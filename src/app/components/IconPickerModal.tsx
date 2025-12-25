@@ -115,7 +115,7 @@ export function IconPickerModal({
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
             <div>
-              <h2 className="text-[16px] font-medium text-white leading-[24px] tracking-[-0.32px]">
+              <h2 className="text-[16px] font-semibold text-white leading-[24px] tracking-[-0.32px]">
                 Choose icon
               </h2>
               <p className="text-[13px] text-white/60 mt-0.5 leading-[18px] tracking-[-0.32px]">
