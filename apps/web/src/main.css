@@ -1,0 +1,15 @@
+@import "tailwindcss";
+@import "@openai/apps-sdk-ui/css";
+
+/* Required for Tailwind to find class references in Apps SDK UI components. */
+@source "../../node_modules/@openai/apps-sdk-ui";
+
+/* Tell Tailwind where to find your app + shared UI components. */
+@source "../index.html";
+@source "./**/*.{js,ts,jsx,tsx}";
+@source "../../packages/ui/src/**/*.{js,ts,jsx,tsx}";
+
+@import "tw-animate-css";
+
+/* ChatUI global styles (fonts, theme variables, base layer). */
+@import "@chatui/ui/styles.css";

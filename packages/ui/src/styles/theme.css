@@ -1,0 +1,225 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  /* Light Mode Colors from ChatGPT Design System */
+  --background: #F9F9F9;
+  --foreground: #0D0D0D;
+  --card: #FFFFFF;
+  --card-foreground: #0D0D0D;
+  --popover: #FFFFFF;
+  --popover-foreground: #0D0D0D;
+  --primary: #F3F3F3;
+  --primary-foreground: #0D0D0D;
+  --secondary: #E8E8E8;
+  --secondary-foreground: #0D0D0D;
+  --muted: #F3F3F3;
+  --muted-foreground: #8F8F8F;
+  --accent: #0285FF;
+  --accent-foreground: #FFFFFF;
+  --destructive: #E02E2A;
+  --destructive-foreground: #FFFFFF;
+  --border: rgba(13, 13, 13, 0.1);
+  --input: transparent;
+  --input-background: #F3F3F3;
+  --switch-background: #E8E8E8;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #0285FF;
+  --chart-1: #0285FF;
+  --chart-2: #E02E2A;
+  --chart-3: #E25507;
+  --chart-4: #008635;
+  --chart-5: #5D5D5D;
+  --radius: 0.625rem;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #0D0D0D;
+  --sidebar-primary: #F3F3F3;
+  --sidebar-primary-foreground: #0D0D0D;
+  --sidebar-accent: #F3F3F3;
+  --sidebar-accent-foreground: #0D0D0D;
+  --sidebar-border: rgba(13, 13, 13, 0.1);
+  --sidebar-ring: #0285FF;
+  /* Text colors */
+  --text-primary: #0D0D0D;
+  --text-secondary: #5D5D5D;
+  --text-tertiary: #8F8F8F;
+  /* Accent colors */
+  --accent-blue: #0285FF;
+  --accent-red: #E02E2A;
+  --accent-orange: #E25507;
+  --accent-green: #008635;
+}
+
+.dark {
+  /* Dark Mode Colors from ChatGPT Design System */
+  --background: #0D0D0D;
+  --foreground: #FFFFFF;
+  --card: #212121;
+  --card-foreground: #FFFFFF;
+  --popover: #212121;
+  --popover-foreground: #FFFFFF;
+  --primary: #212121;
+  --primary-foreground: #FFFFFF;
+  --secondary: #303030;
+  --secondary-foreground: #CDCDCD;
+  --muted: #414141;
+  --muted-foreground: #787878;
+  --accent: #48AAFF;
+  --accent-foreground: #0D0D0D;
+  --destructive: #FF8583;
+  --destructive-foreground: #0D0D0D;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #48AAFF;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --chart-1: #48AAFF;
+  --chart-2: #FF8583;
+  --chart-3: #FF9E6C;
+  --chart-4: #40C977;
+  --chart-5: #CDCDCD;
+  --sidebar: #0D0D0D;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #212121;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #303030;
+  --sidebar-accent-foreground: #CDCDCD;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #48AAFF;
+  /* Text colors */
+  --text-primary: #FFFFFF;
+  --text-secondary: #CDCDCD;
+  --text-tertiary: #787878;
+  /* Accent colors */
+  --accent-blue: #48AAFF;
+  --accent-red: #FF8583;
+  --accent-orange: #FF9E6C;
+  --accent-green: #40C977;
+  --accent-green-darker: #2f7a4f;
+  --accent-purple: #BA8FF7;
+  --accent-pink: #FF8FB3;
+  /* Surfaces */
+  --surface-primary: #171717;
+  --surface-secondary: #2a2a2a;
+  --text-muted: #ababab;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /**
+  * Default typography styles for HTML elements (h1-h4, p, label, button, input).
+  * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them.
+  */
+
+  html {
+    font-size: var(--font-size);
+  }
+
+  h1 {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  h2 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  h4 {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  label {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  button {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  input {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}

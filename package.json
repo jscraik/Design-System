@@ -1,0 +1,16 @@
+{
+  "name": "chatui-sdk-ready",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "packageManager": "pnpm@9.15.0",
+  "scripts": {
+    "dev": "pnpm -C apps/web dev",
+    "build": "pnpm -C apps/web build",
+    "build:widget": "pnpm -C apps/web build:widget",
+    "mcp:dev": "pnpm -C apps/mcp dev",
+    "mcp:start": "pnpm -C apps/mcp start",
+    "storybook:dev": "pnpm -C apps/storybook dev",
+    "storybook:build": "pnpm -C apps/storybook build"
+  }
+}
