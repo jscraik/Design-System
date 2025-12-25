@@ -17,6 +17,7 @@ import {
 } from './icons/ChatGPTIcons';
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { IconPickerModal } from './IconPickerModal';
+import { SettingsModal } from './SettingsModal';
 
 interface SidebarItem {
   id: string;
@@ -83,6 +84,7 @@ export function ChatSidebar({ isOpen, onToggle, sidebarTop, sidebarFooter }: Cha
   const [memoryOption, setMemoryOption] = useState<'default' | 'project-only'>('default');
   const [projectsExpanded, setProjectsExpanded] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
 
   const categories = ['Investing', 'Homework', 'Writing', 'Coding', 'Research'];
 
@@ -313,7 +315,13 @@ export function ChatSidebar({ isOpen, onToggle, sidebarTop, sidebarFooter }: Cha
               </button>
               
               {/* Settings */}
-              <button className="w-full text-left px-3 py-2.5 hover:bg-white/5 transition-colors flex items-center gap-2">
+              <button
+                onClick={() => {
+                  setShowUserMenu(false);
+                  setShowSettingsModal(true);
+                }}
+                className="w-full text-left px-3 py-2.5 hover:bg-white/5 transition-colors flex items-center gap-2"
+              >
                 <IconSettings className="size-4 text-white/70" />
                 <span className="text-[14px] text-white font-normal leading-[20px] tracking-[-0.3px]">Settings</span>
               </button>
@@ -557,6 +565,12 @@ export function ChatSidebar({ isOpen, onToggle, sidebarTop, sidebarFooter }: Cha
           </div>
         )}
       </div>
+
+      {/* Settings Modal */}
+      <SettingsModal
+        isOpen={showSettingsModal}
+        onClose={() => setShowSettingsModal(false)}
+      />
     </>
   );
 }
