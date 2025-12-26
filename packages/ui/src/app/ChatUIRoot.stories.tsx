@@ -63,6 +63,13 @@ export const WithSidebarSlots: Story = {
     defaultMode: "twoPane",
     defaultSidebarOpen: true,
     defaultViewMode: "chat",
+    slots: {
+      sidebarFooter: (
+        <button className="w-full px-3 py-2 bg-white/10 hover:bg-white/15 rounded-lg text-sm text-white/80 transition-colors">
+          + New Workspace
+        </button>
+      ),
+    },
   },
 };
 

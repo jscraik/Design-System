@@ -6,6 +6,7 @@ import { ChatMessages } from "./components/ChatMessages";
 import { ChatInput } from "./components/ChatInput";
 import { ComposeView } from "./components/ComposeView";
 import { useControllableState } from "./hooks/useControllableState";
+import { ChatUISlotsProvider, type ChatUISlots } from "./slots";
 
 export type ChatUIMode = "twoPane" | "full" | "dashboard";
 
@@ -50,6 +51,9 @@ export interface ChatUIRootProps {
 
   /** Slot: Custom content on the right side of header (action buttons) */
   headerRight?: ReactNode;
+
+  /** Template-level slot(s) */
+  slots?: ChatUISlots;
 
   /** Slot: Custom content left of composer input */
   composerLeft?: ReactNode;
@@ -107,11 +111,13 @@ export function ChatUIRoot({
   mobileBreakpointPx = 768,
   onSidebarToggle,
   headerRight,
+  slots,
   composerLeft,
   composerRight,
   emptyState,
 }: ChatUIRootProps) {
   const isMobile = useMediaQuery(`(max-width: ${mobileBreakpointPx}px)`);
+  const slotsValue = useMemo(() => slots ?? {}, [slots]);
 
   const [mode] = useControllableState({
     value: modeProp,
@@ -331,10 +337,9 @@ export function ChatUIRoot({
     <div className="size-full flex bg-[#212121] dark">
       {/* Inline desktop sidebar (twoPane desktop only; Option B = fully hidden when closed) */}
       {sidebarBehavior === "inline" ? (
-        <ChatSidebar
-          isOpen={sidebarOpen}
-          onToggle={toggleSidebar}
-        />
+        <ChatUISlotsProvider value={slotsValue}>
+          <ChatSidebar isOpen={sidebarOpen} onToggle={toggleSidebar} />
+        </ChatUISlotsProvider>
       ) : null}
 
       {/* Overlay sidebar (twoPane mobile + full all sizes) */}
@@ -355,10 +360,9 @@ export function ChatUIRoot({
             tabIndex={-1}
             className="absolute left-0 top-0 h-full w-64 outline-none"
           >
-            <ChatSidebar
-              isOpen={sidebarOpen}
-              onToggle={closeOverlay}
-            />
+            <ChatUISlotsProvider value={slotsValue}>
+              <ChatSidebar isOpen={sidebarOpen} onToggle={closeOverlay} />
+            </ChatUISlotsProvider>
           </div>
         </div>
       ) : null}
