@@ -1,0 +1,38 @@
+import type { Meta, StoryObj } from "@storybook/react-vite";
+
+import { Button } from "./button";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "./collapsible";
+
+const meta: Meta<typeof Collapsible> = {
+  title: "UI/Collapsible",
+  component: Collapsible,
+  parameters: {
+    layout: "centered",
+  },
+};
+
+export default meta;
+
+type Story = StoryObj<typeof Collapsible>;
+
+export const Default: Story = {
+  render: () => (
+    <Collapsible defaultOpen>
+      <div className="flex w-[320px] items-center justify-between rounded-md border px-3 py-2">
+        <div className="text-sm font-medium">Project details</div>
+        <CollapsibleTrigger asChild>
+          <Button variant="outline" size="sm">
+            Toggle
+          </Button>
+        </CollapsibleTrigger>
+      </div>
+      <CollapsibleContent className="mt-2 rounded-md border p-3 text-sm">
+        Hidden content lives here.
+      </CollapsibleContent>
+    </Collapsible>
+  ),
+};

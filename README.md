@@ -15,6 +15,35 @@ This repository is a starter workspace that:
 - `packages/ui` – reusable UI components (chat layout, header, sidebar, etc.)
 - `packages/runtime` – Apps SDK runtime helpers (`window.openai` typings + hooks + mock)
 
+## Library exports
+
+The UI package re-exports chat components and UI primitives from a single entry point.
+
+```ts
+import { Button, ChatHeader, ChatSidebar } from "@chatui/ui";
+```
+
+## Public API surface
+
+| Category | Exports (examples) |
+| --- | --- |
+| Chat UI components | ChatUIRoot, ChatHeader, ChatSidebar, ChatMessages, ChatInput, ComposeView |
+| UI primitives | Button, Dialog, Tabs, Tooltip, and more |
+| Icons | ChatGPTIcons |
+| Pages | DesignSystemPage, TypographyPage, SpacingPage |
+| Templates | ChatFullWidthTemplate, ChatTwoPaneTemplate, DashboardTemplate |
+| Utilities | useControllableState |
+
+## Storybook navigation
+
+- ChatUI – chat app components
+- UI – primitives and overlays
+- DesignSystem – docs and showcases
+- Icons – icon sets
+- Figma – figma utilities
+- Pages – full pages
+- Templates – application templates
+
 ## Prerequisites
 
 - Node.js 18+
