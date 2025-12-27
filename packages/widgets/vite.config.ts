@@ -10,8 +10,8 @@ const __dirname = fileURLToPath(new URL(".", import.meta.url));
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
-    // Bundle size budgets - warn at 500KB, fail at 1MB per chunk
-    chunkSizeWarningLimit: 500,
+    // Bundle size budgets - warn at 800KB to accommodate Three.js core chunk
+    chunkSizeWarningLimit: 800,
     rollupOptions: {
       // Curated widget set (restyled to Apps SDK UI tokens).
       input: {
