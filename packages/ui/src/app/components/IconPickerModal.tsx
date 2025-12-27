@@ -40,14 +40,11 @@ interface IconPickerModalProps {
 }
 
 const colors = [
-  { id: 'gray', value: 'text-white/60', bg: 'bg-white/60' },
-  { id: 'red', value: 'text-[#FF8583]', bg: 'bg-[#FF8583]' },
-  { id: 'orange', value: 'text-[#FF9E6C]', bg: 'bg-[#FF9E6C]' },
-  { id: 'yellow', value: 'text-[#FFD666]', bg: 'bg-[#FFD666]' },
-  { id: 'green', value: 'text-[#40C977]', bg: 'bg-[#40C977]' },
-  { id: 'blue', value: 'text-[#5A9EF4]', bg: 'bg-[#5A9EF4]' },
-  { id: 'purple', value: 'text-[#BA8FF7]', bg: 'bg-[#BA8FF7]' },
-  { id: 'pink', value: 'text-[#FF6BC7]', bg: 'bg-[#FF6BC7]' },
+  { id: "gray", value: "text-white/60", bg: "bg-white/60" },
+  { id: "blue", value: "text-[var(--foundation-accent-blue)]", bg: "bg-[var(--foundation-accent-blue)]" },
+  { id: "green", value: "text-[var(--foundation-accent-green)]", bg: "bg-[var(--foundation-accent-green)]" },
+  { id: "orange", value: "text-[var(--foundation-accent-orange)]", bg: "bg-[var(--foundation-accent-orange)]" },
+  { id: "red", value: "text-[var(--foundation-accent-red)]", bg: "bg-[var(--foundation-accent-red)]" },
 ];
 
 const icons = [
@@ -131,7 +128,7 @@ function ColorPicker({
             onClick={() => onSelect(color.value)}
             className={`size-8 rounded-full transition-all ${color.bg} ${
               selectedColor === color.value
-                ? 'ring-2 ring-white ring-offset-2 ring-offset-[#2C2C2C] scale-110'
+                ? "ring-2 ring-white ring-offset-2 ring-offset-[var(--foundation-bg-dark-2)] scale-110"
                 : 'hover:scale-105'
             }`}
             title={color.id}
@@ -185,7 +182,7 @@ function ModalFooter({ onClose, onSave }: { onClose: () => void; onSave: () => v
       </button>
       <button
         onClick={onSave}
-        className="px-4 py-2 text-[14px] bg-[#40C977] text-white hover:bg-[#40C977]/90 rounded-lg transition-colors font-medium leading-[20px] tracking-[-0.3px]"
+        className="px-4 py-2 text-[14px] bg-[var(--foundation-accent-green)] text-white hover:bg-[var(--foundation-accent-green)]/90 rounded-lg transition-colors font-medium leading-[20px] tracking-[-0.3px]"
       >
         Done
       </button>
@@ -196,7 +193,7 @@ function ModalFooter({ onClose, onSave }: { onClose: () => void; onSave: () => v
 export function IconPickerModal({ 
   isOpen, 
   onClose, 
-  currentColor = 'text-white/60',
+  currentColor = "text-white/60",
   onSave,
   projectName,
 }: IconPickerModalProps) {
@@ -216,7 +213,7 @@ export function IconPickerModal({
     <>
       <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200]" onClick={onClose} />
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[201] w-[400px]">
-        <div className="bg-[#2C2C2C] border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
+        <div className="bg-[var(--foundation-bg-dark-2)] border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
           <ModalHeader projectName={projectName} />
           <div className="px-6 py-6">
             <IconPreview

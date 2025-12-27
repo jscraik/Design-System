@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import { ChatSidebar } from "./components/ChatSidebar";
 import { ChatHeader } from "./components/ChatHeader";
 import { ChatMessages } from "./components/ChatMessages";
@@ -93,7 +94,7 @@ function getFocusable(container: HTMLElement) {
   ].join(",");
 
   return Array.from(container.querySelectorAll<HTMLElement>(selectors)).filter(
-    (el) => !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true"
+    (el) => !el.hasAttribute("disabled") && el.getAttribute("aria-hidden") !== "true",
   );
 }
 
@@ -131,18 +132,16 @@ export function ChatUIRoot({
     onChange: onSidebarOpenChange,
   });
 
-  // Track focus to restore after closing overlay.
   const lastActiveElementRef = useRef<HTMLElement | null>(null);
   const wasOverlayOpenRef = useRef(false);
   const overlayDrawerRef = useRef<HTMLDivElement | null>(null);
 
-  // Local state (replace later with your real data model/host adapter)
   const [selectedModel, setSelectedModel] = useState<ModelConfig>(
     defaultModel ?? {
       name: "ChatGPT 5.2 Pro",
       shortName: "5.2 Pro",
       description: "Our most capable model",
-    }
+    },
   );
   const [viewMode, setViewMode] = useControllableState<"chat" | "compose">({
     value: viewModeProp,
@@ -156,7 +155,7 @@ export function ChatUIRoot({
     ? "none"
     : mode === "twoPane"
       ? (isMobile ? "overlay" : "inline")
-      : "overlay"; // mode === "full"
+      : "overlay";
 
   const emitToggle = useCallback(
     (nextOpen: boolean) => {
@@ -166,7 +165,7 @@ export function ChatUIRoot({
         overlayOpen: sidebarBehavior === "overlay" ? nextOpen : false,
       });
     },
-    [onSidebarToggle, sidebarBehavior]
+    [onSidebarToggle, sidebarBehavior],
   );
 
   const closeOverlay = useCallback(() => {
@@ -217,7 +216,6 @@ export function ChatUIRoot({
     wasOverlayOpenRef.current = isOverlayOpen;
   }, [isOverlayOpen]);
 
-  // Keyboard shortcut: Ctrl/Cmd + B toggles sidebar. Esc closes overlay.
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       const isCmdOrCtrl = e.metaKey || e.ctrlKey;
@@ -238,7 +236,6 @@ export function ChatUIRoot({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [closeOverlay, isOverlayOpen, sidebarBehavior, toggleSidebar]);
 
-  // Focus trap for overlay drawer
   useEffect(() => {
     if (!isOverlayOpen) return;
 
@@ -281,8 +278,7 @@ export function ChatUIRoot({
     };
   }, [isOverlayOpen]);
 
-  const sidebarOpenForHeader =
-    sidebarBehavior === "none" ? false : sidebarOpen;
+  const sidebarOpenForHeader = sidebarBehavior === "none" ? false : sidebarOpen;
 
   const mainContent = useMemo(() => {
     if (mode === "dashboard") {
@@ -294,7 +290,7 @@ export function ChatUIRoot({
     }
 
     return (
-      <div className="flex-1 flex flex-col bg-[#0D0D0D]">
+      <div className="flex-1 flex flex-col bg-[var(--foundation-bg-dark-1)]">
         <ChatHeader
           isSidebarOpen={sidebarOpenForHeader}
           onSidebarToggle={toggleSidebar}
@@ -334,21 +330,19 @@ export function ChatUIRoot({
   ]);
 
   return (
-    <div className="size-full flex bg-[#212121] dark">
-      {/* Inline desktop sidebar (twoPane desktop only; Option B = fully hidden when closed) */}
+    <div className="size-full flex bg-[var(--foundation-bg-dark-1)] dark overflow-hidden">
       {sidebarBehavior === "inline" ? (
         <ChatUISlotsProvider value={slotsValue}>
           <ChatSidebar isOpen={sidebarOpen} onToggle={toggleSidebar} />
         </ChatUISlotsProvider>
       ) : null}
 
-      {/* Overlay sidebar (twoPane mobile + full all sizes) */}
       {sidebarBehavior === "overlay" && sidebarOpen ? (
         <div className="fixed inset-0 z-50">
           <button
             type="button"
             aria-label="Close sidebar"
-            className="absolute inset-0 bg-black/50"
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={closeOverlay}
           />
 

@@ -8,6 +8,11 @@ const meta: Meta<typeof ChatMessages> = {
   parameters: {
     layout: "fullscreen",
   },
+  render: (args) => (
+    <div className="min-h-screen bg-[var(--foundation-bg-dark-1)] flex">
+      <ChatMessages {...args} />
+    </div>
+  ),
 };
 
 export default meta;
@@ -15,23 +20,16 @@ export default meta;
 type Story = StoryObj<typeof ChatMessages>;
 
 export const Default: Story = {
-  render: () => (
-    <div className="min-h-screen bg-[#0D0D0D] flex">
-      <ChatMessages />
-    </div>
-  ),
+  args: {},
 };
 
-export const WithEmptyState: Story = {
-  render: () => (
-    <div className="min-h-screen bg-[#0D0D0D] flex">
-      <ChatMessages
-        emptyState={
-          <div className="text-white/60 text-sm px-4 py-6">
-            No messages yet. Start a conversation.
-          </div>
-        }
-      />
-    </div>
-  ),
+export const EmptyState: Story = {
+  args: {
+    messages: [],
+    emptyState: (
+      <div className="flex-1 flex items-center justify-center text-[var(--foundation-text-dark-tertiary)] text-sm">
+        No messages yet
+      </div>
+    ),
+  },
 };

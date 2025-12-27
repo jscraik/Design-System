@@ -28,7 +28,7 @@ const chartData = [
 const chartConfig = {
   visits: {
     label: "Visits",
-    color: "#40C977",
+    color: "var(--foundation-accent-green)",
   },
 };
 

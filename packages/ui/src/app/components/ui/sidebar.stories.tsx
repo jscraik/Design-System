@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Home, Inbox, Settings } from "lucide-react";
+import { IconChat, IconFolder, IconSettings } from "../../../icons";
 
 import {
   Sidebar,
@@ -45,19 +45,19 @@ export const Default: Story = {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton isActive>
-                      <Home className="size-4" />
+                      <IconChat className="size-4" />
                       <span>Home</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton>
-                      <Inbox className="size-4" />
+                      <IconFolder className="size-4" />
                       <span>Inbox</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton>
-                      <Settings className="size-4" />
+                      <IconSettings className="size-4" />
                       <span>Settings</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

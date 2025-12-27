@@ -1,7 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { ChatUIRoot } from "./ChatUIRoot";
-import { Plus, Star, Settings, Share2, Sparkles, Zap } from "lucide-react";
+import {
+  IconLightBulb,
+  IconPlusLg,
+  IconSettings,
+  IconShare,
+  IconStar,
+} from "../icons";
+import { IconPro } from "./components/icons/ChatGPTIcons";
 
 const meta: Meta<typeof ChatUIRoot> = {
   title: "ChatUI/ChatUIRoot",
@@ -9,6 +16,11 @@ const meta: Meta<typeof ChatUIRoot> = {
   parameters: {
     layout: "fullscreen",
   },
+  render: (args) => (
+    <div className="min-h-screen bg-[var(--foundation-bg-dark-1)]">
+      <ChatUIRoot {...args} />
+    </div>
+  ),
 };
 
 export default meta;
@@ -31,13 +43,13 @@ export const WithCustomHeaderActions: Story = {
     headerRight: (
       <>
         <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors" aria-label="New chat">
-          <Plus className="size-4 text-white/60" />
+          <IconPlusLg className="size-4 text-white/60" />
         </button>
         <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors" aria-label="Star">
-          <Star className="size-4 text-white/60" />
+          <IconStar className="size-4 text-white/60" />
         </button>
         <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors" aria-label="Settings">
-          <Settings className="size-4 text-white/60" />
+          <IconSettings className="size-4 text-white/60" />
         </button>
       </>
     ),
@@ -50,8 +62,8 @@ export const WithShareButton: Story = {
     defaultSidebarOpen: true,
     defaultViewMode: "chat",
     headerRight: (
-      <button className="px-3 py-1.5 bg-[#2f7a4f] hover:bg-[#2a6b45] text-white rounded-lg transition-colors text-sm font-medium flex items-center gap-2">
-        <Share2 className="size-4" />
+      <button className="px-3 py-1.5 bg-[var(--foundation-accent-green)] hover:bg-[var(--foundation-accent-green)]/80 text-white rounded-lg transition-colors text-sm font-medium flex items-center gap-2">
+        <IconShare className="size-4" />
         Share Chat
       </button>
     ),
@@ -79,15 +91,23 @@ export const WithComposerSlots: Story = {
     defaultSidebarOpen: false,
     defaultViewMode: "chat",
     composerLeft: (
-      <button className="p-2 bg-[#1B72E8]/20 text-[#5A9EF4] rounded-lg transition-colors" title="Custom Tool">
-        <Sparkles className="size-4" />
+      <button className="p-2 bg-[var(--foundation-accent-blue)]/20 text-[var(--foundation-accent-blue)] rounded-lg transition-colors" title="Custom Tool">
+        <IconLightBulb className="size-4" />
       </button>
     ),
     composerRight: (
       <button className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg transition-colors" title="AI Assistant">
-        <Zap className="size-4 text-white" />
+        <IconPro className="size-4 text-white" />
       </button>
     ),
+  },
+};
+
+export const ComposeMode: Story = {
+  args: {
+    defaultMode: "twoPane",
+    defaultSidebarOpen: true,
+    defaultViewMode: "compose",
   },
 };
 
@@ -99,21 +119,21 @@ export const WithAllSlots: Story = {
     headerRight: (
       <>
         <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors" aria-label="New chat">
-          <Plus className="size-4 text-white/60" />
+          <IconPlusLg className="size-4 text-white/60" />
         </button>
         <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors" aria-label="Share">
-          <Share2 className="size-4 text-white/60" />
+          <IconShare className="size-4 text-white/60" />
         </button>
       </>
     ),
     composerLeft: (
-      <button className="p-2 bg-[#1B72E8]/20 text-[#5A9EF4] rounded-lg transition-colors" title="Custom Tool">
-        <Sparkles className="size-4" />
+      <button className="p-2 bg-[var(--foundation-accent-blue)]/20 text-[var(--foundation-accent-blue)] rounded-lg transition-colors" title="Custom Tool">
+        <IconLightBulb className="size-4" />
       </button>
     ),
     composerRight: (
       <button className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg transition-colors" title="AI Assistant">
-        <Zap className="size-4 text-white" />
+        <IconPro className="size-4 text-white" />
       </button>
     ),
   },
@@ -127,29 +147,12 @@ export const FullWidthWithSlots: Story = {
     headerRight: (
       <>
         <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors" aria-label="New chat">
-          <Plus className="size-4 text-white/60" />
+          <IconPlusLg className="size-4 text-white/60" />
         </button>
         <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors" aria-label="Share">
-          <Share2 className="size-4 text-white/60" />
+          <IconShare className="size-4 text-white/60" />
         </button>
       </>
-    ),
-  },
-};
-
-export const WithCustomEmptyState: Story = {
-  args: {
-    defaultMode: "twoPane",
-    defaultSidebarOpen: true,
-    defaultViewMode: "chat",
-    emptyState: (
-      <div className="flex flex-col items-center justify-center h-full text-center px-8">
-        <div className="size-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mb-4">
-          <Sparkles className="size-8 text-white" />
-        </div>
-        <h3 className="text-xl font-semibold text-white mb-2">Start a new conversation</h3>
-        <p className="text-white/60 text-sm">Ask anything and get started with ChatGPT</p>
-      </div>
     ),
   },
 };

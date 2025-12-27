@@ -1,6 +1,8 @@
 export { default as ChatUIApp } from "./app/App";
 export { ChatUIRoot } from "./app/ChatUIRoot";
 export * from "./app/hooks/useControllableState";
+export * from "./app/slots";
+export * from "./vendor/appsSdkUi";
 
 export * from "./app/components/ChatHeader";
 export * from "./app/components/ChatSidebar";
@@ -16,6 +18,7 @@ export * from "./app/pages/SpacingPage";
 
 export * from "./app/design-system/DesignTokens";
 
+export * from "./icons";
 export * from "./app/components/icons/ChatGPTIcons";
 export * from "./app/components/ui/utils";
 export * from "./templates";

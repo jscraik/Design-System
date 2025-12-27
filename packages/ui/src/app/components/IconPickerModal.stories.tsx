@@ -8,6 +8,11 @@ const meta: Meta<typeof IconPickerModal> = {
   parameters: {
     layout: "fullscreen",
   },
+  render: (args) => (
+    <div className="h-screen bg-[var(--foundation-bg-dark-1)]">
+      <IconPickerModal {...args} />
+    </div>
+  ),
 };
 
 export default meta;
@@ -15,15 +20,11 @@ export default meta;
 type Story = StoryObj<typeof IconPickerModal>;
 
 export const Default: Story = {
-  render: () => (
-    <div className="h-screen bg-[#0D0D0D]">
-      <IconPickerModal
-        isOpen={true}
-        onClose={() => {}}
-        onSave={() => {}}
-        currentColor="text-[#BA8FF7]"
-        projectName="Apps SDK Designer"
-      />
-    </div>
-  ),
+  args: {
+    isOpen: true,
+    onClose: () => {},
+    onSave: () => {},
+    currentColor: "text-[var(--foundation-accent-blue)]",
+    projectName: "Apps SDK Designer",
+  },
 };

@@ -1,52 +1,48 @@
+import { spacingScale } from "@chatui/tokens";
+
 export function SpacingShowcase() {
-  const spacingTokens = [
-    // Large spacing
-    { size: '128px', token: 'space-64', value: 128 },
-    { size: '64px', token: 'space-32', value: 64 },
-    { size: '48px', token: 'space-24', value: 48 },
-    { size: '40px', token: 'space-20', value: 40 },
-    { size: '32px', token: 'space-16', value: 32 },
-    
-    // Medium spacing
-    { size: '24px', token: 'space-12', value: 24 },
-    { size: '16px', token: 'space-8', value: 16 },
-    { size: '12px', token: 'space-6', value: 12 },
-    { size: '8px', token: 'space-4', value: 8 },
-    { size: '4px', token: 'space-2', value: 4 },
-    
-    // Small spacing
-    { size: '2px', token: 'space-1', value: 2 },
-    { size: '0', token: 'space-0', value: 0 },
-  ];
+  const spacingTokens = spacingScale.map((value) => ({
+    size: value === 0 ? "0" : `${value}px`,
+    token: `space-${value}`,
+    value,
+  }));
 
   const largeSpacing = spacingTokens.slice(0, 5);
   const mediumSpacing = spacingTokens.slice(5, 10);
   const smallSpacing = spacingTokens.slice(10, 12);
 
+  const lightPrimary = "var(--foundation-text-light-primary)";
+  const lightSecondary = "var(--foundation-text-light-secondary)";
+  const lightSurface = "var(--foundation-bg-light-1)";
+  const lightSurfaceAlt = "var(--foundation-bg-light-2)";
+  const accent = "var(--foundation-accent-blue)";
+
   const SpacingBox = ({ size, token, value }: { size: string; token: string; value: number }) => (
     <div className="flex flex-col items-center gap-4">
-      <div className="flex size-32 items-center justify-center bg-[rgba(0,0,0,0.02)] p-6">
+      <div className="flex size-32 items-center justify-center p-6" style={{ backgroundColor: lightSurfaceAlt }}>
         <div
-          className="border border-[#ff69b4] bg-[rgba(255,105,180,0.25)]"
+          className="border"
           style={{
             width: value === 0 ? '100%' : `${value}px`,
             height: value === 0 ? '100%' : `${value}px`,
             opacity: value === 0 ? 0 : 1,
+            borderColor: accent,
+            backgroundColor: accent,
           }}
         />
       </div>
       <div className="flex flex-col items-center font-mono text-[12px] leading-[18px] tracking-[-0.32px]">
-        <p className="text-[#0d0d0d]">{size}</p>
-        <p className="text-[#0d0d0d]/50">{token}</p>
+        <p style={{ color: lightPrimary }}>{size}</p>
+        <p style={{ color: lightSecondary }}>{token}</p>
       </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-[#f5f5f5] p-8">
+    <div className="min-h-screen p-8" style={{ backgroundColor: lightSurfaceAlt }}>
       <div className="mx-auto max-w-7xl">
         {/* Header */}
-        <div className="mb-8 rounded-lg bg-white p-8 shadow-sm">
+        <div className="mb-8 rounded-lg p-8 shadow-sm" style={{ backgroundColor: lightSurface }}>
           <div className="mb-6 flex items-center gap-3">
             <div className="flex size-6 items-center justify-center">
               <svg viewBox="0 0 24 24" fill="currentColor">
@@ -55,17 +51,17 @@ export function SpacingShowcase() {
             </div>
             <h2 className="font-semibold text-[12px] leading-[18px] tracking-[-0.32px]">Foundations</h2>
           </div>
-          <div className="mb-4 h-px w-full bg-[#0d0d0d]" />
+          <div className="mb-4 h-px w-full" style={{ backgroundColor: lightPrimary }} />
           <div>
             <h1 className="text-[56px] font-semibold leading-[1.2] tracking-[0.416px]">Spacing</h1>
           </div>
         </div>
 
         {/* Definitions */}
-        <div className="rounded-lg bg-white p-8 shadow-sm">
+        <div className="rounded-lg p-8 shadow-sm" style={{ backgroundColor: lightSurface }}>
           <div className="mb-8">
             <h3 className="mb-4 font-medium text-[12px] leading-[24px] tracking-[-0.32px]">Definitions</h3>
-            <div className="h-px w-full bg-[#0d0d0d]" />
+            <div className="h-px w-full" style={{ backgroundColor: lightPrimary }} />
           </div>
 
           <div className="space-y-6">
@@ -77,7 +73,7 @@ export function SpacingShowcase() {
             </div>
 
             {/* Divider */}
-            <div className="h-px w-full bg-[#0d0d0d]/10" />
+            <div className="h-px w-full bg-black/10" />
 
             {/* Medium Spacing Row */}
             <div className="flex flex-wrap gap-6">
@@ -87,7 +83,7 @@ export function SpacingShowcase() {
             </div>
 
             {/* Divider */}
-            <div className="h-px w-full bg-[#0d0d0d]/10" />
+            <div className="h-px w-full bg-black/10" />
 
             {/* Small Spacing Row */}
             <div className="flex flex-wrap gap-6">

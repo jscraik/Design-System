@@ -849,6 +849,26 @@ export function IconStuffTools({ className = "size-6" }: { className?: string })
   );
 }
 
+export function IconTelescope({ className = "size-6" }: { className?: string }) {
+  return (
+    <div className={className}>
+      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 24 24">
+        <path clipRule="evenodd" d={svgPathsMisc.p2a5d0600} fill="currentColor" fillRule="evenodd" />
+      </svg>
+    </div>
+  );
+}
+
+export function IconOperator({ className = "size-6" }: { className?: string }) {
+  return (
+    <div className={className}>
+      <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 24 24">
+        <path d={svgPathsMisc.p39e4a900} fill="currentColor" />
+      </svg>
+    </div>
+  );
+}
+
 export function IconGlobe({ className = "size-6" }: { className?: string }) {
   return (
     <div className={className}>

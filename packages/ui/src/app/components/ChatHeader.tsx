@@ -1,193 +1,214 @@
-import type { ReactNode } from 'react';
-import { useState } from 'react';
+import { useState } from "react";
+
+import { Popover } from "../../vendor/appsSdkUi";
 import {
+  Download,
+  Sparkles,
+  IconChat,
   IconChevronDownMd,
-  IconUpload,
-  IconShare,
-  IconSettings,
+  IconChevronRightMd,
   IconCheckmark,
-  IconCompose,
-} from './icons/ChatGPTIcons';
-import { Grid3x3, Download, PanelLeftOpen, PanelLeftClose } from 'lucide-react';
+  IconShare,
+  IconSidebar,
+} from "../../icons";
 
 interface ModelConfig {
   name: string;
   shortName: string;
   description: string;
+  isLegacy?: boolean;
 }
 
-export interface ChatHeaderProps {
-  isSidebarOpen: boolean;
+interface ChatHeaderProps {
   onSidebarToggle: () => void;
-  selectedModel: ModelConfig;
-  onModelChange: (model: ModelConfig) => void;
-  viewMode: 'chat' | 'compose';
-  onViewModeChange: (mode: 'chat' | 'compose') => void;
-
-  /** Slot for custom content on the right side of header (action buttons) */
-  headerRight?: ReactNode;
+  isSidebarOpen?: boolean;
+  selectedModel?: string | ModelConfig;
+  onModelChange?: (model: string | ModelConfig) => void;
+  viewMode?: "chat" | "compose";
+  onViewModeChange?: (mode: "chat" | "compose") => void;
+  headerRight?: React.ReactNode;
 }
 
 const availableModels: ModelConfig[] = [
-  { name: 'ChatGPT 5.2 Pro', shortName: '5.2 Pro', description: 'Our most capable model' },
-  { name: 'ChatGPT 4o', shortName: '4o', description: 'Fast and efficient' },
-  { name: 'ChatGPT 4o mini', shortName: '4o mini', description: 'Lightweight and quick' },
-  { name: 'Claude 3.5 Sonnet', shortName: 'Claude', description: 'Anthropic\'s latest model' },
-  { name: 'Gemini Pro', shortName: 'Gemini', description: 'Google\'s advanced model' },
+  { name: "Auto", shortName: "Auto", description: "Decides how long to think" },
+  { name: "Instant", shortName: "Instant", description: "Answers right away" },
+  { name: "Thinking", shortName: "Thinking", description: "Thinks longer for better answers" },
+  { name: "Pro", shortName: "Pro", description: "Research-grade intelligence" },
+];
+
+const legacyModels: ModelConfig[] = [
+  { name: "GPT-5.1 Instant", shortName: "GPT-5.1 Instant", description: "Legacy model", isLegacy: true },
+  { name: "GPT-5.1 Thinking", shortName: "GPT-5.1 Thinking", description: "Legacy model", isLegacy: true },
+  { name: "GPT-5.1 Pro", shortName: "GPT-5.1 Pro", description: "Legacy model", isLegacy: true },
+  { name: "GPT-5 Instant", shortName: "GPT-5 Instant", description: "Legacy model", isLegacy: true },
+  { name: "GPT-5 Thinking mini", shortName: "GPT-5 Thinking mini", description: "Thinks quickly", isLegacy: true },
+  { name: "GPT-5 Thinking", shortName: "GPT-5 Thinking", description: "Legacy model", isLegacy: true },
+  { name: "GPT-5 Pro", shortName: "GPT-5 Pro", description: "Legacy model", isLegacy: true },
+  { name: "GPT-4o", shortName: "GPT-4o", description: "Legacy model", isLegacy: true },
+  { name: "GPT-4.1", shortName: "GPT-4.1", description: "Legacy model", isLegacy: true },
+  { name: "GPT-4.5", shortName: "GPT-4.5", description: "Legacy model", isLegacy: true },
+  { name: "o3", shortName: "o3", description: "Legacy model", isLegacy: true },
+  { name: "o4-mini", shortName: "o4-mini", description: "Legacy model", isLegacy: true },
 ];
 
 export function ChatHeader({
-  isSidebarOpen,
   onSidebarToggle,
-  selectedModel,
+  isSidebarOpen,
+  selectedModel = "GPT-4o",
   onModelChange,
-  viewMode,
+  viewMode = "chat",
   onViewModeChange,
   headerRight,
 }: ChatHeaderProps) {
-  const [showModelPicker, setShowModelPicker] = useState(false);
+  const [isModelSelectorOpen, setIsModelSelectorOpen] = useState(false);
+  const [isTemplateOpen, setIsTemplateOpen] = useState(false);
+
+  const modelName = typeof selectedModel === "string" ? selectedModel : selectedModel.shortName;
+
+  const handleModelSelect = (selected: string) => {
+    onModelChange?.(selected);
+    setIsModelSelectorOpen(false);
+  };
 
   return (
-    <div className="bg-[#2C2C2C] border-b border-white/10 px-3 py-2 flex items-center justify-between relative">
-      {/* Left Side */}
+    <div className="h-14 border-b border-white/10 bg-[var(--foundation-bg-dark-1)] flex items-center justify-between px-4 flex-shrink-0">
       <div className="flex items-center gap-2">
-        {/* Icon Buttons - Always visible */}
-        <div className="flex items-center gap-0.5 bg-[#2d2d2d] rounded-lg p-0.5">
-          <button 
-            onClick={onSidebarToggle}
-            className="p-1.5 hover:bg-white/10 rounded-md transition-colors"
-          >
-            {isSidebarOpen ? (
-              <PanelLeftClose className="size-4 text-white/60" />
-            ) : (
-              <PanelLeftOpen className="size-4 text-white/60" />
-            )}
-          </button>
-          <button 
-            onClick={() => onViewModeChange(viewMode === 'chat' ? 'compose' : 'chat')}
-            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg transition-colors ${
-              viewMode === 'compose' 
-                ? 'bg-[#2f7a4f] text-white' 
-                : 'hover:bg-white/10 text-white/60'
-            }`}
-          >
-            <IconCompose className="size-4" />
-            {viewMode === 'compose' && (
-              <span className="text-[13px] leading-5 font-medium">Compose</span>
-            )}
-          </button>
-        </div>
+        <button
+          className="flex items-center justify-center size-9 border border-white/10 rounded-xl hover:bg-white/5 transition-colors"
+          onClick={onSidebarToggle}
+          aria-pressed={isSidebarOpen}
+          title={isSidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
+        >
+          <IconSidebar className="size-4 text-[var(--foundation-text-dark-secondary)]" />
+        </button>
 
-        {/* ChatGPT Model Selector - Wrapped in bubble */}
-        <div className="bg-[#2d2d2d] rounded-lg p-0.5">
-          <button 
-            onClick={() => setShowModelPicker(!showModelPicker)}
-            className="flex items-center gap-1.5 hover:bg-white/10 px-2 py-1 rounded-md transition-colors"
-          >
-            <span className="text-[14px] text-white font-normal leading-[20px] tracking-[-0.3px]">ChatGPT</span>
-            <span className="text-[14px] text-white/60 font-normal leading-[20px] tracking-[-0.3px]">{selectedModel.shortName}</span>
-            <IconChevronDownMd className="size-3.5 text-white/60" />
-          </button>
-        </div>
+        <button
+          className="flex items-center gap-2 px-4 py-2 border border-white/10 rounded-xl hover:bg-white/5 transition-colors"
+          onClick={() =>
+            onViewModeChange?.(viewMode === "compose" ? "chat" : "compose")
+          }
+        >
+          {viewMode === "compose" ? (
+            <>
+              <div className="size-4 text-[var(--foundation-text-dark-secondary)]">
+                <IconChat />
+              </div>
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-secondary)]">
+                Chat
+              </span>
+            </>
+          ) : (
+            <>
+              <Sparkles className="size-4 text-[var(--foundation-accent-blue)]" />
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-accent-blue)]">
+                Compose
+              </span>
+            </>
+          )}
+        </button>
+
+        {viewMode !== "compose" && (
+          <Popover open={isModelSelectorOpen} onOpenChange={setIsModelSelectorOpen}>
+            <Popover.Trigger>
+              <button className="flex items-center gap-2 px-3 py-1.5 hover:bg-white/10 rounded-lg transition-colors">
+                <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                  ChatGPT
+                </span>
+                <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-tertiary)]">
+                  {modelName}
+                </span>
+                <IconChevronDownMd className="size-4 text-[var(--foundation-text-dark-tertiary)]" />
+              </button>
+            </Popover.Trigger>
+
+            <Popover.Content
+              side="bottom"
+              align="start"
+              sideOffset={8}
+              className="z-50 w-[340px] rounded-2xl border border-white/10 bg-[var(--foundation-bg-dark-2)] shadow-2xl outline-none"
+            >
+              <div className="p-3">
+                <div className="mb-2">
+                  {availableModels.map((model) => (
+                    <button
+                      key={model.name}
+                      onClick={() => handleModelSelect(model.name)}
+                      className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-white/5 rounded-lg transition-colors text-left group"
+                    >
+                      <div className="flex-1">
+                        <div className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                          {model.name}
+                        </div>
+                        <div className="text-[12px] text-[var(--foundation-text-dark-tertiary)] leading-[16px] tracking-[-0.3px]">
+                          {model.description}
+                        </div>
+                      </div>
+                      {modelName === model.name && (
+                        <IconCheckmark className="size-4 text-white flex-shrink-0 ml-2" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+
+                <Popover open={isTemplateOpen} onOpenChange={setIsTemplateOpen}>
+                  <Popover.Trigger>
+                    <button className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-white/5 rounded-lg transition-colors text-left">
+                      <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                        Legacy models
+                      </span>
+                      <IconChevronRightMd
+                        className={`size-4 text-[var(--foundation-text-dark-tertiary)] transition-transform ${
+                          isTemplateOpen ? "rotate-90" : ""
+                        }`}
+                      />
+                    </button>
+                  </Popover.Trigger>
+
+                  <Popover.Content
+                    side="right"
+                    align="start"
+                    sideOffset={8}
+                    className="z-50 w-[340px] rounded-2xl border border-white/10 bg-[var(--foundation-bg-dark-2)] shadow-2xl outline-none"
+                  >
+                    <div className="p-3 max-h-[400px] overflow-y-auto">
+                      {legacyModels.map((model) => (
+                        <button
+                          key={model.name}
+                          onClick={() => handleModelSelect(model.name)}
+                          className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-white/5 rounded-lg transition-colors text-left group"
+                        >
+                          <div className="flex-1">
+                            <div className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                              {model.name}
+                            </div>
+                            <div className="text-[12px] text-[var(--foundation-text-dark-tertiary)] leading-[16px] tracking-[-0.3px]">
+                              {model.description}
+                            </div>
+                          </div>
+                          {modelName === model.name && (
+                            <IconCheckmark className="size-4 text-white flex-shrink-0 ml-2" />
+                          )}
+                        </button>
+                      ))}
+                    </div>
+                  </Popover.Content>
+                </Popover>
+              </div>
+            </Popover.Content>
+          </Popover>
+        )}
       </div>
 
-      {/* Right Side - Action Buttons - Wrapped in bubble */}
-      {headerRight ? (
-        <div className="flex items-center gap-0.5 bg-black/20 rounded-lg p-0.5">
-          {headerRight}
-        </div>
-      ) : (
-        <div className="flex items-center gap-0.5 bg-black/20 rounded-lg p-0.5">
-          <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors">
-            <Download className="size-4 text-white/60" />
-          </button>
-          <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors">
-            <IconShare className="size-4 text-white/60" />
-          </button>
-        </div>
-      )}
+      <div className="flex items-center gap-2">
+        {headerRight}
 
-      {/* Model Picker Modal */}
-      {showModelPicker && (
-        <>
-          {/* Backdrop */}
-          <div 
-            className="fixed inset-0 bg-black/40 z-40"
-            onClick={() => setShowModelPicker(false)}
-          />
-          
-          {/* Modal */}
-          <div className="fixed top-16 left-1/2 -translate-x-1/2 z-50 w-[560px] bg-[#1a1a1a] border border-white/10 rounded-[12px] shadow-2xl p-6">
-            <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-white mb-4">
-              Select Model
-            </h2>
-            
-            <div className="space-y-2">
-              {/* GPT Models */}
-              <div className="mb-4">
-                <h3 className="text-[12px] font-semibold leading-[18px] tracking-[-0.32px] text-white/60 mb-2 px-1">
-                  GPT MODELS
-                </h3>
-                <div className="space-y-1">
-                  {availableModels.slice(0, 3).map((model) => (
-                    <button
-                      key={model.name}
-                      onClick={() => {
-                        onModelChange(model);
-                        setShowModelPicker(false);
-                      }}
-                      className={`w-full px-4 py-3 rounded-lg text-left transition-all flex items-center justify-between ${
-                        selectedModel.name === model.name
-                          ? 'bg-[#40C977]/10 border border-[#40C977]/30 text-white'
-                          : 'bg-white/5 border border-transparent text-white/80 hover:bg-white/10'
-                      }`}
-                    >
-                      <div>
-                        <div className="text-[14px] font-normal leading-[20px] tracking-[-0.3px]">{model.name}</div>
-                        <div className="text-[12px] font-normal leading-[18px] tracking-[-0.32px] text-white/60">{model.description}</div>
-                      </div>
-                      {selectedModel.name === model.name && (
-                        <IconCheckmark className="size-4 text-white" />
-                      )}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Other Models */}
-              <div>
-                <h3 className="text-[12px] font-semibold leading-[18px] tracking-[-0.32px] text-white/60 mb-2 px-1">
-                  OTHER MODELS
-                </h3>
-                <div className="space-y-1">
-                  {availableModels.slice(3).map((model) => (
-                    <button
-                      key={model.name}
-                      onClick={() => {
-                        onModelChange(model);
-                        setShowModelPicker(false);
-                      }}
-                      className={`w-full px-4 py-3 rounded-lg text-left transition-all flex items-center justify-between ${
-                        selectedModel.name === model.name
-                          ? 'bg-[#40C977]/10 border border-[#40C977]/30 text-white'
-                          : 'bg-white/5 border border-transparent text-white/80 hover:bg-white/10'
-                      }`}
-                    >
-                      <div>
-                        <div className="text-[14px] font-normal leading-[20px] tracking-[-0.3px]">{model.name}</div>
-                        <div className="text-[12px] font-normal leading-[18px] tracking-[-0.32px] text-white/60">{model.description}</div>
-                      </div>
-                      {selectedModel.name === model.name && (
-                        <IconCheckmark className="size-4 text-white" />
-                      )}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
+        <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors">
+          <Download className="size-4 text-[var(--foundation-text-dark-tertiary)]" />
+        </button>
+        <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors">
+          <IconShare className="size-4 text-[var(--foundation-text-dark-tertiary)]" />
+        </button>
+      </div>
     </div>
   );
 }

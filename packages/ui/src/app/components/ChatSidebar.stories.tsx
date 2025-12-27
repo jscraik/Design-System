@@ -7,31 +7,21 @@ const meta: Meta<typeof ChatSidebar> = {
   component: ChatSidebar,
   args: {
     isOpen: true,
+    onToggle: () => {},
+    onProjectSelect: () => {},
   },
   parameters: {
     layout: "fullscreen",
   },
+  render: (args) => (
+    <div className="h-screen bg-[var(--foundation-bg-dark-1)]">
+      <ChatSidebar {...args} />
+    </div>
+  ),
 };
 
 export default meta;
 
 type Story = StoryObj<typeof ChatSidebar>;
 
-export const DefaultOpen: Story = {
-  render: (args) => (
-    <div className="h-screen bg-[#0D0D0D]">
-      <ChatSidebar {...args} onToggle={() => {}} onProjectSelect={() => {}} />
-    </div>
-  ),
-};
-
-export const Collapsed: Story = {
-  args: {
-    isOpen: false,
-  },
-  render: (args) => (
-    <div className="h-screen bg-[#0D0D0D]">
-      <ChatSidebar {...args} onToggle={() => {}} onProjectSelect={() => {}} />
-    </div>
-  ),
-};
+export const DefaultOpen: Story = {};

@@ -206,34 +206,36 @@ export function ComposeView() {
   const taskConfig = getTaskSectionConfig();
 
   return (
-    <div className="flex-1 flex flex-col bg-[#0D0D0D]">
+    <div className="flex-1 flex flex-col bg-[#212121]">
       {/* Main Content Area */}
       <div className="flex-1 overflow-y-auto">
         <div className="w-full px-8 py-8 space-y-8">
           {/* Instructions Section */}
           <div className="bg-[#212121] border border-[#4d4d4d] rounded-lg overflow-hidden">
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 bg-[#2a2a2a]">
+            <div className="flex items-center justify-between px-4 py-3 bg-[#303030]">
               <div className="flex items-center gap-2">
                 <button className="p-1 hover:bg-white/10 rounded transition-colors">
-                  <IconPlusComposer className="size-4 text-[#ececec]/70" />
+                  <IconPlusComposer className="size-4 text-[#AFAFAF]" />
                 </button>
-                <span className="text-[15px] leading-6 text-[#ececec] font-medium">
+                <span className="text-[15px] leading-6 text-white font-medium">
                   Instructions
                 </span>
+              </div>
+              <div className="flex items-center gap-2">
                 <button className="p-1 hover:bg-white/10 rounded transition-colors">
-                  <svg className="size-4 text-[#ececec]/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="size-4 text-[#AFAFAF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                   </svg>
                 </button>
                 <button className="p-1 hover:bg-white/10 rounded transition-colors">
-                  <svg className="size-4 text-[#ececec]/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <svg className="size-4 text-[#AFAFAF]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
-              <button className="flex items-center gap-2 px-3 py-1.5 bg-[#2f2f2f] hover:bg-[#3f3f3f] border border-[#4d4d4d] text-[#ececec] rounded-lg transition-colors text-[13px] leading-5">
-                <IconCompose className="size-4 text-[#ececec]/70" />
+              <button className="flex items-center gap-2 px-3 py-1.5 bg-[#303030] hover:bg-[#414141] border border-[#4d4d4d] text-white rounded-lg transition-colors text-[13px] leading-5">
+                <IconCompose className="size-4 text-[#AFAFAF]" />
                 Send to Chat
               </button>
             </div>
@@ -256,7 +258,7 @@ export function ComposeView() {
             {activeTab === 'builder' && (
               <div className="bg-[#212121] border border-[#4d4d4d] rounded-lg overflow-hidden">
                 {/* Header */}
-                <div className="flex items-center justify-between px-4 py-3 bg-[#2a2a2a]">
+                <div className="flex items-center justify-between px-4 py-3 bg-[#303030]">
                   <div className="flex items-center gap-2">
                     <button className="p-1 hover:bg-white/10 rounded transition-colors">
                       <IconPlusComposer className="size-4 text-[#ececec]/70" />
@@ -383,10 +385,10 @@ export function ComposeView() {
                         <div className="flex flex-col gap-2">
                           <button 
                             onClick={() => setShowDiscoverySettings(true)}
-                            className="px-4 py-2 bg-[#2f2f2f] hover:bg-[#3f3f3f] border border-[#4d4d4d] text-[#ececec]/90 rounded-lg transition-all text-[13px] leading-5 whitespace-nowrap flex items-center gap-2"
+                            className="px-4 py-2 bg-[#303030] hover:bg-[#414141] border border-[#4d4d4d] text-[#ececec]/90 rounded-lg transition-all text-[13px] leading-5 whitespace-nowrap flex items-center gap-2"
                           >
                             <span className="flex items-center gap-1.5">
-                              <span className="text-[#19c37d]">{targetSize}k</span>
+                              <span className="text-[#40C977]">{targetSize}k</span>
                               <span>{taskConfig.buttonText}</span>
                             </span>
                           </button>
@@ -436,7 +438,7 @@ export function ComposeView() {
                       <button
                         onClick={() => setAutoPlan(!autoPlan)}
                         className={`relative w-11 h-6 rounded-full transition-colors ${
-                          autoPlan ? 'bg-[#19c37d]' : 'bg-[#4d4d4d]'
+                          autoPlan ? 'bg-[#40C977]' : 'bg-[#4d4d4d]'
                         }`}
                       >
                         <div
@@ -596,7 +598,7 @@ export function ComposeView() {
                     </div>
                     <div className="px-4 py-3 bg-white/5 border border-white/10 rounded-lg">
                       <div className="text-[12px] font-normal leading-[18px] tracking-[-0.32px] text-white/60">
-                        File Tree · <span className="text-white">{previewMode.contextConfig.fileTree}</span>
+                        File Tree  <span className="text-white">{previewMode.contextConfig.fileTree}</span>
                       </div>
                     </div>
                     <div className="px-4 py-3 bg-white/5 border border-white/10 rounded-lg">
@@ -642,7 +644,7 @@ export function ComposeView() {
                   <div className="mt-6">
                     <button
                       onClick={() => setShowProEditConfig(true)}
-                      className="px-4 py-2 bg-[#2f7a4f] hover:bg-[#2f7a4f]/80 text-white rounded-lg transition-all text-[14px] font-normal leading-[20px] tracking-[-0.3px]"
+                      className="px-4 py-2 bg-[#40C977] hover:bg-[#40C977]/80 text-white rounded-lg transition-all text-[14px] font-normal leading-[20px] tracking-[-0.3px]"
                     >
                       Pro Edit Config
                     </button>

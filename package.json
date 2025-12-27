@@ -5,19 +5,24 @@
   "type": "module",
   "packageManager": "pnpm@9.15.0",
   "scripts": {
-    "dev": "pnpm -C apps/web dev",
+    "dev": "concurrently -n web,storybook -c cyan,magenta \"pnpm dev:web\" \"pnpm dev:storybook\"",
+    "dev:web": "pnpm -C apps/web dev",
+    "dev:storybook": "pnpm -C apps/storybook dev",
     "build": "pnpm -C apps/web build",
     "build:widget": "pnpm -C apps/web build:widget",
     "mcp:dev": "pnpm -C apps/mcp dev",
     "mcp:start": "pnpm -C apps/mcp start",
     "storybook:dev": "pnpm -C apps/storybook dev",
-    "storybook:build": "pnpm -C apps/storybook build"
+    "storybook:build": "pnpm -C apps/storybook build",
+    "test:embed": "node ./apps/mcp/scripts/smoke.mjs",
+    "lint:compliance": "node ./scripts/compliance.mjs"
   },
   "devDependencies": {
     "@storybook/addon-vitest": "^10.1.10",
     "vitest": "^4.0.16",
     "playwright": "^1.57.0",
     "@vitest/browser-playwright": "^4.0.16",
-    "@vitest/coverage-v8": "^4.0.16"
+    "@vitest/coverage-v8": "^4.0.16",
+    "concurrently": "^9.2.1"
   }
 }

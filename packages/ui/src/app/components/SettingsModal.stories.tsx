@@ -8,6 +8,11 @@ const meta: Meta<typeof SettingsModal> = {
   parameters: {
     layout: "fullscreen",
   },
+  render: (args) => (
+    <div className="h-screen bg-[var(--foundation-bg-dark-1)]">
+      <SettingsModal {...args} />
+    </div>
+  ),
 };
 
 export default meta;
@@ -15,9 +20,8 @@ export default meta;
 type Story = StoryObj<typeof SettingsModal>;
 
 export const Default: Story = {
-  render: () => (
-    <div className="h-screen bg-[#0D0D0D]">
-      <SettingsModal isOpen={true} onClose={() => {}} />
-    </div>
-  ),
+  args: {
+    isOpen: true,
+    onClose: () => {},
+  },
 };

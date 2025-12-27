@@ -1,0 +1,12 @@
+{
+  "name": "@chatui/tokens",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./foundations.css": "./src/foundations.css",
+    "./tokens.css": "./src/tokens.css",
+    "./tailwind.preset": "./tailwind.preset.ts"
+  }
+}

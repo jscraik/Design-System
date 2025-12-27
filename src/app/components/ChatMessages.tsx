@@ -37,10 +37,10 @@ export function ChatMessages() {
           <div key={index} className="flex gap-4 group relative">
             <div className="flex-1 max-w-3xl flex items-start gap-2">
               <div
-                className={`text-[15px] leading-[24px] tracking-[-0.3px] font-normal rounded-2xl px-4 py-3 relative flex-1 ${
+                className={`text-[15px] leading-[24px] tracking-[-0.3px] font-normal rounded-[18px] px-4 py-3 relative flex-1 shadow-sm ${
                   message.role === 'user' 
-                    ? 'bg-[#2f7a4f] text-white' 
-                    : 'bg-[#2f2f2f] text-white/90'
+                    ? 'bg-[#40C977] text-white'
+                    : 'bg-[#2f2f2f] text-[#CDCDCD]'
                 }`}
               >
                 {message.content}
@@ -49,14 +49,14 @@ export function ChatMessages() {
                 <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={() => navigator.clipboard.writeText(message.content)}
-                    className="p-1 rounded-lg hover:bg-white/10 text-white/60 hover:text-white transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-white/10 text-[#AFAFAF] hover:text-white transition-colors"
                     title="Copy"
                   >
                     <Copy className="size-3.5" />
                   </button>
                   <button
                     onClick={() => console.log('Edit message:', message.id)}
-                    className="p-1 rounded-lg hover:bg-white/10 text-white/60 hover:text-white transition-colors"
+                    className="p-1.5 rounded-lg hover:bg-white/10 text-[#AFAFAF] hover:text-white transition-colors"
                     title="Edit"
                   >
                     <Pencil className="size-3.5" />

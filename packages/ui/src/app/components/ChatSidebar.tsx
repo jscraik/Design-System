@@ -1,12 +1,23 @@
 import { useState } from "react";
+
+import { Popover } from "../../vendor/appsSdkUi";
 import {
-  IconSearch,
-  IconChevronRightMd,
-  IconDotsHorizontal,
-  IconSettings,
-  IconCloseBold,
+  IconArchive,
   IconChat,
+  IconChevronRightMd,
+  IconCloseBold,
+  IconCode,
+  IconDotsHorizontal,
   IconFolder,
+  IconGrid3x3,
+  IconImage,
+  IconRadio,
+  IconSearch,
+  IconSettings,
+  IconSidebar,
+  Sparkles,
+} from "../../icons";
+import {
   IconBarChart,
   IconBook,
   IconCompose,
@@ -29,30 +40,24 @@ interface ChatSidebarProps {
   onProjectSelect?: (project: SidebarItem) => void;
 }
 
-const quickActions: SidebarItem[] = [
-  { id: "chatgpt", label: "ChatGPT", icon: <IconChat className="size-4" /> },
-  { id: "gpts", label: "GPTs", icon: <IconChevronRightMd className="size-4" /> },
-  { id: "new-project", label: "New project", icon: <IconFolder className="size-4" /> },
-];
-
 const projects: SidebarItem[] = [
   {
     id: "apps-sdk",
     label: "Apps SDK Designer",
     icon: <IconWriting className="size-4" />,
-    color: "text-[#BA8FF7]",
+    color: "text-[var(--foundation-accent-blue)]",
   },
   {
     id: "dadmode",
     label: "DADMODE",
     icon: <IconBarChart className="size-4" />,
-    color: "text-[#40C977]",
+    color: "text-[var(--foundation-accent-green)]",
   },
   {
     id: "peer",
     label: "PEER Framework",
     icon: <IconFolder className="size-4" />,
-    color: "text-[#FF9E6C]",
+    color: "text-[var(--foundation-accent-orange)]",
   },
 ];
 
@@ -87,19 +92,24 @@ const categoryIcons = {
 };
 
 const categoryColors = {
-  Investing: "bg-[#40C977]/20 text-[#40C977] border-[#40C977]/30",
-  Homework: "bg-[#48AAFF]/20 text-[#48AAFF] border-[#48AAFF]/30",
-  Writing: "bg-[#BA8FF7]/20 text-[#BA8FF7] border-[#BA8FF7]/30",
-  Coding: "bg-[#FF9E6C]/20 text-[#FF9E6C] border-[#FF9E6C]/30",
-  Research: "bg-[#FF8FB3]/20 text-[#FF8FB3] border-[#FF8FB3]/30",
+  Investing:
+    "bg-[var(--foundation-accent-green)]/20 text-[var(--foundation-accent-green)] border-[var(--foundation-accent-green)]/30",
+  Homework:
+    "bg-[var(--foundation-accent-blue)]/20 text-[var(--foundation-accent-blue)] border-[var(--foundation-accent-blue)]/30",
+  Writing:
+    "bg-[var(--foundation-accent-orange)]/20 text-[var(--foundation-accent-orange)] border-[var(--foundation-accent-orange)]/30",
+  Coding:
+    "bg-[var(--foundation-accent-red)]/20 text-[var(--foundation-accent-red)] border-[var(--foundation-accent-red)]/30",
+  Research:
+    "bg-[var(--foundation-accent-blue)]/20 text-[var(--foundation-accent-blue)] border-[var(--foundation-accent-blue)]/30",
 };
 
 const categoryIconColors = {
-  Investing: "text-[#40C977]",
-  Homework: "text-[#48AAFF]",
-  Writing: "text-[#BA8FF7]",
-  Coding: "text-[#FF9E6C]",
-  Research: "text-[#FF8FB3]",
+  Investing: "text-[var(--foundation-accent-green)]",
+  Homework: "text-[var(--foundation-accent-blue)]",
+  Writing: "text-[var(--foundation-accent-orange)]",
+  Coding: "text-[var(--foundation-accent-red)]",
+  Research: "text-[var(--foundation-accent-blue)]",
 };
 
 const projectIconMap: { [key: string]: React.ReactNode } = {
@@ -111,315 +121,8 @@ const projectIconMap: { [key: string]: React.ReactNode } = {
   compose: <IconCompose className="size-4" />,
 };
 
-const getProjectIcon = (iconId: string) => projectIconMap[iconId] || <IconFolder className="size-4" />;
-
-function SidebarHeader({
-  searchQuery,
-  onSearchChange,
-}: {
-  searchQuery: string;
-  onSearchChange: (value: string) => void;
-}) {
-  return (
-    <div className="p-3 space-y-3">
-      <div className="flex items-center gap-2 mb-2">
-        <div className="flex gap-2">
-          <div className="size-3 rounded-full bg-[#FF5F56]" />
-          <div className="size-3 rounded-full bg-[#FFBD2E]" />
-          <div className="size-3 rounded-full bg-[#27C93F]" />
-        </div>
-      </div>
-      <div className="relative">
-        <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-white/40" />
-        <input
-          type="text"
-          placeholder="Search"
-          value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-3 py-1.5 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-white/20 font-normal leading-[20px] tracking-[-0.3px]"
-        />
-      </div>
-    </div>
-  );
-}
-
-function QuickActionsSection({
-  selectedAction,
-  projectsData,
-  projectsExpanded,
-  onNewChat,
-  onOpenProjectModal,
-  onProjectSelect,
-  onProjectIconClick,
-  onToggleProjectsExpanded,
-}: {
-  selectedAction: string;
-  projectsData: SidebarItem[];
-  projectsExpanded: boolean;
-  onNewChat: () => void;
-  onOpenProjectModal: () => void;
-  onProjectSelect: (project: SidebarItem) => void;
-  onProjectIconClick: (project: SidebarItem) => void;
-  onToggleProjectsExpanded: () => void;
-}) {
-  return (
-    <div className="px-3 space-y-0.5">
-      <button
-        onClick={onNewChat}
-        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-left ${
-          selectedAction === "chatgpt" ? "bg-white/10" : "hover:bg-white/5"
-        }`}
-      >
-        <IconChat className="size-4 flex-shrink-0" />
-        <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px]">ChatGPT</span>
-      </button>
-      <button
-        onClick={onOpenProjectModal}
-        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-left ${
-          selectedAction === "new-project" ? "bg-white/10" : "hover:bg-white/5"
-        }`}
-      >
-        <IconFolder className="size-4 flex-shrink-0" />
-        <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px]">
-          New project
-        </span>
-      </button>
-      {(projectsExpanded ? projectsData : projectsData.slice(0, 3)).map((project) => (
-        <button
-          key={project.id}
-          onClick={() => onProjectSelect(project)}
-          className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-left ${
-            selectedAction === project.id ? "bg-white/10" : "hover:bg-white/5"
-          }`}
-        >
-          <div
-            onClick={(e) => {
-              e.stopPropagation();
-              onProjectIconClick(project);
-            }}
-            className={`flex-shrink-0 ${project.color} hover:opacity-70 transition-opacity cursor-pointer`}
-          >
-            {project.icon}
-          </div>
-          <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px]">
-            {project.label}
-          </span>
-        </button>
-      ))}
-      {projectsData.length > 3 && (
-        <button
-          onClick={onToggleProjectsExpanded}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5 transition-colors text-left"
-        >
-          <IconDotsHorizontal className="size-4 flex-shrink-0" />
-          <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px]">
-            {projectsExpanded ? "See less" : "See more"}
-          </span>
-        </button>
-      )}
-    </div>
-  );
-}
-
-function ChatHistorySection({ searchQuery }: { searchQuery: string }) {
-  return (
-    <div className="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
-      <div className="px-3 pb-2 text-[11px] text-white/40 font-medium tracking-wide uppercase">
-        Recent
-      </div>
-      {chatHistory
-        .filter((chat) => chat.toLowerCase().includes(searchQuery.toLowerCase()))
-        .map((chat, index) => (
-          <button
-            key={index}
-            className="w-full text-left px-3 py-2 text-[14px] text-white/70 hover:bg-white/5 hover:text-white rounded-lg transition-colors line-clamp-1 font-normal leading-[20px] tracking-[-0.3px]"
-          >
-            {chat}
-          </button>
-        ))}
-    </div>
-  );
-}
-
-function SidebarFooterSlot({ sidebarFooter }: { sidebarFooter?: React.ReactNode }) {
-  if (!sidebarFooter) return null;
-  return (
-    <div className="mt-auto border-t border-white/10 p-3">
-      {sidebarFooter}
-    </div>
-  );
-}
-
-function UserMenuSection({
-  showUserMenu,
-  onToggleUserMenu,
-  onOpenSettings,
-}: {
-  showUserMenu: boolean;
-  onToggleUserMenu: () => void;
-  onOpenSettings: () => void;
-}) {
-  return (
-    <div className="p-3 border-t border-white/10 relative">
-      <button
-        onClick={onToggleUserMenu}
-        className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5 transition-colors"
-      >
-        <div className="size-7 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center flex-shrink-0">
-          <IconCloseBold className="size-4" />
-        </div>
-        <span className="text-[14px] truncate font-normal leading-[20px] tracking-[-0.3px]">
-          Jamie Scott Craik
-        </span>
-      </button>
-      {showUserMenu && (
-        <div className="absolute bottom-full left-3 right-3 mb-2 bg-[#171717] border border-white/20 rounded-xl shadow-2xl py-1 z-50">
-          <div className="px-3 py-2.5 border-b border-white/10">
-            <div className="flex items-center gap-2 text-[13px]">
-              <div className="size-2 rounded-full bg-green-500" />
-              <span className="text-white/70 font-normal">PRO/Veteran/Lik</span>
-            </div>
-          </div>
-          <button className="w-full text-left px-3 py-2.5 hover:bg-white/5 transition-colors flex items-center gap-2">
-            <svg
-              className="size-4 text-white/70"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-            <span className="text-[14px] text-white font-normal leading-[20px] tracking-[-0.3px]">
-              Personal account
-            </span>
-          </button>
-          <button
-            onClick={onOpenSettings}
-            className="w-full text-left px-3 py-2.5 hover:bg-white/5 transition-colors flex items-center gap-2"
-          >
-            <IconSettings className="size-4 text-white/70" />
-            <span className="text-[14px] text-white font-normal leading-[20px] tracking-[-0.3px]">
-              Settings
-            </span>
-          </button>
-          <div className="my-1 border-t border-white/10" />
-          <button className="w-full text-left px-3 py-2.5 hover:bg-white/5 transition-colors">
-            <span className="text-[14px] text-white font-normal leading-[20px] tracking-[-0.3px]">
-              Log Out
-            </span>
-          </button>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ProjectModal({
-  projectName,
-  selectedCategories,
-  newProjectIcon,
-  newProjectColor,
-  onClose,
-  onOpenIconPicker,
-  onProjectNameChange,
-  onToggleCategory,
-  onCreateProject,
-  onOpenMoreOptions,
-}: {
-  projectName: string;
-  selectedCategories: string[];
-  newProjectIcon: string;
-  newProjectColor: string;
-  onClose: () => void;
-  onOpenIconPicker: () => void;
-  onProjectNameChange: (value: string) => void;
-  onToggleCategory: (category: string) => void;
-  onCreateProject: () => void;
-  onOpenMoreOptions: () => void;
-}) {
-  return (
-    <div
-      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-start justify-center pt-32 z-50"
-      onClick={onClose}
-    >
-      <div
-        className="bg-[#171717] border border-white/20 text-white p-0 rounded-[12px] w-[420px] shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="px-6 pt-6 pb-5">
-          <p className="text-[13px] text-[#ababab] leading-[18px] tracking-[-0.32px] font-normal text-center">
-            Projects give ChatGPT shared context
-            <br />
-            across chats and files, all in one place.
-          </p>
-        </div>
-        <div className="px-6 pb-6">
-          <div className="relative mb-5">
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                onOpenIconPicker();
-              }}
-              className={`absolute left-3 top-1/2 -translate-y-1/2 hover:opacity-70 transition-opacity ${newProjectColor}`}
-            >
-              {getProjectIcon(newProjectIcon)}
-            </button>
-            <input
-              type="text"
-              placeholder="Project Name"
-              value={projectName}
-              onChange={(e) => onProjectNameChange(e.target.value)}
-              className="w-full bg-[#404040] border border-transparent rounded-lg pl-10 pr-3 py-3 text-[14px] text-white placeholder:text-white/60 focus:outline-none focus:ring-1 focus:ring-white/20 transition-all font-normal leading-[20px] tracking-[-0.3px]"
-            />
-          </div>
-          <div className="mb-6">
-            <div
-              className="flex gap-2 overflow-x-auto pb-2 -mx-6 px-6 scrollbar-hide"
-              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-            >
-              {categories.map((category) => {
-                const isSelected = selectedCategories.includes(category);
-
-                return (
-                  <button
-                    key={category}
-                    onClick={() => onToggleCategory(category)}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[14px] border transition-all whitespace-nowrap flex-shrink-0 font-normal leading-[20px] tracking-[-0.3px] ${
-                      isSelected
-                        ? categoryColors[category as keyof typeof categoryColors]
-                        : "bg-[#404040] text-white border-white/20 hover:bg-[#4a4a4a]"
-                    }`}
-                  >
-                    <span className={categoryIconColors[category as keyof typeof categoryIconColors]}>
-                      {categoryIcons[category as keyof typeof categoryIcons]}
-                    </span>
-                    <span>{category}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-          <button
-            onClick={onCreateProject}
-            disabled={!projectName.trim()}
-            className="w-full bg-[#2f7a4f] hover:bg-[#2f7a4f]/80 disabled:bg-[#404040] disabled:text-white/40 disabled:cursor-not-allowed text-white py-3 rounded-lg transition-all text-[14px] font-normal leading-[20px] tracking-[-0.3px]"
-          >
-            Create project
-          </button>
-          <button
-            onClick={onOpenMoreOptions}
-            className="w-full bg-[#404040] hover:bg-[#4a4a4a] text-white py-3 rounded-lg mt-2 transition-colors text-[14px] font-normal leading-[20px] tracking-[-0.3px]"
-          >
-            More options
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
+const getProjectIcon = (iconId: string) =>
+  projectIconMap[iconId] || <IconFolder className="size-4" />;
 
 function ProjectSettingsModal({
   memoryOption,
@@ -434,76 +137,56 @@ function ProjectSettingsModal({
 }) {
   return (
     <div
-      className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100]"
+      className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[100]"
       onClick={onClose}
     >
       <div
-        className="bg-[#171717] border border-white/20 text-white rounded-[16px] w-[380px] shadow-2xl"
+        className="bg-[var(--foundation-bg-dark-2)] border border-white/10 text-white rounded-2xl w-[380px] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="px-6 pt-5 pb-4">
-          <h2 className="text-[18px] font-semibold text-white leading-[24px] tracking-[-0.32px]">
+        <div className="px-6 pt-6 pb-5">
+          <h2 className="text-[16px] font-semibold text-white leading-[22px] tracking-[-0.32px]">
             Project settings
           </h2>
         </div>
         <div className="px-6 pb-6">
           <div className="mb-6">
-            <h3 className="text-[14px] text-white/70 mb-3 font-normal leading-[20px] tracking-[-0.3px]">
+            <h3 className="text-[13px] text-white/50 mb-3 font-normal leading-[18px] tracking-[-0.3px]">
               Memory
             </h3>
             <button
               onClick={() => onSelectMemoryOption("default")}
-              className={`w-full text-left p-4 rounded-xl mb-2 border transition-all ${
+              className={`w-full text-left p-4 rounded-xl mb-3 border-2 transition-all ${
                 memoryOption === "default"
-                  ? "bg-[#2f7a4f]/10 border-[#2f7a4f]"
-                  : "bg-[#404040]/40 border-white/10 hover:bg-[#404040]/60"
+                  ? "bg-[var(--foundation-accent-green)]/20 border-[var(--foundation-accent-green)]/40"
+                  : "bg-transparent border-white/10 hover:border-white/20"
               }`}
             >
-              <div className="flex items-start justify-between mb-1">
-                <span className="text-[14px] font-medium text-white leading-[20px] tracking-[-0.3px]">
+              <div className="flex items-start justify-between mb-2">
+                <span className="text-[14px] font-semibold text-white leading-[20px] tracking-[-0.3px]">
                   Default
                 </span>
-                <div
-                  className={`size-4 rounded-full border-2 flex items-center justify-center mt-0.5 ${
-                    memoryOption === "default" ? "border-[#2f7a4f]" : "border-white/30"
-                  }`}
-                >
-                  {memoryOption === "default" && (
-                    <div className="size-2 rounded-full bg-[#2f7a4f]" />
-                  )}
-                </div>
               </div>
-              <p className="text-[13px] text-white/60 leading-[18px] tracking-[-0.32px] font-normal">
+              <p className="text-[13px] text-white/50 leading-[18px] tracking-[-0.32px] font-normal">
                 Project can access memories from outside chats, and vice versa.
               </p>
             </button>
             <button
               onClick={() => onSelectMemoryOption("project-only")}
-              className={`w-full text-left p-4 rounded-xl border transition-all ${
+              className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
                 memoryOption === "project-only"
-                  ? "bg-[#2f7a4f]/10 border-[#2f7a4f]"
-                  : "bg-[#404040]/40 border-white/10 hover:bg-[#404040]/60"
+                  ? "bg-[var(--foundation-accent-green)]/20 border-[var(--foundation-accent-green)]/40"
+                  : "bg-transparent border-white/10 hover:border-white/20"
               }`}
             >
-              <div className="flex items-start justify-between mb-1">
-                <span className="text-[14px] font-medium text-white leading-[20px] tracking-[-0.3px]">
+              <div className="flex items-start justify-between mb-2">
+                <span className="text-[14px] font-semibold text-white leading-[20px] tracking-[-0.3px]">
                   Project-only
                 </span>
-                <div
-                  className={`size-4 rounded-full border-2 flex items-center justify-center mt-0.5 ${
-                    memoryOption === "project-only"
-                      ? "border-[#2f7a4f]"
-                      : "border-white/30"
-                  }`}
-                >
-                  {memoryOption === "project-only" && (
-                    <div className="size-2 rounded-full bg-[#2f7a4f]" />
-                  )}
-                </div>
               </div>
-              <p className="text-[13px] text-white/60 leading-[18px] tracking-[-0.32px] font-normal">
-                Project can only access its own memories. Its memories are hidden from outside
-                chats.
+              <p className="text-[13px] text-white/50 leading-[18px] tracking-[-0.32px] font-normal">
+                Project can only access its own memories. Its memories are hidden
+                from outside chats.
               </p>
             </button>
           </div>
@@ -517,7 +200,7 @@ function ProjectSettingsModal({
           </button>
           <button
             onClick={onDone}
-            className="px-4 py-2 text-[14px] bg-white text-black hover:bg-white/90 rounded-lg transition-colors font-medium leading-[20px] tracking-[-0.3px]"
+            className="px-4 py-2 text-[14px] bg-white text-[var(--foundation-text-light-primary)] hover:bg-white/90 rounded-lg transition-colors font-semibold leading-[20px] tracking-[-0.3px]"
           >
             Done
           </button>
@@ -527,54 +210,64 @@ function ProjectSettingsModal({
   );
 }
 
-export function ChatSidebar({ isOpen, onToggle, onProjectSelect }: ChatSidebarProps) {
+export function ChatSidebar({
+  isOpen,
+  onToggle,
+  onProjectSelect,
+}: ChatSidebarProps) {
   const { sidebarFooter } = useChatUISlots();
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedAction, setSelectedAction] = useState("chatgpt");
-  const [showProjectModal, setShowProjectModal] = useState(false);
   const [projectName, setProjectName] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [showIconPicker, setShowIconPicker] = useState(false);
-  const [selectedProjectForIcon, setSelectedProjectForIcon] = useState<SidebarItem | null>(null);
+  const [selectedProjectForIcon, setSelectedProjectForIcon] =
+    useState<SidebarItem | null>(null);
   const [projectsData, setProjectsData] = useState<SidebarItem[]>(projects);
   const [newProjectIcon, setNewProjectIcon] = useState("folder");
   const [newProjectColor, setNewProjectColor] = useState("text-white/60");
   const [showMoreOptions, setShowMoreOptions] = useState(false);
-  const [memoryOption, setMemoryOption] = useState<"default" | "project-only">("default");
-  const [projectsExpanded, setProjectsExpanded] = useState(false);
+  const [memoryOption, setMemoryOption] =
+    useState<"default" | "project-only">("default");
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [gptsExpanded, setGptsExpanded] = useState(false);
+  const [projectsExpanded, setProjectsExpanded] = useState(true);
+  const [groupChatsExpanded, setGroupChatsExpanded] = useState(false);
+  const [yourChatsExpanded, setYourChatsExpanded] = useState(true);
+  const [hoveredProject, setHoveredProject] = useState<string | null>(null);
 
-  const handleNewChat = (actionId: string) => {
-    setSelectedAction(actionId);
-    console.log("Starting new chat with:", actionId);
+  const handleNewChat = () => {
+    console.log("Starting new chat");
   };
 
   const toggleCategory = (category: string) => {
     setSelectedCategories((prev) => {
-      const newCategories = prev.includes(category) 
+      const newCategories = prev.includes(category)
         ? prev.filter((c) => c !== category)
         : [...prev, category];
-
-      // Update project name based on selected categories
       setProjectName(newCategories.join(" "));
-
       return newCategories;
     });
   };
 
   const handleCreateProject = () => {
-    console.log("Creating project:", { name: projectName, categories: selectedCategories });
+    console.log("Creating project:", {
+      name: projectName,
+      categories: selectedCategories,
+    });
     setProjectName("");
     setSelectedCategories([]);
-    setShowProjectModal(false);
   };
 
   const handleIconChange = (iconId: string, color: string) => {
     if (selectedProjectForIcon) {
       const newIcon = getProjectIcon(iconId);
       const updatedProjects = projectsData.map((project) =>
-        project.id === selectedProjectForIcon.id ? { ...project, icon: newIcon, color } : project
+        project.id === selectedProjectForIcon.id
+          ? { ...project, icon: newIcon, color }
+          : project,
       );
       setProjectsData(updatedProjects);
     }
@@ -595,58 +288,579 @@ export function ChatSidebar({ isOpen, onToggle, onProjectSelect }: ChatSidebarPr
     }
   };
 
+  if (!isOpen) {
+    return null;
+  }
+
   return (
     <>
       <div
-        className={`bg-[#212121] text-white flex flex-col h-full border-r border-white/10 transition-all duration-300 ease-in-out ${
-          isOpen ? "w-64" : "w-0 overflow-hidden"
+        className={`bg-[var(--foundation-bg-dark-1)] text-white flex flex-col h-full border-r border-white/10 transition-all duration-300 ${
+          isCollapsed ? "w-[60px]" : "w-64"
         }`}
       >
-        <SidebarHeader searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+        <div
+          className={`flex items-center px-3 py-3 ${
+            isCollapsed ? "justify-center" : "justify-between"
+          }`}
+        >
+          {!isCollapsed && (
+            <div className="size-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center flex-shrink-0">
+              <IconCloseBold className="size-4" />
+            </div>
+          )}
+          <button
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="size-8 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors"
+            title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            <IconSidebar className="size-5 text-[var(--foundation-text-dark-tertiary)]" />
+          </button>
+        </div>
 
-        <QuickActionsSection
-          selectedAction={selectedAction}
-          projectsData={projectsData}
-          projectsExpanded={projectsExpanded}
-          onNewChat={() => handleNewChat("chatgpt")}
-          onOpenProjectModal={() => setShowProjectModal(true)}
-          onProjectSelect={handleProjectSelect}
-          onProjectIconClick={(project) => {
-            setSelectedProjectForIcon(project);
-            setShowIconPicker(true);
-          }}
-          onToggleProjectsExpanded={() => setProjectsExpanded(!projectsExpanded)}
-        />
+        <div className="px-2 pb-1">
+          <button
+            onClick={handleNewChat}
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5 ${
+              isCollapsed ? "justify-center" : ""
+            }`}
+            title={isCollapsed ? "New chat" : ""}
+          >
+            <IconCompose className="size-4 flex-shrink-0 text-white" />
+            {!isCollapsed && (
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                New chat
+              </span>
+            )}
+          </button>
+        </div>
 
-        <div className="mx-3 my-2 border-t border-white/10" />
+        <div className="px-2 pb-1">
+          <button
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5 ${
+              isCollapsed ? "justify-center" : ""
+            }`}
+            title={isCollapsed ? "Search chats" : ""}
+          >
+            <IconSearch className="size-4 flex-shrink-0 text-white" />
+            {!isCollapsed && (
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                Search chats
+              </span>
+            )}
+          </button>
+        </div>
 
-        <ChatHistorySection searchQuery={searchQuery} />
-
-        <SidebarFooterSlot sidebarFooter={sidebarFooter} />
-
-        <UserMenuSection
-          showUserMenu={showUserMenu}
-          onToggleUserMenu={() => setShowUserMenu(!showUserMenu)}
-          onOpenSettings={() => {
-            setShowUserMenu(false);
-            setShowSettingsModal(true);
-          }}
-        />
-
-        {showProjectModal && (
-          <ProjectModal
-            projectName={projectName}
-            selectedCategories={selectedCategories}
-            newProjectIcon={newProjectIcon}
-            newProjectColor={newProjectColor}
-            onClose={() => setShowProjectModal(false)}
-            onOpenIconPicker={() => setShowIconPicker(true)}
-            onProjectNameChange={setProjectName}
-            onToggleCategory={toggleCategory}
-            onCreateProject={handleCreateProject}
-            onOpenMoreOptions={() => setShowMoreOptions(true)}
-          />
+        {!isCollapsed && (
+          <div className="px-2 pb-1">
+            <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5">
+              <Sparkles className="size-4 flex-shrink-0 text-white" />
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                Your Year With ChatGPT
+              </span>
+            </button>
+          </div>
         )}
+
+        <div className="px-2 pb-1">
+          <button
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5 ${
+              isCollapsed ? "justify-center" : ""
+            }`}
+            title={isCollapsed ? "Pulse" : ""}
+          >
+            <IconRadio className="size-4 flex-shrink-0 text-white" />
+            {!isCollapsed && (
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                Pulse
+              </span>
+            )}
+          </button>
+        </div>
+
+        <div className="px-2 pb-1">
+          <button
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5 ${
+              isCollapsed ? "justify-center" : ""
+            }`}
+            title={isCollapsed ? "Images" : ""}
+          >
+            <IconImage className="size-4 flex-shrink-0 text-white" />
+            {!isCollapsed && (
+              <>
+                <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                  Images
+                </span>
+                <span className="ml-auto text-[10px] font-semibold leading-[14px] tracking-[0.5px] px-1.5 py-0.5 bg-white/10 rounded text-white uppercase">
+                  NEW
+                </span>
+              </>
+            )}
+          </button>
+        </div>
+
+        {!isCollapsed && (
+          <div className="px-2 pb-1">
+            <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5">
+              <IconArchive className="size-4 flex-shrink-0 text-white" />
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                Archived chats
+              </span>
+            </button>
+          </div>
+        )}
+
+        <div className="flex-1 overflow-y-auto overflow-x-hidden">
+          {!isCollapsed && (
+            <div className="px-2 pb-1">
+              <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5">
+                <IconGrid3x3 className="size-4 flex-shrink-0 text-white" />
+                <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                  Apps
+                </span>
+              </button>
+            </div>
+          )}
+
+          {!isCollapsed && (
+            <div className="px-2 pb-1">
+              <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5">
+                <IconCode className="size-4 flex-shrink-0 text-white" />
+                <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                  Codex
+                </span>
+              </button>
+            </div>
+          )}
+
+          {!isCollapsed && (
+            <div className="px-2 pb-1 pt-2">
+              <button
+                onClick={() => setGptsExpanded(!gptsExpanded)}
+                className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors hover:bg-white/5"
+              >
+                <span className="text-[13px] font-normal leading-[18px] tracking-[-0.3px] text-[var(--foundation-text-dark-tertiary)]">
+                  GPTs
+                </span>
+                <IconChevronRightMd
+                  className={`size-3 text-[var(--foundation-text-dark-tertiary)] transition-transform ${
+                    gptsExpanded ? "rotate-90" : ""
+                  }`}
+                />
+              </button>
+            </div>
+          )}
+
+          {!isCollapsed && (
+            <div className="px-2 pb-1">
+              <button
+                onClick={() => setProjectsExpanded(!projectsExpanded)}
+                className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors hover:bg-white/5"
+              >
+                <span className="text-[13px] font-normal leading-[18px] tracking-[-0.3px] text-[var(--foundation-text-dark-tertiary)]">
+                  Projects
+                </span>
+                <IconChevronRightMd
+                  className={`size-3 text-[var(--foundation-text-dark-tertiary)] transition-transform ${
+                    projectsExpanded ? "rotate-90" : ""
+                  }`}
+                />
+              </button>
+            </div>
+          )}
+
+          {projectsExpanded && !isCollapsed && (
+            <>
+              <div className="px-2 pb-1">
+                <Popover>
+                  <Popover.Trigger>
+                    <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5">
+                      <IconFolder className="size-4 flex-shrink-0 text-white" />
+                      <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                        New project
+                      </span>
+                    </button>
+                  </Popover.Trigger>
+                  <Popover.Content
+                    side="right"
+                    align="start"
+                    sideOffset={12}
+                    className="z-[60] w-[420px] rounded-2xl border border-white/10 bg-[var(--foundation-bg-dark-2)] shadow-2xl outline-none"
+                  >
+                    <div className="px-6 pt-6 pb-5">
+                      <p className="text-[13px] text-white/50 leading-[18px] tracking-[-0.32px] font-normal text-center">
+                        Projects give ChatGPT shared context
+                        <br />
+                        across chats and files, all in one place.
+                      </p>
+                    </div>
+                    <div className="px-6 pb-6">
+                      <div className="relative mb-5">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setShowIconPicker(true);
+                          }}
+                          className={`absolute left-3 top-1/2 -translate-y-1/2 hover:opacity-70 transition-opacity ${newProjectColor}`}
+                        >
+                          {getProjectIcon(newProjectIcon)}
+                        </button>
+                        <input
+                          type="text"
+                          placeholder="Project Name"
+                          value={projectName}
+                          onChange={(e) => setProjectName(e.target.value)}
+                          className="w-full bg-[var(--foundation-bg-dark-3)] border border-white/10 rounded-lg pl-10 pr-3 py-3 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-white/20 transition-all font-normal leading-[20px] tracking-[-0.3px]"
+                        />
+                      </div>
+                      <div className="mb-6">
+                        <div
+                          className="flex gap-2 overflow-x-auto pb-2 -mx-6 px-6 scrollbar-hide"
+                          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+                        >
+                          {categories.map((category) => {
+                            const isSelected =
+                              selectedCategories.includes(category);
+                            return (
+                              <button
+                                key={category}
+                                onClick={() => toggleCategory(category)}
+                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[14px] border transition-all whitespace-nowrap flex-shrink-0 font-normal leading-[20px] tracking-[-0.3px] ${
+                                  isSelected
+                                    ? categoryColors[
+                                        category as keyof typeof categoryColors
+                                      ]
+                                    : "bg-[var(--foundation-bg-dark-3)] text-white/60 border-white/10 hover:bg-[var(--foundation-bg-dark-3)]/80"
+                                }`}
+                              >
+                                <span
+                                  className={
+                                    categoryIconColors[
+                                      category as keyof typeof categoryIconColors
+                                    ]
+                                  }
+                                >
+                                  {categoryIcons[
+                                    category as keyof typeof categoryIcons
+                                  ]}
+                                </span>
+                                <span>{category}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                      <button
+                        onClick={handleCreateProject}
+                        disabled={!projectName.trim()}
+                        className="w-full bg-[var(--foundation-accent-green)] hover:bg-[var(--foundation-accent-green)]/80 disabled:bg-[var(--foundation-bg-dark-3)] disabled:text-white/30 disabled:cursor-not-allowed text-white py-3 rounded-lg transition-all text-[14px] font-normal leading-[20px] tracking-[-0.3px]"
+                      >
+                        Create project
+                      </button>
+                      <button
+                        onClick={() => setShowMoreOptions(true)}
+                        className="w-full bg-[var(--foundation-bg-dark-3)] hover:bg-[var(--foundation-bg-dark-3)]/80 text-white/70 py-3 rounded-lg mt-2 transition-colors text-[14px] font-normal leading-[20px] tracking-[-0.3px]"
+                      >
+                        More options
+                      </button>
+                    </div>
+                  </Popover.Content>
+                </Popover>
+              </div>
+
+              <div
+                className="px-2 pb-1 group"
+                onMouseEnter={() => setHoveredProject("apps-sdk-lib")}
+                onMouseLeave={() => setHoveredProject(null)}
+              >
+                <div className="relative">
+                  <button
+                    onClick={() =>
+                      handleProjectSelect({
+                        id: "apps-sdk-lib",
+                        label: "Apps SDK Library",
+                        icon: <IconCode className="size-4" />,
+                        color: "text-[var(--foundation-accent-green)]",
+                      })
+                    }
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5"
+                  >
+                    <IconCode className="size-4 flex-shrink-0 text-[var(--foundation-accent-green)]" />
+                    <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white text-left">
+                      Apps SDK Library
+                    </span>
+                  </button>
+                  {hoveredProject === "apps-sdk-lib" && (
+                    <button
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 hover:bg-white/10 rounded-md transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log("Project options");
+                      }}
+                    >
+                      <IconDotsHorizontal className="size-4 text-[var(--foundation-text-dark-tertiary)]" />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div
+                className="px-2 pb-1 group"
+                onMouseEnter={() => setHoveredProject("apps-sdk")}
+                onMouseLeave={() => setHoveredProject(null)}
+              >
+                <div className="relative">
+                  <button
+                    onClick={() => handleProjectSelect(projectsData[0])}
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5"
+                  >
+                    <IconWriting className="size-4 flex-shrink-0 text-[var(--foundation-accent-blue)]" />
+                    <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white text-left">
+                      Apps SDK Designer
+                    </span>
+                  </button>
+                  {hoveredProject === "apps-sdk" && (
+                    <button
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 hover:bg-white/10 rounded-md transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log("Project options");
+                      }}
+                    >
+                      <IconDotsHorizontal className="size-4 text-[var(--foundation-text-dark-tertiary)]" />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div
+                className="px-2 pb-1 group"
+                onMouseEnter={() => setHoveredProject("dadmode")}
+                onMouseLeave={() => setHoveredProject(null)}
+              >
+                <div className="relative">
+                  <button
+                    onClick={() => handleProjectSelect(projectsData[1])}
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5"
+                  >
+                    <IconBarChart className="size-4 flex-shrink-0 text-[var(--foundation-accent-green)]" />
+                    <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white text-left">
+                      DADMODE
+                    </span>
+                  </button>
+                  {hoveredProject === "dadmode" && (
+                    <button
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 hover:bg-white/10 rounded-md transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log("Project options");
+                      }}
+                    >
+                      <IconDotsHorizontal className="size-4 text-[var(--foundation-text-dark-tertiary)]" />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div
+                className="px-2 pb-1 group"
+                onMouseEnter={() => setHoveredProject("peer")}
+                onMouseLeave={() => setHoveredProject(null)}
+              >
+                <div className="relative">
+                  <button
+                    onClick={() => handleProjectSelect(projectsData[2])}
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5"
+                  >
+                    <IconFolder className="size-4 flex-shrink-0 text-[var(--foundation-accent-orange)]" />
+                    <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white text-left">
+                      PEER Framework
+                    </span>
+                  </button>
+                  {hoveredProject === "peer" && (
+                    <button
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 hover:bg-white/10 rounded-md transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log("Project options");
+                      }}
+                    >
+                      <IconDotsHorizontal className="size-4 text-[var(--foundation-text-dark-tertiary)]" />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div
+                className="px-2 pb-1 group"
+                onMouseEnter={() => setHoveredProject("lyra")}
+                onMouseLeave={() => setHoveredProject(null)}
+              >
+                <div className="relative">
+                  <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5">
+                    <IconFolder className="size-4 flex-shrink-0 text-[var(--foundation-accent-orange)]" />
+                    <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white text-left">
+                      Lyra Interactive
+                    </span>
+                  </button>
+                  {hoveredProject === "lyra" && (
+                    <button
+                      className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 hover:bg-white/10 rounded-md transition-colors"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        console.log("Project options");
+                      }}
+                    >
+                      <IconDotsHorizontal className="size-4 text-[var(--foundation-text-dark-tertiary)]" />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="px-2 pb-1">
+                <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5">
+                  <IconDotsHorizontal className="size-4 flex-shrink-0 text-white" />
+                  <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                    See more
+                  </span>
+                </button>
+              </div>
+            </>
+          )}
+
+          {!isCollapsed && (
+            <div className="px-2 pb-1 pt-2">
+              <button
+                onClick={() => setGroupChatsExpanded(!groupChatsExpanded)}
+                className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors hover:bg-white/5"
+              >
+                <span className="text-[13px] font-normal leading-[18px] tracking-[-0.3px] text-[var(--foundation-text-dark-tertiary)]">
+                  Group chats
+                </span>
+                <IconChevronRightMd
+                  className={`size-3 text-[var(--foundation-text-dark-tertiary)] transition-transform ${
+                    groupChatsExpanded ? "rotate-90" : ""
+                  }`}
+                />
+              </button>
+            </div>
+          )}
+
+          {groupChatsExpanded && !isCollapsed && (
+            <div className="px-2 pb-1">
+              <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5">
+                <div className="size-6 rounded-full bg-[var(--foundation-accent-red)] flex items-center justify-center flex-shrink-0">
+                  <IconChat className="size-3 text-white" />
+                </div>
+                <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                  Summarize chat exchange
+                </span>
+              </button>
+            </div>
+          )}
+
+          {!isCollapsed && (
+            <div className="px-2 pb-1 pt-2">
+              <button
+                onClick={() => setYourChatsExpanded(!yourChatsExpanded)}
+                className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg transition-colors hover:bg-white/5"
+              >
+                <span className="text-[13px] font-normal leading-[18px] tracking-[-0.3px] text-[var(--foundation-text-dark-tertiary)]">
+                  Your chats
+                </span>
+                <IconChevronRightMd
+                  className={`size-3 text-[var(--foundation-text-dark-tertiary)] transition-transform ${
+                    yourChatsExpanded ? "rotate-90" : ""
+                  }`}
+                />
+              </button>
+            </div>
+          )}
+
+          {yourChatsExpanded && !isCollapsed && (
+            <>
+              {chatHistory.slice(0, 5).map((chat) => (
+                <div key={chat} className="px-2 pb-1">
+                  <button className="w-full text-left px-3 py-2.5 rounded-lg transition-colors hover:bg-white/5">
+                    <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
+                      {chat}
+                    </span>
+                  </button>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
+
+        <div className="p-2 border-t border-white/10 relative">
+          <button
+            onClick={() => setShowUserMenu(!showUserMenu)}
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5 transition-colors ${
+              isCollapsed ? "justify-center" : ""
+            }`}
+            title={isCollapsed ? "Jamie Scott Craik" : ""}
+          >
+            <div className="size-7 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center flex-shrink-0">
+              <IconCloseBold className="size-4" />
+            </div>
+            {!isCollapsed && (
+              <div className="flex flex-col items-start flex-1 min-w-0">
+                <span className="text-[14px] truncate font-normal leading-[20px] tracking-[-0.3px] text-white">
+                  Jamie Scott Craik
+                </span>
+                <span className="text-[12px] font-normal leading-[16px] tracking-[-0.3px] text-[var(--foundation-text-dark-tertiary)]">
+                  Personal account
+                </span>
+              </div>
+            )}
+          </button>
+          {showUserMenu && !isCollapsed && (
+            <div className="absolute bottom-full left-3 right-3 mb-2 bg-[var(--foundation-bg-dark-2)] border border-white/20 rounded-xl shadow-2xl py-1 z-50">
+              <div className="px-3 py-2.5 border-b border-white/10">
+                <div className="flex items-center gap-2 text-[13px]">
+                  <div className="size-2 rounded-full bg-[var(--foundation-accent-green)]" />
+                  <span className="text-white/70 font-normal">
+                    PRO/Veteran/Lik
+                  </span>
+                </div>
+              </div>
+              <button className="w-full text-left px-3 py-2.5 hover:bg-white/5 transition-colors flex items-center gap-2">
+                <svg
+                  className="size-4 text-white/70"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <span className="text-[14px] text-white font-normal leading-[20px] tracking-[-0.3px]">
+                  Personal account
+                </span>
+              </button>
+              <button
+                onClick={() => {
+                  setShowUserMenu(false);
+                  setShowSettingsModal(true);
+                }}
+                className="w-full text-left px-3 py-2.5 hover:bg-white/5 transition-colors flex items-center gap-2"
+              >
+                <IconSettings className="size-4 text-white/70" />
+                <span className="text-[14px] text-white font-normal leading-[20px] tracking-[-0.3px]">
+                  Settings
+                </span>
+              </button>
+              <div className="my-1 border-t border-white/10" />
+              <button className="w-full text-left px-3 py-2.5 hover:bg-white/5 transition-colors">
+                <span className="text-[14px] text-white font-normal leading-[20px] tracking-[-0.3px]">
+                  Log Out
+                </span>
+              </button>
+            </div>
+          )}
+        </div>
 
         {showIconPicker && selectedProjectForIcon && (
           <IconPickerModal
@@ -693,6 +907,7 @@ export function ChatSidebar({ isOpen, onToggle, onProjectSelect }: ChatSidebarPr
           />
         )}
       </div>
+      {sidebarFooter}
     </>
   );
 }

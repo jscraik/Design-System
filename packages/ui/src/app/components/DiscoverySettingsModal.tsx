@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { X } from 'lucide-react';
+import { useState } from "react";
+import { IconX } from "../../icons";
 
 interface DiscoverySettingsModalProps {
   isOpen: boolean;
@@ -25,7 +25,7 @@ function SectionHeader({
       <p
         className={
           descriptionClassName ||
-          'text-[13px] font-normal leading-[18px] text-white/60 mb-3'
+          "text-[13px] font-normal leading-[18px] text-[var(--foundation-text-dark-tertiary)] mb-3"
         }
       >
         {description}
@@ -83,8 +83,8 @@ function SegmentedButtons<T extends string>({
           onClick={() => onChange(option.value)}
           className={`px-4 py-2 rounded-lg text-[13px] font-normal leading-[18px] transition-colors ${
             value === option.value
-              ? 'bg-[#4ade80] text-black'
-              : 'bg-[#2a2a2a] text-white/60 hover:text-white'
+              ? "bg-[var(--foundation-accent-green)] text-[var(--foundation-text-light-primary)]"
+              : "bg-[var(--foundation-bg-dark-2)] text-white/60 hover:text-white"
           }`}
         >
           {option.label}
@@ -123,7 +123,7 @@ function ToggleRow({
       <button
         onClick={onToggle}
         className={`relative w-11 h-6 rounded-full transition-colors flex-shrink-0 ${
-          checked ? 'bg-[#4ade80]' : 'bg-white/20'
+          checked ? "bg-[var(--foundation-accent-green)]" : "bg-white/20"
         }`}
       >
         <div
@@ -191,21 +191,21 @@ export function DiscoverySettingsModal({
     }
   };
 
-  const targetSizeBackground = `linear-gradient(to right, #4ade80 0%, #4ade80 ${(targetSize - 20) / 0.8}%, rgba(255,255,255,0.1) ${(targetSize - 20) / 0.8}%, rgba(255,255,255,0.1) 100%)`;
-  const autoPlanBackground = `linear-gradient(to right, #4ade80 0%, #4ade80 ${(autoPlanBudget - 20) / 0.8}%, rgba(255,255,255,0.1) ${(autoPlanBudget - 20) / 0.8}%, rgba(255,255,255,0.1) 100%)`;
+  const targetSizeBackground = `linear-gradient(to right, var(--foundation-accent-green) 0%, var(--foundation-accent-green) ${(targetSize - 20) / 0.8}%, rgba(255,255,255,0.1) ${(targetSize - 20) / 0.8}%, rgba(255,255,255,0.1) 100%)`;
+  const autoPlanBackground = `linear-gradient(to right, var(--foundation-accent-green) 0%, var(--foundation-accent-green) ${(autoPlanBudget - 20) / 0.8}%, rgba(255,255,255,0.1) ${(autoPlanBudget - 20) / 0.8}%, rgba(255,255,255,0.1) 100%)`;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/60" onClick={onClose} />
-      <div className="relative bg-[#1a1a1a] border border-white/10 rounded-xl w-[420px] max-h-[90vh] overflow-y-auto shadow-2xl">
+      <div className="relative bg-[var(--foundation-bg-dark-1)] border border-white/10 rounded-xl w-[420px] max-h-[90vh] overflow-y-auto shadow-2xl">
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
-          <h2 className="text-[16px] font-medium leading-[24px] text-white">
+          <h2 className="text-[16px] font-semibold leading-[24px] tracking-[-0.32px] text-white">
             Discovery Settings
           </h2>
           <div className="flex items-center gap-2">
             <button
               onClick={handleReset}
-              className="px-3 py-1.5 text-[13px] font-normal leading-[18px] text-[#4ade80] hover:bg-white/5 rounded-lg transition-colors flex items-center gap-1.5"
+              className="px-3 py-1.5 text-[13px] font-normal leading-[18px] text-[var(--foundation-accent-green)] hover:bg-white/5 rounded-lg transition-colors flex items-center gap-1.5"
             >
               <svg className="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -221,7 +221,7 @@ export function DiscoverySettingsModal({
               onClick={onClose}
               className="p-1 hover:bg-white/10 rounded-lg transition-colors"
             >
-              <X className="size-4 text-white/60" />
+              <IconX className="size-4 text-white/60" />
             </button>
           </div>
         </div>
@@ -252,7 +252,7 @@ export function DiscoverySettingsModal({
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-                <svg className="size-3.5 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="size-3.5 text-[var(--foundation-accent-orange)]" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
                 <span>Auto Plan Budget</span>
@@ -303,7 +303,7 @@ export function DiscoverySettingsModal({
             <div className="space-y-4">
               <ToggleRow
                 icon={
-                  <svg className="size-5 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="size-5 text-[var(--foundation-accent-blue)]" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M21 15c0-4.625-3.507-8.441-8-8.941V4h-2v2.059c-4.493.5-8 4.316-8 8.941v2l-2 2v1h22v-1l-2-2v-2zm-9 5c1.103 0 2-.897 2-2h-4c0 1.103.897 2 2 2z" />
                   </svg>
                 }
@@ -314,7 +314,7 @@ export function DiscoverySettingsModal({
               />
               <ToggleRow
                 icon={
-                  <svg className="size-5 text-[#4ade80]" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="size-5 text-[var(--foundation-accent-green)]" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M3 3h18v2H3V3zm0 16h18v2H3v-2zm0-8h18v2H3v-2z" />
                   </svg>
                 }
@@ -382,7 +382,7 @@ export function DiscoverySettingsModal({
             />
             <ToggleRow
               icon={
-                <svg className="size-5 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="size-5 text-[var(--foundation-accent-blue)]" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M21 15c0-4.625-3.507-8.441-8-8.941V4h-2v2.059c-4.493.5-8 4.316-8 8.941v2l-2 2v1h22v-1l-2-2v-2zm-9 5c1.103 0 2-.897 2-2h-4c0 1.103.897 2 2 2z" />
                 </svg>
               }
@@ -395,14 +395,14 @@ export function DiscoverySettingsModal({
         </div>
 
         <div className="border-t border-white/10 px-6 py-4 flex items-center justify-center">
-          <div className="flex items-center gap-2 bg-[#0d0d0d] border border-white/10 rounded-lg px-4 py-2">
-            <svg className="size-5 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+          <div className="flex items-center gap-2 bg-[var(--foundation-bg-dark-1)] border border-white/10 rounded-lg px-4 py-2">
+            <svg className="size-5 text-[var(--foundation-accent-blue)]" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
             </svg>
             <span className="text-[14px] font-medium leading-[20px] text-white">
               {targetSize}k
             </span>
-            <span className="text-[13px] font-normal leading-[18px] text-[#4ade80] capitalize">
+            <span className="text-[13px] font-normal leading-[18px] text-[var(--foundation-accent-green)] capitalize">
               {promptEnhancement}
             </span>
           </div>

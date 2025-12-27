@@ -1,45 +1,43 @@
 import { useState } from "react";
-import { IconX, IconChevronRightMd, IconChevronDownMd } from "./icons/ChatGPTIcons";
 import {
-  Mail,
-  Phone,
-  CreditCard,
-  ShoppingBag,
-  Sparkles,
-  Bell,
-  Grid3x3,
-  Shield,
-  Archive,
-  Globe,
-  Monitor,
-  Palette,
-  Eye,
-  SpellCheck,
-  ExternalLink,
-  RefreshCw,
-  MessageSquare,
-  RotateCcw,
-  Keyboard,
-  Zap,
-  ToggleLeft,
-  Layers,
-  Settings,
-  WandSparkles,
-  MessageCircle,
-  FileEdit,
-  Mic,
-  Languages,
-  Volume2,
-  TrendingUp,
-  Lightbulb,
-  ListChecks,
-  Bug,
-  HelpCircle,
-  FileText,
-  Lock,
-  Info,
-  LogOut,
-} from "lucide-react";
+  IconArchive,
+  IconBarChart,
+  IconBook,
+  IconCategory,
+  IconCheckCircle,
+  IconCheckmark,
+  IconChevronDownMd,
+  IconChevronRightMd,
+  IconComment,
+  IconCreditCard,
+  IconEdit,
+  IconEmail,
+  IconGlobe,
+  IconGo,
+  IconInfo,
+  IconLightBulb,
+  IconLink,
+  IconMessaging,
+  IconMic,
+  IconPhone,
+  IconPlayground,
+  IconPro,
+  IconPublic,
+  IconQuestion,
+  IconRegenerate,
+  IconSettings,
+  IconSoundOn,
+  IconStack,
+  IconStarFilled,
+  IconStatus,
+  IconSuitcase,
+  IconSun,
+  IconTerminal,
+  IconUndo,
+  IconUserLock,
+  IconWarning,
+  IconX,
+} from "./icons/ChatGPTIcons";
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -47,12 +45,10 @@ interface SettingsModalProps {
 }
 
 const accentColors = [
-  { name: "Purple", color: "#BA8FF7" },
-  { name: "Blue", color: "#48AAFF" },
-  { name: "Green", color: "#40C977" },
-  { name: "Orange", color: "#FF9E6C" },
-  { name: "Pink", color: "#FF8FB3" },
-  { name: "Red", color: "#FF8583" },
+  { name: "Blue", color: "var(--foundation-accent-blue)" },
+  { name: "Green", color: "var(--foundation-accent-green)" },
+  { name: "Orange", color: "var(--foundation-accent-orange)" },
+  { name: "Red", color: "var(--foundation-accent-red)" },
 ];
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -137,7 +133,7 @@ function ToggleRow({
       <button
         onClick={onToggle}
         className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
-          checked ? "bg-[#40C977]" : "bg-white/20"
+          checked ? "bg-[var(--foundation-accent-green)]" : "bg-white/20"
         }`}
       >
         <span
@@ -156,7 +152,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const [openLinksInApp, setOpenLinksInApp] = useState(true);
   const [appLanguage, setAppLanguage] = useState("English");
   const [showInMenuBar, setShowInMenuBar] = useState("When app is running");
-  const [accentColor, setAccentColor] = useState("Purple");
+  const [accentColor, setAccentColor] = useState("Blue");
   const [positionOnScreen, setPositionOnScreen] = useState("Remember last position");
   const [resetToNewChat, setResetToNewChat] = useState("After 10 minutes");
   const [keyboardShortcut, setKeyboardShortcut] = useState("⌘Space");
@@ -184,7 +180,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   if (!isOpen) return null;
 
   const selectedColorHex =
-    accentColors.find((c) => c.name === accentColor)?.color || "#BA8FF7";
+    accentColors.find((c) => c.name === accentColor)?.color || "var(--foundation-accent-blue)";
 
   return (
     <div
@@ -192,20 +188,20 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
       onClick={onClose}
     >
       <div
-        className="bg-[#171717] rounded-[16px] w-[560px] max-h-[85vh] overflow-hidden shadow-2xl border border-white/10"
+        className="bg-[var(--foundation-bg-dark-1)] rounded-[16px] w-[560px] max-h-[85vh] overflow-hidden shadow-2xl border border-white/10"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="px-6 py-4 border-b border-white/10 flex items-center gap-3">
           <div className="flex gap-2">
             <button
               onClick={onClose}
-              className="size-3 rounded-full bg-[#FF5F56] hover:bg-[#FF5F56]/80 transition-colors"
+              className="size-3 rounded-full bg-[var(--foundation-accent-red)] hover:bg-[var(--foundation-accent-red)]/80 transition-colors"
             />
-            <div className="size-3 rounded-full bg-[#FFBD2E]" />
-            <div className="size-3 rounded-full bg-[#27C93F]" />
+            <div className="size-3 rounded-full bg-[var(--foundation-accent-orange)]" />
+            <div className="size-3 rounded-full bg-[var(--foundation-accent-green)]" />
           </div>
           <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-white">
-            Settings
+            IconSettings
           </h2>
         </div>
 
@@ -213,7 +209,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           <Section title="Account">
             <div className="space-y-0.5">
               <RowDisplay
-                icon={<Mail className="size-4 text-white/60" />}
+                icon={<IconEmail className="size-4 text-white/60" />}
                 label="Email"
                 right={
                   <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white/60">
@@ -222,7 +218,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                 }
               />
               <RowDisplay
-                icon={<Phone className="size-4 text-white/60" />}
+                icon={<IconPhone className="size-4 text-white/60" />}
                 label="Phone number"
                 right={
                   <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white/60">
@@ -231,7 +227,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                 }
               />
               <RowDisplay
-                icon={<CreditCard className="size-4 text-white/60" />}
+                icon={<IconCreditCard className="size-4 text-white/60" />}
                 label="Subscription"
                 right={
                   <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white/60">
@@ -240,37 +236,37 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                 }
               />
               <RowButton
-                icon={<ShoppingBag className="size-4 text-white/60" />}
+                icon={<IconSuitcase className="size-4 text-white/60" />}
                 label="Orders"
                 right={<IconChevronRightMd className="size-4 text-white/40" />}
               />
               <RowButton
-                icon={<Sparkles className="size-4 text-white/60" />}
+                icon={<IconStarFilled className="size-4 text-white/60" />}
                 label="Personalization"
                 right={<IconChevronRightMd className="size-4 text-white/40" />}
               />
               <RowButton
-                icon={<Bell className="size-4 text-white/60" />}
+                icon={<IconStatus className="size-4 text-white/60" />}
                 label="Notifications"
                 right={<IconChevronRightMd className="size-4 text-white/40" />}
               />
               <RowButton
-                icon={<Grid3x3 className="size-4 text-white/60" />}
+                icon={<IconCategory className="size-4 text-white/60" />}
                 label="Apps"
                 right={<IconChevronRightMd className="size-4 text-white/40" />}
               />
               <RowButton
-                icon={<Shield className="size-4 text-white/60" />}
+                icon={<IconUserLock className="size-4 text-white/60" />}
                 label="Data controls"
                 right={<IconChevronRightMd className="size-4 text-white/40" />}
               />
               <RowButton
-                icon={<Archive className="size-4 text-white/60" />}
+                icon={<IconArchive className="size-4 text-white/60" />}
                 label="Archived chats"
                 right={<IconChevronRightMd className="size-4 text-white/40" />}
               />
               <RowButton
-                icon={<Shield className="size-4 text-white/60" />}
+                icon={<IconUserLock className="size-4 text-white/60" />}
                 label="Security"
                 right={<IconChevronRightMd className="size-4 text-white/40" />}
               />
@@ -282,7 +278,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               <div className="relative">
                 <RowButton
                   onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
-                  icon={<Globe className="size-4 text-white/60" />}
+                  icon={<IconGlobe className="size-4 text-white/60" />}
                   label="App language"
                   right={
                     <div className="flex items-center gap-2">
@@ -298,7 +294,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               <div className="relative">
                 <RowButton
                   onClick={() => setShowMenuBarDropdown(!showMenuBarDropdown)}
-                  icon={<Monitor className="size-4 text-white/60" />}
+                  icon={<IconPlayground className="size-4 text-white/60" />}
                   label="Show in Menu Bar"
                   right={
                     <div className="flex items-center gap-2">
@@ -314,7 +310,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               <div className="relative">
                 <RowButton
                   onClick={() => setShowColorDropdown(!showColorDropdown)}
-                  icon={<Palette className="size-4 text-white/60" />}
+                  icon={<IconSun className="size-4 text-white/60" />}
                   label="Accent color"
                   right={
                     <div className="flex items-center gap-2">
@@ -327,7 +323,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   }
                 />
                 {showColorDropdown && (
-                  <div className="absolute right-0 top-full mt-1 bg-[#2C2C2C] border border-white/10 rounded-lg shadow-xl p-1 min-w-[140px] z-10">
+                  <div className="absolute right-0 top-full mt-1 bg-[var(--foundation-bg-dark-2)] border border-white/10 rounded-lg shadow-xl p-1 min-w-[140px] z-10">
                     {accentColors.map((color) => (
                       <button
                         key={color.name}
@@ -348,28 +344,28 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               </div>
 
               <ToggleRow
-                icon={<Eye className="size-4 text-white/60" />}
+                icon={<IconPublic className="size-4 text-white/60" />}
                 label="Show additional models"
                 checked={showAdditionalModels}
                 onToggle={() => setShowAdditionalModels(!showAdditionalModels)}
               />
 
               <ToggleRow
-                icon={<SpellCheck className="size-4 text-white/60" />}
+                icon={<IconCheckmark className="size-4 text-white/60" />}
                 label="Correct spelling automatically"
                 checked={correctSpelling}
                 onToggle={() => setCorrectSpelling(!correctSpelling)}
               />
 
               <ToggleRow
-                icon={<ExternalLink className="size-4 text-white/60" />}
+                icon={<IconLink className="size-4 text-white/60" />}
                 label="Open ChatGPT links in desktop app"
                 checked={openLinksInApp}
                 onToggle={() => setOpenLinksInApp(!openLinksInApp)}
               />
 
               <RowButton
-                icon={<RefreshCw className="size-4 text-white/60" />}
+                icon={<IconRegenerate className="size-4 text-white/60" />}
                 label="Check for updates..."
                 right={<IconChevronRightMd className="size-4 text-white/40" />}
               />
@@ -381,7 +377,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               <div className="relative">
                 <RowButton
                   onClick={() => setShowPositionDropdown(!showPositionDropdown)}
-                  icon={<MessageSquare className="size-4 text-white/60" />}
+                  icon={<IconComment className="size-4 text-white/60" />}
                   label="Position on screen"
                   right={
                     <div className="flex items-center gap-2">
@@ -397,7 +393,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               <div className="relative">
                 <RowButton
                   onClick={() => setShowResetDropdown(!showResetDropdown)}
-                  icon={<RotateCcw className="size-4 text-white/60" />}
+                  icon={<IconUndo className="size-4 text-white/60" />}
                   label="Reset to new chat"
                   right={
                     <div className="flex items-center gap-2">
@@ -411,7 +407,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               </div>
 
               <RowDisplay
-                icon={<Keyboard className="size-4 text-white/60" />}
+                icon={<IconTerminal className="size-4 text-white/60" />}
                 label="Keyboard shortcut"
                 right={
                   <div className="flex items-center gap-2">
@@ -429,7 +425,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               />
 
               <RowDisplay
-                icon={<MessageCircle className="size-4 text-white/60" />}
+                icon={<IconMessaging className="size-4 text-white/60" />}
                 label="Open new chats"
                 right={
                   <div className="flex items-center gap-2">
@@ -446,14 +442,14 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           <Section title="Work with Apps">
             <div className="space-y-0.5">
               <ToggleRow
-                icon={<Zap className="size-4 text-white/60" />}
+                icon={<IconPro className="size-4 text-white/60" />}
                 label="Enable Work with Apps"
                 checked={enableWorkWithApps}
                 onToggle={() => setEnableWorkWithApps(!enableWorkWithApps)}
               />
 
               <RowDisplay
-                icon={<ToggleLeft className="size-4 text-white/60" />}
+                icon={<IconCheckCircle className="size-4 text-white/60" />}
                 label="Toggle pairing"
                 right={
                   <div className="flex items-center gap-2">
@@ -468,7 +464,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               />
 
               <RowDisplay
-                icon={<Layers className="size-4 text-white/60" />}
+                icon={<IconStack className="size-4 text-white/60" />}
                 label="Linear apps"
                 right={
                   <div className="flex items-center gap-2">
@@ -481,27 +477,27 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               />
 
               <RowButton
-                icon={<Settings className="size-4 text-white/60" />}
+                icon={<IconSettings className="size-4 text-white/60" />}
                 label="Manage Apps"
                 right={<IconChevronRightMd className="size-4 text-white/40" />}
               />
 
               <ToggleRow
-                icon={<WandSparkles className="size-4 text-white/60" />}
+                icon={<IconLightBulb className="size-4 text-white/60" />}
                 label="Automatically Pair with Apps from Chat Bar"
                 checked={autoFairWithApps}
                 onToggle={() => setAutoFairWithApps(!autoFairWithApps)}
               />
 
               <ToggleRow
-                icon={<FileEdit className="size-4 text-white/60" />}
+                icon={<IconEdit className="size-4 text-white/60" />}
                 label="Generate suggested edits"
                 checked={generateSuggestedEdits}
                 onToggle={() => setGenerateSuggestedEdits(!generateSuggestedEdits)}
               />
 
               <ToggleRow
-                icon={<FileEdit className="size-4 text-white/60" />}
+                icon={<IconEdit className="size-4 text-white/60" />}
                 label="Automatically Apply Suggested Edits"
                 checked={autoApplySuggestedEdits}
                 onToggle={() => setAutoApplySuggestedEdits(!autoApplySuggestedEdits)}
@@ -518,7 +514,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           <Section title="Speech">
             <div className="space-y-0.5">
               <RowDisplay
-                icon={<Mic className="size-4 text-white/60" />}
+                icon={<IconMic className="size-4 text-white/60" />}
                 label="Voice"
                 right={
                   <div className="flex items-center gap-2">
@@ -531,7 +527,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               />
 
               <RowDisplay
-                icon={<Languages className="size-4 text-white/60" />}
+                icon={<IconGlobe className="size-4 text-white/60" />}
                 label="Main language"
                 right={
                   <div className="flex items-center gap-2">
@@ -544,7 +540,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               />
 
               <RowButton
-                icon={<Volume2 className="size-4 text-white/60" />}
+                icon={<IconSoundOn className="size-4 text-white/60" />}
                 label="Audio settings"
                 right={<IconChevronRightMd className="size-4 text-white/40" />}
               />
@@ -561,21 +557,21 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           <Section title="Suggestions">
             <div className="space-y-0.5">
               <ToggleRow
-                icon={<ListChecks className="size-4 text-white/60" />}
+                icon={<IconCheckCircle className="size-4 text-white/60" />}
                 label="Autocomplete"
                 checked={autocomplete}
                 onToggle={() => setAutocomplete(!autocomplete)}
               />
 
               <ToggleRow
-                icon={<TrendingUp className="size-4 text-white/60" />}
+                icon={<IconBarChart className="size-4 text-white/60" />}
                 label="Trending searches"
                 checked={trendingSearches}
                 onToggle={() => setTrendingSearches(!trendingSearches)}
               />
 
               <ToggleRow
-                icon={<Lightbulb className="size-4 text-white/60" />}
+                icon={<IconLightBulb className="size-4 text-white/60" />}
                 label="Follow-up suggestions"
                 checked={followUpSuggestions}
                 onToggle={() => setFollowUpSuggestions(!followUpSuggestions)}
@@ -586,27 +582,27 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           <Section title="About">
             <div className="space-y-0.5">
               <RowButton
-                icon={<Bug className="size-4 text-white/60" />}
+                icon={<IconWarning className="size-4 text-white/60" />}
                 label="Report bug"
                 right={<IconChevronRightMd className="size-4 text-white/40" />}
               />
               <RowButton
-                icon={<HelpCircle className="size-4 text-white/60" />}
+                icon={<IconQuestion className="size-4 text-white/60" />}
                 label="Help Center"
                 right={<IconChevronRightMd className="size-4 text-white/40" />}
               />
               <RowButton
-                icon={<FileText className="size-4 text-white/60" />}
+                icon={<IconBook className="size-4 text-white/60" />}
                 label="Terms of Use"
                 right={<IconChevronRightMd className="size-4 text-white/40" />}
               />
               <RowButton
-                icon={<Lock className="size-4 text-white/60" />}
+                icon={<IconUserLock className="size-4 text-white/60" />}
                 label="Privacy Policy"
                 right={<IconChevronRightMd className="size-4 text-white/40" />}
               />
               <RowDisplay
-                icon={<Info className="size-4 text-white/60" />}
+                icon={<IconInfo className="size-4 text-white/60" />}
                 label="ChatGPT for macOS"
                 right={
                   <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white/60">
@@ -615,7 +611,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                 }
               />
               <RowButton
-                icon={<LogOut className="size-4 text-white/60" />}
+                icon={<IconGo className="size-4 text-white/60" />}
                 label="Log out"
                 right={<IconChevronRightMd className="size-4 text-white/40" />}
               />

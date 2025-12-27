@@ -3,10 +3,10 @@ import "../preview.css";
 import type { Preview } from "@storybook/react-vite";
 import React from "react";
 
-import { AppsSDKUIProvider } from "@openai/apps-sdk-ui/components/AppsSDKUIProvider";
-import { ensureMockOpenAI } from "@chatui/runtime";
+import { HostProvider, createMockHost } from "@chatui/runtime";
+import { AppsSDKUIProvider } from "@chatui/ui";
 
-ensureMockOpenAI();
+const host = createMockHost();
 
 const preview: Preview = {
   parameters: {
@@ -21,9 +21,11 @@ const preview: Preview = {
 
   decorators: [
     (Story) => (
-      <AppsSDKUIProvider>
-        <Story />
-      </AppsSDKUIProvider>
+      <HostProvider host={host}>
+        <AppsSDKUIProvider>
+          <Story />
+        </AppsSDKUIProvider>
+      </HostProvider>
     ),
   ],
 

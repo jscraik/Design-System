@@ -10,9 +10,9 @@
   "dependencies": {
     "@chatui/runtime": "workspace:*",
     "@chatui/ui": "workspace:*",
-    "@openai/apps-sdk-ui": "^0.2.1",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "@chatui/tokens": "workspace:*",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
     "storybook": "^10.1.10",

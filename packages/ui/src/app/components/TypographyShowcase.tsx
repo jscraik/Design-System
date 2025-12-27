@@ -1,66 +1,220 @@
+import { typographyTokens } from "@chatui/tokens";
+
 export function TypographyShowcase() {
-  const webTypography = [
+  const platforms = [
     {
-      name: 'heading1',
-      example: 'heading1',
-      size: '36px',
-      weight: '600',
-      lineHeight: '40px',
-      letterSpacing: '-0.1px',
-      className: 'text-[36px] font-semibold leading-[40px] tracking-[-0.1px]',
+      id: "web",
+      title: "Typography / Web",
+      font: "SF Pro",
+      weights: "400, 600",
+      items: [
+        {
+          name: "heading1",
+          size: `${typographyTokens.heading1.size}px`,
+          weight: `${typographyTokens.heading1.weight}`,
+          lineHeight: `${typographyTokens.heading1.lineHeight}px`,
+          letterSpacing: `${typographyTokens.heading1.tracking}px`,
+          sampleWeight: "font-semibold",
+        },
+        {
+          name: "heading2",
+          size: `${typographyTokens.heading2.size}px`,
+          weight: `${typographyTokens.heading2.weight}`,
+          lineHeight: `${typographyTokens.heading2.lineHeight}px`,
+          letterSpacing: `${typographyTokens.heading2.tracking}px`,
+          sampleWeight: "font-semibold",
+        },
+        {
+          name: "heading3",
+          size: `${typographyTokens.heading3.size}px`,
+          weight: `${typographyTokens.heading3.weight}`,
+          lineHeight: `${typographyTokens.heading3.lineHeight}px`,
+          letterSpacing: `${typographyTokens.heading3.tracking}px`,
+          sampleWeight: "font-semibold",
+        },
+        {
+          name: "body / regular / emphasized",
+          size: `${typographyTokens.body.size}px`,
+          weight: `${typographyTokens.body.weight} / ${typographyTokens.body.emphasisWeight}`,
+          lineHeight: `${typographyTokens.body.lineHeight}px`,
+          letterSpacing: `${typographyTokens.body.tracking}px`,
+          sampleWeight: "font-normal",
+        },
+        {
+          name: "body-small / regular / emphasized",
+          size: `${typographyTokens.bodySmall.size}px`,
+          weight: `${typographyTokens.bodySmall.weight} / ${typographyTokens.bodySmall.emphasisWeight}`,
+          lineHeight: `${typographyTokens.bodySmall.lineHeight}px`,
+          letterSpacing: `${typographyTokens.bodySmall.tracking}px`,
+          sampleWeight: "font-normal",
+        },
+        {
+          name: "caption / regular / emphasized",
+          size: `${typographyTokens.caption.size}px`,
+          weight: `${typographyTokens.caption.weight} / ${typographyTokens.caption.emphasisWeight}`,
+          lineHeight: `${typographyTokens.caption.lineHeight}px`,
+          letterSpacing: `${typographyTokens.caption.tracking}px`,
+          sampleWeight: "font-normal",
+        },
+      ],
     },
     {
-      name: 'heading2',
-      example: 'heading2',
-      size: '24px',
-      weight: '600',
-      lineHeight: '28px',
-      letterSpacing: '-0.25px',
-      className: 'text-[24px] font-semibold leading-[28px] tracking-[-0.25px]',
+      id: "ios",
+      title: "Typography / iOS",
+      font: "SF Pro",
+      weights: "400, 600",
+      items: [
+        {
+          name: "heading1",
+          size: "32px",
+          weight: "600",
+          lineHeight: "40px",
+          letterSpacing: "-0.1px",
+          sampleWeight: "font-semibold",
+        },
+        {
+          name: "heading2",
+          size: "24px",
+          weight: "600",
+          lineHeight: "28px",
+          letterSpacing: "-0.25px",
+          sampleWeight: "font-semibold",
+        },
+        {
+          name: "heading3",
+          size: "18px",
+          weight: "600",
+          lineHeight: "26px",
+          letterSpacing: "-0.45px",
+          sampleWeight: "font-semibold",
+        },
+        {
+          name: "body / regular / emphasized",
+          size: "16px",
+          weight: "400 / 600",
+          lineHeight: "26px",
+          letterSpacing: "-0.4px",
+          sampleWeight: "font-normal",
+        },
+        {
+          name: "body-small / regular / emphasized",
+          size: "14px",
+          weight: "400 / 600",
+          lineHeight: "18px",
+          letterSpacing: "-0.3px",
+          sampleWeight: "font-normal",
+        },
+        {
+          name: "caption / regular / emphasized",
+          size: "12px",
+          weight: "400 / 600",
+          lineHeight: "16px",
+          letterSpacing: "-0.1px",
+          sampleWeight: "font-normal",
+        },
+      ],
     },
     {
-      name: 'heading3',
-      example: 'heading3',
-      size: '18px',
-      weight: '600',
-      lineHeight: '26px',
-      letterSpacing: '-0.45px',
-      className: 'text-[18px] font-semibold leading-[26px] tracking-[-0.45px]',
-    },
-    {
-      name: 'body-large / emphasized',
-      example: 'body-large / emphasized',
-      size: '16px',
-      weight: '600',
-      lineHeight: '24px',
-      letterSpacing: '-0.32px',
-      className: 'text-[16px] font-semibold leading-[24px] tracking-[-0.32px]',
-    },
-    {
-      name: 'body-small / emphasized',
-      example: 'body-small / emphasized',
-      size: '14px',
-      weight: '600',
-      lineHeight: '20px',
-      letterSpacing: '-0.3px',
-      className: 'text-[14px] font-semibold leading-[20px] tracking-[-0.3px]',
-    },
-    {
-      name: 'label-v-large / emphasized',
-      example: 'label-v-large / emphasized',
-      size: '12px',
-      weight: '600',
-      lineHeight: '18px',
-      letterSpacing: '-0.32px',
-      className: 'text-[12px] font-semibold leading-[18px] tracking-[-0.32px]',
+      id: "android",
+      title: "Typography / Android",
+      font: "SF Pro",
+      weights: "400, 600",
+      items: [
+        {
+          name: "heading1",
+          size: "32px",
+          weight: "600",
+          lineHeight: "40px",
+          letterSpacing: "-0.1px",
+          sampleWeight: "font-semibold",
+        },
+        {
+          name: "heading2",
+          size: "24px",
+          weight: "600",
+          lineHeight: "28px",
+          letterSpacing: "-0.25px",
+          sampleWeight: "font-semibold",
+        },
+        {
+          name: "heading3",
+          size: "16px",
+          weight: "600",
+          lineHeight: "26px",
+          letterSpacing: "0px",
+          sampleWeight: "font-semibold",
+        },
+        {
+          name: "body / regular / emphasized",
+          size: "16px",
+          weight: "400 / 600",
+          lineHeight: "26px",
+          letterSpacing: "0px",
+          sampleWeight: "font-normal",
+        },
+        {
+          name: "body-small / regular / emphasized",
+          size: "14px",
+          weight: "400 / 600",
+          lineHeight: "18px",
+          letterSpacing: "0px",
+          sampleWeight: "font-normal",
+        },
+        {
+          name: "caption / regular / emphasized",
+          size: "12px",
+          weight: "400 / 600",
+          lineHeight: "16px",
+          letterSpacing: "0px",
+          sampleWeight: "font-normal",
+        },
+      ],
     },
   ];
 
+  const getTypeClassName = (item: {
+    size: string;
+    lineHeight: string;
+    letterSpacing: string;
+    sampleWeight: string;
+  }) =>
+    `text-[${item.size}] ${item.sampleWeight} leading-[${item.lineHeight}] tracking-[${item.letterSpacing}]`;
+
+  const lightPrimary = "var(--foundation-text-light-primary)";
+  const lightSecondary = "var(--foundation-text-light-secondary)";
+  const lightTertiary = "var(--foundation-text-light-tertiary)";
+  const lightSurface = "var(--foundation-bg-light-1)";
+  const lightSurfaceAlt = "var(--foundation-bg-light-2)";
+
+  const FontCard = ({ font, weights }: { font: string; weights: string }) => (
+    <div className="rounded-lg p-8 shadow-sm" style={{ backgroundColor: lightSurface }}>
+      <div className="mb-8">
+        <h3 className="mb-4 font-medium text-[12px] leading-[24px] tracking-[-0.32px]">Font</h3>
+        <div className="h-px w-full" style={{ backgroundColor: lightPrimary }} />
+      </div>
+      <div
+        className="flex h-[150px] flex-col justify-between rounded-xl p-3 ring-1 ring-black/10"
+        style={{ backgroundColor: lightSurface }}
+      >
+        <p className="font-medium text-[12px] leading-[18px] tracking-[-0.32px]">{font}</p>
+        <div>
+          <div className="mb-1 flex items-center gap-2 text-[64px] leading-[1.2] tracking-[-0.32px]">
+            <span className="font-normal">Aa</span>
+            <span className="font-semibold">Gg</span>
+          </div>
+          <p className="font-mono text-[12px] leading-[18px] tracking-[-0.32px]" style={{ color: lightSecondary }}>
+            {weights}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-[#f5f5f5] p-8">
+    <div className="min-h-screen p-8" style={{ backgroundColor: lightSurfaceAlt }}>
       <div className="mx-auto max-w-7xl">
         {/* Header */}
-        <div className="mb-12 rounded-lg bg-white p-8 shadow-sm">
+        <div className="mb-12 rounded-lg p-8 shadow-sm" style={{ backgroundColor: lightSurface }}>
           <div className="mb-6 flex items-center gap-3">
             <div className="flex size-6 items-center justify-center">
               <svg viewBox="0 0 24 24" fill="currentColor">
@@ -69,12 +223,13 @@ export function TypographyShowcase() {
             </div>
             <h2 className="font-semibold text-[12px] leading-[18px] tracking-[-0.32px]">Foundations</h2>
           </div>
-          <div className="mb-4 h-px w-full bg-[#0d0d0d]" />
+          <div className="mb-4 h-px w-full" style={{ backgroundColor: lightPrimary }} />
           <div>
             <h1 className="mb-2 text-[56px] font-semibold leading-[1.2] tracking-[0.416px]">Typography</h1>
             <a 
               href="https://developers.openai.com/apps-sdk/concepts/design-guidelines"
-              className="text-[16px] leading-[24px] tracking-[-0.32px] text-[#5d5d5d] underline hover:text-[#0d0d0d]"
+              className="text-[16px] leading-[24px] tracking-[-0.32px] underline"
+              style={{ color: lightSecondary }}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -83,73 +238,66 @@ export function TypographyShowcase() {
           </div>
         </div>
 
-        {/* Content Grid */}
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[308px_1fr]">
-          {/* Font Card */}
-          <div className="rounded-lg bg-white p-8 shadow-sm">
-            <div className="mb-8">
-              <h3 className="mb-4 font-medium text-[12px] leading-[24px] tracking-[-0.32px]">Font</h3>
-              <div className="h-px w-full bg-[#0d0d0d]" />
-            </div>
-            <div className="flex h-[150px] flex-col justify-between rounded-xl bg-white p-3 ring-1 ring-[#0d0d0d]/10">
-              <p className="font-medium text-[12px] leading-[18px] tracking-[-0.32px]">SF Pro</p>
-              <div>
-                <div className="mb-1 flex items-center gap-2 text-[64px] leading-[1.2] tracking-[-0.32px]">
-                  <span className="font-normal">Aa</span>
-                  <span className="font-semibold">Gg</span>
-                </div>
-                <p className="font-mono text-[12px] leading-[18px] tracking-[-0.32px] text-[#0d0d0d]/80">
-                  400, 600
-                </p>
-              </div>
-            </div>
-          </div>
+        <div className="space-y-10">
+          {platforms.map((platform) => (
+            <div key={platform.id} className="space-y-4">
+              <h2 className="text-[16px] font-semibold leading-[24px] tracking-[-0.32px]">
+                {platform.title}
+              </h2>
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-[308px_1fr]">
+                <FontCard font={platform.font} weights={platform.weights} />
 
-          {/* Typography Definitions */}
-          <div className="rounded-lg bg-white p-8 shadow-sm">
-            <div className="mb-8">
-              <h3 className="mb-4 font-medium text-[12px] leading-[24px] tracking-[-0.32px]">Definitions</h3>
-              <div className="h-px w-full bg-[#0d0d0d]" />
-            </div>
-            <div className="space-y-0">
-              {webTypography.map((type, index) => (
-                <div 
-                  key={type.name}
-                  className={`flex items-center justify-between py-6 ${
-                    index !== 0 ? 'border-t border-[#0d0d0d]/5' : ''
-                  }`}
-                >
-                  <p className={type.className}>{type.example}</p>
-                  <div className="flex gap-2">
-                    <div className="flex min-w-[100px] flex-col gap-0.5 rounded-xl bg-[#f9f9f9] px-4 py-2.5">
-                      <span className="text-[10px] leading-none text-[#0d0d0d]/50">Size</span>
-                      <span className="font-semibold text-[14px] leading-[18px] tracking-[-0.3px]">
-                        {type.size}
-                      </span>
-                    </div>
-                    <div className="flex min-w-[100px] flex-col gap-0.5 rounded-xl bg-[#f9f9f9] px-4 py-2.5">
-                      <span className="text-[10px] leading-none text-[#0d0d0d]/50">Weight</span>
-                      <span className="font-semibold text-[14px] leading-[18px] tracking-[-0.3px]">
-                        {type.weight}
-                      </span>
-                    </div>
-                    <div className="flex min-w-[100px] flex-col gap-0.5 rounded-xl bg-[#f9f9f9] px-4 py-2.5">
-                      <span className="text-[10px] leading-none text-[#0d0d0d]/50">Line height</span>
-                      <span className="font-semibold text-[14px] leading-[18px] tracking-[-0.3px]">
-                        {type.lineHeight}
-                      </span>
-                    </div>
-                    <div className="flex min-w-[100px] flex-col gap-0.5 rounded-xl bg-[#f9f9f9] px-4 py-2.5">
-                      <span className="text-[10px] leading-none text-[#0d0d0d]/50">Letter spacing</span>
-                      <span className="font-semibold text-[14px] leading-[18px] tracking-[-0.3px]">
-                        {type.letterSpacing}
-                      </span>
-                    </div>
+                <div className="rounded-lg p-8 shadow-sm" style={{ backgroundColor: lightSurface }}>
+                  <div className="mb-8">
+                    <h3 className="mb-4 font-medium text-[12px] leading-[24px] tracking-[-0.32px]">
+                      Definitions
+                    </h3>
+                    <div className="h-px w-full" style={{ backgroundColor: lightPrimary }} />
+                  </div>
+                  <div className="space-y-0">
+                    {platform.items.map((type, index) => (
+                      <div
+                        key={type.name}
+                        className={`flex items-center justify-between py-6 ${
+                          index !== 0 ? "border-t border-black/5" : ""
+                        }`}
+                      >
+                        <p className={getTypeClassName(type)}>{type.name}</p>
+                        <div className="flex gap-2">
+                          <div className="flex min-w-[100px] flex-col gap-0.5 rounded-xl px-4 py-2.5" style={{ backgroundColor: lightSurfaceAlt }}>
+                            <span className="text-[10px] leading-none" style={{ color: lightTertiary }}>Size</span>
+                            <span className="font-semibold text-[14px] leading-[18px] tracking-[-0.3px]">
+                              {type.size}
+                            </span>
+                          </div>
+                          <div className="flex min-w-[100px] flex-col gap-0.5 rounded-xl px-4 py-2.5" style={{ backgroundColor: lightSurfaceAlt }}>
+                            <span className="text-[10px] leading-none" style={{ color: lightTertiary }}>Weight</span>
+                            <span className="font-semibold text-[14px] leading-[18px] tracking-[-0.3px]">
+                              {type.weight}
+                            </span>
+                          </div>
+                          <div className="flex min-w-[100px] flex-col gap-0.5 rounded-xl px-4 py-2.5" style={{ backgroundColor: lightSurfaceAlt }}>
+                            <span className="text-[10px] leading-none" style={{ color: lightTertiary }}>Line height</span>
+                            <span className="font-semibold text-[14px] leading-[18px] tracking-[-0.3px]">
+                              {type.lineHeight}
+                            </span>
+                          </div>
+                          <div className="flex min-w-[100px] flex-col gap-0.5 rounded-xl px-4 py-2.5" style={{ backgroundColor: lightSurfaceAlt }}>
+                            <span className="text-[10px] leading-none" style={{ color: lightTertiary }}>
+                              Letter spacing
+                            </span>
+                            <span className="font-semibold text-[14px] leading-[18px] tracking-[-0.3px]">
+                              {type.letterSpacing}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>

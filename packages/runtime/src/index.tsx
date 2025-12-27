@@ -1,4 +1,5 @@
-import { useSyncExternalStore } from "react";
+import type { ReactNode } from "react";
+import { createContext, useContext, useSyncExternalStore } from "react";
 
 export const SET_GLOBALS_EVENT_TYPE = "openai:set_globals" as const;
 
@@ -42,6 +43,87 @@ declare global {
   interface Window {
     openai?: OpenAiBridge;
   }
+}
+
+export type Host = {
+  mode: "embedded" | "standalone";
+  toolOutput?: unknown;
+  callTool?: (name: string, args: unknown) => Promise<unknown>;
+  sendMessage?: (text: string) => Promise<void>;
+  getState?: () => unknown;
+  setState?: (state: unknown) => void;
+};
+
+const HostContext = createContext<Host | null>(null);
+
+export function HostProvider({
+  host,
+  children,
+}: {
+  host: Host;
+  children: ReactNode;
+}) {
+  return <HostContext.Provider value={host}>{children}</HostContext.Provider>;
+}
+
+export function useHost() {
+  const host = useContext(HostContext);
+  if (!host) {
+    throw new Error("HostProvider is missing. Wrap your app in <HostProvider />.");
+  }
+  return host;
+}
+
+export function createEmbeddedHost(): Host {
+  const openai = typeof window !== "undefined" ? window.openai : undefined;
+
+  return {
+    mode: "embedded",
+    get toolOutput() {
+      return openai?.toolOutput;
+    },
+    callTool: openai?.callTool?.bind(openai),
+    sendMessage: openai?.sendFollowUpMessage
+      ? async (text) => {
+          await openai.sendFollowUpMessage?.({ prompt: text });
+        }
+      : undefined,
+    getState: openai?.getWidgetState?.bind(openai),
+    setState: openai?.setWidgetState?.bind(openai),
+  };
+}
+
+export function createStandaloneHost(apiBase: string): Host {
+  return {
+    mode: "standalone",
+    async callTool(name, args) {
+      const res = await fetch(`${apiBase}/api/${name}`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(args),
+      });
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+      return await res.json();
+    },
+    async sendMessage(text) {
+      console.log("standalone send:", text);
+    },
+    getState: () => null,
+    setState: () => {},
+  };
+}
+
+export function createMockHost(overrides: Partial<Host> = {}): Host {
+  return {
+    mode: "standalone",
+    callTool: async () => ({ ok: true }),
+    sendMessage: async () => {},
+    getState: () => null,
+    setState: () => {},
+    ...overrides,
+  };
 }
 
 /**

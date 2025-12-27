@@ -1,0 +1,98 @@
+/*
+  Apps SDK UI audit tokens (from Figma foundations).
+  These are reference values for compliance checks and documentation.
+  Do not use as styling defaults; prefer Apps SDK UI tokens/classes instead.
+*/
+
+:root {
+  /* Dark backgrounds */
+  --foundation-bg-dark-1: #212121;
+  --foundation-bg-dark-2: #303030;
+  --foundation-bg-dark-3: #414141;
+
+  /* Dark text */
+  --foundation-text-dark-primary: #ffffff;
+  --foundation-text-dark-secondary: #cdcdcd;
+  --foundation-text-dark-tertiary: #afafaf;
+
+  /* Dark accents */
+  --foundation-accent-blue: #0285ff;
+  --foundation-accent-red: #ff8583;
+  --foundation-accent-orange: #ff9e6c;
+  --foundation-accent-green: #40c977;
+
+  /* Light backgrounds */
+  --foundation-bg-light-1: #ffffff;
+  --foundation-bg-light-2: #e8e8e8;
+  --foundation-bg-light-3: #f3f3f3;
+
+  /* Light text */
+  --foundation-text-light-primary: #0d0d0d;
+  --foundation-text-light-secondary: #5d5d5d;
+  --foundation-text-light-tertiary: #8f8f8f;
+
+  /* Light icon */
+  --foundation-icon-light-primary: #0d0d0d;
+  --foundation-icon-light-secondary: #5d5d5d;
+  --foundation-icon-light-tertiary: #8f8f8f;
+  --foundation-icon-light-inverted: #8f8f8f;
+
+  /* Dark icon */
+  --foundation-icon-dark-primary: #ffffff;
+  --foundation-icon-dark-secondary: #cdcdcd;
+  --foundation-icon-dark-tertiary: #afafaf;
+  --foundation-icon-dark-inverted: #afafaf;
+
+  /* Light accents */
+  --foundation-accent-blue-light: #0285ff;
+  --foundation-accent-red-light: #e02e2a;
+  --foundation-accent-orange-light: #e25507;
+  --foundation-accent-green-light: #008635;
+
+  /* Spacing scale */
+  --foundation-space-128: 128px;
+  --foundation-space-64: 64px;
+  --foundation-space-48: 48px;
+  --foundation-space-40: 40px;
+  --foundation-space-32: 32px;
+  --foundation-space-24: 24px;
+  --foundation-space-16: 16px;
+  --foundation-space-12: 12px;
+  --foundation-space-8: 8px;
+  --foundation-space-4: 4px;
+  --foundation-space-2: 2px;
+  --foundation-space-0: 0;
+
+  /* Typography */
+  --foundation-font-family: "SF Pro", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --foundation-heading-1-size: 36px;
+  --foundation-heading-1-line: 40px;
+  --foundation-heading-1-weight: 600;
+  --foundation-heading-1-tracking: -0.1px;
+  --foundation-heading-2-size: 24px;
+  --foundation-heading-2-line: 28px;
+  --foundation-heading-2-weight: 600;
+  --foundation-heading-2-tracking: -0.25px;
+  --foundation-heading-3-size: 18px;
+  --foundation-heading-3-line: 26px;
+  --foundation-heading-3-weight: 600;
+  --foundation-heading-3-tracking: -0.45px;
+
+  --foundation-body-size: 16px;
+  --foundation-body-line: 26px;
+  --foundation-body-weight-regular: 400;
+  --foundation-body-weight-emphasis: 600;
+  --foundation-body-tracking: -0.4px;
+
+  --foundation-body-small-size: 14px;
+  --foundation-body-small-line: 18px;
+  --foundation-body-small-weight-regular: 400;
+  --foundation-body-small-weight-emphasis: 600;
+  --foundation-body-small-tracking: -0.3px;
+
+  --foundation-caption-size: 12px;
+  --foundation-caption-line: 16px;
+  --foundation-caption-weight-regular: 400;
+  --foundation-caption-weight-emphasis: 600;
+  --foundation-caption-tracking: -0.1px;
+}

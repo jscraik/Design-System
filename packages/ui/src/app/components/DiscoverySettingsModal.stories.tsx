@@ -8,6 +8,11 @@ const meta: Meta<typeof DiscoverySettingsModal> = {
   parameters: {
     layout: "fullscreen",
   },
+  render: (args) => (
+    <div className="h-screen bg-[var(--foundation-bg-dark-1)]">
+      <DiscoverySettingsModal {...args} />
+    </div>
+  ),
 };
 
 export default meta;
@@ -15,16 +20,12 @@ export default meta;
 type Story = StoryObj<typeof DiscoverySettingsModal>;
 
 export const Default: Story = {
-  render: () => (
-    <div className="h-screen bg-[#0D0D0D]">
-      <DiscoverySettingsModal
-        isOpen={true}
-        onClose={() => {}}
-        promptEnhancement="rewrite"
-        onPromptEnhancementChange={() => {}}
-        targetSize={60}
-        onTargetSizeChange={() => {}}
-      />
-    </div>
-  ),
+  args: {
+    isOpen: true,
+    onClose: () => {},
+    promptEnhancement: "rewrite",
+    onPromptEnhancementChange: () => {},
+    targetSize: 60,
+    onTargetSizeChange: () => {},
+  },
 };

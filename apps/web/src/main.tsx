@@ -3,19 +3,21 @@ import "./main.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
-import { AppsSDKUIProvider } from "@openai/apps-sdk-ui/components/AppsSDKUIProvider";
-
-import { ensureMockOpenAI } from "@chatui/runtime";
-import { ChatUIRoot } from "@chatui/ui";
+import { HostProvider, createStandaloneHost, ensureMockOpenAI } from "@chatui/runtime";
+import { AppsSDKUIProvider, ChatUIRoot } from "@chatui/ui";
 
 if (import.meta.env.DEV) {
   ensureMockOpenAI();
 }
 
+const host = createStandaloneHost(import.meta.env.VITE_API_BASE ?? "http://localhost:8787");
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AppsSDKUIProvider>
-      <ChatUIRoot />
-    </AppsSDKUIProvider>
+    <HostProvider host={host}>
+      <AppsSDKUIProvider>
+        <ChatUIRoot />
+      </AppsSDKUIProvider>
+    </HostProvider>
   </StrictMode>
 );

@@ -1,0 +1,45 @@
+@import "tailwindcss";
+@import "@chatui/ui/styles.css";
+@import "tw-animate-css";
+
+/* Required for Tailwind to find class references in Apps SDK UI components. */
+@source "../../../ui/node_modules/@openai/apps-sdk-ui";
+
+/* Tell Tailwind where to find widget + shared UI components. */
+@source "../**/*.{js,ts,jsx,tsx}";
+@source "../../../ui/src";
+@source "../../../ui/src/**/*.{js,ts,jsx,tsx}";
+@source "../../../tokens/src/**/*.{js,ts,jsx,tsx,css}";
+
+@layer utilities {
+  .overflow-auto > *,
+  .overflow-scroll > *,
+  .overflow-x-auto > *,
+  .overflow-y-auto > * {
+    scrollbar-color: auto;
+  }
+
+  .overflow-auto,
+  .overflow-scroll,
+  .overflow-x-auto,
+  .overflow-y-auto,
+  .overflow-x-scroll,
+  .overflow-y-scroll {
+    scrollbar-color: rgb(0, 0, 0, 0.1) transparent;
+
+    @media (prefers-color-scheme: dark) {
+      scrollbar-color: rgb(255, 255, 255, 0.1) transparent;
+    }
+  }
+
+  .overflow-auto:hover,
+  .overflow-scroll:hover,
+  .overflow-x-auto:hover,
+  .overflow-y-auto:hover {
+    scrollbar-color: rgb(0, 0, 0, 0.2) transparent;
+
+    @media (prefers-color-scheme: dark) {
+      scrollbar-color: rgb(255, 255, 255, 0.2) transparent;
+    }
+  }
+}
