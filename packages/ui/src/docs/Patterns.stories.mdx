@@ -137,7 +137,9 @@ Combine `ListItem` components with actions for navigation lists:
           <ListItem
             icon={<span>💬</span>}
             active
-            action={<IconButton icon={<span>⋯</span>} variant="ghost" size="sm" />}
+            action={
+              <IconButton icon={<span>⋯</span>} variant="ghost" size="sm" title="More actions" />
+            }
           >
             <div>
               <div className="text-white font-medium">Current Chat</div>

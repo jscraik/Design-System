@@ -107,11 +107,11 @@ This document audits your codebase against OpenAI's official Apps SDK guidelines
 
 ### ⚠️ Recommended
 
-| Requirement           | Action                            |
-| --------------------- | --------------------------------- |
+| Requirement           | Action                               |
+| --------------------- | ------------------------------------ |
 | Golden prompt set     | ✅ Added tool contracts with prompts |
-| Regression testing    | Document expected behavior        |
-| Production monitoring | Add analytics for tool usage      |
+| Regression testing    | Document expected behavior           |
+| Production monitoring | Add analytics for tool usage         |
 
 ---
 

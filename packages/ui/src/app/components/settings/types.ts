@@ -1,15 +1,15 @@
 // Shared types for Settings components
 
 export interface SettingsPanelProps {
-    onBack: () => void;
+  onBack: () => void;
 }
 
 export interface BaseStyleOption {
-    value: string;
-    description: string;
+  value: string;
+  description: string;
 }
 
 export interface AccentColor {
-    name: string;
-    color: string;
+  name: string;
+  color: string;
 }

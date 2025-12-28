@@ -201,12 +201,14 @@ describe("Input", () => {
 
     it("has visible focus indicator styles", () => {
       render(<Input aria-label="Test input" />);
-      expect(screen.getByRole("textbox")).toHaveClass("focus-visible:ring-ring/50");
+      expect(screen.getByRole("textbox")).toHaveClass(
+        "focus-visible:ring-foundation-accent-blue/50",
+      );
     });
 
     it("has error state styles for aria-invalid", () => {
       render(<Input aria-invalid="true" aria-label="Invalid input" />);
-      expect(screen.getByRole("textbox")).toHaveClass("aria-invalid:border-destructive");
+      expect(screen.getByRole("textbox")).toHaveClass("aria-invalid:border-foundation-accent-red");
     });
   });
 

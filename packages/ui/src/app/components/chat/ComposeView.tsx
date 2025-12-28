@@ -119,18 +119,18 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
 
   return (
     <>
-      <div className="flex-1 flex flex-col bg-[var(--foundation-bg-dark-1)]">
+      <div className="flex-1 flex flex-col bg-foundation-bg-dark-1">
         <div className="flex-1 overflow-y-auto">
           <div className="w-full px-8 py-8 space-y-4 overflow-y-auto">
-            <div className="bg-[var(--foundation-bg-dark-1)] border border-white/10 rounded-lg overflow-hidden">
-              <div className="flex items-center justify-between px-4 py-3 bg-[var(--foundation-bg-dark-2)]">
+            <div className="bg-foundation-bg-dark-1 border border-white/10 rounded-lg overflow-hidden">
+              <div className="flex items-center justify-between px-4 py-3 bg-foundation-bg-dark-2">
                 <div className="flex items-center gap-2">
                   <span className="text-[15px] leading-6 text-white font-medium">
                     Prompt Instructions
                   </span>
                   <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors">
                     <svg
-                      className="size-4 text-[var(--foundation-text-dark-tertiary)]"
+                      className="size-4 text-foundation-text-dark-tertiary"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -144,9 +144,9 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                     </svg>
                   </button>
                 </div>
-                <button className="flex items-center gap-2 px-3 py-1.5 bg-[var(--foundation-bg-dark-2)] hover:bg-[var(--foundation-bg-dark-3)] border border-white/10 text-white rounded-lg transition-colors text-[13px] leading-5">
+                <button className="flex items-center gap-2 px-3 py-1.5 bg-foundation-bg-dark-2 hover:bg-foundation-bg-dark-3 border border-white/10 text-white rounded-lg transition-colors text-[13px] leading-5">
                   <svg
-                    className="size-4 text-[var(--foundation-text-dark-tertiary)]"
+                    className="size-4 text-foundation-text-dark-tertiary"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -165,17 +165,17 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                 value={instructions}
                 onChange={(e) => setInstructions(e.target.value)}
                 placeholder=" Enter your prompt's task specific instructions. Use {{template variables}} for dynamic inputs"
-                className="w-full h-[187px] bg-[var(--foundation-bg-dark-1)] px-4 py-3 text-[15px] leading-6 text-[var(--foundation-text-dark-primary)] placeholder:text-[var(--foundation-text-dark-primary)]/40 focus:outline-none resize-none border-0"
+                className="w-full h-[187px] bg-foundation-bg-dark-1 px-4 py-3 text-[15px] leading-6 text-foundation-text-dark-primary placeholder:text-foundation-text-dark-primary/40 focus:outline-none resize-none border-0"
               />
 
-              <div className="flex items-center justify-between px-4 py-2 bg-[var(--foundation-bg-dark-1)] border-t border-white/10">
+              <div className="flex items-center justify-between px-4 py-2 bg-foundation-bg-dark-1 border-t border-white/10">
                 <div className="flex items-center gap-1">
                   <button
                     className="p-1.5 hover:bg-white/10 rounded-md transition-colors"
                     title="Add"
                   >
                     <svg
-                      className="size-4 text-[var(--foundation-text-dark-tertiary)]"
+                      className="size-4 text-foundation-text-dark-tertiary"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -187,17 +187,15 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                   <button
                     onClick={() => setIsWebSearchActive(!isWebSearchActive)}
                     className={`p-1.5 rounded-md transition-colors relative ${
-                      isWebSearchActive
-                        ? "bg-[var(--foundation-accent-blue)]/10"
-                        : "hover:bg-white/10"
+                      isWebSearchActive ? "bg-foundation-accent-blue/10" : "hover:bg-white/10"
                     }`}
                     title="Web"
                   >
                     <svg
                       className={`size-4 ${
                         isWebSearchActive
-                          ? "text-[var(--foundation-accent-blue)]"
-                          : "text-[var(--foundation-text-dark-tertiary)]"
+                          ? "text-foundation-accent-blue"
+                          : "text-foundation-text-dark-tertiary"
                       }`}
                       fill="none"
                       viewBox="0 0 24 24"
@@ -212,7 +210,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                     </svg>
                     {isWebSearchActive && (
                       <svg
-                        className="size-3 text-[var(--foundation-accent-blue)] absolute top-0.5 right-0.5"
+                        className="size-3 text-foundation-accent-blue absolute top-0.5 right-0.5"
                         fill="none"
                         viewBox="0 0 24 24"
                         strokeWidth={2}
@@ -231,7 +229,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                     title="Link"
                   >
                     <svg
-                      className="size-4 text-[var(--foundation-text-dark-tertiary)]"
+                      className="size-4 text-foundation-text-dark-tertiary"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -249,7 +247,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                     title="Refresh"
                   >
                     <svg
-                      className="size-4 text-[var(--foundation-text-dark-tertiary)]"
+                      className="size-4 text-foundation-text-dark-tertiary"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -272,8 +270,8 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                       Apps
                     </span>
                   </button>
-                  <div className="ml-1 px-2 py-1 bg-[var(--foundation-bg-dark-2)] rounded-md">
-                    <span className="text-[11px] leading-4 text-[var(--foundation-accent-blue)] font-medium">
+                  <div className="ml-1 px-2 py-1 bg-foundation-bg-dark-2 rounded-md">
+                    <span className="text-[11px] leading-4 text-foundation-accent-blue font-medium">
                       {selectedModel.shortName}
                     </span>
                   </div>
@@ -282,7 +280,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                 <div className="flex items-center gap-1">
                   <button className="flex items-center gap-1.5 px-2 py-1 hover:bg-white/10 rounded-md transition-colors">
                     <svg
-                      className="size-3.5 text-[var(--foundation-text-dark-tertiary)]"
+                      className="size-3.5 text-foundation-text-dark-tertiary"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -294,7 +292,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                         d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                       />
                     </svg>
-                    <span className="text-[12px] leading-4 text-[var(--foundation-text-dark-tertiary)]">
+                    <span className="text-[12px] leading-4 text-foundation-text-dark-tertiary">
                       Auto-clear
                     </span>
                   </button>
@@ -303,7 +301,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                     title="Voice"
                   >
                     <svg
-                      className="size-4 text-[var(--foundation-text-dark-tertiary)]"
+                      className="size-4 text-foundation-text-dark-tertiary"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -339,14 +337,14 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
 
             <div className="min-h-[200px]">
               {activeTab === "builder" && (
-                <div className="bg-[var(--foundation-bg-dark-1)] border border-white/10 rounded-lg overflow-hidden">
-                  <div className="flex items-center justify-between px-4 py-3 bg-[var(--foundation-bg-dark-2)]">
+                <div className="bg-foundation-bg-dark-1 border border-white/10 rounded-lg overflow-hidden">
+                  <div className="flex items-center justify-between px-4 py-3 bg-foundation-bg-dark-2">
                     <div className="flex items-center gap-2">
-                      <span className="text-[15px] leading-6 text-[var(--foundation-text-dark-primary)] font-medium">
+                      <span className="text-[15px] leading-6 text-foundation-text-dark-primary font-medium">
                         Prompt Builder
                       </span>
                     </div>
-                    <button className="flex items-center gap-2 px-3 py-1.5 bg-[var(--foundation-bg-dark-2)] hover:bg-[var(--foundation-bg-dark-3)] border border-white/10 text-[var(--foundation-text-dark-primary)] rounded-lg transition-colors text-[13px] leading-5">
+                    <button className="flex items-center gap-2 px-3 py-1.5 bg-foundation-bg-dark-2 hover:bg-foundation-bg-dark-3 border border-white/10 text-foundation-text-dark-primary rounded-lg transition-colors text-[13px] leading-5">
                       <svg
                         className="size-[18px]"
                         fill="none"
@@ -373,7 +371,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                     <div className="space-y-5">
                       <div className="flex gap-6">
                         <div className="w-[340px] flex-shrink-0">
-                          <label className="block text-[13px] leading-5 text-[var(--foundation-text-dark-primary)]/70 mb-2">
+                          <label className="block text-[13px] leading-5 text-foundation-text-dark-primary/70 mb-2">
                             Model
                           </label>
                           <ModelSelector
@@ -387,32 +385,32 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                         </div>
 
                         <div className="flex-1">
-                          <label className="block text-[13px] leading-5 text-[var(--foundation-text-dark-primary)]/70 mb-2">
+                          <label className="block text-[13px] leading-5 text-foundation-text-dark-primary/70 mb-2">
                             System Message
                           </label>
                           <textarea
                             value={systemMessage}
                             onChange={(e) => setSystemMessage(e.target.value)}
                             placeholder="Describe desired modal behavior (tone, tool usage, response style)"
-                            className="w-full h-[60px] bg-[var(--foundation-bg-dark-2)] border border-white/10 rounded-lg px-3 py-2.5 text-[13px] leading-5 text-[var(--foundation-text-dark-primary)] placeholder:text-[var(--foundation-text-dark-primary)]/50 focus:outline-none focus:border-white/20 resize-none"
+                            className="w-full h-[60px] bg-foundation-bg-dark-2 border border-white/10 rounded-lg px-3 py-2.5 text-[13px] leading-5 text-foundation-text-dark-primary placeholder:text-foundation-text-dark-primary/50 focus:outline-none focus:border-white/20 resize-none"
                           />
                         </div>
                       </div>
 
                       <div className="relative">
                         <div className="flex items-center justify-between mb-2">
-                          <label className="text-[13px] leading-5 text-[var(--foundation-text-dark-primary)]/70">
+                          <label className="text-[13px] leading-5 text-foundation-text-dark-primary/70">
                             {taskConfig.label}
                           </label>
                           <div className="flex items-center gap-1">
                             <div className="relative">
                               <button
-                                className="p-1.5 hover:bg-[var(--foundation-bg-dark-2)] rounded transition-colors"
+                                className="p-1.5 hover:bg-foundation-bg-dark-2 rounded transition-colors"
                                 onMouseEnter={() => setShowTooltip(true)}
                                 onMouseLeave={() => setShowTooltip(false)}
                               >
                                 <svg
-                                  className="size-4 text-[var(--foundation-text-dark-primary)]/70"
+                                  className="size-4 text-foundation-text-dark-primary/70"
                                   fill="none"
                                   viewBox="0 0 24 24"
                                   stroke="currentColor"
@@ -427,8 +425,8 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                               </button>
 
                               {showTooltip && (
-                                <div className="absolute right-0 top-8 w-[320px] bg-[var(--foundation-bg-dark-2)] border border-white/10 rounded-lg p-4 shadow-xl z-50">
-                                  <div className="text-[13px] leading-5 text-[var(--foundation-text-dark-primary)] space-y-3">
+                                <div className="absolute right-0 top-8 w-[320px] bg-foundation-bg-dark-2 border border-white/10 rounded-lg p-4 shadow-xl z-50">
+                                  <div className="text-[13px] leading-5 text-foundation-text-dark-primary space-y-3">
                                     {promptEnhancement === "rewrite" && (
                                       <>
                                         <p className="font-medium">Describe your task here.</p>
@@ -440,7 +438,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                                             <li>• Write detailed instructions above</li>
                                           </ul>
                                         </div>
-                                        <p className="text-[var(--foundation-text-dark-primary)]/90">
+                                        <p className="text-foundation-text-dark-primary/90">
                                           This is your primary input in Rewrite mode.
                                         </p>
                                       </>
@@ -458,7 +456,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                                             <li>• Select appropriate files</li>
                                           </ul>
                                         </div>
-                                        <p className="text-[var(--foundation-text-dark-primary)]/90">
+                                        <p className="text-foundation-text-dark-primary/90">
                                           Leave empty to just enhance with file context.
                                         </p>
                                       </>
@@ -475,7 +473,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                                             <li>• Leave your instructions unchanged</li>
                                           </ul>
                                         </div>
-                                        <p className="text-[var(--foundation-text-dark-primary)]/90">
+                                        <p className="text-foundation-text-dark-primary/90">
                                           Useful when you've already written detailed instructions.
                                         </p>
                                       </>
@@ -484,9 +482,9 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                                 </div>
                               )}
                             </div>
-                            <button className="p-1.5 hover:bg-[var(--foundation-bg-dark-2)] rounded transition-colors">
+                            <button className="p-1.5 hover:bg-foundation-bg-dark-2 rounded transition-colors">
                               <svg
-                                className="size-4 text-[var(--foundation-text-dark-primary)]/70"
+                                className="size-4 text-foundation-text-dark-primary/70"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -507,18 +505,16 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                             value={taskDescription}
                             onChange={(e) => setTaskDescription(e.target.value)}
                             placeholder={taskConfig.placeholder}
-                            className="flex-1 h-[120px] bg-[var(--foundation-bg-dark-2)] border border-white/10 rounded-lg px-3 py-2.5 text-[13px] leading-5 text-[var(--foundation-text-dark-primary)] placeholder:text-[var(--foundation-text-dark-primary)]/50 focus:outline-none focus:border-white/20 resize-none"
+                            className="flex-1 h-[120px] bg-foundation-bg-dark-2 border border-white/10 rounded-lg px-3 py-2.5 text-[13px] leading-5 text-foundation-text-dark-primary placeholder:text-foundation-text-dark-primary/50 focus:outline-none focus:border-white/20 resize-none"
                           />
 
                           <div className="flex flex-col gap-2">
                             <button
                               onClick={() => setShowDiscoverySettings(true)}
-                              className="px-4 py-2 bg-[var(--foundation-bg-dark-2)] hover:bg-[var(--foundation-bg-dark-3)] border border-white/10 text-[var(--foundation-text-dark-primary)]/90 rounded-lg transition-all text-[13px] leading-5 whitespace-nowrap flex items-center gap-2"
+                              className="px-4 py-2 bg-foundation-bg-dark-2 hover:bg-foundation-bg-dark-3 border border-white/10 text-foundation-text-dark-primary/90 rounded-lg transition-all text-[13px] leading-5 whitespace-nowrap flex items-center gap-2"
                             >
                               <span className="flex items-center gap-1.5">
-                                <span className="text-[var(--foundation-accent-green)]">
-                                  {targetSize}k
-                                </span>
+                                <span className="text-foundation-accent-green">{targetSize}k</span>
                                 <span>{taskConfig.buttonText}</span>
                               </span>
                             </button>
@@ -529,10 +525,10 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                       <div className="flex items-center justify-between pt-5 border-t border-white/10">
                         <div className="flex items-center gap-4">
                           <div>
-                            <div className="text-[13px] leading-5 text-[var(--foundation-text-dark-primary)]">
+                            <div className="text-[13px] leading-5 text-foundation-text-dark-primary">
                               Prompt Enhancement
                             </div>
-                            <div className="text-[12px] leading-[18px] text-[var(--foundation-text-dark-primary)]/70">
+                            <div className="text-[12px] leading-[18px] text-foundation-text-dark-primary/70">
                               How to handle your instructions
                             </div>
                           </div>
@@ -549,7 +545,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
 
                         <div className="flex items-center gap-4">
                           <div className="flex items-center gap-2">
-                            <span className="text-[12px] leading-[18px] text-[var(--foundation-text-dark-primary)]/70">
+                            <span className="text-[12px] leading-[18px] text-foundation-text-dark-primary/70">
                               Plan mode
                             </span>
                             <ModeSelector
@@ -561,7 +557,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                           </div>
 
                           <Toggle checked={autoPlan} onChange={setAutoPlan} />
-                          <span className="text-[13px] leading-5 text-[var(--foundation-text-dark-primary)]/70 min-w-[32px]">
+                          <span className="text-[13px] leading-5 text-foundation-text-dark-primary/70 min-w-[32px]">
                             {autoPlan ? "On" : "Off"}
                           </span>
                         </div>
@@ -591,7 +587,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
             onClick={() => setShowModeSelector(false)}
           />
 
-          <div className="fixed top-16 right-4 z-50 w-[960px] bg-[var(--foundation-bg-dark-1)] border border-white/10 rounded-[16px] shadow-2xl overflow-hidden">
+          <div className="fixed top-16 right-4 z-50 w-[960px] bg-foundation-bg-dark-1 border border-white/10 rounded-[16px] shadow-2xl overflow-hidden">
             <div className="flex h-[600px]">
               <div className="flex-1 p-8 overflow-y-auto">
                 <div className="flex items-start gap-3 mb-6">
@@ -684,7 +680,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                   <div className="mt-6">
                     <button
                       onClick={() => setShowProEditConfig(true)}
-                      className="px-4 py-2 bg-[var(--foundation-accent-green)] hover:bg-[var(--foundation-accent-green)]/80 text-white rounded-lg transition-all text-[14px] font-normal leading-[20px] tracking-[-0.3px]"
+                      className="px-4 py-2 bg-foundation-accent-green hover:bg-foundation-accent-green/80 text-white rounded-lg transition-all text-[14px] font-normal leading-[20px] tracking-[-0.3px]"
                     >
                       Pro Edit Config
                     </button>
@@ -692,7 +688,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                 )}
               </div>
 
-              <div className="w-[360px] bg-[var(--foundation-bg-dark-1)] border-l border-white/10 p-6">
+              <div className="w-[360px] bg-foundation-bg-dark-1 border-l border-white/10 p-6">
                 <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-white/60 mb-4">
                   Standard Modes
                 </h3>
@@ -705,8 +701,8 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                       className={`w-full px-4 py-3 rounded-lg text-left transition-all flex items-center justify-between ${
                         selectedMode.id === mode.id
                           ? mode.id === "manual"
-                            ? "bg-[var(--foundation-accent-blue)]/10 border-2 border-[var(--foundation-accent-blue)] text-white"
-                            : "bg-[var(--foundation-accent-green)]/10 border border-[var(--foundation-accent-green)]/30 text-white"
+                            ? "bg-foundation-accent-blue/10 border-2 border-foundation-accent-blue text-white"
+                            : "bg-foundation-accent-green/10 border border-foundation-accent-green/30 text-white"
                           : "bg-white/5 border border-transparent text-white/80 hover:bg-white/10"
                       }`}
                     >
@@ -732,14 +728,14 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
             onClick={() => setShowProEditConfig(false)}
           />
 
-          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] w-[720px] bg-[var(--foundation-bg-dark-2)] border border-white/10 rounded-[12px] shadow-2xl p-8">
+          <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] w-[720px] bg-foundation-bg-dark-2 border border-white/10 rounded-[12px] shadow-2xl p-8">
             <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-white mb-4">
               Pro Edit Settings
             </h2>
 
             <div className="flex items-center gap-2 mb-4">
-              <IconCheckmark className="size-4 text-[var(--foundation-accent-green)]" />
-              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-accent-green)]">
+              <IconCheckmark className="size-4 text-foundation-accent-green" />
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-accent-green">
                 Pro Edits currently using Agent mode
               </span>
             </div>
@@ -749,12 +745,12 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
               models apply those edits simultaneously.
             </p>
 
-            <div className="inline-flex items-center gap-0 bg-[var(--foundation-bg-dark-2)] rounded-lg p-1 mb-6">
+            <div className="inline-flex items-center gap-0 bg-foundation-bg-dark-2 rounded-lg p-1 mb-6">
               <button
                 onClick={() => setProEditMode("agent")}
                 className={`px-4 py-1.5 rounded-md transition-all text-[14px] font-normal leading-[20px] tracking-[-0.3px] ${
                   proEditMode === "agent"
-                    ? "bg-[var(--foundation-accent-green)]/30 text-white"
+                    ? "bg-foundation-accent-green/30 text-white"
                     : "text-white/60 hover:text-white"
                 }`}
               >
@@ -764,7 +760,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                 onClick={() => setProEditMode("model")}
                 className={`px-4 py-1.5 rounded-md transition-all text-[14px] font-normal leading-[20px] tracking-[-0.3px] ${
                   proEditMode === "model"
-                    ? "bg-[var(--foundation-accent-green)]/30 text-white"
+                    ? "bg-foundation-accent-green/30 text-white"
                     : "text-white/60 hover:text-white"
                 }`}
               >
@@ -790,7 +786,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                       <select
                         value={selectedAgent}
                         onChange={(e) => setSelectedAgent(e.target.value)}
-                        className="w-full bg-[var(--foundation-bg-dark-2)] border border-white/10 rounded-lg px-4 py-2.5 text-[14px] text-white font-normal leading-[20px] tracking-[-0.3px] appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-white/20"
+                        className="w-full bg-foundation-bg-dark-2 border border-white/10 rounded-lg px-4 py-2.5 text-[14px] text-white font-normal leading-[20px] tracking-[-0.3px] appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-white/20"
                       >
                         <option value="Codex CLI">Codex CLI</option>
                         <option value="Aider">Aider</option>
@@ -808,7 +804,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                       <select
                         value={selectedModelConfig}
                         onChange={(e) => setSelectedModelConfig(e.target.value)}
-                        className="w-full bg-[var(--foundation-bg-dark-2)] border border-white/10 rounded-lg px-4 py-2.5 text-[14px] text-white font-normal leading-[20px] tracking-[-0.3px] appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-white/20"
+                        className="w-full bg-foundation-bg-dark-2 border border-white/10 rounded-lg px-4 py-2.5 text-[14px] text-white font-normal leading-[20px] tracking-[-0.3px] appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-white/20"
                       >
                         <option value="GPT-5.2 Codex Medium">GPT-5.2 Codex Medium</option>
                         <option value="GPT-5.2 Codex Large">GPT-5.2 Codex Large</option>

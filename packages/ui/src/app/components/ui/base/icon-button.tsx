@@ -1,12 +1,24 @@
 import { cn } from "../utils";
 
-export interface IconButtonProps {
+type IconButtonLabelProps =
+  | {
+      /** Tooltip/title text */
+      title: string;
+      /** Explicit aria-label (overrides title for accessibility if provided) */
+      ariaLabel?: string;
+    }
+  | {
+      /** Tooltip/title text */
+      title?: string;
+      /** Explicit aria-label (required when no title is provided) */
+      ariaLabel: string;
+    };
+
+export type IconButtonProps = IconButtonLabelProps & {
   /** Icon to display */
   icon: React.ReactNode;
   /** Click handler */
   onClick?: () => void;
-  /** Tooltip/title text */
-  title?: string;
   /** Size variant */
   size?: "sm" | "md" | "lg";
   /** Visual variant */
@@ -21,7 +33,7 @@ export interface IconButtonProps {
   className?: string;
   /** Button type */
   type?: "button" | "submit" | "reset";
-}
+};
 
 /**
  * IconButton - A button that displays only an icon
@@ -39,6 +51,7 @@ export function IconButton({
   icon,
   onClick,
   title,
+  ariaLabel,
   size = "md",
   variant = "ghost",
   active = false,
@@ -47,6 +60,14 @@ export function IconButton({
   className,
   type = "button",
 }: IconButtonProps) {
+  const accessibleLabel = ariaLabel ?? title;
+
+  if (!accessibleLabel && process.env.NODE_ENV !== "production") {
+    // Enforce accessible names for icon-only buttons in dev builds.
+    // eslint-disable-next-line no-console
+    console.warn("IconButton requires a title or ariaLabel for accessibility.");
+  }
+
   const sizes = {
     sm: "p-1",
     md: "p-1.5",
@@ -61,8 +82,10 @@ export function IconButton({
 
   const variants = {
     ghost: "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-    outline: "border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2",
-    solid: "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
+    outline:
+      "border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2",
+    solid:
+      "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
   };
 
   return (
@@ -71,7 +94,7 @@ export function IconButton({
       onClick={onClick}
       disabled={disabled}
       title={title}
-      aria-label={title}
+      aria-label={accessibleLabel}
       className={cn(
         "rounded-md transition-colors flex items-center justify-center font-foundation",
         sizes[size],

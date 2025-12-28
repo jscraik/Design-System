@@ -37,10 +37,31 @@ bun-debug.log*
 *~
 .DS_Store
 
+# Xcode
+DerivedData/
+*.xcworkspace/
+*.xcuserdata/
+xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+
+# Tooling
+.kiro/
+
+# Swift/SwiftPM
+.build/
+.swiftpm/
+
 # Testing
 coverage/
 .nyc_output/
 *.lcov
+test-results/
+playwright-report/
+apps/web/test-results/
+apps/web/playwright-report/
 
 # Misc
 .cache/

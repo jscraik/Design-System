@@ -5,4 +5,3 @@ export { FoundationsShowcase } from "./FoundationsShowcase";
 export { IconographyShowcase } from "./IconographyShowcase";
 export { SpacingShowcase } from "./SpacingShowcase";
 export { TypographyShowcase } from "./TypographyShowcase";
-

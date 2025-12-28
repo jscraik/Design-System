@@ -63,9 +63,7 @@ export function ColorShowcase() {
     <div className="w-full max-w-6xl space-y-8">
       {/* Dark Theme Colors */}
       <section>
-        <h2 className="text-lg font-semibold mb-4 text-[var(--foundation-text-dark-primary)]">
-          Dark Theme
-        </h2>
+        <h2 className="text-lg font-semibold mb-4 text-foundation-text-dark-primary">Dark Theme</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <ColorGroup title="Backgrounds" colors={colorTokens.background.dark} isDark />
           <ColorGroup title="Text" colors={colorTokens.text.dark} isDark />
@@ -76,7 +74,7 @@ export function ColorShowcase() {
 
       {/* Light Theme Colors */}
       <section>
-        <h2 className="text-lg font-semibold mb-4 text-[var(--foundation-text-dark-primary)]">
+        <h2 className="text-lg font-semibold mb-4 text-foundation-text-dark-primary">
           Light Theme
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -89,7 +87,7 @@ export function ColorShowcase() {
 
       {/* CSS Variable Reference */}
       <section>
-        <h2 className="text-lg font-semibold mb-4 text-[var(--foundation-text-dark-primary)]">
+        <h2 className="text-lg font-semibold mb-4 text-foundation-text-dark-primary">
           CSS Variables (Live)
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -97,7 +95,7 @@ export function ColorShowcase() {
             className="rounded-xl p-5 border border-white/10"
             style={{ backgroundColor: "var(--foundation-bg-dark-2)" }}
           >
-            <h3 className="text-sm font-semibold mb-4 text-[var(--foundation-text-dark-primary)]">
+            <h3 className="text-sm font-semibold mb-4 text-foundation-text-dark-primary">
               Dark Backgrounds
             </h3>
             <div className="space-y-3">
@@ -112,10 +110,10 @@ export function ColorShowcase() {
                     style={{ backgroundColor: `var(${name})` }}
                   />
                   <div>
-                    <div className="text-sm font-medium text-[var(--foundation-text-dark-primary)]">
+                    <div className="text-sm font-medium text-foundation-text-dark-primary">
                       {desc}
                     </div>
-                    <div className="text-xs font-mono text-[var(--foundation-text-dark-tertiary)]">
+                    <div className="text-xs font-mono text-foundation-text-dark-tertiary">
                       {name}
                     </div>
                   </div>
@@ -128,7 +126,7 @@ export function ColorShowcase() {
             className="rounded-xl p-5 border border-white/10"
             style={{ backgroundColor: "var(--foundation-bg-dark-2)" }}
           >
-            <h3 className="text-sm font-semibold mb-4 text-[var(--foundation-text-dark-primary)]">
+            <h3 className="text-sm font-semibold mb-4 text-foundation-text-dark-primary">
               Accent Colors
             </h3>
             <div className="space-y-3">
@@ -144,10 +142,10 @@ export function ColorShowcase() {
                     style={{ backgroundColor: `var(${name})` }}
                   />
                   <div>
-                    <div className="text-sm font-medium text-[var(--foundation-text-dark-primary)]">
+                    <div className="text-sm font-medium text-foundation-text-dark-primary">
                       {desc}
                     </div>
-                    <div className="text-xs font-mono text-[var(--foundation-text-dark-tertiary)]">
+                    <div className="text-xs font-mono text-foundation-text-dark-tertiary">
                       {name}
                     </div>
                   </div>

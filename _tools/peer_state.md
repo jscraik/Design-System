@@ -3,10 +3,10 @@
 ## Current Focus
 
 - Apps SDK compliance audit completed (~95% compliance)
-- All high and medium priority gaps addressed
-- Production-scale testing infrastructure in place
+- Release workflow and Changesets wiring in place
+- React 19 compatibility enforced across the UI library
+- Visual regression + a11y guardrails in place for widgets and core UI
 - Iconography system expanded with full arrow icon set
-- Dashboard widget added to widget build/MCP resources and restyled to Apps SDK UI tokens
 - Widgets restyled to Apps SDK UI tokens (auth-demo, shopping-cart, pizzaz-shop, search-results, pizzaz-table, pizzaz-markdown)
 - Full-repo formatting run (`pnpm format`)
 
@@ -30,20 +30,20 @@
 - [x] Run automated accessibility audit (axe/lighthouse) on all widgets
 - [x] Restyle remaining widgets (pizzaz-carousel, pizzaz-gallery, solar-system) to Apps SDK UI tokens
 - [x] Split Three.js vendor chunk and adjust widget build size warning threshold
-- [ ] Add unit tests for remaining components (Select, Tabs, Accordion, etc.)
+- [x] Add unit tests for remaining components (Select, Tabs, Accordion, etc.)
 - [x] Add Playwright integration tests for apps/web routing
 - [x] Re-run widget a11y audit after fixing regressions
-- [ ] Add visual regression testing (Playwright screenshots or Chromatic)
+- [x] Add visual regression testing (Playwright screenshots or Chromatic)
 - [x] Add Storybook stories for all settings components
 
 ### Medium
 
 - [x] Add internationalization support (i18n utility created)
 - [x] Implement template URI versioning for cache busting
-- [ ] Document `_meta.widgetSessionId` pattern in runtime package
-- [ ] Replace remaining foundation-token styling in core UI surfaces with Apps SDK UI utilities
-- [ ] Migrate MDX docs to Storybook 10 format (optional)
-- [ ] Confirm MIT license holder name in `LICENSE`
+- [x] Document `_meta.widgetSessionId` pattern in runtime package
+- [x] Replace remaining foundation-token styling in core UI surfaces with Apps SDK UI utilities
+- [x] Migrate MDX docs to Storybook 10 format (optional)
+- [x] Confirm MIT license holder name in `LICENSE`
 
 ## Resources
 
@@ -58,6 +58,39 @@
 | Test utils          | `packages/ui/src/test/utils.tsx` | Testing Library helpers                  |
 
 ## Session Notes
+
+- 2025-12-28: Release/process + compatibility hardening
+  - React 19 compatibility enforced (peers + pnpm overrides for react/react-dom/types)
+  - Added/updated a11y labels for icon-only controls across settings/modals/chat sidebar
+  - Added/expanded unit tests for remaining primitives (Select, Tabs, Accordion)
+  - Visual regression snapshots wired via Playwright (@visual) and updated
+  - Formatting pass run for CI consistency
+  - Core UI surfaces now use foundation token utilities (removed raw var() classes)
+
+- 2025-12-28: Visual regression stabilization
+  - Playwright visual config runs Vite on port 5176 (strict) to avoid clashes
+  - Installed Playwright browsers (firefox/webkit) for visual coverage
+  - Updated visual snapshots after sidebar toggle selector fix
+
+- 2025-12-28: Bloat + dead-code cleanup
+  - Removed legacy visual suite from `apps/web/tests/visual.spec.ts` and darwin-only snapshots
+  - Pruned unused Figma export components under `packages/ui/src/imports/` (kept svg paths)
+  - Trimmed `apps/web` dependencies to only used workspace + React deps
+  - Dropped unused `@react-spring/three` from widgets
+  - E2E config now ignores visual tests (`apps/web/playwright.config.ts`)
+  - Visual snapshots now stored per Playwright project (config updated + baselines regenerated)
+  - Restored `tw-animate-css` for apps/web (required by main.css)
+  - Split ChatGPT icon bundles into per-pack modules to reduce bundle bloat
+  - Added Git LFS tracking for `context/foundations/*.pdf`
+
+- 2025-12-28: Bug-hunt fixes + validation
+  - `useWidgetState` now propagates `null` to host and avoids clobbering defaults when host state is undefined
+  - `createEmbeddedHost` now resolves `window.openai` lazily so late injection works
+  - Chart tooltip renders zero values correctly
+  - `apps/web` navigation hook is wired to Router (kept as API)
+  - Dialog tests now include descriptions to eliminate Radix warnings
+  - `.gitignore` updated with explicit app-level Playwright output paths
+  - Tests: `pnpm test` (pass, 477 tests), `pnpm test:visual:web` (pass, 72 tests)
 
 - 2025-12-28: Settings components Storybook stories
   - Created 12 comprehensive Storybook stories for all settings components
@@ -145,6 +178,8 @@
 ## Decisions Made
 
 - Keep demo/Docs exports out of the root UI barrel; expose via `@chatui/ui/dev`
+- Require React 19 for `@chatui/ui` to align with Apps SDK UI usage
+- Release workflow standardized via Changesets + CI action
 - CI runs lint, format check, compliance, type-checks, unit tests, and builds
 - Unit tests use jsdom environment with mocked Radix dependencies
 - Tests focus on invariants (render, ref, disabled, keyboard, ARIA) not visual appearance

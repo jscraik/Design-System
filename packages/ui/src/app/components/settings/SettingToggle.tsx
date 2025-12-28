@@ -27,14 +27,14 @@ export function SettingToggle({
       <div className="flex items-center justify-between px-3 py-2.5">
         <div className="flex items-center gap-3 flex-1">
           {icon}
-          <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-primary)]">
+          <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
             {label}
           </span>
         </div>
         <button
           onClick={() => onCheckedChange(!checked)}
           className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors flex-shrink-0 ${
-            checked ? "bg-[#40c977]" : "bg-[var(--foundation-bg-dark-3)]"
+            checked ? "bg-foundation-accent-green" : "bg-foundation-bg-dark-3"
           }`}
           role="switch"
           aria-checked={checked}
@@ -47,7 +47,7 @@ export function SettingToggle({
         </button>
       </div>
       {description && (
-        <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-[var(--foundation-text-dark-tertiary)] px-3 mt-1">
+        <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary px-3 mt-1">
           {description}
         </p>
       )}

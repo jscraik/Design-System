@@ -81,7 +81,7 @@ const preset: Config = {
             fontWeight: "var(--foundation-heading-3-weight)",
           },
         ],
-        "body": [
+        body: [
           "var(--foundation-body-size)",
           {
             lineHeight: "var(--foundation-body-line)",
@@ -113,7 +113,7 @@ const preset: Config = {
             fontWeight: "var(--foundation-body-small-weight-emphasis)",
           },
         ],
-        "caption": [
+        caption: [
           "var(--foundation-caption-size)",
           {
             lineHeight: "var(--foundation-caption-line)",
@@ -138,18 +138,18 @@ const preset: Config = {
         "heading-1": "var(--foundation-heading-1-tracking)",
         "heading-2": "var(--foundation-heading-2-tracking)",
         "heading-3": "var(--foundation-heading-3-tracking)",
-        "body": "var(--foundation-body-tracking)",
+        body: "var(--foundation-body-tracking)",
         "body-small": "var(--foundation-body-small-tracking)",
-        "caption": "var(--foundation-caption-tracking)",
+        caption: "var(--foundation-caption-tracking)",
       },
       lineHeight: {
         // Foundation line-height values
         "heading-1": "var(--foundation-heading-1-line)",
         "heading-2": "var(--foundation-heading-2-line)",
         "heading-3": "var(--foundation-heading-3-line)",
-        "body": "var(--foundation-body-line)",
+        body: "var(--foundation-body-line)",
         "body-small": "var(--foundation-body-small-line)",
-        "caption": "var(--foundation-caption-line)",
+        caption: "var(--foundation-caption-line)",
       },
     },
   },

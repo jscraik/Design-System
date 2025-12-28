@@ -116,46 +116,117 @@ export function useHost() {
  * Create a host adapter for embedded ChatGPT mode (wraps window.openai)
  */
 export function createEmbeddedHost(): Host {
-  const openai = typeof window !== "undefined" ? window.openai : undefined;
+  const getOpenAi = () => (typeof window !== "undefined" ? window.openai : undefined);
 
   return {
     mode: "embedded",
     get toolInput() {
-      return openai?.toolInput;
+      return getOpenAi()?.toolInput;
     },
     get toolOutput() {
-      return openai?.toolOutput;
+      return getOpenAi()?.toolOutput;
     },
     get toolResponseMetadata() {
-      return openai?.toolResponseMetadata;
+      return getOpenAi()?.toolResponseMetadata;
     },
-    callTool: openai?.callTool
-      ? (name: string, args?: unknown) => openai.callTool!(name, args as UnknownRecord)
-      : undefined,
-    sendMessage: openai?.sendFollowUpMessage
-      ? async (text) => {
-          await openai.sendFollowUpMessage?.({ prompt: text });
+    get callTool() {
+      const openai = getOpenAi();
+      if (!openai?.callTool) return undefined;
+      return (name: string, args?: unknown) => {
+        const current = getOpenAi();
+        if (!current?.callTool) {
+          return Promise.reject(new Error("window.openai.callTool is unavailable"));
         }
-      : undefined,
-    getState: openai?.getWidgetState?.bind(openai),
-    setState: openai?.setWidgetState
-      ? (state: unknown) => openai.setWidgetState!(state as UnknownRecord | null)
-      : undefined,
-    uploadFile: openai?.uploadFile?.bind(openai),
-    getFileDownloadUrl: openai?.getFileDownloadUrl?.bind(openai),
-    requestDisplayMode: openai?.requestDisplayMode
-      ? (args: { mode: OpenAiDisplayMode }) => openai.requestDisplayMode!(args)
-      : undefined,
-    requestModal: openai?.requestModal
-      ? (args: UnknownRecord) => openai.requestModal!(args)
-      : undefined,
-    openExternal: openai?.openExternal
-      ? (args: { href: string }) => openai.openExternal!(args)
-      : undefined,
-    requestClose: openai?.requestClose?.bind(openai),
-    notifyIntrinsicHeight: openai?.notifyIntrinsicHeight
-      ? (args: { height: number }) => openai.notifyIntrinsicHeight!(args)
-      : undefined,
+        return current.callTool(name, args as UnknownRecord);
+      };
+    },
+    get sendMessage() {
+      const openai = getOpenAi();
+      if (!openai?.sendFollowUpMessage) return undefined;
+      return async (text: string) => {
+        const current = getOpenAi();
+        if (!current?.sendFollowUpMessage) {
+          throw new Error("window.openai.sendFollowUpMessage is unavailable");
+        }
+        await current.sendFollowUpMessage({ prompt: text });
+      };
+    },
+    get getState() {
+      const openai = getOpenAi();
+      if (!openai?.getWidgetState) return undefined;
+      return () => getOpenAi()?.getWidgetState?.();
+    },
+    get setState() {
+      const openai = getOpenAi();
+      if (!openai?.setWidgetState) return undefined;
+      return (state: unknown) => {
+        getOpenAi()?.setWidgetState?.(state as UnknownRecord | null);
+      };
+    },
+    get uploadFile() {
+      const openai = getOpenAi();
+      if (!openai?.uploadFile) return undefined;
+      return async (file: File) => {
+        const current = getOpenAi();
+        if (!current?.uploadFile) {
+          throw new Error("window.openai.uploadFile is unavailable");
+        }
+        return current.uploadFile(file);
+      };
+    },
+    get getFileDownloadUrl() {
+      const openai = getOpenAi();
+      if (!openai?.getFileDownloadUrl) return undefined;
+      return async (args: { fileId: string }) => {
+        const current = getOpenAi();
+        if (!current?.getFileDownloadUrl) {
+          throw new Error("window.openai.getFileDownloadUrl is unavailable");
+        }
+        return current.getFileDownloadUrl(args);
+      };
+    },
+    get requestDisplayMode() {
+      const openai = getOpenAi();
+      if (!openai?.requestDisplayMode) return undefined;
+      return async (args: { mode: OpenAiDisplayMode }) => {
+        const current = getOpenAi();
+        if (!current?.requestDisplayMode) {
+          throw new Error("window.openai.requestDisplayMode is unavailable");
+        }
+        return current.requestDisplayMode(args);
+      };
+    },
+    get requestModal() {
+      const openai = getOpenAi();
+      if (!openai?.requestModal) return undefined;
+      return async (args: UnknownRecord) => {
+        const current = getOpenAi();
+        if (!current?.requestModal) {
+          throw new Error("window.openai.requestModal is unavailable");
+        }
+        return current.requestModal(args);
+      };
+    },
+    get openExternal() {
+      const openai = getOpenAi();
+      if (!openai?.openExternal) return undefined;
+      return async (args: { href: string }) => {
+        const current = getOpenAi();
+        if (!current?.openExternal) {
+          throw new Error("window.openai.openExternal is unavailable");
+        }
+        return current.openExternal(args);
+      };
+    },
+    get requestClose() {
+      const openai = getOpenAi();
+      return openai?.requestClose?.bind(openai);
+    },
+    get notifyIntrinsicHeight() {
+      const openai = getOpenAi();
+      if (!openai?.notifyIntrinsicHeight) return undefined;
+      return (args: { height: number }) => openai.notifyIntrinsicHeight!(args);
+    },
   };
 }
 

@@ -42,7 +42,7 @@ test.describe("widget a11y", () => {
         violations,
         strict
           ? `${widget.title} has accessibility violations`
-          : `${widget.title} has accessibility violations (soft)`
+          : `${widget.title} has accessibility violations (soft)`,
       ).toEqual([]);
     });
   }

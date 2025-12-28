@@ -73,7 +73,7 @@ export function DiscoverySettingsModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/60" onClick={onClose} />
-      <div className="relative bg-[var(--foundation-bg-dark-1)] border border-white/10 rounded-xl w-[420px] max-h-[90vh] overflow-y-auto shadow-2xl">
+      <div className="relative bg-foundation-bg-dark-1 border border-white/10 rounded-xl w-[420px] max-h-[90vh] overflow-y-auto shadow-2xl">
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
           <h2 className="text-[16px] font-semibold leading-[24px] tracking-[-0.32px] text-white">
             Discovery Settings
@@ -81,7 +81,7 @@ export function DiscoverySettingsModal({
           <div className="flex items-center gap-2">
             <button
               onClick={handleReset}
-              className="px-3 py-1.5 text-[13px] font-normal leading-[18px] text-[var(--foundation-accent-green)] hover:bg-white/5 rounded-lg transition-colors flex items-center gap-1.5"
+              className="px-3 py-1.5 text-[13px] font-normal leading-[18px] text-foundation-accent-green hover:bg-white/5 rounded-lg transition-colors flex items-center gap-1.5"
             >
               <svg className="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -138,7 +138,7 @@ export function DiscoverySettingsModal({
                   />
                 </svg>
                 <svg
-                  className="size-3.5 text-[var(--foundation-accent-orange)]"
+                  className="size-3.5 text-foundation-accent-orange"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -196,7 +196,7 @@ export function DiscoverySettingsModal({
                 <div className="flex items-start gap-3">
                   <div className="mt-0.5">
                     <svg
-                      className="size-5 text-[var(--foundation-accent-blue)]"
+                      className="size-5 text-foundation-accent-blue"
                       fill="currentColor"
                       viewBox="0 0 24 24"
                     >
@@ -218,7 +218,7 @@ export function DiscoverySettingsModal({
                 <div className="flex items-start gap-3">
                   <div className="mt-0.5">
                     <svg
-                      className="size-5 text-[var(--foundation-accent-green)]"
+                      className="size-5 text-foundation-accent-green"
                       fill="currentColor"
                       viewBox="0 0 24 24"
                     >
@@ -297,7 +297,7 @@ export function DiscoverySettingsModal({
               <div className="flex items-start gap-3">
                 <div className="mt-0.5">
                   <svg
-                    className="size-5 text-[var(--foundation-accent-blue)]"
+                    className="size-5 text-foundation-accent-blue"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                   >
@@ -319,16 +319,16 @@ export function DiscoverySettingsModal({
         </div>
 
         <div className="border-t border-white/10 px-6 py-4 flex items-center justify-center">
-          <div className="flex items-center gap-2 bg-[var(--foundation-bg-dark-1)] border border-white/10 rounded-lg px-4 py-2">
+          <div className="flex items-center gap-2 bg-foundation-bg-dark-1 border border-white/10 rounded-lg px-4 py-2">
             <svg
-              className="size-5 text-[var(--foundation-accent-blue)]"
+              className="size-5 text-foundation-accent-blue"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
             </svg>
             <span className="text-[14px] font-medium leading-[20px] text-white">{targetSize}k</span>
-            <span className="text-[13px] font-normal leading-[18px] text-[var(--foundation-accent-green)] capitalize">
+            <span className="text-[13px] font-normal leading-[18px] text-foundation-accent-green capitalize">
               {promptEnhancement}
             </span>
           </div>

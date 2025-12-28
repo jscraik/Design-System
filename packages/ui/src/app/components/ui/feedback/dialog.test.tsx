@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { render, screen, waitFor } from "../../../test/utils";
 
-import { Button } from "./button";
+import { Button } from "../base/button";
 import {
   Dialog,
   DialogClose,
@@ -25,6 +25,7 @@ describe("Dialog", () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Dialog Title</DialogTitle>
+              <DialogDescription>Dialog description</DialogDescription>
             </DialogHeader>
           </DialogContent>
         </Dialog>,
@@ -40,6 +41,7 @@ describe("Dialog", () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Dialog Title</DialogTitle>
+              <DialogDescription>Dialog description</DialogDescription>
             </DialogHeader>
           </DialogContent>
         </Dialog>,
@@ -75,6 +77,7 @@ describe("Dialog", () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Dialog Title</DialogTitle>
+              <DialogDescription>Dialog description</DialogDescription>
             </DialogHeader>
           </DialogContent>
         </Dialog>,
@@ -93,6 +96,7 @@ describe("Dialog", () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Dialog Title</DialogTitle>
+              <DialogDescription>Dialog description</DialogDescription>
             </DialogHeader>
           </DialogContent>
         </Dialog>,
@@ -117,6 +121,7 @@ describe("Dialog", () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Dialog Title</DialogTitle>
+              <DialogDescription>Dialog description</DialogDescription>
             </DialogHeader>
           </DialogContent>
         </Dialog>,
@@ -143,6 +148,7 @@ describe("Dialog", () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Dialog Title</DialogTitle>
+              <DialogDescription>Dialog description</DialogDescription>
             </DialogHeader>
           </DialogContent>
         </Dialog>,
@@ -158,7 +164,10 @@ describe("Dialog", () => {
       const { rerender } = render(
         <Dialog open={false}>
           <DialogContent>
-            <DialogTitle>Title</DialogTitle>
+            <DialogHeader>
+              <DialogTitle>Title</DialogTitle>
+              <DialogDescription>Dialog description</DialogDescription>
+            </DialogHeader>
           </DialogContent>
         </Dialog>,
       );
@@ -168,7 +177,10 @@ describe("Dialog", () => {
       rerender(
         <Dialog open={true}>
           <DialogContent>
-            <DialogTitle>Title</DialogTitle>
+            <DialogHeader>
+              <DialogTitle>Title</DialogTitle>
+              <DialogDescription>Dialog description</DialogDescription>
+            </DialogHeader>
           </DialogContent>
         </Dialog>,
       );
@@ -184,6 +196,7 @@ describe("Dialog", () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Dialog Title</DialogTitle>
+              <DialogDescription>Dialog description</DialogDescription>
             </DialogHeader>
             <DialogFooter>
               <DialogClose asChild>
@@ -213,6 +226,7 @@ describe("Dialog", () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Dialog Title</DialogTitle>
+              <DialogDescription>Dialog description</DialogDescription>
             </DialogHeader>
           </DialogContent>
         </Dialog>,
@@ -227,6 +241,7 @@ describe("Dialog", () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Dialog Title</DialogTitle>
+              <DialogDescription>Dialog description</DialogDescription>
             </DialogHeader>
           </DialogContent>
         </Dialog>,
@@ -258,6 +273,7 @@ describe("Dialog", () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Dialog Title</DialogTitle>
+              <DialogDescription>Dialog description</DialogDescription>
             </DialogHeader>
           </DialogContent>
         </Dialog>,
@@ -272,6 +288,7 @@ describe("Dialog", () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Dialog Title</DialogTitle>
+              <DialogDescription>Dialog description</DialogDescription>
             </DialogHeader>
             <DialogFooter>
               <Button>First</Button>
@@ -302,6 +319,7 @@ describe("Dialog", () => {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Dialog Title</DialogTitle>
+              <DialogDescription>Dialog description</DialogDescription>
             </DialogHeader>
           </DialogContent>
         </Dialog>,

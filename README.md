@@ -165,14 +165,14 @@ import { ChatFullWidthTemplate } from "@chatui/ui/experimental";
 
 ## Public API surface
 
-| Category           | Exports (examples)                                                        |
-| ------------------ | ------------------------------------------------------------------------- |
-| Chat UI components | ChatUIRoot, ChatHeader, ChatSidebar, ChatMessages, ChatInput, ComposeView |
-| UI primitives      | Button, Dialog, Tabs, Tooltip, and more                                   |
-| Icons              | Icons adapter, ChatGPTIcons                                               |
-| Pages              | DesignSystemPage, TypographyPage, SpacingPage (via `@chatui/ui/dev`)       |
+| Category           | Exports (examples)                                                           |
+| ------------------ | ---------------------------------------------------------------------------- |
+| Chat UI components | ChatUIRoot, ChatHeader, ChatSidebar, ChatMessages, ChatInput, ComposeView    |
+| UI primitives      | Button, Dialog, Tabs, Tooltip, and more                                      |
+| Icons              | Icons adapter, ChatGPTIcons                                                  |
+| Pages              | DesignSystemPage, TypographyPage, SpacingPage (via `@chatui/ui/dev`)         |
 | Templates          | ChatFullWidthTemplate, ChatTwoPaneTemplate, DashboardTemplate (experimental) |
-| Utilities          | useControllableState                                                      |
+| Utilities          | useControllableState                                                         |
 
 ## Public API policy
 

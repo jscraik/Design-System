@@ -38,23 +38,23 @@ export function AppsPanel({ onBack }: SettingsPanelProps) {
 
   return (
     <>
-      <div className="px-6 py-4 border-b border-[var(--foundation-text-dark-primary)]/10 flex items-center gap-3">
+      <div className="px-6 py-4 border-b border-foundation-text-dark-primary/10 flex items-center gap-3">
         <div className="flex gap-2">
           <button
             onClick={onBack}
-            className="size-3 rounded-full bg-[var(--foundation-accent-red)] hover:bg-[var(--foundation-accent-red)]/80 transition-colors"
+            className="size-3 rounded-full bg-foundation-accent-red hover:bg-foundation-accent-red/80 transition-colors"
             aria-label="Close"
           />
-          <div className="size-3 rounded-full bg-[var(--foundation-accent-orange)]" />
-          <div className="size-3 rounded-full bg-[var(--foundation-accent-green)]" />
+          <div className="size-3 rounded-full bg-foundation-accent-orange" />
+          <div className="size-3 rounded-full bg-foundation-accent-green" />
         </div>
         <button
           onClick={onBack}
-          className="p-1 hover:bg-[var(--foundation-bg-dark-3)] rounded transition-colors"
+          className="p-1 hover:bg-foundation-bg-dark-3 rounded transition-colors"
         >
-          <IconChevronLeftMd className="size-4 text-[var(--foundation-icon-dark-primary)]" />
+          <IconChevronLeftMd className="size-4 text-foundation-icon-dark-primary" />
         </button>
-        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-[var(--foundation-text-dark-primary)]">
+        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foundation-text-dark-primary">
           Apps
         </h2>
       </div>
@@ -62,48 +62,46 @@ export function AppsPanel({ onBack }: SettingsPanelProps) {
       <div className="overflow-y-auto max-h-[calc(85vh-80px)] px-6 py-4">
         {/* Enabled apps section */}
         <div className="mb-6">
-          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-primary)] mb-2 px-3">
+          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
             Enabled apps
           </h3>
           <div className="space-y-0.5">
             {enabledApps.map((app, index) => (
               <button
                 key={index}
-                className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-[var(--foundation-bg-dark-2)] rounded-lg transition-colors"
+                className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <AppIcon color={app.color}>{app.icon}</AppIcon>
-                  <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-primary)]">
+                  <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
                     {app.name}
                   </span>
                 </div>
-                <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                <IconChevronRightMd className="size-4 text-foundation-icon-dark-tertiary" />
               </button>
             ))}
           </div>
 
           {/* Info text */}
           <div className="px-3 mt-3">
-            <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-[var(--foundation-text-dark-tertiary)]">
+            <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary">
               ChatGPT can access information from connected apps. Your permissions are always
               respected.{" "}
-              <button className="text-[var(--foundation-accent-blue)] hover:underline">
-                Learn more
-              </button>
+              <button className="text-foundation-accent-blue hover:underline">Learn more</button>
             </p>
           </div>
         </div>
 
         {/* All apps section */}
         <div>
-          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-primary)] mb-2 px-3">
+          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
             All apps
           </h3>
-          <button className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-[var(--foundation-bg-dark-2)] rounded-lg transition-colors">
+          <button className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors">
             <div className="flex items-center gap-3">
-              <div className="size-5 rounded bg-[var(--foundation-bg-dark-3)] flex items-center justify-center">
+              <div className="size-5 rounded bg-foundation-bg-dark-3 flex items-center justify-center">
                 <svg
-                  className="size-3 text-[var(--foundation-icon-dark-secondary)]"
+                  className="size-3 text-foundation-icon-dark-secondary"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -116,11 +114,11 @@ export function AppsPanel({ onBack }: SettingsPanelProps) {
                   />
                 </svg>
               </div>
-              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-primary)]">
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
                 Browse Apps
               </span>
             </div>
-            <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+            <IconChevronRightMd className="size-4 text-foundation-icon-dark-tertiary" />
           </button>
         </div>
       </div>

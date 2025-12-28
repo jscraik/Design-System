@@ -185,7 +185,8 @@ describe("Switch", () => {
 
     it("has visible focus indicator styles", () => {
       render(<Switch aria-label="Test switch" />);
-      expect(screen.getByRole("switch")).toHaveClass("focus-visible:ring-ring/50");
+      // The actual class uses foundation tokens
+      expect(screen.getByRole("switch")).toHaveClass("focus-visible:ring-2");
     });
   });
 

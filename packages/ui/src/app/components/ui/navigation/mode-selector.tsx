@@ -83,28 +83,28 @@ export function ModeSelector({
   };
 
   const triggerClasses = {
-    default: "bg-[var(--foundation-bg-dark-2)] border border-white/10 rounded-lg px-3 py-1.5",
+    default: "bg-foundation-bg-dark-2 border border-white/10 rounded-lg px-3 py-1.5",
     compact: "px-2 py-1 rounded-md",
-    pill: "bg-[var(--foundation-bg-dark-2)] border border-white/10 rounded-full px-4 py-1.5",
+    pill: "bg-foundation-bg-dark-2 border border-white/10 rounded-full px-4 py-1.5",
   };
 
   return (
     <>
       <div className={cn("relative", className)}>
         {label && (
-          <span className="text-[12px] leading-[18px] text-[var(--foundation-text-dark-primary)]/70 mr-2">
+          <span className="text-[12px] leading-[18px] text-foundation-text-dark-primary/70 mr-2">
             {label}
           </span>
         )}
         <button
           onClick={handleOpen}
           className={cn(
-            "text-[12px] leading-[18px] text-[var(--foundation-text-dark-primary)] flex items-center gap-2 hover:bg-[var(--foundation-bg-dark-3)] transition-colors",
+            "text-[12px] leading-[18px] text-foundation-text-dark-primary flex items-center gap-2 hover:bg-foundation-bg-dark-3 transition-colors",
             triggerClasses[variant],
           )}
         >
           {value?.name ?? modes[0]?.name}
-          <IconChevronDownMd className="size-3 text-[var(--foundation-text-dark-primary)]/70" />
+          <IconChevronDownMd className="size-3 text-foundation-text-dark-primary/70" />
         </button>
       </div>
 
@@ -114,7 +114,7 @@ export function ModeSelector({
 
           <div
             className={cn(
-              "fixed z-50 bg-[var(--foundation-bg-dark-1)] border border-white/10 rounded-[16px] shadow-2xl overflow-hidden",
+              "fixed z-50 bg-foundation-bg-dark-1 border border-white/10 rounded-[16px] shadow-2xl overflow-hidden",
               showPreview
                 ? "top-16 right-4 w-[960px]"
                 : "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px]",
@@ -195,7 +195,7 @@ export function ModeSelector({
               {/* Mode List */}
               <div
                 className={cn(
-                  "bg-[var(--foundation-bg-dark-1)] p-6",
+                  "bg-foundation-bg-dark-1 p-6",
                   showPreview ? "w-[360px] border-l border-white/10" : "w-full",
                 )}
               >
@@ -211,7 +211,7 @@ export function ModeSelector({
                       className={cn(
                         "w-full px-4 py-3 rounded-lg text-left transition-all flex items-center justify-between",
                         value?.id === mode.id
-                          ? "bg-[var(--foundation-accent-green)]/10 border border-[var(--foundation-accent-green)]/30 text-white"
+                          ? "bg-foundation-accent-green/10 border border-foundation-accent-green/30 text-white"
                           : "bg-white/5 border border-transparent text-white/80 hover:bg-white/10",
                       )}
                     >

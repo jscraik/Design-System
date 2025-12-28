@@ -56,17 +56,17 @@ export function ViewModeToggle({
     >
       {value === "compose" ? (
         <>
-          <div className="size-4 text-[var(--foundation-text-dark-secondary)]">
+          <div className="size-4 text-foundation-text-dark-secondary">
             <IconChat />
           </div>
-          <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-secondary)]">
+          <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-secondary">
             {labels.chat}
           </span>
         </>
       ) : (
         <>
-          <Sparkles className="size-4 text-[var(--foundation-accent-blue)]" />
-          <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-accent-blue)]">
+          <Sparkles className="size-4 text-foundation-accent-blue" />
+          <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-accent-blue">
             {labels.compose}
           </span>
         </>

@@ -1,5 +1,5 @@
 import { ChatUIRoot } from "@chatui/ui";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { WidgetHarness } from "./WidgetHarness";
 import {
@@ -51,13 +51,24 @@ export function Router({ initialRoute }: RouterProps) {
   }, []);
 
   // Navigation function
-  const navigate = (route: Route) => {
+  const navigate = useCallback((route: Route) => {
     setCurrentRoute(route);
 
     // Update URL without page reload
     const url = route === "chat" ? "/" : `/${route}`;
     window.history.pushState({}, "", url);
-  };
+  }, []);
+
+  useEffect(() => {
+    const handleNavigate = (event: Event) => {
+      const detail = (event as CustomEvent<Route>).detail;
+      if (!detail) return;
+      navigate(detail);
+    };
+
+    window.addEventListener("navigate", handleNavigate);
+    return () => window.removeEventListener("navigate", handleNavigate);
+  }, [navigate]);
 
   // Render current page
   const renderPage = () => {

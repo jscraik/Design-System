@@ -3,19 +3,19 @@ import { useState } from "react";
 
 import { Popover } from "../../../vendor/appsSdkUi";
 import {
-    IconCamera,
-    IconClock,
-    IconCompose,
-    IconFolder,
-    IconGlobe,
-    IconGoFilled,
-    IconHeadphones,
-    IconImage,
-    IconMic,
-    IconOperator,
-    IconPlusLg,
-    IconTelescope,
-    IconVideo,
+  IconCamera,
+  IconClock,
+  IconCompose,
+  IconFolder,
+  IconGlobe,
+  IconGoFilled,
+  IconHeadphones,
+  IconImage,
+  IconMic,
+  IconOperator,
+  IconPlusLg,
+  IconTelescope,
+  IconVideo,
 } from "../icons/ChatGPTIcons";
 import { IconButton } from "../ui/base/icon-button";
 import { ModelBadge } from "../ui/navigation/model-badge";
@@ -54,7 +54,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
   };
 
   return (
-    <div className="border-t border-white/10 bg-[var(--foundation-bg-dark-1)] p-4">
+    <div className="border-t border-white/10 bg-foundation-bg-dark-1 p-4">
       {/* Active Context Tag */}
       {activeTag && (
         <div className="mb-3 flex items-center gap-2">
@@ -68,7 +68,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
       )}
 
       <form onSubmit={handleSubmit}>
-        <div className="rounded-[20px] border border-white/10 bg-[var(--foundation-bg-dark-2)] shadow-lg overflow-hidden">
+        <div className="rounded-[20px] border border-white/10 bg-foundation-bg-dark-2 shadow-lg overflow-hidden">
           {/* Input Area */}
           <div className="px-4 py-3">
             <textarea
@@ -76,7 +76,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Ask anything"
               rows={1}
-              className="w-full resize-none bg-transparent text-white placeholder:text-[var(--foundation-text-dark-tertiary)] focus:outline-none text-[16px] font-normal leading-[24px] tracking-[-0.32px]"
+              className="w-full resize-none bg-transparent text-white placeholder:text-foundation-text-dark-tertiary focus:outline-none text-[16px] font-normal leading-[24px] tracking-[-0.32px]"
               style={{
                 minHeight: "24px",
                 maxHeight: "200px",
@@ -100,10 +100,10 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                 <Popover.Trigger>
                   <button
                     type="button"
-                    className="p-2 rounded-lg transition-colors group hover:bg-white/5 data-[state=open]:bg-[var(--foundation-accent-blue)]/20"
+                    className="p-2 rounded-lg transition-colors group hover:bg-white/5 data-[state=open]:bg-foundation-accent-blue/20"
                     title="Add attachment"
                   >
-                    <IconPlusLg className="size-4 text-[var(--foundation-text-dark-tertiary)] group-hover:text-white data-[state=open]:text-[var(--foundation-accent-blue)]" />
+                    <IconPlusLg className="size-4 text-foundation-text-dark-tertiary group-hover:text-white data-[state=open]:text-foundation-accent-blue" />
                   </button>
                 </Popover.Trigger>
 
@@ -111,7 +111,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                   side="top"
                   align="start"
                   sideOffset={10}
-                  className="z-[60] w-[200px] rounded-lg border border-white/10 bg-[var(--foundation-bg-dark-2)] shadow-2xl outline-none"
+                  className="z-[60] w-[200px] rounded-lg border border-white/10 bg-foundation-bg-dark-2 shadow-2xl outline-none"
                 >
                   <button
                     type="button"
@@ -119,7 +119,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                       console.log("Upload file");
                       setUploadMenuOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-2.5 text-white/90 hover:bg-[var(--foundation-accent-green)] transition-colors text-left text-[14px] font-normal leading-[20px] tracking-[-0.3px] group first:rounded-t-lg"
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-white/90 hover:bg-foundation-accent-green transition-colors text-left text-[14px] font-normal leading-[20px] tracking-[-0.3px] group first:rounded-t-lg"
                   >
                     <IconFolder className="size-4 text-white/60 group-hover:text-white" />
                     <span className="group-hover:text-white">Upload file</span>
@@ -130,7 +130,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                       console.log("Upload photo");
                       setUploadMenuOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-2.5 text-white/90 hover:bg-[var(--foundation-accent-green)] transition-colors text-left text-[14px] font-normal leading-[20px] tracking-[-0.3px] group"
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-white/90 hover:bg-foundation-accent-green transition-colors text-left text-[14px] font-normal leading-[20px] tracking-[-0.3px] group"
                   >
                     <IconImage className="size-4 text-white/60 group-hover:text-white" />
                     <span className="group-hover:text-white">Upload photo</span>
@@ -141,7 +141,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                       console.log("Take screenshot");
                       setUploadMenuOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-2.5 text-white/90 hover:bg-[var(--foundation-accent-green)] transition-colors text-left text-[14px] font-normal leading-[20px] tracking-[-0.3px] group"
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-white/90 hover:bg-foundation-accent-green transition-colors text-left text-[14px] font-normal leading-[20px] tracking-[-0.3px] group"
                   >
                     <IconVideo className="size-4 text-white/60 group-hover:text-white" />
                     <span className="group-hover:text-white">Take screenshot</span>
@@ -152,7 +152,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                       console.log("Take photo");
                       setUploadMenuOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-2.5 text-white/90 hover:bg-[var(--foundation-accent-green)] transition-colors text-left text-[14px] font-normal leading-[20px] tracking-[-0.3px] group last:rounded-b-lg"
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-white/90 hover:bg-foundation-accent-green transition-colors text-left text-[14px] font-normal leading-[20px] tracking-[-0.3px] group last:rounded-b-lg"
                   >
                     <IconCamera className="size-4 text-white/60 group-hover:text-white" />
                     <span className="group-hover:text-white">Take photo</span>
@@ -165,13 +165,13 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                 onClick={() => setIsSearchEnabled(!isSearchEnabled)}
                 className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-colors ${
                   isSearchEnabled
-                    ? "bg-[var(--foundation-accent-blue)]/20 text-[var(--foundation-accent-blue)]"
-                    : "hover:bg-white/5 text-[var(--foundation-text-dark-tertiary)] hover:text-white"
+                    ? "bg-foundation-accent-blue/20 text-foundation-accent-blue"
+                    : "hover:bg-white/5 text-foundation-text-dark-tertiary hover:text-white"
                 }`}
                 title="Browse web"
               >
                 <IconGlobe
-                  className={`size-4 ${isSearchEnabled ? "text-[var(--foundation-accent-blue)]" : ""}`}
+                  className={`size-4 ${isSearchEnabled ? "text-foundation-accent-blue" : ""}`}
                 />
                 {isSearchEnabled && (
                   <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px]">
@@ -185,13 +185,13 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                 onClick={() => setIsResearchEnabled(!isResearchEnabled)}
                 className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-colors ${
                   isResearchEnabled
-                    ? "bg-[var(--foundation-accent-blue)]/20 text-[var(--foundation-accent-blue)]"
-                    : "hover:bg-white/5 text-[var(--foundation-text-dark-tertiary)] hover:text-white"
+                    ? "bg-foundation-accent-blue/20 text-foundation-accent-blue"
+                    : "hover:bg-white/5 text-foundation-text-dark-tertiary hover:text-white"
                 }`}
                 title="Research"
               >
                 <IconTelescope
-                  className={`size-4 ${isResearchEnabled ? "text-[var(--foundation-accent-blue)]" : ""}`}
+                  className={`size-4 ${isResearchEnabled ? "text-foundation-accent-blue" : ""}`}
                 />
                 {isResearchEnabled && (
                   <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px]">
@@ -204,10 +204,10 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                 <Popover.Trigger>
                   <button
                     type="button"
-                    className="p-2 rounded-lg transition-colors group hover:bg-white/5 data-[state=open]:bg-[var(--foundation-accent-blue)]/20 data-[state=open]:border data-[state=open]:border-[var(--foundation-accent-blue)]/40"
+                    className="p-2 rounded-lg transition-colors group hover:bg-white/5 data-[state=open]:bg-foundation-accent-blue/20 data-[state=open]:border data-[state=open]:border-foundation-accent-blue/40"
                     title="Tools"
                   >
-                    <IconOperator className="size-4 text-white/60 group-hover:text-white data-[state=open]:text-[var(--foundation-accent-blue)]" />
+                    <IconOperator className="size-4 text-white/60 group-hover:text-white data-[state=open]:text-foundation-accent-blue" />
                   </button>
                 </Popover.Trigger>
 
@@ -215,7 +215,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                   side="top"
                   align="start"
                   sideOffset={10}
-                  className="z-[60] w-[280px] rounded-xl border border-white/10 bg-[var(--foundation-bg-dark-2)] shadow-2xl outline-none"
+                  className="z-[60] w-[280px] rounded-xl border border-white/10 bg-foundation-bg-dark-2 shadow-2xl outline-none"
                 >
                   {/* Header */}
                   <div className="flex items-center justify-between px-4 pt-3 pb-2">
@@ -258,7 +258,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                       <input
                         type="text"
                         placeholder="Search"
-                        className="w-full rounded-lg border border-white/10 bg-[var(--foundation-bg-dark-1)] pl-8 pr-3 py-1.5 text-[13px] text-white placeholder:text-white/30 focus:outline-none focus:border-white/20 font-normal leading-[18px] tracking-[-0.3px]"
+                        className="w-full rounded-lg border border-white/10 bg-foundation-bg-dark-1 pl-8 pr-3 py-1.5 text-[13px] text-white placeholder:text-white/30 focus:outline-none focus:border-white/20 font-normal leading-[18px] tracking-[-0.3px]"
                       />
                     </div>
                   </div>
@@ -303,7 +303,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                     <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer group">
                       <div className="flex items-center justify-center size-5">
                         <svg
-                          className="size-4 text-[var(--foundation-accent-blue)]"
+                          className="size-4 text-foundation-accent-blue"
                           fill="currentColor"
                           viewBox="0 0 24 24"
                         >
@@ -336,7 +336,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                     <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer group">
                       <div className="flex items-center justify-center size-5">
                         <svg
-                          className="size-4 text-[var(--foundation-accent-blue)]"
+                          className="size-4 text-foundation-accent-blue"
                           fill="currentColor"
                           viewBox="0 0 24 24"
                         >
@@ -369,7 +369,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                     <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer group">
                       <div className="flex items-center justify-center size-5">
                         <svg
-                          className="size-4 text-[var(--foundation-accent-orange)]"
+                          className="size-4 text-foundation-accent-orange"
                           fill="currentColor"
                           viewBox="0 0 24 24"
                         >
@@ -475,7 +475,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
               <button
                 type="submit"
                 disabled={!message.trim()}
-                className="ml-1 rounded-full bg-white p-2 text-[var(--foundation-text-light-primary)] transition-all hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-40"
+                className="ml-1 rounded-full bg-white p-2 text-foundation-text-light-primary transition-all hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-40"
                 title="Send message (⌘+Enter or ⇧+Enter)"
               >
                 <IconGoFilled className="size-4" />

@@ -17,7 +17,9 @@ export function ChatMessages({ emptyState, messages }: ChatMessagesProps) {
   const resolvedMessages = messages ?? [];
 
   if (emptyState && resolvedMessages.length === 0) {
-    return <div className="bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1">{emptyState}</div>;
+    return (
+      <div className="bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1">{emptyState}</div>
+    );
   }
 
   return (

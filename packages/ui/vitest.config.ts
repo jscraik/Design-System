@@ -32,6 +32,9 @@ export default defineConfig({
         __dirname,
         "./src/test/__mocks__/vendor/appsSdkUi.tsx",
       ),
+      // Alias for test utils - support both old and new paths
+      "../../../test/utils": path.resolve(__dirname, "./src/test/utils.tsx"),
+      "../../../../test/utils": path.resolve(__dirname, "./src/test/utils.tsx"),
     },
   },
 });

@@ -16,6 +16,7 @@ export * from "./base/calendar";
 export * from "./base/checkbox";
 export * from "./base/collapsible";
 export * from "./base/collapsible-section";
+export * from "./base/direction-provider";
 export * from "./base/icon-button";
 export * from "./base/input";
 export * from "./base/input-otp";
@@ -44,6 +45,7 @@ export * from "./data-display/progress";
 export * from "./feedback/alert-dialog";
 export * from "./feedback/dialog";
 export * from "./feedback/sonner";
+export * from "./feedback/toast";
 
 // Forms - Form-specific components
 export * from "./layout"; // Re-export form components via layout
@@ -65,8 +67,8 @@ export * from "./navigation/view-mode-toggle";
 export * from "./overlays/command";
 export * from "./overlays/context-menu";
 export * from "./overlays/context-tag";
-export * from "./overlays/dropdown-menu";
 export * from "./overlays/drawer";
+export * from "./overlays/dropdown-menu";
 export * from "./overlays/hover-card";
 export * from "./overlays/popover";
 export * from "./overlays/sheet";

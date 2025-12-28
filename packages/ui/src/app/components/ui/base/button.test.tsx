@@ -25,11 +25,11 @@ describe("Button", () => {
 
   describe("variants", () => {
     it.each([
-      ["default", "bg-primary"],
-      ["destructive", "bg-destructive"],
+      ["default", "bg-foundation-accent-blue"],
+      ["destructive", "bg-foundation-accent-red"],
       ["outline", "border"],
-      ["secondary", "bg-secondary"],
-      ["ghost", "hover:bg-accent"],
+      ["secondary", "bg-foundation-bg-light-2"],
+      ["ghost", "bg-transparent"],
       ["link", "underline-offset-4"],
     ] as const)("renders %s variant with correct styles", (variant, expectedClass) => {
       render(<Button variant={variant}>Button</Button>);
@@ -143,7 +143,7 @@ describe("Button", () => {
 
     it("has visible focus indicator styles", () => {
       render(<Button>Click me</Button>);
-      expect(screen.getByRole("button")).toHaveClass("focus-visible:ring-ring/50");
+      expect(screen.getByRole("button")).toHaveClass("focus-visible:ring-foundation-accent-blue");
     });
   });
 

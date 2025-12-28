@@ -44,23 +44,23 @@ const colors = [
   { id: "gray", value: "text-white/60", bg: "bg-white/60" },
   {
     id: "blue",
-    value: "text-[var(--foundation-accent-blue)]",
-    bg: "bg-[var(--foundation-accent-blue)]",
+    value: "text-foundation-accent-blue",
+    bg: "bg-foundation-accent-blue",
   },
   {
     id: "green",
-    value: "text-[var(--foundation-accent-green)]",
-    bg: "bg-[var(--foundation-accent-green)]",
+    value: "text-foundation-accent-green",
+    bg: "bg-foundation-accent-green",
   },
   {
     id: "orange",
-    value: "text-[var(--foundation-accent-orange)]",
-    bg: "bg-[var(--foundation-accent-orange)]",
+    value: "text-foundation-accent-orange",
+    bg: "bg-foundation-accent-orange",
   },
   {
     id: "red",
-    value: "text-[var(--foundation-accent-red)]",
-    bg: "bg-[var(--foundation-accent-red)]",
+    value: "text-foundation-accent-red",
+    bg: "bg-foundation-accent-red",
   },
 ];
 
@@ -145,7 +145,7 @@ function ColorPicker({
             onClick={() => onSelect(color.value)}
             className={`size-8 rounded-full transition-all ${color.bg} ${
               selectedColor === color.value
-                ? "ring-2 ring-white ring-offset-2 ring-offset-[var(--foundation-bg-dark-2)] scale-110"
+                ? "ring-2 ring-white ring-offset-2 ring-offset-foundation-bg-dark-2 scale-110"
                 : "hover:scale-105"
             }`}
             title={color.id}
@@ -199,7 +199,7 @@ function ModalFooter({ onClose, onSave }: { onClose: () => void; onSave: () => v
       </button>
       <button
         onClick={onSave}
-        className="px-4 py-2 text-[14px] bg-[var(--foundation-accent-green)] text-white hover:bg-[var(--foundation-accent-green)]/90 rounded-lg transition-colors font-medium leading-[20px] tracking-[-0.3px]"
+        className="px-4 py-2 text-[14px] bg-foundation-accent-green text-white hover:bg-foundation-accent-green/90 rounded-lg transition-colors font-medium leading-[20px] tracking-[-0.3px]"
       >
         Done
       </button>
@@ -230,7 +230,7 @@ export function IconPickerModal({
     <>
       <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200]" onClick={onClose} />
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[201] w-[400px]">
-        <div className="bg-[var(--foundation-bg-dark-2)] border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
+        <div className="bg-foundation-bg-dark-2 border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
           <ModalHeader projectName={projectName} />
           <div className="px-6 py-6">
             <IconPreview

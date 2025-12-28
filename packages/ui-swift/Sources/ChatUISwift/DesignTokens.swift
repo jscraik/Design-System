@@ -1,0 +1,258 @@
+import SwiftUI
+
+/// Design tokens generated from the shared token system
+/// This file provides Swift constants that match the CSS custom properties
+public enum DesignTokens {
+    
+    // MARK: - Colors
+    
+    public enum Colors {
+        
+        public enum Background {
+            public static let lightPrimary = Color(hex: "#FFFFFF")
+            public static let lightSecondary = Color(hex: "#E8E8E8")
+            public static let lightTertiary = Color(hex: "#F3F3F3")
+            
+            public static let darkPrimary = Color(hex: "#212121")
+            public static let darkSecondary = Color(hex: "#303030")
+            public static let darkTertiary = Color(hex: "#414141")
+            
+            // Dynamic colors that adapt to system appearance
+            public static let primary = Color.dynamicColor(
+                light: lightPrimary,
+                dark: darkPrimary
+            )
+            
+            public static let secondary = Color.dynamicColor(
+                light: lightSecondary,
+                dark: darkSecondary
+            )
+            
+            public static let tertiary = Color.dynamicColor(
+                light: lightTertiary,
+                dark: darkTertiary
+            )
+        }
+        
+        public enum Text {
+            public static let lightPrimary = Color(hex: "#0D0D0D")
+            public static let lightSecondary = Color(hex: "#5D5D5D")
+            public static let lightTertiary = Color(hex: "#8F8F8F")
+            public static let lightInverted = Color(hex: "#8F8F8F")
+            
+            public static let darkPrimary = Color(hex: "#FFFFFF")
+            public static let darkSecondary = Color(hex: "#CDCDCD")
+            public static let darkTertiary = Color(hex: "#AFAFAF")
+            public static let darkInverted = Color(hex: "#AFAFAF")
+            
+            // Dynamic colors that adapt to system appearance
+            public static let primary = Color.dynamicColor(
+                light: lightPrimary,
+                dark: darkPrimary
+            )
+            
+            public static let secondary = Color.dynamicColor(
+                light: lightSecondary,
+                dark: darkSecondary
+            )
+            
+            public static let tertiary = Color.dynamicColor(
+                light: lightTertiary,
+                dark: darkTertiary
+            )
+            
+            public static let inverted = Color.dynamicColor(
+                light: lightInverted,
+                dark: darkInverted
+            )
+        }
+        
+        public enum Icon {
+            public static let lightPrimary = Color(hex: "#0D0D0D")
+            public static let lightSecondary = Color(hex: "#5D5D5D")
+            public static let lightTertiary = Color(hex: "#8F8F8F")
+            public static let lightInverted = Color(hex: "#8F8F8F")
+            
+            public static let darkPrimary = Color(hex: "#FFFFFF")
+            public static let darkSecondary = Color(hex: "#CDCDCD")
+            public static let darkTertiary = Color(hex: "#AFAFAF")
+            public static let darkInverted = Color(hex: "#AFAFAF")
+            
+            // Dynamic colors that adapt to system appearance
+            public static let primary = Color.dynamicColor(
+                light: lightPrimary,
+                dark: darkPrimary
+            )
+            
+            public static let secondary = Color.dynamicColor(
+                light: lightSecondary,
+                dark: darkSecondary
+            )
+            
+            public static let tertiary = Color.dynamicColor(
+                light: lightTertiary,
+                dark: darkTertiary
+            )
+            
+            public static let inverted = Color.dynamicColor(
+                light: lightInverted,
+                dark: darkInverted
+            )
+        }
+        
+        public enum Accent {
+            public static let lightBlue = Color(hex: "#0285FF")
+            public static let lightRed = Color(hex: "#E02E2A")
+            public static let lightOrange = Color(hex: "#E25507")
+            public static let lightGreen = Color(hex: "#008635")
+            
+            public static let darkBlue = Color(hex: "#0285FF")
+            public static let darkRed = Color(hex: "#FF8583")
+            public static let darkOrange = Color(hex: "#FF9E6C")
+            public static let darkGreen = Color(hex: "#40C977")
+            
+            // Dynamic colors that adapt to system appearance
+            public static let blue = Color.dynamicColor(
+                light: lightBlue,
+                dark: darkBlue
+            )
+            
+            public static let red = Color.dynamicColor(
+                light: lightRed,
+                dark: darkRed
+            )
+            
+            public static let orange = Color.dynamicColor(
+                light: lightOrange,
+                dark: darkOrange
+            )
+            
+            public static let green = Color.dynamicColor(
+                light: lightGreen,
+                dark: darkGreen
+            )
+        }
+    }
+    
+    // MARK: - Typography
+    
+    public enum Typography {
+        public static let fontFamily = "SF Pro"
+        
+        public enum Heading1 {
+            public static let size: CGFloat = 36
+            public static let lineHeight: CGFloat = 40
+            public static let weight = Font.Weight.semibold
+            public static let tracking: CGFloat = -0.1
+        }
+        
+        public enum Heading2 {
+            public static let size: CGFloat = 24
+            public static let lineHeight: CGFloat = 28
+            public static let weight = Font.Weight.semibold
+            public static let tracking: CGFloat = -0.25
+        }
+        
+        public enum Heading3 {
+            public static let size: CGFloat = 18
+            public static let lineHeight: CGFloat = 26
+            public static let weight = Font.Weight.semibold
+            public static let tracking: CGFloat = -0.45
+        }
+        
+        public enum Body {
+            public static let size: CGFloat = 16
+            public static let lineHeight: CGFloat = 26
+            public static let weight = Font.Weight.regular
+            public static let emphasisWeight = Font.Weight.semibold
+            public static let tracking: CGFloat = -0.4
+        }
+        
+        public enum BodySmall {
+            public static let size: CGFloat = 14
+            public static let lineHeight: CGFloat = 18
+            public static let weight = Font.Weight.regular
+            public static let emphasisWeight = Font.Weight.semibold
+            public static let tracking: CGFloat = -0.3
+        }
+        
+        public enum Caption {
+            public static let size: CGFloat = 12
+            public static let lineHeight: CGFloat = 16
+            public static let weight = Font.Weight.regular
+            public static let emphasisWeight = Font.Weight.semibold
+            public static let tracking: CGFloat = -0.1
+        }
+    }
+    
+    // MARK: - Spacing
+    
+    public enum Spacing {
+        public static let scale: [CGFloat] = [128, 64, 48, 40, 32, 24, 16, 12, 8, 4, 2, 0]
+        
+        // Convenience accessors
+        public static let xxl: CGFloat = 128
+        public static let xl: CGFloat = 64
+        public static let lg: CGFloat = 48
+        public static let lgMd: CGFloat = 40
+        public static let md: CGFloat = 32
+        public static let mdSm: CGFloat = 24
+        public static let sm: CGFloat = 16
+        public static let smXs: CGFloat = 12
+        public static let xs: CGFloat = 8
+        public static let xxs: CGFloat = 4
+        public static let xxxs: CGFloat = 2
+        public static let none: CGFloat = 0
+    }
+    
+    // MARK: - Corner Radius
+    
+    public enum CornerRadius {
+        public static let small: CGFloat = 4
+        public static let medium: CGFloat = 8
+        public static let large: CGFloat = 12
+        public static let extraLarge: CGFloat = 16
+    }
+}
+
+// MARK: - Color Extensions
+
+extension Color {
+    /// Creates a Color from a hex string
+    public init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (1, 1, 1, 0)
+        }
+        
+        self.init(
+            .sRGB,
+            red: Double(r) / 255,
+            green: Double(g) / 255,
+            blue:  Double(b) / 255,
+            opacity: Double(a) / 255
+        )
+    }
+    
+    /// Creates a dynamic color that adapts to light/dark mode
+    public static func dynamicColor(light: Color, dark: Color) -> Color {
+        return Color(NSColor(name: nil) { appearance in
+            switch appearance.bestMatch(from: [.aqua, .darkAqua]) {
+            case .darkAqua:
+                return NSColor(dark)
+            default:
+                return NSColor(light)
+            }
+        })
+    }
+}

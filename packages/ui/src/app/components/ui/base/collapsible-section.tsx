@@ -71,7 +71,7 @@ export function CollapsibleSection({
         <div className="flex items-center gap-2">
           <IconChevronDownMd
             className={cn(
-              "size-4 text-[var(--foundation-text-dark-tertiary)] transition-transform",
+              "size-4 text-foundation-text-dark-tertiary transition-transform",
               !expanded && "-rotate-90",
             )}
           />

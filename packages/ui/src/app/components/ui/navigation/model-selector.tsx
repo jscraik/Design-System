@@ -87,10 +87,10 @@ export function ModelSelector({
               {label}
             </span>
           )}
-          <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-tertiary)]">
+          <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-tertiary">
             {modelName}
           </span>
-          <IconChevronDownMd className="size-4 text-[var(--foundation-text-dark-tertiary)]" />
+          <IconChevronDownMd className="size-4 text-foundation-text-dark-tertiary" />
         </button>
       </Popover.Trigger>
 
@@ -98,7 +98,7 @@ export function ModelSelector({
         side="bottom"
         align="start"
         sideOffset={8}
-        className="z-50 w-[340px] rounded-2xl border border-white/10 bg-[var(--foundation-bg-dark-2)] shadow-2xl outline-none"
+        className="z-50 w-[340px] rounded-2xl border border-white/10 bg-foundation-bg-dark-2 shadow-2xl outline-none"
       >
         <div className="p-3">
           <div className="mb-2">
@@ -121,7 +121,7 @@ export function ModelSelector({
                   </span>
                   <IconChevronRightMd
                     className={cn(
-                      "size-4 text-[var(--foundation-text-dark-tertiary)] transition-transform",
+                      "size-4 text-foundation-text-dark-tertiary transition-transform",
                       isLegacyOpen && "rotate-90",
                     )}
                   />
@@ -132,7 +132,7 @@ export function ModelSelector({
                 side="right"
                 align="start"
                 sideOffset={8}
-                className="z-50 w-[340px] rounded-2xl border border-white/10 bg-[var(--foundation-bg-dark-2)] shadow-2xl outline-none"
+                className="z-50 w-[340px] rounded-2xl border border-white/10 bg-foundation-bg-dark-2 shadow-2xl outline-none"
               >
                 <div className="p-3 max-h-[400px] overflow-y-auto">
                   {legacyModels.map((model) => (
@@ -169,7 +169,7 @@ function ModelOption({ model, isSelected, onSelect }: ModelOptionProps) {
         <div className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white">
           {model.name}
         </div>
-        <div className="text-[12px] text-[var(--foundation-text-dark-tertiary)] leading-[16px] tracking-[-0.3px]">
+        <div className="text-[12px] text-foundation-text-dark-tertiary leading-[16px] tracking-[-0.3px]">
           {model.description}
         </div>
       </div>

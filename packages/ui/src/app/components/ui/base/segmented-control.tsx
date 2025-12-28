@@ -62,7 +62,7 @@ export function SegmentedControl<T extends string = string>({
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-0 bg-[var(--foundation-bg-dark-2)] rounded-lg p-1",
+        "inline-flex items-center gap-0 bg-foundation-bg-dark-2 rounded-lg p-1",
         fullWidth && "w-full",
         className,
       )}

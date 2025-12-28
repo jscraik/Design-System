@@ -53,7 +53,12 @@ export function SectionHeader({
   return (
     <div className={cn("flex items-start justify-between font-foundation", className)}>
       <div>
-        <h3 className={cn("font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary tracking-body-small", sizes[size].title)}>
+        <h3
+          className={cn(
+            "font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary tracking-body-small",
+            sizes[size].title,
+          )}
+        >
           {title}
         </h3>
         {description && (

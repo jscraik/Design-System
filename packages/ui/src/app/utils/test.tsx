@@ -7,7 +7,7 @@ import * as React from "react";
  * Test wrapper that provides necessary context
  */
 export function TestWrapper({ children }: { children: React.ReactNode }) {
-  return <div className="dark bg-[var(--foundation-bg-dark-1)]">{children}</div>;
+  return <div className="dark bg-foundation-bg-dark-1">{children}</div>;
 }
 
 /**

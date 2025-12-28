@@ -2,13 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { render, screen } from "../../../test/utils";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
 
 describe("Select", () => {
   it("renders with default value", () => {
@@ -24,7 +18,7 @@ describe("Select", () => {
       </Select>,
     );
 
-    expect(screen.getByRole("button")).toHaveTextContent("Apple");
+    expect(screen.getByRole("combobox")).toHaveTextContent("Apple");
   });
 
   it("calls onValueChange when selecting an item", async () => {
@@ -41,7 +35,7 @@ describe("Select", () => {
       </Select>,
     );
 
-    await user.click(screen.getByRole("button"));
+    await user.click(screen.getByRole("combobox"));
     await user.click(screen.getByText("Banana"));
 
     expect(onValueChange).toHaveBeenCalledWith("banana");

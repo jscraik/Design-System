@@ -6,7 +6,13 @@ import { Command as CommandPrimitive } from "cmdk";
 import { IconSearch } from "../../../../icons";
 
 import { cn } from "../utils";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../feedback/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../feedback/dialog";
 
 function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {
   return (

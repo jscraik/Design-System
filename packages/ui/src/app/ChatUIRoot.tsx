@@ -333,7 +333,7 @@ export function ChatUIRoot({
     }
 
     return (
-      <div className="flex-1 flex flex-col bg-[var(--foundation-bg-light-1)] dark:bg-[var(--foundation-bg-dark-1)]">
+      <div className="flex-1 flex flex-col bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1">
         <ChatHeader
           isSidebarOpen={sidebarOpenForHeader}
           onSidebarToggle={toggleSidebar}
@@ -388,7 +388,7 @@ export function ChatUIRoot({
 
   return (
     <div
-      className="size-full flex bg-[var(--foundation-bg-light-1)] dark:bg-[var(--foundation-bg-dark-1)] overflow-hidden"
+      className="size-full flex bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 overflow-hidden"
       data-testid="chat-ui-root"
     >
       {sidebarBehavior === "inline" ? (

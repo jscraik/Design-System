@@ -74,12 +74,11 @@ export function Toggle({
       className={cn(
         "relative rounded-full transition-colors",
         track,
+        !checked && "bg-foundation-bg-dark-3",
         disabled && "opacity-50 cursor-not-allowed",
         className,
       )}
-      style={{
-        backgroundColor: checked ? activeColor : "var(--foundation-bg-dark-3)",
-      }}
+      style={checked ? { backgroundColor: activeColor } : undefined}
     >
       <div
         className={cn(
@@ -132,13 +131,13 @@ export function ToggleRow({
   return (
     <div className={cn("flex items-center justify-between", className)}>
       <div className="flex items-center gap-3">
-        {icon && <div className="text-[var(--foundation-text-dark-tertiary)]">{icon}</div>}
+        {icon && <div className="text-foundation-text-dark-tertiary">{icon}</div>}
         <div>
-          <div className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-primary)]">
+          <div className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
             {label}
           </div>
           {description && (
-            <div className="text-[12px] leading-[18px] text-[var(--foundation-text-dark-primary)]/70">
+            <div className="text-[12px] leading-[18px] text-foundation-text-dark-primary/70">
               {description}
             </div>
           )}

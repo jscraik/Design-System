@@ -73,15 +73,13 @@ export function ListItem({
       )}
     >
       <div className="flex items-center gap-3 flex-1 min-w-0">
-        {icon && (
-          <div className="flex-shrink-0 text-[var(--foundation-text-dark-tertiary)]">{icon}</div>
-        )}
+        {icon && <div className="flex-shrink-0 text-foundation-text-dark-tertiary">{icon}</div>}
         <div className="flex-1 min-w-0">
           <div className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white truncate">
             {label}
           </div>
           {description && (
-            <div className="text-[12px] text-[var(--foundation-text-dark-tertiary)] leading-[16px] tracking-[-0.3px] truncate">
+            <div className="text-[12px] text-foundation-text-dark-tertiary leading-[16px] tracking-[-0.3px] truncate">
               {description}
             </div>
           )}
@@ -91,7 +89,7 @@ export function ListItem({
       <div className="flex items-center gap-2 flex-shrink-0 ml-2">
         {right}
         {showChevron && (
-          <IconChevronRightMd className="size-4 text-[var(--foundation-text-dark-tertiary)]" />
+          <IconChevronRightMd className="size-4 text-foundation-text-dark-tertiary" />
         )}
       </div>
     </Component>

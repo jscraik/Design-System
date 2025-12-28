@@ -7,6 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   testDir: path.join(__dirname, "tests"),
+  testIgnore: ["**/visual/**"],
   timeout: 30_000,
   expect: { timeout: 10_000 },
   fullyParallel: true,

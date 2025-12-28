@@ -1,19 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
 
 import {
-    IconArchive,
-    IconChat,
-    IconCloseBold,
-    IconCode,
-    IconDotsHorizontal,
-    IconFolder,
-    IconGrid3x3,
-    IconImage,
-    IconRadio,
-    IconSearch,
-    IconSettings,
-    IconSidebar,
-    Sparkles,
+  IconArchive,
+  IconChat,
+  IconCloseBold,
+  IconCode,
+  IconDotsHorizontal,
+  IconFolder,
+  IconGrid3x3,
+  IconImage,
+  IconRadio,
+  IconSearch,
+  IconSettings,
+  IconSidebar,
+  Sparkles,
 } from "../../../icons";
 import { Popover } from "../../../vendor/appsSdkUi";
 import { useChatUISlots } from "../../slots";
@@ -79,7 +79,7 @@ function ProjectSettingsModal({
       onClick={onClose}
     >
       <div
-        className="bg-[var(--foundation-bg-dark-2)] border border-white/10 text-white rounded-2xl w-[380px] shadow-2xl"
+        className="bg-foundation-bg-dark-2 border border-white/10 text-white rounded-2xl w-[380px] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="px-6 pt-6 pb-5">
@@ -96,7 +96,7 @@ function ProjectSettingsModal({
               onClick={() => onSelectMemoryOption("default")}
               className={`w-full text-left p-4 rounded-xl mb-3 border-2 transition-all ${
                 memoryOption === "default"
-                  ? "bg-[var(--foundation-accent-green)]/20 border-[var(--foundation-accent-green)]/40"
+                  ? "bg-foundation-accent-green/20 border-foundation-accent-green/40"
                   : "bg-transparent border-white/10 hover:border-white/20"
               }`}
             >
@@ -113,7 +113,7 @@ function ProjectSettingsModal({
               onClick={() => onSelectMemoryOption("project-only")}
               className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
                 memoryOption === "project-only"
-                  ? "bg-[var(--foundation-accent-green)]/20 border-[var(--foundation-accent-green)]/40"
+                  ? "bg-foundation-accent-green/20 border-foundation-accent-green/40"
                   : "bg-transparent border-white/10 hover:border-white/20"
               }`}
             >
@@ -138,7 +138,7 @@ function ProjectSettingsModal({
           </button>
           <button
             onClick={onDone}
-            className="px-4 py-2 text-[14px] bg-white text-[var(--foundation-text-light-primary)] hover:bg-white/90 rounded-lg transition-colors font-semibold leading-[20px] tracking-[-0.3px]"
+            className="px-4 py-2 text-[14px] bg-white text-foundation-text-light-primary hover:bg-white/90 rounded-lg transition-colors font-semibold leading-[20px] tracking-[-0.3px]"
           >
             Done
           </button>
@@ -261,7 +261,7 @@ export function ChatSidebar({
           console.log("Project options");
         }}
       >
-        <IconDotsHorizontal className="size-4 text-[var(--foundation-text-light-tertiary)] dark:text-[var(--foundation-text-dark-tertiary)]" />
+        <IconDotsHorizontal className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary" />
       </button>
     ) : null;
 
@@ -272,7 +272,7 @@ export function ChatSidebar({
   return (
     <>
       <div
-        className={`bg-[var(--foundation-bg-light-1)] dark:bg-[var(--foundation-bg-dark-1)] text-white flex flex-col h-full border-r border-foundation-bg-light-3 dark:border-white/10 transition-all duration-300 ${
+        className={`bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-white flex flex-col h-full border-r border-foundation-bg-light-3 dark:border-white/10 transition-all duration-300 ${
           isCollapsed ? "w-[60px]" : "w-64"
         }`}
       >
@@ -291,7 +291,7 @@ export function ChatSidebar({
             className="size-8 flex items-center justify-center rounded-lg hover:bg-white/5 transition-colors"
             title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
-            <IconSidebar className="size-5 text-[var(--foundation-text-light-tertiary)] dark:text-[var(--foundation-text-dark-tertiary)]" />
+            <IconSidebar className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary" />
           </button>
         </div>
 
@@ -389,7 +389,7 @@ export function ChatSidebar({
                     side="right"
                     align="start"
                     sideOffset={12}
-                    className="z-[60] w-[420px] rounded-2xl border border-white/10 bg-[var(--foundation-bg-dark-2)] shadow-2xl outline-none"
+                    className="z-[60] w-[420px] rounded-2xl border border-white/10 bg-foundation-bg-dark-2 shadow-2xl outline-none"
                   >
                     <div className="px-6 pt-6 pb-5">
                       <p className="text-[13px] text-white/50 leading-[18px] tracking-[-0.32px] font-normal text-center">
@@ -417,7 +417,7 @@ export function ChatSidebar({
                           placeholder="Project Name"
                           value={projectName}
                           onChange={(e) => setProjectName(e.target.value)}
-                          className="w-full bg-[var(--foundation-bg-dark-3)] border border-white/10 rounded-lg pl-10 pr-3 py-3 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-white/20 transition-all font-normal leading-[20px] tracking-[-0.3px]"
+                          className="w-full bg-foundation-bg-dark-3 border border-white/10 rounded-lg pl-10 pr-3 py-3 text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-white/20 transition-all font-normal leading-[20px] tracking-[-0.3px]"
                         />
                       </div>
                       {resolvedCategories.length > 0 ? (
@@ -437,7 +437,7 @@ export function ChatSidebar({
                                       ? resolvedCategoryColors[
                                           category as keyof typeof resolvedCategoryColors
                                         ]
-                                      : "bg-[var(--foundation-bg-dark-3)] text-white/60 border-white/10 hover:bg-[var(--foundation-bg-dark-3)]/80"
+                                      : "bg-foundation-bg-dark-3 text-white/60 border-white/10 hover:bg-foundation-bg-dark-3/80"
                                   }`}
                                 >
                                   {resolvedCategoryIcons[category] ? (
@@ -465,13 +465,13 @@ export function ChatSidebar({
                       <button
                         onClick={handleCreateProject}
                         disabled={!projectName.trim()}
-                        className="w-full bg-[var(--foundation-accent-green)] hover:bg-[var(--foundation-accent-green)]/80 disabled:bg-[var(--foundation-bg-dark-3)] disabled:text-white/30 disabled:cursor-not-allowed text-white py-3 rounded-lg transition-all text-[14px] font-normal leading-[20px] tracking-[-0.3px]"
+                        className="w-full bg-foundation-accent-green hover:bg-foundation-accent-green/80 disabled:bg-foundation-bg-dark-3 disabled:text-white/30 disabled:cursor-not-allowed text-white py-3 rounded-lg transition-all text-[14px] font-normal leading-[20px] tracking-[-0.3px]"
                       >
                         Create project
                       </button>
                       <button
                         onClick={() => setShowMoreOptions(true)}
-                        className="w-full bg-[var(--foundation-bg-dark-3)] hover:bg-[var(--foundation-bg-dark-3)]/80 text-white/70 py-3 rounded-lg mt-2 transition-colors text-[14px] font-normal leading-[20px] tracking-[-0.3px]"
+                        className="w-full bg-foundation-bg-dark-3 hover:bg-foundation-bg-dark-3/80 text-white/70 py-3 rounded-lg mt-2 transition-colors text-[14px] font-normal leading-[20px] tracking-[-0.3px]"
                       >
                         More options
                       </button>
@@ -555,17 +555,17 @@ export function ChatSidebar({
                 <span className="text-[14px] truncate font-normal leading-[20px] tracking-[-0.3px] text-white">
                   {resolvedUser.name}
                 </span>
-                <span className="text-[12px] font-normal leading-[16px] tracking-[-0.3px] text-[var(--foundation-text-light-tertiary)] dark:text-[var(--foundation-text-dark-tertiary)]">
+                <span className="text-[12px] font-normal leading-[16px] tracking-[-0.3px] text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
                   {resolvedUser.accountLabel}
                 </span>
               </div>
             )}
           </button>
           {showUserMenu && !isCollapsed && (
-            <div className="absolute bottom-full left-3 right-3 mb-2 bg-[var(--foundation-bg-dark-2)] border border-white/20 rounded-xl shadow-2xl py-1 z-50">
+            <div className="absolute bottom-full left-3 right-3 mb-2 bg-foundation-bg-dark-2 border border-white/20 rounded-xl shadow-2xl py-1 z-50">
               <div className="px-3 py-2.5 border-b border-white/10">
                 <div className="flex items-center gap-2 text-[13px]">
-                  <div className="size-2 rounded-full bg-[var(--foundation-accent-green)]" />
+                  <div className="size-2 rounded-full bg-foundation-accent-green" />
                   <span className="text-white/70 font-normal">{resolvedUser.planLabel}</span>
                 </div>
               </div>

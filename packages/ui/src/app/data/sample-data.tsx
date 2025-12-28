@@ -1,13 +1,13 @@
 import type { ChatMessage } from "../components/chat/ChatMessages";
 import type { ChatSidebarUser, SidebarItem } from "../components/chat/ChatSidebar";
 import {
-    IconBarChart,
-    IconBook,
-    IconChat,
-    IconCompose,
-    IconFolder,
-    IconSearch,
-    IconWriting,
+  IconBarChart,
+  IconBook,
+  IconChat,
+  IconCompose,
+  IconFolder,
+  IconSearch,
+  IconWriting,
 } from "../components/icons/ChatGPTIcons";
 import type { ModeConfig } from "../components/ui/navigation/mode-selector";
 import type { ModelConfig } from "../components/ui/navigation/model-selector";
@@ -50,19 +50,19 @@ export const sampleProjects: SidebarItem[] = [
     id: "alpha",
     label: "Project Alpha",
     icon: <IconWriting className="size-4" />,
-    color: "text-[var(--foundation-accent-blue)]",
+    color: "text-foundation-accent-blue",
   },
   {
     id: "beta",
     label: "Project Beta",
     icon: <IconBarChart className="size-4" />,
-    color: "text-[var(--foundation-accent-green)]",
+    color: "text-foundation-accent-green",
   },
   {
     id: "gamma",
     label: "Project Gamma",
     icon: <IconFolder className="size-4" />,
-    color: "text-[var(--foundation-accent-orange)]",
+    color: "text-foundation-accent-orange",
   },
 ];
 
@@ -71,7 +71,7 @@ export const sampleGroupChats: SidebarItem[] = [
     id: "group-1",
     label: "Summarize chat exchange",
     icon: (
-      <div className="size-6 rounded-full bg-[var(--foundation-accent-red)] flex items-center justify-center flex-shrink-0">
+      <div className="size-6 rounded-full bg-foundation-accent-red flex items-center justify-center flex-shrink-0">
         <IconChat className="size-3 text-white" />
       </div>
     ),
@@ -98,23 +98,22 @@ export const sampleCategoryIcons = {
 
 export const sampleCategoryColors = {
   Investing:
-    "bg-[var(--foundation-accent-green)]/20 text-[var(--foundation-accent-green)] border-[var(--foundation-accent-green)]/30",
+    "bg-foundation-accent-green/20 text-foundation-accent-green border-foundation-accent-green/30",
   Homework:
-    "bg-[var(--foundation-accent-blue)]/20 text-[var(--foundation-accent-blue)] border-[var(--foundation-accent-blue)]/30",
+    "bg-foundation-accent-blue/20 text-foundation-accent-blue border-foundation-accent-blue/30",
   Writing:
-    "bg-[var(--foundation-accent-orange)]/20 text-[var(--foundation-accent-orange)] border-[var(--foundation-accent-orange)]/30",
-  Coding:
-    "bg-[var(--foundation-accent-red)]/20 text-[var(--foundation-accent-red)] border-[var(--foundation-accent-red)]/30",
+    "bg-foundation-accent-orange/20 text-foundation-accent-orange border-foundation-accent-orange/30",
+  Coding: "bg-foundation-accent-red/20 text-foundation-accent-red border-foundation-accent-red/30",
   Research:
-    "bg-[var(--foundation-accent-blue)]/20 text-[var(--foundation-accent-blue)] border-[var(--foundation-accent-blue)]/30",
+    "bg-foundation-accent-blue/20 text-foundation-accent-blue border-foundation-accent-blue/30",
 };
 
 export const sampleCategoryIconColors = {
-  Investing: "text-[var(--foundation-accent-green)]",
-  Homework: "text-[var(--foundation-accent-blue)]",
-  Writing: "text-[var(--foundation-accent-orange)]",
-  Coding: "text-[var(--foundation-accent-red)]",
-  Research: "text-[var(--foundation-accent-blue)]",
+  Investing: "text-foundation-accent-green",
+  Homework: "text-foundation-accent-blue",
+  Writing: "text-foundation-accent-orange",
+  Coding: "text-foundation-accent-red",
+  Research: "text-foundation-accent-blue",
 };
 
 export const sampleUser: ChatSidebarUser = {

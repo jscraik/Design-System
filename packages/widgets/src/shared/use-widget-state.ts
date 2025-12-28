@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState, type SetStateAction } from "react";
-import { useHost } from "@chatui/runtime";
+import { useHost, useOpenAiGlobal as useOpenAiGlobalRuntime } from "@chatui/runtime";
 
-import { useOpenAiGlobal } from "./use-openai-global";
 import type { UnknownObject } from "./types";
 
 export function useWidgetState<T extends UnknownObject>(
@@ -13,11 +12,11 @@ export function useWidgetState<T extends UnknownObject>(
 export function useWidgetState<T extends UnknownObject>(
   defaultState?: T | (() => T | null) | null,
 ): readonly [T | null, (state: SetStateAction<T | null>) => void] {
-  const widgetStateFromWindow = useOpenAiGlobal("widgetState") as T;
+  const widgetStateFromWindow = useOpenAiGlobalRuntime("widgetState") as T | null | undefined;
   const host = useHost();
 
   const [widgetState, _setWidgetState] = useState<T | null>(() => {
-    if (widgetStateFromWindow != null) {
+    if (widgetStateFromWindow !== undefined) {
       return widgetStateFromWindow;
     }
 
@@ -25,7 +24,9 @@ export function useWidgetState<T extends UnknownObject>(
   });
 
   useEffect(() => {
-    _setWidgetState(widgetStateFromWindow);
+    if (widgetStateFromWindow !== undefined) {
+      _setWidgetState(widgetStateFromWindow);
+    }
   }, [widgetStateFromWindow]);
 
   const setWidgetState = useCallback(
@@ -33,11 +34,11 @@ export function useWidgetState<T extends UnknownObject>(
       _setWidgetState((prevState) => {
         const newState = typeof state === "function" ? state(prevState) : state;
 
-        if (newState != null) {
+        if (newState !== undefined) {
           if (host.setState) {
             host.setState(newState);
           } else if (typeof window !== "undefined") {
-            void window.openai?.setWidgetState?.(newState);
+            void window.openai?.setWidgetState?.(newState ?? null);
           }
         }
 

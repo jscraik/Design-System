@@ -13,7 +13,9 @@ function DrawerTrigger({ ...props }: React.ComponentProps<typeof DrawerPrimitive
   return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />;
 }
 
-type DrawerPortalProps = React.PropsWithChildren<React.ComponentProps<typeof DrawerPrimitive.Portal>>;
+type DrawerPortalProps = React.PropsWithChildren<
+  React.ComponentProps<typeof DrawerPrimitive.Portal>
+>;
 const DrawerPortalBase = DrawerPrimitive.Portal as unknown as React.ComponentType<
   React.PropsWithChildren<Record<string, unknown>>
 >;

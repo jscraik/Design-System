@@ -19,24 +19,24 @@ export interface ContextTagProps {
 
 const variantStyles = {
   green: {
-    bg: "bg-[var(--foundation-accent-green)]/20",
-    text: "text-[var(--foundation-accent-green)]",
-    hover: "hover:bg-[var(--foundation-accent-green)]/30",
+    bg: "bg-foundation-accent-green/20",
+    text: "text-foundation-accent-green",
+    hover: "hover:bg-foundation-accent-green/30",
   },
   blue: {
-    bg: "bg-[var(--foundation-accent-blue)]/20",
-    text: "text-[var(--foundation-accent-blue)]",
-    hover: "hover:bg-[var(--foundation-accent-blue)]/30",
+    bg: "bg-foundation-accent-blue/20",
+    text: "text-foundation-accent-blue",
+    hover: "hover:bg-foundation-accent-blue/30",
   },
   orange: {
-    bg: "bg-[var(--foundation-accent-orange)]/20",
-    text: "text-[var(--foundation-accent-orange)]",
-    hover: "hover:bg-[var(--foundation-accent-orange)]/30",
+    bg: "bg-foundation-accent-orange/20",
+    text: "text-foundation-accent-orange",
+    hover: "hover:bg-foundation-accent-orange/30",
   },
   red: {
-    bg: "bg-[var(--foundation-accent-red)]/20",
-    text: "text-[var(--foundation-accent-red)]",
-    hover: "hover:bg-[var(--foundation-accent-red)]/30",
+    bg: "bg-foundation-accent-red/20",
+    text: "text-foundation-accent-red",
+    hover: "hover:bg-foundation-accent-red/30",
   },
   default: {
     bg: "bg-white/10",
