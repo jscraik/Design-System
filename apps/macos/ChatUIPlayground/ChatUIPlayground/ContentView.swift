@@ -6,54 +6,63 @@
 //
 
 import SwiftUI
-import SwiftData
+import ChatUISwift
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @State private var selectedComponent: ComponentType = .button
 
     var body: some View {
         NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
+            // Sidebar with component list
+            List(ComponentType.allCases, id: \.self, selection: $selectedComponent) { component in
+                Label(component.displayName, systemImage: component.systemImage)
+                    .tag(component)
             }
-            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-            .toolbar {
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
+            .navigationTitle("Components")
+            .frame(minWidth: 200)
         } detail: {
-            Text("Select an item")
+            // Main content area
+            ComponentGallery(selectedComponent: selectedComponent)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(DesignTokens.Colors.Background.primary)
+        }
+    }
+}
+
+enum ComponentType: String, CaseIterable {
+    case button = "button"
+    case input = "input"
+    case card = "card"
+    case tokens = "tokens"
+
+    var displayName: String {
+        switch self {
+        case .button:
+            return "Button"
+        case .input:
+            return "Input"
+        case .card:
+            return "Card"
+        case .tokens:
+            return "Design Tokens"
         }
     }
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
+    var systemImage: String {
+        switch self {
+        case .button:
+            return "button.programmable"
+        case .input:
+            return "textfield"
+        case .card:
+            return "rectangle"
+        case .tokens:
+            return "paintpalette"
         }
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+        .frame(width: 1000, height: 700)
 }
