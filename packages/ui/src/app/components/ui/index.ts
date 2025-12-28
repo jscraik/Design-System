@@ -70,6 +70,7 @@ export * from "./overlays/context-tag";
 export * from "./overlays/drawer";
 export * from "./overlays/dropdown-menu";
 export * from "./overlays/hover-card";
+export * from "./overlays/modal";
 export * from "./overlays/popover";
 export * from "./overlays/sheet";
 export * from "./overlays/tooltip";

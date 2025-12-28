@@ -40,17 +40,20 @@ export function SettingDropdown({
 
   return (
     <div className={className}>
-      <div className="flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors">
-        <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
+      <div className="flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-lg transition-colors">
+        <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
           {label}
         </span>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-1.5 px-3 py-1.5 hover:bg-foundation-bg-dark-3 rounded-md transition-colors">
-              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
+            <button
+              type="button"
+              className="flex items-center gap-1.5 px-3 py-1.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-md transition-colors"
+            >
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
                 {selectedOption?.label || value}
               </span>
-              <IconChevronDownMd className="size-3.5 text-foundation-icon-dark-secondary" />
+              <IconChevronDownMd className="size-3.5 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align={align} className="min-w-[270px]">
@@ -59,17 +62,17 @@ export function SettingDropdown({
                 <DropdownMenuRadioItem key={option.value} value={option.value}>
                   <div className="flex items-center justify-between w-full">
                     <div className="flex-1">
-                      <div className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
+                      <div className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
                         {option.label}
                       </div>
                       {option.description && (
-                        <div className="text-[12px] leading-[16px] tracking-[-0.24px] text-foundation-text-dark-secondary mt-0.5">
+                        <div className="text-[12px] leading-[16px] tracking-[-0.24px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-0.5">
                           {option.description}
                         </div>
                       )}
                     </div>
                     {value === option.value && (
-                      <IconCheckmark className="size-4 text-foundation-icon-dark-primary ml-2 flex-shrink-0" />
+                      <IconCheckmark className="size-4 text-foundation-icon-light-primary dark:text-foundation-icon-dark-primary ml-2 flex-shrink-0" />
                     )}
                   </div>
                 </DropdownMenuRadioItem>
@@ -79,7 +82,7 @@ export function SettingDropdown({
         </DropdownMenu>
       </div>
       {description && (
-        <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary px-3 mt-2">
+        <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary px-3 mt-2">
           {description}
         </p>
       )}

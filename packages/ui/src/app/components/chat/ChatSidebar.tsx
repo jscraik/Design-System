@@ -63,6 +63,20 @@ const projectIconMap: Record<string, ReactNode> = {
 const getProjectIcon = (iconId: string) =>
   projectIconMap[iconId] || <IconFolder className="size-4" />;
 
+// Helper to get color ID from CSS class string (reverse mapping)
+const getColorIdFromClass = (colorClass: string): string => {
+  const colorClassMap: Record<string, string> = {
+    gray: "text-foundation-icon-light-tertiary dark:text-white/60",
+    blue: "text-foundation-accent-blue",
+    green: "text-foundation-accent-green",
+    orange: "text-foundation-accent-orange",
+    red: "text-foundation-accent-red",
+  };
+  return (
+    Object.entries(colorClassMap).find(([_, value]) => colorClass === value)?.[0] ?? "gray"
+  );
+};
+
 function RailButton(props: {
   icon: ReactNode;
   label: string;
@@ -340,12 +354,13 @@ export function ChatSidebar({
     // Note: Popover closing would require controlled state - this is left as exercise for implementer
   }, [projectName, newProjectIcon, newProjectColor]);
 
-  const handleIconChange = useCallback((iconId: string, color: string) => {
+  const handleIconChange = useCallback((iconId: string, colorId: string) => {
     if (selectedProjectForIcon) {
       const newIcon = getProjectIcon(iconId);
+      const colorClass = colorClassMap[colorId] || colorClassMap.gray;
       setProjectsData((prev) =>
         prev.map((project) =>
-          project.id === selectedProjectForIcon.id ? { ...project, icon: newIcon, color } : project,
+          project.id === selectedProjectForIcon.id ? { ...project, icon: newIcon, color: colorClass } : project,
         ),
       );
     }
@@ -353,16 +368,8 @@ export function ChatSidebar({
     setSelectedProjectForIcon(null);
   }, [selectedProjectForIcon]);
 
-  const handleNewProjectIconChange = useCallback((iconId: string, color: string) => {
+  const handleNewProjectIconChange = useCallback((iconId: string, colorId: string) => {
     setNewProjectIcon(iconId);
-    // More robust color matching: split color into tokens and check for any match
-    const colorTokens = new Set(color.split(/\s+/));
-    const colorId =
-      Object.entries(colorClassMap).find(([_, value]) => {
-        const valueTokens = value.split(/\s+/);
-        // Check if any token from the color value matches any token from our map
-        return valueTokens.some((token) => colorTokens.has(token));
-      })?.[0] ?? "gray";
     setNewProjectColorId(colorId);
     setShowIconPicker(false);
   }, []);
@@ -866,7 +873,7 @@ export function ChatSidebar({
             }}
             onSave={handleIconChange}
             currentIconId={selectedProjectForIcon.id}
-            currentColor={selectedProjectForIcon.color}
+            currentColorId={getColorIdFromClass(selectedProjectForIcon.color)}
             projectName={selectedProjectForIcon.label}
           />
         )}
@@ -880,7 +887,7 @@ export function ChatSidebar({
             }}
             onSave={handleNewProjectIconChange}
             currentIconId={newProjectIcon}
-            currentColor={newProjectColor}
+            currentColorId={newProjectColorId}
             projectName={projectName || "New Project"}
           />
         )}

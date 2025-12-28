@@ -418,7 +418,7 @@ private struct AccessibilityChecklist: View {
 #Preview("Component Gallery - High Contrast") {
     ComponentGallery(selectedComponent: .button)
         .frame(width: 800, height: 600)
-        .environment(\.colorSchemeContrast, .increased)
+        .environment(\.accessibilityContrast, .increased)
 }
 
 #Preview("Component Gallery - Large Text") {

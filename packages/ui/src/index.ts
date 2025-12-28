@@ -2,6 +2,7 @@
 export { ChatUIRoot } from "./app/ChatUIRoot";
 
 // Hooks
+export * from "./app/components/hooks/useFocusTrap";
 export * from "./app/hooks/useControllableState";
 
 // Slots

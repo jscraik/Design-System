@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { ModalDialog, ModalBody } from "../ui/overlays/modal";
 import {
   IconBarChart,
   IconBook,
@@ -35,34 +36,40 @@ interface IconPickerModalProps {
   isOpen: boolean;
   onClose: () => void;
   currentIconId?: string;
-  currentColor?: string;
-  onSave: (icon: string, color: string) => void;
+  currentColorId?: string;
+  onSave: (iconId: string, colorId: string) => void;
   projectName: string;
 }
 
+// Color definitions with ID and CSS class
 const colors = [
-  { id: "gray", value: "text-foundation-text-light-tertiary dark:text-white/60", bg: "bg-foundation-bg-light-3 dark:bg-white/10" },
+  { id: "gray", className: "text-foundation-icon-light-tertiary dark:text-white/60", bg: "bg-foundation-icon-light-tertiary dark:bg-white/60" },
   {
     id: "blue",
-    value: "text-foundation-accent-blue",
+    className: "text-foundation-accent-blue",
     bg: "bg-foundation-accent-blue",
   },
   {
     id: "green",
-    value: "text-foundation-accent-green",
+    className: "text-foundation-accent-green",
     bg: "bg-foundation-accent-green",
   },
   {
     id: "orange",
-    value: "text-foundation-accent-orange",
+    className: "text-foundation-accent-orange",
     bg: "bg-foundation-accent-orange",
   },
   {
     id: "red",
-    value: "text-foundation-accent-red",
+    className: "text-foundation-accent-red",
     bg: "bg-foundation-accent-red",
   },
 ];
+
+// Helper to get CSS class from color ID
+const getColorClass = (colorId: string): string => {
+  return colors.find((c) => c.id === colorId)?.className ?? colors[0].className;
+};
 
 const icons = [
   { id: "folder", component: IconFolder },
@@ -98,21 +105,6 @@ const icons = [
 const getSelectedIconComponent = (selectedIcon: string) =>
   icons.find((icon) => icon.id === selectedIcon)?.component || IconFolder;
 
-function ModalHeader({ projectName }: { projectName: string }) {
-  return (
-    <div className="flex items-center justify-between px-6 py-4 border-b border-foundation-bg-light-3 dark:border-white/10">
-      <div>
-        <h2 className="text-[16px] font-medium text-foundation-text-light-primary dark:text-white leading-[24px] tracking-[-0.32px]">
-          Choose icon
-        </h2>
-        <p className="text-[13px] text-foundation-text-light-tertiary dark:text-white/60 mt-0.5 leading-[18px] tracking-[-0.32px]">
-          {projectName}
-        </p>
-      </div>
-    </div>
-  );
-}
-
 function IconPreview({
   selectedColor,
   SelectedIconComponent,
@@ -130,11 +122,11 @@ function IconPreview({
 }
 
 function ColorPicker({
-  selectedColor,
+  selectedColorId,
   onSelect,
 }: {
-  selectedColor: string;
-  onSelect: (value: string) => void;
+  selectedColorId: string;
+  onSelect: (id: string) => void;
 }) {
   return (
     <div className="mb-6">
@@ -142,9 +134,10 @@ function ColorPicker({
         {colors.map((color) => (
           <button
             key={color.id}
-            onClick={() => onSelect(color.value)}
+            type="button"
+            onClick={() => onSelect(color.id)}
             className={`size-8 rounded-full transition-all ${color.bg} ${
-              selectedColor === color.value
+              selectedColorId === color.id
                 ? "ring-2 ring-black/20 dark:ring-white ring-offset-2 ring-offset-foundation-bg-light-2 dark:ring-offset-foundation-bg-dark-2 scale-110"
                 : "hover:scale-105"
             }`}
@@ -159,11 +152,11 @@ function ColorPicker({
 
 function IconGrid({
   selectedIcon,
-  selectedColor,
+  selectedColorClass,
   onSelect,
 }: {
   selectedIcon: string;
-  selectedColor: string;
+  selectedColorClass: string;
   onSelect: (id: string) => void;
 }) {
   return (
@@ -173,6 +166,7 @@ function IconGrid({
         return (
           <button
             key={icon.id}
+            type="button"
             onClick={() => onSelect(icon.id)}
             className={`p-3 rounded-lg transition-all ${
               selectedIcon === icon.id ? "bg-black/10 dark:bg-white/10 scale-95" : "hover:bg-black/5 dark:hover:bg-white/5"
@@ -181,7 +175,7 @@ function IconGrid({
             aria-label={`Icon: ${icon.id}`}
           >
             <IconComponent
-              className={`size-5 ${selectedIcon === icon.id ? selectedColor : "text-foundation-text-light-tertiary dark:text-white/60"}`}
+              className={`size-5 ${selectedIcon === icon.id ? selectedColorClass : "text-foundation-text-light-tertiary dark:text-white/60"}`}
             />
           </button>
         );
@@ -194,12 +188,14 @@ function ModalFooter({ onClose, onSave }: { onClose: () => void; onSave: () => v
   return (
     <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-foundation-bg-light-3 dark:border-white/10">
       <button
+        type="button"
         onClick={onClose}
         className="px-4 py-2 text-[14px] text-foundation-text-light-secondary dark:text-white/70 hover:text-foundation-text-light-primary dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors font-normal leading-[20px] tracking-[-0.3px]"
       >
         Cancel
       </button>
       <button
+        type="button"
         onClick={onSave}
         className="px-4 py-2 text-[14px] bg-foundation-accent-green text-white hover:bg-foundation-accent-green/90 rounded-lg transition-colors font-medium leading-[20px] tracking-[-0.3px]"
       >
@@ -213,74 +209,55 @@ export function IconPickerModal({
   isOpen,
   onClose,
   currentIconId,
-  currentColor = "text-foundation-text-light-tertiary dark:text-white/60",
+  currentColorId = "gray",
   onSave,
   projectName,
 }: IconPickerModalProps) {
-  const [selectedColor, setSelectedColor] = useState(currentColor);
+  const [selectedColorId, setSelectedColorId] = useState(currentColorId);
   const [selectedIcon, setSelectedIcon] = useState(currentIconId ?? "folder");
 
-  if (!isOpen) return null;
+  // Sync state when modal opens or props change (prevents stale state on reopen)
+  useEffect(() => {
+    if (!isOpen) return;
+    setSelectedColorId(currentColorId);
+    setSelectedIcon(currentIconId ?? "folder");
+  }, [isOpen, currentColorId, currentIconId]);
 
   const handleSave = () => {
-    onSave(selectedIcon, selectedColor);
+    onSave(selectedIcon, selectedColorId);
     onClose();
   };
 
   const SelectedIconComponent = getSelectedIconComponent(selectedIcon);
+  const selectedColorClass = getColorClass(selectedColorId);
 
   return (
-    <>
-      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[200]" onClick={onClose} />
-      <div
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[201] w-[400px]"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="icon-picker-title"
-      >
-        <div className="bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden">
-          <ModalHeader projectName={projectName} />
-          <div className="px-6 py-6">
-            <IconPreview
-              selectedColor={selectedColor}
-              SelectedIconComponent={SelectedIconComponent}
-            />
-            <ColorPicker selectedColor={selectedColor} onSelect={setSelectedColor} />
-            <IconGrid
-              selectedIcon={selectedIcon}
-              selectedColor={selectedColor}
-              onSelect={setSelectedIcon}
-            />
-          </div>
-          <ModalFooter onClose={onClose} onSave={handleSave} />
+    <ModalDialog isOpen={isOpen} onClose={onClose} title="Choose icon" maxWidth="400px">
+      <div className="px-6 py-4 border-b border-foundation-bg-light-3 dark:border-white/10">
+        <div>
+          <h2 id="icon-picker-title" className="text-[16px] font-medium text-foundation-text-light-primary dark:text-white leading-[24px] tracking-[-0.32px]">
+            Choose icon
+          </h2>
+          <p className="text-[13px] text-foundation-text-light-tertiary dark:text-white/60 mt-0.5 leading-[18px] tracking-[-0.32px]">
+            {projectName}
+          </p>
         </div>
       </div>
 
-      <style>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(0, 0, 0, 0.15);
-          border-radius: 3px;
-        }
-        @media (prefers-color-scheme: dark) {
-          .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-          }
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(0, 0, 0, 0.25);
-        }
-        @media (prefers-color-scheme: dark) {
-          .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.3);
-          }
-        }
-      `}</style>
-    </>
+      <ModalBody>
+        <IconPreview
+          selectedColor={selectedColorClass}
+          SelectedIconComponent={SelectedIconComponent}
+        />
+        <ColorPicker selectedColorId={selectedColorId} onSelect={setSelectedColorId} />
+        <IconGrid
+          selectedIcon={selectedIcon}
+          selectedColorClass={selectedColorClass}
+          onSelect={setSelectedIcon}
+        />
+      </ModalBody>
+
+      <ModalFooter onClose={onClose} onSave={handleSave} />
+    </ModalDialog>
   );
 }

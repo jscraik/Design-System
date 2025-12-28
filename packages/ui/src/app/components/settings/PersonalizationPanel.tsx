@@ -48,7 +48,7 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
 
   return (
     <>
-      <div className="px-6 py-4 border-b border-foundation-text-dark-primary/10 flex items-center gap-3">
+      <div className="px-6 py-4 border-b border-foundation-text-light-primary/10 dark:border-foundation-text-dark-primary/10 flex items-center gap-3">
         <div className="flex gap-2">
           <button
             onClick={onBack}
@@ -59,12 +59,13 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
           <div className="size-3 rounded-full bg-foundation-accent-green" />
         </div>
         <button
+          type="button"
           onClick={onBack}
-          className="p-1 hover:bg-foundation-bg-dark-3 rounded transition-colors"
+          className="p-1 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded transition-colors"
         >
-          <IconChevronLeftMd className="size-4 text-foundation-icon-dark-primary" />
+          <IconChevronLeftMd className="size-4 text-foundation-icon-light-primary dark:text-foundation-icon-dark-primary" />
         </button>
-        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foundation-text-dark-primary">
+        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
           Personalization
         </h2>
       </div>
@@ -82,7 +83,7 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
 
         {/* Characteristics */}
         <div className="mb-6">
-          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
+          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2 px-3">
             Characteristics
           </h3>
 
@@ -117,73 +118,77 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
             onValueChange={setEmojiStyle}
           />
 
-          <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary px-3 mt-3">
+          <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary px-3 mt-3">
             Choose some additional customizations on top of your base style and tone.
           </p>
         </div>
 
         {/* Custom instructions */}
         <div className="mb-6">
-          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
+          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2 px-3">
             Custom instructions
           </h3>
-          <div className="px-3 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
+          <div className="px-3 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
             Be habitual and conversational
           </div>
         </div>
 
         {/* Your nickname */}
         <div className="mb-6">
-          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
+          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2 px-3">
             Your nickname
           </h3>
-          <div className="px-3 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
+          <div className="px-3 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
             Jamie
           </div>
         </div>
 
         {/* Your occupation */}
         <div className="mb-6">
-          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
+          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2 px-3">
             Your occupation
           </h3>
-          <div className="px-3 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
+          <div className="px-3 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
             AI System Architect & Dev
           </div>
         </div>
 
         {/* More about you */}
         <div className="mb-6">
-          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
+          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2 px-3">
             More about you
           </h3>
-          <div className="px-3 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
+          <div className="px-3 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
             Ai, Dev
           </div>
         </div>
 
         {/* Memory */}
-        <button className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors mb-6">
+        <button
+          type="button"
+          className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-lg transition-colors mb-6"
+        >
           <div className="flex items-center gap-3">
-            <IconBook className="size-4 text-foundation-icon-dark-secondary" />
-            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
+            <IconBook className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
+            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
               Memory
             </span>
           </div>
-          <IconChevronRightMd className="size-4 text-foundation-icon-dark-tertiary" />
+          <IconChevronRightMd className="size-4 text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary" />
         </button>
 
         {/* Advanced section */}
         <div>
           <button
+            type="button"
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors mb-2"
+            className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-lg transition-colors mb-2"
           >
-            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
+            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
               Advanced
             </span>
             <IconChevronDownMd
-              className={`size-4 text-foundation-icon-dark-tertiary transition-transform ${showAdvanced ? "" : "-rotate-90"}`}
+              className={`size-4 text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary transition-transform ${showAdvanced ? "" : "-rotate-90"}`}
             />
           </button>
 

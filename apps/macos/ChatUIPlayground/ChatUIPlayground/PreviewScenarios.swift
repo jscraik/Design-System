@@ -357,7 +357,7 @@ private struct PreviewScenarioContainer<Content: View>: View {
     PreviewScenarioContainer(width: 450) {
         PreviewScenarios.FormScenario()
     }
-    .environment(\.colorSchemeContrast, .increased)
+    .environment(\.accessibilityContrast, .increased)
 }
 
 #Preview("Form - Dynamic Type") {
