@@ -2,6 +2,7 @@
   Apps SDK UI audit tokens (from Figma foundations).
   These are reference values for compliance checks and documentation.
   Do not use as styling defaults; prefer Apps SDK UI tokens/classes instead.
+  Generated deterministically - same input produces identical output.
 */
 
 :root {
@@ -11,42 +12,42 @@
   --foundation-bg-dark-3: #414141;
 
   /* Dark text */
-  --foundation-text-dark-primary: #ffffff;
-  --foundation-text-dark-secondary: #cdcdcd;
-  --foundation-text-dark-tertiary: #afafaf;
+  --foundation-text-dark-primary: #FFFFFF;
+  --foundation-text-dark-secondary: #CDCDCD;
+  --foundation-text-dark-tertiary: #AFAFAF;
 
   /* Dark accents */
-  --foundation-accent-blue: #0285ff;
-  --foundation-accent-red: #ff8583;
-  --foundation-accent-orange: #ff9e6c;
-  --foundation-accent-green: #40c977;
+  --foundation-accent-blue: #0285FF;
+  --foundation-accent-red: #FF8583;
+  --foundation-accent-orange: #FF9E6C;
+  --foundation-accent-green: #40C977;
 
   /* Light backgrounds */
-  --foundation-bg-light-1: #ffffff;
-  --foundation-bg-light-2: #e8e8e8;
-  --foundation-bg-light-3: #f3f3f3;
+  --foundation-bg-light-1: #FFFFFF;
+  --foundation-bg-light-2: #E8E8E8;
+  --foundation-bg-light-3: #F3F3F3;
 
   /* Light text */
-  --foundation-text-light-primary: #0d0d0d;
-  --foundation-text-light-secondary: #5d5d5d;
-  --foundation-text-light-tertiary: #8f8f8f;
+  --foundation-text-light-primary: #0D0D0D;
+  --foundation-text-light-secondary: #5D5D5D;
+  --foundation-text-light-tertiary: #8F8F8F;
 
   /* Light icon */
-  --foundation-icon-light-primary: #0d0d0d;
-  --foundation-icon-light-secondary: #5d5d5d;
-  --foundation-icon-light-tertiary: #8f8f8f;
-  --foundation-icon-light-inverted: #8f8f8f;
+  --foundation-icon-light-primary: #0D0D0D;
+  --foundation-icon-light-secondary: #5D5D5D;
+  --foundation-icon-light-tertiary: #8F8F8F;
+  --foundation-icon-light-inverted: #8F8F8F;
 
   /* Dark icon */
-  --foundation-icon-dark-primary: #ffffff;
-  --foundation-icon-dark-secondary: #cdcdcd;
-  --foundation-icon-dark-tertiary: #afafaf;
-  --foundation-icon-dark-inverted: #afafaf;
+  --foundation-icon-dark-primary: #FFFFFF;
+  --foundation-icon-dark-secondary: #CDCDCD;
+  --foundation-icon-dark-tertiary: #AFAFAF;
+  --foundation-icon-dark-inverted: #AFAFAF;
 
   /* Light accents */
-  --foundation-accent-blue-light: #0285ff;
-  --foundation-accent-red-light: #e02e2a;
-  --foundation-accent-orange-light: #e25507;
+  --foundation-accent-blue-light: #0285FF;
+  --foundation-accent-red-light: #E02E2A;
+  --foundation-accent-orange-light: #E25507;
   --foundation-accent-green-light: #008635;
 
   /* Spacing scale */
@@ -61,39 +62,102 @@
   --foundation-space-8: 8px;
   --foundation-space-4: 4px;
   --foundation-space-2: 2px;
-  --foundation-space-0: 0;
+  --foundation-space-0: 0px;
 
   /* Typography */
   --foundation-font-family:
     "SF Pro", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --foundation-heading-1-size: 36px;
-  --foundation-heading-1-line: 40px;
-  --foundation-heading-1-weight: 600;
-  --foundation-heading-1-tracking: -0.1px;
-  --foundation-heading-2-size: 24px;
-  --foundation-heading-2-line: 28px;
-  --foundation-heading-2-weight: 600;
-  --foundation-heading-2-tracking: -0.25px;
-  --foundation-heading-3-size: 18px;
-  --foundation-heading-3-line: 26px;
-  --foundation-heading-3-weight: 600;
-  --foundation-heading-3-tracking: -0.45px;
+  --foundation-heading1-size: 36px;
+  --foundation-heading1-line: 40px;
+  --foundation-heading1-weight: 600;
+  --foundation-heading1-weight-regular: 600;
+  --foundation-heading1-tracking: -0.1px;
+
+  --foundation-heading2-size: 24px;
+  --foundation-heading2-line: 28px;
+  --foundation-heading2-weight: 600;
+  --foundation-heading2-weight-regular: 600;
+  --foundation-heading2-tracking: -0.25px;
+
+  --foundation-heading3-size: 18px;
+  --foundation-heading3-line: 26px;
+  --foundation-heading3-weight: 600;
+  --foundation-heading3-weight-regular: 600;
+  --foundation-heading3-tracking: -0.45px;
 
   --foundation-body-size: 16px;
   --foundation-body-line: 26px;
-  --foundation-body-weight-regular: 400;
+  --foundation-body-weight: 400;
   --foundation-body-weight-emphasis: 600;
   --foundation-body-tracking: -0.4px;
 
   --foundation-body-small-size: 14px;
   --foundation-body-small-line: 18px;
-  --foundation-body-small-weight-regular: 400;
+  --foundation-body-small-weight: 400;
   --foundation-body-small-weight-emphasis: 600;
   --foundation-body-small-tracking: -0.3px;
 
   --foundation-caption-size: 12px;
   --foundation-caption-line: 16px;
-  --foundation-caption-weight-regular: 400;
+  --foundation-caption-weight: 400;
   --foundation-caption-weight-emphasis: 600;
   --foundation-caption-tracking: -0.1px;
+
+
+  /* Accessibility */
+  --foundation-focus-ring: #0285ff;
+  --foundation-focus-ring-width: 2px;
+  --foundation-animation-duration: 0.25s;
+  --foundation-animation-duration-reduced: 0.1s;
+  
+  /* High contrast variants */
+  --foundation-high-contrast-text: #ffffff;
+  --foundation-high-contrast-bg: #000000;
+  --foundation-high-contrast-border: #ffffff;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --foundation-text-dark-primary: var(--foundation-high-contrast-text);
+    --foundation-text-light-primary: var(--foundation-high-contrast-bg);
+    --foundation-bg-dark-1: var(--foundation-high-contrast-bg);
+    --foundation-bg-light-1: var(--foundation-high-contrast-text);
+    --foundation-focus-ring-width: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --foundation-animation-duration: var(--foundation-animation-duration-reduced);
+  }
+  
+  * {
+    animation-duration: var(--foundation-animation-duration-reduced) !important;
+    transition-duration: var(--foundation-animation-duration-reduced) !important;
+  }
+}
+
+/* Focus ring utilities */
+.foundation-focus-ring {
+  outline: var(--foundation-focus-ring-width) solid var(--foundation-focus-ring);
+  outline-offset: 2px;
+}
+
+.foundation-focus-ring:focus-visible {
+  outline: var(--foundation-focus-ring-width) solid var(--foundation-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Accessibility utilities */
+.foundation-high-contrast {
+  color: var(--foundation-high-contrast-text);
+  background-color: var(--foundation-high-contrast-bg);
+  border: 1px solid var(--foundation-high-contrast-border);
+}
+
+.foundation-reduced-motion {
+  animation: none !important;
+  transition: none !important;
 }

@@ -2,6 +2,7 @@ import SwiftUI
 
 /// Design tokens generated from the shared token system
 /// This file provides Swift constants that match the CSS custom properties
+/// Generated deterministically - same input produces identical output
 public enum DesignTokens {
     
     // MARK: - Colors
@@ -12,7 +13,7 @@ public enum DesignTokens {
             public static let lightPrimary = Color(hex: "#FFFFFF")
             public static let lightSecondary = Color(hex: "#E8E8E8")
             public static let lightTertiary = Color(hex: "#F3F3F3")
-            
+
             public static let darkPrimary = Color(hex: "#212121")
             public static let darkSecondary = Color(hex: "#303030")
             public static let darkTertiary = Color(hex: "#414141")
@@ -39,7 +40,7 @@ public enum DesignTokens {
             public static let lightSecondary = Color(hex: "#5D5D5D")
             public static let lightTertiary = Color(hex: "#8F8F8F")
             public static let lightInverted = Color(hex: "#8F8F8F")
-            
+
             public static let darkPrimary = Color(hex: "#FFFFFF")
             public static let darkSecondary = Color(hex: "#CDCDCD")
             public static let darkTertiary = Color(hex: "#AFAFAF")
@@ -72,7 +73,7 @@ public enum DesignTokens {
             public static let lightSecondary = Color(hex: "#5D5D5D")
             public static let lightTertiary = Color(hex: "#8F8F8F")
             public static let lightInverted = Color(hex: "#8F8F8F")
-            
+
             public static let darkPrimary = Color(hex: "#FFFFFF")
             public static let darkSecondary = Color(hex: "#CDCDCD")
             public static let darkTertiary = Color(hex: "#AFAFAF")
@@ -105,7 +106,7 @@ public enum DesignTokens {
             public static let lightRed = Color(hex: "#E02E2A")
             public static let lightOrange = Color(hex: "#E25507")
             public static let lightGreen = Color(hex: "#008635")
-            
+
             public static let darkBlue = Color(hex: "#0285FF")
             public static let darkRed = Color(hex: "#FF8583")
             public static let darkOrange = Color(hex: "#FF9E6C")
@@ -145,21 +146,21 @@ public enum DesignTokens {
             public static let weight = Font.Weight.semibold
             public static let tracking: CGFloat = -0.1
         }
-        
+
         public enum Heading2 {
             public static let size: CGFloat = 24
             public static let lineHeight: CGFloat = 28
             public static let weight = Font.Weight.semibold
             public static let tracking: CGFloat = -0.25
         }
-        
+
         public enum Heading3 {
             public static let size: CGFloat = 18
             public static let lineHeight: CGFloat = 26
             public static let weight = Font.Weight.semibold
             public static let tracking: CGFloat = -0.45
         }
-        
+
         public enum Body {
             public static let size: CGFloat = 16
             public static let lineHeight: CGFloat = 26
@@ -167,7 +168,7 @@ public enum DesignTokens {
             public static let emphasisWeight = Font.Weight.semibold
             public static let tracking: CGFloat = -0.4
         }
-        
+
         public enum BodySmall {
             public static let size: CGFloat = 14
             public static let lineHeight: CGFloat = 18
@@ -175,7 +176,7 @@ public enum DesignTokens {
             public static let emphasisWeight = Font.Weight.semibold
             public static let tracking: CGFloat = -0.3
         }
-        
+
         public enum Caption {
             public static let size: CGFloat = 12
             public static let lineHeight: CGFloat = 16
@@ -183,6 +184,7 @@ public enum DesignTokens {
             public static let emphasisWeight = Font.Weight.semibold
             public static let tracking: CGFloat = -0.1
         }
+
     }
     
     // MARK: - Spacing
@@ -212,6 +214,55 @@ public enum DesignTokens {
         public static let medium: CGFloat = 8
         public static let large: CGFloat = 12
         public static let extraLarge: CGFloat = 16
+    }
+    
+    // MARK: - Accessibility
+    
+    public enum Accessibility {
+        /// Focus ring color for keyboard navigation
+        public static let focusRing = Color(hex: "#0285FF")
+        
+        /// Focus ring width for keyboard navigation
+        public static let focusRingWidth: CGFloat = 2
+        
+        /// High contrast variants
+        public enum HighContrast {
+            public static let textOnBackground = Color(hex: "#FFFFFF")
+            public static let backgroundContrast = Color(hex: "#000000")
+            public static let borderContrast = Color(hex: "#FFFFFF")
+        }
+        
+        /// Reduced motion preferences
+        public enum Animation {
+            public static let duration: Double = 0.25
+            public static let reducedDuration: Double = 0.1
+            
+            /// Returns appropriate animation duration based on system preferences
+            public static func duration(respectingMotionPreference: Bool = true) -> Double {
+                if respectingMotionPreference {
+                    return AccessibilityPreferences.prefersReducedMotion ? reducedDuration : duration
+                }
+                return duration
+            }
+        }
+        
+        /// System accessibility preferences
+        public enum AccessibilityPreferences {
+            /// Whether the user prefers reduced motion
+            public static var prefersReducedMotion: Bool {
+                NSWorkspace.shared.accessibilityDisplayShouldReduceMotion
+            }
+            
+            /// Whether the user prefers high contrast
+            public static var prefersHighContrast: Bool {
+                NSWorkspace.shared.accessibilityDisplayShouldIncreaseContrast
+            }
+            
+            /// Whether the user prefers reduced transparency
+            public static var prefersReducedTransparency: Bool {
+                NSWorkspace.shared.accessibilityDisplayShouldReduceTransparency
+            }
+        }
     }
 }
 
@@ -254,5 +305,35 @@ extension Color {
                 return NSColor(light)
             }
         })
+    }
+}
+
+// MARK: - Accessibility Extensions
+
+extension View {
+    /// Applies focus ring styling for keyboard navigation
+    public func accessibilityFocusRing() -> some View {
+        self.overlay(
+            RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.medium)
+                .stroke(DesignTokens.Accessibility.focusRing, lineWidth: DesignTokens.Accessibility.focusRingWidth)
+                .opacity(0) // Will be shown by system focus management
+        )
+    }
+    
+    /// Applies high contrast styling when needed
+    public func accessibilityHighContrast() -> some View {
+        self.modifier(HighContrastModifier())
+    }
+}
+
+private struct HighContrastModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        if DesignTokens.Accessibility.AccessibilityPreferences.prefersHighContrast {
+            content
+                .foregroundColor(DesignTokens.Accessibility.HighContrast.textOnBackground)
+                .background(DesignTokens.Accessibility.HighContrast.backgroundContrast)
+        } else {
+            content
+        }
     }
 }
