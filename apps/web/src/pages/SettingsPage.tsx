@@ -13,9 +13,23 @@ import type { Route } from "../Router";
 
 interface SettingsPageProps {
   onNavigate: (route: Route) => void;
+  onExportSettings?: () => void;
+  onResetDefaults?: () => void;
+  onSaveSettings?: (settings: {
+    darkMode: boolean;
+    notifications: boolean;
+    volume: number;
+    quality: "low" | "medium" | "high";
+    autoSave: boolean;
+  }) => void;
 }
 
-export function SettingsPage({ onNavigate }: SettingsPageProps) {
+export function SettingsPage({
+  onNavigate,
+  onExportSettings,
+  onResetDefaults,
+  onSaveSettings,
+}: SettingsPageProps) {
   const [darkMode, setDarkMode] = useState(true);
   const [notifications, setNotifications] = useState(true);
   const [volume, setVolume] = useState(75);
@@ -37,7 +51,7 @@ export function SettingsPage({ onNavigate }: SettingsPageProps) {
             <h1 className="text-xl font-semibold text-white">Settings</h1>
           </div>
 
-          <Button variant="outline" size="sm" onClick={() => console.log("Export settings")}>
+          <Button variant="outline" size="sm" onClick={onExportSettings}>
             Export
           </Button>
         </div>
@@ -53,7 +67,7 @@ export function SettingsPage({ onNavigate }: SettingsPageProps) {
                 <div className="text-white font-medium">Dark Mode</div>
                 <div className="text-white/60 text-sm">Use dark theme across the application</div>
               </div>
-              <Toggle checked={darkMode} onChange={setDarkMode} />
+              <Toggle checked={darkMode} onChange={setDarkMode} ariaLabel="Dark mode" />
             </div>
 
             <RangeSlider
@@ -75,7 +89,11 @@ export function SettingsPage({ onNavigate }: SettingsPageProps) {
                 <div className="text-white font-medium">Push Notifications</div>
                 <div className="text-white/60 text-sm">Receive notifications for new messages</div>
               </div>
-              <Toggle checked={notifications} onChange={setNotifications} />
+              <Toggle
+                checked={notifications}
+                onChange={setNotifications}
+                ariaLabel="Push notifications"
+              />
             </div>
           </div>
         </CollapsibleSection>
@@ -104,17 +122,33 @@ export function SettingsPage({ onNavigate }: SettingsPageProps) {
                 <div className="text-white font-medium">Auto-save Conversations</div>
                 <div className="text-white/60 text-sm">Automatically save chat history</div>
               </div>
-              <Toggle checked={autoSave} onChange={setAutoSave} />
+              <Toggle
+                checked={autoSave}
+                onChange={setAutoSave}
+                ariaLabel="Auto-save conversations"
+              />
             </div>
           </div>
         </CollapsibleSection>
 
         {/* Actions */}
         <div className="flex gap-3 pt-6 border-t border-white/10">
-          <Button variant="outline" onClick={() => console.log("Reset to defaults")}>
+          <Button variant="outline" onClick={onResetDefaults}>
             Reset to Defaults
           </Button>
-          <Button onClick={() => console.log("Save settings")}>Save Changes</Button>
+          <Button
+            onClick={() =>
+              onSaveSettings?.({
+                darkMode,
+                notifications,
+                volume,
+                quality,
+                autoSave,
+              })
+            }
+          >
+            Save Changes
+          </Button>
         </div>
       </div>
     </div>

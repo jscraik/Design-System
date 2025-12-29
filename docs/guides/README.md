@@ -30,4 +30,5 @@ For more detailed development workflows, see:
 
 - Main [README.md](../../README.md) - Project overview and setup
 - [Storybook](http://localhost:6006) - Component documentation (when running)
-- [Web App](http://localhost:5176) - Reference implementation (when running)
+- [Web App](http://localhost:5173) - Reference implementation (when running)
+- [Swift Integration](../SWIFT_INTEGRATION.md) - Swift packages and macOS app setup

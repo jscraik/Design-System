@@ -1,6 +1,5 @@
 import { IconChat } from "../../../../icons";
 import { Sparkles } from "../../../../vendor/appsSdkUi";
-
 import { cn } from "../utils";
 
 export type ViewMode = "chat" | "compose";
@@ -45,7 +44,7 @@ export function ViewModeToggle({
   };
 
   return (
-    <button
+    <button type="button"
       className={cn(
         "flex items-center gap-2 px-4 py-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 transition-colors",
         disabled && "opacity-50 cursor-not-allowed",

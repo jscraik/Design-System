@@ -5,10 +5,12 @@
  * Validates: Requirements 4.1, 4.2, 4.3, 4.4, 4.5
  */
 
-import fc from 'fast-check';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'fs';
 import { join } from 'path';
+
+import fc from 'fast-check';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
+
 import { VersionSynchronizer } from './version-sync.mjs';
 
 // Test configuration

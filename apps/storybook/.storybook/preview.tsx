@@ -105,7 +105,7 @@ const preview: Preview = {
       options: {
         runOnly: {
           type: "tag",
-          values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"],
+          values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22a", "wcag22aa"],
         },
       },
     },
@@ -138,7 +138,21 @@ const preview: Preview = {
     (Story, context) => {
       // Apply dark/light theme based on backgrounds selection
       const bgValue = context.globals.backgrounds?.value;
-      const isDark = bgValue !== "#ffffff";
+      const resolvedBackground =
+        backgrounds.values.find((value) => value.name === bgValue)?.value ?? bgValue;
+      const lightBackgrounds = new Set([
+        "#ffffff",
+        "#e8e8e8",
+        "#f3f3f3",
+        "var(--foundation-bg-light-1)",
+        "var(--foundation-bg-light-2)",
+        "var(--foundation-bg-light-3)",
+      ]);
+      const isLight =
+        resolvedBackground != null &&
+        (lightBackgrounds.has(resolvedBackground) ||
+          /--foundation-bg-light-/.test(resolvedBackground));
+      const isDark = !isLight;
 
       return (
         <HostProvider host={host}>
@@ -146,7 +160,7 @@ const preview: Preview = {
             <div
               className={isDark ? "dark" : "light"}
               style={{
-                backgroundColor: bgValue || "var(--foundation-bg-dark-1)",
+                backgroundColor: resolvedBackground || "var(--foundation-bg-dark-1)",
                 color: isDark
                   ? "var(--foundation-text-dark-primary)"
                   : "var(--foundation-text-light-primary)",

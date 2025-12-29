@@ -81,7 +81,7 @@ jobs:
           name: build-artifacts-${{ matrix.platform }}
           path: |
             packages/*/dist/
-            packages/ui-swift/.build/
+            swift/*/.build/
             .build-cache/
           retention-days: 7
 

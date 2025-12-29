@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "@storybook/test";
 import { useState } from "react";
 
 import { ChatHeader } from "../app/components/chat/ChatHeader";
@@ -35,7 +36,7 @@ function FullWidthStoryShell({ showFooter, showCompose }: StoryArgs) {
         header={
           <ChatHeader
             isSidebarOpen={false}
-            onSidebarToggle={() => {}}
+            onSidebarToggle={fn()}
             selectedModel={selectedModel}
             onModelChange={setSelectedModel}
             viewMode={viewMode}
@@ -56,6 +57,7 @@ function FullWidthStoryShell({ showFooter, showCompose }: StoryArgs) {
 const meta: Meta<typeof ChatFullWidthTemplate> = {
   title: "Templates/ChatFullWidthTemplate",
   component: ChatFullWidthTemplate,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },

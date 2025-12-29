@@ -122,7 +122,6 @@ export function DashboardPage({
                     description={chat.time}
                     right={<ModelBadge name={chat.model} variant="blue" />}
                     onClick={() => onNavigate?.("chat")}
-                    className="cursor-pointer"
                   />
                 ))}
               </div>

@@ -117,7 +117,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                   <span className="text-[15px] leading-6 text-foundation-text-light-primary dark:text-foundation-text-dark-primary font-medium">
                     Prompt Instructions
                   </span>
-                  <button className="p-1.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors" aria-label="Copy to clipboard">
+                  <button type="button" className="p-1.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors" aria-label="Copy to clipboard">
                     <svg
                       className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
                       fill="none"
@@ -133,7 +133,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                     </svg>
                   </button>
                 </div>
-                <button className="flex items-center gap-2 px-3 py-1.5 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary rounded-lg transition-colors text-[13px] leading-5">
+                <button type="button" className="flex items-center gap-2 px-3 py-1.5 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary rounded-lg transition-colors text-[13px] leading-5">
                   <svg
                     className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
                     fill="none"
@@ -160,7 +160,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
 
               <div className="flex items-center justify-between px-4 py-2 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 border-t border-foundation-bg-light-3 dark:border-foundation-bg-dark-3">
                 <div className="flex items-center gap-1">
-                  <button
+                  <button type="button"
                     className="p-1.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors"
                     title="Add"
                     aria-label="Add"
@@ -175,7 +175,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
                     </svg>
                   </button>
-                  <button
+                  <button type="button"
                     onClick={() => setIsWebSearchActive(!isWebSearchActive)}
                     className={`p-1.5 rounded-md transition-colors relative ${
                       isWebSearchActive ? "bg-foundation-accent-blue/10" : "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2"
@@ -216,7 +216,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                       </svg>
                     )}
                   </button>
-                  <button
+                  <button type="button"
                     className="p-1.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors"
                     title="Link"
                     aria-label="Link"
@@ -235,7 +235,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                       />
                     </svg>
                   </button>
-                  <button
+                  <button type="button"
                     className="p-1.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors"
                     title="Refresh"
                     aria-label="Refresh"
@@ -273,7 +273,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                 </div>
 
                 <div className="flex items-center gap-1">
-                  <button className="flex items-center gap-1.5 px-2 py-1 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors">
+                  <button type="button" className="flex items-center gap-1.5 px-2 py-1 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors">
                     <svg
                       className="size-3.5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
                       fill="none"
@@ -291,7 +291,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                       Auto-clear
                     </span>
                   </button>
-                  <button
+                  <button type="button"
                     className="p-1.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors"
                     title="Voice"
                     aria-label="Voice"
@@ -343,7 +343,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                         Prompt Builder
                       </span>
                     </div>
-                    <button aria-label="Run discovery" className="flex items-center gap-2 px-3 py-1.5 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary rounded-lg transition-colors text-[13px] leading-5">
+                    <button type="button" aria-label="Run discovery" className="flex items-center gap-2 px-3 py-1.5 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary rounded-lg transition-colors text-[13px] leading-5">
                       <svg
                         className="size-[18px]"
                         fill="none"
@@ -404,7 +404,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                           </label>
                           <div className="flex items-center gap-1">
                             <div className="relative">
-                              <button
+                              <button type="button"
                                 aria-label="Show task information"
                                 className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded transition-colors"
                                 onMouseEnter={() => setShowTooltip(true)}
@@ -483,7 +483,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                                 </div>
                               )}
                             </div>
-                            <button aria-label="Clear task" className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded transition-colors">
+                            <button type="button" aria-label="Clear task" className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded transition-colors">
                               <svg
                                 className="size-4 text-foundation-text-light-primary dark:text-foundation-text-dark-primary/70"
                                 fill="none"
@@ -511,7 +511,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                           />
 
                           <div className="flex flex-col gap-2">
-                            <button
+                            <button type="button"
                               onClick={() => setShowDiscoverySettings(true)}
                               aria-label={`Run discovery: ${taskConfig.buttonText}`}
                               className="px-4 py-2 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary rounded-lg transition-all text-[13px] leading-5 whitespace-nowrap flex items-center gap-2"
@@ -559,7 +559,11 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
                             />
                           </div>
 
-                          <Toggle checked={autoPlan} onChange={setAutoPlan} />
+                          <Toggle
+                            checked={autoPlan}
+                            onChange={setAutoPlan}
+                            ariaLabel="Auto plan"
+                          />
                           <span className="text-[13px] leading-5 text-foundation-text-light-primary dark:text-foundation-text-dark-primary/70 min-w-[32px]">
                             {autoPlan ? "On" : "Off"}
                           </span>
@@ -607,7 +611,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
             </p>
 
             <div className="inline-flex items-center gap-0 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 rounded-lg p-1 mb-6">
-              <button
+              <button type="button"
                 onClick={() => setProEditMode("agent")}
                 className={`px-4 py-1.5 rounded-md transition-all text-[14px] font-normal leading-[20px] tracking-[-0.3px] ${
                   proEditMode === "agent"
@@ -617,7 +621,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
               >
                 Agent
               </button>
-              <button
+              <button type="button"
                 onClick={() => setProEditMode("model")}
                 className={`px-4 py-1.5 rounded-md transition-all text-[14px] font-normal leading-[20px] tracking-[-0.3px] ${
                   proEditMode === "model"

@@ -27,6 +27,19 @@ interface ModelConfig {
   description: string;
 }
 
+export type ChatInputAttachmentAction =
+  | "upload-file"
+  | "upload-photo"
+  | "take-screenshot"
+  | "take-photo";
+
+export type ChatInputToolAction =
+  | "terminal-add"
+  | "code-open"
+  | "code-insiders-open"
+  | "notes-open"
+  | "script-editor-open";
+
 export interface ChatInputProps {
   selectedModel: ModelConfig;
 
@@ -35,22 +48,64 @@ export interface ChatInputProps {
 
   /** Slot: Custom content right of composer input (after send button) */
   composerRight?: ReactNode;
+
+  /** Active context tag label */
+  activeTag?: string;
+  /** Clear active context tag */
+  onClearActiveTag?: () => void;
+
+  /** Called when a message is submitted */
+  onSendMessage?: (message: string) => void | Promise<void>;
+  /** Called when an attachment action is selected */
+  onAttachmentAction?: (action: ChatInputAttachmentAction) => void;
+  /** Called when a tool action is selected */
+  onToolAction?: (action: ChatInputToolAction) => void;
+  /** Called when web search is toggled */
+  onSearchToggle?: (enabled: boolean) => void;
+  /** Called when deep research is toggled */
+  onResearchToggle?: (enabled: boolean) => void;
 }
 
-export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatInputProps) {
+export function ChatInput({
+  selectedModel,
+  composerLeft,
+  composerRight,
+  activeTag,
+  onClearActiveTag,
+  onSendMessage,
+  onAttachmentAction,
+  onToolAction,
+  onSearchToggle,
+  onResearchToggle,
+}: ChatInputProps) {
   const [message, setMessage] = useState("");
   const [isRecording, setIsRecording] = useState(false);
-  const [activeTag, setActiveTag] = useState("");
   const [isSearchEnabled, setIsSearchEnabled] = useState(false);
   const [isResearchEnabled, setIsResearchEnabled] = useState(false);
   const [uploadMenuOpen, setUploadMenuOpen] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (message.trim()) {
-      console.log("Sending message:", message);
-      setMessage("");
-    }
+    const trimmed = message.trim();
+    if (!trimmed) return;
+    setMessage("");
+    void onSendMessage?.(trimmed);
+  };
+
+  const toggleSearch = () => {
+    setIsSearchEnabled((prev) => {
+      const next = !prev;
+      onSearchToggle?.(next);
+      return next;
+    });
+  };
+
+  const toggleResearch = () => {
+    setIsResearchEnabled((prev) => {
+      const next = !prev;
+      onResearchToggle?.(next);
+      return next;
+    });
   };
 
   return (
@@ -61,7 +116,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
           <ContextTag
             icon={<IconCompose />}
             label={activeTag}
-            onClose={() => setActiveTag("")}
+            onClose={onClearActiveTag}
             variant="green"
           />
         </div>
@@ -121,7 +176,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                   <button
                     type="button"
                     onClick={() => {
-                      console.log("Upload file");
+                      onAttachmentAction?.("upload-file");
                       setUploadMenuOpen(false);
                     }}
                     className="w-full flex items-center gap-3 px-4 py-2.5 text-foundation-text-light-primary dark:text-foundation-text-dark-primary hover:bg-foundation-accent-green transition-colors text-left text-[14px] font-normal leading-[20px] tracking-[-0.3px] group first:rounded-t-lg"
@@ -132,7 +187,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                   <button
                     type="button"
                     onClick={() => {
-                      console.log("Upload photo");
+                      onAttachmentAction?.("upload-photo");
                       setUploadMenuOpen(false);
                     }}
                     className="w-full flex items-center gap-3 px-4 py-2.5 text-foundation-text-light-primary dark:text-foundation-text-dark-primary hover:bg-foundation-accent-green transition-colors text-left text-[14px] font-normal leading-[20px] tracking-[-0.3px] group"
@@ -143,7 +198,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                   <button
                     type="button"
                     onClick={() => {
-                      console.log("Take screenshot");
+                      onAttachmentAction?.("take-screenshot");
                       setUploadMenuOpen(false);
                     }}
                     className="w-full flex items-center gap-3 px-4 py-2.5 text-foundation-text-light-primary dark:text-foundation-text-dark-primary hover:bg-foundation-accent-green transition-colors text-left text-[14px] font-normal leading-[20px] tracking-[-0.3px] group"
@@ -154,7 +209,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                   <button
                     type="button"
                     onClick={() => {
-                      console.log("Take photo");
+                      onAttachmentAction?.("take-photo");
                       setUploadMenuOpen(false);
                     }}
                     className="w-full flex items-center gap-3 px-4 py-2.5 text-foundation-text-light-primary dark:text-foundation-text-dark-primary hover:bg-foundation-accent-green transition-colors text-left text-[14px] font-normal leading-[20px] tracking-[-0.3px] group last:rounded-b-lg"
@@ -167,7 +222,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
 
               <button
                 type="button"
-                onClick={() => setIsSearchEnabled(!isSearchEnabled)}
+                onClick={toggleSearch}
                 className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-colors ${
                   isSearchEnabled
                     ? "bg-foundation-accent-blue/20 text-foundation-accent-blue"
@@ -188,7 +243,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
 
               <button
                 type="button"
-                onClick={() => setIsResearchEnabled(!isResearchEnabled)}
+                onClick={toggleResearch}
                 className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-colors ${
                   isResearchEnabled
                     ? "bg-foundation-accent-blue/20 text-foundation-accent-blue"
@@ -275,7 +330,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                   {/* Apps List - Scrollable */}
                   <div className="px-2 pb-2 max-h-[320px] overflow-y-auto scrollbar-thin scrollbar-thumb-foundation-bg-light-3 dark:scrollbar-thumb-foundation-bg-dark-3 scrollbar-track-transparent hover:scrollbar-thumb-foundation-bg-light-3/70 dark:hover:scrollbar-thumb-foundation-bg-dark-3">
                     {/* Terminal - Running */}
-                    <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors cursor-pointer group">
+                    <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors group">
                       <div className="flex items-center justify-center size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
                         <svg
                           className="size-4"
@@ -300,7 +355,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          console.log("Add Terminal");
+                          onToolAction?.("terminal-add");
                         }}
                         className="opacity-0 group-hover:opacity-100 px-2.5 py-1 text-[11px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3 rounded-md transition-all font-normal leading-[16px] tracking-[-0.3px]"
                       >
@@ -309,7 +364,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                     </div>
 
                     {/* Code - Not running */}
-                    <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors cursor-pointer group">
+                    <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors group">
                       <div className="flex items-center justify-center size-5">
                         <svg
                           className="size-4 text-foundation-accent-blue"
@@ -333,7 +388,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          console.log("Open Code");
+                          onToolAction?.("code-open");
                         }}
                         className="opacity-0 group-hover:opacity-100 px-2.5 py-1 text-[11px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3 rounded-md transition-all font-normal leading-[16px] tracking-[-0.3px]"
                       >
@@ -342,7 +397,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                     </div>
 
                     {/* Code - Insiders */}
-                    <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors cursor-pointer group">
+                    <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors group">
                       <div className="flex items-center justify-center size-5">
                         <svg
                           className="size-4 text-foundation-accent-blue"
@@ -366,7 +421,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          console.log("Open Code Insiders");
+                          onToolAction?.("code-insiders-open");
                         }}
                         className="opacity-0 group-hover:opacity-100 px-2.5 py-1 text-[11px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3 rounded-md transition-all font-normal leading-[16px] tracking-[-0.3px]"
                       >
@@ -375,7 +430,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                     </div>
 
                     {/* Notes */}
-                    <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors cursor-pointer group">
+                    <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors group">
                       <div className="flex items-center justify-center size-5">
                         <svg
                           className="size-4 text-foundation-accent-orange"
@@ -399,7 +454,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          console.log("Open Notes");
+                          onToolAction?.("notes-open");
                         }}
                         className="opacity-0 group-hover:opacity-100 px-2.5 py-1 text-[11px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3 rounded-md transition-all font-normal leading-[16px] tracking-[-0.3px]"
                       >
@@ -408,7 +463,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                     </div>
 
                     {/* Script Editor */}
-                    <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors cursor-pointer group">
+                    <div className="flex items-center gap-2.5 px-2 py-2 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors group">
                       <div className="flex items-center justify-center size-5">
                         <svg
                           className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
@@ -438,7 +493,7 @@ export function ChatInput({ selectedModel, composerLeft, composerRight }: ChatIn
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          console.log("Open Script Editor");
+                          onToolAction?.("script-editor-open");
                         }}
                         className="opacity-0 group-hover:opacity-100 px-2.5 py-1 text-[11px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3 rounded-md transition-all font-normal leading-[16px] tracking-[-0.3px]"
                       >

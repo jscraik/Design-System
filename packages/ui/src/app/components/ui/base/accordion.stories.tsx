@@ -5,6 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./
 const meta: Meta<typeof Accordion> = {
   title: "UI/Accordion",
   component: Accordion,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },

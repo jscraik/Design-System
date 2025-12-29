@@ -6,78 +6,59 @@
 //
 
 import SwiftUI
-import ChatUISwift
+import ChatUIFoundation
+import ChatUIComponents
 
 struct ContentView: View {
-    @State private var selectedComponent: ComponentType = .button
+    @State private var selectedSection: PlaygroundSection = .settings
 
     var body: some View {
         NavigationSplitView {
-            // Sidebar with component list
-            List(ComponentType.allCases, id: \.self, selection: $selectedComponent) { component in
-                Label(component.displayName, systemImage: component.systemImage)
-                    .tag(component)
+            List(PlaygroundSection.allCases, selection: $selectedSection) { section in
+                Label(section.title, systemImage: section.systemImage)
+                    .tag(section)
             }
-            .navigationTitle("Components")
-            .frame(minWidth: 200)
+            .navigationTitle("ChatUI Playground")
+            .frame(minWidth: 220)
         } detail: {
-            // Main content area
-            ComponentGallery(selectedComponent: selectedComponent)
+            ComponentGallery(section: selectedSection)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(DesignTokens.Colors.Background.primary)
+                .background(FColor.bgApp)
         }
     }
 }
 
-enum ComponentType: String, CaseIterable {
-    case button = "button"
-    case input = "input"
-    case card = "card"
-    case modal = "modal"
-    case navigation = "navigation"
-    case toast = "toast"
-    case dataDisplay = "dataDisplay"
-    case tokens = "tokens"
+enum PlaygroundSection: String, CaseIterable, Identifiable {
+    case buttons
+    case inputs
+    case settings
+    case navigation
 
-    var displayName: String {
+    var id: String { rawValue }
+
+    var title: String {
         switch self {
-        case .button:
-            return "Button"
-        case .input:
-            return "Input"
-        case .card:
-            return "Card"
-        case .modal:
-            return "Modal & Dialogs"
+        case .buttons:
+            return "Buttons"
+        case .inputs:
+            return "Inputs"
+        case .settings:
+            return "Settings"
         case .navigation:
             return "Navigation"
-        case .toast:
-            return "Toast & Notifications"
-        case .dataDisplay:
-            return "Data Display"
-        case .tokens:
-            return "Design Tokens"
         }
     }
 
     var systemImage: String {
         switch self {
-        case .button:
+        case .buttons:
             return "button.programmable"
-        case .input:
+        case .inputs:
             return "textfield"
-        case .card:
-            return "rectangle"
-        case .modal:
-            return "macwindow"
+        case .settings:
+            return "gearshape"
         case .navigation:
             return "sidebar.left"
-        case .toast:
-            return "bell"
-        case .dataDisplay:
-            return "tablecells"
-        case .tokens:
-            return "paintpalette"
         }
     }
 }

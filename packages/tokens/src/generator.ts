@@ -1,5 +1,5 @@
 import { createHash } from "crypto";
-import { mkdir, writeFile } from "fs/promises";
+import { mkdir, rm, writeFile } from "fs/promises";
 import { dirname, join } from "path";
 
 import { colorTokens } from "./colors.js";
@@ -17,8 +17,36 @@ export interface GenerationManifest {
     sha256: {
         swift: string;
         css: string;
+        assetCatalog: string;
     };
     generated: string;
+}
+
+const MANIFEST_GENERATED_AT = "1970-01-01T00:00:00.000Z";
+
+interface ColorComponents {
+    red: string;
+    green: string;
+    blue: string;
+    alpha: string;
+}
+
+interface AssetCatalogColor {
+    colors: Array<{
+        color: {
+            "color-space": string;
+            components: ColorComponents;
+        };
+        idiom: string;
+        appearances?: Array<{
+            appearance: string;
+            value: string;
+        }>;
+    }>;
+    info: {
+        author: string;
+        version: number;
+    };
 }
 
 export class TokenGenerator {
@@ -38,6 +66,12 @@ export class TokenGenerator {
      */
     async generateSwift(): Promise<string> {
         const swiftContent = `import SwiftUI
+#if canImport(AppKit)
+import AppKit
+#endif
+#if canImport(UIKit)
+import UIKit
+#endif
 
 /// Design tokens generated from the shared token system
 /// This file provides Swift constants that match the CSS custom properties
@@ -53,18 +87,18 @@ ${this.generateColorConstants('background')}
             
             // Dynamic colors that adapt to system appearance
             public static let primary = Color.dynamicColor(
-                light: lightPrimary,
-                dark: darkPrimary
+                lightHex: "${this.tokens.colors.background.light.primary}",
+                darkHex: "${this.tokens.colors.background.dark.primary}"
             )
             
             public static let secondary = Color.dynamicColor(
-                light: lightSecondary,
-                dark: darkSecondary
+                lightHex: "${this.tokens.colors.background.light.secondary}",
+                darkHex: "${this.tokens.colors.background.dark.secondary}"
             )
             
             public static let tertiary = Color.dynamicColor(
-                light: lightTertiary,
-                dark: darkTertiary
+                lightHex: "${this.tokens.colors.background.light.tertiary}",
+                darkHex: "${this.tokens.colors.background.dark.tertiary}"
             )
         }
         
@@ -73,23 +107,23 @@ ${this.generateColorConstants('text')}
             
             // Dynamic colors that adapt to system appearance
             public static let primary = Color.dynamicColor(
-                light: lightPrimary,
-                dark: darkPrimary
+                lightHex: "${this.tokens.colors.text.light.primary}",
+                darkHex: "${this.tokens.colors.text.dark.primary}"
             )
             
             public static let secondary = Color.dynamicColor(
-                light: lightSecondary,
-                dark: darkSecondary
+                lightHex: "${this.tokens.colors.text.light.secondary}",
+                darkHex: "${this.tokens.colors.text.dark.secondary}"
             )
             
             public static let tertiary = Color.dynamicColor(
-                light: lightTertiary,
-                dark: darkTertiary
+                lightHex: "${this.tokens.colors.text.light.tertiary}",
+                darkHex: "${this.tokens.colors.text.dark.tertiary}"
             )
             
             public static let inverted = Color.dynamicColor(
-                light: lightInverted,
-                dark: darkInverted
+                lightHex: "${this.tokens.colors.text.light.inverted}",
+                darkHex: "${this.tokens.colors.text.dark.inverted}"
             )
         }
         
@@ -98,23 +132,23 @@ ${this.generateColorConstants('icon')}
             
             // Dynamic colors that adapt to system appearance
             public static let primary = Color.dynamicColor(
-                light: lightPrimary,
-                dark: darkPrimary
+                lightHex: "${this.tokens.colors.icon.light.primary}",
+                darkHex: "${this.tokens.colors.icon.dark.primary}"
             )
             
             public static let secondary = Color.dynamicColor(
-                light: lightSecondary,
-                dark: darkSecondary
+                lightHex: "${this.tokens.colors.icon.light.secondary}",
+                darkHex: "${this.tokens.colors.icon.dark.secondary}"
             )
             
             public static let tertiary = Color.dynamicColor(
-                light: lightTertiary,
-                dark: darkTertiary
+                lightHex: "${this.tokens.colors.icon.light.tertiary}",
+                darkHex: "${this.tokens.colors.icon.dark.tertiary}"
             )
             
             public static let inverted = Color.dynamicColor(
-                light: lightInverted,
-                dark: darkInverted
+                lightHex: "${this.tokens.colors.icon.light.inverted}",
+                darkHex: "${this.tokens.colors.icon.dark.inverted}"
             )
         }
         
@@ -123,23 +157,28 @@ ${this.generateAccentColorConstants()}
             
             // Dynamic colors that adapt to system appearance
             public static let blue = Color.dynamicColor(
-                light: lightBlue,
-                dark: darkBlue
+                lightHex: "${this.tokens.colors.accent.light.blue}",
+                darkHex: "${this.tokens.colors.accent.dark.blue}"
             )
             
             public static let red = Color.dynamicColor(
-                light: lightRed,
-                dark: darkRed
+                lightHex: "${this.tokens.colors.accent.light.red}",
+                darkHex: "${this.tokens.colors.accent.dark.red}"
             )
             
             public static let orange = Color.dynamicColor(
-                light: lightOrange,
-                dark: darkOrange
+                lightHex: "${this.tokens.colors.accent.light.orange}",
+                darkHex: "${this.tokens.colors.accent.dark.orange}"
             )
             
             public static let green = Color.dynamicColor(
-                light: lightGreen,
-                dark: darkGreen
+                lightHex: "${this.tokens.colors.accent.light.green}",
+                darkHex: "${this.tokens.colors.accent.dark.green}"
+            )
+
+            public static let purple = Color.dynamicColor(
+                lightHex: "${this.tokens.colors.accent.light.purple}",
+                darkHex: "${this.tokens.colors.accent.dark.purple}"
             )
         }
     }
@@ -204,23 +243,82 @@ ${this.generateSpacingConstants()}
         public enum AccessibilityPreferences {
             /// Whether the user prefers reduced motion
             public static var prefersReducedMotion: Bool {
+                #if os(macOS)
                 NSWorkspace.shared.accessibilityDisplayShouldReduceMotion
+                #elseif canImport(UIKit)
+                UIAccessibility.isReduceMotionEnabled
+                #else
+                false
+                #endif
             }
             
             /// Whether the user prefers high contrast
             public static var prefersHighContrast: Bool {
+                #if os(macOS)
                 NSWorkspace.shared.accessibilityDisplayShouldIncreaseContrast
+                #elseif canImport(UIKit)
+                UIAccessibility.isDarkerSystemColorsEnabled
+                #else
+                false
+                #endif
             }
             
             /// Whether the user prefers reduced transparency
             public static var prefersReducedTransparency: Bool {
+                #if os(macOS)
                 NSWorkspace.shared.accessibilityDisplayShouldReduceTransparency
+                #elseif canImport(UIKit)
+                UIAccessibility.isReduceTransparencyEnabled
+                #else
+                false
+                #endif
             }
         }
     }
 }
 
 // MARK: - Color Extensions
+
+#if canImport(AppKit)
+private typealias PlatformColor = NSColor
+#elseif canImport(UIKit)
+private typealias PlatformColor = UIColor
+#endif
+
+private enum HexColorParser {
+    static func rgba(from hex: String) -> (red: Double, green: Double, blue: Double, alpha: Double) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (1, 1, 1, 0)
+        }
+
+        return (
+            red: Double(r) / 255,
+            green: Double(g) / 255,
+            blue: Double(b) / 255,
+            alpha: Double(a) / 255
+        )
+    }
+}
+
+#if canImport(AppKit) || canImport(UIKit)
+extension PlatformColor {
+    convenience init(hex: String) {
+        let rgba = HexColorParser.rgba(from: hex)
+        self.init(red: rgba.red, green: rgba.green, blue: rgba.blue, alpha: rgba.alpha)
+    }
+}
+#endif
 
 extension Color {
     /// Creates a Color from a hex string
@@ -250,47 +348,30 @@ extension Color {
     }
     
     /// Creates a dynamic color that adapts to light/dark mode
-    public static func dynamicColor(light: Color, dark: Color) -> Color {
-        return Color(NSColor(name: nil) { appearance in
+    public static func dynamicColor(lightHex: String, darkHex: String) -> Color {
+        #if canImport(AppKit)
+        return Color(PlatformColor(name: nil) { appearance in
             switch appearance.bestMatch(from: [.aqua, .darkAqua]) {
             case .darkAqua:
-                return NSColor(dark)
+                return PlatformColor(hex: darkHex)
             default:
-                return NSColor(light)
+                return PlatformColor(hex: lightHex)
             }
         })
+        #elseif canImport(UIKit)
+        return Color(PlatformColor { traits in
+            traits.userInterfaceStyle == .dark
+                ? PlatformColor(hex: darkHex)
+                : PlatformColor(hex: lightHex)
+        })
+        #else
+        return Color(hex: lightHex)
+        #endif
     }
 }
 
 // MARK: - Accessibility Extensions
-
-extension View {
-    /// Applies focus ring styling for keyboard navigation
-    public func accessibilityFocusRing() -> some View {
-        self.overlay(
-            RoundedRectangle(cornerRadius: DesignTokens.CornerRadius.medium)
-                .stroke(DesignTokens.Accessibility.focusRing, lineWidth: DesignTokens.Accessibility.focusRingWidth)
-                .opacity(0) // Will be shown by system focus management
-        )
-    }
-    
-    /// Applies high contrast styling when needed
-    public func accessibilityHighContrast() -> some View {
-        self.modifier(HighContrastModifier())
-    }
-}
-
-private struct HighContrastModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        if DesignTokens.Accessibility.AccessibilityPreferences.prefersHighContrast {
-            content
-                .foregroundColor(DesignTokens.Accessibility.HighContrast.textOnBackground)
-                .background(DesignTokens.Accessibility.HighContrast.backgroundContrast)
-        } else {
-            content
-        }
-    }
-}
+// Note: Accessibility view extensions are defined in ChatUIFoundation/FAccessibility.swift
 `;
 
         return swiftContent;
@@ -324,6 +405,7 @@ private struct HighContrastModifier: ViewModifier {
   --foundation-accent-red: ${this.tokens.colors.accent.dark.red};
   --foundation-accent-orange: ${this.tokens.colors.accent.dark.orange};
   --foundation-accent-green: ${this.tokens.colors.accent.dark.green};
+  --foundation-accent-purple: ${this.tokens.colors.accent.dark.purple};
 
   /* Light backgrounds */
   --foundation-bg-light-1: ${this.tokens.colors.background.light.primary};
@@ -352,6 +434,7 @@ private struct HighContrastModifier: ViewModifier {
   --foundation-accent-red-light: ${this.tokens.colors.accent.light.red};
   --foundation-accent-orange-light: ${this.tokens.colors.accent.light.orange};
   --foundation-accent-green-light: ${this.tokens.colors.accent.light.green};
+  --foundation-accent-purple-light: ${this.tokens.colors.accent.light.purple};
 
   /* Spacing scale */
 ${this.generateCSSSpacing()}
@@ -426,18 +509,175 @@ ${this.generateCSSTypography()}
     /**
      * Generate manifest with SHA hashes and metadata
      */
-    async generateManifest(swiftContent: string, cssContent: string): Promise<GenerationManifest> {
+    async generateManifest(swiftContent: string, cssContent: string, assetCatalogContent: string): Promise<GenerationManifest> {
         const swiftHash = createHash('sha256').update(swiftContent).digest('hex');
         const cssHash = createHash('sha256').update(cssContent).digest('hex');
+        const assetCatalogHash = createHash('sha256').update(assetCatalogContent).digest('hex');
 
         return {
             version: "1.0.0",
             sha256: {
                 swift: swiftHash,
                 css: cssHash,
+                assetCatalog: assetCatalogHash,
             },
-            generated: new Date().toISOString(),
+            generated: MANIFEST_GENERATED_AT,
         };
+    }
+
+    /**
+     * Convert hex color to RGB components (0-1 range)
+     */
+    private hexToRGB(hex: string): ColorComponents {
+        const cleanHex = hex.replace('#', '');
+        const r = parseInt(cleanHex.substring(0, 2), 16) / 255;
+        const g = parseInt(cleanHex.substring(2, 4), 16) / 255;
+        const b = parseInt(cleanHex.substring(4, 6), 16) / 255;
+
+        return {
+            red: r.toFixed(3),
+            green: g.toFixed(3),
+            blue: b.toFixed(3),
+            alpha: "1.000",
+        };
+    }
+
+    /**
+     * Generate Asset Catalog colorset JSON
+     */
+    private generateColorsetJSON(lightColor: string, darkColor: string): AssetCatalogColor {
+        return {
+            colors: [
+                {
+                    color: {
+                        "color-space": "srgb",
+                        components: this.hexToRGB(lightColor),
+                    },
+                    idiom: "universal",
+                },
+                {
+                    appearances: [
+                        {
+                            appearance: "luminosity",
+                            value: "dark",
+                        },
+                    ],
+                    color: {
+                        "color-space": "srgb",
+                        components: this.hexToRGB(darkColor),
+                    },
+                    idiom: "universal",
+                },
+            ],
+            info: {
+                author: "xcode",
+                version: 1,
+            },
+        };
+    }
+
+    /**
+     * Generate Asset Catalog structure
+     * Returns a deterministic string representation for hashing
+     */
+    async generateAssetCatalog(): Promise<string> {
+        const colorMappings = this.getAssetCatalogMappings()
+            .slice()
+            .sort((a, b) => a.name.localeCompare(b.name));
+
+        const rootContents = {
+            info: {
+                author: "xcode",
+                version: 1,
+            },
+        };
+
+        const files: Record<string, string> = {
+            "Contents.json": JSON.stringify(rootContents, null, 2),
+        };
+
+        for (const mapping of colorMappings) {
+            const colorsetJSON = this.generateColorsetJSON(mapping.light, mapping.dark);
+            files[`${mapping.name}.colorset/Contents.json`] = JSON.stringify(colorsetJSON, null, 2);
+        }
+
+        // Deterministic representation of the actual files written to disk
+        return JSON.stringify(files, null, 2);
+    }
+
+    /**
+     * Write Asset Catalog to disk
+     */
+    async writeAssetCatalog(basePath: string): Promise<void> {
+        const colorMappings = this.getAssetCatalogMappings()
+            .slice()
+            .sort((a, b) => a.name.localeCompare(b.name));
+
+        // Clean existing Asset Catalog directory
+        const assetCatalogPath = join(basePath, 'Colors.xcassets');
+        try {
+            await rm(assetCatalogPath, { recursive: true, force: true });
+        } catch {
+            // Directory might not exist, that's okay
+        }
+
+        // Create Asset Catalog directory
+        await mkdir(assetCatalogPath, { recursive: true });
+
+        // Write root Contents.json
+        const rootContents = {
+            info: {
+                author: "xcode",
+                version: 1,
+            },
+        };
+        await writeFile(
+            join(assetCatalogPath, 'Contents.json'),
+            JSON.stringify(rootContents, null, 2),
+            'utf8'
+        );
+
+        // Write each colorset
+        for (const mapping of colorMappings) {
+            const colorsetPath = join(assetCatalogPath, `${mapping.name}.colorset`);
+            await mkdir(colorsetPath, { recursive: true });
+
+            const colorsetJSON = this.generateColorsetJSON(mapping.light, mapping.dark);
+            await writeFile(
+                join(colorsetPath, 'Contents.json'),
+                JSON.stringify(colorsetJSON, null, 2),
+                'utf8'
+            );
+        }
+    }
+
+    private getAssetCatalogMappings(): Array<{ name: string; light: string; dark: string }> {
+        return [
+            // Background colors
+            { name: "foundation-bg-app", light: this.tokens.colors.background.light.primary, dark: this.tokens.colors.background.dark.primary },
+            { name: "foundation-bg-card", light: this.tokens.colors.background.light.secondary, dark: this.tokens.colors.background.dark.secondary },
+            { name: "foundation-bg-card-alt", light: this.tokens.colors.background.light.tertiary, dark: this.tokens.colors.background.dark.tertiary },
+
+            // Text colors
+            { name: "foundation-text-primary", light: this.tokens.colors.text.light.primary, dark: this.tokens.colors.text.dark.primary },
+            { name: "foundation-text-secondary", light: this.tokens.colors.text.light.secondary, dark: this.tokens.colors.text.dark.secondary },
+            { name: "foundation-text-tertiary", light: this.tokens.colors.text.light.tertiary, dark: this.tokens.colors.text.dark.tertiary },
+
+            // Icon colors
+            { name: "foundation-icon-primary", light: this.tokens.colors.icon.light.primary, dark: this.tokens.colors.icon.dark.primary },
+            { name: "foundation-icon-secondary", light: this.tokens.colors.icon.light.secondary, dark: this.tokens.colors.icon.dark.secondary },
+            { name: "foundation-icon-tertiary", light: this.tokens.colors.icon.light.tertiary, dark: this.tokens.colors.icon.dark.tertiary },
+
+            // Accent colors
+            { name: "foundation-accent-green", light: this.tokens.colors.accent.light.green, dark: this.tokens.colors.accent.dark.green },
+            { name: "foundation-accent-blue", light: this.tokens.colors.accent.light.blue, dark: this.tokens.colors.accent.dark.blue },
+            { name: "foundation-accent-orange", light: this.tokens.colors.accent.light.orange, dark: this.tokens.colors.accent.dark.orange },
+            { name: "foundation-accent-red", light: this.tokens.colors.accent.light.red, dark: this.tokens.colors.accent.dark.red },
+            { name: "foundation-accent-purple", light: this.tokens.colors.accent.light.purple, dark: this.tokens.colors.accent.dark.purple },
+
+            // Divider (using tertiary background as base)
+            { name: "foundation-divider", light: this.tokens.colors.background.light.tertiary, dark: this.tokens.colors.background.dark.tertiary },
+        ];
     }
 
     /**
@@ -447,28 +687,36 @@ ${this.generateCSSTypography()}
         // Generate content
         const swiftContent = await this.generateSwift();
         const cssContent = await this.generateCSS();
-        const manifest = await this.generateManifest(swiftContent, cssContent);
+        const assetCatalogContent = await this.generateAssetCatalog();
+        const manifest = await this.generateManifest(swiftContent, cssContent, assetCatalogContent);
 
         // Determine output paths relative to packages/tokens
-        const swiftOutputPath = join(process.cwd(), '../ui-swift/Sources/ChatUISwift/DesignTokens.swift');
+        const swiftOutputPath = join(process.cwd(), '../../swift/ChatUIFoundation/Sources/ChatUIFoundation/DesignTokens.swift');
         const cssOutputPath = join(process.cwd(), 'src/foundations.css');
         const manifestOutputPath = join(process.cwd(), 'outputs/manifest.json');
+        const assetCatalogBasePath = join(process.cwd(), '../../swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources');
 
         await mkdir(dirname(swiftOutputPath), { recursive: true });
         await mkdir(dirname(cssOutputPath), { recursive: true });
         await mkdir(dirname(manifestOutputPath), { recursive: true });
+        await mkdir(assetCatalogBasePath, { recursive: true });
 
         // Write files
         await writeFile(swiftOutputPath, swiftContent, 'utf8');
         await writeFile(cssOutputPath, cssContent, 'utf8');
         await writeFile(manifestOutputPath, JSON.stringify(manifest, null, 2), 'utf8');
 
+        // Write Asset Catalog
+        await this.writeAssetCatalog(assetCatalogBasePath);
+
         console.log('✅ Token generation complete');
         console.log(`   Swift: ${swiftOutputPath}`);
         console.log(`   CSS: ${cssOutputPath}`);
+        console.log(`   Asset Catalog: ${assetCatalogBasePath}/Colors.xcassets`);
         console.log(`   Manifest: ${manifestOutputPath}`);
         console.log(`   Swift SHA: ${manifest.sha256.swift.substring(0, 8)}...`);
         console.log(`   CSS SHA: ${manifest.sha256.css.substring(0, 8)}...`);
+        console.log(`   Asset Catalog SHA: ${manifest.sha256.assetCatalog.substring(0, 8)}...`);
     }
 
     private generateColorConstants(category: 'background' | 'text' | 'icon'): string {

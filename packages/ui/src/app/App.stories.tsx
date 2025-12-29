@@ -5,6 +5,7 @@ import App from "./App";
 const meta: Meta<typeof App> = {
   title: "Pages/ChatUIApp",
   component: App,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },

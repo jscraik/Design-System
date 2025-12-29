@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "@storybook/test";
 
 import {
   sampleCategories,
@@ -16,10 +17,11 @@ import { ChatSidebar } from "./ChatSidebar";
 const meta: Meta<typeof ChatSidebar> = {
   title: "ChatUI/ChatSidebar",
   component: ChatSidebar,
+  tags: ["autodocs"],
   args: {
     isOpen: true,
-    onToggle: () => {},
-    onProjectSelect: () => {},
+    onToggle: fn(),
+    onProjectSelect: fn(),
     projects: sampleProjects,
     chatHistory: sampleChatHistory,
     groupChats: sampleGroupChats,

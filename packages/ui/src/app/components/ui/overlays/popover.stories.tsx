@@ -1,11 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "../base/button";
+
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
 const meta: Meta<typeof Popover> = {
   title: "UI/Popover",
   component: Popover,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },

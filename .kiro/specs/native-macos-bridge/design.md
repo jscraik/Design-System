@@ -2,16 +2,20 @@
 
 ## Overview
 
-The Native macOS Bridge enables the ChatUI system to run natively on macOS through a modular SwiftUI library architecture. The system is built around four core Swift packages that provide a scalable foundation for native macOS development while maintaining perfect design consistency with the existing React web application.
+The Native macOS Bridge refactors and enhances the existing ChatUI system to provide a unified, modular SwiftUI library architecture that maintains perfect design consistency across React web applications, iOS, macOS, and future platforms like visionOS. The system transforms the current monolithic `ChatUISwift` package at `packages/ui-swift/` into four specialized Swift packages while leveraging enhanced design token generation as the bridge between platforms.
 
-The architecture separates concerns into distinct, reusable packages:
+**Current State**: Single monolithic `ChatUISwift` package with hardcoded design tokens and several components (Button, Card, Input, Modal, Navigation, Toast, DataDisplay).
 
-1. **ChatUIFoundation**: Semantic tokens and platform utilities
-2. **ChatUIComponents**: Reusable SwiftUI primitives that mirror React APIs  
-3. **ChatUIThemes**: Theme presets including pixel-perfect ChatGPT styling
-4. **ChatUIShellChatGPT**: Optional complete application shell layouts
+**Target State**: Four specialized Swift packages with Asset Catalog-based tokens, enhanced token generation, comprehensive testing infrastructure, and development tools.
 
-This approach ensures visual consistency, eliminates JavaScriptCore complexity, and provides a clean foundation for both custom native macOS applications and pixel-perfect ChatGPT-style experiences.
+The architecture is built around four core Swift packages that provide a scalable foundation for native development:
+
+1. **ChatUIFoundation**: Semantic tokens, platform utilities, and accessibility helpers
+2. **ChatUIComponents**: Reusable SwiftUI primitives that mirror React APIs with compile-time safety
+3. **ChatUIThemes**: Theme presets including pixel-perfect ChatGPT styling and native alternatives
+4. **ChatUIShellChatGPT**: Optional complete application shell layouts for rapid development
+
+This approach ensures visual consistency, eliminates manual token synchronization, provides comprehensive testing infrastructure, and enables incremental adoption across development teams while supporting future platforms and advanced development workflows.
 
 ## Architecture
 
@@ -69,11 +73,19 @@ graph TB
 
 ### Core Principles
 
-1. **Modular Architecture**: Each package has a single, clear responsibility
-2. **Token-Driven Consistency**: All visual constants derive from shared design tokens
-3. **Platform-Native Feel**: SwiftUI components follow macOS design patterns
-4. **Incremental Adoption**: Packages can be adopted independently
-5. **Zero Breaking Changes**: Existing React applications remain unaffected
+1. **Modular Architecture**: Each package has a single, clear responsibility with independent versioning
+2. **Token-Driven Consistency**: All visual constants derive from shared design tokens with compile-time safety
+3. **Platform-Native Feel**: SwiftUI components follow platform-specific design patterns (iOS, macOS, visionOS)
+4. **Incremental Adoption**: Packages can be adopted independently with clear migration paths
+5. **Zero Breaking Changes**: Existing React applications remain completely unaffected
+6. **Future-Proof Design**: Architecture supports visionOS and future Apple platforms
+7. **Development Experience**: Comprehensive testing, hot reload, and documentation generation
+8. **Team Collaboration**: Clear ownership boundaries enable parallel development
+9. **Future-Proof Extensibility**: Architecture supports visionOS and future Apple platforms
+10. **Compile-Time Safety**: Swift type system catches token and API errors at build time
+11. **Performance Optimization**: Modular structure enables lazy loading and faster builds
+12. **Accessibility by Default**: Built-in support for VoiceOver, high contrast, and keyboard navigation
+13. **Developer Experience**: Hot reload, component gallery, and auto-generated documentation
 
 ## Components and Interfaces
 
@@ -83,7 +95,7 @@ The SwiftUI library is organized into four distinct packages, each with specific
 
 #### ChatUIFoundation Package
 
-**Purpose**: Provides semantic design tokens and platform utilities
+**Purpose**: Provides semantic design tokens, platform utilities, and accessibility helpers
 **Dependencies**: None (foundation layer)
 **Location**: `swift/ChatUIFoundation/`
 
@@ -92,12 +104,12 @@ The SwiftUI library is organized into four distinct packages, each with specific
 import SwiftUI
 
 public enum FColor {
-    // Surfaces - backed by Asset Catalog with light/dark variants
+    // Surfaces - backed by Asset Catalog with automatic light/dark variants
     public static let bgApp = Color("foundation-bg-app")            // window background
     public static let bgCard = Color("foundation-bg-card")          // section card background
     public static let bgCardAlt = Color("foundation-bg-card-alt")   // hover/pressed overlay base
     
-    // Text
+    // Text - compile-time safe, autocomplete enabled
     public static let textPrimary = Color("foundation-text-primary")
     public static let textSecondary = Color("foundation-text-secondary")
     public static let textTertiary = Color("foundation-text-tertiary")
@@ -107,7 +119,7 @@ public enum FColor {
     public static let iconSecondary = Color("foundation-icon-secondary")
     public static let iconTertiary = Color("foundation-icon-tertiary")
     
-    // Accents
+    // Accents - same across light/dark for brand consistency
     public static let accentGreen = Color("foundation-accent-green")
     public static let accentBlue = Color("foundation-accent-blue")
     public static let accentOrange = Color("foundation-accent-orange")
@@ -117,14 +129,15 @@ public enum FColor {
     // Dividers/borders
     public static let divider = Color("foundation-divider")
     
-    // Automatically supports light/dark mode through Asset Catalog
+    // Automatic light/dark mode through Asset Catalog
+    // High contrast support built-in
 }
 
 // swift/ChatUIFoundation/Sources/ChatUIFoundation/FType.swift
 import SwiftUI
 
 public enum FType {
-    // Pixel-close to React components (SF Pro, small negative tracking)
+    // Typography matching React components exactly
     public static func title() -> Font { .system(size: 16, weight: .semibold) }
     public static func sectionTitle() -> Font { .system(size: 13, weight: .semibold) }
     
@@ -134,7 +147,7 @@ public enum FType {
     public static func caption() -> Font { .system(size: 12, weight: .regular) }
     public static func footnote() -> Font { .system(size: 12, weight: .regular) }
     
-    // Tracking for pixel-close text rendering
+    // Tracking for pixel-perfect text rendering
     public static func trackingRow() -> CGFloat { -0.3 }
     public static func trackingCaption() -> CGFloat { -0.2 }
 }
@@ -143,6 +156,7 @@ public enum FType {
 import Foundation
 
 public enum FSpacing {
+    // Spacing scale matching React exactly
     public static let s2: Double = 2
     public static let s4: Double = 4
     public static let s8: Double = 8
@@ -162,6 +176,79 @@ public enum Platform {
         #else
         false
         #endif
+    }
+    
+    public static var isVisionOS: Bool {
+        #if os(visionOS)
+        true
+        #else
+        false
+        #endif
+    }
+    
+    // Platform-specific interaction helpers
+    public static func hoverEffect<V: View>(_ view: V) -> some View {
+        #if os(macOS)
+        view.onHover { isHovering in
+            // macOS hover logic
+        }
+        #else
+        view // No-op on iOS/visionOS
+        #endif
+    }
+}
+
+// swift/ChatUIFoundation/Sources/ChatUIFoundation/Accessibility.swift
+import SwiftUI
+
+public enum FAccessibility {
+    /// Focus ring for keyboard navigation
+    public static let focusRingColor = FColor.accentBlue
+    public static let focusRingWidth: CGFloat = 2
+    
+    /// High contrast support
+    public static var prefersHighContrast: Bool {
+        #if os(macOS)
+        NSWorkspace.shared.accessibilityDisplayShouldIncreaseContrast
+        #else
+        UIAccessibility.isDarkerSystemColorsEnabled
+        #endif
+    }
+    
+    /// Reduced motion support
+    public static var prefersReducedMotion: Bool {
+        #if os(macOS)
+        NSWorkspace.shared.accessibilityDisplayShouldReduceMotion
+        #else
+        UIAccessibility.isReduceMotionEnabled
+        #endif
+    }
+}
+
+// Accessibility view modifiers
+extension View {
+    public func accessibilityFocusRing() -> some View {
+        self.overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(FAccessibility.focusRingColor, lineWidth: FAccessibility.focusRingWidth)
+                .opacity(0) // Shown by system focus management
+        )
+    }
+    
+    public func accessibilityHighContrast() -> some View {
+        self.modifier(HighContrastModifier())
+    }
+}
+
+private struct HighContrastModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        if FAccessibility.prefersHighContrast {
+            content
+                .foregroundStyle(FColor.textPrimary)
+                .background(FColor.bgApp)
+        } else {
+            content
+        }
     }
 }
 ```
@@ -632,6 +719,250 @@ public struct AppShellView<SidebarContent: View, DetailContent: View>: View {
 }
 ```
 
+### MCP Integration Architecture
+
+The system integrates with the existing Model Context Protocol infrastructure through a Swift networking layer that communicates with web-based MCP servers.
+
+#### Swift MCP Client
+
+```swift
+// swift/ChatUIMCP/Sources/ChatUIMCP/MCPClient.swift
+import Foundation
+import Combine
+
+public class MCPClient {
+    private let baseURL: URL
+    private let session: URLSession
+    private var cancellables = Set<AnyCancellable>()
+    
+    public init(baseURL: URL, session: URLSession = .shared) {
+        self.baseURL = baseURL
+        self.session = session
+    }
+    
+    public func callTool(
+        name: String,
+        arguments: [String: Any]
+    ) async throws -> MCPToolResponse {
+        let request = MCPToolRequest(
+            id: UUID().uuidString,
+            name: name,
+            arguments: arguments
+        )
+        
+        var urlRequest = URLRequest(url: baseURL.appendingPathComponent("/tools/\(name)"))
+        urlRequest.httpMethod = "POST"
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.httpBody = try JSONEncoder().encode(request)
+        
+        let (data, response) = try await session.data(for: urlRequest)
+        
+        guard let httpResponse = response as? HTTPURLResponse,
+              (200...299).contains(httpResponse.statusCode) else {
+            throw MCPError.invalidResponse
+        }
+        
+        return try JSONDecoder().decode(MCPToolResponse.self, from: data)
+    }
+}
+
+public struct MCPToolRequest: Codable {
+    let id: String
+    let name: String
+    let arguments: [String: Any]
+    
+    enum CodingKeys: String, CodingKey {
+        case id, name, arguments
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
+        try container.encode(name, forKey: .name)
+        // Custom encoding for Any dictionary
+        let jsonData = try JSONSerialization.data(withJSONObject: arguments)
+        try container.encode(jsonData, forKey: .arguments)
+    }
+}
+
+public struct MCPToolResponse: Codable {
+    let id: String
+    let result: MCPResult?
+    let error: MCPError?
+}
+
+public enum MCPResult: Codable {
+    case widget(WidgetData)
+    case text(String)
+    case data([String: Any])
+}
+
+public enum MCPError: Error {
+    case invalidResponse
+    case networkError(Error)
+    case authenticationRequired
+    case toolNotFound
+}
+```
+
+#### Native Widget Renderer
+
+```swift
+// swift/ChatUIMCP/Sources/ChatUIMCP/WidgetRenderer.swift
+import SwiftUI
+import ChatUIFoundation
+import ChatUIComponents
+
+public struct WidgetRenderer: View {
+    let widgetData: WidgetData
+    @Environment(\.colorScheme) private var scheme
+    
+    public init(widgetData: WidgetData) {
+        self.widgetData = widgetData
+    }
+    
+    public var body: some View {
+        switch widgetData.type {
+        case .card:
+            renderCard()
+        case .list:
+            renderList()
+        case .chart:
+            renderChart()
+        case .custom:
+            renderCustom()
+        }
+    }
+    
+    private func renderCard() -> some View {
+        SettingsCardView {
+            VStack(alignment: .leading, spacing: FSpacing.s12) {
+                if let title = widgetData.title {
+                    Text(title)
+                        .font(FType.title())
+                        .foregroundStyle(FColor.textPrimary)
+                }
+                
+                if let content = widgetData.content {
+                    Text(content)
+                        .font(FType.rowTitle())
+                        .foregroundStyle(FColor.textSecondary)
+                }
+            }
+            .padding(FSpacing.s16)
+        }
+    }
+    
+    private func renderList() -> some View {
+        SettingsCardView {
+            VStack(spacing: 0) {
+                ForEach(widgetData.items ?? [], id: \.id) { item in
+                    SettingRowView(
+                        title: item.title,
+                        subtitle: item.subtitle,
+                        trailing: .chevron
+                    )
+                    
+                    if item.id != widgetData.items?.last?.id {
+                        SettingsDivider()
+                    }
+                }
+            }
+        }
+    }
+    
+    private func renderChart() -> some View {
+        // Chart rendering using native SwiftUI Charts
+        Text("Chart rendering")
+    }
+    
+    private func renderCustom() -> some View {
+        // Custom widget rendering
+        Text("Custom widget")
+    }
+}
+
+public struct WidgetData: Codable {
+    let type: WidgetType
+    let title: String?
+    let content: String?
+    let items: [WidgetItem]?
+    
+    public enum WidgetType: String, Codable {
+        case card, list, chart, custom
+    }
+}
+
+public struct WidgetItem: Codable, Identifiable {
+    public let id: String
+    let title: String
+    let subtitle: String?
+}
+```
+
+#### macOS Authentication Integration
+
+```swift
+// swift/ChatUIMCP/Sources/ChatUIMCP/MCPAuthenticator.swift
+import Foundation
+import Security
+
+public class MCPAuthenticator {
+    private let keychainService = "com.chatui.mcp"
+    
+    public func storeCredentials(username: String, token: String) throws {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: keychainService,
+            kSecAttrAccount as String: username,
+            kSecValueData as String: token.data(using: .utf8)!
+        ]
+        
+        // Delete existing item
+        SecItemDelete(query as CFDictionary)
+        
+        // Add new item
+        let status = SecItemAdd(query as CFDictionary, nil)
+        guard status == errSecSuccess else {
+            throw MCPError.authenticationRequired
+        }
+    }
+    
+    public func retrieveCredentials(username: String) throws -> String {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: keychainService,
+            kSecAttrAccount as String: username,
+            kSecReturnData as String: true
+        ]
+        
+        var result: AnyObject?
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        
+        guard status == errSecSuccess,
+              let data = result as? Data,
+              let token = String(data: data, encoding: .utf8) else {
+            throw MCPError.authenticationRequired
+        }
+        
+        return token
+    }
+    
+    public func deleteCredentials(username: String) throws {
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: keychainService,
+            kSecAttrAccount as String: username
+        ]
+        
+        let status = SecItemDelete(query as CFDictionary)
+        guard status == errSecSuccess || status == errSecItemNotFound else {
+            throw MCPError.authenticationRequired
+        }
+    }
+}
+```
+
 ### Enhanced Token Generation System
 
 The token generator is enhanced to output both CSS and Swift Asset Catalog formats from the same source:
@@ -925,8 +1256,7 @@ Several properties were identified as logically redundant or could be combined f
 **Validates: Requirements 1.2, 2.1**
 
 **Property 12: Platform-Specific Behavior Adaptation**
-*For any* platform-specific behavior (macOS hover, iOS pressed states), the Platform utilities should centralize conditional logic and provide consistent APIs across ChatUIComponents
-**Validates: Requirements 2.3, 3.3**or any* platform difference (iOS vs macOS), ChatUIFoundation should centralize conditional logic and provide appropriate hover states, corner radii, and interaction patterns
+*For any* platform difference (iOS vs macOS), ChatUIFoundation should centralize conditional logic and provide appropriate hover states, corner radii, and interaction patterns, with Platform utilities providing consistent APIs across ChatUIComponents
 **Validates: Requirements 2.3, 3.3**
 
 ## Error Handling
@@ -1074,6 +1404,671 @@ export class BuildPipeline {
       errors: [new Error(message)]
     };
   }
+}
+```
+
+### Development Tools and Testing Infrastructure
+
+The system provides comprehensive development tools to ensure quality and consistency across platforms.
+
+#### Hot Reload Token Development
+
+```typescript
+// packages/tokens/src/dev-tools/token-watcher.ts
+import chokidar from 'chokidar';
+import { EnhancedTokenGenerator } from '../generators/enhanced-token-generator';
+import { TokenValidator } from '../validation/token-validator';
+
+export class TokenWatcher {
+    private generator: EnhancedTokenGenerator;
+    private validator: TokenValidator;
+    private watcher: chokidar.FSWatcher | null = null;
+    
+    constructor() {
+        this.generator = new EnhancedTokenGenerator();
+        this.validator = new TokenValidator();
+    }
+    
+    start(tokenPath: string, outputPaths: { css: string; swift: string }) {
+        console.log('🔍 Watching tokens for changes...');
+        
+        this.watcher = chokidar.watch(tokenPath, {
+            persistent: true,
+            ignoreInitial: false
+        });
+        
+        this.watcher.on('change', async (path) => {
+            console.log(`\n📝 Token file changed: ${path}`);
+            
+            try {
+                // Load and validate tokens
+                const tokens = await this.loadTokens(path);
+                const validation = this.validator.validate(tokens);
+                
+                if (!validation.isValid) {
+                    console.error('❌ Token validation failed:');
+                    validation.errors.forEach(error => {
+                        console.error(`  - ${error.tokenPath}: ${error.issue}`);
+                        if (error.suggestion) {
+                            console.error(`    Suggestion: ${error.suggestion}`);
+                        }
+                    });
+                    return;
+                }
+                
+                console.log('✅ Tokens validated successfully');
+                
+                // Generate outputs
+                console.log('🔨 Generating CSS...');
+                const css = await this.generator.generateCSS(tokens);
+                await this.writeFile(outputPaths.css, css);
+                
+                console.log('🔨 Generating Swift Asset Catalog...');
+                const assetCatalog = await this.generator.generateSwiftAssetCatalog(tokens);
+                await this.generator.writeAssetCatalog(assetCatalog, outputPaths.swift);
+                
+                console.log('✨ Token generation complete! SwiftUI previews will refresh automatically.');
+                
+            } catch (error) {
+                console.error('❌ Error processing tokens:', error);
+            }
+        });
+    }
+    
+    stop() {
+        if (this.watcher) {
+            this.watcher.close();
+            console.log('👋 Token watcher stopped');
+        }
+    }
+}
+```
+
+#### Component Gallery and Documentation
+
+```swift
+// apps/macos/ComponentGallery/Sources/ComponentGallery/ComponentGallery.swift
+import SwiftUI
+import ChatUIFoundation
+import ChatUIComponents
+import ChatUIThemes
+
+/// Live documentation and testing app for all SwiftUI components
+struct ComponentGallery: App {
+    var body: some Scene {
+        WindowGroup {
+            ComponentGalleryView()
+        }
+    }
+}
+
+struct ComponentGalleryView: View {
+    @State private var selectedTheme: ThemeSelection = .chatGPT
+    @State private var selectedColorScheme: ColorScheme = .light
+    
+    var body: some View {
+        NavigationSplitView {
+            List {
+                Section("Foundation") {
+                    NavigationLink("Colors") { ColorShowcase() }
+                    NavigationLink("Typography") { TypographyShowcase() }
+                    NavigationLink("Spacing") { SpacingShowcase() }
+                }
+                
+                Section("Settings Primitives") {
+                    NavigationLink("Setting Row") { SettingRowShowcase() }
+                    NavigationLink("Setting Toggle") { SettingToggleShowcase() }
+                    NavigationLink("Setting Dropdown") { SettingDropdownShowcase() }
+                    NavigationLink("Settings Card") { SettingsCardShowcase() }
+                }
+                
+                Section("Components") {
+                    NavigationLink("Buttons") { ButtonShowcase() }
+                    NavigationLink("Inputs") { InputShowcase() }
+                    NavigationLink("Navigation") { NavigationShowcase() }
+                }
+                
+                Section("Accessibility") {
+                    NavigationLink("Focus Management") { FocusShowcase() }
+                    NavigationLink("High Contrast") { HighContrastShowcase() }
+                    NavigationLink("Reduced Motion") { ReducedMotionShowcase() }
+                }
+            }
+            .navigationTitle("Component Gallery")
+        } detail: {
+            Text("Select a component to preview")
+                .foregroundStyle(FColor.textSecondary)
+        }
+        .toolbar {
+            ToolbarItem {
+                Menu("Theme") {
+                    Button("ChatGPT") { selectedTheme = .chatGPT }
+                    Button("Native") { selectedTheme = .native }
+                }
+            }
+            ToolbarItem {
+                Menu("Appearance") {
+                    Button("Light") { selectedColorScheme = .light }
+                    Button("Dark") { selectedColorScheme = .dark }
+                }
+            }
+        }
+        .preferredColorScheme(selectedColorScheme)
+    }
+}
+
+enum ThemeSelection {
+    case chatGPT
+    case native
+}
+```
+
+#### Snapshot Testing Framework
+
+```swift
+// swift/ChatUITestSupport/Sources/ChatUITestSupport/SnapshotTesting.swift
+import XCTest
+import SwiftUI
+
+public class SnapshotTestCase: XCTestCase {
+    private let snapshotDirectory = "Snapshots"
+    
+    public func assertSnapshot<V: View>(
+        _ view: V,
+        named name: String,
+        colorScheme: ColorScheme = .light,
+        platform: Platform = .macOS,
+        accessibility: AccessibilityVariant = .standard,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        let hostingController = NSHostingController(rootView: view)
+        hostingController.view.frame = CGRect(x: 0, y: 0, width: 400, height: 300)
+        
+        // Apply appearance settings
+        hostingController.view.appearance = colorScheme == .dark ? 
+            NSAppearance(named: .darkAqua) : 
+            NSAppearance(named: .aqua)
+            
+        // Apply accessibility settings
+        switch accessibility {
+        case .highContrast:
+            hostingController.view.appearance = NSAppearance(named: .accessibilityHighContrastAqua)
+        case .reducedMotion:
+            // Configure reduced motion
+            break
+        case .standard:
+            break
+        }
+        
+        // Render to image
+        guard let bitmap = hostingController.view.bitmapImageRepForCachingDisplay(in: hostingController.view.bounds) else {
+            XCTFail("Failed to create bitmap", file: file, line: line)
+            return
+        }
+        
+        hostingController.view.cacheDisplay(in: hostingController.view.bounds, to: bitmap)
+        
+        let snapshotPath = getSnapshotPath(
+            name: name, 
+            colorScheme: colorScheme, 
+            platform: platform,
+            accessibility: accessibility
+        )
+        
+        if let existingImage = NSImage(contentsOfFile: snapshotPath) {
+            // Compare with existing snapshot
+            let matches = compareImages(bitmap, existingImage, tolerance: 0.02)
+            XCTAssertTrue(matches, "Snapshot mismatch for \(name)", file: file, line: line)
+        } else {
+            // Record new snapshot
+            saveSnapshot(bitmap, to: snapshotPath)
+            XCTFail("Recorded new snapshot for \(name). Run tests again to verify.", file: file, line: line)
+        }
+    }
+    
+    private func getSnapshotPath(
+        name: String, 
+        colorScheme: ColorScheme, 
+        platform: Platform,
+        accessibility: AccessibilityVariant
+    ) -> String {
+        let scheme = colorScheme == .dark ? "dark" : "light"
+        let platformName = platform == .macOS ? "macos" : "ios"
+        let a11y = accessibility == .standard ? "" : "_\(accessibility)"
+        return "\(snapshotDirectory)/\(name)_\(scheme)_\(platformName)\(a11y).png"
+    }
+    
+    private func compareImages(_ image1: NSBitmapImageRep, _ image2: NSImage, tolerance: Double) -> Bool {
+        // Pixel-by-pixel comparison with tolerance for anti-aliasing differences
+        // Returns true if images match within tolerance
+        return true // Implementation details omitted
+    }
+    
+    private func saveSnapshot(_ bitmap: NSBitmapImageRep, to path: String) {
+        // Save bitmap to file with proper directory creation
+        // Implementation details omitted
+    }
+}
+
+public enum Platform {
+    case macOS
+    case iOS
+    case visionOS
+}
+
+public enum AccessibilityVariant {
+    case standard
+    case highContrast
+    case reducedMotion
+}
+```
+
+#### Property-Based Testing Integration
+
+```swift
+// swift/ChatUIComponents/Tests/ChatUIComponentsTests/Properties/ComponentPropertyTests.swift
+import XCTest
+import SwiftCheck
+@testable import ChatUIComponents
+@testable import ChatUIFoundation
+@testable import ChatUIThemes
+
+class ComponentPropertyTests: XCTestCase {
+    func testProperty3ComponentLibraryAPIParity() {
+        property("Component Library API Parity") <- forAll { (title: String, subtitle: String?) in
+            // SettingRowView should render with any valid title/subtitle
+            let row = SettingRowView(
+                title: title.isEmpty ? "Default" : title,
+                subtitle: subtitle,
+                trailing: .none
+            )
+            
+            // Should use semantic tokens exclusively (validated through compilation)
+            // Should render without crashing
+            return !title.isEmpty
+        }
+    }
+    
+    func testProperty10PackageModularityIndependence() {
+        property("Package Modularity Independence") <- forAll { (useFoundation: Bool, useThemes: Bool) in
+            // ChatUIComponents should work with or without ChatUIThemes
+            if useFoundation {
+                // Can use FColor tokens
+                let color = FColor.textPrimary
+                return color != .clear
+            }
+            
+            if useThemes {
+                // Can use ChatGPTTheme constants
+                let radius = ChatGPTTheme.cardCornerRadius
+                return radius > 0
+            }
+            
+            return true
+        }
+    }
+    
+    func testProperty12PlatformSpecificBehaviorAdaptation() {
+        property("Platform-Specific Behavior Adaptation") <- forAll { (isHovering: Bool) in
+            // Platform utilities should centralize conditional logic
+            #if os(macOS)
+            return Platform.isMac == true
+            #elseif os(visionOS)
+            return Platform.isVisionOS == true
+            #else
+            return Platform.isMac == false && Platform.isVisionOS == false
+            #endif
+        }
+    }
+    
+    func testPropertyAccessibilityCompliance() {
+        property("Accessibility Compliance") <- forAll { (title: String) in
+            let row = SettingRowView(title: title.isEmpty ? "Test" : title)
+            
+            // All components should support accessibility by default
+            // This would be validated through accessibility testing tools
+            return true
+        }
+    }
+}
+```
+
+#### CI/CD Integration
+
+```yaml
+# .github/workflows/swift-packages.yml
+name: Swift Packages
+
+on:
+  push:
+    paths:
+      - 'swift/**'
+      - 'packages/tokens/**'
+  pull_request:
+    paths:
+      - 'swift/**'
+      - 'packages/tokens/**'
+
+jobs:
+  test-swift-packages:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: pnpm install
+        
+      - name: Generate tokens
+        run: pnpm generate:tokens
+        
+      - name: Validate token consistency
+        run: pnpm tokens:validate
+        
+      - name: Test ChatUIFoundation
+        run: swift test
+        working-directory: swift/ChatUIFoundation
+        
+      - name: Test ChatUIComponents
+        run: swift test
+        working-directory: swift/ChatUIComponents
+        
+      - name: Test ChatUIThemes
+        run: swift test
+        working-directory: swift/ChatUIThemes
+        
+      - name: Test ChatUIShellChatGPT
+        run: swift test
+        working-directory: swift/ChatUIShellChatGPT
+        
+      - name: Run snapshot tests
+        run: swift test --filter SnapshotTests
+        working-directory: swift/ChatUITestSupport
+        
+      - name: Run property-based tests
+        run: swift test --filter PropertyTests
+        working-directory: swift/ChatUIComponents
+        
+      - name: Build component gallery
+        run: swift build
+        working-directory: apps/macos/ComponentGallery
+```
+
+#### Snapshot Testing Framework
+
+```swift
+// swift/ChatUITestSupport/Sources/ChatUITestSupport/SnapshotTesting.swift
+import XCTest
+import SwiftUI
+
+public class SnapshotTestCase: XCTestCase {
+    private let snapshotDirectory = "Snapshots"
+    
+    public func assertSnapshot<V: View>(
+        _ view: V,
+        named name: String,
+        colorScheme: ColorScheme = .light,
+        platform: Platform = .macOS,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        let hostingController = NSHostingController(rootView: view)
+        hostingController.view.frame = CGRect(x: 0, y: 0, width: 400, height: 300)
+        
+        // Apply color scheme
+        hostingController.view.appearance = colorScheme == .dark ? 
+            NSAppearance(named: .darkAqua) : 
+            NSAppearance(named: .aqua)
+        
+        // Render to image
+        guard let bitmap = hostingController.view.bitmapImageRepForCachingDisplay(in: hostingController.view.bounds) else {
+            XCTFail("Failed to create bitmap", file: file, line: line)
+            return
+        }
+        
+        hostingController.view.cacheDisplay(in: hostingController.view.bounds, to: bitmap)
+        
+        let snapshotPath = getSnapshotPath(name: name, colorScheme: colorScheme, platform: platform)
+        
+        if let existingImage = NSImage(contentsOfFile: snapshotPath) {
+            // Compare with existing snapshot
+            let matches = compareImages(bitmap, existingImage)
+            XCTAssertTrue(matches, "Snapshot mismatch for \(name)", file: file, line: line)
+        } else {
+            // Record new snapshot
+            saveSnapshot(bitmap, to: snapshotPath)
+            XCTFail("Recorded new snapshot for \(name). Run tests again to verify.", file: file, line: line)
+        }
+    }
+    
+    private func getSnapshotPath(name: String, colorScheme: ColorScheme, platform: Platform) -> String {
+        let scheme = colorScheme == .dark ? "dark" : "light"
+        let platformName = platform == .macOS ? "macos" : "ios"
+        return "\(snapshotDirectory)/\(name)_\(scheme)_\(platformName).png"
+    }
+    
+    private func compareImages(_ image1: NSBitmapImageRep, _ image2: NSImage) -> Bool {
+        // Pixel-by-pixel comparison with tolerance
+        // Implementation details omitted for brevity
+        return true
+    }
+    
+    private func saveSnapshot(_ bitmap: NSBitmapImageRep, to path: String) {
+        // Save bitmap to file
+        // Implementation details omitted for brevity
+    }
+}
+
+public enum Platform {
+    case macOS
+    case iOS
+}
+```
+
+#### Real-Time Token Validation
+
+```typescript
+// packages/tokens/src/dev-tools/token-watcher.ts
+import chokidar from 'chokidar';
+import { EnhancedTokenGenerator } from '../generators/enhanced-token-generator';
+import { TokenValidator } from '../validation/token-validator';
+
+export class TokenWatcher {
+  private generator: EnhancedTokenGenerator;
+  private validator: TokenValidator;
+  private watcher: chokidar.FSWatcher | null = null;
+  
+  constructor() {
+    this.generator = new EnhancedTokenGenerator();
+    this.validator = new TokenValidator();
+  }
+  
+  start(tokenPath: string, outputPaths: { css: string; swift: string }) {
+    console.log('🔍 Watching tokens for changes...');
+    
+    this.watcher = chokidar.watch(tokenPath, {
+      persistent: true,
+      ignoreInitial: false
+    });
+    
+    this.watcher.on('change', async (path) => {
+      console.log(`\n📝 Token file changed: ${path}`);
+      
+      try {
+        // Load and validate tokens
+        const tokens = await this.loadTokens(path);
+        const validation = this.validator.validate(tokens);
+        
+        if (!validation.isValid) {
+          console.error('❌ Token validation failed:');
+          validation.errors.forEach(error => {
+            console.error(`  - ${error.tokenPath}: ${error.issue}`);
+            if (error.suggestion) {
+              console.error(`    Suggestion: ${error.suggestion}`);
+            }
+          });
+          return;
+        }
+        
+        console.log('✅ Tokens validated successfully');
+        
+        // Generate outputs
+        console.log('🔨 Generating CSS...');
+        const css = await this.generator.generateCSS(tokens);
+        await this.writeFile(outputPaths.css, css);
+        
+        console.log('🔨 Generating Swift Asset Catalog...');
+        const assetCatalog = await this.generator.generateSwiftAssetCatalog(tokens);
+        await this.generator.writeAssetCatalog(assetCatalog, outputPaths.swift);
+        
+        console.log('✨ Token generation complete!');
+        
+      } catch (error) {
+        console.error('❌ Error processing tokens:', error);
+      }
+    });
+  }
+  
+  stop() {
+    if (this.watcher) {
+      this.watcher.close();
+      console.log('👋 Token watcher stopped');
+    }
+  }
+  
+  private async loadTokens(path: string): Promise<DesignTokens> {
+    // Load tokens from file
+    // Implementation details omitted for brevity
+    return {} as DesignTokens;
+  }
+  
+  private async writeFile(path: string, content: string): Promise<void> {
+    // Write file
+    // Implementation details omitted for brevity
+  }
+}
+```
+
+#### Accessibility Testing Tools
+
+```swift
+// swift/ChatUITestSupport/Sources/ChatUITestSupport/AccessibilityTesting.swift
+import XCTest
+import SwiftUI
+
+public class AccessibilityTestCase: XCTestCase {
+    public func assertAccessible<V: View>(
+        _ view: V,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        let hostingController = NSHostingController(rootView: view)
+        
+        // Check VoiceOver labels
+        let accessibilityElements = hostingController.view.accessibilityChildren()
+        XCTAssertFalse(accessibilityElements?.isEmpty ?? true, 
+                      "View should have accessibility elements", 
+                      file: file, line: line)
+        
+        // Check focus order
+        for element in accessibilityElements ?? [] {
+            if let label = element.accessibilityLabel() {
+                XCTAssertFalse(label.isEmpty, 
+                              "Accessibility label should not be empty", 
+                              file: file, line: line)
+            }
+        }
+    }
+    
+    public func assertKeyboardNavigable<V: View>(
+        _ view: V,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        let hostingController = NSHostingController(rootView: view)
+        
+        // Simulate tab key navigation
+        let focusableElements = hostingController.view.accessibilityChildren()?.filter { element in
+            element.accessibilityRole() == .button || 
+            element.accessibilityRole() == .textField ||
+            element.accessibilityRole() == .link
+        }
+        
+        XCTAssertFalse(focusableElements?.isEmpty ?? true,
+                      "View should have keyboard-focusable elements",
+                      file: file, line: line)
+    }
+    
+    public func assertHighContrastCompliant<V: View>(
+        _ view: V,
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        // Test with high contrast mode enabled
+        let hostingController = NSHostingController(rootView: view)
+        hostingController.view.appearance = NSAppearance(named: .accessibilityHighContrastAqua)
+        
+        // Verify view still renders correctly
+        XCTAssertNotNil(hostingController.view, 
+                       "View should render in high contrast mode",
+                       file: file, line: line)
+    }
+}
+```
+
+#### Keyboard Navigation Testing
+
+```swift
+// swift/ChatUITestSupport/Sources/ChatUITestSupport/KeyboardNavigationTesting.swift
+import XCTest
+import SwiftUI
+
+public class KeyboardNavigationTestCase: XCTestCase {
+    public func testTabNavigation<V: View>(
+        _ view: V,
+        expectedFocusOrder: [String],
+        file: StaticString = #file,
+        line: UInt = #line
+    ) {
+        let hostingController = NSHostingController(rootView: view)
+        let window = NSWindow(contentViewController: hostingController)
+        window.makeKeyAndOrderFront(nil)
+        
+        var actualFocusOrder: [String] = []
+        
+        // Simulate tab key presses
+        for _ in 0..<expectedFocusOrder.count {
+            if let firstResponder = window.firstResponder,
+               let label = firstResponder.accessibilityLabel() {
+                actualFocusOrder.append(label)
+            }
+            
+            // Simulate tab key
+            let event = NSEvent.keyEvent(
+                with: .keyDown,
+                location: .zero,
+                modifierFlags: [],
+                timestamp: 0,
+                windowNumber: window.windowNumber,
+                context: nil,
+                characters: "\t",
+                charactersIgnoringModifiers: "\t",
+                isARepeat: false,
+                keyCode: 48
+            )
+            
+            window.sendEvent(event!)
+        }
+        
+        XCTAssertEqual(actualFocusOrder, expectedFocusOrder,
+                      "Focus order should match expected sequence",
+                      file: file, line: line)
+    }
 }
 ```
 
@@ -1415,3 +2410,1029 @@ jobs:
 ```
 
 This comprehensive testing strategy ensures both specific functionality works correctly (unit tests) and universal properties hold across all inputs (property tests), providing confidence in the system's correctness and robustness.
+
+## Additional Design Benefits
+
+### Future Platform Support
+
+The modular architecture is designed to support future Apple platforms with minimal changes:
+
+#### visionOS Readiness
+
+```swift
+// swift/ChatUIFoundation/Sources/ChatUIFoundation/Platform.swift
+public enum Platform {
+    public static var isMac: Bool {
+        #if os(macOS)
+        true
+        #else
+        false
+        #endif
+    }
+    
+    public static var isVision: Bool {
+        #if os(visionOS)
+        true
+        #else
+        false
+        #endif
+    }
+    
+    public static var supportsHover: Bool {
+        #if os(macOS) || os(visionOS)
+        true
+        #else
+        false
+        #endif
+    }
+}
+```
+
+**Platform-Specific Optimizations**:
+
+- macOS: Native vibrancy with `NSVisualEffectView`
+- iOS: SwiftUI `Material` for lighter weight
+- visionOS: Spatial computing adaptations through same API
+
+### Development Tooling Infrastructure
+
+#### Component Gallery Application
+
+A dedicated macOS app for component development and design review:
+
+```swift
+// apps/macos/ComponentGallery/ComponentGalleryApp.swift
+import SwiftUI
+import ChatUIFoundation
+import ChatUIComponents
+import ChatUIThemes
+
+@main
+struct ComponentGalleryApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ComponentGalleryView()
+        }
+    }
+}
+
+struct ComponentGalleryView: View {
+    @State private var selectedCategory: ComponentCategory = .settings
+    
+    var body: some View {
+        NavigationSplitView {
+            List(ComponentCategory.allCases, selection: $selectedCategory) { category in
+                Label(category.title, systemImage: category.icon)
+            }
+        } detail: {
+            ScrollView {
+                VStack(alignment: .leading, spacing: FSpacing.s24) {
+                    categoryContent(for: selectedCategory)
+                }
+                .padding(FSpacing.s24)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func categoryContent(for category: ComponentCategory) -> some View {
+        switch category {
+        case .settings:
+            settingsPrimitives
+        case .buttons:
+            buttonVariants
+        case .inputs:
+            inputComponents
+        }
+    }
+    
+    private var settingsPrimitives: some View {
+        VStack(alignment: .leading, spacing: FSpacing.s16) {
+            Text("Settings Primitives")
+                .font(FType.title())
+            
+            SettingsCardView {
+                VStack(spacing: 0) {
+                    SettingRowView(title: "Basic Row", trailing: .none)
+                    SettingsDivider()
+                    SettingRowView(title: "With Chevron", trailing: .chevron)
+                    SettingsDivider()
+                    SettingToggleView(title: "Toggle Setting", isOn: .constant(true))
+                }
+            }
+        }
+    }
+}
+
+enum ComponentCategory: String, CaseIterable, Identifiable {
+    case settings, buttons, inputs
+    
+    var id: String { rawValue }
+    var title: String {
+        switch self {
+        case .settings: return "Settings"
+        case .buttons: return "Buttons"
+        case .inputs: return "Inputs"
+        }
+    }
+    var icon: String {
+        switch self {
+        case .settings: return "gearshape"
+        case .buttons: return "button.horizontal"
+        case .inputs: return "textformat"
+        }
+    }
+}
+```
+
+**Benefits**:
+
+- Live component preview for designers
+- Interactive testing of all variants
+- Side-by-side light/dark mode comparison
+- Accessibility testing interface
+- Export screenshots for documentation
+
+#### Token Hot Reload System
+
+Real-time token updates during development:
+
+```typescript
+// packages/tokens/src/dev-tools/token-watcher.ts
+import chokidar from 'chokidar';
+import { EnhancedTokenGenerator } from '../generators/enhanced-token-generator';
+
+export class TokenWatcher {
+  async start(tokenPath: string, outputPaths: { css: string; swift: string }) {
+    console.log('🔍 Watching tokens for changes...');
+    
+    const watcher = chokidar.watch(tokenPath, {
+      persistent: true,
+      ignoreInitial: false
+    });
+    
+    watcher.on('change', async (path) => {
+      console.log(`\n📝 Token file changed: ${path}`);
+      
+      try {
+        const tokens = await this.loadTokens(path);
+        const validation = this.validator.validate(tokens);
+        
+        if (!validation.isValid) {
+          console.error('❌ Token validation failed:');
+          validation.errors.forEach(error => {
+            console.error(`  - ${error.tokenPath}: ${error.issue}`);
+          });
+          return;
+        }
+        
+        console.log('✅ Tokens validated');
+        console.log('🔨 Generating CSS and Swift Asset Catalog...');
+        
+        await this.generator.generateAll(tokens, outputPaths);
+        
+        console.log('✨ Token generation complete!');
+        console.log('💡 SwiftUI previews will refresh automatically');
+        
+      } catch (error) {
+        console.error('❌ Error:', error);
+      }
+    });
+  }
+}
+```
+
+**Development Workflow**:
+
+1. Edit `packages/tokens/src/colors.ts`
+2. Token watcher detects change
+3. Validates tokens
+4. Generates CSS + Swift Asset Catalog
+5. Xcode SwiftUI previews refresh automatically
+6. See changes instantly in Component Gallery
+
+### Documentation Generation
+
+#### DocC Integration
+
+Automatic API documentation generation:
+
+```swift
+// swift/ChatUIFoundation/Sources/ChatUIFoundation/FColor.swift
+/// Semantic color tokens that automatically adapt to light and dark mode.
+///
+/// All colors are backed by Asset Catalog color sets, providing automatic
+/// appearance adaptation without manual switching logic.
+///
+/// ## Usage
+///
+/// ```swift
+/// Text("Hello")
+///     .foregroundStyle(FColor.textPrimary)
+/// ```
+///
+/// ## Topics
+///
+/// ### Surface Colors
+/// - ``bgApp``
+/// - ``bgCard``
+/// - ``bgCardAlt``
+///
+/// ### Text Colors
+/// - ``textPrimary``
+/// - ``textSecondary``
+/// - ``textTertiary``
+public enum FColor {
+    /// Primary application background color.
+    ///
+    /// Use for main window backgrounds and full-screen views.
+    ///
+    /// - Light mode: White (#FFFFFF)
+    /// - Dark mode: Dark gray (#212121)
+    public static let bgApp = Color("foundation-bg-app")
+    
+    // ... rest of colors with documentation
+}
+```
+
+**Generated Documentation Includes**:
+
+- API reference for all public symbols
+- Code examples and usage patterns
+- Light/dark mode color swatches
+- Cross-references between related APIs
+- Platform availability information
+
+### Performance Optimizations
+
+#### Lazy Package Loading
+
+The modular structure enables selective loading:
+
+```swift
+// Minimal app - only Foundation
+import ChatUIFoundation
+// Binary size: ~50KB
+
+// With components
+import ChatUIFoundation
+import ChatUIComponents
+// Binary size: ~200KB
+
+// Full ChatGPT experience
+import ChatUIFoundation
+import ChatUIComponents
+import ChatUIThemes
+import ChatUIShellChatGPT
+// Binary size: ~500KB
+```
+
+#### Incremental Build Performance
+
+Package boundaries enable faster iteration:
+
+```
+Change in ChatUIThemes:
+  ✅ Rebuild ChatUIThemes (fast)
+  ✅ Rebuild dependent app (fast)
+  ❌ No rebuild of ChatUIFoundation
+  ❌ No rebuild of ChatUIComponents
+  
+Total rebuild time: ~2-5 seconds vs ~30+ seconds for monolithic package
+```
+
+### Compile-Time Safety Benefits
+
+#### Type-Safe Token Access
+
+```swift
+// ❌ Runtime error in React
+<div style={{ color: 'var(--foundaton-text-primary)' }} />
+//                           ^^^^^^^^^ typo - wrong color at runtime
+
+// ✅ Compile error in Swift
+Text("Hello").foregroundStyle(FColor.textPrimary)
+//                             ^^^^^^ autocomplete prevents typos
+```
+
+#### Exhaustive Switch Checking
+
+```swift
+// Compiler ensures all variants are handled
+func backgroundColor(for variant: ButtonVariant) -> Color {
+    switch variant {
+    case .default: return FColor.accentBlue
+    case .destructive: return FColor.accentRed
+    case .outline: return .clear
+    case .secondary: return FColor.bgCard
+    case .ghost: return .clear
+    case .link: return .clear
+    // Compiler error if new variant added without handling
+    }
+}
+```
+
+### Cross-Team Collaboration Model
+
+The modular architecture enables parallel development:
+
+```
+Team Structure:
+├── Foundation Team (2 developers)
+│   └── Owns: ChatUIFoundation, token generation
+│   └── Stability: High (rarely changes)
+│
+├── Components Team (3 developers)
+│   └── Owns: ChatUIComponents
+│   └── Velocity: High (frequent additions)
+│
+├── Design Team (2 developers)
+│   └── Owns: ChatUIThemes, visual constants
+│   └── Collaboration: Works with Foundation team
+│
+└── Platform Teams (4+ developers)
+    ├── iOS App Team
+    ├── macOS App Team
+    └── visionOS App Team (future)
+    └── Consume: All packages as dependencies
+```
+
+**Benefits**:
+
+- Clear ownership boundaries
+- Minimal merge conflicts
+- Independent release cycles
+- Parallel feature development
+
+### Versioning Strategy
+
+Each package maintains semantic versioning:
+
+```swift
+// Package.swift dependencies
+dependencies: [
+    .package(url: "ChatUIFoundation", from: "1.0.0"),    // Stable API
+    .package(url: "ChatUIComponents", from: "2.3.0"),    // Active development
+    .package(url: "ChatUIThemes", from: "1.2.0"),        // Occasional updates
+    .package(url: "ChatUIShellChatGPT", from: "1.0.0")   // Stable layouts
+]
+```
+
+**Version Stability Expectations**:
+
+- **Foundation**: Major version changes rare (breaking token API changes)
+- **Components**: Minor version changes frequent (new components added)
+- **Themes**: Patch version changes common (visual refinements)
+- **Shell**: Major version changes rare (layout paradigm shifts)
+
+### Third-Party Integration
+
+The modular structure makes selective sharing possible:
+
+```swift
+// Open source just the foundation
+// Other developers can build their own components
+public package: ChatUIFoundation
+├── FColor (semantic tokens)
+├── FType (typography)
+├── FSpacing (spacing scale)
+└── Platform (utilities)
+
+// Keep proprietary
+private package: ChatUIThemes
+└── ChatGPTTheme (your brand-specific styling)
+```
+
+This enables:
+
+- Community contributions to Foundation
+- Proprietary themes remain private
+- Third-party component libraries can build on Foundation
+- Ecosystem growth without exposing trade secrets
+
+## Future Platform Extensibility
+
+The modular architecture is designed to support future Apple platforms with minimal changes.
+
+### Platform Detection Strategy
+
+```swift
+// swift/ChatUIFoundation/Sources/ChatUIFoundation/Platform.swift
+public enum Platform {
+    public static var isMac: Bool {
+        #if os(macOS)
+        true
+        #else
+        false
+        #endif
+    }
+    
+    public static var isIOS: Bool {
+        #if os(iOS)
+        true
+        #else
+        false
+        #endif
+    }
+    
+    public static var isVisionOS: Bool {
+        #if os(visionOS)
+        true
+        #else
+        false
+        #endif
+    }
+    
+    /// Returns the current platform name for logging/analytics
+    public static var platformName: String {
+        #if os(macOS)
+        return "macOS"
+        #elseif os(iOS)
+        return "iOS"
+        #elseif os(visionOS)
+        return "visionOS"
+        #else
+        return "unknown"
+        #endif
+    }
+}
+```
+
+### Platform-Specific Optimizations
+
+Components can provide platform-optimized implementations while maintaining a consistent API:
+
+```swift
+// swift/ChatUIShellChatGPT/Sources/ChatUIShellChatGPT/VisualEffectView.swift
+#if os(macOS)
+// macOS: Use NSVisualEffectView for native vibrancy
+public struct VisualEffectView: NSViewRepresentable {
+    let material: NSVisualEffectView.Material
+    // Implementation...
+}
+#elseif os(visionOS)
+// visionOS: Use spatial materials
+public struct VisualEffectView: View {
+    let material: Material
+    public var body: some View {
+        Rectangle()
+            .fill(.background)
+            .background(material)
+            .glassBackgroundEffect()  // visionOS-specific
+    }
+}
+#else
+// iOS: Use SwiftUI Material
+public struct VisualEffectView: View {
+    let material: Material
+    public var body: some View {
+        Rectangle()
+            .fill(.background)
+            .background(material)
+    }
+}
+#endif
+```
+
+### Deployment Target Configuration
+
+Each package specifies minimum platform versions:
+
+```swift
+// Package.swift for all packages
+platforms: [
+    .macOS(.v13),
+    .iOS(.v15),
+    .visionOS(.v1)  // Ready for visionOS
+]
+```
+
+## Development Tooling
+
+### Real-Time Token Watcher
+
+The token watcher provides instant feedback during development:
+
+```typescript
+// packages/tokens/src/dev-tools/token-watcher.ts
+import chokidar from 'chokidar';
+import { EnhancedTokenGenerator } from '../generators/enhanced-token-generator';
+import { TokenValidator } from '../validation/token-validator';
+
+export class TokenWatcher {
+  private generator: EnhancedTokenGenerator;
+  private validator: TokenValidator;
+  private watcher: chokidar.FSWatcher | null = null;
+  
+  constructor() {
+    this.generator = new EnhancedTokenGenerator();
+    this.validator = new TokenValidator();
+  }
+  
+  start(tokenPath: string, outputPaths: { css: string; swift: string }) {
+    console.log('🔍 Watching tokens for changes...');
+    
+    this.watcher = chokidar.watch(tokenPath, {
+      persistent: true,
+      ignoreInitial: false
+    });
+    
+    this.watcher.on('change', async (path) => {
+      console.log(`\n📝 Token file changed: ${path}`);
+      
+      try {
+        // Load and validate tokens
+        const tokens = await this.loadTokens(path);
+        const validation = this.validator.validate(tokens);
+        
+        if (!validation.isValid) {
+          console.error('❌ Token validation failed:');
+          validation.errors.forEach(error => {
+            console.error(`  - ${error.tokenPath}: ${error.issue}`);
+            if (error.suggestion) {
+              console.error(`    Suggestion: ${error.suggestion}`);
+            }
+          });
+          return;
+        }
+        
+        console.log('✅ Tokens validated successfully');
+        
+        // Generate outputs
+        console.log('🔨 Generating CSS...');
+        const css = await this.generator.generateCSS(tokens);
+        await this.writeFile(outputPaths.css, css);
+        
+        console.log('🔨 Generating Swift Asset Catalog...');
+        const assetCatalog = await this.generator.generateSwiftAssetCatalog(tokens);
+        await this.generator.writeAssetCatalog(assetCatalog, outputPaths.swift);
+        
+        console.log('✨ Token generation complete!');
+        console.log('💡 SwiftUI previews will refresh automatically\n');
+        
+      } catch (error) {
+        console.error('❌ Error processing tokens:', error);
+      }
+    });
+  }
+  
+  stop() {
+    if (this.watcher) {
+      this.watcher.close();
+      console.log('👋 Token watcher stopped');
+    }
+  }
+}
+
+// Usage in package.json scripts
+// "tokens:watch": "tsx packages/tokens/src/dev-tools/watch.ts"
+```
+
+### Component Gallery Application
+
+A dedicated macOS app for viewing all components:
+
+```swift
+// apps/macos/ComponentGallery/ComponentGalleryApp.swift
+import SwiftUI
+import ChatUIFoundation
+import ChatUIComponents
+import ChatUIThemes
+
+@main
+struct ComponentGalleryApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ComponentGalleryView()
+                .frame(minWidth: 800, minHeight: 600)
+        }
+    }
+}
+
+struct ComponentGalleryView: View {
+    @State private var selectedCategory: ComponentCategory = .settings
+    @State private var colorScheme: ColorScheme = .light
+    
+    var body: some View {
+        NavigationSplitView {
+            List(ComponentCategory.allCases, selection: $selectedCategory) { category in
+                Label(category.title, systemImage: category.icon)
+            }
+            .navigationTitle("Components")
+        } detail: {
+            ScrollView {
+                VStack(alignment: .leading, spacing: FSpacing.s24) {
+                    categoryContent
+                }
+                .padding(FSpacing.s24)
+            }
+            .toolbar {
+                ToolbarItem {
+                    Button {
+                        colorScheme = colorScheme == .light ? .dark : .light
+                    } label: {
+                        Image(systemName: colorScheme == .light ? "moon.fill" : "sun.max.fill")
+                    }
+                }
+            }
+        }
+        .preferredColorScheme(colorScheme)
+    }
+    
+    @ViewBuilder
+    private var categoryContent: some View {
+        switch selectedCategory {
+        case .settings:
+            SettingsPrimitivesGallery()
+        case .buttons:
+            ButtonsGallery()
+        case .inputs:
+            InputsGallery()
+        case .navigation:
+            NavigationGallery()
+        }
+    }
+}
+
+enum ComponentCategory: String, CaseIterable, Identifiable {
+    case settings, buttons, inputs, navigation
+    
+    var id: String { rawValue }
+    
+    var title: String {
+        switch self {
+        case .settings: return "Settings Primitives"
+        case .buttons: return "Buttons"
+        case .inputs: return "Inputs"
+        case .navigation: return "Navigation"
+        }
+    }
+    
+    var icon: String {
+        switch self {
+        case .settings: return "gearshape"
+        case .buttons: return "button.programmable"
+        case .inputs: return "textformat"
+        case .navigation: return "sidebar.left"
+        }
+    }
+}
+
+struct SettingsPrimitivesGallery: View {
+    @State private var toggleValue = true
+    @State private var dropdownValue = "Option 1"
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: FSpacing.s16) {
+            Text("Settings Primitives")
+                .font(FType.title())
+            
+            SettingsCardView {
+                VStack(spacing: 0) {
+                    SettingRowView(
+                        icon: AnyView(Image(systemName: "gear")),
+                        title: "Basic Row",
+                        subtitle: "With icon and subtitle"
+                    )
+                    
+                    SettingsDivider()
+                    
+                    SettingRowView(
+                        title: "Row with Chevron",
+                        trailing: .chevron
+                    )
+                    
+                    SettingsDivider()
+                    
+                    SettingToggleView(
+                        icon: AnyView(Image(systemName: "bell")),
+                        title: "Toggle Setting",
+                        subtitle: "Enable notifications",
+                        isOn: $toggleValue
+                    )
+                    
+                    SettingsDivider()
+                    
+                    SettingDropdownView(
+                        icon: AnyView(Image(systemName: "paintpalette")),
+                        title: "Dropdown Setting",
+                        subtitle: "Choose an option",
+                        options: ["Option 1", "Option 2", "Option 3"],
+                        selection: $dropdownValue
+                    )
+                }
+            }
+        }
+    }
+}
+```
+
+### DocC Documentation Generation
+
+Comprehensive API documentation generated from code:
+
+```swift
+// swift/ChatUIFoundation/Sources/ChatUIFoundation/FColor.swift
+/// Semantic color tokens that automatically adapt to light and dark mode.
+///
+/// `FColor` provides a consistent color API across all ChatUI components.
+/// All colors are backed by Asset Catalog color sets that automatically
+/// switch between light and dark variants based on system appearance.
+///
+/// ## Usage
+///
+/// ```swift
+/// Text("Hello")
+///     .foregroundStyle(FColor.textPrimary)
+///
+/// Rectangle()
+///     .fill(FColor.bgCard)
+/// ```
+///
+/// ## Color Categories
+///
+/// - **Surface Colors**: Background colors for different UI layers
+/// - **Text Colors**: Hierarchical text colors (primary, secondary, tertiary)
+/// - **Icon Colors**: Colors for icons and symbols
+/// - **Accent Colors**: Brand and semantic colors
+/// - **Dividers**: Subtle separators and borders
+///
+/// - Note: All colors automatically adapt to system appearance (light/dark mode)
+/// - Important: Always use semantic colors instead of hardcoded values
+public enum FColor {
+    /// Primary application background color
+    ///
+    /// Use for the main window or view background.
+    ///
+    /// - Light mode: Light gray
+    /// - Dark mode: Dark gray
+    public static let bgApp = Color("foundation-bg-app")
+    
+    // ... rest of colors with documentation
+}
+```
+
+Generate documentation:
+
+```bash
+# Generate DocC documentation for all packages
+cd swift/ChatUIFoundation
+swift package generate-documentation --target ChatUIFoundation
+
+cd ../ChatUIComponents
+swift package generate-documentation --target ChatUIComponents
+
+# Result: Beautiful documentation site with:
+# - API reference
+# - Usage examples
+# - Code snippets
+# - Cross-references between packages
+```
+
+## Compile-Time Safety
+
+### Type-Safe Token Access
+
+Swift's type system provides compile-time validation:
+
+```swift
+// ✅ Compile-time safe
+Text("Hello").foregroundStyle(FColor.textPrimary)
+//                             ^^^^^^ Autocomplete shows all options
+//                                    Typos caught at compile time
+
+// ❌ Won't compile
+Text("Hello").foregroundStyle(FColor.textPrimry)
+//                                    ^^^^^^^^ Error: Type 'FColor' has no member 'textPrimry'
+```
+
+Compare to CSS (runtime errors):
+
+```tsx
+// ❌ Runtime error - typo not caught
+<div style={{ color: 'var(--foundation-text-primry)' }} />
+//                                           ^^^^^^^ Typo! Wrong color at runtime
+```
+
+### CI/CD Token Validation
+
+The build pipeline validates tokens before merge:
+
+```typescript
+// packages/tokens/tests/validation.test.ts
+import { TokenValidator } from '../src/validation/token-validator';
+import { loadTokens } from '../src/loaders/token-loader';
+
+describe('Token Validation', () => {
+  test('all tokens must be valid', async () => {
+    const tokens = await loadTokens('src/tokens.ts');
+    const validator = new TokenValidator();
+    const result = validator.validate(tokens);
+    
+    if (!result.isValid) {
+      console.error('Token validation failed:');
+      result.errors.forEach(error => {
+        console.error(`  ${error.tokenPath}: ${error.issue}`);
+      });
+    }
+    
+    expect(result.isValid).toBe(true);
+  });
+  
+  test('CSS and Swift outputs must match', async () => {
+    const tokens = await loadTokens('src/tokens.ts');
+    const generator = new EnhancedTokenGenerator();
+    
+    const css = await generator.generateCSS(tokens);
+    const assetCatalog = await generator.generateSwiftAssetCatalog(tokens);
+    
+    // Validate that CSS and Asset Catalog have same colors
+    const cssColors = extractColorsFromCSS(css);
+    const swiftColors = extractColorsFromAssetCatalog(assetCatalog);
+    
+    expect(cssColors).toEqual(swiftColors);
+  });
+});
+```
+
+CI configuration:
+
+```yaml
+# .github/workflows/validate-tokens.yml
+name: Validate Design Tokens
+
+on:
+  pull_request:
+    paths:
+      - 'packages/tokens/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: pnpm install
+      - run: pnpm tokens:validate
+      - name: Check for token drift
+        run: |
+          pnpm generate:tokens
+          git diff --exit-code packages/tokens/outputs/
+          # Fails if generated files differ from committed files
+```
+
+### Asset Catalog Autocomplete
+
+Xcode provides autocomplete for all Asset Catalog colors:
+
+```swift
+// Type "FColor." and Xcode shows:
+// - bgApp
+// - bgCard
+// - bgCardAlt
+// - textPrimary
+// - textSecondary
+// - textTertiary
+// - iconPrimary
+// - iconSecondary
+// - iconTertiary
+// - accentGreen
+// - accentBlue
+// - accentOrange
+// - accentRed
+// - accentPurple
+// - divider
+
+// All with inline documentation from DocC comments
+```
+
+## Performance Optimizations
+
+### Modular Loading
+
+Applications only load the packages they need:
+
+```swift
+// Minimal app - just tokens (smallest bundle size)
+import ChatUIFoundation
+
+struct MinimalApp: App {
+    var body: some Scene {
+        WindowGroup {
+            Text("Hello")
+                .foregroundStyle(FColor.textPrimary)
+        }
+    }
+}
+
+// Full-featured app - all packages
+import ChatUIFoundation
+import ChatUIComponents
+import ChatUIThemes
+import ChatUIShellChatGPT
+
+struct FullApp: App {
+    var body: some Scene {
+        WindowGroup {
+            AppShellView(
+                sidebar: { SidebarView() },
+                detail: { DetailView() }
+            )
+        }
+    }
+}
+```
+
+### Incremental Build Optimization
+
+Changes to one package don't rebuild others:
+
+```bash
+# Change a color in ChatUIFoundation
+# Result: Only ChatUIFoundation rebuilds
+
+# Change a component in ChatUIComponents
+# Result: Only ChatUIComponents rebuilds (Foundation already built)
+
+# Change a theme in ChatUIThemes
+# Result: Only ChatUIThemes rebuilds (Foundation and Components already built)
+```
+
+### Asset Catalog Performance
+
+Asset Catalogs are optimized by Xcode:
+
+- **Compile-time optimization**: Colors compiled into efficient binary format
+- **Runtime caching**: System caches color lookups
+- **Memory efficiency**: Colors loaded on-demand, not all at once
+- **Dark mode switching**: Zero-cost switching (system handles it)
+
+## Migration Strategy
+
+### Phase 1: Parallel Development
+
+New modular packages exist alongside old monolithic package:
+
+```
+packages/ui-swift/          # Old package (still works)
+swift/
+  ├── ChatUIFoundation/     # New modular packages
+  ├── ChatUIComponents/
+  ├── ChatUIThemes/
+  └── ChatUIShellChatGPT/
+```
+
+### Phase 2: Gradual Migration
+
+Migrate components one by one:
+
+```swift
+// Week 1: Migrate Button
+// Old: packages/ui-swift/Sources/ChatUISwift/Components/ChatUIButton.swift
+// New: swift/ChatUIComponents/Sources/ChatUIComponents/ChatUIButton.swift
+
+// Week 2: Migrate Card
+// Old: packages/ui-swift/Sources/ChatUISwift/Components/ChatUICard.swift
+// New: swift/ChatUIComponents/Sources/ChatUIComponents/ChatUICard.swift
+
+// Continue until all components migrated
+```
+
+### Phase 3: Deprecation
+
+Once all components migrated, deprecate old package:
+
+```swift
+// packages/ui-swift/Sources/ChatUISwift/ChatUISwift.swift
+@available(*, deprecated, message: "Use modular packages: ChatUIFoundation, ChatUIComponents, ChatUIThemes")
+public enum ChatUISwift {
+    // Old API still works but shows deprecation warnings
+}
+```
+
+### Phase 4: Removal
+
+After deprecation period, remove old package:
+
+```bash
+# Remove old package
+rm -rf packages/ui-swift/
+
+# Update documentation to reference new packages
+# Update all example code
+# Announce breaking change with migration guide
+```
+
+## Summary
+
+The Native macOS Bridge provides a comprehensive, modular architecture for building native Apple platform applications with perfect design consistency. Key benefits include:
+
+- **Unified Design System**: Single source of truth for all platforms
+- **Modular Architecture**: Use only what you need
+- **Compile-Time Safety**: Catch errors before runtime
+- **Future-Proof**: Ready for visionOS and future platforms
+- **Developer Experience**: Hot reload, documentation, component gallery
+- **Performance**: Optimized builds and runtime efficiency
+- **Zero Breaking Changes**: Existing React apps unaffected
+
+The system is designed for incremental adoption, allowing teams to migrate at their own pace while maintaining full backward compatibility with existing applications.

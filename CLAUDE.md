@@ -13,14 +13,14 @@ packages/
 ├── ui/          # React component library (main output)
 ├── runtime/     # Host adapters (embedded/standalone)
 ├── tokens/      # Design tokens (CSS variables, Tailwind preset)
-├── ui-swift/    # Swift/SwiftUI components (emerging)
+├── cloudflare-template/ # Cloudflare Workers deployment template
 └── widgets/     # Standalone widget bundles for ChatGPT
 
 apps/
 ├── web/         # Standalone reference app with page routing
 ├── storybook/   # Component documentation and development
 ├── mcp/         # MCP server for ChatGPT integration
-└── macos/       # Swift macOS reference app
+└── macos/       # Swift macOS reference apps
 ```
 
 ## Commands
@@ -28,14 +28,14 @@ apps/
 ### Development
 ```bash
 pnpm install              # Install dependencies
-pnpm dev                  # Web (localhost:5176) + Storybook (localhost:6006)
+pnpm dev                  # Web (localhost:5173) + Storybook (localhost:6006)
 pnpm dev:web              # Web only
 pnpm dev:storybook        # Storybook only
 ```
 
 ### Building
 ```bash
-pnpm build                # Build web app
+pnpm build                # Build pipeline (web + macOS packages)
 pnpm build:widget         # Build single-file widget HTML (for MCP)
 pnpm build:lib            # Build all library packages (ui, runtime, tokens)
 pnpm build:widgets        # Build widget bundles
@@ -185,7 +185,11 @@ For embedded ChatGPT apps, use `createEmbeddedHost()` which wraps `window.openai
 - **TypeScript**: 5.9+
 - **Node.js**: 18+
 - **Apps SDK UI**: ^0.2.1
-- **Swift**: 5.9+ (for ui-swift)
+- **Swift**: 5.9+ (for Swift packages under `swift/`)
+
+### Swift (modular packages)
+- `swift/ChatUIFoundation`, `swift/ChatUIComponents`, `swift/ChatUIThemes`, `swift/ChatUIShellChatGPT`
+- `apps/macos/ComponentGallery` for development and accessibility checks
 
 ## Page System
 

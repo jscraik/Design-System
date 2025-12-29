@@ -11,7 +11,7 @@ import { DataControlsPanel } from "./DataControlsPanel";
  * ```tsx
  * import { DataControlsPanel } from "@chatui/ui";
  *
- * <DataControlsPanel onBack={() => console.log("back")} />
+ * <DataControlsPanel onBack={fn()} />
  * ```
  */
 const meta: Meta<typeof DataControlsPanel> = {

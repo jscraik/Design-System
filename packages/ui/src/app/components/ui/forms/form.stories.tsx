@@ -1,9 +1,11 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "@storybook/test";
 import { useForm } from "react-hook-form";
 
 import { Button } from "../base/button";
 import { Input } from "../base/input";
+
 import {
   Form,
   FormControl,
@@ -17,6 +19,7 @@ import {
 const meta: Meta<typeof Form> = {
   title: "UI/Form",
   component: Form,
+  tags: ["autodocs"],
   parameters: { layout: "centered" },
 };
 
@@ -36,7 +39,7 @@ export const Default: Story = {
 
     return (
       <Form {...form}>
-        <form className="w-[320px] space-y-4" onSubmit={form.handleSubmit(() => {})}>
+        <form className="w-[320px] space-y-4" onSubmit={form.handleSubmit(fn())}>
           <FormField
             control={form.control}
             name="email"

@@ -115,7 +115,7 @@ export function SettingsModal({ isOpen, onClose, account, appInfo }: SettingsMod
   const [showInMenuBar, setShowInMenuBar] = useState("When app is running");
   const [accentColor, setAccentColor] = useState("Purple");
   const [positionOnScreen] = useState("Remember last position");
-  const [resetToNewChat, setResetToNewChat] = useState("After 10 minutes");
+  const [resetToNewChat] = useState("After 10 minutes");
   const [keyboardShortcut, setKeyboardShortcut] = useState("⌘Space");
 
   const [enableWorkWithApps, setEnableWorkWithApps] = useState(true);

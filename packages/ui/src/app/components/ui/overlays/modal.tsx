@@ -1,7 +1,6 @@
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 
 import { useFocusTrap } from "../../hooks/useFocusTrap";
-
 import { cn } from "../utils";
 
 export interface ModalDialogProps {
@@ -62,6 +61,7 @@ export function ModalDialog({
   className,
   overlayClassName,
 }: ModalDialogProps) {
+  const baseId = useId();
   const { dialogRef, trapProps } = useFocusTrap({
     isOpen,
     onClose,
@@ -71,7 +71,12 @@ export function ModalDialog({
   if (!isOpen) return null;
 
   // Generate title ID from title if not provided
-  const generatedTitleId = titleId || (title ? `modal-title-${title.replace(/\s+/g, "-").toLowerCase()}` : undefined);
+  const generatedTitleId =
+    titleId ||
+    (title ? `modal-title-${title.replace(/\s+/g, "-").toLowerCase()}` : undefined);
+  const descriptionId = description
+    ? `${generatedTitleId ?? `modal-${baseId}`}-description`
+    : undefined;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center" role="presentation">
@@ -90,11 +95,12 @@ export function ModalDialog({
 
       {/* Dialog */}
       <div
+        ref={dialogRef}
         {...trapProps}
         role="dialog"
         aria-modal="true"
         aria-labelledby={generatedTitleId}
-        aria-describedby={description ? `${generatedTitleId}-description` : undefined}
+        aria-describedby={descriptionId}
         className={cn(
           "relative z-10 outline-none",
           "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
@@ -105,6 +111,11 @@ export function ModalDialog({
         )}
         style={{ maxWidth }}
       >
+        {description ? (
+          <p id={descriptionId} className="sr-only">
+            {description}
+          </p>
+        ) : null}
         {children}
       </div>
     </div>

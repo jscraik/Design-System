@@ -77,6 +77,7 @@ function DashboardStoryShell({
 const meta: Meta<typeof DashboardTemplate> = {
   title: "Templates/DashboardTemplate",
   component: DashboardTemplate,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },

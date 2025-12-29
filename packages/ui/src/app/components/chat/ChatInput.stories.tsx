@@ -5,6 +5,7 @@ import { ChatInput } from "./ChatInput";
 const meta: Meta<typeof ChatInput> = {
   title: "ChatUI/ChatInput",
   component: ChatInput,
+  tags: ["autodocs"],
   args: {
     selectedModel: {
       name: "Auto",

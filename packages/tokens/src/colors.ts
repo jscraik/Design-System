@@ -45,12 +45,14 @@ export const colorTokens = {
       red: "#E02E2A",
       orange: "#E25507",
       green: "#008635",
+      purple: "#9966CC",
     },
     dark: {
       blue: "#0285FF",
       red: "#FF8583",
       orange: "#FF9E6C",
       green: "#40C977",
+      purple: "#B280E6",
     },
   },
 } as const;

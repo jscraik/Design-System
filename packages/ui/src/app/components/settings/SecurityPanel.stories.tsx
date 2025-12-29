@@ -11,7 +11,7 @@ import { SecurityPanel } from "./SecurityPanel";
  * ```tsx
  * import { SecurityPanel } from "@chatui/ui";
  *
- * <SecurityPanel onBack={() => console.log("back")} />
+ * <SecurityPanel onBack={fn()} />
  * ```
  */
 const meta: Meta<typeof SecurityPanel> = {

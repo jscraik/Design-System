@@ -6,16 +6,10 @@
 //
 
 import SwiftUI
-import ChatUISwift
+import ChatUIFoundation
 
 @main
 struct ChatUIPlaygroundApp: App {
-
-    init() {
-        // Initialize the ChatUISwift package
-        ChatUISwift.initialize()
-    }
-
     var body: some Scene {
         WindowGroup {
             ContentView()

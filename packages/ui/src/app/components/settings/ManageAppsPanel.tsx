@@ -21,7 +21,7 @@ export function ManageAppsPanel({ onBack }: SettingsPanelProps) {
     <>
       <div className="px-6 py-4 border-b border-foundation-text-dark-primary/10 flex items-center gap-3">
         <div className="flex gap-2">
-          <button
+          <button type="button"
             onClick={onBack}
             className="size-3 rounded-full bg-foundation-accent-red hover:bg-foundation-accent-red/80 transition-colors"
             aria-label="Close"
@@ -29,7 +29,7 @@ export function ManageAppsPanel({ onBack }: SettingsPanelProps) {
           <div className="size-3 rounded-full bg-foundation-accent-orange" />
           <div className="size-3 rounded-full bg-foundation-accent-green" />
         </div>
-        <button
+        <button type="button"
           onClick={onBack}
           className="p-1 hover:bg-foundation-bg-dark-3 rounded transition-colors"
         >
@@ -56,9 +56,9 @@ export function ManageAppsPanel({ onBack }: SettingsPanelProps) {
               Connected apps
             </h4>
             <div className="space-y-0.5">
-              {connectedApps.map((app, index) => (
-                <button
-                  key={index}
+              {connectedApps.map((app) => (
+                <button type="button"
+                  key={app.name}
                   className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors"
                 >
                   <div className="flex items-center gap-3">
@@ -89,9 +89,9 @@ export function ManageAppsPanel({ onBack }: SettingsPanelProps) {
               Available to Connect
             </h4>
             <div className="space-y-0.5">
-              {availableApps.map((app, index) => (
-                <button
-                  key={index}
+              {availableApps.map((app) => (
+                <button type="button"
+                  key={app.name}
                   className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors"
                 >
                   <div className="flex items-center gap-3">

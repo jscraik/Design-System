@@ -2,8 +2,10 @@ import { createEmbeddedHost, ensureMockOpenAI, HostProvider, useToolOutput } fro
 import { AppsSDKUIProvider, Button, Card } from "@chatui/ui";
 import { useState } from "react";
 
-import { createWidget, WidgetErrorBoundary } from "../shared/widget-base";
+import { createWidget, mountWidget, WidgetErrorBoundary } from "../shared/widget-base";
 import "../styles.css";
+
+const isDev = Boolean(import.meta.env?.DEV);
 
 // Mock data for development
 if (import.meta.env.DEV) {
@@ -43,7 +45,9 @@ function ExampleWidgetCore() {
         setLocalCount(result.structuredContent.newValue);
       }
     } catch (error) {
-      console.error("Tool call failed:", error);
+      if (isDev) {
+        console.error("Tool call failed:", error);
+      }
     }
   };
 
@@ -77,8 +81,8 @@ function ExampleWidgetCore() {
         <Card className="p-4">
           <h2 className="text-lg font-semibold text-white mb-2">Items</h2>
           <ul className="space-y-1">
-            {items.map((item, index) => (
-              <li key={index} className="text-gray-300 text-sm">
+            {items.map((item) => (
+              <li key={item} className="text-gray-300 text-sm">
                 • {item}
               </li>
             ))}
@@ -109,6 +113,11 @@ const ExampleWidget = createWidget(
     className: "max-w-md mx-auto",
   }
 );
+
+// Mount into the DOM when used as a standalone widget entry
+if (typeof document !== "undefined") {
+  mountWidget(<ExampleWidget />);
+}
 
 // Export for potential reuse
 export { ExampleWidget, ExampleWidgetCore };

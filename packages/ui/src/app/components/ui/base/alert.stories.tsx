@@ -5,6 +5,7 @@ import { Alert, AlertDescription, AlertTitle } from "./alert";
 const meta: Meta<typeof Alert> = {
   title: "UI/Alert",
   component: Alert,
+  tags: ["autodocs"],
   parameters: { layout: "centered" },
 };
 

@@ -17,6 +17,13 @@ const widgetHtmlPath = process.env.WEB_WIDGET_HTML
 const widgetsDistPath = process.env.WIDGETS_DIST
   ? path.resolve(process.env.WIDGETS_DIST)
   : path.resolve(__dirname, "../../packages/widgets/dist");
+const CORS_ORIGIN = process.env.MCP_CORS_ORIGIN ?? "*";
+const DNS_REBINDING_PROTECTION =
+  process.env.MCP_DNS_REBINDING_PROTECTION === "true";
+const ALLOWED_HOSTS = (process.env.MCP_ALLOWED_HOSTS ?? "")
+  .split(",")
+  .map((host) => host.trim())
+  .filter(Boolean);
 
 // Environment configuration for resource metadata
 const WORKER_DOMAIN = process.env.WORKER_DOMAIN;
@@ -49,7 +56,7 @@ try {
     widgetManifest = await import(manifestPath);
   }
 } catch (error) {
-  console.warn("Widget manifest not found, using fallback configuration");
+  console.warn("Widget manifest not found, using fallback configuration", error);
   // Fallback to manual configuration if manifest not available
   widgetManifest = {
     widgetManifest: {
@@ -115,42 +122,42 @@ const addToCartInputSchema = {
   sessionId: z.string().optional().describe("Cart session ID for cross-turn persistence"),
 };
 
-const removeFromCartInputSchema = {
+const _removeFromCartInputSchema = {
   itemIds: z.array(z.string()).describe("IDs of items to remove from cart"),
   sessionId: z.string().optional().describe("Cart session ID"),
 };
 
-const showCartInputSchema = {
+const _showCartInputSchema = {
   sessionId: z.string().optional().describe("Cart session ID to display"),
 };
 
 // Pizzaz Shop schemas
-const showShopInputSchema = {
+const _showShopInputSchema = {
   view: z.enum(["cart", "checkout", "confirmation"]).optional().describe("Initial view to display"),
   items: z.array(cartItemSchema).optional().describe("Pre-populate cart with items"),
 };
 
-const placeOrderInputSchema = {
+const _placeOrderInputSchema = {
   deliveryOption: z.enum(["standard", "express"]).optional().describe("Delivery speed"),
   tipPercent: z.number().optional().describe("Tip percentage (0, 10, 15, 20)"),
 };
 
 // Auth Demo schemas
-const authStatusInputSchema = {
+const _authStatusInputSchema = {
   checkLevel: z
     .enum(["none", "basic", "oauth", "oauth_elevated"])
     .optional()
     .describe("Minimum auth level to check for"),
 };
 
-const authLoginInputSchema = {
+const _authLoginInputSchema = {
   provider: z.string().optional().describe("OAuth provider (e.g., 'google', 'github')"),
   scopes: z.array(z.string()).optional().describe("Requested OAuth scopes"),
 };
 
-const authLogoutInputSchema = {};
+const _authLogoutInputSchema = {};
 
-const authRefreshInputSchema = {
+const _authRefreshInputSchema = {
   forceRefresh: z.boolean().optional().describe("Force token refresh even if not expired"),
 };
 
@@ -466,7 +473,7 @@ if (isDirectRun) {
 
     if (req.method === "OPTIONS" && url.pathname === MCP_PATH) {
       res.writeHead(204, {
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": CORS_ORIGIN,
         "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
         "Access-Control-Allow-Headers": "content-type, mcp-session-id",
         "Access-Control-Expose-Headers": "Mcp-Session-Id",
@@ -484,13 +491,19 @@ if (isDirectRun) {
 
     const MCP_METHODS = new Set(["POST", "GET", "DELETE"]);
     if (url.pathname === MCP_PATH && req.method && MCP_METHODS.has(req.method)) {
-      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Access-Control-Allow-Origin", CORS_ORIGIN);
       res.setHeader("Access-Control-Expose-Headers", "Mcp-Session-Id");
 
       const server = createEnhancedChatUiServer();
       const transport = new StreamableHTTPServerTransport({
         sessionIdGenerator: undefined,
         enableJsonResponse: true,
+        ...(DNS_REBINDING_PROTECTION
+          ? {
+              enableDnsRebindingProtection: true,
+              allowedHosts: ALLOWED_HOSTS.length > 0 ? ALLOWED_HOSTS : ["127.0.0.1", "localhost"],
+            }
+          : {}),
       });
 
       res.on("close", () => {

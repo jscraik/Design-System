@@ -4,7 +4,6 @@ import * as React from "react";
 import * as MenubarPrimitive from "@radix-ui/react-menubar";
 
 import { IconCheckCircle, IconCheckmark, IconChevronRightMd } from "../../../../icons";
-
 import { cn } from "../utils";
 
 function Menubar({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Root>) {

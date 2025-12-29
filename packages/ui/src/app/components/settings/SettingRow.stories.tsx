@@ -18,7 +18,7 @@ import { SettingRow } from "./SettingRow";
  *   icon={<IconSettings />}
  *   label="General"
  *   description="App preferences"
- *   onClick={() => console.log("clicked")}
+ *   onClick={fn()}
  * />
  * ```
  */
@@ -120,7 +120,7 @@ export const AllVariants: Story = {
         right={
           <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
         }
-        onClick={() => console.log("clicked")}
+        onClick={fn()}
       />
     </div>
   ),

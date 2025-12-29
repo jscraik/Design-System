@@ -5,6 +5,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "./resizabl
 const meta: Meta<typeof ResizablePanelGroup> = {
   title: "UI/Resizable",
   component: ResizablePanelGroup,
+  tags: ["autodocs"],
   parameters: { layout: "centered" },
 };
 

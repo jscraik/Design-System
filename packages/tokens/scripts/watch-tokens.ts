@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
+import { spawn } from 'child_process';
 import { watch } from 'fs';
 import { join } from 'path';
-
-import { TokenGenerator } from '../src/generator.js';
 
 interface WatchConfig {
     debounceMs: number;
@@ -11,13 +10,11 @@ interface WatchConfig {
 }
 
 class TokenWatcher {
-    private generator: TokenGenerator;
     private config: WatchConfig;
     private debounceTimer: NodeJS.Timeout | null = null;
     private isGenerating = false;
 
     constructor(config: Partial<WatchConfig> = {}) {
-        this.generator = new TokenGenerator();
         this.config = {
             debounceMs: 300,
             verbose: false,
@@ -41,7 +38,7 @@ class TokenWatcher {
         }
 
         watchPaths.forEach(path => {
-            watch(path, { persistent: true }, (eventType, filename) => {
+            watch(path, { persistent: true }, (eventType, _filename) => {
                 if (eventType === 'change') {
                     this.handleFileChange(path);
                 }
@@ -88,11 +85,7 @@ class TokenWatcher {
                 console.log(`   Full path: ${changedFile}`);
             }
 
-            // Clear module cache to pick up changes
-            delete require.cache[changedFile];
-
-            // Regenerate tokens
-            await this.generator.generate();
+            await this.runGeneration();
 
             const duration = Date.now() - startTime;
             console.log(`✅ Tokens regenerated in ${duration}ms`);
@@ -114,6 +107,25 @@ class TokenWatcher {
         console.log('🔥 Hot reload: Swift previews will pick up changes automatically');
         console.log('   • Xcode: Resume previews with ⌥⌘P');
         console.log('   • Playground: Build with ⌘B to see changes');
+    }
+
+    private runGeneration(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            const args = ['generate'];
+            const child = spawn('pnpm', args, {
+                cwd: process.cwd(),
+                stdio: this.config.verbose ? 'inherit' : 'pipe',
+            });
+
+            child.on('error', reject);
+            child.on('close', (code) => {
+                if (code === 0) {
+                    resolve();
+                } else {
+                    reject(new Error(`Token generation failed with exit code ${code}`));
+                }
+            });
+        });
     }
 }
 

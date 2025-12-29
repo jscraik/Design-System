@@ -6,6 +6,7 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./chart";
 const meta: Meta<typeof ChartContainer> = {
   title: "UI/Chart",
   component: ChartContainer,
+  tags: ["autodocs"],
   parameters: { layout: "centered" },
 };
 

@@ -4,7 +4,6 @@ import * as React from "react";
 import { Command as CommandPrimitive } from "cmdk";
 
 import { IconSearch } from "../../../../icons";
-
 import { cn } from "../utils";
 import {
   Dialog,

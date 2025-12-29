@@ -5,6 +5,7 @@ import { DesignSystemDocs } from "./DesignSystemDocs";
 const meta: Meta<typeof DesignSystemDocs> = {
   title: "DesignSystem/DesignSystemDocs",
   component: DesignSystemDocs,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },

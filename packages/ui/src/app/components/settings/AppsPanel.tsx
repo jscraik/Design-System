@@ -40,7 +40,7 @@ export function AppsPanel({ onBack }: SettingsPanelProps) {
     <>
       <div className="px-6 py-4 border-b border-foundation-text-dark-primary/10 flex items-center gap-3">
         <div className="flex gap-2">
-          <button
+          <button type="button"
             onClick={onBack}
             className="size-3 rounded-full bg-foundation-accent-red hover:bg-foundation-accent-red/80 transition-colors"
             aria-label="Close"
@@ -48,7 +48,7 @@ export function AppsPanel({ onBack }: SettingsPanelProps) {
           <div className="size-3 rounded-full bg-foundation-accent-orange" />
           <div className="size-3 rounded-full bg-foundation-accent-green" />
         </div>
-        <button
+        <button type="button"
           onClick={onBack}
           className="p-1 hover:bg-foundation-bg-dark-3 rounded transition-colors"
         >
@@ -66,9 +66,9 @@ export function AppsPanel({ onBack }: SettingsPanelProps) {
             Enabled apps
           </h3>
           <div className="space-y-0.5">
-            {enabledApps.map((app, index) => (
-              <button
-                key={index}
+            {enabledApps.map((app) => (
+              <button type="button"
+                key={app.name}
                 className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors"
               >
                 <div className="flex items-center gap-3">
@@ -87,7 +87,7 @@ export function AppsPanel({ onBack }: SettingsPanelProps) {
             <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary">
               ChatGPT can access information from connected apps. Your permissions are always
               respected.{" "}
-              <button className="text-foundation-accent-blue hover:underline">Learn more</button>
+              <button type="button" className="text-foundation-accent-blue hover:underline">Learn more</button>
             </p>
           </div>
         </div>
@@ -97,7 +97,7 @@ export function AppsPanel({ onBack }: SettingsPanelProps) {
           <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
             All apps
           </h3>
-          <button className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors">
+          <button type="button" className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors">
             <div className="flex items-center gap-3">
               <div className="size-5 rounded bg-foundation-bg-dark-3 flex items-center justify-center">
                 <svg

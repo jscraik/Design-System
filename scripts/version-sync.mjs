@@ -22,7 +22,14 @@ const CONFIG = {
       'packages/cloudflare-template'
     ],
     swift: [
-      'packages/ui-swift'
+      'swift/ChatUIFoundation',
+      'swift/ChatUIComponents',
+      'swift/ChatUIThemes',
+      'swift/ChatUIShellChatGPT',
+      'swift/ChatUISystemIntegration',
+      'swift/ChatUIMCP',
+      'swift/ui-swift',
+      'apps/macos/ChatUIApp'
     ]
   }
 };
@@ -41,7 +48,7 @@ class VersionSynchronizer {
       const packageJson = JSON.parse(readFileSync('package.json', 'utf8'));
       return packageJson.version || '0.1.0';
     } catch (error) {
-      console.warn('Warning: Could not read root package.json, using default version 0.1.0');
+      console.warn('Warning: Could not read root package.json, using default version 0.1.0', error);
       return '0.1.0';
     }
   }
@@ -54,6 +61,7 @@ class VersionSynchronizer {
       execSync('which agvtool', { stdio: 'pipe' });
       return true;
     } catch (error) {
+      console.warn('Warning: agvtool check failed', error);
       return false;
     }
   }
@@ -149,7 +157,10 @@ class VersionSynchronizer {
         console.log(`  ✅ Updated ${packagePath} to v${this.rootVersion} (agvtool)`);
         return true;
       } catch (error) {
-        console.warn(`  ⚠️  agvtool failed for ${packagePath}, falling back to Package.swift comment`);
+        console.warn(
+          `  ⚠️  agvtool failed for ${packagePath}, falling back to Package.swift comment`,
+          error,
+        );
       }
     }
 

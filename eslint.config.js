@@ -4,6 +4,7 @@ import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import importPlugin from "eslint-plugin-import";
 import jsxA11y from "eslint-plugin-jsx-a11y";
+
 import noDarkOnlyTokensRule from "./packages/ui/eslint-rules-no-dark-only-tokens.js";
 
 export default [
@@ -82,7 +83,67 @@ export default [
         process: "readonly",
         URL: "readonly",
         module: "readonly",
+        require: "readonly",
+        __dirname: "readonly",
       },
+    },
+    rules: {
+      "no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
+  {
+    files: ["**/*.{test,spec}.{js,jsx,ts,tsx,mjs,cjs}"],
+    languageOptions: {
+      globals: {
+        describe: "readonly",
+        it: "readonly",
+        test: "readonly",
+        expect: "readonly",
+        beforeAll: "readonly",
+        afterAll: "readonly",
+        beforeEach: "readonly",
+        afterEach: "readonly",
+        vi: "readonly",
+        jest: "readonly",
+        console: "readonly",
+        process: "readonly",
+        require: "readonly",
+        __dirname: "readonly",
+      },
+    },
+    rules: {
+      "no-case-declarations": "off",
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
+  {
+    files: ["packages/widgets/src/shared/widget-registry.ts"],
+    languageOptions: {
+      globals: {
+        require: "readonly",
+      },
+    },
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
+  {
+    files: ["packages/tokens/tests/token-validation.test.ts"],
+    languageOptions: {
+      globals: {
+        console: "readonly",
+        process: "readonly",
+        require: "readonly",
+        __dirname: "readonly",
+      },
+    },
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+      "no-case-declarations": "off",
     },
   },
 ];

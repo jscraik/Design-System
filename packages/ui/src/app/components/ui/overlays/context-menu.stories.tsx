@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "@storybook/test";
 
 import {
   ContextMenu,
@@ -13,6 +14,7 @@ import {
 const meta: Meta<typeof ContextMenu> = {
   title: "UI/ContextMenu",
   component: ContextMenu,
+  tags: ["autodocs"],
   parameters: { layout: "centered" },
 };
 
@@ -22,7 +24,7 @@ type Story = StoryObj<typeof ContextMenu>;
 
 export const Default: Story = {
   render: () => (
-    <ContextMenu open onOpenChange={() => {}}>
+    <ContextMenu open onOpenChange={fn()}>
       <ContextMenuTrigger className="flex h-24 w-56 items-center justify-center rounded-md border text-sm">
         Right click area
       </ContextMenuTrigger>

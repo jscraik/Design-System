@@ -10,17 +10,12 @@
  */
 
 import { expect, test } from "@playwright/test";
-import { injectAxe, checkA11y } from "axe-playwright";
 
 // Import test utilities
 import {
   pressKey,
   getFocusedElement,
-  testFocusTrap,
-  testFocusRestoration,
   runAxeScan,
-  checkAriaAttributes,
-  testKeyboardShortcut,
 } from "../../../packages/ui/src/tests/utils/keyboard-utils";
 
 test.describe("ModalDialog keyboard navigation", () => {
@@ -46,8 +41,7 @@ test.describe("ModalDialog keyboard navigation", () => {
     const modal = page.locator('[role="dialog"]');
 
     // Get initial focused element
-    const initialFocused = await getFocusedElement(page);
-    const initialId = await initialFocused.evaluate((el) => el?.id);
+    await getFocusedElement(page);
 
     // Press Tab multiple times - should cycle within modal
     for (let i = 0; i < 5; i++) {
@@ -153,8 +147,6 @@ test.describe("ModalDialog keyboard navigation", () => {
 
   test("passes Axe accessibility scan", async ({ page }) => {
     await page.click('button:has-text("Open Modal")');
-    const modal = page.locator('[role="dialog"]');
-
     // Run Axe scan on modal
     await runAxeScan(page, '[role="dialog"]');
   });
@@ -211,8 +203,6 @@ test.describe("SettingsModal keyboard navigation", () => {
 
     // Find a toggle/switch
     const toggle = page.locator('[role="switch"]').first();
-    const toggleId = await toggle.evaluate((el) => el.id);
-
     // Focus the toggle (Tab to it or click to focus)
     await toggle.focus();
 
@@ -248,8 +238,6 @@ test.describe("SettingsModal keyboard navigation", () => {
 
   test("passes Axe accessibility scan", async ({ page }) => {
     await page.click('[aria-label="Open settings"]');
-    const modal = page.locator('[role="dialog"]');
-
     // Run Axe scan on settings modal
     await runAxeScan(page, '[role="dialog"]');
   });
@@ -304,8 +292,6 @@ test.describe("IconPickerModal keyboard navigation", () => {
 
   test("passes Axe accessibility scan", async ({ page }) => {
     await page.click('button:has-text("Choose Icon")');
-    const modal = page.locator('[role="dialog"]');
-
     // Run Axe scan
     await runAxeScan(page, '[role="dialog"]');
   });
@@ -346,9 +332,7 @@ test.describe("DiscoverySettingsModal keyboard navigation", () => {
 
       const initialValue = await slider.inputValue();
       await pressKey(page, "ArrowRight");
-      const afterRight = await slider.inputValue();
       await pressKey(page, "ArrowLeft");
-      const afterLeft = await slider.inputValue();
 
       // Values should change (direction depends on implementation)
       expect(initialValue).toBeDefined();
@@ -376,8 +360,6 @@ test.describe("DiscoverySettingsModal keyboard navigation", () => {
 
   test("passes Axe accessibility scan", async ({ page }) => {
     await page.click('button:has-text("Discovery Settings")');
-    const modal = page.locator('[role="dialog"]');
-
     // Run Axe scan
     await runAxeScan(page, '[role="dialog"]');
   });

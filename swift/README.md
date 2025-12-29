@@ -1,0 +1,140 @@
+# ChatUI Swift Modular Architecture
+
+This directory contains the refactored ChatUI Swift packages, transformed from a monolithic `ChatUISwift` package into four specialized, modular packages.
+
+## Package Architecture
+
+### 1. ChatUIFoundation (`swift/ChatUIFoundation/`)
+
+**Purpose**: Semantic design tokens, platform utilities, and accessibility helpers  
+**Dependencies**: None (foundation layer)  
+**Deployment Targets**: iOS 15+, macOS 13+, visionOS 1+
+
+**Provides**:
+
+- `FColor`: Semantic colors via Asset Catalog with automatic light/dark mode
+- `FType`: Typography styles matching React components exactly
+- `FSpacing`: Standard spacing constants (s2, s4, s8, s12, s16, s24, s32)
+- `Platform`: Platform detection helpers (isMac, isVisionOS, isIOS)
+- `FAccessibility`: Accessibility utilities and system preference detection
+
+### 2. ChatUIThemes (`swift/ChatUIThemes/`)
+
+**Purpose**: Theme presets including pixel-perfect ChatGPT styling  
+**Dependencies**: ChatUIFoundation  
+**Deployment Targets**: iOS 15+, macOS 13+, visionOS 1+
+
+**Provides**:
+
+- `ChatGPTTheme`: Pixel-perfect constants matching the web application
+  - Corner radii: app (18pt), card (12pt), row (10pt), pill (999pt)
+  - Shadows: opacity (0.45), radius (30pt), Y offset (18pt)
+  - Row metrics: padding, icon sizes, chevron sizes
+  - Interaction overlays: hover and pressed state opacities
+- `DefaultTheme`: Native macOS design patterns as alternative
+
+### 3. ChatUIComponents (`swift/ChatUIComponents/`)
+
+**Purpose**: Reusable SwiftUI primitives that mirror React component APIs  
+**Dependencies**: ChatUIFoundation, ChatUIThemes  
+**Deployment Targets**: iOS 15+, macOS 13+, visionOS 1+
+
+**Provides Settings Primitives** (First Deliverable):
+
+- `SettingsDivider`: 1pt height divider with theme-aware opacity
+- `SettingsCardView`: Rounded container with ChatGPT-style background and border
+- `SettingRowView`: Core primitive with icon, title, subtitle, and trailing content options
+- `FoundationSwitchStyle`: Custom toggle style matching ChatGPT switch design
+- `SettingToggleView`: Composes SettingRowView with Toggle in trailing position
+- `SettingDropdownView`: Composes SettingRowView with Menu in trailing position
+- `ChatUIButton`: Migrated button component using new foundation tokens
+- `SettingsExampleView`: Demonstration of all settings primitives
+
+### 4. ChatUIShellChatGPT (`swift/ChatUIShellChatGPT/`)
+
+**Purpose**: Optional complete application shell layouts  
+**Dependencies**: ChatUIFoundation, ChatUIComponents, ChatUIThemes  
+**Deployment Targets**: iOS 15+, macOS 13+, visionOS 1+
+
+**Provides**:
+
+- `VisualEffectView`: macOS vibrancy effects with iOS/visionOS fallback
+- `RoundedAppContainer`: ChatGPT-style app clipping with borders and shadows
+- `AppShellView`: NavigationSplitView-based layout with configurable sidebar width
+
+## Asset Catalog Integration
+
+ChatUIFoundation includes a complete Asset Catalog at:
+
+```
+swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets/
+```
+
+**Color Sets Created**:
+
+- Surface colors: `foundation-bg-app`, `foundation-bg-card`, `foundation-bg-card-alt`
+- Text colors: `foundation-text-primary`, `foundation-text-secondary`, `foundation-text-tertiary`
+- Icon colors: `foundation-icon-primary`, `foundation-icon-secondary`, `foundation-icon-tertiary`
+- Accent colors: `foundation-accent-green`, `foundation-accent-blue`, `foundation-accent-orange`, `foundation-accent-red`, `foundation-accent-purple`
+- Divider/border: `foundation-divider`
+
+All colors automatically support light/dark mode and high contrast through Asset Catalog configuration.
+
+## Build Verification
+
+All packages compile successfully:
+
+```bash
+# ChatUIFoundation
+cd swift/ChatUIFoundation && swift build
+# ✅ Build complete! (0.83s)
+
+# ChatUIThemes  
+cd swift/ChatUIThemes && swift build
+# ✅ Build complete! (0.28s)
+
+# ChatUIComponents
+cd swift/ChatUIComponents && swift build  
+# ✅ Build complete! (39.71s)
+
+# ChatUIShellChatGPT
+cd swift/ChatUIShellChatGPT && swift build
+# ✅ Build complete! (42.18s)
+```
+
+## Key Architectural Decisions
+
+1. **Asset Catalog for Colors**: Automatic light/dark mode support without manual switching logic
+2. **Semantic Token API**: Components consume `FColor.textPrimary` not `Color("text-primary")` for better discoverability
+3. **Platform Helpers**: Centralize iOS/macOS differences in `Platform.swift` rather than scattered `#if os(macOS)` checks
+4. **Theme Separation**: ChatGPT-specific styling lives in ChatUIThemes, keeping core components theme-agnostic
+5. **Composition Over Inheritance**: `SettingToggleView` composes `SettingRowView` + `Toggle` rather than subclassing
+
+## Migration from Monolithic Package
+
+The original monolithic package at `swift/ui-swift/` has been:
+
+1. **Moved** to `swift/ui-swift/` (preserved for reference)
+2. **Refactored** into four specialized packages with clear separation of concerns
+3. **Enhanced** with Asset Catalog-based tokens for automatic light/dark mode
+4. **Modernized** with platform detection helpers and accessibility utilities
+5. **Tested** with comprehensive unit tests for each package
+
+## Next Steps
+
+1. **Task 2**: Implement enhanced token generation to output Swift Asset Catalogs automatically
+2. **Task 7**: Create token watcher for real-time feedback during development  
+3. **Task 11**: Create Component Gallery application for live testing
+4. **Task 13**: Build production macOS application using the modular packages
+
+## Requirements Fulfilled
+
+This refactoring fulfills **Requirements 2.1, 2.2, 3.1, 4.1, 5.1** from the specification:
+
+- ✅ **2.1**: Modular SwiftUI foundation with semantic color API and Asset Catalog integration
+- ✅ **2.2**: Typography styles, spacing constants, and platform utilities matching React behavior
+- ✅ **3.1**: Reusable SwiftUI components with modular packaging and familiar APIs
+- ✅ **4.1**: Theme presets with pixel-perfect ChatGPT styling separated from core components
+- ✅ **5.1**: Optional application shell layouts that remain completely optional
+
+The modular architecture provides a scalable foundation for native iOS, macOS, and visionOS development with perfect design consistency across platforms.

@@ -11,7 +11,7 @@ import { CheckForUpdatesPanel } from "./CheckForUpdatesPanel";
  * ```tsx
  * import { CheckForUpdatesPanel } from "@chatui/ui";
  *
- * <CheckForUpdatesPanel onBack={() => console.log("back")} />
+ * <CheckForUpdatesPanel onBack={fn()} />
  * ```
  */
 const meta: Meta<typeof CheckForUpdatesPanel> = {

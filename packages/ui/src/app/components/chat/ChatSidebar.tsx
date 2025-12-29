@@ -40,6 +40,18 @@ export interface ChatSidebarUser {
   planLabel?: string;
 }
 
+export type ChatSidebarAction =
+  | "new-chat"
+  | "project-options"
+  | "search-chats"
+  | "pulse"
+  | "images"
+  | "apps"
+  | "archived-chats"
+  | "codex"
+  | "memory-option"
+  | "logout";
+
 interface ChatSidebarProps {
   isOpen: boolean;
   onToggle?: () => void;
@@ -52,6 +64,7 @@ interface ChatSidebarProps {
   categoryColors?: Record<string, string>;
   categoryIconColors?: Record<string, string>;
   user?: ChatSidebarUser;
+  onAction?: (action: ChatSidebarAction, payload?: unknown) => void;
 }
 
 const projectIconMap: Record<string, ReactNode> = {
@@ -184,7 +197,7 @@ function ProjectSettingsModal({
             <h3 className="text-[13px] text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mb-3 font-normal leading-[18px] tracking-[-0.3px]">
               Memory
             </h3>
-            <button
+            <button type="button"
               onClick={() => onSelectMemoryOption("default")}
               className={`w-full text-left p-4 rounded-xl mb-3 border-2 transition-all ${
                 memoryOption === "default"
@@ -201,7 +214,7 @@ function ProjectSettingsModal({
                 Project can access memories from outside chats, and vice versa.
               </p>
             </button>
-            <button
+            <button type="button"
               onClick={() => onSelectMemoryOption("project-only")}
               className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
                 memoryOption === "project-only"
@@ -222,13 +235,13 @@ function ProjectSettingsModal({
           </div>
         </div>
         <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-foundation-bg-light-3 dark:border-foundation-bg-dark-3">
-          <button
+          <button type="button"
             onClick={onClose}
             className="px-4 py-2 text-[14px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:text-foundation-text-light-primary dark:hover:text-white hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 rounded-lg transition-colors font-normal leading-[20px] tracking-[-0.3px]"
           >
             Cancel
           </button>
-          <button
+          <button type="button"
             onClick={onDone}
             className="px-4 py-2 text-[14px] bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary hover:bg-foundation-bg-light-1/90 dark:hover:bg-foundation-bg-dark-2 rounded-lg transition-colors font-semibold leading-[20px] tracking-[-0.3px]"
           >
@@ -252,6 +265,7 @@ export function ChatSidebar({
   categoryColors,
   categoryIconColors,
   user,
+  onAction,
 }: ChatSidebarProps) {
   const resolvedProjects = useMemo(() => projects ?? [], [projects]);
   const resolvedChatHistory = chatHistory ?? [];
@@ -315,7 +329,7 @@ export function ChatSidebar({
 
   const handleNewChat = () => {
     _setSelectedAction("chatgpt");
-    console.log("Starting new chat");
+    onAction?.("new-chat");
     onToggle?.();
   };
 
@@ -391,7 +405,7 @@ export function ChatSidebar({
         className="p-1.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-md transition-colors"
         onClick={(e) => {
           e.stopPropagation();
-          console.log("Project options");
+          onAction?.("project-options", projectId);
         }}
       >
         <IconDotsHorizontal className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary" />
@@ -419,7 +433,7 @@ export function ChatSidebar({
               <IconCloseBold className="size-4" />
             </div>
           )}
-          <button
+          <button type="button"
             onClick={() => setIsCollapsed(!isCollapsed)}
             type="button"
             aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
@@ -450,7 +464,7 @@ export function ChatSidebar({
               active={_selectedAction === "search"}
               onClick={() => {
                 _setSelectedAction("search");
-                console.log("Search chats");
+                onAction?.("search-chats");
               }}
             />
             <RailButton
@@ -459,7 +473,7 @@ export function ChatSidebar({
               active={_selectedAction === "pulse"}
               onClick={() => {
                 _setSelectedAction("pulse");
-                console.log("Pulse");
+                onAction?.("pulse");
               }}
             />
             <RailButton
@@ -468,7 +482,7 @@ export function ChatSidebar({
               active={_selectedAction === "images"}
               onClick={() => {
                 _setSelectedAction("images");
-                console.log("Images");
+                onAction?.("images");
               }}
             />
             <RailButton
@@ -477,7 +491,7 @@ export function ChatSidebar({
               active={_selectedAction === "apps"}
               onClick={() => {
                 _setSelectedAction("apps");
-                console.log("Apps");
+                onAction?.("apps");
               }}
             />
             <RailButton
@@ -486,7 +500,7 @@ export function ChatSidebar({
               active={_selectedAction === "archived"}
               onClick={() => {
                 _setSelectedAction("archived");
-                console.log("Archived chats");
+                onAction?.("archived-chats");
               }}
             />
             <RailButton
@@ -495,7 +509,7 @@ export function ChatSidebar({
               active={_selectedAction === "codex"}
               onClick={() => {
                 _setSelectedAction("codex");
-                console.log("Codex");
+                onAction?.("codex");
               }}
             />
 
@@ -549,6 +563,10 @@ export function ChatSidebar({
                 icon={<IconSearch className="size-4" />}
                 label={isCollapsed ? "" : "Search chats"}
                 className={isCollapsed ? "justify-center" : ""}
+                onClick={() => {
+                  _setSelectedAction("search");
+                  onAction?.("search-chats");
+                }}
               />
             </div>
 
@@ -561,6 +579,10 @@ export function ChatSidebar({
                 icon={<IconRadio className="size-4" />}
                 label={isCollapsed ? "" : "Pulse"}
                 className={isCollapsed ? "justify-center" : ""}
+                onClick={() => {
+                  _setSelectedAction("pulse");
+                  onAction?.("pulse");
+                }}
               />
             </div>
 
@@ -576,25 +598,50 @@ export function ChatSidebar({
                   )
                 }
                 className={isCollapsed ? "justify-center" : ""}
+                onClick={() => {
+                  _setSelectedAction("images");
+                  onAction?.("images");
+                }}
               />
             </div>
 
             {!isCollapsed && (
               <div className="px-2 pb-1">
-                <ListItem icon={<IconArchive className="size-4" />} label="Archived chats" />
+                <ListItem
+                  icon={<IconArchive className="size-4" />}
+                  label="Archived chats"
+                  onClick={() => {
+                    _setSelectedAction("archived");
+                    onAction?.("archived-chats");
+                  }}
+                />
               </div>
             )}
 
             <div className="flex-1 overflow-y-auto overflow-x-hidden">
               {!isCollapsed && (
                 <div className="px-2 pb-1">
-                  <ListItem icon={<IconGrid3x3 className="size-4" />} label="Apps" />
+                  <ListItem
+                    icon={<IconGrid3x3 className="size-4" />}
+                    label="Apps"
+                    onClick={() => {
+                      _setSelectedAction("apps");
+                      onAction?.("apps");
+                    }}
+                  />
                 </div>
               )}
 
               {!isCollapsed && (
                 <div className="px-2 pb-1">
-                  <ListItem icon={<IconCode className="size-4" />} label="Codex" />
+                  <ListItem
+                    icon={<IconCode className="size-4" />}
+                    label="Codex"
+                    onClick={() => {
+                      _setSelectedAction("codex");
+                      onAction?.("codex");
+                    }}
+                  />
                 </div>
               )}
 
@@ -668,7 +715,7 @@ export function ChatSidebar({
                             {resolvedCategories.map((category) => {
                               const isSelected = selectedCategories.includes(category);
                               return (
-                                <button
+                                <button type="button"
                                   key={category}
                                   onClick={() => toggleCategory(category)}
                                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[14px] border transition-all whitespace-nowrap flex-shrink-0 font-normal leading-[20px] tracking-[-0.3px] ${
@@ -701,14 +748,14 @@ export function ChatSidebar({
                           </div>
                         </div>
                       ) : null}
-                      <button
+                      <button type="button"
                         onClick={handleCreateProject}
                         disabled={!projectName.trim()}
                         className="w-full bg-foundation-accent-green hover:bg-foundation-accent-green/80 disabled:bg-foundation-bg-light-3 dark:disabled:bg-foundation-bg-dark-3 disabled:text-foundation-text-light-tertiary dark:disabled:text-white/30 disabled:cursor-not-allowed text-white py-3 rounded-lg transition-all text-[14px] font-normal leading-[20px] tracking-[-0.3px]"
                       >
                         Create project
                       </button>
-                      <button
+                      <button type="button"
                         onClick={() => setShowMoreOptions(true)}
                         className="w-full bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 hover:bg-foundation-bg-light-3/80 dark:hover:bg-foundation-bg-dark-3/80 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary py-3 rounded-lg mt-2 transition-colors text-[14px] font-normal leading-[20px] tracking-[-0.3px]"
                       >
@@ -792,7 +839,7 @@ export function ChatSidebar({
         {sidebarFooter && !isCollapsed ? <div className="px-2 pb-2">{sidebarFooter}</div> : null}
 
         <div className="p-2 border-t border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 relative">
-          <button
+          <button type="button"
             onClick={() => setShowUserMenu(!showUserMenu)}
             aria-haspopup="menu"
             aria-expanded={showUserMenu}
@@ -823,7 +870,7 @@ export function ChatSidebar({
                   <span className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary font-normal">{resolvedUser.planLabel}</span>
                 </div>
               </div>
-              <button className="w-full text-left px-3 py-2.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors flex items-center gap-2">
+              <button type="button" className="w-full text-left px-3 py-2.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors flex items-center gap-2">
                 <svg
                   className="size-4 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary"
                   viewBox="0 0 24 24"
@@ -838,7 +885,7 @@ export function ChatSidebar({
                   {resolvedUser.accountLabel}
                 </span>
               </button>
-              <button
+              <button type="button"
                 onClick={() => {
                   setShowUserMenu(false);
                   setShowSettingsModal(true);
@@ -851,7 +898,10 @@ export function ChatSidebar({
                 </span>
               </button>
               <div className="my-1 border-t border-foundation-bg-light-3 dark:border-foundation-bg-dark-3" />
-              <button className="w-full text-left px-3 py-2.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors">
+              <button type="button"
+                onClick={() => onAction?.("logout")}
+                className="w-full text-left px-3 py-2.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors"
+              >
                 <span className="text-[14px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary font-normal leading-[20px] tracking-[-0.3px]">
                   Log Out
                 </span>
@@ -894,7 +944,7 @@ export function ChatSidebar({
             onSelectMemoryOption={setMemoryOption}
             onClose={() => setShowMoreOptions(false)}
             onDone={() => {
-              console.log("Memory option:", memoryOption);
+              onAction?.("memory-option", memoryOption);
               setShowMoreOptions(false);
             }}
           />

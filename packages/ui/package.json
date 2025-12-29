@@ -53,7 +53,7 @@
     "test:components": "test-storybook",
     "test:a11y": "test-storybook --coverage",
     "test:visual": "chromatic --exit-zero-on-changes",
-    "analyze": "echo 'Bundle analysis available in Storybook addon-webpack-stats-v2'",
+    "analyze": "echo 'Bundle analysis: run `pnpm bundle:analyze` from the repo root'",
     "clean": "rm -rf dist"
   },
   "publishConfig": {

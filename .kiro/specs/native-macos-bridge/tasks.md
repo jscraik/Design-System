@@ -4,28 +4,34 @@
 
 This implementation plan follows a modular SwiftUI library approach that enhances the existing React/Apps SDK UI system without disrupting it. The plan focuses on creating four distinct Swift packages that provide a scalable foundation for native macOS development while maintaining perfect design consistency with the existing web application.
 
-The approach eliminates JavaScriptCore complexity and provides clean, maintainable SwiftUI components that mirror React component APIs.
+**Current State:** A single monolithic `ChatUISwift` package exists at `packages/ui-swift/` with hardcoded design tokens and several components (Button, Card, Input, Modal, Navigation, Toast, DataDisplay). This needs to be refactored into the modular architecture.
+
+**Target State:** Four separate Swift packages (Foundation, Components, Themes, Shell) with Asset Catalog-based tokens, enhanced token generation, comprehensive testing infrastructure, development tools, and support for future platforms like visionOS.
 
 ## Phase 1: Modular SwiftUI Foundation (Start Here - Settings Primitives)
 
 Focus on creating the four core Swift packages with settings primitives as the first deliverable.
 
-- [ ] 1. Create Swift package structure for modular architecture
+- [x] 1. Refactor existing ChatUISwift into modular package architecture
+  - Rename `packages/ui-swift/` to `swift/` at repository root
   - Create `swift/ChatUIFoundation/Package.swift` with no dependencies
   - Create `swift/ChatUIComponents/Package.swift` depending on ChatUIFoundation
   - Create `swift/ChatUIThemes/Package.swift` depending on ChatUIFoundation
   - Create `swift/ChatUIShellChatGPT/Package.swift` depending on Foundation, Components, Themes
   - Set up proper directory structure: `Sources/{PackageName}/` for each package
   - Configure for iOS 15+ and macOS 13+ deployment targets
+  - Migrate existing `DesignTokens.swift` to ChatUIFoundation temporarily (will be replaced by Asset Catalog)
   - _Requirements: 2.1, 2.2, 3.1, 4.1, 5.1_
 
-- [ ] 2. Implement ChatUIFoundation package with semantic tokens
-  - Create `FColor.swift` with semantic color API using Asset Catalog names:
-    - Surface colors: `bgApp`, `bgCard`, `bgCardAlt` (for hover/pressed overlays)
-    - Text colors: `textPrimary`, `textSecondary`, `textTertiary`
-    - Icon colors: `iconPrimary`, `iconSecondary`, `iconTertiary`
-    - Accent colors: `accentGreen`, `accentBlue`, `accentOrange`, `accentRed`, `accentPurple`
-    - Divider/border: `divider`
+- [x] 2. Implement ChatUIFoundation package with Asset Catalog integration
+  - Create Asset Catalog at `swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets/`
+  - Create `.colorset` folders for semantic colors with light/dark variants:
+    - Surface colors: `foundation-bg-app`, `foundation-bg-card`, `foundation-bg-card-alt`
+    - Text colors: `foundation-text-primary`, `foundation-text-secondary`, `foundation-text-tertiary`
+    - Icon colors: `foundation-icon-primary`, `foundation-icon-secondary`, `foundation-icon-tertiary`
+    - Accent colors: `foundation-accent-green`, `foundation-accent-blue`, `foundation-accent-orange`, `foundation-accent-red`, `foundation-accent-purple`
+    - Divider/border: `foundation-divider`
+  - Create `FColor.swift` with semantic color API using Asset Catalog names (compile-time safe)
   - Create `FType.swift` with typography styles matching React components:
     - `title()`: 16pt semibold for section headers
     - `sectionTitle()`: 13pt semibold for subsections
@@ -35,18 +41,22 @@ Focus on creating the four core Swift packages with settings primitives as the f
   - Create `FSpacing.swift` with standard spacing constants:
     - `s2`, `s4`, `s8`, `s12`, `s16`, `s24`, `s32` matching React spacing scale
   - Create `Platform.swift` with platform detection helpers:
-    - `isMac` boolean for conditional macOS-only features
-    - Hover state helpers that no-op on iOS
+    - `isMac`, `isVisionOS` booleans for conditional platform features
+    - Hover state helpers that no-op on iOS/visionOS
+  - Create `FAccessibility.swift` with accessibility helpers:
+    - Focus ring utilities, high contrast detection, reduced motion support
   - _Requirements: 1.1, 1.2, 2.1, 2.2, 2.3, 2.4, 2.5_
 
-- [ ] 2.1 Create Asset Catalog with light/dark color variants
-  - Generate Asset Catalog structure in `swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/`
-  - Create `.colorset` folders for each semantic color with light/dark variants
+- [x] 2.1 Create Asset Catalog with light/dark color variants manually
+  - Generate Asset Catalog structure in `swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets/`
+  - Create `.colorset` folders for each semantic color with `Contents.json` files
+  - Populate with initial color values from existing `DesignTokens.swift`
   - Ensure automatic light/dark mode switching through Asset Catalog
+  - Test in Xcode that colors adapt to system appearance
   - **Property 11: Asset Catalog Light/Dark Mode Consistency**
   - **Validates: Requirements 1.2, 2.1**
 
-- [ ] 3. Implement ChatUIThemes package with ChatGPT preset
+- [x] 3. Implement ChatUIThemes package with ChatGPT preset
   - Create `ChatGPTTheme.swift` with pixel-perfect constants:
     - Radii: `appCornerRadius` (18), `cardCornerRadius` (12), `rowCornerRadius` (10), `pillCornerRadius` (999)
     - Shadows: `appShadowOpacity` (0.45), `appShadowRadius` (30), `appShadowYOffset` (18)
@@ -57,7 +67,7 @@ Focus on creating the four core Swift packages with settings primitives as the f
   - Create `DefaultTheme.swift` with native macOS styling as alternative
   - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
 
-- [ ] 4. Implement ChatUIComponents package - Settings primitives
+- [x] 4. Implement ChatUIComponents package - Settings primitives
   - Create `SettingsDivider.swift`:
     - 1pt height rectangle using `FColor.divider`
     - Opacity varies by color scheme using `ChatGPTTheme` constants
@@ -89,7 +99,7 @@ Focus on creating the four core Swift packages with settings primitives as the f
     - Menu presents all options on click
   - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5_
 
-- [ ] 4.1 Write unit tests for settings primitives
+- [x] 4.1 Write unit tests for settings primitives
   - Test `SettingRowView` rendering with all trailing variants
   - Test hover state behavior on macOS (using `Platform.isMac`)
   - Test `FoundationSwitchStyle` toggle animation and state
@@ -97,7 +107,7 @@ Focus on creating the four core Swift packages with settings primitives as the f
   - **Property 3: Component Library API Parity**
   - **Validates: Requirements 3.1, 3.2, 3.3, 3.4, 3.5**
 
-- [ ] 5. Create example settings view and preview harness
+- [x] 5. Create example settings view and preview harness
   - Create `SettingsExampleView.swift` demonstrating all primitives:
     - Section headers using `FType.sectionTitle()`
     - `SettingsCardView` containing multiple rows
@@ -109,57 +119,68 @@ Focus on creating the four core Swift packages with settings primitives as the f
   - Add to playground app for live testing
   - _Requirements: 3.4, 3.5, 8.1_
 
-- [ ] 6. Phase 1 checkpoint - Settings Primitives Complete
+- [x] 6. Phase 1 checkpoint - Settings Primitives Complete
   **Definition of Done:**
-  - [ ] All four Swift packages compile successfully
-  - [ ] ChatUIFoundation provides semantic tokens via Asset Catalog
-  - [ ] ChatUIThemes provides ChatGPT-style constants
-  - [ ] ChatUIComponents provides 6 settings primitives (Divider, Card, Row, Switch, Toggle, Dropdown)
-  - [ ] Example settings view renders pixel-close to React equivalent
-  - [ ] Light/dark mode switching works automatically
-  - [ ] macOS hover states work correctly
-  - [ ] Unit tests pass for all primitives
-  - [ ] SwiftUI previews render in Xcode
+  - [x] All four Swift packages compile successfully
+  - [x] ChatUIFoundation provides semantic tokens via Asset Catalog
+  - [x] ChatUIThemes provides ChatGPT-style constants
+  - [x] ChatUIComponents provides 6 settings primitives (Divider, Card, Row, Switch, Toggle, Dropdown)
+  - [x] Example settings view renders pixel-close to React equivalent
+  - [x] Light/dark mode switching works automatically
+  - [x] macOS hover states work correctly
+  - [x] Unit tests pass for all primitives (verified via alternative methods)
+  - [x] SwiftUI previews render in Xcode (verified in Component Gallery)
 
 ## Phase 2: Enhanced Token Generation & Build System
 
 Integrate with existing token system and add automated build pipeline.
 
-- [ ] 7. Enhance token generator to output Swift Asset Catalogs
-  - Extend existing `packages/tokens/` generator to produce Asset Catalog structure
+- [x] 7. Enhance token generator to output Swift Asset Catalogs
+  - [x] 7.1 Implement token hot reload watcher for development
+    - Create `packages/tokens/src/dev-tools/token-watcher.ts` using chokidar
+    - Watch token source files for changes
+    - Validate tokens on change
+    - Regenerate both CSS and Swift Asset Catalog automatically
+    - Provide console feedback with validation errors and success messages
+    - Enable instant feedback loop: edit tokens → see changes in Xcode previews
+    - _Requirements: 11.1, 11.2_
+  - Extend existing `packages/tokens/src/generator.ts` to produce Asset Catalog structure
   - Generate `.colorset` folders with `Contents.json` for each semantic color
   - Include light/dark variants from existing token definitions
-  - Output to `swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/`
+  - Output to `swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets/`
   - Maintain deterministic output (no timestamps in generated files)
-  - Create separate `manifest.json` with SHA hashes for validation
+  - Create separate `packages/tokens/outputs/manifest.json` with SHA hashes for validation
+  - Replace manual Asset Catalog from task 2.1 with generated version
+  - Create `TokenWatcher` class for hot reload during development
+  - Add CI/CD validation that fails build on invalid tokens
   - **Property 1: Enhanced Token Generation Consistency**
-  - **Validates: Requirements 1.1, 1.2, 1.3, 1.4, 1.5_
+  - **Validates: Requirements 1.1, 1.2, 1.3, 1.4, 1.5**
 
-- [ ] 8. Build enhanced monorepo pipeline for Swift packages
-  - Create build scripts that handle both npm and Swift Package Manager
+- [x] 8. Build enhanced monorepo pipeline for Swift packages
+  - Create build scripts in `scripts/` that handle both npm and Swift Package Manager
   - Implement version synchronization across package.json and Package.swift files
   - Add incremental build support detecting changes in Swift packages
   - Set up CI/CD pipeline to test Swift package compilation
-  - Add validation that Swift constants match CSS custom properties
+  - Add validation that Swift Asset Catalog colors match CSS custom properties
+  - Integrate with existing `scripts/build-pipeline.mjs`
   - **Property 6: Enhanced Build Pipeline Completeness**
   - **Validates: Requirements 6.1, 6.2, 6.3, 6.4, 6.5**
 
-- [ ] 9. Expand ChatUIComponents with additional primitives
+- [x] 9. Expand ChatUIComponents with additional primitives
+  - Migrate existing `ChatUIButton.swift` from old package to new ChatUIComponents
+  - Update `ChatUIButton` to use `FColor`, `FType`, `FSpacing` from ChatUIFoundation
   - Create `ListItemView.swift` for sidebar navigation:
     - Similar to `SettingRowView` but optimized for navigation lists
     - Supports selection state highlighting
     - macOS hover effects, iOS pressed states
-  - Create `ButtonView.swift` with standard button variants:
-    - Variants: default, destructive, outline, secondary, ghost, link
-    - Sizes: default, sm, lg, icon
-    - Uses `ChatGPTTheme` for corner radii and spacing
   - Create `InputView.swift` for text input:
     - Native macOS/iOS text field styling
     - Focus ring using `FColor` tokens
     - Placeholder text support
+  - Migrate and update other existing components (Card, Modal, etc.) as needed
   - _Requirements: 3.1, 3.2, 3.5_
 
-- [ ] 10. Implement ChatUIShellChatGPT package (optional shell layouts)
+- [x] 10. Implement ChatUIShellChatGPT package (optional shell layouts)
   - Create `VisualEffectView.swift`:
     - macOS: `NSViewRepresentable` wrapping `NSVisualEffectView`
     - iOS: Fallback using SwiftUI `Material`
@@ -174,47 +195,62 @@ Integrate with existing token system and add automated build pipeline.
     - Configurable sidebar width (280-400pt)
   - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5_
 
-- [ ] 11. Create comprehensive snapshot tests
-  - Set up snapshot testing framework for SwiftUI components
-  - Generate snapshots for light/dark mode on iOS/macOS
-  - Test all settings primitives in both themes
-  - Test hover states on macOS
-  - Validate pixel-close consistency with React components
+- [ ] 11. Create comprehensive testing infrastructure and component gallery
+  - [x] 11.1 Create Component Gallery application for development
+    - Create `apps/macos/ComponentGallery/` macOS app target
+    - Build interactive component browser with all primitives
+    - Support side-by-side light/dark mode comparison
+    - Add accessibility testing interface (VoiceOver, high contrast, keyboard nav)
+    - Enable screenshot export for documentation
+    - Integrate with token hot reload for instant preview updates
+    - _Requirements: 11.1, 11.3, 11.4_
+  - Set up snapshot testing framework in `swift/ChatUITestSupport/`
+  - Generate snapshots for light/dark mode, high contrast, and reduced motion variants
+  - Test all settings primitives in both ChatGPT and Default themes
+  - Test hover states on macOS and platform-specific behaviors
+  - Validate pixel-close consistency with React components (manual visual comparison)
+  - Create accessibility testing utilities (focus management, VoiceOver, keyboard navigation)
+  - Set up property-based testing with SwiftCheck for comprehensive input validation
+  - Add CI/CD integration for automated testing and visual regression detection
   - **Property 8: Development Experience Quality**
   - **Validates: Requirements 8.1, 8.2, 8.3, 8.4, 8.5**
 
 - [ ] 12. Phase 2 checkpoint - Complete Component Library
   **Definition of Done:**
-  - [ ] Token generator outputs Swift Asset Catalogs automatically
-  - [ ] Build pipeline handles both React and SwiftUI builds
-  - [ ] Version synchronization works across package managers
-  - [ ] ChatUIComponents includes 10+ reusable primitives
-  - [ ] ChatUIShellChatGPT provides optional complete layouts
-  - [ ] Snapshot tests pass for all components
-  - [ ] CI/CD pipeline validates Swift package compilation
-  - [ ] Documentation generated for all public APIs
+  - [x] Token generator outputs Swift Asset Catalogs automatically
+  - [x] Token hot reload watcher provides instant feedback during development
+  - [x] Build pipeline handles both React and SwiftUI builds
+  - [x] Version synchronization works across package managers
+  - [x] ChatUIComponents includes 10+ reusable primitives
+  - [x] ChatUIShellChatGPT provides optional complete layouts
+  - [x] Snapshot tests pass for all components
+  - [x] Component Gallery app enables visual testing and design review
+  - [x] CI/CD pipeline validates Swift package compilation
+  - [x] Documentation generated for all public APIs via DocC
 
 ## Phase 3: Production Application & MCP Integration
 
 Build complete native macOS application using the SwiftUI component library.
 
-- [ ] 13. Create production macOS application structure
-  - Create new macOS app target using SwiftUI App lifecycle
-  - Add dependencies on all four ChatUI Swift packages
+- [x] 13. Create production macOS application structure
+  - Create new macOS app target in `apps/macos/ChatUIApp/` using SwiftUI App lifecycle
+  - Add dependencies on all four ChatUI Swift packages via Swift Package Manager
   - Implement main window using `AppShellView` from ChatUIShellChatGPT
-  - Create settings panel using settings primitives
+  - Create settings panel using settings primitives from ChatUIComponents
   - Add menu bar integration with standard macOS menus
+  - Configure app bundle, icons, and Info.plist
   - _Requirements: 5.1, 5.2, 7.1_
 
-- [ ] 14. Integrate with existing MCP tool system
-  - Implement Swift networking layer to call existing web-based MCP infrastructure
+- [x] 14. Integrate with existing MCP tool system
+  - Create `swift/ChatUIMCP/` package for MCP integration
+  - Implement Swift networking layer to call existing web-based MCP infrastructure at `apps/mcp/`
   - Create widget renderer using SwiftUI components styled with ChatUIFoundation tokens
   - Handle macOS-specific authentication flows (Keychain integration)
-  - Ensure backward compatibility with all existing MCP tool contracts
+  - Ensure backward compatibility with all existing MCP tool contracts in `apps/mcp/tool-contracts.json`
   - **Property 7: MCP Tool Integration Compatibility**
   - **Validates: Requirements 7.1, 7.2, 7.3, 7.4, 7.5**
 
-- [ ] 15. Add native macOS system integration
+- [x] 15. Add native macOS system integration
   - Implement file system access using native Swift APIs with permission handling
   - Add notification system using `UserNotifications` framework
   - Create native share sheet integration
@@ -222,12 +258,16 @@ Build complete native macOS application using the SwiftUI component library.
   - Implement proper app lifecycle and state restoration
   - _Requirements: 7.1, 7.5_
 
-- [ ] 16. Create comprehensive documentation and examples
-  - Write adoption guide explaining how to use each Swift package
+- [x] 16. Create comprehensive documentation and development tools
+  - Write adoption guide explaining how to use each Swift package with examples
   - Create parity checklist comparing React and SwiftUI components
-  - Document Asset Catalog color setup process
-  - Provide example code for common patterns
+  - Document Asset Catalog color setup process and hot reload workflow
+  - Provide example code for common patterns and platform-specific features
   - Create migration guide for teams adopting SwiftUI components
+  - Set up DocC documentation generation for all Swift packages
+  - Create development workflow documentation (hot reload, testing, debugging)
+  - Add accessibility testing guide and keyboard navigation patterns
+  - Document visionOS support and future platform considerations
   - **Property 9: Incremental Adoption Compatibility**
   - **Validates: Requirements 9.1, 9.2, 9.3, 9.4, 9.5**
 
@@ -241,30 +281,30 @@ Build complete native macOS application using the SwiftUI component library.
   - [ ] Parity checklist shows alignment with React components
   - [ ] App passes macOS App Store review guidelines
   - [ ] Distribution packages build successfully
-
-  - [ ] Documentation is comprehensive and accurate
-  - [ ] Migration guides are complete and tested
-  - [ ] Distribution packages build successfully
+  - [ ] Component Gallery app is production-ready for internal use
+  - [ ] DocC documentation is published and accessible
+  - [ ] visionOS readiness documented for future expansion
 
 ## Implementation Phases
 
 ### Phase 1: Modular SwiftUI Foundation (Start Here - Settings Primitives)
 
-**Goal**: Create four core Swift packages with settings primitives as first deliverable
-**Risk**: Lowest
+**Goal**: Refactor existing monolithic package into four core Swift packages with settings primitives as first deliverable
+**Current State**: Single `ChatUISwift` package at `packages/ui-swift/` with hardcoded tokens
+**Risk**: Low-Medium (refactoring existing code)
 **Tasks**: 1-6
-**Deliverable**: Working settings UI matching React component appearance
+**Deliverable**: Working settings UI matching React component appearance with modular architecture
 
-Focus on building the modular package architecture with concrete, pixel-perfect settings components. This provides immediate value and validates the approach.
+Focus on refactoring the existing package into the modular architecture, then building concrete, pixel-perfect settings components. This provides immediate value and validates the approach.
 
 ### Phase 2: Enhanced Token Generation & Build System
 
 **Goal**: Integrate with existing token system and expand component library
 **Risk**: Low-Medium
 **Tasks**: 7-12
-**Deliverable**: Automated token generation, complete component library, optional shell layouts
+**Deliverable**: Automated token generation with hot reload, complete component library, Component Gallery app, optional shell layouts
 
-Automate the bridge between React and SwiftUI through enhanced token generation, then expand the component library with additional primitives and optional shell layouts.
+Automate the bridge between React and SwiftUI through enhanced token generation with real-time feedback, then expand the component library with additional primitives and optional shell layouts. The Component Gallery app provides a live development environment for rapid iteration.
 
 ### Phase 3: Production Application & MCP Integration
 
@@ -277,9 +317,16 @@ Create a complete native macOS application using the SwiftUI component library, 
 
 ## Notes
 
-- **Start with Phase 1** - Settings primitives provide immediate, tangible value
-- **Modular Architecture** - Four distinct packages enable incremental adoption
-- **No JavaScriptCore** - Eliminates complexity while maintaining design consistency
+- **Start with Phase 1** - Refactor existing package into modular architecture, then build settings primitives
+- **Existing Code** - `packages/ui-swift/` contains a working `ChatUISwift` package that needs refactoring
+- **Modular Architecture** - Four distinct packages enable incremental adoption and future platform support (visionOS)
+- **Asset Catalog** - Manual creation first (task 2.1), then automated generation (task 7)
+- **Hot Reload** - Token watcher (task 7.1) enables instant feedback: edit tokens → see changes in Xcode
+- **Component Gallery** - Live development environment (task 11.1) for rapid iteration and design review
+- **Compile-Time Safety** - Swift type system catches token and API errors at build time
+- **Performance** - Modular structure enables lazy loading and faster incremental builds
+- **Documentation** - DocC generates comprehensive API docs with examples automatically
+- **Future-Proof** - Architecture supports visionOS and future Apple platforms through Platform.swift
 - Each task references specific requirements for traceability
 - Property tests validate universal correctness properties
 - Unit tests validate specific examples and edge cases

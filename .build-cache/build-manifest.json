@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "builds": {},
+  "lastBuild": {
+    "timestamp": "2025-12-29T09:11:12.618Z",
+    "duration": 64,
+    "results": [
+      {
+        "step": "version-sync",
+        "success": true,
+        "version": "0.0.0"
+      },
+      {
+        "step": "token-generation",
+        "success": true,
+        "skipped": true
+      }
+    ],
+    "success": true
+  }
+}

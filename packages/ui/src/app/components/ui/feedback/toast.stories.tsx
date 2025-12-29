@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useRef, useState } from "react";
 
 import { Button } from "../base/button";
 
@@ -161,6 +161,7 @@ export const AutoDismiss: Story = {
 
 export const ToastStack: Story = {
   render: () => {
+    const nextId = useRef(4);
     const [toasts, setToasts] = useState([
       { id: 1, variant: "success" as const, title: "Success", description: "First toast" },
       { id: 2, variant: "info" as const, title: "Info", description: "Second toast" },
@@ -178,7 +179,7 @@ export const ToastStack: Story = {
             setToasts((prev) => [
               ...prev,
               {
-                id: Date.now(),
+                id: nextId.current++,
                 variant: "default" as const,
                 title: "New Toast",
                 description: `Toast #${prev.length + 1}`,

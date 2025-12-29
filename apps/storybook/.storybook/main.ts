@@ -35,14 +35,13 @@ function removeModuleDirectives(): Plugin {
 
 const config: StorybookConfig = {
   stories: [
-    "../../../packages/ui/src/**/*.stories.@(js|jsx|ts|tsx)",
+    "../../../packages/ui/src/**/*.stories.@(js|jsx|ts|tsx|mdx)",
   ],
 
   addons: [
     // Essential addons (Storybook 10)
     "@storybook/addon-docs",
     "@storybook/addon-a11y",
-    "@storybook/addon-themes",
     "@storybook/addon-vitest",
   ],
 
@@ -91,7 +90,6 @@ const config: StorybookConfig = {
       include: [
         "@storybook/addon-docs",
         "@storybook/addon-a11y",
-        "@storybook/addon-themes",
       ],
       // Don't pre-bundle Radix UI modules
       exclude: [

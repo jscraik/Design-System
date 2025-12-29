@@ -10,18 +10,18 @@
  */
 
 import { test, expect } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 // Import deterministic test utilities
 import {
   setupTestEnvironment,
-  waitForFontsLoaded,
   waitForAnimations,
 } from "../../../../packages/ui/src/tests/utils/test-mocks";
 
 /**
  * Helper to set theme and wait for transition
  */
-async function setTheme(page: any, theme: "light" | "dark") {
+async function setTheme(page: Page, theme: "light" | "dark") {
   await page.emulateMedia({ colorScheme: theme });
   await page.waitForTimeout(100);
 }
@@ -29,15 +29,13 @@ async function setTheme(page: any, theme: "light" | "dark") {
 /**
  * Helper to capture screenshot with consistent naming
  */
-async function captureScreenshot(
-  page: any,
-  name: string,
-  options: {
-    theme?: "light" | "dark";
-    fullPage?: boolean;
-    clip?: { x: number; y: number; width: number; height: number };
-  } = {}
-) {
+type CaptureOptions = {
+  theme?: "light" | "dark";
+  fullPage?: boolean;
+  clip?: { x: number; y: number; width: number; height: number };
+};
+
+async function captureScreenshot(page: Page, name: string, options: CaptureOptions = {}) {
   const { theme = "light", ...rest } = options;
   await setTheme(page, theme);
 
@@ -158,8 +156,6 @@ test.describe("SettingsModal visual regression", () => {
 
     if ((await settingsTrigger.count()) > 0) {
       await settingsTrigger.click();
-      const modal = page.locator('[role="dialog"]').first();
-
       // Scroll to bottom to load all content
       await page.locator('[role="dialog"]').first().evaluate((el) => {
         el.scrollTop = el.scrollHeight;
@@ -413,8 +409,6 @@ test.describe("ChatSidebar visual regression", () => {
     if ((await firstItem.count()) > 0) {
       await firstItem.click();
       await page.waitForTimeout(100);
-
-      const sidebar = page.locator('[role="navigation"]');
 
       // Light theme
       await captureScreenshot(page, "sidebar-active-state");

@@ -33,6 +33,10 @@ export type IconButtonProps = IconButtonLabelProps & {
   className?: string;
   /** Button type */
   type?: "button" | "submit" | "reset";
+  /** Standard aria-label (preferred when wiring from JSX) */
+  "aria-label"?: string;
+  /** Standard aria-labelledby */
+  "aria-labelledby"?: string;
 };
 
 /**
@@ -52,6 +56,8 @@ export function IconButton({
   onClick,
   title,
   ariaLabel,
+  "aria-label": ariaLabelProp,
+  "aria-labelledby": ariaLabelledBy,
   size = "md",
   variant = "ghost",
   active = false,
@@ -60,11 +66,11 @@ export function IconButton({
   className,
   type = "button",
 }: IconButtonProps) {
-  const accessibleLabel = ariaLabel ?? title;
+  const accessibleLabel = ariaLabel ?? ariaLabelProp ?? title;
 
   if (!accessibleLabel && process.env.NODE_ENV !== "production") {
     // Enforce accessible names for icon-only buttons in dev builds.
-    // eslint-disable-next-line no-console
+     
     console.warn("IconButton requires a title or ariaLabel for accessibility.");
   }
 
@@ -94,7 +100,8 @@ export function IconButton({
       onClick={onClick}
       disabled={disabled}
       title={title}
-      aria-label={accessibleLabel}
+      aria-label={ariaLabelledBy ? undefined : accessibleLabel}
+      aria-labelledby={ariaLabelledBy}
       className={cn(
         "rounded-md transition-colors flex items-center justify-center font-foundation",
         sizes[size],

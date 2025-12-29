@@ -47,7 +47,7 @@ function App() {
                 href={href}
                 className="text-primary underline underline-offset-4"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 {children}
               </a>

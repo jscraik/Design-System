@@ -1,4 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "@storybook/test";
+
 
 import { IconCode, IconFolder, IconImage } from "../../../../icons";
 
@@ -47,7 +49,7 @@ export const WithCloseButton: Story = {
     icon: <IconCode />,
     label: "Active Context",
     variant: "blue",
-    onClose: () => console.log("Closed"),
+    onClose: fn(),
   },
 };
 
@@ -71,14 +73,14 @@ export const AllSizes: Story = {
         label="Small size"
         variant="green"
         size="sm"
-        onClose={() => {}}
+        onClose={fn()}
       />
       <ContextTag
         icon={<IconImage />}
         label="Medium size"
         variant="green"
         size="md"
-        onClose={() => {}}
+        onClose={fn()}
       />
     </div>
   ),

@@ -5,6 +5,7 @@ import { SpacingPage } from "./SpacingPage";
 const meta: Meta<typeof SpacingPage> = {
   title: "Pages/SpacingPage",
   component: SpacingPage,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },

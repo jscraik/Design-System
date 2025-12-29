@@ -1,8 +1,9 @@
 {
   "version": "1.0.0",
   "sha256": {
-    "swift": "cc11c9eeb4f18e7f7673ffc41eb012c662eb49ab2660c79db89705c97c6276fe",
-    "css": "e70e413c6b85e615ff9092930e6dd796aca06ee439ddcf7b9c7b84519da09676"
+    "swift": "b2fc6440861d677fb12a917a3b267eb84cf6704df12874f1f023cde2767a3354",
+    "css": "c11832c432af24e2cd0fca622913f5564731a4b01115da243148d8758f5c83f2",
+    "assetCatalog": "1c1abac7c7bbb99fb17f75b3f834dcf91feb97de29432cb77420f88b1ebd59f4"
   },
-  "generated": "2025-12-28T11:46:30.455Z"
+  "generated": "1970-01-01T00:00:00.000Z"
 }

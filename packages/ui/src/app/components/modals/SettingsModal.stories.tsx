@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "@storybook/test";
 import { useState } from "react";
 
 import { SettingsModal } from "./SettingsModal";
@@ -6,6 +7,7 @@ import { SettingsModal } from "./SettingsModal";
 const meta: Meta<typeof SettingsModal> = {
   title: "ChatUI/SettingsModal",
   component: SettingsModal,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },
@@ -23,7 +25,7 @@ type Story = StoryObj<typeof SettingsModal>;
 export const Default: Story = {
   args: {
     isOpen: true,
-    onClose: () => {},
+    onClose: fn(),
   },
 };
 
@@ -33,6 +35,7 @@ export const Interactive: Story = {
     return (
       <div className="h-screen bg-[var(--foundation-bg-dark-1)] flex items-center justify-center">
         <button
+          type="button"
           onClick={() => setIsOpen(true)}
           className="px-4 py-2 bg-[var(--foundation-bg-dark-2)] hover:bg-[var(--foundation-bg-dark-3)] text-[var(--foundation-text-dark-primary)] rounded-lg transition-colors"
         >
@@ -47,14 +50,14 @@ export const Interactive: Story = {
 export const Closed: Story = {
   args: {
     isOpen: false,
-    onClose: () => {},
+    onClose: fn(),
   },
 };
 
 export const ColorPaletteCompliant: Story = {
   args: {
     isOpen: true,
-    onClose: () => {},
+    onClose: fn(),
   },
   parameters: {
     docs: {

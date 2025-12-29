@@ -11,7 +11,7 @@ import { AppsPanel } from "./AppsPanel";
  * ```tsx
  * import { AppsPanel } from "@chatui/ui";
  *
- * <AppsPanel onBack={() => console.log("back")} />
+ * <AppsPanel onBack={fn()} />
  * ```
  */
 const meta: Meta<typeof AppsPanel> = {

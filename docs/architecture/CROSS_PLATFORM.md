@@ -1,5 +1,8 @@
 # Cross-Platform Architecture: React + Swift + Apps SDK
 
+> Status: This document includes historical proposals that reference the legacy `swift/ui-swift` package.
+> For the current Swift architecture, see `swift/README.md` and `docs/SWIFT_INTEGRATION.md`.
+
 ## Executive Summary
 
 This document outlines a comprehensive strategy for expanding the ChatUI system to support three target platforms:
@@ -68,7 +71,7 @@ const buttonVariants = cva(
 **Swift Component (Proposed):**
 
 ```swift
-// packages/ui-swift/Sources/ChatUISwift/Components/Button.swift
+// swift/ui-swift/Sources/ChatUISwift/Components/Button.swift
 public struct ChatUIButton: View {
     public enum Variant {
         case `default`, destructive, outline, secondary, ghost, link
@@ -220,7 +223,7 @@ export class ChatStateManager {
 ### 2.3 JavaScript Core Bridge (Swift ↔ TypeScript)
 
 ```swift
-// packages/ui-swift/Sources/ChatUISwift/Runtime/JSBridge.swift
+// swift/ui-swift/Sources/ChatUISwift/Runtime/JSBridge.swift
 import JavaScriptCore
 
 public class ChatUIJSBridge {
@@ -414,7 +417,7 @@ export async function buildRuntime() {
     bundle: true,
     format: 'iife',
     globalName: 'ChatUIRuntime',
-    outfile: 'packages/ui-swift/Sources/ChatUISwift/Resources/chatui-runtime.js',
+    outfile: 'swift/ui-swift/Sources/ChatUISwift/Resources/chatui-runtime.js',
     target: 'es2017', // JavaScriptCore compatibility
     define: {
       'process.env.NODE_ENV': '"production"',
@@ -436,7 +439,7 @@ export async function buildRuntime() {
 ### 3.4 Swift Package Manager Integration
 
 ```swift
-// packages/ui-swift/Package.swift
+// swift/ui-swift/Package.swift
 // swift-tools-version: 5.9
 import PackageDescription
 
@@ -496,7 +499,7 @@ pnpm run build --filter=@chatui/ui
 
 # 4. Build Swift package
 echo "🍎 Building Swift package..."
-cd packages/ui-swift
+cd swift/ui-swift
 swift build
 swift test
 cd ../..
@@ -544,12 +547,12 @@ export async function syncVersions() {
   }
   
   // Update Swift Package.swift version
-  const swiftPackage = readFileSync('packages/ui-swift/Package.swift', 'utf8');
+  const swiftPackage = readFileSync('swift/ui-swift/Package.swift', 'utf8');
   const updatedSwift = swiftPackage.replace(
     /\/\/ Version: .+/,
     `// Version: ${version}`
   );
-  writeFileSync('packages/ui-swift/Package.swift', updatedSwift);
+  writeFileSync('swift/ui-swift/Package.swift', updatedSwift);
   
   // Update Xcode project version
   const xcodeProject = readFileSync('apps/macos/ChatUI.xcodeproj/project.pbxproj', 'utf8');

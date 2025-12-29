@@ -32,7 +32,6 @@ function StreamWord({ children, index, delay }) {
     <>{children}</>
   ) : (
     <motion.span
-      key={index}
       initial={{ opacity: 0, color: "var(--color-text-info)" }}
       animate={{ opacity: 1, color: "var(--color-text)" }}
       transition={{
@@ -53,7 +52,7 @@ function StreamText({ children, delay }) {
   return (
     <>
       {words.map((word, index) => (
-        <StreamWord index={index} delay={delay} key={index}>
+        <StreamWord index={index} delay={delay} key={`${index}-${word}`}>
           {word}{" "}
         </StreamWord>
       ))}

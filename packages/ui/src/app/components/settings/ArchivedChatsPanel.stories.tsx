@@ -11,7 +11,7 @@ import { ArchivedChatsPanel } from "./ArchivedChatsPanel";
  * ```tsx
  * import { ArchivedChatsPanel } from "@chatui/ui";
  *
- * <ArchivedChatsPanel onBack={() => console.log("back")} />
+ * <ArchivedChatsPanel onBack={fn()} />
  * ```
  */
 const meta: Meta<typeof ArchivedChatsPanel> = {

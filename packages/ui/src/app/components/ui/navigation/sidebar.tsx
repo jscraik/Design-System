@@ -5,7 +5,6 @@ import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
 
 import { IconSidebar } from "../../../../icons";
-
 import { useIsMobile } from "../base/use-mobile";
 import { cn } from "../utils";
 import { Button } from "../base/button";
@@ -266,7 +265,7 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
   const { toggleSidebar } = useSidebar();
 
   return (
-    <button
+    <button type="button"
       data-sidebar="rail"
       data-slot="sidebar-rail"
       aria-label="Toggle Sidebar"

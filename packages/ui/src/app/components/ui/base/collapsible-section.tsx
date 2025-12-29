@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import { IconChevronDownMd } from "../../../../icons";
-
 import { cn } from "../utils";
 
 export interface CollapsibleSectionProps {
@@ -61,7 +60,7 @@ export function CollapsibleSection({
 
   return (
     <div className={className}>
-      <button
+      <button type="button"
         onClick={handleToggle}
         className={cn(
           "w-full flex items-center justify-between py-2 text-left group",

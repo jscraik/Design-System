@@ -11,11 +11,14 @@ pnpm storybook:dev
 # Build Storybook for production
 pnpm storybook:build
 
-# Run automated tests
-pnpm test:components
+# Run Storybook interaction tests (Vitest addon)
+pnpm storybook:test
 
-# Run accessibility tests
-pnpm test:a11y
+# Run component unit tests
+pnpm test
+
+# Note: Storybook Vitest browser mode uses port 63315 by default.
+# Override with `VITEST_BROWSER_PORT=xxxx pnpm storybook:test` if needed.
 ```
 
 ## 📚 **What's Already Configured**
@@ -40,11 +43,10 @@ pnpm test:a11y
 - Code examples
 - Design tokens documentation
 
-### ✅ **Bundle Analysis** (`@storybook/addon-webpack-stats-v2`)
+### ✅ **Visual Regression Testing** (Playwright)
 
-- Bundle size monitoring
-- Dependency analysis
-- Performance insights
+- Story-level screenshot regression coverage
+- Light and dark theme baselines
 
 ## 🧪 **Testing Features**
 
@@ -76,10 +78,11 @@ Every story automatically runs accessibility checks:
 
 ### **Visual Regression Testing**
 
-Set up Chromatic for visual testing:
+Run Storybook visual regression tests:
 
 ```bash
-pnpm test:visual
+pnpm test:visual:storybook
+pnpm test:visual:storybook:update
 ```
 
 ## 📖 **Documentation Features**
@@ -197,9 +200,8 @@ export const WithMockData: Story = {
 ## 📊 **Available Reports**
 
 1. **Accessibility Report**: A11y addon panel
-2. **Bundle Analysis**: Webpack Stats addon
-3. **Test Results**: Vitest addon panel
-4. **Component Coverage**: Auto-generated from stories
+2. **Test Results**: Vitest addon panel
+3. **Component Coverage**: Auto-generated from stories
 
 ## 🚀 **CI/CD Integration**
 
@@ -208,8 +210,8 @@ export const WithMockData: Story = {
 - name: Run Storybook Tests
   run: |
     pnpm storybook:build
-    pnpm test:components
-    pnpm test:a11y
+    pnpm storybook:test
+    pnpm -C packages/ui test:a11y
 ```
 
 Your Storybook setup provides everything needed for comprehensive component testing, documentation, and quality assurance without additional tooling!

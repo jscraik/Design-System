@@ -11,7 +11,7 @@ import { NotificationsPanel } from "./NotificationsPanel";
  * ```tsx
  * import { NotificationsPanel } from "@chatui/ui";
  *
- * <NotificationsPanel onBack={() => console.log("back")} />
+ * <NotificationsPanel onBack={fn()} />
  * ```
  */
 const meta: Meta<typeof NotificationsPanel> = {

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { CollapsibleSection } from "./collapsible-section";
 
@@ -62,11 +62,11 @@ export const WithIcon: Story = {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-white/80">Dark mode</span>
-          <input type="checkbox" className="rounded" />
+          <input type="checkbox" className="rounded" aria-label="Toggle dark mode" />
         </div>
         <div className="flex items-center justify-between">
           <span className="text-white/80">Notifications</span>
-          <input type="checkbox" className="rounded" defaultChecked />
+          <input type="checkbox" className="rounded" defaultChecked aria-label="Toggle notifications" />
         </div>
       </div>
     ),

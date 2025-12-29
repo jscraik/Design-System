@@ -61,6 +61,7 @@ export function SegmentedControl<T extends string = string>({
 
   return (
     <div
+      role="radiogroup"
       className={cn(
         "inline-flex items-center gap-0 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 rounded-lg p-1",
         fullWidth && "w-full",
@@ -73,6 +74,8 @@ export function SegmentedControl<T extends string = string>({
           <button
             key={option.value}
             type="button"
+            role="radio"
+            aria-checked={isSelected}
             disabled={option.disabled}
             onClick={() => onChange?.(option.value)}
             className={cn(

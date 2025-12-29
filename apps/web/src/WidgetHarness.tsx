@@ -52,6 +52,7 @@ export function WidgetHarness() {
         <div className="space-y-2">
           {WIDGETS.map((widget) => (
             <button
+              type="button"
               key={widget.id}
               onClick={() => setSelectedWidget(widget)}
               className={`w-full text-left p-3 rounded-lg border transition-colors ${
@@ -91,7 +92,9 @@ export function WidgetHarness() {
             <Button
               size="sm"
               variant="outline"
-              onClick={() => window.open(selectedWidget.path, "_blank")}
+              onClick={() =>
+                window.open(selectedWidget.path, "_blank", "noopener,noreferrer")
+              }
             >
               Open in New Tab
             </Button>

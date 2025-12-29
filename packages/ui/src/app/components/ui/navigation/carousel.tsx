@@ -4,7 +4,6 @@ import * as React from "react";
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react";
 
 import { IconArrowLeftSm, IconArrowRightSm } from "../../../../icons";
-
 import { cn } from "../utils";
 import { Button } from "../base/button";
 

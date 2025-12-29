@@ -6,6 +6,7 @@ import { Switch } from "./switch";
 const meta: Meta<typeof Switch> = {
   title: "UI/Switch",
   component: Switch,
+  tags: ["autodocs"],
   parameters: { layout: "centered" },
 };
 

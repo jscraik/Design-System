@@ -15,8 +15,6 @@ import { expect, test } from "@playwright/test";
 import {
   pressKey,
   getFocusedElement,
-  testArrowNavigation,
-  testHomeEndKeys,
   runAxeScan,
 } from "../../../packages/ui/src/tests/utils/keyboard-utils";
 
@@ -138,8 +136,6 @@ test.describe("ChatSidebar keyboard navigation - Collapsed Mode", () => {
       await collapseBtn.click();
 
       // Now in rail mode - test arrow key navigation
-      const focused = await getFocusedElement(page);
-
       // Arrow Down should move to next rail item
       await pressKey(page, "ArrowDown");
       const afterDown = await getFocusedElement(page);

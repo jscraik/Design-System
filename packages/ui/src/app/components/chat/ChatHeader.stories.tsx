@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "@storybook/test";
 
 import { IconPlusLg, IconSettings, IconStar } from "../../../icons";
 import { sampleLegacyModels, sampleModels } from "../../data/sample-data";
@@ -8,6 +9,7 @@ import { ChatHeader } from "./ChatHeader";
 const meta: Meta<typeof ChatHeader> = {
   title: "ChatUI/ChatHeader",
   component: ChatHeader,
+  tags: ["autodocs"],
   args: {
     isSidebarOpen: true,
     selectedModel: {
@@ -18,9 +20,9 @@ const meta: Meta<typeof ChatHeader> = {
     models: sampleModels,
     legacyModels: sampleLegacyModels,
     viewMode: "chat",
-    onSidebarToggle: () => {},
-    onModelChange: () => {},
-    onViewModeChange: () => {},
+    onSidebarToggle: fn(),
+    onModelChange: fn(),
+    onViewModeChange: fn(),
   },
   parameters: {
     layout: "fullscreen",

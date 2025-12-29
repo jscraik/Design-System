@@ -1,6 +1,10 @@
 import type { SetStateAction } from 'react';
 import { useCallback, useSyncExternalStore } from 'react';
 
+const hasWindow = typeof window !== 'undefined';
+const isDev =
+    typeof import.meta !== 'undefined' && Boolean((import.meta as ImportMeta).env?.DEV);
+
 // Enhanced OpenAI types based on Toolbase-AI template
 export type GlobalOutput = {
     Input?: unknown;
@@ -93,7 +97,7 @@ export function useOpenAIGlobal<T extends GlobalOutput, K extends keyof OpenAiGl
 ): OpenAiGlobals<T>[K] | undefined {
     return useSyncExternalStore(
         (onChange) => {
-            if (typeof window === 'undefined') {
+            if (!hasWindow) {
                 return () => { };
             }
 
@@ -113,8 +117,8 @@ export function useOpenAIGlobal<T extends GlobalOutput, K extends keyof OpenAiGl
                 window.removeEventListener(SET_GLOBALS_EVENT_TYPE, handleSetGlobal);
             };
         },
-        () => (window.openai as OpenAiGlobals<T>)?.[key],
-        () => (window.openai as OpenAiGlobals<T>)?.[key]
+        () => (hasWindow ? (window.openai as OpenAiGlobals<T>)?.[key] : undefined),
+        () => undefined
     );
 }
 
@@ -132,7 +136,9 @@ export function useWidgetState<T extends Record<string, unknown>>(): readonly [
     const setState = useCallback(
         (action: SetStateAction<T | null | undefined>) => {
             if (!globalSetter) {
-                console.warn('setWidgetState is not available on window.openai');
+                if (isDev) {
+                    console.warn('setWidgetState is not available on window.openai');
+                }
                 return;
             }
 
@@ -142,9 +148,11 @@ export function useWidgetState<T extends Record<string, unknown>>(): readonly [
                     : action;
 
             if (newState != null) {
-                globalSetter(newState).catch((err) =>
-                    console.warn('setWidgetState could not be set on window.openai', err)
-                );
+                globalSetter(newState).catch((err) => {
+                    if (isDev) {
+                        console.warn('setWidgetState could not be set on window.openai', err);
+                    }
+                });
             }
         },
         [globalSetter, currentState]
@@ -168,7 +176,7 @@ export function useDisplayMode(): {
     requestMode: RequestDisplayMode | undefined;
 } {
     const mode = useOpenAIGlobal('displayMode');
-    const requestMode = window.openai?.requestDisplayMode;
+    const requestMode = hasWindow ? window.openai?.requestDisplayMode : undefined;
 
     return { mode, requestMode };
 }
@@ -219,7 +227,7 @@ export function useToolMetadata<T = Record<string, unknown>>(): T | null | undef
  * Hook for calling tools from within widgets
  */
 export function useCallTool(): CallTool | undefined {
-    return window.openai?.callTool;
+    return hasWindow ? window.openai?.callTool : undefined;
 }
 
 /**

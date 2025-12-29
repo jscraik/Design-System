@@ -5,6 +5,7 @@ import { TypographyShowcase } from "./TypographyShowcase";
 const meta: Meta<typeof TypographyShowcase> = {
   title: "DesignSystem/TypographyShowcase",
   component: TypographyShowcase,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },

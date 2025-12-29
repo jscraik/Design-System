@@ -1,5 +1,4 @@
 import { IconX } from "../../../../icons";
-
 import { cn } from "../utils";
 
 export interface ContextTagProps {
@@ -85,7 +84,7 @@ export function ContextTag({
       {icon && <span className="size-3.5 [&>svg]:w-full [&>svg]:h-full">{icon}</span>}
       <span>{label}</span>
       {onClose && (
-        <button
+        <button type="button"
           onClick={onClose}
           aria-label={`Remove ${label}`}
           title={`Remove ${label}`}

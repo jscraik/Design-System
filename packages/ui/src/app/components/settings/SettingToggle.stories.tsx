@@ -110,17 +110,17 @@ export const Interactive: Story = {
 export const AllStates: Story = {
   render: () => (
     <div className="space-y-4 max-w-md">
-      <SettingToggle checked={false} onCheckedChange={() => {}} label="Unchecked" />
-      <SettingToggle checked={true} onCheckedChange={() => {}} label="Checked" />
+      <SettingToggle checked={false} onCheckedChange={fn()} label="Unchecked" />
+      <SettingToggle checked={true} onCheckedChange={fn()} label="Checked" />
       <SettingToggle
         checked={true}
-        onCheckedChange={() => {}}
+        onCheckedChange={fn()}
         label="With Description"
         description="Additional context provided here"
       />
       <SettingToggle
         checked={true}
-        onCheckedChange={() => {}}
+        onCheckedChange={fn()}
         icon={<IconMessaging className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
         label="With Icon"
         description="Icon on the left side"

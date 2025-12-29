@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { IconCheckmark, IconChevronDownMd, IconChevronRightMd } from "../../../../icons";
 import { Popover } from "../../../../vendor/appsSdkUi";
-
 import { cn } from "../utils";
 
 export interface ModelConfig {
@@ -75,6 +74,7 @@ export function ModelSelector({
     <Popover open={isOpen} onOpenChange={disabled ? undefined : setIsOpen}>
       <Popover.Trigger>
         <button
+          type="button"
           className={cn(
             "flex items-center gap-2 px-3 py-1.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-lg transition-colors",
             disabled && "opacity-50 cursor-not-allowed",
@@ -115,7 +115,10 @@ export function ModelSelector({
           {legacyModels && legacyModels.length > 0 && (
             <Popover open={isLegacyOpen} onOpenChange={setIsLegacyOpen}>
               <Popover.Trigger>
-                <button className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-lg transition-colors text-left">
+                <button
+                  type="button"
+                  className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-lg transition-colors text-left"
+                >
                   <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
                     Legacy models
                   </span>
@@ -162,6 +165,7 @@ interface ModelOptionProps {
 function ModelOption({ model, isSelected, onSelect }: ModelOptionProps) {
   return (
     <button
+      type="button"
       onClick={() => onSelect(model)}
       className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-lg transition-colors text-left group"
     >

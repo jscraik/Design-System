@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import { IconChevronLeftMd } from "../icons/ChatGPTIcons";
 
@@ -6,12 +6,13 @@ import type { SettingsPanelProps } from "./types";
 
 export function SecurityPanel({ onBack }: SettingsPanelProps) {
   const [mfaEnabled, setMfaEnabled] = useState(true);
+  const mfaLabelId = useId();
 
   return (
     <>
       <div className="px-6 py-4 border-b border-foundation-text-dark-primary/10 flex items-center gap-3">
         <div className="flex gap-2">
-          <button
+          <button type="button"
             onClick={onBack}
             className="size-3 rounded-full bg-foundation-accent-red hover:bg-foundation-accent-red/80 transition-colors"
             aria-label="Close"
@@ -20,8 +21,10 @@ export function SecurityPanel({ onBack }: SettingsPanelProps) {
           <div className="size-3 rounded-full bg-foundation-accent-green" />
         </div>
         <button
+          type="button"
           onClick={onBack}
           className="p-1 hover:bg-foundation-bg-dark-3 rounded transition-colors"
+          aria-label="Back to settings"
         >
           <IconChevronLeftMd className="size-4 text-foundation-icon-dark-primary" />
         </button>
@@ -34,11 +37,18 @@ export function SecurityPanel({ onBack }: SettingsPanelProps) {
         {/* Multi-factor authentication */}
         <div>
           <div className="flex items-center justify-between px-3 py-2.5">
-            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
+            <span
+              id={mfaLabelId}
+              className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary"
+            >
               Multi-factor authentication
             </span>
             <button
+              type="button"
               onClick={() => setMfaEnabled(!mfaEnabled)}
+              role="switch"
+              aria-checked={mfaEnabled}
+              aria-labelledby={mfaLabelId}
               className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${mfaEnabled ? "bg-foundation-accent-green" : "bg-foundation-bg-dark-3"}`}
             >
               <span
@@ -48,7 +58,7 @@ export function SecurityPanel({ onBack }: SettingsPanelProps) {
           </div>
           <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary px-3 mt-1">
             You'll only be able to log in using Google while this is on.{" "}
-            <button className="text-foundation-accent-blue hover:underline">Learn more</button>
+            <button type="button" className="text-foundation-accent-blue hover:underline">Learn more</button>
           </p>
         </div>
       </div>

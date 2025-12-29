@@ -5,9 +5,17 @@ import type { Route } from "../Router";
 
 interface ProfilePageProps {
   onNavigate: (route: Route) => void;
+  onExportData?: () => void;
+  onOpenPrivacySettings?: () => void;
+  onSaveProfile?: (profile: { name: string; email: string; bio: string }) => void;
 }
 
-export function ProfilePage({ onNavigate }: ProfilePageProps) {
+export function ProfilePage({
+  onNavigate,
+  onExportData,
+  onOpenPrivacySettings,
+  onSaveProfile,
+}: ProfilePageProps) {
   const [name, setName] = useState("John Doe");
   const [email, setEmail] = useState("john.doe@example.com");
   const [bio, setBio] = useState("AI enthusiast and developer");
@@ -43,7 +51,12 @@ export function ProfilePage({ onNavigate }: ProfilePageProps) {
           <Button
             variant={isEditing ? "default" : "outline"}
             size="sm"
-            onClick={() => setIsEditing(!isEditing)}
+            onClick={() => {
+              if (isEditing) {
+                onSaveProfile?.({ name, email, bio });
+              }
+              setIsEditing(!isEditing);
+            }}
           >
             {isEditing ? "Save" : "Edit"}
           </Button>
@@ -110,12 +123,11 @@ export function ProfilePage({ onNavigate }: ProfilePageProps) {
           <h3 className="text-lg font-semibold text-white mb-4">Recent Activity</h3>
           <div className="space-y-1">
             {recentActivity.map((activity) => (
-              <ListItem key={activity.id}>
-                <div className="flex items-center justify-between w-full">
-                  <span className="text-white">{activity.action}</span>
-                  <span className="text-white/60 text-sm">{activity.time}</span>
-                </div>
-              </ListItem>
+              <ListItem
+                key={activity.id}
+                label={activity.action}
+                right={<span className="text-white/60 text-sm">{activity.time}</span>}
+              />
             ))}
           </div>
         </Card>
@@ -125,10 +137,10 @@ export function ProfilePage({ onNavigate }: ProfilePageProps) {
           <Button variant="outline" onClick={() => onNavigate("settings")}>
             Settings
           </Button>
-          <Button variant="outline" onClick={() => console.log("Export data")}>
+          <Button variant="outline" onClick={onExportData}>
             Export Data
           </Button>
-          <Button variant="outline" onClick={() => console.log("Privacy settings")}>
+          <Button variant="outline" onClick={onOpenPrivacySettings}>
             Privacy
           </Button>
         </div>

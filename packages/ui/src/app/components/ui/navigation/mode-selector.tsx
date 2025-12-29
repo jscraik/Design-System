@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { IconCheckmark, IconChevronDownMd, IconSettings } from "../../../../icons";
-
+import { useFocusTrap } from "../../hooks/useFocusTrap";
 import { cn } from "../utils";
 
 export interface ModeConfig {
@@ -65,10 +65,23 @@ export function ModeSelector({
 }: ModeSelectorProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [previewMode, setPreviewMode] = useState<ModeConfig | null>(value ?? modes[0]);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+
+  const handleClose = () => {
+    setIsOpen(false);
+    triggerRef.current?.focus();
+  };
+
+  const { trapProps } = useFocusTrap({
+    isOpen,
+    onClose: handleClose,
+    restoreFocus: true,
+  });
 
   const handleSelect = (mode: ModeConfig) => {
     onChange?.(mode);
     setIsOpen(false);
+    triggerRef.current?.focus();
   };
 
   const handleHover = (mode: ModeConfig) => {
@@ -81,6 +94,8 @@ export function ModeSelector({
     setPreviewMode(value ?? modes[0]);
     setIsOpen(true);
   };
+
+  // Focus trap handles Escape and focus restoration.
 
   const triggerClasses = {
     default: "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg px-3 py-1.5",
@@ -97,7 +112,9 @@ export function ModeSelector({
           </span>
         )}
         <button
+          ref={triggerRef}
           onClick={handleOpen}
+          type="button"
           className={cn(
             "text-[12px] leading-[18px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary flex items-center gap-2 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 transition-colors",
             triggerClasses[variant],
@@ -110,9 +127,18 @@ export function ModeSelector({
 
       {isOpen && (
         <>
-          <div className="fixed inset-0 bg-black/40 z-40" onClick={() => setIsOpen(false)} />
+          <div
+            className="fixed inset-0 bg-black/40 z-40"
+            onClick={handleClose}
+            role="presentation"
+            aria-hidden="true"
+          />
 
           <div
+            {...trapProps}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mode selector"
             className={cn(
               "fixed z-50 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-[16px] shadow-2xl overflow-hidden",
               showPreview
@@ -166,9 +192,9 @@ export function ModeSelector({
                         When to use
                       </h3>
                       <ul className="space-y-2">
-                        {previewMode.whenToUse?.map((item, index) => (
+                        {previewMode.whenToUse?.map((item) => (
                           <li
-                            key={index}
+                            key={item}
                             className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary flex items-start gap-2"
                           >
                             <span className="text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">•</span>
@@ -204,7 +230,7 @@ export function ModeSelector({
                 </h3>
                 <div className="space-y-2">
                   {modes.map((mode) => (
-                    <button
+                    <button type="button"
                       key={mode.id}
                       onClick={() => handleSelect(mode)}
                       onMouseEnter={() => handleHover(mode)}

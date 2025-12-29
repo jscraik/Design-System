@@ -10,8 +10,14 @@
 import fc from 'fast-check';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'fs';
 import { join } from 'path';
+import { createRequire } from 'module';
 import { BuildPipeline } from './build-pipeline.mjs';
 import { VersionSynchronizer } from './version-sync.mjs';
+
+const require = createRequire(import.meta.url);
+
+let originalCwd;
+let testWorkspace;
 
 // Test configuration
 const TEST_CONFIG = {
@@ -30,9 +36,6 @@ const TEST_CONFIG = {
  * React and Swift implementations
  */
 describe('Build Pipeline Completeness Property', () => {
-  let originalCwd;
-  let testWorkspace;
-
   beforeAll(() => {
     originalCwd = process.cwd();
     testWorkspace = join(originalCwd, TEST_CONFIG.testDir);
@@ -488,7 +491,6 @@ function validatePlatformArtifacts(platforms) {
         // Check that Swift packages have build artifacts
         const swiftPackages = ['test-ui-swift'];
         for (const pkg of swiftPackages) {
-          const buildPath = join('packages', pkg, '.build');
           if (existsSync(join('packages', pkg))) {
             // Note: In real builds, .build would exist, but in mock tests we just check structure
             expect(existsSync(join('packages', pkg, 'Package.swift'))).toBe(true);

@@ -7,6 +7,7 @@ import { ComposeView } from "./ComposeView";
 const meta: Meta<typeof ComposeView> = {
   title: "ChatUI/ComposeView",
   component: ComposeView,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },

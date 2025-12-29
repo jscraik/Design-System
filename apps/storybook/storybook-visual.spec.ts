@@ -10,13 +10,21 @@
  */
 
 import { test, expect } from "@playwright/test";
+import type { Page } from "@playwright/test";
 
 /**
  * Helper to set theme and wait for transition
  */
-async function setTheme(page: any, theme: "light" | "dark") {
+async function setTheme(page: Page, theme: "light" | "dark") {
   await page.emulateMedia({ colorScheme: theme });
   await page.waitForTimeout(100);
+}
+
+function storyUrl(storyId: string, theme: "light" | "dark") {
+  const params = new URLSearchParams();
+  params.set("id", storyId);
+  params.set("globals", `backgrounds.value:${theme === "light" ? "light" : "dark"}`);
+  return `http://localhost:6006/iframe.html?${params.toString()}`;
 }
 
 /**
@@ -30,82 +38,81 @@ const CRITICAL_STORIES = [
   "ui-button--outline",
   "ui-button--ghost",
   "ui-button--destructive",
-  "ui-button--with-icon",
-  "ui-button--icon-only",
+  "ui-button--withicon",
+  "ui-button--icononly",
   "ui-input--default",
   "ui-textarea--default",
   "ui-switch--default",
   "ui-checkbox--default",
-  "ui-radio-group--default",
+  "ui-radiogroup--default",
   "ui-select--default",
   "ui-slider--default",
-  "ui-segmented-control--default",
+  "ui-segmentedcontrol--default",
   "ui-badge--default",
   "ui-avatar--default",
-  "ui-icon-button--default",
+  "ui-iconbutton--default",
 
   // Forms
-  "form--default",
-  "range-slider--default",
+  "ui-form--default",
+  "ui-rangeslider--default",
 
   // Feedback
-  "dialog--basic",
-  "dialog--with-header",
-  "dialog--long-content",
-  "alert-dialog--default",
-  "toast--default",
-  "sonner--default",
+  "ui-dialog--default",
+  "ui-dialog--longcontent",
+  "ui-alertdialog--default",
+  "ui-feedback-toast--default",
+  "ui-sonner--default",
 
   // Navigation
-  "tabs--default",
-  "sidebar--default",
-  "sidebar--collapsed",
-  "navigation-menu--default",
-  "breadcrumb--default",
-  "pagination--default",
-  "mode-selector--default",
-  "model-selector--default",
+  "ui-tabs--default",
+  "ui-sidebar--default",
+  "ui-navigationmenu--default",
+  "ui-navigation-breadcrumb--default",
+  "ui-navigation-pagination--default",
+  "ui-modeselector--default",
+  "ui-modelselector--default",
+  "ui-viewmodetoggle--default",
 
   // Overlays
-  "popover--default",
-  "tooltip--default",
-  "dropdown-menu--default",
-  "context-menu--default",
-  "drawer--default",
-  "sheet--default",
-  "hover-card--default",
+  "ui-popover--default",
+  "ui-tooltip--default",
+  "ui-dropdownmenu--default",
+  "ui-contextmenu--default",
+  "ui-drawer--default",
+  "ui-sheet--default",
+  "ui-hovercard--default",
+  "ui-overlays-modal-dialog--default",
 
   // Chat components
-  "chat-header--default",
-  "chat-input--default",
-  "chat-messages--default",
-  "chat-sidebar--expanded",
-  "chat-sidebar--collapsed",
-  "compose-view--default",
+  "chatui-chatheader--default",
+  "chatui-chatinput--default",
+  "chatui-chatmessages--default",
+  "chatui-chatsidebar--defaultopen",
+  "chatui-composeview--default",
 
   // Modals
-  "settingsmodal--main-view",
-  "settingsmodal--personalization-panel",
-  "discoverysettingsmodal--default",
+  "chatui-settingsmodal--default",
+  "chatui-discoverysettingsmodal--default",
+  "chatui-iconpickermodal--default",
 
   // Display
-  "card--default",
-  "progress--default",
-  "skeleton--default",
-  "table--default",
+  "ui-card--default",
+  "ui-progress--default",
+  "ui-skeleton--default",
+  "ui-table--default",
 
   // Templates
-  "chat-full-width-template--default",
-  "chat-two-pane-template--default",
-  "dashboard-template--default",
+  "templates-chatfullwidthtemplate--fullwidthchat",
+  "templates-chattwopanetemplate--golden",
+  "templates-dashboardtemplate--dashboardoverview",
 
   // Showcase pages
-  "design-system-page--default",
-  "typography-page--default",
-  "spacing-page--default",
-  "color-showcase--default",
-  "foundations-showcase--default",
-  "iconography-showcase--default",
+  "pages-designsystempage--default",
+  "pages-typographypage--default",
+  "pages-spacingpage--default",
+  "designsystem-colorshowcase--default",
+  "designsystem-foundationsshowcase--default",
+  "design-system-iconography-showcase--default",
 ];
 
 test.describe("Storybook visual regression - Light Theme", () => {
@@ -115,8 +122,9 @@ test.describe("Storybook visual regression - Light Theme", () => {
 
   for (const storyId of CRITICAL_STORIES) {
     test(storyId, async ({ page }) => {
-      await page.goto(`http://localhost:6006/iframe.html?id=${storyId}`);
+      await page.goto(storyUrl(storyId, "light"));
       await page.waitForLoadState("networkidle");
+      await page.waitForFunction(() => !document.fonts || document.fonts.status === "loaded");
       await expect(page).toHaveScreenshot(`${storyId}-light.png`);
     });
   }
@@ -129,8 +137,9 @@ test.describe("Storybook visual regression - Dark Theme", () => {
 
   for (const storyId of CRITICAL_STORIES) {
     test(storyId, async ({ page }) => {
-      await page.goto(`http://localhost:6006/iframe.html?id=${storyId}`);
+      await page.goto(storyUrl(storyId, "dark"));
       await page.waitForLoadState("networkidle");
+      await page.waitForFunction(() => !document.fonts || document.fonts.status === "loaded");
       await expect(page).toHaveScreenshot(`${storyId}-dark.png`);
     });
   }
@@ -141,19 +150,20 @@ test.describe("Storybook visual regression - Interactive States", () => {
   const INTERACTIVE_STORIES = [
     "ui-button--default",
     "ui-input--default",
-    "ui-icon-button--default",
+    "ui-iconbutton--default",
     "ui-switch--default",
   ];
 
   for (const storyId of INTERACTIVE_STORIES) {
     test(`${storyId} - hover state`, async ({ page }) => {
       await setTheme(page, "light");
-      await page.goto(`http://localhost:6006/iframe.html?id=${storyId}`);
+      await page.goto(storyUrl(storyId, "light"));
       await page.waitForLoadState("networkidle");
+      await page.waitForFunction(() => !document.fonts || document.fonts.status === "loaded");
 
       // Hover over the main element
-      const main = page.locator("main, #root").first();
-      const interactive = main.locator("button, input, a, [role='button']").first();
+      const root = page.locator("#storybook-root");
+      const interactive = root.locator("button, input, a, [role='button']").first();
       if ((await interactive.count()) > 0) {
         await interactive.hover();
         await page.waitForTimeout(100);
@@ -163,11 +173,12 @@ test.describe("Storybook visual regression - Interactive States", () => {
 
     test(`${storyId} - focus state`, async ({ page }) => {
       await setTheme(page, "light");
-      await page.goto(`http://localhost:6006/iframe.html?id=${storyId}`);
+      await page.goto(storyUrl(storyId, "light"));
       await page.waitForLoadState("networkidle");
+      await page.waitForFunction(() => !document.fonts || document.fonts.status === "loaded");
 
-      const main = page.locator("main, #root").first();
-      const interactive = main.locator("button, input, a, [role='button']").first();
+      const root = page.locator("#storybook-root");
+      const interactive = root.locator("button, input, a, [role='button']").first();
       if ((await interactive.count()) > 0) {
         await interactive.focus();
         await page.waitForTimeout(100);

@@ -7,7 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		74BCA44E2F01041E000BB6E0 /* ChatUISwift in Frameworks */ = {isa = PBXBuildFile; productRef = 74BCA44D2F01041E000BB6E0 /* ChatUISwift */; };
+		746E70392F01E6E1003EEE5D /* ChatUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 746E70382F01E6E1003EEE5D /* ChatUIComponents */; };
+		746E703C2F01E6F8003EEE5D /* ChatUIFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 746E703B2F01E6F8003EEE5D /* ChatUIFoundation */; };
+		746E70402F01E728003EEE5D /* ChatUIShellChatGPT in Frameworks */ = {isa = PBXBuildFile; productRef = 746E703F2F01E728003EEE5D /* ChatUIShellChatGPT */; };
+		746E70432F01E73D003EEE5D /* ChatUIThemes in Frameworks */ = {isa = PBXBuildFile; productRef = 746E70422F01E73D003EEE5D /* ChatUIThemes */; };
+		746E70462F01EC46003EEE5D /* ChatUIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 746E70452F01EC46003EEE5D /* ChatUIComponents */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,7 +60,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74BCA44E2F01041E000BB6E0 /* ChatUISwift in Frameworks */,
+				746E70392F01E6E1003EEE5D /* ChatUIComponents in Frameworks */,
+				746E70432F01E73D003EEE5D /* ChatUIThemes in Frameworks */,
+				746E703C2F01E6F8003EEE5D /* ChatUIFoundation in Frameworks */,
+				746E70462F01EC46003EEE5D /* ChatUIComponents in Frameworks */,
+				746E70402F01E728003EEE5D /* ChatUIShellChatGPT in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +125,11 @@
 			);
 			name = ChatUIPlayground;
 			packageProductDependencies = (
-				74BCA44D2F01041E000BB6E0 /* ChatUISwift */,
+				746E70382F01E6E1003EEE5D /* ChatUIComponents */,
+				746E703B2F01E6F8003EEE5D /* ChatUIFoundation */,
+				746E703F2F01E728003EEE5D /* ChatUIShellChatGPT */,
+				746E70422F01E73D003EEE5D /* ChatUIThemes */,
+				746E70452F01EC46003EEE5D /* ChatUIComponents */,
 			);
 			productName = ChatUIPlayground;
 			productReference = 74BCA4092F00FBF6000BB6E0 /* ChatUIPlayground.app */;
@@ -202,7 +214,10 @@
 			mainGroup = 74BCA4002F00FBF6000BB6E0;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				74BCA44C2F01041E000BB6E0 /* XCLocalSwiftPackageReference "../../../packages/ui-swift" */,
+				746E703A2F01E6F8003EEE5D /* XCLocalSwiftPackageReference "../../../swift/ChatUIFoundation" */,
+				746E703E2F01E728003EEE5D /* XCLocalSwiftPackageReference "../../../swift/ChatUIShellChatGPT" */,
+				746E70412F01E73D003EEE5D /* XCLocalSwiftPackageReference "../../../swift/ChatUIThemes" */,
+				746E70442F01EC46003EEE5D /* XCLocalSwiftPackageReference "../../../swift/ChatUIComponents" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 74BCA40A2F00FBF6000BB6E0 /* Products */;
@@ -586,16 +601,44 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		74BCA44C2F01041E000BB6E0 /* XCLocalSwiftPackageReference "../../../packages/ui-swift" */ = {
+		746E703A2F01E6F8003EEE5D /* XCLocalSwiftPackageReference "../../../swift/ChatUIFoundation" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../../packages/ui-swift";
+			relativePath = ../../../swift/ChatUIFoundation;
+		};
+		746E703E2F01E728003EEE5D /* XCLocalSwiftPackageReference "../../../swift/ChatUIShellChatGPT" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../../swift/ChatUIShellChatGPT;
+		};
+		746E70412F01E73D003EEE5D /* XCLocalSwiftPackageReference "../../../swift/ChatUIThemes" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../../swift/ChatUIThemes;
+		};
+		746E70442F01EC46003EEE5D /* XCLocalSwiftPackageReference "../../../swift/ChatUIComponents" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../../swift/ChatUIComponents;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		74BCA44D2F01041E000BB6E0 /* ChatUISwift */ = {
+		746E70382F01E6E1003EEE5D /* ChatUIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = ChatUISwift;
+			productName = ChatUIComponents;
+		};
+		746E703B2F01E6F8003EEE5D /* ChatUIFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ChatUIFoundation;
+		};
+		746E703F2F01E728003EEE5D /* ChatUIShellChatGPT */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ChatUIShellChatGPT;
+		};
+		746E70422F01E73D003EEE5D /* ChatUIThemes */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ChatUIThemes;
+		};
+		746E70452F01EC46003EEE5D /* ChatUIComponents */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ChatUIComponents;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

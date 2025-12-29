@@ -4,7 +4,6 @@ import * as React from "react";
 import * as ContextMenuPrimitive from "@radix-ui/react-context-menu";
 
 import { IconCheckCircle, IconCheckmark, IconChevronRightMd } from "../../../../icons";
-
 import { cn } from "../utils";
 
 function ContextMenu({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Root>) {

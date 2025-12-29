@@ -5,6 +5,7 @@ import { SpacingShowcase } from "./SpacingShowcase";
 const meta: Meta<typeof SpacingShowcase> = {
   title: "DesignSystem/SpacingShowcase",
   component: SpacingShowcase,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },

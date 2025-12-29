@@ -50,7 +50,7 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
     <>
       <div className="px-6 py-4 border-b border-foundation-text-light-primary/10 dark:border-foundation-text-dark-primary/10 flex items-center gap-3">
         <div className="flex gap-2">
-          <button
+          <button type="button"
             onClick={onBack}
             className="size-3 rounded-full bg-foundation-accent-red hover:bg-foundation-accent-red/80 transition-colors"
             aria-label="Close"

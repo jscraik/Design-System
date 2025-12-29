@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 import { Button } from "../base/button";
+
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -14,7 +16,17 @@ import {
 const meta: Meta<typeof DropdownMenu> = {
   title: "UI/DropdownMenu",
   component: DropdownMenu,
+  tags: ["autodocs"],
   parameters: { layout: "centered" },
+  argTypes: {
+    defaultOpen: {
+      control: "boolean",
+      description: "Whether the menu is open by default",
+    },
+  },
+  args: {
+    defaultOpen: false,
+  },
 };
 
 export default meta;
@@ -22,8 +34,8 @@ export default meta;
 type Story = StoryObj<typeof DropdownMenu>;
 
 export const Default: Story = {
-  render: () => (
-    <DropdownMenu defaultOpen>
+  render: (args) => (
+    <DropdownMenu defaultOpen={args.defaultOpen}>
       <DropdownMenuTrigger asChild>
         <Button size="sm">Open menu</Button>
       </DropdownMenuTrigger>
@@ -36,4 +48,11 @@ export const Default: Story = {
       </DropdownMenuContent>
     </DropdownMenu>
   ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const trigger = canvas.getByRole("button", { name: /open menu/i });
+    await userEvent.click(trigger);
+    const overlay = within(canvasElement.ownerDocument.body);
+    await expect(overlay.getByRole("menuitem", { name: "View profile" })).toBeVisible();
+  },
 };

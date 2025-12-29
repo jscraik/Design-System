@@ -11,6 +11,7 @@ import {
 const meta: Meta<typeof Carousel> = {
   title: "UI/Carousel",
   component: Carousel,
+  tags: ["autodocs"],
   parameters: { layout: "centered" },
 };
 

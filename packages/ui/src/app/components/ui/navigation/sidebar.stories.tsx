@@ -23,6 +23,7 @@ import {
 const meta: Meta<typeof SidebarProvider> = {
   title: "UI/Sidebar",
   component: SidebarProvider,
+  tags: ["autodocs"],
   parameters: { layout: "centered" },
 };
 

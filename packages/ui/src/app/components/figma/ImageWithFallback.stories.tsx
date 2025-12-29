@@ -6,6 +6,7 @@ import { ImageWithFallback } from "./ImageWithFallback";
 const meta: Meta<typeof ImageWithFallback> = {
   title: "Figma/ImageWithFallback",
   component: ImageWithFallback,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },

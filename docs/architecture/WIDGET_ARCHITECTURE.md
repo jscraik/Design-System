@@ -58,7 +58,7 @@ pnpm dev:web
 # Visit http://localhost:5173/harness
 
 # Component development
-pnpm storybook:dev
+pnpm dev:storybook
 ```
 
 ## Key Benefits Achieved

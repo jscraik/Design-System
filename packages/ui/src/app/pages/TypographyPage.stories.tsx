@@ -5,6 +5,7 @@ import { TypographyPage } from "./TypographyPage";
 const meta: Meta<typeof TypographyPage> = {
   title: "Pages/TypographyPage",
   component: TypographyPage,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },

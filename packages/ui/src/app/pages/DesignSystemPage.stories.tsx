@@ -5,6 +5,7 @@ import { DesignSystemPage } from "./DesignSystemPage";
 const meta: Meta<typeof DesignSystemPage> = {
   title: "Pages/DesignSystemPage",
   component: DesignSystemPage,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },

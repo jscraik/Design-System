@@ -8,7 +8,7 @@
  */
 
 import { execSync, spawn } from 'child_process';
-import { existsSync, readFileSync, statSync, writeFileSync } from 'fs';
+import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from 'fs';
 import { mkdir } from 'fs/promises';
 import { dirname, join } from 'path';
 
@@ -17,11 +17,27 @@ const CONFIG = {
   platforms: ['web', 'macos'],
   packages: {
     npm: ['packages/ui', 'packages/runtime', 'packages/tokens', 'packages/widgets'],
-    swift: ['packages/ui-swift'],
+    swift: [
+      'swift/ChatUIFoundation',
+      'swift/ChatUIComponents',
+      'swift/ChatUIThemes',
+      'swift/ChatUIShellChatGPT',
+      'swift/ChatUISystemIntegration',
+      'swift/ChatUIMCP',
+      'apps/macos/ChatUIApp'
+    ],
   },
   outputs: {
     web: ['packages/ui/dist', 'packages/runtime/dist', 'packages/tokens/dist', 'packages/widgets/dist'],
-    macos: ['packages/ui-swift/.build'],
+    macos: [
+      'swift/ChatUIFoundation/.build',
+      'swift/ChatUIComponents/.build',
+      'swift/ChatUIThemes/.build',
+      'swift/ChatUIShellChatGPT/.build',
+      'swift/ChatUISystemIntegration/.build',
+      'swift/ChatUIMCP/.build',
+      'apps/macos/ChatUIApp/.build'
+    ],
   },
   cacheDir: '.build-cache',
   manifestFile: '.build-cache/build-manifest.json',
@@ -138,7 +154,6 @@ class BuildPipeline {
   async generateTokens(incremental = true) {
     console.log('\n🎨 Generating design tokens...');
 
-    const tokensPath = 'packages/tokens';
     const needsRegeneration = incremental ? this.needsTokenRegeneration() : true;
 
     if (!needsRegeneration) {
@@ -154,7 +169,7 @@ class BuildPipeline {
       // Verify outputs exist
       const expectedOutputs = [
         'packages/tokens/src/foundations.css',
-        'packages/ui-swift/Sources/ChatUISwift/DesignTokens.swift',
+        'swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets',
         'packages/tokens/outputs/manifest.json'
       ];
 
@@ -163,6 +178,9 @@ class BuildPipeline {
           throw new Error(`Expected token output not found: ${output}`);
         }
       }
+
+      // Validate Swift Asset Catalog colors match CSS custom properties
+      await this.validateTokenConsistency();
 
       console.log('  ✅ Token generation complete');
       this.results.push({ step: 'token-generation', success: true });
@@ -289,10 +307,26 @@ class BuildPipeline {
     }
 
     if (platforms.includes('macos')) {
-      // Swift tests are run as part of the build process
-      testSuites.push(
-        { name: 'Swift Tests', command: 'swift', args: ['test'], cwd: 'packages/ui-swift' }
-      );
+      // Swift tests for all four packages
+      const swiftPackages = [
+        'swift/ChatUIFoundation',
+        'swift/ChatUIComponents',
+        'swift/ChatUIThemes',
+        'swift/ChatUIShellChatGPT',
+        'swift/ChatUISystemIntegration',
+        'swift/ChatUIMCP',
+        'apps/macos/ChatUIApp'
+      ];
+      
+      for (const packagePath of swiftPackages) {
+        const packageName = packagePath.split('/').pop();
+        testSuites.push({
+          name: `Swift Tests (${packageName})`,
+          command: 'swift',
+          args: ['test'],
+          cwd: packagePath
+        });
+      }
     }
 
     for (const suite of testSuites) {
@@ -321,6 +355,126 @@ class BuildPipeline {
   }
 
   /**
+   * Validate that Swift Asset Catalog colors match CSS custom properties
+   */
+  async validateTokenConsistency() {
+    console.log('  🔍 Validating token consistency...');
+
+    try {
+      const normalizeHex = (value) => value.trim().toLowerCase();
+      const componentsToHex = (components) => {
+        const toInt = (v) => Math.round(parseFloat(v) * 255);
+        const toHex = (v) => v.toString(16).padStart(2, '0');
+        return `#${toHex(toInt(components.red))}${toHex(toInt(components.green))}${toHex(toInt(components.blue))}`;
+      };
+
+      // Read CSS custom properties
+      const cssPath = 'packages/tokens/src/foundations.css';
+      const cssContent = readFileSync(cssPath, 'utf8');
+      
+      // Extract CSS color variables
+      const cssColors = new Map();
+      const cssColorRegex = /--foundation-([\w-]+):\s*([^;]+);/g;
+      let match;
+      
+      while ((match = cssColorRegex.exec(cssContent)) !== null) {
+        const [, name, value] = match;
+        cssColors.set(name, value.trim());
+      }
+
+      // Read Swift Asset Catalog colorsets
+      const assetCatalogPath = 'swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets';
+      const swiftColors = new Map();
+      
+      // Read all .colorset directories
+      const colorsets = readdirSync(assetCatalogPath, { withFileTypes: true })
+        .filter(dirent => dirent.isDirectory() && dirent.name.endsWith('.colorset'))
+        .map(dirent => dirent.name.replace('.colorset', ''));
+
+      for (const colorset of colorsets) {
+        const contentsPath = join(assetCatalogPath, `${colorset}.colorset`, 'Contents.json');
+        if (existsSync(contentsPath)) {
+          const contents = JSON.parse(readFileSync(contentsPath, 'utf8'));
+          swiftColors.set(colorset, contents);
+        }
+      }
+
+      const catalogToCss = [
+        { asset: 'foundation-bg-app', light: 'foundation-bg-light-1', dark: 'foundation-bg-dark-1' },
+        { asset: 'foundation-bg-card', light: 'foundation-bg-light-2', dark: 'foundation-bg-dark-2' },
+        { asset: 'foundation-bg-card-alt', light: 'foundation-bg-light-3', dark: 'foundation-bg-dark-3' },
+        { asset: 'foundation-text-primary', light: 'foundation-text-light-primary', dark: 'foundation-text-dark-primary' },
+        { asset: 'foundation-text-secondary', light: 'foundation-text-light-secondary', dark: 'foundation-text-dark-secondary' },
+        { asset: 'foundation-text-tertiary', light: 'foundation-text-light-tertiary', dark: 'foundation-text-dark-tertiary' },
+        { asset: 'foundation-icon-primary', light: 'foundation-icon-light-primary', dark: 'foundation-icon-dark-primary' },
+        { asset: 'foundation-icon-secondary', light: 'foundation-icon-light-secondary', dark: 'foundation-icon-dark-secondary' },
+        { asset: 'foundation-icon-tertiary', light: 'foundation-icon-light-tertiary', dark: 'foundation-icon-dark-tertiary' },
+        { asset: 'foundation-accent-blue', light: 'foundation-accent-blue-light', dark: 'foundation-accent-blue' },
+        { asset: 'foundation-accent-red', light: 'foundation-accent-red-light', dark: 'foundation-accent-red' },
+        { asset: 'foundation-accent-orange', light: 'foundation-accent-orange-light', dark: 'foundation-accent-orange' },
+        { asset: 'foundation-accent-green', light: 'foundation-accent-green-light', dark: 'foundation-accent-green' },
+        { asset: 'foundation-divider', light: 'foundation-bg-light-3', dark: 'foundation-bg-dark-3' },
+      ];
+
+      // Validate consistency
+      const mismatches = [];
+      const missing = [];
+
+      for (const mapping of catalogToCss) {
+        const swiftContents = swiftColors.get(mapping.asset);
+        if (!swiftContents) {
+          missing.push(`Swift colorset '${mapping.asset}' not found in Asset Catalog`);
+          continue;
+        }
+
+        const lightValue = cssColors.get(mapping.light);
+        const darkValue = cssColors.get(mapping.dark);
+
+        if (!lightValue) {
+          missing.push(`CSS color '${mapping.light}' not found in foundations.css`);
+        }
+        if (!darkValue) {
+          missing.push(`CSS color '${mapping.dark}' not found in foundations.css`);
+        }
+
+        const lightEntry = swiftContents.colors?.find((entry) => !entry.appearances);
+        const darkEntry = swiftContents.colors?.find((entry) => entry.appearances?.some((appearance) => appearance.value === 'dark'));
+
+        if (!lightEntry || !darkEntry) {
+          mismatches.push(`Swift colorset '${mapping.asset}' is missing light/dark variants`);
+          continue;
+        }
+
+        if (lightValue && normalizeHex(lightValue) !== componentsToHex(lightEntry.color.components)) {
+          mismatches.push(`Light mismatch for '${mapping.asset}': CSS ${mapping.light}=${lightValue} != Swift ${componentsToHex(lightEntry.color.components)}`);
+        }
+        if (darkValue && normalizeHex(darkValue) !== componentsToHex(darkEntry.color.components)) {
+          mismatches.push(`Dark mismatch for '${mapping.asset}': CSS ${mapping.dark}=${darkValue} != Swift ${componentsToHex(darkEntry.color.components)}`);
+        }
+      }
+
+      if (mismatches.length > 0 || missing.length > 0) {
+        console.error('  ❌ Token consistency validation failed:');
+        for (const error of [...mismatches, ...missing]) {
+          console.error(`     ${error}`);
+        }
+        throw new Error('Token consistency validation failed');
+      }
+
+      console.log(`  ✅ Validated ${catalogToCss.length} colorsets across CSS and Swift`);
+      this.results.push({ 
+        step: 'token-validation', 
+        success: true, 
+        colorCount: catalogToCss.length 
+      });
+
+    } catch (error) {
+      console.error('  ❌ Token validation failed:', error.message);
+      throw error;
+    }
+  }
+
+  /**
    * Check if tokens need regeneration based on source file changes
    */
   needsTokenRegeneration() {
@@ -333,7 +487,8 @@ class BuildPipeline {
 
     const outputFiles = [
       'packages/tokens/src/foundations.css',
-      'packages/ui-swift/Sources/ChatUISwift/DesignTokens.swift'
+      'swift/ChatUIFoundation/Sources/ChatUIFoundation/DesignTokens.swift',
+      'swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets'
     ];
 
     return this.needsRebuild(sourceFiles, outputFiles);
@@ -370,6 +525,7 @@ class BuildPipeline {
           }
         }
       } catch (error) {
+        void error;
         // If we can't check, assume rebuild needed
         return true;
       }
@@ -408,6 +564,7 @@ class BuildPipeline {
           }
         }
       } catch (error) {
+        void error;
         return true;
       }
     }
@@ -448,6 +605,7 @@ class BuildPipeline {
         }
       }
     } catch (error) {
+      void error;
       // Ignore errors
     }
     return files;
@@ -493,6 +651,7 @@ class BuildPipeline {
       execSync('which agvtool', { stdio: 'pipe' });
       return true;
     } catch (error) {
+      void error;
       return false;
     }
   }
@@ -506,6 +665,7 @@ class BuildPipeline {
         return JSON.parse(readFileSync(CONFIG.manifestFile, 'utf8'));
       } catch (error) {
         console.warn('Warning: Could not load build manifest, starting fresh');
+        void error;
       }
     }
     

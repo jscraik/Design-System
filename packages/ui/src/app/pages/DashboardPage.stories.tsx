@@ -1,4 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "@storybook/test";
+
 
 import { Button, ListItem } from "../components/ui";
 
@@ -13,6 +15,9 @@ const meta: Meta<typeof DashboardPage> = {
   tags: ["autodocs"],
   argTypes: {
     onNavigate: { action: "navigate" },
+  },
+  args: {
+    onNavigate: fn(),
   },
 };
 
@@ -59,10 +64,10 @@ export const WithSidebar: Story = {
       <div className="space-y-4">
         <h3 className="text-primary font-medium">Quick Links</h3>
         <div className="space-y-1">
-          <ListItem onClick={() => console.log("Analytics")}>📊 Analytics</ListItem>
-          <ListItem onClick={() => console.log("Reports")}>📈 Reports</ListItem>
-          <ListItem onClick={() => console.log("Export")}>💾 Export Data</ListItem>
-          <ListItem onClick={() => console.log("Settings")}>⚙️ Settings</ListItem>
+          <ListItem label="📊 Analytics" onClick={fn()} />
+          <ListItem label="📈 Reports" onClick={fn()} />
+          <ListItem label="💾 Export Data" onClick={fn()} />
+          <ListItem label="⚙️ Settings" onClick={fn()} />
         </div>
       </div>
     ),
@@ -85,19 +90,19 @@ export const FullyCustomized: Story = {
         <div>
           <h3 className="text-primary font-medium mb-3">Navigation</h3>
           <div className="space-y-1">
-            <ListItem active>📊 Dashboard</ListItem>
-            <ListItem>💬 Chats</ListItem>
-            <ListItem>📈 Analytics</ListItem>
-            <ListItem>⚙️ Settings</ListItem>
+            <ListItem label="📊 Dashboard" selected />
+            <ListItem label="💬 Chats" />
+            <ListItem label="📈 Analytics" />
+            <ListItem label="⚙️ Settings" />
           </div>
         </div>
 
         <div>
           <h3 className="text-primary font-medium mb-3">Recent</h3>
           <div className="space-y-1">
-            <ListItem>Code Review</ListItem>
-            <ListItem>Planning Session</ListItem>
-            <ListItem>Debug Help</ListItem>
+            <ListItem label="Code Review" />
+            <ListItem label="Planning Session" />
+            <ListItem label="Debug Help" />
           </div>
         </div>
       </div>

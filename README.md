@@ -15,6 +15,7 @@ A shared design system library that you can use across all your projects:
 - `@chatui/ui` - Reusable UI components (chat layout, header, sidebar, primitives)
 - `@chatui/runtime` - Host adapters + mocks (`window.openai` wrapper, HostProvider)
 - `@chatui/tokens` - Design tokens (CSS variables, Tailwind preset)
+ - `packages/cloudflare-template` - Cloudflare Workers deployment template for MCP
 
 ## Reference Harnesses
 
@@ -23,6 +24,19 @@ A shared design system library that you can use across all your projects:
 - `apps/mcp` - MCP server for ChatGPT integration
 - `packages/widgets` - Standalone widget bundles for ChatGPT
 
+## Contents
+
+- [Quick Start](#-quick-start)
+- [Pages & Navigation](#-pages--navigation)
+- [Documentation](#-documentation)
+- [Rules of the road](#rules-of-the-road)
+- [Apps SDK UI integration](#apps-sdk-ui-integration)
+- [Library exports](#library-exports)
+- [Compatibility matrix](#compatibility-matrix)
+- [Commands](#commands)
+- [Using in Other Projects](#using-in-other-projects)
+- [Development Workflow](#development-workflow)
+
 ## 🚀 Quick Start
 
 ```bash
@@ -30,23 +44,31 @@ A shared design system library that you can use across all your projects:
 pnpm install
 
 # Start development
-pnpm dev                    # Web app at http://localhost:5176
-pnpm storybook:dev         # Storybook at http://localhost:6006
+pnpm dev                    # Web app at http://localhost:5173 + Storybook at http://localhost:6006
+pnpm dev:web                # Web app only (http://localhost:5173)
+pnpm dev:storybook          # Storybook only (http://localhost:6006)
 
 # Build for production
-pnpm build                 # Build web app
-pnpm build:widget         # Build standalone widgets
+pnpm build                 # Build pipeline (web + macOS packages)
+pnpm build:web             # Web-only build
+pnpm build:widgets         # Widget bundles
+pnpm build:widget          # Single-file widget HTML (for MCP harness)
 ```
+
+### Verify
+
+- Web app: open <http://localhost:5173/>
+- Storybook: open <http://localhost:6006/>
 
 ## 📄 Pages & Navigation
 
 The web app includes a flexible page system with URL-based routing:
 
-- **Chat**: <http://localhost:5176/> (default)
-- **Settings**: <http://localhost:5176/settings>
-- **Profile**: <http://localhost:5176/profile>
-- **About**: <http://localhost:5176/about>
-- **Widget Harness**: <http://localhost:5176/harness>
+- **Chat**: <http://localhost:5173/> (default)
+- **Settings**: <http://localhost:5173/settings>
+- **Profile**: <http://localhost:5173/profile>
+- **About**: <http://localhost:5173/about>
+- **Widget Harness**: <http://localhost:5173/harness>
 
 ### Adding New Pages
 
@@ -347,7 +369,7 @@ This creates the component file and a Storybook story.
 
 ## Development Workflow
 
-1. **Design in Storybook** - `pnpm storybook:dev`
+1. **Design in Storybook** - `pnpm dev:storybook`
 2. **Test in Web App** - `pnpm dev:web`
 3. **Build Widgets** - `pnpm build:widgets`
 4. **Test in ChatGPT** - `pnpm mcp:start`

@@ -5,6 +5,7 @@ import { AspectRatio } from "./aspect-ratio";
 const meta: Meta<typeof AspectRatio> = {
   title: "UI/AspectRatio",
   component: AspectRatio,
+  tags: ["autodocs"],
   parameters: { layout: "centered" },
 };
 

@@ -220,7 +220,11 @@ export function DiscoverySettingsModal({
                   </div>
                 </div>
               </div>
-              <Toggle checked={manualRuns} onChange={setManualRuns} />
+              <Toggle
+                checked={manualRuns}
+                onChange={setManualRuns}
+                ariaLabel="Manual runs"
+              />
             </div>
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-3">
@@ -242,7 +246,7 @@ export function DiscoverySettingsModal({
                   </div>
                 </div>
               </div>
-              <Toggle checked={mcpRuns} onChange={setMcpRuns} />
+              <Toggle checked={mcpRuns} onChange={setMcpRuns} ariaLabel="MCP runs" />
             </div>
           </div>
         </div>
@@ -321,7 +325,7 @@ export function DiscoverySettingsModal({
                 </div>
               </div>
             </div>
-            <Toggle checked={storeLogs} onChange={setStoreLogs} />
+            <Toggle checked={storeLogs} onChange={setStoreLogs} ariaLabel="Store logs" />
           </div>
         </div>
       </ModalBody>

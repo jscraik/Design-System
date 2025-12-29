@@ -16,8 +16,10 @@
  *    }
  */
 
-const { dirname } = require("path");
-const { getPackageRoots } = require("@manypkg/get-package-roots").default;
+import { createRequire } from "module";
+import { dirname } from "path";
+
+const require = createRequire(import.meta.url);
 
 /**
  * Path patterns for each layer
@@ -86,7 +88,6 @@ const modalBoundariesRule = {
   },
   create(context) {
     const filename = context.getFilename();
-    const packageRoots = getPackageRoots(context.getCwd());
 
     // Determine which layer this file belongs to
     const getLayer = (filePath) => {
@@ -132,14 +133,23 @@ const modalBoundariesRule = {
             if (path.includes("modal.tsx") && relativePath.includes("ui/overlays/modal")) return "infrastructure";
             if (path.includes("useFocusTrap") && relativePath.includes("hooks/useFocusTrap")) return "infrastructure";
           }
-          for (const path of PATHS.modals) {
-            if (relativePath.includes("modals/") && PATHS.modals.some(p => p.includes(relativePath.split("/").pop()))) return "modals";
+          if (
+            relativePath.includes("modals/") &&
+            PATHS.modals.some((p) => p.includes(relativePath.split("/").pop()))
+          ) {
+            return "modals";
           }
-          for (const path of PATHS.settings) {
-            if (relativePath.includes("settings/") && PATHS.settings.some(p => p.includes(relativePath.split("/").pop()))) return "settings";
+          if (
+            relativePath.includes("settings/") &&
+            PATHS.settings.some((p) => p.includes(relativePath.split("/").pop()))
+          ) {
+            return "settings";
           }
-          for (const path of PATHS.panels) {
-            if (relativePath.includes("settings/") && PATHS.panels.some(p => p.includes(relativePath.split("/").pop()))) return "panels";
+          if (
+            relativePath.includes("settings/") &&
+            PATHS.panels.some((p) => p.includes(relativePath.split("/").pop()))
+          ) {
+            return "panels";
           }
           return null;
         };
@@ -207,7 +217,7 @@ const modalBoundariesRule = {
   },
 };
 
-module.exports = {
+export default {
   rules: {
     "@chatui/modal-boundaries": modalBoundariesRule,
   },

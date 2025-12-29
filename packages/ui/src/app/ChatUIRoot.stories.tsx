@@ -22,6 +22,7 @@ import {
 const meta: Meta<typeof ChatUIRoot> = {
   title: "ChatUI/ChatUIRoot",
   component: ChatUIRoot,
+  tags: ["autodocs"],
   args: {
     models: sampleModels,
     legacyModels: sampleLegacyModels,
@@ -123,7 +124,7 @@ export const WithComposerSlots: Story = {
     composerLeft: (
       <button
         className="p-2 bg-[var(--foundation-accent-blue)]/20 text-[var(--foundation-accent-blue)] rounded-lg transition-colors"
-        title="Custom Tool"
+        aria-label="Custom Tool"
       >
         <IconLightBulb className="size-4" />
       </button>
@@ -131,7 +132,7 @@ export const WithComposerSlots: Story = {
     composerRight: (
       <button
         className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg transition-colors"
-        title="AI Assistant"
+        aria-label="AI Assistant"
       >
         <IconPro className="size-4 text-white" />
       </button>
@@ -168,7 +169,7 @@ export const WithAllSlots: Story = {
     composerLeft: (
       <button
         className="p-2 bg-[var(--foundation-accent-blue)]/20 text-[var(--foundation-accent-blue)] rounded-lg transition-colors"
-        title="Custom Tool"
+        aria-label="Custom Tool"
       >
         <IconLightBulb className="size-4" />
       </button>
@@ -176,7 +177,7 @@ export const WithAllSlots: Story = {
     composerRight: (
       <button
         className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg transition-colors"
-        title="AI Assistant"
+        aria-label="AI Assistant"
       >
         <IconPro className="size-4 text-white" />
       </button>

@@ -4,7 +4,6 @@ import * as React from "react";
 import * as ResizablePrimitive from "react-resizable-panels";
 
 import { IconDotsVertical } from "../../../../icons";
-
 import { cn } from "../utils";
 
 function ResizablePanelGroup({

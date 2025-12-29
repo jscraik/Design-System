@@ -1,4 +1,5 @@
 import { cva } from "class-variance-authority";
+import { useId } from "react";
 
 import { cn } from "../utils";
 
@@ -38,6 +39,12 @@ export interface ToggleProps {
   className?: string;
   /** Active color */
   activeColor?: string;
+  /** Accessible label */
+  ariaLabel?: string;
+  /** Accessible label element id */
+  ariaLabelledby?: string;
+  /** Accessible description element id */
+  ariaDescribedby?: string;
 }
 
 /**
@@ -55,6 +62,9 @@ export function Toggle({
   disabled = false,
   className,
   activeColor = "var(--foundation-accent-green)",
+  ariaLabel,
+  ariaLabelledby,
+  ariaDescribedby,
 }: ToggleProps) {
   const sizes = {
     sm: { track: "w-8 h-4", thumb: "size-3", translate: "translate-x-4" },
@@ -69,6 +79,9 @@ export function Toggle({
       type="button"
       role="switch"
       aria-checked={checked}
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledby}
+      aria-describedby={ariaDescribedby}
       disabled={disabled}
       onClick={() => !disabled && onChange?.(!checked)}
       className={cn(
@@ -128,6 +141,9 @@ export function ToggleRow({
   onChange,
   className,
 }: ToggleRowProps) {
+  const labelId = useId();
+  const descriptionId = useId();
+
   return (
     <div className={cn("flex items-center justify-between", className)}>
       <div className="flex items-center gap-3">
@@ -137,17 +153,28 @@ export function ToggleRow({
           </div>
         )}
         <div>
-          <div className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+          <div
+            id={labelId}
+            className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary"
+          >
             {label}
           </div>
           {description && (
-            <div className="text-[12px] leading-[18px] text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+            <div
+              id={descriptionId}
+              className="text-[12px] leading-[18px] text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
+            >
               {description}
             </div>
           )}
         </div>
       </div>
-      <Toggle checked={checked} onChange={onChange} />
+      <Toggle
+        checked={checked}
+        onChange={onChange}
+        ariaLabelledby={labelId}
+        ariaDescribedby={description ? descriptionId : undefined}
+      />
     </div>
   );
 }

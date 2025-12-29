@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import { IconChevronLeftMd } from "../icons/ChatGPTIcons";
 
@@ -8,12 +8,15 @@ export function DataControlsPanel({ onBack }: SettingsPanelProps) {
   const [improveModel, setImproveModel] = useState(true);
   const [includeAudioRecordings, setIncludeAudioRecordings] = useState(true);
   const [includeVideoRecordings, setIncludeVideoRecordings] = useState(true);
+  const improveModelId = useId();
+  const includeAudioId = useId();
+  const includeVideoId = useId();
 
   return (
     <>
       <div className="px-6 py-4 border-b border-foundation-text-dark-primary/10 flex items-center gap-3">
         <div className="flex gap-2">
-          <button
+          <button type="button"
             onClick={onBack}
             className="size-3 rounded-full bg-foundation-accent-red hover:bg-foundation-accent-red/80 transition-colors"
             aria-label="Close"
@@ -22,8 +25,10 @@ export function DataControlsPanel({ onBack }: SettingsPanelProps) {
           <div className="size-3 rounded-full bg-foundation-accent-green" />
         </div>
         <button
+          type="button"
           onClick={onBack}
           className="p-1 hover:bg-foundation-bg-dark-3 rounded transition-colors"
+          aria-label="Back to settings"
         >
           <IconChevronLeftMd className="size-4 text-foundation-icon-dark-primary" />
         </button>
@@ -36,11 +41,18 @@ export function DataControlsPanel({ onBack }: SettingsPanelProps) {
         {/* Improve the model for everyone */}
         <div className="mb-6">
           <div className="flex items-center justify-between px-3 py-2.5">
-            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
+            <span
+              id={improveModelId}
+              className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary"
+            >
               Improve the model for everyone
             </span>
             <button
+              type="button"
               onClick={() => setImproveModel(!improveModel)}
+              role="switch"
+              aria-checked={improveModel}
+              aria-labelledby={improveModelId}
               className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${improveModel ? "bg-foundation-accent-green" : "bg-foundation-bg-dark-3"}`}
             >
               <span
@@ -51,7 +63,7 @@ export function DataControlsPanel({ onBack }: SettingsPanelProps) {
           <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary px-3 mt-1">
             Allow your content to be used to train our models, which makes ChatGPT better for you
             and everyone who uses it. We take steps to protect your privacy.{" "}
-            <button className="text-foundation-accent-blue hover:underline">Learn more</button>
+            <button type="button" className="text-foundation-accent-blue hover:underline">Learn more</button>
           </p>
         </div>
 
@@ -64,11 +76,18 @@ export function DataControlsPanel({ onBack }: SettingsPanelProps) {
           {/* Include audio recordings */}
           <div className="mb-3">
             <div className="flex items-center justify-between px-3 py-2.5">
-              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
+              <span
+                id={includeAudioId}
+                className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary"
+              >
                 Include audio recordings
               </span>
               <button
+                type="button"
                 onClick={() => setIncludeAudioRecordings(!includeAudioRecordings)}
+                role="switch"
+                aria-checked={includeAudioRecordings}
+                aria-labelledby={includeAudioId}
                 className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${includeAudioRecordings ? "bg-foundation-accent-green" : "bg-foundation-bg-dark-3"}`}
               >
                 <span
@@ -81,11 +100,18 @@ export function DataControlsPanel({ onBack }: SettingsPanelProps) {
           {/* Include video recordings */}
           <div className="mb-3">
             <div className="flex items-center justify-between px-3 py-2.5">
-              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
+              <span
+                id={includeVideoId}
+                className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary"
+              >
                 Include video recordings
               </span>
               <button
+                type="button"
                 onClick={() => setIncludeVideoRecordings(!includeVideoRecordings)}
+                role="switch"
+                aria-checked={includeVideoRecordings}
+                aria-labelledby={includeVideoId}
                 className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${includeVideoRecordings ? "bg-foundation-accent-green" : "bg-foundation-bg-dark-3"}`}
               >
                 <span
@@ -96,7 +122,7 @@ export function DataControlsPanel({ onBack }: SettingsPanelProps) {
             <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary px-3 mt-1">
               Include your audio or video recordings from Voice Mode to train our models.
               Transcripts and other data are covered by "Improve the model for everyone".{" "}
-              <button className="text-foundation-accent-blue hover:underline">Learn more</button>
+              <button type="button" className="text-foundation-accent-blue hover:underline">Learn more</button>
             </p>
           </div>
         </div>
@@ -107,7 +133,7 @@ export function DataControlsPanel({ onBack }: SettingsPanelProps) {
             <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
               Archive all chats
             </span>
-            <button className="px-3 py-1.5 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary bg-foundation-bg-dark-3 hover:bg-foundation-bg-dark-3/80 rounded-md transition-colors">
+            <button type="button" className="px-3 py-1.5 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary bg-foundation-bg-dark-3 hover:bg-foundation-bg-dark-3/80 rounded-md transition-colors">
               Archive
             </button>
           </div>
@@ -119,7 +145,7 @@ export function DataControlsPanel({ onBack }: SettingsPanelProps) {
             <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
               Delete all chats
             </span>
-            <button className="px-3 py-1.5 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white bg-foundation-accent-red hover:bg-foundation-accent-red/80 rounded-md transition-colors">
+            <button type="button" className="px-3 py-1.5 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-white bg-foundation-accent-red hover:bg-foundation-accent-red/80 rounded-md transition-colors">
               Delete all
             </button>
           </div>
@@ -131,7 +157,7 @@ export function DataControlsPanel({ onBack }: SettingsPanelProps) {
             <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
               Export data
             </span>
-            <button className="px-3 py-1.5 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary bg-foundation-bg-dark-3 hover:bg-foundation-bg-dark-3/80 rounded-md transition-colors">
+            <button type="button" className="px-3 py-1.5 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary bg-foundation-bg-dark-3 hover:bg-foundation-bg-dark-3/80 rounded-md transition-colors">
               Export
             </button>
           </div>
@@ -139,7 +165,7 @@ export function DataControlsPanel({ onBack }: SettingsPanelProps) {
 
         {/* Delete account */}
         <div className="px-3">
-          <button className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-accent-red hover:underline">
+          <button type="button" className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-accent-red hover:underline">
             Delete account
           </button>
         </div>

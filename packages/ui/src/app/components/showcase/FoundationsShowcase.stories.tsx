@@ -5,6 +5,7 @@ import { FoundationsShowcase } from "./FoundationsShowcase";
 const meta: Meta<typeof FoundationsShowcase> = {
   title: "DesignSystem/FoundationsShowcase",
   component: FoundationsShowcase,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },

@@ -8,12 +8,21 @@ export interface ChatMessage {
   timestamp: Date;
 }
 
+export type ChatMessageAction =
+  | "copy"
+  | "thumbs-up"
+  | "thumbs-down"
+  | "share"
+  | "regenerate"
+  | "more";
+
 interface ChatMessagesProps {
   emptyState?: React.ReactNode;
   messages?: ChatMessage[];
+  onMessageAction?: (action: ChatMessageAction, message: ChatMessage) => void;
 }
 
-export function ChatMessages({ emptyState, messages }: ChatMessagesProps) {
+export function ChatMessages({ emptyState, messages, onMessageAction }: ChatMessagesProps) {
   const resolvedMessages = messages ?? [];
 
   if (emptyState && resolvedMessages.length === 0) {
@@ -43,13 +52,15 @@ export function ChatMessages({ emptyState, messages }: ChatMessagesProps) {
                         await navigator.clipboard.writeText(message.content);
                       } catch {
                         // Silently fail on clipboard errors
+                      } finally {
+                        onMessageAction?.("copy", message);
                       }
                     }}
-                    onThumbsUp={() => console.log("Thumbs up:", message.id)}
-                    onThumbsDown={() => console.log("Thumbs down:", message.id)}
-                    onShare={() => console.log("Share:", message.id)}
-                    onRegenerate={() => console.log("Regenerate:", message.id)}
-                    onMore={() => console.log("More options:", message.id)}
+                    onThumbsUp={() => onMessageAction?.("thumbs-up", message)}
+                    onThumbsDown={() => onMessageAction?.("thumbs-down", message)}
+                    onShare={() => onMessageAction?.("share", message)}
+                    onRegenerate={() => onMessageAction?.("regenerate", message)}
+                    onMore={() => onMessageAction?.("more", message)}
                   />
                 </div>
               </div>
@@ -69,6 +80,8 @@ export function ChatMessages({ emptyState, messages }: ChatMessagesProps) {
                         await navigator.clipboard.writeText(message.content);
                       } catch {
                         // Silently fail on clipboard errors
+                      } finally {
+                        onMessageAction?.("copy", message);
                       }
                     }}
                     actions={["copy"]}

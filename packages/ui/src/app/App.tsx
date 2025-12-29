@@ -31,19 +31,19 @@ export default function App() {
       <div className="relative">
         <DesignSystemPage />
         <div className="fixed bottom-4 right-4 flex gap-2">
-          <button
+          <button type="button"
             onClick={() => setCurrentView("typography")}
             className="rounded-lg bg-white px-4 py-2 text-sm font-semibold shadow-lg hover:bg-gray-100"
           >
             Typography
           </button>
-          <button
+          <button type="button"
             onClick={() => setCurrentView("spacing")}
             className="rounded-lg bg-white px-4 py-2 text-sm font-semibold shadow-lg hover:bg-gray-100"
           >
             Spacing
           </button>
-          <button
+          <button type="button"
             onClick={() => setCurrentView("chat")}
             className="rounded-lg bg-foundation-bg-dark-1 px-4 py-2 text-sm font-semibold text-white shadow-lg hover:bg-foundation-bg-dark-2"
           >
@@ -59,19 +59,19 @@ export default function App() {
       <div className="relative">
         <TypographyPage />
         <div className="fixed bottom-4 right-4 flex gap-2">
-          <button
+          <button type="button"
             onClick={() => setCurrentView("design-system")}
             className="rounded-lg bg-white px-4 py-2 text-sm font-semibold shadow-lg hover:bg-gray-100"
           >
             ← Overview
           </button>
-          <button
+          <button type="button"
             onClick={() => setCurrentView("spacing")}
             className="rounded-lg bg-white px-4 py-2 text-sm font-semibold shadow-lg hover:bg-gray-100"
           >
             View Spacing →
           </button>
-          <button
+          <button type="button"
             onClick={() => setCurrentView("chat")}
             className="rounded-lg bg-foundation-bg-dark-1 px-4 py-2 text-sm font-semibold text-white shadow-lg hover:bg-foundation-bg-dark-2"
           >
@@ -87,19 +87,19 @@ export default function App() {
       <div className="relative">
         <SpacingPage />
         <div className="fixed bottom-4 right-4 flex gap-2">
-          <button
+          <button type="button"
             onClick={() => setCurrentView("design-system")}
             className="rounded-lg bg-white px-4 py-2 text-sm font-semibold shadow-lg hover:bg-gray-100"
           >
             ← Overview
           </button>
-          <button
+          <button type="button"
             onClick={() => setCurrentView("chat")}
             className="rounded-lg bg-foundation-bg-dark-1 px-4 py-2 text-sm font-semibold text-white shadow-lg hover:bg-foundation-bg-dark-2"
           >
             ← Back to Chat
           </button>
-          <button
+          <button type="button"
             onClick={() => setCurrentView("typography")}
             className="rounded-lg bg-white px-4 py-2 text-sm font-semibold shadow-lg hover:bg-gray-100"
           >

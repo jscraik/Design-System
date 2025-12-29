@@ -33,6 +33,7 @@
     "dev:verbose": "tsx scripts/dev-tools.ts --verbose",
     "dev:hot-reload": "tsx scripts/watch-tokens.ts",
     "dev:hot-reload:verbose": "tsx scripts/watch-tokens.ts --verbose",
+    "tokens:watch": "tsx src/dev-tools/token-watcher.ts",
     "test": "vitest --run",
     "test:watch": "vitest"
   },
@@ -42,6 +43,8 @@
   "devDependencies": {
     "tsx": "^4.7.0",
     "fast-check": "^3.15.1",
-    "vitest": "^4.0.16"
+    "vitest": "^4.0.16",
+    "chokidar": "^3.5.3",
+    "@types/node": "^20.0.0"
   }
 }

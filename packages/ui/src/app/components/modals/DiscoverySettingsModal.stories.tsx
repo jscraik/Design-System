@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "@storybook/test";
 
 import { DiscoverySettingsModal } from "./DiscoverySettingsModal";
 
 const meta: Meta<typeof DiscoverySettingsModal> = {
   title: "ChatUI/DiscoverySettingsModal",
   component: DiscoverySettingsModal,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },
@@ -22,10 +24,10 @@ type Story = StoryObj<typeof DiscoverySettingsModal>;
 export const Default: Story = {
   args: {
     isOpen: true,
-    onClose: () => {},
+    onClose: fn(),
     promptEnhancement: "rewrite",
-    onPromptEnhancementChange: () => {},
+    onPromptEnhancementChange: fn(),
     targetSize: 60,
-    onTargetSizeChange: () => {},
+    onTargetSizeChange: fn(),
   },
 };

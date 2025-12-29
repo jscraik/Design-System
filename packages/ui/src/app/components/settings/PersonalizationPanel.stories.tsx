@@ -11,7 +11,7 @@ import { PersonalizationPanel } from "./PersonalizationPanel";
  * ```tsx
  * import { PersonalizationPanel } from "@chatui/ui";
  *
- * <PersonalizationPanel onBack={() => console.log("back")} />
+ * <PersonalizationPanel onBack={fn()} />
  * ```
  */
 const meta: Meta<typeof PersonalizationPanel> = {

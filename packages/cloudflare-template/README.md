@@ -37,15 +37,16 @@ pnpm deploy
 
 ### 4. Add to ChatGPT
 
-After deployment, integrate with ChatGPT:
+After deployment, integrate with ChatGPT. UI labels change over time, so follow the on-screen prompts for adding an MCP server or connector.
 
 1. **Copy your MCP URL**: `https://your-app.your-subdomain.workers.dev/mcp`
-2. **Open ChatGPT** (web, mobile, or desktop app)
-3. **Go to Settings** → **Features/Integrations** → **MCP Servers**
-4. **Add new server**:
-   - **Name**: `ChatUI Widgets`
-   - **URL**: `https://your-app.your-subdomain.workers.dev/mcp`
-5. **Test it**: Try saying "Show me the dashboard" in ChatGPT
+2. **Open ChatGPT** and go to Settings
+3. **Add a new MCP server/connector**
+4. **Name**: `ChatUI Widgets`
+5. **URL**: `https://your-app.your-subdomain.workers.dev/mcp`
+6. **Test**: Try "Show me the dashboard" in ChatGPT
+
+For full steps and troubleshooting, see `docs/guides/CHATGPT_INTEGRATION.md`.
 
 🎉 **You're done!** Your widgets are now available in ChatGPT.
 

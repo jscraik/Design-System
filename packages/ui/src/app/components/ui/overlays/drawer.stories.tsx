@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "../base/button";
+
 import {
   Drawer,
   DrawerClose,
@@ -15,6 +16,7 @@ import {
 const meta: Meta<typeof Drawer> = {
   title: "UI/Drawer",
   component: Drawer,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },

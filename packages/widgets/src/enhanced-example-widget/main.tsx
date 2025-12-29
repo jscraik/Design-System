@@ -11,8 +11,10 @@ import {
     useToolOutput,
     useWidgetState
 } from "../shared/openai-hooks";
-import { createWidget, WidgetErrorBoundary } from "../shared/widget-base";
+import { createWidget, mountWidget, WidgetErrorBoundary } from "../shared/widget-base";
 import "../styles.css";
+
+const isDev = Boolean(import.meta.env?.DEV);
 
 // Mock data for development
 if (import.meta.env.DEV) {
@@ -64,7 +66,9 @@ function EnhancedExampleCore() {
 
   const handleCallTool = async () => {
     if (!callTool) {
-      console.warn('callTool not available');
+      if (isDev) {
+        console.warn('callTool not available');
+      }
       return;
     }
 
@@ -84,7 +88,9 @@ function EnhancedExampleCore() {
         interactions: [...(prev?.interactions || []), `Tool called at ${new Date().toLocaleTimeString()}`]
       }));
     } catch (error) {
-      console.error("Tool call failed:", error);
+      if (isDev) {
+        console.error("Tool call failed:", error);
+      }
     }
   };
 
@@ -95,7 +101,9 @@ function EnhancedExampleCore() {
       const newMode = displayMode === 'fullscreen' ? 'inline' : 'fullscreen';
       await requestMode({ mode: newMode });
     } catch (error) {
-      console.error('Failed to change display mode:', error);
+      if (isDev) {
+        console.error('Failed to change display mode:', error);
+      }
     }
   };
 
@@ -206,12 +214,12 @@ function EnhancedExampleCore() {
       </Card>
 
       {/* Items List */}
-      {items.length > 0 && (
+          {items.length > 0 && (
         <Card className="p-4">
           <h2 className="text-lg font-semibold text-white mb-2">Items</h2>
           <ul className="space-y-1">
-            {items.map((item, index) => (
-              <li key={index} className="text-gray-300 text-sm">
+            {items.map((item) => (
+              <li key={item} className="text-gray-300 text-sm">
                 • {item}
               </li>
             ))}
@@ -224,8 +232,8 @@ function EnhancedExampleCore() {
         <Card className="p-4">
           <h2 className="text-lg font-semibold text-white mb-2">Recent Interactions</h2>
           <div className="space-y-1 max-h-32 overflow-y-auto">
-            {currentState.interactions.slice(-5).map((interaction, index) => (
-              <div key={index} className="text-xs text-gray-400">
+            {currentState.interactions.slice(-5).map((interaction) => (
+              <div key={interaction} className="text-xs text-gray-400">
                 {interaction}
               </div>
             ))}
@@ -256,6 +264,11 @@ const EnhancedExampleWidget = createWidget(
     className: "max-w-2xl mx-auto",
   }
 );
+
+// Mount into the DOM when used as a standalone widget entry
+if (typeof document !== "undefined") {
+  mountWidget(<EnhancedExampleWidget />);
+}
 
 // Export for potential reuse
 export { EnhancedExampleCore, EnhancedExampleWidget };

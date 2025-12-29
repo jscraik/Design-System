@@ -15,7 +15,7 @@ import { spacingScale } from '../src/spacing.js';
 
 describe('Token Generation Properties', () => {
     test('Property 1: Token Generation Consistency', () => {
-        fc.assert(fc.property(
+        fc.assert(fc.asyncProperty(
             // Generate arbitrary color tokens that match our structure
             fc.record({
                 colors: fc.record({
@@ -64,13 +64,15 @@ describe('Token Generation Properties', () => {
                             blue: fc.hexaString({ minLength: 6, maxLength: 6 }).map(h => `#${h.toUpperCase()}`),
                             red: fc.hexaString({ minLength: 6, maxLength: 6 }).map(h => `#${h.toUpperCase()}`),
                             orange: fc.hexaString({ minLength: 6, maxLength: 6 }).map(h => `#${h.toUpperCase()}`),
-                            green: fc.hexaString({ minLength: 6, maxLength: 6 }).map(h => `#${h.toUpperCase()}`)
+                            green: fc.hexaString({ minLength: 6, maxLength: 6 }).map(h => `#${h.toUpperCase()}`),
+                            purple: fc.hexaString({ minLength: 6, maxLength: 6 }).map(h => `#${h.toUpperCase()}`)
                         }),
                         dark: fc.record({
                             blue: fc.hexaString({ minLength: 6, maxLength: 6 }).map(h => `#${h.toUpperCase()}`),
                             red: fc.hexaString({ minLength: 6, maxLength: 6 }).map(h => `#${h.toUpperCase()}`),
                             orange: fc.hexaString({ minLength: 6, maxLength: 6 }).map(h => `#${h.toUpperCase()}`),
-                            green: fc.hexaString({ minLength: 6, maxLength: 6 }).map(h => `#${h.toUpperCase()}`)
+                            green: fc.hexaString({ minLength: 6, maxLength: 6 }).map(h => `#${h.toUpperCase()}`),
+                            purple: fc.hexaString({ minLength: 6, maxLength: 6 }).map(h => `#${h.toUpperCase()}`)
                         })
                     })
                 }),
@@ -148,7 +150,7 @@ describe('Token Generation Properties', () => {
                 expect(cssOutput).toContain(`"${generatedTokens.typography.fontFamily}"`);
 
                 expect(swiftOutput).toContain(`public static let size: CGFloat = ${generatedTokens.typography.heading1.size}`);
-                expect(cssOutput).toContain(`--foundation-heading-1-size: ${generatedTokens.typography.heading1.size}px;`);
+                expect(cssOutput).toContain(`--foundation-heading1-size: ${generatedTokens.typography.heading1.size}px;`);
 
                 // Test 4: Spacing values should match
                 generatedTokens.spacing.forEach((value) => {
@@ -174,13 +176,14 @@ describe('Token Generation Properties', () => {
                 expect(cssOutput).toBe(cssOutput2);
 
                 // Test 7: Manifest generation should work
-                const manifest = await generator.generateManifest(swiftOutput, cssOutput);
+                const assetCatalogOutput = await generator.generateAssetCatalog();
+                const manifest = await generator.generateManifest(swiftOutput, cssOutput, assetCatalogOutput);
                 expect(manifest.version).toBe("1.0.0");
                 expect(manifest.sha256.swift).toHaveLength(64); // SHA256 hex length
                 expect(manifest.sha256.css).toHaveLength(64);
+                expect(manifest.sha256.assetCatalog).toHaveLength(64); // Asset Catalog hash
                 expect(manifest.generated).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/); // ISO string
 
-                return true;
             }
         ), {
             numRuns: 100,
@@ -194,7 +197,8 @@ describe('Token Generation Properties', () => {
 
         const swiftOutput = await generator.generateSwift();
         const cssOutput = await generator.generateCSS();
-        const manifest = await generator.generateManifest(swiftOutput, cssOutput);
+        const assetCatalogOutput = await generator.generateAssetCatalog();
+        const manifest = await generator.generateManifest(swiftOutput, cssOutput, assetCatalogOutput);
 
         // Verify real token values are present
         expect(swiftOutput).toContain('Color(hex: "#FFFFFF")'); // background.light.primary
@@ -215,6 +219,7 @@ describe('Token Generation Properties', () => {
         expect(manifest.version).toBe("1.0.0");
         expect(manifest.sha256.swift).toHaveLength(64);
         expect(manifest.sha256.css).toHaveLength(64);
+        expect(manifest.sha256.assetCatalog).toHaveLength(64);
         expect(new Date(manifest.generated)).toBeInstanceOf(Date);
     });
 
@@ -224,31 +229,35 @@ describe('Token Generation Properties', () => {
 
         const swift1 = await generator.generateSwift();
         const css1 = await generator.generateCSS();
+        const assetCatalog1 = await generator.generateAssetCatalog();
 
         // Wait a bit to ensure timestamp differences don't affect determinism
         await new Promise(resolve => setTimeout(resolve, 10));
 
         const swift2 = await generator.generateSwift();
         const css2 = await generator.generateCSS();
+        const assetCatalog2 = await generator.generateAssetCatalog();
 
         // Outputs should be identical (deterministic)
         expect(swift1).toBe(swift2);
         expect(css1).toBe(css2);
+        expect(assetCatalog1).toBe(assetCatalog2);
 
         // Manifests should have different timestamps but same content hashes
-        const manifest1 = await generator.generateManifest(swift1, css1);
-        const manifest2 = await generator.generateManifest(swift2, css2);
+        const manifest1 = await generator.generateManifest(swift1, css1, assetCatalog1);
+        const manifest2 = await generator.generateManifest(swift2, css2, assetCatalog2);
 
         expect(manifest1.sha256.swift).toBe(manifest2.sha256.swift);
         expect(manifest1.sha256.css).toBe(manifest2.sha256.css);
+        expect(manifest1.sha256.assetCatalog).toBe(manifest2.sha256.assetCatalog);
     });
 });
 
 // Test helper class that extends TokenGenerator to accept custom tokens
 class TestTokenGenerator extends TokenGenerator {
-    constructor(private customTokens: any) {
+    constructor(private customTokens: Record<string, unknown>) {
         super();
         // Override the tokens property
-        (this as any).tokens = customTokens;
+        (this as { tokens: Record<string, unknown> }).tokens = customTokens;
     }
 }

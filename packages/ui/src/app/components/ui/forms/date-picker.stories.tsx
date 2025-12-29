@@ -1,4 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, fn, userEvent, within } from "@storybook/test";
 import { useState } from "react";
 
 import { DatePicker, DateRangePicker } from "./date-picker";
@@ -11,6 +12,20 @@ const meta: Meta<typeof DatePicker> = {
     backgrounds: { default: "dark" },
   },
   tags: ["autodocs"],
+  argTypes: {
+    placeholder: {
+      control: "text",
+      description: "Placeholder text when no date is selected",
+    },
+    disabled: {
+      control: "boolean",
+      description: "Disable the date picker",
+    },
+  },
+  args: {
+    placeholder: "Pick a date",
+    disabled: false,
+  },
   decorators: [
     (Story) => (
       <div className="w-[300px]">
@@ -23,23 +38,37 @@ const meta: Meta<typeof DatePicker> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const referenceDate = new Date(Date.UTC(2024, 0, 15, 12));
+const minRangeDate = new Date(Date.UTC(2024, 0, 1, 12));
+const maxRangeDate = new Date(Date.UTC(2024, 1, 1, 12));
+const nextWeekDate = new Date(Date.UTC(2024, 0, 22, 12));
+
 export const Default: Story = {
-  render: () => {
+  render: (args) => {
     const [date, setDate] = useState<Date | undefined>();
-    return <DatePicker value={date} onValueChange={setDate} />;
+    return <DatePicker value={date} onValueChange={setDate} {...args} />;
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const trigger = canvas.getByRole("button", { name: /pick a date/i });
+    await userEvent.click(trigger);
+    const doc = canvasElement.ownerDocument;
+    const overlay = within(doc.body);
+    await userEvent.click(overlay.getByRole("button", { name: "15" }));
+    await expect(trigger).toHaveTextContent("January 15, 2024");
   },
 };
 
 export const WithPreselectedDate: Story = {
   render: () => {
-    const [date, setDate] = useState<Date | undefined>(new Date());
+    const [date, setDate] = useState<Date | undefined>(referenceDate);
     return <DatePicker value={date} onValueChange={setDate} />;
   },
 };
 
 export const Disabled: Story = {
   render: () => {
-    const [date, setDate] = useState<Date | undefined>(new Date());
+    const [date, setDate] = useState<Date | undefined>(referenceDate);
     return <DatePicker value={date} onValueChange={setDate} disabled />;
   },
 };
@@ -56,13 +85,12 @@ export const CustomPlaceholder: Story = {
 export const WithMinDate: Story = {
   render: () => {
     const [date, setDate] = useState<Date | undefined>();
-    const today = new Date();
     return (
       <div className="space-y-2">
         <DatePicker
           value={date}
           onValueChange={setDate}
-          minDate={today}
+          minDate={referenceDate}
           placeholder="Select future date..."
         />
         <p className="text-sm text-foundation-text-dark-tertiary">
@@ -76,13 +104,12 @@ export const WithMinDate: Story = {
 export const WithMaxDate: Story = {
   render: () => {
     const [date, setDate] = useState<Date | undefined>();
-    const today = new Date();
     return (
       <div className="space-y-2">
         <DatePicker
           value={date}
           onValueChange={setDate}
-          maxDate={today}
+          maxDate={referenceDate}
           placeholder="Select past date..."
         />
         <p className="text-sm text-foundation-text-dark-tertiary">
@@ -96,17 +123,13 @@ export const WithMaxDate: Story = {
 export const WithDateRange: Story = {
   render: () => {
     const [date, setDate] = useState<Date | undefined>();
-    const minDate = new Date();
-    minDate.setDate(minDate.getDate() - 30);
-    const maxDate = new Date();
-    maxDate.setDate(maxDate.getDate() + 30);
     return (
       <div className="space-y-2">
         <DatePicker
           value={date}
           onValueChange={setDate}
-          minDate={minDate}
-          maxDate={maxDate}
+          minDate={minRangeDate}
+          maxDate={maxRangeDate}
           placeholder="Select date within range..."
         />
         <p className="text-sm text-foundation-text-dark-tertiary">
@@ -119,7 +142,7 @@ export const WithDateRange: Story = {
 
 export const CustomFormat: Story = {
   render: () => {
-    const [date, setDate] = useState<Date | undefined>(new Date());
+    const [date, setDate] = useState<Date | undefined>(referenceDate);
     return (
       <DatePicker
         value={date}
@@ -138,7 +161,7 @@ export const CustomFormat: Story = {
 
 export const ISOFormat: Story = {
   render: () => {
-    const [date, setDate] = useState<Date | undefined>(new Date());
+    const [date, setDate] = useState<Date | undefined>(referenceDate);
     return (
       <DatePicker
         value={date}
@@ -169,12 +192,8 @@ export const RangePicker: Story = {
 
 export const RangePickerWithDates: Story = {
   render: () => {
-    const today = new Date();
-    const nextWeek = new Date();
-    nextWeek.setDate(today.getDate() + 7);
-
-    const [startDate, setStartDate] = useState<Date | undefined>(today);
-    const [endDate, setEndDate] = useState<Date | undefined>(nextWeek);
+    const [startDate, setStartDate] = useState<Date | undefined>(referenceDate);
+    const [endDate, setEndDate] = useState<Date | undefined>(nextWeekDate);
     return (
       <DateRangePicker
         startDate={startDate}
@@ -190,12 +209,13 @@ export const RangePickerWithDates: Story = {
 
 export const RangePickerDisabled: Story = {
   render: () => {
-    const today = new Date();
-    const nextWeek = new Date();
-    nextWeek.setDate(today.getDate() + 7);
-
     return (
-      <DateRangePicker startDate={today} endDate={nextWeek} onRangeChange={() => {}} disabled />
+      <DateRangePicker
+        startDate={referenceDate}
+        endDate={nextWeekDate}
+        onRangeChange={fn()}
+        disabled
+      />
     );
   },
 };

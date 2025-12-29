@@ -6,7 +6,6 @@ import {
   IconThumbDown,
   IconThumbUp,
 } from "../../../../icons";
-
 import { IconButton } from "../base/icon-button";
 import { cn } from "../utils";
 

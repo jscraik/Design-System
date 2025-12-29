@@ -13,6 +13,7 @@ import {
 const meta: Meta<typeof Menubar> = {
   title: "UI/Menubar",
   component: Menubar,
+  tags: ["autodocs"],
   parameters: { layout: "centered" },
 };
 

@@ -13,6 +13,7 @@ import {
 const meta: Meta<typeof NavigationMenu> = {
   title: "UI/NavigationMenu",
   component: NavigationMenu,
+  tags: ["autodocs"],
   parameters: { layout: "centered" },
 };
 

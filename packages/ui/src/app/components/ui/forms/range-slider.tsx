@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 import { cn } from "../utils";
 
 export interface RangeSliderProps {
@@ -13,6 +15,8 @@ export interface RangeSliderProps {
   step?: number;
   /** Label text */
   label?: string;
+  /** Accessible label if no visible label is provided */
+  ariaLabel?: string;
   /** Value suffix (e.g., "k", "%") */
   suffix?: string;
   /** Show value display */
@@ -47,12 +51,14 @@ export function RangeSlider({
   max = 100,
   step = 1,
   label,
+  ariaLabel,
   suffix = "",
   showValue = true,
   gradient,
   disabled = false,
   className,
 }: RangeSliderProps) {
+  const inputId = useId();
   const percentage = ((value - min) / (max - min)) * 100;
 
   const defaultGradient = `linear-gradient(to right, var(--foundation-range-fill) 0%, var(--foundation-range-fill) ${percentage}%, var(--foundation-range-track) ${percentage}%, var(--foundation-range-track) 100%)`;
@@ -62,7 +68,12 @@ export function RangeSlider({
       {(label || showValue) && (
         <div className="flex items-center justify-between">
           {label && (
-            <label className="text-[13px] font-normal leading-[18px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">{label}</label>
+            <label
+              htmlFor={inputId}
+              className="text-[13px] font-normal leading-[18px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary"
+            >
+              {label}
+            </label>
           )}
           {showValue && (
             <span className="text-[13px] font-medium leading-[18px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
@@ -73,6 +84,7 @@ export function RangeSlider({
         </div>
       )}
       <input
+        id={inputId}
         type="range"
         min={min}
         max={max}
@@ -80,6 +92,7 @@ export function RangeSlider({
         value={value}
         onChange={(e) => onChange?.(Number(e.target.value))}
         disabled={disabled}
+        aria-label={ariaLabel ?? label ?? "Range slider"}
         className={cn(
           "w-full h-1.5 rounded-lg appearance-none cursor-pointer [--foundation-range-track:var(--foundation-bg-light-3)] [--foundation-range-thumb:var(--foundation-bg-light-1)] [--foundation-range-fill:var(--foundation-accent-green)] dark:[--foundation-range-track:var(--foundation-bg-dark-3)] dark:[--foundation-range-thumb:var(--foundation-bg-dark-1)]",
           "[&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[var(--foundation-range-thumb)] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-sm",

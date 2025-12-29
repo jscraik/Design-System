@@ -1,4 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import type { ComponentProps } from "react";
 import { useState } from "react";
 
 import { Button } from "../base/button";
@@ -17,7 +18,9 @@ const meta: Meta<typeof ModalDialog> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const ModalWrapper = (args: any) => {
+const ModalWrapper = (
+  args: Omit<ComponentProps<typeof ModalDialog>, "isOpen" | "onClose" | "children">
+) => {
   const [isOpen, setIsOpen] = useState(false);
   
   return (

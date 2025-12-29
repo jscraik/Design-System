@@ -131,8 +131,9 @@ setCSSVar("--foundation-accent-blue", "#0066cc");
 4. **Test Components**
 
    ```bash
-   pnpm storybook:dev  # Visual testing
-   pnpm type-check     # TypeScript validation
+   pnpm storybook:dev   # Visual testing
+   pnpm storybook:test  # Storybook interaction tests
+   pnpm type-check      # TypeScript validation
    ```
 
 ### Compatibility

@@ -51,7 +51,7 @@ The primary button component with multiple variants and sizes.
 
 ```tsx
 // Basic usage
-<Button onClick={() => console.log('clicked')}>
+<Button onClick={() => {}}>
   Click me
 </Button>
 
@@ -175,7 +175,7 @@ Removable tag component for displaying active context or filters.
           icon={<span>📁</span>}
           label="With close button"
           variant="blue"
-          onClose={() => console.log("Closed")}
+          onClose={() => {}}
         />
       </div>
     </div>
@@ -323,12 +323,12 @@ Action buttons for chat messages with configurable actions.
         <MessageActions
           messageId="example"
           actions={["copy", "thumbsUp", "thumbsDown", "share", "regenerate", "more"]}
-          onCopy={() => console.log("Copied")}
-          onThumbsUp={() => console.log("Thumbs up")}
-          onThumbsDown={() => console.log("Thumbs down")}
-          onShare={() => console.log("Shared")}
-          onRegenerate={() => console.log("Regenerated")}
-          onMore={() => console.log("More options")}
+          onCopy={() => {}}
+          onThumbsUp={() => {}}
+          onThumbsDown={() => {}}
+          onShare={() => {}}
+          onRegenerate={() => {}}
+          onMore={() => {}}
         />
       </div>
     </div>

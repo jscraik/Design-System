@@ -2,11 +2,13 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { toast } from "sonner";
 
 import { Button } from "../base/button";
+
 import { Toaster } from "./sonner";
 
 const meta: Meta<typeof Toaster> = {
   title: "UI/Sonner",
   component: Toaster,
+  tags: ["autodocs"],
   parameters: { layout: "centered" },
 };
 

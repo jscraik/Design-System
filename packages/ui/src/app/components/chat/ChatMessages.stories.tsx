@@ -7,6 +7,7 @@ import { ChatMessages } from "./ChatMessages";
 const meta: Meta<typeof ChatMessages> = {
   title: "ChatUI/ChatMessages",
   component: ChatMessages,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },

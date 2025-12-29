@@ -1,62 +1,80 @@
-**Add your own guidelines here**
+# Design Guidelines for ChatUI
 
-<!--
+These guidelines keep the UI consistent across ChatGPT widgets and standalone apps.
 
-System Guidelines
+## Core principles
 
-Use this file to provide the AI with rules and guidelines you want it to follow.
-This template outlines a few examples of things you can add. You can add your own sections and format it to suit your needs
+- **Use Apps SDK UI first.** Prefer `@openai/apps-sdk-ui` components and `@chatui/ui` wrappers.
+- **Avoid raw tokens in production UI.** `@chatui/tokens` is for audits and extensions only.
+- **Match the system defaults.** Stick to component defaults before adding custom styling.
+- **Accessibility is non-negotiable.** Every interactive control must be usable by keyboard and assistive tech.
 
-TIP: More context isn't always better. It can confuse the LLM. Try and add the most important rules you need
+## Component usage
 
-# General guidelines
+### Use the UI library exports
 
-Any general rules you want the AI to follow.
-For example:
+```tsx
+import { Button, Card, IconButton } from "@chatui/ui";
+```
 
-* Only use absolute positioning when necessary. Opt for responsive and well structured layouts that use flexbox and grid by default
-* Refactor code as you go to keep code clean
-* Keep file sizes small and put helper functions and components in their own files.
+If you need tree-shaking, use subpath exports:
 
---------------
+```tsx
+import { Button } from "@chatui/ui/forms";
+import { SectionHeader } from "@chatui/ui/layout";
+```
 
-# Design system guidelines
-Rules for how the AI should make generations look like your company's design system
+### Avoid direct imports from underlying libraries
 
-Additionally, if you select a design system to use in the prompt box, you can reference
-your design system's components, tokens, variables and components.
-For example:
+- Do not import `@radix-ui/*` outside `packages/ui/src/primitives`.
+- Do not import `lucide-react` directly; use the icons adapter in `packages/ui/src/icons`.
 
-* Use a base font-size of 14px
-* Date formats should always be in the format “Jun 10”
-* The bottom toolbar should only ever have a maximum of 4 items
-* Never use the floating action button with the bottom toolbar
-* Chips should always come in sets of 3 or more
-* Don't use a dropdown if there are 2 or fewer options
+## Layout and spacing
 
-You can also create sub sections and add more specific details
-For example:
+- Use the layout components (`Card`, `SectionHeader`, `CollapsibleSection`) before writing custom containers.
+- Keep page layouts simple: one primary column, consistent padding, and predictable section breaks.
+- Prefer `flex` and `grid` layouts with Tailwind utilities; avoid absolute positioning unless required.
 
+## Colors and typography
 
-## Button
-The Button component is a fundamental interactive element in our design system, designed to trigger actions or navigate
-users through the application. It provides visual feedback and clear affordances to enhance user experience.
+- Use component defaults and semantic classes from Apps SDK UI.
+- Do not hardcode hex colors or raw CSS variables in new UI code.
+- If you need a token, add it to `@chatui/ui` or the Apps SDK UI layer, not directly in the page.
 
-### Usage
-Buttons should be used for important actions that users need to take, such as form submissions, confirming choices,
-or initiating processes. They communicate interactivity and should have clear, action-oriented labels.
+## Icons and imagery
 
-### Variants
-* Primary Button
-  * Purpose : Used for the main action in a section or page
-  * Visual Style : Bold, filled with the primary brand color
-  * Usage : One primary button per section to guide users toward the most important action
-* Secondary Button
-  * Purpose : Used for alternative or supporting actions
-  * Visual Style : Outlined with the primary color, transparent background
-  * Usage : Can appear alongside a primary button for less important actions
-* Tertiary Button
-  * Purpose : Used for the least important actions
-  * Visual Style : Text-only with no border, using primary color
-  * Usage : For actions that should be available but not emphasized
--->
+- Use existing icons from the adapter before adding new SVGs.
+- Provide accessible names for icon-only controls (aria-label, title, or visually hidden text).
+
+## Accessibility checklist
+
+Every new UI surface should pass these checks:
+
+- All interactive elements are reachable by keyboard.
+- Focus styles are visible (not color-only).
+- Icon-only buttons have accessible labels.
+- Dialogs and menus are announced correctly by screen readers.
+
+Use the existing test workflows:
+
+- `pnpm test:a11y:widgets`
+- `docs/KEYBOARD_NAVIGATION_TESTS.md`
+
+## Review standard
+
+Before merging, verify:
+
+- Component and styling choices are consistent with Apps SDK UI.
+- No raw tokens or hex colors were introduced in UI code.
+- A11y checks are satisfied and tests are updated if needed.
+
+## Verify
+
+- `pnpm lint:compliance` catches forbidden imports and token misuse.
+- `pnpm test:a11y:widgets` confirms keyboard and screen reader paths for widgets.
+
+## Related docs
+
+- Component usage: `packages/ui/README.md`
+- Page patterns: `docs/guides/PAGES_QUICK_START.md`
+- Accessibility tests: `docs/KEYBOARD_NAVIGATION_TESTS.md`

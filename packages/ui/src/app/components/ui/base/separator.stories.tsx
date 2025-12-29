@@ -5,6 +5,7 @@ import { Separator } from "./separator";
 const meta: Meta<typeof Separator> = {
   title: "UI/Separator",
   component: Separator,
+  tags: ["autodocs"],
   parameters: { layout: "centered" },
 };
 

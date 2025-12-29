@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "storybook dev -p 6006",
     "build": "storybook build",
-    "test": "vitest --project=storybook",
-    "test:coverage": "vitest --project=storybook --coverage"
+    "test": "vitest --project=storybook run --browser",
+    "test:coverage": "vitest --project=storybook run --browser --coverage"
   },
   "dependencies": {
     "@chatui/runtime": "workspace:*",
@@ -19,10 +19,10 @@
   "devDependencies": {
     "@storybook/addon-a11y": "^10.1.10",
     "@storybook/addon-docs": "^10.1.10",
-    "@storybook/addon-themes": "^10.1.10",
+    "@storybook/addon-vitest": "^10.1.10",
     "@storybook/react": "^10.1.10",
     "@storybook/react-vite": "^10.1.10",
-    "@storybook/test": "^8.6.14",
+    "@storybook/test": "^8.6.15",
     "@tailwindcss/vite": "4.1.12",
     "storybook": "^10.1.10",
     "tailwindcss": "4.1.12",

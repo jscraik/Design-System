@@ -4,9 +4,20 @@ import type { Route } from "../Router";
 
 interface AboutPageProps {
   onNavigate: (route: Route) => void;
+  onOpenGithub?: () => void;
 }
 
-export function AboutPage({ onNavigate }: AboutPageProps) {
+export function AboutPage({ onNavigate, onOpenGithub }: AboutPageProps) {
+  const handleOpenGithub = () => {
+    if (onOpenGithub) {
+      onOpenGithub();
+      return;
+    }
+    if (typeof window !== "undefined") {
+      window.open("https://github.com", "_blank", "noopener,noreferrer");
+    }
+  };
+
   const features = [
     {
       title: "AI-Powered Conversations",
@@ -69,7 +80,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
           </div>
           <div className="flex justify-center gap-4">
             <Button onClick={() => onNavigate("chat")}>Start Chatting</Button>
-            <Button variant="outline" onClick={() => window.open("https://github.com", "_blank")}>
+            <Button variant="outline" onClick={handleOpenGithub}>
               View on GitHub
             </Button>
           </div>

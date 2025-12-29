@@ -3,6 +3,7 @@ import { AppsSDKUIProvider } from "@chatui/ui";
 import { Button } from "@openai/apps-sdk-ui/components/Button";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+
 import { CodeBlock } from "../shared/code-block";
 import "../styles.css";
 

@@ -1,19 +1,20 @@
 # Pages Quick Start Guide
 
-## 🚀 Add a New Page in 5 Minutes
+Add a new web app page with routing, navigation, and a starter layout.
 
-### Simple App Page (Most Common)
+## Prerequisites
 
-1. **Create the page file:**
+- `pnpm install` completed
+- Dev server available (`pnpm dev`)
 
-```bash
-# Create: apps/web/src/pages/MyPage.tsx
-```
+## Quick start: add a simple page
 
-1. **Use this template:**
+### 1) Create the page file
+
+Create `apps/web/src/pages/MyPage.tsx`:
 
 ```tsx
-import { Button, Card, IconButton } from "@chatui/ui";
+import { Button, Card, IconButton, SectionHeader } from "@chatui/ui";
 import type { Route } from "../Router";
 
 interface MyPageProps {
@@ -22,8 +23,8 @@ interface MyPageProps {
 
 export function MyPage({ onNavigate }: MyPageProps) {
   return (
-    <div className="min-h-screen bg-[var(--foundation-bg-dark-1)]">
-      <div className="border-b border-white/10 bg-[var(--foundation-bg-dark-2)]">
+    <div className="min-h-screen">
+      <div className="border-b">
         <div className="flex items-center gap-3 p-4">
           <IconButton
             icon={<span>←</span>}
@@ -31,13 +32,15 @@ export function MyPage({ onNavigate }: MyPageProps) {
             title="Back to Chat"
             variant="ghost"
           />
-          <h1 className="text-xl font-semibold text-white">My Page</h1>
+          <h1 className="text-xl font-semibold">My Page</h1>
         </div>
       </div>
-      <div className="max-w-4xl mx-auto p-6">
+      <div className="mx-auto max-w-4xl p-6">
         <Card className="p-6">
-          <h2 className="text-lg font-semibold text-white mb-4">Welcome to My Page</h2>
-          <p className="text-white/80">Add your content here!</p>
+          <SectionHeader
+            title="Welcome to My Page"
+            description="Add your content here."
+          />
         </Card>
       </div>
     </div>
@@ -45,13 +48,15 @@ export function MyPage({ onNavigate }: MyPageProps) {
 }
 ```
 
-1. **Add to Router (apps/web/src/Router.tsx):**
+### 2) Register the route
+
+Update `apps/web/src/Router.tsx` in these places:
 
 ```tsx
 // Add to Route type
 export type Route =
   | "chat" | "harness" | "settings" | "profile" | "about"
-  | "mypage";  // ← Add this
+  | "mypage";
 
 // Add to URL parsing (in useState initializer)
 if (path === "/mypage") return "mypage";
@@ -64,30 +69,37 @@ case "mypage":
 else if (path === "/mypage") setCurrentRoute("mypage");
 ```
 
-1. **Navigate to your page:**
+### 3) Add a navigation entry
+
+Place a link or button where users can reach the page:
 
 ```tsx
 <Button onClick={() => onNavigate("mypage")}>Go to My Page</Button>
 ```
 
-1. **Test it:**
+## Verify
 
-```bash
-pnpm dev
-# Visit: http://localhost:5176/mypage
-```
+1. Start the dev server: `pnpm dev`.
+2. Visit `http://localhost:5173/mypage`.
+3. Confirm the header renders and the Back button returns to Chat.
 
-## 🎯 Current Working Examples
+## Troubleshooting
 
-- **Settings**: <http://localhost:5176/settings>
-- **Profile**: <http://localhost:5176/profile>
-- **About**: <http://localhost:5176/about>
-- **Dashboard** (Storybook): Pages/DashboardPage
+**The page shows a blank screen**
 
-## 📚 Full Documentation
+- Confirm the route string is added in all four locations in `Router.tsx`.
 
-See `.kiro/steering/page-development.md` for complete patterns and advanced usage.
+**The Back button does nothing**
 
-## 🔧 Need Help?
+- Verify the parent component passes `onNavigate` correctly.
 
-The steering system will automatically guide agents to follow these patterns when working with pages!
+## Examples
+
+- Settings: `http://localhost:5173/settings`
+- Profile: `http://localhost:5173/profile`
+- About: `http://localhost:5173/about`
+- Dashboard (Storybook): `Pages/DashboardPage`
+
+## Next steps
+
+- Follow `.kiro/steering/page-development.md` for advanced patterns and layout variations.

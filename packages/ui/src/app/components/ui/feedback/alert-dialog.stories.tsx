@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "../base/button";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,6 +17,7 @@ import {
 const meta: Meta<typeof AlertDialog> = {
   title: "UI/AlertDialog",
   component: AlertDialog,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },

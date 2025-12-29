@@ -5,7 +5,7 @@ import { expectFocused, render, screen } from "../../../../test/utils";
 import { IconButton } from "./icon-button";
 
 const TestIcon = () => <span data-testid="test-icon">🔧</span>;
-const baseProps = { icon: <TestIcon />, title: "Settings" };
+const baseProps = { icon: <TestIcon />, title: "Settings", "aria-label": "Settings" };
 
 describe("IconButton", () => {
   describe("rendering", () => {
@@ -42,7 +42,7 @@ describe("IconButton", () => {
     });
 
     it("sets aria-label from ariaLabel", () => {
-      render(<IconButton icon={<TestIcon />} ariaLabel="Close dialog" />);
+      render(<IconButton icon={<TestIcon />} ariaLabel="Close dialog" aria-label="Close dialog" />);
       expect(screen.getByRole("button")).toHaveAccessibleName("Close dialog");
     });
   });

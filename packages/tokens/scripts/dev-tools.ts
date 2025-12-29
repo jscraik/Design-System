@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { ChildProcess, spawn } from 'child_process';
+import type { Server } from 'http';
 import { join } from 'path';
 
 import { TokenWatcher } from './watch-tokens.js';
@@ -21,7 +22,7 @@ interface DevToolsConfig {
 
 class DevToolsOrchestrator {
     private config: DevToolsConfig;
-    private processes: Map<string, ChildProcess> = new Map();
+    private processes: Map<string, ChildProcess | Server> = new Map();
     private tokenWatcher?: TokenWatcher;
 
     constructor(config: Partial<DevToolsConfig> = {}) {
@@ -89,7 +90,11 @@ class DevToolsOrchestrator {
         // Stop all child processes
         for (const [name, process] of this.processes) {
             console.log(`   Stopping ${name}...`);
-            process.kill('SIGTERM');
+            if ("kill" in process) {
+                process.kill('SIGTERM');
+            } else {
+                process.close();
+            }
         }
 
         this.processes.clear();
@@ -114,7 +119,7 @@ class DevToolsOrchestrator {
     private async startDocumentationWatcher(): Promise<void> {
         console.log('📚 Starting documentation watcher...');
 
-        const swiftPackagePath = join(process.cwd(), '../ui-swift');
+        const swiftPackagePath = join(process.cwd(), '../../swift/ui-swift');
         const docsOutputPath = join(swiftPackagePath, 'docs/components.md');
 
         // Generate initial documentation
@@ -202,7 +207,7 @@ class DevToolsOrchestrator {
         });
 
         // Store server reference for cleanup
-        this.processes.set('performance-server', server as any);
+        this.processes.set('performance-server', server);
     }
 }
 

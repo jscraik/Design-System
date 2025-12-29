@@ -21,6 +21,7 @@ const sizeSamples: IconEntry[] = [
 const meta: Meta<typeof Icons.IconOpenAILogo> = {
   title: "Icons/ChatGPTIcons",
   component: Icons.IconOpenAILogo,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },

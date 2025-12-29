@@ -3,6 +3,9 @@ import { expect, fn, userEvent, within } from "@storybook/test";
 import { useState } from "react";
 
 import { Button } from "../base/button";
+import { Input } from "../base/input";
+import { Label } from "../base/label";
+
 import {
   Dialog,
   DialogClose,
@@ -13,8 +16,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./dialog";
-import { Input } from "../base/input";
-import { Label } from "../base/label";
 
 /**
  * Dialog component built on Radix UI primitives.

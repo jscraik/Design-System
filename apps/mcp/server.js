@@ -14,6 +14,13 @@ const widgetHtmlPath = process.env.WEB_WIDGET_HTML
 const widgetsDistPath = process.env.WIDGETS_DIST
   ? path.resolve(process.env.WIDGETS_DIST)
   : path.resolve(__dirname, "../../packages/widgets/dist/src");
+const CORS_ORIGIN = process.env.MCP_CORS_ORIGIN ?? "*";
+const DNS_REBINDING_PROTECTION =
+  process.env.MCP_DNS_REBINDING_PROTECTION === "true";
+const ALLOWED_HOSTS = (process.env.MCP_ALLOWED_HOSTS ?? "")
+  .split(",")
+  .map((host) => host.trim())
+  .filter(Boolean);
 
 // Widget version for cache busting - increment on breaking changes
 const WIDGET_VERSION = "1.0.0";
@@ -999,7 +1006,7 @@ if (isDirectRun) {
 
     if (req.method === "OPTIONS" && url.pathname === MCP_PATH) {
       res.writeHead(204, {
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": CORS_ORIGIN,
         "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
         "Access-Control-Allow-Headers": "content-type, mcp-session-id",
         "Access-Control-Expose-Headers": "Mcp-Session-Id",
@@ -1017,13 +1024,19 @@ if (isDirectRun) {
 
     const MCP_METHODS = new Set(["POST", "GET", "DELETE"]);
     if (url.pathname === MCP_PATH && req.method && MCP_METHODS.has(req.method)) {
-      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.setHeader("Access-Control-Allow-Origin", CORS_ORIGIN);
       res.setHeader("Access-Control-Expose-Headers", "Mcp-Session-Id");
 
       const server = createChatUiServer();
       const transport = new StreamableHTTPServerTransport({
         sessionIdGenerator: undefined,
         enableJsonResponse: true,
+        ...(DNS_REBINDING_PROTECTION
+          ? {
+              enableDnsRebindingProtection: true,
+              allowedHosts: ALLOWED_HOSTS.length > 0 ? ALLOWED_HOSTS : ["127.0.0.1", "localhost"],
+            }
+          : {}),
       });
 
       res.on("close", () => {

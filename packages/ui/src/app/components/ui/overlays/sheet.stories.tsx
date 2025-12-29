@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "../base/button";
+
 import {
   Sheet,
   SheetClose,
@@ -15,6 +16,7 @@ import {
 const meta: Meta<typeof Sheet> = {
   title: "UI/Sheet",
   component: Sheet,
+  tags: ["autodocs"],
   parameters: {
     layout: "centered",
   },

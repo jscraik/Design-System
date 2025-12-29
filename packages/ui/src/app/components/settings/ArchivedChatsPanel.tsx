@@ -78,7 +78,7 @@ export function ArchivedChatsPanel({ onBack }: SettingsPanelProps) {
     <>
       <div className="px-6 py-4 border-b border-foundation-text-dark-primary/10 flex items-center gap-3">
         <div className="flex gap-2">
-          <button
+          <button type="button"
             onClick={onBack}
             className="size-3 rounded-full bg-foundation-accent-red hover:bg-foundation-accent-red/80 transition-colors"
             aria-label="Close"
@@ -87,8 +87,10 @@ export function ArchivedChatsPanel({ onBack }: SettingsPanelProps) {
           <div className="size-3 rounded-full bg-foundation-accent-green" />
         </div>
         <button
+          type="button"
           onClick={onBack}
           className="p-1 hover:bg-foundation-bg-dark-3 rounded transition-colors"
+          aria-label="Back to settings"
         >
           <IconChevronLeftMd className="size-4 text-foundation-icon-dark-primary" />
         </button>
@@ -117,6 +119,7 @@ export function ArchivedChatsPanel({ onBack }: SettingsPanelProps) {
             <input
               type="text"
               placeholder="Search Archive"
+              aria-label="Search archived chats"
               className="w-full pl-10 pr-4 py-2 bg-foundation-bg-dark-2 border border-white/10 rounded-lg text-[14px] text-foundation-text-dark-primary placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-1 focus:ring-white/20"
             />
           </div>
@@ -130,9 +133,9 @@ export function ArchivedChatsPanel({ onBack }: SettingsPanelProps) {
                 {period}
               </h3>
               <div className="space-y-0.5">
-                {chats.map((chat, index) => (
-                  <button
-                    key={index}
+                {chats.map((chat) => (
+                  <button type="button"
+                    key={`${period}-${chat}`}
                     className="w-full flex items-center justify-between px-3 py-2 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors text-left"
                   >
                     <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">

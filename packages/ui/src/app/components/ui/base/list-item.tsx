@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { IconChevronRightMd } from "../../../../icons";
 
+import { IconChevronRightMd } from "../../../../icons";
 import { cn } from "../utils";
 
 export interface ListItemProps {
@@ -58,13 +58,13 @@ export function ListItem({
     lg: "px-4 py-3",
   };
 
-  const Component = onClick ? "button" : "div";
+  const isButton = Boolean(onClick);
+  const Component = isButton ? "button" : "div";
 
   return (
     <Component
-      {...(Component === "button" ? { type: "button" as const } : {})}
+      {...(isButton ? { type: "button" as const, disabled } : {})}
       onClick={disabled ? undefined : onClick}
-      disabled={disabled}
       className={cn(
         "w-full flex items-center justify-between rounded-lg transition-colors text-left",
         sizes[size],

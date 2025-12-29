@@ -11,7 +11,7 @@ import { AudioSettingsPanel } from "./AudioSettingsPanel";
  * ```tsx
  * import { AudioSettingsPanel } from "@chatui/ui";
  *
- * <AudioSettingsPanel onBack={() => console.log("back")} />
+ * <AudioSettingsPanel onBack={fn()} />
  * ```
  */
 const meta: Meta<typeof AudioSettingsPanel> = {

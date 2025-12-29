@@ -21,6 +21,7 @@
   --foundation-accent-red: #FF8583;
   --foundation-accent-orange: #FF9E6C;
   --foundation-accent-green: #40C977;
+  --foundation-accent-purple: #B280E6;
 
   /* Light backgrounds */
   --foundation-bg-light-1: #FFFFFF;
@@ -49,6 +50,7 @@
   --foundation-accent-red-light: #E02E2A;
   --foundation-accent-orange-light: #E25507;
   --foundation-accent-green-light: #008635;
+  --foundation-accent-purple-light: #9966CC;
 
   /* Spacing scale */
   --foundation-space-128: 128px;

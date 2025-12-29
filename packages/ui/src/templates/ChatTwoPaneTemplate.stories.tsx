@@ -72,6 +72,7 @@ function TwoPaneStoryShell({ showSidebar, showFooter, showDetailsPanel, showComp
 const meta: Meta<typeof ChatTwoPaneTemplate> = {
   title: "Templates/ChatTwoPaneTemplate",
   component: ChatTwoPaneTemplate,
+  tags: ["autodocs"],
   parameters: {
     layout: "fullscreen",
   },

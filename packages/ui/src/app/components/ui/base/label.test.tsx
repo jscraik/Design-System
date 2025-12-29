@@ -27,7 +27,7 @@ describe("Label", () => {
       render(
         <>
           <Label htmlFor="username">Username</Label>
-          <input id="username" type="text" />
+          <input id="username" type="text" aria-label="Username" />
         </>,
       );
       const label = screen.getByText("Username");
@@ -38,7 +38,7 @@ describe("Label", () => {
       const { user } = render(
         <>
           <Label htmlFor="email">Email</Label>
-          <input id="email" type="email" />
+          <input id="email" type="email" aria-label="Email" />
         </>,
       );
 

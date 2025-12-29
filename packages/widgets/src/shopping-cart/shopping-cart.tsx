@@ -17,6 +17,8 @@ import type { DisplayMode } from "../shared/types";
 import { useOpenAiGlobal } from "../shared/use-openai-global";
 import { useWidgetState } from "../shared/use-widget-state";
 
+const isDev = Boolean(import.meta.env?.DEV);
+
 // Types
 type CartItem = {
   id: string;
@@ -173,7 +175,9 @@ export function ShoppingCart() {
   // Checkout action - could call another tool
   const handleCheckout = useCallback(async () => {
     if (!window.openai?.sendFollowUpMessage) {
-      console.warn("sendFollowUpMessage not available");
+      if (isDev) {
+        console.warn("sendFollowUpMessage not available");
+      }
       return;
     }
 
