@@ -16,6 +16,7 @@ public struct GlassBackgroundView: View {
     private let role: Role
     private let cornerRadius: CGFloat?
     @Environment(\.colorScheme) private var scheme
+    @Environment(\.chatUITheme) private var theme
 
     public init(role: Role, cornerRadius: CGFloat? = nil) {
         self.role = role
@@ -24,10 +25,11 @@ public struct GlassBackgroundView: View {
 
     public var body: some View {
         #if os(macOS)
-        if FAccessibility.prefersReducedTransparency {
+        if FAccessibility.prefersReducedTransparency || theme.surfaceStyle == .solid {
             fallbackBackground
         } else {
             VisualEffectView(material: materialForRole, blendingMode: .behindWindow)
+                .overlay(glassOverlay)
                 .overlay(borderOverlay)
                 .clipShape(clipShape)
         }
@@ -57,7 +59,7 @@ public struct GlassBackgroundView: View {
         RoundedRectangle(cornerRadius: cornerRadius ?? 0, style: .continuous)
             .stroke(
                 FColor.divider.opacity(
-                    scheme == .dark ? ChatGPTTheme.cardBorderOpacityDark : ChatGPTTheme.cardBorderOpacityLight
+                    scheme == .dark ? theme.appBorderOpacityDark : theme.appBorderOpacityLight
                 ),
                 lineWidth: cornerRadius == nil ? 0 : 1
             )
@@ -65,5 +67,16 @@ public struct GlassBackgroundView: View {
 
     private var clipShape: some Shape {
         RoundedRectangle(cornerRadius: cornerRadius ?? 0, style: .continuous)
+    }
+
+    private var glassOverlay: some View {
+        let highlight = scheme == .dark ? Color.white.opacity(0.06) : Color.white.opacity(0.18)
+        let shadow = scheme == .dark ? Color.black.opacity(0.18) : Color.black.opacity(0.08)
+        return LinearGradient(
+            colors: [highlight, Color.clear, shadow],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        .opacity(0.7)
     }
 }

@@ -1,7 +1,6 @@
 import SwiftUI
 import ChatUIFoundation
 import ChatUIComponents
-import ChatUIThemes
 import ChatUIMCP
 
 struct ToolsView: View {
@@ -217,14 +216,12 @@ struct ToolRow: View {
     let action: () -> Void
     
     var body: some View {
-        SettingRowView(
-            icon: AnyView(
-                Image(systemName: "hammer.fill")
-                    .foregroundStyle(FColor.iconSecondary)
-            ),
+        ListItemView(
+            systemIcon: "hammer.fill",
             title: tool.name,
             subtitle: tool.description,
             trailing: .chevron,
+            isSelected: isSelected,
             action: action
         )
     }

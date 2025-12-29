@@ -62,7 +62,7 @@ function getOrCreateRoot(element: Element): Root {
 /**
  * Higher-order component for widget creation with consistent patterns
  */
-export function createWidget<T extends Record<string, any>>(
+export function createWidget<T extends Record<string, unknown>>(
   Component: React.ComponentType<T>,
   options?: {
     title?: string;

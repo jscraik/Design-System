@@ -33,16 +33,22 @@ Your codebase now supports both **standalone React apps** and **ChatGPT widget i
 
 ## Current Widgets
 
-| Widget              | Purpose                     | Components Used                    |
-| ------------------- | --------------------------- | ---------------------------------- |
-| `chat-view`         | Full chat interface         | `ChatUIRoot` (same as main app)    |
-| `search-results`    | Display search results      | Apps SDK `Badge`, custom layout    |
-| `kitchen-sink-lite` | API demo/testing            | Apps SDK `Button`, `CodeBlock`     |
-| `pizzaz-table`      | Data table display          | Custom table with Apps SDK styling |
-| `pizzaz-carousel`   | Carousel showcase           | Apps SDK `Button`, custom carousel |
-| `pizzaz-gallery`    | Gallery + fullscreen viewer | Apps SDK `Image`, `Badge`          |
-| `pizzaz-markdown`   | Markdown renderer           | Custom markdown styling            |
-| `solar-system`      | 3D visualization            | Three.js + Apps SDK styling        |
+Widget IDs are defined by folder names in `packages/widgets/src`:
+
+- `auth-demo`
+- `chat-view`
+- `dashboard-widget`
+- `enhanced-example-widget`
+- `example-widget`
+- `kitchen-sink-lite`
+- `pizzaz-carousel`
+- `pizzaz-gallery`
+- `pizzaz-markdown`
+- `pizzaz-shop`
+- `pizzaz-table`
+- `search-results`
+- `shopping-cart`
+- `solar-system`
 
 ## Build Commands
 
@@ -119,5 +125,11 @@ const host = createEmbeddedHost(); // Uses window.openai
 2. **Add widget-specific tools** to MCP server
 3. **Test in ChatGPT** using the MCP integration
 4. **Expand component library** in `packages/ui`
+
+## Verify
+
+1. Build widgets: `pnpm build:widgets`.
+2. Run the MCP server: `pnpm mcp:start`.
+3. Start the harness: `pnpm dev:web` and visit `http://localhost:5173/harness`.
 
 Your architecture perfectly matches the Apps SDK examples approach while maintaining the flexibility to work both inside and outside ChatGPT.

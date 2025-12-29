@@ -22,7 +22,7 @@ export interface WidgetToolConfig {
             "openai/visibility"?: string;
         };
     };
-    handler: () => Promise<any>;
+    handler: () => Promise<unknown>;
 }
 
 /**
@@ -35,7 +35,7 @@ export interface WidgetToolConfig {
 export function createWidgetTool(
     widgetName: WidgetName,
     meta: WidgetMeta,
-    handler: () => Promise<any>
+    handler: () => Promise<unknown>
 ): WidgetToolConfig {
     // Import manifest dynamically to avoid circular dependencies
     let widgetManifest: Record<string, { uri: string }>;
@@ -81,7 +81,7 @@ export function createWidgetTools(
     tools: Array<{
         widgetName: WidgetName;
         meta: WidgetMeta;
-        handler: () => Promise<any>;
+        handler: () => Promise<unknown>;
     }>
 ): WidgetToolConfig[] {
     return tools.map(({ widgetName, meta, handler }) =>
@@ -98,7 +98,16 @@ export function createResourceMeta(options: {
     connectDomains?: string[];
     resourceDomains?: string[];
 }) {
-    const meta: Record<string, any> = {
+    type WidgetCSP = {
+        connect_domains: string[];
+        resource_domains: string[];
+    };
+    type ResourceMeta = {
+        "openai/widgetCSP": WidgetCSP;
+        "openai/widgetDomain"?: string;
+    };
+
+    const meta: ResourceMeta = {
         "openai/widgetCSP": {
             connect_domains: options.connectDomains || [],
             resource_domains: options.resourceDomains || [],

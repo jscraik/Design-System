@@ -13,6 +13,7 @@ public struct ListItemView: View {
     private let action: (() -> Void)?
     
     @Environment(\.colorScheme) private var scheme
+    @Environment(\.chatUITheme) private var theme
     @State private var isHovering = false
     @State private var isPressed = false
     
@@ -56,7 +57,7 @@ public struct ListItemView: View {
         .onHover { isHovering = $0 }
         #endif
         .background(itemBackground)
-        .clipShape(RoundedRectangle(cornerRadius: ChatGPTTheme.rowCornerRadius, style: .continuous))
+        .clipShape(RoundedRectangle(cornerRadius: theme.rowCornerRadius, style: .continuous))
         .padding(.horizontal, 6) // Inset for "floating" appearance
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(isSelected ? [.isSelected] : [])
@@ -66,14 +67,14 @@ public struct ListItemView: View {
         HStack(spacing: 12) {
             if let icon {
                 icon
-                    .frame(width: ChatGPTTheme.rowIconSize, height: ChatGPTTheme.rowIconSize)
+                    .frame(width: theme.rowIconSize, height: theme.rowIconSize)
                     .foregroundStyle(isSelected ? FColor.accentBlue : FColor.iconSecondary)
             }
             
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .font(FType.rowTitle())
-                    .foregroundStyle(isSelected ? FColor.textPrimary : FColor.textPrimary)
+                    .foregroundStyle(isSelected ? FColor.textPrimary : FColor.textSecondary)
                     .tracking(FType.trackingRow())
                     .fontWeight(isSelected ? .semibold : .regular)
                 
@@ -89,8 +90,8 @@ public struct ListItemView: View {
             
             trailingView
         }
-        .padding(.horizontal, ChatGPTTheme.rowHPadding)
-        .padding(.vertical, ChatGPTTheme.rowVPadding)
+        .padding(.horizontal, theme.rowHPadding)
+        .padding(.vertical, theme.rowVPadding)
         .contentShape(Rectangle())
     }
     
@@ -101,7 +102,7 @@ public struct ListItemView: View {
             EmptyView()
         case .chevron:
             Image(systemName: "chevron.right")
-                .font(.system(size: ChatGPTTheme.rowChevronSize, weight: .semibold))
+                .font(.system(size: theme.rowChevronSize, weight: .semibold))
                 .foregroundStyle(FColor.iconTertiary)
         case .badge(let count):
             if count > 0 {
@@ -122,18 +123,18 @@ public struct ListItemView: View {
         Group {
             if isSelected {
                 // Selected state - always visible
-                RoundedRectangle(cornerRadius: ChatGPTTheme.rowCornerRadius, style: .continuous)
+                RoundedRectangle(cornerRadius: theme.rowCornerRadius, style: .continuous)
                     .fill(FColor.accentBlue.opacity(0.15))
             } else if Platform.isMac && isHovering {
                 // Hover state on macOS
-                RoundedRectangle(cornerRadius: ChatGPTTheme.rowCornerRadius, style: .continuous)
+                RoundedRectangle(cornerRadius: theme.rowCornerRadius, style: .continuous)
                     .fill(FColor.bgCardAlt)
-                    .opacity(scheme == .dark ? ChatGPTTheme.hoverOverlayOpacityDark : ChatGPTTheme.hoverOverlayOpacityLight)
+                    .opacity(scheme == .dark ? theme.hoverOverlayOpacityDark : theme.hoverOverlayOpacityLight)
             } else if isPressed {
                 // Pressed state on iOS
-                RoundedRectangle(cornerRadius: ChatGPTTheme.rowCornerRadius, style: .continuous)
+                RoundedRectangle(cornerRadius: theme.rowCornerRadius, style: .continuous)
                     .fill(FColor.bgCardAlt)
-                    .opacity(scheme == .dark ? ChatGPTTheme.pressedOverlayOpacityDark : ChatGPTTheme.pressedOverlayOpacityLight)
+                    .opacity(scheme == .dark ? theme.pressedOverlayOpacityDark : theme.pressedOverlayOpacityLight)
             } else {
                 Color.clear
             }

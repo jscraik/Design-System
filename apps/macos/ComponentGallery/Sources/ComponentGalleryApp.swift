@@ -73,7 +73,6 @@ struct ComponentGalleryiOSApp: App {
 
 class GalleryState: ObservableObject {
     @Published var selectedCategory: ComponentCategory = .foundation
-    @Published var selectedComponent: String? = nil
     @Published var searchQuery: String = ""
     @Published var colorSchemeOverride: ColorScheme? = nil
     @Published var sideBySideMode: Bool = false
@@ -127,25 +126,6 @@ enum ComponentCategory: String, CaseIterable, Identifiable {
         case .navigation: return "arrow.triangle.turn.up.right.diamond"
         case .themes: return "paintpalette"
         case .accessibility: return "accessibility"
-        }
-    }
-    
-    var components: [String] {
-        switch self {
-        case .foundation:
-            return ["Colors", "Typography", "Spacing", "Platform"]
-        case .settings:
-            return ["SettingsDivider", "SettingsCardView", "SettingRowView", "SettingToggleView", "SettingDropdownView", "FoundationSwitchStyle"]
-        case .buttons:
-            return ["ChatUIButton", "Button Variants", "Button Sizes", "Icon Buttons"]
-        case .inputs:
-            return ["InputView", "Text Input", "Search Input", "Input Sizes"]
-        case .navigation:
-            return ["ListItemView", "Navigation Example"]
-        case .themes:
-            return ["ChatGPT Theme", "Default Theme", "Theme Comparison"]
-        case .accessibility:
-            return ["Focus Management", "VoiceOver", "Keyboard Navigation", "High Contrast", "Reduced Motion"]
         }
     }
 }

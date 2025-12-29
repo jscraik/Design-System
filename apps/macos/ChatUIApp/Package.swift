@@ -31,7 +31,15 @@ let package = Package(
                 "ChatUIMCP",
                 "ChatUISystemIntegration"
             ],
-            path: "Sources"
+            path: "Sources",
+            resources: [
+                .process("Resources/Assets.xcassets")
+            ]
+        ),
+        .testTarget(
+            name: "ChatUIAppTests",
+            dependencies: ["ChatUIApp"],
+            path: "Tests"
         )
     ]
 )

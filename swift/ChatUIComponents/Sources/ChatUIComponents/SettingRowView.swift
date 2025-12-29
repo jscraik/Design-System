@@ -19,6 +19,7 @@ public struct SettingRowView: View {
     private let action: (() -> Void)?
     
     @Environment(\.colorScheme) private var scheme
+    @Environment(\.chatUITheme) private var theme
     @State private var isHovering = false
     @State private var isPressed = false
     
@@ -62,7 +63,7 @@ public struct SettingRowView: View {
             }
         }
         .background(rowBackground)
-        .clipShape(RoundedRectangle(cornerRadius: ChatGPTTheme.rowCornerRadius, style: .continuous))
+        .clipShape(RoundedRectangle(cornerRadius: theme.rowCornerRadius, style: .continuous))
         .padding(.horizontal, 6) // "inset hover" appearance
     }
     
@@ -70,7 +71,7 @@ public struct SettingRowView: View {
         HStack(spacing: 12) {
             if let icon {
                 icon
-                    .frame(width: ChatGPTTheme.rowIconSize, height: ChatGPTTheme.rowIconSize)
+                    .frame(width: theme.rowIconSize, height: theme.rowIconSize)
                     .foregroundStyle(FColor.iconSecondary)
             }
             
@@ -92,8 +93,8 @@ public struct SettingRowView: View {
             
             trailingView
         }
-        .padding(.horizontal, ChatGPTTheme.rowHPadding)
-        .padding(.vertical, ChatGPTTheme.rowVPadding)
+        .padding(.horizontal, theme.rowHPadding)
+        .padding(.vertical, theme.rowVPadding)
         .contentShape(Rectangle())
     }
     
@@ -104,7 +105,7 @@ public struct SettingRowView: View {
             EmptyView()
         case .chevron:
             Image(systemName: "chevron.right")
-                .font(.system(size: ChatGPTTheme.rowChevronSize, weight: .semibold))
+                .font(.system(size: theme.rowChevronSize, weight: .semibold))
                 .foregroundStyle(FColor.iconTertiary)
         case .text(let value):
             Text(value)
@@ -119,13 +120,13 @@ public struct SettingRowView: View {
     private var rowBackground: some View {
         Group {
             if isPressed {
-                RoundedRectangle(cornerRadius: ChatGPTTheme.rowCornerRadius, style: .continuous)
+                RoundedRectangle(cornerRadius: theme.rowCornerRadius, style: .continuous)
                     .fill(FColor.bgCardAlt)
-                    .opacity(scheme == .dark ? ChatGPTTheme.pressedOverlayOpacityDark : ChatGPTTheme.pressedOverlayOpacityLight)
+                    .opacity(scheme == .dark ? theme.pressedOverlayOpacityDark : theme.pressedOverlayOpacityLight)
             } else if Platform.isMac && isHovering {
-                RoundedRectangle(cornerRadius: ChatGPTTheme.rowCornerRadius, style: .continuous)
+                RoundedRectangle(cornerRadius: theme.rowCornerRadius, style: .continuous)
                     .fill(FColor.bgCardAlt)
-                    .opacity(scheme == .dark ? ChatGPTTheme.hoverOverlayOpacityDark : ChatGPTTheme.hoverOverlayOpacityLight)
+                    .opacity(scheme == .dark ? theme.hoverOverlayOpacityDark : theme.hoverOverlayOpacityLight)
             } else {
                 Color.clear
             }

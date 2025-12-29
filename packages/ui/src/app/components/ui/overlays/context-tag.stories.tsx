@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "@storybook/test";
 
-
 import { IconCode, IconFolder, IconImage } from "../../../../icons";
 
 import { ContextTag } from "./context-tag";

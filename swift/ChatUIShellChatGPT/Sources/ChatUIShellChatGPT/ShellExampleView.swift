@@ -7,7 +7,7 @@ import ChatUIThemes
 public struct ShellExampleView: View {
     @State private var selectedItem: String? = "Home"
     @State private var notificationsEnabled = true
-    @State private var selectedTheme = "Light"
+    @State private var selectedTheme = "ChatGPT"
     
     public init() {}
     
@@ -21,6 +21,7 @@ public struct ShellExampleView: View {
                 detailContent
             }
         }
+        .chatUITheme(selectedTheme == "Default" ? .default : .chatgpt)
         .frame(width: 1000, height: 700)
     }
     
@@ -102,7 +103,7 @@ public struct ShellExampleView: View {
                             icon: AnyView(Image(systemName: "paintbrush.fill")),
                             title: "Theme",
                             subtitle: "Choose your appearance",
-                            options: ["Light", "Dark", "Auto"],
+                            options: ["ChatGPT", "Default"],
                             selection: $selectedTheme
                         )
                     }

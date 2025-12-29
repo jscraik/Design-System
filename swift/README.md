@@ -82,24 +82,11 @@ All colors automatically support light/dark mode and high contrast through Asset
 
 ## Build Verification
 
-All packages compile successfully:
-
 ```bash
-# ChatUIFoundation
 cd swift/ChatUIFoundation && swift build
-# ✅ Build complete! (0.83s)
-
-# ChatUIThemes  
-cd swift/ChatUIThemes && swift build
-# ✅ Build complete! (0.28s)
-
-# ChatUIComponents
-cd swift/ChatUIComponents && swift build  
-# ✅ Build complete! (39.71s)
-
-# ChatUIShellChatGPT
-cd swift/ChatUIShellChatGPT && swift build
-# ✅ Build complete! (42.18s)
+cd ../ChatUIThemes && swift build
+cd ../ChatUIComponents && swift build
+cd ../ChatUIShellChatGPT && swift build
 ```
 
 ## Key Architectural Decisions
@@ -122,10 +109,9 @@ The original monolithic package at `swift/ui-swift/` has been:
 
 ## Next Steps
 
-1. **Task 2**: Implement enhanced token generation to output Swift Asset Catalogs automatically
-2. **Task 7**: Create token watcher for real-time feedback during development  
-3. **Task 11**: Create Component Gallery application for live testing
-4. **Task 13**: Build production macOS application using the modular packages
+- Follow `swift/DEVELOPMENT_WORKFLOW.md` for hot reload and test workflows.
+- Use `apps/macos/ComponentGallery` for live component review.
+- See `docs/SWIFT_INTEGRATION.md` for app integration details.
 
 ## Requirements Fulfilled
 

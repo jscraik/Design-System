@@ -62,7 +62,7 @@ export function ModalDialog({
   overlayClassName,
 }: ModalDialogProps) {
   const baseId = useId();
-  const { dialogRef, trapProps } = useFocusTrap({
+  const { trapProps } = useFocusTrap({
     isOpen,
     onClose,
     restoreFocus: true,
@@ -88,14 +88,14 @@ export function ModalDialog({
             "absolute inset-0 bg-black/60",
             overlayClassName,
           )}
-          aria-label="Close dialog"
+          aria-hidden="true"
+          tabIndex={-1}
           onClick={onClose}
         />
       )}
 
       {/* Dialog */}
       <div
-        ref={dialogRef}
         {...trapProps}
         role="dialog"
         aria-modal="true"
@@ -169,7 +169,7 @@ export function ModalHeader({
           {title}
         </h2>
         {subtitle && (
-          <p className="text-[13px] font-normal leading-[18px] tracking-[-0.32px] text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-0.5">
+          <p className="text-[13px] font-normal leading-[18px] tracking-[-0.32px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-0.5">
             {subtitle}
           </p>
         )}

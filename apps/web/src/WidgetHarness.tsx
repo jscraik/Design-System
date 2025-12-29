@@ -1,4 +1,5 @@
-import { Button } from "@chatui/ui";
+import { Button, ModalBody, ModalDialog, ModalFooter, ModalHeader } from "@chatui/ui";
+import { DiscoverySettingsModal, IconPickerModal, SettingsModal } from "@chatui/ui/modals";
 import { useState } from "react";
 
 interface Widget {
@@ -43,6 +44,18 @@ const WIDGETS: Widget[] = [
 
 export function WidgetHarness() {
   const [selectedWidget, setSelectedWidget] = useState<Widget>(WIDGETS[0]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isIconPickerOpen, setIsIconPickerOpen] = useState(false);
+  const [isDiscoveryOpen, setIsDiscoveryOpen] = useState(false);
+  const [iconSelection, setIconSelection] = useState({
+    iconId: "folder",
+    colorId: "gray",
+  });
+  const [promptEnhancement, setPromptEnhancement] = useState<
+    "rewrite" | "augment" | "preserve"
+  >("rewrite");
+  const [targetSize, setTargetSize] = useState(60);
 
   return (
     <div className="flex h-screen">
@@ -81,6 +94,44 @@ export function WidgetHarness() {
             </div>
           </div>
         </div>
+
+        <div className="mt-6 pt-4 border-t">
+          <h3 className="font-medium mb-2">Modal Test Controls</h3>
+          <div className="space-y-2">
+            <Button
+              size="sm"
+              variant="outline"
+              className="w-full justify-start"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Open Modal
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="w-full justify-start"
+              onClick={() => setIsSettingsOpen(true)}
+            >
+              Open Settings
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="w-full justify-start"
+              onClick={() => setIsIconPickerOpen(true)}
+            >
+              Choose Icon
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="w-full justify-start"
+              onClick={() => setIsDiscoveryOpen(true)}
+            >
+              Discovery Settings
+            </Button>
+          </div>
+        </div>
       </div>
 
       {/* Widget Preview */}
@@ -110,6 +161,77 @@ export function WidgetHarness() {
           />
         </div>
       </div>
+
+      <ModalDialog
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Test Modal"
+        description="Modal dialog for keyboard navigation tests."
+        maxWidth="480px"
+      >
+        <ModalHeader title="Test Modal" subtitle="Keyboard navigation baseline" />
+        <ModalBody className="space-y-4">
+          <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            This modal exists to validate focus trap, Escape, and overlay behavior.
+          </p>
+          <label
+            htmlFor="modal-test-input"
+            className="block text-sm text-foundation-text-light-primary dark:text-foundation-text-dark-primary"
+          >
+            Sample input
+            <input
+              id="modal-test-input"
+              aria-label="Sample input"
+              className="mt-2 w-full rounded-md border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-transparent px-3 py-2 text-sm"
+              placeholder="Type here"
+            />
+          </label>
+          <div className="flex items-center gap-2">
+            <Button size="sm" variant="outline" onClick={() => setIsModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button size="sm" onClick={() => setIsModalOpen(false)}>
+              Confirm
+            </Button>
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <Button variant="ghost" size="sm" onClick={() => setIsModalOpen(false)}>
+            Close
+          </Button>
+        </ModalFooter>
+      </ModalDialog>
+
+      {isSettingsOpen && (
+        <SettingsModal
+          isOpen={isSettingsOpen}
+          onClose={() => setIsSettingsOpen(false)}
+          account={{ email: "dev@chatui.test", phone: "(555) 123-4567", subscriptionLabel: "Pro" }}
+          appInfo={{ versionLabel: "1.0.0" }}
+        />
+      )}
+
+      {isIconPickerOpen && (
+        <IconPickerModal
+          isOpen={isIconPickerOpen}
+          onClose={() => setIsIconPickerOpen(false)}
+          currentIconId={iconSelection.iconId}
+          currentColorId={iconSelection.colorId}
+          onSave={(iconId, colorId) => setIconSelection({ iconId, colorId })}
+          projectName="Test Project"
+        />
+      )}
+
+      {isDiscoveryOpen && (
+        <DiscoverySettingsModal
+          isOpen={isDiscoveryOpen}
+          onClose={() => setIsDiscoveryOpen(false)}
+          promptEnhancement={promptEnhancement}
+          onPromptEnhancementChange={setPromptEnhancement}
+          targetSize={targetSize}
+          onTargetSizeChange={setTargetSize}
+        />
+      )}
     </div>
   );
 }

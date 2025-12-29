@@ -34,7 +34,7 @@ export default defineConfig({
   },
 
   use: {
-    baseURL: "http://localhost:5176",
+    baseURL: "http://127.0.0.1:5176",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     // Consistent viewport for screenshots
@@ -76,8 +76,8 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "pnpm dev --port 5176 --strictPort",
-    url: "http://localhost:5176",
+    command: "pnpm dev --host 127.0.0.1 --port 5176 --strictPort",
+    url: "http://127.0.0.1:5176",
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
     cwd: __dirname,

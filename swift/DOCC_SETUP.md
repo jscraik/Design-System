@@ -205,7 +205,7 @@ let x = 5
 
 **Links:**
 ```markdown
-[External link](https://example.com)
+[DocC Reference](https://developer.apple.com/documentation/docc)
 ``InternalSymbol``
 ```
 
@@ -506,6 +506,12 @@ Document deprecations:
 @available(*, deprecated, renamed: "newFunction")
 public func oldFunction() { }
 ```
+
+## Verify
+
+1. Generate docs: `swift package generate-documentation --output-path ./docs`.
+2. Open the landing page: `open ./docs/documentation/chatuifoundation/index.html`.
+3. Confirm symbol links resolve and search returns your public types.
 
 ## Troubleshooting
 

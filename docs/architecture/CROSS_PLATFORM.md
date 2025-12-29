@@ -475,96 +475,45 @@ let package = Package(
 )
 ```
 
-### 3.5 Cross-Platform Build Scripts
+### 3.5 Cross-Platform Build Pipeline (Current)
+
+The repo uses a unified build pipeline. These commands exist today:
 
 ```bash
-#!/bin/bash
-# scripts/build-all.sh
+# Generate design tokens
+pnpm generate:tokens
 
-set -e
+# Build core libraries (ui/runtime/tokens)
+pnpm build:lib
 
-echo "🏗️  Building cross-platform ChatUI..."
+# Build widgets
+pnpm build:widgets
 
-# 1. Generate design tokens for all platforms
-echo "📐 Generating design tokens..."
-pnpm run build:tokens
+# Build web app
+pnpm build:web
 
-# 2. Build shared runtime for all targets
-echo "⚙️  Building runtime..."
-pnpm run build:runtime
-
-# 3. Build React components
-echo "⚛️  Building React components..."
-pnpm run build --filter=@chatui/ui
-
-# 4. Build Swift package
-echo "🍎 Building Swift package..."
-cd swift/ui-swift
-swift build
-swift test
-cd ../..
-
-# 5. Build widgets
-echo "🧩 Building widgets..."
-pnpm run build --filter=@chatui/widgets
-
-# 6. Build apps
-echo "📱 Building applications..."
-pnpm run build --filter=@chatui/web
-
-# macOS app build
-cd apps/macos
-xcodebuild -scheme ChatUI -configuration Release
-cd ../..
-
-echo "✅ Cross-platform build complete!"
+# Build macOS targets (Swift packages + macOS apps)
+pnpm build:macos
 ```
 
-### 3.6 Version Synchronization
+For full details and flags, see `docs/BUILD_PIPELINE.md`.
 
-```typescript
-// tools/sync-versions.ts
-import { readFileSync, writeFileSync } from 'fs';
-import { glob } from 'glob';
+### 3.6 Version Synchronization (Current)
 
-interface PackageJson {
-  name: string;
-  version: string;
-  dependencies?: Record<string, string>;
-  devDependencies?: Record<string, string>;
-}
+Use the scripts in `scripts/`:
 
-export async function syncVersions() {
-  const rootPkg = JSON.parse(readFileSync('package.json', 'utf8')) as PackageJson;
-  const version = rootPkg.version;
-  
-  // Update all package.json files
-  const packageFiles = await glob('packages/*/package.json');
-  for (const file of packageFiles) {
-    const pkg = JSON.parse(readFileSync(file, 'utf8')) as PackageJson;
-    pkg.version = version;
-    writeFileSync(file, JSON.stringify(pkg, null, 2) + '\n');
-  }
-  
-  // Update Swift Package.swift version
-  const swiftPackage = readFileSync('swift/ui-swift/Package.swift', 'utf8');
-  const updatedSwift = swiftPackage.replace(
-    /\/\/ Version: .+/,
-    `// Version: ${version}`
-  );
-  writeFileSync('swift/ui-swift/Package.swift', updatedSwift);
-  
-  // Update Xcode project version
-  const xcodeProject = readFileSync('apps/macos/ChatUI.xcodeproj/project.pbxproj', 'utf8');
-  const updatedXcode = xcodeProject.replace(
-    /MARKETING_VERSION = .+;/g,
-    `MARKETING_VERSION = ${version};`
-  );
-  writeFileSync('apps/macos/ChatUI.xcodeproj/project.pbxproj', updatedXcode);
-}
-```
+- `pnpm sync:versions` for JS package version alignment (`scripts/version-sync.mjs`)
+- `pnpm sync:swift-versions` for Swift Package.swift version comments (`scripts/sync-swift-versions.mjs`)
 
-## 4. Implementation Roadmap
+See `docs/VERSION_SYNC.md` for the full workflow.
+
+## Verify (Current Pipeline)
+
+- `pnpm build:lib` builds UI/runtime/tokens.
+- `pnpm build:widgets` builds widget bundles.
+- `pnpm build:macos` builds Swift packages and macOS apps.
+
+## 4. Implementation Roadmap (Historical)
 
 ### Phase 1: Foundation (Weeks 1-2)
 

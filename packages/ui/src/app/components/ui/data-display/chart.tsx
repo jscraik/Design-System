@@ -8,6 +8,31 @@ import { cn } from "../utils";
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: "", dark: ".dark" } as const;
 
+const supportsCssColor = (value: string) => {
+  if (typeof CSS !== "undefined" && typeof CSS.supports === "function") {
+    return CSS.supports("color", value);
+  }
+  return (
+    /^#([0-9a-fA-F]{3,8})$/.test(value) ||
+    /^(rgb|rgba|hsl|hsla)\(/i.test(value) ||
+    /^var\(--[a-z0-9-]+\)$/i.test(value) ||
+    /^(currentColor|transparent|inherit)$/.test(value)
+  );
+};
+
+const getSafeColor = (value?: string) => {
+  if (!value) return undefined;
+  const trimmed = value.trim();
+  return supportsCssColor(trimmed) ? trimmed : undefined;
+};
+
+const escapeCssSelector = (value: string) => {
+  if (typeof CSS !== "undefined" && typeof CSS.escape === "function") {
+    return CSS.escape(value);
+  }
+  return value.replace(/[^a-zA-Z0-9_-]/g, "\\$&");
+};
+
 export type ChartConfig = {
   [k in string]: {
     label?: React.ReactNode;
@@ -66,6 +91,7 @@ function ChartContainer({
 }
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
+  const safeChartId = escapeCssSelector(id);
   const colorConfig = Object.entries(config).filter(([, config]) => config.theme || config.color);
 
   if (!colorConfig.length) {
@@ -78,10 +104,11 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
         __html: Object.entries(THEMES)
           .map(
             ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
+${prefix} [data-chart="${safeChartId}"] {
 ${colorConfig
   .map(([key, itemConfig]) => {
-    const color = itemConfig.theme?.[theme as keyof typeof itemConfig.theme] || itemConfig.color;
+    const rawColor = itemConfig.theme?.[theme as keyof typeof itemConfig.theme] || itemConfig.color;
+    const color = getSafeColor(rawColor);
     return color ? `  --color-${key}: ${color};` : null;
   })
   .join("\n")}
@@ -164,11 +191,13 @@ function ChartTooltipContent({
         {payload.map((item, index) => {
           const key = `${nameKey || item.name || item.dataKey || "value"}`;
           const itemConfig = getPayloadConfigFromPayload(config, item, key);
-          const indicatorColor = color || item.payload.fill || item.color;
+          const rawIndicatorColor = color || item.payload?.fill || item.color;
+          const indicatorColor = getSafeColor(rawIndicatorColor);
+          const itemKey = item.dataKey ?? item.name ?? index;
 
           return (
             <div
-              key={item.dataKey}
+              key={itemKey}
               className={cn(
                 "[&>svg]:text-muted-foreground flex w-full flex-wrap items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5",
                 indicator === "dot" && "items-center",
@@ -194,10 +223,12 @@ function ChartTooltipContent({
                           },
                         )}
                         style={
-                          {
-                            "--color-bg": indicatorColor,
-                            "--color-border": indicatorColor,
-                          } as React.CSSProperties
+                          indicatorColor
+                            ? ({
+                                "--color-bg": indicatorColor,
+                                "--color-border": indicatorColor,
+                              } as React.CSSProperties)
+                            : undefined
                         }
                       />
                     )
@@ -274,7 +305,7 @@ function ChartLegendContent({
               <div
                 className="h-2 w-2 shrink-0 rounded-[2px]"
                 style={{
-                  backgroundColor: item.color,
+                  backgroundColor: getSafeColor(item.color) ?? undefined,
                 }}
               />
             )}

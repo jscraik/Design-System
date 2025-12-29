@@ -270,11 +270,7 @@ class BuildPipeline {
         
         // Build Swift package
         await this.runCommand('swift', ['build'], { cwd: packagePath });
-        
-        // Run Swift tests
-        await this.runCommand('swift', ['test'], { cwd: packagePath });
-        
-        console.log(`  ✅ ${packagePath} build and test complete`);
+        console.log(`  ✅ ${packagePath} build complete`);
         
         this.results.push({ 
           step: 'macos-build', 
@@ -351,6 +347,14 @@ class BuildPipeline {
         });
         // Continue with other tests
       }
+    }
+
+    const failedSuites = this.results.filter(
+      (result) => result.step === 'test' && result.success === false
+    );
+    if (failedSuites.length > 0) {
+      const failedList = failedSuites.map((suite) => suite.suite).join(', ');
+      throw new Error(`Test failures: ${failedList}`);
     }
   }
 

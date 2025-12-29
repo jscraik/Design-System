@@ -11,25 +11,34 @@ struct ContentView: View {
     let lifecycleManager: AppLifecycleManager
     
     @State private var mcpClient: MCPClient?
-    @State private var isLoading = false
     @State private var errorMessage: String?
     
     var body: some View {
-        AppShellView(
-            sidebar: {
-                SidebarView()
-            },
-            detail: {
-                DetailView(
-                    mcpClient: mcpClient,
-                    isLoading: isLoading,
-                    errorMessage: errorMessage
+        ZStack {
+            FColor.bgApp
+
+            RoundedAppContainer {
+                AppShellView(
+                    sidebar: {
+                        SidebarView()
+                    },
+                    detail: {
+                        DetailView(
+                            mcpClient: mcpClient,
+                            errorMessage: errorMessage
+                        )
+                    }
                 )
             }
-        )
+            .padding(FSpacing.s12)
+        }
+        .chatUITheme(appState.themeStyle == .default ? .default : .chatgpt)
         .onAppear {
             setupMCPClient()
             restoreState()
+        }
+        .onChange(of: appState.mcpBaseURLString) { _ in
+            setupMCPClient()
         }
         .onDisappear {
             saveState()
@@ -39,9 +48,11 @@ struct ContentView: View {
     private func setupMCPClient() {
         guard let url = URL(string: appState.mcpBaseURLString) else {
             errorMessage = "Invalid MCP base URL"
+            mcpClient = nil
             return
         }
         mcpClient = MCPClient(baseURL: url)
+        errorMessage = nil
     }
     
     private func restoreState() {
@@ -79,7 +90,7 @@ struct SidebarView: View {
         VStack(spacing: 0) {
             // Header
             VStack(alignment: .leading, spacing: FSpacing.s8) {
-                Text("ChatUI")
+                Text(AppInfo.displayName)
                     .font(FType.title())
                     .foregroundStyle(FColor.textPrimary)
                 
@@ -96,8 +107,9 @@ struct SidebarView: View {
             ScrollView {
                 VStack(spacing: FSpacing.s4) {
                     ForEach(AppSection.allCases) { section in
-                        NavigationButton(
-                            section: section,
+                        ListItemView(
+                            systemIcon: section.systemImage,
+                            title: section.title,
                             isSelected: appState.selectedSection == section
                         ) {
                             appState.selectedSection = section
@@ -113,7 +125,7 @@ struct SidebarView: View {
             SettingsDivider()
             
             VStack(spacing: FSpacing.s8) {
-                Text("Version 1.0.0")
+                Text("Version \(AppInfo.versionString)")
                     .font(FType.footnote())
                     .foregroundStyle(FColor.textTertiary)
             }
@@ -123,62 +135,20 @@ struct SidebarView: View {
     }
 }
 
-struct NavigationButton: View {
-    let section: AppSection
-    let isSelected: Bool
-    let action: () -> Void
-    
-    @State private var isHovering = false
-    @Environment(\.colorScheme) private var scheme
-    
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: FSpacing.s12) {
-                Image(systemName: section.systemImage)
-                    .font(.system(size: ChatGPTTheme.rowIconSize))
-                    .foregroundStyle(isSelected ? FColor.accentBlue : FColor.iconSecondary)
-                
-                Text(section.title)
-                    .font(FType.rowTitle())
-                    .foregroundStyle(isSelected ? FColor.textPrimary : FColor.textSecondary)
-                
-                Spacer()
-            }
-            .padding(.horizontal, ChatGPTTheme.rowHPadding)
-            .padding(.vertical, ChatGPTTheme.rowVPadding)
-            .background(buttonBackground)
-            .clipShape(RoundedRectangle(cornerRadius: ChatGPTTheme.rowCornerRadius, style: .continuous))
-        }
-        .buttonStyle(.plain)
-        .onHover { isHovering = $0 }
-    }
-    
-    @ViewBuilder
-    private var buttonBackground: some View {
-        if isSelected {
-            RoundedRectangle(cornerRadius: ChatGPTTheme.rowCornerRadius, style: .continuous)
-                .fill(FColor.accentBlue.opacity(0.15))
-        } else if Platform.isMac && isHovering {
-            RoundedRectangle(cornerRadius: ChatGPTTheme.rowCornerRadius, style: .continuous)
-                .fill(FColor.bgCardAlt)
-                .opacity(scheme == .dark ? ChatGPTTheme.hoverOverlayOpacityDark : ChatGPTTheme.hoverOverlayOpacityLight)
-        } else {
-            Color.clear
-        }
-    }
-}
-
 // MARK: - Detail View
 
 struct DetailView: View {
     let mcpClient: MCPClient?
-    let isLoading: Bool
     let errorMessage: String?
     
     @EnvironmentObject private var appState: AppState
     
     var body: some View {
-        Group {
+        VStack(spacing: 0) {
+            if let errorMessage {
+                ErrorBannerView(message: errorMessage)
+            }
+            
             switch appState.selectedSection {
             case .chat:
                 ChatView(mcpClient: mcpClient)
@@ -189,6 +159,27 @@ struct DetailView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+private struct ErrorBannerView: View {
+    let message: String
+    @Environment(\.chatUITheme) private var theme
+
+    var body: some View {
+        HStack(spacing: FSpacing.s8) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(FColor.accentRed)
+            Text(message)
+                .font(FType.caption())
+                .foregroundStyle(FColor.textSecondary)
+            Spacer()
+        }
+        .padding(FSpacing.s12)
+        .background(FColor.accentRed.opacity(0.12))
+        .clipShape(RoundedRectangle(cornerRadius: theme.cardCornerRadius))
+        .padding(.horizontal, FSpacing.s16)
+        .padding(.top, FSpacing.s16)
     }
 }
 

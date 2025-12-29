@@ -31,6 +31,11 @@ let package = Package(
                 "ChatUIShellChatGPT"
             ],
             path: "Sources"
+        ),
+        .testTarget(
+            name: "ComponentGalleryTests",
+            dependencies: ["ComponentGallery"],
+            path: "Tests"
         )
     ]
 )

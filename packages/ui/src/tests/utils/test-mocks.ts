@@ -21,12 +21,11 @@ export async function setupDeterministicMocks(page: Page): Promise<void> {
     const FIXED_DATE = new Date("2025-01-15T10:30:00Z");
 
     class MockDate extends Date {
-      constructor(...args: any[]) {
+      constructor(...args: unknown[]) {
         if (args.length === 0) {
           super(FIXED_DATE);
         } else {
-          // @ts-expect-error - Pass through other args
-          super(...args);
+          super(...(args as ConstructorParameters<typeof Date>));
         }
       }
 
@@ -117,13 +116,13 @@ export async function setupDateTimeMock(page: Page): Promise<void> {
     const ORIGINAL_FORMAT = Intl.DateTimeFormat;
 
     // @ts-expect-error - Mock Intl for consistent dates
-    Intl.DateTimeFormat = function (...args: any[]) {
+    Intl.DateTimeFormat = function (...args: Parameters<typeof ORIGINAL_FORMAT>) {
       const formatter = new ORIGINAL_FORMAT(...args);
       const originalFormat = formatter.format;
 
       return {
         ...formatter,
-        format: (date: Date) => {
+        format: (_date: Date) => {
           // Always format as the same fixed date
           return originalFormat(new Date("2025-01-15T10:30:00Z"));
         },
@@ -206,17 +205,22 @@ export async function mockIntersectionObserver(page: Page): Promise<void> {
     const ORIGINAL = IntersectionObserver;
 
     IntersectionObserver = class MockIntersectionObserver extends ORIGINAL {
-      constructor(callback: any, options?: any) {
+      constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverInit) {
         super(callback, options);
         // Immediately trigger callback with "intersecting" entries
         setTimeout(() => {
-          callback([
-            {
-              isIntersecting: true,
-              target: document.body,
-              intersectionRatio: 1,
-            },
-          ]);
+          const now = Date.now();
+          const rect = document.body.getBoundingClientRect();
+          const entry = {
+            time: now,
+            isIntersecting: true,
+            target: document.body,
+            intersectionRatio: 1,
+            boundingClientRect: rect,
+            intersectionRect: rect,
+            rootBounds: rect,
+          } as IntersectionObserverEntry;
+          callback([entry], this);
         }, 0);
       }
 
@@ -243,21 +247,19 @@ export async function mockResizeObserver(page: Page): Promise<void> {
     const ORIGINAL = ResizeObserver;
 
     ResizeObserver = class MockResizeObserver extends ORIGINAL {
-      constructor(callback: any) {
+      constructor(callback: ResizeObserverCallback) {
         super(callback);
         // Trigger with default size
         setTimeout(() => {
-          callback([
-            {
-              contentRect: {
-                width: 1280,
-                height: 720,
-                top: 0,
-                left: 0,
-              },
-              target: document.body,
-            },
-          ]);
+          const rect = document.body.getBoundingClientRect();
+          const entry = {
+            contentRect: rect,
+            target: document.body,
+            borderBoxSize: [],
+            contentBoxSize: [],
+            devicePixelContentBoxSize: [],
+          } as ResizeObserverEntry;
+          callback([entry], this);
         }, 0);
       }
 

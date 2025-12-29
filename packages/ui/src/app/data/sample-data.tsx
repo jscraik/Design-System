@@ -29,19 +29,19 @@ export const sampleMessages: ChatMessage[] = [
     id: "1",
     role: "assistant",
     content: "Hello! I’m here to help. What would you like to work on?",
-    timestamp: new Date(Date.now() - 1000 * 60 * 30),
+    timestamp: new Date("2024-05-10T09:00:00.000Z"),
   },
   {
     id: "2",
     role: "user",
     content: "Can you help me design a better chat experience?",
-    timestamp: new Date(Date.now() - 1000 * 60 * 28),
+    timestamp: new Date("2024-05-10T09:02:00.000Z"),
   },
   {
     id: "3",
     role: "assistant",
     content: "Absolutely. Let’s focus on navigation, input ergonomics, and visual hierarchy.",
-    timestamp: new Date(Date.now() - 1000 * 60 * 27),
+    timestamp: new Date("2024-05-10T09:03:00.000Z"),
   },
 ];
 

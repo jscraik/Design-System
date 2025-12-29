@@ -19,7 +19,9 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../ChatUIFoundation"),
-        .package(path: "../ChatUIThemes")
+        .package(path: "../ChatUIThemes"),
+        .package(path: "../ChatUITestSupport"),
+        .package(url: "https://github.com/toastersocks/SwiftCheck.git", from: "0.13.1")
     ],
     targets: [
         .target(
@@ -28,7 +30,7 @@ let package = Package(
         ),
         .testTarget(
             name: "ChatUIComponentsTests",
-            dependencies: ["ChatUIComponents"]
+            dependencies: ["ChatUIComponents", "ChatUITestSupport", "SwiftCheck"]
         ),
     ]
 )

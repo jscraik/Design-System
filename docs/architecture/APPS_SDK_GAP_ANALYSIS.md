@@ -15,18 +15,12 @@ We have strong foundations with most Apps SDK requirements implemented. Recent i
 
 ### ✅ What We're Doing Well
 
-1. **MCP Server Architecture** - Proper tool registration, resource management, structured responses
-2. **Widget Runtime** - Full `window.openai` API coverage in `@chatui/runtime`
-3. **Tool Annotations** - `readOnlyHint`, `destructiveHint`, `openWorldHint`, `idempotentHint`
-4. **Tool Metadata** - `openai/outputTemplate`, `openai/toolInvocation/*`, `openai/widgetAccessible`, `openai/visibility`
-5. **State Management** - `widgetState`, `setWidgetState`, `widgetSessionId` patterns
-6. **Apps SDK UI Integration** - Using `@openai/apps-sdk-ui` components
-7. **Template URI Versioning** - Cache busting via `WIDGET_VERSION` constant
-8. **Bundle Optimization** - Size budgets (500KB warning), vendor chunking
-9. **Accessibility** - ARIA labels, focus rings, keyboard navigation on core widgets
-10. **i18n Utilities** - Locale-aware formatting via `packages/widgets/src/shared/i18n.ts`
-
-### ⚠️ Remaining Gaps (Low Priority)
+- MCP server architecture and structured tool responses
+- Full `window.openai` API coverage in `@chatui/runtime`
+- Tool annotations + metadata (`readOnlyHint`, `openai/outputTemplate`, etc.)
+- Apps SDK UI integration with consistent UI primitives
+- Token/state patterns (`widgetState`, `setWidgetState`, `widgetSessionId`)
+- Accessibility and i18n coverage on core widgets
 
 ---
 
@@ -45,7 +39,6 @@ We have strong foundations with most Apps SDK requirements implemented. Recent i
 | `openai/widgetCSP.redirect_domains` | ⚠️     | Missing - needed for checkout flows        |
 | `openai/widgetCSP.frame_domains`    | ⚠️     | Missing - needed if embedding iframes      |
 
-**Status: 80% Complete** - Core CSP configured, advanced domains optional for our use case.
 
 ### 2. Tool Descriptor Metadata
 
@@ -59,7 +52,6 @@ We have strong foundations with most Apps SDK requirements implemented. Recent i
 | `openai/fileParams`              | ⚠️     | Not implemented - no file upload tools yet                 |
 | `securitySchemes`                | ✅     | Set to `noauth`                                            |
 
-**Status: 95% Complete** - All metadata implemented except fileParams (not needed yet).
 
 ### 3. Tool Response Structure
 
@@ -71,7 +63,6 @@ We have strong foundations with most Apps SDK requirements implemented. Recent i
 | Keep `structuredContent` < 4k tokens     | ⚠️     | Not enforced (low risk for our tools) |
 | `openai/closeWidget: true` in metadata   | ⚠️     | Not implemented - optional feature    |
 
-**Status: 90% Complete** - Core structure solid, optional features pending.
 
 ### 4. Runtime API Coverage (`window.openai`)
 
@@ -99,7 +90,6 @@ We have strong foundations with most Apps SDK requirements implemented. Recent i
 | `userAgent`               | ✅     | Implemented |
 | `locale`                  | ✅     | Implemented |
 
-**Status: 100% API Coverage** ✅
 
 ### 5. Apps SDK UI Component Usage
 
@@ -112,7 +102,6 @@ We have strong foundations with most Apps SDK requirements implemented. Recent i
 | System colors                        | ✅     | Using Apps SDK palettes            |
 | 8px grid spacing                     | ✅     | Audited and compliant              |
 
-**Status: 95% Complete** - Provider optional for non-router widgets.
 
 ### 6. Display Mode Support
 
@@ -122,7 +111,6 @@ We have strong foundations with most Apps SDK requirements implemented. Recent i
 | Fullscreen               | ✅     | Implemented in Pizzaz Shop with expand button |
 | PiP (Picture-in-Picture) | ⚠️     | API available, not used in widgets            |
 
-**Status: 90% Complete** - Core modes implemented, PiP optional.
 
 ### 7. Accessibility
 
@@ -135,7 +123,6 @@ We have strong foundations with most Apps SDK requirements implemented. Recent i
 | ARIA labels           | ✅     | Comprehensive labels on shopping-cart          |
 | Focus management      | ✅     | Focus rings with offset for dark/light themes  |
 
-**Status: 95% Complete** - Core accessibility implemented on main widgets.
 
 ### 8. Internationalization
 
@@ -146,14 +133,7 @@ We have strong foundations with most Apps SDK requirements implemented. Recent i
 | Load translations                  | ✅     | Basic `t()` function with en-US, es-ES, fr-FR  |
 | RTL support                        | ⚠️     | Not implemented - low priority                 |
 
-**Status: 85% Complete** - Core i18n ready, RTL pending.
-
-**Implementation:** `packages/widgets/src/shared/i18n.ts` provides:
-
-- `getLocale()` - reads from `window.openai.locale`
-- `formatNumber()`, `formatCurrency()`, `formatDate()`, `formatRelativeTime()`
-- `t()` - simple message translation with parameter interpolation
-- `useI18n()` - React hook for locale-aware formatting
+**Implementation:** See `packages/widgets/src/shared/i18n.ts` for locale helpers (`getLocale`, `formatNumber`, `formatCurrency`, `formatDate`, `t`, `useI18n`).
 
 ### 9. Security
 
@@ -164,7 +144,6 @@ We have strong foundations with most Apps SDK requirements implemented. Recent i
 | CSP configuration            | ✅     | Core CSP set             |
 | Don't rely on hints for auth | ✅     | Not using hints for auth |
 
-**Status: 100% Complete** ✅
 
 ### 10. Performance
 
@@ -175,55 +154,18 @@ We have strong foundations with most Apps SDK requirements implemented. Recent i
 | Cache-bust template URIs | ✅     | `WIDGET_VERSION` constant with `versionedUri()`   |
 | Vendor splitting         | ✅     | react, framer-motion, three.js in separate chunks |
 
-**Status: 100% Complete** ✅
-
-**Implementation:** `packages/widgets/vite.config.ts` includes:
-
-- `chunkSizeWarningLimit: 500` (500KB warning)
-- `manualChunks` for vendor-react, vendor-motion, vendor-three
-
-**Template Versioning:** `apps/mcp/server.js` includes:
-
-- `WIDGET_VERSION = "1.0.0"` constant
-- `versionedUri(widgetId)` helper for cache busting
-- All `outputTemplate` references use versioned URIs
+**Implementation notes:** `packages/widgets/vite.config.ts` sets the 500KB warning limit and vendor chunk splitting. `apps/mcp/server.js` versions widget URIs via `WIDGET_VERSION` and `versionedUri()`.
 
 ---
 
-## Completed Action Items
+## Completed Action Items (Summary)
 
-### High Priority (Done ✅)
-
-1. ✅ **Added `openai/widgetAccessible: true`** to widget-callable tools:
-   - `add_to_cart`, `remove_from_cart`
-
-2. ✅ **Added `openai/visibility: "private"`** to widget-only tools:
-   - `auth_logout`, `auth_refresh` (hidden from model)
-
-3. ✅ **Implemented fullscreen mode** for complex widgets:
-   - Pizzaz Shop has expand button in cart view header
-
-4. ✅ **Accessibility improvements** on shopping-cart widget:
-   - ARIA roles (`region`, `list`, `listitem`, `group`, `status`)
-   - ARIA labels on all interactive elements
-   - Focus rings with proper offset for dark/light themes
-   - Keyboard navigation support
-
-### Medium Priority (Done ✅)
-
-1. ✅ **Added internationalization support**:
-   - Created `packages/widgets/src/shared/i18n.ts`
-   - Locale-aware number, currency, date formatting
-   - Simple translation system with en-US, es-ES, fr-FR
-
-2. ✅ **Implemented template URI versioning**:
-   - `WIDGET_VERSION` constant in server.js
-   - `versionedUri()` helper function
-   - All widget URIs include version query param
-
-3. ✅ **Added bundle size budgets**:
-   - 500KB warning limit per chunk
-   - Vendor splitting for react, framer-motion, three.js
+- `openai/widgetAccessible` and `openai/visibility` metadata added to tool definitions.
+- Fullscreen mode implemented for complex widgets (Pizzaz Shop).
+- Accessibility enhancements on shopping-cart (roles, labels, focus rings).
+- i18n utilities added (`packages/widgets/src/shared/i18n.ts`).
+- Versioned widget URIs (`WIDGET_VERSION`, `versionedUri()`).
+- Bundle size budgets and vendor chunk splitting enabled.
 
 ---
 
@@ -261,3 +203,10 @@ Our implementation is now at **~95% compliance** with Apps SDK requirements. All
 - ✅ Bundle size budgets and vendor splitting
 
 The remaining gaps are low priority nice-to-haves that can be addressed as needed.
+
+## Verify (Re-run the Audit)
+
+1. Run compliance checks: `pnpm lint:compliance`.
+2. Run widget a11y tests: `pnpm test:a11y:widgets`.
+3. Validate MCP contracts: `pnpm test:mcp-contract`.
+4. Re-scan `apps/mcp/server.js` and `packages/widgets/src/shared` for metadata changes.

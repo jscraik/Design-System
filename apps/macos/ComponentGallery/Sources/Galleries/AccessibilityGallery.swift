@@ -15,6 +15,10 @@ struct AccessibilityGallery: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: FSpacing.s24) {
+            GallerySection(title: "Interaction Harness", subtitle: "Manual regression checks for common interactions") {
+                InteractionTestPanel()
+            }
+
             GallerySection(title: "Focus Management", subtitle: "Keyboard navigation and focus order") {
                 VStack(alignment: .leading, spacing: FSpacing.s16) {
                     Text("Press Tab to navigate forward, Shift-Tab to navigate backward")

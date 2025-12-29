@@ -1,6 +1,5 @@
 import SwiftUI
 import ChatUIFoundation
-import ChatUIThemes
 
 /// Example settings view demonstrating all settings primitives
 ///
@@ -12,7 +11,7 @@ import ChatUIThemes
 /// - `SettingsDivider` between rows
 ///
 /// The view demonstrates proper usage of all ChatUIComponents settings primitives
-/// with pixel-perfect ChatGPT styling from ChatUIThemes.
+/// with theme tokens sourced from ChatUIThemes.
 public struct SettingsExampleView: View {
     @State private var notificationsEnabled = true
     @State private var darkModeEnabled = false
@@ -106,9 +105,10 @@ public struct SettingsExampleView: View {
                 
                 Spacer(minLength: FSpacing.s32)
             }
+            .frame(maxWidth: 720, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.top, FSpacing.s16)
         }
-        .background(FColor.bgApp)
     }
 }
 

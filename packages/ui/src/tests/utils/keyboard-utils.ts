@@ -9,6 +9,7 @@
 
 import type { Page, Locator } from "@playwright/test";
 import { expect } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 
 // Re-export deterministic test mocks for convenience
 export * from "./test-mocks";
@@ -61,8 +62,7 @@ export async function testTabCycle(
   options: { cycles?: number } = {}
 ): Promise<void> {
   const { cycles = 2 } = options;
-
-  const focusableBefore = await getFocusableElements(page, container);
+  void (await getFocusableElements(page, container));
 
   for (let i = 0; i < cycles; i++) {
     await pressKey(page, "Tab");
@@ -82,7 +82,7 @@ export async function testTabCycle(
  */
 export async function testShiftTabCycle(
   page: Page,
-  container: string
+  _container: string
 ): Promise<void> {
   await pressKey(page, "Shift+Tab");
   const focused = await getFocusedElement(page);
@@ -195,6 +195,7 @@ export async function testArrowNavigation(
   options: { wrap?: boolean } = {}
 ): Promise<void> {
   const { wrap = true } = options;
+  void wrap;
 
   const items = await page.locator(`${listSelector} [role="menuitem"]`).all();
   const itemCount = items.length;
@@ -247,51 +248,23 @@ export async function runAxeScan(
 ): Promise<void> {
   const excludedRules = options?.excludedRules || [];
 
-  if (selector) {
-    // Scan a specific element
-    await page.locator(selector).evaluate(
-      async (el) => {
-        const axe = (window as any).axe;
-        if (!axe) {
-          throw new Error("Axe-core not loaded. Ensure @axe-core/playwright is set up.");
-        }
+  type AxeViolation = { id: string; description: string; nodes: Array<unknown> };
+  type AxeRunResult = { violations: AxeViolation[] };
+  const builder = new AxeBuilder({ page });
+  if (selector) builder.include(selector);
+  if (excludedRules.length) builder.disableRules(excludedRules);
 
-        const results = await axe.run(el);
+  const results = (await builder.analyze()) as AxeRunResult;
 
-        if (results.violations.length > 0) {
-          const violationMessages = results.violations
-            .map((v: any) => `  - ${v.id}: ${v.description} (${v.nodes.length} affected)`)
-            .join("\n");
+  if (results.violations.length > 0) {
+    const violationMessages = results.violations
+      .map((v) => `  - ${v.id}: ${v.description} (${v.nodes.length} affected)`)
+      .join("\n");
 
-          throw new Error(
-            `Axe accessibility violations found:\n${violationMessages}\n` +
-            `Run with DEBUG=1 to see full details.`
-          );
-        }
-      },
-      excludedRules
+    throw new Error(
+      `Axe accessibility violations found:\n${violationMessages}\n` +
+      `Run with DEBUG=1 to see full details.`
     );
-  } else {
-    // Scan entire page
-    await page.evaluate(async () => {
-      const axe = (window as any).axe;
-      if (!axe) {
-        throw new Error("Axe-core not loaded. Ensure @axe-core/playwright is set up.");
-      }
-
-      const results = await axe.run(document);
-
-      if (results.violations.length > 0) {
-        const violationMessages = results.violations
-          .map((v: any) => `  - ${v.id}: ${v.description} (${v.nodes.length} affected)`)
-          .join("\n");
-
-        throw new Error(
-          `Axe accessibility violations found:\n${violationMessages}\n` +
-          `Run with DEBUG=1 to see full details.`
-        );
-      }
-    });
   }
 }
 

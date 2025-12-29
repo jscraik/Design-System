@@ -23,6 +23,16 @@ This checklist captures the remaining manual steps to finish the Storybook harde
 - [ ] Run component unit tests for UI package.
   - Command: `pnpm -C packages/ui test`
 
+## Swift Storybook (ComponentGallery)
+
+- [ ] Build and run ComponentGallery for macOS.
+  - Command: `swift build --package-path apps/macos/ComponentGallery`
+- [ ] Build and run ComponentGallery for iOS (Xcode).
+  - Open `apps/macos/ComponentGallery/Package.swift` in Xcode and run the iOS scheme.
+- [ ] Generate DocC output for ComponentGallery.
+  - Command: `xcodebuild docbuild -scheme ComponentGallery -destination 'generic/platform=macOS'`
+  - Output path: `~/Library/Developer/Xcode/DerivedData/.../Build/Products/Debug/ComponentGallery.doccarchive`
+
 ## Notes
 
 - Storybook Vitest browser mode requires binding to a local port. If this fails in a restricted environment, run tests on a host that allows local port binding.

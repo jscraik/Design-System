@@ -47,9 +47,9 @@ RoundedAppContainer {
 
 **Features:**
 
-- Clips to `ChatGPTTheme.appCornerRadius` (18pt)
+- Clips to `ChatUITheme.appCornerRadius` (18pt in ChatGPT theme)
 - Subtle border stroke with opacity
-- Shadow using `ChatGPTTheme` constants:
+- Shadow using `ChatUITheme` constants:
   - Opacity: 0.45
   - Radius: 30pt
   - Y-offset: 18pt

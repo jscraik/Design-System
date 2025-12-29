@@ -58,3 +58,5 @@ UX scope: ChatGPT widgets + React UI; record changes for SwiftUI parity.
 - [A11Y] `packages/ui/src/app/components/ui/base/icon-button.tsx`: accepted standard `aria-label`/`aria-labelledby` props and wired them to the underlying button for lint/a11y parity.
 - [A11Y] `packages/ui/src/app/components/ui/base/radio-group.tsx`: paired dark-only background token with a light-mode counterpart.
 - [A11Y] `packages/ui/src/app/components/ui/base/select.tsx`: added light hover token to pair with dark hover styles under media-based theming.
+- [A11Y] `packages/ui/src/app/components/ui/overlays/modal.tsx`: wired focus-trap ref to the dialog element to ensure correct focus management.
+- [BUG] `packages/ui/src/app/components/chat/ChatSidebar.tsx`: removed duplicate `type` attribute on collapse/expand button.

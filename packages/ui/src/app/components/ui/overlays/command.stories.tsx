@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 import {
   Command,
@@ -46,4 +47,11 @@ export const Default: Story = {
       </CommandList>
     </Command>
   ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByRole("combobox");
+    await userEvent.type(input, "Open settings");
+
+    await expect(canvas.getByText("Open settings")).toBeInTheDocument();
+  },
 };

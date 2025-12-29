@@ -2,86 +2,86 @@
 export const widgetManifest = {
   "auth-demo": {
     "name": "auth-demo",
-    "uri": "auth-demo.6a49a43f",
-    "hash": "6a49a43f",
+    "uri": "auth-demo.2f6f23af",
+    "hash": "2f6f23af",
     "originalPath": "src/auth-demo/index.html"
   },
   "chat-view": {
     "name": "chat-view",
-    "uri": "chat-view.259916a7",
-    "hash": "259916a7",
+    "uri": "chat-view.844f3b35",
+    "hash": "844f3b35",
     "originalPath": "src/chat-view/index.html"
   },
   "dashboard-widget": {
     "name": "dashboard-widget",
-    "uri": "dashboard-widget.9af6d02a",
-    "hash": "9af6d02a",
+    "uri": "dashboard-widget.5750ff2d",
+    "hash": "5750ff2d",
     "originalPath": "src/dashboard-widget/index.html"
   },
   "enhanced-example-widget": {
     "name": "enhanced-example-widget",
-    "uri": "enhanced-example-widget.4b2fc53b",
-    "hash": "4b2fc53b",
+    "uri": "enhanced-example-widget.4b9c61dd",
+    "hash": "4b9c61dd",
     "originalPath": "src/enhanced-example-widget/index.html"
   },
   "example-widget": {
     "name": "example-widget",
-    "uri": "example-widget.a77b2c08",
-    "hash": "a77b2c08",
+    "uri": "example-widget.41c09b34",
+    "hash": "41c09b34",
     "originalPath": "src/example-widget/index.html"
   },
   "kitchen-sink-lite": {
     "name": "kitchen-sink-lite",
-    "uri": "kitchen-sink-lite.547db0a4",
-    "hash": "547db0a4",
+    "uri": "kitchen-sink-lite.c6ec9621",
+    "hash": "c6ec9621",
     "originalPath": "src/kitchen-sink-lite/index.html"
   },
   "pizzaz-carousel": {
     "name": "pizzaz-carousel",
-    "uri": "pizzaz-carousel.fb77922c",
-    "hash": "fb77922c",
+    "uri": "pizzaz-carousel.33b72ebb",
+    "hash": "33b72ebb",
     "originalPath": "src/pizzaz-carousel/index.html"
   },
   "pizzaz-gallery": {
     "name": "pizzaz-gallery",
-    "uri": "pizzaz-gallery.2ffb160b",
-    "hash": "2ffb160b",
+    "uri": "pizzaz-gallery.9f0fda42",
+    "hash": "9f0fda42",
     "originalPath": "src/pizzaz-gallery/index.html"
   },
   "pizzaz-markdown": {
     "name": "pizzaz-markdown",
-    "uri": "pizzaz-markdown.b7c726f3",
-    "hash": "b7c726f3",
+    "uri": "pizzaz-markdown.2accb25b",
+    "hash": "2accb25b",
     "originalPath": "src/pizzaz-markdown/index.html"
   },
   "pizzaz-shop": {
     "name": "pizzaz-shop",
-    "uri": "pizzaz-shop.bba86afa",
-    "hash": "bba86afa",
+    "uri": "pizzaz-shop.73f9199e",
+    "hash": "73f9199e",
     "originalPath": "src/pizzaz-shop/index.html"
   },
   "pizzaz-table": {
     "name": "pizzaz-table",
-    "uri": "pizzaz-table.617db3c0",
-    "hash": "617db3c0",
+    "uri": "pizzaz-table.fd4ed84a",
+    "hash": "fd4ed84a",
     "originalPath": "src/pizzaz-table/index.html"
   },
   "search-results": {
     "name": "search-results",
-    "uri": "search-results.fc486567",
-    "hash": "fc486567",
+    "uri": "search-results.7946e9d7",
+    "hash": "7946e9d7",
     "originalPath": "src/search-results/index.html"
   },
   "shopping-cart": {
     "name": "shopping-cart",
-    "uri": "shopping-cart.5d0fd603",
-    "hash": "5d0fd603",
+    "uri": "shopping-cart.6d45c6b6",
+    "hash": "6d45c6b6",
     "originalPath": "src/shopping-cart/index.html"
   },
   "solar-system": {
     "name": "solar-system",
-    "uri": "solar-system.9b74c132",
-    "hash": "9b74c132",
+    "uri": "solar-system.fffcf20c",
+    "hash": "fffcf20c",
     "originalPath": "src/solar-system/index.html"
   }
 } as const;

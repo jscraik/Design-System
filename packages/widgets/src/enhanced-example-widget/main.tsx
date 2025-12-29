@@ -107,7 +107,10 @@ function EnhancedExampleCore() {
     }
   };
 
-  const updatePreferences = (key: keyof WidgetState['preferences'], value: any) => {
+  const updatePreferences = <K extends keyof WidgetState["preferences"]>(
+    key: K,
+    value: WidgetState["preferences"][K]
+  ) => {
     setWidgetState(prev => ({
       ...prev!,
       preferences: {

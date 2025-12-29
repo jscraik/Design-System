@@ -133,6 +133,13 @@ export function SettingsModal({ isOpen, onClose, account, appInfo }: SettingsMod
   const [followUpSuggestions, setFollowUpSuggestions] = useState(true);
 
   const selectedColorHex = accentColors.find((c) => c.name === accentColor)?.color || "#3b82f6";
+  const handleClose = () => {
+    if (currentView !== "main") {
+      setCurrentView("main");
+      return;
+    }
+    onClose();
+  };
 
   // Render the appropriate panel based on current view
   const renderPanel = () => {
@@ -667,7 +674,7 @@ export function SettingsModal({ isOpen, onClose, account, appInfo }: SettingsMod
   return (
     <ModalDialog
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleClose}
       title="Settings"
       titleId="settings-modal-title"
       maxWidth="560px"

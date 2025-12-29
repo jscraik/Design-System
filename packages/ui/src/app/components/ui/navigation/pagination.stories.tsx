@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 import { useState } from "react";
 
 import { Pagination } from "./pagination";
@@ -134,5 +135,11 @@ export const Interactive: Story = {
         <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
       </div>
     );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const nextButton = canvas.getByRole("button", { name: /go to next page/i });
+    await userEvent.click(nextButton);
+    await expect(canvas.getByText("Showing 11 to 20 of 142 results")).toBeInTheDocument();
   },
 };

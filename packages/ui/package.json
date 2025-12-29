@@ -22,6 +22,18 @@
       "types": "./dist/app/components/ui/layout/index.d.ts",
       "import": "./dist/layout.js"
     },
+    "./modals": {
+      "types": "./dist/app/components/modals/index.d.ts",
+      "import": "./dist/modals.js"
+    },
+    "./settings": {
+      "types": "./dist/app/components/settings/index.d.ts",
+      "import": "./dist/settings.js"
+    },
+    "./showcase": {
+      "types": "./dist/app/components/showcase/index.d.ts",
+      "import": "./dist/showcase.js"
+    },
     "./templates": {
       "types": "./dist/templates/index.d.ts",
       "import": "./dist/templates.js"
@@ -93,6 +105,7 @@
     "@radix-ui/react-toggle": "^1.1.0",
     "@radix-ui/react-toggle-group": "^1.1.0",
     "@radix-ui/react-tooltip": "^1.1.2",
+    "@radix-ui/react-visually-hidden": "^1.2.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.1.1",

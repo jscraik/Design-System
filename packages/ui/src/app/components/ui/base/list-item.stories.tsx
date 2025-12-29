@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "@storybook/test";
 
 import { ListItem } from "./list-item";
 
@@ -59,7 +60,10 @@ export const WithAction: Story = {
       </svg>
     ),
     action: (
-      <button className="px-2 py-1 text-xs bg-white/10 hover:bg-white/20 rounded transition-colors">
+      <button
+        type="button"
+        className="px-2 py-1 text-xs bg-white/10 hover:bg-white/20 rounded transition-colors"
+      >
         Open
       </button>
     ),
@@ -106,7 +110,7 @@ export const Clickable: Story = {
         />
       </svg>
     ),
-    onClick: () => alert("List item clicked!"),
+    onClick: fn(),
     children: "Clickable list item",
   },
 };

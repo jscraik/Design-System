@@ -344,7 +344,7 @@ test.describe("ChatSidebar visual regression", () => {
   });
 
   test("renders expanded sidebar in both themes", async ({ page }) => {
-    const sidebar = page.locator('[role="navigation"]');
+    const sidebar = page.locator('[data-testid="chat-sidebar"]');
 
     await expect(sidebar).toBeVisible();
 
@@ -372,7 +372,7 @@ test.describe("ChatSidebar visual regression", () => {
 
   test("renders sidebar with project list in both themes", async ({ page }) => {
     // Find projects section and expand
-    const projectsSection = page.locator('text=Projects').first();
+    const projectsSection = page.getByRole("button", { name: /projects/i }).first();
 
     if ((await projectsSection.count()) > 0) {
       await projectsSection.click();
@@ -388,7 +388,7 @@ test.describe("ChatSidebar visual regression", () => {
 
   test("renders sidebar with groups in both themes", async ({ page }) => {
     // Find group chats section
-    const groupsSection = page.locator('text=Group Chats, [data-group="chats"]').first();
+    const groupsSection = page.getByRole("button", { name: /group chats/i }).first();
 
     if ((await groupsSection.count()) > 0) {
       await groupsSection.click();
@@ -404,7 +404,9 @@ test.describe("ChatSidebar visual regression", () => {
 
   test("renders sidebar with active state in both themes", async ({ page }) => {
     // Click a chat/project to activate it
-    const firstItem = page.locator('[data-rail-item="true"], [role="menuitem"]').first();
+    const firstItem = page
+      .locator('button:has-text("UI Library"), button:has-text("Apps SDK Demo"), button:has-text("Search Widgets")')
+      .first();
 
     if ((await firstItem.count()) > 0) {
       await firstItem.click();
@@ -508,7 +510,7 @@ test.describe("Responsive visual regression", () => {
     await page.setViewportSize({ width: 375, height: 667 });
     await page.goto("/");
 
-    const sidebar = page.locator('[role="navigation"]');
+    const sidebar = page.locator('[data-testid="chat-sidebar"]');
 
     await expect(sidebar).toBeVisible();
 

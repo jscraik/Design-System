@@ -11,8 +11,6 @@ import { join } from 'path';
 import fc from 'fast-check';
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 
-import { VersionSynchronizer } from './version-sync.mjs';
-
 // Test configuration
 const TEST_CONFIG = {
   testDir: '.test-build-pipeline',
@@ -127,9 +125,6 @@ describe('Build Pipeline Completeness Property', () => {
           setupMockProject(testDir, config.version, config.packages);
           process.chdir(testDir);
 
-          // Mock version synchronization
-          const synchronizer = new VersionSynchronizer();
-          
           // Verify all packages have the correct version after setup
           for (const packageName of config.packages) {
             const packageJsonPath = join('packages', packageName, 'package.json');

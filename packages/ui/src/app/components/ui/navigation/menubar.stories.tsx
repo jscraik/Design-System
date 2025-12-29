@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 import {
   Menubar,
@@ -44,4 +45,12 @@ export const Default: Story = {
       </MenubarMenu>
     </Menubar>
   ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const trigger = canvas.getByRole("menuitem", { name: /file/i });
+    await userEvent.click(trigger);
+
+    const menu = within(canvasElement.ownerDocument.body);
+    await expect(menu.getByText("New Tab")).toBeInTheDocument();
+  },
 };

@@ -16,11 +16,13 @@ export interface EnvironmentConfig {
  */
 export function getEnvironmentConfig(): EnvironmentConfig {
     const env = import.meta.env;
+    const nodeEnv =
+        env.NODE_ENV === "production" || env.NODE_ENV === "test" ? env.NODE_ENV : "development";
 
     return {
         WORKER_DOMAIN_BASE: env.VITE_WORKER_DOMAIN_BASE || env.WORKER_DOMAIN_BASE,
         WIDGET_DOMAIN: env.VITE_WIDGET_DOMAIN || env.WIDGET_DOMAIN,
-        NODE_ENV: (env.NODE_ENV as any) || 'development',
+        NODE_ENV: nodeEnv,
         DEV: env.DEV || false,
         PROD: env.PROD || false,
     };
@@ -87,7 +89,16 @@ export function getWidgetDomain(): string | undefined {
 export function createEnvironmentMeta() {
     const config = getEnvironmentConfig();
 
-    const meta: Record<string, any> = {
+    type WidgetCSP = {
+        connect_domains: string[];
+        resource_domains: string[];
+    };
+    type EnvironmentMeta = {
+        "openai/widgetCSP": WidgetCSP;
+        "openai/widgetDomain"?: string;
+    };
+
+    const meta: EnvironmentMeta = {
         "openai/widgetCSP": {
             connect_domains: [] as string[],
             resource_domains: [] as string[],

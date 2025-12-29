@@ -8,23 +8,55 @@
 import SwiftUI
 import ChatUIFoundation
 import ChatUIComponents
+import ChatUIShellChatGPT
 
 struct ContentView: View {
     @State private var selectedSection: PlaygroundSection = .settings
 
     var body: some View {
-        NavigationSplitView {
-            List(PlaygroundSection.allCases, selection: $selectedSection) { section in
-                Label(section.title, systemImage: section.systemImage)
-                    .tag(section)
+        ZStack {
+            FColor.bgApp
+
+            RoundedAppContainer {
+                AppShellView {
+                    SidebarView(selection: $selectedSection)
+                } detail: {
+                    ComponentGallery(section: selectedSection)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
             }
-            .navigationTitle("ChatUI Playground")
-            .frame(minWidth: 220)
-        } detail: {
-            ComponentGallery(section: selectedSection)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(FColor.bgApp)
+            .padding(FSpacing.s12)
         }
+    }
+}
+
+private struct SidebarView: View {
+    @Binding var selection: PlaygroundSection
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: FSpacing.s12) {
+            Text("ChatUIPlayground")
+                .font(FType.title())
+                .foregroundStyle(FColor.textPrimary)
+                .padding(.horizontal, FSpacing.s8)
+                .padding(.top, FSpacing.s12)
+
+            VStack(spacing: FSpacing.s4) {
+                ForEach(PlaygroundSection.allCases) { section in
+                    ListItemView(
+                        systemIcon: section.systemImage,
+                        title: section.title,
+                        isSelected: selection == section
+                    ) {
+                        selection = section
+                    }
+                }
+            }
+            .padding(.horizontal, FSpacing.s8)
+
+            Spacer()
+        }
+        .padding(.bottom, FSpacing.s12)
     }
 }
 

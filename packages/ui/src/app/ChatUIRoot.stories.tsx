@@ -68,15 +68,21 @@ export const WithCustomHeaderActions: Story = {
     headerRight: (
       <>
         <button
+          type="button"
           className="p-1.5 hover:bg-white/10 rounded-md transition-colors"
           aria-label="New chat"
         >
           <IconPlusLg className="size-4 text-white/60" />
         </button>
-        <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors" aria-label="Star">
+        <button
+          type="button"
+          className="p-1.5 hover:bg-white/10 rounded-md transition-colors"
+          aria-label="Star"
+        >
           <IconStar className="size-4 text-white/60" />
         </button>
         <button
+          type="button"
           className="p-1.5 hover:bg-white/10 rounded-md transition-colors"
           aria-label="Settings"
         >
@@ -93,7 +99,10 @@ export const WithShareButton: Story = {
     defaultSidebarOpen: true,
     defaultViewMode: "chat",
     headerRight: (
-      <button className="px-3 py-1.5 bg-[var(--foundation-accent-green)] hover:bg-[var(--foundation-accent-green)]/80 text-white rounded-lg transition-colors text-sm font-medium flex items-center gap-2">
+      <button
+        type="button"
+        className="px-3 py-1.5 bg-[var(--foundation-accent-green)] hover:bg-[var(--foundation-accent-green)]/80 text-white rounded-lg transition-colors text-sm font-medium flex items-center gap-2"
+      >
         <IconShare className="size-4" />
         Share Chat
       </button>
@@ -108,7 +117,10 @@ export const WithSidebarSlots: Story = {
     defaultViewMode: "chat",
     slots: {
       sidebarFooter: (
-        <button className="w-full px-3 py-2 bg-white/10 hover:bg-white/15 rounded-lg text-sm text-white/80 transition-colors">
+        <button
+          type="button"
+          className="w-full px-3 py-2 bg-white/10 hover:bg-white/15 rounded-lg text-sm text-white/80 transition-colors"
+        >
           + New Workspace
         </button>
       ),
@@ -123,6 +135,7 @@ export const WithComposerSlots: Story = {
     defaultViewMode: "chat",
     composerLeft: (
       <button
+        type="button"
         className="p-2 bg-[var(--foundation-accent-blue)]/20 text-[var(--foundation-accent-blue)] rounded-lg transition-colors"
         aria-label="Custom Tool"
       >
@@ -131,6 +144,7 @@ export const WithComposerSlots: Story = {
     ),
     composerRight: (
       <button
+        type="button"
         className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg transition-colors"
         aria-label="AI Assistant"
       >
@@ -156,18 +170,24 @@ export const WithAllSlots: Story = {
     headerRight: (
       <>
         <button
+          type="button"
           className="p-1.5 hover:bg-white/10 rounded-md transition-colors"
           aria-label="New chat"
         >
           <IconPlusLg className="size-4 text-white/60" />
         </button>
-        <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors" aria-label="Share">
+        <button
+          type="button"
+          className="p-1.5 hover:bg-white/10 rounded-md transition-colors"
+          aria-label="Share"
+        >
           <IconShare className="size-4 text-white/60" />
         </button>
       </>
     ),
     composerLeft: (
       <button
+        type="button"
         className="p-2 bg-[var(--foundation-accent-blue)]/20 text-[var(--foundation-accent-blue)] rounded-lg transition-colors"
         aria-label="Custom Tool"
       >
@@ -176,6 +196,7 @@ export const WithAllSlots: Story = {
     ),
     composerRight: (
       <button
+        type="button"
         className="p-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg transition-colors"
         aria-label="AI Assistant"
       >
@@ -193,12 +214,17 @@ export const FullWidthWithSlots: Story = {
     headerRight: (
       <>
         <button
+          type="button"
           className="p-1.5 hover:bg-white/10 rounded-md transition-colors"
           aria-label="New chat"
         >
           <IconPlusLg className="size-4 text-white/60" />
         </button>
-        <button className="p-1.5 hover:bg-white/10 rounded-md transition-colors" aria-label="Share">
+        <button
+          type="button"
+          className="p-1.5 hover:bg-white/10 rounded-md transition-colors"
+          aria-label="Share"
+        >
           <IconShare className="size-4 text-white/60" />
         </button>
       </>

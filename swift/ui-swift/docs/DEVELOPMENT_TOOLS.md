@@ -1,6 +1,8 @@
 # ChatUISwift Development Tools
 
-This document describes the comprehensive development tooling available for ChatUISwift, including hot reload, documentation generation, debugging tools, and performance monitoring.
+> Legacy: `swift/ui-swift` is retained for reference. The current macOS apps use the modular Swift packages in `swift/`.
+
+This document describes the development tooling available for ChatUISwift, including hot reload, documentation generation, debugging tools, and performance monitoring.
 
 ## Overview
 
@@ -16,18 +18,18 @@ The ChatUISwift development tools provide an integrated development experience w
 ### Start All Development Tools
 
 ```bash
-# From packages/tokens directory
-pnpm dev
+# Start the token dev tools
+pnpm -C packages/tokens dev
 
 # Or with verbose logging
-pnpm dev:verbose
+pnpm -C packages/tokens dev:verbose
 ```
 
 ### Start Individual Tools
 
 ```bash
 # Token hot reload only
-pnpm dev:hot-reload
+pnpm -C packages/tokens dev:hot-reload
 
 # Swift development mode
 cd swift/ui-swift
@@ -54,14 +56,13 @@ Automatically regenerates Swift constants and CSS variables when design tokens c
 
 ```bash
 # Start token watcher
-cd packages/tokens
-pnpm dev:hot-reload
+pnpm -C packages/tokens dev:hot-reload
 
 # With verbose logging
-pnpm dev:hot-reload:verbose
+pnpm -C packages/tokens dev:hot-reload:verbose
 
 # Custom debounce timing
-tsx scripts/watch-tokens.ts --debounce=500
+pnpm -C packages/tokens exec tsx scripts/watch-tokens.ts --debounce=500
 ```
 
 **How it works:**
@@ -228,12 +229,10 @@ The development tools are designed to work seamlessly with Xcode's SwiftUI previ
 
 ```bash
 # 1. Start development tools
-cd packages/tokens
-pnpm dev
+pnpm -C packages/tokens dev
 
-# 2. Open Xcode project
-cd swift/ui-swift
-./build.sh playground
+# 2. Open the ChatUISwift package in Xcode
+open swift/ui-swift/Package.swift
 
 # 3. In Xcode:
 # - Open component files
@@ -290,10 +289,10 @@ The dashboard provides:
 
 ```bash
 # Check if files are being watched
-pnpm dev:hot-reload:verbose
+pnpm -C packages/tokens dev:hot-reload:verbose
 
 # Manually trigger regeneration
-pnpm generate
+pnpm -C packages/tokens generate
 
 # Clear Node.js cache
 rm -rf node_modules/.cache
@@ -341,7 +340,7 @@ DebugConfig.showStateInspector = true
 
 ### Development Workflow
 
-1. **Start with tools enabled**: Always run `pnpm dev` before development
+1. **Start with tools enabled**: Always run `pnpm -C packages/tokens dev` before development
 2. **Use performance monitoring**: Add `.previewPerformance()` to new components
 3. **Monitor state changes**: Use debug inspector for complex state logic
 4. **Generate documentation**: Run `./build.sh docs` after API changes
@@ -370,6 +369,12 @@ DebugConfig.showStateInspector = true
 - **Swift 5.9+** (for package compilation)
 - **Node.js 18+** (for token generation)
 - **pnpm** (for package management)
+
+## Verify
+
+1. Run `pnpm -C packages/tokens dev:hot-reload`.
+2. Change a token in `packages/tokens/src/colors.ts`.
+3. Confirm regeneration logs in the terminal and refresh previews with `⌥⌘P`.
 
 ## Validation: Requirements 7.1, 7.4
 

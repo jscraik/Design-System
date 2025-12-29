@@ -15,6 +15,7 @@ const SWIFT_PACKAGES = [
   'swift/ChatUIComponents',
   'swift/ChatUIThemes',
   'swift/ChatUIShellChatGPT',
+  'swift/ChatUITestSupport',
   'swift/ChatUISystemIntegration',
   'swift/ChatUIMCP',
   'swift/ui-swift',

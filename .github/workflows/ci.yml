@@ -17,6 +17,9 @@ jobs:
           - os: macos-latest
             platform: macos
     runs-on: ${{ matrix.os }}
+    env:
+      SNAPSHOT_TESTS: ${{ matrix.platform == 'macos' && '1' || '0' }}
+      SNAPSHOT_RECORD: "0"
 
     steps:
       - name: Checkout
@@ -82,6 +85,7 @@ jobs:
           path: |
             packages/*/dist/
             swift/*/.build/
+            swift/**/__Snapshots__/
             .build-cache/
           retention-days: 7
 

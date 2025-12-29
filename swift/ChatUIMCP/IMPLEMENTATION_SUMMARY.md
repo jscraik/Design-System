@@ -270,7 +270,7 @@ Build complete! (1.61s)
 ```swift
 import ChatUIMCP
 
-let client = MCPClient(baseURL: URL(string: "http://localhost:3000")!)
+let client = MCPClient(baseURL: URL(string: "http://localhost:8787")!)
 
 // Call display_chat tool
 let response = try await client.callTool(
@@ -296,7 +296,7 @@ try authenticator.storeToken("user-auth-token-12345")
 
 // Client automatically uses stored token
 let client = MCPClient(
-    baseURL: URL(string: "http://localhost:3000")!,
+    baseURL: URL(string: "http://localhost:8787")!,
     authenticator: authenticator
 )
 
@@ -327,7 +327,7 @@ struct MCPWidgetView: View {
     }
     
     func loadWidget() async {
-        let client = MCPClient(baseURL: URL(string: "http://localhost:3000")!)
+        let client = MCPClient(baseURL: URL(string: "http://localhost:8787")!)
         
         do {
             let response = try await client.callTool(name: "display_dashboard")

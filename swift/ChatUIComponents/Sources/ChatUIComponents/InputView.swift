@@ -30,6 +30,7 @@ public struct InputView: View {
     
     @FocusState private var isFocused: Bool
     @Environment(\.colorScheme) private var scheme
+    @Environment(\.chatUITheme) private var theme
     
     public init(
         text: Binding<String>,
@@ -62,7 +63,8 @@ public struct InputView: View {
                         variant: variant,
                         size: size,
                         isFocused: isFocused,
-                        scheme: scheme
+                        scheme: scheme,
+                        theme: theme
                     ))
             case .password:
                 SecureField(placeholder, text: $text)
@@ -70,7 +72,8 @@ public struct InputView: View {
                         variant: variant,
                         size: size,
                         isFocused: isFocused,
-                        scheme: scheme
+                        scheme: scheme,
+                        theme: theme
                     ))
             }
         }
@@ -113,6 +116,7 @@ struct InputViewStyle: TextFieldStyle {
     let size: InputView.Size
     let isFocused: Bool
     let scheme: ColorScheme
+    let theme: ChatUITheme
     
     func _body(configuration: TextField<Self._Label>) -> some View {
         let prefersHighContrast = FAccessibility.prefersHighContrast
@@ -173,7 +177,7 @@ struct InputViewStyle: TextFieldStyle {
             return FAccessibility.focusRingColor
         }
         
-        return FColor.divider.opacity(scheme == .dark ? ChatGPTTheme.dividerOpacityDark : ChatGPTTheme.dividerOpacityLight)
+        return FColor.divider.opacity(scheme == .dark ? theme.dividerOpacityDark : theme.dividerOpacityLight)
     }
     
     private var borderWidth: CGFloat {
@@ -181,11 +185,12 @@ struct InputViewStyle: TextFieldStyle {
     }
     
     private func cornerRadiusForSize(_ size: InputView.Size) -> CGFloat {
+        let base = theme.inputCornerRadius
         switch size {
         case .sm:
-            return 4
+            return max(2, base - 2)
         case .default, .lg:
-            return 8
+            return base
         }
     }
     

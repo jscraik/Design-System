@@ -7,8 +7,10 @@ Interactive component browser for the ChatUI SwiftUI library, demonstrating all 
 The Component Gallery is a macOS and iOS application that provides:
 
 - **Interactive Component Browser**: Explore all components from ChatUIFoundation, ChatUIComponents, ChatUIThemes, and ChatUIShellChatGPT
+- **Search & Filtering**: Quickly find components and sections by name
 - **Side-by-Side Light/Dark Mode**: Compare component appearance in both color schemes simultaneously
 - **Accessibility Testing Interface**: Built-in checklist and testing tools for VoiceOver, keyboard navigation, focus management, and high contrast
+- **Interaction Harness**: Manual regression checks for inputs, toggles, dropdowns, and selection controls
 - **Screenshot Export**: Keyboard shortcut wired; export implementation pending
 - **Token Hot Reload Integration**: Automatically updates when design tokens change (when integrated with token watcher)
 
@@ -72,6 +74,29 @@ Generate DocC documentation for the Swift Storybook:
 ```bash
 cd apps/macos/ComponentGallery
 swift package generate-documentation --target ComponentGallery --output-path .build/docc
+```
+
+## UI Tests (Xcode)
+
+UI tests require an Xcode project or a manually added UI test target (SPM executable targets do not run UI tests on their own).
+
+1. Open `Package.swift` in Xcode.
+2. From the target selector, choose **New Target → UI Testing Bundle**.
+3. Name it `ComponentGalleryUITests`.
+4. Add `apps/macos/ComponentGallery/UITests/InteractionHarnessUITests.swift` to the new target.
+5. Run the UI test target (⌘U).
+
+Notes:
+- The interaction harness uses accessibility identifiers (e.g., `interaction.input`, `interaction.toggle`) to keep UI tests stable.
+- If the UI test target cannot see the identifiers, ensure the accessibility options are enabled in the test scheme.
+
+## Unit Tests
+
+Run ComponentGallery unit tests with SwiftPM:
+
+```bash
+cd apps/macos/ComponentGallery
+swift test
 ```
 
 ## Architecture
@@ -145,8 +170,7 @@ To add a new component to the gallery:
 
 1. Add the component to the appropriate ChatUI package
 2. Create or update the corresponding gallery view in `Sources/Galleries/`
-3. Add the component name to the `ComponentCategory.components` array
-4. Build and test in the Component Gallery
+3. Build and test in the Component Gallery
 
 ### Adding New Categories
 
@@ -181,7 +205,6 @@ This Component Gallery satisfies the following requirements from Task 11.1:
 ## Future Enhancements
 
 - [ ] Implement actual screenshot export functionality (currently just keyboard shortcut)
-- [ ] Add search/filter functionality for components
 - [ ] Add code snippet viewer showing component usage
 - [ ] Add performance metrics and rendering statistics
 - [ ] Add component variant comparison view

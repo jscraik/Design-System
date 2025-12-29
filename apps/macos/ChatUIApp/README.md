@@ -53,7 +53,8 @@ ChatUIApp/
 │   ├── ChatView.swift            # Chat interface with MCP integration
 │   ├── ToolsView.swift           # MCP tools browser
 │   └── SettingsView.swift        # Settings panel with primitives
-├── Info.plist                    # App bundle configuration
+├── Bundle/Info.plist             # App bundle configuration
+├── Bundle/ChatUIApp.entitlements # Sandbox entitlements for signing
 ├── Package.swift                 # Swift Package Manager manifest
 └── README.md                     # This file
 ```
@@ -178,7 +179,7 @@ Widgets are rendered using native SwiftUI components styled with ChatUIFoundatio
 1. Create a new Swift file in `Sources/`
 2. Import required ChatUI packages
 3. Use ChatUIFoundation tokens (FColor, FType, FSpacing)
-4. Follow ChatGPTTheme constants for styling
+4. Follow ChatUITheme tokens for styling
 5. Add SwiftUI previews for development
 
 ### Extending MCP Integration
@@ -224,8 +225,9 @@ To create a distributable app bundle:
 1. Build in Release mode: `swift build -c release`
 2. Create app bundle structure
 3. Copy executable to `ChatUI.app/Contents/MacOS/`
-4. Copy Info.plist to `ChatUI.app/Contents/`
+4. Copy Info.plist (`apps/macos/ChatUIApp/Bundle/Info.plist`) to `ChatUI.app/Contents/`
 5. Add app icon to `ChatUI.app/Contents/Resources/`
+6. Include entitlements file (`apps/macos/ChatUIApp/Bundle/ChatUIApp.entitlements`) for sandboxed signing
 
 ### Code Signing
 
@@ -233,6 +235,7 @@ For distribution outside the Mac App Store:
 
 ```bash
 codesign --deep --force --verify --verbose \
+  --entitlements apps/macos/ChatUIApp/Bundle/ChatUIApp.entitlements \
   --sign "Developer ID Application: Your Name" \
   ChatUI.app
 ```

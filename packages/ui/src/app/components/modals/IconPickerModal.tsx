@@ -200,14 +200,14 @@ function ModalFooter({ onClose, onSave }: { onClose: () => void; onSave: () => v
       <button
         type="button"
         onClick={onClose}
-        className="px-4 py-2 text-[14px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-lg transition-colors font-normal leading-[20px] tracking-[-0.3px]"
+        className="px-4 py-2 text-[14px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-lg transition-colors font-normal leading-[20px] tracking-[-0.3px]"
       >
         Cancel
       </button>
       <button
         type="button"
         onClick={onSave}
-        className="px-4 py-2 text-[14px] bg-foundation-accent-green text-white hover:bg-foundation-accent-green/90 rounded-lg transition-colors font-medium leading-[20px] tracking-[-0.3px]"
+        className="px-4 py-2 text-[14px] bg-foundation-accent-green-light text-white hover:bg-foundation-accent-green-light/90 dark:bg-foundation-accent-green dark:text-foundation-text-light-primary dark:hover:bg-foundation-accent-green/90 rounded-lg transition-colors font-medium leading-[20px] tracking-[-0.3px]"
       >
         Done
       </button>
@@ -242,7 +242,13 @@ export function IconPickerModal({
   const selectedColorClass = getColorClass(selectedColorId);
 
   return (
-    <ModalDialog isOpen={isOpen} onClose={onClose} title="Choose icon" maxWidth="400px">
+    <ModalDialog
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Choose icon"
+      titleId="icon-picker-title"
+      maxWidth="400px"
+    >
       <div className="px-6 py-4 border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3">
         <div>
           <h2
@@ -251,7 +257,7 @@ export function IconPickerModal({
           >
             Choose icon
           </h2>
-          <p className="text-[13px] text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-0.5 leading-[18px] tracking-[-0.32px]">
+          <p className="text-[13px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-0.5 leading-[18px] tracking-[-0.32px]">
             {projectName}
           </p>
         </div>

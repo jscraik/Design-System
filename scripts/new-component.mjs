@@ -10,8 +10,8 @@
  *   - page -> packages/ui/src/app/pages/
  */
 
-import { writeFileSync, mkdirSync, existsSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -162,9 +162,9 @@ mkdirSync(dirname(fullComponentPath), { recursive: true });
 writeFileSync(fullComponentPath, componentTemplate);
 writeFileSync(fullStoryPath, storyTemplate);
 
-console.log(\`✅ Created component: \${componentPath}\`);
-console.log(\`✅ Created story: \${storyPath}\`);
-console.log(\`\nNext steps:\`);
-console.log(\`1. Edit the component: \${componentPath}\`);
-console.log(\`2. Add to exports in packages/ui/src/index.ts\`);
-console.log(\`3. Run: pnpm storybook:dev\`);
+console.log(`✅ Created component: ${componentPath}`);
+console.log(`✅ Created story: ${storyPath}`);
+console.log(`\nNext steps:`);
+console.log(`1. Edit the component: ${componentPath}`);
+console.log(`2. Add to exports in packages/ui/src/index.ts`);
+console.log(`3. Run: pnpm storybook:dev`);

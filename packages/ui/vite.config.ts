@@ -10,6 +10,10 @@ const entries = {
   forms: resolve(__dirname, "src/app/components/ui/forms/index.ts"),
   chat: resolve(__dirname, "src/app/components/ui/chat/index.ts"),
   layout: resolve(__dirname, "src/app/components/ui/layout/index.ts"),
+  modals: resolve(__dirname, "src/app/components/modals/index.ts"),
+  settings: resolve(__dirname, "src/app/components/settings/index.ts"),
+  showcase: resolve(__dirname, "src/app/components/showcase/index.ts"),
+  styles: resolve(__dirname, "src/styles.ts"),
   templates: resolve(__dirname, "src/templates/index.ts"),
   experimental: resolve(__dirname, "src/experimental.ts"),
 };

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 import {
   NavigationMenu,
@@ -58,4 +59,12 @@ export const Default: Story = {
       <NavigationMenuViewport />
     </NavigationMenu>
   ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const trigger = canvas.getByRole("button", { name: /getting started/i });
+    await userEvent.click(trigger);
+
+    const menu = within(canvasElement.ownerDocument.body);
+    await expect(menu.getByText("Introduction")).toBeInTheDocument();
+  },
 };

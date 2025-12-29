@@ -1,7 +1,6 @@
 import SwiftUI
 import ChatUIFoundation
 import ChatUIComponents
-import ChatUIThemes
 
 struct SettingsView: View {
     @EnvironmentObject private var appState: AppState
@@ -10,9 +9,21 @@ struct SettingsView: View {
     @State private var darkModeEnabled = false
     @State private var selectedAccent = "Blue"
     @State private var selectedLanguage = "English"
+    @State private var showingMCPConfig = false
+    @State private var mcpURLDraft = ""
     
     let accentOptions = ["Blue", "Green", "Orange", "Red", "Purple"]
     let languageOptions = ["English", "Spanish", "French", "German", "Japanese"]
+    private let themeOptions = ThemeStyle.allCases.map { $0.title }
+    
+    private var themeSelection: Binding<String> {
+        Binding(
+            get: { appState.themeStyle.title },
+            set: { newValue in
+                appState.themeStyle = ThemeStyle.allCases.first { $0.title == newValue } ?? .chatgpt
+            }
+        )
+    }
     
     var body: some View {
         ScrollView {
@@ -29,17 +40,18 @@ struct SettingsView: View {
                     
                     SettingsCardView {
                         VStack(spacing: 0) {
-                            SettingRowView(
-                                icon: AnyView(
-                                    Image(systemName: "network")
-                                        .foregroundStyle(FColor.iconSecondary)
-                                ),
-                                title: "MCP Server URL",
-                                subtitle: appState.mcpBaseURLString,
-                                trailing: .chevron
-                            ) {
-                                // Open URL configuration
-                            }
+                        SettingRowView(
+                            icon: AnyView(
+                                Image(systemName: "network")
+                                    .foregroundStyle(FColor.iconSecondary)
+                            ),
+                            title: "MCP Server URL",
+                            subtitle: appState.mcpBaseURLString,
+                            trailing: .chevron
+                        ) {
+                            mcpURLDraft = appState.mcpBaseURLString
+                            showingMCPConfig = true
+                        }
                             
                             SettingsDivider()
                             
@@ -55,17 +67,17 @@ struct SettingsView: View {
                             
                             SettingsDivider()
                             
-                            SettingRowView(
-                                icon: AnyView(
-                                    Image(systemName: "info.circle")
-                                        .foregroundStyle(FColor.iconSecondary)
-                                ),
-                                title: "About",
-                                subtitle: "Version 1.0.0",
-                                trailing: .chevron
-                            ) {
-                                // Show about dialog
-                            }
+                        SettingRowView(
+                            icon: AnyView(
+                                Image(systemName: "info.circle")
+                                    .foregroundStyle(FColor.iconSecondary)
+                            ),
+                            title: "About",
+                            subtitle: "Version \(AppInfo.versionString)",
+                            trailing: .chevron
+                        ) {
+                            // Show about dialog
+                        }
                         }
                     }
                 }
@@ -79,22 +91,35 @@ struct SettingsView: View {
                     
                     SettingsCardView {
                         VStack(spacing: 0) {
-                            SettingToggleView(
-                                icon: AnyView(
-                                    Image(systemName: "moon.fill")
-                                        .foregroundStyle(FColor.iconSecondary)
-                                ),
-                                title: "Dark Mode",
-                                subtitle: "Use dark color scheme",
-                                isOn: $darkModeEnabled
-                            )
-                            
-                            SettingsDivider()
-                            
-                            SettingDropdownView(
-                                icon: AnyView(
-                                    Image(systemName: "paintpalette.fill")
-                                        .foregroundStyle(FColor.iconSecondary)
+                        SettingToggleView(
+                            icon: AnyView(
+                                Image(systemName: "moon.fill")
+                                    .foregroundStyle(FColor.iconSecondary)
+                            ),
+                            title: "Dark Mode",
+                            subtitle: "Use dark color scheme",
+                            isOn: $darkModeEnabled
+                        )
+                        
+                        SettingsDivider()
+
+                        SettingDropdownView(
+                            icon: AnyView(
+                                Image(systemName: "paintbrush.pointed")
+                                    .foregroundStyle(FColor.iconSecondary)
+                            ),
+                            title: "Theme Style",
+                            subtitle: "Switch between ChatGPT and native",
+                            options: themeOptions,
+                            selection: themeSelection
+                        )
+
+                        SettingsDivider()
+                        
+                        SettingDropdownView(
+                            icon: AnyView(
+                                Image(systemName: "paintpalette.fill")
+                                    .foregroundStyle(FColor.iconSecondary)
                                 ),
                                 title: "Accent Color",
                                 subtitle: "Choose your preferred accent",
@@ -158,6 +183,16 @@ struct SettingsView: View {
             }
             .padding(FSpacing.s16)
         }
+        .sheet(isPresented: $showingMCPConfig) {
+            MCPServerSheet(
+                mcpURL: $mcpURLDraft,
+                onCancel: { showingMCPConfig = false },
+                onSave: {
+                    appState.mcpBaseURLString = mcpURLDraft.trimmingCharacters(in: .whitespacesAndNewlines)
+                    showingMCPConfig = false
+                }
+            )
+        }
     }
 }
 
@@ -173,6 +208,66 @@ struct SettingsHeaderView: View {
                 .foregroundStyle(FColor.textSecondary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+private struct MCPServerSheet: View {
+    @Binding var mcpURL: String
+    let onCancel: () -> Void
+    let onSave: () -> Void
+    
+    @State private var errorMessage: String?
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: FSpacing.s16) {
+            Text("MCP Server")
+                .font(FType.title())
+                .foregroundStyle(FColor.textPrimary)
+            
+            Text("Configure the base URL for the MCP server.")
+                .font(FType.caption())
+                .foregroundStyle(FColor.textSecondary)
+            
+            InputView(
+                text: $mcpURL,
+                placeholder: "http://localhost:8787",
+                variant: .default,
+                submitLabel: .done
+            )
+            .onSubmit { validateAndSave() }
+            
+            if let errorMessage {
+                Text(errorMessage)
+                    .font(FType.caption())
+                    .foregroundStyle(FColor.accentRed)
+            }
+            
+            HStack(spacing: FSpacing.s12) {
+                Spacer()
+                ChatUIButton("Cancel", variant: .secondary) {
+                    onCancel()
+                }
+                ChatUIButton("Save", variant: .default) {
+                    validateAndSave()
+                }
+            }
+        }
+        .padding(FSpacing.s24)
+        .frame(width: 420)
+    }
+    
+    private func validateAndSave() {
+        let trimmed = mcpURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let url = URL(string: trimmed),
+              let scheme = url.scheme,
+              ["http", "https"].contains(scheme.lowercased())
+        else {
+            errorMessage = "Enter a valid http or https URL."
+            return
+        }
+        errorMessage = nil
+        mcpURL = trimmed
+        onSave()
     }
 }
 

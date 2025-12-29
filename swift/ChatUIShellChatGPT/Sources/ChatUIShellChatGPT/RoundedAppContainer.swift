@@ -6,6 +6,8 @@ import ChatUIThemes
 public struct RoundedAppContainer<Content: View>: View {
     @ViewBuilder let content: () -> Content
     private let useGlassBackground: Bool
+    @Environment(\.colorScheme) private var scheme
+    @Environment(\.chatUITheme) private var theme
     
     public init(
         useGlassBackground: Bool = true,
@@ -17,21 +19,26 @@ public struct RoundedAppContainer<Content: View>: View {
     
     public var body: some View {
         ZStack {
-            if useGlassBackground {
-                GlassBackgroundView(role: .chrome, cornerRadius: ChatGPTTheme.appCornerRadius)
+            if useGlassBackground && theme.surfaceStyle == .glass {
+                GlassBackgroundView(role: .chrome, cornerRadius: theme.appCornerRadius)
             }
             content()
         }
-            .clipShape(RoundedRectangle(cornerRadius: ChatGPTTheme.appCornerRadius, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: ChatGPTTheme.appCornerRadius, style: .continuous)
-                    .stroke(FColor.divider.opacity(0.2), lineWidth: 1)
-            )
-            .shadow(
-                color: Color.black.opacity(ChatGPTTheme.appShadowOpacity),
-                radius: ChatGPTTheme.appShadowRadius,
-                x: 0,
-                y: ChatGPTTheme.appShadowYOffset
-            )
+        .clipShape(RoundedRectangle(cornerRadius: theme.appCornerRadius, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: theme.appCornerRadius, style: .continuous)
+                .stroke(
+                    FColor.divider.opacity(
+                        scheme == .dark ? theme.appBorderOpacityDark : theme.appBorderOpacityLight
+                    ),
+                    lineWidth: 1
+                )
+        )
+        .shadow(
+            color: Color.black.opacity(theme.appShadowOpacity),
+            radius: theme.appShadowRadius,
+            x: 0,
+            y: theme.appShadowYOffset
+        )
     }
 }

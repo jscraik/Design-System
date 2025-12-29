@@ -38,6 +38,13 @@ Then add it to your target dependencies:
 
 ## Components
 
+> Components read their styling tokens from the environment. Apply a theme once at the root:
+>
+> ```swift
+> ContentView()
+>     .chatUITheme(.chatgpt) // or .default
+> ```
+
 ### SettingsDivider
 
 1pt height divider with theme-aware opacity.
@@ -60,7 +67,7 @@ struct MySettings: View {
 **Features:**
 
 - Uses `FColor.divider` for consistent color
-- Opacity varies by color scheme (ChatGPTTheme constants)
+- Opacity varies by color scheme (ChatUITheme tokens)
 - 1pt height for subtle separation
 
 ### SettingsCardView
@@ -86,7 +93,7 @@ struct MySettings: View {
 
 **Features:**
 
-- `ChatGPTTheme.cardCornerRadius` (12pt) with continuous style
+- `ChatUITheme.cardCornerRadius` (12pt in ChatGPT theme) with continuous style
 - `FColor.bgCard` background
 - Stroke border with scheme-dependent opacity
 - Accepts generic `@ViewBuilder` content
@@ -152,7 +159,7 @@ struct MySettings: View {
 - macOS hover overlay using `Platform.isMac` check
 - Pressed state overlay for both platforms
 - Inset padding (6pt horizontal) for "floating row" appearance
-- Uses `ChatGPTTheme` metrics for all spacing/sizing
+- Uses `ChatUITheme` metrics for all spacing/sizing
 
 **Trailing Options:**
 

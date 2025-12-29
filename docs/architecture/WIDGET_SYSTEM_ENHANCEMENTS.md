@@ -11,7 +11,7 @@ Successfully implemented an enhanced widget infrastructure inspired by the [Tool
 - **Zero-config widget registration** - no more manual Vite input entries
 - **Auto-generated manifest** with TypeScript types
 - **Content-based hashing** for automatic cache busting
-- **13 widgets discovered** and processed automatically
+- **14 widgets discovered** and processed automatically
 
 ### 2. **Standardized Widget Registry**
 
@@ -69,7 +69,7 @@ export const widgetManifest = {
     "hash": "df302ead",
     "originalPath": "src/auth-demo/index.html"
   },
-  // ... 12 more widgets
+  // ... 13 more widgets
 } as const;
 ```
 
@@ -111,18 +111,17 @@ mountWidget(<MyWidget />);
 ### Build Output
 
 ```
-✓ 13 widgets built with auto-generated hashes
+✓ 14 widgets built with auto-generated hashes
 ✓ Zero manual configuration required
 ✓ Content-based cache busting enabled
 ✓ TypeScript manifest with full type safety
 ```
 
-### Generated Hashes (Example)
+## Verify
 
-- `auth-demo.df302ead`
-- `dashboard-widget.e9be144f`
-- `shopping-cart.32c2447d`
-- `example-widget.fb3abfc8`
+1. Build widgets: `pnpm build:widgets`.
+2. Confirm `packages/widgets/src/generated/widget-manifest.ts` is updated.
+3. Start MCP server: `pnpm mcp:start`.
 
 ## 🚀 Benefits Achieved
 
@@ -174,15 +173,5 @@ mountWidget(<MyWidget />);
 - [ ] Add widget preview system
 - [ ] Implement widget testing utilities
 - [ ] Create widget development CLI tools
-
-## 🎁 Immediate Value
-
-The enhanced widget system eliminates several pain points:
-
-1. **Manual widget registration** → Automatic discovery
-2. **Cache invalidation issues** → Content-based hashing
-3. **Inconsistent error handling** → Standardized error boundaries
-4. **Boilerplate code** → Reusable components and helpers
-5. **Configuration drift** → Zero-config approach
 
 This implementation brings the ChatUI widget system up to production standards while maintaining backward compatibility and providing a clear path for future enhancements.

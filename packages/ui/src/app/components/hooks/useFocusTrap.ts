@@ -72,8 +72,17 @@ export function useFocusTrap({
       lastActiveRef.current = document.activeElement as HTMLElement | null;
     }
 
-    // Focus the dialog when it opens
-    const t = window.setTimeout(() => dialogRef.current?.focus(), 0);
+    // Focus the first focusable element when it opens (or the dialog itself)
+    const t = window.setTimeout(() => {
+      const dialog = dialogRef.current;
+      if (!dialog) return;
+      const focusables = getFocusable(dialog);
+      if (focusables.length > 0) {
+        focusables[0].focus();
+      } else {
+        dialog.focus();
+      }
+    }, 0);
 
     const onKeyDown = (e: KeyboardEvent) => {
       // Handle Escape key

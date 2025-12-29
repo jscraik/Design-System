@@ -34,12 +34,18 @@ export const Default: Story = {};
 export const WithComposerSlots: Story = {
   args: {
     composerLeft: (
-      <button className="px-2 py-1 rounded-md bg-white/5 text-white/70 text-xs hover:bg-white/10 transition-colors">
+      <button
+        type="button"
+        className="px-2 py-1 rounded-md bg-white/5 text-white/70 text-xs hover:bg-white/10 transition-colors"
+      >
         Quick action
       </button>
     ),
     composerRight: (
-      <button className="px-2 py-1 rounded-md bg-white/5 text-white/70 text-xs hover:bg-white/10 transition-colors">
+      <button
+        type="button"
+        className="px-2 py-1 rounded-md bg-white/5 text-white/70 text-xs hover:bg-white/10 transition-colors"
+      >
         Save draft
       </button>
     ),

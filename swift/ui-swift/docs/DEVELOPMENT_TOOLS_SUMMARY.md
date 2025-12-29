@@ -1,5 +1,7 @@
 # Development Tools Implementation Summary
 
+> Legacy context: This summary applies to `swift/ui-swift`, which is retained for reference.
+
 ## Task 8: Create Development Experience Tooling - COMPLETED ✅
 
 This task has been successfully implemented with comprehensive development tooling for ChatUISwift. All four required components have been delivered:
@@ -23,10 +25,9 @@ This task has been successfully implemented with comprehensive development tooli
 **Usage:**
 
 ```bash
-cd packages/tokens
-pnpm dev:hot-reload          # Start hot reload
-pnpm dev:hot-reload:verbose  # With verbose logging
-pnpm dev                     # Start all development tools
+pnpm -C packages/tokens dev:hot-reload          # Start hot reload
+pnpm -C packages/tokens dev:hot-reload:verbose  # With verbose logging
+pnpm -C packages/tokens dev                     # Start all development tools
 ```
 
 ### 2. Component Documentation Generation ✅
@@ -190,12 +191,10 @@ PreviewPerformanceConfig.slowPreviewThreshold = 0.016 // 60fps
 
 ```bash
 # 1. Start all development tools
-cd packages/tokens
-pnpm dev
+pnpm -C packages/tokens dev
 
-# 2. Open Xcode project
-cd swift/ui-swift
-./build.sh playground
+# 2. Open the ChatUISwift package in Xcode
+open swift/ui-swift/Package.swift
 
 # 3. In Xcode:
 # - Open component files

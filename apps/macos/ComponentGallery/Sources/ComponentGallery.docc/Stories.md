@@ -10,7 +10,7 @@ ComponentGallery organizes stories by category. Each gallery section is a determ
 - Inputs: InputView variants and accessibility patterns
 - Navigation: ListItemView and navigation patterns
 - Themes: ChatGPT theme constants and comparisons
-- Accessibility: focus management, VoiceOver, keyboard navigation, high contrast, reduced motion
+- Accessibility: interaction harness, focus management, VoiceOver, keyboard navigation, high contrast, reduced motion
 
 ## Adding Stories
 
@@ -19,3 +19,11 @@ ComponentGallery organizes stories by category. Each gallery section is a determ
 3. Keep data deterministic to avoid visual diffs.
 4. Ensure icon-only controls include accessibility labels.
 5. Prefer ChatUIFoundation tokens (FColor, FType, FSpacing) for styling.
+
+## UI Test Harness
+
+The Interaction Harness section includes accessibility identifiers for UI testing. See `apps/macos/ComponentGallery/UITests/InteractionHarnessUITests.swift` for a reference test and instructions in the README for adding a UI test target in Xcode.
+
+## Unit Tests
+
+ComponentGallery ships with SwiftPM unit tests that validate the `GalleryState` defaults and toggle behavior. Run them with `swift test` from `apps/macos/ComponentGallery`.

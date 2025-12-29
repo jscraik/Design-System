@@ -204,14 +204,14 @@ Integrate with existing token system and add automated build pipeline.
     - Enable screenshot export for documentation
     - Integrate with token hot reload for instant preview updates
     - _Requirements: 11.1, 11.3, 11.4_
-  - Set up snapshot testing framework in `swift/ChatUITestSupport/`
-  - Generate snapshots for light/dark mode, high contrast, and reduced motion variants
-  - Test all settings primitives in both ChatGPT and Default themes
-  - Test hover states on macOS and platform-specific behaviors
-  - Validate pixel-close consistency with React components (manual visual comparison)
-  - Create accessibility testing utilities (focus management, VoiceOver, keyboard navigation)
-  - Set up property-based testing with SwiftCheck for comprehensive input validation
-  - Add CI/CD integration for automated testing and visual regression detection
+  - [x] Set up snapshot testing framework in `swift/ChatUITestSupport/`
+  - [x] Generate snapshot coverage for light/dark mode, high contrast, and reduced motion variants (test definitions)
+  - [x] Test all settings primitives in both ChatGPT and Default themes (test definitions)
+  - [x] Set up property-based testing with SwiftCheck for comprehensive input validation
+  - [x] Add CI/CD integration for automated testing and visual regression detection
+  - [ ] Record snapshot baselines and commit `__Snapshots__` (run with `SNAPSHOT_RECORD=1`)
+  - [ ] Validate pixel-close consistency with React components (manual visual comparison)
+  - [ ] Add accessibility testing utilities for focus management and keyboard navigation beyond Component Gallery
   - **Property 8: Development Experience Quality**
   - **Validates: Requirements 8.1, 8.2, 8.3, 8.4, 8.5**
 
@@ -223,10 +223,10 @@ Integrate with existing token system and add automated build pipeline.
   - [x] Version synchronization works across package managers
   - [x] ChatUIComponents includes 10+ reusable primitives
   - [x] ChatUIShellChatGPT provides optional complete layouts
-  - [x] Snapshot tests pass for all components
+  - [ ] Snapshot tests pass for all components
   - [x] Component Gallery app enables visual testing and design review
   - [x] CI/CD pipeline validates Swift package compilation
-  - [x] Documentation generated for all public APIs via DocC
+  - [ ] Documentation generated for all public APIs via DocC
 
 ## Phase 3: Production Application & MCP Integration
 
@@ -280,7 +280,7 @@ Build complete native macOS application using the SwiftUI component library.
   - [ ] Documentation is comprehensive and includes examples
   - [ ] Parity checklist shows alignment with React components
   - [ ] App passes macOS App Store review guidelines
-  - [ ] Distribution packages build successfully
+  - [ ] Distribution packages build successfully (bundle + codesign + notarization)
   - [ ] Component Gallery app is production-ready for internal use
   - [ ] DocC documentation is published and accessible
   - [ ] visionOS readiness documented for future expansion

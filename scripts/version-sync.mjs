@@ -26,6 +26,7 @@ const CONFIG = {
       'swift/ChatUIComponents',
       'swift/ChatUIThemes',
       'swift/ChatUIShellChatGPT',
+      'swift/ChatUITestSupport',
       'swift/ChatUISystemIntegration',
       'swift/ChatUIMCP',
       'swift/ui-swift',

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, within } from "@storybook/test";
 
 import { Button } from "../base/button";
 
@@ -28,4 +29,9 @@ export const Default: Story = {
       </Tooltip>
     </div>
   ),
+  play: async ({ canvasElement }) => {
+    const body = within(canvasElement.ownerDocument.body);
+    const tooltips = body.getAllByText("Helpful tooltip text");
+    await expect(tooltips.length).toBeGreaterThan(0);
+  },
 };

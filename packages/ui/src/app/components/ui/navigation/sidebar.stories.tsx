@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 import { IconChat, IconFolder, IconSettings } from "../../../../icons";
 
@@ -79,4 +80,10 @@ export const Default: Story = {
       </div>
     </SidebarProvider>
   ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const toggle = canvas.getByRole("button", { name: /toggle sidebar/i });
+    await userEvent.click(toggle);
+    await expect(toggle).toBeInTheDocument();
+  },
 };

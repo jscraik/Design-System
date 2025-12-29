@@ -56,13 +56,14 @@ export function widgetManifest(): Plugin {
         "src/generated/widget-manifest.ts"
     );
     let viteConfig: ResolvedConfig;
+    let logger: ResolvedConfig["logger"] | undefined;
     let widgets: Widget[] = [];
 
     return {
         name: "chatui-widget-manifest",
         sharedDuringBuild: true,
 
-        config(config) {
+        config(_config) {
             // Discover all widget HTML files
             const discoveredWidgets = glob
                 .sync(["src/**/index.html"], {
@@ -100,10 +101,11 @@ export function widgetManifest(): Plugin {
 
         async configResolved(resolvedConfig) {
             viteConfig = resolvedConfig;
+            logger = resolvedConfig.logger;
 
             if (viteConfig.command === "serve") {
                 if (widgets.length === 0) {
-                    this.warn(
+                    logger?.warn(
                         "[widget-manifest] No widgets found. Cannot generate manifest in development."
                     );
                     return;
@@ -114,7 +116,7 @@ export function widgetManifest(): Plugin {
                 });
 
                 writeFileSync(manifestFilePath, generateManifestContent(devManifest));
-                this.info(
+                logger?.info(
                     `[widget-manifest] Generated development manifest for ${widgets.length} widgets`
                 );
             }
@@ -135,7 +137,7 @@ export function widgetManifest(): Plugin {
                     if (urlToCheck && redirectMap.has(urlToCheck)) {
                         const redirectTo = redirectMap.get(urlToCheck)!;
 
-                        this.info(
+                        server.config.logger?.info(
                             `[widget-manifest] Redirecting dev server URL: ${req.url} -> ${redirectTo}`
                         );
 
@@ -158,7 +160,7 @@ export function widgetManifest(): Plugin {
                 if (!outDir) return;
 
                 if (widgets.length === 0) {
-                    this.warn(
+                    logger?.warn(
                         "[widget-manifest] No widgets found. Cannot generate build manifest."
                     );
                     return;

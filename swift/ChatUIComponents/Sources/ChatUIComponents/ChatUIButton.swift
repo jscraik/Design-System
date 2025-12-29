@@ -1,5 +1,6 @@
 import SwiftUI
 import ChatUIFoundation
+import ChatUIThemes
 
 // MARK: - Button Enums
 
@@ -32,8 +33,6 @@ public struct ChatUIButton<Content: View>: View {
     private let isDisabled: Bool
     private let accessibilityLabel: String?
     private let accessibilityHint: String?
-    
-    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     
     public init(
         variant: Variant = .default,
@@ -120,9 +119,13 @@ public struct ChatUIButton<Content: View>: View {
 struct ChatUIButtonStyle: ButtonStyle {
     let variant: ChatUIButtonVariant
     let size: ChatUIButtonSize
+    @Environment(\.chatUITheme) private var theme
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.isEnabled) private var isEnabled
     
     func makeBody(configuration: Configuration) -> some View {
         let prefersHighContrast = FAccessibility.prefersHighContrast
+        let scale = reduceMotion ? 1.0 : (configuration.isPressed ? 0.98 : 1.0)
         configuration.label
             .background(backgroundForVariant(variant, isPressed: configuration.isPressed, prefersHighContrast: prefersHighContrast))
             .foregroundColor(foregroundForVariant(variant, isPressed: configuration.isPressed, prefersHighContrast: prefersHighContrast))
@@ -131,8 +134,9 @@ struct ChatUIButtonStyle: ButtonStyle {
                 RoundedRectangle(cornerRadius: cornerRadiusForSize(size))
                     .stroke(borderColorForVariant(variant, prefersHighContrast: prefersHighContrast), lineWidth: borderWidthForVariant(variant))
             )
-            .scaleEffect(configuration.isPressed ? 0.98 : 1.0)
-            .animation(.easeInOut(duration: 0.15), value: configuration.isPressed)
+            .scaleEffect(scale)
+            .opacity(isEnabled ? 1 : 0.55)
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.15), value: configuration.isPressed)
     }
     
     private func backgroundForVariant(_ variant: ChatUIButtonVariant, isPressed: Bool, prefersHighContrast: Bool) -> Color {
@@ -195,13 +199,16 @@ struct ChatUIButtonStyle: ButtonStyle {
     }
     
     private func cornerRadiusForSize(_ size: ChatUIButtonSize) -> CGFloat {
+        let base = theme.buttonCornerRadius
         switch size {
         case .sm:
-            return 4
-        case .default, .lg:
-            return 8
+            return max(2, base - 2)
+        case .default:
+            return base
+        case .lg:
+            return base + 2
         case .icon:
-            return 4
+            return max(2, base - 2)
         }
     }
 }

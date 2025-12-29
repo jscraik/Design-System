@@ -10,7 +10,7 @@ test.describe("apps/web routing", () => {
   for (const route of routes) {
     test(`renders ${route.path}`, async ({ page }) => {
       await page.goto(route.path);
-      await expect(page.getByText(route.heading)).toBeVisible();
+      await expect(page.getByRole("heading", { name: route.heading })).toBeVisible();
     });
   }
 

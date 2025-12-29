@@ -20,7 +20,8 @@ let package = Package(
     dependencies: [
         .package(path: "../ChatUIFoundation"),
         .package(path: "../ChatUIComponents"),
-        .package(path: "../ChatUIThemes")
+        .package(path: "../ChatUIThemes"),
+        .package(path: "../ChatUITestSupport")
     ],
     targets: [
         .target(
@@ -29,7 +30,7 @@ let package = Package(
         ),
         .testTarget(
             name: "ChatUIShellChatGPTTests",
-            dependencies: ["ChatUIShellChatGPT"]
+            dependencies: ["ChatUIShellChatGPT", "ChatUITestSupport"]
         ),
     ]
 )

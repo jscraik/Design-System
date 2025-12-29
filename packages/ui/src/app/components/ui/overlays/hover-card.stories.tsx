@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, within } from "@storybook/test";
 
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card";
 
@@ -31,4 +32,8 @@ export const Default: Story = {
       </HoverCard>
     </div>
   ),
+  play: async ({ canvasElement }) => {
+    const body = within(canvasElement.ownerDocument.body);
+    await expect(body.getByText("ChatUI Team")).toBeInTheDocument();
+  },
 };

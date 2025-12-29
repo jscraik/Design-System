@@ -10,6 +10,7 @@ ChatUIThemes provides theme presets that enable pixel-perfect ChatGPT-style inte
 
 - Pixel-perfect ChatGPT theme constants
 - Native macOS design patterns as alternative
+- Environment-driven theme tokens (`ChatUITheme`) for components
 - Light and dark mode variants for all constants
 - Separation from core components for flexibility
 - Easy theme switching and customization
@@ -36,6 +37,24 @@ Then add it to your target dependencies:
 ```
 
 ## Themes
+
+### ChatUITheme (recommended)
+
+`ChatUITheme` is the environment-driven theme used by ChatUI components and shells.
+Set it once at the root and all components will adopt the theme tokens.
+
+```swift
+import SwiftUI
+import ChatUIThemes
+import ChatUIComponents
+
+struct RootView: View {
+    var body: some View {
+        ContentView()
+            .chatUITheme(.chatgpt) // or .default
+    }
+}
+```
 
 ### ChatGPTTheme
 
@@ -204,19 +223,12 @@ struct ThemeAwareRow: View {
 
 ### Switching Themes
 
-Create a theme protocol for easy switching:
+Switch themes using the environment:
 
 ```swift
-protocol AppTheme {
-    var cardRadius: CGFloat { get }
-    var rowPadding: CGFloat { get }
-    // ... other properties
-}
-
-struct ChatGPTAppTheme: AppTheme {
-    var cardRadius: CGFloat { ChatGPTTheme.cardCornerRadius }
-    var rowPadding: CGFloat { ChatGPTTheme.rowHPadding }
-}
+ContentView()
+    .chatUITheme(.default)
+```
 
 struct NativeAppTheme: AppTheme {
     var cardRadius: CGFloat { DefaultTheme.cardRadius }

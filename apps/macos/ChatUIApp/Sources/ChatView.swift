@@ -1,7 +1,7 @@
+import Foundation
 import SwiftUI
 import ChatUIFoundation
 import ChatUIComponents
-import ChatUIThemes
 import ChatUIMCP
 
 struct ChatView: View {
@@ -93,10 +93,14 @@ struct ChatView: View {
     
     private func extractWidgetData(from result: MCPToolCallResult) -> WidgetData? {
         // Check if structured content can be converted to WidgetData
-        if let structured = result.structuredContent {
+        if result.structuredContent != nil {
             // Try to extract widget data from structured content
-            // This is a simplified implementation - real implementation would parse the structure
-            return nil
+            do {
+                let data = try JSONEncoder().encode(result.structuredContent)
+                return try JSONDecoder().decode(WidgetData.self, from: data)
+            } catch {
+                return nil
+            }
         }
         return nil
     }
@@ -222,6 +226,7 @@ struct ProcessingIndicator: View {
 
 struct ErrorMessageView: View {
     let message: String
+    @Environment(\.chatUITheme) private var theme
     
     var body: some View {
         HStack(spacing: FSpacing.s12) {
@@ -234,7 +239,7 @@ struct ErrorMessageView: View {
         }
         .padding(FSpacing.s12)
         .background(FColor.accentRed.opacity(0.1))
-        .clipShape(RoundedRectangle(cornerRadius: ChatGPTTheme.cardCornerRadius))
+        .clipShape(RoundedRectangle(cornerRadius: theme.cardCornerRadius))
     }
 }
 
@@ -245,22 +250,25 @@ struct ChatInputView: View {
     
     var body: some View {
         HStack(spacing: FSpacing.s12) {
-            TextField("Type a message...", text: $text)
-                .textFieldStyle(.plain)
-                .font(FType.rowTitle())
-                .padding(FSpacing.s12)
-                .background(FColor.bgCard)
-                .clipShape(RoundedRectangle(cornerRadius: ChatGPTTheme.rowCornerRadius))
-                .onSubmit(onSend)
-                .disabled(isProcessing)
-            
-            Button(action: onSend) {
-                Image(systemName: "arrow.up.circle.fill")
-                    .font(.system(size: 28))
-                    .foregroundStyle(text.isEmpty ? FColor.iconTertiary : FColor.accentBlue)
+            InputView(
+                text: $text,
+                placeholder: "Type a message...",
+                variant: .default,
+                submitLabel: .send
+            ) {
+                onSend()
             }
-            .buttonStyle(.plain)
-            .disabled(text.isEmpty || isProcessing)
+            .disabled(isProcessing)
+            
+            ChatUIButton(
+                systemName: "arrow.up",
+                variant: .default,
+                size: .icon,
+                isDisabled: text.isEmpty || isProcessing,
+                accessibilityLabel: "Send"
+            ) {
+                onSend()
+            }
         }
         .padding(FSpacing.s16)
     }

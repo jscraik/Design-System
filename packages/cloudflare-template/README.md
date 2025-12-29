@@ -7,6 +7,9 @@ Deploy your ChatUI widgets to Cloudflare Workers with automatic widget discovery
 ### 1. Setup
 
 ```bash
+# From repo root
+cd packages/cloudflare-template
+
 # Copy environment variables
 cp .env.example .env
 
@@ -179,8 +182,8 @@ After deployment, add your MCP server to ChatGPT:
 
 ### Development Tips
 
-- Use `pnpm check` to validate before deployment
-- Use `wrangler dev` for local development with Cloudflare environment
+- Use `pnpm -C packages/cloudflare-template check` to validate before deployment
+- Use `pnpm -C packages/cloudflare-template dev` for local development with Cloudflare environment
 - Check `wrangler.jsonc` for Cloudflare-specific configuration
 
 ## 📚 Learn More

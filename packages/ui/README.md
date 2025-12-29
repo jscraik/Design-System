@@ -176,11 +176,11 @@ function ChatWidget() {
 # Install dependencies
 pnpm install
 
-# Start development
-pnpm dev
+# Watch build output
+pnpm -C packages/ui dev
 
 # Build library
-pnpm build
+pnpm -C packages/ui build
 
 # Run Storybook
 pnpm storybook:dev

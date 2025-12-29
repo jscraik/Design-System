@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { fn } from "@storybook/test";
+import { expect, fn, userEvent, within } from "@storybook/test";
 
 import {
   ContextMenu,
@@ -37,4 +37,12 @@ export const Default: Story = {
       </ContextMenuContent>
     </ContextMenu>
   ),
+  play: async ({ canvasElement }) => {
+    const menu = within(canvasElement.ownerDocument.body);
+    await expect(menu.getByText("Actions")).toBeInTheDocument();
+
+    const checkbox = menu.getByRole("menuitemcheckbox", { name: /show hidden files/i });
+    await userEvent.click(checkbox);
+    await expect(checkbox).toHaveAttribute("aria-checked", "false");
+  },
 };

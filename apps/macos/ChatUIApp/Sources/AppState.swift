@@ -31,19 +31,38 @@ enum AppSection: String, CaseIterable, Identifiable {
     }
 }
 
+enum ThemeStyle: String, CaseIterable, Identifiable {
+    case chatgpt
+    case `default`
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .chatgpt:
+            return "ChatGPT"
+        case .default:
+            return "Default"
+        }
+    }
+}
+
 struct AppStateSnapshot: Codable {
     let selectedSectionRawValue: String
     let mcpBaseURLString: String
+    let themeStyleRawValue: String
 }
 
 final class AppState: ObservableObject {
     @Published var selectedSection: AppSection = .chat
     @Published var mcpBaseURLString: String = "http://localhost:8787"
+    @Published var themeStyle: ThemeStyle = .chatgpt
 
     func snapshot() -> AppStateSnapshot {
         AppStateSnapshot(
             selectedSectionRawValue: selectedSection.rawValue,
-            mcpBaseURLString: mcpBaseURLString
+            mcpBaseURLString: mcpBaseURLString,
+            themeStyleRawValue: themeStyle.rawValue
         )
     }
 
@@ -52,5 +71,6 @@ final class AppState: ObservableObject {
             selectedSection = section
         }
         mcpBaseURLString = snapshot.mcpBaseURLString
+        themeStyle = ThemeStyle(rawValue: snapshot.themeStyleRawValue) ?? .chatgpt
     }
 }

@@ -63,6 +63,7 @@ test.describe("ModalDialog keyboard navigation", () => {
     const modal = page.locator('[role="dialog"]');
 
     // Press Shift+Tab - should move to previous focusable element within modal
+    await page.waitForTimeout(100);
     await pressKey(page, "Shift+Tab");
     const focused = await getFocusedElement(page);
 
@@ -92,14 +93,14 @@ test.describe("ModalDialog keyboard navigation", () => {
 
   test("closes modal on overlay click", async ({ page }) => {
     const modal = page.locator('[role="dialog"]');
-    const overlay = page.locator('[role="presentation"]').first();
+    const overlay = page.locator('[role="presentation"] > button').first();
 
     // Open modal
     await page.click('button:has-text("Open Modal")');
     await expect(modal).toBeVisible();
 
     // Click overlay
-    await overlay.click();
+    await overlay.evaluate((el) => (el as HTMLButtonElement).click());
 
     // Modal should be closed
     await expect(modal).not.toBeVisible();
@@ -158,8 +159,9 @@ test.describe("SettingsModal keyboard navigation", () => {
   });
 
   test("navigates between main sections with Tab", async ({ page }) => {
-    // Open Settings modal
-    await page.click('[aria-label="Open settings"]');
+    // Open Settings modal via sidebar user menu
+    await page.click('[data-testid="chat-sidebar-user-menu"]');
+    await page.click('[data-testid="chat-sidebar-settings"]');
     const modal = page.locator('[role="dialog"]');
 
     // Tab through main sections
@@ -178,8 +180,9 @@ test.describe("SettingsModal keyboard navigation", () => {
   });
 
   test("navigates into panel and back with keyboard", async ({ page }) => {
-    // Open Settings modal
-    await page.click('[aria-label="Open settings"]');
+    // Open Settings modal via sidebar user menu
+    await page.click('[data-testid="chat-sidebar-user-menu"]');
+    await page.click('[data-testid="chat-sidebar-settings"]');
 
     // Find and click Personalization setting row
     const personalizationRow = page.locator('button:has-text("Personalization")');
@@ -192,14 +195,15 @@ test.describe("SettingsModal keyboard navigation", () => {
     await pressKey(page, "Escape");
 
     // Should be back in main view
-    await expect(page.locator('text=Settings')).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Settings" })).toBeVisible();
 
     // Personalization row should still be visible
     await expect(personalizationRow).toBeVisible();
   });
 
   test("toggles switches with Space/Enter", async ({ page }) => {
-    await page.click('[aria-label="Open settings"]');
+    await page.click('[data-testid="chat-sidebar-user-menu"]');
+    await page.click('[data-testid="chat-sidebar-settings"]');
 
     // Find a toggle/switch
     const toggle = page.locator('[role="switch"]').first();
@@ -218,7 +222,8 @@ test.describe("SettingsModal keyboard navigation", () => {
   });
 
   test("navigates dropdowns with arrow keys", async ({ page }) => {
-    await page.click('[aria-label="Open settings"]');
+    await page.click('[data-testid="chat-sidebar-user-menu"]');
+    await page.click('[data-testid="chat-sidebar-settings"]');
 
     // Find a dropdown/segmented control
     const dropdown = page.locator('[role="radiogroup"]').first();
@@ -237,7 +242,8 @@ test.describe("SettingsModal keyboard navigation", () => {
   });
 
   test("passes Axe accessibility scan", async ({ page }) => {
-    await page.click('[aria-label="Open settings"]');
+    await page.click('[data-testid="chat-sidebar-user-menu"]');
+    await page.click('[data-testid="chat-sidebar-settings"]');
     // Run Axe scan on settings modal
     await runAxeScan(page, '[role="dialog"]');
   });

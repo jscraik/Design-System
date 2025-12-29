@@ -1,6 +1,5 @@
 import SwiftUI
 import ChatUIFoundation
-import ChatUIThemes
 
 /// Example view demonstrating ListItemView and InputView components
 public struct NavigationExampleView: View {
@@ -106,6 +105,7 @@ public struct NavigationExampleView: View {
                 .padding(.bottom, FSpacing.s16)
             }
         }
-        .background(FColor.bgApp)
+        .frame(maxWidth: 720, alignment: .leading)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

@@ -189,7 +189,7 @@ Your current widgets focus on #3 (better ways to show), which is valid. Consider
 
 ---
 
-## Latest Improvements (December 2024)
+## Historical Improvements (December 2024)
 
 ### ✅ Enhanced Apps SDK Compliance
 
@@ -233,7 +233,9 @@ async (args, { _meta } = {}) => {
 };
 ```
 
-### Compliance Status: 100% ✅
+### Compliance Status at Time of Audit: 100% ✅
+
+Re-verify against current Apps SDK guidance before submission.
 
 The implementation now fully complies with all Apps SDK specifications:
 

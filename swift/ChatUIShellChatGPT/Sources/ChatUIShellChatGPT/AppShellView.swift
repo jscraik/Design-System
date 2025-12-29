@@ -5,6 +5,7 @@ import ChatUIFoundation
 public struct AppShellView<SidebarContent: View, DetailContent: View>: View {
     @ViewBuilder let sidebarContent: () -> SidebarContent
     @ViewBuilder let detailContent: () -> DetailContent
+    @Environment(\.chatUITheme) private var theme
     
     public init(
         @ViewBuilder sidebar: @escaping () -> SidebarContent,
@@ -29,7 +30,11 @@ public struct AppShellView<SidebarContent: View, DetailContent: View>: View {
     @ViewBuilder
     private var sidebarBackground: some View {
         #if os(macOS)
-        GlassBackgroundView(role: .sidebar)
+        if theme.surfaceStyle == .glass {
+            GlassBackgroundView(role: .sidebar)
+        } else {
+            FColor.bgApp
+        }
         #else
         FColor.bgApp
         #endif
@@ -38,7 +43,11 @@ public struct AppShellView<SidebarContent: View, DetailContent: View>: View {
     @ViewBuilder
     private var detailBackground: some View {
         #if os(macOS)
-        GlassBackgroundView(role: .content)
+        if theme.surfaceStyle == .glass {
+            GlassBackgroundView(role: .content)
+        } else {
+            FColor.bgApp
+        }
         #else
         FColor.bgApp
         #endif

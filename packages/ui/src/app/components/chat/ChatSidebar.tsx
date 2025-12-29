@@ -294,6 +294,7 @@ export function ChatSidebar({
 
   // Ref to track if we've initialized from props (prevents overwriting local edits)
   const didInitProjectsRef = useRef(false);
+  const userMenuButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const [memoryOption, setMemoryOption] = useState<"default" | "project-only">("default");
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -419,6 +420,9 @@ export function ChatSidebar({
   return (
     <>
       <div
+        role="navigation"
+        aria-label="Sidebar"
+        data-testid="chat-sidebar"
         className={`bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary flex flex-col h-full border-r border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 transition-all duration-300 ${
           isCollapsed ? "w-[60px]" : "w-64"
         }`}
@@ -433,10 +437,11 @@ export function ChatSidebar({
               <IconCloseBold className="size-4" />
             </div>
           )}
-          <button type="button"
-            onClick={() => setIsCollapsed(!isCollapsed)}
+          <button
             type="button"
+            onClick={() => setIsCollapsed(!isCollapsed)}
             aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            data-testid="chat-sidebar-toggle"
             className="size-8 flex items-center justify-center rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors"
             title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
@@ -445,12 +450,7 @@ export function ChatSidebar({
         </div>
 
         {isCollapsed ? (
-          <div
-            role="navigation"
-            aria-label="Sidebar"
-            onKeyDown={onRailKeyDown}
-            className="flex-1 overflow-y-auto overflow-x-hidden pt-1"
-          >
+          <div onKeyDown={onRailKeyDown} className="flex-1 overflow-y-auto overflow-x-hidden pt-1">
             {/* Primary actions */}
             <RailButton
               icon={<IconCompose className="size-4" />}
@@ -666,9 +666,9 @@ export function ChatSidebar({
               <div className="px-2 pb-1">
                 <Popover>
                   <Popover.Trigger>
-                    <div className="w-full">
+                    <button type="button" className="w-full text-left">
                       <ListItem icon={<IconFolder className="size-4" />} label="New project" />
-                    </div>
+                    </button>
                   </Popover.Trigger>
                   <Popover.Content
                     side="right"
@@ -839,10 +839,14 @@ export function ChatSidebar({
         {sidebarFooter && !isCollapsed ? <div className="px-2 pb-2">{sidebarFooter}</div> : null}
 
         <div className="p-2 border-t border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 relative">
-          <button type="button"
+          <button
+            type="button"
             onClick={() => setShowUserMenu(!showUserMenu)}
             aria-haspopup="menu"
             aria-expanded={showUserMenu}
+            aria-label="Open user menu"
+            data-testid="chat-sidebar-user-menu"
+            ref={userMenuButtonRef}
             className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors ${
               isCollapsed ? "justify-center" : ""
             }`}
@@ -885,11 +889,15 @@ export function ChatSidebar({
                   {resolvedUser.accountLabel}
                 </span>
               </button>
-              <button type="button"
+              <button
+                type="button"
                 onClick={() => {
+                  userMenuButtonRef.current?.focus();
                   setShowUserMenu(false);
                   setShowSettingsModal(true);
                 }}
+                aria-label="Open settings"
+                data-testid="chat-sidebar-settings"
                 className="w-full text-left px-3 py-2.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-2 transition-colors flex items-center gap-2"
               >
                 <IconSettings className="size-4 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />

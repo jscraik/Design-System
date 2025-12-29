@@ -15,7 +15,7 @@ A shared design system library that you can use across all your projects:
 - `@chatui/ui` - Reusable UI components (chat layout, header, sidebar, primitives)
 - `@chatui/runtime` - Host adapters + mocks (`window.openai` wrapper, HostProvider)
 - `@chatui/tokens` - Design tokens (CSS variables, Tailwind preset)
- - `packages/cloudflare-template` - Cloudflare Workers deployment template for MCP
+- `packages/cloudflare-template` - Cloudflare Workers deployment template for MCP
 
 ## Reference Harnesses
 
@@ -262,7 +262,7 @@ Storybook:
 pnpm dev:storybook
 ```
 
-Build the standalone app:
+Build all targets:
 
 ```bash
 pnpm build
@@ -338,7 +338,9 @@ Publish to npm or GitHub Packages:
 
 ```bash
 pnpm build:lib
-pnpm publish --access public
+pnpm changeset
+pnpm version-packages
+pnpm release
 ```
 
 Then install normally:

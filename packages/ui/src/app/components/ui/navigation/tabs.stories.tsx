@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./tabs";
 
@@ -34,6 +35,12 @@ export const Default: Story = {
       </TabsContent>
     </Tabs>
   ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const usageTab = canvas.getByRole("tab", { name: /usage/i });
+    await userEvent.click(usageTab);
+    await expect(canvas.getByText("Usage notes and examples.")).toBeInTheDocument();
+  },
 };
 
 export const Wide: Story = {
