@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "@storybook/test";
-import { ChevronRight, Loader2, Mail, Plus } from "lucide-react";
 
-import { Button } from "./button";
+import { Button } from "./Button";
+import { IconChevronRightMd, IconEmail, IconPlusLg, IconRefresh } from "../../../../icons";
 
 /**
  * Button component following Apps SDK UI patterns.
@@ -25,7 +25,7 @@ import { Button } from "./button";
  * - Icon-only buttons should include `aria-label`
  */
 const meta: Meta<typeof Button> = {
-  title: "UI/Button",
+  title: "Components/UI/Base/Button",
   component: Button,
   parameters: {
     layout: "centered",
@@ -140,7 +140,7 @@ export const Loading: Story = {
     disabled: true,
     children: (
       <>
-        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        <IconRefresh className="mr-2 h-4 w-4 animate-spin" />
         Please wait
       </>
     ),
@@ -152,7 +152,7 @@ export const WithIcon: Story = {
   args: {
     children: (
       <>
-        <Mail className="mr-2 h-4 w-4" />
+        <IconEmail className="mr-2 h-4 w-4" />
         Login with Email
       </>
     ),
@@ -163,7 +163,7 @@ export const IconOnly: Story = {
   args: {
     size: "icon",
     "aria-label": "Add item",
-    children: <Plus className="h-4 w-4" />,
+    children: <IconPlusLg className="h-4 w-4" />,
   },
 };
 
@@ -172,7 +172,7 @@ export const WithTrailingIcon: Story = {
     children: (
       <>
         Next
-        <ChevronRight className="ml-2 h-4 w-4" />
+        <IconChevronRightMd className="ml-2 h-4 w-4" />
       </>
     ),
   },

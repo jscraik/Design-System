@@ -1,13 +1,25 @@
 import SwiftUI
 import ChatUIFoundation
 
-/// Settings row with a toggle switch in the trailing position
+/// Renders a settings row with a toggle switch.
+///
+/// - Example:
+/// ```swift
+/// SettingToggleView(title: "Notifications", isOn: $isOn)
+/// ```
 public struct SettingToggleView: View {
     private let icon: AnyView?
     private let title: String
     private let subtitle: String?
     @Binding private var isOn: Bool
     
+    /// Creates a settings toggle view.
+    ///
+    /// - Parameters:
+    ///   - icon: Optional leading icon view.
+    ///   - title: Primary title text.
+    ///   - subtitle: Optional subtitle text.
+    ///   - isOn: Binding for toggle state.
     public init(
         icon: AnyView? = nil,
         title: String,
@@ -20,6 +32,7 @@ public struct SettingToggleView: View {
         self._isOn = isOn
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         SettingRowView(
             icon: icon,

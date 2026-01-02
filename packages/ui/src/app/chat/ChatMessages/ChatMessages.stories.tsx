@@ -5,7 +5,7 @@ import { sampleMessages } from "../../../fixtures/sample-data";
 import { ChatMessages } from "./ChatMessages";
 
 const meta: Meta<typeof ChatMessages> = {
-  title: "ChatUI/ChatMessages",
+  title: "Components/Chat/Chat Messages",
   component: ChatMessages,
   tags: ["autodocs"],
   parameters: {

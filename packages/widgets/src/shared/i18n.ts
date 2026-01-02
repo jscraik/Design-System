@@ -1,20 +1,21 @@
 /**
- * Simple i18n utility for widgets
+ * Provide lightweight i18n helpers for widgets.
  *
- * Reads locale from window.openai.locale and provides:
+ * Reads locale from `window.openai.locale` and exposes:
  * - Number formatting
  * - Currency formatting
  * - Date formatting
  * - Simple message translation
  *
- * For production apps, consider using react-intl or similar.
+ * For production apps, prefer a full i18n library (for example, react-intl).
  */
 
 // Default locale
 const DEFAULT_LOCALE = "en-US";
 
 /**
- * Get the current locale from window.openai or fallback to default
+ * Return the active locale from `window.openai` or the default fallback.
+ * @returns The resolved locale string.
  */
 export function getLocale(): string {
   if (typeof window !== "undefined" && window.openai?.locale) {
@@ -24,7 +25,10 @@ export function getLocale(): string {
 }
 
 /**
- * Format a number according to the current locale
+ * Format a number according to the current locale.
+ * @param value - The numeric value to format.
+ * @param options - Optional Intl.NumberFormat options.
+ * @returns The formatted number string.
  */
 export function formatNumber(value: number, options?: Intl.NumberFormatOptions): string {
   const locale = getLocale();
@@ -32,7 +36,11 @@ export function formatNumber(value: number, options?: Intl.NumberFormatOptions):
 }
 
 /**
- * Format a currency value according to the current locale
+ * Format a currency value according to the current locale.
+ * @param value - The numeric value to format.
+ * @param currency - The ISO 4217 currency code (defaults to USD).
+ * @param options - Optional Intl.NumberFormat options.
+ * @returns The formatted currency string.
  */
 export function formatCurrency(
   value: number,
@@ -48,7 +56,10 @@ export function formatCurrency(
 }
 
 /**
- * Format a date according to the current locale
+ * Format a date according to the current locale.
+ * @param date - The date input to format.
+ * @param options - Optional Intl.DateTimeFormat options.
+ * @returns The formatted date string.
  */
 export function formatDate(
   date: Date | string | number,
@@ -60,7 +71,10 @@ export function formatDate(
 }
 
 /**
- * Format a relative time (e.g., "2 hours ago")
+ * Format a relative time string (for example, "2 hours ago").
+ * @param date - The date input to compare with now.
+ * @param options - Optional Intl.RelativeTimeFormat options.
+ * @returns A locale-aware relative time string.
  */
 export function formatRelativeTime(
   date: Date | string | number,
@@ -92,8 +106,8 @@ export function formatRelativeTime(
 }
 
 /**
- * Simple message translations
- * For production, use a proper i18n library like react-intl
+ * Simple message translations.
+ * For production, use a proper i18n library like react-intl.
  */
 type MessageKey =
   | "cart.empty"
@@ -155,9 +169,10 @@ const messages: Record<string, Record<MessageKey, string>> = {
 };
 
 /**
- * Get a translated message
- * @param key - Message key
- * @param params - Optional parameters for interpolation
+ * Return a translated message string.
+ * @param key - The message key.
+ * @param params - Optional interpolation params.
+ * @returns The localized message string.
  */
 export function t(key: MessageKey, params?: Record<string, string | number>): string {
   const locale = getLocale();
@@ -179,7 +194,8 @@ export function t(key: MessageKey, params?: Record<string, string | number>): st
 }
 
 /**
- * React hook for locale-aware formatting
+ * Return locale-aware formatting helpers.
+ * @returns Formatting utilities and a translation helper.
  */
 export function useI18n() {
   const locale = getLocale();

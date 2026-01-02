@@ -1,5 +1,6 @@
 import { figma } from "@figma/code-connect";
-import { DashboardTemplate, type DashboardTemplateProps } from "./DashboardTemplate";
+
+import { DashboardTemplate } from "./DashboardTemplate";
 
 /**
  * Figma Code Connect mapping for DashboardTemplate

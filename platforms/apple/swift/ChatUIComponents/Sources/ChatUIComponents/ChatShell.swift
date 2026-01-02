@@ -1,6 +1,21 @@
 import SwiftUI
 import ChatUIFoundation
 
+/// Renders the main chat layout with optional sidebar and context panel.
+///
+/// ### Discussion
+/// Compose this layout using slots for sidebar, header, messages, composer, and context panel.
+///
+/// - Example:
+/// ```swift
+/// ChatShell(
+///     sidebar: { SidebarView() },
+///     header: { HeaderView() },
+///     messages: { MessagesView() },
+///     composer: { ComposerView() },
+///     contextPanel: { ContextPanelView() }
+/// )
+/// ```
 public struct ChatShell<Sidebar: View, Header: View, Messages: View, Composer: View, ContextPanel: View>: View {
     private let sidebar: Sidebar
     private let header: Header
@@ -10,6 +25,16 @@ public struct ChatShell<Sidebar: View, Header: View, Messages: View, Composer: V
     private let spacing: CGFloat
     private let padding: CGFloat
 
+    /// Creates a chat shell layout.
+    ///
+    /// - Parameters:
+    ///   - spacing: Spacing between regions.
+    ///   - padding: Outer padding.
+    ///   - sidebar: Sidebar content builder.
+    ///   - header: Header content builder.
+    ///   - messages: Messages list builder.
+    ///   - composer: Composer input builder.
+    ///   - contextPanel: Context panel builder.
     public init(
         spacing: CGFloat = CGFloat(FSpacing.s16),
         padding: CGFloat = CGFloat(FSpacing.s16),
@@ -28,6 +53,7 @@ public struct ChatShell<Sidebar: View, Header: View, Messages: View, Composer: V
         self.contextPanel = contextPanel()
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         HStack(spacing: spacing) {
             sidebar
@@ -46,6 +72,7 @@ public struct ChatShell<Sidebar: View, Header: View, Messages: View, Composer: V
     }
 }
 
+/// Renders a chat layout with a sidebar but no context panel.
 public struct ChatVariantSplitSidebar<Sidebar: View, Header: View, Messages: View, Composer: View>: View {
     private let sidebar: Sidebar
     private let header: Header
@@ -54,6 +81,15 @@ public struct ChatVariantSplitSidebar<Sidebar: View, Header: View, Messages: Vie
     private let spacing: CGFloat
     private let padding: CGFloat
 
+    /// Creates a split sidebar variant.
+    ///
+    /// - Parameters:
+    ///   - spacing: Spacing between regions.
+    ///   - padding: Outer padding.
+    ///   - sidebar: Sidebar content builder.
+    ///   - header: Header content builder.
+    ///   - messages: Messages list builder.
+    ///   - composer: Composer input builder.
     public init(
         spacing: CGFloat = CGFloat(FSpacing.s16),
         padding: CGFloat = CGFloat(FSpacing.s16),
@@ -70,6 +106,7 @@ public struct ChatVariantSplitSidebar<Sidebar: View, Header: View, Messages: Vie
         self.composer = composer()
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         ChatShell(
             spacing: spacing,
@@ -83,6 +120,7 @@ public struct ChatVariantSplitSidebar<Sidebar: View, Header: View, Messages: Vie
     }
 }
 
+/// Renders a compact chat layout without sidebar or context panel.
 public struct ChatVariantCompact<Header: View, Messages: View, Composer: View>: View {
     private let header: Header
     private let messages: Messages
@@ -90,6 +128,14 @@ public struct ChatVariantCompact<Header: View, Messages: View, Composer: View>: 
     private let spacing: CGFloat
     private let padding: CGFloat
 
+    /// Creates a compact chat variant.
+    ///
+    /// - Parameters:
+    ///   - spacing: Spacing between regions.
+    ///   - padding: Outer padding.
+    ///   - header: Header content builder.
+    ///   - messages: Messages list builder.
+    ///   - composer: Composer input builder.
     public init(
         spacing: CGFloat = CGFloat(FSpacing.s16),
         padding: CGFloat = CGFloat(FSpacing.s16),
@@ -104,6 +150,7 @@ public struct ChatVariantCompact<Header: View, Messages: View, Composer: View>: 
         self.composer = composer()
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         ChatShell(
             spacing: spacing,
@@ -117,6 +164,7 @@ public struct ChatVariantCompact<Header: View, Messages: View, Composer: View>: 
     }
 }
 
+/// Renders a chat layout with sidebar and context panel.
 public struct ChatVariantContextRail<Sidebar: View, Header: View, Messages: View, Composer: View, ContextPanel: View>: View {
     private let sidebar: Sidebar
     private let header: Header
@@ -126,6 +174,16 @@ public struct ChatVariantContextRail<Sidebar: View, Header: View, Messages: View
     private let spacing: CGFloat
     private let padding: CGFloat
 
+    /// Creates a context rail variant.
+    ///
+    /// - Parameters:
+    ///   - spacing: Spacing between regions.
+    ///   - padding: Outer padding.
+    ///   - sidebar: Sidebar content builder.
+    ///   - header: Header content builder.
+    ///   - messages: Messages list builder.
+    ///   - composer: Composer input builder.
+    ///   - contextPanel: Context panel builder.
     public init(
         spacing: CGFloat = CGFloat(FSpacing.s16),
         padding: CGFloat = CGFloat(FSpacing.s16),
@@ -144,6 +202,7 @@ public struct ChatVariantContextRail<Sidebar: View, Header: View, Messages: View
         self.contextPanel = contextPanel()
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         ChatShell(
             spacing: spacing,

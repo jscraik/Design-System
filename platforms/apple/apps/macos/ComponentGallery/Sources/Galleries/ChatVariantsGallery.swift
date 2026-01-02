@@ -10,6 +10,7 @@ import ChatUIFoundation
 import ChatUIComponents
 import ChatUIThemes
 
+/// Gallery of chat layout variants.
 struct ChatVariantsGallery: View {
     @State private var composerText = ""
     @State private var selectedThread: String = "general"

@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Button } from "../button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./collapsible";
+import { Button } from "../Button";
+
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./Collapsible";
 
 const meta: Meta<typeof Collapsible> = {
-  title: "UI/Collapsible",
+  title: "Components/UI/Base/Collapsible",
   component: Collapsible,
   tags: ["autodocs"],
   parameters: {

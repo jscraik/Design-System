@@ -10,7 +10,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "./select";
+} from "./Select";
 
 type SelectStoryArgs = React.ComponentProps<typeof Select> & {
   triggerSize: "sm" | "default";
@@ -19,7 +19,7 @@ type SelectStoryArgs = React.ComponentProps<typeof Select> & {
 };
 
 const meta: Meta<SelectStoryArgs> = {
-  title: "UI/Select",
+  title: "Components/UI/Base/Select",
   component: Select,
   tags: ["autodocs"],
   parameters: { layout: "centered" },

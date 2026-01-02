@@ -1,7 +1,6 @@
 /**
- * ProjectSettingsModal - Modal for configuring project memory settings
+ * Props for the project settings modal.
  */
-
 export interface ProjectSettingsModalProps {
   memoryOption: "default" | "project-only";
   onSelectMemoryOption: (value: "default" | "project-only") => void;
@@ -9,6 +8,15 @@ export interface ProjectSettingsModalProps {
   onDone: () => void;
 }
 
+/**
+ * Renders the project settings modal for memory configuration.
+ *
+ * Accessibility contract:
+ * - Overlay click closes the modal via `onClose`.
+ *
+ * @param props - Project settings modal props.
+ * @returns The modal element.
+ */
 export function ProjectSettingsModal({
   memoryOption,
   onSelectMemoryOption,
@@ -17,7 +25,7 @@ export function ProjectSettingsModal({
 }: ProjectSettingsModalProps) {
   return (
     <div
-      className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[100]"
+      className="fixed inset-0 bg-foundation-bg-dark-1/70 backdrop-blur-sm flex items-center justify-center z-[100]"
       onClick={onClose}
     >
       <div

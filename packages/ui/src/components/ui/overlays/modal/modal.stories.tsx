@@ -2,12 +2,12 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import type { ComponentProps } from "react";
 import { useState } from "react";
 
-import { Button } from "../../base/button";
+import { Button } from "../../base/Button";
 
-import { ModalDialog } from "./modal";
+import { ModalDialog } from "./Modal";
 
 const meta: Meta<typeof ModalDialog> = {
-  title: "UI/Overlays/Modal Dialog",
+  title: "Components/UI/Overlays/Modal",
   component: ModalDialog,
   parameters: {
     layout: "centered",

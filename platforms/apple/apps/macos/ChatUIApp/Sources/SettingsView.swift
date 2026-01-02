@@ -4,6 +4,7 @@ import ChatUIFoundation
 import ChatUIComponents
 import ChatUISystemIntegration
 
+/// Settings surface for configuring app preferences.
 struct SettingsView: View {
     @EnvironmentObject private var appState: AppState
     
@@ -213,6 +214,7 @@ private extension SettingsView {
     }
 }
 
+/// Sheet for editing the MCP server base URL.
 private struct MCPServerSheet: View {
     @Binding var mcpURL: String
     let onCancel: () -> Void

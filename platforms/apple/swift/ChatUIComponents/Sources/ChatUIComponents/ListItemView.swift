@@ -2,8 +2,15 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
-/// A list item component optimized for sidebar navigation
-/// Similar to SettingRowView but designed for navigation lists with selection state
+/// A list item component optimized for sidebar navigation.
+///
+/// ### Discussion
+/// Similar to `SettingRowView` but designed for navigation lists with selection state.
+///
+/// - Example:
+/// ```swift
+/// ListItemView(systemIcon: "gear", title: "Settings", trailing: .chevron)
+/// ```
 public struct ListItemView: View {
     private let icon: AnyView?
     private let title: String
@@ -17,6 +24,15 @@ public struct ListItemView: View {
     @State private var isHovering = false
     @State private var isPressed = false
     
+    /// Creates a list item view.
+    ///
+    /// - Parameters:
+    ///   - icon: Optional leading icon view.
+    ///   - title: Primary title text.
+    ///   - subtitle: Optional subtitle text.
+    ///   - trailing: Trailing content configuration.
+    ///   - isSelected: Whether the item is selected.
+    ///   - action: Optional action when tapped.
     public init(
         icon: AnyView? = nil,
         title: String,
@@ -33,6 +49,7 @@ public struct ListItemView: View {
         self.action = action
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         Group {
             if let action {
@@ -153,7 +170,8 @@ public struct ListItemView: View {
 
 // MARK: - Trailing Options
 
-public enum ListItemTrailing {
+    /// Trailing content variants for `ListItemView`.
+    public enum ListItemTrailing {
     case none
     case chevron
     case badge(Int)
@@ -163,7 +181,15 @@ public enum ListItemTrailing {
 // MARK: - Convenience Initializers
 
 extension ListItemView {
-    /// Creates a list item with a system icon
+    /// Creates a list item with a system icon.
+    ///
+    /// - Parameters:
+    ///   - systemIcon: SF Symbol name.
+    ///   - title: Primary title text.
+    ///   - subtitle: Optional subtitle text.
+    ///   - trailing: Trailing content configuration.
+    ///   - isSelected: Whether the item is selected.
+    ///   - action: Optional action when tapped.
     public init(
         systemIcon: String,
         title: String,

@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { DiscoverySettingsModal } from "../../../app/modals/DiscoverySettingsModal";
 
 export function DiscoverySettingsModalDemo() {
@@ -30,7 +31,7 @@ export function DiscoverySettingsModalDemo() {
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="w-full px-4 py-3 bg-foundation-accent-green text-white hover:bg-foundation-accent-green/90 rounded-xl transition-colors font-medium text-body"
+          className="w-full px-4 py-3 bg-foundation-accent-green text-accent-foreground hover:bg-foundation-accent-green/90 rounded-xl transition-colors font-medium text-body"
         >
           Open Discovery Settings
         </button>

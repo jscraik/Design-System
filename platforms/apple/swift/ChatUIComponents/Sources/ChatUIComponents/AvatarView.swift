@@ -1,6 +1,7 @@
 import SwiftUI
 import ChatUIFoundation
 
+/// Size variants for `AvatarView`.
 public enum AvatarSize {
     case sm
     case md
@@ -18,6 +19,19 @@ public enum AvatarSize {
     }
 }
 
+/// Renders a circular avatar from an image, URL, or initials.
+///
+/// ### Discussion
+/// Provide an accessibility label for non-decorative avatars.
+/// Renders a circular avatar from an image, URL, or initials.
+///
+/// ### Discussion
+/// Provide an accessibility label for non-decorative avatars.
+///
+/// - Example:
+/// ```swift
+/// AvatarView(initials: "JC", size: .sm, accessibilityLabel: "Jamie Craik")
+/// ```
 public struct AvatarView: View {
     private let image: Image?
     private let url: URL?
@@ -25,6 +39,14 @@ public struct AvatarView: View {
     private let size: AvatarSize
     private let accessibilityLabel: String?
 
+    /// Creates an avatar view.
+    ///
+    /// - Parameters:
+    ///   - image: Optional image to display.
+    ///   - url: Optional image URL to load asynchronously.
+    ///   - initials: Optional initials to show when no image is available.
+    ///   - size: Avatar size (default: `.md`).
+    ///   - accessibilityLabel: Accessibility label for VoiceOver.
     public init(
         image: Image? = nil,
         url: URL? = nil,
@@ -39,6 +61,7 @@ public struct AvatarView: View {
         self.accessibilityLabel = accessibilityLabel
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         ZStack {
             if let image {
@@ -88,6 +111,13 @@ public struct AvatarView: View {
 }
 
 public extension AvatarView {
+    /// Creates an avatar view from a URL.
+    ///
+    /// - Parameters:
+    ///   - url: Optional image URL to load asynchronously.
+    ///   - initials: Optional initials to show when no image is available.
+    ///   - size: Avatar size (default: `.md`).
+    ///   - accessibilityLabel: Accessibility label for VoiceOver.
     init(
         url: URL?,
         initials: String? = nil,

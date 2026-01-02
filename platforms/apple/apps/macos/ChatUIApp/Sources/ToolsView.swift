@@ -3,6 +3,7 @@ import ChatUIFoundation
 import ChatUIComponents
 import ChatUIMCP
 
+/// Tool browser for MCP integrations.
 struct ToolsView: View {
     let mcpClient: MCPClient?
     
@@ -91,6 +92,7 @@ struct ToolsView: View {
 
 // MARK: - Tool Info Model
 
+/// Basic tool metadata for display in the tool list.
 struct ToolInfo: Identifiable {
     let id = UUID()
     let name: String
@@ -100,6 +102,7 @@ struct ToolInfo: Identifiable {
 
 // MARK: - Subviews
 
+/// Loading state view for tool fetches.
 struct LoadingView: View {
     var body: some View {
         VStack(spacing: FSpacing.s16) {
@@ -113,6 +116,7 @@ struct LoadingView: View {
     }
 }
 
+/// Error view shown when tool loading fails.
 struct ErrorView: View {
     let message: String
     
@@ -137,6 +141,7 @@ struct ErrorView: View {
     }
 }
 
+/// Empty state shown when no tools are available.
 struct EmptyToolsView: View {
     var body: some View {
         VStack(spacing: FSpacing.s16) {
@@ -159,6 +164,7 @@ struct EmptyToolsView: View {
     }
 }
 
+/// List view that groups tools by category.
 struct ToolsListView: View {
     let tools: [ToolInfo]
     @Binding var selectedTool: ToolInfo?
@@ -189,6 +195,7 @@ struct ToolsListView: View {
     }
 }
 
+/// Single row for a tool entry.
 struct ToolRow: View {
     let tool: ToolInfo
     let isSelected: Bool

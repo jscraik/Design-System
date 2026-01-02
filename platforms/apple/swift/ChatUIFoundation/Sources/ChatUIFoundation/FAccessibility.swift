@@ -6,20 +6,24 @@ import AppKit
 import UIKit
 #endif
 
-/// Accessibility helpers and utilities
+/// Accessibility helpers and system preference lookups.
+///
+/// ### Discussion
+/// These values map to platform accessibility settings such as reduced motion
+/// and high contrast. Use them to adjust UI rendering and motion safely.
 public enum FAccessibility {
     
     // MARK: - Focus Ring
     
-    /// Focus ring color for keyboard navigation
+    /// Focus ring color for keyboard navigation.
     public static let focusRingColor = FColor.accentBlue
     
-    /// Focus ring width for keyboard navigation
+    /// Focus ring width for keyboard navigation.
     public static let focusRingWidth: CGFloat = 2
     
     // MARK: - System Preferences
     
-    /// Whether the user prefers high contrast
+    /// Returns whether the user prefers high contrast.
     public static var prefersHighContrast: Bool {
         #if os(macOS)
         NSWorkspace.shared.accessibilityDisplayShouldIncreaseContrast
@@ -28,7 +32,7 @@ public enum FAccessibility {
         #endif
     }
     
-    /// Whether the user prefers reduced motion
+    /// Returns whether the user prefers reduced motion.
     public static var prefersReducedMotion: Bool {
         #if os(macOS)
         NSWorkspace.shared.accessibilityDisplayShouldReduceMotion
@@ -37,7 +41,7 @@ public enum FAccessibility {
         #endif
     }
     
-    /// Whether the user prefers reduced transparency
+    /// Returns whether the user prefers reduced transparency.
     public static var prefersReducedTransparency: Bool {
         #if os(macOS)
         NSWorkspace.shared.accessibilityDisplayShouldReduceTransparency
@@ -51,7 +55,10 @@ public enum FAccessibility {
 
 extension View {
     
-    /// Applies focus ring styling for keyboard navigation
+    /// Applies a focus ring overlay used by keyboard navigation.
+    ///
+    /// - Returns: A view with a focus-ring overlay applied.
+    /// - Note: The ring is rendered with zero opacity; the system toggles it when focused.
     public func accessibilityFocusRing() -> some View {
         self.overlay(
             RoundedRectangle(cornerRadius: 8)
@@ -60,7 +67,9 @@ extension View {
         )
     }
     
-    /// Applies high contrast styling when needed
+    /// Applies high-contrast styling when the system preference is enabled.
+    ///
+    /// - Returns: A view adjusted for high-contrast accessibility settings.
     public func accessibilityHighContrast() -> some View {
         self.modifier(HighContrastModifier())
     }

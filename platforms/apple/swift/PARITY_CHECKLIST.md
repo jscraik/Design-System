@@ -94,7 +94,7 @@ This document tracks the parity between React components in `packages/ui` and Sw
 | ---------------- | ------------------- | -------------------------------- | ------ | -------------------------------- |
 | AppShell         | Custom layouts      | `AppShellView.swift`             | ✅     | NavigationSplitView-based        |
 | ChatShell        | `ChatShell.tsx`     | `ChatShell.swift`                | ✅     | Slot-based layout container      |
-| Chat Variants    | `chat-variants.tsx` | `ChatVariantsTemplateView.swift` | ✅     | Split/compact/context-rail demos |
+| Chat Variants    | `ChatVariants/ChatVariants.tsx` | `ChatVariantsTemplateView.swift` | ✅     | Split/compact/context-rail demos |
 | RoundedContainer | Custom styling      | `RoundedAppContainer.swift`      | ✅     | ChatGPT-style clipping           |
 | VisualEffect     | ➖                  | `VisualEffectView.swift`         | ✅     | macOS vibrancy, iOS fallback     |
 | ScrollArea       | `ScrollArea.tsx`    | ➖                               | ➖     | Use native ScrollView            |

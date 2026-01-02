@@ -1,9 +1,12 @@
 import { useState } from "react";
 
 import { sampleLegacyModels, sampleModels } from "../../fixtures/sample-data";
-
 import { ChatHeaderBlock } from "../blocks/ChatHeaderBlock";
 
+/**
+ * Render the chat header template with sample data.
+ * @returns The chat header template element.
+ */
 export function ChatHeaderTemplate() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [viewMode, setViewMode] = useState<"chat" | "compose">("chat");

@@ -27,6 +27,9 @@ const toastVariants = cva(
   },
 );
 
+/**
+ * Props for the toast component.
+ */
 export interface ToastProps
   extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof toastVariants> {
   /** Toast title */
@@ -129,6 +132,9 @@ function Toast({
   );
 }
 
+/**
+ * Props for the toast container.
+ */
 export interface ToastContainerProps {
   /** Position of the toast container */
   position?:

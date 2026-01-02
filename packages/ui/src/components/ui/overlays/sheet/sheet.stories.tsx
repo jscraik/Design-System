@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "@storybook/test";
 
-import { Button } from "../../base/button";
+import { Button } from "../../base/Button";
 
 import {
   Sheet,
@@ -12,10 +12,10 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./sheet";
+} from "./Sheet";
 
 const meta: Meta<typeof Sheet> = {
-  title: "UI/Sheet",
+  title: "Components/UI/Overlays/Sheet",
   component: Sheet,
   tags: ["autodocs"],
   parameters: {

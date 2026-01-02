@@ -1,5 +1,6 @@
 import { figma } from "@figma/code-connect";
-import { ChatTwoPaneTemplate, type ChatTwoPaneTemplateProps } from "./ChatTwoPaneTemplate";
+
+import { ChatTwoPaneTemplate } from "./ChatTwoPaneTemplate";
 
 /**
  * Figma Code Connect mapping for ChatTwoPaneTemplate

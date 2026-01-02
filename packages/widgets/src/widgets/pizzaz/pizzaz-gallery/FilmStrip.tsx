@@ -1,4 +1,4 @@
-import type { Photo, Album } from "../../../shared/data-types";
+import type { Album } from "../../../shared/data-types";
 
 type FilmStripProps = {
   album: Album;
@@ -6,6 +6,11 @@ type FilmStripProps = {
   onSelect?: (index: number) => void;
 };
 
+/**
+ * Render a vertical film strip for album navigation.
+ * @param props - Film strip props.
+ * @returns The film strip element.
+ */
 export default function FilmStrip({ album, selectedIndex, onSelect }: FilmStripProps) {
   return (
     <div className="h-full w-full overflow-auto flex flex-col items-center justify-center p-5 space-y-5">

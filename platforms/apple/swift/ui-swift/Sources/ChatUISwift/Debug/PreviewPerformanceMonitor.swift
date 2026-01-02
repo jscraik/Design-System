@@ -9,7 +9,9 @@ import SwiftUI
 
 // MARK: - Preview Performance Configuration
 
+/// Configuration flags for preview performance monitoring.
 public struct PreviewPerformanceConfig {
+    /// Whether preview performance monitoring is enabled (defaults to true in DEBUG).
     public static var isEnabled: Bool = {
         #if DEBUG
         return true
@@ -18,16 +20,22 @@ public struct PreviewPerformanceConfig {
         #endif
     }()
     
+    /// Whether to show the metrics overlay.
     public static var showMetricsOverlay = true
+    /// Whether to track memory usage.
     public static var trackMemoryUsage = true
+    /// Whether to log slow preview renders.
     public static var logSlowPreviews = true
+    /// Threshold (seconds) for a slow preview render.
     public static var slowPreviewThreshold: TimeInterval = 0.016 // 60fps
+    /// Memory warning threshold (MB).
     public static var memoryWarningThreshold: Double = 100.0 // MB
 }
 
 // MARK: - Preview Performance Monitor
 
 @available(macOS 13.0, *)
+/// Wraps content with preview performance monitoring.
 public struct PreviewPerformanceMonitor<Content: View>: View {
     let content: Content
     let previewName: String
@@ -36,6 +44,12 @@ public struct PreviewPerformanceMonitor<Content: View>: View {
     @StateObject private var metrics = PreviewMetrics()
     @State private var isMetricsVisible = PreviewPerformanceConfig.showMetricsOverlay
     
+    /// Creates a performance monitor wrapper.
+    ///
+    /// - Parameters:
+    ///   - previewName: Label shown in the overlay.
+    ///   - renderKey: Optional render key to track changes.
+    ///   - content: Preview content builder.
     public init(
         previewName: String,
         renderKey: AnyHashable? = nil,
@@ -46,6 +60,7 @@ public struct PreviewPerformanceMonitor<Content: View>: View {
         self.content = content()
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         ZStack(alignment: .topLeading) {
             // Main content with performance tracking
@@ -169,11 +184,17 @@ private struct PerformanceTracker: View {
 // MARK: - Preview Metrics
 
 @available(macOS 13.0, *)
+/// Tracks preview performance metrics.
 public class PreviewMetrics: ObservableObject {
+    /// Number of renders recorded.
     @Published public var renderCount = 0
+    /// Current frames per second estimate.
     @Published public var currentFPS: Double = 0
+    /// Average render time (seconds).
     @Published public var averageRenderTime: TimeInterval = 0
+    /// Current memory usage estimate (MB).
     @Published public var memoryUsage: Double = 0
+    /// Number of state updates recorded.
     @Published public var stateUpdateCount = 0
     
     private var renderTimes: [TimeInterval] = []
@@ -182,6 +203,7 @@ public class PreviewMetrics: ObservableObject {
     private var lastFPSUpdate = Date()
     private var frameCount = 0
     
+    /// Starts monitoring for a preview.
     public func startMonitoring(previewName: String) {
         guard PreviewPerformanceConfig.isEnabled else { return }
         // Start FPS monitoring
@@ -199,6 +221,7 @@ public class PreviewMetrics: ObservableObject {
         print("⚡ Started performance monitoring for preview: \(previewName)")
     }
     
+    /// Stops monitoring timers.
     public func stopMonitoring() {
         fpsTimer?.invalidate()
         memoryTimer?.invalidate()
@@ -206,6 +229,7 @@ public class PreviewMetrics: ObservableObject {
         memoryTimer = nil
     }
     
+    /// Records a render duration.
     public func recordRender(duration: TimeInterval) {
         guard PreviewPerformanceConfig.isEnabled else { return }
         DispatchQueue.main.async {
@@ -222,6 +246,7 @@ public class PreviewMetrics: ObservableObject {
         }
     }
     
+    /// Records a state update.
     public func recordStateUpdate() {
         guard PreviewPerformanceConfig.isEnabled else { return }
         DispatchQueue.main.async {
@@ -272,17 +297,25 @@ public class PreviewMetrics: ObservableObject {
 // MARK: - Preview Performance Wrapper
 
 @available(macOS 13.0, *)
+/// Convenience wrapper for monitored previews.
 public struct PreviewWithPerformanceMonitoring<Content: View>: View {
     let content: Content
     let name: String
     let renderKey: AnyHashable?
     
+    /// Creates a monitored preview wrapper.
+    ///
+    /// - Parameters:
+    ///   - name: Preview name shown in the overlay.
+    ///   - renderKey: Optional render key to track changes.
+    ///   - content: Preview content builder.
     public init(_ name: String, renderKey: AnyHashable? = nil, @ViewBuilder content: () -> Content) {
         self.name = name
         self.renderKey = renderKey
         self.content = content()
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         PreviewPerformanceMonitor(previewName: name, renderKey: renderKey) {
             content
@@ -293,14 +326,14 @@ public struct PreviewWithPerformanceMonitoring<Content: View>: View {
 // MARK: - Preview Performance Extensions
 
 extension View {
-    /// Adds performance monitoring to a SwiftUI preview
+    /// Adds performance monitoring to a SwiftUI preview.
     public func previewPerformance(name: String, renderKey: AnyHashable? = nil) -> some View {
         PreviewPerformanceMonitor(previewName: name, renderKey: renderKey) {
             self
         }
     }
     
-    /// Tracks state updates for performance monitoring
+    /// Tracks state updates for performance monitoring.
     public func trackStateUpdate() -> some View {
         self.onAppear {
             // This would be called by components when their state updates
@@ -311,7 +344,7 @@ extension View {
 
 // MARK: - Preview Performance Helpers
 
-/// Convenience function for creating performance-monitored previews
+/// Convenience function for creating performance-monitored previews.
 public func PreviewWithMonitoring<Content: View>(
     _ name: String,
     renderKey: AnyHashable? = nil,
@@ -323,7 +356,9 @@ public func PreviewWithMonitoring<Content: View>(
 // MARK: - Performance Benchmark
 
 @available(macOS 13.0, *)
+/// Utility for benchmarking preview render performance.
 public struct PreviewBenchmark {
+    /// Measures render performance for a preview.
     public static func measurePreviewPerformance<Content: View>(
         name: String,
         iterations: Int = 100,
@@ -366,18 +401,27 @@ public struct PreviewBenchmark {
     }
 }
 
+/// Result of a preview performance benchmark.
 public struct BenchmarkResult {
+    /// Preview name used in the benchmark.
     public let previewName: String
+    /// Number of iterations executed.
     public let iterations: Int
+    /// Average render time (seconds).
     public let averageRenderTime: TimeInterval
+    /// Minimum render time (seconds).
     public let minRenderTime: TimeInterval
+    /// Maximum render time (seconds).
     public let maxRenderTime: TimeInterval
+    /// Total elapsed time (seconds).
     public let totalTime: TimeInterval
     
+    /// Whether average render time meets the configured threshold.
     public var isPerformant: Bool {
         averageRenderTime <= PreviewPerformanceConfig.slowPreviewThreshold
     }
     
+    /// Human-readable performance grade.
     public var performanceGrade: String {
         switch averageRenderTime {
         case 0..<0.008: return "A+ (Excellent)"

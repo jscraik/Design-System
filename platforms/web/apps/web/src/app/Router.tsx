@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { ChatUIRoot } from "@chatui/ui";
 
-import { WidgetHarness } from "../features/widgets/WidgetHarness";
+import { HarnessPage } from "../pages/HarnessPage";
 import { AboutPage } from "../pages/AboutPage";
 import { ProfilePage } from "../pages/ProfilePage";
 import { SettingsPage } from "../pages/SettingsPage";
+import { TemplatesGalleryPage } from "../pages/TemplatesGalleryPage";
 
 function normalizePath(pathname: string) {
   if (!pathname) return "/";
@@ -44,20 +45,19 @@ export function Router() {
   const pathname = usePathname();
 
   const route = useMemo(() => {
-    switch (pathname) {
-      case "/":
-        return <ChatUIRoot />;
-      case "/harness":
-        return <WidgetHarness />;
-      case "/settings":
-        return <SettingsPage />;
-      case "/profile":
-        return <ProfilePage />;
-      case "/about":
-        return <AboutPage />;
-      default:
-        return <NotFound />;
+    if (pathname === "/") return <ChatUIRoot />;
+    if (pathname === "/harness") return <HarnessPage />;
+    if (pathname === "/settings") return <SettingsPage />;
+    if (pathname === "/profile") return <ProfilePage />;
+    if (pathname === "/about") return <AboutPage />;
+
+    if (pathname.startsWith("/templates")) {
+      const parts = pathname.split("/").filter(Boolean);
+      const templateId = parts.length > 1 ? parts[1] : undefined;
+      return <TemplatesGalleryPage initialTemplateId={templateId} />;
     }
+
+    return <NotFound />;
   }, [pathname]);
 
   return route;

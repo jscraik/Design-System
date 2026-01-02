@@ -1,4 +1,4 @@
-import { Meta, Canvas, Story, ArgTypes } from "@storybook/addon-docs";
+import { Meta, Canvas, Story, ArgTypes } from "@storybook/blocks";
 import {
   Button,
   IconButton,
@@ -9,8 +9,9 @@ import {
   SegmentedControl,
   MessageActions,
 } from "../../index";
+import * as APIReferenceStories from "./APIReference.stories";
 
-<Meta title="Documentation/API Reference" />
+<Meta of={APIReferenceStories} />
 
 # API Reference
 
@@ -356,7 +357,9 @@ Most components accept these common styling props:
 All components accept a `className` prop for custom CSS classes:
 
 ```tsx
-<Button className="bg-purple-500 hover:bg-purple-600">Custom Button</Button>
+<Button className="bg-foundation-accent-purple text-accent-foreground hover:bg-foundation-accent-purple/90">
+  Custom Button
+</Button>
 ```
 
 ### CSS Custom Properties

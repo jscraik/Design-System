@@ -4,6 +4,7 @@ import ChatUIThemes
 
 // MARK: - Button Enums
 
+/// Visual variants for `ChatUIButton`.
 public enum ChatUIButtonVariant {
     case `default`
     case destructive
@@ -13,6 +14,7 @@ public enum ChatUIButtonVariant {
     case link
 }
 
+/// Size variants for `ChatUIButton`.
 public enum ChatUIButtonSize {
     case `default`
     case sm
@@ -20,7 +22,16 @@ public enum ChatUIButtonSize {
     case icon
 }
 
-/// A native button component that uses ChatUIFoundation tokens
+/// A native button component that uses ChatUIFoundation tokens.
+///
+/// ### Discussion
+/// Provide an accessibility label for icon-only buttons to ensure VoiceOver
+/// announces the action clearly.
+///
+/// - Example:
+/// ```swift
+/// ChatUIButton("Save", variant: .secondary) { save() }
+/// ```
 public struct ChatUIButton<Content: View>: View {
     
     public typealias Variant = ChatUIButtonVariant
@@ -34,6 +45,16 @@ public struct ChatUIButton<Content: View>: View {
     private let accessibilityLabel: String?
     private let accessibilityHint: String?
     
+    /// Creates a themed button.
+    ///
+    /// - Parameters:
+    ///   - variant: Visual style of the button (default: `.default`).
+    ///   - size: Size variant (default: `.default`).
+    ///   - isDisabled: Whether the button is disabled.
+    ///   - accessibilityLabel: Optional accessibility label for VoiceOver.
+    ///   - accessibilityHint: Optional accessibility hint for VoiceOver.
+    ///   - action: Action to invoke when tapped.
+    ///   - content: Content builder for the button label.
     public init(
         variant: Variant = .default,
         size: Size = .default,
@@ -52,6 +73,7 @@ public struct ChatUIButton<Content: View>: View {
         self.content = content
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         Button(action: action) {
             content()
@@ -216,6 +238,16 @@ struct ChatUIButtonStyle: ButtonStyle {
 // MARK: - Convenience Initializers
 
 extension ChatUIButton where Content == Text {
+    /// Creates a themed button with a text label.
+    ///
+    /// - Parameters:
+    ///   - title: Title string to display.
+    ///   - variant: Visual style of the button (default: `.default`).
+    ///   - size: Size variant (default: `.default`).
+    ///   - isDisabled: Whether the button is disabled.
+    ///   - accessibilityLabel: Optional accessibility label for VoiceOver.
+    ///   - accessibilityHint: Optional accessibility hint for VoiceOver.
+    ///   - action: Action to invoke when tapped.
     public init(
         _ title: String,
         variant: Variant = .default,
@@ -240,6 +272,17 @@ extension ChatUIButton where Content == Text {
 }
 
 extension ChatUIButton where Content == Image {
+    /// Creates a themed button with an SF Symbol image.
+    ///
+    /// - Parameters:
+    ///   - systemName: SF Symbol name for the image.
+    ///   - variant: Visual style of the button (default: `.default`).
+    ///   - size: Size variant (default: `.icon`).
+    ///   - isDisabled: Whether the button is disabled.
+    ///   - accessibilityLabel: Optional accessibility label for VoiceOver.
+    ///   - accessibilityHint: Optional accessibility hint for VoiceOver.
+    ///   - action: Action to invoke when tapped.
+    /// - Important: Provide an accessibility label when the icon does not convey the action.
     public init(
         systemName: String,
         variant: Variant = .default,

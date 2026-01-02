@@ -1,6 +1,10 @@
 import Foundation
 
-/// Standard spacing constants matching React spacing scale
+/// Standard spacing constants matching the shared UI scale.
+///
+/// ### Discussion
+/// Values are in points and map to the React spacing tokens used across the
+/// design system for consistent layout rhythm.
 public enum FSpacing {
     
     /// 2pt spacing

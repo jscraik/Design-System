@@ -10,6 +10,7 @@ import ChatUIFoundation
 import ChatUIComponents
 import ChatUIThemes
 
+/// Gallery of settings-related components.
 struct SettingsGallery: View {
     @State private var notificationsEnabled = true
     @State private var darkModeEnabled = false

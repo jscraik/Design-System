@@ -1,6 +1,6 @@
 # Tools Handoff (MCP) v1.0
 
-This document captures the current tool surface area in `apps/mcp/server.js` and aligns it to Apps SDK tool-design guidelines. It is meant to be the implementation handoff for tools and UI components.
+This document captures the current tool surface area in `platforms/mcp/server.js` and aligns it to Apps SDK tool-design guidelines. It is meant to be the implementation handoff for tools and UI components.
 
 ## App-level metadata (global)
 

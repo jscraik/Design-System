@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { IconographyShowcase } from "./IconographyShowcase";
 
 const meta: Meta<typeof IconographyShowcase> = {
-  title: "Design System/Iconography Showcase",
+  title: "Documentation/Design System/Iconography Showcase",
   component: IconographyShowcase,
   parameters: {
     layout: "fullscreen",

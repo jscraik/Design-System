@@ -15,7 +15,7 @@ import { DataControlsPanel } from "./DataControlsPanel";
  * ```
  */
 const meta: Meta<typeof DataControlsPanel> = {
-  title: "Settings/DataControlsPanel",
+  title: "Components/Settings/Data Controls Panel",
   component: DataControlsPanel,
   parameters: {
     layout: "fullscreen",

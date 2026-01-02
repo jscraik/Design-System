@@ -1,5 +1,7 @@
 # Security Policy
 
+Last updated: 2026-01-02
+
 ## Supported Versions
 
 We provide security updates for the most recent minor release line.

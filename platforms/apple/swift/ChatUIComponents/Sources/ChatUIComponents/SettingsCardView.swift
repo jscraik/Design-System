@@ -2,16 +2,28 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
-/// A rounded container with ChatGPT-style background and border for grouping settings
+/// Renders a rounded container for grouping settings.
+///
+/// ### Discussion
+/// Uses theme-provided corner radii and border opacities.
+///
+/// - Example:
+/// ```swift
+/// SettingsCardView { SettingRowView(title: "General") }
+/// ```
 public struct SettingsCardView<Content: View>: View {
     private let content: Content
     @Environment(\.colorScheme) private var scheme
     @Environment(\.chatUITheme) private var theme
     
+    /// Creates a settings card view.
+    ///
+    /// - Parameter content: Content builder.
     public init(@ViewBuilder content: () -> Content) {
         self.content = content()
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(spacing: 0) {
             content

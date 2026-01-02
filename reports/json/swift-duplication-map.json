@@ -1,0 +1,485 @@
+{
+  "duplicationAnalysis": {
+    "generatedAt": "2026-01-02T00:37:00Z",
+    "totalDuplicateLOC": 4800,
+    "duplicationPercentage": 25,
+    "brand": "brAInwav"
+  },
+  "criticalDuplicates": [
+    {
+      "id": "DUP-001",
+      "type": "component_implementation",
+      "severity": "critical",
+      "title": "ChatUIButton",
+      "locations": [
+        {
+          "package": "ChatUIComponents",
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ChatUIButton.swift",
+          "lines": "1-284",
+          "hash": "a3f8c2d1"
+        },
+        {
+          "package": "ui-swift",
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/Components/ChatUIButton.swift",
+          "lines": "1-410",
+          "hash": "b4e9d3f2"
+        }
+      ],
+      "duplicatedElements": [
+        {
+          "name": "ChatUIButtonVariant",
+          "type": "enum",
+          "lines": 7,
+          "similarity": 100
+        },
+        {
+          "name": "ChatUIButtonSize",
+          "type": "enum",
+          "lines": 7,
+          "similarity": 100
+        },
+        {
+          "name": "resolveAccessibilityLabel",
+          "type": "function",
+          "lines": 12,
+          "similarity": 100
+        },
+        {
+          "name": "accessibilityLabelIfPresent",
+          "type": "extension",
+          "lines": 15,
+          "similarity": 100
+        },
+        {
+          "name": "accessibilityHintIfPresent",
+          "type": "extension",
+          "lines": 15,
+          "similarity": 100
+        }
+      ],
+      "overlapPercentage": 95,
+      "recommendedAction": "consolidate_to_foundation",
+      "potentialSavings": 180
+    },
+    {
+      "id": "DUP-002",
+      "type": "token_system",
+      "severity": "critical",
+      "title": "DesignTokens",
+      "locations": [
+        {
+          "package": "ChatUIFoundation",
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/DesignTokens.swift",
+          "lines": "1-433",
+          "hash": "c5h7j4k8"
+        },
+        {
+          "package": "ui-swift",
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/DesignTokens.swift",
+          "lines": "1-421",
+          "hash": "d6i8k5l9"
+        }
+      ],
+      "duplicatedElements": [
+        {
+          "name": "Colors.Background",
+          "type": "enum",
+          "lines": 42,
+          "similarity": 90
+        },
+        {
+          "name": "Colors.Text",
+          "type": "enum",
+          "lines": 42,
+          "similarity": 90
+        },
+        {
+          "name": "Colors.Icon",
+          "type": "enum",
+          "lines": 42,
+          "similarity": 90
+        },
+        {
+          "name": "Colors.Accent",
+          "type": "enum",
+          "lines": 48,
+          "similarity": 85
+        },
+        {
+          "name": "Typography",
+          "type": "enum",
+          "lines": 60,
+          "similarity": 95
+        },
+        {
+          "name": "Spacing",
+          "type": "enum",
+          "lines": 20,
+          "similarity": 100
+        },
+        {
+          "name": "CornerRadius",
+          "type": "enum",
+          "lines": 8,
+          "similarity": 100
+        },
+        {
+          "name": "Accessibility",
+          "type": "enum",
+          "lines": 65,
+          "similarity": 80
+        },
+        {
+          "name": "HexColorParser",
+          "type": "struct",
+          "lines": 28,
+          "similarity": 100
+        },
+        {
+          "name": "Color.init(hex:)",
+          "type": "extension",
+          "lines": 32,
+          "similarity": 100
+        },
+        {
+          "name": "Color.dynamicColor",
+          "type": "extension",
+          "lines": 24,
+          "similarity": 100
+        }
+      ],
+      "overlapPercentage": 85,
+      "differences": [
+        "Foundation has Colors.Interactive, ui-swift missing",
+        "Different hex values for same token names",
+        "Foundation has Accessibility extensions in separate file"
+      ],
+      "recommendedAction": "consolidate_to_foundation",
+      "potentialSavings": 380
+    },
+    {
+      "id": "DUP-003",
+      "type": "icon_data",
+      "severity": "critical",
+      "title": "Icon Implementations",
+      "locations": [
+        {
+          "package": "ChatUIFoundation",
+          "file": "Sources/ChatUIFoundation/Icons/ChatGPTIcons.swift",
+          "lines": 448,
+          "hash": "e7k9m6n1"
+        },
+        {
+          "package": "ChatUIFoundation",
+          "file": "Sources/ChatUIFoundation/Icons/ChatGPTIconPaths.swift",
+          "lines": 261,
+          "hash": "f8l0n7o2"
+        },
+        {
+          "package": "ChatUIFoundation",
+          "file": "Sources/ChatUIFoundation/Icons/ChatGPTIconVectors.swift",
+          "lines": 482,
+          "hash": "g9m1o8p3"
+        }
+      ],
+      "duplicatedElements": [
+        {
+          "name": "Icon definitions",
+          "type": "static properties",
+          "count": 100,
+          "description": "Same icons defined 3 ways: Image, String path, Path vector"
+        }
+      ],
+      "overlapPercentage": 66,
+      "description": "Icons defined as Images, SVG path strings, and SwiftUI Paths - should be single asset catalog reference",
+      "recommendedAction": "migrate_to_asset_catalog",
+      "potentialSavings": 900
+    }
+  ],
+  "highDuplicates": [
+    {
+      "id": "DUP-004",
+      "type": "card_component",
+      "severity": "high",
+      "title": "Card Container Implementations",
+      "locations": [
+        {
+          "package": "ChatUIComponents",
+          "file": "Sources/ChatUIComponents/SettingsCardView.swift",
+          "lines": 30,
+          "hash": "h1n2p4q6"
+        },
+        {
+          "package": "ui-swift",
+          "file": "Sources/ChatUISwift/Components/ChatUICard.swift",
+          "lines": 45,
+          "hash": "i2o3q5r7"
+        }
+      ],
+      "duplicatedElements": [
+        {
+          "name": "Card structure",
+          "type": "View",
+          "similarity": 75,
+          "description": "Similar background, corner radius, shadow patterns"
+        }
+      ],
+      "overlapPercentage": 75,
+      "recommendedAction": "create_shared_base",
+      "potentialSavings": 35
+    },
+    {
+      "id": "DUP-005",
+      "type": "modal_component",
+      "severity": "high",
+      "title": "Modal/Dialog Implementations",
+      "locations": [
+        {
+          "package": "ChatUIComponents",
+          "file": "Sources/ChatUIComponents/ModalDialogView.swift",
+          "lines": 85,
+          "hash": "j3p4q6r8"
+        },
+        {
+          "package": "ChatUIComponents",
+          "file": "Sources/ChatUIComponents/AlertView.swift",
+          "lines": 42,
+          "hash": "k4q5r7s9"
+        },
+        {
+          "package": "ui-swift",
+          "file": "Sources/ChatUISwift/Components/ChatUIModal.swift",
+          "lines": 120,
+          "hash": "l5r6s8t0"
+        }
+      ],
+      "duplicatedElements": [
+        {
+          "name": "Modal presentation logic",
+          "type": "ViewModifier",
+          "similarity": 70,
+          "description": "Similar overlay, backdrop, presentation patterns"
+        },
+        {
+          "name": "Accessibility handling",
+          "type": "extension",
+          "similarity": 65,
+          "description": "Focus management, escape handling"
+        }
+      ],
+      "overlapPercentage": 70,
+      "recommendedAction": "create_shared_protocol",
+      "potentialSavings": 80
+    },
+    {
+      "id": "DUP-006",
+      "type": "button_style",
+      "severity": "high",
+      "title": "ButtonStyle Implementations",
+      "locations": [
+        {
+          "package": "ChatUIComponents",
+          "file": "Sources/ChatUIComponents/ChatUIButton.swift",
+          "lines": 96,
+          "hash": "m6s7t9u1"
+        },
+        {
+          "package": "ui-swift",
+          "file": "Sources/ChatUISwift/Components/ChatUIButton.swift",
+          "lines": 142,
+          "hash": "n7t8u0v2"
+        }
+      ],
+      "duplicatedElements": [
+        {
+          "name": "ChatUIButtonStyle",
+          "type": "ButtonStyle",
+          "similarity": 80,
+          "description": "Variant handling, color logic, animation"
+        }
+      ],
+      "overlapPercentage": 80,
+      "recommendedAction": "extract_to_foundation",
+      "potentialSavings": 75
+    },
+    {
+      "id": "DUP-007",
+      "type": "input_component",
+      "severity": "high",
+      "title": "Input/TextField Implementations",
+      "locations": [
+        {
+          "package": "ChatUIComponents",
+          "file": "Sources/ChatUIComponents/InputView.swift",
+          "lines": 175,
+          "hash": "o8u9v1w2"
+        },
+        {
+          "package": "ChatUIComponents",
+          "file": "Sources/ChatUIComponents/Compose/ComposeTextArea.swift",
+          "lines": 95,
+          "hash": "p9v0w2x3"
+        },
+        {
+          "package": "ui-swift",
+          "file": "Sources/ChatUISwift/Components/ChatUIInput.swift",
+          "lines": 145,
+          "hash": "q0w1x3y4"
+        }
+      ],
+      "duplicatedElements": [
+        {
+          "name": "Text input field styling",
+          "type": "View",
+          "similarity": 72,
+          "description": "Similar border, focus, placeholder handling"
+        }
+      ],
+      "overlapPercentage": 72,
+      "recommendedAction": "create_shared_textfield",
+      "potentialSavings": 85
+    }
+  ],
+  "mediumDuplicates": [
+    {
+      "id": "DUP-008",
+      "type": "navigation_component",
+      "severity": "medium",
+      "title": "Navigation Implementations",
+      "locations": [
+        {
+          "package": "ChatUIComponents",
+          "file": "Sources/ChatUIComponents/NavigationExampleView.swift",
+          "lines": 72,
+          "hash": "r1x2y4z5"
+        },
+        {
+          "package": "ui-swift",
+          "file": "Sources/ChatUISwift/Components/ChatUINavigation.swift",
+          "lines": 155,
+          "hash": "s2y3z5a6"
+        }
+      ],
+      "overlapPercentage": 65,
+      "potentialSavings": 55
+    },
+    {
+      "id": "DUP-009",
+      "type": "toast_component",
+      "severity": "medium",
+      "title": "Toast/Notification Implementations",
+      "locations": [
+        {
+          "package": "ChatUIComponents",
+          "file": "Sources/ChatUIComponents/ToastView.swift",
+          "lines": 88,
+          "hash": "t3z4a6b7"
+        },
+        {
+          "package": "ui-swift",
+          "file": "Sources/ChatUISwift/Components/ChatUIToast.swift",
+          "lines": 185,
+          "hash": "u4a5b7c8"
+        }
+      ],
+      "overlapPercentage": 68,
+      "potentialSavings": 60
+    },
+    {
+      "id": "DUP-010",
+      "type": "accessibility_extensions",
+      "severity": "medium",
+      "title": "Accessibility View Extensions",
+      "locations": [
+        {
+          "package": "ChatUIFoundation",
+          "file": "Sources/ChatUIFoundation/FAccessibility.swift",
+          "lines": 48,
+          "hash": "v5b6c8d9"
+        },
+        {
+          "package": "ui-swift",
+          "file": "Sources/ChatUISwift/DesignTokens.swift",
+          "lines": 32,
+          "hash": "w6c7d9e0"
+        }
+      ],
+      "duplicatedElements": [
+        {
+          "name": "accessibilityFocusRing",
+          "type": "extension",
+          "similarity": 85
+        },
+        {
+          "name": "accessibilityHighContrast",
+          "type": "extension",
+          "similarity": 70
+        }
+      ],
+      "overlapPercentage": 75,
+      "potentialSavings": 25
+    }
+  ],
+  "summary": {
+    "totalDuplicates": 10,
+    "bySeverity": {
+      "critical": 3,
+      "high": 4,
+      "medium": 3
+    },
+    "totalPotentialSavings": 1875,
+    "byPackage": {
+      "ChatUIComponents": {
+        "duplicates": 6,
+        "savings": 420
+      },
+      "ui-swift": {
+        "duplicates": 8,
+        "savings": 680
+      },
+      "ChatUIFoundation": {
+        "duplicates": 4,
+        "savings": 775
+      }
+    },
+    "byType": {
+      "component_implementation": 5,
+      "token_system": 1,
+      "icon_data": 1,
+      "accessibility": 2,
+      "styling": 1
+    }
+  },
+  "recommendations": [
+    {
+      "priority": 1,
+      "action": "Create ChatUIFoundation as single source of truth for shared types and utilities",
+      "affectedDuplicates": ["DUP-001", "DUP-002", "DUP-006"],
+      "estimatedSavings": 635
+    },
+    {
+      "priority": 2,
+      "action": "Migrate icons to Asset Catalog with code generation",
+      "affectedDuplicates": ["DUP-003"],
+      "estimatedSavings": 900
+    },
+    {
+      "priority": 3,
+      "action": "Extract shared protocols for card, modal, and input patterns",
+      "affectedDuplicates": ["DUP-004", "DUP-005", "DUP-007"],
+      "estimatedSavings": 200
+    },
+    {
+      "priority": 4,
+      "action": "Consolidate accessibility extensions into Foundation",
+      "affectedDuplicates": ["DUP-010"],
+      "estimatedSavings": 25
+    },
+    {
+      "priority": 5,
+      "action": "Standardize navigation and toast implementations",
+      "affectedDuplicates": ["DUP-008", "DUP-009"],
+      "estimatedSavings": 115
+    }
+  ]
+}

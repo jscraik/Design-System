@@ -2,7 +2,9 @@ import { createContext, type ReactNode, useCallback, useContext, useId, useState
 
 import { cn } from "../../../components/ui/utils";
 
+/** Visual variants for TemplateFieldGroup. */
 export type TemplateFieldGroupVariant = "default" | "card" | "bordered" | "ghost";
+/** Size presets for TemplateFieldGroup. */
 export type TemplateFieldGroupSize = "sm" | "md" | "lg";
 
 // Context for field group state
@@ -14,10 +16,16 @@ interface TemplateFieldGroupContextValue {
 
 const TemplateFieldGroupContext = createContext<TemplateFieldGroupContextValue | null>(null);
 
+/**
+ * Access the current TemplateFieldGroup context.
+ * @returns Field group state and helpers.
+ * @throws Error when used outside a TemplateFieldGroup.
+ */
 export function useTemplateFieldGroup() {
   return useContext(TemplateFieldGroupContext);
 }
 
+/** Props for TemplateFieldGroup. */
 export interface TemplateFieldGroupProps {
   /** Group label/title */
   label: string;
@@ -76,18 +84,18 @@ const variantStyles: Record<
   },
   card: {
     container:
-      "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg overflow-hidden",
-    header: "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 px-4 py-3",
-    content: "px-4 py-3",
+      "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl overflow-hidden shadow-sm",
+    header: "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 px-5 py-4",
+    content: "px-5 py-4",
   },
   bordered: {
     container: "border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg",
     header: "px-4 py-3 border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
-    content: "px-4 py-3",
+    content: "px-4 py-4",
   },
   ghost: {
     container: "",
-    header: "pb-2",
+    header: "pb-3",
     content: "pl-4 border-l-2 border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
   },
 };
@@ -129,6 +137,11 @@ const columnStyles: Record<1 | 2 | 3 | 4, string> = {
   4: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
 };
 
+/**
+ * Render a grouped set of related form fields.
+ * @param props - Field group props.
+ * @returns The field group element.
+ */
 export function TemplateFieldGroup({
   label,
   description,
@@ -216,28 +229,28 @@ export function TemplateFieldGroup({
               "border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
           )}
         >
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2 min-w-0">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5 min-w-0 flex-1">
               {icon && (
                 <span className="shrink-0 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary">
                   {icon}
                 </span>
               )}
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
                   <span
                     id={`${groupId}-label`}
                     className={cn(
-                      "text-foundation-text-light-primary dark:text-foundation-text-dark-primary truncate",
+                      "text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
                       labelSize,
-                      disabled && "opacity-50",
+                      disabled && "opacity-50 cursor-not-allowed",
                       labelClassName,
                     )}
                   >
                     {label}
                   </span>
                   {required && (
-                    <span className="text-foundation-accent-red text-xs" aria-hidden="true">
+                    <span className="text-foundation-accent-red text-xs" aria-label="required">
                       *
                     </span>
                   )}
@@ -246,7 +259,7 @@ export function TemplateFieldGroup({
                 {description && (
                   <p
                     className={cn(
-                      "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-0.5 truncate",
+                      "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1",
                       descriptionSize,
                       disabled && "opacity-50",
                     )}
@@ -263,12 +276,12 @@ export function TemplateFieldGroup({
                   type="button"
                   onClick={toggleCollapse}
                   className={cn(
-                    "inline-flex items-center justify-center rounded-md p-1",
-                    "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
-                    "hover:text-foundation-text-light-secondary dark:hover:text-foundation-text-dark-secondary",
+                    "inline-flex items-center justify-center rounded-lg w-7 h-7",
+                    "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
+                    "hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
                     "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
-                    "transition-all duration-150",
+                    "transition-colors",
                   )}
                   aria-expanded={!isCollapsed}
                   aria-controls={`${groupId}-content`}
@@ -276,7 +289,7 @@ export function TemplateFieldGroup({
                 >
                   <svg
                     className={cn(
-                      "size-4 transition-transform duration-200",
+                      "w-4 h-4 transition-transform",
                       isCollapsed && "-rotate-90",
                     )}
                     fill="none"
@@ -296,11 +309,11 @@ export function TemplateFieldGroup({
         {error && (
           <div
             id={`${groupId}-error`}
-            className="flex items-center gap-1.5 px-4 py-2 text-xs text-foundation-accent-red bg-foundation-accent-red/10"
+            className="flex items-center gap-1.5 px-4 py-2.5 text-xs text-foundation-accent-red bg-foundation-accent-red/10"
             role="alert"
           >
             <svg
-              className="size-3.5 shrink-0"
+              className="w-3.5 h-3.5 shrink-0"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -324,6 +337,7 @@ export function TemplateFieldGroup({
 }
 
 // Compound component for group action button
+/** Props for TemplateFieldGroupAction. */
 export interface TemplateFieldGroupActionProps {
   children: ReactNode;
   onClick?: () => void;
@@ -333,6 +347,11 @@ export interface TemplateFieldGroupActionProps {
   className?: string;
 }
 
+/**
+ * Render a field group action element.
+ * @param props - Action props.
+ * @returns The action element.
+ */
 export function TemplateFieldGroupAction({
   children,
   onClick,
@@ -346,7 +365,7 @@ export function TemplateFieldGroupAction({
       "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:bg-foundation-bg-light-4 dark:hover:bg-foundation-bg-dark-4",
     primary: "text-foundation-accent-blue hover:text-foundation-accent-blue/80",
     ghost:
-      "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary hover:text-foundation-text-light-secondary dark:hover:text-foundation-text-dark-secondary",
+      "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
   };
 
   return (
@@ -355,27 +374,33 @@ export function TemplateFieldGroupAction({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "inline-flex items-center gap-1 text-xs font-medium",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue focus-visible:rounded",
-        "transition-colors duration-150",
+        "inline-flex items-center gap-1.5 text-xs font-medium rounded-lg px-2 py-1",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
+        "transition-colors",
         variantClasses[variant],
-        disabled && "opacity-50 cursor-not-allowed",
+        disabled && "opacity-40 cursor-not-allowed pointer-events-none",
         className,
       )}
     >
-      {icon && <span className="size-3.5">{icon}</span>}
+      {icon && <span className="w-3.5 h-3.5">{icon}</span>}
       {children}
     </button>
   );
 }
 
 // Compound component for group badge
+/** Props for TemplateFieldGroupBadge. */
 export interface TemplateFieldGroupBadgeProps {
   children: ReactNode;
   variant?: "default" | "primary" | "success" | "warning" | "error";
   className?: string;
 }
 
+/**
+ * Render a badge inside a field group.
+ * @param props - Badge props.
+ * @returns The badge element.
+ */
 export function TemplateFieldGroupBadge({
   children,
   variant = "default",
@@ -386,14 +411,14 @@ export function TemplateFieldGroupBadge({
       "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
     primary: "bg-foundation-accent-blue/10 text-foundation-accent-blue",
     success: "bg-foundation-accent-green/10 text-foundation-accent-green",
-    warning: "bg-foundation-accent-yellow/10 text-foundation-accent-yellow",
+    warning: "bg-foundation-accent-orange/10 text-foundation-accent-orange",
     error: "bg-foundation-accent-red/10 text-foundation-accent-red",
   };
 
   return (
     <span
       className={cn(
-        "inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium uppercase tracking-wide",
+        "inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-wide",
         variantClasses[variant],
         className,
       )}
@@ -404,39 +429,51 @@ export function TemplateFieldGroupBadge({
 }
 
 // Compound component for nested field group divider
+/** Props for TemplateFieldGroupDivider. */
 export interface TemplateFieldGroupDividerProps {
   label?: string;
   className?: string;
 }
 
+/**
+ * Render a divider within a field group.
+ * @param props - Divider props.
+ * @returns The divider element.
+ */
 export function TemplateFieldGroupDivider({ label, className }: TemplateFieldGroupDividerProps) {
   if (label) {
     return (
-      <div className={cn("flex items-center gap-3 py-2", className)}>
+      <div className={cn("flex items-center gap-3 py-3", className)}>
         <div className="flex-1 h-px bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3" />
         <span className="text-[11px] font-medium uppercase tracking-wider text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
           {label}
         </span>
-        <div className="flex-1 h-px bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3" />
+        <div className="flex-1 h-px bg-foundation-bg-light-3 dark:border-foundation-bg-dark-3" />
       </div>
     );
   }
 
   return (
     <div
-      className={cn("h-px bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 my-2", className)}
+      className={cn("h-px bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 my-3", className)}
       role="separator"
     />
   );
 }
 
 // Compound component for field group row (horizontal layout)
+/** Props for TemplateFieldGroupRow. */
 export interface TemplateFieldGroupRowProps {
   children: ReactNode;
   className?: string;
   gap?: "sm" | "md" | "lg";
 }
 
+/**
+ * Render a row within a field group.
+ * @param props - Row props.
+ * @returns The row element.
+ */
 export function TemplateFieldGroupRow({
   children,
   className,

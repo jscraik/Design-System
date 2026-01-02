@@ -5,9 +5,17 @@ import { DayPicker } from "react-day-picker";
 
 import { IconChevronLeftMd, IconChevronRightMd } from "../../../../icons";
 import { cn } from "../../utils";
+import { buttonVariants } from "../Button";
 
-import { buttonVariants } from "../button";
-
+/**
+ * Renders a calendar component using `react-day-picker`.
+ *
+ * Defaults to showing outside days unless `showOutsideDays` is overridden.
+ * Pass `mode="single" | "multiple" | "range"` to control selection behavior.
+ *
+ * @param props - DayPicker props.
+ * @returns A calendar element.
+ */
 function Calendar({
   className,
   classNames,

@@ -1,12 +1,11 @@
-import { useId, useState } from "react";
+import { useState } from "react";
 
 import { IconChevronLeftMd } from "../../../icons/ChatGPTIcons";
-
-import type { SettingsPanelProps } from "../types";
+import { SettingToggle } from "../SettingToggle";
+import type { SettingsPanelProps } from "../shared/types";
 
 export function SecurityPanel({ onBack }: SettingsPanelProps) {
   const [mfaEnabled, setMfaEnabled] = useState(true);
-  const mfaLabelId = useId();
 
   return (
     <>
@@ -29,7 +28,7 @@ export function SecurityPanel({ onBack }: SettingsPanelProps) {
         >
           <IconChevronLeftMd className="size-4 text-foundation-icon-dark-primary" />
         </button>
-        <h2 className="text-heading-3 font-semibold   text-foundation-text-dark-primary">
+        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foundation-text-dark-primary">
           Security
         </h2>
       </div>
@@ -37,31 +36,16 @@ export function SecurityPanel({ onBack }: SettingsPanelProps) {
       <div className="overflow-y-auto max-h-[calc(85vh-80px)] px-6 py-4">
         {/* Multi-factor authentication */}
         <div>
-          <div className="flex items-center justify-between px-3 py-2.5">
-            <span
-              id={mfaLabelId}
-              className="text-body-small font-normal   text-foundation-text-dark-primary"
-            >
-              Multi-factor authentication
-            </span>
-            <button
-              type="button"
-              onClick={() => setMfaEnabled(!mfaEnabled)}
-              role="switch"
-              aria-checked={mfaEnabled}
-              aria-labelledby={mfaLabelId}
-              className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${mfaEnabled ? "bg-foundation-accent-green" : "bg-foundation-bg-dark-3"}`}
-            >
-              <span
-                className={`inline-block size-4 transform rounded-full bg-foundation-bg-light-1 transition-transform ${mfaEnabled ? "translate-x-[18px]" : "translate-x-0.5"}`}
-              />
-            </button>
-          </div>
-          <p className="text-caption   text-foundation-text-dark-tertiary px-3 mt-1">
+          <SettingToggle
+            label="Multi-factor authentication"
+            checked={mfaEnabled}
+            onCheckedChange={setMfaEnabled}
+          />
+          <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary px-3 mt-1">
             You'll only be able to log in using Google while this is on.{" "}
             <button
               type="button"
-              className="text-foundation-text-dark-primary underline decoration-foundation-accent-blue underline-offset-2 hover:decoration-foundation-accent-blue/70"
+              className="text-foundation-accent-blue hover:underline"
             >
               Learn more
             </button>

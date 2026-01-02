@@ -2,7 +2,7 @@ import { Card } from "./Card";
 import { CodeBlock } from "./CodeBlock";
 import { Section } from "./Section";
 import { StatCard } from "./StatCard";
-import { colorSwatches, iconCategories, spacingScale, type DocTab } from "./data";
+import { colorSwatches, iconCategories, spacingScale } from "./data";
 
 /** Overview tab content for DesignSystemDocs. */
 export function OverviewTab() {

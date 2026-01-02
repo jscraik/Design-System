@@ -9,8 +9,8 @@ import {
   IconSearch,
   IconWriting,
 } from "../icons/ChatGPTIcons";
-import type { ModeConfig } from "../components/ui/navigation/mode-selector";
-import type { ModelConfig } from "../components/ui/navigation/model-selector";
+import type { ModeConfig } from "../components/ui/navigation/ModeSelector";
+import type { ModelConfig } from "../components/ui/navigation/ModelSelector";
 
 export const sampleModels: ModelConfig[] = [
   { name: "Auto", shortName: "Auto", description: "Decides how long to think" },

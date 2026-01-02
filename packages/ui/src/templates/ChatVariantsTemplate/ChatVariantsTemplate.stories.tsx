@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ChatVariantsTemplate } from "./ChatVariantsTemplate";
 
 const meta: Meta<typeof ChatVariantsTemplate> = {
-  title: "Templates/ChatVariantsTemplate",
+  title: "Components/Templates/Chat/Chat Variants",
   component: ChatVariantsTemplate,
   parameters: {
     layout: "fullscreen",

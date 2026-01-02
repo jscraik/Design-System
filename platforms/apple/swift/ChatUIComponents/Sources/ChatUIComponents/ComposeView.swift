@@ -2,6 +2,15 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Renders the Compose experience layout.
+///
+/// ### Discussion
+/// This view showcases prompt instructions, prompt builder, and configuration controls.
+///
+/// - Example:
+/// ```swift
+/// ComposeView()
+/// ```
 public struct ComposeView: View {
     @Environment(\.chatUITheme) private var theme
     @Environment(\.colorScheme) private var scheme
@@ -16,8 +25,10 @@ public struct ComposeView: View {
     @State private var modelSelection = "ChatGPT 5.2 Pro"
     @State private var planMode = "Manual"
 
+    /// Creates a compose view.
     public init() {}
 
+    /// The content and behavior of this view.
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: FSpacing.s16) {

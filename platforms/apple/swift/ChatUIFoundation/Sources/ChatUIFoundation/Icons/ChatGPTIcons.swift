@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Identifiers for bundled ChatGPT icons.
 public enum ChatGPTIcon: String, CaseIterable, Identifiable, Hashable {
     case agent = "agent"
     case alertCircle = "alertCircle"
@@ -257,36 +258,59 @@ public enum ChatGPTIcon: String, CaseIterable, Identifiable, Hashable {
     case x = "x"
     case xXs = "xXs"
 
+    /// Stable identifier for use in lists.
     public var id: String { rawValue }
 }
 
+/// SVG path data for a ChatGPT icon.
 public struct ChatGPTIconData {
+    /// SVG path strings for the icon.
     public let paths: [String]
+    /// Whether the paths use even-odd fill rules.
     public let usesEvenOddFill: Bool
 
+    /// Creates icon path data.
+    /// - Parameters:
+    ///   - paths: SVG path strings for the icon.
+    ///   - usesEvenOddFill: Whether to use even-odd fill.
     public init(paths: [String], usesEvenOddFill: Bool) {
         self.paths = paths
         self.usesEvenOddFill = usesEvenOddFill
     }
 }
 
+/// Renders a ChatGPT icon using vector or path assets.
 public struct ChatGPTIconView: View {
+    /// Icon to render.
     public let icon: ChatGPTIcon
+    /// Render size.
     public let size: CGSize
+    /// Icon color.
     public let color: Color
 
+    /// Creates an icon view with a square size.
+    /// - Parameters:
+    ///   - icon: Icon to render.
+    ///   - size: Square size in points.
+    ///   - color: Icon color.
     public init(_ icon: ChatGPTIcon, size: CGFloat = 24, color: Color = FColor.iconSecondary) {
         self.icon = icon
         self.size = CGSize(width: size, height: size)
         self.color = color
     }
 
+    /// Creates an icon view with an explicit size.
+    /// - Parameters:
+    ///   - icon: Icon to render.
+    ///   - size: Size in points.
+    ///   - color: Icon color.
     public init(_ icon: ChatGPTIcon, size: CGSize, color: Color = FColor.iconSecondary) {
         self.icon = icon
         self.size = size
         self.color = color
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         let vector = ChatGPTIconVectorAssets.data[icon]
         let data = ChatGPTIconAssets.data[icon]
@@ -309,6 +333,7 @@ public struct ChatGPTIconView: View {
     }
 }
 
+/// Standard size tokens for ChatGPT icons.
 public enum ChatGPTIconSize {
     public static let xs: CGFloat = 12
     public static let sm: CGFloat = 16

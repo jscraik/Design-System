@@ -2,9 +2,12 @@ import type { ReactNode } from "react";
 
 import { cn } from "../../../components/ui/utils";
 
+/** Visual variants for TemplateHeaderBar. */
 export type TemplateHeaderBarVariant = "default" | "transparent" | "elevated" | "bordered";
+/** Size presets for TemplateHeaderBar. */
 export type TemplateHeaderBarSize = "sm" | "md" | "lg";
 
+/** Props for TemplateHeaderBar. */
 export interface TemplateHeaderBarProps {
   /** Main title text */
   title: string;
@@ -76,6 +79,11 @@ const sizeStyles: Record<
   },
 };
 
+/**
+ * Render the template header bar.
+ * @param props - Header bar props.
+ * @returns The header bar element.
+ */
 export function TemplateHeaderBar({
   title,
   subtitle,
@@ -218,12 +226,18 @@ export function TemplateHeaderBar({
 }
 
 // Compound component for common back button pattern
+/** Props for TemplateHeaderBackButton. */
 export interface TemplateHeaderBackButtonProps {
   onClick: () => void;
   className?: string;
   "aria-label"?: string;
 }
 
+/**
+ * Render a back button for the header bar.
+ * @param props - Back button props.
+ * @returns The back button element.
+ */
 export function TemplateHeaderBackButton({
   onClick,
   className,
@@ -235,7 +249,7 @@ export function TemplateHeaderBackButton({
       onClick={onClick}
       className={cn(
         "inline-flex items-center justify-center rounded-md p-1.5 -ml-1.5",
-        "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
+        "text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary",
         "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
         "transition-colors duration-150",
@@ -251,6 +265,7 @@ export function TemplateHeaderBackButton({
 }
 
 // Compound component for icon button in header
+/** Props for TemplateHeaderIconButton. */
 export interface TemplateHeaderIconButtonProps {
   icon: ReactNode;
   onClick?: () => void;
@@ -260,6 +275,11 @@ export interface TemplateHeaderIconButtonProps {
   disabled?: boolean;
 }
 
+/**
+ * Render an icon-only header action button.
+ * @param props - Icon button props.
+ * @returns The icon button element.
+ */
 export function TemplateHeaderIconButton({
   icon,
   onClick,
@@ -275,12 +295,12 @@ export function TemplateHeaderIconButton({
       disabled={disabled}
       className={cn(
         "inline-flex items-center justify-center rounded-md p-2",
-        "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
+        "text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary",
         "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
         "transition-colors duration-150",
         active &&
-          "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
+          "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-icon-light-primary dark:text-foundation-icon-dark-primary",
         disabled && "opacity-50 cursor-not-allowed",
         className,
       )}
@@ -293,6 +313,7 @@ export function TemplateHeaderIconButton({
 }
 
 // Compound component for action button in header
+/** Props for TemplateHeaderActionButton. */
 export interface TemplateHeaderActionButtonProps {
   children: ReactNode;
   onClick?: () => void;
@@ -302,6 +323,11 @@ export interface TemplateHeaderActionButtonProps {
   disabled?: boolean;
 }
 
+/**
+ * Render a labeled header action button.
+ * @param props - Action button props.
+ * @returns The action button element.
+ */
 export function TemplateHeaderActionButton({
   children,
   onClick,
@@ -344,12 +370,18 @@ export function TemplateHeaderActionButton({
 }
 
 // Compound component for close button pattern
+/** Props for TemplateHeaderCloseButton. */
 export interface TemplateHeaderCloseButtonProps {
   onClick: () => void;
   className?: string;
   "aria-label"?: string;
 }
 
+/**
+ * Render a close button for the header bar.
+ * @param props - Close button props.
+ * @returns The close button element.
+ */
 export function TemplateHeaderCloseButton({
   onClick,
   className,
@@ -378,8 +410,10 @@ export function TemplateHeaderCloseButton({
 }
 
 // Compound component for badge/notification indicator
+/** Badge variants for header badges. */
 export type TemplateHeaderBadgeVariant = "default" | "primary" | "success" | "warning" | "error";
 
+/** Props for TemplateHeaderBadge. */
 export interface TemplateHeaderBadgeProps {
   children?: ReactNode;
   count?: number;
@@ -393,11 +427,16 @@ const badgeVariantStyles: Record<TemplateHeaderBadgeVariant, string> = {
   default:
     "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
   primary: "bg-foundation-accent-blue text-white",
-  success: "bg-foundation-accent-green text-white",
-  warning: "bg-foundation-accent-yellow text-foundation-text-light-primary",
+  success: "bg-foundation-accent-success text-white",
+  warning: "bg-foundation-accent-orange text-white",
   error: "bg-foundation-accent-red text-white",
 };
 
+/**
+ * Render a header badge element.
+ * @param props - Badge props.
+ * @returns The badge element.
+ */
 export function TemplateHeaderBadge({
   children,
   count,
@@ -432,18 +471,25 @@ export function TemplateHeaderBadge({
 }
 
 // Compound component for breadcrumbs
+/** Item metadata for header breadcrumbs. */
 export interface TemplateHeaderBreadcrumbItem {
   label: string;
   href?: string;
   onClick?: () => void;
 }
 
+/** Props for TemplateHeaderBreadcrumbs. */
 export interface TemplateHeaderBreadcrumbsProps {
   items: TemplateHeaderBreadcrumbItem[];
   separator?: ReactNode;
   className?: string;
 }
 
+/**
+ * Render breadcrumb navigation for the header bar.
+ * @param props - Breadcrumb props.
+ * @returns The breadcrumbs element.
+ */
 export function TemplateHeaderBreadcrumbs({
   items,
   separator,

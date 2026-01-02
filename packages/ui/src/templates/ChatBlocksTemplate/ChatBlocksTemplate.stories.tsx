@@ -6,7 +6,7 @@ import { ChatMessagesTemplate } from "../ChatMessagesTemplate";
 import { ChatInputTemplate } from "../ChatInputTemplate";
 
 const meta: Meta = {
-  title: "Templates/Chat Blocks",
+  title: "Components/Templates/Chat/Chat Blocks",
   parameters: {
     layout: "fullscreen",
   },

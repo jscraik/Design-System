@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as RechartsPrimitive from "recharts";
 
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./chart";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./Chart";
 
 const meta: Meta<typeof ChartContainer> = {
-  title: "UI/Chart",
+  title: "Components/UI/Data Display/Chart",
   component: ChartContainer,
   tags: ["autodocs"],
   parameters: { layout: "centered" },

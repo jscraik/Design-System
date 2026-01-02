@@ -1,4 +1,13 @@
-import { IconCheckCircle, IconEdit, IconLightBulb, IconPro, IconSettings, IconStack, IconChevronRightMd, IconChevronDownMd, IconX } from "../../../../icons/ChatGPTIcons";
+import {
+  IconCheckCircle,
+  IconChevronDownMd,
+  IconChevronRightMd,
+  IconEdit,
+  IconLightBulb,
+  IconPro,
+  IconSettings,
+  IconStack,
+} from "../../../../icons/ChatGPTIcons";
 import { SettingRow, SettingToggle } from "../../../settings";
 
 interface WorkWithAppsSectionProps {

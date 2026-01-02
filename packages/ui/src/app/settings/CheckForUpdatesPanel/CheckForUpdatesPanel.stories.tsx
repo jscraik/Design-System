@@ -15,7 +15,7 @@ import { CheckForUpdatesPanel } from "./CheckForUpdatesPanel";
  * ```
  */
 const meta: Meta<typeof CheckForUpdatesPanel> = {
-  title: "Settings/CheckForUpdatesPanel",
+  title: "Components/Settings/Check For Updates Panel",
   component: CheckForUpdatesPanel,
   parameters: {
     layout: "fullscreen",

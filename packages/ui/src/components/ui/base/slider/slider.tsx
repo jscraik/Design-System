@@ -5,6 +5,15 @@ import * as SliderPrimitive from "@radix-ui/react-slider";
 
 import { cn } from "../../utils";
 
+/**
+ * Renders a slider component (Radix Slider).
+ *
+ * Provide `aria-label` or `aria-labelledby` so each thumb is accessible.
+ * Supports controlled (`value`) and uncontrolled (`defaultValue`) usage.
+ *
+ * @param props - Radix slider root props.
+ * @returns A slider element.
+ */
 function Slider({
   className,
   defaultValue,

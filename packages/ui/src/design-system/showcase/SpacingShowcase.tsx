@@ -1,331 +1,243 @@
-import { spacingScale } from "@chatui/tokens";
-import { useCallback, useState } from "react";
+import { radiusTokens, spacingScale } from "@chatui/tokens";
 
-import { cn } from "../../components/ui/utils";
+interface SpacingBoxProps {
+  token: string;
+  value: string;
+  showBox?: boolean;
+}
 
-import { IconBook, IconCheck, IconCopy, IconGrid, IconScale } from "./spacing/icons";
-import { SpacingCard } from "./spacing/SpacingCard";
-import { ScaleBar } from "./spacing/ScaleDisplay";
-import { UsageCard } from "./spacing/UsageExamples";
+const spacingPx = (value: number) => `${value}px`;
 
-type ViewMode = "grid" | "scale" | "usage";
+const spacingEntries = [...spacingScale]
+  .sort((a, b) => a - b)
+  .map((value) => [String(value), spacingPx(value)] as const);
 
-function Toast({ message, value, visible }: { message: string; value: string; visible: boolean }) {
+const semanticSpacing = {
+  "container-padding": {
+    sm: spacingPx(16),
+    md: spacingPx(24),
+    lg: spacingPx(32),
+  },
+  "component-gap": {
+    sm: spacingPx(8),
+    md: spacingPx(16),
+    lg: spacingPx(24),
+  },
+  "section-spacing": {
+    sm: spacingPx(32),
+    md: spacingPx(48),
+    lg: spacingPx(64),
+  },
+  "border-radius": {
+    sm: spacingPx(radiusTokens.r6),
+    md: spacingPx(radiusTokens.r8),
+    lg: spacingPx(radiusTokens.r12),
+    xl: spacingPx(radiusTokens.r16),
+  },
+} as const;
+
+function SpacingBox({ token, value, showBox = true }: SpacingBoxProps) {
   return (
-    <div
-      className={cn(
-        "fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-3 rounded-xl shadow-lg bg-foundation-bg-dark-2 border border-foundation-bg-dark-3 flex items-center gap-3 transition-all duration-300",
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none",
+    <div className="rounded-xl p-4 bg-foundation-bg-dark-2 border border-foundation-text-dark-primary/10">
+      <div className="flex items-center justify-between mb-3">
+        <div className="text-sm font-medium text-foundation-text-dark-primary">{token}</div>
+        <div className="text-xs font-mono text-foundation-text-dark-tertiary">{value}</div>
+      </div>
+      {showBox && (
+        <div className="bg-foundation-bg-dark-3 rounded flex items-center justify-center">
+          <div className="bg-foundation-accent-blue" style={{ width: value, height: value }} />
+        </div>
       )}
-      role="status"
-      aria-live="polite"
-    >
-      <div className="size-8 rounded-full bg-foundation-accent-green/10 flex items-center justify-center">
-        <IconCheck className="size-4 text-foundation-accent-green" />
-      </div>
-      <div>
-        <p className="text-sm font-medium text-foundation-text-dark-primary">{message}</p>
-        <p className="text-xs font-mono text-foundation-text-dark-tertiary max-w-[200px] truncate">
-          {value}
-        </p>
-      </div>
     </div>
   );
 }
 
-/** SpacingShowcase displays all spacing tokens with grid, scale, and usage views. */
+/**
+ * SpacingShowcase displays all spacing tokens from the design system.
+ * Use this to verify spacing matches the 8px grid system.
+ */
 export function SpacingShowcase() {
-  const [copiedValue, setCopiedValue] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<ViewMode>("grid");
-  const [toastVisible, setToastVisible] = useState(false);
-
-  const copyToClipboard = useCallback(async (value: string) => {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopiedValue(value);
-      setToastVisible(true);
-      setTimeout(() => {
-        setCopiedValue(null);
-        setToastVisible(false);
-      }, 2000);
-    } catch {
-      /* ignore */
-    }
-  }, []);
-
-  const spacingTokens = spacingScale.map((value) => ({ token: `space-${value}`, value }));
-  const maxValue = Math.max(...spacingScale);
-
   return (
-    <div className="w-full max-w-6xl space-y-8">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="w-full max-w-6xl space-y-12">
+      {/* Spacing Scale */}
+      <section className="space-y-6">
         <div>
-          <h2 className="text-xl font-semibold text-foundation-text-dark-primary">
-            Spacing Showcase
+          <h2 className="text-lg font-semibold text-foundation-text-dark-primary mb-2">
+            Spacing Scale
           </h2>
-          <p className="text-sm text-foundation-text-dark-tertiary mt-1">
-            8px grid system with {spacingTokens.length} spacing tokens
+          <p className="text-body-small text-foundation-text-dark-secondary">
+            Based on 8px grid system. Token number represents HALF the pixel value.
           </p>
         </div>
-        <div className="flex gap-1 p-1 rounded-xl bg-foundation-bg-dark-2 border border-foundation-bg-dark-3">
-          <button
-            type="button"
-            onClick={() => setViewMode("grid")}
-            className={cn(
-              "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
-              viewMode === "grid"
-                ? "bg-foundation-bg-dark-3 text-foundation-text-dark-primary shadow-sm"
-                : "text-foundation-text-dark-tertiary hover:text-foundation-text-dark-secondary",
-            )}
-          >
-            <IconGrid className="size-3.5" />
-            Grid
-          </button>
-          <button
-            type="button"
-            onClick={() => setViewMode("scale")}
-            className={cn(
-              "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
-              viewMode === "scale"
-                ? "bg-foundation-bg-dark-3 text-foundation-text-dark-primary shadow-sm"
-                : "text-foundation-text-dark-tertiary hover:text-foundation-text-dark-secondary",
-            )}
-          >
-            <IconScale className="size-3.5" />
-            Scale
-          </button>
-          <button
-            type="button"
-            onClick={() => setViewMode("usage")}
-            className={cn(
-              "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
-              viewMode === "usage"
-                ? "bg-foundation-bg-dark-3 text-foundation-text-dark-primary shadow-sm"
-                : "text-foundation-text-dark-tertiary hover:text-foundation-text-dark-secondary",
-            )}
-          >
-            <IconBook className="size-3.5" />
-            Usage
-          </button>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {spacingEntries.map(([token, value]) => (
+            <SpacingBox key={token} token={`space-${token}`} value={value} />
+          ))}
         </div>
-      </div>
+      </section>
 
-      {/* Grid View */}
-      {viewMode === "grid" && (
-        <section className="space-y-4">
-          <h3 className="text-lg font-semibold text-foundation-text-dark-primary">Spacing Scale</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {spacingTokens.map(({ token, value }) => (
-              <SpacingCard
-                key={token}
-                token={token}
-                value={value}
-                onCopy={copyToClipboard}
-                copiedValue={copiedValue}
-              />
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Visual Scale */}
+      <section className="space-y-6">
+        <div>
+          <h2 className="text-lg font-semibold text-foundation-text-dark-primary mb-2">
+            Visual Scale
+          </h2>
+          <p className="text-body-small text-foundation-text-dark-secondary">
+            Compare relative sizes of spacing tokens
+          </p>
+        </div>
 
-      {/* Scale View */}
-      {viewMode === "scale" && (
-        <section className="space-y-4">
-          <h3 className="text-lg font-semibold text-foundation-text-dark-primary">Visual Scale</h3>
-          <div className="rounded-2xl border border-foundation-bg-dark-3 bg-foundation-bg-dark-2 p-5 space-y-2">
-            {spacingTokens
-              .filter((s) => s.value > 0)
-              .map(({ token, value }) => (
-                <ScaleBar
-                  key={token}
-                  token={token}
-                  value={value}
-                  maxValue={maxValue}
-                  onCopy={copyToClipboard}
-                  copiedValue={copiedValue}
-                />
-              ))}
-          </div>
-        </section>
-      )}
-
-      {/* Usage View */}
-      {viewMode === "usage" && (
-        <>
-          <section className="space-y-4">
-            <h3 className="text-lg font-semibold text-foundation-text-dark-primary">
-              Usage Guidelines
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <UsageCard
-                title="Major Sections"
-                description="Use for major page sections and large gaps"
-                token="space-64"
-                value="64px"
-                example={
-                  <div className="flex flex-col gap-16">
-                    <div className="h-8 bg-foundation-accent-blue/30 rounded" />
-                    <div className="h-8 bg-foundation-accent-blue/30 rounded" />
-                  </div>
-                }
-              />
-              <UsageCard
-                title="Component Spacing"
-                description="Use between related components"
-                token="space-32"
-                value="32px"
-                example={
-                  <div className="flex flex-col gap-8">
-                    <div className="h-8 bg-foundation-accent-green/30 rounded" />
-                    <div className="h-8 bg-foundation-accent-green/30 rounded" />
-                  </div>
-                }
-              />
-              <UsageCard
-                title="Element Spacing"
-                description="Use between elements within a component"
-                token="space-16"
-                value="16px"
-                example={
-                  <div className="flex flex-col gap-4">
-                    <div className="h-6 bg-foundation-accent-orange/30 rounded" />
-                    <div className="h-6 bg-foundation-accent-orange/30 rounded" />
-                  </div>
-                }
-              />
-              <UsageCard
-                title="Tight Spacing"
-                description="Use for tight groupings and inline elements"
-                token="space-8"
-                value="8px"
-                example={
-                  <div className="flex gap-2">
-                    <div className="h-6 w-16 bg-foundation-accent-red/30 rounded" />
-                    <div className="h-6 w-16 bg-foundation-accent-red/30 rounded" />
-                  </div>
-                }
-              />
+        <div className="rounded-xl p-6 bg-foundation-bg-dark-2 border border-foundation-text-dark-primary/10 space-y-4">
+          {spacingEntries.slice(1).map(([token, value]) => (
+            <div key={token} className="flex items-center gap-4">
+              <div className="w-20 text-xs font-mono text-foundation-text-dark-tertiary">
+                space-{token}
+              </div>
+              <div className="bg-foundation-accent-green h-8 rounded" style={{ width: value }} />
+              <div className="text-xs text-foundation-text-dark-secondary">{value}</div>
             </div>
-          </section>
+          ))}
+        </div>
+      </section>
 
-          <section className="space-y-4">
-            <h3 className="text-lg font-semibold text-foundation-text-dark-primary">
-              Tailwind Usage
-            </h3>
-            <div className="rounded-2xl border border-foundation-bg-dark-3 bg-foundation-bg-dark-2 p-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-sm">
-                {[
-                  { prop: "Padding", class: "p-4", result: "16px" },
-                  { prop: "Margin", class: "m-8", result: "32px" },
-                  { prop: "Gap", class: "gap-2", result: "8px" },
-                  { prop: "Space", class: "space-y-6", result: "24px" },
-                ].map(({ prop, class: cls, result }) => (
-                  <div
-                    key={prop}
-                    className="flex items-center gap-4 p-3 rounded-lg bg-foundation-bg-dark-3/50"
-                  >
-                    <span className="text-foundation-text-dark-tertiary w-20">{prop}:</span>
-                    <code className="text-foundation-accent-green">{cls}</code>
-                    <span className="text-foundation-text-dark-secondary">→ {result}</span>
-                  </div>
-                ))}
+      {/* Semantic Spacing */}
+      <section className="space-y-6">
+        <div>
+          <h2 className="text-lg font-semibold text-foundation-text-dark-primary mb-2">
+            Container Padding
+          </h2>
+          <p className="text-body-small text-foundation-text-dark-secondary">
+            Recommended padding values for different container sizes
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {Object.entries(semanticSpacing["container-padding"]).map(([size, value]) => (
+            <div
+              key={size}
+              className="rounded-xl border border-foundation-text-dark-primary/10 bg-foundation-bg-dark-2"
+              style={{ padding: value }}
+            >
+              <div className="bg-foundation-bg-dark-3 rounded p-4">
+                <div className="text-sm font-medium text-foundation-text-dark-primary mb-1">
+                  {size.toUpperCase()}
+                </div>
+                <div className="text-xs font-mono text-foundation-text-dark-tertiary">
+                  padding: {value}
+                </div>
               </div>
             </div>
-          </section>
+          ))}
+        </div>
+      </section>
 
-          <section className="space-y-4">
-            <h3 className="text-lg font-semibold text-foundation-text-dark-primary">
-              Container Padding
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {[
-                { size: "SM", padding: "16px" },
-                { size: "MD", padding: "24px" },
-                { size: "LG", padding: "32px" },
-              ].map(({ size, padding }) => (
-                <div
-                  key={size}
-                  className="rounded-2xl border border-foundation-bg-dark-3 bg-foundation-bg-dark-2"
-                  style={{ padding }}
-                >
-                  <div className="bg-foundation-bg-dark-3 rounded-lg p-4">
-                    <div className="text-sm font-semibold text-foundation-text-dark-primary">
-                      {size}
-                    </div>
-                    <div className="text-xs font-mono text-foundation-text-dark-tertiary">
-                      padding: {padding}
-                    </div>
-                  </div>
+      {/* Component Gap */}
+      <section className="space-y-6">
+        <div>
+          <h2 className="text-lg font-semibold text-foundation-text-dark-primary mb-2">
+            Component Gap
+          </h2>
+          <p className="text-body-small text-foundation-text-dark-secondary">
+            Recommended gap values between components
+          </p>
+        </div>
+
+        <div className="rounded-xl p-6 bg-foundation-bg-dark-2 border border-foundation-text-dark-primary/10 space-y-6">
+          {Object.entries(semanticSpacing["component-gap"]).map(([size, value]) => (
+            <div key={size}>
+              <div className="flex items-center gap-2 mb-3">
+                <div className="text-sm font-medium text-foundation-text-dark-primary">
+                  {size.toUpperCase()}
                 </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="space-y-4">
-            <h3 className="text-lg font-semibold text-foundation-text-dark-primary">
-              Component Gap
-            </h3>
-            <div className="rounded-2xl border border-foundation-bg-dark-3 bg-foundation-bg-dark-2 p-5 space-y-6">
-              {[
-                { size: "SM", gap: "8px" },
-                { size: "MD", gap: "16px" },
-                { size: "LG", gap: "24px" },
-              ].map(({ size, gap }) => (
-                <div key={size}>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-sm font-semibold text-foundation-text-dark-primary">
-                      {size}
-                    </span>
-                    <span className="text-xs font-mono text-foundation-text-dark-tertiary">
-                      gap: {gap}
-                    </span>
-                  </div>
-                  <div className="flex" style={{ gap }}>
-                    <div className="flex-1 h-12 bg-foundation-accent-green/30 rounded-lg" />
-                    <div className="flex-1 h-12 bg-foundation-accent-green/30 rounded-lg" />
-                    <div className="flex-1 h-12 bg-foundation-accent-green/30 rounded-lg" />
-                  </div>
+                <div className="text-xs font-mono text-foundation-text-dark-tertiary">
+                  gap: {value}
                 </div>
-              ))}
+              </div>
+              <div className="flex" style={{ gap: value }}>
+                <div className="flex-1 h-16 bg-foundation-accent-blue rounded" />
+                <div className="flex-1 h-16 bg-foundation-accent-blue rounded" />
+                <div className="flex-1 h-16 bg-foundation-accent-blue rounded" />
+              </div>
             </div>
-          </section>
+          ))}
+        </div>
+      </section>
 
-          <section className="space-y-4">
-            <h3 className="text-lg font-semibold text-foundation-text-dark-primary">
-              Border Radius
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { size: "sm", value: "6px" },
-                { size: "md", value: "8px" },
-                { size: "lg", value: "12px" },
-                { size: "xl", value: "16px" },
-              ].map(({ size, value }) => (
-                <div
-                  key={size}
-                  className="rounded-2xl border border-foundation-bg-dark-3 bg-foundation-bg-dark-2 p-4"
-                >
-                  <div className="mb-3">
-                    <div className="text-sm font-semibold text-foundation-text-dark-primary">
-                      {size}
-                    </div>
-                    <div className="text-xs font-mono text-foundation-text-dark-tertiary">
-                      {value}
-                    </div>
-                  </div>
-                  <div
-                    className="w-full h-16 bg-foundation-accent-blue/30"
-                    style={{ borderRadius: value }}
-                  />
+      {/* Border Radius */}
+      <section className="space-y-6">
+        <div>
+          <h2 className="text-lg font-semibold text-foundation-text-dark-primary mb-2">
+            Border Radius
+          </h2>
+          <p className="text-body-small text-foundation-text-dark-secondary">
+            Standard border radius values for UI elements
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {Object.entries(semanticSpacing["border-radius"]).map(([size, value]) => (
+            <div
+              key={size}
+              className="rounded-xl p-4 bg-foundation-bg-dark-2 border border-foundation-text-dark-primary/10"
+            >
+              <div className="mb-3">
+                <div className="text-sm font-medium text-foundation-text-dark-primary">
+                  {size}
                 </div>
-              ))}
+                <div className="text-xs font-mono text-foundation-text-dark-tertiary">{value}</div>
+              </div>
+              <div className="w-full h-16 bg-foundation-accent-purple" style={{ borderRadius: value }} />
             </div>
-          </section>
-        </>
-      )}
+          ))}
+        </div>
+      </section>
 
-      <Toast message="Copied to clipboard!" value={copiedValue ?? ""} visible={toastVisible} />
+      {/* Usage Guidelines */}
+      <section className="space-y-6">
+        <div>
+          <h2 className="text-lg font-semibold text-foundation-text-dark-primary mb-2">
+            Usage Guidelines
+          </h2>
+        </div>
+
+        <div className="rounded-xl p-6 bg-foundation-bg-dark-2 border border-foundation-text-dark-primary/10 space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <div className="text-sm font-semibold text-foundation-text-dark-primary mb-2">
+                Major Sections
+              </div>
+              <div className="text-body-small text-foundation-text-dark-secondary">
+                Use <code className="text-foundation-accent-blue">space-64</code> (128px) for major page sections
+              </div>
+            </div>
+            <div>
+              <div className="text-sm font-semibold text-foundation-text-dark-primary mb-2">
+                Component Spacing
+              </div>
+              <div className="text-body-small text-foundation-text-dark-secondary">
+                Use <code className="text-foundation-accent-blue">space-24</code> (48px) between unrelated components
+              </div>
+            </div>
+            <div>
+              <div className="text-sm font-semibold text-foundation-text-dark-primary mb-2">
+                Element Spacing
+              </div>
+              <div className="text-body-small text-foundation-text-dark-secondary">
+                Use <code className="text-foundation-accent-blue">space-8</code> (16px) between related elements
+              </div>
+            </div>
+            <div>
+              <div className="text-sm font-semibold text-foundation-text-dark-primary mb-2">
+                Tight Spacing
+              </div>
+              <div className="text-body-small text-foundation-text-dark-secondary">
+                Use <code className="text-foundation-accent-blue">space-4</code> (8px) for tight groupings
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

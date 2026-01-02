@@ -2,6 +2,8 @@ import SwiftUI
 
 // MARK: - Button Enums
 
+@available(*, deprecated, message: "Use ChatUIComponents.ChatUIButtonVariant instead. This API will be removed in a future release.")
+/// Deprecated button variant for `ChatUIButton`.
 public enum ChatUIButtonVariant {
     case `default`
     case destructive
@@ -11,6 +13,8 @@ public enum ChatUIButtonVariant {
     case link
 }
 
+@available(*, deprecated, message: "Use ChatUIComponents.ChatUIButtonSize instead. This API will be removed in a future release.")
+/// Deprecated button size for `ChatUIButton`.
 public enum ChatUIButtonSize {
     case `default`
     case sm
@@ -19,6 +23,29 @@ public enum ChatUIButtonSize {
 }
 
 /// A native macOS button component that uses design tokens
+///
+/// **Deprecation Notice:**
+/// This component is deprecated. Please use `ChatUIComponents.ChatUIButton` instead.
+/// The ui-swift package is legacy and new features should use ChatUIComponents.
+///
+/// **Migration Guide:**
+/// ```swift
+/// // Old (deprecated)
+/// import ui_swift
+/// let button = ChatUIButton("Click me", variant: .default)
+///
+/// // New (recommended)
+/// import ChatUIComponents
+/// let button = ChatUIButton("Click me", variant: .default)
+/// ```
+///
+/// **Why Migrate?**
+/// - ChatUIComponents supports iOS, macOS, and visionOS
+/// - Better token integration with ChatUIFoundation
+/// - More comprehensive accessibility support
+/// - Property-based testing for higher reliability
+@available(*, deprecated, message: "Use ChatUIComponents.ChatUIButton instead. This component will be removed in ui-swift version 2.0.")
+/// Legacy ChatUIButton component (deprecated).
 public struct ChatUIButton<Content: View>: View {
     
     public typealias Variant = ChatUIButtonVariant
@@ -34,6 +61,16 @@ public struct ChatUIButton<Content: View>: View {
     
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     
+    /// Creates a legacy button with token-based styling.
+    ///
+    /// - Parameters:
+    ///   - variant: Visual variant (deprecated).
+    ///   - size: Size variant (deprecated).
+    ///   - isDisabled: Whether the button is disabled.
+    ///   - accessibilityLabel: Optional accessibility label.
+    ///   - accessibilityHint: Optional accessibility hint.
+    ///   - action: Action invoked on tap.
+    ///   - content: Button content builder.
     public init(
         variant: Variant = .default,
         size: Size = .default,
@@ -52,6 +89,8 @@ public struct ChatUIButton<Content: View>: View {
         self.content = content
     }
     
+    /// The content and behavior of this view.
+    /// The content and behavior of this view.
     public var body: some View {
         Button(action: action) {
             content()
@@ -341,6 +380,16 @@ enum ChatUIButtonColorToken {
 // MARK: - Convenience Initializers
 
 extension ChatUIButton where Content == Text {
+    /// Creates a text-backed legacy button.
+    ///
+    /// - Parameters:
+    ///   - title: Button title text.
+    ///   - variant: Visual variant (deprecated).
+    ///   - size: Size variant (deprecated).
+    ///   - isDisabled: Whether the button is disabled.
+    ///   - accessibilityLabel: Optional accessibility label.
+    ///   - accessibilityHint: Optional accessibility hint.
+    ///   - action: Action invoked on tap.
     public init(
         _ title: String,
         variant: Variant = .default,
@@ -365,6 +414,16 @@ extension ChatUIButton where Content == Text {
 }
 
 extension ChatUIButton where Content == Image {
+    /// Creates an icon-only legacy button using an SF Symbol.
+    ///
+    /// - Parameters:
+    ///   - systemName: SF Symbol name.
+    ///   - variant: Visual variant (deprecated).
+    ///   - size: Size variant (deprecated).
+    ///   - isDisabled: Whether the button is disabled.
+    ///   - accessibilityLabel: Optional accessibility label.
+    ///   - accessibilityHint: Optional accessibility hint.
+    ///   - action: Action invoked on tap.
     public init(
         systemName: String,
         variant: Variant = .default,

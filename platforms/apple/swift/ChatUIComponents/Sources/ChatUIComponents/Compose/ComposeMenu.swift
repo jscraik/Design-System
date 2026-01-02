@@ -2,7 +2,12 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
-/// Dropdown menu for compose toolbar
+/// Renders a dropdown menu for the compose toolbar.
+///
+/// - Example:
+/// ```swift
+/// ComposeMenu(title: "Model", options: ["Auto", "Pro"], selection: $selection)
+/// ```
 public struct ComposeMenu: View {
     @Environment(\.chatUITheme) private var theme
 
@@ -10,6 +15,19 @@ public struct ComposeMenu: View {
     let options: [String]
     @Binding var selection: String
 
+    /// Creates a compose menu.
+    ///
+    /// - Parameters:
+    ///   - title: Menu label text.
+    ///   - options: Available options.
+    ///   - selection: Binding for the selected option.
+    public init(title: String, options: [String], selection: Binding<String>) {
+        self.title = title
+        self.options = options
+        self._selection = selection
+    }
+
+    /// The content and behavior of this view.
     public var body: some View {
         Menu {
             ForEach(options, id: \.self) { option in

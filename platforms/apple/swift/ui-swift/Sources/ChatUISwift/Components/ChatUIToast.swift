@@ -4,9 +4,10 @@ import os
 
 private let toastLogger = Logger(subsystem: "ChatUISwift", category: "ChatUIToast")
 
-/// A native macOS toast notification component with system integration
+/// A native macOS toast notification component with system integration.
 public struct ChatUIToast: View {
     
+    /// Visual styles for toasts.
     public enum Style {
         case info
         case success
@@ -14,6 +15,7 @@ public struct ChatUIToast: View {
         case error
     }
     
+    /// Placement options for toast presentation.
     public enum Position {
         case top
         case bottom
@@ -33,6 +35,14 @@ public struct ChatUIToast: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     
+    /// Creates a toast view.
+    ///
+    /// - Parameters:
+    ///   - message: Toast message text.
+    ///   - style: Visual style (default: `.info`).
+    ///   - duration: Auto-dismiss duration in seconds (0 disables).
+    ///   - showIcon: Whether to show the leading icon.
+    ///   - onDismiss: Optional dismiss callback.
     public init(
         message: String,
         style: Style = .info,
@@ -47,6 +57,7 @@ public struct ChatUIToast: View {
         self.onDismiss = onDismiss
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         if isVisible {
             HStack(spacing: DesignTokens.Spacing.sm) {
@@ -227,6 +238,7 @@ public struct ChatUIToast: View {
     
     // MARK: - Public Methods
     
+    /// Returns the toast instance for presentation.
     public func show() -> ChatUIToast {
         self
     }
@@ -234,17 +246,22 @@ public struct ChatUIToast: View {
 
 // MARK: - Toast Manager
 
-/// Manages toast notifications and system integration
+/// Manages toast notifications and system integration.
 @MainActor
+/// Toast manager that runs on the main actor.
 public class ChatUIToastManager: ObservableObject {
     
+    /// Active toast items currently displayed.
     @Published public var activeToasts: [ToastItem] = []
     
+    /// Shared singleton instance.
     public static let shared = ChatUIToastManager()
     
     private init() {}
     
+    /// Represents a toast item in the queue.
     public struct ToastItem: Identifiable {
+        /// Unique identifier for the toast item.
         public let id: UUID
         let toast: ChatUIToast
         let position: ChatUIToast.Position
@@ -252,6 +269,7 @@ public class ChatUIToastManager: ObservableObject {
     
     // MARK: - Show Toast
     
+    /// Shows a toast with the given configuration.
     public func show(
         _ message: String,
         style: ChatUIToast.Style = .info,
@@ -287,6 +305,7 @@ public class ChatUIToastManager: ObservableObject {
     // MARK: - System Notifications
     
     /// Request notification permissions
+    /// Requests system notification permissions.
     public func requestNotificationPermissions() async -> Bool {
         let center = UNUserNotificationCenter.current()
         
@@ -300,6 +319,7 @@ public class ChatUIToastManager: ObservableObject {
     }
     
     /// Send a system notification
+    /// Sends a system notification via UserNotifications.
     public func sendSystemNotification(
         title: String,
         body: String,
@@ -343,18 +363,22 @@ public class ChatUIToastManager: ObservableObject {
     
     // MARK: - Convenience Methods
     
+    /// Convenience: show an info toast.
     public func showInfo(_ message: String, position: ChatUIToast.Position = .top) {
         show(message, style: .info, position: position)
     }
     
+    /// Convenience: show a success toast.
     public func showSuccess(_ message: String, position: ChatUIToast.Position = .top) {
         show(message, style: .success, position: position)
     }
     
+    /// Convenience: show a warning toast.
     public func showWarning(_ message: String, position: ChatUIToast.Position = .top) {
         show(message, style: .warning, position: position)
     }
     
+    /// Convenience: show an error toast.
     public func showError(_ message: String, position: ChatUIToast.Position = .top) {
         show(message, style: .error, position: position)
     }
@@ -362,13 +386,15 @@ public class ChatUIToastManager: ObservableObject {
 
 // MARK: - Toast Container View
 
-/// Container view that displays active toasts
+/// Container view that displays active toasts.
 public struct ChatUIToastContainer: View {
     
     @StateObject private var toastManager = ChatUIToastManager.shared
     
+    /// Creates a toast container view.
     public init() {}
     
+    /// The content and behavior of this view.
     public var body: some View {
         ZStack {
             // Top toasts
@@ -463,7 +489,7 @@ public struct ChatUIToastContainer: View {
 // MARK: - View Modifiers
 
 extension View {
-    /// Adds toast notification support to the view
+    /// Adds toast notification support to the view.
     public func toastContainer() -> some View {
         self.overlay(
             ChatUIToastContainer()

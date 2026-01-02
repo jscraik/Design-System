@@ -146,7 +146,7 @@ We have strong foundations with most Apps SDK requirements implemented. Recent i
 | Cache-bust template URIs | ✅     | `WIDGET_VERSION` constant with `versionedUri()`   |
 | Vendor splitting         | ✅     | react, framer-motion, three.js in separate chunks |
 
-**Implementation notes:** `packages/widgets/vite.config.ts` sets the 500KB warning limit and vendor chunk splitting. `apps/mcp/server.js` versions widget URIs via `WIDGET_VERSION` and `versionedUri()`.
+**Implementation notes:** `packages/widgets/vite.config.ts` sets the 500KB warning limit and vendor chunk splitting. `platforms/mcp/server.js` versions widget URIs via `WIDGET_VERSION` and `versionedUri()`.
 
 ---
 
@@ -201,4 +201,4 @@ The remaining gaps are low priority nice-to-haves that can be addressed as neede
 1. Run compliance checks: `pnpm lint:compliance`.
 2. Run widget a11y tests: `pnpm test:a11y:widgets`.
 3. Validate MCP contracts: `pnpm test:mcp-contract`.
-4. Re-scan `apps/mcp/server.js` and `packages/widgets/src/shared` for metadata changes.
+4. Re-scan `platforms/mcp/server.js` and `packages/widgets/src/shared` for metadata changes.

@@ -5,10 +5,34 @@ import { Drawer as DrawerPrimitive } from "vaul";
 
 import { cn } from "../../utils";
 
+/**
+ * Renders the drawer root component (Vaul).
+ *
+ * @param props - Vaul drawer root props.
+ * @returns The drawer root element.
+ *
+ * @example
+ * ```tsx
+ * <Drawer>
+ *   <DrawerTrigger>Open</DrawerTrigger>
+ *   <DrawerContent>
+ *     <DrawerHeader>
+ *       <DrawerTitle>Drawer</DrawerTitle>
+ *     </DrawerHeader>
+ *   </DrawerContent>
+ * </Drawer>
+ * ```
+ */
 function Drawer({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Root>) {
   return <DrawerPrimitive.Root data-slot="drawer" {...props} />;
 }
 
+/**
+ * Renders the trigger element that opens the drawer.
+ *
+ * @param props - Vaul drawer trigger props.
+ * @returns The drawer trigger element.
+ */
 function DrawerTrigger({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Trigger>) {
   return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />;
 }
@@ -28,10 +52,22 @@ function DrawerPortal({ children, ...props }: DrawerPortalProps) {
   );
 }
 
+/**
+ * Renders the close element for the drawer.
+ *
+ * @param props - Vaul drawer close props.
+ * @returns The drawer close element.
+ */
 function DrawerClose({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Close>) {
   return <DrawerPrimitive.Close data-slot="drawer-close" {...props} />;
 }
 
+/**
+ * Renders the drawer overlay/backdrop.
+ *
+ * @param props - Vaul drawer overlay props.
+ * @returns The drawer overlay element.
+ */
 function DrawerOverlay({
   className,
   ...props
@@ -40,7 +76,7 @@ function DrawerOverlay({
     <DrawerPrimitive.Overlay
       data-slot="drawer-overlay"
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-foundation-bg-dark-1/50",
         className,
       )}
       {...props}
@@ -48,6 +84,15 @@ function DrawerOverlay({
   );
 }
 
+/**
+ * Renders the drawer content container.
+ *
+ * Accessibility contract:
+ * - Provide a `DrawerTitle` and optionally `DrawerDescription`.
+ *
+ * @param props - Vaul drawer content props.
+ * @returns The drawer content element.
+ */
 function DrawerContent({
   className,
   children,
@@ -75,6 +120,12 @@ function DrawerContent({
   );
 }
 
+/**
+ * Renders the header layout container for drawer content.
+ *
+ * @param props - Div props for layout.
+ * @returns A header container element.
+ */
 function DrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -85,6 +136,12 @@ function DrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * Renders the footer layout container for drawer actions.
+ *
+ * @param props - Div props for layout.
+ * @returns A footer container element.
+ */
 function DrawerFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -95,6 +152,12 @@ function DrawerFooter({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * Renders the drawer title element.
+ *
+ * @param props - Vaul drawer title props.
+ * @returns A title element.
+ */
 function DrawerTitle({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Title>) {
   return (
     <DrawerPrimitive.Title
@@ -105,6 +168,12 @@ function DrawerTitle({ className, ...props }: React.ComponentProps<typeof Drawer
   );
 }
 
+/**
+ * Renders the drawer description element.
+ *
+ * @param props - Vaul drawer description props.
+ * @returns A description element.
+ */
 function DrawerDescription({
   className,
   ...props

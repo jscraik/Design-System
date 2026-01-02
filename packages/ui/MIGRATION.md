@@ -18,8 +18,8 @@ import { Button } from "@chatui/ui"; // Could conflict with vendor Button
 
 ```tsx
 // Explicit imports (recommended)
-import { Button } from "@chatui/ui/forms";
-import { ModelSelector } from "@chatui/ui/chat";
+import { Button } from "@chatui/ui/base";
+import { ModelSelector } from "@chatui/ui/navigation";
 
 // Or use main export (all components available)
 import { Button, ModelSelector } from "@chatui/ui";
@@ -72,13 +72,16 @@ Components are now organized by category for better tree-shaking:
 
 ```tsx
 // Form components
-import { Button, Input, Toggle } from "@chatui/ui/forms";
+import { Button, Input, Toggle } from "@chatui/ui/base";
 
 // Layout components
-import { Card, Dialog, Tabs } from "@chatui/ui/layout";
+import { Card } from "@chatui/ui/data-display";
+import { Dialog } from "@chatui/ui/feedback";
+import { Tabs } from "@chatui/ui/navigation";
 
 // Chat-specific components
-import { ModelSelector, ContextTag } from "@chatui/ui/chat";
+import { ModelSelector } from "@chatui/ui/navigation";
+import { ContextTag } from "@chatui/ui/overlays";
 ```
 
 #### Enhanced Development Tools

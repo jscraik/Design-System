@@ -5,13 +5,16 @@ import * as React from "react";
 
 import { cn } from "../../utils";
 
+/**
+ * Props for the breadcrumb navigation.
+ */
 export interface BreadcrumbProps extends React.ComponentPropsWithoutRef<"nav"> {
   /** Separator between items */
   separator?: React.ReactNode;
 }
 
 /**
- * Breadcrumb - Navigation component showing the current location in a hierarchy
+ * Renders a navigation breadcrumb for hierarchy context.
  *
  * @example
  * ```tsx
@@ -31,11 +34,20 @@ export interface BreadcrumbProps extends React.ComponentPropsWithoutRef<"nav"> {
  *   </BreadcrumbList>
  * </Breadcrumb>
  * ```
+ *
+ * @param props - Breadcrumb props.
+ * @returns A breadcrumb navigation element.
  */
 function Breadcrumb({ ...props }: BreadcrumbProps) {
   return <nav aria-label="Breadcrumb" data-slot="breadcrumb" {...props} />;
 }
 
+/**
+ * Renders the breadcrumb list container.
+ *
+ * @param props - Ol props for the list.
+ * @returns A breadcrumb list element.
+ */
 function BreadcrumbList({ className, ...props }: React.ComponentPropsWithoutRef<"ol">) {
   return (
     <ol
@@ -49,6 +61,12 @@ function BreadcrumbList({ className, ...props }: React.ComponentPropsWithoutRef<
   );
 }
 
+/**
+ * Renders a breadcrumb item container.
+ *
+ * @param props - Li props for the item.
+ * @returns A breadcrumb item element.
+ */
 function BreadcrumbItem({ className, ...props }: React.ComponentPropsWithoutRef<"li">) {
   return (
     <li
@@ -59,6 +77,12 @@ function BreadcrumbItem({ className, ...props }: React.ComponentPropsWithoutRef<
   );
 }
 
+/**
+ * Renders a breadcrumb link element.
+ *
+ * @param props - Anchor props and `asChild` option.
+ * @returns A breadcrumb link element.
+ */
 function BreadcrumbLink({
   asChild,
   className,
@@ -78,6 +102,12 @@ function BreadcrumbLink({
   );
 }
 
+/**
+ * Renders the current breadcrumb page label.
+ *
+ * @param props - Span props for the page label.
+ * @returns A breadcrumb page element.
+ */
 function BreadcrumbPage({ className, ...props }: React.ComponentPropsWithoutRef<"span">) {
   return (
     <span
@@ -91,6 +121,12 @@ function BreadcrumbPage({ className, ...props }: React.ComponentPropsWithoutRef<
   );
 }
 
+/**
+ * Renders the separator between breadcrumb items.
+ *
+ * @param props - Li props for the separator.
+ * @returns A breadcrumb separator element.
+ */
 function BreadcrumbSeparator({
   children,
   className,
@@ -119,6 +155,12 @@ function BreadcrumbSeparator({
   );
 }
 
+/**
+ * Renders a truncated breadcrumb ellipsis.
+ *
+ * @param props - Span props for the ellipsis.
+ * @returns A breadcrumb ellipsis element.
+ */
 function BreadcrumbEllipsis({ className, ...props }: React.ComponentPropsWithoutRef<"span">) {
   return (
     <span

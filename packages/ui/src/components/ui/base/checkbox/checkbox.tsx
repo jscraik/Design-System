@@ -6,6 +6,21 @@ import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { IconCheckmark } from "../../../../icons";
 import { cn } from "../../utils";
 
+/**
+ * Renders a styled checkbox using Radix primitives.
+ *
+ * Accessibility contract:
+ * - Provide a visible label or `aria-label`/`aria-labelledby`.
+ * - Supports keyboard toggling via Space/Enter per Radix behavior.
+ *
+ * @param props - Radix checkbox root props.
+ * @returns A styled checkbox element.
+ *
+ * @example
+ * ```tsx
+ * <Checkbox checked={checked} onCheckedChange={setChecked} />
+ * ```
+ */
 function Checkbox({ className, ...props }: React.ComponentProps<typeof CheckboxPrimitive.Root>) {
   return (
     <CheckboxPrimitive.Root

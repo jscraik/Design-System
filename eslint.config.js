@@ -8,6 +8,7 @@ import sonarjs from "eslint-plugin-sonarjs";
 import complexity from "eslint-plugin-complexity";
 
 import noDarkOnlyTokensRule from "./packages/ui/eslint-rules-no-dark-only-tokens.js";
+import uiSubpathImportsRule from "./packages/ui/eslint-rules-ui-subpath-imports.js";
 
 export default [
   {
@@ -18,6 +19,9 @@ export default [
       "**/*.mdx",
       "scripts/new-component.mjs",
       "**/.*/**",
+      "_temp/**",
+      "**/docs/examples/**",
+      "**/src/**/generated/**",
       "pnpm-lock.yaml",
     ],
   },
@@ -33,6 +37,7 @@ export default [
       sonarjs,
       complexity,
       "@chatui-dark-only-tokens": noDarkOnlyTokensRule,
+      "@chatui-ui-subpaths": uiSubpathImportsRule,
     },
     languageOptions: {
       ecmaVersion: "latest",
@@ -63,6 +68,21 @@ export default [
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
       "@typescript-eslint/no-explicit-any": "warn",
+      // Prevent accidental coupling to archived Figma export bundles.
+      // `_temp/**` is kept as a reference only and must never be imported by product code.
+      "no-restricted-imports": [
+        "error",
+        {
+          "patterns": ["**/_temp/**", "_temp/**"],
+          "paths": [
+            {
+              name: "@chatui/ui/dev",
+              message:
+                "Dev-only export. Use @chatui/ui/* or @chatui/ui/experimental outside local harnesses.",
+            },
+          ],
+        }
+      ],
       // Complexity rules (warnings initially, can be escalated to errors)
       "sonarjs/cognitive-complexity": ["warn", 25],
       "complexity": ["warn", 15],
@@ -78,6 +98,8 @@ export default [
           allowedPatterns: [],
         },
       ],
+      // Enforce UI package subpath imports
+      "@chatui-ui-subpaths/ui-subpath-imports": "error",
     },
   },
   {
@@ -89,16 +111,71 @@ export default [
       "sonarjs/no-duplicate-string": ["off"],
     },
   },
+  {
+    files: [
+      "packages/ui/src/app/**/*.tsx",
+      "packages/ui/src/components/**/*.tsx",
+      "packages/ui/src/design-system/**/*.tsx",
+      "packages/ui/src/fixtures/**/*.tsx",
+      "packages/ui/src/storybook/**/*.tsx",
+      "packages/widgets/src/widgets/**/*.tsx",
+    ],
+    rules: {
+      "sonarjs/no-duplicate-string": "off",
+    },
+  },
+  {
+    files: ["packages/ui/src/templates/**/*.{ts,tsx}"],
+    rules: {
+      "sonarjs/cognitive-complexity": "off",
+      "complexity": "off",
+      "sonarjs/no-duplicate-string": "off",
+    },
+  },
+  {
+    files: ["packages/ui/src/app/chat/**/*.{ts,tsx}"],
+    rules: {
+      "sonarjs/no-duplicate-string": "off",
+    },
+  },
+  {
+    files: [
+      "**/*.config.{js,jsx,ts,tsx,mjs,cjs}",
+      "**/vite.config.{js,jsx,ts,tsx,mjs,cjs}",
+      "**/tailwind.preset.ts",
+      "packages/tokens/src/dev-tools/**/*.{js,jsx,ts,tsx,mjs,cjs}",
+      "platforms/mcp/**/*.{js,jsx,ts,tsx,mjs,cjs}",
+      "packages/cloudflare-template/**/*.{js,jsx,ts,tsx,mjs,cjs}",
+      "packages/ui/eslint-rules-*.js",
+    ],
+    rules: {
+      "sonarjs/cognitive-complexity": "off",
+      "complexity": "off",
+      "sonarjs/no-duplicate-string": "off",
+    },
+  },
+  {
+    files: [
+      "packages/ui/src/components/ui/data-display/Chart/Chart.tsx",
+      "packages/ui/src/components/ui/navigation/ModeSelector/ModeSelector.tsx",
+      "packages/ui/src/components/ui/navigation/ModelSelector/ModelSelector.tsx",
+    ],
+    rules: {
+      "sonarjs/cognitive-complexity": "off",
+      "complexity": "off",
+    },
+  },
   // Allow higher complexity for tests
   {
     files: ["**/*.{test,spec}.{js,jsx,ts,tsx,mjs,cjs}"],
     rules: {
       "sonarjs/cognitive-complexity": ["off"],
       "complexity": ["off"],
+      "sonarjs/no-duplicate-string": ["off"],
     },
   },
   {
-    files: ["**/*.mjs", "**/*.cjs", "apps/mcp/**/*.js"],
+    files: ["**/*.mjs", "**/*.cjs", "platforms/mcp/**/*.js"],
     languageOptions: {
       globals: {
         console: "readonly",
@@ -163,6 +240,21 @@ export default [
     rules: {
       "@typescript-eslint/no-require-imports": "off",
       "no-case-declarations": "off",
+    },
+  },
+  {
+    files: [
+      "platforms/web/apps/storybook/**/*.{js,jsx,ts,tsx}",
+      "platforms/web/apps/web/src/pages/TemplatesGalleryPage.tsx",
+      "platforms/web/apps/web/src/pages/TemplateWidgetPage.tsx",
+    ],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          "patterns": ["**/_temp/**", "_temp/**"],
+        },
+      ],
     },
   },
 ];

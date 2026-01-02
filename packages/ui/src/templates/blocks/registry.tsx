@@ -121,7 +121,7 @@ function TemplateShellSample() {
           </span>
           <button
             type="button"
-            className="text-xs px-3 py-1.5 rounded-lg bg-foundation-accent-blue text-white hover:bg-foundation-accent-blue/90 transition-colors"
+            className="text-xs px-3 py-1.5 rounded-lg bg-foundation-accent-blue text-accent-foreground hover:bg-foundation-accent-blue/90 transition-colors"
           >
             Save
           </button>
@@ -184,7 +184,7 @@ function TemplatePanelSample() {
                 </button>
                 <button
                   type="button"
-                  className="text-xs px-3 py-1.5 rounded-md bg-foundation-accent-blue text-white hover:bg-foundation-accent-blue/90 transition-colors"
+                  className="text-xs px-3 py-1.5 rounded-md bg-foundation-accent-blue text-accent-foreground hover:bg-foundation-accent-blue/90 transition-colors"
                 >
                   Save
                 </button>

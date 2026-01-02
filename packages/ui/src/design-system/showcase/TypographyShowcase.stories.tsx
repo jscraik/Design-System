@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { TypographyShowcase } from "./TypographyShowcase";
 
 const meta: Meta<typeof TypographyShowcase> = {
-  title: "DesignSystem/TypographyShowcase",
+  title: "Documentation/Design System/Typography Showcase",
   component: TypographyShowcase,
   tags: ["autodocs"],
   parameters: {

@@ -18,10 +18,11 @@ Standalone ChatUI widget bundles used by the MCP server and Cloudflare Workers d
 
 ## Structure
 
-Widgets live under `packages/widgets/src/widgets/` grouped by category. Examples include:
+Widgets live under `packages/widgets/src/widgets/` grouped by category. Examples and demos live in
+`packages/widgets/docs/examples/` and are not bundled into production widgets. Examples include:
 
 - `widgets/chat/chat-view`
-- `widgets/examples/dashboard-widget`
+- `examples/dashboard-widget`
 - `widgets/commerce/shopping-cart`
 - `widgets/search/search-results`
 - `widgets/pizzaz/pizzaz-gallery`

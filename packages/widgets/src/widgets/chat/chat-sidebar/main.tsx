@@ -15,6 +15,9 @@ if (import.meta.env.DEV) {
   });
 }
 
+/**
+ * Render the chat sidebar template with host-aware styling.
+ */
 function ChatSidebarWidgetCore() {
   const theme = useTheme();
   const maxHeight = useMaxHeight();
@@ -27,6 +30,9 @@ function ChatSidebarWidgetCore() {
   );
 }
 
+/**
+ * Provide host context and theming for the chat sidebar widget.
+ */
 function ChatSidebarWidget() {
   const host = createEmbeddedHost();
 

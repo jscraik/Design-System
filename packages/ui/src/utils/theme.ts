@@ -1,7 +1,10 @@
 /**
- * Theme utilities for consistent styling
+ * Theme utilities for consistent styling.
  */
 
+/**
+ * CSS variable tokens for color usage in UI components.
+ */
 export const colors = {
   // Foundation colors
   bg: {
@@ -26,6 +29,9 @@ export const colors = {
   },
 } as const;
 
+/**
+ * Rem-based spacing scale for layout and component padding.
+ */
 export const spacing = {
   xs: "0.25rem",
   sm: "0.5rem",
@@ -35,6 +41,9 @@ export const spacing = {
   "2xl": "3rem",
 } as const;
 
+/**
+ * Border-radius scale for UI components.
+ */
 export const borderRadius = {
   sm: "0.25rem",
   md: "0.375rem",
@@ -45,7 +54,10 @@ export const borderRadius = {
 } as const;
 
 /**
- * Get CSS custom property value
+ * Reads a CSS custom property from `:root`.
+ *
+ * @param property - CSS variable name (e.g., `--foundation-bg-dark-1`).
+ * @returns The trimmed CSS value, or an empty string during SSR.
  */
 export function getCSSVar(property: string): string {
   if (typeof window !== "undefined") {
@@ -55,7 +67,10 @@ export function getCSSVar(property: string): string {
 }
 
 /**
- * Set CSS custom property value
+ * Sets a CSS custom property on `:root`.
+ *
+ * @param property - CSS variable name (e.g., `--foundation-bg-dark-1`).
+ * @param value - CSS value to assign.
  */
 export function setCSSVar(property: string, value: string): void {
   if (typeof window !== "undefined") {
@@ -64,7 +79,16 @@ export function setCSSVar(property: string, value: string): void {
 }
 
 /**
- * Create theme variants for components
+ * Creates a variants object that includes a `base` class string.
+ *
+ * @param base - Base class string applied to all variants.
+ * @param variants - Variant map to merge with `base`.
+ * @returns The merged variants object including `base`.
+ *
+ * @example
+ * ```ts
+ * const button = createVariants("inline-flex", { primary: "bg-blue-500" });
+ * ```
  */
 export function createVariants<T extends Record<string, unknown>>(
   base: string,
@@ -74,7 +98,11 @@ export function createVariants<T extends Record<string, unknown>>(
 }
 
 /**
- * Generate color variants with opacity
+ * Generates a `color-mix` string with opacity.
+ *
+ * @param color - CSS color value or variable.
+ * @param opacity - Opacity from `0` to `1`.
+ * @returns A `color-mix` string in SRGB space.
  */
 export function withOpacity(color: string, opacity: number): string {
   return `color-mix(in srgb, ${color} ${opacity * 100}%, transparent)`;

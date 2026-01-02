@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { render, screen } from "../../../../testing/utils";
 
-import { Label } from "./label";
+import { Label } from "./Label";
 
 describe("Label", () => {
   describe("rendering", () => {
@@ -63,7 +63,7 @@ describe("Label", () => {
       render(
         <Label>
           Username
-          <span className="text-red-500">*</span>
+          <span className="text-accent-red">*</span>
         </Label>,
       );
       expect(screen.getByText("*")).toBeInTheDocument();

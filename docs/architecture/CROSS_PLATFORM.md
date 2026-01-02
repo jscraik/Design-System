@@ -53,7 +53,7 @@ packages/tokens/
 **React Component (Current):**
 
 ```tsx
-// packages/ui/src/components/ui/base/button.tsx
+// packages/ui/src/components/ui/base/Button/Button.tsx
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md font-foundation text-body-small font-medium transition-colors disabled:pointer-events-none disabled:opacity-50",
   {
@@ -318,13 +318,14 @@ chatui/
 │   │   ├── Tests/
 │   │   └── Package.swift
 │   └── widgets/            # Cross-platform widget definitions
-├── apps/
-│   ├── web/               # React web app
-│   ├── macos/             # Swift macOS app
-│   │   ├── ChatUI.xcodeproj
-│   │   ├── Sources/
-│   │   └── Package.swift
-│   └── storybook/         # Design system docs
+├── platforms/
+│   ├── web/               # React web apps
+│   │   ├── apps/web
+│   │   ├── apps/storybook
+│   ├── apple/             # Swift/macOS targets
+│   │   ├── apps/macos
+│   │   └── swift
+│   └── mcp/               # MCP server + tool contracts
 ├── tools/
 │   ├── build-tokens.ts    # Token generation
 │   ├── build-runtime.ts   # Runtime bundling

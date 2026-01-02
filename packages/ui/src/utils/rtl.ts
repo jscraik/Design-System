@@ -1,11 +1,11 @@
 /**
- * RTL (Right-to-Left) Support Utilities
+ * RTL (Right-to-Left) support utilities.
  *
- * Provides utilities for supporting RTL languages like Arabic, Hebrew, Persian, etc.
+ * Provides helpers for locales such as Arabic, Hebrew, and Persian.
  */
 
 /**
- * List of RTL language codes
+ * List of ISO language codes that are commonly rendered RTL.
  */
 export const RTL_LANGUAGES = [
   "ar", // Arabic
@@ -22,10 +22,21 @@ export const RTL_LANGUAGES = [
   "yi", // Yiddish
 ] as const;
 
+/**
+ * Union type of supported RTL language codes.
+ */
 export type RTLLanguage = (typeof RTL_LANGUAGES)[number];
 
 /**
- * Check if a locale is RTL
+ * Determines whether a locale is RTL.
+ *
+ * @param locale - Locale string (e.g., `en-US`, `ar`, `fa-IR`).
+ * @returns `true` when the base language is RTL.
+ *
+ * @example
+ * ```ts
+ * isRTL("ar-EG"); // true
+ * ```
  */
 export function isRTL(locale: string): boolean {
   const lang = locale.split("-")[0].toLowerCase();
@@ -33,15 +44,26 @@ export function isRTL(locale: string): boolean {
 }
 
 /**
- * Get the direction for a locale
+ * Returns the writing direction for a locale.
+ *
+ * @param locale - Locale string (e.g., `en-US`, `ar`).
+ * @returns `"rtl"` when the locale is RTL, otherwise `"ltr"`.
  */
 export function getDirection(locale: string): "ltr" | "rtl" {
   return isRTL(locale) ? "rtl" : "ltr";
 }
 
 /**
- * Get logical CSS property name based on direction
- * Converts physical properties to logical ones
+ * Maps a physical CSS property to its logical equivalent.
+ *
+ * @param property - Physical property to convert.
+ * @param direction - Document direction.
+ * @returns Logical property name when available, otherwise the original input.
+ *
+ * @example
+ * ```ts
+ * getLogicalProperty("margin-left", "rtl"); // "margin-inline-end"
+ * ```
  */
 export function getLogicalProperty(
   property: "left" | "right" | "margin-left" | "margin-right" | "padding-left" | "padding-right",
@@ -60,22 +82,32 @@ export function getLogicalProperty(
 }
 
 /**
- * Flip a value for RTL
- * Useful for transforms, positions, etc.
+ * Selects an LTR or RTL-specific value.
+ *
+ * @param ltrValue - Value to use for LTR.
+ * @param rtlValue - Value to use for RTL.
+ * @param isRtl - Whether RTL is active.
+ * @returns The appropriate value for the current direction.
  */
 export function flipForRTL<T>(ltrValue: T, rtlValue: T, isRtl: boolean): T {
   return isRtl ? rtlValue : ltrValue;
 }
 
 /**
- * Get text alignment based on direction
+ * Returns the text alignment for a direction.
+ *
+ * @param direction - Document direction.
+ * @returns `"left"` for LTR or `"right"` for RTL.
  */
 export function getTextAlign(direction: "ltr" | "rtl"): "left" | "right" {
   return direction === "rtl" ? "right" : "left";
 }
 
 /**
- * Get start/end alignment based on direction
+ * Returns logical start/end alignment values.
+ *
+ * @param direction - Document direction.
+ * @returns Start/end alignment tokens for the direction.
  */
 export function getStartEnd(direction: "ltr" | "rtl"): {
   start: "left" | "right";
@@ -85,7 +117,7 @@ export function getStartEnd(direction: "ltr" | "rtl"): {
 }
 
 /**
- * CSS class names for RTL support
+ * Tailwind class helpers for RTL support.
  */
 export const rtlClasses = {
   /** Flip horizontal for RTL */
@@ -117,7 +149,15 @@ export const rtlClasses = {
 } as const;
 
 /**
- * Hook-like function to get RTL utilities for a locale
+ * Returns a bundle of RTL utilities for a locale.
+ *
+ * @param locale - Locale string (e.g., `en-US`, `ar`).
+ * @returns Helper values and functions derived from the locale direction.
+ *
+ * @example
+ * ```ts
+ * const { direction, textAlign } = getRTLUtils("fa-IR");
+ * ```
  */
 export function getRTLUtils(locale: string) {
   const rtl = isRTL(locale);

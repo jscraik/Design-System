@@ -1,5 +1,6 @@
 import { figma } from "@figma/code-connect";
-import { ChatInputTemplate, type ChatInputTemplateProps } from "./ChatInputTemplate";
+
+import { ChatInputTemplate } from "./ChatInputTemplate";
 
 /**
  * Figma Code Connect mapping for ChatInputTemplate

@@ -1,6 +1,5 @@
 import { IconChevronLeftMd, IconChevronRightMd } from "../../../icons/ChatGPTIcons";
-
-import type { SettingsPanelProps } from "../types";
+import type { SettingsPanelProps } from "../shared/types";
 
 export function ArchivedChatsPanel({ onBack }: SettingsPanelProps) {
   const archivedChats = {
@@ -95,7 +94,7 @@ export function ArchivedChatsPanel({ onBack }: SettingsPanelProps) {
         >
           <IconChevronLeftMd className="size-4 text-foundation-icon-dark-primary" />
         </button>
-        <h2 className="text-heading-3 font-semibold   text-foundation-text-dark-primary">
+        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foundation-text-dark-primary">
           Archived chats
         </h2>
       </div>
@@ -121,7 +120,7 @@ export function ArchivedChatsPanel({ onBack }: SettingsPanelProps) {
               type="text"
               placeholder="Search Archive"
               aria-label="Search archived chats"
-              className="w-full pl-10 pr-4 py-2 bg-foundation-bg-dark-2 border border-foundation-bg-dark-3 rounded-lg text-body-small text-foundation-text-dark-primary placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue/50 focus:border-foundation-accent-blue"
+              className="w-full pl-10 pr-4 py-2 bg-foundation-bg-dark-2 border border-foundation-bg-dark-3 rounded-lg text-[14px] text-foundation-text-dark-primary placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-1 focus:ring-white/20"
             />
           </div>
         </div>
@@ -130,7 +129,7 @@ export function ArchivedChatsPanel({ onBack }: SettingsPanelProps) {
         <div className="px-6 py-4">
           {Object.entries(archivedChats).map(([period, chats]) => (
             <div key={period} className="mb-6">
-              <h3 className="text-caption font-semibold   text-foundation-text-dark-tertiary mb-2">
+              <h3 className="text-[13px] font-semibold leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary mb-2">
                 {period}
               </h3>
               <div className="space-y-0.5">
@@ -140,7 +139,7 @@ export function ArchivedChatsPanel({ onBack }: SettingsPanelProps) {
                     key={`${period}-${chat}`}
                     className="w-full flex items-center justify-between px-3 py-2 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors text-left"
                   >
-                    <span className="text-body-small font-normal   text-foundation-text-dark-primary">
+                    <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
                       {chat}
                     </span>
                     <IconChevronRightMd className="size-4 text-foundation-icon-dark-tertiary flex-shrink-0 ml-2" />

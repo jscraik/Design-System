@@ -10,6 +10,7 @@ import ChatUIFoundation
 import ChatUIComponents
 import ChatUIThemes
 
+/// Checklist panel for manual accessibility verification.
 struct AccessibilityTestPanel: View {
     @State private var focusOrderCompleted = false
     @State private var focusRingCompleted = false
@@ -104,6 +105,7 @@ struct AccessibilityTestPanel: View {
     }
 }
 
+/// Single checklist row for accessibility tasks.
 struct AccessibilityCheckItem: View {
     @Binding var isCompleted: Bool
     let title: String

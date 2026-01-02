@@ -1,4 +1,16 @@
 import {
+  IconChevronRightMd,
+  IconLock,
+  IconNotification,
+  IconPlusLg,
+  IconQuestion,
+  IconSettings,
+  IconUser,
+  IconX,
+} from "../../../icons";
+import { useState } from "react";
+
+import {
   TemplateFieldGroup,
   TemplateFieldGroupAction,
   TemplateFieldGroupBadge,
@@ -6,8 +18,6 @@ import {
   TemplateFieldGroupRow,
 } from "../../blocks/TemplateFieldGroup";
 import { TemplateFormField } from "../../blocks/TemplateFormField";
-import { User, Settings, Lock, Bell, Plus, HelpCircle, X } from "lucide-react";
-import { useState } from "react";
 
 export function TemplateFieldGroupDemo() {
   const [personalInfoCollapsed, setPersonalInfoCollapsed] = useState(false);
@@ -42,6 +52,7 @@ export function TemplateFieldGroupDemo() {
                 <input
                   id="name"
                   type="text"
+                  aria-label="Full Name"
                   placeholder="John Doe"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -50,6 +61,7 @@ export function TemplateFieldGroupDemo() {
                 <input
                   id="email"
                   type="email"
+                  aria-label="Email"
                   placeholder="john@example.com"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -72,12 +84,13 @@ export function TemplateFieldGroupDemo() {
             <TemplateFieldGroup
               label="Account Settings"
               description="Manage your account preferences and personal information"
-              icon={<User className="w-4 h-4" />}
+              icon={<IconUser className="w-4 h-4" />}
             >
               <TemplateFormField label="Username" htmlFor="username">
                 <input
                   id="username"
                   type="text"
+                  aria-label="Username"
                   placeholder="johndoe"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -86,6 +99,7 @@ export function TemplateFieldGroupDemo() {
                 <textarea
                   id="bio"
                   rows={3}
+                  aria-label="Bio"
                   placeholder="Tell us about yourself..."
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue resize-none transition-shadow"
                 />
@@ -110,10 +124,10 @@ export function TemplateFieldGroupDemo() {
               badge={<TemplateFieldGroupBadge variant="primary">3</TemplateFieldGroupBadge>}
               actions={
                 <>
-                  <TemplateFieldGroupAction icon={<HelpCircle className="w-3.5 h-3.5" />}>
+                  <TemplateFieldGroupAction icon={<IconQuestion className="w-3.5 h-3.5" />}>
                     Help
                   </TemplateFieldGroupAction>
-                  <TemplateFieldGroupAction variant="primary" icon={<Plus className="w-3.5 h-3.5" />}>
+                  <TemplateFieldGroupAction variant="primary" icon={<IconPlusLg className="w-3.5 h-3.5" />}>
                     Add Email
                   </TemplateFieldGroupAction>
                 </>
@@ -131,7 +145,7 @@ export function TemplateFieldGroupDemo() {
                     john.work@company.com
                   </span>
                   <button className="text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary hover:text-foundation-accent-red transition-colors">
-                    <X className="w-4 h-4" />
+                    <IconX className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -153,7 +167,7 @@ export function TemplateFieldGroupDemo() {
             <TemplateFieldGroup
               label="Personal Information"
               description="Your basic account details"
-              icon={<User className="w-4 h-4" />}
+              icon={<IconUser className="w-4 h-4" />}
               collapsible
               collapsed={personalInfoCollapsed}
               onCollapseChange={setPersonalInfoCollapsed}
@@ -162,6 +176,7 @@ export function TemplateFieldGroupDemo() {
                 <input
                   id="firstName"
                   type="text"
+                  aria-label="First Name"
                   placeholder="John"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -170,6 +185,7 @@ export function TemplateFieldGroupDemo() {
                 <input
                   id="lastName"
                   type="text"
+                  aria-label="Last Name"
                   placeholder="Doe"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -179,7 +195,7 @@ export function TemplateFieldGroupDemo() {
             <TemplateFieldGroup
               label="Security Settings"
               description="Manage your password and authentication"
-              icon={<Lock className="w-4 h-4" />}
+              icon={<IconLock className="w-4 h-4" />}
               collapsible
               collapsed={securityCollapsed}
               onCollapseChange={setSecurityCollapsed}
@@ -188,6 +204,7 @@ export function TemplateFieldGroupDemo() {
                 <input
                   id="currentPassword"
                   type="password"
+                  aria-label="Current Password"
                   placeholder="••••••••"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -196,6 +213,7 @@ export function TemplateFieldGroupDemo() {
                 <input
                   id="newPassword"
                   type="password"
+                  aria-label="New Password"
                   placeholder="••••••••"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -219,11 +237,16 @@ export function TemplateFieldGroupDemo() {
               variant="card"
               label="Notification Preferences"
               description="Choose how you want to be notified"
-              icon={<Bell className="w-4 h-4" />}
+              icon={<IconNotification className="w-4 h-4" />}
               badge={<TemplateFieldGroupBadge variant="warning">Beta</TemplateFieldGroupBadge>}
             >
               <label className="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" className="w-4 h-4 rounded" defaultChecked />
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 rounded"
+                  aria-label="Email notifications"
+                  defaultChecked
+                />
                 <div className="flex-1">
                   <div className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
                     Email Notifications
@@ -235,7 +258,11 @@ export function TemplateFieldGroupDemo() {
               </label>
               <TemplateFieldGroupDivider />
               <label className="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" className="w-4 h-4 rounded" />
+                <input
+                  type="checkbox"
+                  className="w-4 h-4 rounded"
+                  aria-label="Push notifications"
+                />
                 <div className="flex-1">
                   <div className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
                     Push Notifications
@@ -263,7 +290,7 @@ export function TemplateFieldGroupDemo() {
             variant="bordered"
             label="API Configuration"
             description="Configure your API settings"
-            icon={<Settings className="w-4 h-4" />}
+            icon={<IconSettings className="w-4 h-4" />}
             actions={
               <TemplateFieldGroupAction variant="ghost">
                 Reset
@@ -274,6 +301,7 @@ export function TemplateFieldGroupDemo() {
               <input
                 id="apiKey"
                 type="text"
+                aria-label="API Key"
                 value="sk_live_1234567890abcdef"
                 readOnly
                 className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary font-mono text-sm"
@@ -283,6 +311,7 @@ export function TemplateFieldGroupDemo() {
               <input
                 id="endpoint"
                 type="url"
+                aria-label="Endpoint URL"
                 placeholder="https://api.example.com"
                 className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
               />
@@ -310,6 +339,7 @@ export function TemplateFieldGroupDemo() {
                 <input
                   id="timeout"
                   type="number"
+                  aria-label="Timeout (seconds)"
                   placeholder="30"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -318,6 +348,7 @@ export function TemplateFieldGroupDemo() {
                 <input
                   id="retries"
                   type="number"
+                  aria-label="Max Retries"
                   placeholder="3"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -347,6 +378,7 @@ export function TemplateFieldGroupDemo() {
                 <input
                   id="street"
                   type="text"
+                  aria-label="Street"
                   placeholder="123 Main St"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -355,6 +387,7 @@ export function TemplateFieldGroupDemo() {
                 <input
                   id="city"
                   type="text"
+                  aria-label="City"
                   placeholder="San Francisco"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -363,6 +396,7 @@ export function TemplateFieldGroupDemo() {
                 <input
                   id="state"
                   type="text"
+                  aria-label="State"
                   placeholder="CA"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -371,6 +405,7 @@ export function TemplateFieldGroupDemo() {
                 <input
                   id="zip"
                   type="text"
+                  aria-label="ZIP Code"
                   placeholder="94102"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -401,6 +436,7 @@ export function TemplateFieldGroupDemo() {
                 <input
                   id="cardNumber"
                   type="text"
+                  aria-label="Card Number"
                   placeholder="1234 5678 9012 3456"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-accent-red bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-red transition-shadow"
                 />
@@ -410,6 +446,7 @@ export function TemplateFieldGroupDemo() {
                   <input
                     id="expiry"
                     type="text"
+                    aria-label="Expiry"
                     placeholder="MM/YY"
                     className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                   />
@@ -418,6 +455,7 @@ export function TemplateFieldGroupDemo() {
                   <input
                     id="cvv"
                     type="text"
+                    aria-label="CVV"
                     placeholder="123"
                     className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                   />
@@ -446,6 +484,7 @@ export function TemplateFieldGroupDemo() {
               >
                 <input
                   type="text"
+                  aria-label="Small input"
                   placeholder="Small input"
                   className="w-full px-2 py-1.5 text-sm rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -460,6 +499,7 @@ export function TemplateFieldGroupDemo() {
               >
                 <input
                   type="text"
+                  aria-label="Large input"
                   placeholder="Large input"
                   className="w-full px-3 py-2.5 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />

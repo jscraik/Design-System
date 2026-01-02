@@ -1,5 +1,15 @@
+import {
+  IconChevronLeftMd,
+  IconDotsHorizontal,
+  IconDownload,
+  IconNotification,
+  IconPlusLg,
+  IconSearch,
+  IconSettings,
+  IconShare,
+} from "../../../icons";
+
 import { TemplateHeaderBar } from "../../blocks/TemplateHeaderBar";
-import { Search, Bell, Settings, ChevronLeft, Plus, MoreHorizontal, Download, Share2 } from "lucide-react";
 
 export function TemplateHeaderBarDemo() {
   return (
@@ -44,7 +54,7 @@ export function TemplateHeaderBarDemo() {
               title="Settings"
               leading={
                 <button className="p-1.5 -ml-1 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-lg transition-colors">
-                  <ChevronLeft className="w-5 h-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
+                  <IconChevronLeftMd className="w-5 h-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
                 </button>
               }
             />
@@ -66,13 +76,13 @@ export function TemplateHeaderBarDemo() {
               trailing={
                 <div className="flex items-center gap-1">
                   <button className="p-2 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-lg transition-colors">
-                    <Search className="w-5 h-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
+                    <IconSearch className="w-5 h-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
                   </button>
                   <button className="p-2 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-lg transition-colors">
-                    <Bell className="w-5 h-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
+                    <IconNotification className="w-5 h-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
                   </button>
                   <button className="p-2 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-lg transition-colors">
-                    <Settings className="w-5 h-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
+                    <IconSettings className="w-5 h-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
                   </button>
                 </div>
               }
@@ -94,21 +104,21 @@ export function TemplateHeaderBarDemo() {
               title="Document Editor"
               leading={
                 <button className="p-1.5 -ml-1 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-lg transition-colors">
-                  <ChevronLeft className="w-5 h-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
+                  <IconChevronLeftMd className="w-5 h-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
                 </button>
               }
               trailing={
                 <div className="flex items-center gap-2">
                   <button className="px-3 py-1.5 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary flex items-center gap-2 transition-colors">
-                    <Download className="w-4 h-4" />
+                    <IconDownload className="w-4 h-4" />
                     <span>Export</span>
                   </button>
                   <button className="px-3 py-1.5 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary flex items-center gap-2 transition-colors">
-                    <Share2 className="w-4 h-4" />
+                    <IconShare className="w-4 h-4" />
                     <span>Share</span>
                   </button>
                   <button className="p-2 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-lg transition-colors">
-                    <MoreHorizontal className="w-5 h-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
+                    <IconDotsHorizontal className="w-5 h-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
                   </button>
                 </div>
               }
@@ -130,7 +140,7 @@ export function TemplateHeaderBarDemo() {
               title="My Tasks"
               trailing={
                 <button className="px-4 py-2 bg-button-primary-bg-light dark:bg-button-primary-bg-dark text-button-primary-text-light dark:text-button-primary-text-dark rounded-lg hover:bg-button-primary-bg-light-hover dark:hover:bg-button-primary-bg-dark-hover flex items-center gap-2 font-medium shadow-sm transition-all">
-                  <Plus className="w-4 h-4" />
+                  <IconPlusLg className="w-4 h-4" />
                   <span>New Task</span>
                 </button>
               }

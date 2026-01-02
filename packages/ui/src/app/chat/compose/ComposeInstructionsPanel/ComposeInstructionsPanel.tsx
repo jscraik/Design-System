@@ -2,8 +2,11 @@ import { TemplatePanel } from "../../../../templates/blocks/TemplatePanel";
 import { TemplateHeaderBar } from "../../../../templates/blocks/TemplateHeaderBar";
 import { TemplateFooterBar } from "../../../../templates/blocks/TemplateFooterBar";
 import { IconOperator } from "../../../../icons";
-import { type ModelConfig } from "../../../../components/ui/navigation/model-selector";
+import { type ModelConfig } from "../../../../components/ui/navigation/ModelSelector";
 
+/**
+ * Props for the compose instructions panel.
+ */
 interface ComposeInstructionsPanelProps {
   instructions: string;
   onInstructionsChange: (value: string) => void;
@@ -13,7 +16,10 @@ interface ComposeInstructionsPanelProps {
 }
 
 /**
- * ComposeInstructionsPanel - The prompt instructions input panel with header and footer actions.
+ * Renders the compose instructions panel with header and footer actions.
+ *
+ * @param props - Compose instructions panel props.
+ * @returns A template panel containing the instructions editor.
  */
 export function ComposeInstructionsPanel({
   instructions,
@@ -30,7 +36,7 @@ export function ComposeInstructionsPanel({
           leading={
             <button
               type="button"
-              className="p-1.5 hover:bg-secondary rounded-md transition-colors"
+              className="p-2 hover:bg-secondary rounded-md transition-colors"
               aria-label="Copy to clipboard"
             >
               <svg
@@ -77,7 +83,7 @@ export function ComposeInstructionsPanel({
             <>
               <button
                 type="button"
-                className="p-1.5 hover:bg-secondary rounded-md transition-colors"
+                className="p-2 hover:bg-secondary rounded-md transition-colors"
                 title="Add"
                 aria-label="Add"
               >
@@ -88,7 +94,7 @@ export function ComposeInstructionsPanel({
               <button
                 type="button"
                 onClick={onToggleWebSearch}
-                className={`p-1.5 rounded-md transition-colors relative ${
+                className={`p-2 rounded-md transition-colors relative ${
                   isWebSearchActive ? "bg-accent-blue/10" : "hover:bg-secondary"
                 }`}
                 title="Web"
@@ -108,24 +114,24 @@ export function ComposeInstructionsPanel({
                   />
                 </svg>
                 {isWebSearchActive && (
-                  <svg className="size-3 text-accent-blue absolute top-0.5 right-0.5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <svg className="size-3.5 text-accent-blue absolute top-0.5 right-0.5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                   </svg>
                 )}
               </button>
-              <button type="button" className="p-1.5 hover:bg-secondary rounded-md transition-colors" title="Link" aria-label="Link">
+              <button type="button" className="p-2 hover:bg-secondary rounded-md transition-colors" title="Link" aria-label="Link">
                 <svg className="size-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                 </svg>
               </button>
-              <button type="button" className="p-1.5 hover:bg-secondary rounded-md transition-colors" title="Refresh" aria-label="Refresh">
+              <button type="button" className="p-2 hover:bg-secondary rounded-md transition-colors" title="Refresh" aria-label="Refresh">
                 <svg className="size-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
               </button>
               <button
                 type="button"
-                className="flex items-center gap-1.5 px-2 py-1 rounded-lg transition-colors group hover:bg-secondary"
+                className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg transition-colors group hover:bg-secondary"
                 title="Tools"
                 aria-label="Tools"
               >
@@ -139,13 +145,13 @@ export function ComposeInstructionsPanel({
           }
           trailing={
             <>
-              <button type="button" className="flex items-center gap-1.5 px-2 py-1 hover:bg-secondary rounded-md transition-colors">
-                <svg className="size-3.5 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <button type="button" className="flex items-center gap-1.5 px-2 py-1.5 hover:bg-secondary rounded-md transition-colors">
+                <svg className="size-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
                 <span className="text-caption leading-4 text-muted-foreground">Auto-clear</span>
               </button>
-              <button type="button" className="p-1.5 hover:bg-secondary rounded-md transition-colors" title="Voice" aria-label="Voice">
+              <button type="button" className="p-2 hover:bg-secondary rounded-md transition-colors" title="Voice" aria-label="Voice">
                 <svg className="size-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                 </svg>
@@ -153,9 +159,9 @@ export function ComposeInstructionsPanel({
               <button
                 aria-label="Send message"
                 type="button"
-                className="w-6 h-6 rounded-full bg-accent-green ml-1 flex items-center justify-center hover:bg-accent-green/90 transition-colors"
+                className="w-7 h-7 rounded-full bg-accent-green ml-1 flex items-center justify-center hover:bg-accent-green/90 transition-colors"
               >
-                <svg className="size-3 text-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <svg className="size-4 text-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
                 </svg>
               </button>

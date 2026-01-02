@@ -5,6 +5,12 @@ import * as SeparatorPrimitive from "@radix-ui/react-separator";
 
 import { cn } from "../../utils";
 
+/**
+ * Renders a visual separator line.
+ *
+ * @param props - Radix separator props.
+ * @returns A separator element.
+ */
 function Separator({
   className,
   orientation = "horizontal",

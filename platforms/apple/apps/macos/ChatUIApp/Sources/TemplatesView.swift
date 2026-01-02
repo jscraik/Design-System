@@ -2,6 +2,7 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIComponents
 
+/// Template gallery view for browsing UI shell templates.
 struct TemplatesView: View {
     @Environment(\.chatUITheme) private var theme
     @Environment(\.colorScheme) private var scheme

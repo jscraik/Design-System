@@ -1,6 +1,9 @@
 import { IconCheckmark, IconChevronDownMd } from "../../../../icons";
-import { type ProEditMode } from "../types";
+import { type ProEditMode } from "../shared/types";
 
+/**
+ * Props for the Pro Edit configuration modal.
+ */
 interface ProEditConfigModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -13,7 +16,10 @@ interface ProEditConfigModalProps {
 }
 
 /**
- * ProEditConfigModal - Modal for configuring Pro Edit settings (agent/model mode).
+ * Renders the Pro Edit configuration modal.
+ *
+ * @param props - Pro Edit config modal props.
+ * @returns The modal element or `null` when closed.
  */
 export function ProEditConfigModal({
   isOpen,
@@ -29,7 +35,7 @@ export function ProEditConfigModal({
 
   return (
     <>
-      <div className="fixed inset-0 bg-black/60 z-50" onClick={onClose} />
+      <div className="fixed inset-0 bg-foundation-bg-dark-1/60 z-50" onClick={onClose} />
 
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] w-[720px] bg-popover border border-border rounded-[12px] shadow-2xl p-8">
         <h2 className="text-heading-3 font-semibold text-foreground mb-4">Pro Edit Settings</h2>

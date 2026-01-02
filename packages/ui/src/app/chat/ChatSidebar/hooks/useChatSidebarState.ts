@@ -1,22 +1,24 @@
 import type { ReactNode } from "react";
 import { useState, useCallback } from "react";
 
-import type { SidebarItem } from "../../types";
+import type { SidebarItem } from "../../shared/types";
 
 /**
- * Custom hook for managing ChatSidebar state
- * Centralizes all state management logic for the sidebar component
+ * Manages ChatSidebar state and handlers.
+ *
+ * @param initialProjects - Initial project list for the sidebar.
+ * @returns Sidebar state and action handlers.
  */
 
 export function useChatSidebarState(initialProjects: SidebarItem[]) {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [searchQuery, _setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedAction, setSelectedAction] = useState("chatgpt");
   const [projectName, setProjectName] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [projectsData, setProjectsData] = useState<SidebarItem[]>(initialProjects);
   const [newProjectIcon, setNewProjectIcon] = useState("folder");
-  const [newProjectColor, setNewProjectColor] = useState("text-white/60");
+  const [newProjectColor, setNewProjectColor] = useState("text-foundation-text-dark-tertiary");
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [showNewProjectModal, setShowNewProjectModal] = useState(false);
   const [memoryOption, setMemoryOption] = useState<"default" | "project-only">("default");
@@ -26,6 +28,7 @@ export function useChatSidebarState(initialProjects: SidebarItem[]) {
   const [projectsExpanded, setProjectsExpanded] = useState(true);
   const [groupChatsExpanded, setGroupChatsExpanded] = useState(false);
   const [yourChatsExpanded, setYourChatsExpanded] = useState(true);
+  const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
 
   // Icon picker state
   const [showIconPicker, setShowIconPicker] = useState(false);
@@ -81,6 +84,7 @@ export function useChatSidebarState(initialProjects: SidebarItem[]) {
     // State
     isCollapsed,
     searchQuery,
+    selectedChatId,
     selectedAction,
     projectName,
     selectedCategories,
@@ -101,6 +105,7 @@ export function useChatSidebarState(initialProjects: SidebarItem[]) {
 
     // Setters
     setIsCollapsed,
+    setSearchQuery,
     setSelectedAction,
     setProjectName,
     setProjectsData,
@@ -112,6 +117,7 @@ export function useChatSidebarState(initialProjects: SidebarItem[]) {
     setProjectsExpanded,
     setGroupChatsExpanded,
     setYourChatsExpanded,
+    setSelectedChatId,
     setMemoryOption,
     setSelectedProjectForIcon,
     setShowIconPicker,

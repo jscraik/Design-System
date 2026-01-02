@@ -1,11 +1,15 @@
 import SwiftUI
 
-/// Platform detection helpers and conditional logic
+/// Detects the current Apple platform and applies platform-specific behavior.
+///
+/// ### Discussion
+/// Use these helpers to keep platform checks centralized and avoid scattering
+/// `#if os(...)` directives across UI code.
 public enum Platform {
     
     // MARK: - Platform Detection
     
-    /// Whether the current platform is macOS
+    /// Returns whether the current platform is macOS.
     public static var isMac: Bool {
         #if os(macOS)
         true
@@ -14,7 +18,7 @@ public enum Platform {
         #endif
     }
     
-    /// Whether the current platform is visionOS
+    /// Returns whether the current platform is visionOS.
     public static var isVisionOS: Bool {
         #if os(visionOS)
         true
@@ -23,7 +27,7 @@ public enum Platform {
         #endif
     }
     
-    /// Whether the current platform is iOS
+    /// Returns whether the current platform is iOS.
     public static var isIOS: Bool {
         #if os(iOS)
         true
@@ -34,7 +38,13 @@ public enum Platform {
     
     // MARK: - Platform-Specific Interaction Helpers
     
-    /// Applies hover effects on macOS, no-op on other platforms
+    /// Applies hover effects on macOS and is a no-op on other platforms.
+    ///
+    /// - Parameters:
+    ///   - view: The view to apply a hover effect to.
+    ///   - onHover: Callback invoked with the hover state.
+    /// - Returns: The view with hover support applied on macOS.
+    /// - Important: This only triggers on macOS; other platforms return the view unchanged.
     public static func hoverEffect<V: View>(_ view: V, onHover: @escaping (Bool) -> Void) -> some View {
         #if os(macOS)
         view.onHover(perform: onHover)

@@ -9,6 +9,7 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Gallery of foundation tokens and primitives.
 struct FoundationGallery: View {
     var body: some View {
         VStack(alignment: .leading, spacing: FSpacing.s24) {

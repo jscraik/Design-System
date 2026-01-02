@@ -1,4 +1,7 @@
 // Generated from src/tokens/index.dtcg.json. Do not edit by hand.
+/**
+ * Color design tokens grouped by category and scheme. Values are hex colors in #RRGGBB format.
+ */
 export const colorTokens = {
   "background": {
     "light": {
@@ -17,13 +20,13 @@ export const colorTokens = {
       "primary": "#0D0D0D",
       "secondary": "#5D5D5D",
       "tertiary": "#8F8F8F",
-      "inverted": "#8F8F8F"
+      "inverted": "#FFFFFF"
     },
     "dark": {
       "primary": "#FFFFFF",
       "secondary": "#CDCDCD",
       "tertiary": "#AFAFAF",
-      "inverted": "#AFAFAF"
+      "inverted": "#0D0D0D"
     }
   },
   "icon": {
@@ -31,13 +34,31 @@ export const colorTokens = {
       "primary": "#0D0D0D",
       "secondary": "#5D5D5D",
       "tertiary": "#8F8F8F",
-      "inverted": "#8F8F8F"
+      "inverted": "#FFFFFF",
+      "accent": "#0285FF",
+      "statusError": "#E02E2A",
+      "statusWarning": "#E25507",
+      "statusSuccess": "#008635"
     },
     "dark": {
       "primary": "#FFFFFF",
       "secondary": "#CDCDCD",
       "tertiary": "#AFAFAF",
-      "inverted": "#AFAFAF"
+      "inverted": "#0D0D0D",
+      "accent": "#48AAFF",
+      "statusError": "#FF8583",
+      "statusWarning": "#FF9E6C",
+      "statusSuccess": "#40C977"
+    }
+  },
+  "border": {
+    "light": {
+      "light": "#0D0D0D0D",
+      "heavy": "#0D0D0D26"
+    },
+    "dark": {
+      "default": "#FFFFFF26",
+      "light": "#FFFFFF0D"
     }
   },
   "accent": {

@@ -9,6 +9,7 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIComponents
 
+/// Gallery of data display components.
 struct DataDisplayGallery: View {
     private struct RowItem: Identifiable {
         let id = UUID()

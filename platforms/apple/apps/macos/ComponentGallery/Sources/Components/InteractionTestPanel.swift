@@ -10,6 +10,7 @@ import ChatUIFoundation
 import ChatUIComponents
 import ChatUIThemes
 
+/// Manual interaction harness for common components.
 struct InteractionTestPanel: View {
     private enum Defaults {
         static let textInput = "Sample input"

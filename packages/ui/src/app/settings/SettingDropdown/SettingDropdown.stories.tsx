@@ -26,7 +26,7 @@ import { SettingDropdown, type DropdownOption } from "./SettingDropdown";
  * ```
  */
 const meta: Meta<typeof SettingDropdown> = {
-  title: "Settings/SettingDropdown",
+  title: "Components/Settings/Setting Dropdown",
   component: SettingDropdown,
   parameters: {
     layout: "padded",

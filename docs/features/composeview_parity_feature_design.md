@@ -366,7 +366,7 @@ final class ComposeViewController: NSViewController {
 
 - packages/ui/src/app/chat/ComposeView.tsx (reference: web parity target)
 - packages/ui/src/app/chat/ComposeWidgetView.tsx (new widget view)
-- platforms/web/apps/web/src/features/widgets/WidgetHarness.tsx (add widget entry)
+- platforms/web/apps/web/src/pages/HarnessPage.tsx (add widget entry)
 - platforms/web/apps/web/src/widgets/compose-widget/index.html (new widget mount, if using existing widget harness pattern)
 - platforms/web/apps/web/src/widgets/compose-widget/main.tsx (widget entry)
 - platforms/web/apps/storybook/src/stories/ComposeWidgetView.stories.tsx

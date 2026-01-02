@@ -1,6 +1,6 @@
 // Feedback and notification components
-export * from "./alert-dialog";
-export * from "./dialog";
+export * from "./AlertDialog";
+export * from "./Dialog";
 export * from "./ErrorBoundary";
-export * from "./sonner";
-export * from "./toast";
+export * from "./Sonner";
+export * from "./Toast";

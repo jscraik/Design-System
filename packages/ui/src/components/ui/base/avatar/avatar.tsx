@@ -5,6 +5,12 @@ import * as AvatarPrimitive from "@radix-ui/react-avatar";
 
 import { cn } from "../../utils";
 
+/**
+ * Renders an avatar root container.
+ *
+ * @param props - Radix avatar root props.
+ * @returns An avatar root element.
+ */
 function Avatar({ className, ...props }: React.ComponentProps<typeof AvatarPrimitive.Root>) {
   return (
     <AvatarPrimitive.Root
@@ -15,6 +21,17 @@ function Avatar({ className, ...props }: React.ComponentProps<typeof AvatarPrimi
   );
 }
 
+/**
+ * Renders the avatar image.
+ *
+ * @param props - Radix avatar image props.
+ * @returns An avatar image element.
+ *
+ * @example
+ * ```tsx
+ * <AvatarImage src={url} alt="Profile photo" />
+ * ```
+ */
 function AvatarImage({ className, ...props }: React.ComponentProps<typeof AvatarPrimitive.Image>) {
   return (
     <AvatarPrimitive.Image
@@ -25,6 +42,12 @@ function AvatarImage({ className, ...props }: React.ComponentProps<typeof Avatar
   );
 }
 
+/**
+ * Renders the avatar fallback content.
+ *
+ * @param props - Radix avatar fallback props.
+ * @returns An avatar fallback element.
+ */
 function AvatarFallback({
   className,
   ...props

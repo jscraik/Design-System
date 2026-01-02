@@ -14,6 +14,11 @@ type PlaceCardProps = {
   place: Place;
 };
 
+/**
+ * Render a single place card within the carousel.
+ * @param props - Card props.
+ * @returns The place card element.
+ */
 export default function PlaceCard({ place }: PlaceCardProps) {
   if (!place) return null;
   return (

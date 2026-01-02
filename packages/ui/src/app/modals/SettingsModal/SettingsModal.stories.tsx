@@ -5,7 +5,7 @@ import { useState } from "react";
 import { SettingsModal } from "./SettingsModal";
 
 const meta: Meta<typeof SettingsModal> = {
-  title: "ChatUI/SettingsModal",
+  title: "Components/Modals/Settings Modal",
   component: SettingsModal,
   tags: ["autodocs"],
   parameters: {

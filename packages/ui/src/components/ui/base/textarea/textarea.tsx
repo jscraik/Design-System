@@ -2,6 +2,20 @@ import * as React from "react";
 
 import { cn } from "../../utils";
 
+/**
+ * Renders a styled textarea element.
+ *
+ * Accessibility contract:
+ * - Provide a visible label or `aria-label`/`aria-labelledby`.
+ *
+ * @param props - Native textarea props.
+ * @returns A styled textarea element.
+ *
+ * @example
+ * ```tsx
+ * <Textarea rows={4} placeholder="Write a response..." />
+ * ```
+ */
 function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
   return (
     <textarea

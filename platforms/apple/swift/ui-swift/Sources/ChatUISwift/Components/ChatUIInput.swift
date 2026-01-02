@@ -1,14 +1,16 @@
 import SwiftUI
 
-/// A native macOS text input component that uses design tokens
+/// A native macOS text input component that uses design tokens.
 public struct ChatUIInput: View {
     
+    /// Visual variants for the input field.
     public enum Variant {
         case `default`
         case search
         case password
     }
     
+    /// Size variants for the input field.
     public enum Size {
         case `default`
         case sm
@@ -28,6 +30,18 @@ public struct ChatUIInput: View {
     @FocusState private var isFocused: Bool
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     
+    /// Creates a text input field.
+    ///
+    /// - Parameters:
+    ///   - text: Binding for the input value.
+    ///   - placeholder: Placeholder text when empty.
+    ///   - variant: Visual variant (default: `.default`).
+    ///   - size: Size variant (default: `.default`).
+    ///   - isDisabled: Whether the field is disabled.
+    ///   - accessibilityLabel: Accessibility label for VoiceOver.
+    ///   - accessibilityHint: Accessibility hint for VoiceOver.
+    ///   - submitLabel: Keyboard submit label override.
+    ///   - onSubmit: Optional submit action.
     public init(
         text: Binding<String>,
         placeholder: String = "",
@@ -50,6 +64,7 @@ public struct ChatUIInput: View {
         self.onSubmit = onSubmit
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         Group {
             switch variant {
@@ -296,6 +311,7 @@ struct ChatUITextFieldStyle: TextFieldStyle {
 // MARK: - Convenience Modifiers
 
 extension ChatUIInput {
+    /// Returns a copy of the input with a submit handler.
     public func onSubmit(_ action: @escaping () -> Void) -> ChatUIInput {
         ChatUIInput(
             text: self._text,

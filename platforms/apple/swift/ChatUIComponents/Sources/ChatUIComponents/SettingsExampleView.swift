@@ -1,7 +1,12 @@
 import SwiftUI
 import ChatUIFoundation
 
-/// Example settings view demonstrating all settings primitives
+/// Example settings view demonstrating all settings primitives.
+///
+/// - Example:
+/// ```swift
+/// SettingsExampleView()
+/// ```
 ///
 /// This view showcases:
 /// - Section headers using `FType.sectionTitle()`
@@ -21,8 +26,10 @@ public struct SettingsExampleView: View {
     private let accentColorOptions = ["Blue", "Green", "Orange", "Red", "Purple"]
     private let languageOptions = ["English", "Spanish", "French", "German", "Japanese"]
     
+    /// Creates the settings example view.
     public init() {}
     
+    /// The content and behavior of this view.
     public var body: some View {
         ScrollView {
             VStack(spacing: FSpacing.s24) {

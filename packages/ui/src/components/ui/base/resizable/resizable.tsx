@@ -6,6 +6,14 @@ import * as ResizablePrimitive from "react-resizable-panels";
 import { IconDotsVertical } from "../../../../icons";
 import { cn } from "../../utils";
 
+/**
+ * Renders a resizable panel group.
+ *
+ * Use `direction="horizontal" | "vertical"` to control layout direction.
+ *
+ * @param props - Resizable panel group props.
+ * @returns A resizable panel group element.
+ */
 function ResizablePanelGroup({
   className,
   ...props
@@ -19,10 +27,24 @@ function ResizablePanelGroup({
   );
 }
 
+/**
+ * Renders a resizable panel.
+ *
+ * @param props - Resizable panel props.
+ * @returns A resizable panel element.
+ */
 function ResizablePanel({ ...props }: React.ComponentProps<typeof ResizablePrimitive.Panel>) {
   return <ResizablePrimitive.Panel data-slot="resizable-panel" {...props} />;
 }
 
+/**
+ * Renders a resize handle between panels.
+ *
+ * Set `withHandle` to render the visual grip element.
+ *
+ * @param props - Resize handle props.
+ * @returns A resize handle element.
+ */
 function ResizableHandle({
   withHandle,
   className,

@@ -1,5 +1,6 @@
+import { IconChat, IconSettings, IconSidebar, IconUser } from "../../../icons";
+
 import { TemplateShell, TemplateShellToggleButton, useTemplateShell } from "../../blocks/TemplateShell";
-import { MessageSquare, Settings, User, PanelLeftClose, PanelRightClose } from "lucide-react";
 
 // Inner component that has access to the TemplateShell context
 function DemoContent() {
@@ -28,7 +29,7 @@ function DemoContent() {
         <div className="grid md:grid-cols-2 gap-4">
           <div className="p-4 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3">
             <div className="flex items-center gap-2 mb-2">
-              <PanelLeftClose className="size-5 text-foundation-accent-blue" />
+              <IconSidebar className="size-5 text-foundation-accent-blue" />
               <h3 className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
                 Collapsible Sidebar
               </h3>
@@ -40,7 +41,7 @@ function DemoContent() {
 
           <div className="p-4 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3">
             <div className="flex items-center gap-2 mb-2">
-              <PanelRightClose className="size-5 text-foundation-accent-blue" />
+              <IconSidebar className="size-5 text-foundation-accent-blue rotate-180" />
               <h3 className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
                 Collapsible Detail Panel
               </h3>
@@ -123,15 +124,15 @@ export function TemplateShellDemo() {
           </div>
           <nav className="space-y-1 flex-1">
             <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary transition-colors">
-              <MessageSquare className="size-5 shrink-0" />
+              <IconChat className="size-5 shrink-0" />
               <span>Chats</span>
             </button>
             <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary transition-colors">
-              <User className="size-5 shrink-0" />
+              <IconUser className="size-5 shrink-0" />
               <span>Profile</span>
             </button>
             <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary transition-colors">
-              <Settings className="size-5 shrink-0" />
+              <IconSettings className="size-5 shrink-0" />
               <span>Settings</span>
             </button>
           </nav>
@@ -153,7 +154,7 @@ export function TemplateShellDemo() {
           <span className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
             Footer Section
           </span>
-          <button className="px-4 py-2 bg-foundation-accent-blue text-white rounded-lg hover:bg-foundation-accent-blue/90 transition-colors">
+          <button className="px-4 py-2 bg-foundation-accent-blue text-accent-foreground rounded-lg hover:bg-foundation-accent-blue/90 transition-colors">
             Action Button
           </button>
         </div>

@@ -1,0 +1,58 @@
+# SwiftLint Configuration for Swift Packages
+# Extends root configuration with package-specific rules
+
+extends: .swiftlint.yml
+
+# Package-specific inclusions
+included:
+  - Sources
+  - Tests
+
+# Package-specific exclusions
+excluded:
+  - .build
+  - .swiftpm
+  - Package.resolved
+
+# Stricter rules for production code
+custom_rules:
+  # Detect missing error handling
+  no_discarded_errors:
+    name: "No Discarded Errors"
+    regex: 'try\s+(?!throw|catch|await)'
+    match_kinds:
+      - keyword
+    message: "Try without error handling detected. Use try?, try!, or do-catch."
+    severity: warning
+    excluded:
+      - ".*Tests?.swift"
+
+  # Detect missing access control
+  explicit_access_control:
+    name: "Explicit Access Control"
+    regex: '^\s*(class|struct|enum|protocol|extension)\s+(?!private|fileprivate|internal|public|open)'
+    match_kinds:
+      - keyword
+    message: "Type declaration without explicit access control."
+    severity: warning
+
+  # Detect missing documentation for public APIs
+  document_public_api:
+    name: "Document Public API"
+    regex: 'public\s+(class|struct|enum|protocol|func|var|let)\s+\w+'
+    match_kinds:
+      - keyword
+    message: "Public API without documentation detected."
+    severity: warning
+    excluded:
+      - ".*Tests?.swift"
+      - "Internal*.swift"
+
+  # Detect force unwrap in public API
+  no_force_unwrap_public:
+    name: "No Force Unwrap in Public API"
+    regex: 'public.*!\s*[^\s]'
+    match_kinds:
+      - identifier
+    message: "Force unwrap in public API detected. Return optional instead."
+    severity: error

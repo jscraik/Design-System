@@ -2,6 +2,7 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Renders the color token palette in grouped sections.
 public struct ColorPaletteShowcaseView: View {
     private struct ColorToken: Identifiable {
         let id: String
@@ -107,8 +108,10 @@ public struct ColorPaletteShowcaseView: View {
         )
     ]
 
+    /// Creates a color palette showcase view.
     public init() {}
 
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(alignment: .leading, spacing: FSpacing.s16) {
             Text("Colors")

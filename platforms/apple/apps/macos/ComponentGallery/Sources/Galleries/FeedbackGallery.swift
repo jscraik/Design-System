@@ -10,6 +10,7 @@ import ChatUIFoundation
 import ChatUIComponents
 import ChatUIThemes
 
+/// Gallery of feedback components.
 struct FeedbackGallery: View {
     @State private var showToast = false
     @State private var showModal = false

@@ -80,14 +80,14 @@ import { chatGPTIconSizes, getSizeClass } from './icons/ChatGPTIcons';
 
 ### Icon Button
 ```tsx
-<button className="p-2 hover:bg-white/10 rounded-lg">
+<button className="p-2 hover:bg-foundation-bg-dark-3/40 rounded-lg">
   <IconTrash className="size-5 text-[#ececec]" />
 </button>
 ```
 
 ### Button with Icon
 ```tsx
-<button className="flex items-center gap-2 px-4 py-2 bg-[#2f7a4f] text-white rounded-lg">
+<button className="flex items-center gap-2 px-4 py-2 bg-foundation-accent-green text-accent-foreground rounded-lg">
   <IconPlus className="size-5" />
   <span>New Chat</span>
 </button>
@@ -96,7 +96,7 @@ import { chatGPTIconSizes, getSizeClass } from './icons/ChatGPTIcons';
 ### Conditional State
 ```tsx
 {isMuted ? (
-  <IconMicOff className="size-6 text-red-500" />
+  <IconMicOff className="size-6 text-accent-red" />
 ) : (
   <IconMic className="size-6 text-[#2f7a4f]" />
 )}

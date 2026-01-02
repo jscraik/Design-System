@@ -55,7 +55,7 @@ function FullWidthStoryShell({ showFooter, showCompose }: StoryArgs) {
 }
 
 const meta: Meta<typeof ChatFullWidthTemplate> = {
-  title: "Templates/ChatFullWidthTemplate",
+  title: "Components/Templates/Chat/Chat Full Width",
   component: ChatFullWidthTemplate,
   tags: ["autodocs"],
   parameters: {

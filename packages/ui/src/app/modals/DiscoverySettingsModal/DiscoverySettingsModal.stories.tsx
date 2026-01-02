@@ -4,7 +4,7 @@ import { fn } from "@storybook/test";
 import { DiscoverySettingsModal } from "./DiscoverySettingsModal";
 
 const meta: Meta<typeof DiscoverySettingsModal> = {
-  title: "ChatUI/DiscoverySettingsModal",
+  title: "Components/Modals/Discovery Settings Modal",
   component: DiscoverySettingsModal,
   tags: ["autodocs"],
   parameters: {

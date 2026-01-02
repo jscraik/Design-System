@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Button } from "../../base/button";
+import { Button } from "../../base/Button";
 
 import {
   Card,
@@ -10,10 +10,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./card";
+} from "./Card";
 
 const meta: Meta<typeof Card> = {
-  title: "UI/Card",
+  title: "Components/UI/Data Display/Card",
   component: Card,
   tags: ["autodocs"],
   parameters: { layout: "centered" },

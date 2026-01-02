@@ -1,8 +1,9 @@
 import SwiftUI
 
-/// A native macOS modal dialog component with proper focus management
+/// A native macOS modal dialog component with proper focus management.
 public struct ChatUIModal<Content: View>: View {
     
+    /// Size presets for the modal dialog.
     public enum Size {
         case small
         case medium
@@ -21,6 +22,14 @@ public struct ChatUIModal<Content: View>: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
     
+    /// Creates a modal dialog.
+    ///
+    /// - Parameters:
+    ///   - isPresented: Binding controlling presentation state.
+    ///   - title: Optional modal title.
+    ///   - size: Size preset (default: `.medium`).
+    ///   - onDismiss: Optional dismiss callback.
+    ///   - content: Modal content builder.
     public init(
         isPresented: Binding<Bool>,
         title: String? = nil,
@@ -35,6 +44,7 @@ public struct ChatUIModal<Content: View>: View {
         self.content = content
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         ZStack {
             if isPresented {
@@ -195,28 +205,38 @@ public struct ChatUIModal<Content: View>: View {
 
 // MARK: - Alert Dialog
 
-/// A specialized modal for alert dialogs with action buttons
+/// A specialized modal for alert dialogs with action buttons.
 public struct ChatUIAlert: View {
     
+    /// Represents an alert action button.
     public struct Action {
         let title: String
         let style: ChatUIButtonVariant
         let action: () -> Void
         
+        /// Creates an alert action.
+        ///
+        /// - Parameters:
+        ///   - title: Button title.
+        ///   - style: Visual button style.
+        ///   - action: Action invoked on tap.
         public init(title: String, style: ChatUIButtonVariant = .default, action: @escaping () -> Void) {
             self.title = title
             self.style = style
             self.action = action
         }
         
+        /// Convenience cancel action.
         public static func cancel(_ action: @escaping () -> Void = {}) -> Action {
             Action(title: "Cancel", style: .secondary, action: action)
         }
         
+        /// Convenience destructive action.
         public static func destructive(_ title: String, action: @escaping () -> Void) -> Action {
             Action(title: title, style: .destructive, action: action)
         }
         
+        /// Convenience default action.
         public static func `default`(_ title: String, action: @escaping () -> Void) -> Action {
             Action(title: title, style: .default, action: action)
         }
@@ -227,6 +247,13 @@ public struct ChatUIAlert: View {
     private let message: String?
     private let actions: [Action]
     
+    /// Creates an alert modal.
+    ///
+    /// - Parameters:
+    ///   - isPresented: Binding controlling presentation state.
+    ///   - title: Alert title.
+    ///   - message: Optional alert message.
+    ///   - actions: Action buttons shown in the footer.
     public init(
         isPresented: Binding<Bool>,
         title: String,
@@ -239,6 +266,7 @@ public struct ChatUIAlert: View {
         self.actions = actions
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         ChatUIModal(
             isPresented: $isPresented,

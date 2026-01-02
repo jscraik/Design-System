@@ -2,9 +2,12 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Renders the foundations showcase for color, spacing, typography, and iconography.
 public struct FoundationsShowcaseView: View {
+    /// Creates a foundations showcase view.
     public init() {}
 
+    /// The content and behavior of this view.
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: FSpacing.s24) {

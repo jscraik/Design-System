@@ -34,7 +34,7 @@ module.exports = [
             {
               target: [
                 "packages/ui/src/hooks/useFocusTrap.ts",
-                "packages/ui/src/components/ui/overlays/modal.tsx",
+                "packages/ui/src/components/ui/overlays/Modal/Modal.tsx",
               ],
               from: "packages/ui/src/app/modals/**",
               message:
@@ -45,7 +45,7 @@ module.exports = [
             {
               target: [
                 "packages/ui/src/hooks/useFocusTrap.ts",
-                "packages/ui/src/components/ui/overlays/modal.tsx",
+                "packages/ui/src/components/ui/overlays/Modal/Modal.tsx",
               ],
               from: "packages/ui/src/app/settings/**",
               message:
@@ -89,7 +89,7 @@ module.exports = [
                 "packages/ui/src/app/settings/ManageAppsPanel.tsx",
                 "packages/ui/src/app/settings/AudioSettingsPanel.tsx",
               ],
-              from: "packages/ui/src/components/ui/overlays/modal.tsx",
+              from: "packages/ui/src/components/ui/overlays/Modal/Modal.tsx",
               message:
                 "Panels MUST NOT import ModalDialog directly. Use parent SettingsModal's modal context instead.",
             },
@@ -98,7 +98,7 @@ module.exports = [
             {
               target: [
                 "packages/ui/src/hooks/useFocusTrap.ts",
-                "packages/ui/src/components/ui/overlays/modal.tsx",
+                "packages/ui/src/components/ui/overlays/Modal/Modal.tsx",
               ],
               from: [
                 "packages/ui/src/app/settings/PersonalizationPanel.tsx",
@@ -132,7 +132,7 @@ module.exports = {
           {
             target: [
               "packages/ui/src/hooks/useFocusTrap.ts",
-              "packages/ui/src/components/ui/overlays/modal.tsx",
+              "packages/ui/src/components/ui/overlays/Modal/Modal.tsx",
             ],
             from: "packages/ui/src/app/modals/**",
             message:
@@ -159,7 +159,7 @@ module.exports = {
       {
         target: [
           "packages/ui/src/hooks/useFocusTrap.ts",
-          "packages/ui/src/components/ui/overlays/modal.tsx",
+          "packages/ui/src/components/ui/overlays/Modal/Modal.tsx",
         ],
         from: "packages/ui/src/app/modals/**",
         message: "Infrastructure (useFocusTrap, ModalDialog) MUST NOT import from feature modals.",
@@ -167,7 +167,7 @@ module.exports = {
       {
         target: [
           "packages/ui/src/hooks/useFocusTrap.ts",
-          "packages/ui/src/components/ui/overlays/modal.tsx",
+          "packages/ui/src/components/ui/overlays/Modal/Modal.tsx",
         ],
         from: "packages/ui/src/app/settings/**",
         message: "Infrastructure (useFocusTrap, ModalDialog) MUST NOT import from settings components.",
@@ -175,7 +175,7 @@ module.exports = {
       {
         target: [
           "packages/ui/src/hooks/useFocusTrap.ts",
-          "packages/ui/src/components/ui/overlays/modal.tsx",
+          "packages/ui/src/components/ui/overlays/Modal/Modal.tsx",
         ],
         from: [
           "packages/ui/src/app/settings/PersonalizationPanel.tsx",
@@ -234,7 +234,7 @@ module.exports = {
           "packages/ui/src/app/settings/ArchivedChatsPanel.tsx",
           "packages/ui/src/app/settings/CheckForUpdatesPanel.tsx",
         ],
-        from: "packages/ui/src/components/ui/overlays/modal.tsx",
+        from: "packages/ui/src/components/ui/overlays/Modal/Modal.tsx",
         message: "Panels MUST NOT import ModalDialog directly. Use parent SettingsModal instead.",
       },
     ],
@@ -248,7 +248,7 @@ module.exports = {
 
 ### ❌ Violation: Infrastructure importing from modals
 
-**File:** `packages/ui/src/components/ui/overlays/modal.tsx`
+**File:** `packages/ui/src/components/ui/overlays/Modal/Modal.tsx`
 
 ```tsx
 // BAD: Creates circular dependency
@@ -324,7 +324,7 @@ Look for `import/no-restricted-paths` in the loaded rules.
 Create a test file to verify rules work:
 
 ```tsx
-// packages/ui/src/components/ui/overlays/modal-bad-test.tsx
+// packages/ui/src/components/ui/overlays/Modal/Modal-bad-test.tsx
 // This should trigger an error
 import { DiscoverySettingsModal } from "../../modals/DiscoverySettingsModal";
 
@@ -336,7 +336,7 @@ export function BadModal() {
 Run:
 
 ```bash
-pnpm lint packages/ui/src/components/ui/overlays/modal-bad-test.tsx
+pnpm lint packages/ui/src/components/ui/overlays/Modal/Modal-bad-test.tsx
 ```
 
 ### 3. Test allowed imports

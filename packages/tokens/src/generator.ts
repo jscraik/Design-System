@@ -5,13 +5,25 @@ import { dirname, join } from "path";
 import { colorTokens } from "./colors.js";
 import { spacingScale } from "./spacing.js";
 import { typographyTokens } from "./typography.js";
+import { radiusTokens } from "./radius.js";
+import { shadowTokens } from "./shadows.js";
+import { sizeTokens } from "./sizes.js";
 
+/**
+ * Design token payload used for generating platform outputs.
+ */
 export interface DesignTokens {
   colors: typeof colorTokens;
   spacing: typeof spacingScale;
   typography: typeof typographyTokens;
+  radius: typeof radiusTokens;
+  shadows: typeof shadowTokens;
+  sizes: typeof sizeTokens;
 }
 
+/**
+ * Manifest describing generated outputs and their hashes.
+ */
 export interface GenerationManifest {
   version: string;
   sha256: {
@@ -49,6 +61,9 @@ interface AssetCatalogColor {
   };
 }
 
+/**
+ * Generates platform-specific outputs from DTCG design tokens.
+ */
 export class TokenGenerator {
   private tokens: DesignTokens;
 
@@ -57,6 +72,9 @@ export class TokenGenerator {
       colors: colorTokens,
       spacing: spacingScale,
       typography: typographyTokens,
+      radius: radiusTokens,
+      shadows: shadowTokens,
+      sizes: sizeTokens,
     };
   }
 
@@ -150,6 +168,41 @@ ${this.generateColorConstants("icon")}
                 lightHex: "${this.tokens.colors.icon.light.inverted}",
                 darkHex: "${this.tokens.colors.icon.dark.inverted}"
             )
+
+            public static let accent = Color.dynamicColor(
+                lightHex: "${this.tokens.colors.icon.light.accent}",
+                darkHex: "${this.tokens.colors.icon.dark.accent}"
+            )
+
+            public static let statusError = Color.dynamicColor(
+                lightHex: "${this.tokens.colors.icon.light.statusError}",
+                darkHex: "${this.tokens.colors.icon.dark.statusError}"
+            )
+
+            public static let statusWarning = Color.dynamicColor(
+                lightHex: "${this.tokens.colors.icon.light.statusWarning}",
+                darkHex: "${this.tokens.colors.icon.dark.statusWarning}"
+            )
+
+            public static let statusSuccess = Color.dynamicColor(
+                lightHex: "${this.tokens.colors.icon.light.statusSuccess}",
+                darkHex: "${this.tokens.colors.icon.dark.statusSuccess}"
+            )
+        }
+
+        public enum Border {
+${this.generateColorConstants("border")}
+
+            // Dynamic colors that adapt to system appearance
+            public static let light = Color.dynamicColor(
+                lightHex: "${this.tokens.colors.border.light.light}",
+                darkHex: "${this.tokens.colors.border.dark.light}"
+            )
+
+            public static let heavy = Color.dynamicColor(
+                lightHex: "${this.tokens.colors.border.light.heavy}",
+                darkHex: "${this.tokens.colors.border.dark.default}"
+            )
         }
         
         public enum Accent {
@@ -234,10 +287,81 @@ ${this.generateSpacingConstants()}
     // MARK: - Corner Radius
     
     public enum CornerRadius {
-        public static let small: CGFloat = 4
-        public static let medium: CGFloat = 8
-        public static let large: CGFloat = 12
-        public static let extraLarge: CGFloat = 16
+        public static let small: CGFloat = ${this.tokens.radius.r6}
+        public static let medium: CGFloat = ${this.tokens.radius.r8}
+        public static let large: CGFloat = ${this.tokens.radius.r12}
+        public static let extraLarge: CGFloat = ${this.tokens.radius.r16}
+
+        public static let r6: CGFloat = ${this.tokens.radius.r6}
+        public static let r8: CGFloat = ${this.tokens.radius.r8}
+        public static let r10: CGFloat = ${this.tokens.radius.r10}
+        public static let r12: CGFloat = ${this.tokens.radius.r12}
+        public static let r16: CGFloat = ${this.tokens.radius.r16}
+        public static let r18: CGFloat = ${this.tokens.radius.r18}
+        public static let r21: CGFloat = ${this.tokens.radius.r21}
+        public static let r24: CGFloat = ${this.tokens.radius.r24}
+        public static let r30: CGFloat = ${this.tokens.radius.r30}
+        public static let round: CGFloat = ${this.tokens.radius.round}
+    }
+
+    // MARK: - Sizes
+
+    public enum Size {
+        public static let controlHeight: CGFloat = ${this.tokens.sizes.controlHeight}
+        public static let cardHeaderHeight: CGFloat = ${this.tokens.sizes.cardHeaderHeight}
+        public static let hitTarget: CGFloat = ${this.tokens.sizes.hitTarget}
+    }
+
+    // MARK: - Shadows
+
+    public struct ShadowToken {
+        public let color: Color
+        public let x: CGFloat
+        public let y: CGFloat
+        public let blur: CGFloat
+        public let spread: CGFloat
+
+        public init(color: Color, x: CGFloat, y: CGFloat, blur: CGFloat, spread: CGFloat) {
+            self.color = color
+            self.x = x
+            self.y = y
+            self.blur = blur
+            self.spread = spread
+        }
+    }
+
+    public enum Shadow {
+        public static let card = ShadowToken(
+            color: Color(hex: "0000000D"),
+            x: 0,
+            y: 4,
+            blur: 16,
+            spread: 0
+        )
+
+        public static let pip = ShadowToken(
+            color: Color(hex: "0000000D"),
+            x: 0,
+            y: 4,
+            blur: 16,
+            spread: 0
+        )
+
+        public static let pill = ShadowToken(
+            color: Color(hex: "0000000A"),
+            x: 0,
+            y: 10,
+            blur: 22,
+            spread: 0
+        )
+
+        public static let close = ShadowToken(
+            color: Color(hex: "00000029"),
+            x: 0,
+            y: 4,
+            blur: 8,
+            spread: 0
+        )
     }
     
     // MARK: - Accessibility
@@ -456,12 +580,26 @@ extension Color {
   --foundation-icon-light-secondary: ${this.tokens.colors.icon.light.secondary};
   --foundation-icon-light-tertiary: ${this.tokens.colors.icon.light.tertiary};
   --foundation-icon-light-inverted: ${this.tokens.colors.icon.light.inverted};
+  --foundation-icon-light-accent: ${this.tokens.colors.icon.light.accent};
+  --foundation-icon-light-status-error: ${this.tokens.colors.icon.light.statusError};
+  --foundation-icon-light-status-warning: ${this.tokens.colors.icon.light.statusWarning};
+  --foundation-icon-light-status-success: ${this.tokens.colors.icon.light.statusSuccess};
 
   /* Dark icon */
   --foundation-icon-dark-primary: ${this.tokens.colors.icon.dark.primary};
   --foundation-icon-dark-secondary: ${this.tokens.colors.icon.dark.secondary};
   --foundation-icon-dark-tertiary: ${this.tokens.colors.icon.dark.tertiary};
   --foundation-icon-dark-inverted: ${this.tokens.colors.icon.dark.inverted};
+  --foundation-icon-dark-accent: ${this.tokens.colors.icon.dark.accent};
+  --foundation-icon-dark-status-error: ${this.tokens.colors.icon.dark.statusError};
+  --foundation-icon-dark-status-warning: ${this.tokens.colors.icon.dark.statusWarning};
+  --foundation-icon-dark-status-success: ${this.tokens.colors.icon.dark.statusSuccess};
+
+  /* Borders */
+  --foundation-border-light: ${this.tokens.colors.border.light.light};
+  --foundation-border-heavy: ${this.tokens.colors.border.light.heavy};
+  --foundation-border-dark-default: ${this.tokens.colors.border.dark.default};
+  --foundation-border-dark-light: ${this.tokens.colors.border.dark.light};
 
   /* Light accents */
   --foundation-accent-gray-light: ${this.tokens.colors.accent.light.gray};
@@ -480,6 +618,29 @@ ${this.generateCSSSpacing()}
   --foundation-font-family:
     "${this.tokens.typography.fontFamily}", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 ${this.generateCSSTypography()}
+
+  /* Radius scale */
+  --foundation-radius-6: ${this.tokens.radius.r6}px;
+  --foundation-radius-8: ${this.tokens.radius.r8}px;
+  --foundation-radius-10: ${this.tokens.radius.r10}px;
+  --foundation-radius-12: ${this.tokens.radius.r12}px;
+  --foundation-radius-16: ${this.tokens.radius.r16}px;
+  --foundation-radius-18: ${this.tokens.radius.r18}px;
+  --foundation-radius-21: ${this.tokens.radius.r21}px;
+  --foundation-radius-24: ${this.tokens.radius.r24}px;
+  --foundation-radius-30: ${this.tokens.radius.r30}px;
+  --foundation-radius-round: ${this.tokens.radius.round}px;
+
+  /* Size scale */
+  --foundation-size-control-height: ${this.tokens.sizes.controlHeight}px;
+  --foundation-size-card-header-height: ${this.tokens.sizes.cardHeaderHeight}px;
+  --foundation-size-hit-target: ${this.tokens.sizes.hitTarget}px;
+
+  /* Shadows */
+  --foundation-shadow-card: ${this.formatShadow(this.tokens.shadows.card)};
+  --foundation-shadow-pip: ${this.formatShadow(this.tokens.shadows.pip)};
+  --foundation-shadow-pill: ${this.formatShadow(this.tokens.shadows.pill)};
+  --foundation-shadow-close: ${this.formatShadow(this.tokens.shadows.close)};
 
   /* Accessibility */
   --foundation-focus-ring: #0285ff;
@@ -745,6 +906,18 @@ ${this.generateCSSTypography()}
         dark: this.tokens.colors.icon.dark.tertiary,
       },
 
+      // Border colors
+      {
+        name: "foundation-border-light",
+        light: this.tokens.colors.border.light.light,
+        dark: this.tokens.colors.border.dark.light,
+      },
+      {
+        name: "foundation-border-heavy",
+        light: this.tokens.colors.border.light.heavy,
+        dark: this.tokens.colors.border.dark.default,
+      },
+
       // Accent colors
       {
         name: "foundation-accent-gray",
@@ -841,7 +1014,7 @@ ${this.generateCSSTypography()}
     console.log(`   Asset Catalog SHA: ${manifest.sha256.assetCatalog.substring(0, 8)}...`);
   }
 
-  private generateColorConstants(category: "background" | "text" | "icon"): string {
+  private generateColorConstants(category: "background" | "text" | "icon" | "border"): string {
     const colors = this.tokens.colors[category];
     const lines: string[] = [];
 
@@ -986,6 +1159,15 @@ ${this.generateCSSTypography()}
     });
 
     return lines.join("\n");
+  }
+
+  private formatShadow(shadow: Array<{ color: string; offsetX: number; offsetY: number; blur: number; spread: number }>): string {
+    return shadow
+      .map(
+        (layer) =>
+          `${layer.offsetX}px ${layer.offsetY}px ${layer.blur}px ${layer.spread}px ${layer.color}`,
+      )
+      .join(", ");
   }
 
   private mapFontWeight(weight: number): string {

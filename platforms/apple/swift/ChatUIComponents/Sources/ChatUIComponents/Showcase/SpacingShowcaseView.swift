@@ -2,6 +2,7 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Renders the spacing token grid with size labels.
 public struct SpacingShowcaseView: View {
     private let spacingValues: [CGFloat] = [
         DesignTokens.Spacing.none,
@@ -18,8 +19,10 @@ public struct SpacingShowcaseView: View {
         DesignTokens.Spacing.xxl
     ]
 
+    /// Creates a spacing showcase view.
     public init() {}
 
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(alignment: .leading, spacing: FSpacing.s16) {
             Text("Spacing")

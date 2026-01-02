@@ -10,6 +10,7 @@ import ChatUIFoundation
 import ChatUIComponents
 import ChatUIThemes
 
+/// Gallery of accessibility-related components and checks.
 struct AccessibilityGallery: View {
     @State private var testInput = ""
     @Environment(\.accessibilityReduceMotion) private var reduceMotion

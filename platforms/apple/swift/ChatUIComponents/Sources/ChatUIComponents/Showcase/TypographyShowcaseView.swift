@@ -2,6 +2,7 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Renders the typography token list with size and spacing metadata.
 public struct TypographyShowcaseView: View {
     private struct TypographyToken: Identifiable {
         let id: String
@@ -63,8 +64,10 @@ public struct TypographyShowcaseView: View {
         )
     ]
 
+    /// Creates a typography showcase view.
     public init() {}
 
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(alignment: .leading, spacing: FSpacing.s16) {
             Text("Typography")

@@ -3,7 +3,11 @@ export {
   ChatVariantCompact,
   ChatVariantContextRail,
   ChatVariantSplitSidebar,
-} from "./chat-variants";
+} from "./ChatVariants";
+export { ChatUIRoot } from "./ChatUIRoot";
+export { ChatView } from "./ChatView";
+export * from "./shared/slots";
+export * from "./shared/types";
 export { ChatHeader } from "./ChatHeader";
 export { ChatInput } from "./ChatInput";
 export { ChatMessages } from "./ChatMessages";

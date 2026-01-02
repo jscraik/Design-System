@@ -1,21 +1,13 @@
-// Core App Components
-export { ChatUIRoot } from "./app/chat/ChatUIRoot";
+/**
+ * Public entry point for ChatUI exports.
+ */
+
+// App Surfaces
+export * from "./app";
 
 // Hooks
 export * from "./hooks/useFocusTrap";
 export * from "./hooks/useControllableState";
-
-// Slots
-export * from "./app/chat/slots";
-
-// Main Chat Components
-export * from "./app/chat/ChatHeader";
-export * from "./app/chat/ChatInput";
-export * from "./app/chat/ChatMessages";
-export * from "./app/chat/ChatSidebar";
-export * from "./app/chat/ChatShell";
-export * from "./app/chat/chat-variants";
-export * from "./app/chat/ComposeView";
 
 // UI Components (prioritized over vendor)
 export * from "./components/ui";
@@ -39,6 +31,9 @@ export {
   Download as AppsSDKDownloadIcon,
   Sparkles as AppsSDKSparklesIcon,
 } from "./integrations/apps-sdk";
+
+// Figma integrations
+export * from "./integrations/figma";
 
 // Icons (canonical source - 350+ icons from Figma)
 export * from "./icons";

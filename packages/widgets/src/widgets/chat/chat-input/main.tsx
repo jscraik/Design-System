@@ -15,6 +15,9 @@ if (import.meta.env.DEV) {
   });
 }
 
+/**
+ * Render the chat input template with host-aware styling.
+ */
 function ChatInputWidgetCore() {
   const theme = useTheme();
   const maxHeight = useMaxHeight();
@@ -27,6 +30,9 @@ function ChatInputWidgetCore() {
   );
 }
 
+/**
+ * Provide host context and theming for the chat input widget.
+ */
 function ChatInputWidget() {
   const host = createEmbeddedHost();
 

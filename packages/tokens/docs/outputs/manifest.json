@@ -1,9 +1,9 @@
 {
   "version": "1.0.0",
   "sha256": {
-    "swift": "96a967ab9d7c817aaad55bc3a7fbc1a8c645930d5b59c63f81e11eced2b02245",
-    "css": "4a5faee23ce614cb5be5e27d433fc50427d6a65ccc5d3eaf5147da367c123c7c",
-    "assetCatalog": "4d2758a7fabef1a4cf8fd67721eabb6e46f89cf9d5172ad28259a36922e06d29"
+    "swift": "83edbafba560e47a391afeaa792f6b324f761afb902338f038d227d399166d5e",
+    "css": "3fb697851e18d7a3f8e9b483e7979fff9c062a45c78579d0a35a850ed076c5ae",
+    "assetCatalog": "cd492fe7f67ae37fcde2791be15a00fd3b6b24d20d39464e588ac77dcf14f01b"
   },
   "generated": "1970-01-01T00:00:00.000Z"
 }

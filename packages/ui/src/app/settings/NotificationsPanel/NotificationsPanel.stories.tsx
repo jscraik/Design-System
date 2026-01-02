@@ -15,7 +15,7 @@ import { NotificationsPanel } from "./NotificationsPanel";
  * ```
  */
 const meta: Meta<typeof NotificationsPanel> = {
-  title: "Settings/NotificationsPanel",
+  title: "Components/Settings/Notifications Panel",
   component: NotificationsPanel,
   parameters: {
     layout: "fullscreen",

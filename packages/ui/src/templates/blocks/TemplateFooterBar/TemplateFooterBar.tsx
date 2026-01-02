@@ -2,10 +2,14 @@ import type { ReactNode } from "react";
 
 import { cn } from "../../../components/ui/utils";
 
+/** Visual variants for TemplateFooterBar. */
 export type TemplateFooterBarVariant = "default" | "elevated" | "transparent" | "subtle";
+/** Size presets for TemplateFooterBar. */
 export type TemplateFooterBarSize = "sm" | "md" | "lg";
+/** Status variants for TemplateFooterBar. */
 export type TemplateFooterBarStatus = "default" | "success" | "warning" | "error" | "info";
 
+/** Props for TemplateFooterBar. */
 export interface TemplateFooterBarProps {
   /** Content on the left side */
   leading?: ReactNode;
@@ -52,9 +56,9 @@ const variantStyles: Record<TemplateFooterBarVariant, string> = {
 };
 
 const sizeStyles: Record<TemplateFooterBarSize, { padding: string; gap: string }> = {
-  sm: { padding: "px-3 py-1.5", gap: "gap-2" },
+  sm: { padding: "px-3 py-2", gap: "gap-2" },
   md: { padding: "px-4 py-2.5", gap: "gap-3" },
-  lg: { padding: "px-5 py-3", gap: "gap-4" },
+  lg: { padding: "px-5 py-3.5", gap: "gap-4" },
 };
 
 const statusStyles: Record<TemplateFooterBarStatus, { bg: string; text: string; icon: string }> = {
@@ -70,8 +74,8 @@ const statusStyles: Record<TemplateFooterBarStatus, { bg: string; text: string; 
   },
   warning: {
     bg: "",
-    text: "text-foundation-accent-yellow",
-    icon: "text-foundation-accent-yellow",
+    text: "text-foundation-accent-orange",
+    icon: "text-foundation-accent-orange",
   },
   error: {
     bg: "",
@@ -88,7 +92,7 @@ const statusStyles: Record<TemplateFooterBarStatus, { bg: string; text: string; 
 const statusIcons: Record<TemplateFooterBarStatus, ReactNode> = {
   default: null,
   success: (
-    <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -97,7 +101,7 @@ const statusIcons: Record<TemplateFooterBarStatus, ReactNode> = {
     </svg>
   ),
   warning: (
-    <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -106,7 +110,7 @@ const statusIcons: Record<TemplateFooterBarStatus, ReactNode> = {
     </svg>
   ),
   error: (
-    <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -115,7 +119,7 @@ const statusIcons: Record<TemplateFooterBarStatus, ReactNode> = {
     </svg>
   ),
   info: (
-    <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -125,6 +129,11 @@ const statusIcons: Record<TemplateFooterBarStatus, ReactNode> = {
   ),
 };
 
+/**
+ * Render the template footer bar.
+ * @param props - Footer bar props.
+ * @returns The footer bar element.
+ */
 export function TemplateFooterBar({
   leading,
   trailing,
@@ -174,7 +183,7 @@ export function TemplateFooterBar({
   const loadingElement = loading && (
     <div className="flex items-center gap-2">
       <svg
-        className="size-4 animate-spin text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
+        className="w-4 h-4 animate-spin text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
         fill="none"
         viewBox="0 0 24 24"
       >
@@ -239,6 +248,7 @@ export function TemplateFooterBar({
 }
 
 // Compound component for footer button
+/** Props for TemplateFooterButton. */
 export interface TemplateFooterButtonProps {
   children: ReactNode;
   onClick?: () => void;
@@ -250,6 +260,11 @@ export interface TemplateFooterButtonProps {
   className?: string;
 }
 
+/**
+ * Render a button for the footer bar.
+ * @param props - Button props.
+ * @returns The footer button element.
+ */
 export function TemplateFooterButton({
   children,
   onClick,
@@ -262,17 +277,17 @@ export function TemplateFooterButton({
 }: TemplateFooterButtonProps) {
   const variantClasses = {
     default:
-      "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary hover:bg-foundation-bg-light-4 dark:hover:bg-foundation-bg-dark-4 border border-foundation-bg-light-4 dark:border-foundation-bg-dark-4",
+      "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
     primary:
-      "bg-foundation-accent-blue text-white hover:bg-foundation-accent-blue/90 border border-transparent",
+      "bg-button-primary-bg-light dark:bg-button-primary-bg-dark text-button-primary-text-light dark:text-button-primary-text-dark hover:bg-button-primary-bg-light-hover dark:hover:bg-button-primary-bg-dark-hover border border-transparent shadow-sm",
     ghost:
-      "bg-transparent text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 border border-transparent",
+      "bg-transparent text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary border border-transparent",
     danger:
-      "bg-foundation-accent-red text-white hover:bg-foundation-accent-red/90 border border-transparent",
+      "bg-foundation-accent-red text-white hover:bg-foundation-accent-red/90 border border-transparent shadow-sm",
   };
 
   const sizeClasses = {
-    sm: "text-xs px-3 py-1.5 rounded-md",
+    sm: "text-xs px-3 py-1.5 rounded-lg",
     md: "text-sm px-4 py-2 rounded-lg",
   };
 
@@ -282,17 +297,17 @@ export function TemplateFooterButton({
       onClick={onClick}
       disabled={disabled || loading}
       className={cn(
-        "inline-flex items-center justify-center gap-1.5 font-medium",
+        "inline-flex items-center justify-center gap-2 font-medium",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue focus-visible:ring-offset-1",
-        "transition-colors duration-150",
+        "transition-colors",
         variantClasses[variant],
         sizeClasses[size],
-        (disabled || loading) && "opacity-50 cursor-not-allowed",
+        (disabled || loading) && "opacity-40 cursor-not-allowed pointer-events-none",
         className,
       )}
     >
       {loading ? (
-        <svg className="size-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
+        <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
           <circle
             className="opacity-25"
             cx="12"
@@ -316,6 +331,7 @@ export function TemplateFooterButton({
 }
 
 // Compound component for footer link
+/** Props for TemplateFooterLink. */
 export interface TemplateFooterLinkProps {
   children: ReactNode;
   onClick?: () => void;
@@ -325,6 +341,11 @@ export interface TemplateFooterLinkProps {
   disabled?: boolean;
 }
 
+/**
+ * Render a link for the footer bar.
+ * @param props - Link props.
+ * @returns The footer link element.
+ */
 export function TemplateFooterLink({
   children,
   onClick,
@@ -335,17 +356,16 @@ export function TemplateFooterLink({
 }: TemplateFooterLinkProps) {
   const baseClasses = cn(
     "inline-flex items-center gap-1.5 text-xs font-medium",
-    "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-    "hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue focus-visible:rounded",
-    "transition-colors duration-150",
-    disabled && "opacity-50 pointer-events-none",
+    "text-foundation-accent-blue hover:text-foundation-accent-blue/80",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue focus-visible:rounded-sm",
+    "transition-colors",
+    disabled && "opacity-40 pointer-events-none cursor-not-allowed",
     className,
   );
 
   const content = (
     <>
-      {icon && <span className="size-3.5">{icon}</span>}
+      {icon && <span className="w-3.5 h-3.5">{icon}</span>}
       {children}
     </>
   );
@@ -366,6 +386,7 @@ export function TemplateFooterLink({
 }
 
 // Compound component for footer text/info
+/** Props for TemplateFooterText. */
 export interface TemplateFooterTextProps {
   children: ReactNode;
   variant?: "default" | "muted" | "success" | "warning" | "error";
@@ -373,6 +394,11 @@ export interface TemplateFooterTextProps {
   className?: string;
 }
 
+/**
+ * Render text content for the footer bar.
+ * @param props - Text props.
+ * @returns The footer text element.
+ */
 export function TemplateFooterText({
   children,
   variant = "default",
@@ -383,7 +409,7 @@ export function TemplateFooterText({
     default: "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
     muted: "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
     success: "text-foundation-accent-green",
-    warning: "text-foundation-accent-yellow",
+    warning: "text-foundation-accent-orange",
     error: "text-foundation-accent-red",
   };
 
@@ -391,17 +417,23 @@ export function TemplateFooterText({
     <span
       className={cn("inline-flex items-center gap-1.5 text-xs", variantClasses[variant], className)}
     >
-      {icon && <span className="size-3.5">{icon}</span>}
+      {icon && <span className="w-3.5 h-3.5">{icon}</span>}
       {children}
     </span>
   );
 }
 
 // Compound component for footer divider
+/** Props for TemplateFooterDivider. */
 export interface TemplateFooterDividerProps {
   className?: string;
 }
 
+/**
+ * Render a divider within the footer bar.
+ * @param props - Divider props.
+ * @returns The divider element.
+ */
 export function TemplateFooterDivider({ className }: TemplateFooterDividerProps) {
   return (
     <div

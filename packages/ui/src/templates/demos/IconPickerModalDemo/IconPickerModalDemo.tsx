@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { IconPickerModal } from "../../../app/modals/IconPickerModal";
 import {
   IconFolder,
@@ -89,7 +90,7 @@ export function IconPickerModalDemo() {
             <button
               type="button"
               onClick={() => setIsOpen(true)}
-              className="w-full px-6 py-3 bg-foundation-accent-green-light dark:bg-foundation-accent-green text-white hover:opacity-90 hover:scale-105 active:scale-95 rounded-xl transition-all duration-200 font-medium text-[16px] leading-[26px] tracking-[-0.4px] shadow-sm hover:shadow-md"
+              className="w-full px-6 py-3 bg-foundation-accent-green-light dark:bg-foundation-accent-green text-accent-foreground hover:opacity-90 hover:scale-105 active:scale-95 rounded-xl transition-all duration-200 font-medium text-[16px] leading-[26px] tracking-[-0.4px] shadow-sm hover:shadow-md"
             >
               Choose Icon
             </button>

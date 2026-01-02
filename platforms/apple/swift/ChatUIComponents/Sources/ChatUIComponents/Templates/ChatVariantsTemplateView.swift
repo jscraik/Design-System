@@ -2,6 +2,7 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Renders the chat template with selectable layout variants.
 public struct ChatVariantsTemplateView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     private enum Variant: String, CaseIterable, Identifiable {
@@ -33,10 +34,13 @@ public struct ChatVariantsTemplateView: View {
         ChatSidebarItem(title: "Template audit", systemIcon: "doc.text.fill")
     ]
 
+    /// Creates a chat variants template view.
+    /// - Parameter messages: Initial message list to display.
     public init(messages: [ChatMessageItem] = ChatTemplateView.sampleMessages) {
         _messages = State(initialValue: messages)
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(spacing: 0) {
             TemplateHeaderBarView(

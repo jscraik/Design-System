@@ -40,13 +40,27 @@
   --foundation-icon-light-primary: #0D0D0D;
   --foundation-icon-light-secondary: #5D5D5D;
   --foundation-icon-light-tertiary: #8F8F8F;
-  --foundation-icon-light-inverted: #8F8F8F;
+  --foundation-icon-light-inverted: #FFFFFF;
+  --foundation-icon-light-accent: #0285FF;
+  --foundation-icon-light-status-error: #E02E2A;
+  --foundation-icon-light-status-warning: #E25507;
+  --foundation-icon-light-status-success: #008635;
 
   /* Dark icon */
   --foundation-icon-dark-primary: #FFFFFF;
   --foundation-icon-dark-secondary: #CDCDCD;
   --foundation-icon-dark-tertiary: #AFAFAF;
-  --foundation-icon-dark-inverted: #AFAFAF;
+  --foundation-icon-dark-inverted: #0D0D0D;
+  --foundation-icon-dark-accent: #48AAFF;
+  --foundation-icon-dark-status-error: #FF8583;
+  --foundation-icon-dark-status-warning: #FF9E6C;
+  --foundation-icon-dark-status-success: #40C977;
+
+  /* Borders */
+  --foundation-border-light: #0D0D0D0D;
+  --foundation-border-heavy: #0D0D0D26;
+  --foundation-border-dark-default: #FFFFFF26;
+  --foundation-border-dark-light: #FFFFFF0D;
 
   /* Light accents */
   --foundation-accent-gray-light: #8F8F8F;
@@ -111,6 +125,59 @@
   --foundation-caption-weight-emphasis: 600;
   --foundation-caption-tracking: -0.1px;
 
+  --foundation-card-title-size: 17px;
+  --foundation-card-title-line: 23px;
+  --foundation-card-title-weight: 500;
+  --foundation-card-title-weight-regular: 500;
+  --foundation-card-title-tracking: -0.43px;
+
+  --foundation-list-title-size: 17px;
+  --foundation-list-title-line: 24px;
+  --foundation-list-title-weight: 400;
+  --foundation-list-title-weight-regular: 400;
+  --foundation-list-title-tracking: -0.4px;
+
+  --foundation-list-subtitle-size: 14px;
+  --foundation-list-subtitle-line: 20px;
+  --foundation-list-subtitle-weight: 400;
+  --foundation-list-subtitle-weight-regular: 400;
+  --foundation-list-subtitle-tracking: -0.18px;
+
+  --foundation-button-label-size: 15px;
+  --foundation-button-label-line: 24px;
+  --foundation-button-label-weight: 500;
+  --foundation-button-label-weight-regular: 500;
+  --foundation-button-label-tracking: -0.24px;
+
+  --foundation-button-label-small-size: 14px;
+  --foundation-button-label-small-line: 20px;
+  --foundation-button-label-small-weight: 600;
+  --foundation-button-label-small-weight-regular: 600;
+  --foundation-button-label-small-tracking: -0.3px;
+
+
+  /* Radius scale */
+  --foundation-radius-6: 6px;
+  --foundation-radius-8: 8px;
+  --foundation-radius-10: 10px;
+  --foundation-radius-12: 12px;
+  --foundation-radius-16: 16px;
+  --foundation-radius-18: 18px;
+  --foundation-radius-21: 21px;
+  --foundation-radius-24: 24px;
+  --foundation-radius-30: 30px;
+  --foundation-radius-round: 999px;
+
+  /* Size scale */
+  --foundation-size-control-height: 44px;
+  --foundation-size-card-header-height: 56px;
+  --foundation-size-hit-target: 44px;
+
+  /* Shadows */
+  --foundation-shadow-card: 0px 4px 16px 0px #0000000D;
+  --foundation-shadow-pip: 0px 4px 16px 0px #0000000D;
+  --foundation-shadow-pill: 0px 10px 22px 0px #0000000A;
+  --foundation-shadow-close: 0px 4px 8px 0px #00000029;
 
   /* Accessibility */
   --foundation-focus-ring: #0285ff;

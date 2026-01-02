@@ -1,13 +1,20 @@
 import SwiftUI
 import ChatUIFoundation
 
-/// Example view demonstrating ListItemView and InputView components
+/// Example view demonstrating `ListItemView` and `InputView`.
+///
+/// - Example:
+/// ```swift
+/// NavigationExampleView()
+/// ```
 public struct NavigationExampleView: View {
     @State private var selectedItem: String? = "inbox"
     @State private var searchText: String = ""
     
+    /// Creates the navigation example view.
     public init() {}
     
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(spacing: 0) {
             // Search input

@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "@storybook/test";
 
-import { Button } from "../../base/button";
+import { Button } from "../../base/Button";
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "./tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./Tooltip";
 
 const meta: Meta<typeof Tooltip> = {
-  title: "UI/Tooltip",
+  title: "Components/UI/Overlays/Tooltip",
   component: Tooltip,
   tags: ["autodocs"],
   parameters: {

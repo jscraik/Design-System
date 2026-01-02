@@ -1,8 +1,11 @@
 import type { ComponentType } from "react";
 
-// ============================================================================
-// ORIGINAL TEMPLATES
-// ============================================================================
+import { FoundationsShowcase } from "../design-system/showcase/FoundationsShowcase";
+import { ColorShowcase } from "../design-system/showcase/ColorShowcase";
+import { TypographyShowcase } from "../design-system/showcase/TypographyShowcase";
+import { SpacingShowcase } from "../design-system/showcase/SpacingShowcase";
+import { IconographyShowcase } from "../design-system/showcase/IconographyShowcase";
+import { DesignSystemDocs } from "../design-system/showcase/DesignSystemDocs";
 
 import { ComposeTemplate } from "./ComposeTemplate";
 import { ChatTemplate } from "./ChatTemplate";
@@ -20,47 +23,20 @@ import { ManageAppsPanelTemplate } from "./ManageAppsPanelTemplate";
 import { NotificationsPanelTemplate } from "./NotificationsPanelTemplate";
 import { PersonalizationPanelTemplate } from "./PersonalizationPanelTemplate";
 import { SecurityPanelTemplate } from "./SecurityPanelTemplate";
-
-// ============================================================================
-// NEW TEMPLATES FROM FIGMA EXPORT
-// ============================================================================
-// NOTE: These templates require import path updates to work with the new structure.
-// They have been temporarily commented out until imports can be fixed.
-//
-// To enable a template:
-// 1. Update import paths to use relative imports from packages/ui/src/templates/
-// 2. Ensure all referenced components exist in packages/ui/src/
-// 3. Uncomment the import and add it to the registry below
-
-// Design System Showcases
-import { FoundationsShowcase } from "../design-system/showcase/FoundationsShowcase";
-import { ColorShowcase } from "../design-system/showcase/ColorShowcase";
-import { TypographyShowcase } from "../design-system/showcase/TypographyShowcase";
-import { SpacingShowcase } from "../design-system/showcase/SpacingShowcase";
-import { IconographyShowcase } from "../design-system/showcase/IconographyShowcase";
-import { DesignSystemDocs } from "../design-system/showcase/DesignSystemDocs";
 import { ChatGPTIconCatalog } from "./ChatGPTIconCatalog";
-
-// Template Blocks
 import { TemplateShellDemo } from "./demos/TemplateShellDemo";
 import { TemplatePanelDemo } from "./demos/TemplatePanelDemo";
 import { TemplateHeaderBarDemo } from "./demos/TemplateHeaderBarDemo";
 import { TemplateFormFieldDemo } from "./demos/TemplateFormFieldDemo";
 import { TemplateFooterBarDemo } from "./demos/TemplateFooterBarDemo";
 import { TemplateFieldGroupDemo } from "./demos/TemplateFieldGroupDemo";
-
-// Settings Blocks
 import { SettingToggleBlockDemo } from "./demos/SettingToggleBlockDemo";
 import { SettingRowBlockDemo } from "./demos/SettingRowBlockDemo";
 import { SettingDropdownBlockDemo } from "./demos/SettingDropdownBlockDemo";
-
-// Chat Components
 import { ChatHeaderDemo } from "./demos/ChatHeaderDemo";
 import { ModelSelectorDemo } from "./demos/ModelSelectorDemo";
 import { ChatInputDemo } from "./demos/ChatInputDemo";
 import { AttachmentMenuDemo } from "./demos/AttachmentMenuDemo";
-
-// Modals
 import { IconPickerModalDemo } from "./demos/IconPickerModalDemo";
 import { DiscoverySettingsModalDemo } from "./demos/DiscoverySettingsModalDemo";
 import { SettingsModalDemo } from "./demos/SettingsModalDemo";
@@ -69,6 +45,9 @@ import { SettingsModalDemo } from "./demos/SettingsModalDemo";
 // TEMPLATE DEFINITIONS
 // ============================================================================
 
+/**
+ * Template identifiers for the templates registry.
+ */
 export type TemplateId =
   // Original templates
   | "compose"
@@ -142,6 +121,9 @@ export type TemplateId =
 //   | "discovery-settings-modal"
 //   | "settings-modal";
 
+/**
+ * Template categories used for grouping registry entries.
+ */
 export type TemplateCategory =
   | "layouts"
   | "modals"
@@ -151,6 +133,9 @@ export type TemplateCategory =
   | "components"
   | "templates";
 
+/**
+ * Definition for a template registry entry.
+ */
 export interface TemplateDefinition {
   id: TemplateId;
   title: string;
@@ -160,6 +145,9 @@ export interface TemplateDefinition {
   tags?: string[];
 }
 
+/**
+ * Registry of available templates and demos.
+ */
 export const templateRegistry: TemplateDefinition[] = [
   // ==========================================================================
   // ORIGINAL TEMPLATES
@@ -520,12 +508,25 @@ export const templateRegistry: TemplateDefinition[] = [
   // },
 ];
 
+/**
+ * Look up a template definition by ID.
+ * @param id - Template identifier.
+ * @returns The template definition if found.
+ */
 export const getTemplate = (id: TemplateId): TemplateDefinition | undefined =>
   templateRegistry.find((template) => template.id === id);
 
+/**
+ * Return templates matching a category.
+ * @param category - Template category.
+ * @returns Templates in the requested category.
+ */
 export const getTemplatesByCategory = (category: TemplateCategory): TemplateDefinition[] =>
   templateRegistry.filter((template) => template.category === category);
 
+/**
+ * Human-readable category labels for UI.
+ */
 export const categories: Record<TemplateCategory, string> = {
   layouts: "Layouts",
   modals: "Modals",

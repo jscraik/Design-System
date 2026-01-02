@@ -10,6 +10,7 @@ import ChatUIFoundation
 import ChatUIComponents
 import ChatUIThemes
 
+/// Gallery of button components.
 struct ButtonsGallery: View {
     var body: some View {
         VStack(alignment: .leading, spacing: FSpacing.s24) {

@@ -1,6 +1,5 @@
 import { IconChevronLeftMd, IconChevronRightMd } from "../../../icons/ChatGPTIcons";
-
-import type { SettingsPanelProps } from "../types";
+import type { SettingsPanelProps } from "../shared/types";
 
 export function NotificationsPanel({ onBack }: SettingsPanelProps) {
   return (
@@ -23,7 +22,7 @@ export function NotificationsPanel({ onBack }: SettingsPanelProps) {
         >
           <IconChevronLeftMd className="size-4 text-foundation-icon-dark-primary" />
         </button>
-        <h2 className="text-heading-3 font-semibold   text-foundation-text-dark-primary">
+        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foundation-text-dark-primary">
           Notifications
         </h2>
       </div>
@@ -35,11 +34,11 @@ export function NotificationsPanel({ onBack }: SettingsPanelProps) {
             type="button"
             className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors"
           >
-            <span className="text-body-small font-normal   text-foundation-text-dark-primary">
+            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
               Responses
             </span>
             <div className="flex items-center gap-2">
-              <span className="text-body-small font-normal   text-foundation-text-dark-secondary">
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-secondary">
                 Push
               </span>
               <IconChevronRightMd className="size-4 text-foundation-icon-dark-tertiary" />
@@ -51,11 +50,11 @@ export function NotificationsPanel({ onBack }: SettingsPanelProps) {
             type="button"
             className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors"
           >
-            <span className="text-body-small font-normal   text-foundation-text-dark-primary">
+            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
               Turn safety notifications
             </span>
             <div className="flex items-center gap-2">
-              <span className="text-body-small font-normal   text-foundation-text-dark-secondary">
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-secondary">
                 Push, Email, SMS
               </span>
               <IconChevronRightMd className="size-4 text-foundation-icon-dark-tertiary" />
@@ -67,11 +66,11 @@ export function NotificationsPanel({ onBack }: SettingsPanelProps) {
             type="button"
             className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors"
           >
-            <span className="text-body-small font-normal   text-foundation-text-dark-primary">
+            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
               Group chats
             </span>
             <div className="flex items-center gap-2">
-              <span className="text-body-small font-normal   text-foundation-text-dark-secondary">
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-secondary">
                 Push
               </span>
               <IconChevronRightMd className="size-4 text-foundation-icon-dark-tertiary" />
@@ -83,11 +82,11 @@ export function NotificationsPanel({ onBack }: SettingsPanelProps) {
             type="button"
             className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors"
           >
-            <span className="text-body-small font-normal   text-foundation-text-dark-primary">
+            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
               Pulse daily updates
             </span>
             <div className="flex items-center gap-2">
-              <span className="text-body-small font-normal   text-foundation-text-dark-secondary">
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-secondary">
                 Push
               </span>
               <IconChevronRightMd className="size-4 text-foundation-icon-dark-tertiary" />
@@ -99,11 +98,11 @@ export function NotificationsPanel({ onBack }: SettingsPanelProps) {
             type="button"
             className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors"
           >
-            <span className="text-body-small font-normal   text-foundation-text-dark-primary">
+            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
               Pulse leaks
             </span>
             <div className="flex items-center gap-2">
-              <span className="text-body-small font-normal   text-foundation-text-dark-secondary">
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-secondary">
                 Push, Email
               </span>
               <IconChevronRightMd className="size-4 text-foundation-icon-dark-tertiary" />
@@ -115,11 +114,11 @@ export function NotificationsPanel({ onBack }: SettingsPanelProps) {
             type="button"
             className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors"
           >
-            <span className="text-body-small font-normal   text-foundation-text-dark-primary">
+            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
               Projects
             </span>
             <div className="flex items-center gap-2">
-              <span className="text-body-small font-normal   text-foundation-text-dark-secondary">
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-secondary">
                 Email
               </span>
               <IconChevronRightMd className="size-4 text-foundation-icon-dark-tertiary" />
@@ -131,11 +130,11 @@ export function NotificationsPanel({ onBack }: SettingsPanelProps) {
             type="button"
             className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors"
           >
-            <span className="text-body-small font-normal   text-foundation-text-dark-primary">
+            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
               Recommendations
             </span>
             <div className="flex items-center gap-2">
-              <span className="text-body-small font-normal   text-foundation-text-dark-secondary">
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-secondary">
                 Push, Email
               </span>
               <IconChevronRightMd className="size-4 text-foundation-icon-dark-tertiary" />

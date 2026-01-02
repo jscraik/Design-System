@@ -2,15 +2,24 @@
 
 import * as React from "react";
 
-import { Button } from "../../base/button";
+import { Button } from "../../base/Button";
 import { cn } from "../../utils";
 
+/**
+ * Represents a combobox option.
+ */
 export interface ComboboxOption {
+  /** Option value */
   value: string;
+  /** Option label */
   label: string;
+  /** Whether the option is disabled */
   disabled?: boolean;
 }
 
+/**
+ * Props for the combobox component.
+ */
 export interface ComboboxProps {
   /** Available options */
   options: ComboboxOption[];
@@ -33,7 +42,11 @@ export interface ComboboxProps {
 }
 
 /**
- * Combobox - A searchable select component with autocomplete
+ * Renders a searchable select component with autocomplete.
+ *
+ * Accessibility contract:
+ * - The trigger uses `role="combobox"` and `aria-expanded`.
+ * - The options list uses `role="listbox"`/`option`.
  *
  * @example
  * ```tsx
@@ -48,6 +61,9 @@ export interface ComboboxProps {
  *   placeholder="Select framework..."
  * />
  * ```
+ *
+ * @param props - Combobox props.
+ * @returns A combobox element with search and selection UI.
  */
 function Combobox({
   options,

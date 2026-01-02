@@ -40,12 +40,13 @@ interface McpResponse {
 }
 
 /**
- * Cloudflare Workers MCP Server for ChatUI Widgets
- * Serves widgets and provides MCP tools for OpenAI integration
+ * Cloudflare Workers MCP server for ChatUI widgets.
+ * Serves widget resources and MCP tool responses.
  */
 
 /**
- * Security headers for all responses
+ * Return security headers for all responses.
+ * @returns A record of security header values.
  */
 function getSecurityHeaders(): Record<string, string> {
   return {
@@ -60,7 +61,9 @@ function getSecurityHeaders(): Record<string, string> {
 }
 
 /**
- * Add security headers to a response
+ * Add security headers to a response.
+ * @param response - The response to decorate.
+ * @returns A response with security headers applied.
  */
 function addSecurityHeaders(response: Response): Response {
   const newHeaders = new Headers(response.headers);
@@ -77,15 +80,25 @@ function addSecurityHeaders(response: Response): Response {
   });
 }
 
+/**
+ * MCP server implementation for widget resources and tools.
+ */
 export class ChatUIWidgetServer {
   private env: Env;
   private resources: Map<string, McpResource> = new Map();
   private tools: Map<string, McpToolDefinition> = new Map();
 
+  /**
+   * Create a widget server instance.
+   * @param env - Cloudflare Workers environment bindings.
+   */
   constructor(env: Env) {
     this.env = env;
   }
 
+  /**
+   * Initialize resources and tool definitions.
+   */
   async init(): Promise<void> {
     // Auto-register all widgets from the manifest
     for (const [widgetName, widgetInfo] of Object.entries(widgetManifest)) {
@@ -109,7 +122,9 @@ export class ChatUIWidgetServer {
   }
 
   /**
-   * Handle MCP protocol requests
+   * Handle MCP protocol requests.
+   * @param request - The incoming request.
+   * @returns The MCP response.
    */
   async handleMcpRequest(request: Request): Promise<Response> {
     // Handle CORS preflight
@@ -227,7 +242,9 @@ export class ChatUIWidgetServer {
   }
 
   /**
-   * Handle resource read requests
+   * Handle resource read requests.
+   * @param uri - The resource URI to resolve.
+   * @returns A response with the resource payload.
    */
   private async handleResourceRead(uri: string): Promise<Response> {
     try {
@@ -311,7 +328,10 @@ export class ChatUIWidgetServer {
   }
 
   /**
-   * Handle tool call requests
+   * Handle tool call requests.
+   * @param toolName - Tool name to invoke.
+   * @param args - Tool arguments payload.
+   * @returns A response with the tool result.
    */
   private async handleToolCall(toolName: string, args: Record<string, unknown>): Promise<Response> {
     try {
@@ -346,8 +366,7 @@ export class ChatUIWidgetServer {
   }
 
   /**
-   * Register example tools that demonstrate widget usage
-   * Following OpenAI's official MCP server patterns
+   * Register example tools that demonstrate widget usage.
    */
   private registerExampleTools(): void {
     // Example: Dashboard tool (public, no widget access)

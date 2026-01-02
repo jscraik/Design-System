@@ -12,6 +12,7 @@ import ChatUIThemes
 import ChatUIShellChatGPT
 
 #if os(macOS)
+/// Entry point for the macOS Component Gallery app.
 @main
 struct ComponentGalleryApp: App {
     @StateObject private var galleryState = GalleryState()
@@ -56,6 +57,7 @@ struct ComponentGalleryApp: App {
 #endif
 
 #if os(iOS)
+/// Entry point for the iOS Component Gallery app.
 @main
 struct ComponentGalleryiOSApp: App {
     @StateObject private var galleryState = GalleryState()
@@ -71,6 +73,7 @@ struct ComponentGalleryiOSApp: App {
 
 // MARK: - Gallery State
 
+/// Shared state for the component gallery UI.
 @MainActor
 class GalleryState: ObservableObject {
     @Published var selectedCategory: ComponentCategory = .foundation
@@ -81,6 +84,7 @@ class GalleryState: ObservableObject {
     @Published var highContrastMode: Bool = false
     @Published var reducedMotionMode: Bool = false
     
+    /// Cycles the color scheme override between system, dark, and light.
     func toggleColorScheme() {
         if colorSchemeOverride == nil {
             colorSchemeOverride = .dark
@@ -91,10 +95,12 @@ class GalleryState: ObservableObject {
         }
     }
     
+    /// Toggles side-by-side comparison mode.
     func toggleSideBySide() {
         sideBySideMode.toggle()
     }
     
+    /// Emits a notification to export a screenshot.
     func exportScreenshot() {
         // Trigger screenshot export
         NotificationCenter.default.post(name: .exportScreenshot, object: nil)
@@ -102,11 +108,13 @@ class GalleryState: ObservableObject {
 }
 
 extension Notification.Name {
+    /// Posted when a screenshot export is requested.
     static let exportScreenshot = Notification.Name("exportScreenshot")
 }
 
 // MARK: - Component Categories
 
+/// Component categories available in the gallery.
 enum ComponentCategory: String, CaseIterable, Identifiable, Sendable {
     case foundation = "Foundation"
     case settings = "Settings"

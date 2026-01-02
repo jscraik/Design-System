@@ -1,4 +1,4 @@
 // Data display components
-export * from "./card";
-export * from "./chart";
-export * from "./progress";
+export * from "./Card";
+export * from "./Chart";
+export * from "./Progress";

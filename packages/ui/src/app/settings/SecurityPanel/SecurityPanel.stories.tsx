@@ -15,7 +15,7 @@ import { SecurityPanel } from "./SecurityPanel";
  * ```
  */
 const meta: Meta<typeof SecurityPanel> = {
-  title: "Settings/SecurityPanel",
+  title: "Components/Settings/Security Panel",
   component: SecurityPanel,
   parameters: {
     layout: "fullscreen",

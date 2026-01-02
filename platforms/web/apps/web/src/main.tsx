@@ -11,7 +11,11 @@ if (import.meta.env.DEV) {
   ensureMockOpenAI();
 }
 
-document.documentElement.setAttribute("data-theme", "dark");
+const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+document.documentElement.setAttribute("data-theme", prefersDark.matches ? "dark" : "light");
+prefersDark.addEventListener("change", (event) => {
+  document.documentElement.setAttribute("data-theme", event.matches ? "dark" : "light");
+});
 
 const host = createStandaloneHost(import.meta.env.VITE_API_BASE ?? "http://localhost:8787");
 

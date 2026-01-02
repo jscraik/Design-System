@@ -4,6 +4,7 @@ import ChatUIFoundation
 import ChatUIComponents
 import ChatUIMCP
 
+/// Main chat experience powered by MCP tools.
 struct ChatView: View {
     let mcpClient: MCPClient?
     
@@ -124,17 +125,24 @@ struct ChatView: View {
 
 // MARK: - Chat Message Model
 
+/// Chat message model used by the macOS app.
 struct ChatMessage: Identifiable {
     let id = UUID()
     let role: Role
     let content: String
     let widgetData: WidgetData?
     
+    /// Author role for a chat message.
     enum Role {
         case user
         case assistant
     }
     
+    /// Creates a chat message.
+    /// - Parameters:
+    ///   - role: Message author role.
+    ///   - content: The message content.
+    ///   - widgetData: Optional widget payload to render.
     init(role: Role, content: String, widgetData: WidgetData? = nil) {
         self.role = role
         self.content = content
@@ -144,6 +152,7 @@ struct ChatMessage: Identifiable {
 
 // MARK: - Subviews
 
+/// Empty state shown when no messages exist.
 struct EmptyStateView: View {
     var body: some View {
         VStack(spacing: FSpacing.s16) {
@@ -164,6 +173,7 @@ struct EmptyStateView: View {
     }
 }
 
+/// Renders a single chat message row.
 struct MessageRow: View {
     let message: ChatMessage
     
@@ -206,6 +216,7 @@ struct MessageRow: View {
     }
 }
 
+/// Indicates that a response is being processed.
 struct ProcessingIndicator: View {
     var body: some View {
         HStack(spacing: FSpacing.s8) {
@@ -222,6 +233,7 @@ struct ProcessingIndicator: View {
     }
 }
 
+/// Error banner shown in the message list.
 struct ErrorMessageView: View {
     let message: String
     @Environment(\.chatUITheme) private var theme
@@ -244,6 +256,7 @@ struct ErrorMessageView: View {
     }
 }
 
+/// Input bar for composing a message.
 struct ChatInputView: View {
     @Binding var text: String
     let isProcessing: Bool

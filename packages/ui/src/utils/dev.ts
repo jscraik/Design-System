@@ -1,9 +1,18 @@
 /**
- * Development utilities for debugging and testing components
+ * Development utilities for debugging and testing components.
  */
 
 /**
- * Log component props in development mode
+ * Logs component props in development mode.
+ *
+ * @param componentName - Human-readable component label for the log group.
+ * @param props - Props object to log.
+ * @returns The original props, to enable inline usage.
+ *
+ * @example
+ * ```ts
+ * const loggedProps = logProps("Button", props);
+ * ```
  */
 export function logProps<T extends Record<string, unknown>>(componentName: string, props: T): T {
   if (process.env.NODE_ENV === "development") {
@@ -15,7 +24,16 @@ export function logProps<T extends Record<string, unknown>>(componentName: strin
 }
 
 /**
- * Measure component render time
+ * Measures render function timing in development mode.
+ *
+ * @param componentName - Human-readable label for timing output.
+ * @param renderFn - Function to wrap and measure.
+ * @returns The wrapped function in development, otherwise the original.
+ *
+ * @example
+ * ```ts
+ * const render = measureRender("Card", () => <Card />);
+ * ```
  */
 export function measureRender<T extends (...args: unknown[]) => unknown>(
   componentName: string,
@@ -34,7 +52,16 @@ export function measureRender<T extends (...args: unknown[]) => unknown>(
 }
 
 /**
- * Debug component lifecycle
+ * Logs mount/unmount events in development mode.
+ *
+ * @param componentName - Human-readable label for logs.
+ * @param props - Optional props to log on mount.
+ * @returns A cleanup function to call on unmount, or `undefined` in production.
+ *
+ * @example
+ * ```ts
+ * useEffect(() => useDebugLifecycle("Sidebar", props), [props]);
+ * ```
  */
 export function useDebugLifecycle(componentName: string, props?: unknown) {
   if (process.env.NODE_ENV === "development") {
@@ -47,7 +74,16 @@ export function useDebugLifecycle(componentName: string, props?: unknown) {
 }
 
 /**
- * Validate required props
+ * Validates required props in development mode.
+ *
+ * @param componentName - Component label for error messages.
+ * @param props - Props object to validate.
+ * @param required - Keys that must be defined.
+ *
+ * @example
+ * ```ts
+ * validateProps("Badge", props, ["label"]);
+ * ```
  */
 export function validateProps<T extends Record<string, unknown>>(
   componentName: string,

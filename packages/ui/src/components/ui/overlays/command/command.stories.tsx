@@ -10,10 +10,10 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from "./command";
+} from "./Command";
 
 const meta: Meta<typeof Command> = {
-  title: "UI/Command",
+  title: "Components/UI/Overlays/Command",
   component: Command,
   tags: ["autodocs"],
   parameters: { layout: "centered" },

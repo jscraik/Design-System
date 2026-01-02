@@ -1,7 +1,9 @@
 import { IconChat, IconFolder, IconDotsHorizontal } from "../../../../../icons";
+import type { SidebarItem } from "../../../shared/types";
 
-import type { SidebarItem } from "../../../types";
-
+/**
+ * Props for the quick actions section in the sidebar.
+ */
 interface ChatSidebarQuickActionsProps {
   selectedAction: string;
   projectsData: SidebarItem[];
@@ -14,12 +16,10 @@ interface ChatSidebarQuickActionsProps {
 }
 
 /**
- * ChatSidebarQuickActions - Internal module
- * Renders "ChatGPT", "New project", projects list, "See more/less"
+ * Renders quick actions and project shortcuts in the sidebar.
  *
- * Following best practice:
- * - Parent owns state; children are pure render + callbacks
- * - No new exports during stabilization
+ * @param props - Quick actions props.
+ * @returns A quick actions list.
  */
 export function ChatSidebarQuickActions({
   selectedAction,
@@ -38,10 +38,14 @@ export function ChatSidebarQuickActions({
       {/* ChatGPT */}
       <button
         onClick={() => onNewChatClick("chatgpt")}
-        className="w-full flex items-center gap-3 px-3 py-2 bg-muted hover:bg-muted/80 rounded-lg transition-colors group"
+        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors group ${
+          selectedAction === "chatgpt" ? "bg-muted" : "hover:bg-muted"
+        }`}
       >
-        <IconChat className="size-4 flex-shrink-0" />
-        <span className="text-body-small font-normal">ChatGPT</span>
+        <IconChat className="size-5 flex-shrink-0 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
+        <span className="text-body-small font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+          ChatGPT
+        </span>
       </button>
 
       {/* New Project */}
@@ -49,8 +53,10 @@ export function ChatSidebarQuickActions({
         onClick={onNewProjectClick}
         className="w-full flex items-center gap-3 px-3 py-2 hover:bg-muted rounded-lg transition-colors group"
       >
-        <IconFolder className="size-4 flex-shrink-0" />
-        <span className="text-body-small font-normal">New project</span>
+        <IconFolder className="size-5 flex-shrink-0 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
+        <span className="text-body-small font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+          New project
+        </span>
       </button>
 
       {/* Projects List */}
@@ -71,7 +77,9 @@ export function ChatSidebarQuickActions({
           >
             {project.icon}
           </div>
-          <span className="text-body-small font-normal">{project.label}</span>
+          <span className="text-body-small font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            {project.label}
+          </span>
         </button>
       ))}
 
@@ -81,8 +89,8 @@ export function ChatSidebarQuickActions({
           onClick={onToggleExpanded}
           className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-muted transition-colors text-left"
         >
-          <IconDotsHorizontal className="size-4 flex-shrink-0" />
-          <span className="text-body-small font-normal">
+          <IconDotsHorizontal className="size-5 flex-shrink-0 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
+          <span className="text-body-small font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
             {projectsExpanded ? "See less" : "See more"}
           </span>
         </button>

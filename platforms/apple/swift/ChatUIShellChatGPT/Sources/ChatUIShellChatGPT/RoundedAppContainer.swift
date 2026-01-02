@@ -2,13 +2,17 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
-/// Container that clips content to ChatGPT app corner radius with border and shadow
+/// Container that clips content to ChatGPT app corner radius with border and shadow.
 public struct RoundedAppContainer<Content: View>: View {
     @ViewBuilder let content: () -> Content
     private let useGlassBackground: Bool
     @Environment(\.colorScheme) private var scheme
     @Environment(\.chatUITheme) private var theme
     
+    /// Creates a rounded container for a full app shell.
+    /// - Parameters:
+    ///   - useGlassBackground: Whether to render the glass background when available.
+    ///   - content: The content to wrap.
     public init(
         useGlassBackground: Bool = true,
         @ViewBuilder content: @escaping () -> Content

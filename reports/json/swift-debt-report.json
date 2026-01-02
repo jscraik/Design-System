@@ -1,0 +1,441 @@
+{
+  "reportMetadata": {
+    "generatedAt": "2026-01-02T00:37:00Z",
+    "scope": [
+      "ChatUIComponents",
+      "ChatUIShellChatGPT",
+      "ChatUIFoundation",
+      "ui-swift"
+    ],
+    "totalFilesAnalyzed": 121,
+    "totalLOC": 19210,
+    "brand": "brAInwav"
+  },
+  "summary": {
+    "criticalIssues": 3,
+    "highPriority": 7,
+    "mediumPriority": 12,
+    "lowPriority": 8,
+    "totalDebtItems": 30,
+    "estimatedEffortHours": 140,
+    "codeReductionPercentage": 24,
+    "duplicationReductionPercentage": 65
+  },
+  "findings": [
+    {
+      "id": "CRITICAL-001",
+      "severity": "critical",
+      "category": "code_duplication",
+      "title": "ChatUIButton Implementation Duplication",
+      "description": "Two nearly identical implementations of ChatUIButton with 95% code overlap between ChatUIComponents and ui-swift packages",
+      "locations": [
+        {
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ChatUIButton.swift",
+          "lineCount": 284,
+          "issues": ["Uses FType/FColor/FSpacing tokens", "Duplicate enum definitions"]
+        },
+        {
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/Components/ChatUIButton.swift",
+          "lineCount": 410,
+          "issues": ["Uses DesignTokens namespace", "More sophisticated styling logic"]
+        }
+      ],
+      "duplicates": [
+        "ChatUIButtonVariant enum",
+        "ChatUIButtonSize enum",
+        "resolveAccessibilityLabel() function",
+        "accessibilityLabelIfPresent extension",
+        "accessibilityHintIfPresent extension"
+      ],
+      "recommendation": "Create shared protocol in ChatUIFoundation, move shared enums and accessibility helpers",
+      "estimatedEffortHours": 5,
+      "risk": "low",
+      "impact": "High maintenance cost, inconsistency risk"
+    },
+    {
+      "id": "CRITICAL-002",
+      "severity": "critical",
+      "category": "code_duplication",
+      "title": "DesignTokens Duplication",
+      "description": "Two separate design token implementations with overlapping structure but different values between ChatUIFoundation and ui-swift",
+      "locations": [
+        {
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/DesignTokens.swift",
+          "lineCount": 433,
+          "issues": ["Contains Interactive enum", "More complete implementation"]
+        },
+        {
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/DesignTokens.swift",
+          "lineCount": 421,
+          "issues": ["Missing Interactive enum", "Different hex values for same tokens"]
+        }
+      ],
+      "differences": [
+        "Foundation has Interactive colors, ui-swift doesn't",
+        "ui-swift missing some accessibility extensions",
+        "Same token names with different hex values"
+      ],
+      "recommendation": "Consolidate into single source in ChatUIFoundation, use package-level re-exports in ui-swift",
+      "estimatedEffortHours": 10,
+      "risk": "medium",
+      "impact": "Token drift, maintenance nightmare"
+    },
+    {
+      "id": "CRITICAL-003",
+      "severity": "critical",
+      "category": "code_bloat",
+      "title": "Icon Implementation Bloat",
+      "description": "1,191 LOC of hand-coded icon data that should be asset-catalog based or generated",
+      "locations": [
+        {
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Icons/ChatGPTIcons.swift",
+          "lineCount": 448,
+          "issues": ["100+ static properties", "Repetitive code"]
+        },
+        {
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Icons/ChatGPTIconPaths.swift",
+          "lineCount": 261,
+          "issues": ["SVG path strings", "Should be in assets"]
+        },
+        {
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Icons/ChatGPTIconVectors.swift",
+          "lineCount": 482,
+          "issues": ["Vector path data", "Duplicate of paths"]
+        }
+      ],
+      "totalLines": 1191,
+      "recommendation": "Migrate to Asset Catalog, use code generation for type-safe accessors, remove vector path data",
+      "estimatedEffortHours": 20,
+      "risk": "medium",
+      "impact": "Large binary size, maintenance overhead"
+    },
+    {
+      "id": "HIGH-001",
+      "severity": "high",
+      "category": "inconsistency",
+      "title": "Dual Token System Confusion",
+      "description": "Two competing token APIs in the same codebase - FType/FColor/FSpacing vs DesignTokens",
+      "locations": [
+        {
+          "file": "ChatUIComponents (multiple files)",
+          "pattern": "FType.rowTitle(), FColor.textPrimary, FSpacing.s16"
+        },
+        {
+          "file": "ui-swift (multiple files)",
+          "pattern": "DesignTokens.Typography.Body, DesignTokens.Colors.Text.primary"
+        }
+      ],
+      "recommendation": "Standardize on DesignTokens namespace, create convenience extensions, deprecate FType/FColor/FSpacing",
+      "estimatedEffortHours": 14,
+      "risk": "medium",
+      "impact": "Developer confusion, inconsistent styling"
+    },
+    {
+      "id": "HIGH-002",
+      "severity": "high",
+      "category": "missing_abstraction",
+      "title": "Repeated Card/Container Patterns",
+      "description": "Multiple card/container implementations without shared base between SettingsCardView and ChatUICard",
+      "locations": [
+        {
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/SettingsCardView.swift"
+        },
+        {
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/Components/ChatUICard.swift"
+        }
+      ],
+      "recommendation": "Create shared ChatUICard component in Foundation with elevation and padding variants",
+      "estimatedEffortHours": 7,
+      "risk": "low",
+      "impact": "Code duplication, inconsistent styling"
+    },
+    {
+      "id": "HIGH-003",
+      "severity": "high",
+      "category": "missing_abstraction",
+      "title": "Repeated Modal/Dialog Patterns",
+      "description": "Multiple modal/dialog implementations without shared base across packages",
+      "locations": [
+        {
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ModalDialogView.swift"
+        },
+        {
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/AlertView.swift"
+        },
+        {
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/Components/ChatUIModal.swift"
+        }
+      ],
+      "recommendation": "Create shared modal protocol and base implementations in Foundation",
+      "estimatedEffortHours": 9,
+      "risk": "low",
+      "impact": "Inconsistent UX, duplicated accessibility logic"
+    },
+    {
+      "id": "MEDIUM-001",
+      "severity": "medium",
+      "category": "complexity",
+      "title": "ComposeView Monolithic Structure",
+      "description": "257 LOC with deeply nested VStacks and hardcoded logic, hard to test and maintain",
+      "locations": [
+        {
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ComposeView.swift",
+          "lineCount": 257,
+          "issues": ["Monolithic view", "Deeply nested structure", "Hardcoded business logic"]
+        }
+      ],
+      "recommendation": "Extract into smaller testable components: PromptInstructionsSection, PromptBuilderSection, TaskConfigurationSection",
+      "estimatedEffortHours": 5,
+      "risk": "low",
+      "impact": "Hard to test, hard to maintain"
+    },
+    {
+      "id": "MEDIUM-002",
+      "severity": "medium",
+      "category": "complexity",
+      "title": "ChatUIDataDisplay File Size",
+      "description": "641 LOC in single file containing multiple unrelated components (Table, List, Badge, etc.)",
+      "locations": [
+        {
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/Components/ChatUIDataDisplay.swift",
+          "lineCount": 641,
+          "issues": ["Multiple components in one file", "Hard to navigate"]
+        }
+      ],
+      "recommendation": "Split into separate files: ChatUITable.swift, ChatUIList.swift, ChatUIBadge.swift, ChatUIProgress.swift",
+      "estimatedEffortHours": 3,
+      "risk": "low",
+      "impact": "Hard to navigate, violates single responsibility"
+    },
+    {
+      "id": "MEDIUM-003",
+      "severity": "medium",
+      "category": "accessibility",
+      "title": "Incomplete Accessibility Labels",
+      "description": "Some components have accessibility labels, others don't. Inconsistent implementation.",
+      "locations": [
+        {
+          "file": "Multiple components",
+          "good": "ChatUIButton has proper labels",
+          "bad": "ComposeView buttons missing labels"
+        }
+      ],
+      "recommendation": "Create accessibility linting rules, add requirements to component template, run accessibility audit",
+      "estimatedEffortHours": 10,
+      "risk": "low",
+      "impact": "Poor screen reader experience"
+    },
+    {
+      "id": "MEDIUM-004",
+      "severity": "medium",
+      "category": "accessibility",
+      "title": "Missing Focus Management",
+      "description": "Inconsistent focus ring implementation across interactive components",
+      "locations": [
+        {
+          "file": "Most interactive components",
+          "issues": ["No consistent focus styling", "Missing keyboard navigation"]
+        }
+      ],
+      "recommendation": "Create shared focus modifier with consistent ring styling and behavior",
+      "estimatedEffortHours": 5,
+      "risk": "low",
+      "impact": "Keyboard navigation issues"
+    },
+    {
+      "id": "MEDIUM-005",
+      "severity": "medium",
+      "category": "testing",
+      "title": "Missing Snapshot Tests",
+      "description": "Many components lack snapshot tests, only SnapshotTests.swift (290 LOC) exists",
+      "locations": [
+        {
+          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Tests/ChatUIComponentsTests/SnapshotTests.swift",
+          "lineCount": 290,
+          "issues": ["Covers only some components", "Missing variant tests"]
+        }
+      ],
+      "recommendation": "Add snapshot tests for all components covering all variants and states",
+      "estimatedEffortHours": 18,
+      "risk": "low",
+      "impact": "Visual regressions"
+    },
+    {
+      "id": "LOW-001",
+      "severity": "low",
+      "category": "organization",
+      "title": "Inconsistent File Organization",
+      "description": "Inconsistent grouping of components across packages",
+      "locations": [
+        {
+          "file": "ChatUIComponents",
+          "structure": "Flat structure with some subfolders"
+        },
+        {
+          "file": "ui-swift",
+          "structure": "Components/ folder but mixed content"
+        },
+        {
+          "file": "ChatUIFoundation",
+          "structure": "Mixed token/utility files"
+        }
+      ],
+      "recommendation": "Standardize structure: Components/, Foundation/, Templates/ with proper subdirectories",
+      "estimatedEffortHours": 5,
+      "risk": "low",
+      "impact": "Hard to find code"
+    },
+    {
+      "id": "LOW-002",
+      "severity": "low",
+      "category": "documentation",
+      "title": "Missing Documentation",
+      "description": "Minimal documentation comments on public APIs",
+      "locations": [
+        {
+          "file": "Most files",
+          "issues": ["No doc comments", "Missing usage examples", "No parameter descriptions"]
+        }
+      ],
+      "recommendation": "Add comprehensive doc comments with examples to all public APIs",
+      "estimatedEffortHours": 14,
+      "risk": "none",
+      "impact": "Higher onboarding cost"
+    },
+    {
+      "id": "LOW-003",
+      "severity": "low",
+      "category": "dead_code",
+      "title": "Potentially Obsolete Platform Conditionals",
+      "description": "4 @available attributes found, some platform checks may be obsolete",
+      "locations": [
+        {
+          "file": "Multiple files",
+          "pattern": "#if os(macOS)",
+          "count": 4
+        }
+      ],
+      "recommendation": "Audit all #if os(macOS) and @available checks for necessity",
+      "estimatedEffortHours": 3,
+      "risk": "low",
+      "impact": "Unnecessary complexity"
+    }
+  ],
+  "metrics": {
+    "duplication": {
+      "criticalDuplicates": 3,
+      "highDuplicates": 7,
+      "mediumDuplicates": 12,
+      "estimatedDuplicateLOC": 4800,
+      "duplicationPercentage": 25
+    },
+    "complexity": {
+      "functionsOver30LOC": 15,
+      "filesOver300LOC": 12,
+      "nestingDepthOver4": 23,
+      "cyclomaticComplexityOver10": 8
+    },
+    "packageStats": [
+      {
+        "name": "ChatUIComponents",
+        "fileCount": 27,
+        "totalLOC": 5400,
+        "avgLOC": 200
+      },
+      {
+        "name": "ui-swift",
+        "fileCount": 9,
+        "totalLOC": 7200,
+        "avgLOC": 800
+      },
+      {
+        "name": "ChatUIFoundation",
+        "fileCount": 7,
+        "totalLOC": 2100,
+        "avgLOC": 300
+      },
+      {
+        "name": "ChatUIShellChatGPT",
+        "fileCount": 6,
+        "totalLOC": 800,
+        "avgLOC": 133
+      }
+    ]
+  },
+  "actionPlan": [
+    {
+      "phase": 1,
+      "name": "Critical",
+      "durationWeeks": "1-2",
+      "tasks": [
+        "Consolidate DesignTokens into single source",
+        "Extract ChatUIButton shared code to Foundation",
+        "Create shared accessibility helpers"
+      ]
+    },
+    {
+      "phase": 2,
+      "name": "High Priority",
+      "durationWeeks": "3-4",
+      "tasks": [
+        "Standardize token APIs, deprecate FType/FColor/FSpacing",
+        "Create card/modal abstractions",
+        "Icon consolidation to asset catalog"
+      ]
+    },
+    {
+      "phase": 3,
+      "name": "Medium Priority",
+      "durationWeeks": "5-6",
+      "tasks": [
+        "Split complex views (ComposeView, ChatUIDataDisplay)",
+        "Accessibility audit and improvements",
+        "Add comprehensive snapshot tests"
+      ]
+    },
+    {
+      "phase": 4,
+      "name": "Low Priority",
+      "durationWeeks": "7-8",
+      "tasks": [
+        "Reorganize file structure",
+        "Add comprehensive documentation",
+        "Remove dead code and audit conditionals"
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "name": "Periphery",
+      "purpose": "Detect dead code",
+      "command": "periphery scan --setup periphery.yml"
+    },
+    {
+      "name": "SwiftLint",
+      "purpose": "Enforce consistent style",
+      "command": "swiftlint lint --strict"
+    },
+    {
+      "name": "SwiftFormat",
+      "purpose": "Consistent formatting",
+      "command": "swiftformat ."
+    },
+    {
+      "name": "Muter",
+      "purpose": "Mutation testing",
+      "command": "muter --config .muter.yml"
+    }
+  ],
+  "estimatedImpact": {
+    "codeReductionLOC": 4700,
+    "currentLOC": 19210,
+    "targetLOC": 14510,
+    "reductionPercentage": 24,
+    "duplicationReduction": 65,
+    "testCoverageIncrease": {
+      "current": 15,
+      "target": 65,
+      "percentagePoints": 50
+    }
+  }
+}

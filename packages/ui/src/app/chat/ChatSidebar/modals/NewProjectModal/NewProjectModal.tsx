@@ -2,6 +2,9 @@ import type { ReactNode } from "react";
 
 import { getProjectIcon } from "../../data/projectData";
 
+/**
+ * Props for the new project modal.
+ */
 export interface NewProjectModalProps {
   isOpen: boolean;
   projectName: string;
@@ -20,6 +23,15 @@ export interface NewProjectModalProps {
   onClose: () => void;
 }
 
+/**
+ * Renders the new project modal with icon and category selection.
+ *
+ * Accessibility contract:
+ * - Overlay click closes the modal via `onClose`.
+ *
+ * @param props - New project modal props.
+ * @returns The modal element or `null` when closed.
+ */
 export function NewProjectModal({
   isOpen,
   projectName,
@@ -41,7 +53,7 @@ export function NewProjectModal({
 
   return (
     <div
-      className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[95]"
+      className="fixed inset-0 bg-foundation-bg-dark-1/70 backdrop-blur-sm flex items-center justify-center z-[95]"
       onClick={onClose}
     >
       <div

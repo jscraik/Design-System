@@ -30,8 +30,7 @@ import {
   IconVideo,
   IconWriting,
 } from "../../../icons";
-import { IconButton } from "../../../components/ui/base/icon-button";
-import { ModalBody, ModalDialog, ModalFooter } from "../../../components/ui/overlays/modal";
+import { ModalDialog } from "../../../components/ui/overlays/Modal";
 import { cn } from "../../../components/ui/utils";
 
 interface IconPickerModalProps {
@@ -43,7 +42,6 @@ interface IconPickerModalProps {
   projectName: string;
 }
 
-// Complete 8-color palette with proper design tokens (light + dark)
 const colors = [
   {
     id: "gray",
@@ -52,6 +50,7 @@ const colors = [
     darkClass: "text-foundation-accent-gray",
     lightBg: "bg-foundation-accent-gray-light",
     darkBg: "bg-foundation-accent-gray",
+    bgClasses: "bg-foundation-accent-gray-light dark:bg-foundation-accent-gray",
   },
   {
     id: "red",
@@ -60,6 +59,7 @@ const colors = [
     darkClass: "text-foundation-accent-red",
     lightBg: "bg-foundation-accent-red-light",
     darkBg: "bg-foundation-accent-red",
+    bgClasses: "bg-foundation-accent-red-light dark:bg-foundation-accent-red",
   },
   {
     id: "orange",
@@ -68,6 +68,7 @@ const colors = [
     darkClass: "text-foundation-accent-orange",
     lightBg: "bg-foundation-accent-orange-light",
     darkBg: "bg-foundation-accent-orange",
+    bgClasses: "bg-foundation-accent-orange-light dark:bg-foundation-accent-orange",
   },
   {
     id: "yellow",
@@ -76,6 +77,7 @@ const colors = [
     darkClass: "text-foundation-accent-yellow",
     lightBg: "bg-foundation-accent-yellow-light",
     darkBg: "bg-foundation-accent-yellow",
+    bgClasses: "bg-foundation-accent-yellow-light dark:bg-foundation-accent-yellow",
   },
   {
     id: "green",
@@ -84,6 +86,7 @@ const colors = [
     darkClass: "text-foundation-accent-green",
     lightBg: "bg-foundation-accent-green-light",
     darkBg: "bg-foundation-accent-green",
+    bgClasses: "bg-foundation-accent-green-light dark:bg-foundation-accent-green",
   },
   {
     id: "blue",
@@ -92,6 +95,7 @@ const colors = [
     darkClass: "text-foundation-accent-blue",
     lightBg: "bg-foundation-accent-blue-light",
     darkBg: "bg-foundation-accent-blue",
+    bgClasses: "bg-foundation-accent-blue-light dark:bg-foundation-accent-blue",
   },
   {
     id: "purple",
@@ -100,6 +104,7 @@ const colors = [
     darkClass: "text-foundation-accent-purple",
     lightBg: "bg-foundation-accent-purple-light",
     darkBg: "bg-foundation-accent-purple",
+    bgClasses: "bg-foundation-accent-purple-light dark:bg-foundation-accent-purple",
   },
   {
     id: "pink",
@@ -108,10 +113,10 @@ const colors = [
     darkClass: "text-foundation-accent-pink",
     lightBg: "bg-foundation-accent-pink-light",
     darkBg: "bg-foundation-accent-pink",
+    bgClasses: "bg-foundation-accent-pink-light dark:bg-foundation-accent-pink",
   },
 ];
 
-// Helper to get CSS classes from color ID
 const getColorClasses = (colorId: string) => {
   const color = colors.find((c) => c.id === colorId) ?? colors[0];
   return {
@@ -168,10 +173,9 @@ function IconPreview({
       <div
         className={cn(
           "p-6 rounded-2xl transition-all duration-200",
-          "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-3/50",
+          "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3/50",
           "border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
-          "shadow-lg shadow-black/10",
-          "motion-reduce:transition-none",
+          "shadow-lg shadow-foundation-bg-light-3/50 dark:shadow-black/10",
         )}
       >
         <SelectedIconComponent className={cn("size-10", colorClasses.text)} />
@@ -189,7 +193,7 @@ function ColorPicker({
 }) {
   return (
     <div className="mb-8">
-      <h3 className="text-body-small font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-4">
+      <h3 className="text-[14px] font-medium leading-[18px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-4">
         Color
       </h3>
       <div className="flex items-center justify-center gap-3">
@@ -200,19 +204,16 @@ function ColorPicker({
               key={color.id}
               type="button"
               onClick={() => onSelect(color.id)}
-              aria-pressed={isSelected}
               className={cn(
-                "size-12 rounded-full transition-all duration-200",
+                "size-10 rounded-full transition-all duration-200",
                 "focus-visible:outline-none focus-visible:ring-2",
                 "focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue",
                 "focus-visible:ring-offset-2",
                 "focus-visible:ring-offset-foundation-bg-light-1 dark:focus-visible:ring-offset-foundation-bg-dark-2",
-                color.lightBg,
-                `dark:${color.darkBg}`,
+                color.bgClasses,
                 isSelected
-                  ? "ring-2 ring-foundation-text-light-primary dark:ring-foundation-text-dark-primary ring-offset-2 ring-offset-foundation-bg-light-1 dark:ring-offset-foundation-bg-dark-2 shadow-lg"
-                  : "hover:shadow-md",
-                "motion-reduce:transition-none",
+                  ? "ring-2 ring-foundation-text-light-primary dark:ring-foundation-text-dark-primary ring-offset-2 ring-offset-foundation-bg-light-1 dark:ring-offset-foundation-bg-dark-2 scale-110 shadow-lg"
+                  : "hover:scale-105 hover:shadow-md",
               )}
               title={color.name}
               aria-label={`Select ${color.name} color`}
@@ -237,10 +238,10 @@ function IconGrid({
 
   return (
     <div className="space-y-4">
-      <h3 className="text-body-small font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+      <h3 className="text-[14px] font-medium leading-[18px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
         Icon
       </h3>
-      <div className="grid grid-cols-7 gap-2 max-h-[calc(var(--foundation-space-128)+var(--foundation-space-64)+var(--foundation-space-32))] overflow-y-auto pr-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foundation-bg-light-3 dark:scrollbar-thumb-foundation-bg-dark-3">
+      <div className="grid grid-cols-7 gap-2 max-h-[280px] overflow-y-auto pr-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foundation-bg-light-3 dark:scrollbar-thumb-foundation-bg-dark-3">
         {icons.map((icon) => {
           const IconComponent = icon.component;
           const isSelected = selectedIcon === icon.id;
@@ -250,30 +251,27 @@ function IconGrid({
               key={icon.id}
               type="button"
               onClick={() => onSelect(icon.id)}
-              aria-pressed={isSelected}
               className={cn(
-                "p-3 rounded-xl transition-all duration-200 group border border-transparent",
+                "p-3 rounded-xl transition-all duration-200 group",
                 "focus-visible:outline-none focus-visible:ring-2",
                 "focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue",
                 "focus-visible:ring-offset-2",
                 "focus-visible:ring-offset-foundation-bg-light-1 dark:focus-visible:ring-offset-foundation-bg-dark-2",
                 isSelected
-                  ? "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-3 border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm"
-                  : "hover:bg-foundation-bg-light-3/50 dark:hover:bg-foundation-bg-dark-3/50",
-                "motion-reduce:transition-none",
+                  ? "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 scale-95 shadow-inner"
+                  : "hover:bg-foundation-bg-light-3/50 dark:hover:bg-foundation-bg-dark-3/50 hover:scale-105",
               )}
               title={icon.name}
               aria-label={`Select ${icon.name} icon`}
             >
-                <IconComponent
-                  className={cn(
-                    "size-5 transition-colors duration-200",
-                    isSelected
-                      ? selectedColorClasses.text
-                      : "text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary group-hover:text-foundation-icon-light-primary dark:group-hover:text-foundation-icon-dark-primary",
-                    "motion-reduce:transition-none",
-                  )}
-                />
+              <IconComponent
+                className={cn(
+                  "size-5 transition-colors duration-200",
+                  isSelected
+                    ? selectedColorClasses.text
+                    : "text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary group-hover:text-foundation-icon-light-secondary dark:group-hover:text-foundation-icon-dark-secondary",
+                )}
+              />
             </button>
           );
         })}
@@ -293,7 +291,6 @@ export function IconPickerModal({
   const [selectedColorId, setSelectedColorId] = useState(currentColorId);
   const [selectedIcon, setSelectedIcon] = useState(currentIconId ?? "folder");
 
-  // Sync state when modal opens or props change (prevents stale state on reopen)
   useEffect(() => {
     if (!isOpen) return;
     setSelectedColorId(currentColorId);
@@ -306,93 +303,79 @@ export function IconPickerModal({
   };
 
   const SelectedIconComponent = getSelectedIconComponent(selectedIcon);
+
   return (
     <ModalDialog
       isOpen={isOpen}
       onClose={onClose}
       title="Choose icon"
-      titleId="icon-picker-title"
       maxWidth="440px"
-      description={`Select an icon and color for ${projectName}`}
-      className="bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2 border-foundation-bg-light-3 dark:border-foundation-bg-dark-3"
+      className="bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-2xl shadow-2xl p-0"
+      showOverlay={false}
     >
-      {/* Custom Header */}
       <div className="px-6 py-4 border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3">
         <div className="flex items-center justify-between">
-          <div>
+          <div className="flex-1">
             <h2
-              id="icon-picker-title"
-              className="text-body font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary"
+              className="text-[16px] font-medium leading-[26px] tracking-[-0.4px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary"
+              aria-hidden="true"
             >
               Choose icon
             </h2>
-            <p className="text-caption text-foundation-text-light-primary dark:text-foundation-text-dark-secondary mt-0.5">
+            <p
+              className="text-[12px] font-normal leading-[16px] tracking-[-0.1px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-0.5"
+              aria-hidden="true"
+            >
               {projectName}
             </p>
           </div>
-          <IconButton
+          <button
+            type="button"
             onClick={onClose}
+            aria-label="Close dialog"
             title="Close dialog"
-            ariaLabel="Close dialog"
-            size="lg"
-            variant="ghost"
-            iconClassName="text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary"
             className={cn(
-              "size-12",
+              "p-1.5 rounded-lg transition-colors duration-200",
               "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
               "focus-visible:outline-none focus-visible:ring-2",
               "focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue",
               "focus-visible:ring-offset-2",
               "focus-visible:ring-offset-foundation-bg-light-1 dark:focus-visible:ring-offset-foundation-bg-dark-2",
-              "motion-reduce:transition-none",
             )}
-            icon={
-              <svg
-                className="size-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            }
-          />
+          >
+            <svg
+              className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
       </div>
 
-      <ModalBody className="px-6 py-6">
-        <IconPreview
-          selectedColorId={selectedColorId}
-          SelectedIconComponent={SelectedIconComponent}
-        />
+      <div className="px-6 py-6">
+        <IconPreview selectedColorId={selectedColorId} SelectedIconComponent={SelectedIconComponent} />
         <ColorPicker selectedColorId={selectedColorId} onSelect={setSelectedColorId} />
-        <IconGrid
-          selectedIcon={selectedIcon}
-          selectedColorId={selectedColorId}
-          onSelect={setSelectedIcon}
-        />
-      </ModalBody>
+        <IconGrid selectedIcon={selectedIcon} selectedColorId={selectedColorId} onSelect={setSelectedIcon} />
+      </div>
 
-      <ModalFooter className="border-foundation-bg-light-3 dark:border-foundation-bg-dark-3">
+      <div className="px-6 py-4 border-t border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 flex items-center justify-end gap-2">
         <button
           type="button"
           onClick={onClose}
           className={cn(
             "px-4 py-2 rounded-lg transition-all duration-200",
-            "text-body-small font-normal",
-            "text-foundation-text-light-primary dark:text-foundation-text-dark-secondary",
+            "text-[14px] font-normal leading-[18px] tracking-[-0.3px]",
+            "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
             "hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
             "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
             "focus-visible:outline-none focus-visible:ring-2",
             "focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue",
             "focus-visible:ring-offset-2",
             "focus-visible:ring-offset-foundation-bg-light-1 dark:focus-visible:ring-offset-foundation-bg-dark-2",
-            "motion-reduce:transition-none",
           )}
         >
           Cancel
@@ -402,21 +385,20 @@ export function IconPickerModal({
           onClick={handleSave}
           className={cn(
             "px-4 py-2 rounded-lg transition-all duration-200",
-            "text-body-small font-medium",
+            "text-[14px] font-medium leading-[18px] tracking-[-0.3px]",
             "bg-foundation-accent-green-light dark:bg-foundation-accent-green",
-            "text-foundation-text-light-primary",
-            "hover:opacity-90 active:opacity-95",
+            "text-white",
+            "hover:opacity-90 hover:scale-105 active:scale-95",
             "shadow-sm hover:shadow-md",
             "focus-visible:outline-none focus-visible:ring-2",
             "focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue",
             "focus-visible:ring-offset-2",
             "focus-visible:ring-offset-foundation-bg-light-1 dark:focus-visible:ring-offset-foundation-bg-dark-2",
-            "motion-reduce:transition-none",
           )}
         >
           Done
         </button>
-      </ModalFooter>
+      </div>
     </ModalDialog>
   );
 }

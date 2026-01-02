@@ -17,6 +17,9 @@ if (import.meta.env.DEV) {
   });
 }
 
+/**
+ * Render the Pizzaz table widget with tool output data.
+ */
 function PizzazTableWidget() {
   const host = createEmbeddedHost();
   type TableRow = Record<string, string | number>;

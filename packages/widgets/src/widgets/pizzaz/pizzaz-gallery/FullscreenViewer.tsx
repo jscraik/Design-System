@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useMaxHeight } from "../../../shared/use-max-height";
-import type { Photo, Album } from "../../../shared/data-types";
+import type { Album } from "../../../shared/data-types";
 
 import FilmStrip from "./FilmStrip";
 
@@ -9,6 +9,11 @@ type FullscreenViewerProps = {
   album: Album;
 };
 
+/**
+ * Render the full-screen album viewer.
+ * @param props - Viewer props.
+ * @returns The viewer element.
+ */
 export default function FullscreenViewer({ album }: FullscreenViewerProps) {
   const maxHeight = useMaxHeight() ?? undefined;
   const [index, setIndex] = React.useState(0);

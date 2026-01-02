@@ -2,12 +2,15 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Renders icon sizes and the full icon catalog.
 public struct IconographyShowcaseView: View {
     private let iconSizes: [CGFloat] = [16, 20, 24, 32]
     private let sampleIcons: [ChatGPTIcon] = [.search, .compose, .plusLg]
 
+    /// Creates an iconography showcase view.
     public init() {}
 
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(alignment: .leading, spacing: FSpacing.s16) {
             Text("Iconography")

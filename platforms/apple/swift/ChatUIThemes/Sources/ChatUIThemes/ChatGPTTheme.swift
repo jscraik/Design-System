@@ -8,8 +8,8 @@ public enum ChatGPTTheme {
     /// App-level corner radius (18pt)
     public static let appCornerRadius: CGFloat = 18
     
-    /// Card corner radius (12pt)
-    public static let cardCornerRadius: CGFloat = 12
+    /// Card corner radius (24pt)
+    public static let cardCornerRadius: CGFloat = 24
     
     /// Row corner radius (10pt)
     public static let rowCornerRadius: CGFloat = 10
@@ -44,14 +44,14 @@ public enum ChatGPTTheme {
     
     // MARK: - Row Metrics
     
-    /// Row horizontal padding (12pt)
-    public static let rowHPadding: CGFloat = 12
+    /// Row horizontal padding (16pt)
+    public static let rowHPadding: CGFloat = 16
     
-    /// Row vertical padding (10pt)
-    public static let rowVPadding: CGFloat = 10
+    /// Row vertical padding (12pt)
+    public static let rowVPadding: CGFloat = 12
     
-    /// Row icon size (18pt)
-    public static let rowIconSize: CGFloat = 18
+    /// Row icon size (24pt)
+    public static let rowIconSize: CGFloat = 24
     
     /// Row chevron size (14pt)
     public static let rowChevronSize: CGFloat = 14

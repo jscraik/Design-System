@@ -1,14 +1,14 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Focus trap options for configuring the hook behavior
+ * Focus trap options for configuring the hook behavior.
  */
 export interface UseFocusTrapOptions {
-  /** Whether the focus trap is active */
+  /** Whether the focus trap is active. */
   isOpen: boolean;
-  /** Callback when Escape key is pressed */
+  /** Callback invoked when the Escape key is pressed. */
   onClose?: () => void;
-  /** Whether to restore focus to the previously focused element on close */
+  /** Whether to restore focus to the previously focused element on close. */
   restoreFocus?: boolean;
 }
 
@@ -31,24 +31,31 @@ const getFocusable = (container: HTMLElement) => {
 };
 
 /**
- * useFocusTrap - A hook for trapping focus within a modal/dialog
+ * Traps keyboard focus within a container when open.
  *
- * Implements the WAI-ARIA focus trap pattern:
- * - Tab cycles forward through focusable elements
- * - Shift+Tab cycles backward
- * - Escape key triggers onClose callback
- * - Restores focus to the previously focused element on close
+ * Accessibility contract:
+ * - `Tab`/`Shift+Tab` cycles through focusable elements inside the container.
+ * - `Escape` invokes `onClose` when provided.
+ * - Focus is restored to the previously focused element when the trap closes.
+ *
+ * Notes:
+ * - This hook touches `window`/`document`, so it should only run in the browser.
+ *
+ * @param options - Focus trap configuration.
+ * @param options.isOpen - Whether the trap is active.
+ * @param options.onClose - Callback invoked on Escape.
+ * @param options.restoreFocus - Restores focus on close (default: `true`).
+ * @returns An object with `dialogRef` and `trapProps` to spread onto the container.
  *
  * @example
  * ```tsx
  * function MyModal({ isOpen, onClose }) {
- *   const dialogRef = useRef<HTMLDivElement>(null);
  *   const { trapProps } = useFocusTrap({ isOpen, onClose });
  *
  *   if (!isOpen) return null;
  *
  *   return (
- *     <div ref={dialogRef} {...trapProps} role="dialog" aria-modal="true">
+ *     <div {...trapProps} role="dialog" aria-modal="true">
  *       <button>Close</button>
  *       <button>Save</button>
  *     </div>

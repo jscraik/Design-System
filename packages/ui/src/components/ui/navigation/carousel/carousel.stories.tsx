@@ -6,10 +6,10 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./carousel";
+} from "./Carousel";
 
 const meta: Meta<typeof Carousel> = {
-  title: "UI/Carousel",
+  title: "Components/UI/Navigation/Carousel",
   component: Carousel,
   tags: ["autodocs"],
   parameters: { layout: "centered" },

@@ -6,19 +6,23 @@ public class MCPClient {
     private let session: URLSession
     private let authenticator: MCPAuthenticator
     private var sessionId: String?
-    
-    /// Initialize MCP client with base URL and MCP endpoint path
+    private let rateLimiter: MCPRateLimiter
+
+    /// Initialize MCP client with base URL and MCP endpoint path.
     /// - Parameters:
     ///   - baseURL: Base URL of the MCP server (e.g., http://localhost:8787)
     ///   - endpointPath: Path to the MCP endpoint (default: /mcp)
     ///   - session: URLSession to use for requests (defaults to .shared)
     ///   - authenticator: Authenticator for handling credentials
+    ///   - rateLimiter: Rate limiter used to gate outbound requests
     public init(
         baseURL: URL,
         endpointPath: String = "/mcp",
         session: URLSession = .shared,
-        authenticator: MCPAuthenticator = MCPAuthenticator()
+        authenticator: MCPAuthenticator = MCPAuthenticator(),
+        rateLimiter: MCPRateLimiter = MCPRateLimiter()
     ) {
+        // Initialize endpoint URL first
         if endpointPath.isEmpty {
             self.endpointURL = baseURL
         } else if let resolved = URL(string: endpointPath, relativeTo: baseURL) {
@@ -26,10 +30,50 @@ public class MCPClient {
         } else {
             self.endpointURL = baseURL.appendingPathComponent(endpointPath)
         }
+
+        // Initialize properties
         self.session = session
         self.authenticator = authenticator
+        self.rateLimiter = rateLimiter
+
+        // Validate the endpoint URL meets security requirements (after initialization)
+        try? validateURL(self.endpointURL)
     }
-    
+
+    /// Initialize MCP client with certificate pinning.
+    /// - Parameters:
+    ///   - baseURL: Base URL of the MCP server
+    ///   - endpointPath: Path to the MCP endpoint (default: /mcp)
+    ///   - pinnedHashes: Array of base64-encoded certificate hashes for pinning
+    ///   - hashType: Type of hash to use for pinning (default: SPKI SHA-256)
+    ///   - pinningMode: Validation mode (default: strict)
+    ///   - authenticator: Authenticator for handling credentials
+    ///   - rateLimiter: Rate limiter used to gate outbound requests
+    public convenience init(
+        baseURL: URL,
+        endpointPath: String = "/mcp",
+        pinnedHashes: [String],
+        hashType: PinningHashType = .spkiSHA256,
+        pinningMode: PinningMode = .strict,
+        authenticator: MCPAuthenticator = MCPAuthenticator(),
+        rateLimiter: MCPRateLimiter = MCPRateLimiter()
+    ) {
+        let validator = CertificatePinningValidator(
+            pinnedHashes: pinnedHashes,
+            hashType: hashType,
+            mode: pinningMode
+        )
+        let session = validator.createPinnedSession()
+
+        self.init(
+            baseURL: baseURL,
+            endpointPath: endpointPath,
+            session: session,
+            authenticator: authenticator,
+            rateLimiter: rateLimiter
+        )
+    }
+
     /// Call an MCP tool
     /// - Parameters:
     ///   - name: Name of the tool to call
@@ -40,6 +84,12 @@ public class MCPClient {
         name: String,
         arguments: [String: Any] = [:]
     ) async throws -> MCPToolResponse {
+        // Rate limiting check
+        try await rateLimiter.acquire()
+
+        // Validate tool name
+        try validateToolName(name)
+
         let params = MCPToolCallParams(name: name, arguments: arguments)
         let response: MCPJSONRPCResponse<MCPToolCallResult> = try await sendRequest(
             method: "tools/call",
@@ -57,7 +107,7 @@ public class MCPClient {
         return MCPToolResponse(id: response.id, result: result, error: response.error)
     }
     
-    /// List available tools from the MCP server
+    /// List available tools from the MCP server.
     /// - Returns: Array of tool names
     /// - Throws: MCPError if the request fails
     public func listTools() async throws -> [String] {
@@ -77,7 +127,7 @@ public class MCPClient {
         return result.tools.map { $0.name }
     }
 
-    /// List available tools with full metadata from the MCP server
+    /// List available tools with full metadata from the MCP server.
     /// - Returns: Array of tool metadata objects
     /// - Throws: MCPError if the request fails
     public func listToolInfo() async throws -> [MCPTool] {
@@ -97,7 +147,7 @@ public class MCPClient {
         return result.tools
     }
     
-    /// Get tool metadata
+    /// Get tool metadata.
     /// - Parameter name: Name of the tool
     /// - Returns: Tool metadata
     /// - Throws: MCPError if the request fails
@@ -194,12 +244,18 @@ public class MCPClient {
     }
 }
 
-/// Metadata about an MCP tool
+/// Metadata about an MCP tool derived from tool listing responses.
 public struct ToolMetadata: Codable {
+    /// Tool name.
     public let name: String
+    /// Optional tool description.
     public let description: String?
+    /// Visibility hint supplied by the server.
     public let visibility: String
+    /// Whether the tool is accessible to widget rendering.
     public let widgetAccessible: Bool
+    /// Whether the tool is expected to be read-only.
     public let readOnlyHint: Bool
+    /// Optional output template hint from server metadata.
     public let outputTemplateIncludes: String?
 }

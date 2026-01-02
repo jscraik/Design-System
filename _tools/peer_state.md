@@ -65,10 +65,10 @@
   - ✅ Ready for integration into production macOS applications
 - **COMPLETED: Task 14 - Integrate with Existing MCP Tool System**
   - ✅ Created comprehensive Swift package at `platforms/apple/swift/ChatUIMCP/` for MCP integration
-  - ✅ Implemented async/await networking layer (MCPClient) calling existing web-based MCP infrastructure at `apps/mcp/`
+  - ✅ Implemented async/await networking layer (MCPClient) calling existing web-based MCP infrastructure at `platforms/mcp/`
   - ✅ Created widget renderer (WidgetRenderer) using SwiftUI components styled with ChatUIFoundation tokens
   - ✅ Implemented macOS-specific authentication flows (MCPAuthenticator) with Keychain integration
-  - ✅ Ensured backward compatibility with all 14 existing MCP tool contracts in `apps/mcp/tool-contracts.json`
+  - ✅ Ensured backward compatibility with all 14 existing MCP tool contracts in `platforms/mcp/tool-contracts.json`
   - ✅ Comprehensive type-safe models (MCPModels) with Codable conformance for all MCP data structures
   - ✅ Robust error handling (MCPError) with LocalizedError conformance
   - ✅ Support for all widget types: card, list, chart, table, custom
@@ -298,7 +298,7 @@
 | Widget manifest     | `packages/widgets/src/plugins/widget-manifest.ts` | Auto-discovery & content hashing plugin  |
 | Widget registry     | `packages/widgets/src/shared/widget-registry.ts`  | Standardized tool creation helpers       |
 | Widget base         | `packages/widgets/src/shared/widget-base.tsx`     | Consistent widget components & mounting  |
-| Enhanced MCP        | `apps/mcp/enhanced-server.js`                     | Auto-discovery MCP server implementation |
+| Enhanced MCP        | `platforms/mcp/enhanced-server.js`                     | Auto-discovery MCP server implementation |
 
 ## Session Notes
 
@@ -435,7 +435,7 @@
 
 - 2025-12-29: **Native macOS Bridge Task 14 Complete - MCP Tool System Integration**
   - **ChatUIMCP Package Created**: Comprehensive Swift package at `platforms/apple/swift/ChatUIMCP/` for MCP integration with native macOS applications
-  - **Networking Layer**: Implemented MCPClient with async/await API for calling existing web-based MCP infrastructure at `apps/mcp/`
+  - **Networking Layer**: Implemented MCPClient with async/await API for calling existing web-based MCP infrastructure at `platforms/mcp/`
   - **Widget Rendering**: Created WidgetRenderer using native SwiftUI components styled with ChatUIFoundation tokens (FColor, FType, FSpacing)
   - **Authentication**: Implemented MCPAuthenticator with macOS Keychain integration for secure token storage and retrieval
   - **Type-Safe Models**: Comprehensive Codable models (MCPToolRequest, MCPToolResponse, MCPResult, WidgetData, WidgetItem, AnyCodable)
@@ -651,7 +651,7 @@
 - 2025-12-27: E2E, a11y, and MCP contract testing
   - Added Playwright e2e routing tests for `apps/web` with `apps/web/playwright.config.ts`
   - Added widget a11y audit (axe + Playwright) with CI enforcement (`A11Y_STRICT=1`)
-  - Added MCP tool contracts + golden prompt coverage tests (`apps/mcp/tool-contracts.json`)
+  - Added MCP tool contracts + golden prompt coverage tests (`platforms/mcp/tool-contracts.json`)
   - Updated MCP server to export `createChatUiServer` and guard direct-run startup
 
 - 2025-12-27: A11y fixes for chat-view, dashboard, kitchen-sink-lite

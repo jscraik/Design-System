@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Label } from "../label";
-import { Switch } from "./switch";
+import { Label } from "../Label";
+
+import { Switch } from "./Switch";
 
 const meta: Meta<typeof Switch> = {
-  title: "UI/Switch",
+  title: "Components/UI/Base/Switch",
   component: Switch,
   tags: ["autodocs"],
   parameters: { layout: "centered" },

@@ -1,7 +1,8 @@
 import SwiftUI
 
-/// A native macOS navigation component following platform patterns
+/// A native macOS navigation component following platform patterns.
 @available(*, deprecated, message: "Prefer NavigationStack + .toolbar to inherit system navigation and Liquid Glass behaviors.")
+/// Legacy navigation container (deprecated).
 public struct ChatUINavigationView<Content: View>: View {
     
     private let title: String
@@ -12,6 +13,14 @@ public struct ChatUINavigationView<Content: View>: View {
     
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     
+    /// Creates a navigation container with a title and optional actions.
+    ///
+    /// - Parameters:
+    ///   - title: Navigation title.
+    ///   - showBackButton: Whether to show a back button.
+    ///   - onBack: Optional back action.
+    ///   - trailingActions: Action buttons shown on the trailing side.
+    ///   - content: Content builder for the main view.
     public init(
         title: String,
         showBackButton: Bool = false,
@@ -26,6 +35,7 @@ public struct ChatUINavigationView<Content: View>: View {
         self.content = content
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(spacing: 0) {
             // Navigation Bar
@@ -96,6 +106,7 @@ public struct ChatUINavigationView<Content: View>: View {
 
 // MARK: - Navigation Action
 
+/// Defines a navigation bar action button.
 public struct NavigationAction {
     let systemName: String
     let variant: ChatUIButtonVariant
@@ -103,6 +114,14 @@ public struct NavigationAction {
     let accessibilityHint: String?
     let action: () -> Void
     
+    /// Creates a navigation action.
+    ///
+    /// - Parameters:
+    ///   - systemName: SF Symbol name for the icon.
+    ///   - variant: Button variant.
+    ///   - accessibilityLabel: Accessibility label.
+    ///   - accessibilityHint: Accessibility hint.
+    ///   - action: Action invoked on tap.
     public init(
         systemName: String,
         variant: ChatUIButtonVariant = .ghost,
@@ -118,6 +137,7 @@ public struct NavigationAction {
     }
     
     // Common actions
+    /// Convenience action for settings.
     public static func settings(action: @escaping () -> Void) -> NavigationAction {
         NavigationAction(
             systemName: "gearshape",
@@ -127,6 +147,7 @@ public struct NavigationAction {
         )
     }
     
+    /// Convenience action for add.
     public static func add(action: @escaping () -> Void) -> NavigationAction {
         NavigationAction(
             systemName: "plus",
@@ -136,6 +157,7 @@ public struct NavigationAction {
         )
     }
     
+    /// Convenience action for search.
     public static func search(action: @escaping () -> Void) -> NavigationAction {
         NavigationAction(
             systemName: "magnifyingglass",
@@ -145,6 +167,7 @@ public struct NavigationAction {
         )
     }
     
+    /// Convenience action for more options.
     public static func more(action: @escaping () -> Void) -> NavigationAction {
         NavigationAction(
             systemName: "ellipsis",
@@ -157,14 +180,21 @@ public struct NavigationAction {
 
 // MARK: - Tab Navigation
 
-/// A native macOS tab navigation component
+/// A native macOS tab navigation component.
 @available(*, deprecated, message: "Prefer TabView with system styles to inherit platform navigation behaviors.")
+/// Legacy tab navigation container (deprecated).
 public struct ChatUITabView<Content: View>: View {
     
     @Binding private var selection: Int
     private let tabs: [TabItem]
     private let content: () -> Content
     
+    /// Creates a tab navigation container.
+    ///
+    /// - Parameters:
+    ///   - selection: Binding for the selected tab index.
+    ///   - tabs: Tab definitions.
+    ///   - content: Content builder for the selected tab.
     public init(
         selection: Binding<Int>,
         tabs: [TabItem],
@@ -175,6 +205,7 @@ public struct ChatUITabView<Content: View>: View {
         self.content = content
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(spacing: 0) {
             // Tab bar
@@ -244,10 +275,16 @@ public struct ChatUITabView<Content: View>: View {
 
 // MARK: - Tab Item
 
+/// Defines a tab item for `ChatUITabView`.
 public struct TabItem {
     let title: String
     let systemName: String?
     
+    /// Creates a tab item.
+    ///
+    /// - Parameters:
+    ///   - title: Tab title.
+    ///   - systemName: Optional SF Symbol name.
     public init(title: String, systemName: String? = nil) {
         self.title = title
         self.systemName = systemName
@@ -256,13 +293,19 @@ public struct TabItem {
 
 // MARK: - Breadcrumb Navigation
 
-/// A breadcrumb navigation component for hierarchical navigation
+/// A breadcrumb navigation component for hierarchical navigation.
 public struct ChatUIBreadcrumb: View {
     
+    /// Represents a breadcrumb item.
     public struct Item {
         let title: String
         let action: (() -> Void)?
         
+        /// Creates a breadcrumb item.
+        ///
+        /// - Parameters:
+        ///   - title: Item title.
+        ///   - action: Optional action for interactive items.
         public init(title: String, action: (() -> Void)? = nil) {
             self.title = title
             self.action = action
@@ -271,10 +314,14 @@ public struct ChatUIBreadcrumb: View {
     
     private let items: [Item]
     
+    /// Creates a breadcrumb view.
+    ///
+    /// - Parameter items: Breadcrumb items in display order.
     public init(items: [Item]) {
         self.items = items
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         HStack(spacing: DesignTokens.Spacing.xs) {
             ForEach(Array(items.enumerated()), id: \.offset) { index, item in
@@ -312,7 +359,7 @@ public struct ChatUIBreadcrumb: View {
 // MARK: - View Modifiers
 
 extension View {
-    /// Wraps the view in a navigation container
+    /// Wraps the view in a navigation container.
     public func navigationContainer(
         title: String,
         showBackButton: Bool = false,

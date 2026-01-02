@@ -10,6 +10,12 @@ public struct VisualEffectView: NSViewRepresentable {
     let state: NSVisualEffectView.State
     let isEmphasized: Bool
     
+    /// Creates a macOS visual effect view.
+    /// - Parameters:
+    ///   - material: The visual effect material (defaults to `.sidebar`).
+    ///   - blendingMode: The blending mode for the effect.
+    ///   - state: The state used for the effect view.
+    ///   - isEmphasized: Whether the view is emphasized.
     public init(
         material: NSVisualEffectView.Material = .sidebar,
         blendingMode: NSVisualEffectView.BlendingMode = .behindWindow,
@@ -47,6 +53,8 @@ import ChatUIFoundation
 public struct VisualEffectView: View {
     let material: Material
     
+    /// Creates a fallback visual effect view.
+    /// - Parameter material: The SwiftUI material to use for the background.
     public init(material: Material = .regular) {
         self.material = material
     }

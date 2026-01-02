@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "@storybook/test";
 
-import { Button } from "../../base/button";
+import { Button } from "../../base/Button";
 
 import {
   Drawer,
@@ -12,10 +12,10 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "./drawer";
+} from "./Drawer";
 
 const meta: Meta<typeof Drawer> = {
-  title: "UI/Drawer",
+  title: "Components/UI/Overlays/Drawer",
   component: Drawer,
   tags: ["autodocs"],
   parameters: {

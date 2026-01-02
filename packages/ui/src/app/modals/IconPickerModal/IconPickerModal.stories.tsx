@@ -4,7 +4,7 @@ import { fn } from "@storybook/test";
 import { IconPickerModal } from "./IconPickerModal";
 
 const meta: Meta<typeof IconPickerModal> = {
-  title: "ChatUI/IconPickerModal",
+  title: "Components/Modals/Icon Picker Modal",
   component: IconPickerModal,
   tags: ["autodocs"],
   parameters: {

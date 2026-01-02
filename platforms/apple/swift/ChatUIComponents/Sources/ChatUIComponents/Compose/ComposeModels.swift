@@ -1,19 +1,24 @@
 import SwiftUI
 
-/// Configuration for task sections in compose view
+/// Configuration for task sections in the compose view.
 public struct TaskSectionConfig {
+    /// Section title text.
     let label: String
+    /// Placeholder text for the text area.
     let placeholder: String
+    /// Help text shown in the popover.
     let helpText: String
+    /// Button title for the action.
     let buttonText: String
 }
 
-/// Prompt enhancement modes for compose view
+/// Prompt enhancement modes for the compose view.
 public enum PromptEnhancement: String, CaseIterable {
     case rewrite
     case augment
     case preserve
 
+    /// Display title for the prompt enhancement mode.
     public var title: String {
         switch self {
         case .rewrite:
@@ -25,6 +30,7 @@ public enum PromptEnhancement: String, CaseIterable {
         }
     }
 
+    /// Task section configuration for the selected mode.
     public var taskConfig: TaskSectionConfig {
         switch self {
         case .rewrite:

@@ -1,5 +1,6 @@
 import { figma } from "@figma/code-connect";
-import { ChatFullWidthTemplate, type ChatFullWidthTemplateProps } from "./ChatFullWidthTemplate";
+
+import { ChatFullWidthTemplate } from "./ChatFullWidthTemplate";
 
 /**
  * Figma Code Connect mapping for ChatFullWidthTemplate

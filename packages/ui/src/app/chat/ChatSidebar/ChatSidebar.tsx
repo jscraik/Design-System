@@ -11,30 +11,30 @@
 
 import { useRef } from "react";
 
-import { Archive, Code, Grid3x3, ImageIcon, Radio, Sparkles } from "lucide-react";
-
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../../components/ui/base/Collapsible";
+import { Input } from "../../../components/ui/base/Input";
+import { ListItem } from "../../../components/ui/base/ListItem";
 import {
-  IconBarChart,
-  IconBook,
   IconChat,
   IconChevronRightMd,
   IconCloseBold,
-  IconCompose,
-  IconFolder,
   IconSearch,
   IconSettings,
   IconSidebar,
-  IconWriting,
+  IconArchive,
+  IconCode,
+  IconGrid3x3,
+  IconImage,
+  IconRadio,
+  IconSparkles,
 } from "../../../icons";
 import { IconPickerModal } from "../../modals/IconPickerModal";
 import { SettingsModal } from "../../modals/SettingsModal";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../../components/ui/base/collapsible";
-import { ListItem } from "../../../components/ui/base/list-item";
+import type { ChatSidebarUser, SidebarItem, SidebarItemConfig } from "../shared/types";
 
 import { ChatSidebarFooterSlot } from "./components/ChatSidebarFooterSlot";
 import { ChatSidebarHistory } from "./components/ChatSidebarHistory";
 import { ChatSidebarQuickActions } from "./components/ChatSidebarQuickActions";
-import type { ChatSidebarUser, SidebarItem, SidebarItemConfig } from "../types";
 import { NewProjectModal } from "./modals/NewProjectModal";
 import { ProjectSettingsModal } from "./modals/ProjectSettingsModal";
 import {
@@ -48,6 +48,9 @@ import {
 } from "./data/projectData";
 import { useChatSidebarState } from "./hooks/useChatSidebarState";
 
+/**
+ * Props for the chat sidebar component.
+ */
 interface ChatSidebarProps {
   isOpen: boolean;
   onToggle: () => void;
@@ -62,18 +65,25 @@ interface ChatSidebarProps {
   user?: ChatSidebarUser;
 }
 
+/* eslint-disable complexity */
+/**
+ * Renders the chat sidebar with projects, history, and quick actions.
+ *
+ * @param props - Chat sidebar props.
+ * @returns A sidebar panel element.
+ */
 export function ChatSidebar({
   isOpen,
-  onToggle,
+  onToggle: _onToggle,
   onProjectSelect,
   projects,
   chatHistory,
-  groupChats,
+  groupChats: _groupChats,
   categories,
   categoryIcons,
   categoryColors,
   categoryIconColors,
-  user,
+  user: _user,
 }: ChatSidebarProps) {
   const resolvedProjects = projects ?? defaultProjects;
   const resolvedChatHistory = chatHistory ?? defaultChatHistory;
@@ -88,6 +98,7 @@ export function ChatSidebar({
   const {
     isCollapsed,
     searchQuery,
+    selectedChatId,
     selectedAction,
     projectName,
     selectedCategories,
@@ -106,7 +117,7 @@ export function ChatSidebar({
     yourChatsExpanded,
     memoryOption,
     setIsCollapsed,
-    setSelectedAction,
+    setSearchQuery,
     setProjectName,
     setShowMoreOptions,
     setShowNewProjectModal,
@@ -117,6 +128,8 @@ export function ChatSidebar({
     setGroupChatsExpanded,
     setYourChatsExpanded,
     setMemoryOption,
+    setSelectedChatId,
+    setSelectedAction,
     setSelectedProjectForIcon,
     setShowIconPicker,
     handleNewChat,
@@ -131,13 +144,15 @@ export function ChatSidebar({
     return null;
   }
 
+  const railItemClassName = isCollapsed ? "justify-center" : "";
+
   return (
     <>
       <div
         data-testid="chat-sidebar"
         role="navigation"
         aria-label="Chat sidebar"
-        className={`bg-background text-foreground flex flex-col h-full border-r border-border transition-all duration-300 ${
+        className={`bg-background text-foreground flex flex-col h-full border-r border-border transition-all duration-300 shrink-0 ${
           isCollapsed ? "w-[60px]" : "w-64"
         }`}
       >
@@ -145,7 +160,7 @@ export function ChatSidebar({
           className={`flex items-center px-6 py-6 ${isCollapsed ? "justify-center" : "justify-between"}`}
         >
           {!isCollapsed && (
-            <div className="size-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center flex-shrink-0">
+            <div className="size-8 rounded-full bg-foundation-accent-purple-light dark:bg-foundation-accent-purple text-foundation-text-dark-primary flex items-center justify-center flex-shrink-0">
               <IconCloseBold className="size-4" />
             </div>
           )}
@@ -156,20 +171,33 @@ export function ChatSidebar({
             aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
             data-testid="chat-sidebar-toggle"
           >
-            <IconSidebar className="size-6 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
+            <IconSidebar className="size-6 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
           </button>
         </div>
 
-        <div className="px-2 pb-1">
-          <ListItem
-            icon={<IconSearch className="size-5" />}
-            label={isCollapsed ? "" : "Search chats"}
-            ariaLabel="Search chats"
-            title="Search chats"
-            dataRailItem={isCollapsed}
-            onClick={() => {}}
-            className={isCollapsed ? "justify-center" : ""}
-          />
+        <div className="px-3 pb-3">
+          {isCollapsed ? (
+            <ListItem
+              icon={<IconSearch className="size-5" />}
+              label=""
+              ariaLabel="Search chats"
+              title="Search chats"
+              dataRailItem={true}
+              onClick={() => setIsCollapsed(false)}
+              className={railItemClassName}
+            />
+          ) : (
+            <div className="relative">
+              <IconSearch className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-text-secondary" />
+              <Input
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder="Search chats"
+                className="pl-9"
+                aria-label="Search chats"
+              />
+            </div>
+          )}
         </div>
 
         {!isCollapsed && (
@@ -190,30 +218,37 @@ export function ChatSidebar({
 
         {!isCollapsed && (
           <div className="px-2 pb-1">
-            <ListItem icon={<Sparkles className="size-5" />} label="Your Year With ChatGPT" />
+            <ListItem
+              icon={<IconSparkles className="size-5" />}
+              label="Your Year With ChatGPT"
+              onClick={() => setSelectedAction("year-summary")}
+              selected={selectedAction === "year-summary"}
+            />
           </div>
         )}
 
         <div className="px-2 pb-1">
           <ListItem
-            icon={<Radio className="size-5" />}
+            icon={<IconRadio className="size-5" />}
             label={isCollapsed ? "" : "Pulse"}
             ariaLabel="Pulse"
             title="Pulse"
             dataRailItem={isCollapsed}
-            onClick={() => {}}
-            className={isCollapsed ? "justify-center" : ""}
+            onClick={() => setSelectedAction("pulse")}
+            selected={selectedAction === "pulse"}
+            className={railItemClassName}
           />
         </div>
 
         <div className="px-2 pb-1">
           <ListItem
-            icon={<ImageIcon className="size-5" />}
+            icon={<IconImage className="size-5" />}
             label={isCollapsed ? "" : "Images"}
             ariaLabel="Images"
             title="Images"
             dataRailItem={isCollapsed}
-            onClick={() => {}}
+            onClick={() => setSelectedAction("images")}
+            selected={selectedAction === "images"}
             right={
               !isCollapsed && (
                 <span className="text-[10px] font-semibold leading-[14px] tracking-[0.5px] px-1.5 py-0.5 bg-secondary rounded text-foreground uppercase">
@@ -221,26 +256,41 @@ export function ChatSidebar({
                 </span>
               )
             }
-            className={isCollapsed ? "justify-center" : ""}
+            className={railItemClassName}
           />
         </div>
 
         {!isCollapsed && (
           <div className="px-2 pb-1">
-            <ListItem icon={<Archive className="size-5" />} label="Archived chats" />
+            <ListItem
+              icon={<IconArchive className="size-5" />}
+              label="Archived chats"
+              onClick={() => setSelectedAction("archived")}
+              selected={selectedAction === "archived"}
+            />
           </div>
         )}
 
         <div className="flex-1 overflow-y-auto overflow-x-hidden">
           {!isCollapsed && (
             <div className="px-2 pb-1">
-              <ListItem icon={<Grid3x3 className="size-5" />} label="Apps" />
+              <ListItem
+                icon={<IconGrid3x3 className="size-5" />}
+                label="Apps"
+                onClick={() => setSelectedAction("apps")}
+                selected={selectedAction === "apps"}
+              />
             </div>
           )}
 
           {!isCollapsed && (
             <div className="px-2 pb-1">
-              <ListItem icon={<Code className="size-5" />} label="Codex" />
+              <ListItem
+                icon={<IconCode className="size-5" />}
+                label="Codex"
+                onClick={() => setSelectedAction("codex")}
+                selected={selectedAction === "codex"}
+              />
             </div>
           )}
 
@@ -253,12 +303,28 @@ export function ChatSidebar({
                       GPTs
                     </span>
                     <IconChevronRightMd
-                      className={`size-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary transition-transform ${gptsExpanded ? "rotate-90" : ""}`}
+                      className={`size-4 text-foundation-icon-light-primary dark:text-foundation-icon-dark-primary transition-transform ${gptsExpanded ? "rotate-90" : ""}`}
                     />
                   </button>
                 </CollapsibleTrigger>
               </div>
-              <CollapsibleContent forceMount className="sr-only" />
+              <CollapsibleContent forceMount>
+                <div className="px-2 pb-2 space-y-1">
+                  {["GPT-5 Pro", "GPT-5 Thinking", "GPT-4o"].map((label) => (
+                    <button
+                      key={label}
+                      onClick={() => setSelectedAction(label)}
+                      className={`w-full text-left px-3 py-2 text-body-small rounded-lg transition-colors ${
+                        selectedAction === label
+                          ? "bg-muted text-foreground"
+                          : "text-text-secondary hover:bg-muted hover:text-foreground"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </CollapsibleContent>
             </Collapsible>
           )}
 
@@ -271,7 +337,7 @@ export function ChatSidebar({
                       Group chats
                     </span>
                     <IconChevronRightMd
-                      className={`size-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary transition-transform ${groupChatsExpanded ? "rotate-90" : ""}`}
+                      className={`size-4 text-foundation-icon-light-primary dark:text-foundation-icon-dark-primary transition-transform ${groupChatsExpanded ? "rotate-90" : ""}`}
                     />
                   </button>
                 </CollapsibleTrigger>
@@ -281,11 +347,19 @@ export function ChatSidebar({
                   <div className="px-2 pb-1">
                     <ListItem
                       icon={
-                        <div className="size-6 rounded-full bg-[var(--accent-red)] flex items-center justify-center flex-shrink-0">
-                          <IconChat className="size-3 text-foreground" />
+                        <div className="size-6 rounded-full bg-accent-red flex items-center justify-center flex-shrink-0">
+                          <IconChat className="size-4 text-foreground" />
                         </div>
                       }
                       label="Summarize chat exchange"
+                    />
+                    <ListItem
+                      icon={
+                        <div className="size-6 rounded-full bg-accent-blue flex items-center justify-center flex-shrink-0">
+                          <IconChat className="size-4 text-foreground" />
+                        </div>
+                      }
+                      label="Draft follow-up"
                     />
                   </div>
                 )}
@@ -302,14 +376,19 @@ export function ChatSidebar({
                       Your chats
                     </span>
                     <IconChevronRightMd
-                      className={`size-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary transition-transform ${yourChatsExpanded ? "rotate-90" : ""}`}
+                      className={`size-4 text-foundation-icon-light-primary dark:text-foundation-icon-dark-primary transition-transform ${yourChatsExpanded ? "rotate-90" : ""}`}
                     />
                   </button>
                 </CollapsibleTrigger>
               </div>
               <CollapsibleContent forceMount>
                 {!isCollapsed && (
-                  <ChatSidebarHistory chatHistory={resolvedChatHistory} searchQuery={searchQuery} />
+                  <ChatSidebarHistory
+                    chatHistory={resolvedChatHistory}
+                    searchQuery={searchQuery}
+                    selectedId={selectedChatId}
+                    onSelect={setSelectedChatId}
+                  />
                 )}
               </CollapsibleContent>
             </Collapsible>
@@ -320,11 +399,11 @@ export function ChatSidebar({
           <button
             ref={userMenuButtonRef}
             onClick={() => setShowUserMenu(!showUserMenu)}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-secondary transition-colors ${isCollapsed ? "justify-center" : ""}`}
+          className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-secondary transition-colors ${railItemClassName}`}
             title={isCollapsed ? "Jamie Scott Craik" : ""}
             data-testid="chat-sidebar-user-menu"
           >
-            <div className="size-7 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center flex-shrink-0">
+            <div className="size-7 rounded-full bg-foundation-accent-purple-light dark:bg-foundation-accent-purple text-foundation-text-dark-primary flex items-center justify-center flex-shrink-0">
               <IconCloseBold className="size-4" />
             </div>
             {!isCollapsed && (
@@ -367,7 +446,7 @@ export function ChatSidebar({
                 data-testid="chat-sidebar-settings"
                 className="w-full text-left px-3 py-2.5 hover:bg-secondary transition-colors flex items-center gap-2"
               >
-                <IconSettings className="size-4 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
+                <IconSettings className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
                 <span className="text-body-small text-foreground font-normal">Settings</span>
               </button>
               <div className="my-1 border-t border-border" />
@@ -453,5 +532,9 @@ export function ChatSidebar({
     </>
   );
 }
+/* eslint-enable complexity */
 
+/**
+ * Re-export shared sidebar types for consumers.
+ */
 export type { ChatSidebarUser, SidebarItem, SidebarItemConfig };

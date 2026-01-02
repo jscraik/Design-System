@@ -1,6 +1,15 @@
 import { useState } from "react";
+
+import {
+  IconBook,
+  IconDotsHorizontal,
+  IconGlobe,
+  IconGroup,
+  IconLock,
+  IconStar,
+} from "../../../icons";
+
 import { ChatHeader } from "../../../app/chat/ChatHeader";
-import { Star, BookmarkPlus, MoreHorizontal, Users, Lock, Globe } from "lucide-react";
 
 export function ChatHeaderDemo() {
   // Example 1: Basic chat mode
@@ -95,10 +104,10 @@ export function ChatHeaderDemo() {
               headerRight={
                 <>
                   <button className="p-1.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-md transition-colors">
-                    <Star className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary" />
+                    <IconStar className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary" />
                   </button>
                   <button className="p-1.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-md transition-colors">
-                    <BookmarkPlus className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary" />
+                    <IconBook className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary" />
                   </button>
                 </>
               }
@@ -156,7 +165,7 @@ export function ChatHeaderDemo() {
                   className="flex items-center gap-2 px-3 py-1.5 bg-button-primary-bg-light dark:bg-button-primary-bg-dark text-button-primary-text-light dark:text-button-primary-text-dark rounded-lg hover:opacity-90 transition-opacity"
                   onClick={() => alert("Share conversation")}
                 >
-                  <Users className="size-3.5" />
+                  <IconGroup className="size-3.5" />
                   <span className="text-[13px]">Share</span>
                 </button>
               }
@@ -185,7 +194,7 @@ export function ChatHeaderDemo() {
               onViewModeChange={setViewMode1}
               headerRight={
                 <button className="p-1.5 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-md transition-colors">
-                  <MoreHorizontal className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary" />
+                  <IconDotsHorizontal className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary" />
                 </button>
               }
             />
@@ -257,7 +266,7 @@ export function ChatHeaderDemo() {
                 onViewModeChange={() => {}}
                 headerRight={
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 rounded-lg">
-                    <Lock className="size-3.5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary" />
+                    <IconLock className="size-3.5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary" />
                     <span className="text-[13px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
                       Private
                     </span>
@@ -279,7 +288,7 @@ export function ChatHeaderDemo() {
                 onViewModeChange={() => {}}
                 headerRight={
                   <div className="flex items-center gap-2 px-3 py-1.5 bg-foundation-accent-green-light/10 dark:bg-foundation-accent-green/10 rounded-lg">
-                    <Globe className="size-3.5 text-foundation-accent-green-light dark:text-foundation-accent-green" />
+                    <IconGlobe className="size-3.5 text-foundation-accent-green-light dark:text-foundation-accent-green" />
                     <span className="text-[13px] text-foundation-accent-green-light dark:text-foundation-accent-green">
                       Public
                     </span>

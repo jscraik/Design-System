@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { expectFocused, render, screen } from "../../../../testing/utils";
 
-import { Button } from "./button";
+import { Button } from "./Button";
 
 describe("Button", () => {
   describe("rendering", () => {
@@ -25,10 +25,10 @@ describe("Button", () => {
 
   describe("variants", () => {
     it.each([
-      ["default", "bg-foundation-accent-blue"],
+      ["default", "bg-foreground"],
       ["destructive", "bg-foundation-accent-red"],
       ["outline", "border"],
-      ["secondary", "bg-foundation-bg-light-2"],
+      ["secondary", "bg-muted"],
       ["ghost", "bg-transparent"],
       ["link", "underline-offset-4"],
     ] as const)("renders %s variant with correct styles", (variant, expectedClass) => {
@@ -39,10 +39,10 @@ describe("Button", () => {
 
   describe("sizes", () => {
     it.each([
-      ["default", "h-9"],
-      ["sm", "h-8"],
-      ["lg", "h-10"],
-      ["icon", "size-9"],
+      ["default", "h-[var(--foundation-size-control-height)]"],
+      ["sm", "h-[var(--foundation-size-control-height)]"],
+      ["lg", "h-[var(--foundation-size-control-height)]"],
+      ["icon", "size-[var(--foundation-size-control-height)]"],
     ] as const)("renders %s size with correct styles", (size, expectedClass) => {
       render(<Button size={size}>Button</Button>);
       expect(screen.getByRole("button")).toHaveClass(expectedClass);

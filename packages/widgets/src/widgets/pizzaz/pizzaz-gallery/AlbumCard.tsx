@@ -1,11 +1,17 @@
 import { AppsSDKBadge, AppsSDKButton, AppsSDKImage } from "@chatui/ui";
-import type { Photo, Album } from "../../../shared/data-types";
+
+import type { Album } from "../../../shared/data-types";
 
 type AlbumCardProps = {
   album: Album;
   onSelect?: (album: Album) => void;
 };
 
+/**
+ * Render a selectable album card.
+ * @param props - Album card props.
+ * @returns The album card element.
+ */
 function AlbumCard({ album, onSelect }: AlbumCardProps) {
   return (
     <AppsSDKButton

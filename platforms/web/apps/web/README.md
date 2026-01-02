@@ -33,15 +33,24 @@ pnpm -C platforms/web/apps/web build:widget
 
 Creates `platforms/web/apps/web/dist/widget.html` — a single-file HTML bundle used by the MCP server.
 
+Render a single template by ID:
+
+```bash
+VITE_TEMPLATE_ID=chat-input pnpm -C platforms/web/apps/web build:widget
+```
+
 ## Environment Variables
 
 - `VITE_API_BASE` (optional) — defaults to `http://localhost:8787`
 - `VITE_WIDGETS_BASE` (optional) — defaults to `http://localhost:5173`
+- `VITE_TEMPLATE_ID` (optional) — render a single template by ID for `build:widget`
 
 ## Key Files
 
-- `src/app/Router.tsx` — simplified router (just shows WidgetHarness)
-- `src/features/widgets/WidgetHarness.tsx` — widget gallery UI
+- `src/app/Router.tsx` — simplified router (chat shell + harness route)
+- `src/pages/HarnessPage.tsx` — widget gallery UI
+- `src/pages/TemplatesGalleryPage.tsx` — templates gallery route (`/templates`)
+- `src/pages/TemplateWidgetPage.tsx` — single-template widget shell
 - `scripts/inline-widget.mjs` — widget bundler for MCP
 
 ## Verify
@@ -62,9 +71,8 @@ pnpm -C platforms/web/apps/web dev -- --port 5174
 - Ensure MCP server is running: `pnpm mcp:start`
 - Check `VITE_WIDGETS_BASE` points to widget server
 
-## Removed (Simplified)
+## Routes
 
-- ~~Chat UI demo~~ → Use `platforms/web/apps/templates-gallery` instead
-- ~~Pages (Settings, Profile, About, Templates, Variants)~~ → Not needed
-- ~~Sample data~~ → Not needed
-- ~~Complex routing~~ → Simplified to single view
+- `/` — Chat UI root
+- `/harness` — Widget gallery UI
+- `/templates/:id?` — Templates gallery (uses `@chatui/ui/dev`)

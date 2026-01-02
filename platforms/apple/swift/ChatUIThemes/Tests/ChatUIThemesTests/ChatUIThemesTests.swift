@@ -6,7 +6,7 @@ final class ChatUIThemesTests: XCTestCase {
     func testChatGPTThemeConstants() {
         // Test that ChatGPT theme constants are correct
         XCTAssertEqual(ChatGPTTheme.appCornerRadius, 18)
-        XCTAssertEqual(ChatGPTTheme.cardCornerRadius, 12)
+        XCTAssertEqual(ChatGPTTheme.cardCornerRadius, 24)
         XCTAssertEqual(ChatGPTTheme.rowCornerRadius, 10)
         XCTAssertEqual(ChatGPTTheme.pillCornerRadius, 999)
         
@@ -14,9 +14,9 @@ final class ChatUIThemesTests: XCTestCase {
         XCTAssertEqual(ChatGPTTheme.appShadowRadius, 30)
         XCTAssertEqual(ChatGPTTheme.appShadowYOffset, 18)
         
-        XCTAssertEqual(ChatGPTTheme.rowHPadding, 12)
-        XCTAssertEqual(ChatGPTTheme.rowVPadding, 10)
-        XCTAssertEqual(ChatGPTTheme.rowIconSize, 18)
+        XCTAssertEqual(ChatGPTTheme.rowHPadding, 16)
+        XCTAssertEqual(ChatGPTTheme.rowVPadding, 12)
+        XCTAssertEqual(ChatGPTTheme.rowIconSize, 24)
         XCTAssertEqual(ChatGPTTheme.rowChevronSize, 14)
     }
     

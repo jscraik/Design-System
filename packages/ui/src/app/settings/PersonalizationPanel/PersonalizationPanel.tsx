@@ -6,10 +6,10 @@ import {
   IconChevronLeftMd,
   IconChevronRightMd,
 } from "../../../icons/ChatGPTIcons";
-
 import { SettingDropdown, type DropdownOption } from "../SettingDropdown";
 import { SettingToggle } from "../SettingToggle";
-import type { SettingsPanelProps } from "../types";
+import { SettingRow } from "../SettingRow";
+import type { SettingsPanelProps } from "../shared/types";
 
 export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
   // Base style state
@@ -66,130 +66,138 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
         >
           <IconChevronLeftMd className="size-4 text-foundation-icon-light-primary dark:text-foundation-icon-dark-primary" />
         </button>
-        <h2 className="text-heading-3 font-semibold   text-foundation-text-dark-primary">
+        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foundation-text-dark-primary">
           Personalization
         </h2>
       </div>
 
       <div className="overflow-y-auto max-h-[calc(85vh-80px)] px-6 py-4">
         {/* Base style and tone */}
-        <SettingDropdown
-          label="Base style and tone"
-          value={baseStyle}
-          options={baseStyleOptions}
-          onValueChange={setBaseStyle}
-          description="This is the main voice and tone ChatGPT uses in your conversations. This doesn't impact ChatGPT's capabilities."
-          className="mb-6"
-        />
+        <div className="mb-5">
+          <SettingDropdown
+            label="Base style and tone"
+            value={baseStyle}
+            options={baseStyleOptions}
+            onValueChange={setBaseStyle}
+            description="This is the main voice and tone ChatGPT uses in your conversations. This doesn't impact ChatGPT's capabilities."
+          />
+        </div>
 
         {/* Characteristics */}
-        <div className="mb-6">
-          <h3 className="text-body-small font-semibold   text-foundation-text-dark-primary mb-2 px-3">
+        <div className="mb-5">
+          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
             Characteristics
           </h3>
 
-          <SettingDropdown
-            label="Warm"
-            value={warmStyle}
-            options={characteristicOptions}
-            onValueChange={setWarmStyle}
-            className="mb-2"
-          />
+          <div className="space-y-0.5">
+            <SettingDropdown
+              label="Warm"
+              value={warmStyle}
+              options={characteristicOptions}
+              onValueChange={setWarmStyle}
+            />
 
-          <SettingDropdown
-            label="Enthusiastic"
-            value={enthusiasticStyle}
-            options={characteristicOptions}
-            onValueChange={setEnthusiasticStyle}
-            className="mb-2"
-          />
+            <SettingDropdown
+              label="Enthusiastic"
+              value={enthusiasticStyle}
+              options={characteristicOptions}
+              onValueChange={setEnthusiasticStyle}
+            />
 
-          <SettingDropdown
-            label="Headers & Lists"
-            value={headersListsStyle}
-            options={characteristicOptions}
-            onValueChange={setHeadersListsStyle}
-            className="mb-2"
-          />
+            <SettingDropdown
+              label="Headers & Lists"
+              value={headersListsStyle}
+              options={characteristicOptions}
+              onValueChange={setHeadersListsStyle}
+            />
 
-          <SettingDropdown
-            label="Emoji"
-            value={emojiStyle}
-            options={characteristicOptions}
-            onValueChange={setEmojiStyle}
-          />
+            <SettingDropdown
+              label="Emoji"
+              value={emojiStyle}
+              options={characteristicOptions}
+              onValueChange={setEmojiStyle}
+            />
+          </div>
 
-          <p className="text-caption   text-foundation-text-dark-tertiary px-3 mt-3">
+          <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary px-3 mt-3">
             Choose some additional customizations on top of your base style and tone.
           </p>
         </div>
 
         {/* Custom instructions */}
-        <div className="mb-6">
-          <h3 className="text-body-small font-semibold   text-foundation-text-dark-primary mb-2 px-3">
+        <div className="mb-5">
+          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
             Custom instructions
           </h3>
-          <div className="px-3 text-body-small font-normal   text-foundation-text-dark-primary">
-            Be habitual and conversational
-          </div>
+          <textarea
+            className="w-full px-3 py-2 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary bg-foundation-bg-dark-2 border border-foundation-text-dark-primary/10 rounded-lg resize-none focus:outline-none focus:ring-1 focus:ring-foundation-text-dark-primary/20 transition-all"
+            rows={2}
+            defaultValue="Be habitual and conversational"
+            placeholder="Enter custom instructions..."
+          />
         </div>
 
         {/* Your nickname */}
-        <div className="mb-6">
-          <h3 className="text-body-small font-semibold   text-foundation-text-dark-primary mb-2 px-3">
+        <div className="mb-5">
+          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
             Your nickname
           </h3>
-          <div className="px-3 text-body-small font-normal   text-foundation-text-dark-primary">
-            Jamie
-          </div>
+          <input
+            type="text"
+            className="w-full px-3 py-2 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary bg-foundation-bg-dark-2 border border-foundation-text-dark-primary/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-foundation-text-dark-primary/20 transition-all"
+            defaultValue="Jamie"
+            placeholder="Enter your nickname..."
+          />
         </div>
 
         {/* Your occupation */}
-        <div className="mb-6">
-          <h3 className="text-body-small font-semibold   text-foundation-text-dark-primary mb-2 px-3">
+        <div className="mb-5">
+          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
             Your occupation
           </h3>
-          <div className="px-3 text-body-small font-normal   text-foundation-text-dark-primary">
-            AI System Architect & Dev
-          </div>
+          <input
+            type="text"
+            className="w-full px-3 py-2 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary bg-foundation-bg-dark-2 border border-foundation-text-dark-primary/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-foundation-text-dark-primary/20 transition-all"
+            defaultValue="AI System Architect & Dev"
+            placeholder="Enter your occupation..."
+          />
         </div>
 
         {/* More about you */}
-        <div className="mb-6">
-          <h3 className="text-body-small font-semibold   text-foundation-text-dark-primary mb-2 px-3">
+        <div className="mb-5">
+          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
             More about you
           </h3>
-          <div className="px-3 text-body-small font-normal   text-foundation-text-dark-primary">
-            Ai, Dev
-          </div>
+          <input
+            type="text"
+            className="w-full px-3 py-2 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary bg-foundation-bg-dark-2 border border-foundation-text-dark-primary/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-foundation-text-dark-primary/20 transition-all"
+            defaultValue="Ai, Dev"
+            placeholder="Tell us more about yourself..."
+          />
         </div>
 
         {/* Memory */}
-        <button
-          type="button"
-          className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-lg transition-colors mb-6"
-        >
-          <div className="flex items-center gap-3">
-            <IconBook className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-            <span className="text-body-small font-normal   text-foundation-text-dark-primary">
-              Memory
-            </span>
-          </div>
-          <IconChevronRightMd className="size-4 text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary" />
-        </button>
+        <div className="mb-5">
+          <SettingRow
+            icon={<IconBook className="size-4 text-foundation-icon-dark-secondary" />}
+            label="Memory"
+            onClick={() => {}}
+            right={<IconChevronRightMd className="size-4 text-foundation-icon-dark-tertiary" />}
+          />
+        </div>
 
         {/* Advanced section */}
         <div>
           <button
             type="button"
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-lg transition-colors mb-2"
+            className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors mb-2"
           >
-            <span className="text-body-small font-normal   text-foundation-text-dark-primary">
+            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
               Advanced
             </span>
             <IconChevronDownMd
-              className={`size-4 text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary transition-transform ${showAdvanced ? "" : "-rotate-90"}`}
+              className={`size-4 text-foundation-icon-dark-tertiary transition-transform ${showAdvanced ? "" : "-rotate-90"}`}
             />
           </button>
 

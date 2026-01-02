@@ -23,7 +23,7 @@ import { SettingToggle } from "./SettingToggle";
  * ```
  */
 const meta: Meta<typeof SettingToggle> = {
-  title: "Settings/SettingToggle",
+  title: "Components/Settings/Setting Toggle",
   component: SettingToggle,
   parameters: {
     layout: "padded",

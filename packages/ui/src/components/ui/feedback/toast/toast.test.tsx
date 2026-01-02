@@ -1,7 +1,8 @@
 import { describe, expect, it, vi } from "vitest";
 
 import { render, screen } from "../../../../testing/utils";
-import { Toast, ToastContainer } from "./toast";
+
+import { Toast, ToastContainer } from "./Toast";
 
 describe("Toast", () => {
   describe("rendering", () => {

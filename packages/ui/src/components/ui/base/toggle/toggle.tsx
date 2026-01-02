@@ -3,7 +3,9 @@ import { useId } from "react";
 
 import { cn } from "../../utils";
 
-// Add toggleVariants for compatibility with toggle-group
+/**
+ * Toggle style variants used by Toggle and ToggleGroup.
+ */
 export const toggleVariants = cva(
   "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-muted hover:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground",
   {
@@ -26,6 +28,9 @@ export const toggleVariants = cva(
   },
 );
 
+/**
+ * Props for the toggle switch.
+ */
 export interface ToggleProps {
   /** Whether the toggle is on */
   checked?: boolean;
@@ -48,12 +53,18 @@ export interface ToggleProps {
 }
 
 /**
- * Toggle - A switch component for boolean values
+ * Renders a switch component for boolean values.
+ *
+ * Accessibility contract:
+ * - Uses `role="switch"` and `aria-checked`.
  *
  * @example
  * ```tsx
  * <Toggle checked={isEnabled} onChange={setIsEnabled} />
  * ```
+ *
+ * @param props - Toggle props.
+ * @returns A toggle switch element.
  */
 export function Toggle({
   checked = false,
@@ -104,6 +115,9 @@ export function Toggle({
   );
 }
 
+/**
+ * Props for the toggle row helper.
+ */
 export interface ToggleRowProps {
   /** Icon to display */
   icon?: React.ReactNode;
@@ -120,7 +134,7 @@ export interface ToggleRowProps {
 }
 
 /**
- * ToggleRow - A row with label and toggle switch
+ * Renders a row with label and toggle switch.
  *
  * @example
  * ```tsx
@@ -132,6 +146,9 @@ export interface ToggleRowProps {
  *   onChange={setIsEnabled}
  * />
  * ```
+ *
+ * @param props - Toggle row props.
+ * @returns A row with a toggle control.
  */
 export function ToggleRow({
   icon,

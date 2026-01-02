@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { ChatVariantSplitSidebar } from "../../app/chat/chat-variants";
+import { ChatVariantSplitSidebar } from "../../app/chat/ChatVariants";
 import {
   sampleCategories,
   sampleCategoryColors,
@@ -16,10 +16,18 @@ import {
   sampleUser,
 } from "../../fixtures/sample-data";
 
+/**
+ * Props for the chat template surface.
+ */
 export interface ChatTemplateProps {
   initialViewMode?: "chat" | "compose";
 }
 
+/**
+ * Render the full chat template with sample data.
+ * @param props - Template props.
+ * @returns The chat template element.
+ */
 export function ChatTemplate({ initialViewMode = "chat" }: ChatTemplateProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedModel, setSelectedModel] = useState(sampleModels[0]);

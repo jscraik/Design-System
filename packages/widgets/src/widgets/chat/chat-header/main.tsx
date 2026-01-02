@@ -15,6 +15,9 @@ if (import.meta.env.DEV) {
   });
 }
 
+/**
+ * Render the chat header template with host-aware styling.
+ */
 function ChatHeaderWidgetCore() {
   const theme = useTheme();
   const maxHeight = useMaxHeight();
@@ -27,6 +30,9 @@ function ChatHeaderWidgetCore() {
   );
 }
 
+/**
+ * Provide host context and theming for the chat header widget.
+ */
 function ChatHeaderWidget() {
   const host = createEmbeddedHost();
 

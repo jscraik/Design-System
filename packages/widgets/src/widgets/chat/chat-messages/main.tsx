@@ -15,6 +15,9 @@ if (import.meta.env.DEV) {
   });
 }
 
+/**
+ * Render the chat messages template with host-aware styling.
+ */
 function ChatMessagesWidgetCore() {
   const theme = useTheme();
   const maxHeight = useMaxHeight();
@@ -27,6 +30,9 @@ function ChatMessagesWidgetCore() {
   );
 }
 
+/**
+ * Provide host context and theming for the chat messages widget.
+ */
 function ChatMessagesWidget() {
   const host = createEmbeddedHost();
 

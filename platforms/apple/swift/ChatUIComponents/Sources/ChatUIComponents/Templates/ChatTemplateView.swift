@@ -3,16 +3,20 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Renders the full chat template with message list and composer.
 public struct ChatTemplateView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var messages: [ChatMessageItem]
     @State private var inputText = ""
     @State private var isProcessing = false
 
+    /// Creates a chat template view.
+    /// - Parameter messages: Initial message list to display.
     public init(messages: [ChatMessageItem] = ChatTemplateView.sampleMessages) {
         _messages = State(initialValue: messages)
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(spacing: 0) {
             if messages.isEmpty {
@@ -58,6 +62,7 @@ public struct ChatTemplateView: View {
         }
     }
 
+    /// Sample messages for previews and template demos.
     public static let sampleMessages: [ChatMessageItem] = [
         ChatMessageItem(role: .assistant, content: "Welcome back! How can I help?"),
         ChatMessageItem(role: .user, content: "Show me the chat template layout."),

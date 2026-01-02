@@ -2,16 +2,20 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
-/// A text input component with native macOS/iOS styling
-/// Uses ChatUIFoundation tokens for consistent appearance
+/// A text input component with native macOS/iOS styling.
+///
+/// ### Discussion
+/// Uses ChatUIFoundation tokens for consistent appearance and focus rings.
 public struct InputView: View {
     
+    /// Visual variants for `InputView`.
     public enum Variant {
         case `default`
         case search
         case password
     }
     
+    /// Size variants for `InputView`.
     public enum Size {
         case `default`
         case sm
@@ -32,6 +36,23 @@ public struct InputView: View {
     @Environment(\.colorScheme) private var scheme
     @Environment(\.chatUITheme) private var theme
     
+    /// Creates an input view.
+    ///
+    /// - Parameters:
+    ///   - text: Bound text value.
+    ///   - placeholder: Placeholder text (default: empty).
+    ///   - variant: Visual variant (default: `.default`).
+    ///   - size: Size variant (default: `.default`).
+    ///   - isDisabled: Whether the input is disabled.
+    ///   - accessibilityLabel: Accessibility label for VoiceOver.
+    ///   - accessibilityHint: Accessibility hint for VoiceOver.
+    ///   - submitLabel: Optional submit label for the keyboard.
+    ///   - onSubmit: Optional submit callback.
+    ///
+    /// - Example:
+    /// ```swift
+    /// InputView(text: $query, placeholder: "Search", variant: .search)
+    /// ```
     public init(
         text: Binding<String>,
         placeholder: String = "",
@@ -54,6 +75,7 @@ public struct InputView: View {
         self.onSubmit = onSubmit
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         Group {
             switch variant {
@@ -203,7 +225,9 @@ struct InputViewStyle: TextFieldStyle {
 // MARK: - Convenience Modifiers
 
 extension InputView {
-    /// Adds a submit action to the input
+    /// Adds a submit action to the input.
+    ///
+    /// - Parameter action: Action invoked on submit.
     public func onSubmit(_ action: @escaping () -> Void) -> InputView {
         InputView(
             text: self._text,

@@ -9,12 +9,14 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Card-styled section wrapper with search filtering support.
 struct GallerySection<Content: View>: View {
     @EnvironmentObject private var galleryState: GalleryState
     let title: String
     let subtitle: String?
     @ViewBuilder let content: () -> Content
     
+    /// Creates a gallery section container.
     init(title: String, subtitle: String? = nil, @ViewBuilder content: @escaping () -> Content) {
         self.title = title
         self.subtitle = subtitle

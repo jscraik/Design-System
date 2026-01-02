@@ -170,7 +170,7 @@ The `WidgetRenderer` view renders MCP tool results using native SwiftUI componen
 
 ## MCP Tool Contracts
 
-ChatUIMCP is compatible with all existing MCP tool contracts defined in `apps/mcp/tool-contracts.json`:
+ChatUIMCP is compatible with all existing MCP tool contracts defined in `platforms/mcp/tool-contracts.json`:
 
 - `display_chat`: Chat interface widget
 - `display_search_results`: Search results widget

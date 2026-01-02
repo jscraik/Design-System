@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-Comprehensive audit of all UI components against ChatGPT design standards as defined in `/COLOR_REFERENCE.md` and `packages/ui/src/storybook/design-system/DesignTokens.ts`.
+Comprehensive audit of all UI components against ChatGPT design standards as defined in `/COLOR_REFERENCE.md` and `packages/ui/src/storybook/design-system/DesignTokens/DesignTokens.ts`.
 
 **Status:** ✅ AUDIT COMPLETE - All critical and high priority issues RESOLVED
 

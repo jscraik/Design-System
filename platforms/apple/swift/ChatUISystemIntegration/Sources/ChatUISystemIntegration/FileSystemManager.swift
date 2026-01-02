@@ -6,6 +6,7 @@ import AppKit
 /// Manages file system access with proper permission handling for macOS applications
 public class FileSystemManager {
     
+    /// Errors thrown by file system operations.
     public enum FileSystemError: Error, LocalizedError, Equatable {
         case permissionDenied
         case fileNotFound
@@ -15,6 +16,7 @@ public class FileSystemManager {
         case bookmarkCreationFailed
         case bookmarkResolutionFailed
         
+        /// A localized description of the error.
         public var errorDescription: String? {
             switch self {
             case .permissionDenied:
@@ -50,13 +52,17 @@ public class FileSystemManager {
         }
     }
     
+    /// Creates a file system manager.
     public init() {}
     
     // MARK: - File Access with Permissions
     
-    /// Request access to a file or directory using native file picker
-    /// Returns a security-scoped bookmark for persistent access
     #if os(macOS)
+    /// Request access to a file or directory using native file picker.
+    /// - Parameters:
+    ///   - allowedFileTypes: Optional filename extensions to allow.
+    ///   - allowsMultipleSelection: Whether multiple files can be selected.
+    /// - Returns: The selected file URLs.
     public func requestFileAccess(
         allowedFileTypes: [String]? = nil,
         allowsMultipleSelection: Bool = false
@@ -83,7 +89,8 @@ public class FileSystemManager {
         }
     }
     
-    /// Request access to a directory
+    /// Request access to a directory.
+    /// - Returns: The selected directory URL.
     public func requestDirectoryAccess() async throws -> URL {
         return try await withCheckedThrowingContinuation { continuation in
             DispatchQueue.main.async {
@@ -107,7 +114,9 @@ public class FileSystemManager {
     
     // MARK: - Security-Scoped Bookmarks
     
-    /// Create a security-scoped bookmark for persistent file access
+    /// Create a security-scoped bookmark for persistent file access.
+    /// - Parameter url: The file URL to bookmark.
+    /// - Returns: Bookmark data.
     public func createBookmark(for url: URL) throws -> Data {
         #if os(macOS)
         do {
@@ -126,7 +135,9 @@ public class FileSystemManager {
         #endif
     }
     
-    /// Resolve a security-scoped bookmark to access the file
+    /// Resolve a security-scoped bookmark to access the file.
+    /// - Parameter bookmarkData: The stored bookmark data.
+    /// - Returns: The resolved file URL.
     public func resolveBookmark(_ bookmarkData: Data) throws -> URL {
         #if os(macOS)
         var isStale = false
@@ -152,7 +163,9 @@ public class FileSystemManager {
         #endif
     }
     
-    /// Start accessing a security-scoped resource
+    /// Start accessing a security-scoped resource.
+    /// - Parameter url: The URL to access.
+    /// - Returns: `true` if access was granted.
     public func startAccessingSecurityScopedResource(_ url: URL) -> Bool {
         #if os(macOS)
         return url.startAccessingSecurityScopedResource()
@@ -161,7 +174,8 @@ public class FileSystemManager {
         #endif
     }
     
-    /// Stop accessing a security-scoped resource
+    /// Stop accessing a security-scoped resource.
+    /// - Parameter url: The URL to stop accessing.
     public func stopAccessingSecurityScopedResource(_ url: URL) {
         #if os(macOS)
         url.stopAccessingSecurityScopedResource()
@@ -170,7 +184,9 @@ public class FileSystemManager {
     
     // MARK: - File Operations
     
-    /// Read file contents with proper error handling
+    /// Read file contents with proper error handling.
+    /// - Parameter url: The file URL to read.
+    /// - Returns: The file data.
     public func readFile(at url: URL) async throws -> Data {
         guard FileManager.default.fileExists(atPath: url.path) else {
             throw FileSystemError.fileNotFound
@@ -192,7 +208,10 @@ public class FileSystemManager {
         }
     }
     
-    /// Write data to file with proper error handling
+    /// Write data to file with proper error handling.
+    /// - Parameters:
+    ///   - data: The data to write.
+    ///   - url: The destination file URL.
     public func writeFile(data: Data, to url: URL) async throws {
         do {
             try await withCheckedThrowingContinuation { continuation in
@@ -210,12 +229,16 @@ public class FileSystemManager {
         }
     }
     
-    /// Check if file exists
+    /// Check if file exists.
+    /// - Parameter url: The file URL to check.
+    /// - Returns: `true` if the file exists.
     public func fileExists(at url: URL) -> Bool {
         return FileManager.default.fileExists(atPath: url.path)
     }
     
-    /// Get file attributes
+    /// Get file attributes.
+    /// - Parameter url: The file URL to inspect.
+    /// - Returns: The file attributes dictionary.
     public func fileAttributes(at url: URL) throws -> [FileAttributeKey: Any] {
         do {
             return try FileManager.default.attributesOfItem(atPath: url.path)
@@ -231,6 +254,7 @@ public class FileSystemManager {
 import UniformTypeIdentifiers
 
 extension UTType {
+    /// UTType for exported chat history files.
     static let chatHistory = UTType(exportedAs: "com.chatui.chat-history")
 }
 #endif

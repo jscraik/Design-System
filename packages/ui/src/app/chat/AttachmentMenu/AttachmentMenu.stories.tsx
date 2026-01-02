@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AttachmentMenu } from "./AttachmentMenu";
 
 const meta: Meta<typeof AttachmentMenu> = {
-  title: "Chat/AttachmentMenu",
+  title: "Components/Chat/Attachment Menu",
   component: AttachmentMenu,
   parameters: {
     layout: "centered",

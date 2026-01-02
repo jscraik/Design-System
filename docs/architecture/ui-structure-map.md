@@ -15,9 +15,9 @@ packages/ui/src/
 │   │   ├── ChatShell/ChatShell.tsx
 │   │   ├── ChatSidebar/ChatSidebar.tsx
 │   │   ├── ChatUIRoot/ChatUIRoot.tsx
+│   │   ├── ChatVariants/ChatVariants.tsx
 │   │   ├── ChatView/ChatView.tsx
 │   │   ├── ComposeView/ComposeView.tsx
-│   │   ├── ChatInputDemo/ChatInputDemo.tsx
 │   │   ├── ChatSidebar/
 │   │   │   ├── components/
 │   │   │   ├── data/
@@ -26,12 +26,15 @@ packages/ui/src/
 │   │   ├── compose/
 │   │   │   ├── ComposeInstructionsPanel/
 │   │   │   ├── PromptBuilderSection/
-│   │   │   └── ProEditConfigModal/
-│   │   ├── chat-variants.tsx
-│   │   ├── constants.ts
-│   │   ├── iconHelpers.tsx
-│   │   ├── slots.tsx
-│   │   └── types.ts
+│   │   │   ├── ProEditConfigModal/
+│   │   │   └── shared/
+│   │   │       ├── constants.ts
+│   │   │       └── types.ts
+│   │   └── shared/
+│   │       ├── constants.ts
+│   │       ├── iconHelpers.tsx
+│   │       ├── slots.tsx
+│   │       └── types.ts
 │   ├── modals/
 │   │   ├── DiscoverySettingsModal/
 │   │   ├── IconPickerModal/
@@ -57,7 +60,8 @@ packages/ui/src/
 │       ├── SettingDropdown/
 │       ├── SettingRow/
 │       ├── SettingToggle/
-│       └── types.ts
+│       └── shared/
+│           └── types.ts
 ├── components/
 │   └── ui/
 │       ├── base/<component>/<component>.tsx
@@ -75,8 +79,13 @@ packages/ui/src/
 ├── design-system/
 │   └── showcase/
 ├── storybook/
+│   ├── App/App.tsx
+│   ├── docs/*.mdx
+│   ├── design-system/DesignTokens/DesignTokens.ts
+│   └── pages/<PageName>/<PageName>.tsx
 ├── icons/
 ├── integrations/
+│   └── figma/ImageWithFallback/ImageWithFallback.tsx
 ├── hooks/
 ├── fixtures/
 ├── testing/
@@ -86,8 +95,9 @@ packages/ui/src/
 
 ## Conventions
 - Per-component folders: a component and its stories/tests live together.
+- Component folders and files use `PascalCase` (e.g. `Button/Button.tsx`); category folders stay `kebab-case` (e.g. `data-display`).
 - Component folders export from `index.ts`, so imports can stay at the folder root.
-- Shared utilities and types remain at the category root (e.g. `app/chat/types.ts`).
+- Shared utilities and types live under a `shared/` folder (e.g. `app/chat/shared/types.ts`).
 - Templates follow the same per-component convention, including `*.figmaConnect.tsx` files.
 
 ## Adding new components

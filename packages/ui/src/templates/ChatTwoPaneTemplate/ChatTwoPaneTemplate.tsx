@@ -1,5 +1,8 @@
 import type { ReactNode } from "react";
 
+/**
+ * Props for the two-pane chat layout.
+ */
 export interface ChatTwoPaneTemplateProps {
   sidebar?: ReactNode;
   header?: ReactNode;
@@ -8,6 +11,11 @@ export interface ChatTwoPaneTemplateProps {
   detailsPanel?: ReactNode;
 }
 
+/**
+ * Render a two-pane layout with optional sidebar and details panel.
+ * @param props - Layout slot props.
+ * @returns The two-pane template element.
+ */
 export function ChatTwoPaneTemplate({
   sidebar,
   header,

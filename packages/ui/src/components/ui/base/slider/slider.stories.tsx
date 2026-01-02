@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Slider } from "./slider";
+import { Slider } from "./Slider";
 
 const meta: Meta<typeof Slider> = {
-  title: "UI/Slider",
+  title: "Components/UI/Base/Slider",
   component: Slider,
   tags: ["autodocs"],
   parameters: { layout: "centered" },

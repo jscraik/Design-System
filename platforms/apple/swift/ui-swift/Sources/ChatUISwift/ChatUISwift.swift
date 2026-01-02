@@ -14,12 +14,16 @@ import SwiftUI
 
 // MARK: - Package Information
 
+/// Legacy entry point for the ChatUISwift package.
 public enum ChatUISwift {
+    /// Current package version string.
     public static let version = "1.0.0"
+    /// Package display name.
     public static let name = "ChatUISwift"
     
-    /// Initializes the ChatUISwift package
-    /// Call this method early in your app's lifecycle to ensure proper setup
+    /// Initializes the ChatUISwift package.
+    ///
+    /// Call this method early in your app's lifecycle to enable debug tooling in development.
     public static func initialize() {
         #if DEBUG
         // Enable debug tools in development

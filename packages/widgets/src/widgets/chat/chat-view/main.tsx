@@ -16,6 +16,9 @@ if (import.meta.env.DEV) {
   });
 }
 
+/**
+ * Render the full chat view widget with host context.
+ */
 function ChatViewWidget() {
   const host = createEmbeddedHost();
 

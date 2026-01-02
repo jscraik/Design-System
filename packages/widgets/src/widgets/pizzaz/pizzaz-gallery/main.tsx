@@ -9,7 +9,7 @@ import "../../../styles/widget.css";
 
 import { useMaxHeight } from "../../../shared/use-max-height";
 import { useOpenAiGlobal } from "../../../shared/use-openai-global";
-import type { Photo, Album } from "../../../shared/data-types";
+import type { Album } from "../../../shared/data-types";
 
 import albumsData from "./albums.json";
 import FullscreenViewer from "./FullscreenViewer";
@@ -19,6 +19,11 @@ type AlbumsCarouselProps = {
   onSelect: (album: Album) => void;
 };
 
+/**
+ * Render the horizontal album carousel.
+ * @param props - Carousel props.
+ * @returns The carousel element.
+ */
 function AlbumsCarousel({ onSelect }: AlbumsCarouselProps) {
   const albums = (albumsData?.albums || []) as Album[];
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -149,6 +154,9 @@ function AlbumsCarousel({ onSelect }: AlbumsCarouselProps) {
   );
 }
 
+/**
+ * Render the Pizzaz gallery widget.
+ */
 function App() {
   const displayMode = useOpenAiGlobal("displayMode");
   const host = useHost();

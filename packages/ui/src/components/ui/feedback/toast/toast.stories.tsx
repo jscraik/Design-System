@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useRef, useState } from "react";
 
-import { Button } from "../../base/button";
+import { Button } from "../../base/Button";
 
-import { Toast, ToastContainer } from "./toast";
+import { Toast, ToastContainer } from "./Toast";
 
 const meta: Meta<typeof Toast> = {
-  title: "UI/Feedback/Toast",
+  title: "Components/UI/Feedback/Toast",
   component: Toast,
   parameters: {
     layout: "centered",

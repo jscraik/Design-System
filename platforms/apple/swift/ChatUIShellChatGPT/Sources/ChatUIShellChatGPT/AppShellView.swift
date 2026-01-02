@@ -1,12 +1,16 @@
 import SwiftUI
 import ChatUIFoundation
 
-/// NavigationSplitView-based app shell with sidebar and detail panes
+/// NavigationSplitView-based app shell with sidebar and detail panes.
 public struct AppShellView<SidebarContent: View, DetailContent: View>: View {
     @ViewBuilder let sidebarContent: () -> SidebarContent
     @ViewBuilder let detailContent: () -> DetailContent
     @Environment(\.chatUITheme) private var theme
     
+    /// Creates an app shell layout.
+    /// - Parameters:
+    ///   - sidebar: Sidebar content builder.
+    ///   - detail: Detail content builder.
     public init(
         @ViewBuilder sidebar: @escaping () -> SidebarContent,
         @ViewBuilder detail: @escaping () -> DetailContent

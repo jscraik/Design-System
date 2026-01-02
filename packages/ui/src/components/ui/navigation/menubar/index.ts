@@ -1,1 +1,1 @@
-export * from "./menubar";
+export * from "./Menubar";

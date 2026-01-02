@@ -2,6 +2,9 @@ import type { ReactNode } from "react";
 
 import { cn } from "../../../components/ui/utils";
 
+/**
+ * Slot content regions for the chat shell layout.
+ */
 export type ChatShellSlots = {
   sidebar?: ReactNode;
   header?: ReactNode;
@@ -10,12 +13,21 @@ export type ChatShellSlots = {
   contextPanel?: ReactNode;
 };
 
+/**
+ * Props for the chat shell layout.
+ */
 export interface ChatShellProps {
   slots: ChatShellSlots;
   className?: string;
   contentClassName?: string;
 }
 
+/**
+ * Renders the chat shell layout with named slots.
+ *
+ * @param props - Chat shell props.
+ * @returns A layout container that arranges slot regions.
+ */
 export function ChatShell({ slots, className, contentClassName }: ChatShellProps) {
   return (
     <div

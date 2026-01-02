@@ -1,5 +1,3 @@
-import { cn } from "../../../components/ui/utils";
-
 import { IconCheck, IconCopy } from "./icons";
 
 interface CSSVariableSwatchProps {
@@ -31,9 +29,9 @@ export function CSSVariableSwatch({
         />
         <div className="absolute inset-0 flex items-center justify-center rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-150">
           {isCopied ? (
-            <IconCheck className="size-4 text-white drop-shadow-md" />
+            <IconCheck className="size-4 text-foundation-text-dark-primary drop-shadow-md" />
           ) : (
-            <IconCopy className="size-3.5 text-white drop-shadow-md" />
+            <IconCopy className="size-3.5 text-foundation-text-dark-primary drop-shadow-md" />
           )}
         </div>
       </div>

@@ -5,6 +5,15 @@ import * as TabsPrimitive from "@radix-ui/react-tabs";
 
 import { cn } from "../../utils";
 
+/**
+ * Tabs root container for grouping triggers and content.
+ *
+ * Accessibility contract:
+ * - Ensure each `TabsTrigger` has a readable label.
+ *
+ * @param props - Radix Tabs root props.
+ * @returns The Tabs root element.
+ */
 function Tabs({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Root>) {
   return (
     <TabsPrimitive.Root
@@ -15,6 +24,12 @@ function Tabs({ className, ...props }: React.ComponentProps<typeof TabsPrimitive
   );
 }
 
+/**
+ * Container for tab triggers.
+ *
+ * @param props - Radix Tabs list props.
+ * @returns The Tabs list element.
+ */
 function TabsList({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.List>) {
   return (
     <TabsPrimitive.List
@@ -28,6 +43,12 @@ function TabsList({ className, ...props }: React.ComponentProps<typeof TabsPrimi
   );
 }
 
+/**
+ * Tab trigger button.
+ *
+ * @param props - Radix Tabs trigger props.
+ * @returns A tab trigger element.
+ */
 function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
   return (
     <TabsPrimitive.Trigger
@@ -41,6 +62,12 @@ function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPr
   );
 }
 
+/**
+ * Tab content panel.
+ *
+ * @param props - Radix Tabs content props.
+ * @returns A tab content element.
+ */
 function TabsContent({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Content>) {
   return (
     <TabsPrimitive.Content

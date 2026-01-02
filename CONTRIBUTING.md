@@ -1,5 +1,7 @@
 # Contributing
 
+Last updated: 2026-01-02
+
 Thanks for helping improve ChatUI. This repo is a library-first monorepo with Apps SDK UI as the design system.
 
 ## Prerequisites
@@ -28,7 +30,7 @@ pnpm dev
 - `packages/widgets` — standalone widget bundles
 - `platforms/web/apps/web` — reference app
 - `platforms/web/apps/storybook` — component docs
-- `apps/mcp` — MCP integration harness
+- `platforms/mcp` — MCP integration harness
 
 ## Code style
 

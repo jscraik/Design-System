@@ -115,5 +115,5 @@ TemplateFooterBarView(
 
 ## How to view templates (checklist)
 
-- Storybook: run `pnpm dev:storybook`, open **Templates → Gallery**.
+- Storybook: run `pnpm dev:storybook`, open **Components → Templates → Gallery**.
 - SwiftUI previews: open the Swift files in Xcode (e.g. `ChatTemplateView.swift`) and render `#Preview` blocks.

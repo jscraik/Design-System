@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { render, screen } from "../../../../testing/utils";
 
-import { Pagination } from "./pagination";
+import { Pagination } from "./Pagination";
 
 describe("Pagination", () => {
   const defaultProps = {

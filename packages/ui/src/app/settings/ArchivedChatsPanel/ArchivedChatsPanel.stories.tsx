@@ -15,7 +15,7 @@ import { ArchivedChatsPanel } from "./ArchivedChatsPanel";
  * ```
  */
 const meta: Meta<typeof ArchivedChatsPanel> = {
-  title: "Settings/ArchivedChatsPanel",
+  title: "Components/Settings/Archived Chats Panel",
   component: ArchivedChatsPanel,
   parameters: {
     layout: "fullscreen",

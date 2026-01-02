@@ -3,8 +3,8 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "@storybook/test";
 import { useForm } from "react-hook-form";
 
-import { Button } from "../../base/button";
-import { Input } from "../../base/input";
+import { Button } from "../../base/Button";
+import { Input } from "../../base/Input";
 
 import {
   Form,
@@ -14,10 +14,10 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./form";
+} from "./Form";
 
 const meta: Meta<typeof Form> = {
-  title: "UI/Form",
+  title: "Components/UI/Forms/Form",
   component: Form,
   tags: ["autodocs"],
   parameters: { layout: "centered" },

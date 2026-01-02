@@ -6,16 +6,25 @@ import { ChatHeader } from "../ChatHeader";
 import { ChatView } from "../ChatView";
 import { ComposeView } from "../ComposeView";
 import { useControllableState } from "../../../hooks/useControllableState";
-import { ChatUISlotsProvider, type ChatUISlots } from "../slots";
+import { ChatUISlotsProvider, type ChatUISlots } from "../shared/slots";
 
+/**
+ * Layout modes for the chat UI.
+ */
 export type ChatUIMode = "twoPane" | "full" | "dashboard";
 
+/**
+ * Model metadata used by the chat header and composer.
+ */
 export interface ModelConfig {
   name: string;
   shortName: string;
   description: string;
 }
 
+/**
+ * Props for the chat UI root container.
+ */
 export interface ChatUIRootProps {
   mode?: ChatUIMode;
   defaultMode?: ChatUIMode;
@@ -97,6 +106,16 @@ function getFocusable(container: HTMLElement) {
   );
 }
 
+/**
+ * Renders the full chat UI shell with sidebar, header, and content.
+ *
+ * Accessibility contract:
+ * - When sidebar opens as an overlay, focus is restored to the previously
+ *   focused element on close.
+ *
+ * @param props - Chat UI root props.
+ * @returns The full chat UI layout.
+ */
 export function ChatUIRoot({
   mode: modeProp,
   defaultMode = "twoPane",
@@ -284,19 +303,21 @@ export function ChatUIRoot({
   }, [isOverlayOpen]);
 
   const sidebarOpenForHeader = sidebarBehavior === "none" ? false : sidebarOpen;
-  const handleModelChange = (model: string | ModelConfig) => {
+  const handleModelChange = useCallback((model: string | ModelConfig) => {
     if (typeof model === "string") {
       setSelectedModel({ name: model, shortName: model, description: "" });
       return;
     }
     setSelectedModel(model);
-  };
+  }, []);
 
   const mainContent = useMemo(() => {
     if (mode === "dashboard") {
       return (
         <div className="flex-1 flex flex-col">
-          <div className="p-4 text-white/80">Dashboard template placeholder</div>
+          <div className="p-4 text-foundation-text-dark-secondary">
+            Dashboard template placeholder
+          </div>
         </div>
       );
     }
@@ -340,7 +361,7 @@ export function ChatUIRoot({
   ]);
 
   return (
-    <div className="size-full flex bg-background overflow-hidden" data-testid="chat-ui-root">
+    <div className="min-h-screen w-full flex bg-background overflow-hidden" data-testid="chat-ui-root">
       {/* Inline desktop sidebar (twoPane desktop only; Option B = fully hidden when closed) */}
       {sidebarBehavior === "inline" ? (
         <ChatUISlotsProvider value={slotsValue}>
@@ -354,7 +375,7 @@ export function ChatUIRoot({
           <button
             type="button"
             aria-label="Close sidebar"
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            className="absolute inset-0 bg-foundation-bg-dark-1/50 backdrop-blur-sm"
             onClick={closeOverlay}
           />
 
@@ -373,7 +394,7 @@ export function ChatUIRoot({
         </div>
       ) : null}
 
-      <div className="flex-1 flex min-w-0">{mainContent}</div>
+      <div className="flex-1 flex min-w-0 min-h-0">{mainContent}</div>
     </div>
   );
 }

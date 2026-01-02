@@ -10,6 +10,7 @@ import ChatUIFoundation
 import ChatUIComponents
 import ChatUIThemes
 
+/// Gallery of input components.
 struct InputsGallery: View {
     @State private var textInput = ""
     @State private var searchInput = ""

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
-import { Combobox } from "./combobox";
+import { Combobox } from "./Combobox";
 
 const meta: Meta<typeof Combobox> = {
-  title: "UI/Forms/Combobox",
+  title: "Components/UI/Forms/Combobox",
   component: Combobox,
   parameters: {
     layout: "centered",

@@ -5,22 +5,41 @@ import ChatUIThemes
 import XCTest
 #endif
 
+/// Accessibility contrast variants for snapshot tests.
 public enum SnapshotAccessibilityContrast {
     case standard
     case increased
 }
 
+/// Provides helpers for SnapshotTesting configuration and assertions.
 public enum SnapshotTestSupport {
+    /// Returns `true` when snapshot recording is enabled via environment.
     public static let isRecording: Bool = {
         let value = ProcessInfo.processInfo.environment["SNAPSHOT_RECORD"] ?? "0"
         return value == "1" || value.lowercased() == "true"
     }()
 
+    /// Returns `true` when snapshot tests are enabled via environment.
     public static let isEnabled: Bool = {
         let value = ProcessInfo.processInfo.environment["SNAPSHOT_TESTS"] ?? "0"
         return isRecording || value == "1" || value.lowercased() == "true"
     }()
 
+    /// Asserts a snapshot for a SwiftUI view with common configuration.
+    /// - Parameters:
+    ///   - view: The view under test.
+    ///   - size: The snapshot size to render.
+    ///   - colorScheme: The color scheme to apply.
+    ///   - theme: The ChatUI theme to apply.
+    ///   - accessibilityContrast: Optional contrast override (currently unused).
+    ///   - reduceMotion: Optional reduce motion override (currently unused).
+    ///   - legibilityWeight: Optional legibility weight to apply.
+    ///   - dynamicTypeSize: Optional dynamic type size to apply.
+    ///   - named: Optional snapshot name suffix.
+    ///   - file: The file path for snapshot failure reporting.
+    ///   - testName: The test name for snapshot failure reporting.
+    ///   - line: The line number for snapshot failure reporting.
+    /// - Throws: `XCTSkip` when snapshot tests are disabled.
     @MainActor
     public static func assertView<V: View>(
         _ view: V,

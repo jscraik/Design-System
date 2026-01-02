@@ -1,11 +1,12 @@
+import { IconCheck, IconCopy, IconEye, IconEyeOff } from "../../../icons";
+import { useState } from "react";
+
 import {
   TemplateFormField,
   TemplateFormFieldAction,
   TemplateFormFieldIconButton,
   TemplateFormFieldInline,
 } from "../../blocks/TemplateFormField";
-import { Info, Eye, EyeOff, RefreshCw, Copy, Check } from "lucide-react";
-import { useState } from "react";
 
 export function TemplateFormFieldDemo() {
   const [showPassword, setShowPassword] = useState(false);
@@ -46,6 +47,7 @@ export function TemplateFormFieldDemo() {
                 <input
                   id="username"
                   type="text"
+                  aria-label="Username"
                   placeholder="Enter your username"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -60,6 +62,7 @@ export function TemplateFormFieldDemo() {
                 <input
                   id="email"
                   type="email"
+                  aria-label="Email address"
                   placeholder="you@example.com"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -69,6 +72,7 @@ export function TemplateFormFieldDemo() {
                 <input
                   id="phone"
                   type="tel"
+                  aria-label="Phone"
                   placeholder="+1 (555) 000-0000"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -98,9 +102,9 @@ export function TemplateFormFieldDemo() {
                   <TemplateFormFieldIconButton
                     icon={
                       showPassword ? (
-                        <EyeOff className="w-4 h-4" />
+                        <IconEyeOff className="w-4 h-4" />
                       ) : (
-                        <Eye className="w-4 h-4" />
+                        <IconEye className="w-4 h-4" />
                       )
                     }
                     onClick={() => setShowPassword(!showPassword)}
@@ -111,6 +115,7 @@ export function TemplateFormFieldDemo() {
                 <input
                   id="password"
                   type={showPassword ? "text" : "password"}
+                  aria-label="Password"
                   placeholder="Enter your password"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -130,6 +135,7 @@ export function TemplateFormFieldDemo() {
                   <input
                     id="apikey"
                     type="text"
+                    aria-label="API Key"
                     value="sk_live_1234567890abcdef"
                     readOnly
                     className="flex-1 px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary font-mono text-sm"
@@ -140,12 +146,12 @@ export function TemplateFormFieldDemo() {
                   >
                     {copied ? (
                       <>
-                        <Check className="w-4 h-4" />
+                        <IconCheck className="w-4 h-4" />
                         <span className="text-sm">Copied</span>
                       </>
                     ) : (
                       <>
-                        <Copy className="w-4 h-4" />
+                        <IconCopy className="w-4 h-4" />
                         <span className="text-sm">Copy</span>
                       </>
                     )}
@@ -177,6 +183,7 @@ export function TemplateFormFieldDemo() {
                 <input
                   id="email-error"
                   type="email"
+                  aria-label="Email"
                   defaultValue="taken@example.com"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-accent-red bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary focus:outline-none focus:ring-2 focus:ring-foundation-accent-red transition-shadow"
                 />
@@ -190,6 +197,7 @@ export function TemplateFormFieldDemo() {
                 <input
                   id="username-success"
                   type="text"
+                  aria-label="Username"
                   defaultValue="johndoe"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-accent-green bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary focus:outline-none focus:ring-2 focus:ring-foundation-accent-green transition-shadow"
                 />
@@ -203,6 +211,7 @@ export function TemplateFormFieldDemo() {
                 <input
                   id="website"
                   type="url"
+                  aria-label="Website"
                   placeholder="https://example.com"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -232,6 +241,7 @@ export function TemplateFormFieldDemo() {
                 <textarea
                   id="bio"
                   rows={4}
+                  aria-label="Bio"
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                   placeholder="Write something..."
@@ -258,6 +268,7 @@ export function TemplateFormFieldDemo() {
                 <input
                   id="displayname"
                   type="text"
+                  aria-label="Display Name"
                   placeholder="John Doe"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -266,6 +277,7 @@ export function TemplateFormFieldDemo() {
               <TemplateFormFieldInline label="Theme" htmlFor="theme" labelWidth={120}>
                 <select
                   id="theme"
+                  aria-label="Theme"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 >
                   <option value="light">Light</option>
@@ -279,6 +291,7 @@ export function TemplateFormFieldDemo() {
                   <input
                     id="notifications-inline"
                     type="checkbox"
+                    aria-label="Enable email notifications"
                     className="w-4 h-4 rounded border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 text-foundation-accent-blue focus:ring-2 focus:ring-foundation-accent-blue"
                   />
                   <span className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
@@ -311,6 +324,7 @@ export function TemplateFormFieldDemo() {
                 <input
                   id="field-sm"
                   type="text"
+                  aria-label="Small Field"
                   placeholder="Small input"
                   className="w-full px-3 py-1.5 text-sm rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -325,6 +339,7 @@ export function TemplateFormFieldDemo() {
                 <input
                   id="field-md"
                   type="text"
+                  aria-label="Medium Field"
                   placeholder="Medium input"
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -339,6 +354,7 @@ export function TemplateFormFieldDemo() {
                 <input
                   id="field-lg"
                   type="text"
+                  aria-label="Large Field"
                   placeholder="Large input"
                   className="w-full px-3 py-2.5 text-base rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue transition-shadow"
                 />
@@ -368,6 +384,7 @@ export function TemplateFormFieldDemo() {
                 <input
                   id="disabled-field"
                   type="text"
+                  aria-label="Disabled Field"
                   value="Cannot edit this"
                   disabled
                   className="w-full px-3 py-2 rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary cursor-not-allowed"

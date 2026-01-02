@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "@storybook/test";
-import { Eye, EyeOff, Search } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "../button";
-import { Input } from "./input";
-import { Label } from "../label";
+import { Button } from "../Button";
+import { Label } from "../Label";
+import { IconEye, IconEyeOff, IconSearch } from "../../../../icons";
+
+import { Input } from "./Input";
 
 /**
  * Input component for text entry.
@@ -26,7 +27,7 @@ import { Label } from "../label";
  * - Disabled inputs are properly announced
  */
 const meta: Meta<typeof Input> = {
-  title: "UI/Input",
+  title: "Components/UI/Base/Input",
   component: Input,
   parameters: {
     layout: "centered",
@@ -182,7 +183,7 @@ export const WithError: Story = {
 export const WithIcon: Story = {
   render: (args) => (
     <div className="relative w-64">
-      <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+      <IconSearch className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
       <Input type="search" placeholder="Search..." className="pl-8" {...args} />
     </div>
   ),
@@ -232,9 +233,9 @@ export const PasswordToggle: Story = {
           aria-label={showPassword ? "Hide password" : "Show password"}
         >
           {showPassword ? (
-            <EyeOff className="h-4 w-4 text-muted-foreground" />
+            <IconEyeOff className="h-4 w-4 text-muted-foreground" />
           ) : (
-            <Eye className="h-4 w-4 text-muted-foreground" />
+            <IconEye className="h-4 w-4 text-muted-foreground" />
           )}
         </Button>
       </div>

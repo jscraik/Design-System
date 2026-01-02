@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { render, screen } from "../../../../testing/utils";
 
-import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "./Avatar";
 
 describe("Avatar", () => {
   describe("rendering", () => {

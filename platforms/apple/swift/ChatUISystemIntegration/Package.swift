@@ -14,11 +14,17 @@ let package = Package(
             targets: ["ChatUISystemIntegration"]
         )
     ],
-    dependencies: [],
+    dependencies: [
+        // CryptoKit is part of the standard library on supported platforms
+        // No external dependencies needed
+    ],
     targets: [
         .target(
             name: "ChatUISystemIntegration",
-            dependencies: []
+            dependencies: [],
+            linkerSettings: [
+                .linkedFramework("CryptoKit")
+            ]
         ),
         .testTarget(
             name: "ChatUISystemIntegrationTests",

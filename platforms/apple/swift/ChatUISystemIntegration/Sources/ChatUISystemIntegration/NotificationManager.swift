@@ -7,11 +7,13 @@ import UserNotifications
 /// Manages system notifications using UserNotifications framework
 public class NotificationManager: NSObject {
     
+    /// Errors thrown by notification operations.
     public enum NotificationError: Error, LocalizedError {
         case permissionDenied
         case notificationFailed(Error)
         case invalidConfiguration
         
+        /// A localized description of the error.
         public var errorDescription: String? {
             switch self {
             case .permissionDenied:
@@ -24,6 +26,7 @@ public class NotificationManager: NSObject {
         }
     }
     
+    /// Notification categories used for action routing.
     public enum NotificationCategory: String {
         case message = "MESSAGE"
         case update = "UPDATE"
@@ -41,6 +44,7 @@ public class NotificationManager: NSObject {
         #endif
     }
     
+    /// Creates a notification manager and registers categories when available.
     public override init() {
         if Self.isAvailableForCurrentProcess {
             center = UNUserNotificationCenter.current()
@@ -63,7 +67,7 @@ public class NotificationManager: NSObject {
     
     // MARK: - Permission Management
     
-    /// Request notification permissions from the user
+    /// Request notification permissions from the user.
     public func requestPermission() async throws -> Bool {
         let center = try requireCenter()
         do {
@@ -74,7 +78,7 @@ public class NotificationManager: NSObject {
         }
     }
     
-    /// Check current notification permission status
+    /// Check current notification permission status.
     public func checkPermissionStatus() async -> UNAuthorizationStatus {
         guard let center else {
             return .notDetermined
@@ -138,7 +142,7 @@ public class NotificationManager: NSObject {
     
     // MARK: - Sending Notifications
     
-    /// Send a local notification
+    /// Send a local notification.
     public func sendNotification(
         title: String,
         body: String,
@@ -175,7 +179,7 @@ public class NotificationManager: NSObject {
         }
     }
     
-    /// Schedule a notification for a specific time
+    /// Schedule a notification for a specific time.
     public func scheduleNotification(
         title: String,
         body: String,
@@ -211,7 +215,7 @@ public class NotificationManager: NSObject {
     
     // MARK: - Managing Notifications
     
-    /// Get all pending notifications
+    /// Get all pending notifications.
     public func getPendingNotifications() async -> [UNNotificationRequest] {
         guard let center else {
             return []
@@ -219,7 +223,7 @@ public class NotificationManager: NSObject {
         return await center.pendingNotificationRequests()
     }
     
-    /// Get all delivered notifications
+    /// Get all delivered notifications.
     public func getDeliveredNotifications() async -> [UNNotification] {
         guard let center else {
             return []
@@ -227,27 +231,27 @@ public class NotificationManager: NSObject {
         return await center.deliveredNotifications()
     }
     
-    /// Remove pending notifications by identifier
+    /// Remove pending notifications by identifier.
     public func removePendingNotifications(withIdentifiers identifiers: [String]) {
         center?.removePendingNotificationRequests(withIdentifiers: identifiers)
     }
     
-    /// Remove all pending notifications
+    /// Remove all pending notifications.
     public func removeAllPendingNotifications() {
         center?.removeAllPendingNotificationRequests()
     }
     
-    /// Remove delivered notifications by identifier
+    /// Remove delivered notifications by identifier.
     public func removeDeliveredNotifications(withIdentifiers identifiers: [String]) {
         center?.removeDeliveredNotifications(withIdentifiers: identifiers)
     }
     
-    /// Remove all delivered notifications
+    /// Remove all delivered notifications.
     public func removeAllDeliveredNotifications() {
         center?.removeAllDeliveredNotifications()
     }
     
-    /// Clear badge count
+    /// Clear badge count.
     public func clearBadge() {
         #if os(macOS)
         DispatchQueue.main.async {
@@ -301,5 +305,6 @@ extension NotificationManager: UNUserNotificationCenterDelegate {
 // MARK: - Notification Names
 
 extension Notification.Name {
+    /// Posted when a notification action is received.
     public static let notificationActionReceived = Notification.Name("notificationActionReceived")
 }

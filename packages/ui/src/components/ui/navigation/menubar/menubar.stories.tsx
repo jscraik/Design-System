@@ -9,10 +9,10 @@ import {
   MenubarSeparator,
   MenubarShortcut,
   MenubarTrigger,
-} from "./menubar";
+} from "./Menubar";
 
 const meta: Meta<typeof Menubar> = {
-  title: "UI/Menubar",
+  title: "Components/UI/Navigation/Menubar",
   component: Menubar,
   tags: ["autodocs"],
   parameters: { layout: "centered" },

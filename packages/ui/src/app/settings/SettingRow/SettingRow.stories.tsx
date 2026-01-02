@@ -23,7 +23,7 @@ import { SettingRow } from "./SettingRow";
  * ```
  */
 const meta: Meta<typeof SettingRow> = {
-  title: "Settings/SettingRow",
+  title: "Components/Settings/Setting Row",
   component: SettingRow,
   parameters: {
     layout: "padded",

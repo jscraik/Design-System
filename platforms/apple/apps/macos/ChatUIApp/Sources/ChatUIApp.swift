@@ -1,6 +1,7 @@
 import SwiftUI
 import ChatUISystemIntegration
 
+/// Main entry point for the ChatUI macOS app.
 @main
 struct ChatUIApp: App {
     @StateObject private var appState = AppState()
@@ -18,6 +19,7 @@ struct ChatUIApp: App {
     }
 }
 
+/// Command set for common ChatUI actions.
 struct AppCommands: Commands {
     @ObservedObject var appState: AppState
 

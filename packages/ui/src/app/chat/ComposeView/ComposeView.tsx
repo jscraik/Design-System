@@ -14,8 +14,10 @@ import {
 } from "../compose";
 
 /**
- * ComposeView - Advanced prompt composition interface with multi-panel editing.
- * Supports prompt enhancement modes, discovery settings, and pro edit configuration.
+ * Renders the prompt composition interface for compose mode.
+ *
+ * @param props - Compose view props.
+ * @returns A compose mode panel layout.
  */
 export function ComposeView({ models, modes }: ComposeViewProps) {
   const resolvedModels = models && models.length > 0 ? models : [fallbackModel];
@@ -96,5 +98,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
   );
 }
 
-// Re-export types for backward compatibility
+/**
+ * Re-export compose types for backward compatibility.
+ */
 export type { ComposeModeConfig, ComposeViewProps, ProEditMode } from "../compose";

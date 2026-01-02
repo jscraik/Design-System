@@ -30,22 +30,26 @@ Successfully implemented an enhanced widget infrastructure inspired by the [Tool
 ## 📁 New Architecture
 
 ```
-packages/widgets/src/
-├── sdk/
-│   ├── plugins/
-│   │   └── widget-manifest.ts      # Auto-discovery Vite plugin
-│   └── generated/
-│       └── widget-manifest.ts      # Auto-generated manifest (build-time)
-├── shared/
-│   ├── widget-registry.ts          # Tool creation helpers
-│   └── widget-base.tsx             # Base components & mounting
-└── widgets/
-    └── examples/example-widget/    # Example using new patterns
-        ├── index.html
-        └── main.tsx
+packages/widgets/
+├── src/
+│   ├── sdk/
+│   │   ├── plugins/
+│   │   │   └── widget-manifest.ts      # Auto-discovery Vite plugin
+│   │   └── generated/
+│   │       └── widget-manifest.ts      # Auto-generated manifest (build-time)
+│   ├── shared/
+│   │   ├── widget-registry.ts          # Tool creation helpers
+│   │   └── widget-base.tsx             # Base components & mounting
+│   ├── widgets/                        # Production widget surfaces
+│   └── styles.css                      # Global widget styles
+└── docs/
+    └── examples/                       # Demo widgets + sample integrations
+        └── example-widget/
+            ├── index.html
+            └── main.tsx
 
-apps/mcp/
-└── enhanced-server.js              # MCP server using new registry
+platforms/mcp/
+└── enhanced-server.js                  # MCP server using new registry
 ```
 
 ## 🔧 Implementation Details
@@ -55,7 +59,7 @@ apps/mcp/
 ```typescript
 // Auto-discovers widgets and generates content hashes
 export function widgetManifest(): Plugin {
-  // Discovers src/**/index.html files
+  // Discovers src/widgets/**/index.html files
   // Generates typed manifest with content hashes
   // Eliminates manual Vite configuration
 }
@@ -65,13 +69,13 @@ export function widgetManifest(): Plugin {
 
 ```typescript
 export const widgetManifest = {
-  "auth-demo": {
-    name: "auth-demo",
-    uri: "auth-demo.df302ead", // Content hash for cache busting
+  "chat-view": {
+    name: "chat-view",
+    uri: "chat-view.df302ead", // Content hash for cache busting
     hash: "df302ead",
-    originalPath: "src/widgets/examples/auth-demo/index.html",
+    originalPath: "src/widgets/chat/chat-view/index.html",
   },
-  // ... 13 more widgets
+  // ... 14 more widgets
 } as const;
 ```
 

@@ -2,6 +2,15 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Renders a multiline text input with ChatUI styling.
+///
+/// ### Discussion
+/// Uses a `TextEditor` with placeholder and accessibility labeling.
+///
+/// - Example:
+/// ```swift
+/// TextareaView(text: $notes, placeholder: "Add notes")
+/// ```
 public struct TextareaView: View {
     @Binding private var text: String
     private let placeholder: String
@@ -14,6 +23,15 @@ public struct TextareaView: View {
     @Environment(\.colorScheme) private var scheme
     @Environment(\.chatUITheme) private var theme
 
+    /// Creates a textarea view.
+    ///
+    /// - Parameters:
+    ///   - text: Bound text value.
+    ///   - placeholder: Placeholder text (default: empty).
+    ///   - minHeight: Minimum height for the editor.
+    ///   - isDisabled: Whether the input is disabled.
+    ///   - accessibilityLabel: Accessibility label for VoiceOver.
+    ///   - accessibilityHint: Accessibility hint for VoiceOver.
     public init(
         text: Binding<String>,
         placeholder: String = "",
@@ -30,6 +48,7 @@ public struct TextareaView: View {
         self.accessibilityHint = accessibilityHint
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         ZStack(alignment: .topLeading) {
             if text.isEmpty {

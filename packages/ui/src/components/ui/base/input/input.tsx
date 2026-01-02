@@ -2,6 +2,20 @@ import * as React from "react";
 
 import { cn } from "../../utils";
 
+/**
+ * Renders a styled input element.
+ *
+ * Accessibility contract:
+ * - Provide a visible label or `aria-label`/`aria-labelledby`.
+ *
+ * @param props - Native input props.
+ * @returns A styled input element.
+ *
+ * @example
+ * ```tsx
+ * <Input type="email" placeholder="name@company.com" />
+ * ```
+ */
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
     <input

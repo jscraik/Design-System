@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 import { render, screen, waitFor } from "../../../../testing/utils";
-import { Button } from "../../base/button";
+import { Button } from "../../base/Button";
 
 import {
   Dialog,
@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./dialog";
+} from "./Dialog";
 
 describe("Dialog", () => {
   describe("rendering", () => {
@@ -325,7 +325,7 @@ describe("Dialog", () => {
         </Dialog>,
       );
 
-      // Overlay should be present (has bg-black/50 class)
+      // Overlay should be present (has bg-foundation-bg-dark-1/50 class)
       const overlay = document.querySelector('[data-slot="dialog-overlay"]');
       expect(overlay).toBeInTheDocument();
     });

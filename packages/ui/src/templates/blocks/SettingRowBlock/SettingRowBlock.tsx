@@ -2,9 +2,12 @@ import type { ReactNode } from "react";
 
 import { cn } from "../../../components/ui/utils";
 
+/** Visual variants for SettingRowBlock. */
 export type SettingRowBlockVariant = "default" | "card" | "compact" | "danger";
+/** Size presets for SettingRowBlock. */
 export type SettingRowBlockSize = "sm" | "md" | "lg";
 
+/** Props for SettingRowBlock. */
 export interface SettingRowBlockProps {
   /** Icon displayed before the label */
   icon?: ReactNode;
@@ -96,6 +99,11 @@ const sizeStyles: Record<
   },
 };
 
+/**
+ * Render a settings row block with optional actions and status.
+ * @param props - Block props.
+ * @returns The settings row block element.
+ */
 export function SettingRowBlock({
   icon,
   label,
@@ -282,12 +290,18 @@ export function SettingRowBlock({
 }
 
 // Compound component for row value display
+/** Props for SettingRowValue. */
 export interface SettingRowValueProps {
   children: ReactNode;
   variant?: "default" | "muted" | "accent";
   className?: string;
 }
 
+/**
+ * Render a value element for a settings row.
+ * @param props - Value props.
+ * @returns The value element.
+ */
 export function SettingRowValue({
   children,
   variant = "default",
@@ -303,12 +317,18 @@ export function SettingRowValue({
 }
 
 // Compound component for row badge
+/** Props for SettingRowBadge. */
 export interface SettingRowBadgeProps {
   children: ReactNode;
   variant?: "default" | "primary" | "success" | "warning" | "error" | "new";
   className?: string;
 }
 
+/**
+ * Render a badge for a settings row.
+ * @param props - Badge props.
+ * @returns The badge element.
+ */
 export function SettingRowBadge({
   children,
   variant = "default",
@@ -319,7 +339,8 @@ export function SettingRowBadge({
       "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
     primary: "bg-foundation-accent-blue text-white",
     success: "bg-foundation-accent-green text-white",
-    warning: "bg-foundation-accent-yellow text-foundation-text-light-primary",
+    warning:
+      "bg-foundation-accent-orange text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
     error: "bg-foundation-accent-red text-white",
     new: "bg-foundation-accent-blue/10 text-foundation-accent-blue",
   };
@@ -338,6 +359,7 @@ export function SettingRowBadge({
 }
 
 // Compound component for row group
+/** Props for SettingRowGroup. */
 export interface SettingRowGroupProps {
   children: ReactNode;
   label?: string;
@@ -345,6 +367,11 @@ export interface SettingRowGroupProps {
   className?: string;
 }
 
+/**
+ * Render a group of related setting rows.
+ * @param props - Group props.
+ * @returns The group element.
+ */
 export function SettingRowGroup({ children, label, description, className }: SettingRowGroupProps) {
   return (
     <div className={cn("space-y-1", className)}>
@@ -370,6 +397,11 @@ export function SettingRowGroup({ children, label, description, className }: Set
 }
 
 // Compound component for row divider
+/**
+ * Render a divider between setting rows.
+ * @param props - Divider props.
+ * @returns The divider element.
+ */
 export function SettingRowDivider({ className }: { className?: string }) {
   return (
     <div

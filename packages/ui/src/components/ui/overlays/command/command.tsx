@@ -11,8 +11,14 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "../../feedback/dialog";
+} from "../../feedback/Dialog";
 
+/**
+ * Renders the command palette container (cmdk).
+ *
+ * @param props - Cmdk root props.
+ * @returns The command palette root element.
+ */
 function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {
   return (
     <CommandPrimitive
@@ -26,6 +32,22 @@ function Command({ className, ...props }: React.ComponentProps<typeof CommandPri
   );
 }
 
+/**
+ * Renders the command palette inside a dialog.
+ *
+ * @param props - Dialog props plus title/description.
+ * @returns A dialog-wrapped command palette.
+ *
+ * @example
+ * ```tsx
+ * <CommandDialog open>
+ *   <CommandInput placeholder="Search..." />
+ *   <CommandList>
+ *     <CommandItem>Open Settings</CommandItem>
+ *   </CommandList>
+ * </CommandDialog>
+ * ```
+ */
 function CommandDialog({
   title = "Command Palette",
   description = "Search for a command to run...",
@@ -51,6 +73,12 @@ function CommandDialog({
   );
 }
 
+/**
+ * Renders the command input field with search icon.
+ *
+ * @param props - Cmdk input props.
+ * @returns A command input element.
+ */
 function CommandInput({
   className,
   ...props
@@ -70,6 +98,12 @@ function CommandInput({
   );
 }
 
+/**
+ * Renders a scrollable list container for command items.
+ *
+ * @param props - Cmdk list props.
+ * @returns A command list element.
+ */
 function CommandList({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.List>) {
   return (
     <CommandPrimitive.List
@@ -80,6 +114,12 @@ function CommandList({ className, ...props }: React.ComponentProps<typeof Comman
   );
 }
 
+/**
+ * Renders an empty state when no command results match.
+ *
+ * @param props - Cmdk empty props.
+ * @returns An empty state element.
+ */
 function CommandEmpty({ ...props }: React.ComponentProps<typeof CommandPrimitive.Empty>) {
   return (
     <CommandPrimitive.Empty
@@ -90,6 +130,12 @@ function CommandEmpty({ ...props }: React.ComponentProps<typeof CommandPrimitive
   );
 }
 
+/**
+ * Renders a group container for command items.
+ *
+ * @param props - Cmdk group props.
+ * @returns A command group element.
+ */
 function CommandGroup({
   className,
   ...props
@@ -106,6 +152,12 @@ function CommandGroup({
   );
 }
 
+/**
+ * Renders a separator line between command groups.
+ *
+ * @param props - Cmdk separator props.
+ * @returns A separator element.
+ */
 function CommandSeparator({
   className,
   ...props
@@ -119,6 +171,12 @@ function CommandSeparator({
   );
 }
 
+/**
+ * Renders a command item element.
+ *
+ * @param props - Cmdk item props.
+ * @returns A command item element.
+ */
 function CommandItem({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Item>) {
   return (
     <CommandPrimitive.Item
@@ -132,6 +190,12 @@ function CommandItem({ className, ...props }: React.ComponentProps<typeof Comman
   );
 }
 
+/**
+ * Renders a right-aligned keyboard shortcut label.
+ *
+ * @param props - Span props for shortcut text.
+ * @returns A shortcut label element.
+ */
 function CommandShortcut({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span

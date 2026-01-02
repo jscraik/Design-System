@@ -2,6 +2,7 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Renders the header-only template demo.
 public struct ChatHeaderTemplateView: View {
     @State private var isSidebarOpen = true
     @State private var viewMode: ChatHeaderViewMode = .chat
@@ -13,8 +14,10 @@ public struct ChatHeaderTemplateView: View {
         "GPT-5.2 Codex Large"
     ]
 
+    /// Creates a header-only template demo view.
     public init() {}
 
+    /// The content and behavior of this view.
     public var body: some View {
         ChatHeaderBlockView(
             isSidebarOpen: $isSidebarOpen,
@@ -25,6 +28,7 @@ public struct ChatHeaderTemplateView: View {
     }
 }
 
+/// Renders the sidebar-only template demo.
 public struct ChatSidebarTemplateView: View {
     @State private var selectedID: UUID? = nil
 
@@ -35,8 +39,10 @@ public struct ChatSidebarTemplateView: View {
         ChatSidebarItem(title: "Widget polish", systemIcon: "sparkles")
     ]
 
+    /// Creates a sidebar-only template demo view.
     public init() {}
 
+    /// The content and behavior of this view.
     public var body: some View {
         ChatSidebarBlockView(
             title: "Chat",
@@ -48,6 +54,7 @@ public struct ChatSidebarTemplateView: View {
     }
 }
 
+/// Renders the messages-only template demo.
 public struct ChatMessagesTemplateView: View {
     private let messages = [
         ChatMessageItem(role: .assistant, content: "Welcome back!"),
@@ -55,20 +62,25 @@ public struct ChatMessagesTemplateView: View {
         ChatMessageItem(role: .assistant, content: "Here’s a reusable message list block.")
     ]
 
+    /// Creates a messages-only template demo view.
     public init() {}
 
+    /// The content and behavior of this view.
     public var body: some View {
         ChatMessagesBlockView(messages: messages)
     }
 }
 
+/// Renders the composer-only template demo.
 public struct ChatInputTemplateView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var text = ""
     @State private var isProcessing = false
 
+    /// Creates a composer-only template demo view.
     public init() {}
 
+    /// The content and behavior of this view.
     public var body: some View {
         ChatInputBlockView(text: $text, isProcessing: isProcessing) {
             guard !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return }

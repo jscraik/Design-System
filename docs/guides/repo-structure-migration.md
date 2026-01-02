@@ -11,9 +11,12 @@ This guide documents the 2026 restructure that improved discoverability and norm
 - Apps SDK adapters moved under `packages/ui/src/integrations/`.
 - Testing helpers consolidated under `packages/ui/src/testing/`.
 - Storybook demos/docs consolidated under `packages/ui/src/storybook/`.
-- Templates gallery app renamed to `platforms/web/apps/templates-gallery/`.
+- Templates gallery moved into the web app as `/templates`.
 - Web app + Storybook moved under `platforms/web/apps/`.
+- MCP server moved to `platforms/mcp/`.
 - Widget SDK tooling moved under `packages/widgets/src/sdk/`.
+- Widget examples moved to `packages/widgets/docs/examples/`.
+- Templates gallery registry moved under `packages/ui/src/dev/templates-gallery.tsx` (consumed via `@chatui/ui/dev`).
 - `packages/runtime`, `packages/tokens`, and `packages/widgets` now follow `src/ /tests/ /docs/` conventions.
 
 ## Path map (old → new)
@@ -28,7 +31,10 @@ This guide documents the 2026 restructure that improved discoverability and norm
 
 - `apps/web/*` → `platforms/web/apps/web/*`
 - `apps/storybook/*` → `platforms/web/apps/storybook/*`
-- `apps/ChatGPT-UI_templates/*` → `platforms/web/apps/templates-gallery/*`
+- `apps/ChatGPT-UI_templates/*` → `platforms/web/apps/web/src/pages/TemplatesGalleryPage.tsx`
+- `apps/mcp/*` → `platforms/mcp/*`
+- `platforms/web/apps/templates-gallery/src/shared/lib/template-registry.tsx` → `packages/ui/src/dev/templates-gallery.tsx` (consumed via `@chatui/ui/dev`)
+- `platforms/web/apps/web/src/features/widgets/WidgetHarness.tsx` → `platforms/web/apps/web/src/pages/HarnessPage.tsx`
 
 ### Tokens
 
@@ -40,19 +46,46 @@ This guide documents the 2026 restructure that improved discoverability and norm
 - `packages/ui/src/components/chat/*` → `packages/ui/src/app/chat/*`
 - `packages/ui/src/components/modals/*` → `packages/ui/src/app/modals/*`
 - `packages/ui/src/components/settings/*` → `packages/ui/src/app/settings/*`
+- `packages/ui/src/app/chat/chat-variants.tsx` → `packages/ui/src/app/chat/ChatVariants/ChatVariants.tsx`
+- `packages/ui/src/app/chat/{constants,types,slots,iconHelpers}.*` → `packages/ui/src/app/chat/shared/*`
+- `packages/ui/src/app/chat/compose/{constants,types}.ts` → `packages/ui/src/app/chat/compose/shared/*`
+- `packages/ui/src/app/settings/types.ts` → `packages/ui/src/app/settings/shared/types.ts`
 - `packages/ui/src/components/showcase/*` → `packages/ui/src/design-system/showcase/*`
 - `packages/ui/src/components/figma/*` → `packages/ui/src/integrations/figma/*`
+- `packages/ui/src/integrations/figma/ImageWithFallback.tsx` → `packages/ui/src/integrations/figma/ImageWithFallback/ImageWithFallback.tsx`
 - `packages/ui/src/components/icons/*` → `packages/ui/src/icons/legacy/*`
 - `packages/ui/src/imports/*` → `packages/ui/src/icons/imports/*`
+- `packages/ui/src/components/ui/<category>/<component>.*` → `packages/ui/src/components/ui/<category>/<Component>/<Component>.*`
 - `packages/ui/src/sdk/apps-sdk.ts` → `packages/ui/src/integrations/apps-sdk/index.ts`
 - `packages/ui/src/vendor/appsSdkUi.ts` → `packages/ui/src/integrations/apps-sdk/vendor.ts`
 - `packages/ui/src/tests/*` → `packages/ui/src/testing/*`
 - `packages/ui/src/test/*` → `packages/ui/src/testing/*`
+- `packages/ui/src/storybook/App.tsx` → `packages/ui/src/storybook/App/App.tsx`
+- `packages/ui/src/storybook/pages/*.tsx` → `packages/ui/src/storybook/pages/<PageName>/<PageName>.tsx`
+- `packages/ui/src/storybook/design-system/DesignTokens.ts` → `packages/ui/src/storybook/design-system/DesignTokens/DesignTokens.ts`
+- `@chatui/ui/forms` → `@chatui/ui/base`
+- `@chatui/ui/layout` → `@chatui/ui/data-display`, `@chatui/ui/feedback`, `@chatui/ui/navigation`, `@chatui/ui/overlays`
+
+### UI import surface (new)
+
+Use the published subpaths for UI primitives and app surfaces:
+
+- `@chatui/ui/app`
+- `@chatui/ui/base`
+- `@chatui/ui/chat`
+- `@chatui/ui/data-display`
+- `@chatui/ui/feedback`
+- `@chatui/ui/icons`
+- `@chatui/ui/modals`
+- `@chatui/ui/navigation`
+- `@chatui/ui/overlays`
+- `@chatui/ui/settings`
 
 ### Widgets
 
 - `packages/widgets/src/plugins/*` → `packages/widgets/src/sdk/plugins/*`
 - `packages/widgets/src/generated/*` → `packages/widgets/src/sdk/generated/*`
+- `packages/widgets/src/widgets/examples/*` → `packages/widgets/docs/examples/*`
 
 ## Tooling updates to check
 

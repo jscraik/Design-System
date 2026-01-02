@@ -15,4 +15,4 @@ export * from "./SettingRow";
 export * from "./SettingToggle";
 
 // Types
-export * from "./types";
+export * from "./shared/types";

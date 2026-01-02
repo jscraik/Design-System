@@ -1,10 +1,12 @@
 # Repository Guidelines
 
+Last updated: 2026-01-02
+
 ## Project Structure & Module Organization
 
 This is a pnpm workspace monorepo. Key locations:
 
-- `apps/` — runnable apps and harnesses (`platforms/web/apps/web`, `platforms/web/apps/storybook`, `apps/mcp`, macOS apps under `platforms/apple/apps/macos/`).
+- `platforms/mcp/` — MCP server + tool contracts for ChatGPT integration.
 - `packages/` — reusable libraries (`ui`, `runtime`, `tokens`, `widgets`, `cloudflare-template`).
 - `platforms/apple/apps/macos/` — macOS apps (Xcode/SwiftPM).
 - `platforms/apple/swift/` — Swift packages and macOS/iOS components; legacy Swift package lives in `platforms/apple/swift/ui-swift/`.

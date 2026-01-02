@@ -2,11 +2,21 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Column definition for `ChatUITableView`.
 public struct ChatUITableColumn {
+    /// Column title text.
     public let title: String
+    /// Optional fixed width for the column.
     public let width: CGFloat?
+    /// Horizontal alignment for column content.
     public let alignment: HorizontalAlignment
 
+    /// Creates a table column definition.
+    ///
+    /// - Parameters:
+    ///   - title: Column title.
+    ///   - width: Optional fixed width.
+    ///   - alignment: Horizontal alignment for column content.
     public init(title: String, width: CGFloat? = nil, alignment: HorizontalAlignment = .leading) {
         self.title = title
         self.width = width
@@ -14,6 +24,14 @@ public struct ChatUITableColumn {
     }
 }
 
+/// Renders a table view with optional sorting and row actions.
+///
+/// - Example:
+/// ```swift
+/// ChatUITableView(data: rows, columns: columns) { row in
+///     Text(row.title)
+/// }
+/// ```
 public struct ChatUITableView<Data: RandomAccessCollection, RowContent: View>: View where Data.Element: Identifiable {
     private let data: Data
     private let columns: [ChatUITableColumn]
@@ -26,6 +44,14 @@ public struct ChatUITableView<Data: RandomAccessCollection, RowContent: View>: V
     @Environment(\.colorScheme) private var scheme
     @Environment(\.chatUITheme) private var theme
 
+    /// Creates a table view.
+    ///
+    /// - Parameters:
+    ///   - data: Collection of row data.
+    ///   - columns: Column definitions.
+    ///   - sortComparator: Optional comparator for sorting.
+    ///   - onRowTap: Optional row tap handler.
+    ///   - rowContent: Row content builder.
     public init(
         data: Data,
         columns: [ChatUITableColumn],
@@ -40,6 +66,7 @@ public struct ChatUITableView<Data: RandomAccessCollection, RowContent: View>: V
         self.rowContent = rowContent
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(spacing: 0) {
             tableHeader

@@ -12,7 +12,7 @@ import { ColorShowcase } from "./ColorShowcase";
  * - Live CSS variable reference
  */
 const meta: Meta<typeof ColorShowcase> = {
-  title: "DesignSystem/ColorShowcase",
+  title: "Documentation/Design System/Color Showcase",
   component: ColorShowcase,
   parameters: {
     layout: "fullscreen",

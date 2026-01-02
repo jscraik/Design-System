@@ -3,6 +3,9 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "../../utils";
 
+/**
+ * Defines base class names and variant mappings for alerts.
+ */
 const alertVariants = cva(
   "relative w-full rounded-lg border border-foundation-bg-dark-3 px-4 py-3 font-foundation text-body-small grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current bg-foundation-bg-dark-1 text-foundation-text-dark-primary",
   {
@@ -19,6 +22,15 @@ const alertVariants = cva(
   },
 );
 
+/**
+ * Renders an alert container with variant styles.
+ *
+ * Accessibility contract:
+ * - Uses `role="alert"` for assistive technologies.
+ *
+ * @param props - Alert props including variant.
+ * @returns An alert element.
+ */
 function Alert({
   className,
   variant,
@@ -34,6 +46,12 @@ function Alert({
   );
 }
 
+/**
+ * Renders an alert title element.
+ *
+ * @param props - Div props for the title.
+ * @returns An alert title element.
+ */
 function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -47,6 +65,12 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * Renders an alert description element.
+ *
+ * @param props - Div props for the description.
+ * @returns An alert description element.
+ */
 function AlertDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div

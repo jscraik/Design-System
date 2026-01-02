@@ -1,4 +1,4 @@
-import type { ComponentType, ErrorInfo, ReactNode } from "react";
+import type { ErrorInfo, ReactNode } from "react";
 import { Component } from "react";
 
 /**
@@ -28,6 +28,9 @@ interface UIErrorBoundaryState {
   error?: Error;
 }
 
+/**
+ * Error boundary component for React trees.
+ */
 export class UIErrorBoundary extends Component<UIErrorBoundaryProps, UIErrorBoundaryState> {
   constructor(props: UIErrorBoundaryProps) {
     super(props);
@@ -102,7 +105,13 @@ export class UIErrorBoundary extends Component<UIErrorBoundaryProps, UIErrorBoun
 /**
  * Default error fallback component
  */
-export function DefaultErrorFallback({ error, resetError }: { error?: Error; resetError: () => void }) {
+export function DefaultErrorFallback({
+  error,
+  resetError: _resetError,
+}: {
+  error?: Error;
+  resetError: () => void;
+}) {
   return (
     <div className="flex items-center justify-center min-h-[200px] p-6">
       <div className="text-center max-w-md">

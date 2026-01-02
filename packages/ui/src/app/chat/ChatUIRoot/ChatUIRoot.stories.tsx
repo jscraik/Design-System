@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { IconLightBulb, IconPlusLg, IconSettings, IconShare, IconStar } from "../../../icons";
-
-import { ChatUIRoot } from "./ChatUIRoot";
 import { IconPro } from "../../../icons/ChatGPTIcons";
 import {
   sampleCategories,
@@ -19,8 +17,9 @@ import {
   sampleUser,
 } from "../../../fixtures/sample-data";
 
+import { ChatUIRoot } from "./ChatUIRoot";
 const meta: Meta<typeof ChatUIRoot> = {
-  title: "ChatUI/ChatUIRoot",
+  title: "Components/Chat/Chat UI Root",
   component: ChatUIRoot,
   tags: ["autodocs"],
   args: {

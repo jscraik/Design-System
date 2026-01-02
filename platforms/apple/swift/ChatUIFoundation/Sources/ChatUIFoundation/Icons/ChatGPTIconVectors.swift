@@ -1,5 +1,6 @@
 import SwiftUI
 
+/// Paint styles used by vector icon shapes.
 public enum ChatGPTIconPaint {
     case current
     case white
@@ -17,6 +18,7 @@ public enum ChatGPTIconPaint {
     }
 }
 
+/// Stroke attributes for vector icon paths.
 public struct ChatGPTIconStroke {
     let width: CGFloat
     let paint: ChatGPTIconPaint
@@ -24,12 +26,14 @@ public struct ChatGPTIconStroke {
     let lineJoin: CGLineJoin?
 }
 
+/// Text alignment anchor for vector icon text shapes.
 public enum ChatGPTIconTextAnchor {
     case start
     case middle
     case end
 }
 
+/// Vector shapes used to compose icons.
 public enum ChatGPTIconShape {
     case path(d: String, fill: ChatGPTIconPaint, stroke: ChatGPTIconStroke?)
     case rect(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, rx: CGFloat?, ry: CGFloat?, fill: ChatGPTIconPaint, stroke: ChatGPTIconStroke?)
@@ -37,11 +41,13 @@ public enum ChatGPTIconShape {
     case text(value: String, x: CGFloat, y: CGFloat, size: CGFloat, weight: Font.Weight, anchor: ChatGPTIconTextAnchor, fill: ChatGPTIconPaint)
 }
 
+/// Vector icon definition with viewBox and shapes.
 public struct ChatGPTIconVector {
     let viewBox: CGSize
     let shapes: [ChatGPTIconShape]
 }
 
+/// Vector assets for ChatGPT icons.
 public enum ChatGPTIconVectorAssets {
     public static let data: [ChatGPTIcon: ChatGPTIconVector] = [
         .alertCircle: ChatGPTIconVector(viewBox: CGSize(width: 24, height: 24), shapes: [

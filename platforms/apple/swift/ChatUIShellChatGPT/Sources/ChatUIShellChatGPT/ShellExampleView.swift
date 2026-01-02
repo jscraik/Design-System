@@ -9,6 +9,7 @@ public struct ShellExampleView: View {
     @State private var notificationsEnabled = true
     @State private var selectedTheme = "ChatGPT"
     
+    /// Creates a shell example showcase view.
     public init() {}
     
     public var body: some View {

@@ -1,2 +1,5 @@
 export { ChatSidebar } from "./ChatSidebar";
-export type { ChatSidebarUser, SidebarItem, SidebarItemConfig } from "../types";
+/**
+ * Re-export shared sidebar types for consumers.
+ */
+export type { ChatSidebarUser, SidebarItem, SidebarItemConfig } from "../shared/types";

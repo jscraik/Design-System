@@ -42,6 +42,9 @@ const toSafeCssVarKey = (value: string) => {
   return trimmed || "series";
 };
 
+/**
+ * Chart series configuration keyed by data key.
+ */
 export type ChartConfig = {
   [k in string]: {
     label?: React.ReactNode;

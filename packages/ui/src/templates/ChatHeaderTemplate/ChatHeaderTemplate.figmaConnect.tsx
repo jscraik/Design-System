@@ -1,5 +1,6 @@
 import { figma } from "@figma/code-connect";
-import { ChatHeaderTemplate, type ChatHeaderTemplateProps } from "./ChatHeaderTemplate";
+
+import { ChatHeaderTemplate } from "./ChatHeaderTemplate";
 
 /**
  * Figma Code Connect mapping for ChatHeaderTemplate

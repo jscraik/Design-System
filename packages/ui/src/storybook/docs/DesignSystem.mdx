@@ -1,7 +1,8 @@
 import { Meta, Canvas, Story, ColorPalette, ColorItem } from "@storybook/blocks";
 import { colors } from "../../utils/theme";
+import * as DesignSystemStories from "./DesignSystem.stories";
 
-<Meta title="Documentation/Design System" />
+<Meta of={DesignSystemStories} />
 
 # Design System
 
@@ -258,7 +259,10 @@ const styles = {
 ### Component-Specific Overrides
 
 ```tsx
-<Button className="bg-purple-500 hover:bg-purple-600" style={{ "--button-radius": "12px" }}>
+<Button
+  className="bg-foundation-accent-purple text-accent-foreground hover:bg-foundation-accent-purple/90"
+  style={{ "--button-radius": "12px" }}
+>
   Custom Button
 </Button>
 ```

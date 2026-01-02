@@ -3,6 +3,7 @@ import type { Config } from "tailwindcss";
 import preset from "../../../../packages/tokens/tailwind.preset";
 
 const config = {
+  darkMode: ["class", '[data-theme="dark"]'],
   presets: [preset],
   content: [
     "./**/*.{ts,tsx}",

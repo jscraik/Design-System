@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { render, screen } from "../../../../testing/utils";
 
-import { Badge } from "./badge";
+import { Badge } from "./Badge";
 
 describe("Badge", () => {
   describe("rendering", () => {

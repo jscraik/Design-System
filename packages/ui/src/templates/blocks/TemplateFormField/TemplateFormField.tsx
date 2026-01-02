@@ -2,10 +2,14 @@ import { type ReactNode, useId } from "react";
 
 import { cn } from "../../../components/ui/utils";
 
+/** Size presets for TemplateFormField. */
 export type TemplateFormFieldSize = "sm" | "md" | "lg";
+/** Status variants for TemplateFormField. */
 export type TemplateFormFieldStatus = "default" | "error" | "success" | "warning";
+/** Layout orientation for TemplateFormField. */
 export type TemplateFormFieldOrientation = "vertical" | "horizontal";
 
+/** Props for TemplateFormField. */
 export interface TemplateFormFieldProps {
   /** Field label text */
   label: string;
@@ -89,11 +93,16 @@ const statusStyles: Record<TemplateFormFieldStatus, { border: string; text: stri
     text: "text-foundation-accent-green",
   },
   warning: {
-    border: "ring-1 ring-foundation-accent-yellow",
-    text: "text-foundation-accent-yellow",
+    border: "ring-1 ring-foundation-accent-orange",
+    text: "text-foundation-accent-orange",
   },
 };
 
+/**
+ * Render a template form field with label, description, and actions.
+ * @param props - Form field props.
+ * @returns The form field element.
+ */
 export function TemplateFormField({
   label,
   htmlFor,
@@ -147,14 +156,14 @@ export function TemplateFormField({
         className={cn(
           "font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
           labelSize,
-          disabled && "opacity-50",
+          disabled && "opacity-50 cursor-not-allowed",
           hideLabel && "sr-only",
           labelClassName,
         )}
       >
         {label}
         {required && (
-          <span className="text-foundation-accent-red ml-0.5" aria-hidden="true">
+          <span className="text-foundation-accent-red ml-0.5" aria-label="required">
             *
           </span>
         )}
@@ -168,17 +177,17 @@ export function TemplateFormField({
         <button
           type="button"
           className={cn(
-            "inline-flex items-center justify-center rounded-full p-0.5",
+            "inline-flex items-center justify-center rounded-full w-4 h-4",
             "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
             "hover:text-foundation-text-light-secondary dark:hover:text-foundation-text-dark-secondary",
             "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
-            "transition-colors duration-150",
+            "transition-colors",
           )}
           aria-label="More information"
         >
           <svg
-            className="size-3.5"
+            className="w-3.5 h-3.5"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -203,7 +212,7 @@ export function TemplateFormField({
     <p
       id={descriptionId}
       className={cn(
-        "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
+        "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
         descriptionSize,
         disabled && "opacity-50",
         descriptionClassName,
@@ -219,11 +228,11 @@ export function TemplateFormField({
         {error && (
           <p
             id={errorId}
-            className={cn("flex items-center gap-1", hintSize, statusStyles.error.text)}
+            className={cn("flex items-center gap-1.5", hintSize, statusStyles.error.text)}
             role="alert"
           >
             <svg
-              className="size-3.5 shrink-0"
+              className="w-3.5 h-3.5 shrink-0 mt-0.5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -239,9 +248,9 @@ export function TemplateFormField({
           </p>
         )}
         {success && !error && (
-          <p className={cn("flex items-center gap-1", hintSize, statusStyles.success.text)}>
+          <p className={cn("flex items-center gap-1.5", hintSize, statusStyles.success.text)}>
             <svg
-              className="size-3.5 shrink-0"
+              className="w-3.5 h-3.5 shrink-0 mt-0.5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -268,9 +277,9 @@ export function TemplateFormField({
         <span
           className={cn(
             hintSize,
-            "tabular-nums shrink-0",
-            isOverLimit && "text-foundation-accent-red font-medium",
-            isNearLimit && !isOverLimit && "text-foundation-accent-yellow",
+            "tabular-nums shrink-0 font-medium",
+            isOverLimit && "text-foundation-accent-red",
+            isNearLimit && !isOverLimit && "text-foundation-accent-orange",
             !isOverLimit &&
               !isNearLimit &&
               "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
@@ -286,7 +295,7 @@ export function TemplateFormField({
   if (isHorizontal) {
     return (
       <div className={cn("flex items-start gap-4", disabled && "pointer-events-none", className)}>
-        <div className="pt-2">
+        <div className="pt-2.5">
           {labelElement}
           {descriptionElement && <div className="mt-1">{descriptionElement}</div>}
         </div>
@@ -320,6 +329,7 @@ export function TemplateFormField({
 }
 
 // Compound component for form field action link
+/** Props for TemplateFormFieldAction. */
 export interface TemplateFormFieldActionProps {
   children: ReactNode;
   onClick?: () => void;
@@ -328,6 +338,11 @@ export interface TemplateFormFieldActionProps {
   disabled?: boolean;
 }
 
+/**
+ * Render a form field action element.
+ * @param props - Action props.
+ * @returns The action element.
+ */
 export function TemplateFormFieldAction({
   children,
   onClick,
@@ -338,9 +353,9 @@ export function TemplateFormFieldAction({
   const baseClasses = cn(
     "text-xs font-medium",
     "text-foundation-accent-blue hover:text-foundation-accent-blue/80",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue focus-visible:rounded",
-    "transition-colors duration-150",
-    disabled && "opacity-50 pointer-events-none",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue focus-visible:rounded-sm",
+    "transition-colors",
+    disabled && "opacity-50 pointer-events-none cursor-not-allowed",
     className,
   );
 
@@ -360,6 +375,7 @@ export function TemplateFormFieldAction({
 }
 
 // Compound component for form field icon button
+/** Props for TemplateFormFieldIconButton. */
 export interface TemplateFormFieldIconButtonProps {
   icon: ReactNode;
   onClick?: () => void;
@@ -368,6 +384,11 @@ export interface TemplateFormFieldIconButtonProps {
   disabled?: boolean;
 }
 
+/**
+ * Render an icon button for form field actions.
+ * @param props - Icon button props.
+ * @returns The icon button element.
+ */
 export function TemplateFormFieldIconButton({
   icon,
   onClick,
@@ -381,13 +402,13 @@ export function TemplateFormFieldIconButton({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "inline-flex items-center justify-center rounded p-1",
-        "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
-        "hover:text-foundation-text-light-secondary dark:hover:text-foundation-text-dark-secondary",
+        "inline-flex items-center justify-center rounded-lg w-7 h-7",
+        "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
+        "hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
         "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
-        "transition-colors duration-150",
-        disabled && "opacity-50 cursor-not-allowed",
+        "transition-colors",
+        disabled && "opacity-40 cursor-not-allowed pointer-events-none",
         className,
       )}
       aria-label={ariaLabel}
@@ -398,35 +419,53 @@ export function TemplateFormFieldIconButton({
 }
 
 // Compound component for inline form field (label and input on same line)
+/** Props for TemplateFormFieldInline. */
 export interface TemplateFormFieldInlineProps {
   label: string;
   htmlFor?: string;
   children: ReactNode;
   className?: string;
   labelWidth?: number | string;
+  required?: boolean;
+  disabled?: boolean;
 }
 
+/**
+ * Render an inline layout for form field content.
+ * @param props - Inline props.
+ * @returns The inline element.
+ */
 export function TemplateFormFieldInline({
   label,
   htmlFor,
   children,
   className,
   labelWidth = 120,
+  required = false,
+  disabled = false,
 }: TemplateFormFieldInlineProps) {
   const generatedId = useId();
   const fieldId = htmlFor ?? generatedId;
   const widthValue = typeof labelWidth === "number" ? `${labelWidth}px` : labelWidth;
 
   return (
-    <div className={cn("flex items-center gap-3", className)}>
+    <div className={cn("flex items-center gap-3", disabled && "pointer-events-none", className)}>
       <label
         htmlFor={fieldId}
-        className="text-[13px] leading-5 font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary shrink-0"
+        className={cn(
+          "text-[13px] leading-5 font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary shrink-0",
+          disabled && "opacity-50 cursor-not-allowed",
+        )}
         style={{ width: widthValue }}
       >
         {label}
+        {required && (
+          <span className="text-foundation-accent-red ml-0.5" aria-label="required">
+            *
+          </span>
+        )}
       </label>
-      <div className="flex-1 min-w-0">{children}</div>
+      <div className={cn("flex-1 min-w-0", disabled && "opacity-50")}>{children}</div>
     </div>
   );
 }

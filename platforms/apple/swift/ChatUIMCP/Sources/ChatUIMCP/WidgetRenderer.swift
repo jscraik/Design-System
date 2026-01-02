@@ -8,18 +8,27 @@ public struct WidgetRenderer: View {
     private let toolResult: MCPToolCallResult?
     private let onAction: ((String) -> Void)?
 
+    /// Creates a renderer for explicit widget data.
+    /// - Parameters:
+    ///   - widgetData: The widget payload to render.
+    ///   - onAction: Optional callback for widget actions.
     public init(widgetData: WidgetData, onAction: ((String) -> Void)? = nil) {
         self.widgetData = widgetData
         self.toolResult = nil
         self.onAction = onAction
     }
 
+    /// Creates a renderer for an MCP tool call result.
+    /// - Parameters:
+    ///   - result: The tool call result to render.
+    ///   - onAction: Optional callback for widget actions.
     public init(result: MCPToolCallResult, onAction: ((String) -> Void)? = nil) {
         self.widgetData = nil
         self.toolResult = result
         self.onAction = onAction
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         if let widgetData {
             switch widgetData.type {

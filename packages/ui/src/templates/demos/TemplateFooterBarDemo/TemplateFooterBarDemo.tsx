@@ -1,21 +1,20 @@
 import {
+  IconCheckCircle,
+  IconCheckmark,
+  IconDownload,
+  IconNotebook,
+  IconQuestion,
+  IconShare,
+} from "../../../icons";
+import { useState } from "react";
+
+import {
   TemplateFooterBar,
   TemplateFooterButton,
   TemplateFooterLink,
   TemplateFooterText,
   TemplateFooterDivider,
 } from "../../blocks/TemplateFooterBar";
-import {
-  HelpCircle,
-  Save,
-  X,
-  Download,
-  Share2,
-  FileText,
-  CheckCircle2,
-  AlertCircle,
-} from "lucide-react";
-import { useState } from "react";
 
 export function TemplateFooterBarDemo() {
   const [progress, setProgress] = useState(65);
@@ -56,12 +55,12 @@ export function TemplateFooterBarDemo() {
             </div>
             <TemplateFooterBar
               leading={
-                <TemplateFooterLink icon={<HelpCircle className="w-3.5 h-3.5" />}>
+                <TemplateFooterLink icon={<IconQuestion className="w-3.5 h-3.5" />}>
                   Help
                 </TemplateFooterLink>
               }
               trailing={
-                <TemplateFooterButton variant="primary" icon={<Save className="w-3.5 h-3.5" />}>
+                <TemplateFooterButton variant="primary" icon={<IconCheckmark className="w-3.5 h-3.5" />}>
                   Save Changes
                 </TemplateFooterButton>
               }
@@ -86,7 +85,7 @@ export function TemplateFooterBarDemo() {
             <TemplateFooterBar
               leading={
                 <>
-                  <TemplateFooterLink icon={<HelpCircle className="w-3.5 h-3.5" />}>
+                  <TemplateFooterLink icon={<IconQuestion className="w-3.5 h-3.5" />}>
                     Documentation
                   </TemplateFooterLink>
                   <TemplateFooterDivider />
@@ -278,7 +277,7 @@ export function TemplateFooterBarDemo() {
             </div>
             <TemplateFooterBar
               leading={
-                <TemplateFooterText icon={<CheckCircle2 className="w-3.5 h-3.5" />} variant="success">
+                <TemplateFooterText icon={<IconCheckCircle className="w-3.5 h-3.5" />} variant="success">
                   All changes saved
                 </TemplateFooterText>
               }
@@ -407,7 +406,7 @@ export function TemplateFooterBarDemo() {
             <TemplateFooterBar
               leading={
                 <>
-                  <TemplateFooterText icon={<FileText className="w-3.5 h-3.5" />}>
+                  <TemplateFooterText icon={<IconNotebook className="w-3.5 h-3.5" />}>
                     1,247 words
                   </TemplateFooterText>
                   <TemplateFooterDivider />
@@ -416,10 +415,10 @@ export function TemplateFooterBarDemo() {
               }
               center={
                 <>
-                  <TemplateFooterButton variant="ghost" size="sm" icon={<Download className="w-3.5 h-3.5" />}>
+                  <TemplateFooterButton variant="ghost" size="sm" icon={<IconDownload className="w-3.5 h-3.5" />}>
                     Download
                   </TemplateFooterButton>
-                  <TemplateFooterButton variant="ghost" size="sm" icon={<Share2 className="w-3.5 h-3.5" />}>
+                  <TemplateFooterButton variant="ghost" size="sm" icon={<IconShare className="w-3.5 h-3.5" />}>
                     Share
                   </TemplateFooterButton>
                 </>

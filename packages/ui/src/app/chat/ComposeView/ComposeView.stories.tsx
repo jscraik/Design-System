@@ -5,7 +5,7 @@ import { sampleComposeModes, sampleModels } from "../../../fixtures/sample-data"
 import { ComposeView } from "./ComposeView";
 
 const meta: Meta<typeof ComposeView> = {
-  title: "ChatUI/ComposeView",
+  title: "Components/Chat/Compose View",
   component: ComposeView,
   tags: ["autodocs"],
   parameters: {

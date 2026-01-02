@@ -1,6 +1,8 @@
 import { useState } from "react";
+
 import { IconSearch } from "../../../icons/ChatGPTIcons";
 import { cn } from "../../../components/ui/utils";
+
 import { Card } from "./Card";
 import { Section } from "./Section";
 import { iconCategories } from "./data";

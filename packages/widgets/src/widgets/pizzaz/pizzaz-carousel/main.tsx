@@ -9,6 +9,9 @@ import "../../../styles/widget.css";
 import markers from "./markers.json";
 import PlaceCard from "./PlaceCard";
 
+/**
+ * Render the Pizzaz carousel widget.
+ */
 function App() {
   const places = markers?.places || [];
   const [emblaRef, emblaApi] = useEmblaCarousel({

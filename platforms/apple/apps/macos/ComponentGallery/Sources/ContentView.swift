@@ -13,6 +13,7 @@ import ChatUIThemes
 import AppKit
 #endif
 
+/// Root navigation container for the component gallery.
 struct ContentView: View {
     @EnvironmentObject var galleryState: GalleryState
 #if os(macOS)
@@ -100,6 +101,7 @@ private extension ContentView {
 
 // MARK: - Sidebar View
 
+/// Sidebar navigation and display controls.
 struct SidebarView: View {
     @EnvironmentObject var galleryState: GalleryState
     
@@ -144,6 +146,7 @@ struct SidebarView: View {
 
 // MARK: - Detail View
 
+/// Detail view that hosts the selected component gallery.
 struct DetailView: View {
     @EnvironmentObject var galleryState: GalleryState
     
@@ -210,6 +213,7 @@ struct DetailView: View {
 
 // MARK: - Side-by-Side View
 
+/// Side-by-side comparison view for light/dark modes.
 struct SideBySideView: View {
     @EnvironmentObject var galleryState: GalleryState
     

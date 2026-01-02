@@ -2,7 +2,7 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
-/// Trailing content options for SettingRowView
+/// Trailing content options for `SettingRowView`.
 public enum SettingTrailing {
     case none
     case chevron
@@ -10,7 +10,15 @@ public enum SettingTrailing {
     case custom(AnyView)
 }
 
-/// Core primitive for settings rows with optional icon, title, subtitle, and trailing content
+/// Core primitive for settings rows with optional icon, title, subtitle, and trailing content.
+///
+/// ### Discussion
+/// Use `SettingRowView` to render settings lists with consistent spacing and hover states.
+///
+/// - Example:
+/// ```swift
+/// SettingRowView(title: "Notifications", trailing: .chevron)
+/// ```
 public struct SettingRowView: View {
     private let icon: AnyView?
     private let title: String
@@ -23,6 +31,14 @@ public struct SettingRowView: View {
     @State private var isHovering = false
     @State private var isPressed = false
 
+    /// Creates a settings row view.
+    ///
+    /// - Parameters:
+    ///   - icon: Optional leading icon view.
+    ///   - title: Primary title text.
+    ///   - subtitle: Optional subtitle text.
+    ///   - trailing: Trailing content configuration.
+    ///   - action: Optional action when tapped.
     public init(
         icon: AnyView? = nil,
         title: String,
@@ -37,6 +53,7 @@ public struct SettingRowView: View {
         self.action = action
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         Group {
             if let action {

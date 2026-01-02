@@ -1,14 +1,15 @@
 import Foundation
 import Security
 
-/// Handles authentication for MCP tool calls using macOS Keychain
+/// Handles authentication for MCP tool calls using macOS Keychain.
 public class MCPAuthenticator {
     private let keychainService = "com.chatui.mcp"
     private let defaultAccount = "mcp-token"
     
+    /// Creates an authenticator with the default Keychain service.
     public init() {}
     
-    /// Store authentication token in Keychain
+    /// Store authentication token in Keychain.
     /// - Parameters:
     ///   - token: Authentication token to store
     ///   - account: Account identifier (defaults to "mcp-token")
@@ -22,7 +23,8 @@ public class MCPAuthenticator {
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: keychainService,
             kSecAttrAccount as String: account,
-            kSecValueData as String: tokenData
+            kSecValueData as String: tokenData,
+            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlockedThisDeviceOnly
         ]
         
         // Delete existing item if present
@@ -35,7 +37,7 @@ public class MCPAuthenticator {
         }
     }
     
-    /// Retrieve authentication token from Keychain
+    /// Retrieve authentication token from Keychain.
     /// - Parameter account: Account identifier (defaults to "mcp-token")
     /// - Returns: Authentication token
     /// - Throws: MCPError if retrieval fails
@@ -59,7 +61,7 @@ public class MCPAuthenticator {
         return token
     }
     
-    /// Delete authentication token from Keychain
+    /// Delete authentication token from Keychain.
     /// - Parameter account: Account identifier (defaults to "mcp-token")
     /// - Throws: MCPError if deletion fails
     public func deleteToken(account: String = "mcp-token") throws {
@@ -75,7 +77,7 @@ public class MCPAuthenticator {
         }
     }
     
-    /// Check if authentication token exists
+    /// Check if authentication token exists.
     /// - Parameter account: Account identifier (defaults to "mcp-token")
     /// - Returns: True if token exists, false otherwise
     public func hasToken(account: String = "mcp-token") -> Bool {
@@ -90,7 +92,7 @@ public class MCPAuthenticator {
         return status == errSecSuccess
     }
     
-    /// Update existing authentication token
+    /// Update existing authentication token.
     /// - Parameters:
     ///   - token: New authentication token
     ///   - account: Account identifier (defaults to "mcp-token")

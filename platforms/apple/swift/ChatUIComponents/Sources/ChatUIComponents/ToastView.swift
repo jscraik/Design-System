@@ -2,6 +2,7 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Visual variants for `ToastView`.
 public enum ToastVariant {
     case `default`
     case success
@@ -10,6 +11,7 @@ public enum ToastVariant {
     case info
 }
 
+/// Placement options for toast containers.
 public enum ToastPosition {
     case topLeading
     case top
@@ -56,6 +58,15 @@ public enum ToastPosition {
     }
 }
 
+/// Renders a toast notification.
+///
+/// ### Discussion
+/// The toast auto-dismisses after `duration` seconds when `duration` is greater than zero.
+///
+/// - Example:
+/// ```swift
+/// ToastView(isPresented: $showToast, variant: .success, title: "Saved")
+/// ```
 public struct ToastView: View {
     private let variant: ToastVariant
     private let title: String?
@@ -69,6 +80,17 @@ public struct ToastView: View {
 
     @Environment(\.chatUITheme) private var theme
 
+    /// Creates a toast view.
+    ///
+    /// - Parameters:
+    ///   - isPresented: Binding controlling presentation.
+    ///   - variant: Visual variant (default: `.default`).
+    ///   - title: Optional title text.
+    ///   - description: Optional description text.
+    ///   - icon: Optional leading icon.
+    ///   - action: Optional trailing action view.
+    ///   - duration: Auto-dismiss duration in seconds (default: `5.0`).
+    ///   - onClose: Optional callback invoked when dismissing.
     public init(
         isPresented: Binding<Bool>,
         variant: ToastVariant = .default,
@@ -89,6 +111,7 @@ public struct ToastView: View {
         self.onClose = onClose
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         if isPresented {
             HStack(alignment: .top, spacing: FSpacing.s12) {
@@ -197,10 +220,23 @@ public struct ToastView: View {
     }
 }
 
+/// Renders a container for stacking toast views.
+///
+/// - Example:
+/// ```swift
+/// ToastContainerView {
+///     ToastView(isPresented: $showToast, title: "Updated")
+/// }
+/// ```
 public struct ToastContainerView<Content: View>: View {
     private let position: ToastPosition
     private let content: Content
 
+    /// Creates a toast container.
+    ///
+    /// - Parameters:
+    ///   - position: Placement for the stack (default: `.bottomTrailing`).
+    ///   - content: Toast content builder.
     public init(
         position: ToastPosition = .bottomTrailing,
         @ViewBuilder content: () -> Content
@@ -209,6 +245,7 @@ public struct ToastContainerView<Content: View>: View {
         self.content = content()
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         ZStack(alignment: position.alignment) {
             VStack(alignment: position.stackAlignment, spacing: FSpacing.s8) {

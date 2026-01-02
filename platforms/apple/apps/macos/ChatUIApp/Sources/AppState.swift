@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 
+/// Top-level sections displayed in the app sidebar.
 enum AppSection: String, CaseIterable, Identifiable, Sendable {
     case chat
     case templates
@@ -36,6 +37,7 @@ enum AppSection: String, CaseIterable, Identifiable, Sendable {
     }
 }
 
+/// Theme styles supported by the app.
 enum ThemeStyle: String, CaseIterable, Identifiable, Sendable {
     case chatgpt
     case `default`
@@ -52,18 +54,21 @@ enum ThemeStyle: String, CaseIterable, Identifiable, Sendable {
     }
 }
 
+/// Serialized snapshot of app state for persistence.
 struct AppStateSnapshot: Codable, Sendable {
     let selectedSectionRawValue: String
     let mcpBaseURLString: String
     let themeStyleRawValue: String
 }
 
+/// Observable application state used across the UI.
 @MainActor
 final class AppState: ObservableObject {
     @Published var selectedSection: AppSection = .chat
     @Published var mcpBaseURLString: String = "http://localhost:8787"
     @Published var themeStyle: ThemeStyle = .chatgpt
 
+    /// Creates a serializable snapshot of the current state.
     func snapshot() -> AppStateSnapshot {
         AppStateSnapshot(
             selectedSectionRawValue: selectedSection.rawValue,
@@ -72,6 +77,8 @@ final class AppState: ObservableObject {
         )
     }
 
+    /// Applies a previously captured snapshot to the current state.
+    /// - Parameter snapshot: The snapshot to restore.
     func apply(snapshot: AppStateSnapshot) {
         if let section = AppSection(rawValue: snapshot.selectedSectionRawValue) {
             selectedSection = section

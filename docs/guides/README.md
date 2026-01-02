@@ -29,6 +29,7 @@ Use these when you want step-by-step workflows, not API reference.
 
 - [Page Development Steering](../../.kiro/steering/page-development.md) - Comprehensive page development guide
 - [Component Organization](../../packages/ui/src/components/README.md) - Component structure and usage
+- [UI Structure Map](../architecture/ui-structure-map.md) - UI library layout and component foldering map
 - [Contributing Guidelines](../../CONTRIBUTING.md) - General contribution guidelines
 
 ## Additional Resources

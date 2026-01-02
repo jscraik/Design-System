@@ -2,6 +2,17 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Renders a modal dialog with optional title and description.
+///
+/// ### Discussion
+/// Uses an overlay and accessibility modal traits to convey focus.
+///
+/// - Example:
+/// ```swift
+/// ModalDialogView(isPresented: $showDialog, title: "Settings") {
+///     ModalBodyView { Text("Content") }
+/// }
+/// ```
 public struct ModalDialogView<Content: View>: View {
     @Binding private var isPresented: Bool
     private let title: String?
@@ -14,6 +25,16 @@ public struct ModalDialogView<Content: View>: View {
     @Environment(\.colorScheme) private var scheme
     @Environment(\.chatUITheme) private var theme
 
+    /// Creates a modal dialog view.
+    ///
+    /// - Parameters:
+    ///   - isPresented: Binding controlling presentation.
+    ///   - title: Optional title string.
+    ///   - description: Optional description string.
+    ///   - maxWidth: Maximum dialog width (default: `520`).
+    ///   - showOverlay: Whether to show the dimmed overlay.
+    ///   - onClose: Optional callback invoked when dismissing.
+    ///   - content: Content builder for the dialog body.
     public init(
         isPresented: Binding<Bool>,
         title: String? = nil,
@@ -32,6 +53,7 @@ public struct ModalDialogView<Content: View>: View {
         self.content = content()
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         if isPresented {
             ZStack {
@@ -86,17 +108,25 @@ public struct ModalDialogView<Content: View>: View {
     }
 }
 
+/// Renders a modal header with title, subtitle, and optional close action.
 public struct ModalHeaderView: View {
     private let title: String
     private let subtitle: String?
     private let onClose: (() -> Void)?
 
+    /// Creates a modal header view.
+    ///
+    /// - Parameters:
+    ///   - title: Title string.
+    ///   - subtitle: Optional subtitle string.
+    ///   - onClose: Optional close action.
     public init(title: String, subtitle: String? = nil, onClose: (() -> Void)? = nil) {
         self.title = title
         self.subtitle = subtitle
         self.onClose = onClose
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         HStack(alignment: .center, spacing: FSpacing.s12) {
             VStack(alignment: .leading, spacing: FSpacing.s4) {
@@ -131,13 +161,18 @@ public struct ModalHeaderView: View {
     }
 }
 
+/// Renders the body content for a modal dialog.
 public struct ModalBodyView<Content: View>: View {
     private let content: Content
 
+    /// Creates a modal body view.
+    ///
+    /// - Parameter content: Content builder.
     public init(@ViewBuilder content: () -> Content) {
         self.content = content()
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(alignment: .leading, spacing: FSpacing.s12) {
             content
@@ -146,13 +181,18 @@ public struct ModalBodyView<Content: View>: View {
     }
 }
 
+/// Renders a footer area for modal dialog actions.
 public struct ModalFooterView<Content: View>: View {
     private let content: Content
 
+    /// Creates a modal footer view.
+    ///
+    /// - Parameter content: Content builder.
     public init(@ViewBuilder content: () -> Content) {
         self.content = content()
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         HStack {
             Spacer()

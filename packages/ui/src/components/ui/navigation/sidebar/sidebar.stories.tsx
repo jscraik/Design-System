@@ -19,10 +19,10 @@ import {
   SidebarProvider,
   SidebarSeparator,
   SidebarTrigger,
-} from "./sidebar";
+} from "./Sidebar";
 
 const meta: Meta<typeof SidebarProvider> = {
-  title: "UI/Sidebar",
+  title: "Components/UI/Navigation/Sidebar",
   component: SidebarProvider,
   tags: ["autodocs"],
   parameters: { layout: "centered" },

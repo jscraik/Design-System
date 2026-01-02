@@ -13,8 +13,10 @@ public enum DesignTokens {
     
     // MARK: - Colors
     
+    /// Color tokens grouped by semantic usage.
     public enum Colors {
         
+        /// Background surface colors.
         public enum Background {
             public static let lightPrimary = Color(hex: "#FFFFFF")
             public static let lightSecondary = Color(hex: "#E8E8E8")
@@ -41,16 +43,17 @@ public enum DesignTokens {
             )
         }
         
+        /// Text foreground colors.
         public enum Text {
             public static let lightPrimary = Color(hex: "#0D0D0D")
             public static let lightSecondary = Color(hex: "#5D5D5D")
             public static let lightTertiary = Color(hex: "#8F8F8F")
-            public static let lightInverted = Color(hex: "#8F8F8F")
+            public static let lightInverted = Color(hex: "#FFFFFF")
 
             public static let darkPrimary = Color(hex: "#FFFFFF")
             public static let darkSecondary = Color(hex: "#CDCDCD")
             public static let darkTertiary = Color(hex: "#AFAFAF")
-            public static let darkInverted = Color(hex: "#AFAFAF")
+            public static let darkInverted = Color(hex: "#0D0D0D")
             
             // Dynamic colors that adapt to system appearance
             public static let primary = Color.dynamicColor(
@@ -69,21 +72,30 @@ public enum DesignTokens {
             )
             
             public static let inverted = Color.dynamicColor(
-                lightHex: "#8F8F8F",
-                darkHex: "#AFAFAF"
+                lightHex: "#FFFFFF",
+                darkHex: "#0D0D0D"
             )
         }
         
+        /// Icon foreground colors.
         public enum Icon {
             public static let lightPrimary = Color(hex: "#0D0D0D")
             public static let lightSecondary = Color(hex: "#5D5D5D")
             public static let lightTertiary = Color(hex: "#8F8F8F")
-            public static let lightInverted = Color(hex: "#8F8F8F")
+            public static let lightInverted = Color(hex: "#FFFFFF")
+            public static let lightAccent = Color(hex: "#0285FF")
+            public static let lightStatusError = Color(hex: "#E02E2A")
+            public static let lightStatusWarning = Color(hex: "#E25507")
+            public static let lightStatusSuccess = Color(hex: "#008635")
 
             public static let darkPrimary = Color(hex: "#FFFFFF")
             public static let darkSecondary = Color(hex: "#CDCDCD")
             public static let darkTertiary = Color(hex: "#AFAFAF")
-            public static let darkInverted = Color(hex: "#AFAFAF")
+            public static let darkInverted = Color(hex: "#0D0D0D")
+            public static let darkAccent = Color(hex: "#48AAFF")
+            public static let darkStatusError = Color(hex: "#FF8583")
+            public static let darkStatusWarning = Color(hex: "#FF9E6C")
+            public static let darkStatusSuccess = Color(hex: "#40C977")
             
             // Dynamic colors that adapt to system appearance
             public static let primary = Color.dynamicColor(
@@ -102,11 +114,52 @@ public enum DesignTokens {
             )
             
             public static let inverted = Color.dynamicColor(
-                lightHex: "#8F8F8F",
-                darkHex: "#AFAFAF"
+                lightHex: "#FFFFFF",
+                darkHex: "#0D0D0D"
+            )
+
+            public static let accent = Color.dynamicColor(
+                lightHex: "#0285FF",
+                darkHex: "#48AAFF"
+            )
+
+            public static let statusError = Color.dynamicColor(
+                lightHex: "#E02E2A",
+                darkHex: "#FF8583"
+            )
+
+            public static let statusWarning = Color.dynamicColor(
+                lightHex: "#E25507",
+                darkHex: "#FF9E6C"
+            )
+
+            public static let statusSuccess = Color.dynamicColor(
+                lightHex: "#008635",
+                darkHex: "#40C977"
+            )
+        }
+
+        /// Border and divider colors.
+        public enum Border {
+            public static let lightLight = Color(hex: "#0D0D0D0D")
+            public static let lightHeavy = Color(hex: "#0D0D0D26")
+
+            public static let darkDefault = Color(hex: "#FFFFFF26")
+            public static let darkLight = Color(hex: "#FFFFFF0D")
+
+            // Dynamic colors that adapt to system appearance
+            public static let light = Color.dynamicColor(
+                lightHex: "#0D0D0D0D",
+                darkHex: "#FFFFFF0D"
+            )
+
+            public static let heavy = Color.dynamicColor(
+                lightHex: "#0D0D0D26",
+                darkHex: "#FFFFFF26"
             )
         }
         
+        /// Accent colors for statuses and semantic accents.
         public enum Accent {
             public static let lightGray = Color(hex: "#8F8F8F")
             public static let lightRed = Color(hex: "#E02E2A")
@@ -175,6 +228,7 @@ public enum DesignTokens {
             )
         }
 
+        /// Interactive element colors.
         public enum Interactive {
             public static let lightRing = Color(hex: "#0285FF")
             public static let darkRing = Color(hex: "#0285FF")
@@ -189,9 +243,12 @@ public enum DesignTokens {
     
     // MARK: - Typography
     
+    /// Typography scale and font tokens.
     public enum Typography {
+        /// Default font family name.
         public static let fontFamily = "SF Pro"
         
+        /// Heading level 1 typography tokens.
         public enum Heading1 {
             public static let size: CGFloat = 36
             public static let lineHeight: CGFloat = 40
@@ -199,6 +256,7 @@ public enum DesignTokens {
             public static let tracking: CGFloat = -0.1
         }
 
+        /// Heading level 2 typography tokens.
         public enum Heading2 {
             public static let size: CGFloat = 24
             public static let lineHeight: CGFloat = 28
@@ -206,6 +264,7 @@ public enum DesignTokens {
             public static let tracking: CGFloat = -0.25
         }
 
+        /// Heading level 3 typography tokens.
         public enum Heading3 {
             public static let size: CGFloat = 18
             public static let lineHeight: CGFloat = 26
@@ -213,6 +272,7 @@ public enum DesignTokens {
             public static let tracking: CGFloat = -0.45
         }
 
+        /// Body typography tokens.
         public enum Body {
             public static let size: CGFloat = 16
             public static let lineHeight: CGFloat = 26
@@ -221,6 +281,7 @@ public enum DesignTokens {
             public static let tracking: CGFloat = -0.4
         }
 
+        /// Small body typography tokens.
         public enum BodySmall {
             public static let size: CGFloat = 14
             public static let lineHeight: CGFloat = 18
@@ -229,6 +290,7 @@ public enum DesignTokens {
             public static let tracking: CGFloat = -0.3
         }
 
+        /// Caption typography tokens.
         public enum Caption {
             public static let size: CGFloat = 12
             public static let lineHeight: CGFloat = 16
@@ -237,10 +299,51 @@ public enum DesignTokens {
             public static let tracking: CGFloat = -0.1
         }
 
+        /// Card title typography tokens.
+        public enum CardTitle {
+            public static let size: CGFloat = 17
+            public static let lineHeight: CGFloat = 23
+            public static let weight = Font.Weight.medium
+            public static let tracking: CGFloat = -0.43
+        }
+
+        /// List title typography tokens.
+        public enum ListTitle {
+            public static let size: CGFloat = 17
+            public static let lineHeight: CGFloat = 24
+            public static let weight = Font.Weight.regular
+            public static let tracking: CGFloat = -0.4
+        }
+
+        /// List subtitle typography tokens.
+        public enum ListSubtitle {
+            public static let size: CGFloat = 14
+            public static let lineHeight: CGFloat = 20
+            public static let weight = Font.Weight.regular
+            public static let tracking: CGFloat = -0.18
+        }
+
+        /// Button label typography tokens.
+        public enum ButtonLabel {
+            public static let size: CGFloat = 15
+            public static let lineHeight: CGFloat = 24
+            public static let weight = Font.Weight.medium
+            public static let tracking: CGFloat = -0.24
+        }
+
+        /// Small button label typography tokens.
+        public enum ButtonLabelSmall {
+            public static let size: CGFloat = 14
+            public static let lineHeight: CGFloat = 20
+            public static let weight = Font.Weight.semibold
+            public static let tracking: CGFloat = -0.3
+        }
+
     }
     
     // MARK: - Spacing
     
+    /// Spacing scale tokens.
     public enum Spacing {
         public static let scale: [CGFloat] = [128, 64, 48, 40, 32, 24, 16, 12, 8, 4, 2, 0]
         
@@ -261,15 +364,103 @@ public enum DesignTokens {
     
     // MARK: - Corner Radius
     
+    /// Corner radius tokens.
     public enum CornerRadius {
-        public static let small: CGFloat = 4
+        public static let small: CGFloat = 6
         public static let medium: CGFloat = 8
         public static let large: CGFloat = 12
         public static let extraLarge: CGFloat = 16
+
+        public static let r6: CGFloat = 6
+        public static let r8: CGFloat = 8
+        public static let r10: CGFloat = 10
+        public static let r12: CGFloat = 12
+        public static let r16: CGFloat = 16
+        public static let r18: CGFloat = 18
+        public static let r21: CGFloat = 21
+        public static let r24: CGFloat = 24
+        public static let r30: CGFloat = 30
+        public static let round: CGFloat = 999
+    }
+
+    // MARK: - Sizes
+
+    /// Standard component size tokens.
+    public enum Size {
+        public static let controlHeight: CGFloat = 44
+        public static let cardHeaderHeight: CGFloat = 56
+        public static let hitTarget: CGFloat = 44
+    }
+
+    // MARK: - Shadows
+
+    /// Shadow token value definition.
+    public struct ShadowToken {
+        /// Shadow color.
+        public let color: Color
+        /// Horizontal offset.
+        public let x: CGFloat
+        /// Vertical offset.
+        public let y: CGFloat
+        /// Blur radius.
+        public let blur: CGFloat
+        /// Spread radius.
+        public let spread: CGFloat
+
+        /// Creates a shadow token definition.
+        /// - Parameters:
+        ///   - color: Shadow color.
+        ///   - x: Horizontal offset.
+        ///   - y: Vertical offset.
+        ///   - blur: Blur radius.
+        ///   - spread: Spread radius.
+        public init(color: Color, x: CGFloat, y: CGFloat, blur: CGFloat, spread: CGFloat) {
+            self.color = color
+            self.x = x
+            self.y = y
+            self.blur = blur
+            self.spread = spread
+        }
+    }
+
+    /// Shadow tokens for common surfaces.
+    public enum Shadow {
+        public static let card = ShadowToken(
+            color: Color(hex: "0000000D"),
+            x: 0,
+            y: 4,
+            blur: 16,
+            spread: 0
+        )
+
+        public static let pip = ShadowToken(
+            color: Color(hex: "0000000D"),
+            x: 0,
+            y: 4,
+            blur: 16,
+            spread: 0
+        )
+
+        public static let pill = ShadowToken(
+            color: Color(hex: "0000000A"),
+            x: 0,
+            y: 10,
+            blur: 22,
+            spread: 0
+        )
+
+        public static let close = ShadowToken(
+            color: Color(hex: "00000029"),
+            x: 0,
+            y: 4,
+            blur: 8,
+            spread: 0
+        )
     }
     
     // MARK: - Accessibility
     
+    /// Accessibility-related tokens and helpers.
     public enum Accessibility {
         /// Focus ring color for keyboard navigation
         public static let focusRing = Color(hex: "#0285FF")

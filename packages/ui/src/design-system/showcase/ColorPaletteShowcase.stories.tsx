@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ColorPaletteShowcase } from "./ColorPaletteShowcase";
 
 const meta: Meta<typeof ColorPaletteShowcase> = {
-  title: "Design System/Color Palette Showcase",
+  title: "Documentation/Design System/Color Palette Showcase",
   component: ColorPaletteShowcase,
   parameters: {
     layout: "fullscreen",

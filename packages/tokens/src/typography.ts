@@ -1,4 +1,7 @@
 // Generated from src/tokens/index.dtcg.json. Do not edit by hand.
+/**
+ * Typography tokens for web usage. Sizes, line heights, and tracking are numeric CSS values.
+ */
 export const typographyTokens = {
   "fontFamily": "SF Pro",
   "heading1": {
@@ -39,5 +42,35 @@ export const typographyTokens = {
     "weight": 400,
     "emphasisWeight": 600,
     "tracking": -0.1
+  },
+  "cardTitle": {
+    "size": 17,
+    "lineHeight": 23,
+    "weight": 500,
+    "tracking": -0.43
+  },
+  "listTitle": {
+    "size": 17,
+    "lineHeight": 24,
+    "weight": 400,
+    "tracking": -0.4
+  },
+  "listSubtitle": {
+    "size": 14,
+    "lineHeight": 20,
+    "weight": 400,
+    "tracking": -0.18
+  },
+  "buttonLabel": {
+    "size": 15,
+    "lineHeight": 24,
+    "weight": 500,
+    "tracking": -0.24
+  },
+  "buttonLabelSmall": {
+    "size": 14,
+    "lineHeight": 20,
+    "weight": 600,
+    "tracking": -0.3
   }
 } as const;

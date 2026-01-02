@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Checkbox } from "./checkbox";
-import { Label } from "../label";
+import { Label } from "../Label";
+
+import { Checkbox } from "./Checkbox";
 
 const meta: Meta<typeof Checkbox> = {
-  title: "UI/Checkbox",
+  title: "Components/UI/Base/Checkbox",
   component: Checkbox,
   tags: ["autodocs"],
   parameters: { layout: "centered" },

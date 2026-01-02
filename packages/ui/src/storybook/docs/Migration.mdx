@@ -1,7 +1,8 @@
 import { Meta, Canvas, Story } from "@storybook/blocks";
 import { Toggle, IconButton, Button } from "../../index";
+import * as MigrationStories from "./Migration.stories";
 
-<Meta title="Documentation/Migration Guide" />
+<Meta of={MigrationStories} />
 
 # Migration Guide
 
@@ -62,7 +63,7 @@ The `IconButton` component now uses an `active` prop with `activeColor` instead 
 <IconButton
   icon={<Icon />}
   variant={isActive ? "solid" : "ghost"}
-  className={isActive ? "bg-blue-500" : ""}
+  className={isActive ? "bg-accent-blue" : ""}
 />
 ```
 
@@ -108,13 +109,15 @@ Components are now organized by category for better tree-shaking and discoverabi
 
 ```tsx
 // Form components
-import { Button, Input, Toggle } from "@chatui/ui/forms";
+import { Button, Input, Toggle } from "@chatui/ui/base";
 
 // Layout components
-import { Card, Dialog, Tabs } from "@chatui/ui/layout";
+import { Card } from "@chatui/ui/data-display";
+import { Dialog } from "@chatui/ui/feedback";
+import { Tabs, ModelSelector } from "@chatui/ui/navigation";
 
 // Chat-specific components
-import { ModelSelector, ContextTag } from "@chatui/ui/chat";
+import { ContextTag } from "@chatui/ui/overlays";
 
 // Or import everything from main entry
 import { Button, ModelSelector, ContextTag } from "@chatui/ui";
@@ -160,8 +163,9 @@ For better tree-shaking, consider using category imports:
 import { Button, Input, ModelSelector, ContextTag } from "@chatui/ui";
 
 // After (optional, for better tree-shaking)
-import { Button, Input } from "@chatui/ui/forms";
-import { ModelSelector, ContextTag } from "@chatui/ui/chat";
+import { Button, Input } from "@chatui/ui/base";
+import { ModelSelector } from "@chatui/ui/navigation";
+import { ContextTag } from "@chatui/ui/overlays";
 ```
 
 ### 3. Test Your Components

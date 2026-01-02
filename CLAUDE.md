@@ -16,11 +16,10 @@ packages/
 ├── cloudflare-template/ # Cloudflare Workers deployment template
 └── widgets/     # Standalone widget bundles for ChatGPT
 
-apps/
-├── web/         # Standalone reference app with page routing
-├── storybook/   # Component documentation and development
-├── mcp/         # MCP server for ChatGPT integration
-└── macos/       # Swift macOS reference apps
+platforms/
+├── web/         # Web apps (reference app + Storybook + templates gallery)
+├── apple/       # macOS apps + Swift packages
+└── mcp/         # MCP server for ChatGPT integration
 ```
 
 ## Commands
@@ -139,7 +138,7 @@ pnpm release              # Publish packages
 
 - No reusable UI source (goes in `packages/ui`)
 
-### `apps/mcp`
+### `platforms/mcp`
 
 **✅ Allowed:**
 
@@ -154,9 +153,9 @@ pnpm release              # Publish packages
 ### Production code (prefer subpath exports for tree-shaking):
 
 ```ts
-import { Button } from "@chatui/ui/forms";
+import { Button } from "@chatui/ui/base";
+import { ModelSelector } from "@chatui/ui/navigation";
 import { ChatSidebar } from "@chatui/ui/chat";
-import { SectionHeader } from "@chatui/ui/layout";
 ```
 
 ### Dev/demo exports:
@@ -242,6 +241,8 @@ See `docs/guides/PAGES_QUICK_START.md` for adding pages.
 
 ### API Stability
 
-- **Stable**: Root exports, `@chatui/ui/forms`, `@chatui/ui/chat`, `@chatui/ui/layout`
+- **Stable**: Root exports, `@chatui/ui/app`, `@chatui/ui/chat`, `@chatui/ui/modals`, `@chatui/ui/settings`,
+  `@chatui/ui/base`, `@chatui/ui/data-display`, `@chatui/ui/feedback`, `@chatui/ui/navigation`,
+  `@chatui/ui/overlays`, `@chatui/ui/icons`
 - **Experimental**: `@chatui/ui/experimental`, `@chatui/ui/templates`
 - **Dev-only**: `@chatui/ui/dev` (for Storybook/docs only)

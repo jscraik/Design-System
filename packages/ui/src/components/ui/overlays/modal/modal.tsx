@@ -3,6 +3,9 @@ import { useId, type ReactNode } from "react";
 import { useFocusTrap } from "../../../../hooks/useFocusTrap";
 import { cn } from "../../utils";
 
+/**
+ * Props for the modal dialog component.
+ */
 export interface ModalDialogProps {
   /** Whether the modal is open */
   isOpen: boolean;
@@ -27,7 +30,7 @@ export interface ModalDialogProps {
 }
 
 /**
- * ModalDialog - A primitive modal dialog with focus trap
+ * Renders a primitive modal dialog with focus trap.
  *
  * Implements the WAI-ARIA dialog pattern:
  * - Focus trap (Tab/Shift+Tab cycle within modal)
@@ -48,6 +51,9 @@ export interface ModalDialogProps {
  *   );
  * }
  * ```
+ *
+ * @param props - Modal dialog props.
+ * @returns A modal dialog element, or `null` when closed.
  */
 export function ModalDialog({
   isOpen,
@@ -82,7 +88,7 @@ export function ModalDialog({
       {showOverlay && (
         <button
           type="button"
-          className={cn("absolute inset-0 bg-black/60", overlayClassName)}
+          className={cn("absolute inset-0 bg-foundation-bg-dark-1/60", overlayClassName)}
           aria-hidden="true"
           tabIndex={-1}
           onClick={onClose}
@@ -144,6 +150,12 @@ export interface ModalHeaderProps {
   actions?: ReactNode;
 }
 
+/**
+ * Renders the modal header section.
+ *
+ * @param props - Modal header props.
+ * @returns A header element for the modal dialog.
+ */
 export function ModalHeader({
   title,
   titleId,
@@ -217,6 +229,12 @@ export interface ModalBodyProps {
   className?: string;
 }
 
+/**
+ * Renders the modal body section.
+ *
+ * @param props - Modal body props.
+ * @returns A body element for the modal dialog.
+ */
 export function ModalBody({ children, className }: ModalBodyProps) {
   return <div className={cn("p-6", className)}>{children}</div>;
 }
@@ -233,6 +251,12 @@ export interface ModalFooterProps {
   className?: string;
 }
 
+/**
+ * Renders the modal footer section.
+ *
+ * @param props - Modal footer props.
+ * @returns A footer element for the modal dialog.
+ */
 export function ModalFooter({ children, className }: ModalFooterProps) {
   return (
     <div

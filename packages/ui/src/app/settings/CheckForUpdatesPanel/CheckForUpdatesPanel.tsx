@@ -1,6 +1,5 @@
 import { IconChevronLeftMd } from "../../../icons/ChatGPTIcons";
-
-import type { SettingsPanelProps } from "../types";
+import type { SettingsPanelProps } from "../shared/types";
 
 export function CheckForUpdatesPanel({ onBack }: SettingsPanelProps) {
   return (

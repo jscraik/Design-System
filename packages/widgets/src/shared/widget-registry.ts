@@ -1,5 +1,8 @@
 import type { WidgetName } from "../sdk/generated/widget-manifest";
 
+/**
+ * Metadata used to describe a widget tool.
+ */
 export interface WidgetMeta {
   title: string;
   description?: string;
@@ -9,6 +12,9 @@ export interface WidgetMeta {
   visibility?: "public" | "private";
 }
 
+/**
+ * Standardized widget tool configuration payload.
+ */
 export interface WidgetToolConfig {
   name: string;
   config: {
@@ -26,11 +32,12 @@ export interface WidgetToolConfig {
 }
 
 /**
- * Creates a standardized widget tool configuration with auto-generated URIs
- * @param widgetName - Name of the widget (must match manifest)
- * @param meta - Widget metadata and configuration
- * @param handler - Tool execution handler
- * @returns Standardized tool configuration
+ * Create a standardized widget tool configuration with auto-generated URIs.
+ * @param widgetName - Name of the widget (must match manifest).
+ * @param meta - Widget metadata and configuration.
+ * @param handler - Tool execution handler.
+ * @returns Standardized tool configuration.
+ * @throws Error when the widget is missing from the manifest.
  */
 export function createWidgetTool(
   widgetName: WidgetName,
@@ -73,9 +80,9 @@ export function createWidgetTool(
 }
 
 /**
- * Batch create multiple widget tools
- * @param tools - Array of widget tool definitions
- * @returns Array of standardized tool configurations
+ * Batch create multiple widget tools.
+ * @param tools - Array of widget tool definitions.
+ * @returns Array of standardized tool configurations.
  */
 export function createWidgetTools(
   tools: Array<{
@@ -88,7 +95,9 @@ export function createWidgetTools(
 }
 
 /**
- * Environment-aware resource metadata for widgets
+ * Create environment-aware resource metadata for widgets.
+ * @param options - CSP and domain configuration.
+ * @returns Widget metadata suitable for tool responses.
  */
 export function createResourceMeta(options: {
   workerDomain?: string;

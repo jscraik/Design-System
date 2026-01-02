@@ -15,7 +15,7 @@ import { AudioSettingsPanel } from "./AudioSettingsPanel";
  * ```
  */
 const meta: Meta<typeof AudioSettingsPanel> = {
-  title: "Settings/AudioSettingsPanel",
+  title: "Components/Settings/Audio Settings Panel",
   component: AudioSettingsPanel,
   parameters: {
     layout: "fullscreen",

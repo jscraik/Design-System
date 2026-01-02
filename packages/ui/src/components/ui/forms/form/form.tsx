@@ -14,8 +14,11 @@ import {
 } from "react-hook-form";
 
 import { cn } from "../../utils";
-import { Label } from "../../base/label";
+import { Label } from "../../base/Label";
 
+/**
+ * Provides the React Hook Form context to descendants.
+ */
 const Form: typeof FormProvider = FormProvider;
 
 type FormFieldContextValue<
@@ -27,6 +30,12 @@ type FormFieldContextValue<
 
 const FormFieldContext = React.createContext<FormFieldContextValue>({} as FormFieldContextValue);
 
+/**
+ * Provides a form field wrapper connecting React Hook Form control to context.
+ *
+ * @param props - Controller props from React Hook Form.
+ * @returns A controller wrapped with field context.
+ */
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
@@ -40,6 +49,12 @@ const FormField = <
   );
 };
 
+/**
+ * Returns field metadata for the current form item.
+ *
+ * @returns Field metadata and IDs for accessibility wiring.
+ * @throws Error when used outside `FormField`.
+ */
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext);
   const itemContext = React.useContext(FormItemContext);
@@ -69,6 +84,12 @@ type FormItemContextValue = {
 
 const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue);
 
+/**
+ * Renders a form item container providing a stable ID for labels and messages.
+ *
+ * @param props - Div props for layout.
+ * @returns A form item container element.
+ */
 function FormItem({ className, ...props }: React.ComponentProps<"div">) {
   const id = React.useId();
 
@@ -79,6 +100,12 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * Renders a form label bound to the current form item.
+ *
+ * @param props - Radix label props.
+ * @returns A label element wired to the form control.
+ */
 function FormLabel({ className, ...props }: React.ComponentProps<typeof LabelPrimitive.Root>) {
   const { error, formItemId } = useFormField();
 
@@ -93,6 +120,12 @@ function FormLabel({ className, ...props }: React.ComponentProps<typeof LabelPri
   );
 }
 
+/**
+ * Renders a form control slot that wires ARIA attributes to the current field.
+ *
+ * @param props - Slot props for the input element.
+ * @returns A slot element with ARIA attributes.
+ */
 function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
 
@@ -107,6 +140,12 @@ function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
   );
 }
 
+/**
+ * Renders optional field description text.
+ *
+ * @param props - Paragraph props for description text.
+ * @returns A description element for the field.
+ */
 function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
   const { formDescriptionId } = useFormField();
 
@@ -120,6 +159,12 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
   );
 }
 
+/**
+ * Renders field error or helper message text.
+ *
+ * @param props - Paragraph props for message text.
+ * @returns A message element, or `null` if empty.
+ */
 function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
   const { error, formMessageId } = useFormField();
   const body = error ? String(error?.message ?? "") : props.children;

@@ -90,7 +90,7 @@ const widgetCSP = {
 Implement rate limiting for MCP endpoints to prevent abuse:
 
 ```javascript
-// apps/mcp/server.js - Add rate limiting middleware
+// platforms/mcp/server.js - Add rate limiting middleware
 import rateLimit from "express-rate-limit";
 
 const mcpLimiter = rateLimit({
@@ -273,7 +273,7 @@ if (config.isProd && config.apiBase.includes("localhost")) {
 ### MCP Server CORS
 
 ```javascript
-// apps/mcp/server.js
+// platforms/mcp/server.js
 const corsOptions = {
   origin:
     process.env.NODE_ENV === "production"

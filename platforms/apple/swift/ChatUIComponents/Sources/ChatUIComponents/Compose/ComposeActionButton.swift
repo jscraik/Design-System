@@ -2,8 +2,14 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
-/// Action button for compose toolbar with secondary or ghost style
+/// Renders an action button for the compose toolbar.
+///
+/// - Example:
+/// ```swift
+/// ComposeActionButton(title: "Run", systemName: "play.circle", style: .secondary) {}
+/// ```
 public struct ComposeActionButton: View {
+    /// Visual styles for `ComposeActionButton`.
     public enum Style {
         case secondary
         case ghost
@@ -17,6 +23,21 @@ public struct ComposeActionButton: View {
     let style: Style
     let action: () -> Void
 
+    /// Creates a compose action button.
+    ///
+    /// - Parameters:
+    ///   - title: Button title text.
+    ///   - systemName: SF Symbol name for the icon.
+    ///   - style: Visual style for the button (default: `.secondary`).
+    ///   - action: Action invoked on tap.
+    public init(title: String, systemName: String, style: Style = .secondary, action: @escaping () -> Void) {
+        self.title = title
+        self.systemName = systemName
+        self.style = style
+        self.action = action
+    }
+
+    /// The content and behavior of this view.
     public var body: some View {
         Button(action: action) {
             HStack(spacing: FSpacing.s8) {

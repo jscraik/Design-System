@@ -2,7 +2,7 @@
 // CHATUI CANONICAL ICON SYSTEM
 // ============================================================================
 // This is the SINGLE SOURCE OF TRUTH for all icons across the entire ChatUI
-// repository. All apps (web, storybook, templates-gallery) must import icons
+// repository. All apps (web, storybook, templates route) must import icons
 // from this file only.
 //
 // Icon System Breakdown:
@@ -41,15 +41,19 @@ export {
   IconReply,
   IconShuffle,
 } from "./legacy/chatgpt/arrows";
+export { IconGroup, IconGroupFilled, IconUserAdd, IconUserLock as IconUserLockLegacy } from "./legacy/chatgpt/account";
+export {
+  IconNotification,
+  IconNotificationFilled,
+  IconWifi,
+  IconBatteryFull,
+  IconBatteryHalf,
+  IconBatteryLow,
+} from "./legacy/chatgpt/platform";
 
-// Common icon aliases for consistency (not already in NAMED EXPORTS section)
-export { ArrowUp as IconArrowUp } from "lucide-react";
-export { Clock as IconClock } from "lucide-react";
-export { Globe as IconGlobe, Globe as IconPublic } from "lucide-react";
-export { Headphones as IconHeadphones } from "lucide-react";
-export { Mic as IconMic } from "lucide-react";
-export { Paperclip as IconPaperclip } from "lucide-react";
-export { Plus as IconPlusComposer } from "lucide-react";
+// Common icon aliases for consistency
+export { IconArrowUpSm as IconArrowUp } from "./chatgpt/ChatGPTIconsFixed";
+export { IconCheckmark as IconCheck } from "./chatgpt/missing-icons";
 
 // ----------------------------------------------------------------------------
 // BRAND ICONS
@@ -69,44 +73,6 @@ export {
 } from "./brands";
 
 // ----------------------------------------------------------------------------
-// LUCIDE REACT ICONS (convenience re-exports)
-// ----------------------------------------------------------------------------
-
-import {
-  Archive,
-  ArrowLeft,
-  ArrowRight,
-  ArrowUp,
-  Check,
-  CheckCircle,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  ChevronUp,
-  Code,
-  Copy,
-  Folder,
-  Grid3x3,
-  Image,
-  Lightbulb,
-  MessageSquare,
-  MoreHorizontal,
-  MoreVertical,
-  PanelLeft,
-  Pencil,
-  Plus,
-  Radio,
-  RefreshCw,
-  Search,
-  Settings,
-  Share,
-  Star,
-  ThumbsDown,
-  ThumbsUp,
-  X,
-} from "lucide-react";
-
-// ----------------------------------------------------------------------------
 // APPS SDK UI ICONS
 // ----------------------------------------------------------------------------
 
@@ -119,42 +85,41 @@ export { Download as IconDownload, Sparkles as IconSparkles } from "../integrati
 
 // These provide convenient aliases with Icon* prefix
 export {
-  Archive as IconArchive,
-  ArrowLeft as IconArrowLeftSm,
-  ArrowRight as IconArrowRightSm,
-  ArrowUp as IconArrowUpSm,
-  MessageSquare as IconChat,
-  CheckCircle as IconCheckCircle,
-  Check as IconCheckmark,
-  Check as IconCheck,
-  ChevronDown as IconChevronDownMd,
-  ChevronLeft as IconChevronLeftMd,
-  ChevronRight as IconChevronRightMd,
-  ChevronUp as IconChevronUpMd,
-  X as IconCloseBold,
-  Code as IconCode,
-  Copy as IconCopy,
-  MoreHorizontal as IconDotsHorizontal,
-  MoreVertical as IconDotsVertical,
-  Pencil as IconEdit,
-  Folder as IconFolder,
-  Grid3x3 as IconGrid3x3,
-  Image as IconImage,
-  Lightbulb as IconLightBulb,
-  Plus as IconPlusLg,
-  Plus as IconPlusSm,
-  Radio as IconRadio,
-  RefreshCw as IconRegenerate,
-  RefreshCw as IconRefresh,
-  Search as IconSearch,
-  Settings as IconSettings,
-  Share as IconShare,
-  PanelLeft as IconSidebar,
-  Star as IconStar,
-  ThumbsDown as IconThumbDown,
-  ThumbsUp as IconThumbUp,
-  X as IconX,
-};
+  IconArchive,
+  IconArrowLeftSm,
+  IconArrowRightSm,
+  IconArrowUpSm,
+  IconChat,
+  IconChevronDownMd,
+  IconChevronLeftMd,
+  IconChevronRightMd,
+  IconChevronUpMd,
+  IconCopy,
+  IconDotsVertical,
+  IconEdit,
+  IconFolder,
+  IconImage,
+  IconLightBulb,
+  IconPlusComposer,
+  IconPlusLg,
+  IconRegenerate,
+  IconSearch,
+  IconSettings,
+  IconShare,
+  IconStar,
+  IconThumbDown,
+  IconThumbUp,
+} from "./chatgpt/ChatGPTIconsFixed";
+export {
+  IconCheckCircle,
+  IconCheckmark,
+  IconCode,
+  IconGrid3x3,
+  IconPlusCircle,
+  IconX,
+} from "./chatgpt/missing-icons";
+export { IconCloseBold, IconDotsHorizontal, IconPlusSm, IconSidebar } from "./legacy/chatgpt/interface";
+export { IconRadio, IconRefreshCw as IconRefresh } from "./legacy/chatgpt/platform";
 
 // ----------------------------------------------------------------------------
 // ICON CATALOG (for browsing all icons)

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { DesignSystemDocs } from "./DesignSystemDocs";
 
 const meta: Meta<typeof DesignSystemDocs> = {
-  title: "DesignSystem/DesignSystemDocs",
+  title: "Documentation/Design System/Design System Docs",
   component: DesignSystemDocs,
   tags: ["autodocs"],
   parameters: {

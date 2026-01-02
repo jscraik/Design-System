@@ -2,9 +2,12 @@ import { type ReactNode, useId } from "react";
 
 import { cn } from "../../../components/ui/utils";
 
+/** Visual variants for SettingToggleBlock. */
 export type SettingToggleBlockVariant = "default" | "card" | "compact" | "inline";
+/** Size presets for SettingToggleBlock. */
 export type SettingToggleBlockSize = "sm" | "md" | "lg";
 
+/** Props for SettingToggleBlock. */
 export interface SettingToggleBlockProps {
   /** Whether the toggle is checked */
   checked: boolean;
@@ -49,12 +52,12 @@ const variantStyles: Record<SettingToggleBlockVariant, { container: string; cont
   },
   card: {
     container:
-      "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg",
-    content: "px-4 py-3",
+      "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl shadow-sm",
+    content: "px-4 py-3.5",
   },
   compact: {
     container: "",
-    content: "px-2 py-1.5",
+    content: "px-2 py-2",
   },
   inline: {
     container: "",
@@ -70,28 +73,33 @@ const sizeStyles: Record<
     label: "text-xs",
     description: "text-[11px]",
     toggle: "h-4 w-7",
-    icon: "size-4",
+    icon: "w-4 h-4",
   },
   md: {
     label: "text-sm",
     description: "text-xs",
     toggle: "h-5 w-9",
-    icon: "size-5",
+    icon: "w-5 h-5",
   },
   lg: {
-    label: "text-base",
+    label: "text-[15px]",
     description: "text-sm",
     toggle: "h-6 w-11",
-    icon: "size-6",
+    icon: "w-6 h-6",
   },
 };
 
 const toggleKnobSizes: Record<SettingToggleBlockSize, { size: string; translate: string }> = {
-  sm: { size: "size-3", translate: "translate-x-[14px]" },
-  md: { size: "size-4", translate: "translate-x-[18px]" },
-  lg: { size: "size-5", translate: "translate-x-[22px]" },
+  sm: { size: "w-3 h-3", translate: "translate-x-[14px]" },
+  md: { size: "w-4 h-4", translate: "translate-x-[18px]" },
+  lg: { size: "w-5 h-5", translate: "translate-x-[22px]" },
 };
 
+/**
+ * Render a settings toggle block with label and actions.
+ * @param props - Block props.
+ * @returns The settings toggle block element.
+ */
 export function SettingToggleBlock({
   checked,
   onCheckedChange,
@@ -143,7 +151,7 @@ export function SettingToggleBlock({
       className={cn(
         container,
         divider && "border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
-        disabled && "opacity-50",
+        disabled && "opacity-50 cursor-not-allowed",
         className,
       )}
     >
@@ -151,7 +159,9 @@ export function SettingToggleBlock({
         className={cn(
           "flex items-center justify-between gap-3",
           content,
-          !disabled && !loading && "cursor-pointer",
+          !disabled &&
+            !loading &&
+            "cursor-pointer hover:bg-foundation-bg-light-2/50 dark:hover:bg-foundation-bg-dark-2/50 rounded-lg transition-colors",
         )}
         onClick={handleToggle}
         onKeyDown={handleKeyDown}
@@ -170,7 +180,7 @@ export function SettingToggleBlock({
             </span>
           )}
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <label
                 htmlFor={toggleId}
                 className={cn(
@@ -191,7 +201,7 @@ export function SettingToggleBlock({
               <p
                 id={descriptionId}
                 className={cn(
-                  "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-0.5",
+                  "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1 leading-relaxed",
                   descriptionSize,
                 )}
               >
@@ -229,7 +239,7 @@ export function SettingToggleBlock({
             {loading ? (
               <span className={cn("absolute inset-0 flex items-center justify-center")}>
                 <svg
-                  className="size-3 animate-spin text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
+                  className="w-3 h-3 animate-spin text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
                   fill="none"
                   viewBox="0 0 24 24"
                 >
@@ -251,7 +261,7 @@ export function SettingToggleBlock({
             ) : (
               <span
                 className={cn(
-                  "transform rounded-full bg-white shadow-sm transition-transform duration-200",
+                  "transform rounded-full bg-white shadow-sm transition-transform",
                   knobSize,
                   checked ? knobTranslate : "translate-x-0.5",
                 )}
@@ -265,7 +275,7 @@ export function SettingToggleBlock({
       {hint && !error && (
         <p
           className={cn(
-            "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-1",
+            "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-2 leading-relaxed",
             content,
             "pt-0",
             descriptionSize,
@@ -280,7 +290,7 @@ export function SettingToggleBlock({
         <div
           id={errorId}
           className={cn(
-            "flex items-center gap-1.5 text-foundation-accent-red mt-1",
+            "flex items-center gap-1.5 text-foundation-accent-red mt-2",
             content,
             "pt-0",
             descriptionSize,
@@ -288,7 +298,7 @@ export function SettingToggleBlock({
           role="alert"
         >
           <svg
-            className="size-3.5 shrink-0"
+            className="w-3.5 h-3.5 shrink-0"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -308,12 +318,18 @@ export function SettingToggleBlock({
 }
 
 // Compound component for toggle badge
+/** Props for SettingToggleBadge. */
 export interface SettingToggleBadgeProps {
   children: ReactNode;
   variant?: "default" | "new" | "beta" | "pro" | "deprecated";
   className?: string;
 }
 
+/**
+ * Render a badge for a toggle block.
+ * @param props - Badge props.
+ * @returns The badge element.
+ */
 export function SettingToggleBadge({
   children,
   variant = "default",
@@ -323,7 +339,7 @@ export function SettingToggleBadge({
     default:
       "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
     new: "bg-foundation-accent-blue/10 text-foundation-accent-blue",
-    beta: "bg-foundation-accent-yellow/10 text-foundation-accent-yellow",
+    beta: "bg-foundation-accent-orange/10 text-foundation-accent-orange",
     pro: "bg-gradient-to-r from-foundation-accent-purple/10 to-foundation-accent-blue/10 text-foundation-accent-purple",
     deprecated: "bg-foundation-accent-red/10 text-foundation-accent-red",
   };
@@ -331,7 +347,7 @@ export function SettingToggleBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium uppercase tracking-wide",
+        "inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-wide",
         variantClasses[variant],
         className,
       )}
@@ -342,6 +358,7 @@ export function SettingToggleBadge({
 }
 
 // Compound component for toggle group
+/** Props for SettingToggleGroup. */
 export interface SettingToggleGroupProps {
   children: ReactNode;
   label?: string;
@@ -349,6 +366,11 @@ export interface SettingToggleGroupProps {
   className?: string;
 }
 
+/**
+ * Render a group of toggle blocks.
+ * @param props - Group props.
+ * @returns The group element.
+ */
 export function SettingToggleGroup({
   children,
   label,
@@ -360,12 +382,12 @@ export function SettingToggleGroup({
       {(label || description) && (
         <div className="px-3 py-2">
           {label && (
-            <h3 className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+            <h3 className="text-sm font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
               {label}
             </h3>
           )}
           {description && (
-            <p className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-0.5">
+            <p className="text-xs text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
               {description}
             </p>
           )}

@@ -11,6 +11,9 @@ import { useWidgetProps } from "../../../shared/use-widget-props";
 import { useMaxHeight } from "../../../shared/use-max-height";
 import { useDisplayMode } from "../../../shared/use-display-mode";
 
+/**
+ * Render the expand icon used in the viewer chrome.
+ */
 const ExpandIcon = () => {
   return (
     <svg
@@ -26,6 +29,9 @@ const ExpandIcon = () => {
 };
 
 /* -------------------------------- util text streaming (unchanged) ------------------------------- */
+/**
+ * Animate a single word in streamed text.
+ */
 function StreamWord({ children, index, delay }) {
   const [isComplete, setIsComplete] = useState(false);
   return isComplete ? (
@@ -47,6 +53,9 @@ function StreamWord({ children, index, delay }) {
   );
 }
 
+/**
+ * Animate a block of text word-by-word.
+ */
 function StreamText({ children, delay }) {
   const words = children.split(" ");
   return (
@@ -61,6 +70,9 @@ function StreamText({ children, delay }) {
 }
 
 /* -------------------------------- background stars ------------------------------- */
+/**
+ * Apply the starfield background texture to the scene.
+ */
 function SceneBackground() {
   const { scene } = useThree();
   const texture = useLoader(
@@ -75,6 +87,9 @@ function SceneBackground() {
 }
 
 /* -------------------------------- post-processing ------------------------------- */
+/**
+ * Render post-processing effects with focus-aware depth of field.
+ */
 function Effects({ focusTarget, hasFocus }) {
   const { camera } = useThree();
   const depthOfFieldRef = useRef();
@@ -183,6 +198,9 @@ const planets = [
 ];
 
 /* -------------------------------- main solar-system component ------------------------------- */
+/**
+ * Render the interactive solar system view.
+ */
 function SolarSystem() {
   const [isOrbiting, setIsOrbiting] = useState(true);
   const [targetPlanetPosition, setTargetPlanetPosition] = useState(null);
@@ -501,6 +519,9 @@ function CameraController({
   return null;
 }
 
+/**
+ * Provide routing for the solar system widget.
+ */
 export default function App() {
   return (
     <BrowserRouter>

@@ -1,5 +1,4 @@
-// ChatUIThemes
-// Theme presets including pixel-perfect ChatGPT styling and native alternatives
+/// Theme presets including pixel-perfect ChatGPT styling and native alternatives.
 
 import SwiftUI
 import ChatUIFoundation

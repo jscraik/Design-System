@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, type ReactNode } from "react";
 import { copyToClipboard as copyToClipboardUtil } from "../../utils/clipboard";
 
 import {
@@ -254,7 +254,7 @@ const typographyTokens = [
   },
 ] as const;
 
-const tabs: { id: DocTab; label: string; icon: React.ReactNode }[] = [
+const tabs: { id: DocTab; label: string; icon: ReactNode }[] = [
   {
     id: "overview",
     label: "Overview",
@@ -454,7 +454,7 @@ function StatCard({
   label: string;
   value: string | number;
   description?: string;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
 }) {
   return (
     <div className="rounded-xl p-6 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 hover:border-foundation-accent-blue/30 transition-all duration-200 hover:shadow-sm">
@@ -486,7 +486,7 @@ function Section({
 }: {
   title: string;
   description?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <section className="space-y-6">
@@ -506,7 +506,7 @@ function Section({
 }
 
 // Card component
-function Card({ children, className }: { children: React.ReactNode; className?: string }) {
+function Card({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
       className={cn(
@@ -732,7 +732,7 @@ export function DesignSystemDocs() {
                           Import Icons & Components
                         </h3>
                         <CodeBlock
-                          code={`import { IconSettings, IconSearch, IconUser } from '@chatui/ui/icons';
+                          code={`import { IconSettings, IconSearch, IconUser } from '@/components/icons/ChatGPTIcons';
 import { SettingDropdownBlock, SettingToggleBlock } from '@/components';
 
 // Use components with full type safety`}
@@ -1101,7 +1101,7 @@ import { SettingDropdownBlock, SettingToggleBlock } from '@/components';
                   Usage Example
                 </h3>
                 <CodeBlock
-                  code={`import { IconSettings, IconSearch, IconUser } from '@chatui/ui/icons';
+                  code={`import { IconSettings, IconSearch, IconUser } from '@/components/icons/ChatGPTIcons';
 
 function MyComponent() {
   return (

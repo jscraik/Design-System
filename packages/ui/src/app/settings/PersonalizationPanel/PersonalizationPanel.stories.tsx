@@ -15,7 +15,7 @@ import { PersonalizationPanel } from "./PersonalizationPanel";
  * ```
  */
 const meta: Meta<typeof PersonalizationPanel> = {
-  title: "Settings/PersonalizationPanel",
+  title: "Components/Settings/Personalization Panel",
   component: PersonalizationPanel,
   parameters: {
     layout: "fullscreen",

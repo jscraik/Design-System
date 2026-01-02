@@ -46,8 +46,8 @@ export function ColorSwatch({
             )}
             style={{ backgroundColor: value }}
           />
-          <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/10 transition-all duration-200 rounded-xl">
-            <div className="bg-white/95 dark:bg-foundation-bg-dark-2/95 backdrop-blur-sm rounded-full p-2.5 transform scale-0 group-hover:scale-100 transition-transform duration-200 shadow-lg">
+          <div className="absolute inset-0 flex items-center justify-center bg-foundation-bg-dark-1/0 group-hover:bg-foundation-bg-dark-1/10 transition-all duration-200 rounded-xl">
+            <div className="bg-foundation-bg-light-1/95 dark:bg-foundation-bg-dark-2/95 backdrop-blur-sm rounded-full p-2.5 transform scale-0 group-hover:scale-100 transition-transform duration-200 shadow-lg">
               {isCopied ? (
                 <IconCheck className="size-4 text-foundation-accent-green" />
               ) : (
@@ -90,9 +90,9 @@ export function ColorSwatch({
         />
         <div className="absolute inset-0 flex items-center justify-center rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-150">
           {isCopied ? (
-            <IconCheck className="size-4 text-white drop-shadow-md" />
+            <IconCheck className="size-4 text-foundation-text-dark-primary drop-shadow-md" />
           ) : (
-            <IconCopy className="size-3.5 text-white drop-shadow-md" />
+            <IconCopy className="size-3.5 text-foundation-text-dark-primary drop-shadow-md" />
           )}
         </div>
       </div>

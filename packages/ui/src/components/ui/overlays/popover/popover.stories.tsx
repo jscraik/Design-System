@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "@storybook/test";
 
-import { Button } from "../../base/button";
+import { Button } from "../../base/Button";
 
-import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { Popover, PopoverContent, PopoverTrigger } from "./Popover";
 
 const meta: Meta<typeof Popover> = {
-  title: "UI/Popover",
+  title: "Components/UI/Overlays/Popover",
   component: Popover,
   tags: ["autodocs"],
   parameters: {

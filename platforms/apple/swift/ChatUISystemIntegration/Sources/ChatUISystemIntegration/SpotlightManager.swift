@@ -7,11 +7,13 @@ import UniformTypeIdentifiers
 /// Manages Spotlight search integration for chat history
 public class SpotlightManager {
     
+    /// Errors thrown by Spotlight operations.
     public enum SpotlightError: Error, LocalizedError {
         case indexingFailed(Error)
         case searchFailed(Error)
         case invalidContent
         
+        /// A localized description of the error.
         public var errorDescription: String? {
             switch self {
             case .indexingFailed(let error):
@@ -26,11 +28,14 @@ public class SpotlightManager {
     
     private let searchableIndex = CSSearchableIndex.default()
     
+    /// Creates a Spotlight manager.
     public init() {}
     
     // MARK: - Indexing Chat Messages
     
-    /// Index a chat message for Spotlight search
+    /// Index a chat message for Spotlight search.
+    /// - Parameter message: The message to index.
+    /// - Throws: `SpotlightError` when indexing fails.
     public func indexChatMessage(_ message: ChatMessage) async throws {
         let attributeSet = CSSearchableItemAttributeSet(contentType: .text)
         
@@ -64,7 +69,9 @@ public class SpotlightManager {
         }
     }
     
-    /// Index multiple chat messages
+    /// Index multiple chat messages.
+    /// - Parameter messages: The messages to index.
+    /// - Throws: `SpotlightError` when indexing fails.
     public func indexChatMessages(_ messages: [ChatMessage]) async throws {
         let items = messages.map { message -> CSSearchableItem in
             let attributeSet = CSSearchableItemAttributeSet(contentType: .text)
@@ -93,7 +100,9 @@ public class SpotlightManager {
     
     // MARK: - Removing Items
     
-    /// Remove a specific chat message from Spotlight index
+    /// Remove a specific chat message from Spotlight index.
+    /// - Parameter id: The message identifier to remove.
+    /// - Throws: `SpotlightError` when removal fails.
     public func removeChatMessage(withId id: String) async throws {
         do {
             try await searchableIndex.deleteSearchableItems(withIdentifiers: [id])
@@ -102,7 +111,9 @@ public class SpotlightManager {
         }
     }
     
-    /// Remove multiple chat messages from Spotlight index
+    /// Remove multiple chat messages from Spotlight index.
+    /// - Parameter ids: The message identifiers to remove.
+    /// - Throws: `SpotlightError` when removal fails.
     public func removeChatMessages(withIds ids: [String]) async throws {
         do {
             try await searchableIndex.deleteSearchableItems(withIdentifiers: ids)
@@ -111,7 +122,8 @@ public class SpotlightManager {
         }
     }
     
-    /// Remove all chat messages from Spotlight index
+    /// Remove all chat messages from Spotlight index.
+    /// - Throws: `SpotlightError` when removal fails.
     public func removeAllChatMessages() async throws {
         do {
             try await searchableIndex.deleteSearchableItems(withDomainIdentifiers: ["com.chatui.messages"])
@@ -120,7 +132,8 @@ public class SpotlightManager {
         }
     }
     
-    /// Remove all indexed items
+    /// Remove all indexed items.
+    /// - Throws: `SpotlightError` when removal fails.
     public func removeAllIndexedItems() async throws {
         do {
             try await searchableIndex.deleteAllSearchableItems()
@@ -130,10 +143,23 @@ public class SpotlightManager {
     }
     
     // MARK: - Search
-    
-    /// Search for chat messages in Spotlight
+
+    /// Search for chat messages in Spotlight.
+    /// - Parameters:
+    ///   - query: The query string to search for.
+    ///   - limit: The maximum number of identifiers to return.
+    /// - Returns: Matching message identifiers.
+    /// - Throws: `SpotlightError` when the search fails.
     public func searchChatMessages(query: String, limit: Int = 20) async throws -> [String] {
-        let escapedQuery = query
+        // Sanitize query to prevent injection attacks
+        let sanitized = sanitizeSpotlightQuery(query)
+
+        // Validate query length
+        guard sanitized.count <= 100 else {
+            throw SpotlightError.invalidContent
+        }
+
+        let escapedQuery = sanitized
             .replacingOccurrences(of: "\\", with: "\\\\")
             .replacingOccurrences(of: "\"", with: "\\\"")
         let queryString = "contentDescription == \"*\(escapedQuery)*\"cd || textContent == \"*\(escapedQuery)*\"cd"
@@ -159,7 +185,20 @@ public class SpotlightManager {
     }
     
     // MARK: - Helper Methods
-    
+
+    /// Sanitizes Spotlight query to prevent injection attacks
+    /// - Parameter query: Raw query string
+    /// - Returns: Sanitized query string
+    private func sanitizeSpotlightQuery(_ query: String) -> String {
+        // Allow only alphanumeric, spaces, and basic punctuation
+        let allowed = CharacterSet.alphanumerics
+            .union(CharacterSet.whitespaces)
+            .union(CharacterSet(charactersIn: ".!?@-_"))
+
+        return String(query.unicodeScalars.filter { allowed.contains($0) })
+            .trimmingCharacters(in: .whitespaces)
+    }
+
     private func extractKeywords(from text: String) -> [String] {
         // Simple keyword extraction - split by whitespace and filter short words
         let words = text.components(separatedBy: .whitespacesAndNewlines)
@@ -180,5 +219,6 @@ public class SpotlightManager {
 // MARK: - UTType Extension
 
 extension UTType {
+    /// UTType for chat message indexing.
     static let chatMessage = UTType(exportedAs: "com.chatui.chat-message")
 }

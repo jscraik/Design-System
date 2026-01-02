@@ -4,6 +4,9 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "../../utils";
 
+/**
+ * Defines base class names and variant mappings for badges.
+ */
 const badgeVariants = cva(
   "inline-flex items-center justify-center rounded-md border px-2 py-0.5 font-foundation text-caption font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-foundation-accent-blue focus-visible:ring-2 focus-visible:ring-foundation-accent-blue/50 aria-invalid:ring-2 aria-invalid:ring-foundation-accent-red aria-invalid:border-foundation-accent-red transition-colors overflow-hidden",
   {
@@ -25,6 +28,17 @@ const badgeVariants = cva(
   },
 );
 
+/**
+ * Renders a badge element with visual variants.
+ *
+ * @param props - Badge props including variant and `asChild`.
+ * @returns A badge element.
+ *
+ * @example
+ * ```tsx
+ * <Badge variant="secondary">Beta</Badge>
+ * ```
+ */
 function Badge({
   className,
   variant,

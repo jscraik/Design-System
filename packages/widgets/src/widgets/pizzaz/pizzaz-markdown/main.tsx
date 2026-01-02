@@ -11,6 +11,9 @@ type MarkdownPayload = {
   markdown?: string;
 };
 
+/**
+ * Render the markdown widget with safe element allowlist.
+ */
 function App() {
   const { markdown } = useWidgetProps<MarkdownPayload>({
     markdown: fallbackMarkdown,

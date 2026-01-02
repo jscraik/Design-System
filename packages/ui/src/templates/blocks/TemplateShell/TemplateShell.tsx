@@ -1,6 +1,6 @@
 import { createContext, type ReactNode, useCallback, useContext, useState } from "react";
 
-import { ScrollArea } from "../../../components/ui/base/scroll-area";
+import { ScrollArea } from "../../../components/ui/base/ScrollArea";
 import { cn } from "../../../components/ui/utils";
 
 // Context for shell state management
@@ -15,6 +15,11 @@ interface TemplateShellContextValue {
 
 const TemplateShellContext = createContext<TemplateShellContextValue | null>(null);
 
+/**
+ * Access the current TemplateShell context.
+ * @returns Shell state and helpers.
+ * @throws Error when used outside a TemplateShell.
+ */
 export function useTemplateShell() {
   const context = useContext(TemplateShellContext);
   if (!context) {
@@ -23,6 +28,7 @@ export function useTemplateShell() {
   return context;
 }
 
+/** Props for TemplateShell. */
 export interface TemplateShellProps {
   /** Left sidebar content */
   sidebar?: ReactNode;
@@ -62,6 +68,11 @@ export interface TemplateShellProps {
   onDetailCollapseChange?: (collapsed: boolean) => void;
 }
 
+/**
+ * Render a shell layout with header, body, and optional side panels.
+ * @param props - Shell props.
+ * @returns The template shell element.
+ */
 export function TemplateShell({
   sidebar,
   header,
@@ -206,12 +217,18 @@ export function TemplateShell({
 }
 
 // Compound components for common patterns
+/** Props for TemplateShellToggleButton. */
 export interface TemplateShellToggleButtonProps {
   panel: "sidebar" | "detail";
   className?: string;
   children?: ReactNode;
 }
 
+/**
+ * Render a toggle button for shell side panels.
+ * @param props - Toggle button props.
+ * @returns The toggle button element.
+ */
 export function TemplateShellToggleButton({
   panel,
   className,

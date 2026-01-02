@@ -1,12 +1,21 @@
 import type { ReactNode } from "react";
 import { createContext, useContext, useSyncExternalStore } from "react";
 
+/**
+ * Event name used by the host to announce `window.openai` updates.
+ */
 export const SET_GLOBALS_EVENT_TYPE = "openai:set_globals" as const;
 
 type UnknownRecord = Record<string, unknown>;
 
 // Display modes per Apps SDK spec
+/**
+ * Display modes supported by the Apps SDK host.
+ */
 export type OpenAiDisplayMode = "inline" | "pip" | "fullscreen";
+/**
+ * Theme modes supported by the Apps SDK host.
+ */
 export type OpenAiTheme = "light" | "dark";
 
 /**
@@ -67,6 +76,9 @@ export interface OpenAiBridge extends OpenAiGlobals {
   requestClose?: () => void;
 }
 
+/**
+ * Custom event payload emitted when the host updates `window.openai`.
+ */
 export interface SetGlobalsEvent extends CustomEvent<{ globals: OpenAiGlobals }> {
   type: typeof SET_GLOBALS_EVENT_TYPE;
 }
@@ -79,6 +91,9 @@ declare global {
 
 /**
  * Host abstraction for both embedded (ChatGPT) and standalone modes
+ */
+/**
+ * Host abstraction for embedded and standalone widget environments.
  */
 export type Host = {
   mode: "embedded" | "standalone";
@@ -100,10 +115,20 @@ export type Host = {
 
 const HostContext = createContext<Host | null>(null);
 
+/**
+ * Provide a host instance to widget components.
+ * @param props - Provider props.
+ * @returns The provider element.
+ */
 export function HostProvider({ host, children }: { host: Host; children: ReactNode }) {
   return <HostContext.Provider value={host}>{children}</HostContext.Provider>;
 }
 
+/**
+ * Access the current host instance.
+ * @returns The host instance.
+ * @throws Error when the host provider is missing.
+ */
 export function useHost() {
   const host = useContext(HostContext);
   if (!host) {
@@ -113,7 +138,8 @@ export function useHost() {
 }
 
 /**
- * Create a host adapter for embedded ChatGPT mode (wraps window.openai)
+ * Create a host adapter for embedded ChatGPT mode (wraps `window.openai`).
+ * @returns The embedded host adapter.
  */
 export function createEmbeddedHost(): Host {
   const getOpenAi = () => (typeof window !== "undefined" ? window.openai : undefined);
@@ -231,7 +257,9 @@ export function createEmbeddedHost(): Host {
 }
 
 /**
- * Create a host adapter for standalone mode (API-based)
+ * Create a host adapter for standalone mode (API-based).
+ * @param apiBase - Base URL for the standalone API.
+ * @returns The standalone host adapter.
  */
 export function createStandaloneHost(apiBase: string): Host {
   return {
@@ -267,7 +295,9 @@ export function createStandaloneHost(apiBase: string): Host {
 }
 
 /**
- * Create a mock host for testing/Storybook
+ * Create a mock host for testing or Storybook.
+ * @param overrides - Partial host overrides.
+ * @returns A mock host implementation.
  */
 export function createMockHost(overrides: Partial<Host> = {}): Host {
   return {
@@ -289,7 +319,8 @@ export function createMockHost(overrides: Partial<Host> = {}): Host {
 
 /**
  * Subscribe to `window.openai` global changes dispatched by the host.
- * Based on the Apps SDK docs: `openai:set_globals` events + `useSyncExternalStore`.
+ * @param key - Global key to read.
+ * @returns The current value for the key.
  * @see https://developers.openai.com/apps-sdk/build/chatgpt-ui
  */
 export function useOpenAiGlobal<K extends keyof OpenAiGlobals>(key: K): OpenAiGlobals[K] {
@@ -318,40 +349,50 @@ export function useOpenAiGlobal<K extends keyof OpenAiGlobals>(key: K): OpenAiGl
 }
 
 // Convenience hooks for common globals
+/** Return the current tool input payload. */
 export function useToolInput() {
   return useOpenAiGlobal("toolInput");
 }
 
+/** Return the current tool output payload. */
 export function useToolOutput() {
   return useOpenAiGlobal("toolOutput");
 }
 
+/** Return the current tool response metadata. */
 export function useToolResponseMetadata() {
   return useOpenAiGlobal("toolResponseMetadata");
 }
 
+/** Return the current widget state snapshot. */
 export function useWidgetState() {
   return useOpenAiGlobal("widgetState");
 }
 
+/** Return the current theme. */
 export function useTheme() {
   return useOpenAiGlobal("theme");
 }
 
+/** Return the current display mode. */
 export function useDisplayMode() {
   return useOpenAiGlobal("displayMode");
 }
 
+/** Return the current locale string. */
 export function useLocale() {
   return useOpenAiGlobal("locale");
 }
 
+/** Return the current maximum height constraint. */
 export function useMaxHeight() {
   return useOpenAiGlobal("maxHeight");
 }
 
 /**
- * Create a mock window.openai object for standalone/Storybook use
+ * Create a mock `window.openai` bridge for standalone or Storybook use.
+ * @param overrides - Partial overrides for the mock bridge.
+ * @returns A mock OpenAI bridge implementation.
  */
 export function createMockOpenAI(overrides: Partial<OpenAiBridge> = {}): OpenAiBridge {
   const mock: OpenAiBridge = {
@@ -392,7 +433,8 @@ export function createMockOpenAI(overrides: Partial<OpenAiBridge> = {}): OpenAiB
 }
 
 /**
- * For standalone / Storybook: provide a minimal `window.openai` so UI code can run.
+ * Ensure a minimal `window.openai` exists for standalone or Storybook rendering.
+ * @param overrides - Partial overrides for the mock bridge.
  */
 export function ensureMockOpenAI(overrides: Partial<OpenAiBridge> = {}) {
   if (typeof window === "undefined") return;

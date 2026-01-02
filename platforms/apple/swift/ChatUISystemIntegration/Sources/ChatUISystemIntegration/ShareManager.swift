@@ -8,11 +8,13 @@ import UIKit
 /// Manages native share sheet integration for sharing content
 public class ShareManager {
     
+    /// Errors thrown by share operations.
     public enum ShareError: Error, LocalizedError {
         case sharingNotAvailable
         case invalidContent
         case shareFailed(Error)
         
+        /// A localized description of the error.
         public var errorDescription: String? {
             switch self {
             case .sharingNotAvailable:
@@ -25,6 +27,7 @@ public class ShareManager {
         }
     }
     
+    /// Creates a share manager.
     public init() {}
     
     // MARK: - Share Content
@@ -179,7 +182,9 @@ public class ShareManager {
     
     // MARK: - Share Extensions
     
-    /// Create shareable chat transcript
+    /// Create shareable chat transcript.
+    /// - Parameter messages: The messages to include in the transcript.
+    /// - Returns: A formatted transcript string.
     public func createChatTranscript(messages: [ChatMessage]) -> String {
         var transcript = "Chat Transcript\n"
         transcript += "Generated: \(Date().formatted())\n"
@@ -193,7 +198,11 @@ public class ShareManager {
         return transcript
     }
     
-    /// Export chat history to file
+    /// Export chat history to file.
+    /// - Parameters:
+    ///   - messages: The messages to export.
+    ///   - url: The destination file URL.
+    /// - Throws: `ShareError` when writing fails.
     public func exportChatHistory(messages: [ChatMessage], to url: URL) async throws {
         let transcript = createChatTranscript(messages: messages)
         
@@ -216,12 +225,23 @@ public class ShareManager {
 
 // MARK: - Supporting Types
 
+/// Represents a chat message for transcript export.
 public struct ChatMessage: Codable, Sendable {
+    /// Stable identifier for the message.
     public let id: String
+    /// Display name for the sender.
     public let sender: String
+    /// Message content text.
     public let content: String
+    /// Message timestamp.
     public let timestamp: Date
     
+    /// Creates a chat message record.
+    /// - Parameters:
+    ///   - id: Stable identifier for the message.
+    ///   - sender: Display name for the sender.
+    ///   - content: The message content.
+    ///   - timestamp: The message timestamp.
     public init(id: String, sender: String, content: String, timestamp: Date) {
         self.id = id
         self.sender = sender

@@ -118,6 +118,12 @@ const preview: Preview = {
         title: "Table of Contents",
       },
     },
+    options: {
+      storySort: {
+        order: ["Overview", "Documentation", "Components"],
+        method: "alphabetical",
+      },
+    },
 
     // Layout default
     layout: "centered",

@@ -158,6 +158,8 @@ components/ui/
 └── overlays/       # Modals, popovers, tooltips
 ```
 
+**Naming:** Component folders and files use `PascalCase` (e.g. `Button/Button.tsx`), while category folders stay `kebab-case` (e.g. `data-display`).
+
 **Usage:**
 
 ```tsx

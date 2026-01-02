@@ -15,7 +15,7 @@ import { ManageAppsPanel } from "./ManageAppsPanel";
  * ```
  */
 const meta: Meta<typeof ManageAppsPanel> = {
-  title: "Settings/ManageAppsPanel",
+  title: "Components/Settings/Manage Apps Panel",
   component: ManageAppsPanel,
   parameters: {
     layout: "fullscreen",

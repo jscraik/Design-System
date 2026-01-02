@@ -209,7 +209,7 @@ Widgets are rendered using native SwiftUI components styled with ChatUIFoundatio
 1. Add new tool handlers in `ChatView.swift`
 2. Implement widget rendering in `WidgetRenderer`
 3. Update tool categories in `ToolsView.swift`
-4. Test with MCP server at `apps/mcp/`
+4. Test with MCP server at `platforms/mcp/`
 
 ## Troubleshooting
 

@@ -16,7 +16,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import type { DisplayMode } from "../../../shared/types";
 import { useOpenAiGlobal } from "../../../shared/use-openai-global";
 import { useWidgetState } from "../../../shared/use-widget-state";
-import type { CartItem, CartWidgetState, CartToolOutput } from "../../../shared/tool-output-types";
+import type { CartItem, CartWidgetState } from "../../../shared/tool-output-types";
 
 const isDev = Boolean(import.meta.env?.DEV);
 
@@ -56,6 +56,11 @@ function mergeCartItems(existing: CartItem[], incoming: CartItem[]): CartItem[] 
   return Array.from(merged.values()).filter((item) => item.quantity > 0);
 }
 
+/**
+ * Renders the shopping cart widget.
+ *
+ * @returns A shopping cart widget element.
+ */
 export function ShoppingCart() {
   const toolOutput = useOpenAiGlobal("toolOutput") as ToolOutput | null;
   const toolResponseMetadata = useOpenAiGlobal("toolResponseMetadata") as Record<

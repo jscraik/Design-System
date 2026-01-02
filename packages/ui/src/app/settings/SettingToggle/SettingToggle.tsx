@@ -27,7 +27,7 @@ export function SettingToggle({
       <div className="flex items-center justify-between px-3 py-2.5">
         <div className="flex items-center gap-3 flex-1">
           {icon}
-          <span className="text-body-small font-normal   text-foundation-text-dark-primary">
+          <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
             {label}
           </span>
         </div>
@@ -42,14 +42,16 @@ export function SettingToggle({
           aria-label={label}
         >
           <span
-            className={`inline-block size-4 transform rounded-full bg-foundation-bg-dark-1 transition-transform ${
+            className={`inline-block size-4 transform rounded-full bg-foundation-bg-light-1 transition-transform ${
               checked ? "translate-x-[18px]" : "translate-x-0.5"
             }`}
           />
         </button>
       </div>
       {description && (
-        <p className="text-caption   text-foundation-text-dark-tertiary px-3 mt-1">{description}</p>
+        <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary px-3 mt-1">
+          {description}
+        </p>
       )}
     </div>
   );

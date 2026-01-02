@@ -5,6 +5,21 @@ import * as SwitchPrimitive from "@radix-ui/react-switch";
 
 import { cn } from "../../utils";
 
+/**
+ * Renders a styled switch using Radix primitives.
+ *
+ * Accessibility contract:
+ * - Provide a visible label or `aria-label`/`aria-labelledby`.
+ * - Supports keyboard toggling via Space per Radix behavior.
+ *
+ * @param props - Radix switch root props.
+ * @returns A styled switch element.
+ *
+ * @example
+ * ```tsx
+ * <Switch checked={enabled} onCheckedChange={setEnabled} />
+ * ```
+ */
 function Switch({ className, ...props }: React.ComponentProps<typeof SwitchPrimitive.Root>) {
   return (
     <SwitchPrimitive.Root

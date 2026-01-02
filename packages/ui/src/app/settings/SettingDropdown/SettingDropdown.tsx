@@ -5,7 +5,7 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
-} from "../../../components/ui/overlays/dropdown-menu";
+} from "../../../components/ui/overlays/DropdownMenu";
 
 export interface DropdownOption {
   value: string;

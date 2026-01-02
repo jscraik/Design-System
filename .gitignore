@@ -83,6 +83,9 @@ _temp/
 .tmp/
 *.tsbuildinfo
 
+# Stray files
+
+
 # OS
 .DS_Store
 Thumbs.db

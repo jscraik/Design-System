@@ -11,7 +11,7 @@ import { PersonalizationPanelTemplate } from "../PersonalizationPanelTemplate";
 import { SecurityPanelTemplate } from "../SecurityPanelTemplate";
 
 const meta: Meta = {
-  title: "Templates/Settings Panels",
+  title: "Components/Templates/Settings/Settings Panels",
   parameters: {
     layout: "fullscreen",
   },

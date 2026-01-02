@@ -1,11 +1,19 @@
 import type { ReactNode } from "react";
 
+/**
+ * Props for the full-width chat template layout.
+ */
 export interface ChatFullWidthTemplateProps {
   header?: ReactNode;
   body?: ReactNode;
   footer?: ReactNode;
 }
 
+/**
+ * Render a full-width chat layout with optional slots.
+ * @param props - Layout slot props.
+ * @returns The full-width template element.
+ */
 export function ChatFullWidthTemplate({ header, body, footer }: ChatFullWidthTemplateProps) {
   return (
     <div className="flex h-full w-full min-h-0 flex-col">

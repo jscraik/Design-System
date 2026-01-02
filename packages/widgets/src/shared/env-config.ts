@@ -1,8 +1,10 @@
 /**
- * Environment configuration utilities inspired by Toolbase-AI template
- * Provides type-safe environment variable handling and validation
+ * Provide environment configuration utilities for widgets.
  */
 
+/**
+ * Supported environment configuration values.
+ */
 export interface EnvironmentConfig {
   WORKER_DOMAIN_BASE?: string;
   WIDGET_DOMAIN?: string;
@@ -12,7 +14,8 @@ export interface EnvironmentConfig {
 }
 
 /**
- * Get environment configuration with validation
+ * Return environment configuration from Vite runtime values.
+ * @returns The resolved environment config.
  */
 export function getEnvironmentConfig(): EnvironmentConfig {
   const env = import.meta.env;
@@ -28,8 +31,12 @@ export function getEnvironmentConfig(): EnvironmentConfig {
   };
 }
 
+const DEFAULT_WIDGET_DEV_ORIGIN = "http://localhost:5173";
+
 /**
- * Validate required environment variables
+ * Validate required environment variables.
+ * @param required - Keys that must be present.
+ * @throws Error when one or more required variables are missing.
  */
 export function validateEnvironment(required: (keyof EnvironmentConfig)[] = []): void {
   const config = getEnvironmentConfig();
@@ -50,41 +57,43 @@ export function validateEnvironment(required: (keyof EnvironmentConfig)[] = []):
 }
 
 /**
- * Get base URL for widget resources
+ * Return the base URL for widget resources.
+ * @returns A base URL string (empty when not configured).
  */
 export function getWidgetBaseUrl(): string {
   const config = getEnvironmentConfig();
 
   if (config.DEV) {
-    return "http://localhost:5173"; // Default Vite dev server
+    return DEFAULT_WIDGET_DEV_ORIGIN; // Default Vite dev server
   }
 
   return config.WORKER_DOMAIN_BASE || "";
 }
 
 /**
- * Check if running in development mode
+ * Return `true` when running in development mode.
  */
 export function isDevelopment(): boolean {
   return getEnvironmentConfig().DEV;
 }
 
 /**
- * Check if running in production mode
+ * Return `true` when running in production mode.
  */
 export function isProduction(): boolean {
   return getEnvironmentConfig().PROD;
 }
 
 /**
- * Get widget domain for CSP configuration
+ * Return the widget domain for CSP configuration.
  */
 export function getWidgetDomain(): string | undefined {
   return getEnvironmentConfig().WIDGET_DOMAIN;
 }
 
 /**
- * Create environment-aware resource metadata
+ * Create environment-aware resource metadata.
+ * @returns Metadata compatible with OpenAI widget CSP expectations.
  */
 export function createEnvironmentMeta() {
   const config = getEnvironmentConfig();
@@ -115,8 +124,8 @@ export function createEnvironmentMeta() {
 
   // Add development-specific domains
   if (config.DEV) {
-    meta["openai/widgetCSP"].resource_domains.push("http://localhost:5173");
-    meta["openai/widgetCSP"].connect_domains.push("http://localhost:5173");
+    meta["openai/widgetCSP"].resource_domains.push(DEFAULT_WIDGET_DEV_ORIGIN);
+    meta["openai/widgetCSP"].connect_domains.push(DEFAULT_WIDGET_DEV_ORIGIN);
   }
 
   return meta;

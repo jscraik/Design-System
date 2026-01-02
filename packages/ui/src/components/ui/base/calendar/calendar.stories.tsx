@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Calendar } from "./calendar";
+import { Calendar } from "./Calendar";
 
 const meta: Meta<typeof Calendar> = {
-  title: "UI/Calendar",
+  title: "Components/UI/Base/Calendar",
   component: Calendar,
   tags: ["autodocs"],
   parameters: { layout: "centered" },

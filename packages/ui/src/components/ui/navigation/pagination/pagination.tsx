@@ -2,9 +2,12 @@
 
 import * as React from "react";
 
-import { Button } from "../../base/button";
+import { Button } from "../../base/Button";
 import { cn } from "../../utils";
 
+/**
+ * Props for the pagination component.
+ */
 export interface PaginationProps extends React.ComponentPropsWithoutRef<"nav"> {
   /** Current page number (1-indexed) */
   currentPage: number;
@@ -21,7 +24,7 @@ export interface PaginationProps extends React.ComponentPropsWithoutRef<"nav"> {
 }
 
 /**
- * Pagination - Navigation component for paginated content
+ * Renders pagination controls for paginated content.
  *
  * @example
  * ```tsx
@@ -31,6 +34,9 @@ export interface PaginationProps extends React.ComponentPropsWithoutRef<"nav"> {
  *   onPageChange={(page) => setPage(page)}
  * />
  * ```
+ *
+ * @param props - Pagination props.
+ * @returns A pagination navigation element.
  */
 function Pagination({
   currentPage,
@@ -202,6 +208,12 @@ interface PaginationButtonProps extends Omit<
   isActive?: boolean;
 }
 
+/**
+ * Renders an individual pagination button.
+ *
+ * @param props - Button props plus active state.
+ * @returns A pagination button element.
+ */
 function PaginationButton({ isActive, className, ...props }: PaginationButtonProps) {
   return (
     <Button
@@ -218,6 +230,12 @@ function PaginationButton({ isActive, className, ...props }: PaginationButtonPro
   );
 }
 
+/**
+ * Renders the pagination ellipsis element.
+ *
+ * @param props - Span props for the ellipsis.
+ * @returns A pagination ellipsis element.
+ */
 function PaginationEllipsis({ className, ...props }: React.ComponentPropsWithoutRef<"span">) {
   return (
     <span

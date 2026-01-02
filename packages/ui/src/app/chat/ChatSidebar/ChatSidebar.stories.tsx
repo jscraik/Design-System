@@ -15,7 +15,7 @@ import {
 import { ChatSidebar } from "./ChatSidebar";
 
 const meta: Meta<typeof ChatSidebar> = {
-  title: "ChatUI/ChatSidebar",
+  title: "Components/Chat/Chat Sidebar",
   component: ChatSidebar,
   tags: ["autodocs"],
   args: {

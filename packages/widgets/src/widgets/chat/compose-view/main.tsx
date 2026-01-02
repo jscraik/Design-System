@@ -15,6 +15,9 @@ if (import.meta.env.DEV) {
   });
 }
 
+/**
+ * Render the compose template with host-aware styling.
+ */
 function ComposeWidgetCore() {
   const theme = useTheme();
   const maxHeight = useMaxHeight();
@@ -27,6 +30,9 @@ function ComposeWidgetCore() {
   );
 }
 
+/**
+ * Provide host context and theming for the compose widget.
+ */
 function ComposeWidget() {
   const host = createEmbeddedHost();
 

@@ -1,6 +1,5 @@
 import { IconChevronLeftMd, IconChevronRightMd } from "../../../icons/ChatGPTIcons";
-
-import type { SettingsPanelProps } from "../types";
+import type { SettingsPanelProps } from "../shared/types";
 
 const LIGHT_TEXT_HEX = "#0D0D0D";
 const DARK_TEXT_HEX = "#FFFFFF";
@@ -50,10 +49,10 @@ function AppIcon({ children, color }: { children: React.ReactNode; color: string
   const textClass = getReadableTextClass(color);
   return (
     <div
-      className={`size-5 rounded flex items-center justify-center text-caption font-semibold ${textClass}`}
+      className={`size-5 rounded flex items-center justify-center flex-shrink-0 ${textClass}`}
       style={{ backgroundColor: color }}
     >
-      {children}
+      <span className="text-white text-[11px] font-semibold">{children}</span>
     </div>
   );
 }
@@ -100,13 +99,15 @@ export function AppsPanel({ onBack }: SettingsPanelProps) {
         >
           <IconChevronLeftMd className="size-4 text-foundation-icon-dark-primary" />
         </button>
-        <h2 className="text-heading-3 font-semibold   text-foundation-text-dark-primary">Apps</h2>
+        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foundation-text-dark-primary">
+          Apps
+        </h2>
       </div>
 
       <div className="overflow-y-auto max-h-[calc(85vh-80px)] px-6 py-4">
         {/* Enabled apps section */}
         <div className="mb-6">
-          <h3 className="text-body-small font-semibold   text-foundation-text-dark-primary mb-2 px-3">
+          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
             Enabled apps
           </h3>
           <div className="space-y-0.5">
@@ -118,7 +119,7 @@ export function AppsPanel({ onBack }: SettingsPanelProps) {
               >
                 <div className="flex items-center gap-3">
                   <AppIcon color={app.color}>{app.icon}</AppIcon>
-                  <span className="text-body-small font-normal   text-foundation-text-dark-primary">
+                  <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
                     {app.name}
                   </span>
                 </div>
@@ -129,12 +130,12 @@ export function AppsPanel({ onBack }: SettingsPanelProps) {
 
           {/* Info text */}
           <div className="px-3 mt-3">
-            <p className="text-caption   text-foundation-text-dark-tertiary">
+            <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary">
               ChatGPT can access information from connected apps. Your permissions are always
               respected.{" "}
               <button
                 type="button"
-                className="text-foundation-text-dark-primary underline decoration-foundation-accent-blue underline-offset-2 hover:decoration-foundation-accent-blue/70"
+                className="text-foundation-accent-blue hover:underline"
               >
                 Learn more
               </button>
@@ -144,7 +145,7 @@ export function AppsPanel({ onBack }: SettingsPanelProps) {
 
         {/* All apps section */}
         <div>
-          <h3 className="text-body-small font-semibold   text-foundation-text-dark-primary mb-2 px-3">
+          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
             All apps
           </h3>
           <button
@@ -167,7 +168,7 @@ export function AppsPanel({ onBack }: SettingsPanelProps) {
                   />
                 </svg>
               </div>
-              <span className="text-body-small font-normal   text-foundation-text-dark-primary">
+              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
                 Browse Apps
               </span>
             </div>

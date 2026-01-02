@@ -9,6 +9,11 @@ type CodeBlockProps = {
   wrapLongLines?: boolean;
 };
 
+/**
+ * Render a styled code block with optional wrapping.
+ * @param props - Code block props.
+ * @returns A preformatted code block element.
+ */
 export function CodeBlock({ children, className, wrapLongLines }: CodeBlockProps) {
   return (
     <pre

@@ -1,5 +1,4 @@
-// ChatUIShellChatGPT
-// Optional complete application shell layouts for ChatGPT-style experiences
+/// Optional complete application shell layouts for ChatGPT-style experiences.
 
 import SwiftUI
 import ChatUIFoundation

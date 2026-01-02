@@ -1,3 +1,6 @@
+/**
+ * Globals injected by the OpenAI host runtime for widget integration.
+ */
 export type OpenAiGlobals<
   ToolInput = UnknownObject,
   ToolOutput = UnknownObject,
@@ -36,10 +39,19 @@ type API = {
   requestClose: () => Promise<void>;
 };
 
+/**
+ * Generic object map for dynamic payloads.
+ */
 export type UnknownObject = Record<string, unknown>;
 
+/**
+ * Host-provided theme mode.
+ */
 export type Theme = "light" | "dark";
 
+/**
+ * Safe area inset values in pixels.
+ */
 export type SafeAreaInsets = {
   top: number;
   bottom: number;
@@ -47,12 +59,21 @@ export type SafeAreaInsets = {
   right: number;
 };
 
+/**
+ * Safe area metadata for the current display.
+ */
 export type SafeArea = {
   insets: SafeAreaInsets;
 };
 
+/**
+ * Device type classification from the host user agent.
+ */
 export type DeviceType = "mobile" | "tablet" | "desktop" | "unknown";
 
+/**
+ * User agent capabilities and device info from the host.
+ */
 export type UserAgent = {
   device: { type: DeviceType };
   capabilities: {
@@ -61,8 +82,13 @@ export type UserAgent = {
   };
 };
 
-/** Display mode */
+/**
+ * Display mode for widget rendering.
+ */
 export type DisplayMode = "pip" | "inline" | "fullscreen";
+/**
+ * Requests a host display mode change.
+ */
 export type RequestDisplayMode = (args: { mode: DisplayMode }) => Promise<{
   /**
    * The granted display mode. The host may reject the request.
@@ -71,15 +97,25 @@ export type RequestDisplayMode = (args: { mode: DisplayMode }) => Promise<{
   mode: DisplayMode;
 }>;
 
+/**
+ * Response payload for tool calls.
+ */
 export type CallToolResponse = {
   result: string;
 };
 
-/** Calling APIs */
+/**
+ * Calls a host tool by name with arguments.
+ */
 export type CallTool = (name: string, args: Record<string, unknown>) => Promise<CallToolResponse>;
 
-/** Extra events */
+/**
+ * DOM event type emitted when globals are updated.
+ */
 export const SET_GLOBALS_EVENT_TYPE = "openai:set_globals";
+/**
+ * Custom event carrying updated globals.
+ */
 export class SetGlobalsEvent extends CustomEvent<{
   globals: Partial<OpenAiGlobals>;
 }> {
@@ -99,7 +135,9 @@ declare global {
   }
 }
 
-// Re-export shared data types for convenience
+/**
+ * Re-export shared widget data types.
+ */
 export type {
   Photo,
   Album,
@@ -109,6 +147,9 @@ export type {
   ShopWidgetState,
 } from "./data-types";
 
+/**
+ * Re-export tool output types.
+ */
 export type {
   BaseToolOutput,
   CartToolOutput,

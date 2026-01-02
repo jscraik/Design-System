@@ -8,23 +8,47 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./app": {
+      "types": "./dist/app/index.d.ts",
+      "import": "./dist/app.js"
+    },
     "./icons": {
       "types": "./dist/icons/index.d.ts",
       "import": "./dist/icons/index.js"
     },
     "./styles.css": "./dist/ui.css",
     "./dist/ui.css": "./dist/ui.css",
+    "./base": {
+      "types": "./dist/components/ui/base/index.d.ts",
+      "import": "./dist/base.js"
+    },
+    "./data-display": {
+      "types": "./dist/components/ui/data-display/index.d.ts",
+      "import": "./dist/data-display.js"
+    },
+    "./feedback": {
+      "types": "./dist/components/ui/feedback/index.d.ts",
+      "import": "./dist/feedback.js"
+    },
     "./forms": {
       "types": "./dist/components/ui/forms/index.d.ts",
       "import": "./dist/forms.js"
     },
     "./chat": {
-      "types": "./dist/components/ui/chat/index.d.ts",
+      "types": "./dist/app/chat/index.d.ts",
       "import": "./dist/chat.js"
     },
     "./layout": {
       "types": "./dist/components/ui/layout/index.d.ts",
       "import": "./dist/layout.js"
+    },
+    "./navigation": {
+      "types": "./dist/components/ui/navigation/index.d.ts",
+      "import": "./dist/navigation.js"
+    },
+    "./overlays": {
+      "types": "./dist/components/ui/overlays/index.d.ts",
+      "import": "./dist/overlays.js"
     },
     "./modals": {
       "types": "./dist/app/modals/index.d.ts",

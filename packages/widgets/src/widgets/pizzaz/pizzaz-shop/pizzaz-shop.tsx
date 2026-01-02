@@ -23,7 +23,7 @@ import { useCallback, useMemo } from "react";
 
 import { useOpenAiGlobal } from "../../../shared/use-openai-global";
 import { useWidgetState } from "../../../shared/use-widget-state";
-import type { CartItem, ShopView, ShopWidgetState, ShopToolOutput } from "../../../shared/tool-output-types";
+import type { CartItem, ShopView, ShopWidgetState } from "../../../shared/tool-output-types";
 
 // Sample items
 const SAMPLE_ITEMS: CartItem[] = [
@@ -71,6 +71,11 @@ const pageVariants = {
   exit: { opacity: 0, x: -20 },
 };
 
+/**
+ * Renders the Pizzaz shop widget.
+ *
+ * @returns A shopping experience widget element.
+ */
 export function PizzazShop() {
   const toolOutput = useOpenAiGlobal("toolOutput") as ToolOutput | null;
 

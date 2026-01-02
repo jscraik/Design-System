@@ -1,42 +1,40 @@
 import { useState } from "react";
 import {
+  IconCamera,
+  IconCategory,
+  IconChevronRightMd,
+  IconCreditCard,
+  IconDownload,
+  IconEmail,
+  IconError,
+  IconGlobe,
+  IconGrid3x3,
+  IconHeadphones,
+  IconImage,
+  IconInfo,
+  IconLock,
+  IconNotebook,
+  IconNotification,
+  IconQuestion,
+  IconRefresh,
+  IconShare,
+  IconSparkles,
+  IconStar,
+  IconTelescope,
+  IconUser,
+  IconUserLock,
+  IconPhone,
+  IconFolder,
+  IconSettings,
+} from "../../../icons";
+
+import {
   SettingRowBlock,
   SettingRowValue,
   SettingRowBadge,
   SettingRowGroup,
   SettingRowDivider,
 } from "../../blocks/SettingRowBlock";
-import {
-  User,
-  Mail,
-  Shield,
-  Bell,
-  Palette,
-  Globe,
-  Key,
-  CreditCard,
-  Download,
-  Trash2,
-  Settings,
-  ExternalLink,
-  Info,
-  HelpCircle,
-  Lock,
-  Eye,
-  Smartphone,
-  Monitor,
-  Languages,
-  Volume2,
-  Image,
-  FileText,
-  Cloud,
-  Database,
-  Zap,
-  Star,
-  Activity,
-  Sparkles,
-  ChevronRight,
-} from "lucide-react";
 
 export function SettingRowBlockDemo() {
   const [selectedRow, setSelectedRow] = useState<string | null>(null);
@@ -86,14 +84,14 @@ export function SettingRowBlockDemo() {
               <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
                 <SettingRowBlock
                   variant="default"
-                  icon={<User />}
+                  icon={<IconUser />}
                   label="Profile Settings"
                   description="Manage your profile information and preferences"
                   onClick={() => handleClick("profile")}
                 />
                 <SettingRowBlock
                   variant="default"
-                  icon={<Mail />}
+                  icon={<IconEmail />}
                   label="Email Notifications"
                   description="Control how you receive email updates"
                   onClick={() => handleClick("email")}
@@ -109,14 +107,14 @@ export function SettingRowBlockDemo() {
               <div className="space-y-2">
                 <SettingRowBlock
                   variant="card"
-                  icon={<Shield />}
+                  icon={<IconUserLock />}
                   label="Security Settings"
                   description="Configure authentication and security features"
                   onClick={() => handleClick("security")}
                 />
                 <SettingRowBlock
                   variant="card"
-                  icon={<Bell />}
+                  icon={<IconNotification />}
                   label="Push Notifications"
                   description="Manage mobile and desktop notifications"
                   onClick={() => handleClick("push")}
@@ -132,14 +130,14 @@ export function SettingRowBlockDemo() {
               <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
                 <SettingRowBlock
                   variant="compact"
-                  icon={<Palette />}
+                  icon={<IconSparkles />}
                   label="Theme"
                   onClick={() => handleClick("theme")}
                   right={<SettingRowValue variant="muted">Dark</SettingRowValue>}
                 />
                 <SettingRowBlock
                   variant="compact"
-                  icon={<Globe />}
+                  icon={<IconGlobe />}
                   label="Language"
                   onClick={() => handleClick("language")}
                   right={<SettingRowValue variant="muted">English (US)</SettingRowValue>}
@@ -155,7 +153,7 @@ export function SettingRowBlockDemo() {
               <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
                 <SettingRowBlock
                   variant="danger"
-                  icon={<Trash2 />}
+                  icon={<IconError />}
                   label="Delete Account"
                   description="Permanently delete your account and all associated data"
                   onClick={() => handleClick("delete")}
@@ -179,21 +177,21 @@ export function SettingRowBlockDemo() {
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
             <SettingRowBlock
               size="sm"
-              icon={<Settings />}
+              icon={<IconSettings />}
               label="Small Size"
               description="Compact spacing for dense layouts"
               onClick={() => handleClick("size-sm")}
             />
             <SettingRowBlock
               size="md"
-              icon={<Settings />}
+              icon={<IconSettings />}
               label="Medium Size (Default)"
               description="Standard spacing for most use cases"
               onClick={() => handleClick("size-md")}
             />
             <SettingRowBlock
               size="lg"
-              icon={<Settings />}
+              icon={<IconSettings />}
               label="Large Size"
               description="Generous spacing for prominent settings"
               onClick={() => handleClick("size-lg")}
@@ -214,28 +212,28 @@ export function SettingRowBlockDemo() {
 
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
             <SettingRowBlock
-              icon={<Sparkles />}
+              icon={<IconSparkles />}
               label="AI Features"
               description="Enable advanced AI-powered capabilities"
               badge={<SettingRowBadge variant="new">New</SettingRowBadge>}
               onClick={() => handleClick("ai")}
             />
             <SettingRowBlock
-              icon={<Zap />}
+              icon={<IconSparkles />}
               label="Performance Mode"
               description="Optimize for speed and efficiency"
               badge={<SettingRowBadge variant="primary">Pro</SettingRowBadge>}
               onClick={() => handleClick("performance")}
             />
             <SettingRowBlock
-              icon={<Activity />}
+              icon={<IconRefresh />}
               label="Beta Features"
               description="Try experimental features before release"
               badge={<SettingRowBadge variant="warning">Beta</SettingRowBadge>}
               onClick={() => handleClick("beta")}
             />
             <SettingRowBlock
-              icon={<Star />}
+              icon={<IconStar />}
               label="Premium Access"
               description="Unlock exclusive premium features"
               badge={<SettingRowBadge variant="success">Active</SettingRowBadge>}
@@ -257,21 +255,21 @@ export function SettingRowBlockDemo() {
 
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
             <SettingRowBlock
-              icon={<Download />}
+              icon={<IconDownload />}
               label="Download Data"
               description="Export your data to a file"
               loading={loadingRow === "download"}
               onClick={() => handleLoadingClick("download")}
             />
             <SettingRowBlock
-              icon={<Cloud />}
+              icon={<IconShare />}
               label="Sync Settings"
               description="Synchronize across all devices"
               selected={selectedRow === "sync"}
               onClick={() => handleClick("sync")}
             />
             <SettingRowBlock
-              icon={<Database />}
+              icon={<IconFolder />}
               label="Backup Options"
               description="Configure automatic backups"
               disabled
@@ -293,14 +291,14 @@ export function SettingRowBlockDemo() {
 
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
             <SettingRowBlock
-              icon={<Settings />}
+              icon={<IconSettings />}
               label="Quick Settings"
               description="Access frequently used settings"
               shortcut="⌘K"
               onClick={() => handleClick("quick")}
             />
             <SettingRowBlock
-              icon={<Key />}
+              icon={<IconLock />}
               label="Keyboard Shortcuts"
               description="View all available keyboard shortcuts"
               shortcut="⌘/"
@@ -322,21 +320,21 @@ export function SettingRowBlockDemo() {
 
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
             <SettingRowBlock
-              icon={<FileText />}
+              icon={<IconNotebook />}
               label="Terms of Service"
               description="Read our terms and conditions"
               external
               onClick={() => window.open("https://example.com/terms", "_blank")}
             />
             <SettingRowBlock
-              icon={<Lock />}
+              icon={<IconLock />}
               label="Privacy Policy"
               description="Learn how we protect your data"
               external
               onClick={() => window.open("https://example.com/privacy", "_blank")}
             />
             <SettingRowBlock
-              icon={<HelpCircle />}
+              icon={<IconQuestion />}
               label="Help Center"
               description="Get support and documentation"
               external
@@ -358,28 +356,28 @@ export function SettingRowBlockDemo() {
 
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
             <SettingRowBlock
-              icon={<CreditCard />}
+              icon={<IconCreditCard />}
               label="Subscription Plan"
               description="Manage your subscription"
               onClick={() => handleClick("subscription")}
               right={<SettingRowValue variant="accent">Pro Plan</SettingRowValue>}
             />
             <SettingRowBlock
-              icon={<Database />}
+              icon={<IconFolder />}
               label="Storage Usage"
               description="View and manage storage"
               onClick={() => handleClick("storage")}
               right={<SettingRowValue variant="muted">2.4 GB / 5 GB</SettingRowValue>}
             />
             <SettingRowBlock
-              icon={<Smartphone />}
+              icon={<IconPhone />}
               label="Connected Devices"
               description="Manage your active sessions"
               onClick={() => handleClick("devices")}
               right={
                 <div className="flex items-center gap-2">
                   <SettingRowBadge variant="primary">3 active</SettingRowBadge>
-                  <ChevronRight className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary" />
+                  <IconChevronRightMd className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary" />
                 </div>
               }
             />
@@ -399,7 +397,7 @@ export function SettingRowBlockDemo() {
 
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
             <SettingRowBlock
-              icon={<User />}
+              icon={<IconUser />}
               label="Account ID"
               right={
                 <SettingRowValue variant="muted" className="font-mono text-xs">
@@ -408,17 +406,17 @@ export function SettingRowBlockDemo() {
               }
             />
             <SettingRowBlock
-              icon={<Mail />}
+              icon={<IconEmail />}
               label="Email Address"
               right={<SettingRowValue>user@example.com</SettingRowValue>}
             />
             <SettingRowBlock
-              icon={<Monitor />}
+              icon={<IconGrid3x3 />}
               label="Last Login"
               right={<SettingRowValue variant="muted">2 hours ago</SettingRowValue>}
             />
             <SettingRowBlock
-              icon={<Info />}
+              icon={<IconInfo />}
               label="App Version"
               right={<SettingRowValue variant="muted">v2.4.1</SettingRowValue>}
             />
@@ -464,17 +462,17 @@ export function SettingRowBlockDemo() {
               description="Manage your account information and preferences"
             >
               <SettingRowBlock
-                icon={<User />}
+                icon={<IconUser />}
                 label="Profile"
                 onClick={() => handleClick("profile-group")}
               />
               <SettingRowBlock
-                icon={<Mail />}
+                icon={<IconEmail />}
                 label="Email"
                 onClick={() => handleClick("email-group")}
               />
               <SettingRowBlock
-                icon={<Eye />}
+                icon={<IconTelescope />}
                 label="Privacy"
                 onClick={() => handleClick("privacy-group")}
               />
@@ -484,17 +482,17 @@ export function SettingRowBlockDemo() {
 
             <SettingRowGroup label="Preferences">
               <SettingRowBlock
-                icon={<Palette />}
+                icon={<IconSparkles />}
                 label="Theme"
                 onClick={() => handleClick("theme-group")}
               />
               <SettingRowBlock
-                icon={<Languages />}
+                icon={<IconGlobe />}
                 label="Language"
                 onClick={() => handleClick("language-group")}
               />
               <SettingRowBlock
-                icon={<Volume2 />}
+                icon={<IconHeadphones />}
                 label="Sound"
                 onClick={() => handleClick("sound-group")}
               />
@@ -517,7 +515,7 @@ export function SettingRowBlockDemo() {
             <SettingRowBlock
               size="lg"
               variant="card"
-              icon={<Star />}
+              icon={<IconStar />}
               label="Premium Features"
               description="Unlock all pro features with a premium subscription"
               badge={<SettingRowBadge variant="new">New</SettingRowBadge>}
@@ -525,7 +523,7 @@ export function SettingRowBlockDemo() {
               right={<SettingRowValue variant="accent">$9.99/mo</SettingRowValue>}
             />
             <SettingRowBlock
-              icon={<Image />}
+              icon={<IconImage />}
               label="Image Quality"
               description="Choose default quality for uploads"
               shortcut="⌘I"
@@ -535,7 +533,7 @@ export function SettingRowBlockDemo() {
             <SettingRowBlock
               size="sm"
               variant="compact"
-              icon={<Activity />}
+              icon={<IconRefresh />}
               label="Analytics"
               badge={<SettingRowBadge variant="success">Enabled</SettingRowBadge>}
               onClick={() => handleClick("analytics")}
@@ -558,20 +556,20 @@ export function SettingRowBlockDemo() {
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
             <SettingRowGroup label="Privacy & Security">
               <SettingRowBlock
-                icon={<Shield />}
+                icon={<IconUserLock />}
                 label="Two-Factor Authentication"
                 description="Add an extra layer of security"
                 badge={<SettingRowBadge variant="success">Enabled</SettingRowBadge>}
                 onClick={() => handleClick("2fa")}
               />
               <SettingRowBlock
-                icon={<Eye />}
+                icon={<IconTelescope />}
                 label="Privacy Settings"
                 description="Control who can see your information"
                 onClick={() => handleClick("privacy-real")}
               />
               <SettingRowBlock
-                icon={<Smartphone />}
+                icon={<IconPhone />}
                 label="Connected Devices"
                 description="Manage devices that can access your account"
                 onClick={() => handleClick("devices-real")}
@@ -584,21 +582,21 @@ export function SettingRowBlockDemo() {
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
             <SettingRowGroup label="Billing & Subscription">
               <SettingRowBlock
-                icon={<CreditCard />}
+                icon={<IconCreditCard />}
                 label="Current Plan"
                 description="Professional plan with unlimited features"
                 onClick={() => handleClick("plan-real")}
                 right={<SettingRowValue variant="accent">Pro</SettingRowValue>}
               />
               <SettingRowBlock
-                icon={<Download />}
+                icon={<IconDownload />}
                 label="Download Invoices"
                 description="Access your billing history"
                 onClick={() => handleClick("invoices")}
               />
               <SettingRowBlock
                 variant="danger"
-                icon={<Trash2 />}
+                icon={<IconError />}
                 label="Cancel Subscription"
                 description="End your subscription and downgrade to free"
                 onClick={() => handleClick("cancel")}

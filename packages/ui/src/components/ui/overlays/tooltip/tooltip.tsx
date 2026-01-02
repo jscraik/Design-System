@@ -5,6 +5,12 @@ import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
 import { cn } from "../../utils";
 
+/**
+ * Provides a tooltip provider for shared configuration.
+ *
+ * @param props - Radix tooltip provider props.
+ * @returns The tooltip provider element.
+ */
 function TooltipProvider({
   delayDuration = 0,
   ...props
@@ -18,6 +24,20 @@ function TooltipProvider({
   );
 }
 
+/**
+ * Renders the tooltip root component.
+ *
+ * @param props - Radix tooltip root props.
+ * @returns The tooltip root element.
+ *
+ * @example
+ * ```tsx
+ * <Tooltip>
+ *   <TooltipTrigger>Info</TooltipTrigger>
+ *   <TooltipContent>Helpful text</TooltipContent>
+ * </Tooltip>
+ * ```
+ */
 function Tooltip({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Root>) {
   return (
     <TooltipProvider>
@@ -26,10 +46,22 @@ function Tooltip({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Root
   );
 }
 
+/**
+ * Renders the tooltip trigger element.
+ *
+ * @param props - Radix tooltip trigger props.
+ * @returns The tooltip trigger element.
+ */
 function TooltipTrigger({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
   return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />;
 }
 
+/**
+ * Renders the tooltip content container.
+ *
+ * @param props - Radix tooltip content props.
+ * @returns The tooltip content element rendered in a portal.
+ */
 function TooltipContent({
   className,
   sideOffset = 0,

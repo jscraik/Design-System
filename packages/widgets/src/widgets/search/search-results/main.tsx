@@ -37,6 +37,9 @@ if (import.meta.env.DEV) {
   });
 }
 
+/**
+ * Render search results using tool output data.
+ */
 function SearchResultsWidget() {
   type SearchResult = {
     id: string | number;
@@ -104,6 +107,9 @@ function SearchResultsWidget() {
   );
 }
 
+/**
+ * Provide host context and theming for the search results widget.
+ */
 function SearchResultsApp() {
   const host = createEmbeddedHost();
 

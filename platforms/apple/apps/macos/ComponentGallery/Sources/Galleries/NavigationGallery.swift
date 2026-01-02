@@ -10,6 +10,7 @@ import ChatUIFoundation
 import ChatUIComponents
 import ChatUIThemes
 
+/// Gallery of navigation components.
 struct NavigationGallery: View {
     @State private var selectedItem: String? = nil
     

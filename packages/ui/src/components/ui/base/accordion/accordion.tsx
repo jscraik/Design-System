@@ -6,10 +6,22 @@ import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { IconChevronDownMd } from "../../../../icons";
 import { cn } from "../../utils";
 
+/**
+ * Renders the accordion root component (Radix Accordion).
+ *
+ * @param props - Radix accordion root props.
+ * @returns The accordion root element.
+ */
 function Accordion({ ...props }: React.ComponentProps<typeof AccordionPrimitive.Root>) {
   return <AccordionPrimitive.Root data-slot="accordion" {...props} />;
 }
 
+/**
+ * Renders an accordion item container.
+ *
+ * @param props - Radix accordion item props.
+ * @returns An accordion item element.
+ */
 function AccordionItem({
   className,
   ...props
@@ -23,6 +35,22 @@ function AccordionItem({
   );
 }
 
+/**
+ * Renders the accordion trigger.
+ *
+ * @param props - Radix accordion trigger props.
+ * @returns An accordion trigger element.
+ *
+ * @example
+ * ```tsx
+ * <Accordion type="single" collapsible>
+ *   <AccordionItem value="item-1">
+ *     <AccordionTrigger>Details</AccordionTrigger>
+ *     <AccordionContent>Content</AccordionContent>
+ *   </AccordionItem>
+ * </Accordion>
+ * ```
+ */
 function AccordionTrigger({
   className,
   children,
@@ -45,6 +73,12 @@ function AccordionTrigger({
   );
 }
 
+/**
+ * Renders the accordion content panel.
+ *
+ * @param props - Radix accordion content props.
+ * @returns An accordion content element.
+ */
 function AccordionContent({
   className,
   children,

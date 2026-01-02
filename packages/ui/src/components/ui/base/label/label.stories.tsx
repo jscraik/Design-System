@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Input } from "../input";
-import { Label } from "./label";
+import { Input } from "../Input";
+
+import { Label } from "./Label";
 
 const meta: Meta<typeof Label> = {
-  title: "UI/Label",
+  title: "Components/UI/Base/Label",
   component: Label,
   tags: ["autodocs"],
   parameters: { layout: "centered" },

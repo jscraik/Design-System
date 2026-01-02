@@ -8,6 +8,7 @@ import ChatUISystemIntegration
 
 private let appLogger = Logger(subsystem: "ChatUIApp", category: "ContentView")
 
+/// Root view that hosts the app shell and navigation panes.
 struct ContentView: View {
     @EnvironmentObject private var appState: AppState
     let lifecycleManager: AppLifecycleManager
@@ -85,6 +86,7 @@ struct ContentView: View {
 
 // MARK: - Sidebar View
 
+/// Sidebar list for navigating between app sections.
 struct SidebarView: View {
     @EnvironmentObject private var appState: AppState
 
@@ -118,6 +120,7 @@ struct SidebarView: View {
 
 // MARK: - Detail View
 
+/// Detail pane that hosts the active app section.
 struct DetailView: View {
     let mcpClient: MCPClient?
     let errorMessage: String?
@@ -145,6 +148,7 @@ struct DetailView: View {
     }
 }
 
+/// Inline error banner for transient issues.
 private struct ErrorBannerView: View {
     let message: String
     @Environment(\.chatUITheme) private var theme

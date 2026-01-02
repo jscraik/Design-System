@@ -5,10 +5,9 @@
   "type": "module",
   "packageManager": "pnpm@9.15.0",
   "scripts": {
-    "dev": "concurrently -n web,storybook,gallery -c cyan,magenta,green \"pnpm dev:web\" \"pnpm dev:storybook\" \"pnpm dev:templates-gallery\"",
+    "dev": "concurrently -n web,storybook -c cyan,magenta \"pnpm dev:web\" \"pnpm dev:storybook\"",
     "dev:web": "pnpm -C platforms/web/apps/web dev",
     "dev:storybook": "pnpm -C platforms/web/apps/storybook dev",
-    "dev:templates-gallery": "pnpm -C platforms/web/apps/templates-gallery dev",
     "dev:widgets": "pnpm -C packages/widgets dev",
     "build": "node scripts/build-pipeline.mjs",
     "build:web": "node scripts/build-pipeline.mjs --platforms web",
@@ -22,8 +21,8 @@
     "sync:versions": "node scripts/version-sync.mjs",
     "sync:swift-versions": "node scripts/sync-swift-versions.mjs",
     "validate:tokens": "node scripts/validate-token-consistency.mjs",
-    "mcp:dev": "pnpm -C apps/mcp dev",
-    "mcp:start": "pnpm -C apps/mcp start",
+    "mcp:dev": "pnpm -C platforms/mcp dev",
+    "mcp:start": "pnpm -C platforms/mcp start",
     "storybook:dev": "pnpm -C platforms/web/apps/storybook dev",
     "storybook:build": "pnpm -C platforms/web/apps/storybook build",
     "storybook:test": "pnpm -C platforms/web/apps/storybook test",
@@ -31,7 +30,7 @@
     "test:e2e:web": "pnpm -C packages/ui build && pnpm exec playwright test -c platforms/web/apps/web/playwright.config.ts",
     "test:a11y:widgets": "pnpm -C packages/ui build && pnpm exec playwright test -c packages/widgets/playwright.a11y.config.ts",
     "test:a11y:widgets:ci": "pnpm exec playwright test -c packages/widgets/playwright.a11y.config.ts",
-    "test:mcp-contract": "node --test apps/mcp/tests/tool-contract.test.mjs",
+    "test:mcp-contract": "node --test platforms/mcp/tests/tool-contract.test.mjs",
     "test:visual:web": "pnpm -C packages/ui build && pnpm exec playwright test -c platforms/web/apps/web/playwright.visual.config.ts",
     "test:visual:update": "pnpm -C packages/ui build && pnpm exec playwright test -c platforms/web/apps/web/playwright.visual.config.ts --update-snapshots",
     "test:swift": "cd platforms/apple/swift/ChatUIFoundation && swift test && cd ../ChatUIComponents && swift test && cd ../ChatUIThemes && swift test && cd ../ChatUIShellChatGPT && swift test && cd ../ChatUISystemIntegration && swift test && cd ../ChatUIMCP && swift test && cd ../../apps/macos/ChatUIApp && swift test",
@@ -52,7 +51,7 @@
     "bundle:monitor:json": "node ./scripts/bundle-size-monitor.mjs --json",
     "test:watch": "pnpm -C packages/ui test:watch",
     "test:coverage": "pnpm -C packages/ui test:coverage",
-    "test:embed": "node ./apps/mcp/scripts/smoke.mjs",
+    "test:embed": "node ./platforms/mcp/scripts/smoke.mjs",
     "lint:compliance": "node ./scripts/compliance.mjs",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -98,6 +97,10 @@
       "react-dom": "19.0.0",
       "@types/react": "19.2.7",
       "@types/react-dom": "19.2.3"
-    }
+    },
+    "publicHoistPattern": [
+      "@storybook/*",
+      "storybook"
+    ]
   }
 }

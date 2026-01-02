@@ -32,8 +32,7 @@ import { Button, Card, IconButton } from "@chatui/ui";
 If you need tree-shaking, use subpath exports:
 
 ```tsx
-import { Button } from "@chatui/ui/forms";
-import { SectionHeader } from "@chatui/ui/layout";
+import { Button, SectionHeader } from "@chatui/ui/base";
 ```
 
 ### Avoid direct imports from underlying libraries

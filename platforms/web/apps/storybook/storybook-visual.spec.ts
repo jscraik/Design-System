@@ -29,90 +29,90 @@ function storyUrl(storyId: string, theme: "light" | "dark") {
 
 /**
  * Critical UI components to test (from each major category)
- * Format: "title--story" from story title (e.g., "UI/Button" + "Default" = "ui-button--default")
+ * Format: "title--story" from story title (e.g., "Components/UI/Base/Button" + "Default" = "components-ui-base-button--default")
  */
 const CRITICAL_STORIES = [
   // Base primitives
-  "ui-button--default",
-  "ui-button--secondary",
-  "ui-button--outline",
-  "ui-button--ghost",
-  "ui-button--destructive",
-  "ui-button--withicon",
-  "ui-button--icononly",
-  "ui-input--default",
-  "ui-textarea--default",
-  "ui-switch--default",
-  "ui-checkbox--default",
-  "ui-radiogroup--default",
-  "ui-select--default",
-  "ui-slider--default",
-  "ui-segmentedcontrol--default",
-  "ui-badge--default",
-  "ui-avatar--default",
-  "ui-iconbutton--default",
+  "components-ui-base-button--default",
+  "components-ui-base-button--secondary",
+  "components-ui-base-button--outline",
+  "components-ui-base-button--ghost",
+  "components-ui-base-button--destructive",
+  "components-ui-base-button--withicon",
+  "components-ui-base-button--icononly",
+  "components-ui-base-input--default",
+  "components-ui-base-textarea--default",
+  "components-ui-base-switch--default",
+  "components-ui-base-checkbox--default",
+  "components-ui-base-radio-group--default",
+  "components-ui-base-select--default",
+  "components-ui-base-slider--default",
+  "components-ui-base-segmented-control--default",
+  "components-ui-base-badge--default",
+  "components-ui-base-avatar--default",
+  "components-ui-base-icon-button--default",
 
   // Forms
-  "ui-form--default",
-  "ui-rangeslider--default",
+  "components-ui-forms-form--default",
+  "components-ui-forms-range-slider--default",
 
   // Feedback
-  "ui-dialog--default",
-  "ui-dialog--longcontent",
-  "ui-alertdialog--default",
-  "ui-feedback-toast--default",
-  "ui-sonner--default",
+  "components-ui-feedback-dialog--default",
+  "components-ui-feedback-dialog--longcontent",
+  "components-ui-feedback-alert-dialog--default",
+  "components-ui-feedback-toast--default",
+  "components-ui-feedback-sonner--default",
 
   // Navigation
-  "ui-tabs--default",
-  "ui-sidebar--default",
-  "ui-navigationmenu--default",
-  "ui-navigation-breadcrumb--default",
-  "ui-navigation-pagination--default",
-  "ui-modeselector--default",
-  "ui-modelselector--default",
-  "ui-viewmodetoggle--default",
+  "components-ui-navigation-tabs--default",
+  "components-ui-navigation-sidebar--default",
+  "components-ui-navigation-navigation-menu--default",
+  "components-ui-navigation-breadcrumb--default",
+  "components-ui-navigation-pagination--default",
+  "components-ui-navigation-mode-selector--default",
+  "components-ui-navigation-model-selector--default",
+  "components-ui-navigation-view-mode-toggle--default",
 
   // Overlays
-  "ui-popover--default",
-  "ui-tooltip--default",
-  "ui-dropdownmenu--default",
-  "ui-contextmenu--default",
-  "ui-drawer--default",
-  "ui-sheet--default",
-  "ui-hovercard--default",
-  "ui-overlays-modal-dialog--default",
+  "components-ui-overlays-popover--default",
+  "components-ui-overlays-tooltip--default",
+  "components-ui-overlays-dropdown-menu--default",
+  "components-ui-overlays-context-menu--default",
+  "components-ui-overlays-drawer--default",
+  "components-ui-overlays-sheet--default",
+  "components-ui-overlays-hover-card--default",
+  "components-ui-overlays-modal--default",
 
   // Chat components
-  "chatui-chatheader--default",
-  "chatui-chatinput--default",
-  "chatui-chatmessages--default",
-  "chatui-chatsidebar--defaultopen",
-  "chatui-composeview--default",
+  "components-chat-chat-header--default",
+  "components-chat-chat-input--default",
+  "components-chat-chat-messages--default",
+  "components-chat-chat-sidebar--defaultopen",
+  "components-chat-compose-view--default",
 
   // Modals
-  "chatui-settingsmodal--default",
-  "chatui-discoverysettingsmodal--default",
-  "chatui-iconpickermodal--default",
+  "components-modals-settings-modal--default",
+  "components-modals-discovery-settings-modal--default",
+  "components-modals-icon-picker-modal--default",
 
   // Display
-  "ui-card--default",
-  "ui-progress--default",
-  "ui-skeleton--default",
-  "ui-table--default",
+  "components-ui-data-display-card--default",
+  "components-ui-data-display-progress--default",
+  "components-ui-base-skeleton--default",
+  "components-ui-base-table--default",
 
   // Templates
-  "templates-chatfullwidthtemplate--fullwidthchat",
-  "templates-chattwopanetemplate--golden",
-  "templates-dashboardtemplate--dashboardoverview",
+  "components-templates-chat-chat-full-width--fullwidthchat",
+  "components-templates-chat-chat-two-pane--golden",
+  "components-templates-dashboard-dashboard--dashboardoverview",
 
   // Showcase pages
-  "pages-designsystempage--default",
-  "pages-typographypage--default",
-  "pages-spacingpage--default",
-  "designsystem-colorshowcase--default",
-  "designsystem-foundationsshowcase--default",
-  "design-system-iconography-showcase--default",
+  "overview-pages-design-system--default",
+  "overview-pages-typography--default",
+  "overview-pages-spacing--default",
+  "documentation-design-system-color-showcase--default",
+  "documentation-design-system-foundations-showcase--default",
+  "documentation-design-system-iconography-showcase--default",
 ];
 
 test.describe("Storybook visual regression - Light Theme", () => {
@@ -148,10 +148,10 @@ test.describe("Storybook visual regression - Dark Theme", () => {
 test.describe("Storybook visual regression - Interactive States", () => {
   // Test hover/focus states for critical interactive elements
   const INTERACTIVE_STORIES = [
-    "ui-button--default",
-    "ui-input--default",
-    "ui-iconbutton--default",
-    "ui-switch--default",
+    "components-ui-base-button--default",
+    "components-ui-base-input--default",
+    "components-ui-base-icon-button--default",
+    "components-ui-base-switch--default",
   ];
 
   for (const storyId of INTERACTIVE_STORIES) {

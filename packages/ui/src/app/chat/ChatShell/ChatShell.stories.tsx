@@ -13,15 +13,14 @@ import {
   sampleProjects,
   sampleUser,
 } from "../../../fixtures/sample-data";
-
 import {
   ChatVariantCompact,
   ChatVariantContextRail,
   ChatVariantSplitSidebar,
-} from "../chat-variants";
+} from "../ChatVariants";
 
 const meta: Meta = {
-  title: "ChatUI/ChatVariants",
+  title: "Components/Chat/Chat Shell",
   component: ChatVariantSplitSidebar,
   parameters: {
     layout: "fullscreen",

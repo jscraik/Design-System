@@ -1,0 +1,303 @@
+# SwiftLint Configuration with Security-Focused Rules
+# This configuration enforces security best practices for Swift development
+
+# Disabled rules (optional - can be re-enabled for stricter enforcement)
+disabled_rules:
+  - trailing_whitespace
+
+# Opt-in rules for security
+opt_in_rules:
+  # Security-critical rules
+  - force_unwrapping
+  - implicitly_unwrapped_optional
+  - force_cast
+  - force_try
+  - fatal_error_message
+  - file_name
+  - file_name_no_space
+  - file_type_order
+  - first_where
+  - flatmap_over_map_reduce
+  - joined_empty_parameter
+  - last_where
+  - legacy_random
+  - lower_than_than
+  - modifier_order
+  - multiline_arguments
+  - multiline_function_chains
+  - nimble_operator
+  - number_separator
+  - object_literal
+  - operator_usage_whitespace
+  - overridden_super_call
+  - pattern_matching_keywords
+  - prefer_zero_over_explicit_init
+  - prefixed_toplevel_constant
+  - prohibited_interface_builder
+  - quick_discouraged_focused_test
+  - quick_discouraged_pending_test
+  - redundant_nil_coalescing
+  - sorted_first_last
+  - static_operator
+  - strict_fileprivate
+  - toggle_bool
+  - unneeded_parentheses_in_closure_argument
+  - vertical_parameter_alignment_on_call
+  - weak_delegate
+  - yoda_condition
+
+# Included paths
+included:
+  - platforms/apple/swift
+  - platforms/apple/apps
+
+# Excluded paths
+excluded:
+  - platforms/apple/swift/**/.build
+  - platforms/apple/swift/**/Package.resolved
+  - platforms/apple/**/.build
+  - platforms/apple/**/Tests
+  - platforms/apple/**/DerivedData
+  - Pods
+  - Carthage
+  - vendor
+
+# Rule configurations with security focus
+
+# Prevent force unwrapping (runtime crash risk)
+force_unwrapping:
+  severity: error
+  mode:
+    - explicit
+    - implicit
+
+# Prevent implicitly unwrapped optionals (runtime crash risk)
+implicitly_unwrapped_optional:
+  severity: error
+  mode:
+    - explicit
+    - implicit
+
+# Prevent force casting (runtime crash risk)
+force_cast:
+  severity: error
+  mode:
+    - explicit
+    - implicit
+
+# Prevent force try (runtime crash risk)
+force_try:
+  severity: error
+  mode:
+    - explicit
+    - implicit
+
+# Require messages for fatalError (security/debugging)
+fatal_error_message:
+  severity: warning
+
+# Line length (maintainability)
+line_length:
+  warning: 120
+  error: 200
+  ignores_function_declarations: true
+  ignores_comments: true
+  ignores_urls: true
+
+# File length (maintainability)
+file_length:
+  warning: 500
+  error: 1000
+  ignore_comment_only_lines: true
+
+# Function body length (maintainability)
+function_body_length:
+  warning: 50
+  error: 100
+
+# Function parameter count (complexity)
+function_parameter_count:
+  warning: 6
+  error: 8
+
+# Type body length (maintainability)
+type_body_length:
+  warning: 300
+  error: 500
+
+# Cyclomatic complexity (maintainability/security)
+cyclomatic_complexity:
+  warning: 10
+  error: 20
+  ignores_case_statements: true
+
+# Nesting depth (maintainability)
+nesting:
+  type_level:
+    warning: 2
+    error: 3
+  statement_level:
+    warning: 5
+    error: 10
+
+# Type name (convention)
+type_name:
+  min_length: 3
+  max_length:
+    warning: 40
+    error: 50
+  excluded:
+    - ID
+    - URL
+    - T
+
+# Identifier name (convention)
+identifier_name:
+  min_length:
+    warning: 2
+    error: 1
+  max_length:
+    warning: 40
+    error: 50
+  excluded:
+    - id
+    - url
+    - URL
+    - x
+    - y
+    - z
+
+# Large tuple (code smell)
+large_tuple:
+  warning: 3
+  error: 4
+
+# Weak delegate (memory safety)
+weak_delegate:
+  severity: error
+
+# Custom rules for security patterns
+custom_rules:
+  # Detect hardcoded credentials
+  no_hardcoded_credentials:
+    name: "No Hardcoded Credentials"
+    regex: '(let|var)\s+\w*password\w*\s*=\s*"[^"]+"|(let|var)\s+\w*api_?key\w*\s*=\s*"[^"]+"|(let|var)\s+\w*token\w*\s*=\s*"[^"]+"'
+    match_kinds:
+      - identifier
+      - string
+    message: "Hardcoded credentials detected. Use secure storage or environment variables."
+    severity: error
+
+  # Detect insecure URL schemes
+  no_insecure_urls:
+    name: "No Insecure URLs"
+    regex: 'URL\(string:\s*"http://[^"]+"\)'
+    match_kinds:
+      - identifier
+      - string
+    message: "Insecure HTTP URL detected. Use HTTPS."
+    severity: warning
+
+  # Detect print statements in production code
+  no_print_in_production:
+    name: "No Print in Production"
+    regex: 'print\('
+    match_kinds:
+      - identifier
+    message: "Print statement detected. Use proper logging framework."
+    severity: warning
+    excluded:
+      - ".*Tests?.swift"
+      - ".*Test*.swift"
+
+  # Detect TODOs that should be addressed
+  no_todo_without_ticket:
+    name: "TODO Without Ticket"
+    regex: 'TODO:(?!\s*[A-Z]+-[0-9]+)'
+    match_kinds:
+      - comment
+    message: "TODO found without ticket reference. Format: TODO: TICKET-123 description"
+    severity: warning
+
+  # Detect insecure random usage
+  no_insecure_random:
+    name: "No Insecure Random"
+    regex: '\b(arc4random|arc4random_uniform|rand|random)\('
+    match_kinds:
+      - identifier
+    message: "Insecure random function detected. Use SystemRandomNumberGenerator."
+    severity: warning
+
+  # Detect insecure data storage
+  no_user_defaults_for_sensitive:
+    name: "No UserDefaults for Sensitive Data"
+    regex: 'UserDefaults\.standard\.(set|synchronize)\([^)]*password|token|credential|secret'
+    match_kinds:
+      - identifier
+    message: "Sensitive data in UserDefaults detected. Use Keychain instead."
+    severity: error
+
+  # Detect eval-like patterns
+  no_dynamic_eval:
+    name: "No Dynamic Evaluation"
+    regex: 'NSExpression\(.*\)|evaluate\(.*\)|NSScriptCommandDescription'
+    match_kinds:
+      - identifier
+      - typeidentifier
+    message: "Dynamic code execution detected. This can lead to code injection vulnerabilities."
+    severity: error
+
+  # Detect SQL injection risks
+  no_string_concat_in_sql:
+    name: "No String Concatenation in SQL"
+    regex: '(SELECT|INSERT|UPDATE|DELETE).*\+.*FROM|(SELECT|INSERT|UPDATE|DELETE).*\(format:|stringInterpolation'
+    match_kinds:
+      - string
+    message: "String concatenation in SQL query detected. Use parameterized queries."
+    severity: error
+
+  # Detect weak crypto
+  no_weak_crypto:
+    name: "No Weak Cryptography"
+    regex: '\b(MD5|SHA1|SHA224|DES|3DES|RC4)\b'
+    match_kinds:
+      - identifier
+      - typeidentifier
+    message: "Weak cryptographic algorithm detected. Use SHA256 or higher."
+    severity: error
+
+  # Detect insecure file permissions
+  no_insecure_file_perms:
+    name: "No Insecure File Permissions"
+    regex: 'FileManager\.default\.createFile\(.*\)|\.createFile\('
+    match_kinds:
+      - identifier
+    message: "File creation without explicit permissions detected. Specify secure attributes."
+    severity: warning
+
+  # Detect missing HTTPS enforcement
+  enforce_app_transport_security:
+    name: "Enforce App Transport Security"
+    regex: 'NSAppTransportSecurity.*NSAllowsArbitraryLoads.*true'
+    match_kinds:
+      - string
+      - dictionary_literal
+    message: "App Transport Security disabled. Ensure HTTPS is enforced."
+    severity: error
+
+# Analyzer rules (requires --analyze flag)
+analyzer_rules:
+  - unused_declaration
+  - unused_import
+  - explicit_self
+  - explicit_type_interface
+
+# Reporter configuration
+reporter: "github-actions-logging"
+
+# Paths to ignore during analysis (in addition to excluded)
+excluded:
+  - .build
+  - Pods
+  - Carthage
+  - vendor

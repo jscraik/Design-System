@@ -1,5 +1,7 @@
 # Apps SDK UI Library Workspace
 
+Last updated: 2026-01-02
+
 This repository is a **library-first monorepo** for building consistent UI across ChatGPT widgets and standalone React applications.
 
 ## What This Is
@@ -21,11 +23,13 @@ A shared design system library that you can use across all your projects:
 
 - `platforms/web/apps/web` - Standalone reference app with page routing system
 - `platforms/web/apps/storybook` - Component documentation and development
-- `apps/mcp` - MCP server for ChatGPT integration
+- `platforms/mcp` - MCP server for ChatGPT integration
 - `packages/widgets` - Standalone widget bundles for ChatGPT
 
 ## Contents
 
+- [Prerequisites](#prerequisites)
+- [Compatibility matrix](#compatibility-matrix)
 - [Quick Start](#quick-start)
 - [Verify](#verify)
 - [Common tasks](#common-tasks)
@@ -34,9 +38,15 @@ A shared design system library that you can use across all your projects:
 - [Troubleshooting](#troubleshooting)
 - [Rules of the road](#rules-of-the-road)
 - [Apps SDK UI integration](#apps-sdk-ui-integration)
+- [Foundation tokens (audit layer)](#foundation-tokens-audit-layer)
+- [Host adapter seam](#host-adapter-seam)
 - [Library exports](#library-exports)
-- [Compatibility matrix](#compatibility-matrix)
+- [Public API surface](#public-api-surface)
+- [Public API policy](#public-api-policy)
+- [Storybook navigation](#storybook-navigation)
+- [Release & versioning](#release--versioning)
 - [Using in Other Projects](#using-in-other-projects)
+- [Creating New Components](#creating-new-components)
 - [Development Workflow](#development-workflow)
 - [Architecture](#architecture)
 
@@ -128,7 +138,7 @@ Use this table to jump to the canonical doc surface. For more detail, see
 | macOS app               | `platforms/apple/apps/macos/ChatUIApp/README.md` |
 | Web app                 | `platforms/web/apps/web/README.md`             |
 | Storybook               | `platforms/web/apps/storybook/README.md`       |
-| MCP server              | `apps/mcp/README.md`             |
+| MCP server              | `platforms/mcp/README.md`             |
 | Tokens                  | `packages/tokens/README.md`      |
 | UI components (React)   | `packages/ui/README.md`          |
 | Runtime host            | `packages/runtime/README.md`     |
@@ -190,7 +200,7 @@ node -v
   ✅ Provide host adapters  
   ❌ No reusable UI source
 
-- **apps/mcp**  
+- **platforms/mcp**  
   ✅ Integration harness (widget bundle + tool definitions)  
   ❌ Not required for the library itself
 
@@ -246,9 +256,9 @@ import { Button, ChatHeader, ChatSidebar } from "@chatui/ui";
 For production code, prefer subpath exports for better tree-shaking:
 
 ```ts
-import { Button } from "@chatui/ui/forms";
+import { Button } from "@chatui/ui/base";
+import { ModelSelector } from "@chatui/ui/navigation";
 import { ChatSidebar } from "@chatui/ui/chat";
-import { SectionHeader } from "@chatui/ui/layout";
 ```
 
 ### Dev/demo exports
@@ -280,19 +290,17 @@ import { ChatFullWidthTemplate } from "@chatui/ui/experimental";
 
 ## Public API policy
 
-- **Stable**: `@chatui/ui` root exports and the `@chatui/ui/forms`, `@chatui/ui/chat`, `@chatui/ui/layout` subpaths.
+- **Stable**: `@chatui/ui` root exports and the `@chatui/ui/app`, `@chatui/ui/chat`, `@chatui/ui/modals`,
+  `@chatui/ui/settings`, `@chatui/ui/base`, `@chatui/ui/data-display`, `@chatui/ui/feedback`,
+  `@chatui/ui/navigation`, `@chatui/ui/overlays`, and `@chatui/ui/icons` subpaths.
 - **Experimental**: `@chatui/ui/experimental` and `@chatui/ui/templates` (subject to breaking changes).
 - **Dev-only**: `@chatui/ui/dev` is for Storybook, docs, and local harnesses — not production.
 
 ## Storybook navigation
 
-- ChatUI – chat app components
-- UI – primitives and overlays
-- DesignSystem – docs and showcases
-- Icons – icon sets
-- Figma – figma utilities
-- Pages – full pages
-- Templates – application templates
+- Overview – onboarding, galleries, and page previews
+- Documentation – system docs + design system
+- Components – UI primitives, chat surfaces, templates, icons, integrations
 
 ## Release & versioning
 

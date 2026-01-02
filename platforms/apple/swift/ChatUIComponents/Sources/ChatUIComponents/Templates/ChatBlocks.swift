@@ -2,18 +2,29 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Defines the header variant shown in chat templates.
 public enum ChatHeaderViewMode: String, CaseIterable, Identifiable {
     case chat
     case compose
 
+    /// The raw identifier used for SwiftUI identity.
     public var id: String { rawValue }
 }
 
+/// Represents a sidebar item in template chat layouts.
 public struct ChatSidebarItem: Identifiable {
+    /// Stable identifier for the sidebar item.
     public let id: UUID
+    /// Display title for the item.
     public let title: String
+    /// SF Symbols name for the leading icon.
     public let systemIcon: String
 
+    /// Creates a sidebar item model.
+    /// - Parameters:
+    ///   - id: The stable identifier for the item.
+    ///   - title: The visible title for the item.
+    ///   - systemIcon: The SF Symbols name used for the leading icon.
     public init(id: UUID = UUID(), title: String, systemIcon: String) {
         self.id = id
         self.title = title
@@ -21,16 +32,26 @@ public struct ChatSidebarItem: Identifiable {
     }
 }
 
+/// Describes the role of a message in template chat layouts.
 public enum ChatMessageRole {
     case user
     case assistant
 }
 
+/// Represents a message in template chat layouts.
 public struct ChatMessageItem: Identifiable {
+    /// Stable identifier for the message.
     public let id: UUID
+    /// Role of the message author.
     public let role: ChatMessageRole
+    /// Message content text.
     public let content: String
 
+    /// Creates a message item model.
+    /// - Parameters:
+    ///   - id: The stable identifier for the message.
+    ///   - role: The author role (user or assistant).
+    ///   - content: The message content.
     public init(id: UUID = UUID(), role: ChatMessageRole, content: String) {
         self.id = id
         self.role = role
@@ -38,6 +59,7 @@ public struct ChatMessageItem: Identifiable {
     }
 }
 
+/// Renders the chat header block with model picker and action buttons.
 public struct ChatHeaderBlockView: View {
     @Environment(\.chatUITheme) private var theme
     @Environment(\.colorScheme) private var scheme
@@ -49,6 +71,14 @@ public struct ChatHeaderBlockView: View {
     private let onDownload: () -> Void
     private let onShare: () -> Void
 
+    /// Creates a header block view for chat templates.
+    /// - Parameters:
+    ///   - isSidebarOpen: Binding that controls whether the sidebar is visible.
+    ///   - viewMode: Binding for the current header mode (chat vs compose).
+    ///   - selectedModel: Binding for the currently selected model label.
+    ///   - models: The available model labels displayed in the picker.
+    ///   - onDownload: Action invoked when the download button is tapped.
+    ///   - onShare: Action invoked when the share button is tapped.
     public init(
         isSidebarOpen: Binding<Bool>,
         viewMode: Binding<ChatHeaderViewMode>,
@@ -65,6 +95,7 @@ public struct ChatHeaderBlockView: View {
         self.onShare = onShare
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         HStack(spacing: FSpacing.s12) {
             ChatUIButton(variant: .ghost, size: .icon, accessibilityLabel: "Toggle sidebar") {
@@ -154,6 +185,7 @@ public struct ChatHeaderBlockView: View {
     }
 }
 
+/// Renders the sidebar block for chat templates.
 public struct ChatSidebarBlockView: View {
     @Environment(\.chatUITheme) private var theme
     @Environment(\.colorScheme) private var scheme
@@ -162,6 +194,12 @@ public struct ChatSidebarBlockView: View {
     private let items: [ChatSidebarItem]
     private let onNewChat: () -> Void
 
+    /// Creates a sidebar block view for chat templates.
+    /// - Parameters:
+    ///   - title: The sidebar section title.
+    ///   - items: The sidebar item models to display.
+    ///   - selectedItemID: Binding to the currently selected item.
+    ///   - onNewChat: Action invoked when the new chat button is tapped.
     public init(
         title: String,
         items: [ChatSidebarItem],
@@ -174,6 +212,7 @@ public struct ChatSidebarBlockView: View {
         self.onNewChat = onNewChat
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(alignment: .leading, spacing: FSpacing.s12) {
             HStack {
@@ -219,13 +258,17 @@ public struct ChatSidebarBlockView: View {
     }
 }
 
+/// Renders the message list block for chat templates.
 public struct ChatMessagesBlockView: View {
     private let messages: [ChatMessageItem]
 
+    /// Creates a messages block view.
+    /// - Parameter messages: The message models to render in order.
     public init(messages: [ChatMessageItem]) {
         self.messages = messages
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         ScrollView {
             LazyVStack(spacing: FSpacing.s16) {
@@ -242,6 +285,7 @@ public struct ChatMessagesBlockView: View {
     }
 }
 
+/// Renders the input composer block for chat templates.
 public struct ChatInputBlockView: View {
     @Binding private var text: String
     private let isProcessing: Bool
@@ -253,6 +297,13 @@ public struct ChatInputBlockView: View {
     @State private var isRecording = false
     @State private var isWebSearchActive = false
 
+    /// Creates an input block view with state bindings.
+    /// - Parameters:
+    ///   - text: Binding to the composer text.
+    ///   - isProcessing: Whether the composer should be disabled and show processing state.
+    ///   - modelShortName: The short model label displayed in the toolbar.
+    ///   - onSend: Action invoked when a non-empty message is sent.
+    /// - Important: `onSend` is only called when the send button is enabled.
     public init(
         text: Binding<String>,
         isProcessing: Bool,
@@ -269,6 +320,7 @@ public struct ChatInputBlockView: View {
         !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isProcessing
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: FSpacing.s8) {

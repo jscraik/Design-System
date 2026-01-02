@@ -70,7 +70,7 @@ function TwoPaneStoryShell({ showSidebar, showFooter, showDetailsPanel, showComp
 }
 
 const meta: Meta<typeof ChatTwoPaneTemplate> = {
-  title: "Templates/ChatTwoPaneTemplate",
+  title: "Components/Templates/Chat/Chat Two Pane",
   component: ChatTwoPaneTemplate,
   tags: ["autodocs"],
   parameters: {

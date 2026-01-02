@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "@storybook/test";
 import { useState } from "react";
 
-import { Button } from "../../base/button";
-import { Input } from "../../base/input";
-import { Label } from "../../base/label";
+import { Button } from "../../base/Button";
+import { Input } from "../../base/Input";
+import { Label } from "../../base/Label";
 
 import {
   Dialog,
@@ -15,7 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./dialog";
+} from "./Dialog";
 
 /**
  * Dialog component built on Radix UI primitives.
@@ -47,7 +47,7 @@ import {
  * - Screen readers announce the dialog title
  */
 const meta: Meta<typeof Dialog> = {
-  title: "UI/Dialog",
+  title: "Components/UI/Feedback/Dialog",
   component: Dialog,
   parameters: {
     layout: "centered",

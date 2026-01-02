@@ -6,10 +6,13 @@ import ChatUIComponents
 public struct MCPStructuredContentView: View {
     private let content: [String: AnyCodable]
 
+    /// Creates a structured content renderer.
+    /// - Parameter content: The structured content dictionary to render.
     public init(content: [String: AnyCodable]) {
         self.content = content
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(alignment: .leading, spacing: FSpacing.s16) {
             section(for: content)
@@ -132,10 +135,13 @@ public struct MCPStructuredContentView: View {
 public struct MCPContentBlocksView: View {
     private let blocks: [MCPContentBlock]
 
+    /// Creates a content blocks renderer.
+    /// - Parameter blocks: The content blocks to render.
     public init(blocks: [MCPContentBlock]) {
         self.blocks = blocks
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         SettingsCardView {
             VStack(alignment: .leading, spacing: FSpacing.s12) {

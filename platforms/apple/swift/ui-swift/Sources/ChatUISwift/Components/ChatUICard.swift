@@ -1,8 +1,9 @@
 import SwiftUI
 
-/// A native macOS card component that uses design tokens
+/// A native macOS card component that uses design tokens.
 public struct ChatUICard<Content: View>: View {
     
+    /// Visual variants for the card.
     public enum Variant {
         case `default`
         case elevated
@@ -12,6 +13,11 @@ public struct ChatUICard<Content: View>: View {
     private let variant: Variant
     private let content: () -> Content
     
+    /// Creates a card with a specified variant.
+    ///
+    /// - Parameters:
+    ///   - variant: Visual style for the card.
+    ///   - content: Card content builder.
     public init(
         variant: Variant = .default,
         @ViewBuilder content: @escaping () -> Content
@@ -20,6 +26,7 @@ public struct ChatUICard<Content: View>: View {
         self.content = content
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         content()
             .padding(DesignTokens.Spacing.sm)
@@ -127,6 +134,7 @@ public struct ChatUICard<Content: View>: View {
 // MARK: - Convenience Modifiers
 
 extension ChatUICard {
+    /// Returns a copy of the card with a different variant.
     public func variant(_ variant: Variant) -> ChatUICard<Content> {
         ChatUICard(variant: variant, content: content)
     }

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
-import { Toggle } from "./toggle";
+import { Toggle } from "./Toggle";
 
 const meta: Meta<typeof Toggle> = {
-  title: "UI/Toggle",
+  title: "Components/UI/Base/Toggle",
   component: Toggle,
   parameters: {
     layout: "centered",

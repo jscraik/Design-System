@@ -7,6 +7,7 @@ import AppKit
 
 /// Glass-style background surface for macOS with reduced-transparency fallback.
 public struct GlassBackgroundView: View {
+    /// Describes the visual role of the glass surface.
     public enum Role {
         case sidebar
         case content
@@ -18,6 +19,10 @@ public struct GlassBackgroundView: View {
     @Environment(\.colorScheme) private var scheme
     @Environment(\.chatUITheme) private var theme
 
+    /// Creates a glass background view.
+    /// - Parameters:
+    ///   - role: The role used to pick a matching system material.
+    ///   - cornerRadius: Optional corner radius for clipping and borders.
     public init(role: Role, cornerRadius: CGFloat? = nil) {
         self.role = role
         self.cornerRadius = cornerRadius

@@ -51,7 +51,7 @@
           "type": "color"
         },
         "inverted": {
-          "value": "#8F8F8F",
+          "value": "#FFFFFF",
           "type": "color"
         }
       },
@@ -69,7 +69,7 @@
           "type": "color"
         },
         "inverted": {
-          "value": "#AFAFAF",
+          "value": "#0D0D0D",
           "type": "color"
         }
       }
@@ -89,7 +89,23 @@
           "type": "color"
         },
         "inverted": {
-          "value": "#8F8F8F",
+          "value": "#FFFFFF",
+          "type": "color"
+        },
+        "accent": {
+          "value": "#0285FF",
+          "type": "color"
+        },
+        "statusError": {
+          "value": "#E02E2A",
+          "type": "color"
+        },
+        "statusWarning": {
+          "value": "#E25507",
+          "type": "color"
+        },
+        "statusSuccess": {
+          "value": "#008635",
           "type": "color"
         }
       },
@@ -107,7 +123,45 @@
           "type": "color"
         },
         "inverted": {
-          "value": "#AFAFAF",
+          "value": "#0D0D0D",
+          "type": "color"
+        },
+        "accent": {
+          "value": "#48AAFF",
+          "type": "color"
+        },
+        "statusError": {
+          "value": "#FF8583",
+          "type": "color"
+        },
+        "statusWarning": {
+          "value": "#FF9E6C",
+          "type": "color"
+        },
+        "statusSuccess": {
+          "value": "#40C977",
+          "type": "color"
+        }
+      }
+    },
+    "border": {
+      "light": {
+        "light": {
+          "value": "#0D0D0D0D",
+          "type": "color"
+        },
+        "heavy": {
+          "value": "#0D0D0D26",
+          "type": "color"
+        }
+      },
+      "dark": {
+        "default": {
+          "value": "#FFFFFF26",
+          "type": "color"
+        },
+        "light": {
+          "value": "#FFFFFF0D",
           "type": "color"
         }
       }
@@ -259,6 +313,112 @@
       "type": "dimension"
     }
   },
+  "radius": {
+    "r6": {
+      "value": 6,
+      "type": "dimension"
+    },
+    "r8": {
+      "value": 8,
+      "type": "dimension"
+    },
+    "r10": {
+      "value": 10,
+      "type": "dimension"
+    },
+    "r12": {
+      "value": 12,
+      "type": "dimension"
+    },
+    "r16": {
+      "value": 16,
+      "type": "dimension"
+    },
+    "r18": {
+      "value": 18,
+      "type": "dimension"
+    },
+    "r21": {
+      "value": 21,
+      "type": "dimension"
+    },
+    "r24": {
+      "value": 24,
+      "type": "dimension"
+    },
+    "r30": {
+      "value": 30,
+      "type": "dimension"
+    },
+    "round": {
+      "value": 999,
+      "type": "dimension"
+    }
+  },
+  "size": {
+    "controlHeight": {
+      "value": 44,
+      "type": "dimension"
+    },
+    "cardHeaderHeight": {
+      "value": 56,
+      "type": "dimension"
+    },
+    "hitTarget": {
+      "value": 44,
+      "type": "dimension"
+    }
+  },
+  "shadow": {
+    "card": {
+      "value": [
+        {
+          "color": "#0000000D",
+          "offsetX": 0,
+          "offsetY": 4,
+          "blur": 16,
+          "spread": 0
+        }
+      ],
+      "type": "shadow"
+    },
+    "pip": {
+      "value": [
+        {
+          "color": "#0000000D",
+          "offsetX": 0,
+          "offsetY": 4,
+          "blur": 16,
+          "spread": 0
+        }
+      ],
+      "type": "shadow"
+    },
+    "pill": {
+      "value": [
+        {
+          "color": "#0000000A",
+          "offsetX": 0,
+          "offsetY": 10,
+          "blur": 22,
+          "spread": 0
+        }
+      ],
+      "type": "shadow"
+    },
+    "close": {
+      "value": [
+        {
+          "color": "#00000029",
+          "offsetX": 0,
+          "offsetY": 4,
+          "blur": 8,
+          "spread": 0
+        }
+      ],
+      "type": "shadow"
+    }
+  },
   "type": {
     "fontFamily": {
       "value": "SF Pro",
@@ -382,6 +542,96 @@
         },
         "tracking": {
           "value": -0.1,
+          "type": "letterSpacing"
+        }
+      },
+      "cardTitle": {
+        "size": {
+          "value": 17,
+          "type": "dimension"
+        },
+        "lineHeight": {
+          "value": 23,
+          "type": "dimension"
+        },
+        "weight": {
+          "value": 500,
+          "type": "fontWeight"
+        },
+        "tracking": {
+          "value": -0.43,
+          "type": "letterSpacing"
+        }
+      },
+      "listTitle": {
+        "size": {
+          "value": 17,
+          "type": "dimension"
+        },
+        "lineHeight": {
+          "value": 24,
+          "type": "dimension"
+        },
+        "weight": {
+          "value": 400,
+          "type": "fontWeight"
+        },
+        "tracking": {
+          "value": -0.4,
+          "type": "letterSpacing"
+        }
+      },
+      "listSubtitle": {
+        "size": {
+          "value": 14,
+          "type": "dimension"
+        },
+        "lineHeight": {
+          "value": 20,
+          "type": "dimension"
+        },
+        "weight": {
+          "value": 400,
+          "type": "fontWeight"
+        },
+        "tracking": {
+          "value": -0.18,
+          "type": "letterSpacing"
+        }
+      },
+      "buttonLabel": {
+        "size": {
+          "value": 15,
+          "type": "dimension"
+        },
+        "lineHeight": {
+          "value": 24,
+          "type": "dimension"
+        },
+        "weight": {
+          "value": 500,
+          "type": "fontWeight"
+        },
+        "tracking": {
+          "value": -0.24,
+          "type": "letterSpacing"
+        }
+      },
+      "buttonLabelSmall": {
+        "size": {
+          "value": 14,
+          "type": "dimension"
+        },
+        "lineHeight": {
+          "value": 20,
+          "type": "dimension"
+        },
+        "weight": {
+          "value": 600,
+          "type": "fontWeight"
+        },
+        "tracking": {
+          "value": -0.3,
           "type": "letterSpacing"
         }
       }

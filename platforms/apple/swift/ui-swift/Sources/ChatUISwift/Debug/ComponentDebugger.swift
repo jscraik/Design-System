@@ -9,7 +9,9 @@ import SwiftUI
 
 // MARK: - Debug Configuration
 
+/// Configuration flags for debug tooling.
 public struct DebugConfig {
+    /// Whether debug tooling is enabled (defaults to true in DEBUG).
     public static var isEnabled: Bool = {
         #if DEBUG
         return true
@@ -18,26 +20,37 @@ public struct DebugConfig {
         #endif
     }()
     
+    /// Whether to show the state inspector overlay.
     public static var showStateInspector = false
+    /// Whether to log state changes to the console.
     public static var logStateChanges = false
+    /// Whether to show performance metrics overlays.
     public static var showPerformanceMetrics = false
+    /// Whether to highlight view redraws.
     public static var highlightRedraws = false
 }
 
 // MARK: - Component State Inspector
 
 @available(macOS 13.0, *)
+/// Debug overlay that tracks and displays state changes.
 public struct ComponentStateInspector<Content: View>: View {
     let content: Content
     let componentName: String
     @State private var isExpanded = false
     @State private var stateHistory: [StateSnapshot] = []
     
+    /// Creates a state inspector wrapper.
+    ///
+    /// - Parameters:
+    ///   - componentName: Label shown in the inspector.
+    ///   - content: Content to wrap.
     public init(componentName: String, @ViewBuilder content: () -> Content) {
         self.componentName = componentName
         self.content = content()
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         if DebugConfig.isEnabled && DebugConfig.showStateInspector {
             VStack(alignment: .leading, spacing: 0) {
@@ -132,6 +145,7 @@ public struct ComponentStateInspector<Content: View>: View {
         .padding(.vertical, 2)
     }
     
+    /// Records a state change entry for the inspector.
     public func logStateChange(_ description: String, type: StateChangeType = .update) {
         guard DebugConfig.isEnabled else { return }
         
@@ -163,6 +177,7 @@ private struct StateSnapshot: Identifiable {
     let changeType: StateChangeType
 }
 
+/// Categories for state change logging.
 public enum StateChangeType: String, CaseIterable {
     case initialization = "INIT"
     case update = "UPDATE"
@@ -184,6 +199,7 @@ public enum StateChangeType: String, CaseIterable {
 // MARK: - Performance Monitor
 
 @available(macOS 13.0, *)
+/// Displays a lightweight performance overlay for a component.
 public struct PerformanceMonitor<Content: View>: View {
     let content: Content
     let componentName: String
@@ -193,6 +209,12 @@ public struct PerformanceMonitor<Content: View>: View {
     @State private var averageRenderTime: TimeInterval = 0
     @State private var renderTimes: [TimeInterval] = []
     
+    /// Creates a performance monitor wrapper.
+    ///
+    /// - Parameters:
+    ///   - componentName: Name shown in the overlay.
+    ///   - renderKey: Optional render key to track changes.
+    ///   - content: Content to wrap.
     public init(
         componentName: String,
         renderKey: AnyHashable? = nil,
@@ -203,6 +225,7 @@ public struct PerformanceMonitor<Content: View>: View {
         self.content = content()
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         content
             .background(
@@ -273,21 +296,21 @@ public struct PerformanceMonitor<Content: View>: View {
 // MARK: - Debug View Modifiers
 
 extension View {
-    /// Adds component state inspection capabilities
+    /// Adds component state inspection capabilities.
     public func debugInspector(componentName: String) -> some View {
         ComponentStateInspector(componentName: componentName) {
             self
         }
     }
     
-    /// Adds performance monitoring overlay
+    /// Adds performance monitoring overlay.
     public func debugPerformance(componentName: String, renderKey: AnyHashable? = nil) -> some View {
         PerformanceMonitor(componentName: componentName, renderKey: renderKey) {
             self
         }
     }
     
-    /// Highlights view redraws with a red flash
+    /// Highlights view redraws with a red flash.
     public func debugRedraws() -> some View {
         self.background(
             DebugConfig.highlightRedraws ? 
@@ -296,7 +319,7 @@ extension View {
         )
     }
     
-    /// Comprehensive debug wrapper with all debugging features
+    /// Comprehensive debug wrapper with all debugging features.
     public func debugComponent(name: String) -> some View {
         self
             .debugInspector(componentName: name)
@@ -307,14 +330,19 @@ extension View {
 
 // MARK: - Debug Console
 
+/// In-memory debug log console.
 public class DebugConsole: ObservableObject {
+    /// Shared singleton instance.
     public static let shared = DebugConsole()
     
+    /// Logged debug entries.
     @Published public var logs: [DebugLog] = []
+    /// Whether the console UI is visible.
     @Published public var isVisible = false
     
     private init() {}
     
+    /// Appends a log entry to the console.
     public func log(_ message: String, level: LogLevel = .info, component: String? = nil) {
         guard DebugConfig.isEnabled else { return }
         
@@ -339,23 +367,32 @@ public class DebugConsole: ObservableObject {
         print("🐛 \(level.emoji) \(prefix)\(message)")
     }
     
+    /// Clears all logged entries.
     public func clear() {
         logs.removeAll()
     }
     
+    /// Toggles visibility of the console UI.
     public func toggle() {
         isVisible.toggle()
     }
 }
 
+/// Represents a single debug log entry.
 public struct DebugLog: Identifiable {
+    /// Unique identifier for the entry.
     public let id = UUID()
+    /// Log message.
     public let message: String
+    /// Severity level.
     public let level: LogLevel
+    /// Optional component name.
     public let component: String?
+    /// Log timestamp.
     public let timestamp: Date
 }
 
+/// Severity levels for debug logging.
 public enum LogLevel: String, CaseIterable {
     case debug = "DEBUG"
     case info = "INFO"
@@ -384,12 +421,15 @@ public enum LogLevel: String, CaseIterable {
 // MARK: - Debug Console View
 
 @available(macOS 13.0, *)
+/// Debug console UI for viewing logs.
 public struct DebugConsoleView: View {
     @ObservedObject private var console = DebugConsole.shared
     @State private var selectedLevel: LogLevel? = nil
     
+    /// Creates a debug console view.
     public init() {}
     
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(spacing: 0) {
             // Header
@@ -488,18 +528,22 @@ public struct DebugConsoleView: View {
 
 // MARK: - Global Debug Functions
 
+/// Logs a message to the debug console.
 public func debugLog(_ message: String, level: LogLevel = .info, component: String? = nil) {
     DebugConsole.shared.log(message, level: level, component: component)
 }
 
+/// Logs an error message to the debug console.
 public func debugError(_ message: String, component: String? = nil) {
     DebugConsole.shared.log(message, level: .error, component: component)
 }
 
+/// Logs a warning message to the debug console.
 public func debugWarning(_ message: String, component: String? = nil) {
     DebugConsole.shared.log(message, level: .warning, component: component)
 }
 
+/// Logs an info message to the debug console.
 public func debugInfo(_ message: String, component: String? = nil) {
     DebugConsole.shared.log(message, level: .info, component: component)
 }

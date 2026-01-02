@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Skeleton } from "./skeleton";
+import { Skeleton } from "./Skeleton";
 
 const meta: Meta<typeof Skeleton> = {
-  title: "UI/Skeleton",
+  title: "Components/UI/Base/Skeleton",
   component: Skeleton,
   tags: ["autodocs"],
   parameters: { layout: "centered" },

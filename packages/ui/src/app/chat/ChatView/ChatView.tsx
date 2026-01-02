@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown } from "lucide-react";
+import { IconArrowDownMd } from "../../../icons";
 
 import { ChatMessages } from "../ChatMessages";
 import type { ChatMessage, ChatMessageAction } from "../ChatMessages";
 import { ChatInput } from "../ChatInput";
 import type { ModelConfig } from "../ChatUIRoot";
 
+/**
+ * Props for the composed chat view.
+ */
 interface ChatViewProps {
   selectedModel: ModelConfig;
   composerLeft?: React.ReactNode;
@@ -15,6 +18,12 @@ interface ChatViewProps {
   onMessageAction?: (action: ChatMessageAction, message: ChatMessage) => void;
 }
 
+/**
+ * Renders the full chat view with message list and composer.
+ *
+ * @param props - Chat view props.
+ * @returns A chat view layout container.
+ */
 export function ChatView({
   selectedModel,
   composerLeft,
@@ -76,7 +85,7 @@ export function ChatView({
           title="Scroll to bottom"
           className="absolute bottom-[200px] left-1/2 -translate-x-1/2 z-10 flex items-center justify-center size-10 bg-muted hover:bg-muted/80 border border-border rounded-full shadow-lg transition-all duration-200 ease-out hover:scale-110"
         >
-          <ArrowDown className="size-5 text-foreground" />
+          <IconArrowDownMd className="size-5 text-foreground" />
         </button>
       )}
 

@@ -57,8 +57,8 @@ if (import.meta.env.DEV) {
 
 **Files:**
 
-- `apps/mcp/server.js`
-- `apps/mcp/enhanced-server.js`
+- `platforms/mcp/server.js`
+- `platforms/mcp/enhanced-server.js`
 
 **Implementation:**
 
@@ -262,8 +262,8 @@ function getSecurityHeaders(): Record<string, string> {
 
 - `packages/ui/src/app/chat/ChatUIRoot.tsx`
 - `packages/widgets/src/shared/widget-base.tsx`
-- `apps/mcp/server.js`
-- `apps/mcp/enhanced-server.js`
+- `platforms/mcp/server.js`
+- `platforms/mcp/enhanced-server.js`
 - `packages/cloudflare-template/src/worker/index.ts`
 
 ### New Files

@@ -10,9 +10,12 @@ import {
   sampleProjects,
   sampleUser,
 } from "../../fixtures/sample-data";
-
 import { ChatSidebarBlock } from "../blocks/ChatSidebarBlock";
 
+/**
+ * Render the chat sidebar template with sample data.
+ * @returns The chat sidebar template element.
+ */
 export function ChatSidebarTemplate() {
   const [isOpen, setIsOpen] = useState(true);
 

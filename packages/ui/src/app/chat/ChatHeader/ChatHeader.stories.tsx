@@ -7,7 +7,7 @@ import { sampleLegacyModels, sampleModels } from "../../../fixtures/sample-data"
 import { ChatHeader } from "./ChatHeader";
 
 const meta: Meta<typeof ChatHeader> = {
-  title: "ChatUI/ChatHeader",
+  title: "Components/Chat/Chat Header",
   component: ChatHeader,
   tags: ["autodocs"],
   args: {

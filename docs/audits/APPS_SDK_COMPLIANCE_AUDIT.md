@@ -131,7 +131,7 @@ This document audits your codebase against OpenAI's official Apps SDK guidelines
 3. App screenshots
 4. Developer verification
 5. Support contact details
-6. Golden prompt set for testing (tracked in `apps/mcp/tool-contracts.json`)
+6. Golden prompt set for testing (tracked in `platforms/mcp/tool-contracts.json`)
 
 ### Recommended Improvements
 
@@ -250,6 +250,6 @@ The implementation now fully complies with all Apps SDK specifications:
 
 ## Files Updated for Compliance
 
-- `apps/mcp/server.js` - Tool definitions with proper annotations
+- `platforms/mcp/server.js` - Tool definitions with proper annotations
 - `packages/widgets/*` - Widget implementations using Apps SDK UI
 - `packages/runtime/src/index.tsx` - Host adapter for embedded/standalone modes

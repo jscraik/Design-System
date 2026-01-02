@@ -3,12 +3,32 @@ import { useHost, useOpenAiGlobal as useOpenAiGlobalRuntime } from "@chatui/runt
 
 import type { UnknownObject } from "./types";
 
+/**
+ * Reads and writes widget state, syncing with the host when available.
+ *
+ * @param defaultState - Default state value or factory.
+ * @returns A tuple of `[state, setState]`.
+ *
+ * @example
+ * ```ts
+ * const [state, setState] = useWidgetState({ count: 0 });
+ * ```
+ */
 export function useWidgetState<T extends UnknownObject>(
   defaultState: T | (() => T),
 ): readonly [T, (state: SetStateAction<T>) => void];
+/**
+ * Reads and writes optional widget state, syncing with the host when available.
+ *
+ * @param defaultState - Default state value or factory, or `null`.
+ * @returns A tuple of `[state, setState]` where state may be `null`.
+ */
 export function useWidgetState<T extends UnknownObject>(
   defaultState?: T | (() => T | null) | null,
 ): readonly [T | null, (state: SetStateAction<T | null>) => void];
+/**
+ * Implementation signature for `useWidgetState`.
+ */
 export function useWidgetState<T extends UnknownObject>(
   defaultState?: T | (() => T | null) | null,
 ): readonly [T | null, (state: SetStateAction<T | null>) => void] {

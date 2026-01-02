@@ -1,7 +1,12 @@
 import SwiftUI
 import ChatUIFoundation
 
-/// Settings row with a dropdown menu in the trailing position
+/// Renders a settings row with a dropdown menu.
+///
+/// - Example:
+/// ```swift
+/// SettingDropdownView(title: "Theme", options: ["Light", "Dark"], selection: $selection)
+/// ```
 public struct SettingDropdownView: View {
     private let icon: AnyView?
     private let title: String
@@ -9,6 +14,14 @@ public struct SettingDropdownView: View {
     private let options: [String]
     @Binding private var selection: String
     
+    /// Creates a settings dropdown view.
+    ///
+    /// - Parameters:
+    ///   - icon: Optional leading icon view.
+    ///   - title: Primary title text.
+    ///   - subtitle: Optional subtitle text.
+    ///   - options: Options to display.
+    ///   - selection: Binding for the selected option.
     public init(
         icon: AnyView? = nil,
         title: String,
@@ -23,6 +36,7 @@ public struct SettingDropdownView: View {
         self._selection = selection
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         SettingRowView(
             icon: icon,

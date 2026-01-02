@@ -177,5 +177,5 @@ declare global {
 ## Related Documentation
 
 - [Apps SDK Documentation](https://developers.openai.com/apps-sdk)
-- [MCP Server Implementation](../../../apps/mcp/README.md)
+- [MCP Server Implementation](../../../platforms/mcp/README.md)
 - [Widget Architecture](../../../docs/architecture/WIDGET_ARCHITECTURE.md)

@@ -10,6 +10,7 @@ import ChatUIFoundation
 import ChatUIComponents
 import ChatUIThemes
 
+/// Gallery of template layouts and previews.
 struct TemplatesGallery: View {
     @State private var selectedTemplate: TemplateID = TemplateRegistry.templates.first?.id ?? .compose
 

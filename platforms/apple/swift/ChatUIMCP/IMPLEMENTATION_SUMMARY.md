@@ -50,8 +50,8 @@ public func getToolMetadata(name: String) async throws -> ToolMetadata
 
 **Integration with Existing Infrastructure**:
 
-- Calls existing web-based MCP server at `apps/mcp/`
-- Compatible with all tool contracts in `apps/mcp/tool-contracts.json`
+- Calls existing web-based MCP server at `platforms/mcp/`
+- Compatible with all tool contracts in `platforms/mcp/tool-contracts.json`
 - Supports all 14 existing tools (display_chat, display_table, add_to_cart, etc.)
 
 #### 2. MCPAuthenticator (MCPAuthenticator.swift)
@@ -184,7 +184,7 @@ public func hasToken(account: String) -> Bool
 
 **All Existing MCP Tool Contracts Supported**:
 
-From `apps/mcp/tool-contracts.json`:
+From `platforms/mcp/tool-contracts.json`:
 
 - ✅ display_chat (public, read-only)
 - ✅ display_search_results (public, read-only)
@@ -235,7 +235,7 @@ _For any_ existing MCP tool call, SwiftUI applications should execute them throu
 
 #### Requirement 7.1: Tool Execution ✅
 
-- MCPClient calls existing web-based MCP infrastructure at `apps/mcp/`
+- MCPClient calls existing web-based MCP infrastructure at `platforms/mcp/`
 - Async/await networking layer with proper error handling
 - Supports all existing tool contracts
 

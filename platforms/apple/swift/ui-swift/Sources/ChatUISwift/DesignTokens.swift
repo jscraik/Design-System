@@ -6,15 +6,17 @@ import AppKit
 import UIKit
 #endif
 
-/// Design tokens generated from the shared token system
-/// This file provides Swift constants that match the CSS custom properties
-/// Generated deterministically - same input produces identical output
+/// Design tokens generated from the shared token system.
+/// This file provides Swift constants that match the CSS custom properties.
+/// Generated deterministically - same input produces identical output.
 public enum DesignTokens {
     
     // MARK: - Colors
     
+    /// Color token namespaces.
     public enum Colors {
         
+        /// Background color tokens.
         public enum Background {
             public static let lightPrimary = Color(hex: "#FFFFFF")
             public static let lightSecondary = Color(hex: "#E8E8E8")
@@ -41,6 +43,7 @@ public enum DesignTokens {
             )
         }
         
+        /// Text color tokens.
         public enum Text {
             public static let lightPrimary = Color(hex: "#0D0D0D")
             public static let lightSecondary = Color(hex: "#5D5D5D")
@@ -74,6 +77,7 @@ public enum DesignTokens {
             )
         }
         
+        /// Icon color tokens.
         public enum Icon {
             public static let lightPrimary = Color(hex: "#0D0D0D")
             public static let lightSecondary = Color(hex: "#5D5D5D")
@@ -107,6 +111,7 @@ public enum DesignTokens {
             )
         }
         
+        /// Accent color tokens.
         public enum Accent {
             public static let lightBlue = Color(hex: "#0285FF")
             public static let lightRed = Color(hex: "#E02E2A")
@@ -150,9 +155,11 @@ public enum DesignTokens {
     
     // MARK: - Typography
     
+    /// Typography token namespaces.
     public enum Typography {
         public static let fontFamily = "SF Pro"
         
+        /// Heading 1 typography tokens.
         public enum Heading1 {
             public static let size: CGFloat = 36
             public static let lineHeight: CGFloat = 40
@@ -160,6 +167,7 @@ public enum DesignTokens {
             public static let tracking: CGFloat = -0.1
         }
 
+        /// Heading 2 typography tokens.
         public enum Heading2 {
             public static let size: CGFloat = 24
             public static let lineHeight: CGFloat = 28
@@ -167,6 +175,7 @@ public enum DesignTokens {
             public static let tracking: CGFloat = -0.25
         }
 
+        /// Heading 3 typography tokens.
         public enum Heading3 {
             public static let size: CGFloat = 18
             public static let lineHeight: CGFloat = 26
@@ -174,6 +183,7 @@ public enum DesignTokens {
             public static let tracking: CGFloat = -0.45
         }
 
+        /// Body typography tokens.
         public enum Body {
             public static let size: CGFloat = 16
             public static let lineHeight: CGFloat = 26
@@ -182,6 +192,7 @@ public enum DesignTokens {
             public static let tracking: CGFloat = -0.4
         }
 
+        /// Body small typography tokens.
         public enum BodySmall {
             public static let size: CGFloat = 14
             public static let lineHeight: CGFloat = 18
@@ -190,6 +201,7 @@ public enum DesignTokens {
             public static let tracking: CGFloat = -0.3
         }
 
+        /// Caption typography tokens.
         public enum Caption {
             public static let size: CGFloat = 12
             public static let lineHeight: CGFloat = 16
@@ -202,6 +214,7 @@ public enum DesignTokens {
     
     // MARK: - Spacing
     
+    /// Spacing scale tokens.
     public enum Spacing {
         public static let scale: [CGFloat] = [128, 64, 48, 40, 32, 24, 16, 12, 8, 4, 2, 0]
         
@@ -222,6 +235,7 @@ public enum DesignTokens {
     
     // MARK: - Corner Radius
     
+    /// Corner radius tokens.
     public enum CornerRadius {
         public static let small: CGFloat = 4
         public static let medium: CGFloat = 8
@@ -231,6 +245,7 @@ public enum DesignTokens {
     
     // MARK: - Accessibility
     
+    /// Accessibility-related tokens and helpers.
     public enum Accessibility {
         /// Focus ring color for keyboard navigation
         public static let focusRing = Color(hex: "#0285FF")
@@ -239,6 +254,7 @@ public enum DesignTokens {
         public static let focusRingWidth: CGFloat = 2
         
         /// High contrast variants
+        /// High-contrast color tokens.
         public enum HighContrast {
             public static let textOnBackground = Color(hex: "#FFFFFF")
             public static let backgroundContrast = Color(hex: "#000000")
@@ -246,6 +262,7 @@ public enum DesignTokens {
         }
         
         /// Reduced motion preferences
+        /// Animation timing tokens for accessibility.
         public enum Animation {
             public static let duration: Double = 0.25
             public static let reducedDuration: Double = 0.1
@@ -260,6 +277,7 @@ public enum DesignTokens {
         }
         
         /// System accessibility preferences
+        /// Runtime accessibility preferences.
         public enum AccessibilityPreferences {
             /// Whether the user prefers reduced motion
             public static var prefersReducedMotion: Bool {

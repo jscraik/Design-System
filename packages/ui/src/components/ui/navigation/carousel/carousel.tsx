@@ -5,7 +5,7 @@ import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-reac
 
 import { IconArrowLeftSm, IconArrowRightSm } from "../../../../icons";
 import { cn } from "../../utils";
-import { Button } from "../../base/button";
+import { Button } from "../../base/Button";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -40,6 +40,15 @@ function useCarousel() {
   return context;
 }
 
+/**
+ * Renders a carousel container backed by Embla.
+ *
+ * Accessibility contract:
+ * - Exposes `aria-roledescription="carousel"` on the root.
+ *
+ * @param props - Carousel props including options and orientation.
+ * @returns A carousel element.
+ */
 function Carousel({
   orientation = "horizontal",
   opts,
@@ -129,6 +138,12 @@ function Carousel({
   );
 }
 
+/**
+ * Renders the carousel content track.
+ *
+ * @param props - Div props for the content container.
+ * @returns A carousel content element.
+ */
 function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   const { carouselRef, orientation } = useCarousel();
 
@@ -142,6 +157,12 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * Renders a carousel slide item.
+ *
+ * @param props - Div props for the item.
+ * @returns A carousel item element.
+ */
 function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
   const { orientation } = useCarousel();
 
@@ -160,6 +181,12 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * Renders the previous-slide control.
+ *
+ * @param props - Button props.
+ * @returns A previous control element.
+ */
 function CarouselPrevious({
   className,
   variant = "outline",
@@ -190,6 +217,12 @@ function CarouselPrevious({
   );
 }
 
+/**
+ * Renders the next-slide control.
+ *
+ * @param props - Button props.
+ * @returns A next control element.
+ */
 function CarouselNext({
   className,
   variant = "outline",

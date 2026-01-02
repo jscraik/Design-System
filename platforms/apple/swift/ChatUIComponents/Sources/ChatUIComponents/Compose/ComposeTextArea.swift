@@ -2,7 +2,12 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
-/// Text area for compose input with placeholder
+/// Renders a text area for compose input with placeholder.
+///
+/// - Example:
+/// ```swift
+/// ComposeTextArea(text: $text, placeholder: "Describe your task", minHeight: 120, accessibilityLabel: "Task")
+/// ```
 public struct ComposeTextArea: View {
     @Environment(\.chatUITheme) private var theme
     @Environment(\.colorScheme) private var scheme
@@ -12,6 +17,26 @@ public struct ComposeTextArea: View {
     let minHeight: CGFloat
     let accessibilityLabel: String
 
+    /// Creates a compose text area.
+    ///
+    /// - Parameters:
+    ///   - text: Bound text value.
+    ///   - placeholder: Placeholder text to show when empty.
+    ///   - minHeight: Minimum height for the text area.
+    ///   - accessibilityLabel: Accessibility label for VoiceOver.
+    public init(
+        text: Binding<String>,
+        placeholder: String,
+        minHeight: CGFloat,
+        accessibilityLabel: String
+    ) {
+        self.text = text
+        self.placeholder = placeholder
+        self.minHeight = minHeight
+        self.accessibilityLabel = accessibilityLabel
+    }
+
+    /// The content and behavior of this view.
     public var body: some View {
         ZStack(alignment: .topLeading) {
             if text.wrappedValue.isEmpty {

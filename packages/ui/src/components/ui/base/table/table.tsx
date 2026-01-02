@@ -4,6 +4,14 @@ import * as React from "react";
 
 import { cn } from "../../utils";
 
+/**
+ * Renders a responsive table container and table element.
+ *
+ * Preserve semantic table structure (`thead`, `tbody`, `th`, `td`) for accessibility.
+ *
+ * @param props - Table props.
+ * @returns A table element wrapped in a scroll container.
+ */
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
     <div data-slot="table-container" className="relative w-full overflow-x-auto">
@@ -16,10 +24,22 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
   );
 }
 
+/**
+ * Renders a table header section.
+ *
+ * @param props - Thead props.
+ * @returns A table header element.
+ */
 function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
   return <thead data-slot="table-header" className={cn("[&_tr]:border-b", className)} {...props} />;
 }
 
+/**
+ * Renders a table body section.
+ *
+ * @param props - Tbody props.
+ * @returns A table body element.
+ */
 function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
   return (
     <tbody
@@ -30,6 +50,12 @@ function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
   );
 }
 
+/**
+ * Renders a table footer section.
+ *
+ * @param props - Tfoot props.
+ * @returns A table footer element.
+ */
 function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
   return (
     <tfoot
@@ -40,6 +66,12 @@ function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
   );
 }
 
+/**
+ * Renders a table row element.
+ *
+ * @param props - Tr props.
+ * @returns A table row element.
+ */
 function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
   return (
     <tr
@@ -53,6 +85,12 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
   );
 }
 
+/**
+ * Renders a table header cell.
+ *
+ * @param props - Th props.
+ * @returns A header cell element.
+ */
 function TableHead({ className, ...props }: React.ComponentProps<"th">) {
   return (
     <th
@@ -66,6 +104,12 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
   );
 }
 
+/**
+ * Renders a table data cell.
+ *
+ * @param props - Td props.
+ * @returns A table cell element.
+ */
 function TableCell({ className, ...props }: React.ComponentProps<"td">) {
   return (
     <td
@@ -79,6 +123,12 @@ function TableCell({ className, ...props }: React.ComponentProps<"td">) {
   );
 }
 
+/**
+ * Renders a table caption element.
+ *
+ * @param props - Caption props.
+ * @returns A table caption element.
+ */
 function TableCaption({ className, ...props }: React.ComponentProps<"caption">) {
   return (
     <caption

@@ -1,4 +1,5 @@
 import { cn } from "../../../components/ui/utils";
+
 import { tabs, type DocTab } from "./data";
 
 interface TabNavigationProps {

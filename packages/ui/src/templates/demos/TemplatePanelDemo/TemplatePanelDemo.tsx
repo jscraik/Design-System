@@ -1,22 +1,23 @@
 import { useState } from "react";
 import {
+  IconCategory,
+  IconCheckCircle,
+  IconFolder,
+  IconNotification,
+  IconRefresh,
+  IconSearch,
+  IconSettings,
+  IconSparkles,
+  IconWarning,
+  IconX,
+} from "../../../icons";
+
+import {
   TemplatePanel,
   TemplatePanelHeader,
   TemplatePanelFooter,
   useTemplatePanel,
 } from "../../blocks/TemplatePanel";
-import {
-  AlertCircle,
-  Bell,
-  CheckCircle2,
-  Filter,
-  Inbox,
-  Loader2,
-  Search,
-  Settings,
-  Sparkles,
-  X,
-} from "lucide-react";
 
 // Demo component that uses the panel context
 function PanelStatusIndicator() {
@@ -24,7 +25,7 @@ function PanelStatusIndicator() {
 
   return (
     <div className="inline-flex items-center gap-2 text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
-      {isLoading && <Loader2 className="size-3 animate-spin" />}
+      {isLoading && <IconRefresh className="size-3 animate-spin" />}
       {isCollapsed && <span>Collapsed</span>}
     </div>
   );
@@ -136,7 +137,7 @@ export function TemplatePanelDemo() {
                   <TemplatePanelHeader
                     title="Dismissable Panel"
                     subtitle="Click the X to close"
-                    leading={<Bell className="size-4 text-foundation-accent-blue" />}
+                    leading={<IconNotification className="size-4 text-foundation-accent-blue" />}
                     trailing={
                       <button
                         type="button"
@@ -144,7 +145,7 @@ export function TemplatePanelDemo() {
                         className="inline-flex items-center justify-center rounded-md p-1.5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 transition-colors"
                         aria-label="Close panel"
                       >
-                        <X className="size-4" />
+                        <IconX className="size-4" />
                       </button>
                     }
                   />
@@ -171,7 +172,7 @@ export function TemplatePanelDemo() {
                   <TemplatePanelHeader
                     title="Notifications"
                     subtitle="New updates available"
-                    leading={<Bell className="size-4 text-foundation-accent-orange" />}
+                    leading={<IconNotification className="size-4 text-foundation-accent-orange" />}
                     trailing={
                       <button
                         type="button"
@@ -179,7 +180,7 @@ export function TemplatePanelDemo() {
                         className="inline-flex items-center justify-center rounded-md p-1.5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 transition-colors"
                         aria-label="Close panel"
                       >
-                        <X className="size-4" />
+                        <IconX className="size-4" />
                       </button>
                     }
                   />
@@ -213,7 +214,7 @@ export function TemplatePanelDemo() {
                 <TemplatePanelHeader
                   title="Error State Demo"
                   subtitle={errorState ? "Error occurred" : "Click button to trigger error"}
-                  leading={<AlertCircle className="size-4 text-foundation-accent-red" />}
+                  leading={<IconWarning className="size-4 text-foundation-accent-red" />}
                 />
               }
               footer={
@@ -221,7 +222,7 @@ export function TemplatePanelDemo() {
                   trailing={
                     <button
                       onClick={errorState ? handleRetry : simulateError}
-                      className="px-3 py-1.5 text-xs rounded-md bg-foundation-accent-red text-white hover:bg-foundation-accent-red/90 transition-colors"
+                      className="px-3 py-1.5 text-xs rounded-md bg-foundation-accent-red text-accent-foreground hover:bg-foundation-accent-red/90 transition-colors"
                     >
                       {errorState ? "Retry" : "Trigger Error"}
                     </button>
@@ -231,7 +232,7 @@ export function TemplatePanelDemo() {
             >
               {errorState ? (
                 <div className="flex items-start gap-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-4">
-                  <AlertCircle className="size-5 text-foundation-accent-red" />
+                  <IconWarning className="size-5 text-foundation-accent-red" />
                   <div>
                     <p className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
                       Failed to load data
@@ -255,7 +256,7 @@ export function TemplatePanelDemo() {
                 <TemplatePanelHeader
                   title="Empty State Demo"
                   subtitle={emptyState ? "No content" : "Has content"}
-                  leading={<Inbox className="size-4 text-foundation-accent-blue" />}
+                  leading={<IconFolder className="size-4 text-foundation-accent-blue" />}
                 />
               }
               footer={
@@ -263,7 +264,7 @@ export function TemplatePanelDemo() {
                   trailing={
                     <button
                       onClick={() => setEmptyState(!emptyState)}
-                      className="px-3 py-1.5 text-xs rounded-md bg-foundation-accent-blue text-white hover:bg-foundation-accent-blue/90 transition-colors"
+                      className="px-3 py-1.5 text-xs rounded-md bg-foundation-accent-blue text-accent-foreground hover:bg-foundation-accent-blue/90 transition-colors"
                     >
                       {emptyState ? "Add Content" : "Clear Content"}
                     </button>
@@ -273,7 +274,7 @@ export function TemplatePanelDemo() {
             >
               {emptyState ? (
                 <div className="flex flex-col items-center text-center gap-2 py-6">
-                  <Inbox className="size-8 text-foundation-accent-blue" />
+                  <IconFolder className="size-8 text-foundation-accent-blue" />
                   <p className="text-sm text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
                     No items found
                   </p>
@@ -303,7 +304,7 @@ export function TemplatePanelDemo() {
               <TemplatePanelHeader
                 title="Settings Panel"
                 subtitle="Use the chevron to collapse"
-                leading={<Settings className="size-4 text-foundation-accent-blue" />}
+                leading={<IconSettings className="size-4 text-foundation-accent-blue" />}
                 trailing={<PanelStatusIndicator />}
                 showCollapseToggle
               />
@@ -316,7 +317,7 @@ export function TemplatePanelDemo() {
                   </span>
                 }
                 trailing={
-                  <button className="px-3 py-1.5 text-xs rounded-md bg-foundation-accent-blue text-white hover:bg-foundation-accent-blue/90 transition-colors">
+                  <button className="px-3 py-1.5 text-xs rounded-md bg-foundation-accent-blue text-accent-foreground hover:bg-foundation-accent-blue/90 transition-colors">
                     Save
                   </button>
                 }
@@ -328,13 +329,18 @@ export function TemplatePanelDemo() {
                 <label className="text-sm text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
                   Email Notifications
                 </label>
-                <input type="checkbox" className="size-4" defaultChecked />
+                <input
+                  type="checkbox"
+                  className="size-4"
+                  aria-label="Email Notifications"
+                  defaultChecked
+                />
               </div>
               <div className="flex items-center justify-between">
                 <label className="text-sm text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
                   Push Notifications
                 </label>
-                <input type="checkbox" className="size-4" />
+                <input type="checkbox" className="size-4" aria-label="Push Notifications" />
               </div>
             </div>
           </TemplatePanel>
@@ -353,7 +359,7 @@ export function TemplatePanelDemo() {
               <TemplatePanelHeader
                 title="Data Panel"
                 subtitle={loading ? "Loading content..." : "Click the button to load"}
-                leading={<Sparkles className="size-4 text-foundation-accent-purple" />}
+                leading={<IconSparkles className="size-4 text-foundation-accent-purple" />}
               />
             }
             footer={
@@ -362,11 +368,11 @@ export function TemplatePanelDemo() {
                   <button
                     onClick={simulateLoading}
                     disabled={loading}
-                    className="px-3 py-1.5 text-xs rounded-md bg-foundation-accent-purple text-white hover:bg-foundation-accent-purple/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="px-3 py-1.5 text-xs rounded-md bg-foundation-accent-purple text-accent-foreground hover:bg-foundation-accent-purple/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                   >
                     {loading ? (
                       <>
-                        <Loader2 className="size-3 animate-spin" />
+                        <IconRefresh className="size-3 animate-spin" />
                         Loading...
                       </>
                     ) : (
@@ -399,10 +405,10 @@ export function TemplatePanelDemo() {
               <TemplatePanelHeader
                 title="Scrollable Content"
                 subtitle={`Showing ${itemCount} items`}
-                leading={<Filter className="size-4 text-foundation-accent-blue" />}
+                leading={<IconCategory className="size-4 text-foundation-accent-blue" />}
                 trailing={
                   <button className="px-2 py-1 text-xs rounded bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 hover:bg-foundation-bg-light-4 dark:hover:bg-foundation-bg-dark-4 transition-colors">
-                    <Search className="size-3" />
+                    <IconSearch className="size-3" />
                   </button>
                 }
               />
@@ -445,7 +451,7 @@ export function TemplatePanelDemo() {
               ))}
               {itemCount >= 20 && (
                 <div className="text-center py-4">
-                  <CheckCircle2 className="size-8 mx-auto mb-2 text-foundation-accent-green" />
+                  <IconCheckCircle className="size-8 mx-auto mb-2 text-foundation-accent-green" />
                   <p className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
                     All items loaded
                   </p>

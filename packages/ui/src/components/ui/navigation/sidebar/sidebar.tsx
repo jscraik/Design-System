@@ -5,14 +5,14 @@ import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
 
 import { IconSidebar } from "../../../../icons";
-import { useIsMobile } from "../../base/use-mobile";
+import { useIsMobile } from "../../base/UseMobile";
 import { cn } from "../../utils";
-import { Button } from "../../base/button";
-import { Input } from "../../base/input";
-import { Separator } from "../../base/separator";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "../../overlays/sheet";
-import { Skeleton } from "../../base/skeleton";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../overlays/tooltip";
+import { Button } from "../../base/Button";
+import { Input } from "../../base/Input";
+import { Separator } from "../../base/Separator";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "../../overlays/Sheet";
+import { Skeleton } from "../../base/Skeleton";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../overlays/Tooltip";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -33,6 +33,12 @@ type SidebarContextProps = {
 
 const SidebarContext = React.createContext<SidebarContextProps | null>(null);
 
+/**
+ * Returns the current sidebar context.
+ *
+ * @returns Sidebar state and controls.
+ * @throws Error when used outside `SidebarProvider`.
+ */
 function useSidebar() {
   const context = React.useContext(SidebarContext);
   if (!context) {
@@ -42,6 +48,12 @@ function useSidebar() {
   return context;
 }
 
+/**
+ * Provides sidebar state and layout context.
+ *
+ * @param props - Sidebar provider props.
+ * @returns A sidebar provider element.
+ */
 function SidebarProvider({
   defaultOpen = true,
   open: openProp,
@@ -137,6 +149,12 @@ function SidebarProvider({
   );
 }
 
+/**
+ * Renders the sidebar container for desktop or mobile.
+ *
+ * @param props - Sidebar props.
+ * @returns A sidebar element.
+ */
 function Sidebar({
   side = "left",
   variant = "sidebar",
@@ -239,6 +257,12 @@ function Sidebar({
   );
 }
 
+/**
+ * Renders the sidebar trigger button.
+ *
+ * @param props - Button props.
+ * @returns A sidebar trigger element.
+ */
 function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar();
 
@@ -261,6 +285,12 @@ function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<t
   );
 }
 
+/**
+ * Renders the sidebar rail for resize/toggle affordance.
+ *
+ * @param props - Button props.
+ * @returns A sidebar rail element.
+ */
 function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
   const { toggleSidebar } = useSidebar();
 
@@ -287,6 +317,12 @@ function SidebarRail({ className, ...props }: React.ComponentProps<"button">) {
   );
 }
 
+/**
+ * Renders the main content area adjacent to the sidebar.
+ *
+ * @param props - Main props.
+ * @returns A sidebar inset element.
+ */
 function SidebarInset({ className, ...props }: React.ComponentProps<"main">) {
   return (
     <main
@@ -301,6 +337,12 @@ function SidebarInset({ className, ...props }: React.ComponentProps<"main">) {
   );
 }
 
+/**
+ * Renders an input styled for the sidebar.
+ *
+ * @param props - Input props.
+ * @returns A sidebar input element.
+ */
 function SidebarInput({ className, ...props }: React.ComponentProps<typeof Input>) {
   return (
     <Input
@@ -312,6 +354,12 @@ function SidebarInput({ className, ...props }: React.ComponentProps<typeof Input
   );
 }
 
+/**
+ * Renders the sidebar header container.
+ *
+ * @param props - Div props.
+ * @returns A sidebar header element.
+ */
 function SidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -323,6 +371,12 @@ function SidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * Renders the sidebar footer container.
+ *
+ * @param props - Div props.
+ * @returns A sidebar footer element.
+ */
 function SidebarFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -334,6 +388,12 @@ function SidebarFooter({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * Renders a separator inside the sidebar.
+ *
+ * @param props - Separator props.
+ * @returns A sidebar separator element.
+ */
 function SidebarSeparator({ className, ...props }: React.ComponentProps<typeof Separator>) {
   return (
     <Separator
@@ -345,6 +405,12 @@ function SidebarSeparator({ className, ...props }: React.ComponentProps<typeof S
   );
 }
 
+/**
+ * Renders the sidebar content container.
+ *
+ * @param props - Div props.
+ * @returns A sidebar content element.
+ */
 function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -359,6 +425,12 @@ function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * Renders a sidebar group container.
+ *
+ * @param props - Div props.
+ * @returns A sidebar group element.
+ */
 function SidebarGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -370,6 +442,12 @@ function SidebarGroup({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
+/**
+ * Renders a sidebar group label.
+ *
+ * @param props - Div props plus `asChild`.
+ * @returns A sidebar group label element.
+ */
 function SidebarGroupLabel({
   className,
   asChild = false,
@@ -391,6 +469,12 @@ function SidebarGroupLabel({
   );
 }
 
+/**
+ * Renders a sidebar group action button.
+ *
+ * @param props - Button props plus `asChild`.
+ * @returns A sidebar group action element.
+ */
 function SidebarGroupAction({
   className,
   asChild = false,
@@ -414,6 +498,12 @@ function SidebarGroupAction({
   );
 }
 
+/**
+ * Renders sidebar group content container.
+ *
+ * @param props - Div props.
+ * @returns A sidebar group content element.
+ */
 function SidebarGroupContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -425,6 +515,12 @@ function SidebarGroupContent({ className, ...props }: React.ComponentProps<"div"
   );
 }
 
+/**
+ * Renders the sidebar menu list.
+ *
+ * @param props - Ul props.
+ * @returns A sidebar menu element.
+ */
 function SidebarMenu({ className, ...props }: React.ComponentProps<"ul">) {
   return (
     <ul
@@ -436,6 +532,12 @@ function SidebarMenu({ className, ...props }: React.ComponentProps<"ul">) {
   );
 }
 
+/**
+ * Renders a sidebar menu item container.
+ *
+ * @param props - Li props.
+ * @returns A sidebar menu item element.
+ */
 function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
   return (
     <li
@@ -469,6 +571,12 @@ const sidebarMenuButtonVariants = cva(
   },
 );
 
+/**
+ * Renders a sidebar menu button.
+ *
+ * @param props - Button props plus active state and tooltip config.
+ * @returns A sidebar menu button element.
+ */
 function SidebarMenuButton({
   asChild = false,
   isActive = false,
@@ -519,6 +627,12 @@ function SidebarMenuButton({
   );
 }
 
+/**
+ * Renders a sidebar menu action button.
+ *
+ * @param props - Button props plus `asChild` and hover behavior.
+ * @returns A sidebar menu action element.
+ */
 function SidebarMenuAction({
   className,
   asChild = false,
@@ -551,6 +665,12 @@ function SidebarMenuAction({
   );
 }
 
+/**
+ * Renders a sidebar menu badge.
+ *
+ * @param props - Div props.
+ * @returns A sidebar menu badge element.
+ */
 function SidebarMenuBadge({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -570,6 +690,12 @@ function SidebarMenuBadge({ className, ...props }: React.ComponentProps<"div">) 
   );
 }
 
+/**
+ * Renders a sidebar menu skeleton placeholder.
+ *
+ * @param props - Div props plus `showIcon`.
+ * @returns A sidebar menu skeleton element.
+ */
 function SidebarMenuSkeleton({
   className,
   showIcon = false,
@@ -603,6 +729,12 @@ function SidebarMenuSkeleton({
   );
 }
 
+/**
+ * Renders a submenu list within the sidebar.
+ *
+ * @param props - Ul props.
+ * @returns A sidebar submenu element.
+ */
 function SidebarMenuSub({ className, ...props }: React.ComponentProps<"ul">) {
   return (
     <ul
@@ -618,6 +750,12 @@ function SidebarMenuSub({ className, ...props }: React.ComponentProps<"ul">) {
   );
 }
 
+/**
+ * Renders a submenu item container.
+ *
+ * @param props - Li props.
+ * @returns A sidebar submenu item element.
+ */
 function SidebarMenuSubItem({ className, ...props }: React.ComponentProps<"li">) {
   return (
     <li
@@ -629,6 +767,12 @@ function SidebarMenuSubItem({ className, ...props }: React.ComponentProps<"li">)
   );
 }
 
+/**
+ * Renders a submenu button within the sidebar.
+ *
+ * @param props - Anchor props plus size and active state.
+ * @returns A sidebar submenu button element.
+ */
 function SidebarMenuSubButton({
   asChild = false,
   size = "md",

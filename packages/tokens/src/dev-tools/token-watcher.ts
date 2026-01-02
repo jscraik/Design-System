@@ -23,6 +23,14 @@ interface ValidationError {
   suggestion?: string;
 }
 
+/**
+ * Watches token source files and regenerates outputs on change.
+ *
+ * @example
+ * const watcher = new TokenWatcher();
+ * await watcher.start();
+ * // Later: await watcher.stop();
+ */
 export class TokenWatcher {
   private watcher: chokidar.FSWatcher | null = null;
   private isGenerating = false;

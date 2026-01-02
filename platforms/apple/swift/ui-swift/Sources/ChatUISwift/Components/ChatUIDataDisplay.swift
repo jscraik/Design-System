@@ -2,14 +2,24 @@ import SwiftUI
 
 // MARK: - Table Component
 
-/// A native macOS table component for displaying structured data
+/// A native macOS table component for displaying structured data.
 public struct ChatUITable<Data: RandomAccessCollection, RowContent: View>: View where Data.Element: Identifiable {
     
+    /// Column definition for `ChatUITable`.
     public struct Column {
+        /// Column title text.
         let title: String
+        /// Optional fixed column width.
         let width: CGFloat?
+        /// Column content alignment.
         let alignment: HorizontalAlignment
         
+        /// Creates a column definition.
+        ///
+        /// - Parameters:
+        ///   - title: Column title text.
+        ///   - width: Optional fixed width.
+        ///   - alignment: Column alignment (default: `.leading`).
         public init(title: String, width: CGFloat? = nil, alignment: HorizontalAlignment = .leading) {
             self.title = title
             self.width = width
@@ -27,6 +37,14 @@ public struct ChatUITable<Data: RandomAccessCollection, RowContent: View>: View 
     @State private var sortAscending = true
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     
+    /// Creates a table view.
+    ///
+    /// - Parameters:
+    ///   - data: Collection of row data.
+    ///   - columns: Column definitions.
+    ///   - sortComparator: Optional comparator for sorting.
+    ///   - onRowTap: Optional row tap handler.
+    ///   - rowContent: Row content builder.
     public init(
         data: Data,
         columns: [Column],
@@ -41,6 +59,7 @@ public struct ChatUITable<Data: RandomAccessCollection, RowContent: View>: View 
         self.rowContent = rowContent
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(spacing: 0) {
             // Header
@@ -204,9 +223,10 @@ public struct ChatUITable<Data: RandomAccessCollection, RowContent: View>: View 
 
 // MARK: - List Component
 
-/// A native macOS list component for displaying collections
+/// A native macOS list component for displaying collections.
 public struct ChatUIList<Data: RandomAccessCollection, Content: View>: View where Data.Element: Identifiable {
     
+    /// Visual styles for `ChatUIList`.
     public enum Style {
         case plain
         case grouped
@@ -218,6 +238,13 @@ public struct ChatUIList<Data: RandomAccessCollection, Content: View>: View wher
     private let content: (Data.Element) -> Content
     private let onItemTap: ((Data.Element) -> Void)?
     
+    /// Creates a list view.
+    ///
+    /// - Parameters:
+    ///   - data: Collection of list items.
+    ///   - style: List style (default: `.plain`).
+    ///   - onItemTap: Optional item tap handler.
+    ///   - content: List row content builder.
     public init(
         data: Data,
         style: Style = .plain,
@@ -230,6 +257,7 @@ public struct ChatUIList<Data: RandomAccessCollection, Content: View>: View wher
         self.onItemTap = onItemTap
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         ScrollView {
             LazyVStack(spacing: spacingForStyle(style)) {
@@ -392,7 +420,7 @@ public struct ChatUIList<Data: RandomAccessCollection, Content: View>: View wher
 
 // MARK: - Grid Component
 
-/// A native macOS grid component for displaying items in a grid layout
+/// A native macOS grid component for displaying items in a grid layout.
 public struct ChatUIGrid<Data: RandomAccessCollection, Content: View>: View where Data.Element: Identifiable {
     
     private let data: Data
@@ -401,6 +429,14 @@ public struct ChatUIGrid<Data: RandomAccessCollection, Content: View>: View wher
     private let content: (Data.Element) -> Content
     private let onItemTap: ((Data.Element) -> Void)?
     
+    /// Creates a grid view.
+    ///
+    /// - Parameters:
+    ///   - data: Collection of grid items.
+    ///   - columns: Grid column layout.
+    ///   - spacing: Spacing between items.
+    ///   - onItemTap: Optional item tap handler.
+    ///   - content: Grid item content builder.
     public init(
         data: Data,
         columns: [GridItem],
@@ -415,6 +451,7 @@ public struct ChatUIGrid<Data: RandomAccessCollection, Content: View>: View wher
         self.onItemTap = onItemTap
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: spacing) {
@@ -448,7 +485,7 @@ public struct ChatUIGrid<Data: RandomAccessCollection, Content: View>: View wher
 
 // MARK: - Data Card Component
 
-/// A specialized card component for displaying data with optional actions
+/// A specialized card component for displaying data with optional actions.
 public struct ChatUIDataCard<Content: View>: View {
     
     private let title: String?
@@ -458,6 +495,13 @@ public struct ChatUIDataCard<Content: View>: View {
     
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     
+    /// Creates a data card.
+    ///
+    /// - Parameters:
+    ///   - title: Optional card title.
+    ///   - subtitle: Optional card subtitle.
+    ///   - actions: Optional action buttons.
+    ///   - content: Card body content builder.
     public init(
         title: String? = nil,
         subtitle: String? = nil,
@@ -470,6 +514,7 @@ public struct ChatUIDataCard<Content: View>: View {
         self.content = content
     }
     
+    /// The content and behavior of this view.
     public var body: some View {
         VStack(alignment: .leading, spacing: DesignTokens.Spacing.sm) {
             // Header
@@ -577,6 +622,7 @@ public struct ChatUIDataCard<Content: View>: View {
 
 // MARK: - Data Card Action
 
+/// Defines an action shown in a data card footer.
 public struct DataCardAction {
     let title: String?
     let systemName: String
@@ -585,6 +631,15 @@ public struct DataCardAction {
     let accessibilityHint: String?
     let action: () -> Void
     
+    /// Creates a data card action.
+    ///
+    /// - Parameters:
+    ///   - title: Optional action title.
+    ///   - systemName: SF Symbol name for the action icon.
+    ///   - variant: Button variant for the action.
+    ///   - accessibilityLabel: Accessibility label for the action.
+    ///   - accessibilityHint: Accessibility hint for the action.
+    ///   - action: Action invoked on tap.
     public init(
         title: String? = nil,
         systemName: String,
@@ -602,6 +657,7 @@ public struct DataCardAction {
     }
     
     // Common actions
+    /// Convenience action for edit.
     public static func edit(action: @escaping () -> Void) -> DataCardAction {
         DataCardAction(
             systemName: "pencil",
@@ -611,6 +667,7 @@ public struct DataCardAction {
         )
     }
     
+    /// Convenience action for delete.
     public static func delete(action: @escaping () -> Void) -> DataCardAction {
         DataCardAction(
             systemName: "trash",
@@ -621,6 +678,7 @@ public struct DataCardAction {
         )
     }
     
+    /// Convenience action for share.
     public static func share(action: @escaping () -> Void) -> DataCardAction {
         DataCardAction(
             systemName: "square.and.arrow.up",
@@ -630,6 +688,7 @@ public struct DataCardAction {
         )
     }
     
+    /// Convenience action for more options.
     public static func more(action: @escaping () -> Void) -> DataCardAction {
         DataCardAction(
             systemName: "ellipsis",

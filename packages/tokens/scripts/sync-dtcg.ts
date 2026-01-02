@@ -4,10 +4,24 @@ const dtcgPath = new URL("../src/tokens/index.dtcg.json", import.meta.url);
 const colorsPath = new URL("../src/colors.ts", import.meta.url);
 const spacingPath = new URL("../src/spacing.ts", import.meta.url);
 const typographyPath = new URL("../src/typography.ts", import.meta.url);
+const radiusPath = new URL("../src/radius.ts", import.meta.url);
+const shadowPath = new URL("../src/shadows.ts", import.meta.url);
+const sizePath = new URL("../src/sizes.ts", import.meta.url);
 
 const banner = "// Generated from src/tokens/index.dtcg.json. Do not edit by hand.\n";
 
-type DtcgToken = { value: string | number; type?: string };
+function formatTokenFile(doc: string, exportLine: string): string {
+  return `${banner}/**\n * ${doc}\n */\n${exportLine}\n`;
+}
+
+type DtcgToken<T = string | number> = { value: T; type?: string };
+type DtcgShadowValue = Array<{
+  color: string;
+  offsetX: number;
+  offsetY: number;
+  blur: number;
+  spread: number;
+}>;
 type DtcgRoot = {
   color: {
     background: {
@@ -34,12 +48,30 @@ type DtcgRoot = {
         secondary: DtcgToken;
         tertiary: DtcgToken;
         inverted: DtcgToken;
+        accent: DtcgToken;
+        statusError: DtcgToken;
+        statusWarning: DtcgToken;
+        statusSuccess: DtcgToken;
       };
       dark: {
         primary: DtcgToken;
         secondary: DtcgToken;
         tertiary: DtcgToken;
         inverted: DtcgToken;
+        accent: DtcgToken;
+        statusError: DtcgToken;
+        statusWarning: DtcgToken;
+        statusSuccess: DtcgToken;
+      };
+    };
+    border: {
+      light: {
+        light: DtcgToken;
+        heavy: DtcgToken;
+      };
+      dark: {
+        default: DtcgToken;
+        light: DtcgToken;
       };
     };
     accent: {
@@ -72,6 +104,9 @@ type DtcgRoot = {
     };
   };
   space: Record<string, DtcgToken>;
+  radius: Record<string, DtcgToken>;
+  size: Record<string, DtcgToken>;
+  shadow: Record<string, DtcgToken<DtcgShadowValue>>;
   type: {
     fontFamily: DtcgToken;
     web: {
@@ -113,11 +148,41 @@ type DtcgRoot = {
         weight: DtcgToken;
         tracking: DtcgToken;
       };
+      cardTitle: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      listTitle: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      listSubtitle: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      buttonLabel: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      buttonLabelSmall: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
     };
   };
 };
 
-function getValue(token: DtcgToken, path: string) {
+function getValue<T>(token: DtcgToken<T>, path: string): T {
   if (!token || token.value === undefined) {
     throw new Error(`Missing token value at ${path}`);
   }
@@ -159,12 +224,30 @@ function buildColors(dtcg: DtcgRoot) {
         secondary: getValue(c.icon.light.secondary, "color.icon.light.secondary"),
         tertiary: getValue(c.icon.light.tertiary, "color.icon.light.tertiary"),
         inverted: getValue(c.icon.light.inverted, "color.icon.light.inverted"),
+        accent: getValue(c.icon.light.accent, "color.icon.light.accent"),
+        statusError: getValue(c.icon.light.statusError, "color.icon.light.statusError"),
+        statusWarning: getValue(c.icon.light.statusWarning, "color.icon.light.statusWarning"),
+        statusSuccess: getValue(c.icon.light.statusSuccess, "color.icon.light.statusSuccess"),
       },
       dark: {
         primary: getValue(c.icon.dark.primary, "color.icon.dark.primary"),
         secondary: getValue(c.icon.dark.secondary, "color.icon.dark.secondary"),
         tertiary: getValue(c.icon.dark.tertiary, "color.icon.dark.tertiary"),
         inverted: getValue(c.icon.dark.inverted, "color.icon.dark.inverted"),
+        accent: getValue(c.icon.dark.accent, "color.icon.dark.accent"),
+        statusError: getValue(c.icon.dark.statusError, "color.icon.dark.statusError"),
+        statusWarning: getValue(c.icon.dark.statusWarning, "color.icon.dark.statusWarning"),
+        statusSuccess: getValue(c.icon.dark.statusSuccess, "color.icon.dark.statusSuccess"),
+      },
+    },
+    border: {
+      light: {
+        light: getValue(c.border.light.light, "color.border.light.light"),
+        heavy: getValue(c.border.light.heavy, "color.border.light.heavy"),
+      },
+      dark: {
+        default: getValue(c.border.dark.default, "color.border.dark.default"),
+        light: getValue(c.border.dark.light, "color.border.dark.light"),
       },
     },
     accent: {
@@ -220,6 +303,41 @@ function buildSpacing(dtcg: DtcgRoot) {
   ] as const;
 }
 
+function buildRadius(dtcg: DtcgRoot) {
+  const radius = dtcg.radius;
+  return {
+    r6: getValue(radius.r6, "radius.r6"),
+    r8: getValue(radius.r8, "radius.r8"),
+    r10: getValue(radius.r10, "radius.r10"),
+    r12: getValue(radius.r12, "radius.r12"),
+    r16: getValue(radius.r16, "radius.r16"),
+    r18: getValue(radius.r18, "radius.r18"),
+    r21: getValue(radius.r21, "radius.r21"),
+    r24: getValue(radius.r24, "radius.r24"),
+    r30: getValue(radius.r30, "radius.r30"),
+    round: getValue(radius.round, "radius.round"),
+  } as const;
+}
+
+function buildShadows(dtcg: DtcgRoot) {
+  const shadow = dtcg.shadow;
+  return {
+    card: getValue(shadow.card, "shadow.card"),
+    pip: getValue(shadow.pip, "shadow.pip"),
+    pill: getValue(shadow.pill, "shadow.pill"),
+    close: getValue(shadow.close, "shadow.close"),
+  } as const;
+}
+
+function buildSizes(dtcg: DtcgRoot) {
+  const size = dtcg.size;
+  return {
+    controlHeight: getValue(size.controlHeight, "size.controlHeight"),
+    cardHeaderHeight: getValue(size.cardHeaderHeight, "size.cardHeaderHeight"),
+    hitTarget: getValue(size.hitTarget, "size.hitTarget"),
+  } as const;
+}
+
 function buildTypography(dtcg: DtcgRoot) {
   const t = dtcg.type;
   // Use web platform values as default
@@ -265,6 +383,36 @@ function buildTypography(dtcg: DtcgRoot) {
       emphasisWeight: getValue(web.caption.emphasisWeight, "type.web.caption.emphasisWeight"),
       tracking: getValue(web.caption.tracking, "type.web.caption.tracking"),
     },
+    cardTitle: {
+      size: getValue(web.cardTitle.size, "type.web.cardTitle.size"),
+      lineHeight: getValue(web.cardTitle.lineHeight, "type.web.cardTitle.lineHeight"),
+      weight: getValue(web.cardTitle.weight, "type.web.cardTitle.weight"),
+      tracking: getValue(web.cardTitle.tracking, "type.web.cardTitle.tracking"),
+    },
+    listTitle: {
+      size: getValue(web.listTitle.size, "type.web.listTitle.size"),
+      lineHeight: getValue(web.listTitle.lineHeight, "type.web.listTitle.lineHeight"),
+      weight: getValue(web.listTitle.weight, "type.web.listTitle.weight"),
+      tracking: getValue(web.listTitle.tracking, "type.web.listTitle.tracking"),
+    },
+    listSubtitle: {
+      size: getValue(web.listSubtitle.size, "type.web.listSubtitle.size"),
+      lineHeight: getValue(web.listSubtitle.lineHeight, "type.web.listSubtitle.lineHeight"),
+      weight: getValue(web.listSubtitle.weight, "type.web.listSubtitle.weight"),
+      tracking: getValue(web.listSubtitle.tracking, "type.web.listSubtitle.tracking"),
+    },
+    buttonLabel: {
+      size: getValue(web.buttonLabel.size, "type.web.buttonLabel.size"),
+      lineHeight: getValue(web.buttonLabel.lineHeight, "type.web.buttonLabel.lineHeight"),
+      weight: getValue(web.buttonLabel.weight, "type.web.buttonLabel.weight"),
+      tracking: getValue(web.buttonLabel.tracking, "type.web.buttonLabel.tracking"),
+    },
+    buttonLabelSmall: {
+      size: getValue(web.buttonLabelSmall.size, "type.web.buttonLabelSmall.size"),
+      lineHeight: getValue(web.buttonLabelSmall.lineHeight, "type.web.buttonLabelSmall.lineHeight"),
+      weight: getValue(web.buttonLabelSmall.weight, "type.web.buttonLabelSmall.weight"),
+      tracking: getValue(web.buttonLabelSmall.tracking, "type.web.buttonLabelSmall.tracking"),
+    },
   } as const;
 }
 
@@ -273,19 +421,55 @@ const dtcg = JSON.parse(dtcgRaw);
 
 const colorTokens = buildColors(dtcg);
 const spacingScale = buildSpacing(dtcg);
+const radiusTokens = buildRadius(dtcg);
+const shadowTokens = buildShadows(dtcg);
+const sizeTokens = buildSizes(dtcg);
 const typographyTokens = buildTypography(dtcg);
 
 await writeFile(
   colorsPath,
-  `${banner}export const colorTokens = ${JSON.stringify(colorTokens, null, 2)} as const;\n`,
+  formatTokenFile(
+    "Color design tokens grouped by category and scheme. Values are hex colors in #RRGGBB format.",
+    `export const colorTokens = ${JSON.stringify(colorTokens, null, 2)} as const;`,
+  ),
 );
 
 await writeFile(
   spacingPath,
-  `${banner}export const spacingScale = ${JSON.stringify(spacingScale)} as const;\n`,
+  formatTokenFile(
+    "Spacing scale values in descending order (px).",
+    `export const spacingScale = ${JSON.stringify(spacingScale)} as const;`,
+  ),
 );
 
 await writeFile(
   typographyPath,
-  `${banner}export const typographyTokens = ${JSON.stringify(typographyTokens, null, 2)} as const;\n`,
+  formatTokenFile(
+    "Typography tokens for web usage. Sizes, line heights, and tracking are numeric CSS values.",
+    `export const typographyTokens = ${JSON.stringify(typographyTokens, null, 2)} as const;`,
+  ),
+);
+
+await writeFile(
+  radiusPath,
+  formatTokenFile(
+    "Corner radius tokens in px.",
+    `export const radiusTokens = ${JSON.stringify(radiusTokens, null, 2)} as const;`,
+  ),
+);
+
+await writeFile(
+  shadowPath,
+  formatTokenFile(
+    "Shadow tokens with offsets, blur, and spread in px plus hex colors.",
+    `export const shadowTokens = ${JSON.stringify(shadowTokens, null, 2)} as const;`,
+  ),
+);
+
+await writeFile(
+  sizePath,
+  formatTokenFile(
+    "Size tokens in px for common component dimensions.",
+    `export const sizeTokens = ${JSON.stringify(sizeTokens, null, 2)} as const;`,
+  ),
 );

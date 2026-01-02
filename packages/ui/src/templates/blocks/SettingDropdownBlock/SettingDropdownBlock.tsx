@@ -2,9 +2,12 @@ import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from 
 
 import { cn } from "../../../components/ui/utils";
 
+/** Visual variants for SettingDropdownBlock. */
 export type SettingDropdownBlockVariant = "default" | "card" | "compact" | "inline";
+/** Size presets for SettingDropdownBlock. */
 export type SettingDropdownBlockSize = "sm" | "md" | "lg";
 
+/** Option metadata for dropdown selections. */
 export interface SettingDropdownOption {
   /** Unique value for the option */
   value: string;
@@ -20,6 +23,7 @@ export interface SettingDropdownOption {
   group?: string;
 }
 
+/** Props for SettingDropdownBlock. */
 export interface SettingDropdownBlockProps {
   /** Main label text */
   label: string;
@@ -108,6 +112,11 @@ const sizeStyles: Record<
   },
 };
 
+/**
+ * Render a settings dropdown block with label and options.
+ * @param props - Block props.
+ * @returns The settings dropdown block element.
+ */
 export function SettingDropdownBlock({
   label,
   value,
@@ -250,7 +259,7 @@ export function SettingDropdownBlock({
               <label
                 htmlFor={dropdownId}
                 className={cn(
-                  "font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary truncate",
+                  "font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
                   labelSize,
                 )}
               >
@@ -456,7 +465,7 @@ export function SettingDropdownBlock({
           role="alert"
         >
           <svg
-            className="size-3.5 shrink-0"
+            className="w-3.5 h-3.5 shrink-0"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -476,6 +485,7 @@ export function SettingDropdownBlock({
 }
 
 // Compound component for dropdown group
+/** Props for SettingDropdownGroup. */
 export interface SettingDropdownGroupProps {
   children: ReactNode;
   label?: string;
@@ -483,6 +493,11 @@ export interface SettingDropdownGroupProps {
   className?: string;
 }
 
+/**
+ * Render a group of dropdown blocks.
+ * @param props - Group props.
+ * @returns The group element.
+ */
 export function SettingDropdownGroup({
   children,
   label,

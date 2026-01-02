@@ -3,13 +3,11 @@
 This document provides a quick, task-oriented map of the repository so contributors can find the right surface fast.
 
 ## Top-level
-
-- `apps/` — Shared services and tooling (e.g. `apps/mcp`).
 - `platforms/` — Platform-specific code and apps.
   - `platforms/web/apps/web/src/app/` — app shell + router
-  - `platforms/web/apps/web/src/features/` — feature slices (e.g. widget harness)
-  - `platforms/web/apps/web/src/pages/` — route-level pages
-  - `platforms/web/apps/templates-gallery/src/app/` — template gallery shell
+  - `platforms/web/apps/web/src/pages/` — route-level pages (About/Profile/Settings/Harness)
+  - `platforms/web/apps/web/src/pages/TemplatesGalleryPage.tsx` — templates gallery route (`/templates`)
+  - `packages/ui/src/dev/templates-gallery.tsx` — canonical templates-gallery registry (consumed via `@chatui/ui/dev`)
   - `platforms/web/apps/storybook/.storybook/` — Storybook configuration + preview styles
 - `packages/` — Reusable JS/TS packages (UI, tokens, runtime, widgets).
 - `docs/` — Architecture, guides, audits, and build pipeline documentation.
@@ -18,18 +16,20 @@ This document provides a quick, task-oriented map of the repository so contribut
 ## Platform surface
 
 - `platforms/apple/`
-  - `apps/macos/` — macOS apps (Xcode/SwiftPM projects) at `platforms/apple/apps/macos/`
-  - `swift/` — Swift packages shared across macOS/iOS at `platforms/apple/swift/`
+  - `apps/macos/` — macOS apps (Xcode/SwiftPM projects)
+    - `platforms/apple/apps/macos/README.md` — macOS app overview + entry points
+  - `swift/` — Swift packages shared across macOS/iOS
+  - `platforms/apple/README.md` — Apple platform overview
 - `platforms/web/`
   - `platforms/web/apps/web/` — main web app
   - `platforms/web/apps/storybook/` — Storybook harness
-  - `platforms/web/apps/templates-gallery/` — template gallery app
+- `platforms/mcp/` — MCP server (tool contracts + integration harness)
 
 ## JS/TS packages
 
 - `packages/ui/` — React UI library
   - `src/app/` — app-level surfaces (chat, modals, settings)
-  - `src/components/ui/` — base UI primitives + utilities
+  - `src/components/ui/` — base UI primitives + utilities (per-component PascalCase folders)
   - `src/design-system/` — design system docs + showcases
   - `src/fixtures/` — sample data for stories/templates
   - `src/hooks/` — shared hooks
@@ -52,7 +52,7 @@ This document provides a quick, task-oriented map of the repository so contribut
   - `src/sdk/` — Apps SDK build tooling + generated manifest
   - `src/styles.css` — global widget styles
   - `tests/` — Playwright suites
-  - `docs/` — (reserved)
+  - `docs/examples/` — widget demos + sample integrations
 
 ## Key docs
 

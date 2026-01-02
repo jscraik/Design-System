@@ -5,7 +5,7 @@ import {
   ChatVariantCompact,
   ChatVariantContextRail,
   ChatVariantSplitSidebar,
-} from "../../app/chat/chat-variants";
+} from "../../app/chat/ChatVariants";
 import {
   sampleCategories,
   sampleCategoryColors,
@@ -23,11 +23,19 @@ import {
 const variants = ["Split Sidebar", "Compact", "Context Rail"] as const;
 type Variant = (typeof variants)[number];
 
+/**
+ * Props for the chat variants template.
+ */
 export interface ChatVariantsTemplateProps {
   headerLeading?: ReactNode;
   headerActions?: ReactNode;
 }
 
+/**
+ * Render selectable chat layout variants using sample data.
+ * @param props - Template props.
+ * @returns The chat variants template element.
+ */
 export function ChatVariantsTemplate({ headerLeading, headerActions }: ChatVariantsTemplateProps) {
   const [activeVariant, setActiveVariant] = useState<Variant>("Split Sidebar");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);

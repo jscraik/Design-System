@@ -1,13 +1,17 @@
 import { useState } from "react";
+
 import { IconChevronDownMd } from "../../../../icons";
 import { TemplateFieldGroup } from "../../../../templates/blocks/TemplateFieldGroup";
 import { TemplateFormField } from "../../../../templates/blocks/TemplateFormField";
 import { TemplatePanel } from "../../../../templates/blocks/TemplatePanel";
 import { TemplateHeaderBar } from "../../../../templates/blocks/TemplateHeaderBar";
-import { ModeSelector } from "../../../../components/ui/navigation/mode-selector";
-import { Toggle } from "../../../../components/ui/base/toggle";
-import { type ComposeModeConfig } from "../types";
+import { ModeSelector } from "../../../../components/ui/navigation/ModeSelector";
+import { Toggle } from "../../../../components/ui/base/Toggle";
+import { type ComposeModeConfig } from "../shared/types";
 
+/**
+ * Props for the prompt builder section.
+ */
 interface PromptBuilderSectionProps {
   systemMessage: string;
   onSystemMessageChange: (value: string) => void;
@@ -21,11 +25,14 @@ interface PromptBuilderSectionProps {
   previewMode: ComposeModeConfig;
   onModeSelect: (mode: ComposeModeConfig) => void;
   modes: ComposeModeConfig[];
-  taskConfig: ReturnType<typeof import("../constants").getTaskSectionConfig>;
+  taskConfig: ReturnType<typeof import("../shared/constants").getTaskSectionConfig>;
 }
 
 /**
- * PromptBuilderSection - The prompt builder panel with model, system message, and task inputs.
+ * Renders the prompt builder panel for compose mode.
+ *
+ * @param props - Prompt builder props.
+ * @returns A panel with task and system inputs.
  */
 export function PromptBuilderSection({
   systemMessage,

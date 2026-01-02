@@ -2,21 +2,39 @@ import SwiftUI
 import ChatUIFoundation
 import ChatUIThemes
 
+/// Select option model for `SelectView`.
 public struct SelectOption: Identifiable, Hashable {
+    /// Stable identifier for the option.
     public let id: String
+    /// Display label for the option.
     public let label: String
 
+    /// Creates a select option.
+    ///
+    /// - Parameters:
+    ///   - value: Option value.
+    ///   - label: Optional display label (defaults to `value`).
     public init(value: String, label: String? = nil) {
         self.id = value
         self.label = label ?? value
     }
 }
 
+/// Size variants for `SelectView`.
 public enum SelectSize {
     case sm
     case `default`
 }
 
+/// Renders a dropdown selection view.
+///
+/// ### Discussion
+/// Uses a native `Menu` with a styled label.
+///
+/// - Example:
+/// ```swift
+/// SelectView(selection: $selection, options: [SelectOption(value: "One")])
+/// ```
 public struct SelectView: View {
     @Binding private var selection: String
     private let options: [SelectOption]
@@ -29,6 +47,16 @@ public struct SelectView: View {
     @Environment(\.colorScheme) private var scheme
     @Environment(\.chatUITheme) private var theme
 
+    /// Creates a select view.
+    ///
+    /// - Parameters:
+    ///   - selection: Binding for the selected value.
+    ///   - options: Options to display.
+    ///   - placeholder: Placeholder text when selection is empty.
+    ///   - size: Size variant (default: `.default`).
+    ///   - isDisabled: Whether the control is disabled.
+    ///   - accessibilityLabel: Accessibility label for VoiceOver.
+    ///   - accessibilityHint: Accessibility hint for VoiceOver.
     public init(
         selection: Binding<String>,
         options: [SelectOption],
@@ -47,6 +75,7 @@ public struct SelectView: View {
         self.accessibilityHint = accessibilityHint
     }
 
+    /// The content and behavior of this view.
     public var body: some View {
         Menu {
             ForEach(options) { option in

@@ -1,32 +1,28 @@
 import { useState } from "react";
 import {
+  IconBatteryFull,
+  IconCalendar,
+  IconClock,
+  IconCode,
+  IconFolder,
+  IconGlobe,
+  IconHeadphones,
+  IconImage,
+  IconMoon,
+  IconNotification,
+  IconPhone,
+  IconSparkles,
+  IconSun,
+  IconUserLock,
+  IconWifi,
+  IconNotebook,
+} from "../../../icons";
+
+import {
   SettingDropdownBlock,
   SettingDropdownGroup,
   type SettingDropdownOption,
 } from "../../blocks/SettingDropdownBlock";
-import {
-  Palette,
-  Globe,
-  Zap,
-  Bell,
-  Calendar,
-  Clock,
-  Smartphone,
-  Monitor,
-  Moon,
-  Sun,
-  Laptop,
-  Languages,
-  Volume2,
-  Image,
-  Database,
-  Wifi,
-  Battery,
-  Cpu,
-  HardDrive,
-  Sparkles,
-  Shield,
-} from "lucide-react";
 import { SettingRowBadge } from "../../blocks/SettingRowBlock";
 
 export function SettingDropdownBlockDemo() {
@@ -43,14 +39,13 @@ export function SettingDropdownBlockDemo() {
   const [networkMode, setNetworkMode] = useState("auto");
   const [powerMode, setPowerMode] = useState("balanced");
   const [storage, setStorage] = useState("cloud");
-  const [device, setDevice] = useState("desktop");
   const [processor, setProcessor] = useState("performance");
 
   // Theme options with icons
   const themeOptions: SettingDropdownOption[] = [
-    { value: "light", label: "Light", description: "Use light theme", icon: <Sun className="size-4" /> },
-    { value: "dark", label: "Dark", description: "Use dark theme", icon: <Moon className="size-4" /> },
-    { value: "system", label: "System", description: "Match system preference", icon: <Laptop className="size-4" /> },
+    { value: "light", label: "Light", description: "Use light theme", icon: <IconSun className="size-4" /> },
+    { value: "dark", label: "Dark", description: "Use dark theme", icon: <IconMoon className="size-4" /> },
+    { value: "system", label: "System", description: "Match system preference", icon: <IconNotebook className="size-4" /> },
   ];
 
   // Language options with groups
@@ -75,19 +70,19 @@ export function SettingDropdownBlockDemo() {
       value: "gpt-4",
       label: "GPT-4",
       description: "Most capable model, best at complex tasks",
-      icon: <Sparkles className="size-4" />,
+      icon: <IconSparkles className="size-4" />,
     },
     {
       value: "gpt-4-turbo",
       label: "GPT-4 Turbo",
       description: "Faster and more efficient GPT-4",
-      icon: <Zap className="size-4" />,
+      icon: <IconSparkles className="size-4" />,
     },
     {
       value: "gpt-3.5-turbo",
       label: "GPT-3.5 Turbo",
       description: "Fast and efficient for most tasks",
-      icon: <Cpu className="size-4" />,
+      icon: <IconCode className="size-4" />,
     },
   ];
 
@@ -141,46 +136,39 @@ export function SettingDropdownBlockDemo() {
 
   // Sound volume options
   const soundVolumeOptions: SettingDropdownOption[] = [
-    { value: "muted", label: "Muted", icon: <Volume2 className="size-4 opacity-30" /> },
-    { value: "low", label: "Low", icon: <Volume2 className="size-4 opacity-50" /> },
-    { value: "medium", label: "Medium", icon: <Volume2 className="size-4 opacity-75" /> },
-    { value: "high", label: "High", icon: <Volume2 className="size-4" /> },
+    { value: "muted", label: "Muted", icon: <IconHeadphones className="size-4 opacity-30" /> },
+    { value: "low", label: "Low", icon: <IconHeadphones className="size-4 opacity-50" /> },
+    { value: "medium", label: "Medium", icon: <IconHeadphones className="size-4 opacity-75" /> },
+    { value: "high", label: "High", icon: <IconHeadphones className="size-4" /> },
   ];
 
   // Network mode options
   const networkModeOptions: SettingDropdownOption[] = [
-    { value: "auto", label: "Automatic", description: "Auto-select best network", icon: <Wifi className="size-4" /> },
-    { value: "wifi", label: "Wi-Fi only", description: "Connect via Wi-Fi only", icon: <Wifi className="size-4" /> },
-    { value: "cellular", label: "Cellular only", description: "Use mobile data only", icon: <Smartphone className="size-4" /> },
+    { value: "auto", label: "Automatic", description: "Auto-select best network", icon: <IconWifi className="size-4" /> },
+    { value: "wifi", label: "Wi-Fi only", description: "Connect via Wi-Fi only", icon: <IconWifi className="size-4" /> },
+    { value: "cellular", label: "Cellular only", description: "Use mobile data only", icon: <IconPhone className="size-4" /> },
     { value: "offline", label: "Offline mode", description: "Work without connection", disabled: true },
   ];
 
   // Power mode options
   const powerModeOptions: SettingDropdownOption[] = [
-    { value: "performance", label: "Performance", description: "Maximum performance", icon: <Zap className="size-4" /> },
-    { value: "balanced", label: "Balanced", description: "Balance performance and battery", icon: <Battery className="size-4" /> },
-    { value: "saver", label: "Power Saver", description: "Extend battery life", icon: <Battery className="size-4 opacity-50" /> },
+    { value: "performance", label: "Performance", description: "Maximum performance", icon: <IconSparkles className="size-4" /> },
+    { value: "balanced", label: "Balanced", description: "Balance performance and battery", icon: <IconBatteryFull className="size-4" /> },
+    { value: "saver", label: "Power Saver", description: "Extend battery life", icon: <IconBatteryFull className="size-4 opacity-50" /> },
   ];
 
   // Storage options
   const storageOptions: SettingDropdownOption[] = [
-    { value: "cloud", label: "Cloud Storage", description: "Sync across devices", icon: <Database className="size-4" /> },
-    { value: "local", label: "Local Storage", description: "Store on device only", icon: <HardDrive className="size-4" /> },
-    { value: "hybrid", label: "Hybrid", description: "Both cloud and local", icon: <Database className="size-4" /> },
-  ];
-
-  // Device options
-  const deviceOptions: SettingDropdownOption[] = [
-    { value: "desktop", label: "Desktop", icon: <Monitor className="size-4" /> },
-    { value: "mobile", label: "Mobile", icon: <Smartphone className="size-4" /> },
-    { value: "tablet", label: "Tablet", icon: <Smartphone className="size-4" /> },
+    { value: "cloud", label: "Cloud Storage", description: "Sync across devices", icon: <IconFolder className="size-4" /> },
+    { value: "local", label: "Local Storage", description: "Store on device only", icon: <IconFolder className="size-4" /> },
+    { value: "hybrid", label: "Hybrid", description: "Both cloud and local", icon: <IconFolder className="size-4" /> },
   ];
 
   // Processor mode options
   const processorOptions: SettingDropdownOption[] = [
-    { value: "performance", label: "Performance", icon: <Cpu className="size-4" /> },
-    { value: "efficiency", label: "Efficiency", icon: <Cpu className="size-4 opacity-75" /> },
-    { value: "auto", label: "Automatic", icon: <Cpu className="size-4 opacity-50" /> },
+    { value: "performance", label: "Performance", icon: <IconCode className="size-4" /> },
+    { value: "efficiency", label: "Efficiency", icon: <IconCode className="size-4 opacity-75" /> },
+    { value: "auto", label: "Automatic", icon: <IconCode className="size-4 opacity-50" /> },
   ];
 
   return (
@@ -217,7 +205,7 @@ export function SettingDropdownBlockDemo() {
               <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
                 <SettingDropdownBlock
                   variant="default"
-                  icon={<Palette />}
+                  icon={<IconSparkles />}
                   label="Theme"
                   value={theme}
                   options={themeOptions}
@@ -226,7 +214,7 @@ export function SettingDropdownBlockDemo() {
                 />
                 <SettingDropdownBlock
                   variant="default"
-                  icon={<Languages />}
+                  icon={<IconGlobe />}
                   label="Language"
                   value={language}
                   options={languageOptions}
@@ -243,7 +231,7 @@ export function SettingDropdownBlockDemo() {
               <div className="space-y-2">
                 <SettingDropdownBlock
                   variant="card"
-                  icon={<Sparkles />}
+                  icon={<IconSparkles />}
                   label="AI Model"
                   value={model}
                   options={modelOptions}
@@ -252,7 +240,7 @@ export function SettingDropdownBlockDemo() {
                 />
                 <SettingDropdownBlock
                   variant="card"
-                  icon={<Image />}
+                  icon={<IconImage />}
                   label="Image Quality"
                   value={quality}
                   options={qualityOptions}
@@ -302,7 +290,7 @@ export function SettingDropdownBlockDemo() {
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
             <SettingDropdownBlock
               size="sm"
-              icon={<Globe />}
+              icon={<IconGlobe />}
               label="Small Size"
               value={region}
               options={regionOptions}
@@ -310,7 +298,7 @@ export function SettingDropdownBlockDemo() {
             />
             <SettingDropdownBlock
               size="md"
-              icon={<Globe />}
+              icon={<IconGlobe />}
               label="Medium Size (Default)"
               value={region}
               options={regionOptions}
@@ -318,7 +306,7 @@ export function SettingDropdownBlockDemo() {
             />
             <SettingDropdownBlock
               size="lg"
-              icon={<Globe />}
+              icon={<IconGlobe />}
               label="Large Size"
               value={region}
               options={regionOptions}
@@ -340,7 +328,7 @@ export function SettingDropdownBlockDemo() {
 
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
             <SettingDropdownBlock
-              icon={<Languages />}
+              icon={<IconGlobe />}
               label="Language (Searchable)"
               value={language}
               options={languageOptions}
@@ -364,7 +352,7 @@ export function SettingDropdownBlockDemo() {
 
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
             <SettingDropdownBlock
-              icon={<Languages />}
+              icon={<IconGlobe />}
               label="Language (Grouped)"
               value={language}
               options={languageOptions}
@@ -388,21 +376,21 @@ export function SettingDropdownBlockDemo() {
 
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
             <SettingDropdownBlock
-              icon={<Palette />}
+              icon={<IconSparkles />}
               label="Theme (With Icons)"
               value={theme}
               options={themeOptions}
               onValueChange={setTheme}
             />
             <SettingDropdownBlock
-              icon={<Volume2 />}
+              icon={<IconHeadphones />}
               label="Sound Volume"
               value={soundVolume}
               options={soundVolumeOptions}
               onValueChange={setSoundVolume}
             />
             <SettingDropdownBlock
-              icon={<Sparkles />}
+              icon={<IconSparkles />}
               label="AI Model (With Icons)"
               value={model}
               options={modelOptions}
@@ -424,7 +412,7 @@ export function SettingDropdownBlockDemo() {
 
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
             <SettingDropdownBlock
-              icon={<Zap />}
+              icon={<IconSparkles />}
               label="Loading State"
               value={model}
               options={modelOptions}
@@ -432,7 +420,7 @@ export function SettingDropdownBlockDemo() {
               loading
             />
             <SettingDropdownBlock
-              icon={<Shield />}
+              icon={<IconUserLock />}
               label="Disabled State"
               value={theme}
               options={themeOptions}
@@ -440,7 +428,7 @@ export function SettingDropdownBlockDemo() {
               disabled
             />
             <SettingDropdownBlock
-              icon={<Bell />}
+              icon={<IconNotification />}
               label="Error State"
               value={notifications}
               options={notificationOptions}
@@ -463,7 +451,7 @@ export function SettingDropdownBlockDemo() {
 
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
             <SettingDropdownBlock
-              icon={<Sparkles />}
+              icon={<IconSparkles />}
               label="AI Model"
               value={model}
               options={modelOptions}
@@ -471,7 +459,7 @@ export function SettingDropdownBlockDemo() {
               badge={<SettingRowBadge variant="new">New</SettingRowBadge>}
             />
             <SettingDropdownBlock
-              icon={<Zap />}
+              icon={<IconSparkles />}
               label="Performance Mode"
               value={powerMode}
               options={powerModeOptions}
@@ -479,7 +467,7 @@ export function SettingDropdownBlockDemo() {
               badge={<SettingRowBadge variant="primary">Pro</SettingRowBadge>}
             />
             <SettingDropdownBlock
-              icon={<Wifi />}
+              icon={<IconWifi />}
               label="Network Mode"
               value={networkMode}
               options={networkModeOptions}
@@ -502,7 +490,7 @@ export function SettingDropdownBlockDemo() {
 
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
             <SettingDropdownBlock
-              icon={<Wifi />}
+              icon={<IconWifi />}
               label="Network Mode"
               value={networkMode}
               options={networkModeOptions}
@@ -526,14 +514,14 @@ export function SettingDropdownBlockDemo() {
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
             <SettingDropdownGroup label="Display Settings" description="Customize your visual experience">
               <SettingDropdownBlock
-                icon={<Palette />}
+                icon={<IconSparkles />}
                 label="Theme"
                 value={theme}
                 options={themeOptions}
                 onValueChange={setTheme}
               />
               <SettingDropdownBlock
-                icon={<Image />}
+                icon={<IconImage />}
                 label="Font Size"
                 value={fontSize}
                 options={fontSizeOptions}
@@ -558,7 +546,7 @@ export function SettingDropdownBlockDemo() {
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
             <SettingDropdownGroup label="Display Preferences">
               <SettingDropdownBlock
-                icon={<Palette />}
+                icon={<IconSparkles />}
                 label="Appearance"
                 value={theme}
                 options={themeOptions}
@@ -566,7 +554,7 @@ export function SettingDropdownBlockDemo() {
                 description="Choose your preferred color theme"
               />
               <SettingDropdownBlock
-                icon={<Image />}
+                icon={<IconImage />}
                 label="Text Size"
                 value={fontSize}
                 options={fontSizeOptions}
@@ -580,7 +568,7 @@ export function SettingDropdownBlockDemo() {
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
             <SettingDropdownGroup label="Localization">
               <SettingDropdownBlock
-                icon={<Languages />}
+                icon={<IconGlobe />}
                 label="Language"
                 value={language}
                 options={languageOptions}
@@ -588,21 +576,21 @@ export function SettingDropdownBlockDemo() {
                 searchable
               />
               <SettingDropdownBlock
-                icon={<Globe />}
+                icon={<IconGlobe />}
                 label="Region"
                 value={region}
                 options={regionOptions}
                 onValueChange={setRegion}
               />
               <SettingDropdownBlock
-                icon={<Calendar />}
+                icon={<IconCalendar />}
                 label="Date Format"
                 value={dateFormat}
                 options={dateFormatOptions}
                 onValueChange={setDateFormat}
               />
               <SettingDropdownBlock
-                icon={<Clock />}
+                icon={<IconClock />}
                 label="Time Format"
                 value={timeFormat}
                 options={timeFormatOptions}
@@ -615,7 +603,7 @@ export function SettingDropdownBlockDemo() {
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
             <SettingDropdownGroup label="System & Performance">
               <SettingDropdownBlock
-                icon={<Cpu />}
+                icon={<IconCode />}
                 label="Processor Mode"
                 value={processor}
                 options={processorOptions}
@@ -623,21 +611,21 @@ export function SettingDropdownBlockDemo() {
                 description="Balance performance and efficiency"
               />
               <SettingDropdownBlock
-                icon={<Battery />}
+                icon={<IconBatteryFull />}
                 label="Power Mode"
                 value={powerMode}
                 options={powerModeOptions}
                 onValueChange={setPowerMode}
               />
               <SettingDropdownBlock
-                icon={<Database />}
+                icon={<IconFolder />}
                 label="Storage"
                 value={storage}
                 options={storageOptions}
                 onValueChange={setStorage}
               />
               <SettingDropdownBlock
-                icon={<Wifi />}
+                icon={<IconWifi />}
                 label="Network"
                 value={networkMode}
                 options={networkModeOptions}

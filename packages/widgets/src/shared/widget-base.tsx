@@ -1,6 +1,9 @@
 import React, { ReactNode, StrictMode } from "react";
 import { createRoot, type Root } from "react-dom/client";
 
+/**
+ * Props for the base widget wrapper.
+ */
 export interface WidgetProps {
   children: ReactNode;
   className?: string;
@@ -9,8 +12,11 @@ export interface WidgetProps {
 }
 
 /**
- * Base wrapper component for all widgets with consistent styling
- * Uses Apps SDK UI token utilities for theming and enhanced scrollbar styling
+ * Base wrapper component for all widgets with consistent styling.
+ *
+ * @param props - Widget wrapper props.
+ * @param props.title - Optional title displayed at the top of the widget.
+ * @returns A styled wrapper element containing widget content.
  */
 export function WidgetBase({ children, className = "", title, style }: WidgetProps) {
   return (
@@ -29,8 +35,10 @@ export function WidgetBase({ children, className = "", title, style }: WidgetPro
 }
 
 /**
- * Standardized widget mounting helper
- * Reduces boilerplate across all widget components
+ * Mounts a widget into the `#root` element with StrictMode.
+ *
+ * @param component - The widget component to render.
+ * @returns `void`.
  */
 export function mountWidget(component: ReactNode) {
   const rootElement = document.getElementById("root");
@@ -56,7 +64,11 @@ function getOrCreateRoot(element: Element): Root {
 }
 
 /**
- * Higher-order component for widget creation with consistent patterns
+ * Creates a widget component wrapped in `WidgetBase`.
+ *
+ * @param Component - The widget component to wrap.
+ * @param options - Optional wrapper configuration.
+ * @returns A wrapped widget component.
  */
 export function createWidget<T extends Record<string, unknown>>(
   Component: React.ComponentType<T>,
@@ -82,7 +94,10 @@ export function createWidget<T extends Record<string, unknown>>(
 }
 
 /**
- * Widget error boundary for production resilience
+ * Widget error boundary for production resilience.
+ *
+ * @param props - Error boundary props.
+ * @returns A rendered widget or fallback UI when errors occur.
  */
 export class WidgetErrorBoundary extends React.Component<
   { children: ReactNode; fallback?: ReactNode },

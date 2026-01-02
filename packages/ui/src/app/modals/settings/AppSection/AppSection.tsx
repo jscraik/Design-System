@@ -1,6 +1,16 @@
-import { IconChevronRightMd, IconChevronDownMd, IconComment, IconCheckmark, IconGlobe, IconLink, IconPlayground, IconRegenerate, IconSun, IconX } from "../../../../icons/ChatGPTIcons";
+import {
+  IconCheckmark,
+  IconChevronDownMd,
+  IconChevronRightMd,
+  IconComment,
+  IconGlobe,
+  IconLink,
+  IconPlayground,
+  IconRegenerate,
+  IconSun,
+} from "../../../../icons/ChatGPTIcons";
 import { SettingRow, SettingToggle } from "../../../settings";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "../../../../components/ui/overlays/dropdown-menu";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem } from "../../../../components/ui/overlays/DropdownMenu";
 
 interface AppSectionProps {
   appLanguage: string;

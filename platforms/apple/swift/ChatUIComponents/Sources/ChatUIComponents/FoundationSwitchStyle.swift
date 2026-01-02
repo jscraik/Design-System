@@ -1,10 +1,18 @@
 import SwiftUI
 import ChatUIFoundation
 
-/// Custom toggle style matching ChatGPT switch design
+/// Custom toggle style matching ChatGPT switch design.
+///
+/// - Example:
+/// ```swift
+/// Toggle("Auto plan", isOn: $enabled)
+///     .toggleStyle(FoundationSwitchStyle())
+/// ```
 public struct FoundationSwitchStyle: ToggleStyle {
+    /// Creates the switch style.
     public init() {}
     
+    /// Builds the switch style body.
     public func makeBody(configuration: Configuration) -> some View {
         HStack {
             configuration.label
