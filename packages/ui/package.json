@@ -167,7 +167,7 @@
     "axe-core": "^4.10.3",
     "jsdom": "^26.1.0",
     "typescript": "^5.7.2",
-    "vite": "^6.4.1",
+    "vite": "^7.3.0",
     "vite-plugin-dts": "^4.3.0",
     "vitest": "^4.0.16",
     "vitest-axe": "^1.0.0-pre.3"
