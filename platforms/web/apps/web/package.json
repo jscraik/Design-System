@@ -12,8 +12,8 @@
   "dependencies": {
     "@chatui/runtime": "workspace:*",
     "@chatui/ui": "workspace:*",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "tw-animate-css": "1.3.8"
   },
   "devDependencies": {
