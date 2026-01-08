@@ -1,5 +1,35 @@
 # macOS Hover State Fix
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Issue](#issue)
+- [Root Cause](#root-cause)
+- [Solution](#solution)
+  - [Before (Incorrect Order)](#before-incorrect-order)
+  - [After (Correct Order)](#after-correct-order)
+- [Implementation Details](#implementation-details)
+  - [SettingRowView](#settingrowview)
+  - [ListItemView](#listitemview)
+  - [Platform Detection](#platform-detection)
+- [Testing](#testing)
+  - [Manual Testing](#manual-testing)
+  - [Automated Testing](#automated-testing)
+- [Verification](#verification)
+- [Related Files](#related-files)
+- [Design Validation](#design-validation)
+- [Future Considerations](#future-considerations)
+
+
 ## Issue
 
 The hover states in `SettingRowView` were not working correctly on macOS because the `.onHover` modifier was placed after `.background()` and `.clipShape()` modifiers. This caused the hover detection to not properly trigger the state changes.

@@ -1,7 +1,8 @@
 import * as React from "react";
+import { ImageOff } from "lucide-react";
+
 import { cn } from "./utils";
 import { ShimmerInline } from "./shimmer-text";
-import { ImageOff } from "lucide-react";
 
 export interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   fallback?: React.ReactNode;

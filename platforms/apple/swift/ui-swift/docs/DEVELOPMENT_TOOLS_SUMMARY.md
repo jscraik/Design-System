@@ -1,5 +1,36 @@
 # Development Tools Implementation Summary
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Task 8: Create Development Experience Tooling - COMPLETED ✅](#task-8-create-development-experience-tooling-completed)
+  - [1. Hot Reload for Token Changes ✅](#1-hot-reload-for-token-changes)
+  - [2. Component Documentation Generation ✅](#2-component-documentation-generation)
+  - [3. Debugging Tools for Component State ✅](#3-debugging-tools-for-component-state)
+  - [4. Performance Monitoring for SwiftUI Previews ✅](#4-performance-monitoring-for-swiftui-previews)
+- [Integration and Testing ✅](#integration-and-testing)
+  - [Build System Integration](#build-system-integration)
+  - [Testing](#testing)
+  - [Documentation](#documentation)
+- [Requirements Validation ✅](#requirements-validation)
+- [Usage Examples](#usage-examples)
+  - [Complete Development Workflow](#complete-development-workflow)
+  - [Performance Dashboard](#performance-dashboard)
+- [Files Created/Modified](#files-createdmodified)
+  - [New Files](#new-files)
+  - [Modified Files](#modified-files)
+- [Status: COMPLETED ✅](#status-completed)
+
+
 > Legacy context: This summary applies to `platforms/apple/swift/ui-swift`, which is retained for reference.
 
 ## Task 8: Create Development Experience Tooling - COMPLETED ✅

@@ -1,5 +1,15 @@
 # PEER Operational State
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 ## Current Focus
 
 - **IN PROGRESS: Template library scaffolding (React + SwiftUI + AppKit)**

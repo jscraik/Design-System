@@ -1,4 +1,5 @@
 import { createRequire } from "node:module";
+
 import type { WidgetName } from "../sdk/generated/widget-manifest";
 
 /**

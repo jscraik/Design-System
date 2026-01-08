@@ -1,5 +1,36 @@
 # MCP Testing Guide
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (beginner to intermediate)
+- Scope: Task-focused instructions for this topic
+- Non-scope: Comprehensive architecture reference
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [Known Issue: MCP Inspector CLI](#known-issue-mcp-inspector-cli)
+- [Alternative Testing Methods](#alternative-testing-methods)
+  - [1. Tool Contract Tests (Fastest)](#1-tool-contract-tests-fastest)
+  - [2. JSON-RPC Integration Tests](#2-json-rpc-integration-tests)
+  - [3. Manual CLI Testing](#3-manual-cli-testing)
+  - [4. MCP Inspector UI](#4-mcp-inspector-ui)
+- [Complete Test Suite](#complete-test-suite)
+- [Example Test Workflow](#example-test-workflow)
+- [Direct JSON-RPC with curl](#direct-json-rpc-with-curl)
+- [CI/CD Integration](#cicd-integration)
+- [Troubleshooting](#troubleshooting)
+  - [Server not responding](#server-not-responding)
+  - [Connection refused](#connection-refused)
+  - [Widget not found errors](#widget-not-found-errors)
+- [Files](#files)
+- [Related Documentation](#related-documentation)
+
+
 ## Overview
 
 This guide explains how to test the MCP server without relying on the broken MCP Inspector CLI.
@@ -227,5 +258,14 @@ pnpm build:widgets
 ## Related Documentation
 
 - [MCP Protocol Specification](https://spec.modelcontextprotocol.io/)
-- [Widget Architecture](../../../docs/architecture/WIDGET_ARCHITECTURE.md)
-- [ChatGPT Integration Guide](../../../docs/guides/CHATGPT_INTEGRATION.md)
+- [Widget Architecture](../../docs/architecture/WIDGET_ARCHITECTURE.md)
+- [ChatGPT Integration Guide](../../docs/guides/CHATGPT_INTEGRATION.md)
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+

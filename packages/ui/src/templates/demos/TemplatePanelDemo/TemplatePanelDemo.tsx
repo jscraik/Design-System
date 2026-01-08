@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import {
   IconCategory,
   IconCheckCircle,
@@ -11,7 +12,6 @@ import {
   IconWarning,
   IconX,
 } from "../../../icons";
-
 import {
   TemplatePanel,
   TemplatePanelHeader,

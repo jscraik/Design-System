@@ -1,5 +1,6 @@
 import { Button } from "../../components/ui";
 import { IconPlusCircle, IconStar } from "../../icons";
+
 import { markers } from "./data/markers";
 import type { Place } from "./components/PlaceCard";
 

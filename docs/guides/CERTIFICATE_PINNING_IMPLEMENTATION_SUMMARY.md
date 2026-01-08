@@ -1,5 +1,67 @@
 # TLS Certificate Pinning Implementation Summary
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [Files Created](#files-created)
+  - [1. Core Implementation](#1-core-implementation)
+  - [2. Unit Tests](#2-unit-tests)
+  - [3. Documentation](#3-documentation)
+  - [4. Developer Tools](#4-developer-tools)
+- [Files Modified](#files-modified)
+  - [1. MCP Error Types](#1-mcp-error-types)
+  - [2. MCP Client Integration](#2-mcp-client-integration)
+  - [3. Validation Extension (Bug Fix)](#3-validation-extension-bug-fix)
+- [Key Features](#key-features)
+  - [1. SPKI Pinning (Recommended)](#1-spki-pinning-recommended)
+  - [2. Certificate Pinning (Alternative)](#2-certificate-pinning-alternative)
+  - [3. Development Mode](#3-development-mode)
+  - [4. Certificate Rotation Support](#4-certificate-rotation-support)
+- [Security Considerations](#security-considerations)
+  - [DO's ✅](#dos)
+  - [DON'Ts ❌](#donts)
+- [Certificate Hash Extraction](#certificate-hash-extraction)
+  - [Command Line (One-liner)](#command-line-one-liner)
+  - [From PEM File](#from-pem-file)
+  - [Using Swift API](#using-swift-api)
+- [Testing](#testing)
+  - [Generate Test Certificates](#generate-test-certificates)
+  - [Run Unit Tests](#run-unit-tests)
+- [Build Verification](#build-verification)
+- [API Surface](#api-surface)
+  - [Types](#types)
+  - [Main Class](#main-class)
+  - [Convenience Methods](#convenience-methods)
+  - [Debug Support](#debug-support)
+- [Performance](#performance)
+- [Compatibility](#compatibility)
+- [Migration Guide](#migration-guide)
+  - [From Default URLSession](#from-default-urlsession)
+  - [Gradual Rollout Strategy](#gradual-rollout-strategy)
+- [Error Handling](#error-handling)
+  - [Certificate Mismatch](#certificate-mismatch)
+  - [Debug Mode Logging](#debug-mode-logging)
+- [Sample Configuration](#sample-configuration)
+  - [Production](#production)
+  - [Staging](#staging)
+  - [Development](#development)
+- [Review Findings](#review-findings)
+  - [✅ Strengths](#strengths)
+  - [📋 Recommendations](#recommendations)
+- [Next Steps](#next-steps)
+- [Support](#support)
+
+
 ## Overview
 
 Successfully implemented comprehensive TLS certificate pinning for the ChatUIMCP Swift client, providing production-ready security for MCP server connections.

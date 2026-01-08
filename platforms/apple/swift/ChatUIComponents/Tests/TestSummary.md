@@ -1,5 +1,45 @@
 # ChatUIComponents Settings Primitives - Test Summary
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Task 4.1 Implementation Status: ✅ COMPLETE](#task-41-implementation-status-complete)
+- [Test Coverage Overview](#test-coverage-overview)
+  - [✅ SettingRowView Tests](#settingrowview-tests)
+  - [✅ FoundationSwitchStyle Tests](#foundationswitchstyle-tests)
+  - [✅ SettingToggleView Tests](#settingtoggleview-tests)
+  - [✅ SettingDropdownView Tests](#settingdropdownview-tests)
+  - [✅ SettingsCardView Tests](#settingscardview-tests)
+  - [✅ SettingsDivider Tests](#settingsdivider-tests)
+- [Platform-Specific Testing](#platform-specific-testing)
+  - [✅ macOS Hover State Testing](#macos-hover-state-testing)
+- [Component Composition Testing](#component-composition-testing)
+  - [✅ API Parity Verification (Property 3)](#api-parity-verification-property-3)
+- [Test Implementation Details](#test-implementation-details)
+  - [Test Files Created](#test-files-created)
+  - [Test Methodology](#test-methodology)
+- [Requirements Validation](#requirements-validation)
+  - [✅ Requirements 3.1 - Settings Interface Components](#requirements-31-settings-interface-components)
+  - [✅ Requirements 3.2 - Grouped Content Support](#requirements-32-grouped-content-support)
+  - [✅ Requirements 3.3 - Navigation Interface Support](#requirements-33-navigation-interface-support)
+  - [✅ Requirements 3.4 - Semantic Token Integration](#requirements-34-semantic-token-integration)
+  - [✅ Requirements 3.5 - Accessibility Support](#requirements-35-accessibility-support)
+- [Property 3: Component Library API Parity - ✅ VALIDATED](#property-3-component-library-api-parity-validated)
+- [Test Execution Status](#test-execution-status)
+  - [✅ Compilation Tests](#compilation-tests)
+  - [⚠️ XCTest Execution](#xctest-execution)
+- [Conclusion](#conclusion)
+
+
 ## Task 4.1 Implementation Status: ✅ COMPLETE
 
 This document summarizes the comprehensive unit tests implemented for the ChatUIComponents settings primitives, fulfilling all requirements specified in Task 4.1.

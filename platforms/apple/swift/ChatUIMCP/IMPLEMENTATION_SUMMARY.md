@@ -1,5 +1,34 @@
 # ChatUIMCP Implementation Summary
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [Implementation Details](#implementation-details)
+  - [Package Structure](#package-structure)
+  - [Core Components](#core-components)
+  - [Testing Infrastructure](#testing-infrastructure)
+  - [Backward Compatibility](#backward-compatibility)
+  - [Build Verification](#build-verification)
+  - [Requirements Validation](#requirements-validation)
+  - [Usage Examples](#usage-examples)
+  - [Integration with Existing Codebase](#integration-with-existing-codebase)
+  - [Known Limitations](#known-limitations)
+  - [Future Enhancements](#future-enhancements)
+  - [Conclusion](#conclusion)
+- [Build and Test Commands](#build-and-test-commands)
+- [Next Steps](#next-steps)
+
+
 ## Overview
 
 Task 14 has been successfully implemented, creating a comprehensive Swift package for MCP (Model Context Protocol) integration that bridges native macOS applications with the existing web-based MCP infrastructure.

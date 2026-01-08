@@ -1,5 +1,60 @@
 # Swift Code Consolidation Migration Plan
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Executive Summary](#executive-summary)
+- [Phase 1: ChatUIButton Consolidation (Week 1-2)](#phase-1-chatuibutton-consolidation-week-1-2)
+  - [Current State](#current-state)
+  - [Source of Truth](#source-of-truth)
+  - [Migration Steps](#migration-steps)
+  - [Breaking Changes](#breaking-changes)
+  - [Rollback Strategy](#rollback-strategy)
+- [Phase 2: DesignTokens Unification (Week 2-3)](#phase-2-designtokens-unification-week-2-3)
+  - [Current State](#current-state-1)
+  - [Source of Truth](#source-of-truth-1)
+  - [Migration Steps](#migration-steps-1)
+  - [Breaking Changes](#breaking-changes-1)
+  - [Rollback Strategy](#rollback-strategy-1)
+- [Phase 3: Icon Migration to Asset Catalog (Week 3-4)](#phase-3-icon-migration-to-asset-catalog-week-3-4)
+  - [Current State](#current-state-2)
+  - [Target State](#target-state)
+  - [Migration Steps](#migration-steps-2)
+  - [Breaking Changes](#breaking-changes-2)
+  - [Rollback Strategy](#rollback-strategy-2)
+- [Phase 4: Shared Component Extraction (Week 4-5)](#phase-4-shared-component-extraction-week-4-5)
+  - [4.1 Card Components (75% similar)](#41-card-components-75-similar)
+  - [4.2 Modal Components (70% similar)](#42-modal-components-70-similar)
+  - [4.3 Input Components (72% similar)](#43-input-components-72-similar)
+- [Phase 5: Testing & Validation (Week 5-6)](#phase-5-testing-validation-week-5-6)
+  - [Unit Tests](#unit-tests)
+  - [Integration Tests](#integration-tests)
+  - [Migration Checklist](#migration-checklist)
+- [Timeline Summary](#timeline-summary)
+- [Risk Mitigation](#risk-mitigation)
+  - [Risk 1: Breaking Changes in Dependent Packages](#risk-1-breaking-changes-in-dependent-packages)
+  - [Risk 2: Icon Asset Catalog Issues](#risk-2-icon-asset-catalog-issues)
+  - [Risk 3: Foundation Package Bloat](#risk-3-foundation-package-bloat)
+- [Success Metrics](#success-metrics)
+- [Post-Migration Cleanup](#post-migration-cleanup)
+  - [Release 1 (Immediate)](#release-1-immediate)
+  - [Release 2 (2 releases later)](#release-2-2-releases-later)
+  - [Release 3 (Future)](#release-3-future)
+- [Appendix A: File Inventory](#appendix-a-file-inventory)
+  - [Files to Modify](#files-to-modify)
+  - [Files to Create](#files-to-create)
+- [Appendix B: Commands Reference](#appendix-b-commands-reference)
+
+
 ## Executive Summary
 
 This document outlines the step-by-step plan to consolidate duplicate code across the Swift packages, reducing code duplication from ~25% to <5%.
@@ -463,3 +518,15 @@ swift test --enable-code-coverage
 xcrun llvm-cov report --instr-profile=.build/debug/codecov/default.profdata \
   .build/debug/ChatUIPackageTests.xctest/Contents/MacOS/ChatUIPackageTests
 ```
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

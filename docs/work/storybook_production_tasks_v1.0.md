@@ -1,5 +1,15 @@
 # Storybook Production Completion Tasks
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 This checklist captures the remaining manual steps to finish the Storybook hardening pass and validate production readiness. Run these after pulling latest changes.
 
 ## Required

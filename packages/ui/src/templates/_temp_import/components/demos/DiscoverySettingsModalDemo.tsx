@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { DiscoverySettingsModal } from "../DiscoverySettingsModal";
 
 export function DiscoverySettingsModalDemo() {

@@ -1,6 +1,6 @@
-import { IconCheck, IconCopy, IconEye, IconEyeOff } from "../../../icons";
 import { useState } from "react";
 
+import { IconCheck, IconCopy, IconEye, IconEyeOff } from "../../../icons";
 import {
   TemplateFormField,
   TemplateFormFieldAction,

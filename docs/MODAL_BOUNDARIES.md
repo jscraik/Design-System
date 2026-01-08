@@ -1,5 +1,50 @@
 # Modal Module Boundaries
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [1. Infrastructure Layer (Stateless, Reusable)](#1-infrastructure-layer-stateless-reusable)
+  - [Location: `packages/ui/src/hooks/` + `packages/ui/src/components/ui/`](#location-packagesuisrchooks-packagesuisrccomponentsui)
+- [2. Feature Modals (Stateful, Business Logic)](#2-feature-modals-stateful-business-logic)
+  - [Location: `packages/ui/src/app/modals/`](#location-packagesuisrcappmodals)
+- [3. Settings Components (Leaf Building Blocks)](#3-settings-components-leaf-building-blocks)
+  - [Location: `packages/ui/src/app/settings/`](#location-packagesuisrcappsettings)
+- [4. Panel Components (Nested Views)](#4-panel-components-nested-views)
+  - [Location: `packages/ui/src/app/settings/`](#location-packagesuisrcappsettings-1)
+- [5. Dependency Graph (Acyclic)](#5-dependency-graph-acyclic)
+- [6. State Ownership Rules](#6-state-ownership-rules)
+  - [Infrastructure (OWNED: None, PASS-THROUGH: All)](#infrastructure-owned-none-pass-through-all)
+  - [Feature Modals (OWNED: Business State)](#feature-modals-owned-business-state)
+  - [Settings Components (OWNED: None, CONTROLLED)](#settings-components-owned-none-controlled)
+- [7. Data Flow Patterns](#7-data-flow-patterns)
+  - [Pattern A: Synced State (DiscoverySettingsModal, IconPickerModal)](#pattern-a-synced-state-discoverysettingsmodal-iconpickermodal)
+  - [Pattern B: Local-Only State (SettingsModal, PersonalizationPanel)](#pattern-b-local-only-state-settingsmodal-personalizationpanel)
+  - [Pattern C: Controlled Components (SettingRow, SettingToggle, SettingDropdown)](#pattern-c-controlled-components-settingrow-settingtoggle-settingdropdown)
+- [8. Future Modal Guidelines](#8-future-modal-guidelines)
+  - [When to Create a New Modal](#when-to-create-a-new-modal)
+  - [State Ownership Checklist](#state-ownership-checklist)
+  - [Example: Creating a New Modal](#example-creating-a-new-modal)
+- [9. Anti-Patterns to Avoid](#9-anti-patterns-to-avoid)
+  - [❌ Duplicate Focus Trap Logic](#duplicate-focus-trap-logic)
+  - [❌ Direct DOM Manipulation](#direct-dom-manipulation)
+  - [❌ Complex Object Callbacks](#complex-object-callbacks)
+  - [❌ State Drift Without Sync](#state-drift-without-sync)
+- [10. Testing Strategy](#10-testing-strategy)
+  - [Infrastructure Tests](#infrastructure-tests)
+  - [Component Tests](#component-tests)
+- [Summary](#summary)
+
+
 ## Overview
 
 This document defines the module boundaries, state ownership, and dependencies for the modal system in ChatUI.

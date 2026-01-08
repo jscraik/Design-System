@@ -1,4 +1,62 @@
 # Xcode Project Analysis Report
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Executive Summary](#executive-summary)
+  - [Key Findings](#key-findings)
+  - [Critical Issues Identified](#critical-issues-identified)
+- [Package Analysis](#package-analysis)
+  - [1. ChatUIFoundation](#1-chatuifoundation)
+  - [2. ChatUIThemes](#2-chatuithemes)
+  - [3. ChatUIComponents](#3-chatuicomponents)
+  - [4. ChatUIShellChatGPT](#4-chatuishellchatgpt)
+  - [5. ChatUIMCP](#5-chatuimcp)
+  - [6. ChatUISystemIntegration](#6-chatuisystemintegration)
+  - [7. ChatUITestSupport](#7-chatuitestsupport)
+  - [8. ui-swift (Legacy)](#8-ui-swift-legacy)
+- [macOS Apps Analysis](#macos-apps-analysis)
+  - [1. ChatUIApp](#1-chatuiapp)
+  - [2. ComponentGallery](#2-componentgallery)
+  - [3. ChatUIPlayground](#3-chatuiplayground)
+- [Build System Analysis](#build-system-analysis)
+  - [Swift Tools Version](#swift-tools-version)
+  - [Package Dependencies](#package-dependencies)
+- [Resource Management](#resource-management)
+  - [Asset Catalogs](#asset-catalogs)
+  - [Info.plist Files](#infoplist-files)
+- [Code Signing Configuration](#code-signing-configuration)
+  - [ChatUIPlayground (Xcode Project)](#chatuiplayground-xcode-project)
+  - [ChatUIApp](#chatuiapp)
+- [Platform Support Matrix](#platform-support-matrix)
+- [Build Warnings & Errors](#build-warnings-errors)
+  - [Critical Issues (Fix Required)](#critical-issues-fix-required)
+  - [Medium Issues (Should Fix)](#medium-issues-should-fix)
+  - [Low Priority (Nice to Have)](#low-priority-nice-to-have)
+- [Recommendations](#recommendations)
+  - [Immediate Actions (Required)](#immediate-actions-required)
+  - [Short-term Improvements](#short-term-improvements)
+  - [Long-term Considerations](#long-term-considerations)
+- [Dependency Graph](#dependency-graph)
+- [Testing Infrastructure](#testing-infrastructure)
+  - [Test Targets](#test-targets)
+  - [Test Coverage](#test-coverage)
+- [Build Verification Commands](#build-verification-commands)
+  - [Verify All Packages Build](#verify-all-packages-build)
+  - [Run All Tests](#run-all-tests)
+  - [Build Apps](#build-apps)
+- [Conclusion](#conclusion)
+  - [Overall Health Score: **7.5/10**](#overall-health-score-7510)
+
+
 **Generated**: 2026-01-02
 **Repository**: chatui
 **Analysis Scope**: All Swift packages and macOS apps

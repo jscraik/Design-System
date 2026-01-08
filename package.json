@@ -63,6 +63,7 @@
     "test:coverage": "pnpm -C packages/ui test:coverage",
     "test:embed": "node ./platforms/mcp/scripts/smoke.mjs",
     "lint:compliance": "node ./scripts/compliance.mjs",
+    "doc:lint": "vale sync && vale . && node scripts/check-doc-links.mjs",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

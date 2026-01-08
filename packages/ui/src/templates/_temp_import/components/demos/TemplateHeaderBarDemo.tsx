@@ -1,5 +1,6 @@
-import { TemplateHeaderBar } from "../TemplateHeaderBar";
 import { Search, Bell, Settings, ChevronLeft, Plus, MoreHorizontal, Download, Share2 } from "lucide-react";
+
+import { TemplateHeaderBar } from "../TemplateHeaderBar";
 
 export function TemplateHeaderBarDemo() {
   return (

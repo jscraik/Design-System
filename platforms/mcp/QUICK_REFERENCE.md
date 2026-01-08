@@ -1,5 +1,32 @@
 # MCP Testing Quick Reference
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Start Server](#start-server)
+- [Run Tests](#run-tests)
+  - [All Tests](#all-tests)
+  - [Specific Tests](#specific-tests)
+- [Manual Testing](#manual-testing)
+  - [CLI Tool](#cli-tool)
+  - [With curl](#with-curl)
+  - [Inspector UI](#inspector-ui)
+- [Environment Variables](#environment-variables)
+- [Common Workflows](#common-workflows)
+  - [Test Workflow](#test-workflow)
+  - [Debug Workflow](#debug-workflow)
+- [Files](#files)
+
+
 ## Start Server
 
 ```bash

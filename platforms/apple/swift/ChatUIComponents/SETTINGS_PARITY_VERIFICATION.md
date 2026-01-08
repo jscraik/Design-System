@@ -1,5 +1,38 @@
 # Settings Primitives Parity Verification
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [Verification Date](#verification-date)
+- [Component Comparison](#component-comparison)
+  - [1. SettingRowView vs SettingRow](#1-settingrowview-vs-settingrow)
+  - [2. SettingToggleView vs SettingToggle](#2-settingtoggleview-vs-settingtoggle)
+  - [3. SettingDropdownView vs SettingDropdown](#3-settingdropdownview-vs-settingdropdown)
+  - [4. SettingsDivider](#4-settingsdivider)
+  - [5. SettingsCardView](#5-settingscardview)
+- [Visual Consistency Assessment](#visual-consistency-assessment)
+  - [✅ Pixel-Close Elements](#pixel-close-elements)
+  - [⚠️ Minor Differences (Within Tolerance)](#minor-differences-within-tolerance)
+- [Implementation Verification](#implementation-verification)
+  - [SwiftUI Components Location](#swiftui-components-location)
+  - [React Components Location](#react-components-location)
+  - [Component Gallery Integration](#component-gallery-integration)
+- [Testing Recommendations](#testing-recommendations)
+  - [Manual Visual Testing](#manual-visual-testing)
+  - [Automated Testing](#automated-testing)
+- [Conclusion](#conclusion)
+
+
 ## Overview
 
 This document verifies that the SwiftUI settings primitives render pixel-close to their React equivalents, fulfilling Phase 1 checkpoint requirement.
@@ -187,3 +220,15 @@ Unit tests exist for settings primitives:
 **Phase 1 Checkpoint Status**: ✅ Complete
 
 The settings primitives successfully demonstrate that the modular SwiftUI architecture can achieve visual consistency with the React implementation while maintaining platform-native behavior and compile-time safety.
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

@@ -1,5 +1,60 @@
 # React vs SwiftUI Component Parity Checklist
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Operators and maintainers
+- Scope: Operational steps and verification
+- Non-scope: Long-form design history
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Legend](#legend)
+- [Foundation Tokens](#foundation-tokens)
+- [Settings Components](#settings-components)
+- [Button Components](#button-components)
+- [Input Components](#input-components)
+- [Card Components](#card-components)
+- [Navigation Components](#navigation-components)
+- [Modal/Dialog Components](#modaldialog-components)
+- [Feedback Components](#feedback-components)
+- [Layout Components](#layout-components)
+- [Form Components](#form-components)
+- [Data Display Components](#data-display-components)
+- [Interaction Patterns](#interaction-patterns)
+- [Accessibility Features](#accessibility-features)
+- [Theme Support](#theme-support)
+- [Platform-Specific Features](#platform-specific-features)
+- [Component API Comparison](#component-api-comparison)
+  - [SettingRow](#settingrow)
+  - [SettingToggle](#settingtoggle)
+  - [SettingDropdown](#settingdropdown)
+- [Implementation Priority](#implementation-priority)
+  - [Phase 1: Complete ✅](#phase-1-complete)
+  - [Phase 2: In Progress 🚧](#phase-2-in-progress)
+  - [Phase 3: Planned ⏳](#phase-3-planned)
+- [Behavioral Differences](#behavioral-differences)
+  - [State Management](#state-management)
+  - [Event Handling](#event-handling)
+  - [Conditional Rendering](#conditional-rendering)
+  - [Platform Detection](#platform-detection)
+- [Testing Parity](#testing-parity)
+- [Documentation Parity](#documentation-parity)
+- [Known Limitations](#known-limitations)
+  - [SwiftUI Limitations](#swiftui-limitations)
+  - [React Limitations](#react-limitations)
+- [Recommendations](#recommendations)
+  - [When to Use React Components](#when-to-use-react-components)
+  - [When to Use SwiftUI Components](#when-to-use-swiftui-components)
+  - [Hybrid Approach](#hybrid-approach)
+- [Next Steps](#next-steps)
+- [Contributing](#contributing)
+- [License](#license)
+
+
 This document tracks the parity between React components in `packages/ui` and SwiftUI components in `platforms/apple/swift/ChatUIComponents`.
 
 ## Legend
@@ -380,3 +435,15 @@ When adding new components:
 ## License
 
 See repository root for license information.
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

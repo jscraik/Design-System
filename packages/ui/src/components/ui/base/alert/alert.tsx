@@ -1,26 +1,24 @@
-import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react";
 
 import { cn } from "../../utils";
 
 /**
  * Defines base class names and variant mappings for alerts.
  */
-const alertVariants = cva(
-  "relative w-full rounded-lg border border-foundation-bg-dark-3 px-4 py-3 font-foundation text-body-small grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current bg-foundation-bg-dark-1 text-foundation-text-dark-primary",
-  {
-    variants: {
-      variant: {
-        default: "",
-        destructive:
-          "border-foundation-accent-red/50 bg-foundation-accent-red/10 [&>svg]:text-foundation-accent-red",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  },
-);
+const alertVariants = cva("relative w-full rounded-lg border p-4", {
+	variants: {
+		variant: {
+			default:
+				"bg-foundation-bg-dark-2 text-foundation-text-dark-primary border-foundation-text-dark-primary/10",
+			destructive:
+				"border-foundation-accent-red/50 text-foundation-accent-red dark:border-foundation-accent-red [&>svg]:text-foundation-accent-red",
+		},
+	},
+	defaultVariants: {
+		variant: "default",
+	},
+});
 
 /**
  * Renders an alert container with variant styles.
@@ -31,39 +29,36 @@ const alertVariants = cva(
  * @param props - Alert props including variant.
  * @returns An alert element.
  */
-function Alert({
-  className,
-  variant,
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>) {
-  return (
-    <div
-      data-slot="alert"
-      role="alert"
-      className={cn(alertVariants({ variant }), className)}
-      {...props}
-    />
-  );
-}
+const Alert = React.forwardRef<
+	HTMLDivElement,
+	React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
+>(({ className, variant, ...props }, ref) => (
+	<div
+		ref={ref}
+		role="alert"
+		className={cn(alertVariants({ variant }), className)}
+		{...props}
+	/>
+));
+Alert.displayName = "Alert";
 
 /**
  * Renders an alert title element.
  *
- * @param props - Div props for the title.
+ * @param props - Heading props for the title.
  * @returns An alert title element.
  */
-function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="alert-title"
-      className={cn(
-        "col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight text-body-small-emphasis",
-        className,
-      )}
-      {...props}
-    />
-  );
-}
+const AlertTitle = React.forwardRef<
+	HTMLParagraphElement,
+	React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+	<h5
+		ref={ref}
+		className={cn("mb-1 font-medium leading-none tracking-tight", className)}
+		{...props}
+	/>
+));
+AlertTitle.displayName = "AlertTitle";
 
 /**
  * Renders an alert description element.
@@ -71,17 +66,16 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
  * @param props - Div props for the description.
  * @returns An alert description element.
  */
-function AlertDescription({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="alert-description"
-      className={cn(
-        "text-foundation-text-dark-tertiary col-start-2 grid justify-items-start gap-1 text-body-small [&_p]:leading-body",
-        className,
-      )}
-      {...props}
-    />
-  );
-}
+const AlertDescription = React.forwardRef<
+	HTMLParagraphElement,
+	React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+	<div
+		ref={ref}
+		className={cn("text-sm [&_p]:leading-relaxed", className)}
+		{...props}
+	/>
+));
+AlertDescription.displayName = "AlertDescription";
 
-export { Alert, AlertTitle, AlertDescription };
+export { Alert, AlertDescription, AlertTitle };

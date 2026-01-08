@@ -1,5 +1,46 @@
 # Cross-Platform Architecture: React + Swift + Apps SDK
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Engineers and technical leads
+- Scope: System architecture and component relationships
+- Non-scope: Step-by-step operational procedures
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Executive Summary](#executive-summary)
+- [1. UI Component Parity Strategy](#1-ui-component-parity-strategy)
+  - [1.1 Token-Driven Design System](#11-token-driven-design-system)
+  - [1.2 Component Architecture Mapping](#12-component-architecture-mapping)
+  - [1.3 Component Parity Matrix](#13-component-parity-matrix)
+- [2. Shared Business Logic Architecture](#2-shared-business-logic-architecture)
+  - [2.1 Runtime Abstraction Layer](#21-runtime-abstraction-layer)
+  - [2.2 Shared State Management](#22-shared-state-management)
+  - [2.3 JavaScript Core Bridge (Swift ↔ TypeScript)](#23-javascript-core-bridge-swift-typescript)
+  - [2.4 Validation & Business Rules](#24-validation-business-rules)
+- [3. Build & Distribution Pipeline](#3-build-distribution-pipeline)
+  - [3.1 Enhanced Monorepo Structure](#31-enhanced-monorepo-structure)
+  - [3.2 Token Generation Pipeline](#32-token-generation-pipeline)
+  - [3.3 Runtime Bundling Strategy](#33-runtime-bundling-strategy)
+  - [3.4 Swift Package Manager Integration](#34-swift-package-manager-integration)
+  - [3.5 Cross-Platform Build Pipeline (Current)](#35-cross-platform-build-pipeline-current)
+  - [3.6 Version Synchronization (Current)](#36-version-synchronization-current)
+- [Verify (Current Pipeline)](#verify-current-pipeline)
+- [4. Implementation Roadmap (Historical)](#4-implementation-roadmap-historical)
+  - [Phase 1: Foundation (Weeks 1-2)](#phase-1-foundation-weeks-1-2)
+  - [Phase 2: Core Components (Weeks 3-4)](#phase-2-core-components-weeks-3-4)
+  - [Phase 3: Integration (Weeks 5-6)](#phase-3-integration-weeks-5-6)
+  - [Phase 4: Production (Weeks 7-8)](#phase-4-production-weeks-7-8)
+- [5. Benefits & Trade-offs](#5-benefits-trade-offs)
+  - [Benefits](#benefits)
+  - [Trade-offs](#trade-offs)
+- [6. Success Metrics](#6-success-metrics)
+
+
 > Status: This document includes historical proposals that reference the legacy `platforms/apple/swift/ui-swift` package.
 > For the current Swift architecture, see `platforms/apple/swift/README.md` and `docs/SWIFT_INTEGRATION.md`.
 

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import * as Icons from './ChatGPTIcons';
+
 import { colors, getBackgroundClass, getTextColorClass, getIconColorClass } from '../../design-tokens';
 import { copyToClipboard } from '../../utils/clipboard';
+
+import * as Icons from './ChatGPTIcons';
 
 // Icon catalog component for browsing and testing all ChatGPT icons
 export function ChatGPTIconCatalog() {

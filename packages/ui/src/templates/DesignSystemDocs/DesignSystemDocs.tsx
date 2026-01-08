@@ -1,6 +1,6 @@
 import { useCallback, useState, type ReactNode } from "react";
-import { copyToClipboard as copyToClipboardUtil } from "../../utils/clipboard";
 
+import { copyToClipboard as copyToClipboardUtil } from "../../utils/clipboard";
 import {
   IconArrowUpSm,
   IconCheckmark,

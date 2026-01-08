@@ -1,5 +1,15 @@
 # Design Document: Native macOS Bridge
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 ## Overview
 
 The Native macOS Bridge refactors and enhances the existing ChatUI system to provide a unified, modular SwiftUI library architecture that maintains perfect design consistency across React web applications, iOS, macOS, and future platforms like visionOS. The system transforms the current monolithic `ChatUISwift` package at `packages/ui-swift/` into four specialized Swift packages while leveraging enhanced design token generation as the bridge between platforms.

@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   IconChevronRightMd,
   IconLock,
@@ -8,8 +10,6 @@ import {
   IconUser,
   IconX,
 } from "../../../icons";
-import { useState } from "react";
-
 import {
   TemplateFieldGroup,
   TemplateFieldGroupAction,

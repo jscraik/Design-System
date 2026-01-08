@@ -1,5 +1,47 @@
 # Swift CI/CD Security Scanning Setup
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Overview and essential workflows for this area
+- Non-scope: Deep API reference or internal design rationale
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [What's Been Created](#whats-been-created)
+  - [1. SwiftLint Configuration (`.swiftlint.yml`)](#1-swiftlint-configuration-swiftlintyml)
+  - [2. CodeQL Configuration (`.github/codeql-config.yml`)](#2-codeql-configuration-githubcodeql-configyml)
+  - [3. GitHub Actions Workflow (`.github/workflows/swift-security.yml`)](#3-github-actions-workflow-githubworkflowsswift-securityyml)
+  - [4. Security Test Suite](#4-security-test-suite)
+  - [5. Documentation](#5-documentation)
+- [File Structure](#file-structure)
+- [Quick Start](#quick-start)
+  - [1. Run Security Tests Locally](#1-run-security-tests-locally)
+  - [2. Run SwiftLint Locally](#2-run-swiftlint-locally)
+  - [3. Run CodeQL Locally](#3-run-codeql-locally)
+- [CI/CD Integration](#cicd-integration)
+  - [Automatic Triggers](#automatic-triggers)
+  - [Security Gates](#security-gates)
+  - [Viewing Results](#viewing-results)
+- [Customization](#customization)
+  - [Adjusting SwiftLint Rules](#adjusting-swiftlint-rules)
+  - [Adjusting CodeQL Queries](#adjusting-codeql-queries)
+  - [Adding Security Tests](#adding-security-tests)
+- [Coverage Requirements](#coverage-requirements)
+- [Troubleshooting](#troubleshooting)
+  - [SwiftLint Not Found](#swiftlint-not-found)
+  - [CodeQL Not Found](#codeql-not-found)
+  - [Tests Failing Locally](#tests-failing-locally)
+  - [Coverage Below Threshold](#coverage-below-threshold)
+- [Next Steps](#next-steps)
+- [Support](#support)
+- [License](#license)
+
+
 This document provides an overview of the complete security scanning setup for the Swift codebase, including all configuration files, workflows, and testing infrastructure.
 
 ## What's Been Created
@@ -404,3 +446,12 @@ For questions or issues with the security setup:
 ## License
 
 This security setup is part of the ChatUI project and follows the same license terms.
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+

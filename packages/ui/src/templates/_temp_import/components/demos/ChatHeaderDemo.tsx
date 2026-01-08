@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { ChatHeader } from "../ChatHeader";
 import { Star, BookmarkPlus, MoreHorizontal, Users, Lock, Globe } from "lucide-react";
+
+import { ChatHeader } from "../ChatHeader";
 
 export function ChatHeaderDemo() {
   // Example 1: Basic chat mode

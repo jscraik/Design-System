@@ -1,5 +1,27 @@
 # Block Wrapper Pattern Recommendations
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Current State](#current-state)
+- [Industry Context](#industry-context)
+- [Options](#options)
+  - [Option A: Delete ChatInputBlock (Recommended)](#option-a-delete-chatinputblock-recommended)
+  - [Option B: Keep for Consistency](#option-b-keep-for-consistency)
+  - [Option C: Add Value to the Block](#option-c-add-value-to-the-block)
+- [My Recommendation](#my-recommendation)
+- [Files to Review](#files-to-review)
+
+
 ## Current State
 
 `ChatInputBlock.tsx` is a pure pass-through wrapper:

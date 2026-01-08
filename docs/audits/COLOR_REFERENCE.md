@@ -1,5 +1,42 @@
 # ChatGPT Design System - Color Reference
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Core Backgrounds](#core-backgrounds)
+  - [Modal & Panel Backgrounds](#modal-panel-backgrounds)
+- [Text Colors](#text-colors)
+  - [Primary Text](#primary-text)
+- [Accent Colors](#accent-colors)
+  - [Green (Primary Actions)](#green-primary-actions)
+  - [Blue](#blue)
+  - [Purple](#purple)
+  - [Orange](#orange)
+  - [Pink/Red](#pinkred)
+- [Borders & Dividers](#borders-dividers)
+- [Interactive States](#interactive-states)
+  - [Buttons](#buttons)
+  - [Inputs & Dropdowns](#inputs-dropdowns)
+  - [Toggle Buttons (Pill Style)](#toggle-buttons-pill-style)
+- [Mode Colors](#mode-colors)
+  - [Mode Selection States](#mode-selection-states)
+- [Category Tags](#category-tags)
+- [Avatar Backgrounds](#avatar-backgrounds)
+- [Usage Guidelines](#usage-guidelines)
+  - [DO ✅](#do)
+  - [DON'T ❌](#dont)
+- [Migration Notes](#migration-notes)
+
+
 This document outlines all colors used in the application for consistency across all components.
 
 ## Core Backgrounds
