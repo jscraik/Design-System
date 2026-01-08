@@ -1,5 +1,15 @@
 # Template Drift Report
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 Source: `_temp/ChatGPT UI Templates (1)/src/templates/registry.ts` vs `packages/ui/src`
 
 | Template ID | Component | _temp path | Best match in packages/ui | Similarity (Jaccard) | Match count |

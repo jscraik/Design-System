@@ -1,5 +1,4 @@
 import { IconChevronLeftMd, IconChevronRightMd } from "./icons/ChatGPTIcons";
-
 import type { SettingsPanelProps } from "./types";
 
 export function ArchivedChatsPanel({ onBack }: SettingsPanelProps) {

@@ -1,5 +1,15 @@
 # Template Drift (Code-Level)
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 Comparison source: `_temp/ChatGPT UI Templates (1)` vs `packages/ui/src`
 
 ## new-components-showcase

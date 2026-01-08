@@ -9,9 +9,10 @@ import {
   type UIEvent,
 } from "react";
 import { Resizable } from "re-resizable";
+import { X, AlertCircle, RefreshCw } from "lucide-react";
+
 import { ScrollArea } from "./ui/scroll-area";
 import { cn } from "./ui/utils";
-import { X, AlertCircle, RefreshCw } from "lucide-react";
 
 // Context for panel state management
 interface TemplatePanelContextValue {

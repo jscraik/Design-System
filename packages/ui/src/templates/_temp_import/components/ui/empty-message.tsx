@@ -1,6 +1,7 @@
 import * as React from "react";
-import { cn } from "./utils";
 import { FileQuestion, Search, Inbox, AlertCircle } from "lucide-react";
+
+import { cn } from "./utils";
 
 export interface EmptyMessageProps extends React.HTMLAttributes<HTMLDivElement> {
   icon?: React.ReactNode | React.ElementType;

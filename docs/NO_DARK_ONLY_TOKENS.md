@@ -1,5 +1,41 @@
 # No Dark-Only Tokens (ESLint Rule)
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [The Problem](#the-problem)
+- [The Solution](#the-solution)
+  - [Option 1: Use Foundation Token Pairs (Preferred)](#option-1-use-foundation-token-pairs-preferred)
+  - [Option 2: Use Utility Pairs](#option-2-use-utility-pairs)
+- [Rule Configuration](#rule-configuration)
+- [Rule Behavior](#rule-behavior)
+  - [Detects Dark-Only Tokens](#detects-dark-only-tokens)
+  - [Allowances](#allowances)
+  - [Validations](#validations)
+- [Examples](#examples)
+  - [❌ Violations](#violations)
+  - [✅ Allowed](#allowed)
+- [Whitelist: Valid Dark-Only Tokens](#whitelist-valid-dark-only-tokens)
+- [Foundation Token Prefixes](#foundation-token-prefixes)
+- [Custom Allowances](#custom-allowances)
+- [Fixing Violations](#fixing-violations)
+  - [Step 1: Find the light mode equivalent](#step-1-find-the-light-mode-equivalent)
+  - [Step 2: Add the light mode token](#step-2-add-the-light-mode-token)
+  - [Step 3: Or use a utility pair](#step-3-or-use-a-utility-pair)
+- [Testing](#testing)
+- [Related Documentation](#related-documentation)
+
+
 ## Overview
 
 This ESLint rule prevents dark-only token usage when using **media mode** for dark mode (`darkMode: "media"` in Tailwind config).
@@ -240,3 +276,15 @@ pnpm --filter @chatui/ui lint
 - [Tailwind CSS Dark Mode](https://tailwindcss.com/docs/dark-mode)
 - [Modal Boundaries](./MODAL_BOUNDARIES.md)
 - [ESLint Modal Rules](./ESLINT_MODAL_RULES.md)
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

@@ -7,7 +7,6 @@ import { TypographyShowcase as TempTypographyShowcase } from "./_temp_import/com
 import { SpacingShowcase as TempSpacingShowcase } from "./_temp_import/components/SpacingShowcase";
 import { IconographyShowcase as TempIconographyShowcase } from "./_temp_import/components/IconographyShowcase";
 import { DesignSystemDocs as TempDesignSystemDocs } from "./_temp_import/components/DesignSystemDocs";
-
 import { ComposeTemplate } from "./ComposeTemplate";
 import { ChatTemplate } from "./ChatTemplate";
 import { ChatSidebarTemplate } from "./ChatSidebarTemplate";

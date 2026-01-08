@@ -1,5 +1,15 @@
 # React Audit Log (Dec 2025)
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 Scope: Full React surface (packages/ui, packages/widgets, platforms/web/apps/web, platforms/web/apps/storybook).
 Change policy: Breaking changes allowed.
 UX scope: ChatGPT widgets + React UI; record changes for SwiftUI parity.

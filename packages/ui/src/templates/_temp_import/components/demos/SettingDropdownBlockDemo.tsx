@@ -1,10 +1,5 @@
 import { useState } from "react";
 import {
-  SettingDropdownBlock,
-  SettingDropdownGroup,
-  type SettingDropdownOption,
-} from "../SettingDropdownBlock";
-import {
   Palette,
   Globe,
   Zap,
@@ -27,6 +22,12 @@ import {
   Sparkles,
   Shield,
 } from "lucide-react";
+
+import {
+  SettingDropdownBlock,
+  SettingDropdownGroup,
+  type SettingDropdownOption,
+} from "../SettingDropdownBlock";
 import { SettingRowBadge } from "../SettingRowBlock";
 
 export function SettingDropdownBlockDemo() {

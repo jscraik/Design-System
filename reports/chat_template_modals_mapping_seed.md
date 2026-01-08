@@ -1,5 +1,15 @@
 # Chat/Template/Compose/Modals Manual Mapping (Seed)
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 These are fuzzy best-matches to help bootstrap a manual mapping. Please edit this list to confirm or adjust.
 
 | packages/ui file | proposed _temp match | similarity |

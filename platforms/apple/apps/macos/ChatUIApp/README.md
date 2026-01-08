@@ -1,5 +1,15 @@
 # ChatUI - Native macOS Application
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Overview and essential workflows for this area
+- Non-scope: Deep API reference or internal design rationale
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 A production-ready native macOS application built with SwiftUI, demonstrating the complete ChatUI component library and MCP tool integration.
 
 ## Table of contents

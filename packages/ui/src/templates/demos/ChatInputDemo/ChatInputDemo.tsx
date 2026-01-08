@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { ChatInput } from "../../../app/chat/ChatInput";
+
 import { ChatInputReference } from "./ChatInputReference";
 
 export function ChatInputDemo() {

@@ -1,5 +1,15 @@
 # DocC Documentation Setup Guide
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (beginner to intermediate)
+- Scope: Task-focused instructions for this topic
+- Non-scope: Comprehensive architecture reference
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 Complete guide for generating and publishing DocC documentation for ChatUI Swift packages.
 
 ## Table of Contents
@@ -599,3 +609,15 @@ public func oldFunction() { }
 ## License
 
 See repository root for license information.
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

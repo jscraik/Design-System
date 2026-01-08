@@ -1,11 +1,5 @@
 import { useState } from "react";
 import {
-  TemplatePanel,
-  TemplatePanelHeader,
-  TemplatePanelFooter,
-  useTemplatePanel,
-} from "../TemplatePanel";
-import {
   Settings,
   Bell,
   Loader2,
@@ -22,6 +16,13 @@ import {
   Plus,
   CheckCircle2,
 } from "lucide-react";
+
+import {
+  TemplatePanel,
+  TemplatePanelHeader,
+  TemplatePanelFooter,
+  useTemplatePanel,
+} from "../TemplatePanel";
 
 // Demo component that uses the panel context
 function PanelStatusIndicator() {

@@ -1,5 +1,4 @@
 import { IconChevronLeftMd, IconChevronRightMd } from "./icons/ChatGPTIcons";
-
 import type { SettingsPanelProps } from "./types";
 
 // Simplified app icon component with better visual consistency

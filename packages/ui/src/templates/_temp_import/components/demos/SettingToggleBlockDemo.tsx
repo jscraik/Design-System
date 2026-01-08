@@ -1,10 +1,5 @@
 import { useState } from "react";
 import {
-  SettingToggleBlock,
-  SettingToggleBadge,
-  SettingToggleGroup,
-} from "../SettingToggleBlock";
-import {
   Bell,
   Globe,
   Shield,
@@ -22,6 +17,12 @@ import {
   HelpCircle,
   ExternalLink,
 } from "lucide-react";
+
+import {
+  SettingToggleBlock,
+  SettingToggleBadge,
+  SettingToggleGroup,
+} from "../SettingToggleBlock";
 
 export function SettingToggleBlockDemo() {
   const [notifications, setNotifications] = useState(true);

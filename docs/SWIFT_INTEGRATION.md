@@ -1,5 +1,15 @@
 # Swift Integration Guide
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 This guide explains how to work with the modular ChatUI Swift packages and the macOS Component Gallery.
 
 ## Table of contents
@@ -135,3 +145,9 @@ The original `platforms/apple/swift/ui-swift` package is retained for historical
 
 - Use `platforms/apple/swift/ADOPTION_GUIDE.md` for team rollout.
 - Use `platforms/apple/swift/DEVELOPMENT_WORKFLOW.md` for detailed workflows.
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+

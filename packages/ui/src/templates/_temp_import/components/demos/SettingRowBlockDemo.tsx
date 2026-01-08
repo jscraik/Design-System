@@ -1,12 +1,5 @@
 import { useState } from "react";
 import {
-  SettingRowBlock,
-  SettingRowValue,
-  SettingRowBadge,
-  SettingRowGroup,
-  SettingRowDivider,
-} from "../SettingRowBlock";
-import {
   User,
   Mail,
   Shield,
@@ -37,6 +30,14 @@ import {
   Sparkles,
   ChevronRight,
 } from "lucide-react";
+
+import {
+  SettingRowBlock,
+  SettingRowValue,
+  SettingRowBadge,
+  SettingRowGroup,
+  SettingRowDivider,
+} from "../SettingRowBlock";
 
 export function SettingRowBlockDemo() {
   const [selectedRow, setSelectedRow] = useState<string | null>(null);

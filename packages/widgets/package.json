@@ -18,19 +18,20 @@
     "embla-carousel-react": "8.6.0",
     "framer-motion": "12.23.26",
     "lucide-react": "0.487.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-markdown": "9.1.0",
-    "react-router-dom": "7.8.2",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-markdown": "10.1.0",
+    "react-router-dom": "7.11.0",
     "three": "0.179.1"
   },
   "devDependencies": {
+    "@types/mapbox-gl": "^3.4.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.7.0",
-    "@tailwindcss/vite": "^4.1.12",
+    "@tailwindcss/vite": "^4.1.18",
     "fast-glob": "^3.3.3",
-    "tailwindcss": "^4.1.12",
+    "tailwindcss": "^4.1.18",
     "vite": "^6.4.1"
   }
 }

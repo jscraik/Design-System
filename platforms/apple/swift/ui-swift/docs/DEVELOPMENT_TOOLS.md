@@ -1,5 +1,47 @@
 # ChatUISwift Development Tools
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [Quick Start](#quick-start)
+  - [Start All Development Tools](#start-all-development-tools)
+  - [Start Individual Tools](#start-individual-tools)
+- [Tool Details](#tool-details)
+  - [1. Token Hot Reload](#1-token-hot-reload)
+  - [2. Component Documentation Generation](#2-component-documentation-generation)
+  - [3. Component Debugging Tools](#3-component-debugging-tools)
+  - [4. Performance Monitoring](#4-performance-monitoring)
+- [Integration with Xcode](#integration-with-xcode)
+  - [SwiftUI Previews](#swiftui-previews)
+  - [Xcode Workflow](#xcode-workflow)
+- [Configuration](#configuration)
+  - [Environment Variables](#environment-variables)
+  - [Debug Configuration](#debug-configuration)
+- [Performance Dashboard](#performance-dashboard)
+- [Troubleshooting](#troubleshooting)
+  - [Token Hot Reload Issues](#token-hot-reload-issues)
+  - [Documentation Generation Issues](#documentation-generation-issues)
+  - [Performance Monitoring Issues](#performance-monitoring-issues)
+  - [Debug Tools Not Appearing](#debug-tools-not-appearing)
+- [Best Practices](#best-practices)
+  - [Development Workflow](#development-workflow)
+  - [Performance Optimization](#performance-optimization)
+  - [Documentation Maintenance](#documentation-maintenance)
+- [Requirements](#requirements)
+- [Verify](#verify)
+- [Validation: Requirements 7.1, 7.4](#validation-requirements-71-74)
+
+
 > Legacy: `platforms/apple/swift/ui-swift` is retained for reference. The current macOS apps use the modular Swift packages in `platforms/apple/swift/`.
 
 This document describes the development tooling available for ChatUISwift, including hot reload, documentation generation, debugging tools, and performance monitoring.

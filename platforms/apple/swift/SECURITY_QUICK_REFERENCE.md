@@ -1,5 +1,45 @@
 # Swift Security Testing - Quick Reference
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Maintainers and security reviewers
+- Scope: Security posture, guidance, and required practices
+- Non-scope: Feature usage or product marketing
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Quick Commands](#quick-commands)
+  - [Run All Security Checks](#run-all-security-checks)
+  - [Run Individual Checks](#run-individual-checks)
+- [CI/CD Security Gates](#cicd-security-gates)
+- [File Locations](#file-locations)
+- [Common Security Rules](#common-security-rules)
+  - [Prohibited Patterns](#prohibited-patterns)
+  - [Required Patterns](#required-patterns)
+- [Test Structure](#test-structure)
+- [Helper Methods](#helper-methods)
+- [Coverage Threshold](#coverage-threshold)
+- [Viewing Results](#viewing-results)
+  - [Local](#local)
+  - [CI/CD](#cicd)
+- [Security Test Categories](#security-test-categories)
+  - [1. Input Validation](#1-input-validation)
+  - [2. Authentication](#2-authentication)
+  - [3. Authorization](#3-authorization)
+- [Common Vulnerabilities](#common-vulnerabilities)
+- [Troubleshooting](#troubleshooting)
+  - [SwiftLint fails](#swiftlint-fails)
+  - [Tests fail](#tests-fail)
+  - [Coverage low](#coverage-low)
+- [Resources](#resources)
+- [Best Practices](#best-practices)
+- [Quick Checklist](#quick-checklist)
+
+
 ## Quick Commands
 
 ### Run All Security Checks
@@ -208,3 +248,12 @@ Before committing:
 ---
 
 **Remember**: Security gates block merge on failure. No bypasses!
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+

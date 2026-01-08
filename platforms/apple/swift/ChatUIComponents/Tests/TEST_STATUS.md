@@ -1,5 +1,39 @@
 # Test Status for ChatUIComponents
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Summary](#summary)
+- [Test Coverage](#test-coverage)
+  - [SettingRowView Tests](#settingrowview-tests)
+  - [FoundationSwitchStyle Tests](#foundationswitchstyle-tests)
+  - [SettingToggleView Tests](#settingtoggleview-tests)
+  - [SettingDropdownView Tests](#settingdropdownview-tests)
+  - [SettingsCardView Tests](#settingscardview-tests)
+  - [SettingsDivider Tests](#settingsdivider-tests)
+  - [Component Composition Tests](#component-composition-tests)
+  - [Platform Tests (ChatUIFoundation)](#platform-tests-chatuifoundation)
+  - [Token System Tests (ChatUIFoundation)](#token-system-tests-chatuifoundation)
+- [Test Files](#test-files)
+- [Build Status](#build-status)
+- [Running Tests](#running-tests)
+  - [With Xcode (Recommended)](#with-xcode-recommended)
+  - [With Swift Package Manager](#with-swift-package-manager)
+- [Property-Based Testing](#property-based-testing)
+- [Validation](#validation)
+- [Next Steps](#next-steps)
+- [Status: ✅ READY](#status-ready)
+
+
 ## Summary
 
 Unit tests for all settings primitives have been written and are ready to run. The tests are syntactically correct and the packages build successfully.
@@ -123,3 +157,15 @@ These will be implemented using SwiftCheck in a future phase.
 ## Status: ✅ READY
 
 All unit tests are written, syntactically correct, and ready to run in Xcode. The packages build successfully, confirming the test code is valid.
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

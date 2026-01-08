@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   IconCheckCircle,
   IconCheckmark,
@@ -6,8 +8,6 @@ import {
   IconQuestion,
   IconShare,
 } from "../../../icons";
-import { useState } from "react";
-
 import {
   TemplateFooterBar,
   TemplateFooterButton,

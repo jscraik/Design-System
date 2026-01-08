@@ -1,227 +1,299 @@
 @custom-variant dark (&:where([data-theme=dark],[data-theme=dark] *));
 
 :root {
-  --font-size: 16px;
-  --font-weight-medium: 500;
-  --font-weight-normal: 400;
-  --radius: var(--foundation-radius-12);
-  --radius-card: var(--foundation-radius-24);
-  --radius-row: var(--foundation-radius-10);
-  --radius-media: var(--foundation-radius-16);
-  --radius-pip: var(--foundation-radius-18);
-  --radius-pill: var(--foundation-radius-round);
-  --radius-floating: var(--foundation-radius-21);
+	--font-size: 16px;
+	--font-weight-medium: 500;
+	--font-weight-normal: 400;
+	--radius: var(--foundation-radius-12);
+	--radius-card: var(--foundation-radius-24);
+	--radius-row: var(--foundation-radius-10);
+	--radius-media: var(--foundation-radius-16);
+	--radius-pip: var(--foundation-radius-18);
+	--radius-pill: var(--foundation-radius-round);
+	--radius-floating: var(--foundation-radius-21);
 }
 
 /* Light mode - explicit values */
 :root,
 :where([data-theme="light"]) {
-  /* Backgrounds */
-  --background: var(--foundation-bg-light-1) !important; /* primary */
-  --secondary: var(--foundation-bg-light-2) !important;
-  --muted: var(--foundation-bg-light-3) !important; /* tertiary */
-  --card: var(--foundation-bg-light-1) !important;
-  --popover: var(--foundation-bg-light-1) !important;
-  --border: var(--foundation-border-light) !important;
-  --border-subtle: var(--foundation-border-light) !important;
-  --border-strong: var(--foundation-border-heavy) !important;
+	/* Backgrounds */
+	--background: var(--foundation-bg-light-1) !important; /* primary */
+	--secondary: var(--foundation-bg-light-2) !important;
+	--muted: var(--foundation-bg-light-3) !important; /* tertiary */
+	--card: var(--foundation-bg-light-1) !important;
+	--popover: var(--foundation-bg-light-1) !important;
+	--border: var(--foundation-border-light) !important;
+	--border-subtle: var(--foundation-border-light) !important;
+	--border-strong: var(--foundation-border-heavy) !important;
 
-  /* Text + Icons */
-  --foreground: var(--foundation-text-light-primary) !important; /* primary */
-  --text-secondary: var(--foundation-text-light-secondary) !important; /* secondary */
-  --text-tertiary: var(--foundation-text-light-tertiary) !important; /* tertiary */
-  --text-inverted: var(--foundation-text-dark-primary) !important; /* inverted */
+	/* Text + Icons */
+	--foreground: var(--foundation-text-light-primary) !important; /* primary */
+	--text-secondary: var(
+		--foundation-text-light-secondary
+	) !important; /* secondary */
+	--text-tertiary: var(
+		--foundation-text-light-tertiary
+	) !important; /* tertiary */
+	--text-inverted: var(
+		--foundation-text-dark-primary
+	) !important; /* inverted */
 
-  /* Accents */
-  --accent-blue: var(--foundation-accent-blue-light) !important;
-  --accent-red: var(--foundation-accent-red-light) !important;
-  --accent-orange: var(--foundation-accent-orange-light) !important;
-  --accent-green: var(--foundation-accent-green-light) !important;
-  --accent-purple: var(--foundation-accent-purple-light) !important;
+	/* Accents */
+	--accent-blue: var(--foundation-accent-blue-light) !important;
+	--accent-red: var(--foundation-accent-red-light) !important;
+	--accent-orange: var(--foundation-accent-orange-light) !important;
+	--accent-green: var(--foundation-accent-green-light) !important;
+	--accent-purple: var(--foundation-accent-purple-light) !important;
 
-  /* Accent foreground (text on accent backgrounds) */
-  --accent-foreground: var(--foundation-text-dark-primary) !important;
+	/* Accent foreground (text on accent backgrounds) */
+	--accent-foreground: var(--foundation-text-dark-primary) !important;
 
-  /* Ring (focus outline) */
-  --ring: var(--foundation-focus-ring) !important;
+	/* Ring (focus outline) */
+	--ring: var(--foundation-focus-ring) !important;
 }
 
 /* Dark mode - explicit values */
 :where([data-theme="dark"]) {
-  /* Backgrounds */
-  --background: var(--foundation-bg-dark-1) !important; /* primary */
-  --secondary: var(--foundation-bg-dark-2) !important;
-  --muted: var(--foundation-bg-dark-3) !important; /* tertiary */
-  --card: var(--foundation-bg-dark-1) !important;
-  --popover: var(--foundation-bg-dark-2) !important;
-  --border: var(--foundation-border-dark-light) !important;
-  --border-subtle: var(--foundation-border-dark-light) !important;
-  --border-strong: var(--foundation-border-dark-default) !important;
+	/* Backgrounds */
+	--background: var(--foundation-bg-dark-1) !important; /* primary */
+	--secondary: var(--foundation-bg-dark-2) !important;
+	--muted: var(--foundation-bg-dark-3) !important; /* tertiary */
+	--card: var(--foundation-bg-dark-1) !important;
+	--popover: var(--foundation-bg-dark-2) !important;
+	--border: var(--foundation-border-dark-light) !important;
+	--border-subtle: var(--foundation-border-dark-light) !important;
+	--border-strong: var(--foundation-border-dark-default) !important;
 
-  /* Text + Icons */
-  --foreground: var(--foundation-text-dark-primary) !important; /* primary */
-  --text-secondary: var(--foundation-text-dark-secondary) !important; /* secondary */
-  --text-tertiary: var(--foundation-text-dark-tertiary) !important; /* tertiary */
-  --text-inverted: var(--foundation-text-light-primary) !important; /* inverted */
+	/* Text + Icons */
+	--foreground: var(--foundation-text-dark-primary) !important; /* primary */
+	--text-secondary: var(
+		--foundation-text-dark-secondary
+	) !important; /* secondary */
+	--text-tertiary: var(
+		--foundation-text-dark-tertiary
+	) !important; /* tertiary */
+	--text-inverted: var(
+		--foundation-text-light-primary
+	) !important; /* inverted */
 
-  /* Accents */
-  --accent-blue: var(--foundation-accent-blue) !important;
-  --accent-red: var(--foundation-accent-red) !important;
-  --accent-orange: var(--foundation-accent-orange) !important;
-  --accent-green: var(--foundation-accent-green) !important;
-  --accent-purple: var(--foundation-accent-purple) !important;
+	/* Accents */
+	--accent-blue: var(--foundation-accent-blue) !important;
+	--accent-red: var(--foundation-accent-red) !important;
+	--accent-orange: var(--foundation-accent-orange) !important;
+	--accent-green: var(--foundation-accent-green) !important;
+	--accent-purple: var(--foundation-accent-purple) !important;
 
-  /* Accent foreground (text on accent backgrounds) */
-  --accent-foreground: var(--foundation-text-dark-primary) !important;
+	/* Accent foreground (text on accent backgrounds) */
+	--accent-foreground: var(--foundation-text-dark-primary) !important;
 
-  /* Ring (focus outline) */
-  --ring: var(--foundation-focus-ring) !important;
+	/* Ring (focus outline) */
+	--ring: var(--foundation-focus-ring) !important;
 }
 
 @theme inline {
-  /* Background colors */
-  --color-background: var(--background);
-  --color-secondary: var(--secondary);
-  --color-muted: var(--muted);
-  --color-popover: var(--popover);
-  --color-card: var(--card);
+	/* Background colors */
+	--color-background: var(--background);
+	--color-secondary: var(--secondary);
+	--color-muted: var(--muted);
+	--color-popover: var(--popover);
+	--color-card: var(--card);
 
-  /* Text colors */
-  --color-foreground: var(--foreground);
-  --color-text-secondary: var(--text-secondary);
-  --color-muted-foreground: var(--text-tertiary);
-  --color-text-inverted: var(--text-inverted);
+	/* Text colors */
+	--color-foreground: var(--foreground);
+	--color-text-secondary: var(--text-secondary);
+	--color-muted-foreground: var(--text-tertiary);
+	--color-text-inverted: var(--text-inverted);
 
-  /* Border */
-  --color-border: var(--border);
-  --color-border-subtle: var(--border-subtle);
-  --color-border-strong: var(--border-strong);
+	/* Border */
+	--color-border: var(--border);
+	--color-border-subtle: var(--border-subtle);
+	--color-border-strong: var(--border-strong);
 
-  /* Accents */
-  --color-accent: var(--accent-blue);
-  --color-accent-blue: var(--accent-blue);
-  --color-accent-red: var(--accent-red);
-  --color-accent-orange: var(--accent-orange);
-  --color-accent-green: var(--accent-green);
-  --color-accent-purple: var(--accent-purple);
+	/* Accents */
+	--color-accent: var(--accent-blue);
+	--color-accent-blue: var(--accent-blue);
+	--color-accent-red: var(--accent-red);
+	--color-accent-orange: var(--accent-orange);
+	--color-accent-green: var(--accent-green);
+	--color-accent-purple: var(--accent-purple);
 
-  /* Accent foreground */
-  --color-accent-foreground: var(--accent-foreground);
+	/* Accent foreground */
+	--color-accent-foreground: var(--accent-foreground);
 
-  /* Ring */
-  --color-ring: var(--ring);
+	/* Ring */
+	--color-ring: var(--ring);
 
-  /* Radius */
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+	/* Radius */
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+
+	/* Foundation colors (for backward compatibility with _temp templates) */
+	/* Background colors */
+	--color-foundation-bg-dark-1: var(--foundation-bg-dark-1);
+	--color-foundation-bg-dark-2: var(--foundation-bg-dark-2);
+	--color-foundation-bg-dark-3: var(--foundation-bg-dark-3);
+	--color-foundation-bg-light-1: var(--foundation-bg-light-1);
+	--color-foundation-bg-light-2: var(--foundation-bg-light-2);
+	--color-foundation-bg-light-3: var(--foundation-bg-light-3);
+
+	/* Text colors */
+	--color-foundation-text-dark-primary: var(--foundation-text-dark-primary);
+	--color-foundation-text-dark-secondary: var(--foundation-text-dark-secondary);
+	--color-foundation-text-dark-tertiary: var(--foundation-text-dark-tertiary);
+	--color-foundation-text-light-primary: var(--foundation-text-light-primary);
+	--color-foundation-text-light-secondary: var(
+		--foundation-text-light-secondary
+	);
+	--color-foundation-text-light-tertiary: var(--foundation-text-light-tertiary);
+
+	/* Icon colors */
+	--color-foundation-icon-dark-primary: var(--foundation-icon-dark-primary);
+	--color-foundation-icon-dark-secondary: var(--foundation-icon-dark-secondary);
+	--color-foundation-icon-dark-tertiary: var(--foundation-icon-dark-tertiary);
+	--color-foundation-icon-light-primary: var(--foundation-icon-light-primary);
+	--color-foundation-icon-light-secondary: var(
+		--foundation-icon-light-secondary
+	);
+	--color-foundation-icon-light-tertiary: var(--foundation-icon-light-tertiary);
+
+	/* Accent colors (dark) */
+	--color-foundation-accent-gray: var(--foundation-accent-gray);
+	--color-foundation-accent-red: var(--foundation-accent-red);
+	--color-foundation-accent-orange: var(--foundation-accent-orange);
+	--color-foundation-accent-yellow: var(--foundation-accent-yellow);
+	--color-foundation-accent-green: var(--foundation-accent-green);
+	--color-foundation-accent-blue: var(--foundation-accent-blue);
+	--color-foundation-accent-purple: var(--foundation-accent-purple);
+	--color-foundation-accent-pink: var(--foundation-accent-pink);
+
+	/* Accent colors (light) */
+	--color-foundation-accent-gray-light: var(--foundation-accent-gray-light);
+	--color-foundation-accent-red-light: var(--foundation-accent-red-light);
+	--color-foundation-accent-orange-light: var(--foundation-accent-orange-light);
+	--color-foundation-accent-yellow-light: var(--foundation-accent-yellow-light);
+	--color-foundation-accent-green-light: var(--foundation-accent-green-light);
+	--color-foundation-accent-blue-light: var(--foundation-accent-blue-light);
+	--color-foundation-accent-purple-light: var(--foundation-accent-purple-light);
+	--color-foundation-accent-pink-light: var(--foundation-accent-pink-light);
+
+	/* Border colors */
+	--color-foundation-border-light: var(--foundation-border-light);
+	--color-foundation-border-heavy: var(--foundation-border-heavy);
+	--color-foundation-border-dark-default: var(--foundation-border-dark-default);
+	--color-foundation-border-dark-light: var(--foundation-border-dark-light);
+
+	/* Focus ring */
+	--color-foundation-focus-ring: var(--foundation-focus-ring);
 }
 
 @layer base {
-  * {
-    @apply border-border;
-    outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
-  }
+	* {
+		@apply border-border;
+		outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
+	}
 
-  html,
-  body,
-  #root {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
+	html,
+	body,
+	#root {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
 
-  body {
-    font-family: var(--foundation-font-family);
-    @apply bg-background text-foreground;
-  }
+	body {
+		font-family: var(--foundation-font-family);
+		@apply bg-background text-foreground;
+	}
 
-  /**
-  * Default typography styles for HTML elements (h1-h4, p, label, button, input).
-  * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them.
-  */
+	/**
+	 * Default typography styles for HTML elements (h1-h4, p, label, button, input).
+	 * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them.
+	 */
 
-  html {
-    font-size: var(--font-size);
-  }
+	html {
+		font-size: var(--font-size);
+	}
 
-  h1 {
-    font-size: var(--text-2xl);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+	h1 {
+		font-size: var(--text-2xl);
+		font-weight: var(--font-weight-medium);
+		line-height: 1.5;
+	}
 
-  h2 {
-    font-size: var(--text-xl);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+	h2 {
+		font-size: var(--text-xl);
+		font-weight: var(--font-weight-medium);
+		line-height: 1.5;
+	}
 
-  h3 {
-    font-size: var(--text-lg);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+	h3 {
+		font-size: var(--text-lg);
+		font-weight: var(--font-weight-medium);
+		line-height: 1.5;
+	}
 
-  h4 {
-    font-size: var(--text-base);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+	h4 {
+		font-size: var(--text-base);
+		font-weight: var(--font-weight-medium);
+		line-height: 1.5;
+	}
 
-  label {
-    font-size: var(--text-base);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+	label {
+		font-size: var(--text-base);
+		font-weight: var(--font-weight-medium);
+		line-height: 1.5;
+	}
 
-  button {
-    font-size: var(--text-base);
-    font-weight: var(--font-weight-medium);
-    line-height: 1.5;
-  }
+	button {
+		font-size: var(--text-base);
+		font-weight: var(--font-weight-medium);
+		line-height: 1.5;
+	}
 
-  input {
-    font-size: var(--text-base);
-    font-weight: var(--font-weight-normal);
-    line-height: 1.5;
-  }
+	input {
+		font-size: var(--text-base);
+		font-weight: var(--font-weight-normal);
+		line-height: 1.5;
+	}
 
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
+	/* Hide scrollbar for Chrome, Safari and Opera */
+	.scrollbar-hide::-webkit-scrollbar {
+		display: none;
+	}
 
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .scrollbar-hide {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
+	/* Hide scrollbar for IE, Edge and Firefox */
+	.scrollbar-hide {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: var(--foundation-animation-duration-reduced) !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: var(--foundation-animation-duration-reduced) !important;
-    scroll-behavior: auto !important;
-  }
+	*,
+	*::before,
+	*::after {
+		animation-duration: var(--foundation-animation-duration-reduced) !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: var(
+			--foundation-animation-duration-reduced
+		) !important;
+		scroll-behavior: auto !important;
+	}
 }
 
 /* Override Apps SDK UI text-muted-foreground to use our tertiary text color */
 .text-muted-foreground {
-  color: var(--text-tertiary) !important;
+	color: var(--text-tertiary) !important;
 }
 
 /* Light mode */
 :where([data-theme="light"]) .text-muted-foreground {
-  color: #8f8f8f !important;
+	color: #8f8f8f !important;
 }
 
 /* Dark mode */
 :where([data-theme="dark"]) .text-muted-foreground {
-  color: #afafaf !important;
+	color: #afafaf !important;
 }

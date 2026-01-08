@@ -1,5 +1,15 @@
 # Security Best Practices
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Maintainers and security reviewers
+- Scope: Security posture, guidance, and required practices
+- Non-scope: Feature usage or product marketing
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 This guide covers security best practices for deploying ChatUI applications and widgets.
 
 ## Table of Contents
@@ -422,3 +432,15 @@ Follow the process in [SECURITY.md](../../SECURITY.md):
 - [SECURITY.md](../../SECURITY.md) - Security policy
 - [BUILD_PIPELINE.md](../BUILD_PIPELINE.md) - Build security
 - [Widget Architecture](../architecture/WIDGET_ARCHITECTURE.md) - Widget security patterns
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

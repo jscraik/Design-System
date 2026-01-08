@@ -1,5 +1,40 @@
 # Task 9 Implementation Summary: Expand ChatUIComponents with Additional Primitives
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [Components Implemented](#components-implemented)
+  - [1. ListItemView (Navigation Primitive)](#1-listitemview-navigation-primitive)
+  - [2. InputView (Text Input Primitive)](#2-inputview-text-input-primitive)
+  - [3. ChatUIButton (Already Migrated)](#3-chatuibutton-already-migrated)
+  - [4. NavigationExampleView (Demo)](#4-navigationexampleview-demo)
+- [Token Compliance](#token-compliance)
+  - [Colors (FColor)](#colors-fcolor)
+  - [Typography (FType)](#typography-ftype)
+  - [Spacing (FSpacing)](#spacing-fspacing)
+  - [Platform Utilities (Platform)](#platform-utilities-platform)
+  - [Accessibility (FAccessibility)](#accessibility-faccessibility)
+  - [Theme Constants (ChatGPTTheme)](#theme-constants-chatgpttheme)
+- [Build Verification](#build-verification)
+- [Requirements Validation](#requirements-validation)
+  - [Requirement 3.1: Component Library API Parity](#requirement-31-component-library-api-parity)
+  - [Requirement 3.2: Layout Primitives](#requirement-32-layout-primitives)
+  - [Requirement 3.5: Accessibility Support](#requirement-35-accessibility-support)
+- [File Structure](#file-structure)
+- [Next Steps (Not Part of This Task)](#next-steps-not-part-of-this-task)
+- [Summary](#summary)
+
+
 ## Overview
 
 Successfully expanded the ChatUIComponents package with additional navigation and input primitives, completing the migration from the old monolithic ChatUISwift package to the new modular architecture.

@@ -1,5 +1,15 @@
 # Chat/Template/Compose/Modals Delta Report (Manual Mapping)
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 Mapping is curated (not fuzzy). Update the mapping in this report if you want different pairings.
 
 | packages/ui file | _temp file | status |

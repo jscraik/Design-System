@@ -1,5 +1,29 @@
 # Repo Structure Migration
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Summary](#summary)
+- [Path map (old → new)](#path-map-old-new)
+  - [Apple platform](#apple-platform)
+  - [Apps](#apps)
+  - [Tokens](#tokens)
+  - [UI library](#ui-library)
+  - [UI import surface (new)](#ui-import-surface-new)
+  - [Widgets](#widgets)
+- [Tooling updates to check](#tooling-updates-to-check)
+- [Verification checklist](#verification-checklist)
+
+
 This guide documents the 2026 restructure that improved discoverability and normalized package layouts. Use it to update local tooling, scripts, and bookmarks.
 
 ## Summary
@@ -99,3 +123,15 @@ Use the published subpaths for UI primitives and app surfaces:
 - Swift packages build: `pnpm test:swift:foundation` (and other variants).
 - macOS apps open: `platforms/apple/apps/macos/ComponentGallery/Package.swift`.
 - Token generation writes manifest to `packages/tokens/docs/outputs/manifest.json`.
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

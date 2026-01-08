@@ -8,7 +8,6 @@ import {
   IconSettings,
   IconShare,
 } from "../../../icons";
-
 import { TemplateHeaderBar } from "../../blocks/TemplateHeaderBar";
 
 export function TemplateHeaderBarDemo() {

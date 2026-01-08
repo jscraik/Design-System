@@ -1,5 +1,42 @@
 # FEATURE_DESIGN: ComposeView Parity (SwiftUI + AppKit + Widget)
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [0) Summary](#0-summary)
+- [1) User journeys](#1-user-journeys)
+  - [1.1 Happy path](#11-happy-path)
+  - [1.2 Failure/edge paths](#12-failureedge-paths)
+- [2) Information architecture + navigation](#2-information-architecture-navigation)
+- [3) Screens and states (token-referenced)](#3-screens-and-states-token-referenced)
+- [4) Interaction patterns](#4-interaction-patterns)
+- [5) Responsive/adaptive behavior](#5-responsiveadaptive-behavior)
+- [6) Motion](#6-motion)
+- [7) Accessibility map (WCAG 2.2 AA + Apple AX)](#7-accessibility-map-wcag-22-aa-apple-ax)
+  - [7.1 Semantics and labels](#71-semantics-and-labels)
+  - [7.2 Focus order](#72-focus-order)
+  - [7.3 Keyboard + shortcuts](#73-keyboard-shortcuts)
+  - [7.4 Contrast + accommodations](#74-contrast-accommodations)
+- [8) Acceptance criteria](#8-acceptance-criteria)
+- [9) Implementation guide](#9-implementation-guide)
+  - [9.1 React (Apps SDK widget)](#91-react-apps-sdk-widget)
+  - [9.2 SwiftUI](#92-swiftui)
+  - [9.3 AppKit](#93-appkit)
+- [10) Test plan (step-by-step)](#10-test-plan-step-by-step)
+- [Apps SDK widget (React + Apps SDK UI)](#apps-sdk-widget-react-apps-sdk-ui)
+- [SwiftUI (macOS)](#swiftui-macos)
+- [AppKit (macOS parity)](#appkit-macos-parity)
+
+
 ## 0) Summary
 
 - Goal: Match the existing web `ComposeView` UI in macOS SwiftUI and AppKit, plus a widget-friendly version (Apps SDK UI) that preserves structure, tokens, and accessibility.

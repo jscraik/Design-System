@@ -1,5 +1,40 @@
 # Settings Example View - Implementation Summary
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [Components Demonstrated](#components-demonstrated)
+  - [1. Section Headers](#1-section-headers)
+  - [2. SettingsCardView](#2-settingscardview)
+  - [3. SettingToggleView](#3-settingtoggleview)
+  - [4. SettingDropdownView](#4-settingdropdownview)
+  - [5. SettingsDivider](#5-settingsdivider)
+  - [6. SettingRowView](#6-settingrowview)
+- [SwiftUI Previews](#swiftui-previews)
+  - [Light/Dark Mode Previews](#lightdark-mode-previews)
+  - [Platform-Specific Previews](#platform-specific-previews)
+  - [iOS Previews (Conditional)](#ios-previews-conditional)
+- [Integration with Playground App](#integration-with-playground-app)
+- [Design Tokens Usage](#design-tokens-usage)
+- [Platform Differences Demonstrated](#platform-differences-demonstrated)
+  - [macOS](#macos)
+  - [iOS](#ios)
+- [Requirements Validation](#requirements-validation)
+- [File Locations](#file-locations)
+- [Testing in Xcode](#testing-in-xcode)
+- [Notes](#notes)
+
+
 ## Overview
 
 The `SettingsExampleView.swift` has been successfully created and enhanced with comprehensive SwiftUI previews demonstrating all settings primitives from the ChatUIComponents package.
