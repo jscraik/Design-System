@@ -1,5 +1,15 @@
 # Templates
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Overview and essential workflows for this area
+- Non-scope: Deep API reference or internal design rationale
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 Templates are higher-level UI compositions built from the base components and blocks. They are used by the web app, Storybook, and widget previews to demonstrate full-screen layouts and complex flows.
 
 ## Structure

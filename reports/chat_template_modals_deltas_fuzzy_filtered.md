@@ -1,5 +1,15 @@
 # Chat/Template/Compose/Modals Delta Report (Fuzzy, Filtered)
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 Scope: `Chat*.tsx`, `*Template*.tsx`, `ComposeView.tsx`, and `packages/ui/src/app/modals/**/*.tsx`
 Match strategy: semantic token Jaccard over entire _temp TSX corpus.
 Filter: only matches with similarity >= 0.30 (lower scores are likely false matches).

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { IconArrowDownMd } from "../../../icons";
 
+import { IconArrowDownMd } from "../../../icons";
 import { ChatMessages } from "../ChatMessages";
 import type { ChatMessage, ChatMessageAction } from "../ChatMessages";
 import { ChatInput } from "../ChatInput";

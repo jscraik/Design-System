@@ -1,5 +1,43 @@
 # Security Test Suite Documentation
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Maintainers and security reviewers
+- Scope: Security posture, guidance, and required practices
+- Non-scope: Feature usage or product marketing
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [Test Files](#test-files)
+  - [ChatUIMCP Security Tests](#chatuimcp-security-tests)
+  - [ChatUISystemIntegration Security Tests](#chatuisystemintegration-security-tests)
+- [Test Execution](#test-execution)
+  - [Running All Security Tests](#running-all-security-tests)
+  - [Running Specific Test Suites](#running-specific-test-suites)
+  - [Running with Coverage](#running-with-coverage)
+- [CI Quality Gates](#ci-quality-gates)
+  - [Coverage Requirements](#coverage-requirements)
+  - [Security Requirements](#security-requirements)
+  - [Performance Requirements](#performance-requirements)
+  - [Flakiness Budget](#flakiness-budget)
+- [Test Maintenance](#test-maintenance)
+  - [Adding New Tests](#adding-new-tests)
+  - [Updating Tests](#updating-tests)
+  - [Test Anti-Patterns to Avoid](#test-anti-patterns-to-avoid)
+- [Mock Data Generators](#mock-data-generators)
+  - [Token Generator](#token-generator)
+  - [URL Generator](#url-generator)
+  - [ChatMessage Generator](#chatmessage-generator)
+- [Known Limitations](#known-limitations)
+- [Future Enhancements](#future-enhancements)
+- [Summary](#summary)
+
+
 ## Overview
 
 This document describes the comprehensive security test suites created for the ChatUI Swift codebase. The tests cover authentication, client validation, rate limiting, search security, and cryptographic operations.
@@ -477,3 +515,15 @@ static func generateMessage(id: String, content: String) -> ChatMessage {
 | **Total** | **210+** | **Comprehensive** | **All security-critical code** |
 
 All tests follow XCTest best practices with async/await support, table-driven test patterns, comprehensive edge case coverage, and performance benchmarks.
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

@@ -1,7 +1,9 @@
 import * as React from "react";
-import { cn } from "./utils";
 import { Check, Copy } from "lucide-react";
+
 import { copyToClipboard as copyToClipboardUtil } from "../../utils/clipboard";
+
+import { cn } from "./utils";
 
 export interface CodeBlockProps extends React.HTMLAttributes<HTMLPreElement> {
   code: string;

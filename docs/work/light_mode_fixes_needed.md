@@ -1,5 +1,31 @@
 # Light Mode Fixes Needed - Comparison with Figma
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Current Issues vs Figma Designs](#current-issues-vs-figma-designs)
+  - [1. **Compose View (Light Mode)**](#1-compose-view-light-mode)
+  - [2. **Chat Input (Light Mode)**](#2-chat-input-light-mode)
+  - [3. **Sidebar (Light Mode)**](#3-sidebar-light-mode)
+  - [4. **Foundation Colors**](#4-foundation-colors)
+  - [5. **Text Colors**](#5-text-colors)
+- [Priority Fixes](#priority-fixes)
+  - [High Priority](#high-priority)
+  - [Medium Priority](#medium-priority)
+  - [Low Priority](#low-priority)
+- [Next Steps](#next-steps)
+- [Key Principle](#key-principle)
+
+
 ## Current Issues vs Figma Designs
 
 ### 1. **Compose View (Light Mode)**

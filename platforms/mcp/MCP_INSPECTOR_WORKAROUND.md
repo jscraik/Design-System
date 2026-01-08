@@ -1,5 +1,32 @@
 # MCP Inspector CLI Workaround Summary
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Problem](#problem)
+- [Solution](#solution)
+  - [What Was Added](#what-was-added)
+  - [Quick Start](#quick-start)
+  - [From Repo Root](#from-repo-root)
+- [Files Added/Modified](#files-addedmodified)
+  - [New Files](#new-files)
+  - [Modified Files](#modified-files)
+- [Inspector UI Still Works](#inspector-ui-still-works)
+- [Benefits](#benefits)
+- [Testing Coverage](#testing-coverage)
+- [Next Steps](#next-steps)
+- [See Also](#see-also)
+
+
 ## Problem
 
 The `@modelcontextprotocol/inspector` CLI (v0.18.0) has a module resolution bug:

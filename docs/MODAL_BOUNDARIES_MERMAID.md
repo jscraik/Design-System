@@ -1,5 +1,30 @@
 # Modal Module Boundaries (Mermaid)
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Module Dependency Graph](#module-dependency-graph)
+- [State Ownership Diagram](#state-ownership-diagram)
+- [Data Flow Patterns](#data-flow-patterns)
+  - [Pattern A: Synced State (DiscoverySettingsModal, IconPickerModal)](#pattern-a-synced-state-discoverysettingsmodal-iconpickermodal)
+  - [Pattern B: Local-Only State (SettingsModal, Panels)](#pattern-b-local-only-state-settingsmodal-panels)
+  - [Pattern C: Controlled Components (SettingRow, SettingToggle)](#pattern-c-controlled-components-settingrow-settingtoggle)
+- [Component Architecture](#component-architecture)
+- [Anti-Patterns to Avoid](#anti-patterns-to-avoid)
+- [Testing Strategy](#testing-strategy)
+- [File Structure](#file-structure)
+- [Import Dependencies](#import-dependencies)
+
+
 ## Module Dependency Graph
 
 ```mermaid

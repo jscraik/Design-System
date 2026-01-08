@@ -1,5 +1,63 @@
 # TLS Certificate Pinning Guide
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [What is Certificate Pinning?](#what-is-certificate-pinning)
+- [Why SPKI Pinning?](#why-spki-pinning)
+- [Installation](#installation)
+- [Basic Usage](#basic-usage)
+  - [Production Mode (Strict)](#production-mode-strict)
+  - [Development Mode (Relaxed)](#development-mode-relaxed)
+  - [Local Development (No Pinning)](#local-development-no-pinning)
+- [Extracting Certificate Hashes](#extracting-certificate-hashes)
+  - [From a PEM Certificate File](#from-a-pem-certificate-file)
+  - [From Certificate Data](#from-certificate-data)
+  - [Using Command Line Tools](#using-command-line-tools)
+- [Certificate Rotation Strategy](#certificate-rotation-strategy)
+  - [Best Practices](#best-practices)
+  - [Example Rotation Setup](#example-rotation-setup)
+- [Sample Certificates for Testing](#sample-certificates-for-testing)
+  - [Generate Self-Signed Test Certificate](#generate-self-signed-test-certificate)
+  - [Sample Certificate Hashes](#sample-certificate-hashes)
+- [Configuration Modes](#configuration-modes)
+  - [Strict Mode (Production)](#strict-mode-production)
+  - [Relaxed Mode (Staging)](#relaxed-mode-staging)
+- [Hash Types](#hash-types)
+  - [SPKI SHA-256 (Recommended)](#spki-sha-256-recommended)
+  - [Certificate SHA-256 (Not Recommended)](#certificate-sha-256-not-recommended)
+- [Debugging](#debugging)
+  - [Print Certificate Details](#print-certificate-details)
+  - [Common Issues](#common-issues)
+- [Security Considerations](#security-considerations)
+  - [DO's ✅](#dos)
+  - [DON'Ts ❌](#donts)
+- [Advanced Usage](#advanced-usage)
+  - [Custom URLSession Delegate](#custom-urlsession-delegate)
+  - [Dynamic Hash Loading](#dynamic-hash-loading)
+- [Testing](#testing)
+  - [Unit Tests](#unit-tests)
+  - [Integration Tests](#integration-tests)
+- [Migration Guide](#migration-guide)
+  - [From Default URLSession](#from-default-urlsession)
+  - [Gradual Rollout](#gradual-rollout)
+- [Troubleshooting](#troubleshooting)
+  - [Enable Debug Logging](#enable-debug-logging)
+  - [Network Capture Tools](#network-capture-tools)
+- [References](#references)
+- [Support](#support)
+
+
 ## Overview
 
 TLS certificate pinning is a security technique that ensures your Swift application communicates only with servers presenting trusted certificates. The `ChatUIMCP` library provides comprehensive certificate pinning support for MCP client connections.
@@ -434,3 +492,12 @@ For issues or questions:
 1. Check the troubleshooting section
 2. Review the unit tests in `CertificatePinningValidatorTests.swift`
 3. Enable debug logging to see detailed validation output
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+

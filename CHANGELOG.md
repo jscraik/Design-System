@@ -1,5 +1,15 @@
 # Changelog
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Contributors and release stakeholders
+- Scope: Release history and notable changes
+- Non-scope: Usage instructions or implementation details
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)

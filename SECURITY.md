@@ -1,6 +1,14 @@
 # Security Policy
 
-Last updated: 2026-01-02
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Maintainers and security reviewers
+- Scope: Security posture, guidance, and required practices
+- Non-scope: Feature usage or product marketing
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
 
 ## Supported Versions
 

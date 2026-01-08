@@ -1,5 +1,15 @@
 # Swift Security Testing Guide
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Maintainers and security reviewers
+- Scope: Security posture, guidance, and required practices
+- Non-scope: Feature usage or product marketing
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 This guide provides comprehensive documentation for security testing in the Swift codebase, including testing patterns, CI/CD integration, and best practices.
 
 ## Table of Contents
@@ -460,3 +470,15 @@ let hash = SHA256.hash(data: input.data(using: .utf8)!)
 - [SwiftLint Rules](https://github.com/realm/SwiftLint/blob/master/Rules.md)
 - [CodeQL Documentation](https://codeql.github.com/docs/)
 - [Common Crypto Documentation](https://developer.apple.com/documentation/commoncrypto)
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

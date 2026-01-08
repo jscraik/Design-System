@@ -1,5 +1,15 @@
 # Implementation Plan: Native macOS Bridge
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 ## Overview
 
 This implementation plan follows a modular SwiftUI library approach that enhances the existing React/Apps SDK UI system without disrupting it. The plan focuses on creating four distinct Swift packages that provide a scalable foundation for native macOS development while maintaining perfect design consistency with the existing web application.

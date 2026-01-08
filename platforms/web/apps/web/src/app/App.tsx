@@ -1,5 +1,6 @@
-import { Router } from "./Router";
 import { TemplateWidgetPage } from "../pages/TemplateWidgetPage";
+
+import { Router } from "./Router";
 
 export function App() {
   const templateId = import.meta.env.VITE_TEMPLATE_ID as string | undefined;

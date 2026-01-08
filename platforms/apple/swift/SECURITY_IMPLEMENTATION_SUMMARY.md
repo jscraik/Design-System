@@ -1,5 +1,44 @@
 # Swift CI/CD Security Scanning - Implementation Summary
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Maintainers and security reviewers
+- Scope: Security posture, guidance, and required practices
+- Non-scope: Feature usage or product marketing
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [What Was Created](#what-was-created)
+  - [1. Configuration Files](#1-configuration-files)
+  - [2. GitHub Actions Workflow](#2-github-actions-workflow)
+  - [3. Security Test Suite](#3-security-test-suite)
+  - [4. Documentation](#4-documentation)
+  - [5. Enforcement Artifacts](#5-enforcement-artifacts)
+  - [6. Automation Scripts](#6-automation-scripts)
+- [Security Coverage](#security-coverage)
+  - [Static Analysis](#static-analysis)
+  - [Dependency Scanning](#dependency-scanning)
+  - [Dynamic Testing](#dynamic-testing)
+- [Security Gates](#security-gates)
+- [File Locations Summary](#file-locations-summary)
+- [Usage](#usage)
+  - [Run Security Tests Locally](#run-security-tests-locally)
+  - [View CI/CD Results](#view-cicd-results)
+- [Next Steps](#next-steps)
+  - [Immediate](#immediate)
+  - [Short Term](#short-term)
+  - [Long Term](#long-term)
+- [Compliance](#compliance)
+- [Metrics](#metrics)
+- [Success Criteria](#success-criteria)
+- [Support](#support)
+
+
 ## Overview
 
 A complete CI/CD security scanning setup has been implemented for the Swift codebase with strict enforcement, comprehensive coverage, and automated workflows.

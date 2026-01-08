@@ -1,13 +1,21 @@
 # Contributing
 
-Last updated: 2026-01-02
+Last updated: 2026-01-07
 
-Thanks for helping improve ChatUI. This repo is a library-first monorepo with Apps SDK UI as the design system.
+## Doc requirements
+
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+Thanks for helping improve aStudio. This repo is a library-first monorepo with Apps SDK UI as the design system.
 
 ## Prerequisites
 
 - Node.js 18+
-- pnpm 9.15.0 (see `packageManager` in `package.json`)
+- pnpm 10.27.0 (see `packageManager` in `package.json`)
 - macOS app work (optional): macOS 13+ + Xcode 15+
 
 ## Development setup

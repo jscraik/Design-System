@@ -1,5 +1,26 @@
 # Token reference (canonical -> web -> swift)
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [Modes](#modes)
+- [Color (semantic)](#color-semantic)
+- [Spacing](#spacing)
+- [Motion](#motion)
+- [Consumption rules](#consumption-rules)
+- [Drift prevention checklist](#drift-prevention-checklist)
+
+
 ## Overview
 
 This document is generated from `packages/tokens/src/tokens/index.dtcg.json`. Do not manually edit generated sections.
@@ -45,3 +66,15 @@ This document is generated from `packages/tokens/src/tokens/index.dtcg.json`. Do
 - Web + Swift outputs regenerated
 - Docs regenerated (this file)
 - No disallowed literals in components
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

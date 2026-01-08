@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import {
   IconBatteryFull,
   IconCalendar,
@@ -17,7 +18,6 @@ import {
   IconWifi,
   IconNotebook,
 } from "../../../icons";
-
 import {
   SettingDropdownBlock,
   SettingDropdownGroup,

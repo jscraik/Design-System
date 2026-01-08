@@ -1,3 +1,6 @@
+import { User, Settings, Lock, Bell, Plus, HelpCircle, X } from "lucide-react";
+import { useState } from "react";
+
 import {
   TemplateFieldGroup,
   TemplateFieldGroupAction,
@@ -6,8 +9,6 @@ import {
   TemplateFieldGroupRow,
 } from "../TemplateFieldGroup";
 import { TemplateFormField } from "../TemplateFormField";
-import { User, Settings, Lock, Bell, Plus, HelpCircle, X } from "lucide-react";
-import { useState } from "react";
 
 export function TemplateFieldGroupDemo() {
   const [personalInfoCollapsed, setPersonalInfoCollapsed] = useState(false);

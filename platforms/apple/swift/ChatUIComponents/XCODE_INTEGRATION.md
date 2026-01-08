@@ -1,5 +1,15 @@
 # Xcode Project Integration Guide
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 ## Issue: ChatUIComponents module not found
 
 If you see the error:
@@ -92,3 +102,15 @@ Once the package dependencies are added:
 - **SettingsExampleView Source**: `platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/SettingsExampleView.swift`
 - **Playground Integration**: `platforms/apple/apps/macos/ChatUIPlayground/ChatUIPlayground/ComponentGallery.swift`
 - **Package Definition**: `platforms/apple/swift/ChatUIComponents/Package.swift`
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

@@ -6,6 +6,12 @@ import { ChatFullWidthTemplate } from "../templates/ChatFullWidthTemplate";
 import { ChatTwoPaneTemplate } from "../templates/ChatTwoPaneTemplate";
 import { NewComponentsShowcase } from "../templates/_temp_import/components/templates/NewComponentsShowcase";
 import {
+  categories as templateCategories,
+  getTemplatesByCategory,
+  templateRegistry as templatesRegistry,
+} from "../templates/registry";
+
+import {
   AppsSdkCarouselExample,
   AppsSdkCarouselExampleAlt,
   AppsSdkFullscreenExample,
@@ -19,11 +25,6 @@ import {
   AppsSdkStarterTemplate,
   AppsSdkStarterTemplateAlt,
 } from "./apps-sdk-examples";
-import {
-  categories as templateCategories,
-  getTemplatesByCategory,
-  templateRegistry as templatesRegistry,
-} from "../templates/registry";
 
 export type TemplatesGalleryCategory = keyof typeof templatesGalleryCategories;
 

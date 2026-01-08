@@ -1,5 +1,46 @@
 # ChatUISystemIntegration Implementation Summary
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [Package Structure](#package-structure)
+- [Implementation Details](#implementation-details)
+  - [1. FileSystemManager](#1-filesystemmanager)
+  - [2. NotificationManager](#2-notificationmanager)
+  - [3. ShareManager](#3-sharemanager)
+  - [4. SpotlightManager](#4-spotlightmanager)
+  - [5. AppLifecycleManager](#5-applifecyclemanager)
+- [Error Handling](#error-handling)
+  - [FileSystemError](#filesystemerror)
+  - [NotificationError](#notificationerror)
+  - [ShareError](#shareerror)
+  - [SpotlightError](#spotlighterror)
+  - [LifecycleError](#lifecycleerror)
+- [Testing](#testing)
+- [Build Status](#build-status)
+- [Requirements Validation](#requirements-validation)
+  - [Requirement 7.1: MCP Tool System Integration](#requirement-71-mcp-tool-system-integration)
+  - [Requirement 7.5: macOS System Integration](#requirement-75-macos-system-integration)
+- [Integration Guide](#integration-guide)
+  - [Adding to Production App](#adding-to-production-app)
+  - [SwiftUI View Integration](#swiftui-view-integration)
+- [Platform Support](#platform-support)
+- [Known Limitations](#known-limitations)
+- [Future Enhancements](#future-enhancements)
+- [Documentation](#documentation)
+- [Conclusion](#conclusion)
+
+
 ## Overview
 
 Successfully implemented comprehensive native macOS and iOS system integration package providing file system access, notifications, sharing, Spotlight search, and app lifecycle management for Task 15 of the Native macOS Bridge specification.

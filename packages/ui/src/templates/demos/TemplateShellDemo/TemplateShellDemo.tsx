@@ -1,5 +1,4 @@
 import { IconChat, IconSettings, IconSidebar, IconUser } from "../../../icons";
-
 import { TemplateShell, TemplateShellToggleButton, useTemplateShell } from "../../blocks/TemplateShell";
 
 // Inner component that has access to the TemplateShell context

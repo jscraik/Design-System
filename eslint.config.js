@@ -1,13 +1,17 @@
 import js from "@eslint/js";
-import tseslint from "typescript-eslint";
-import react from "eslint-plugin-react";
-import reactHooks from "eslint-plugin-react-hooks";
+import complexity from "eslint-plugin-complexity";
 import importPlugin from "eslint-plugin-import";
 import jsxA11y from "eslint-plugin-jsx-a11y";
+import react from "eslint-plugin-react";
+import reactHooks from "eslint-plugin-react-hooks";
 import sonarjs from "eslint-plugin-sonarjs";
-import complexity from "eslint-plugin-complexity";
+import tseslint from "typescript-eslint";
 
+import noConsoleInProductionRule from "./packages/ui/eslint-rules-no-console-in-production.js";
 import noDarkOnlyTokensRule from "./packages/ui/eslint-rules-no-dark-only-tokens.js";
+import noDeprecatedImportsRule from "./packages/ui/eslint-rules-no-deprecated-imports.js";
+import noLucideDirectImportsRule from "./packages/ui/eslint-rules-no-lucide-direct-imports.js";
+import noWindowOpenaiDirectAccessRule from "./packages/ui/eslint-rules-no-window-openai-direct-access.js";
 import uiSubpathImportsRule from "./packages/ui/eslint-rules-ui-subpath-imports.js";
 
 export default [
@@ -38,6 +42,10 @@ export default [
       complexity,
       "@chatui-dark-only-tokens": noDarkOnlyTokensRule,
       "@chatui-ui-subpaths": uiSubpathImportsRule,
+      "@chatui-no-lucide-direct-imports": noLucideDirectImportsRule,
+      "@chatui-no-console": noConsoleInProductionRule,
+      "@chatui-no-window-openai": noWindowOpenaiDirectAccessRule,
+      "@chatui-no-deprecated": noDeprecatedImportsRule,
     },
     languageOptions: {
       ecmaVersion: "latest",
@@ -100,6 +108,57 @@ export default [
       ],
       // Enforce UI package subpath imports
       "@chatui-ui-subpaths/ui-subpath-imports": "error",
+      // Enforce icon imports through canonical icon system
+      "@chatui-no-lucide-direct-imports/no-lucide-direct-imports": [
+        "warn",
+        {
+          // Allow lucide-react in these patterns (e.g., reference/template code)
+          allowInPatterns: [
+            "**/node_modules/**",
+            "**/_temp/**",
+            "**/_temp_import/**",
+            "**/packages/widgets/**",
+          ],
+        },
+      ],
+      // Prevent console statements in production
+      "@chatui-no-console/no-console-in-production": [
+        "warn",
+        {
+          // Allow console methods in these contexts
+          allow: [],
+        },
+      ],
+      // Prevent direct window.openai access (use runtime host abstraction)
+      "@chatui-no-window-openai/no-window-openai-direct-access": [
+        "error",
+        {
+          // Allow window.openai access in these patterns
+          allowInPatterns: [
+            "**/node_modules/**",
+            "**/*.test.*",
+            "**/*.spec.*",
+            "**/packages/runtime/**",
+            "**/packages/widgets/**",
+            "**/platforms/mcp/**",
+          ],
+        },
+      ],
+      // Prevent imports from deprecated/archived paths
+      "@chatui-no-deprecated/no-deprecated-imports": [
+        "error",
+        {
+          deprecatedPatterns: [
+            "**/_temp/**",
+            "**/_temp_import/**",
+          ],
+          deprecatedPaths: ["@chatui/ui/dev"],
+          customMessages: {
+            "@chatui/ui/dev":
+              "Dev-only export. Use @chatui/ui/* or @chatui/ui/experimental outside local harnesses.",
+          },
+        },
+      ],
     },
   },
   {
@@ -184,11 +243,20 @@ export default [
         module: "readonly",
         require: "readonly",
         __dirname: "readonly",
+        setTimeout: "readonly",
+        clearTimeout: "readonly",
+        setInterval: "readonly",
+        clearInterval: "readonly",
+        Buffer: "readonly",
+        document: "readonly",
+        window: "readonly",
+        navigator: "readonly",
       },
     },
     rules: {
       "no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
       "@typescript-eslint/no-require-imports": "off",
+      "no-undef": "off",
     },
   },
   {
@@ -245,7 +313,6 @@ export default [
   {
     files: [
       "platforms/web/apps/storybook/**/*.{js,jsx,ts,tsx}",
-      "platforms/web/apps/web/src/pages/TemplatesGalleryPage.tsx",
       "platforms/web/apps/web/src/pages/TemplateWidgetPage.tsx",
     ],
     rules: {
@@ -253,6 +320,18 @@ export default [
         "error",
         {
           "patterns": ["**/_temp/**", "_temp/**"],
+        },
+      ],
+      // Allow @chatui/ui/dev imports in these specific files
+      "@chatui-no-deprecated/no-deprecated-imports": [
+        "error",
+        {
+          deprecatedPatterns: [
+            "**/_temp/**",
+            "**/_temp_import/**",
+          ],
+          deprecatedPaths: [], // Don't flag @chatui/ui/dev here
+          customMessages: {},
         },
       ],
     },

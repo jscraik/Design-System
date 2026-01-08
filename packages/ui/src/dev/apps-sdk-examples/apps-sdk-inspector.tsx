@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { Button } from "../../components/ui";
 import { IconStar, IconX } from "../../icons";
+
 import { markers } from "./data/markers";
 import type { Place } from "./components/PlaceCard";
 

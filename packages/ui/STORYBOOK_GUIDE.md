@@ -1,5 +1,15 @@
 # Storybook Usage Guide
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (beginner to intermediate)
+- Scope: Task-focused instructions for this topic
+- Non-scope: Comprehensive architecture reference
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 Your ChatUI library is fully integrated with Storybook for comprehensive testing and documentation. Here's how to leverage all the built-in features:
 
 ## 🚀 **Getting Started**

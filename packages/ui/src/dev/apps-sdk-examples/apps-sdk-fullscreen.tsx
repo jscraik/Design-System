@@ -1,9 +1,10 @@
 import * as React from "react";
 
+import { Button } from "../../components/ui";
+
 import { albums as albumsData } from "./data/albums";
 import type { Album } from "./components/AlbumCard";
 import { AlbumCard } from "./components/AlbumCard";
-import { Button } from "../../components/ui";
 import { FilmStrip } from "./components/FilmStrip";
 import { useMaxHeight } from "./use-max-height";
 

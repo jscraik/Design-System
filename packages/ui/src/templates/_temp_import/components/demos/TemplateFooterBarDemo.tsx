@@ -1,11 +1,4 @@
 import {
-  TemplateFooterBar,
-  TemplateFooterButton,
-  TemplateFooterLink,
-  TemplateFooterText,
-  TemplateFooterDivider,
-} from "../TemplateFooterBar";
-import {
   HelpCircle,
   Save,
   X,
@@ -16,6 +9,14 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useState } from "react";
+
+import {
+  TemplateFooterBar,
+  TemplateFooterButton,
+  TemplateFooterLink,
+  TemplateFooterText,
+  TemplateFooterDivider,
+} from "../TemplateFooterBar";
 
 export function TemplateFooterBarDemo() {
   const [progress, setProgress] = useState(65);

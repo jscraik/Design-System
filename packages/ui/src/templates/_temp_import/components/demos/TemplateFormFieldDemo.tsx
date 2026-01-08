@@ -1,11 +1,12 @@
+import { Info, Eye, EyeOff, RefreshCw, Copy, Check } from "lucide-react";
+import { useState } from "react";
+
 import {
   TemplateFormField,
   TemplateFormFieldAction,
   TemplateFormFieldIconButton,
   TemplateFormFieldInline,
 } from "../TemplateFormField";
-import { Info, Eye, EyeOff, RefreshCw, Copy, Check } from "lucide-react";
-import { useState } from "react";
 
 export function TemplateFormFieldDemo() {
   const [showPassword, setShowPassword] = useState(false);

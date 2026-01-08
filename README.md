@@ -1,16 +1,28 @@
-# Developer Design UI Library
+<img src="./brand/aStudio-brand-logo.png" alt="aStudio" height="48" />
 
-Last updated: 2026-01-02
+# aStudio
+
+Cross-Platform UI Workbench
+
+Last updated: 2026-01-07
+
+## Doc requirements
+
+- Audience: Developers (intermediate)
+- Scope: Overview and essential workflows for this area
+- Non-scope: Deep API reference or internal design rationale
+- Owner: Platform Team (confirm)
+- Review cadence: Quarterly (confirm)
 
 This repository is a **library-first monorepo** for building consistent UI across ChatGPT widgets and standalone React applications.
 
 ## What This Is
 
-A comprehensive design system and component library for building ChatGPT-style interfaces across multiple platforms:
+A cross-platform UI workbench for building ChatGPT-style interfaces across multiple platforms:
 
 - **ChatGPT Widgets** - Embedded widgets via OpenAI Apps SDK
 - **React Applications** - Standalone web applications using `@chatui/ui`
-- **macOS Applications** - Native SwiftUI apps with ChatUI Swift packages
+- **macOS Applications** - Native SwiftUI apps with aStudio Swift packages
 - **MCP Integration** - Model Context Protocol server for ChatGPT tool integration
 
 ## Primary Products
@@ -57,7 +69,7 @@ A comprehensive design system and component library for building ChatGPT-style i
 ## Prerequisites
 
 - Node.js 18+
-- pnpm 9.15.0 (see `packageManager` in `package.json`)
+- pnpm 10.27.0 (see `packageManager` in `package.json`)
 - **For macOS app development** (optional): macOS 13+ with Xcode 15+
 
 > Note: Web and widget development works on all platforms. macOS/Xcode is only required for Swift package and native macOS app work.
@@ -124,6 +136,7 @@ pnpm lint                   # ESLint
 pnpm format                 # Prettier (write)
 pnpm format:check           # Prettier (check only)
 pnpm lint:compliance        # Check compliance rules
+pnpm doc:lint               # Vale sync + markdown linting + link check
 
 # Building
 pnpm build                  # Full build pipeline
@@ -139,24 +152,24 @@ pnpm sync:versions          # Sync package versions across workspace
 pnpm validate:tokens        # Validate design token consistency
 ```
 
-### ChatUI CLI
+### aStudio CLI
 
 The repo includes a unified CLI wrapper for common dev/build/test/MCP tasks:
 
 ```bash
-pnpm chatui --help
-pnpm chatui dev
-pnpm chatui build web
-pnpm chatui test e2e-web
-pnpm chatui mcp tools list
-pnpm chatui doctor
+pnpm astudio --help
+pnpm astudio dev
+pnpm astudio build web
+pnpm astudio test e2e-web
+pnpm astudio mcp tools list
+pnpm astudio doctor
 ```
 
 ## 📄 Widget Gallery & Development
 
 The web app (`platforms/web/apps/web`) is a **Widget Gallery** for visual testing and MCP widget builds:
 
-- **Widget Gallery**: <http://localhost:5173/> (default) - Browse and test all ChatUI widgets in iframe previews
+- **Widget Gallery**: <http://localhost:5173/> (default) - Browse and test all aStudio widgets in iframe previews
 - **Widget Harness**: <http://localhost:5173/harness> - Test individual widgets with modal controls
 
 ### Key Features
@@ -194,7 +207,7 @@ Use this table to jump to the canonical doc surface. For more detail, see
 | Swift integration       | `docs/SWIFT_INTEGRATION.md`      |
 | Restructure migration   | `docs/guides/repo-structure-migration.md` |
 | Swift packages overview | `platforms/apple/swift/README.md`                |
-| macOS ChatUI app        | `platforms/apple/apps/macos/ChatUIApp/README.md` |
+| macOS aStudio app       | `platforms/apple/apps/macos/ChatUIApp/README.md` |
 | macOS Playground        | `platforms/apple/apps/macos/ChatUIPlayground/README.md` |
 | macOS Component Gallery | `platforms/apple/apps/macos/ComponentGallery/README.md` |
 | Web Widget Gallery      | `platforms/web/apps/web/README.md`             |
@@ -225,7 +238,7 @@ Fix:
 pnpm mcp:start
 ```
 
-Then confirm the MCP URL in the ChatUI macOS app Settings panel (default `http://localhost:8787`).
+Then confirm the MCP URL in the aStudio macOS app Settings panel (default `http://localhost:8787`).
 
 ### Symptom: Storybook or Widget Gallery doesn't start
 
@@ -360,7 +373,8 @@ import { ChatFullWidthTemplate } from "@chatui/ui/experimental";
 
 - **Stable**: `@chatui/ui` root exports and the `@chatui/ui/app`, `@chatui/ui/chat`, `@chatui/ui/modals`,
   `@chatui/ui/settings`, `@chatui/ui/base`, `@chatui/ui/data-display`, `@chatui/ui/feedback`,
-  `@chatui/ui/navigation`, `@chatui/ui/overlays`, and `@chatui/ui/icons` subpaths.
+  `@chatui/ui/forms`, `@chatui/ui/layout`, `@chatui/ui/navigation`, `@chatui/ui/overlays`,
+  `@chatui/ui/icons`, and `@chatui/ui/showcase` subpaths.
 - **Experimental**: `@chatui/ui/experimental` and `@chatui/ui/templates` (subject to breaking changes).
 - **Dev-only**: `@chatui/ui/dev` is for Storybook, docs, and local harnesses — not production.
 
@@ -521,3 +535,18 @@ The repository supports both **React** (web/ChatGPT widgets) and **Swift** (macO
 - **React**: Uses `@chatui/ui`, `@chatui/runtime`, and `@chatui/tokens` packages
 - **Swift**: Uses modular Swift packages (`ChatUIFoundation`, `ChatUIComponents`, `ChatUIThemes`, etc.)
 - **Design Parity**: Both platforms share the same design tokens and visual language from Apps SDK UI
+
+---
+
+<img
+  src="./brand/brand-mark.webp"
+  srcset="./brand/brand-mark.webp 1x, ./brand/brand-mark@2x.webp 2x"
+  alt="brAInwav"
+  height="28"
+  align="left"
+/>
+
+<br clear="left" />
+
+**brAInwav**  
+_from demo to duty_
