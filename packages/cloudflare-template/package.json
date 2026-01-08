@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.13.12",
-    "@cloudflare/workers-types": "^4.20241218.0",
+    "@cloudflare/workers-types": "^4.20260103.0",
     "@types/node": "^25.0.3",
     "fast-glob": "^3.3.3",
     "typescript": "^5.9.3",
