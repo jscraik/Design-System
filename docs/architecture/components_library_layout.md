@@ -1,5 +1,27 @@
 # Components Library Layout
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Engineers and technical leads
+- Scope: System architecture and component relationships
+- Non-scope: Step-by-step operational procedures
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overall Structure](#overall-structure)
+- [Component Structure Details](#component-structure-details)
+  - [React Components Structure](#react-components-structure)
+  - [Swift Components Structure](#swift-components-structure)
+- [Cross-Platform Considerations](#cross-platform-considerations)
+  - [Shared Design Tokens](#shared-design-tokens)
+  - [Platform-Specific Implementations](#platform-specific-implementations)
+  - [Documentation](#documentation)
+
+
 This document outlines the folder structure for a cross-platform components library supporting both React and Swift implementations.
 
 ## Overall Structure

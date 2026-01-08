@@ -1,5 +1,38 @@
 # ChatInput Theme Implementation Summary
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Status: ✅ COMPLETE](#status-complete)
+- [Overview](#overview)
+- [Changes Made](#changes-made)
+  - [1. ChatInput.tsx - Theme Token Migration](#1-chatinputtsx-theme-token-migration)
+  - [2. SettingsPage.tsx - Theme Toggle Functionality](#2-settingspagetsx-theme-toggle-functionality)
+  - [3. ChatInput.stories.tsx - Light Theme Story](#3-chatinputstoriestsx-light-theme-story)
+- [Brand Colors Preserved](#brand-colors-preserved)
+- [Theme System Architecture](#theme-system-architecture)
+  - [CSS Custom Properties](#css-custom-properties)
+  - [Theme Switching](#theme-switching)
+  - [Tailwind Integration](#tailwind-integration)
+- [Testing](#testing)
+  - [Manual Testing](#manual-testing)
+  - [Storybook Testing](#storybook-testing)
+- [Component Features Verified](#component-features-verified)
+- [Files Modified](#files-modified)
+- [No Breaking Changes](#no-breaking-changes)
+- [Next Steps (Optional)](#next-steps-optional)
+- [Verification Checklist](#verification-checklist)
+
+
 ## Status: ✅ COMPLETE
 
 ## Overview

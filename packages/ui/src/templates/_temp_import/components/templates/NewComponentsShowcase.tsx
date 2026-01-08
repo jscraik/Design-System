@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { Grid, List, Settings, Copy, Edit, Trash, Share } from "lucide-react";
+import { DateRange } from "react-day-picker";
+
 import { Alert, AlertTitle, AlertDescription } from "../ui/alert";
 import { CodeBlock } from "../ui/code-block";
 import { EmptyMessage } from "../ui/empty-message";
@@ -23,8 +26,6 @@ import { Image, AvatarImage } from "../ui/image";
 import { Markdown } from "../ui/markdown";
 import { Transition, Stagger, Collapse, SlideIn } from "../ui/transition";
 import { Button } from "../ui/button";
-import { Grid, List, Settings, Copy, Edit, Trash, Share } from "lucide-react";
-import { DateRange } from "react-day-picker";
 
 export function NewComponentsShowcase() {
   // State for interactive demos

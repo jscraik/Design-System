@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from "react";
+
 import { copyToClipboard as copyToClipboardUtil } from "../utils/clipboard";
 import { colors } from "../design-tokens";
+
 import { cn } from "./ui/utils";
 
 // Types

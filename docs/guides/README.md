@@ -1,5 +1,26 @@
 # Guides for common developer tasks
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Overview and essential workflows for this area
+- Non-scope: Deep API reference or internal design rationale
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Start here](#start-here)
+- [Documents](#documents)
+  - [Development Guides](#development-guides)
+  - [Integration Guides](#integration-guides)
+  - [Process Guides](#process-guides)
+- [Related Documentation](#related-documentation)
+- [Additional Resources](#additional-resources)
+
+
 Use these when you want step-by-step workflows, not API reference.
 
 ## Start here
@@ -40,3 +61,15 @@ For more detailed development workflows, see:
 - [Storybook](http://localhost:6006) - Component documentation (when running)
 - [Web App](http://localhost:5173) - Reference implementation (when running)
 - [Swift Integration](../SWIFT_INTEGRATION.md) - Swift packages and macOS app setup
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

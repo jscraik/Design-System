@@ -1,5 +1,15 @@
 # Design Guidelines for ChatUI
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (beginner to intermediate)
+- Scope: Task-focused instructions for this topic
+- Non-scope: Comprehensive architecture reference
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 These guidelines keep the UI consistent across ChatGPT widgets and standalone apps.
 
 ## Table of contents

@@ -1,5 +1,54 @@
 # Light/Dark Mode Automatic Switching Verification
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [Implementation Architecture](#implementation-architecture)
+  - [Asset Catalog Structure](#asset-catalog-structure)
+  - [Asset Catalog Format](#asset-catalog-format)
+- [Automatic Switching Mechanism](#automatic-switching-mechanism)
+  - [How It Works](#how-it-works)
+  - [FColor Semantic API](#fcolor-semantic-api)
+- [Component Usage Examples](#component-usage-examples)
+  - [Example 1: SettingsDivider (Minimal Manual Logic)](#example-1-settingsdivider-minimal-manual-logic)
+  - [Example 2: SettingsCardView (Pure Automatic)](#example-2-settingscardview-pure-automatic)
+  - [Example 3: SettingRowView (Text and Icons)](#example-3-settingrowview-text-and-icons)
+- [Verification Tests](#verification-tests)
+  - [Test 1: Asset Catalog Structure](#test-1-asset-catalog-structure)
+  - [Test 2: Light/Dark Variants](#test-2-lightdark-variants)
+  - [Test 3: FColor API Compilation](#test-3-fcolor-api-compilation)
+  - [Test 4: Component Integration](#test-4-component-integration)
+  - [Test 5: SwiftUI Preview Variants](#test-5-swiftui-preview-variants)
+- [Benefits of Automatic Switching](#benefits-of-automatic-switching)
+  - [1. Zero Manual Logic](#1-zero-manual-logic)
+  - [2. Compile-Time Safety](#2-compile-time-safety)
+  - [3. Consistent Behavior](#3-consistent-behavior)
+  - [4. Performance](#4-performance)
+  - [5. Accessibility](#5-accessibility)
+- [Requirements Validation](#requirements-validation)
+  - [Requirement 1.2: SwiftUI Components Use Same Design Values as React](#requirement-12-swiftui-components-use-same-design-values-as-react)
+  - [Requirement 2.1: Semantic Color API with Automatic Light/Dark Mode](#requirement-21-semantic-color-api-with-automatic-lightdark-mode)
+  - [Requirement 2.2: Typography, Spacing, and Platform Utilities](#requirement-22-typography-spacing-and-platform-utilities)
+  - [Requirement 2.5: Semantic APIs Prevent Typos and Enable Autocomplete](#requirement-25-semantic-apis-prevent-typos-and-enable-autocomplete)
+- [Testing Recommendations](#testing-recommendations)
+  - [Manual Testing in Xcode](#manual-testing-in-xcode)
+  - [Automated Testing](#automated-testing)
+- [Known Limitations](#known-limitations)
+  - [1. SwiftUI Preview Macros](#1-swiftui-preview-macros)
+  - [2. Opacity Adjustments](#2-opacity-adjustments)
+- [Conclusion](#conclusion)
+
+
 **Task:** Verify that light/dark mode switching works automatically
 **Status:** ✅ VERIFIED
 **Date:** December 28, 2024
@@ -490,3 +539,15 @@ This is theme-specific styling, not color selection. The base color (`FColor.div
 **Verified by:** Kiro AI Agent  
 **Date:** December 28, 2024  
 **Task:** `.kiro/specs/native-macos-bridge/tasks.md` - Task 6 (Light/dark mode switching)
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

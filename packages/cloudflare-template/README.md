@@ -1,6 +1,16 @@
-# ChatUI Cloudflare Workers Deployment Template
+# aStudio Cloudflare Workers Deployment Template
 
-Deploy your ChatUI widgets to Cloudflare Workers with automatic widget discovery and MCP server integration.
+Last updated: 2026-01-07
+
+## Doc requirements
+
+- Audience: Developers (intermediate)
+- Scope: Overview and essential workflows for this area
+- Non-scope: Deep API reference or internal design rationale
+- Owner: Infrastructure Team (confirm)
+- Review cadence: Each release (confirm)
+
+Deploy your aStudio widgets to Cloudflare Workers with automatic widget discovery and MCP server integration.
 
 ## Table of contents
 
@@ -62,7 +72,7 @@ After deployment, integrate with ChatGPT. UI labels change over time, so follow 
 1. **Copy your MCP URL**: `https://your-app.your-subdomain.workers.dev/mcp`
 2. **Open ChatGPT** and go to Settings
 3. **Add a new MCP server/connector**
-4. **Name**: `ChatUI Widgets`
+4. **Name**: `aStudio Widgets`
 5. **URL**: `https://your-app.your-subdomain.workers.dev/mcp`
 6. **Test**: Try "Show me the dashboard" in ChatGPT
 
@@ -214,4 +224,4 @@ After deployment, add your MCP server to ChatGPT:
 - [Cloudflare Workers Documentation](https://developers.cloudflare.com/workers/)
 - [MCP Specification](https://modelcontextprotocol.io/)
 - [OpenAI Apps SDK](https://developers.openai.com/apps-sdk/)
-- [ChatUI Widget System](../widgets/README.md)
+- [aStudio Widget System](../widgets/README.md)

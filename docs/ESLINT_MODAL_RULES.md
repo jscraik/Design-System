@@ -1,5 +1,36 @@
 # ESLint "Do Not Import" Rules for Modal Boundaries
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Approach: `eslint-plugin-import`](#approach-eslint-plugin-import)
+- [ESLint Configuration](#eslint-configuration)
+  - [Using flat config (ESLint 9+)](#using-flat-config-eslint-9)
+  - [Using legacy config (ESLint 8)](#using-legacy-config-eslint-8)
+- [Complete Zone List (Copy-Paste Ready)](#complete-zone-list-copy-paste-ready)
+- [Example Violations](#example-violations)
+  - [❌ Violation: Infrastructure importing from modals](#violation-infrastructure-importing-from-modals)
+  - [❌ Violation: Settings component importing from modals](#violation-settings-component-importing-from-modals)
+  - [❌ Violation: Panel importing ModalDialog directly](#violation-panel-importing-modaldialog-directly)
+- [Testing the Rules](#testing-the-rules)
+  - [1. Verify rules are loaded](#1-verify-rules-are-loaded)
+  - [2. Test violations manually](#2-test-violations-manually)
+  - [3. Test allowed imports](#3-test-allowed-imports)
+- [Troubleshooting](#troubleshooting)
+  - [Rule not firing?](#rule-not-firing)
+  - [Too many false positives?](#too-many-false-positives)
+- [Summary Table](#summary-table)
+
+
 This document defines ESLint rules to enforce the module boundaries established in `docs/MODAL_BOUNDARIES.md`.
 
 ---

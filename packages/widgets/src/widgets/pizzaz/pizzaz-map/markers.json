@@ -1,0 +1,82 @@
+{
+    "places": [
+        {
+            "id": "nova-slice-lab",
+            "name": "Nova Slice Lab",
+            "coords": [
+                -122.4098,
+                37.8001
+            ],
+            "description": "Award-winning Neapolitan pies in North Beach.",
+            "city": "North Beach",
+            "rating": 4.8,
+            "price": "$$",
+            "thumbnail": "https://persistent.oaistatic.com/pizzaz/pizzaz-1.png"
+        },
+        {
+            "id": "midnight-marinara",
+            "name": "Midnight Marinara",
+            "coords": [
+                -122.4093,
+                37.799
+            ],
+            "description": "Focaccia-style squares, late-night favorite.",
+            "city": "North Beach",
+            "rating": 4.6,
+            "price": "$",
+            "thumbnail": "https://persistent.oaistatic.com/pizzaz/pizzaz-2.png"
+        },
+        {
+            "id": "cinder-oven-co",
+            "name": "Cinder Oven Co.",
+            "coords": [
+                -122.4255,
+                37.7613
+            ],
+            "description": "Thin-crust classics on 18th Street.",
+            "city": "Mission",
+            "rating": 4.5,
+            "price": "$",
+            "thumbnail": "https://persistent.oaistatic.com/pizzaz/pizzaz-3.png"
+        },
+        {
+            "id": "neon-crust-works",
+            "name": "Neon Crust Works",
+            "coords": [
+                -122.4388,
+                37.7775
+            ],
+            "description": "Deep-dish and cornmeal crust favorites.",
+            "city": "Alamo Square",
+            "rating": 4.5,
+            "price": "$",
+            "thumbnail": "https://persistent.oaistatic.com/pizzaz/pizzaz-6.png"
+        },
+        {
+            "id": "luna-pie-collective",
+            "name": "Luna Pie Collective",
+            "coords": [
+                -122.4077,
+                37.799
+            ],
+            "description": "Wood-fired pies and burrata in North Beach.",
+            "city": "North Beach",
+            "rating": 4.6,
+            "price": "$",
+            "thumbnail": "https://persistent.oaistatic.com/pizzaz/pizzaz-4.png"
+        },
+        {
+            "id": "bricklight-deep-dish",
+            "name": "Bricklight Deep Dish",
+            "coords": [
+                -122.4097,
+                37.7992
+            ],
+            "description": "Chicago-style pies from Tony Gemignani.",
+            "city": "North Beach",
+            "rating": 4.4,
+            "price": "$$",
+            "thumbnail": "https://persistent.oaistatic.com/pizzaz/pizzaz-5.png"
+        }
+    ]
+}

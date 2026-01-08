@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import {
   IconArrowTopRightSm,
   IconCamera,
@@ -17,7 +18,6 @@ import {
   IconWifi,
   IconTelescope,
 } from "../../../icons";
-
 import {
   SettingToggleBlock,
   SettingToggleBadge,

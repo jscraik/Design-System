@@ -1,5 +1,15 @@
 # Chat/Template/Compose/Modals Delta Report
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 Scope: `Chat*.tsx`, `*Template*.tsx`, `ComposeView.tsx`, and `packages/ui/src/app/modals/**/*.tsx`
 
 | File (packages/ui) | Matched _temp file | Similarity |

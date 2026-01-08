@@ -1,5 +1,38 @@
 # UI component tooling (web + iOS)
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Web (React + Tailwind + Vite)](#web-react-tailwind-vite)
+  - [1) Author components + stories](#1-author-components-stories)
+  - [2) Run Storybook for component development](#2-run-storybook-for-component-development)
+  - [3) Interaction tests (Storybook + Vitest)](#3-interaction-tests-storybook-vitest)
+  - [4) Visual regression (Storybook + Playwright)](#4-visual-regression-storybook-playwright)
+  - [5) Visual regression (Web app + Playwright)](#5-visual-regression-web-app-playwright)
+  - [6) Accessibility regression (widgets)](#6-accessibility-regression-widgets)
+- [Argos integration (optional, CI-first)](#argos-integration-optional-ci-first)
+  - [Storybook Vitest uploads](#storybook-vitest-uploads)
+  - [Playwright uploads (web + Storybook)](#playwright-uploads-web-storybook)
+  - [First baseline build (required by Argos)](#first-baseline-build-required-by-argos)
+  - [Argos auth](#argos-auth)
+  - [Argos CLI upload (when you generate screenshots yourself)](#argos-cli-upload-when-you-generate-screenshots-yourself)
+- [iOS (SwiftUI)](#ios-swiftui)
+  - [1) Component catalog](#1-component-catalog)
+  - [2) Snapshot regression (recommended next)](#2-snapshot-regression-recommended-next)
+  - [3) Accessibility regression (recommended next)](#3-accessibility-regression-recommended-next)
+- [Install / update dependencies](#install-update-dependencies)
+- [Related docs](#related-docs)
+
+
 This guide maps the approved UI tooling to this repo in the order you should use it.
 
 ## Web (React + Tailwind + Vite)
@@ -83,3 +116,15 @@ pnpm install
 
 - `packages/ui/STORYBOOK_GUIDE.md`
 - `docs/KEYBOARD_NAVIGATION_TESTS.md`
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

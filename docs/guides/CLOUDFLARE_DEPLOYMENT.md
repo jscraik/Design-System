@@ -1,5 +1,15 @@
 # Cloudflare Workers Deployment Guide
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 ## Deploy ChatUI Widgets to Cloudflare Workers
 
 This guide shows how to deploy the ChatUI widget library to Cloudflare Workers, making your widgets available as a production MCP server for OpenAI integration.
@@ -283,3 +293,12 @@ npx wrangler status
 4. **Scale up** by adding more widgets and tools
 
 The Cloudflare Workers integration makes the ChatUI widget library production-ready with minimal configuration, providing a robust foundation for deploying interactive widgets at scale.
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+

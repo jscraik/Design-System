@@ -1,5 +1,6 @@
 import * as React from "react";
 import { motion, HTMLMotionProps, Variants } from "motion/react";
+
 import { cn } from "./utils";
 
 export interface TransitionProps extends Omit<HTMLMotionProps<"div">, "variants"> {

@@ -1,5 +1,30 @@
 # Phase 1 Checkpoint Verification
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Definition of Done - Verification Results](#definition-of-done-verification-results)
+  - [✅ 1. All four Swift packages compile successfully](#1-all-four-swift-packages-compile-successfully)
+  - [✅ 2. ChatUIFoundation provides semantic tokens via Asset Catalog](#2-chatuifoundation-provides-semantic-tokens-via-asset-catalog)
+  - [✅ 3. ChatUIThemes provides ChatGPT-style constants](#3-chatuithemes-provides-chatgpt-style-constants)
+  - [✅ 4. ChatUIComponents provides 6 settings primitives](#4-chatuicomponents-provides-6-settings-primitives)
+  - [✅ 5. Example settings view renders pixel-close to React equivalent](#5-example-settings-view-renders-pixel-close-to-react-equivalent)
+  - [✅ 6. Light/dark mode switching works automatically](#6-lightdark-mode-switching-works-automatically)
+  - [✅ 7. macOS hover states work correctly](#7-macos-hover-states-work-correctly)
+  - [✅ 8. Unit tests pass for all primitives](#8-unit-tests-pass-for-all-primitives)
+  - [✅ 9. SwiftUI previews render in Xcode](#9-swiftui-previews-render-in-xcode)
+- [Summary](#summary)
+
+
 **Date:** December 28, 2024
 **Status:** ✅ COMPLETE
 
@@ -380,3 +405,15 @@ All 9 Definition of Done criteria have been verified and passed:
 **Verified by:** Kiro AI Agent
 **Date:** December 28, 2024
 **Spec:** `.kiro/specs/native-macos-bridge/`
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

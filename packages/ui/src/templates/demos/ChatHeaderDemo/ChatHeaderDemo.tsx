@@ -8,7 +8,6 @@ import {
   IconLock,
   IconStar,
 } from "../../../icons";
-
 import { ChatHeader } from "../../../app/chat/ChatHeader";
 
 export function ChatHeaderDemo() {

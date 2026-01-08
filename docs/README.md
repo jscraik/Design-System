@@ -1,5 +1,27 @@
 # Documentation index for developers
 
+Last updated: 2026-01-07
+
+## Doc requirements
+
+- Audience: Developers (intermediate)
+- Scope: Overview and essential workflows for this area
+- Non-scope: Deep API reference or internal design rationale
+- Owner: Docs Maintainers (confirm)
+- Review cadence: Quarterly (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Directory structure](#directory-structure)
+- [Start here](#start-here)
+- [Documentation quality checks](#documentation-quality-checks)
+- [Architecture docs](#architecture-docs)
+- [Audit reports](#audit-reports)
+- [Guides](#guides)
+- [Root documentation](#root-documentation)
+- [Workflow docs](#workflow-docs)
+
 This index helps you find the right doc fast. Start here, then jump into the category you need.
 
 ## Directory structure
@@ -20,6 +42,19 @@ docs/
 - Working on Swift? Start with [SWIFT_INTEGRATION.md](./SWIFT_INTEGRATION.md).
 - Releasing? Use [RELEASE_CHECKLIST.md](./guides/RELEASE_CHECKLIST.md).
 - Looking for the CLI? See [packages/cli/README.md](../packages/cli/README.md).
+
+## Documentation quality checks
+
+Run documentation checks from the repo root:
+
+```bash
+pnpm doc:lint
+```
+
+Requirements:
+
+- Vale installed locally (e.g., `brew install vale`).
+- `pnpm install` completed so repo scripts are available.
 
 ## Architecture docs
 

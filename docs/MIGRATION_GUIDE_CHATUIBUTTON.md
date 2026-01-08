@@ -1,5 +1,40 @@
 # ChatUIButton Migration Guide
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (beginner to intermediate)
+- Scope: Task-focused instructions for this topic
+- Non-scope: Comprehensive architecture reference
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [Why Migrate?](#why-migrate)
+- [Migration Steps](#migration-steps)
+  - [Step 1: Update Imports](#step-1-update-imports)
+  - [Step 2: Update Type Names](#step-2-update-type-names)
+  - [Step 3: Update Package Dependencies](#step-3-update-package-dependencies)
+- [Breaking Changes](#breaking-changes)
+  - [Dynamic Type Scaling](#dynamic-type-scaling)
+  - [Token Access](#token-access)
+- [Feature Parity](#feature-parity)
+  - [✅ Fully Compatible Features](#fully-compatible-features)
+  - [⚠️ Different Implementations](#different-implementations)
+  - [🚧 Missing Features](#missing-features)
+- [Code Examples](#code-examples)
+  - [Basic Button](#basic-button)
+  - [Icon Button](#icon-button)
+  - [Custom Content](#custom-content)
+  - [Disabled State](#disabled-state)
+- [Timeline](#timeline)
+- [Support](#support)
+- [Future Enhancements](#future-enhancements)
+
+
 ## Overview
 
 The `ui-swift` package is now in maintenance mode. All new development should use the `ChatUIComponents` package for button components.
@@ -175,7 +210,7 @@ ChatUIButton("Submit", isDisabled: !isValid) {
 ## Support
 
 For questions or issues:
-1. Check [ChatUIComponents documentation](../../ChatUIComponents/README.md)
+1. Check [ChatUIComponents documentation](../platforms/apple/swift/ChatUIComponents/README.md)
 2. File an issue on GitHub
 3. Contact the ChatUI team
 
@@ -188,3 +223,15 @@ We're working on adding the following features to ChatUIComponents:
 3. **Theming Improvements** - More theme customization options
 
 Stay tuned for updates!
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+
+## Troubleshooting
+- TBD: Add the top 3 failure modes and fixes.
+

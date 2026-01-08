@@ -1,5 +1,54 @@
 # Security Test Suite - Quality Report
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Maintainers and security reviewers
+- Scope: Security posture, guidance, and required practices
+- Non-scope: Feature usage or product marketing
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Executive Summary](#executive-summary)
+- [Files Delivered](#files-delivered)
+  - [1. MCPAuthenticatorSecurityTests.swift](#1-mcpauthenticatorsecuritytestsswift)
+  - [2. MCPClientValidationTests.swift](#2-mcpclientvalidationtestsswift)
+  - [3. MCPRateLimiterTests.swift](#3-mcpratelimitertestsswift)
+  - [4. SpotlightManagerSecurityTests.swift](#4-spotlightmanagersecuritytestsswift)
+  - [5. CryptoManagerTests.swift](#5-cryptomanagertestsswift)
+- [Testing Best Practices Applied](#testing-best-practices-applied)
+  - [1. Table-Driven Tests](#1-table-driven-tests)
+  - [2. Async/Await Patterns](#2-asyncawait-patterns)
+  - [3. Edge Case Coverage](#3-edge-case-coverage)
+  - [4. Mock Data Generation](#4-mock-data-generation)
+  - [5. Performance Testing](#5-performance-testing)
+- [Quality Gates Established](#quality-gates-established)
+  - [Coverage Requirements](#coverage-requirements)
+  - [Security Requirements](#security-requirements)
+  - [Performance Requirements](#performance-requirements)
+  - [Flakiness Budget](#flakiness-budget)
+- [Test Maintenance Guidelines](#test-maintenance-guidelines)
+  - [Adding New Tests](#adding-new-tests)
+  - [Test Anti-Patterns to Avoid](#test-anti-patterns-to-avoid)
+  - [When to Update Tests](#when-to-update-tests)
+- [Known Limitations](#known-limitations)
+- [Gap Analysis](#gap-analysis)
+  - [Coverage Gaps](#coverage-gaps)
+  - [Potential Enhancements](#potential-enhancements)
+- [Specification Ambiguities](#specification-ambiguities)
+  - [Resolved](#resolved)
+  - [Documented Assumptions](#documented-assumptions)
+- [Summary Statistics](#summary-statistics)
+- [Recommendations](#recommendations)
+  - [Immediate Actions](#immediate-actions)
+  - [Short-term Improvements](#short-term-improvements)
+  - [Long-term Enhancements](#long-term-enhancements)
+- [Conclusion](#conclusion)
+
+
 ## Executive Summary
 
 Comprehensive security test suites have been created for the ChatUI Swift codebase, covering authentication, client validation, rate limiting, search security, and cryptographic operations.

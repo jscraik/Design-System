@@ -1,5 +1,39 @@
 # ChatGPT Design System Audit Report
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Executive Summary](#executive-summary)
+- [✅ FIXES APPLIED (December 25, 2024)](#fixes-applied-december-25-2024)
+  - [Critical Fixes](#critical-fixes)
+  - [Summary of Changes](#summary-of-changes)
+- [✅ COMPLIANT COMPONENTS](#compliant-components)
+  - [Fully Conformant](#fully-conformant)
+- [⚠️ ISSUES FOUND](#issues-found)
+  - [1. COLOR VIOLATIONS](#1-color-violations)
+  - [2. TYPOGRAPHY VIOLATIONS](#2-typography-violations)
+  - [3. MISSING LETTER-SPACING (TRACKING)](#3-missing-letter-spacing-tracking)
+  - [4. BORDER RADIUS INCONSISTENCIES](#4-border-radius-inconsistencies)
+- [📋 PRIORITY FIX LIST](#priority-fix-list)
+  - [HIGH PRIORITY (Breaking Visual Standards)](#high-priority-breaking-visual-standards)
+  - [MEDIUM PRIORITY (Consistency)](#medium-priority-consistency)
+  - [LOW PRIORITY (Polish)](#low-priority-polish)
+- [🎨 DESIGN SYSTEM REFERENCE](#design-system-reference)
+  - [Typography Scale (Use Only These)](#typography-scale-use-only-these)
+  - [Color Palette (Use Only These)](#color-palette-use-only-these)
+- [📝 NOTES](#notes)
+- [✅ RECOMMENDED ACTIONS](#recommended-actions)
+
+
 ## Executive Summary
 
 Comprehensive audit of all UI components against ChatGPT design standards as defined in `/COLOR_REFERENCE.md` and `packages/ui/src/storybook/design-system/DesignTokens/DesignTokens.ts`.

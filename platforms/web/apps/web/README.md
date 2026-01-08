@@ -1,4 +1,27 @@
-# ChatUI Widget Gallery (platforms/web/apps/web)
+# aStudio Widget Gallery (platforms/web/apps/web)
+
+Last updated: 2026-01-07
+
+## Doc requirements
+
+- Audience: Developers (intermediate)
+- Scope: Overview and essential workflows for this area
+- Non-scope: Deep API reference or internal design rationale
+- Owner: Web Platform Team (confirm)
+- Review cadence: Each release (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [What this app is for](#what-this-app-is-for)
+- [Quick Start](#quick-start)
+- [Widget Gallery Features](#widget-gallery-features)
+- [Build Widget for MCP](#build-widget-for-mcp)
+- [Environment Variables](#environment-variables)
+- [Key Files](#key-files)
+- [Verify](#verify)
+- [Troubleshooting](#troubleshooting)
+- [Routes](#routes)
 
 **Simplified app for visual widget testing and MCP widget build.**
 
@@ -47,9 +70,8 @@ VITE_TEMPLATE_ID=chat-input pnpm -C platforms/web/apps/web build:widget
 
 ## Key Files
 
-- `src/app/Router.tsx` — simplified router (chat shell + harness route)
+- `src/app/Router.tsx` — simplified router (harness + utility routes)
 - `src/pages/HarnessPage.tsx` — widget gallery UI
-- `src/pages/TemplatesGalleryPage.tsx` — templates gallery route (`/templates`)
 - `src/pages/TemplateWidgetPage.tsx` — single-template widget shell
 - `scripts/inline-widget.mjs` — widget bundler for MCP
 
@@ -63,16 +85,16 @@ VITE_TEMPLATE_ID=chat-input pnpm -C platforms/web/apps/web build:widget
 ## Troubleshooting
 
 **Port 5173 is in use**
+
 ```bash
 pnpm -C platforms/web/apps/web dev -- --port 5174
 ```
 
 **Widgets show blank**
+
 - Ensure MCP server is running: `pnpm mcp:start`
 - Check `VITE_WIDGETS_BASE` points to widget server
 
 ## Routes
 
-- `/` — Chat UI root
-- `/harness` — Widget gallery UI
-- `/templates/:id?` — Templates gallery (uses `@chatui/ui/dev`)
+- `/` — Widget gallery UI (HarnessPage)

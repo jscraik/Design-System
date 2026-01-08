@@ -1,5 +1,32 @@
 # Template / Block API (Internal)
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Engineers and technical leads
+- Scope: System architecture and component relationships
+- Non-scope: Step-by-step operational procedures
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [React API (templates + blocks)](#react-api-templates-blocks)
+  - [Templates](#templates)
+  - [Blocks](#blocks)
+  - [Adding a new React template](#adding-a-new-react-template)
+  - [Adding a new React block](#adding-a-new-react-block)
+- [SwiftUI API (templates + blocks)](#swiftui-api-templates-blocks)
+  - [Templates](#templates-1)
+  - [Adding a new SwiftUI template](#adding-a-new-swiftui-template)
+  - [Available SwiftUI templates](#available-swiftui-templates)
+  - [Blocks](#blocks-1)
+- [Widgets (template-backed)](#widgets-template-backed)
+- [Stability](#stability)
+- [Related docs](#related-docs)
+
+
 This document defines the internal API for templates and blocks across React, widgets, and SwiftUI/AppKit. It reflects the current repo layout and export surface.
 
 ## React API (templates + blocks)

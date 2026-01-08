@@ -1,6 +1,16 @@
 # @chatui/cli
 
-Unified developer CLI for the ChatUI monorepo (dev/build/test/mcp/tokens/versions).
+Last updated: 2026-01-07
+
+## Doc requirements
+
+- Audience: Developers (intermediate)
+- Scope: Overview and essential workflows for this area
+- Non-scope: Deep API reference or internal design rationale
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+Unified developer CLI for the aStudio monorepo (dev/build/test/mcp/tokens/versions).
 
 See `CLI_SPEC.md` for the full interface contract.
 
@@ -13,12 +23,12 @@ pnpm install
 ## Usage
 
 ```bash
-pnpm chatui --help
-pnpm chatui dev --exec
-pnpm chatui build web --exec
-pnpm chatui test e2e-web --exec
-pnpm chatui mcp tools list --network
-pnpm chatui doctor
+pnpm astudio --help
+pnpm astudio dev --exec
+pnpm astudio build web --exec
+pnpm astudio test e2e-web --exec
+pnpm astudio mcp tools list --network
+pnpm astudio doctor
 ```
 
 ## Command overview
@@ -55,6 +65,7 @@ Precedence: flags > env > project config > user config > system.
 - User config: `~/.config/chatui/config.json`
 
 Environment variables:
+
 - `CHATUI_CONFIG` (config path override)
 - `CHATUI_CWD` (working directory override)
 - `CHATUI_COLOR=0|1` (force color off/on)
@@ -66,22 +77,22 @@ Environment variables:
 ## Examples
 
 ```bash
-pnpm chatui dev --exec
-pnpm chatui build web --exec --json
-pnpm chatui test visual-storybook --update --exec
-pnpm chatui mcp rpc tools/list --network
-pnpm chatui mcp tools call --name display_chat --args @payload.json --network
-pnpm chatui tokens validate --exec
-pnpm chatui mcp tools list --dry-run --plain
+pnpm astudio dev --exec
+pnpm astudio build web --exec --json
+pnpm astudio test visual-storybook --update --exec
+pnpm astudio mcp rpc tools/list --network
+pnpm astudio mcp tools call --name display_chat --args @payload.json --network
+pnpm astudio tokens validate --exec
+pnpm astudio mcp tools list --dry-run --plain
 ```
 
 ## JSON output schema
 
 ```json
 {
-  "schema": "chatui.command.v1",
+  "schema": "astudio.command.v1",
   "meta": {
-    "tool": "chatui",
+    "tool": "astudio",
     "version": "x.y.z",
     "timestamp": "ISO-8601",
     "request_id": "optional"

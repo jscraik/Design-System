@@ -1,5 +1,30 @@
 # Security Test Suite - Deliverables
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Maintainers and security reviewers
+- Scope: Security posture, guidance, and required practices
+- Non-scope: Feature usage or product marketing
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Test Files](#test-files)
+  - [ChatUIMCP Security Tests](#chatuimcp-security-tests)
+  - [ChatUISystemIntegration Security Tests](#chatuisystemintegration-security-tests)
+- [Documentation](#documentation)
+- [Test Summary](#test-summary)
+- [Key Features](#key-features)
+- [Running the Tests](#running-the-tests)
+- [CI Integration](#ci-integration)
+- [Quality Gates](#quality-gates)
+- [Next Steps](#next-steps)
+- [Support](#support)
+
+
 ## Test Files
 
 ### ChatUIMCP Security Tests

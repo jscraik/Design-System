@@ -1,5 +1,44 @@
 # Apps SDK Guidelines Compliance Audit
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [1. App Submission Guidelines](#1-app-submission-guidelines)
+  - [✅ Compliant](#compliant)
+  - [⚠️ Needs Attention Before Submission](#needs-attention-before-submission)
+- [2. UX Principles](#2-ux-principles)
+  - [✅ Compliant](#compliant-1)
+  - [Checklist (from guidelines)](#checklist-from-guidelines)
+- [3. UI Guidelines](#3-ui-guidelines)
+  - [✅ Compliant](#compliant-2)
+  - [⚠️ Recommended Improvements](#recommended-improvements)
+- [4. Security & Privacy](#4-security-privacy)
+  - [✅ Compliant](#compliant-3)
+  - [⚠️ Recommended](#recommended)
+- [5. Optimize Metadata](#5-optimize-metadata)
+  - [✅ Compliant](#compliant-4)
+  - [⚠️ Recommended](#recommended-1)
+- [Summary](#summary)
+  - [Ready for Development ✅](#ready-for-development)
+  - [Required Before Submission ⚠️](#required-before-submission)
+  - [Recommended Improvements](#recommended-improvements-1)
+- [Golden Prompt Set (Template)](#golden-prompt-set-template)
+- [What Makes a Great ChatGPT App (Summary)](#what-makes-a-great-chatgpt-app-summary)
+- [Historical Improvements (December 2024)](#historical-improvements-december-2024)
+  - [✅ Enhanced Apps SDK Compliance](#enhanced-apps-sdk-compliance)
+  - [Compliance Status at Time of Audit: 100% ✅](#compliance-status-at-time-of-audit-100)
+- [Files Updated for Compliance](#files-updated-for-compliance)
+
+
 This document audits your codebase against OpenAI's official Apps SDK guidelines.
 
 ---

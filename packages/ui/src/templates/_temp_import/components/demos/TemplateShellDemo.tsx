@@ -1,5 +1,6 @@
-import { TemplateShell, TemplateShellToggleButton, useTemplateShell } from "../TemplateShell";
 import { MessageSquare, Settings, User, PanelLeftClose, PanelRightClose } from "lucide-react";
+
+import { TemplateShell, TemplateShellToggleButton, useTemplateShell } from "../TemplateShell";
 
 // Inner component that has access to the TemplateShell context
 function DemoContent() {

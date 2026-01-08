@@ -1,5 +1,15 @@
 # ChatUI Playground Setup Guide
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (beginner to intermediate)
+- Scope: Task-focused instructions for this topic
+- Non-scope: Comprehensive architecture reference
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 > Note: The primary macOS development app is `platforms/apple/apps/macos/ComponentGallery`. `ChatUIPlayground` is a lightweight companion for quick experiments with the modular Swift packages.
 
 This guide explains how to open and run the existing ChatUIPlayground Xcode project in this repo.
@@ -108,3 +118,9 @@ platforms/apple/apps/macos/ChatUIPlayground/
 - ✅ Sidebar navigation switches sections correctly
 - ✅ Components render with semantic tokens (colors/spacing)
 - ✅ Light/dark mode works as expected
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+

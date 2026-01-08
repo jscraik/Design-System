@@ -1,5 +1,37 @@
 # Apps SDK Gap Analysis - December 2025
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Engineers and technical leads
+- Scope: System architecture and component relationships
+- Non-scope: Step-by-step operational procedures
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Executive Summary](#executive-summary)
+  - [✅ What We're Doing Well](#what-were-doing-well)
+- [Gap Analysis by Category](#gap-analysis-by-category)
+  - [1. Widget Resource Metadata](#1-widget-resource-metadata)
+  - [2. Tool Descriptor Metadata](#2-tool-descriptor-metadata)
+  - [3. Tool Response Structure](#3-tool-response-structure)
+  - [4. Runtime API Coverage (`window.openai`)](#4-runtime-api-coverage-windowopenai)
+  - [5. Apps SDK UI Component Usage](#5-apps-sdk-ui-component-usage)
+  - [6. Display Mode Support](#6-display-mode-support)
+  - [7. Accessibility](#7-accessibility)
+  - [8. Internationalization](#8-internationalization)
+  - [9. Security](#9-security)
+  - [10. Performance](#10-performance)
+- [Completed Action Items (Summary)](#completed-action-items-summary)
+- [Remaining Gaps (Low Priority)](#remaining-gaps-low-priority)
+  - [Nice to Have](#nice-to-have)
+- [Conclusion](#conclusion)
+- [Verify (Re-run the Audit)](#verify-re-run-the-audit)
+
+
 This document analyzes our ChatUI implementation against the official Apps SDK documentation from:
 
 - <https://developers.openai.com/apps-sdk>

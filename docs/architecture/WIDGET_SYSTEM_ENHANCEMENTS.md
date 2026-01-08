@@ -1,5 +1,42 @@
 # Enhanced Widget System Implementation
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Engineers and technical leads
+- Scope: System architecture and component relationships
+- Non-scope: Step-by-step operational procedures
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Overview](#overview)
+- [🎯 Key Improvements](#key-improvements)
+  - [1. **Automated Widget Discovery**](#1-automated-widget-discovery)
+  - [2. **Standardized Widget Registry**](#2-standardized-widget-registry)
+  - [3. **Enhanced Widget Components**](#3-enhanced-widget-components)
+- [📁 New Architecture](#new-architecture)
+- [🔧 Implementation Details](#implementation-details)
+  - [Widget Manifest Plugin](#widget-manifest-plugin)
+  - [Widget Registry System](#widget-registry-system)
+  - [Enhanced Widget Components](#enhanced-widget-components)
+- [📊 Results](#results)
+  - [Build Output](#build-output)
+- [Verify](#verify)
+- [🚀 Benefits Achieved](#benefits-achieved)
+  - [For Developers](#for-developers)
+  - [For Production](#for-production)
+  - [For Maintenance](#for-maintenance)
+- [🔄 Migration Path](#migration-path)
+  - [Existing Widgets](#existing-widgets)
+  - [New Widgets](#new-widgets)
+- [📋 Next Steps](#next-steps)
+  - [Phase 2: Widget Standardization](#phase-2-widget-standardization)
+  - [Phase 3: Enhanced Features](#phase-3-enhanced-features)
+
+
 ## Overview
 
 Successfully implemented an enhanced widget infrastructure inspired by the [Toolbase-AI OpenAI Apps SDK template](https://github.com/Toolbase-AI/openai-apps-sdk-cloudflare-vite-template), bringing automated discovery, content hashing, and standardized patterns to the ChatUI widget system.

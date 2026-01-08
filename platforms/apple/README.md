@@ -1,5 +1,15 @@
 # Apple Platform
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Overview and essential workflows for this area
+- Non-scope: Deep API reference or internal design rationale
+- Owner: Apple Platform Team (confirm)
+- Review cadence: Each release (confirm)
+
+
 SwiftUI and macOS/iOS platform surfaces live under `platforms/apple/`. This area contains the Swift packages that mirror the React UI library plus the macOS apps used for validation and demos.
 
 ## Structure

@@ -1,6 +1,16 @@
-# ChatUI Swift Modular Architecture
+# aStudio Swift Modular Architecture
 
-This directory contains the refactored ChatUI Swift packages, transformed from a monolithic `ChatUISwift` package into four specialized, modular packages.
+Last updated: 2026-01-07
+
+## Doc requirements
+
+- Audience: Developers (intermediate)
+- Scope: Overview and essential workflows for this area
+- Non-scope: Deep API reference or internal design rationale
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+This directory contains the refactored aStudio Swift packages, transformed from a monolithic `ChatUISwift` package into four specialized, modular packages.
 
 ## Table of contents
 
@@ -25,6 +35,7 @@ cd platforms/apple/swift/ChatUIFoundation && swift build
 cd ../ChatUIThemes && swift build
 cd ../ChatUIComponents && swift build
 cd ../ChatUIShellChatGPT && swift build
+cd ../ChatUITestSupport && swift build
 ```
 
 ### 2) Run Swift tests (optional)
@@ -96,6 +107,12 @@ pnpm test:swift
 - `VisualEffectView`: macOS vibrancy effects with iOS/visionOS fallback
 - `RoundedAppContainer`: ChatGPT-style app clipping with borders and shadows
 - `AppShellView`: NavigationSplitView-based layout with configurable sidebar width
+
+### 5. ChatUITestSupport (`platforms/apple/swift/ChatUITestSupport/`)
+
+**Purpose**: Shared test utilities and mocks for Swift package testing  
+**Dependencies**: ChatUIFoundation  
+**Deployment Targets**: iOS 15+, macOS 13+
 
 ## Asset Catalog Integration
 

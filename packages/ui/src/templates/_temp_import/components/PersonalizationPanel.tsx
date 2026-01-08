@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import { IconBook, IconChevronDownMd, IconChevronLeftMd, IconChevronRightMd } from "./icons/ChatGPTIcons";
-
 import { SettingDropdown, type DropdownOption } from "./SettingDropdown";
 import { SettingToggle } from "./SettingToggle";
 import { SettingRow } from "./SettingRow";

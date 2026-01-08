@@ -3,6 +3,7 @@ import useEmblaCarousel from "embla-carousel-react";
 
 import { Button } from "../../components/ui";
 import { IconArrowLeftSm, IconArrowRightSm } from "../../icons";
+
 import { markers } from "./data/markers";
 import { PlaceCard, type Place } from "./components/PlaceCard";
 

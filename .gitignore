@@ -53,6 +53,7 @@ platforms/apple/apps/macos/ChatUIPlayground/
 
 # Tooling
 .kiro/
+.vale/
 
 # Swift/SwiftPM
 .build/

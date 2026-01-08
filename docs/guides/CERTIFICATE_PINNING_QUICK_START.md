@@ -1,5 +1,28 @@
 # Certificate Pinning Quick Start
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (beginner to intermediate)
+- Scope: Task-focused instructions for this topic
+- Non-scope: Comprehensive architecture reference
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [30-Second Setup](#30-second-setup)
+- [Extract Hash in One Command](#extract-hash-in-one-command)
+- [Local Development](#local-development)
+- [Common Configurations](#common-configurations)
+  - [Production (Recommended)](#production-recommended)
+  - [Staging](#staging)
+- [Testing](#testing)
+- [Troubleshooting](#troubleshooting)
+- [Need More?](#need-more)
+
+
 ## 30-Second Setup
 
 ```swift
@@ -87,3 +110,12 @@ pinnedHashes: [oldHash, newHash]
 ## Need More?
 
 See [TLS_CERTIFICATE_PINNING.md](./TLS_CERTIFICATE_PINNING.md) for complete documentation.
+
+## Risks and assumptions
+- Assumptions: TBD (confirm)
+- Failure modes and blast radius: TBD (confirm)
+- Rollback or recovery guidance: TBD (confirm)
+
+## Verify
+- TBD: Add concrete verification steps and expected results.
+

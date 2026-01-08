@@ -1,5 +1,15 @@
 # _temp vs packages/ui Mismatch Report
 
+Last updated: 2026-01-04
+
+## Doc requirements
+- Audience: Developers (intermediate)
+- Scope: Topic defined by this document
+- Non-scope: Anything not explicitly covered here
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+
 ## Summary
 - Mismatches (same mapped path, different content): 9
 - Present in _temp but missing in packages/ui (mapped): 139

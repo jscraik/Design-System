@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import {
   IconCamera,
   IconCategory,
@@ -27,7 +28,6 @@ import {
   IconFolder,
   IconSettings,
 } from "../../../icons";
-
 import {
   SettingRowBlock,
   SettingRowValue,
