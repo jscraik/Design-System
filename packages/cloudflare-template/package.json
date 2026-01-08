@@ -18,7 +18,7 @@
     "@chatui/widgets": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.20.0",
     "agents": "^0.2.13",
-    "zod": "^3.25.76"
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.13.12",
