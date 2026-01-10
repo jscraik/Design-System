@@ -10,7 +10,7 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-Complete guide for teams adopting ChatUI SwiftUI components incrementally.
+Complete guide for teams adopting aStudio SwiftUI components incrementally.
 
 ## Table of Contents
 
@@ -49,7 +49,7 @@ Before starting migration, assess your current state:
 
 **Questions to Answer:**
 
-1. Do you have existing React components using the ChatUI design system?
+1. Do you have existing React components using the aStudio design system?
 2. Do you need native iOS, macOS, or visionOS applications?
 3. What features require native platform integration?
 4. What's your team's Swift/SwiftUI experience level?
@@ -60,10 +60,10 @@ Before starting migration, assess your current state:
 | Scenario                     | Recommendation                                      |
 | ---------------------------- | --------------------------------------------------- |
 | Web-only, no native plans    | Stay with React                                     |
-| Need native apps, small team | Start with ChatUIShellChatGPT for rapid development |
+| Need native apps, small team | Start with AStudioShellChatGPT for rapid development |
 | Need native apps, large team | Full modular adoption with parallel teams           |
-| Existing native app          | Integrate ChatUI packages incrementally             |
-| Prototype/MVP                | Use ChatUIShellChatGPT for speed                    |
+| Existing native app          | Integrate aStudio packages incrementally             |
+| Prototype/MVP                | Use AStudioShellChatGPT for speed                    |
 
 ### Migration Paths
 
@@ -73,9 +73,9 @@ Before starting migration, assess your current state:
 
 **Steps:**
 
-1. Install all four ChatUI packages
-2. Use ChatUIShellChatGPT for rapid layout
-3. Build features with ChatUIComponents
+1. Install all four aStudio packages
+2. Use AStudioShellChatGPT for rapid layout
+3. Build features with AStudioComponents
 4. Customize as needed
 
 **Timeline:** 2-4 weeks to first release
@@ -86,10 +86,10 @@ Before starting migration, assess your current state:
 
 **Steps:**
 
-1. Install ChatUIFoundation first
+1. Install AStudioFoundation first
 2. Gradually replace hardcoded colors with FColor
-3. Add ChatUIComponents for new features
-4. Refactor existing components to use ChatUI tokens
+3. Add AStudioComponents for new features
+4. Refactor existing components to use aStudio tokens
 
 **Timeline:** 4-8 weeks for full integration
 
@@ -167,28 +167,28 @@ Before starting migration, assess your current state:
 4. Verify builds:
 
    ```bash
-   cd platforms/apple/swift/ChatUIFoundation && swift build
-   cd platforms/apple/swift/ChatUIThemes && swift build
-   cd platforms/apple/swift/ChatUIComponents && swift build
-   cd platforms/apple/swift/ChatUIShellChatGPT && swift build
+   cd platforms/apple/swift/AStudioFoundation && swift build
+   cd platforms/apple/swift/AStudioThemes && swift build
+   cd platforms/apple/swift/AStudioComponents && swift build
+   cd platforms/apple/swift/AStudioShellChatGPT && swift build
    ```
 
 **Day 3-4: Team Training**
 
 1. SwiftUI basics workshop (if needed)
-2. ChatUI architecture overview
+2. aStudio architecture overview
 3. Asset Catalog walkthrough
 4. Component Gallery demonstration
 5. Hot reload workflow training
 
 **Day 5: First Component**
 
-1. Create simple view using ChatUIFoundation
+1. Create simple view using AStudioFoundation
 2. Use FColor, FType, FSpacing
 3. Test light/dark mode switching
 4. Review with team
 
-**Deliverable:** Team comfortable with ChatUI basics
+**Deliverable:** Team comfortable with aStudio basics
 
 ### Week 2: Token Integration
 
@@ -219,7 +219,7 @@ Before starting migration, assess your current state:
 
 ### Weeks 3-4: Settings Interface
 
-**Goal:** Build complete settings interface using ChatUI components
+**Goal:** Build complete settings interface using aStudio components
 
 **Tasks:**
 
@@ -326,7 +326,7 @@ Before starting migration, assess your current state:
 
 ### Weeks 7-8: Feature Development
 
-**Goal:** Build first complete feature using ChatUI components
+**Goal:** Build first complete feature using aStudio components
 
 **Tasks:**
 
@@ -335,7 +335,7 @@ Before starting migration, assess your current state:
    - Ensure it has React equivalent for comparison
 
 2. **Implement Feature**
-   - Use ChatUIComponents exclusively
+   - Use AStudioComponents exclusively
    - Follow established patterns
    - Add platform-specific enhancements
 
@@ -364,7 +364,7 @@ Before starting migration, assess your current state:
 
 2. **Implement New Components**
    - Follow established patterns
-   - Use ChatUIFoundation tokens
+   - Use AStudioFoundation tokens
    - Add to Component Gallery
 
 3. **Maintain Parity**
@@ -506,7 +506,7 @@ Use `Platform` helpers:
 
    ```swift
    .target(
-       name: "ChatUIFoundation",
+       name: "AStudioFoundation",
        resources: [.process("Resources")]
    )
    ```
@@ -532,7 +532,7 @@ Use `Platform` helpers:
 1. Open package directly in Xcode:
 
    ```bash
-   cd platforms/apple/swift/ChatUIComponents
+   cd platforms/apple/swift/AStudioComponents
    open Package.swift
    ```
 
@@ -544,9 +544,9 @@ Use `Platform` helpers:
 
 ### Phase 1 Success Criteria
 
-- ✅ All team members can build and run ChatUI packages
+- ✅ All team members can build and run aStudio packages
 - ✅ Token hot reload workflow working
-- ✅ First simple view created using ChatUIFoundation
+- ✅ First simple view created using AStudioFoundation
 - ✅ Team comfortable with SwiftUI basics
 
 ### Phase 2 Success Criteria
@@ -558,7 +558,7 @@ Use `Platform` helpers:
 
 ### Phase 3 Success Criteria
 
-- ✅ Multiple features built with ChatUI components
+- ✅ Multiple features built with aStudio components
 - ✅ Platform-specific integrations working
 - ✅ Performance meets targets
 - ✅ Accessibility compliance achieved
@@ -608,7 +608,7 @@ Use `Platform` helpers:
 ## Next Steps
 
 1. **Complete Phase 1**: Set up environment and train team
-2. **Start Phase 2**: Build first feature with ChatUI components
+2. **Start Phase 2**: Build first feature with aStudio components
 3. **Review Progress**: Weekly check-ins on migration progress
 4. **Expand Gradually**: Add more components and features
 5. **Optimize**: Improve performance and accessibility

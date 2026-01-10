@@ -12,7 +12,7 @@
  * Deprecated Patterns:
  * - _temp directories - Archived Figma exports (reference only)
  * - _temp_import - Temporary import structure
- * - @chatui/ui/dev - Dev-only exports, not for production
+ * - @astudio/ui/dev - Dev-only exports, not for production
  */
 
 const noDeprecatedImportsRule = {
@@ -63,8 +63,8 @@ const noDeprecatedImportsRule = {
     ];
     const deprecatedPaths = options.deprecatedPaths || [];
     const customMessages = options.customMessages || {
-      "@chatui/ui/dev":
-        "Dev-only export. Use @chatui/ui/* or @chatui/ui/experimental outside local harnesses.",
+      "@astudio/ui/dev":
+        "Dev-only export. Use @astudio/ui/* or @astudio/ui/experimental outside local harnesses.",
     };
 
     // Convert glob pattern to regex

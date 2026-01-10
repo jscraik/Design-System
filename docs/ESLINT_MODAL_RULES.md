@@ -86,9 +86,9 @@ module.exports = [
             // RULE 3: Settings components CANNOT import from modals
             {
               target: [
-                "packages/ui/src/app/settings/SettingRow.tsx",
-                "packages/ui/src/app/settings/SettingToggle.tsx",
-                "packages/ui/src/app/settings/SettingDropdown.tsx",
+                "packages/ui/src/app/settings/SettingRow/SettingRow.tsx",
+                "packages/ui/src/app/settings/SettingToggle/SettingToggle.tsx",
+                "packages/ui/src/app/settings/SettingDropdown/SettingDropdown.tsx",
               ],
               from: "packages/ui/src/app/modals/**",
               message:
@@ -98,14 +98,14 @@ module.exports = [
             // RULE 4: Settings components CANNOT import from panels
             {
               target: [
-                "packages/ui/src/app/settings/SettingRow.tsx",
-                "packages/ui/src/app/settings/SettingToggle.tsx",
-                "packages/ui/src/app/settings/SettingDropdown.tsx",
+                "packages/ui/src/app/settings/SettingRow/SettingRow.tsx",
+                "packages/ui/src/app/settings/SettingToggle/SettingToggle.tsx",
+                "packages/ui/src/app/settings/SettingDropdown/SettingDropdown.tsx",
               ],
               from: [
                 "packages/ui/src/app/settings/PersonalizationPanel.tsx",
-                "packages/ui/src/app/settings/SecurityPanel.tsx",
-                "packages/ui/src/app/settings/ManageAppsPanel.tsx",
+                "packages/ui/src/app/settings/SecurityPanel/SecurityPanel.tsx",
+                "packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.tsx",
                 "packages/ui/src/app/settings/AudioSettingsPanel.tsx",
               ],
               message:
@@ -116,8 +116,8 @@ module.exports = [
             {
               target: [
                 "packages/ui/src/app/settings/PersonalizationPanel.tsx",
-                "packages/ui/src/app/settings/SecurityPanel.tsx",
-                "packages/ui/src/app/settings/ManageAppsPanel.tsx",
+                "packages/ui/src/app/settings/SecurityPanel/SecurityPanel.tsx",
+                "packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.tsx",
                 "packages/ui/src/app/settings/AudioSettingsPanel.tsx",
               ],
               from: "packages/ui/src/components/ui/overlays/Modal/Modal.tsx",
@@ -133,8 +133,8 @@ module.exports = [
               ],
               from: [
                 "packages/ui/src/app/settings/PersonalizationPanel.tsx",
-                "packages/ui/src/app/settings/SecurityPanel.tsx",
-                "packages/ui/src/app/settings/ManageAppsPanel.tsx",
+                "packages/ui/src/app/settings/SecurityPanel/SecurityPanel.tsx",
+                "packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.tsx",
                 "packages/ui/src/app/settings/AudioSettingsPanel.tsx",
               ],
               message:
@@ -210,13 +210,13 @@ module.exports = {
         ],
         from: [
           "packages/ui/src/app/settings/PersonalizationPanel.tsx",
-          "packages/ui/src/app/settings/SecurityPanel.tsx",
-          "packages/ui/src/app/settings/ManageAppsPanel.tsx",
+          "packages/ui/src/app/settings/SecurityPanel/SecurityPanel.tsx",
+          "packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.tsx",
           "packages/ui/src/app/settings/AudioSettingsPanel.tsx",
           "packages/ui/src/app/settings/NotificationsPanel.tsx",
-          "packages/ui/src/app/settings/AppsPanel.tsx",
-          "packages/ui/src/app/settings/DataControlsPanel.tsx",
-          "packages/ui/src/app/settings/ArchivedChatsPanel.tsx",
+          "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+          "packages/ui/src/app/settings/DataControlsPanel/DataControlsPanel.tsx",
+          "packages/ui/src/app/settings/ArchivedChatsPanel/ArchivedChatsPanel.tsx",
           "packages/ui/src/app/settings/CheckForUpdatesPanel.tsx",
         ],
         message: "Infrastructure MUST NOT import from panel components.",
@@ -225,28 +225,28 @@ module.exports = {
       // ===== SETTINGS COMPONENTS RESTRICTIONS =====
       {
         target: [
-          "packages/ui/src/app/settings/SettingRow.tsx",
-          "packages/ui/src/app/settings/SettingToggle.tsx",
-          "packages/ui/src/app/settings/SettingDropdown.tsx",
+          "packages/ui/src/app/settings/SettingRow/SettingRow.tsx",
+          "packages/ui/src/app/settings/SettingToggle/SettingToggle.tsx",
+          "packages/ui/src/app/settings/SettingDropdown/SettingDropdown.tsx",
         ],
         from: "packages/ui/src/app/modals/**",
         message: "Settings components (SettingRow, SettingToggle, SettingDropdown) MUST NOT import from modals.",
       },
       {
         target: [
-          "packages/ui/src/app/settings/SettingRow.tsx",
-          "packages/ui/src/app/settings/SettingToggle.tsx",
-          "packages/ui/src/app/settings/SettingDropdown.tsx",
+          "packages/ui/src/app/settings/SettingRow/SettingRow.tsx",
+          "packages/ui/src/app/settings/SettingToggle/SettingToggle.tsx",
+          "packages/ui/src/app/settings/SettingDropdown/SettingDropdown.tsx",
         ],
         from: [
           "packages/ui/src/app/settings/PersonalizationPanel.tsx",
-          "packages/ui/src/app/settings/SecurityPanel.tsx",
-          "packages/ui/src/app/settings/ManageAppsPanel.tsx",
+          "packages/ui/src/app/settings/SecurityPanel/SecurityPanel.tsx",
+          "packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.tsx",
           "packages/ui/src/app/settings/AudioSettingsPanel.tsx",
           "packages/ui/src/app/settings/NotificationsPanel.tsx",
-          "packages/ui/src/app/settings/AppsPanel.tsx",
-          "packages/ui/src/app/settings/DataControlsPanel.tsx",
-          "packages/ui/src/app/settings/ArchivedChatsPanel.tsx",
+          "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+          "packages/ui/src/app/settings/DataControlsPanel/DataControlsPanel.tsx",
+          "packages/ui/src/app/settings/ArchivedChatsPanel/ArchivedChatsPanel.tsx",
           "packages/ui/src/app/settings/CheckForUpdatesPanel.tsx",
         ],
         message: "Settings components MUST NOT import from panels.",
@@ -256,13 +256,13 @@ module.exports = {
       {
         target: [
           "packages/ui/src/app/settings/PersonalizationPanel.tsx",
-          "packages/ui/src/app/settings/SecurityPanel.tsx",
-          "packages/ui/src/app/settings/ManageAppsPanel.tsx",
+          "packages/ui/src/app/settings/SecurityPanel/SecurityPanel.tsx",
+          "packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.tsx",
           "packages/ui/src/app/settings/AudioSettingsPanel.tsx",
           "packages/ui/src/app/settings/NotificationsPanel.tsx",
-          "packages/ui/src/app/settings/AppsPanel.tsx",
-          "packages/ui/src/app/settings/DataControlsPanel.tsx",
-          "packages/ui/src/app/settings/ArchivedChatsPanel.tsx",
+          "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+          "packages/ui/src/app/settings/DataControlsPanel/DataControlsPanel.tsx",
+          "packages/ui/src/app/settings/ArchivedChatsPanel/ArchivedChatsPanel.tsx",
           "packages/ui/src/app/settings/CheckForUpdatesPanel.tsx",
         ],
         from: "packages/ui/src/components/ui/overlays/Modal/Modal.tsx",
@@ -298,7 +298,7 @@ error  Infrastructure (useFocusTrap, ModalDialog) MUST NOT import from feature m
 
 ### ❌ Violation: Settings component importing from modals
 
-**File:** `packages/ui/src/app/settings/SettingRow.tsx`
+**File:** `packages/ui/src/app/settings/SettingRow/SettingRow.tsx`
 
 ```tsx
 // BAD: Creates circular dependency

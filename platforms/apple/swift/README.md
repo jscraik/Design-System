@@ -10,7 +10,7 @@ Last updated: 2026-01-07
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
 
-This directory contains the refactored aStudio Swift packages, transformed from a monolithic `ChatUISwift` package into four specialized, modular packages.
+This directory contains the refactored aStudio Swift packages, transformed from a monolithic `AStudioSwift` package into four specialized, modular packages.
 
 ## Table of contents
 
@@ -31,11 +31,11 @@ This directory contains the refactored aStudio Swift packages, transformed from 
 ### 1) Build all Swift packages
 
 ```bash
-cd platforms/apple/swift/ChatUIFoundation && swift build
-cd ../ChatUIThemes && swift build
-cd ../ChatUIComponents && swift build
-cd ../ChatUIShellChatGPT && swift build
-cd ../ChatUITestSupport && swift build
+cd platforms/apple/swift/AStudioFoundation && swift build
+cd ../AStudioThemes && swift build
+cd ../AStudioComponents && swift build
+cd ../AStudioShellChatGPT && swift build
+cd ../AStudioTestSupport && swift build
 ```
 
 ### 2) Run Swift tests (optional)
@@ -50,7 +50,7 @@ pnpm test:swift
 
 ## Package Architecture
 
-### 1. ChatUIFoundation (`platforms/apple/swift/ChatUIFoundation/`)
+### 1. AStudioFoundation (`platforms/apple/swift/AStudioFoundation/`)
 
 **Purpose**: Semantic design tokens, platform utilities, and accessibility helpers  
 **Dependencies**: None (foundation layer)  
@@ -64,10 +64,10 @@ pnpm test:swift
 - `Platform`: Platform detection helpers (isMac, isVisionOS, isIOS)
 - `FAccessibility`: Accessibility utilities and system preference detection
 
-### 2. ChatUIThemes (`platforms/apple/swift/ChatUIThemes/`)
+### 2. AStudioThemes (`platforms/apple/swift/AStudioThemes/`)
 
 **Purpose**: Theme presets including pixel-perfect ChatGPT styling  
-**Dependencies**: ChatUIFoundation  
+**Dependencies**: AStudioFoundation  
 **Deployment Targets**: iOS 15+, macOS 13+, visionOS 1+
 
 **Provides**:
@@ -79,10 +79,10 @@ pnpm test:swift
   - Interaction overlays: hover and pressed state opacities
 - `DefaultTheme`: Native macOS design patterns as alternative
 
-### 3. ChatUIComponents (`platforms/apple/swift/ChatUIComponents/`)
+### 3. AStudioComponents (`platforms/apple/swift/AStudioComponents/`)
 
 **Purpose**: Reusable SwiftUI primitives that mirror React component APIs  
-**Dependencies**: ChatUIFoundation, ChatUIThemes  
+**Dependencies**: AStudioFoundation, AStudioThemes  
 **Deployment Targets**: iOS 15+, macOS 13+, visionOS 1+
 
 **Provides Settings Primitives** (First Deliverable):
@@ -96,10 +96,10 @@ pnpm test:swift
 - `ChatUIButton`: Migrated button component using new foundation tokens
 - `SettingsExampleView`: Demonstration of all settings primitives
 
-### 4. ChatUIShellChatGPT (`platforms/apple/swift/ChatUIShellChatGPT/`)
+### 4. AStudioShellChatGPT (`platforms/apple/swift/AStudioShellChatGPT/`)
 
 **Purpose**: Optional complete application shell layouts  
-**Dependencies**: ChatUIFoundation, ChatUIComponents, ChatUIThemes  
+**Dependencies**: AStudioFoundation, AStudioComponents, AStudioThemes  
 **Deployment Targets**: iOS 15+, macOS 13+, visionOS 1+
 
 **Provides**:
@@ -108,18 +108,18 @@ pnpm test:swift
 - `RoundedAppContainer`: ChatGPT-style app clipping with borders and shadows
 - `AppShellView`: NavigationSplitView-based layout with configurable sidebar width
 
-### 5. ChatUITestSupport (`platforms/apple/swift/ChatUITestSupport/`)
+### 5. AStudioTestSupport (`platforms/apple/swift/AStudioTestSupport/`)
 
 **Purpose**: Shared test utilities and mocks for Swift package testing  
-**Dependencies**: ChatUIFoundation  
+**Dependencies**: AStudioFoundation  
 **Deployment Targets**: iOS 15+, macOS 13+
 
 ## Asset Catalog Integration
 
-ChatUIFoundation includes a complete Asset Catalog at:
+AStudioFoundation includes a complete Asset Catalog at:
 
 ```
-platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets/
+platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Resources/Colors.xcassets/
 ```
 
 **Color Sets Created**:
@@ -135,10 +135,10 @@ All colors automatically support light/dark mode and high contrast through Asset
 ## Build Verification
 
 ```bash
-cd platforms/apple/swift/ChatUIFoundation && swift build
-cd ../ChatUIThemes && swift build
-cd ../ChatUIComponents && swift build
-cd ../ChatUIShellChatGPT && swift build
+cd platforms/apple/swift/AStudioFoundation && swift build
+cd ../AStudioThemes && swift build
+cd ../AStudioComponents && swift build
+cd ../AStudioShellChatGPT && swift build
 ```
 
 ## Key Architectural Decisions
@@ -146,7 +146,7 @@ cd ../ChatUIShellChatGPT && swift build
 1. **Asset Catalog for Colors**: Automatic light/dark mode support without manual switching logic
 2. **Semantic Token API**: Components consume `FColor.textPrimary` not `Color("text-primary")` for better discoverability
 3. **Platform Helpers**: Centralize iOS/macOS differences in `Platform.swift` rather than scattered `#if os(macOS)` checks
-4. **Theme Separation**: ChatGPT-specific styling lives in ChatUIThemes, keeping core components theme-agnostic
+4. **Theme Separation**: ChatGPT-specific styling lives in AStudioThemes, keeping core components theme-agnostic
 5. **Composition Over Inheritance**: `SettingToggleView` composes `SettingRowView` + `Toggle` rather than subclassing
 
 ## Migration from Monolithic Package
@@ -181,7 +181,7 @@ Then ensure Xcode 15+ is selected in Xcode Settings → Locations.
 ### Symptom: Colors are missing in SwiftUI previews
 
 Cause: Asset Catalog resources not loaded.
-Fix: Ensure `ChatUIFoundation` includes `Resources/Colors.xcassets` and rebuild the package.
+Fix: Ensure `AStudioFoundation` includes `Resources/Colors.xcassets` and rebuild the package.
 
 ## Requirements Fulfilled
 

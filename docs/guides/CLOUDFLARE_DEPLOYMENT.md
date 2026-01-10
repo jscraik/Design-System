@@ -1,6 +1,6 @@
 # Cloudflare Workers Deployment Guide
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Developers (intermediate)
@@ -10,9 +10,9 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-## Deploy ChatUI Widgets to Cloudflare Workers
+## Deploy aStudio Widgets to Cloudflare Workers
 
-This guide shows how to deploy the ChatUI widget library to Cloudflare Workers, making your widgets available as a production MCP server for OpenAI integration.
+This guide shows how to deploy the aStudio widget library to Cloudflare Workers, making your widgets available as a production MCP server for OpenAI integration.
 
 ## Table of Contents
 
@@ -36,7 +36,7 @@ This guide shows how to deploy the ChatUI widget library to Cloudflare Workers, 
 ## What You Get
 
 - **Edge deployment** on Cloudflare's global network
-- **Auto-discovery** of all ChatUI widgets
+- **Auto-discovery** of all aStudio widgets
 - **Content hashing** for cache busting
 - **MCP server** ready for OpenAI ChatGPT integration
 - **Durable Objects** for persistent state
@@ -46,7 +46,7 @@ This guide shows how to deploy the ChatUI widget library to Cloudflare Workers, 
 
 ```
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   ChatGPT       │───▶│ Cloudflare       │───▶│ ChatUI Widgets  │
+│   ChatGPT       │───▶│ Cloudflare       │───▶│ aStudio Widgets  │
 │   (OpenAI)      │    │ Workers Edge     │    │ (Your Library)  │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
                               │
@@ -72,14 +72,11 @@ This guide shows how to deploy the ChatUI widget library to Cloudflare Workers, 
 # Ensure widgets are built
 pnpm -C packages/widgets build
 
-# Navigate to the deployment template
-cd packages/cloudflare-template
-
 # Install dependencies
-pnpm install
+pnpm -C packages/cloudflare-template install
 
 # Copy environment configuration
-cp .env.example .env
+cp packages/cloudflare-template/.env.example packages/cloudflare-template/.env
 ```
 
 ### Step 2: Configure Environment
@@ -88,7 +85,7 @@ Edit `.env` with your Cloudflare Workers domain:
 
 ```bash
 # Required: Your Cloudflare Workers domain
-WORKER_DOMAIN_BASE="https://my-chatui-widgets.your-subdomain.workers.dev"
+WORKER_DOMAIN_BASE="https://my-astudio-widgets.your-subdomain.workers.dev"
 
 # Optional: Domain shown to users in ChatGPT
 WIDGET_DOMAIN="https://your-company.com"
@@ -101,18 +98,18 @@ WIDGET_DOMAIN="https://your-company.com"
 npx wrangler login
 
 # Generate types for your worker
-pnpm cf-typegen
+pnpm -C packages/cloudflare-template cf-typegen
 ```
 
 ### Step 4: Deploy
 
 ```bash
 # Build and deploy in one command
-pnpm build-deploy
+pnpm -C packages/cloudflare-template build-deploy
 
 # Or step by step
-pnpm build    # Copies widgets and builds worker
-pnpm deploy   # Deploys to Cloudflare Workers
+pnpm -C packages/cloudflare-template build    # Copies widgets and builds worker
+pnpm -C packages/cloudflare-template deploy   # Deploys to Cloudflare Workers
 ```
 
 ### Step 5: Test Your Deployment
@@ -191,7 +188,7 @@ const [state, setState] = useWidgetState<MyStateType>();
 
 ### Build Phase
 
-1. **Widget Discovery**: Scans `@chatui/widgets` for all widgets
+1. **Widget Discovery**: Scans `@astudio/widgets` for all widgets
 2. **Asset Copying**: Copies HTML, CSS, JS files to `dist/client`
 3. **Manifest Generation**: Creates manifest with content hashes
 4. **Worker Build**: Compiles TypeScript worker code
@@ -292,7 +289,7 @@ npx wrangler status
 3. **Monitor performance** via Cloudflare dashboard
 4. **Scale up** by adding more widgets and tools
 
-The Cloudflare Workers integration makes the ChatUI widget library production-ready with minimal configuration, providing a robust foundation for deploying interactive widgets at scale.
+The Cloudflare Workers integration makes the aStudio widget library production-ready with minimal configuration, providing a robust foundation for deploying interactive widgets at scale.
 
 ## Risks and assumptions
 - Assumptions: TBD (confirm)
@@ -301,4 +298,3 @@ The Cloudflare Workers integration makes the ChatUI widget library production-re
 
 ## Verify
 - TBD: Add concrete verification steps and expected results.
-

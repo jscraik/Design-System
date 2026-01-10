@@ -11,7 +11,7 @@ Last updated: 2026-01-04
 
 
 **Created:** 2026-01-02  
-**Purpose:** Now that the templates gallery is driven by the canonical `@chatui/ui` sources (and `_temp/**` is archived), this backlog tracks **visual parity + polish** items to review and iterate after functional consolidation.
+**Purpose:** Now that the templates gallery is driven by the canonical `@astudio/ui` sources (and `_temp/**` is archived), this backlog tracks **visual parity + polish** items to review and iterate after functional consolidation.
 
 ## How to review
 

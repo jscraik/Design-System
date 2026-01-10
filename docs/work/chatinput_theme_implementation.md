@@ -43,7 +43,7 @@ Successfully updated the ChatInput component to use semantic CSS tokens from `th
 
 ### 1. ChatInput.tsx - Theme Token Migration
 
-**File**: `packages/ui/src/app/chat/ChatInput.tsx`
+**File**: `packages/ui/src/app/chat/ChatInput/ChatInput.tsx`
 
 Replaced all hardcoded colors with semantic theme tokens:
 
@@ -131,7 +131,7 @@ Tailwind classes automatically use the theme tokens:
 ### Storybook Testing
 
 1. Start Storybook: `pnpm storybook:dev`
-2. Navigate to: ChatUI/ChatInput
+2. Navigate to: aStudio/ChatInput
 3. View "Default" story (dark theme)
 4. View "LightTheme" story (light theme)
 5. Verify colors adapt correctly
@@ -154,7 +154,7 @@ All ChatInput features work with theme tokens:
 
 ## Files Modified
 
-1. `packages/ui/src/app/chat/ChatInput.tsx` - Theme token implementation
+1. `packages/ui/src/app/chat/ChatInput/ChatInput.tsx` - Theme token implementation
 2. `platforms/web/apps/web/src/pages/SettingsPage.tsx` - Theme toggle functionality
 3. `packages/ui/src/app/chat/ChatInput.stories.tsx` - Light theme story
 

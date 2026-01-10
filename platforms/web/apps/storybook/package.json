@@ -1,5 +1,5 @@
 {
-  "name": "@chatui/storybook",
+  "name": "@astudio/storybook",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -10,9 +10,9 @@
     "test:coverage": "vitest --project=storybook run --browser --coverage"
   },
   "dependencies": {
-    "@chatui/runtime": "workspace:*",
-    "@chatui/tokens": "workspace:*",
-    "@chatui/ui": "workspace:*",
+    "@astudio/runtime": "workspace:*",
+    "@astudio/tokens": "workspace:*",
+    "@astudio/ui": "workspace:*",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },

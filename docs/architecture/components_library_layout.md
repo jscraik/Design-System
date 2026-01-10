@@ -1,6 +1,6 @@
 # Components Library Layout
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Engineers and technical leads
@@ -140,9 +140,9 @@ components-library/
 │       ├── package.json
 │       └── tsconfig.json
 ├── platforms/apple/swift/
-│   ├── ChatUIComponents/
+│   ├── AStudioComponents/
 │   │   ├── Sources/
-│   │   │   ├── ChatUIComponents/
+│   │   │   ├── AStudioComponents/
 │   │   │   │   ├── Components/
 │   │   │   │   │   ├── Button/
 │   │   │   │   │   │   ├── Button.swift
@@ -194,10 +194,10 @@ components-library/
 │   │   │   │   └── Utils/
 │   │   │   │       ├── Extensions.swift
 │   │   │   │       └── Helpers.swift
-│   │   │   └── ChatUIComponents.docc/
-│   │   │       └── ChatUIComponents.md
+│   │   │   └── AStudioComponents.docc/
+│   │   │       └── AStudioComponents.md
 │   │   ├── Tests/
-│   │   │   ├── ChatUIComponentsTests/
+│   │   │   ├── AStudioComponentsTests/
 │   │   │   │   ├── ButtonTests.swift
 │   │   │   │   ├── CardTests.swift
 │   │   │   │   ├── InputTests.swift
@@ -205,21 +205,21 @@ components-library/
 │   │   │   └── LinuxMain.swift
 │   │   ├── Package.swift
 │   │   └── README.md
-│   ├── ChatUIThemes/
+│   ├── AStudioThemes/
 │   │   ├── Sources/
-│   │   │   └── ChatUIThemes/
+│   │   │   └── AStudioThemes/
 │   │   │       ├── Theme.swift
 │   │   │       ├── Color.swift
 │   │   │       ├── Typography.swift
 │   │   │       └── Spacing.swift
 │   │   ├── Tests/
-│   │   │   └── ChatUIThemesTests/
-│   │   │       └── ChatUIThemesTests.swift
+│   │   │   └── AStudioThemesTests/
+│   │   │       └── AStudioThemesTests.swift
 │   │   ├── Package.swift
 │   │   └── README.md
-│   └── ChatUIFoundation/
+│   └── AStudioFoundation/
 │       ├── Sources/
-│       │   └── ChatUIFoundation/
+│       │   └── AStudioFoundation/
 │       │       ├── Foundation/
 │       │       │   ├── Color.swift
 │       │       │   ├── Typography.swift
@@ -230,7 +230,7 @@ components-library/
 │       │       └── Protocols/
 │       │           └── ComponentProtocol.swift
 │       ├── Tests/
-│       │   └── ChatUIFoundationTests/
+│       │   └── AStudioFoundationTests/
 │       │       └── FoundationTests.swift
 │       ├── Package.swift
 │       └── README.md

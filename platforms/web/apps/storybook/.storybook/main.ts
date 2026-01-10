@@ -185,8 +185,8 @@ const config = {
       ...(viteConfig.resolve ?? {}),
       alias: {
         ...(viteConfig.resolve?.alias ?? {}),
-        "@chatui/ui": path.join(repoRoot, "packages/ui/src"),
-        "@chatui/runtime": path.join(repoRoot, "packages/runtime/src"),
+        "@astudio/ui": path.join(repoRoot, "packages/ui/src"),
+        "@astudio/runtime": path.join(repoRoot, "packages/runtime/src"),
       },
     };
 

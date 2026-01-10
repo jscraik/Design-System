@@ -52,7 +52,7 @@ Use this when you only need to refresh the Swift package comments.
 The scripts read the version from the root `package.json` and update:
 
 - NPM packages: `packages/ui`, `packages/runtime`, `packages/tokens`, `packages/widgets`, `packages/cloudflare-template`
-- Swift packages: `platforms/apple/swift/ChatUIFoundation`, `platforms/apple/swift/ChatUIComponents`, `platforms/apple/swift/ChatUIThemes`, `platforms/apple/swift/ChatUIShellChatGPT`, `platforms/apple/swift/ChatUIMCP`
+- Swift packages: `platforms/apple/swift/AStudioFoundation`, `platforms/apple/swift/AStudioComponents`, `platforms/apple/swift/AStudioThemes`, `platforms/apple/swift/AStudioShellChatGPT`, `platforms/apple/swift/AStudioMCP`
 
 If `agvtool` is available, it is used for Swift packages. Otherwise the scripts update the `// Version:` comment in `Package.swift`.
 

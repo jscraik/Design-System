@@ -24,8 +24,8 @@ let package = Package(
         .testTarget(
             name: "SecurityTests",
             dependencies: [
-                "ChatUIFoundation",
-                "ChatUIComponents",
+                "AStudioFoundation",
+                "AStudioComponents",
                 .product(name: "Crypto", package: "swift-crypto"),
                 .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
             ],

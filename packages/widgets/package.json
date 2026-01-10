@@ -1,16 +1,16 @@
 {
-  "name": "@chatui/widgets",
+  "name": "@astudio/widgets",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "build": "vite build",
     "dev": "vite dev"
   },
   "dependencies": {
-    "@chatui/ui": "workspace:*",
-    "@chatui/runtime": "workspace:*",
-    "@chatui/tokens": "workspace:*",
+    "@astudio/ui": "workspace:*",
+    "@astudio/runtime": "workspace:*",
+    "@astudio/tokens": "workspace:*",
     "@openai/apps-sdk-ui": "^0.2.1",
     "@react-three/drei": "10.7.7",
     "@react-three/fiber": "9.4.2",
@@ -18,6 +18,7 @@
     "embla-carousel-react": "8.6.0",
     "framer-motion": "12.23.26",
     "lucide-react": "0.562.0",
+    "mapbox-gl": "^3.6.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "9.1.0",

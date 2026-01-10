@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-import { glob } from "fast-glob";
+import fastGlob from "fast-glob";
+const glob = fastGlob;
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";

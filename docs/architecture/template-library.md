@@ -1,6 +1,6 @@
 # Template Library Architecture
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Engineers and technical leads
@@ -25,7 +25,7 @@ Last updated: 2026-01-04
 - [How to view templates (checklist)](#how-to-view-templates-checklist)
 
 
-This document describes the internal template library used to compose ChatUI surfaces across web, widgets, and macOS.
+This document describes the internal template library used to compose aStudio surfaces across web, widgets, and macOS.
 
 ## Goals
 
@@ -39,10 +39,10 @@ This document describes the internal template library used to compose ChatUI sur
 - React blocks: `packages/ui/src/templates/blocks`
 - React registries:
   - Templates: `packages/ui/src/templates/registry.ts`
-  - Blocks: `packages/ui/src/templates/blocks/registry.ts`
-- SwiftUI templates + blocks: `platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/Templates`
-- SwiftUI registry: `platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/Templates/TemplateRegistry.swift`
-- Widgets: `packages/widgets/src/widgets/**` (each widget renders a template from `@chatui/ui/templates`)
+  - Blocks: `packages/ui/src/templates/blocks/registry.tsx`
+- SwiftUI templates + blocks: `platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/Templates`
+- SwiftUI registry: `platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/Templates/TemplateRegistry.swift`
+- Widgets: `packages/widgets/src/widgets/**` (each widget renders a template from `@astudio/ui/templates`)
 
 ## Core building blocks (React)
 
@@ -97,7 +97,7 @@ This document describes the internal template library used to compose ChatUI sur
 
 ## Cross-platform parity rules
 
-- Use ChatUIFoundation tokens (colors, spacing, typography) in SwiftUI.
+- Use AStudioFoundation tokens (colors, spacing, typography) in SwiftUI.
 - Use foundation CSS tokens in React/Widgets (`--foundation-*`).
 - Avoid ad-hoc sizing; prefer `FSpacing` and `FType` in Swift.
 - Keep action labels and icon semantics consistent between platforms.
@@ -114,7 +114,7 @@ This document describes the internal template library used to compose ChatUI sur
 ### React
 
 ```tsx
-import { TemplatePanel, TemplateHeaderBar, TemplateFooterBar } from "@chatui/ui/templates";
+import { TemplatePanel, TemplateHeaderBar, TemplateFooterBar } from "@astudio/ui/templates";
 
 <TemplatePanel
   header={<TemplateHeaderBar title="Compose" />}
@@ -141,4 +141,4 @@ TemplateFooterBarView(
 ## How to view templates (checklist)
 
 - Storybook: run `pnpm dev:storybook`, open **Components → Templates → Gallery**.
-- SwiftUI previews: open the Swift files in Xcode (e.g. `ChatTemplateView.swift`) and render `#Preview` blocks.
+- SwiftUI previews: open the Swift files in Xcode (for example `ChatTemplateView.swift`) and render `#Preview` blocks.

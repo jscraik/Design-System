@@ -1,6 +1,6 @@
 # UI Design System Charter (Apps SDK UI–First)
 
-Last updated: 2026-01-08
+Last updated: 2026-01-09
 
 ## Doc requirements
 
@@ -18,7 +18,7 @@ This charter defines the governance and non-negotiable rules for the aStudio UI 
 
 In scope:
 
-- Web UI built with React/Vite/Tailwind and `@chatui/ui`.
+- Web UI built with React/Vite/Tailwind and `@astudio/ui`.
 - SwiftUI packages and macOS/iOS/visionOS applications under `platforms/apple/swift` and `platforms/apple/apps`.
 - Embedded ChatGPT Apps SDK widgets under `packages/widgets`.
 - Design tokens, component APIs, interaction patterns, and QA gates.

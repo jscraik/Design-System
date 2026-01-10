@@ -44,7 +44,7 @@ To debug and test the MCP server with the interactive inspector:
 
 ```bash
 cd platforms/mcp
-pnpm inspector
+pnpm mcp:inspector
 ```
 
 This will launch the MCP Inspector, which provides a web-based UI for testing MCP server tools and capabilities.
@@ -63,7 +63,7 @@ an optional `payload` object that is exposed to the widget via `structuredConten
 Example (from `platforms/mcp`):
 
 ```bash
-pnpm test:cli tools/call '{"name":"widget_preview_chat-view","arguments":{"payload":{"seedMessage":"Hello"}}}'
+pnpm mcp:test:cli tools/call '{"name":"widget_preview_chat-view","arguments":{"payload":{"seedMessage":"Hello"}}}'
 ```
 
 ## Tests
@@ -71,17 +71,17 @@ pnpm test:cli tools/call '{"name":"widget_preview_chat-view","arguments":{"paylo
 ### Tool Contract Tests
 
 ```bash
-pnpm test:contract          # Run tool contract validation tests
+pnpm mcp:test:contract          # Run tool contract validation tests
 ```
 
 ### JSON-RPC Integration Tests
 
 ```bash
 # Start the server first in one terminal
-pnpm dev
+pnpm mcp:dev
 
 # Then run integration tests in another terminal
-pnpm test:jsonrpc
+pnpm mcp:test:jsonrpc
 ```
 
 ### Manual CLI Testing
@@ -90,21 +90,21 @@ Since the MCP Inspector CLI has module resolution issues, use our custom test CL
 
 ```bash
 # Start the server first
-pnpm dev
+pnpm mcp:dev
 
 # In another terminal, test various methods:
-pnpm test:cli tools/list
-pnpm test:cli resources/list
-pnpm test:cli tools/call '{"name":"example_widget","arguments":{}}'
+pnpm mcp:test:cli tools/list
+pnpm mcp:test:cli resources/list
+pnpm mcp:test:cli tools/call '{"name":"example_widget","arguments":{}}'
 
 # Use custom server URL
-MCP_TEST_URL=http://localhost:8797 pnpm test:cli tools/list
+MCP_TEST_URL=http://localhost:8797 pnpm mcp:test:cli tools/list
 ```
 
 ### Run All Tests
 
 ```bash
-pnpm test                   # Runs both contract and JSON-RPC tests
+pnpm mcp:test                   # Runs both contract and JSON-RPC tests
 ```
 
 From the repo root:

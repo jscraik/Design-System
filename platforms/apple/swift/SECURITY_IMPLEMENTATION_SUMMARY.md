@@ -1,6 +1,6 @@
 # Swift CI/CD Security Scanning - Implementation Summary
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Maintainers and security reviewers
@@ -48,7 +48,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
 ### 1. Configuration Files
 
 #### `.swiftlint.yml` (Root)
-- **Location**: `/Users/jamiecraik/chatui/.swiftlint.yml`
+- **Location**: `/Users/jamiecraik/dev/aStudio/.swiftlint.yml`
 - **Purpose**: Root SwiftLint configuration with security-focused rules
 - **Features**:
   - 15 opt-in security rules enabled
@@ -65,7 +65,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
   - Strict error enforcement
 
 #### `.swiftlint.yml` (Swift Packages)
-- **Location**: `/Users/jamiecraik/chatui/platforms/apple/swift/.swiftlint.yml`
+- **Location**: `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/.swiftlint.yml`
 - **Purpose**: Package-specific SwiftLint configuration
 - **Features**:
   - Extends root configuration
@@ -73,7 +73,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
   - Stricter enforcement for production code
 
 #### `.github/codeql-config.yml`
-- **Location**: `/Users/jamiecraik/chatui/.github/codeql-config.yml`
+- **Location**: `/Users/jamiecraik/dev/aStudio/.github/codeql-config.yml`
 - **Purpose**: CodeQL security scanning configuration
 - **Features**:
   - Swift-specific security queries
@@ -83,30 +83,10 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
 
 ### 2. GitHub Actions Workflow
 
-#### `.github/workflows/swift-security.yml`
-- **Location**: `/Users/jamiecraik/chatui/.github/workflows/swift-security.yml`
-- **Purpose**: Automated security scanning pipeline
-- **Triggers**:
-  - Pull requests (Swift file changes)
-  - Pushes to main/master branch
-  - Daily scheduled runs (2 AM UTC)
-  - Manual workflow dispatch
-
-**Jobs**:
-
-1. **SwiftLint Security Analysis**
-   - Caches SwiftLint installation
-   - Runs strict security rules
-   - Generates JSON reports
-   - Auto-comments on PRs
-   - Uploads artifacts (30-day retention)
-
-2. **CodeQL Security Analysis**
-   - Initializes CodeQL for Swift
-   - Builds all Swift packages
-   - Runs security-extended queries
-   - Uploads to GitHub Security tab
-   - 60-minute timeout
+#### `.github/workflows/ci.yml`
+- **Location**: `/Users/jamiecraik/dev/aStudio/.github/workflows/ci.yml`
+- **Purpose**: CI pipeline that runs macOS build steps and Swift setup alongside web linting/compliance.
+- **Note**: There is no dedicated Swift security workflow file in this repo. If security scanning is required, add a separate workflow.
 
 3. **Dependency Security Scan**
    - Scans Package.resolved files
@@ -130,7 +110,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
 ### 3. Security Test Suite
 
 #### Location
-`/Users/jamiecraik/chatui/platforms/apple/swift/SecurityTests/`
+`/Users/jamiecraik/dev/aStudio/platforms/apple/swift/SecurityTests/`
 
 #### Test Files
 
@@ -189,7 +169,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
 ### 4. Documentation
 
 #### `SECURITY_TESTING_GUIDE.md`
-- **Location**: `/Users/jamiecraik/chatui/platforms/apple/swift/SECURITY_TESTING_GUIDE.md`
+- **Location**: `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/SECURITY_TESTING_GUIDE.md`
 - **Size**: ~25 KB
 - **Sections**: 8
 - **Contents**:
@@ -203,7 +183,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
   - Common vulnerabilities and prevention
 
 #### `SECURITY_SETUP_README.md`
-- **Location**: `/Users/jamiecraik/chatui/platforms/apple/swift/SECURITY_SETUP_README.md`
+- **Location**: `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/SECURITY_SETUP_README.md`
 - **Size**: ~15 KB
 - **Sections**: 10
 - **Contents**:
@@ -218,7 +198,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
 ### 5. Enforcement Artifacts
 
 #### `enforcement.plan.json`
-- **Location**: `/Users/jamiecraik/chatui/enforcement.plan.json`
+- **Location**: `/Users/jamiecraik/dev/aStudio/enforcement.plan.json`
 - **Purpose**: Comprehensive enforcement plan
 - **Contents**:
   - 5 components defined
@@ -228,7 +208,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
   - Maintenance schedule
 
 #### `enforcement.results.json`
-- **Location**: `/Users/jamiecraik/chatui/enforcement.results.json`
+- **Location**: `/Users/jamiecraik/dev/aStudio/enforcement.results.json`
 - **Purpose**: Implementation verification results
 - **Contents**:
   - All components verified
@@ -240,7 +220,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
 ### 6. Automation Scripts
 
 #### `run-security-tests.sh`
-- **Location**: `/Users/jamiecraik/chatui/platforms/apple/swift/scripts/run-security-tests.sh`
+- **Location**: `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/scripts/run-security-tests.sh`
 - **Purpose**: Local security testing script
 - **Features**:
   - Checks SwiftLint installation
@@ -283,14 +263,14 @@ All gates must pass before merge:
 ## File Locations Summary
 
 ```
-/Users/jamiecraik/chatui/
+/Users/jamiecraik/dev/aStudio/
 ├── .swiftlint.yml                                    # Root SwiftLint config
 ├── enforcement.plan.json                             # Enforcement plan
 ├── enforcement.results.json                          # Implementation results
 ├── .github/
 │   ├── codeql-config.yml                            # CodeQL config
 │   └── workflows/
-│       └── swift-security.yml                       # Security workflow
+│       └── ci.yml                                   # CI workflow (includes Swift setup/build steps)
 └── platforms/apple/swift/
     ├── .swiftlint.yml                               # Package SwiftLint
     ├── scripts/
@@ -312,7 +292,7 @@ All gates must pass before merge:
 
 ```bash
 # Navigate to Swift directory
-cd /Users/jamiecraik/chatui/platforms/apple/swift
+cd /Users/jamiecraik/dev/aStudio/platforms/apple/swift
 
 # Run all security checks
 ./scripts/run-security-tests.sh

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import App from "./App";
 
 const meta: Meta<typeof App> = {
-  title: "Overview/App/ChatUIApp",
+  title: "Overview/App/AStudioApp",
   component: App,
   tags: ["autodocs"],
   parameters: {

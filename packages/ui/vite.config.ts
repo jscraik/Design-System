@@ -33,6 +33,12 @@ export default defineConfig({
       outDir: "dist",
     }),
   ],
+  resolve: {
+    alias: {
+      "@astudio/runtime": resolve(__dirname, "../runtime/src"),
+      "@astudio/tokens": resolve(__dirname, "../tokens/src"),
+    },
+  },
   build: {
     lib: {
       entry: entries,

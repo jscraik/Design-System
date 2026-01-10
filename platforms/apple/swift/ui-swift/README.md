@@ -1,4 +1,4 @@
-# ChatUISwift
+# AStudioSwift
 
 Last updated: 2026-01-04
 
@@ -10,7 +10,7 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-A native macOS SwiftUI component library that uses design tokens for visual consistency with the React ChatUI system.
+A native macOS SwiftUI component library that uses design tokens for visual consistency with the React aStudio system.
 
 > Legacy package. For new development, prefer the modular Swift packages under `platforms/apple/swift/`.
 
@@ -38,14 +38,14 @@ open platforms/apple/swift/ui-swift/Package.swift
 ```
 
 ```swift
-import ChatUISwift
+import AStudioSwift
 
 ChatUIButton("Hello") { }
 ```
 
 ## Overview
 
-ChatUISwift provides native macOS components that consume the same design tokens as the React web application, ensuring visual consistency across platforms while delivering truly native macOS experiences.
+AStudioSwift provides native macOS components that consume the same design tokens as the React web application, ensuring visual consistency across platforms while delivering truly native macOS experiences.
 
 ## Features
 
@@ -95,7 +95,7 @@ The package includes comprehensive design tokens that match the React implementa
 
 ```swift
 import SwiftUI
-import ChatUISwift
+import AStudioSwift
 
 struct MyView: View {
     @State private var text = ""
@@ -158,9 +158,9 @@ The package includes comprehensive preview examples:
 
 ### Playground App (legacy)
 
-`platforms/apple/apps/macos/ChatUIPlayground` now uses the modular Swift packages. It is no longer wired to `platforms/apple/swift/ui-swift`.
+`platforms/apple/apps/macos/AStudioPlayground` now uses the modular Swift packages. It is no longer wired to `platforms/apple/swift/ui-swift`.
 
-For ChatUISwift development, open the package directly:
+For AStudioSwift development, open the package directly:
 
 ```bash
 open platforms/apple/swift/ui-swift/Package.swift
@@ -170,7 +170,7 @@ open platforms/apple/swift/ui-swift/Package.swift
 
 For component development:
 
-1. Open a component file (e.g., `ChatUIButton.swift`)
+1. Open a component file (for example, `ChatUIButton.swift`)
 2. Show Canvas: `⌥⌘⏎` (Option+Command+Enter)
 3. Resume previews: `⌥⌘P`
 4. Use `#Preview { ... }` blocks for different variants
@@ -201,7 +201,7 @@ Or run tests in Xcode:
 
 1. In Xcode, go to File → Add Package Dependencies
 2. Enter the local path: `platforms/apple/swift/ui-swift`
-3. Add `ChatUISwift` to your target
+3. Add `AStudioSwift` to your target
 
 ### Swift Package Manager
 
@@ -214,7 +214,7 @@ dependencies: [
 targets: [
     .target(
         name: "YourTarget",
-        dependencies: ["ChatUISwift"]
+        dependencies: ["AStudioSwift"]
     )
 ]
 ```

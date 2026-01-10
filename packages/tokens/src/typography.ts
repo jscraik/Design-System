@@ -1,6 +1,6 @@
 // Generated from src/tokens/index.dtcg.json. Do not edit by hand.
 /**
- * Typography tokens for web usage. Sizes, line heights, and tracking are numeric CSS values.
+ * Typography tokens for web, iOS, and Android usage. Sizes, line heights, and tracking are numeric values.
  */
 export const typographyTokens = {
   "fontFamily": "SF Pro",
@@ -72,5 +72,87 @@ export const typographyTokens = {
     "lineHeight": 20,
     "weight": 600,
     "tracking": -0.3
+  }
+} as const;
+export const typographyTokensIos = {
+  "heading1": {
+    "size": 32,
+    "lineHeight": 40,
+    "weight": 600,
+    "tracking": -0.1
+  },
+  "heading2": {
+    "size": 24,
+    "lineHeight": 28,
+    "weight": 600,
+    "tracking": -0.25
+  },
+  "heading3": {
+    "size": 16,
+    "lineHeight": 26,
+    "weight": 600,
+    "tracking": 0
+  },
+  "body": {
+    "size": 16,
+    "lineHeight": 26,
+    "weight": 400,
+    "emphasisWeight": 600,
+    "tracking": 0
+  },
+  "bodySmall": {
+    "size": 14,
+    "lineHeight": 18,
+    "weight": 400,
+    "emphasisWeight": 600,
+    "tracking": 0
+  },
+  "caption": {
+    "size": 12,
+    "lineHeight": 16,
+    "weight": 400,
+    "emphasisWeight": 600,
+    "tracking": 0
+  }
+} as const;
+export const typographyTokensAndroid = {
+  "heading1": {
+    "size": 32,
+    "lineHeight": 40,
+    "weight": 600,
+    "tracking": -0.1
+  },
+  "heading2": {
+    "size": 24,
+    "lineHeight": 28,
+    "weight": 600,
+    "tracking": -0.25
+  },
+  "heading3": {
+    "size": 16,
+    "lineHeight": 26,
+    "weight": 600,
+    "tracking": 0
+  },
+  "body": {
+    "size": 16,
+    "lineHeight": 26,
+    "weight": 400,
+    "emphasisWeight": 600,
+    "tracking": 0
+  },
+  "bodySmall": {
+    "size": 14,
+    "lineHeight": 18,
+    "weight": 400,
+    "emphasisWeight": 600,
+    "tracking": 0
+  },
+  "caption": {
+    "size": 12,
+    "lineHeight": 16,
+    "weight": 400,
+    "emphasisWeight": 600,
+    "tracking": 0
   }
 } as const;

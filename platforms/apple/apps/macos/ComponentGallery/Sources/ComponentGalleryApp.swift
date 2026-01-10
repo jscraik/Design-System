@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
-import ChatUIFoundation
-import ChatUIComponents
-import ChatUIThemes
-import ChatUIShellChatGPT
+import AStudioFoundation
+import AStudioComponents
+import AStudioThemes
+import AStudioShellChatGPT
 
 #if os(macOS)
 /// Entry point for the macOS Component Gallery app.

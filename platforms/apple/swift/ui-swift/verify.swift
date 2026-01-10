@@ -3,7 +3,7 @@
 import Foundation
 
 // Simple verification script to check that the package structure is correct
-print("🔍 Verifying ChatUISwift package structure...")
+print("🔍 Verifying AStudioSwift package structure...")
 
 let fileManager = FileManager.default
 let currentPath = fileManager.currentDirectoryPath
@@ -11,12 +11,12 @@ let currentPath = fileManager.currentDirectoryPath
 // Check required files exist
 let requiredFiles = [
     "Package.swift",
-    "Sources/ChatUISwift/DesignTokens.swift",
-    "Sources/ChatUISwift/Components/ChatUIButton.swift",
-    "Sources/ChatUISwift/Components/ChatUIInput.swift",
-    "Sources/ChatUISwift/Components/ChatUICard.swift",
-    "Sources/ChatUISwift/ChatUISwift.swift",
-    "Tests/ChatUISwiftTests/ChatUISwiftTests.swift",
+    "Sources/AStudioSwift/DesignTokens.swift",
+    "Sources/AStudioSwift/Components/ChatUIButton.swift",
+    "Sources/AStudioSwift/Components/ChatUIInput.swift",
+    "Sources/AStudioSwift/Components/ChatUICard.swift",
+    "Sources/AStudioSwift/AStudioSwift.swift",
+    "Tests/AStudioSwiftTests/AStudioSwiftTests.swift",
     "README.md"
 ]
 
@@ -34,7 +34,7 @@ for file in requiredFiles {
 
 if allFilesExist {
     print("\n🎉 All required files are present!")
-    print("📦 ChatUISwift package structure is complete")
+    print("📦 AStudioSwift package structure is complete")
     print("🚀 Ready for Xcode development")
 } else {
     print("\n⚠️  Some files are missing")
@@ -44,13 +44,13 @@ if allFilesExist {
 // Check playground app structure
 print("\n🔍 Verifying playground app structure...")
 
-let playgroundPath = "../../apps/macos/ChatUIPlayground"
+let playgroundPath = "../../apps/macos/AStudioPlayground"
 let playgroundFiles = [
-    "ChatUIPlayground.xcodeproj/project.pbxproj",
-    "ChatUIPlayground/ChatUIPlaygroundApp.swift",
-    "ChatUIPlayground/ContentView.swift",
-    "ChatUIPlayground/ComponentGallery.swift",
-    "ChatUIPlayground/PreviewScenarios.swift"
+    "AStudioPlayground.xcodeproj/project.pbxproj",
+    "AStudioPlayground/AStudioPlaygroundApp.swift",
+    "AStudioPlayground/ContentView.swift",
+    "AStudioPlayground/ComponentGallery.swift",
+    "AStudioPlayground/PreviewScenarios.swift"
 ]
 
 var allPlaygroundFilesExist = true
@@ -73,7 +73,7 @@ if allPlaygroundFilesExist {
 }
 
 print("\n📋 Next steps:")
-print("1. Open ChatUIPlayground.xcodeproj in Xcode")
+print("1. Open AStudioPlayground.xcodeproj in Xcode")
 print("2. Build and run the playground app (⌘R)")
 print("3. Browse components in the sidebar")
 print("4. Use SwiftUI previews for component development")

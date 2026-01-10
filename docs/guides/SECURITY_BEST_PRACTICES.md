@@ -10,7 +10,7 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-This guide covers security best practices for deploying ChatUI applications and widgets.
+This guide covers security best practices for deploying aStudio applications and widgets.
 
 ## Table of Contents
 

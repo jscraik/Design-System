@@ -1,7 +1,7 @@
 {
-  "name": "@chatui/mcp",
+  "name": "@astudio/mcp",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "predev": "pnpm -C ../web/apps/web build:widget && pnpm -C ../../packages/widgets build",

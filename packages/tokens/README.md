@@ -1,6 +1,6 @@
-# @chatui/tokens
+# @astudio/tokens
 
-Last updated: 2026-01-07
+Last updated: 2026-01-09
 
 ## Doc requirements
 
@@ -40,13 +40,13 @@ Note: For production UI code, prefer Apps SDK UI components and tokens. Use thes
 
 ## Docs
 
-- `docs/FIGMA_EXPORT_GUIDE.md` - Figma export workflow and handoff
-- `docs/outputs/manifest.json` - Generated validation manifest (token build output)
+- `packages/tokens/docs/FIGMA_EXPORT_GUIDE.md` - Figma export workflow and handoff
+- `packages/tokens/docs/outputs/manifest.json` - Generated validation manifest (token build output)
 
 ## Install
 
 ```bash
-pnpm add @chatui/tokens
+pnpm add @astudio/tokens
 ```
 
 ## Quick start
@@ -54,15 +54,15 @@ pnpm add @chatui/tokens
 ### CSS
 
 ```css
-@import "@chatui/tokens/foundations.css";
-@import "@chatui/tokens/tokens.css";
+@import "@astudio/tokens/foundations.css";
+@import "@astudio/tokens/tokens.css";
 ```
 
 ### Tailwind preset
 
 ```ts
 // tailwind.config.ts
-import preset from "@chatui/tokens/tailwind.preset";
+import preset from "@astudio/tokens/tailwind.preset";
 
 export default {
   presets: [preset],
@@ -100,7 +100,7 @@ pnpm validate:tokens
 After generation:
 
 - `packages/tokens/src/foundations.css` updates
-- `platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets/` updates
+- `platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Resources/Colors.xcassets/` updates
 
 ## Troubleshooting
 

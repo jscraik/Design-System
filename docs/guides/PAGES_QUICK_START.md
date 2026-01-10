@@ -1,6 +1,6 @@
 # Pages Quick Start Guide
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Developers (beginner to intermediate)
@@ -30,10 +30,10 @@ Add a new web app page with routing, navigation, and a starter layout.
 
 ### 1) Create the page file
 
-Create `platforms/web/apps/web/src/pages/MyPage.tsx`:
+Create a new file in `platforms/web/apps/web/src/pages/` named `MyPage.tsx`:
 
 ```tsx
-import { Button, Card, IconButton, SectionHeader } from "@chatui/ui";
+import { Button, Card, IconButton, SectionHeader } from "@astudio/ui";
 import type { Route } from "../Router";
 
 interface MyPageProps {
@@ -124,4 +124,3 @@ Place a link or button where users can reach the page:
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
-

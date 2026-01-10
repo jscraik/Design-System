@@ -10,7 +10,7 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-Complete guide for developing with ChatUI Swift packages including hot reload, testing, and debugging.
+Complete guide for developing with aStudio Swift packages including hot reload, testing, and debugging.
 
 ## Table of Contents
 
@@ -55,10 +55,10 @@ alias tokens-gen='pnpm generate:tokens'
 ```
 workspace/
 ├── platforms/apple/swift/                          # Swift packages
-│   ├── ChatUIFoundation/
-│   ├── ChatUIComponents/
-│   ├── ChatUIThemes/
-│   └── ChatUIShellChatGPT/
+│   ├── AStudioFoundation/
+│   ├── AStudioComponents/
+│   ├── AStudioThemes/
+│   └── AStudioShellChatGPT/
 ├── platforms/apple/apps/macos/ComponentGallery/    # Development app
 ├── packages/tokens/                # Token system
 └── scripts/                        # Build scripts
@@ -200,7 +200,7 @@ Create multiple preview variants for rapid testing:
 
 ```swift
 import XCTest
-@testable import ChatUIComponents
+@testable import AStudioComponents
 
 final class SettingRowTests: XCTestCase {
     func testRowRendersTitle() {
@@ -228,7 +228,7 @@ final class SettingRowTests: XCTestCase {
 
 ```bash
 # All tests
-cd platforms/apple/swift/ChatUIComponents
+cd platforms/apple/swift/AStudioComponents
 swift test
 
 # Specific test
@@ -469,7 +469,7 @@ swift build --jobs 8
 1. **Create Component File:**
 
    ```bash
-   cd platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents
+   cd platforms/apple/swift/AStudioComponents/Sources/AStudioComponents
    touch MyNewComponent.swift
    ```
 
@@ -477,8 +477,8 @@ swift build --jobs 8
 
    ```swift
    import SwiftUI
-   import ChatUIFoundation
-   import ChatUIThemes
+   import AStudioFoundation
+   import AStudioThemes
 
    public struct MyNewComponent: View {
        public init() {}
@@ -511,7 +511,7 @@ swift build --jobs 8
 5. **Write Tests:**
 
    ```swift
-   // In Tests/ChatUIComponentsTests/
+   // In Tests/AStudioComponentsTests/
    final class MyNewComponentTests: XCTestCase {
        func testComponentRenders() {
            // Test implementation
@@ -555,7 +555,7 @@ swift build --jobs 8
 
    ```bash
    git add packages/tokens/src/colors.ts
-   git add platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/
+   git add platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Resources/
    git commit -m "Update text primary color"
    ```
 
@@ -566,7 +566,7 @@ swift build --jobs 8
    - Click error to jump to location
 
 2. **Common Fixes:**
-   - Missing import: Add `import ChatUIFoundation`
+   - Missing import: Add `import AStudioFoundation`
    - Type mismatch: Check parameter types
    - Missing resource: Verify Asset Catalog included
 
@@ -628,7 +628,7 @@ swift build --jobs 8
 ```swift
 // 1. Imports
 import SwiftUI
-import ChatUIFoundation
+import AStudioFoundation
 
 // 2. Main Type
 public struct MyView: View {

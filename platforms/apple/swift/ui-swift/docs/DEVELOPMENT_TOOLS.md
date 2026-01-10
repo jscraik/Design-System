@@ -1,4 +1,4 @@
-# ChatUISwift Development Tools
+# AStudioSwift Development Tools
 
 Last updated: 2026-01-04
 
@@ -44,11 +44,11 @@ Last updated: 2026-01-04
 
 > Legacy: `platforms/apple/swift/ui-swift` is retained for reference. The current macOS apps use the modular Swift packages in `platforms/apple/swift/`.
 
-This document describes the development tooling available for ChatUISwift, including hot reload, documentation generation, debugging tools, and performance monitoring.
+This document describes the development tooling available for AStudioSwift, including hot reload, documentation generation, debugging tools, and performance monitoring.
 
 ## Overview
 
-The ChatUISwift development tools provide an integrated development experience with:
+The AStudioSwift development tools provide an integrated development experience with:
 
 1. **Hot Reload for Token Changes** - Automatic regeneration when design tokens change
 2. **Component Documentation Generation** - Automated API documentation from source code
@@ -160,7 +160,7 @@ Runtime debugging and state inspection tools for SwiftUI components.
 **Usage in Components:**
 
 ```swift
-import ChatUISwift
+import AStudioSwift
 
 struct MyComponent: View {
     var body: some View {
@@ -273,7 +273,7 @@ The development tools are designed to work seamlessly with Xcode's SwiftUI previ
 # 1. Start development tools
 pnpm -C packages/tokens dev
 
-# 2. Open the ChatUISwift package in Xcode
+# 2. Open the AStudioSwift package in Xcode
 open platforms/apple/swift/ui-swift/Package.swift
 
 # 3. In Xcode:
@@ -289,13 +289,13 @@ open platforms/apple/swift/ui-swift/Package.swift
 
 ```bash
 # Enable development mode
-export CHATUI_DEV_MODE=true
+export ASTUDIO_DEV_MODE=true
 
 # Enable performance monitoring
-export CHATUI_PERFORMANCE_MONITORING=true
+export ASTUDIO_PERFORMANCE_MONITORING=true
 
 # Verbose logging
-export CHATUI_VERBOSE=true
+export ASTUDIO_VERBOSE=true
 ```
 
 ### Debug Configuration
@@ -357,7 +357,7 @@ chmod +x scripts/generate-docs.swift
 
 ```bash
 # Check if debug mode is enabled
-echo $CHATUI_DEV_MODE
+echo $ASTUDIO_DEV_MODE
 
 # Verify Xcode preview setup
 # - Ensure Canvas is visible (⌥⌘⏎)

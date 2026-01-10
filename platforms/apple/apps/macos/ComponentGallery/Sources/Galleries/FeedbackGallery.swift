@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
-import ChatUIFoundation
-import ChatUIComponents
-import ChatUIThemes
+import AStudioFoundation
+import AStudioComponents
+import AStudioThemes
 
 /// Gallery of feedback components.
 struct FeedbackGallery: View {

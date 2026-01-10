@@ -104,24 +104,42 @@ export function useFocusTrap({ isOpen, onClose, restoreFocus = true }: UseFocusT
           return;
         }
 
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
         const active = document.activeElement as HTMLElement | null;
+        const currentIndex = active ? focusables.indexOf(active) : -1;
+        const lastIndex = focusables.length - 1;
+        const nextIndex = e.shiftKey
+          ? currentIndex <= 0
+            ? lastIndex
+            : currentIndex - 1
+          : currentIndex >= lastIndex
+            ? 0
+            : currentIndex + 1;
 
-        if (!e.shiftKey && active === last) {
-          e.preventDefault();
-          first.focus();
-        } else if (e.shiftKey && active === first) {
-          e.preventDefault();
-          last.focus();
-        }
+        e.preventDefault();
+        focusables[nextIndex]?.focus();
       }
     };
 
-    window.addEventListener("keydown", onKeyDown);
+    const onFocusIn = (e: FocusEvent) => {
+      const dialog = dialogRef.current;
+      if (!dialog) return;
+      const target = e.target as HTMLElement | null;
+      if (!target || dialog.contains(target)) return;
+
+      const focusables = getFocusable(dialog);
+      if (focusables.length > 0) {
+        focusables[0].focus();
+      } else {
+        dialog.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown, true);
+    document.addEventListener("focusin", onFocusIn, true);
     return () => {
       window.clearTimeout(t);
-      window.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("keydown", onKeyDown, true);
+      document.removeEventListener("focusin", onFocusIn, true);
 
       // Restore focus to the previously focused element
       if (restoreFocus && lastActiveRef.current) {

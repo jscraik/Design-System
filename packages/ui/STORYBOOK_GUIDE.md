@@ -1,6 +1,6 @@
 # Storybook Usage Guide
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Developers (beginner to intermediate)
@@ -10,7 +10,7 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-Your ChatUI library is fully integrated with Storybook for comprehensive testing and documentation. Here's how to leverage all the built-in features:
+Your aStudio library is fully integrated with Storybook for comprehensive testing and documentation. Here's how to leverage all the built-in features:
 
 ## 🚀 **Getting Started**
 
@@ -190,14 +190,14 @@ Test responsive behavior with built-in viewport controls.
 
 ### **Theme Switching**
 
-Components automatically work with the ChatUI theme system.
+Components automatically work with the aStudio theme system.
 
 ### **Mock Data**
 
 Use the provided mock data utilities:
 
 ```tsx
-import { mockData } from "@chatui/ui";
+import { mockData } from "@astudio/ui";
 
 export const WithMockData: Story = {
   args: {
@@ -224,4 +224,4 @@ export const WithMockData: Story = {
     pnpm -C packages/ui test:a11y
 ```
 
-Your Storybook setup provides everything needed for comprehensive component testing, documentation, and quality assurance without additional tooling!
+Your Storybook setup provides everything needed for comprehensive component testing, documentation, and quality assurance without additional tooling.

@@ -247,7 +247,7 @@ Before committing:
 
 ---
 
-**Remember**: Security gates block merge on failure. No bypasses!
+**Remember**: Security gates block merge on failure. No bypasses.
 
 ## Risks and assumptions
 - Assumptions: TBD (confirm)
@@ -256,4 +256,3 @@ Before committing:
 
 ## Verify
 - TBD: Add concrete verification steps and expected results.
-

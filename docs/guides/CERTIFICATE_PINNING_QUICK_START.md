@@ -26,7 +26,7 @@ Last updated: 2026-01-04
 ## 30-Second Setup
 
 ```swift
-import ChatUIMCP
+import AStudioMCP
 
 // 1. Extract your server's SPKI hash (see below)
 let pinnedHash = "base64encodedhash=="

@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "chatui-widgets-deployment",
+  "name": "astudio-widgets-deployment",
   "main": "./src/worker/index.ts",
   "compatibility_date": "2025-12-28",
   "compatibility_flags": ["nodejs_compat"],
@@ -13,5 +13,45 @@
   },
   "vars": {
     "ENVIRONMENT": "production",
+  },
+
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "WIDGET_SERVER",
+        "class_name": "ChatUIWidgetServerDO"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_classes": ["ChatUIWidgetServerDO"]
+    }
+  ],
+  "env": {
+    "development": {
+      "vars": {
+        "ENVIRONMENT": "development"
+      },
+      "assets": {
+        "binding": "ASSETS",
+        "directory": "./dist/client"
+      },
+      "durable_objects": {
+        "bindings": [
+          {
+            "name": "WIDGET_SERVER",
+            "class_name": "ChatUIWidgetServerDO"
+          }
+        ]
+      },
+      "migrations": [
+        {
+          "tag": "v1",
+          "new_classes": ["ChatUIWidgetServerDO"]
+        }
+      ]
+    }
   },
 }

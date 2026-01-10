@@ -1,6 +1,6 @@
-# Design Guidelines for ChatUI
+# Design Guidelines for aStudio
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Developers (beginner to intermediate)
@@ -26,8 +26,8 @@ These guidelines keep the UI consistent across ChatGPT widgets and standalone ap
 
 ## Core principles
 
-- **Use Apps SDK UI first.** Prefer `@openai/apps-sdk-ui` components and `@chatui/ui` wrappers.
-- **Avoid raw tokens in production UI.** `@chatui/tokens` is for audits and extensions only.
+- **Use Apps SDK UI first.** Prefer `@openai/apps-sdk-ui` components and `@astudio/ui` wrappers.
+- **Avoid raw tokens in production UI.** `@astudio/tokens` is for audits and extensions only.
 - **Match the system defaults.** Stick to component defaults before adding custom styling.
 - **Accessibility is non-negotiable.** Every interactive control must be usable by keyboard and assistive tech.
 
@@ -36,13 +36,13 @@ These guidelines keep the UI consistent across ChatGPT widgets and standalone ap
 ### Use the UI library exports
 
 ```tsx
-import { Button, Card, IconButton } from "@chatui/ui";
+import { Button, Card, IconButton } from "@astudio/ui";
 ```
 
 If you need tree-shaking, use subpath exports:
 
 ```tsx
-import { Button, SectionHeader } from "@chatui/ui/base";
+import { Button, SectionHeader } from "@astudio/ui/base";
 ```
 
 ### Avoid direct imports from underlying libraries
@@ -60,7 +60,7 @@ import { Button, SectionHeader } from "@chatui/ui/base";
 
 - Use component defaults and semantic classes from Apps SDK UI.
 - Do not hardcode hex colors or raw CSS variables in new UI code.
-- If you need a token, add it to `@chatui/ui` or the Apps SDK UI layer, not directly in the page.
+- If you need a token, add it to `@astudio/ui` or the Apps SDK UI layer, not directly in the page.
 
 ## Icons and imagery
 

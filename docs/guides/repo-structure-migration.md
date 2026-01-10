@@ -1,6 +1,6 @@
 # Repo Structure Migration
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Developers (intermediate)
@@ -40,7 +40,7 @@ This guide documents the 2026 restructure that improved discoverability and norm
 - MCP server moved to `platforms/mcp/`.
 - Widget SDK tooling moved under `packages/widgets/src/sdk/`.
 - Widget examples moved to `packages/widgets/docs/examples/`.
-- Templates gallery registry moved under `packages/ui/src/dev/templates-gallery.tsx` (consumed via `@chatui/ui/dev`).
+- Templates gallery registry moved under `packages/ui/src/dev/templates-gallery.tsx` (consumed via `@astudio/ui/dev`).
 - `packages/runtime`, `packages/tokens`, and `packages/widgets` now follow `src/ /tests/ /docs/` conventions.
 
 ## Path map (old → new)
@@ -55,9 +55,9 @@ This guide documents the 2026 restructure that improved discoverability and norm
 
 - `apps/web/*` → `platforms/web/apps/web/*`
 - `apps/storybook/*` → `platforms/web/apps/storybook/*`
-- `apps/ChatGPT-UI_templates/*` → `platforms/web/apps/web/src/pages/TemplatesGalleryPage.tsx`
+- `apps/ChatGPT-UI_templates/*` → `platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx`
 - `apps/mcp/*` → `platforms/mcp/*`
-- `platforms/web/apps/templates-gallery/src/shared/lib/template-registry.tsx` → `packages/ui/src/dev/templates-gallery.tsx` (consumed via `@chatui/ui/dev`)
+- `platforms/web/apps/templates-gallery/src/shared/lib/template-registry.tsx` → `packages/ui/src/dev/templates-gallery.tsx` (consumed via `@astudio/ui/dev`)
 - `platforms/web/apps/web/src/features/widgets/WidgetHarness.tsx` → `platforms/web/apps/web/src/pages/HarnessPage.tsx`
 
 ### Tokens
@@ -87,23 +87,23 @@ This guide documents the 2026 restructure that improved discoverability and norm
 - `packages/ui/src/storybook/App.tsx` → `packages/ui/src/storybook/App/App.tsx`
 - `packages/ui/src/storybook/pages/*.tsx` → `packages/ui/src/storybook/pages/<PageName>/<PageName>.tsx`
 - `packages/ui/src/storybook/design-system/DesignTokens.ts` → `packages/ui/src/storybook/design-system/DesignTokens/DesignTokens.ts`
-- `@chatui/ui/forms` → `@chatui/ui/base`
-- `@chatui/ui/layout` → `@chatui/ui/data-display`, `@chatui/ui/feedback`, `@chatui/ui/navigation`, `@chatui/ui/overlays`
+- `@astudio/ui/forms` → `@astudio/ui/base`
+- `@astudio/ui/layout` → `@astudio/ui/data-display`, `@astudio/ui/feedback`, `@astudio/ui/navigation`, `@astudio/ui/overlays`
 
 ### UI import surface (new)
 
 Use the published subpaths for UI primitives and app surfaces:
 
-- `@chatui/ui/app`
-- `@chatui/ui/base`
-- `@chatui/ui/chat`
-- `@chatui/ui/data-display`
-- `@chatui/ui/feedback`
-- `@chatui/ui/icons`
-- `@chatui/ui/modals`
-- `@chatui/ui/navigation`
-- `@chatui/ui/overlays`
-- `@chatui/ui/settings`
+- `@astudio/ui/app`
+- `@astudio/ui/base`
+- `@astudio/ui/chat`
+- `@astudio/ui/data-display`
+- `@astudio/ui/feedback`
+- `@astudio/ui/icons`
+- `@astudio/ui/modals`
+- `@astudio/ui/navigation`
+- `@astudio/ui/overlays`
+- `@astudio/ui/settings`
 
 ### Widgets
 
@@ -134,4 +134,3 @@ Use the published subpaths for UI primitives and app surfaces:
 
 ## Troubleshooting
 - TBD: Add the top 3 failure modes and fixes.
-

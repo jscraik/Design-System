@@ -32,7 +32,7 @@ Use these when you want step-by-step workflows, not API reference.
 
 ### Development Guides
 
-- **[PAGES_QUICK_START.md](./PAGES_QUICK_START.md)** - Quick start guide for creating new pages in the ChatUI system
+- **[PAGES_QUICK_START.md](./PAGES_QUICK_START.md)** - Quick start guide for creating new pages in the aStudio system
 - **[DESIGN_GUIDELINES.md](./DESIGN_GUIDELINES.md)** - Design system guidelines and best practices
 - **[SECURITY_BEST_PRACTICES.md](./SECURITY_BEST_PRACTICES.md)** - Security best practices for deployment and widget development
 - **[repo-structure-migration.md](./repo-structure-migration.md)** - Path changes and migration notes for the 2026 restructure

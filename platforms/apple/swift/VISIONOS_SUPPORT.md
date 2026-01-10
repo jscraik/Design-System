@@ -10,7 +10,7 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-Complete guide for visionOS support and future platform considerations in ChatUI Swift packages.
+Complete guide for visionOS support and future platform considerations in aStudio Swift packages.
 
 ## Table of Contents
 
@@ -24,7 +24,7 @@ Complete guide for visionOS support and future platform considerations in ChatUI
 
 ## Overview
 
-ChatUI Swift packages are designed with future platform support in mind. While initially focused on iOS and macOS, the architecture supports visionOS and future Apple platforms through modular design and platform detection utilities.
+aStudio Swift packages are designed with future platform support in mind. While initially focused on iOS and macOS, the architecture supports visionOS and future Apple platforms through modular design and platform detection utilities.
 
 ### Design Principles
 
@@ -37,10 +37,10 @@ ChatUI Swift packages are designed with future platform support in mind. While i
 
 | Package            | iOS 15+ | macOS 13+ | visionOS 1+ | Future Platforms |
 | ------------------ | ------- | --------- | ----------- | ---------------- |
-| ChatUIFoundation   | ✅      | ✅        | ✅          | ✅               |
-| ChatUIThemes       | ✅      | ✅        | ✅          | ✅               |
-| ChatUIComponents   | ✅      | ✅        | ✅          | ✅               |
-| ChatUIShellChatGPT | ✅      | ✅        | ✅          | ✅               |
+| AStudioFoundation   | ✅      | ✅        | ✅          | ✅               |
+| AStudioThemes       | ✅      | ✅        | ✅          | ✅               |
+| AStudioComponents   | ✅      | ✅        | ✅          | ✅               |
+| AStudioShellChatGPT | ✅      | ✅        | ✅          | ✅               |
 
 ## Current Support
 
@@ -59,7 +59,7 @@ platforms: [
 
 ### Tested Features
 
-**ChatUIFoundation:**
+**AStudioFoundation:**
 
 - ✅ FColor semantic colors
 - ✅ FType typography
@@ -67,14 +67,14 @@ platforms: [
 - ✅ Platform detection (Platform.isVisionOS)
 - ✅ Accessibility helpers
 
-**ChatUIComponents:**
+**AStudioComponents:**
 
 - ✅ Settings primitives (Row, Toggle, Dropdown, Card, Divider)
 - ✅ Button components
 - ✅ Input components
 - ⚠️ Platform-specific interactions (needs visionOS testing)
 
-**ChatUIShellChatGPT:**
+**AStudioShellChatGPT:**
 
 - ✅ AppShellView (NavigationSplitView-based)
 - ✅ RoundedAppContainer
@@ -93,7 +93,7 @@ platforms: [
 ### Using Platform Utilities
 
 ```swift
-import ChatUIFoundation
+import AStudioFoundation
 
 struct MyView: View {
     var body: some View {
@@ -376,7 +376,7 @@ extension View {
 
 ### Extensibility Architecture
 
-The ChatUI architecture is designed to support future Apple platforms:
+The aStudio architecture is designed to support future Apple platforms:
 
 **Foundation Layer:**
 
@@ -548,7 +548,7 @@ struct EyeTrackableButton: View {
 
 ```bash
 # Build for visionOS simulator
-cd platforms/apple/swift/ChatUIComponents
+cd platforms/apple/swift/AStudioComponents
 swift build --destination 'platform=visionOS Simulator,name=Apple Vision Pro'
 ```
 

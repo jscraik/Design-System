@@ -28,7 +28,7 @@ Changesets release PR or publish to npm when ready.
 ## Create a changeset
 
 - [ ] Run `pnpm changeset`.
-- [ ] Choose the package(s) impacted and the correct semver bump.
+- [ ] Choose the affected packages and the correct semver bump.
 - [ ] Write a concise summary in the changeset.
 
 ## Version and review
@@ -59,4 +59,3 @@ If CI publishing is unavailable, publish manually after versioning:
 
 ## Troubleshooting
 - TBD: Add the top 3 failure modes and fixes.
-

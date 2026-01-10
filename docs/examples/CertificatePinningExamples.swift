@@ -1,8 +1,8 @@
-// Certificate Pinning Examples for ChatUIMCP
+// Certificate Pinning Examples for AStudioMCP
 // This file demonstrates practical usage of TLS certificate pinning
 
 import Foundation
-import ChatUIMCP
+import AStudioMCP
 
 // MARK: - Example 1: Basic Production Setup
 

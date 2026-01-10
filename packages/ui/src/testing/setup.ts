@@ -53,10 +53,31 @@ if (!Element.prototype.hasPointerCapture) {
 class MockImage {
   onload: (() => void) | null = null;
   onerror: (() => void) | null = null;
-  set src(_value: string) {
+  #src = "";
+
+  set src(value: string) {
+    this.#src = value;
     if (this.onload) {
       this.onload();
     }
+  }
+
+  addEventListener(type: string, listener: () => void) {
+    if (type === "load" && this.#src) {
+      listener();
+      return;
+    }
+    if (type === "load") {
+      this.onload = listener;
+      return;
+    }
+    if (type === "error") {
+      this.onerror = listener;
+    }
+  }
+
+  removeEventListener(_type: string, _listener: () => void) {
+    // No-op for tests.
   }
 }
 Object.defineProperty(globalThis, "Image", {

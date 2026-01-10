@@ -1,6 +1,6 @@
-# @chatui/widgets
+# @astudio/widgets
 
-Last updated: 2026-01-07
+Last updated: 2026-01-09
 
 ## Doc requirements
 

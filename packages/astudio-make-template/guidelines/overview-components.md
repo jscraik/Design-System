@@ -1,6 +1,6 @@
 # Component Overview
 
-Use `@astudio/ui` for Apps SDK UI-first React components. The package mirrors the `@chatui/ui` surface area and exposes:
+Use `@astudio/ui` for Apps SDK UI-first React components. The package mirrors the `@astudio/ui` surface area and exposes:
 
 - Core primitives: buttons, text, badges, cards, separators, stacks
 - Navigation: tabs, menus, breadcrumbs

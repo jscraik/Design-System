@@ -1,6 +1,6 @@
 # No Dark-Only Tokens (ESLint Rule)
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Developers (intermediate)
@@ -89,10 +89,10 @@ import noDarkOnlyTokens from "./packages/ui/eslint-rules-no-dark-only-tokens.js"
 export default [
   {
     plugins: {
-      "@chatui/no-dark-only-tokens": noDarkOnlyTokens,
+      "@astudio/no-dark-only-tokens": noDarkOnlyTokens,
     },
     rules: {
-      "@chatui/no-dark-only-tokens/no-dark-only-tokens": [
+      "@astudio/no-dark-only-tokens/no-dark-only-tokens": [
         "error",
         {
           // Optional: allow specific patterns if needed
@@ -227,7 +227,7 @@ If you need to allow specific patterns (not recommended):
 
 ```js
 {
-  "@chatui/no-dark-only-tokens/no-dark-only-tokens": [
+  "@astudio/no-dark-only-tokens/no-dark-only-tokens": [
     "error",
     {
       allowedPatterns: ["dark:bg-gradient-", "dark:backdrop-"],
@@ -267,8 +267,8 @@ To test the rule locally:
 # Run ESLint
 pnpm lint
 
-# Or lint specific file
-pnpm --filter @chatui/ui lint
+# Or lint a specific folder
+pnpm lint -- packages/ui/src
 ```
 
 ## Related Documentation
@@ -287,4 +287,3 @@ pnpm --filter @chatui/ui lint
 
 ## Troubleshooting
 - TBD: Add the top 3 failure modes and fixes.
-

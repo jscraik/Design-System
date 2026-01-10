@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
-import ChatUIFoundation
-import ChatUIComponents
-import ChatUIThemes
+import AStudioFoundation
+import AStudioComponents
+import AStudioThemes
 
 /// Gallery of button components.
 struct ButtonsGallery: View {
     var body: some View {
         VStack(alignment: .leading, spacing: FSpacing.s24) {
-            GallerySection(title: "ChatUIButton", subtitle: "Button component from ChatUIComponents") {
+            GallerySection(title: "ChatUIButton", subtitle: "Button component from AStudioComponents") {
                 VStack(alignment: .leading, spacing: FSpacing.s16) {
                     Text("Basic button with text label")
                         .font(FType.caption())

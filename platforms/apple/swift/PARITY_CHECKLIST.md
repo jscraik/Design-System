@@ -55,7 +55,7 @@ Last updated: 2026-01-04
 - [License](#license)
 
 
-This document tracks the parity between React components in `packages/ui` and SwiftUI components in `platforms/apple/swift/ChatUIComponents`.
+This document tracks the parity between React components in `packages/ui` and SwiftUI components in `platforms/apple/swift/AStudioComponents`.
 
 ## Legend
 

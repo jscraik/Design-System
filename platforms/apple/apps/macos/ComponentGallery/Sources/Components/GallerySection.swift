@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-import ChatUIFoundation
-import ChatUIThemes
+import AStudioFoundation
+import AStudioThemes
 
 /// Card-styled section wrapper with search filtering support.
 struct GallerySection<Content: View>: View {

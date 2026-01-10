@@ -12,18 +12,18 @@ Last updated: 2026-01-04
 
 ## Overview
 
-The Native macOS Bridge refactors and enhances the existing ChatUI system to provide a unified, modular SwiftUI library architecture that maintains perfect design consistency across React web applications, iOS, macOS, and future platforms like visionOS. The system transforms the current monolithic `ChatUISwift` package at `packages/ui-swift/` into four specialized Swift packages while leveraging enhanced design token generation as the bridge between platforms.
+The Native macOS Bridge refactors and enhances the existing aStudio system to provide a unified, modular SwiftUI library architecture that maintains perfect design consistency across React web applications, iOS, macOS, and future platforms like visionOS. The system transforms the current monolithic `AStudioSwift` package at `packages/ui-swift/` into four specialized Swift packages while leveraging enhanced design token generation as the bridge between platforms.
 
-**Current State**: Single monolithic `ChatUISwift` package with hardcoded design tokens and several components (Button, Card, Input, Modal, Navigation, Toast, DataDisplay).
+**Current State**: Single monolithic `AStudioSwift` package with hardcoded design tokens and several components (Button, Card, Input, Modal, Navigation, Toast, DataDisplay).
 
 **Target State**: Four specialized Swift packages with Asset Catalog-based tokens, enhanced token generation, comprehensive testing infrastructure, and development tools.
 
 The architecture is built around four core Swift packages that provide a scalable foundation for native development:
 
-1. **ChatUIFoundation**: Semantic tokens, platform utilities, and accessibility helpers
-2. **ChatUIComponents**: Reusable SwiftUI primitives that mirror React APIs with compile-time safety
-3. **ChatUIThemes**: Theme presets including pixel-perfect ChatGPT styling and native alternatives
-4. **ChatUIShellChatGPT**: Optional complete application shell layouts for rapid development
+1. **AStudioFoundation**: Semantic tokens, platform utilities, and accessibility helpers
+2. **AStudioComponents**: Reusable SwiftUI primitives that mirror React APIs with compile-time safety
+3. **AStudioThemes**: Theme presets including pixel-perfect ChatGPT styling and native alternatives
+4. **AStudioShellChatGPT**: Optional complete application shell layouts for rapid development
 
 This approach ensures visual consistency, eliminates manual token synchronization, provides comprehensive testing infrastructure, and enables incremental adoption across development teams while supporting future platforms and advanced development workflows.
 
@@ -41,10 +41,10 @@ graph TB
     end
     
     subgraph "SwiftUI Package Layer"
-        CF[ChatUIFoundation]
-        CC[ChatUIComponents] 
-        CT[ChatUIThemes]
-        CS[ChatUIShellChatGPT]
+        CF[AStudioFoundation]
+        CC[AStudioComponents] 
+        CT[AStudioThemes]
+        CS[AStudioShellChatGPT]
     end
     
     subgraph "Application Layer"
@@ -103,14 +103,14 @@ graph TB
 
 The SwiftUI library is organized into four distinct packages, each with specific responsibilities:
 
-#### ChatUIFoundation Package
+#### AStudioFoundation Package
 
 **Purpose**: Provides semantic design tokens, platform utilities, and accessibility helpers
 **Dependencies**: None (foundation layer)
-**Location**: `swift/ChatUIFoundation/`
+**Location**: `swift/AStudioFoundation/`
 
 ```swift
-// swift/ChatUIFoundation/Sources/ChatUIFoundation/FColor.swift
+// swift/AStudioFoundation/Sources/AStudioFoundation/FColor.swift
 import SwiftUI
 
 public enum FColor {
@@ -143,7 +143,7 @@ public enum FColor {
     // High contrast support built-in
 }
 
-// swift/ChatUIFoundation/Sources/ChatUIFoundation/FType.swift
+// swift/AStudioFoundation/Sources/AStudioFoundation/FType.swift
 import SwiftUI
 
 public enum FType {
@@ -162,7 +162,7 @@ public enum FType {
     public static func trackingCaption() -> CGFloat { -0.2 }
 }
 
-// swift/ChatUIFoundation/Sources/ChatUIFoundation/FSpacing.swift
+// swift/AStudioFoundation/Sources/AStudioFoundation/FSpacing.swift
 import Foundation
 
 public enum FSpacing {
@@ -176,7 +176,7 @@ public enum FSpacing {
     public static let s32: Double = 32
 }
 
-// swift/ChatUIFoundation/Sources/ChatUIFoundation/Platform.swift
+// swift/AStudioFoundation/Sources/AStudioFoundation/Platform.swift
 import SwiftUI
 
 public enum Platform {
@@ -208,7 +208,7 @@ public enum Platform {
     }
 }
 
-// swift/ChatUIFoundation/Sources/ChatUIFoundation/Accessibility.swift
+// swift/AStudioFoundation/Sources/AStudioFoundation/Accessibility.swift
 import SwiftUI
 
 public enum FAccessibility {
@@ -263,19 +263,19 @@ private struct HighContrastModifier: ViewModifier {
 }
 ```
 
-#### ChatUIComponents Package
+#### AStudioComponents Package
 
 **Purpose**: Reusable SwiftUI primitives that mirror React component APIs
-**Dependencies**: ChatUIFoundation, ChatUIThemes
-**Location**: `swift/ChatUIComponents/`
+**Dependencies**: AStudioFoundation, AStudioThemes
+**Location**: `swift/AStudioComponents/`
 
 **Settings Primitives** (First Deliverable):
 
 ```swift
-// swift/ChatUIComponents/Sources/ChatUIComponents/SettingsDivider.swift
+// swift/AStudioComponents/Sources/AStudioComponents/SettingsDivider.swift
 import SwiftUI
-import ChatUIFoundation
-import ChatUIThemes
+import AStudioFoundation
+import AStudioThemes
 
 public struct SettingsDivider: View {
     @Environment(\.colorScheme) private var scheme
@@ -290,7 +290,7 @@ public struct SettingsDivider: View {
     }
 }
 
-// swift/ChatUIComponents/Sources/ChatUIComponents/SettingsCardView.swift
+// swift/AStudioComponents/Sources/AStudioComponents/SettingsCardView.swift
 public struct SettingsCardView<Content: View>: View {
     private let content: Content
     @Environment(\.colorScheme) private var scheme
@@ -313,7 +313,7 @@ public struct SettingsCardView<Content: View>: View {
     }
 }
 
-// swift/ChatUIComponents/Sources/ChatUIComponents/SettingRowView.swift
+// swift/AStudioComponents/Sources/AStudioComponents/SettingRowView.swift
 public enum SettingTrailing {
     case none
     case chevron
@@ -427,7 +427,7 @@ public struct SettingRowView: View {
     }
 }
 
-// swift/ChatUIComponents/Sources/ChatUIComponents/FoundationSwitchStyle.swift
+// swift/AStudioComponents/Sources/AStudioComponents/FoundationSwitchStyle.swift
 public struct FoundationSwitchStyle: ToggleStyle {
     public init() {}
     
@@ -453,7 +453,7 @@ public struct FoundationSwitchStyle: ToggleStyle {
     }
 }
 
-// swift/ChatUIComponents/Sources/ChatUIComponents/SettingToggleView.swift
+// swift/AStudioComponents/Sources/AStudioComponents/SettingToggleView.swift
 public struct SettingToggleView: View {
     private let icon: AnyView?
     private let title: String
@@ -484,7 +484,7 @@ public struct SettingToggleView: View {
     }
 }
 
-// swift/ChatUIComponents/Sources/ChatUIComponents/SettingDropdownView.swift
+// swift/AStudioComponents/Sources/AStudioComponents/SettingDropdownView.swift
 public struct SettingDropdownView: View {
     private let icon: AnyView?
     private let title: String
@@ -542,14 +542,14 @@ public struct SettingDropdownView: View {
 }
 ```
 
-#### ChatUIThemes Package
+#### AStudioThemes Package
 
 **Purpose**: Theme presets including ChatGPT-style visual constants
-**Dependencies**: ChatUIFoundation
-**Location**: `swift/ChatUIThemes/`
+**Dependencies**: AStudioFoundation
+**Location**: `swift/AStudioThemes/`
 
 ```swift
-// swift/ChatUIThemes/Sources/ChatUIThemes/ChatGPTTheme.swift
+// swift/AStudioThemes/Sources/AStudioThemes/ChatGPTTheme.swift
 import SwiftUI
 
 public enum ChatGPTTheme {
@@ -605,14 +605,14 @@ public enum DefaultTheme {
 }
 ```
 
-#### ChatUIShellChatGPT Package
+#### AStudioShellChatGPT Package
 
 **Purpose**: Optional complete application shell layouts
-**Dependencies**: ChatUIFoundation, ChatUIComponents, ChatUIThemes
-**Location**: `swift/ChatUIShellChatGPT/`
+**Dependencies**: AStudioFoundation, AStudioComponents, AStudioThemes
+**Location**: `swift/AStudioShellChatGPT/`
 
 ```swift
-// swift/ChatUIShellChatGPT/Sources/ChatUIShellChatGPT/VisualEffectView.swift
+// swift/AStudioShellChatGPT/Sources/AStudioShellChatGPT/VisualEffectView.swift
 #if os(macOS)
 import AppKit
 import SwiftUI
@@ -661,10 +661,10 @@ public struct VisualEffectView: View {
 }
 #endif
 
-// swift/ChatUIShellChatGPT/Sources/ChatUIShellChatGPT/RoundedAppContainer.swift
+// swift/AStudioShellChatGPT/Sources/AStudioShellChatGPT/RoundedAppContainer.swift
 import SwiftUI
-import ChatUIFoundation
-import ChatUIThemes
+import AStudioFoundation
+import AStudioThemes
 
 public struct RoundedAppContainer<Content: View>: View {
     @ViewBuilder let content: () -> Content
@@ -689,11 +689,11 @@ public struct RoundedAppContainer<Content: View>: View {
     }
 }
 
-// swift/ChatUIShellChatGPT/Sources/ChatUIShellChatGPT/AppShellView.swift
+// swift/AStudioShellChatGPT/Sources/AStudioShellChatGPT/AppShellView.swift
 import SwiftUI
-import ChatUIFoundation
-import ChatUIComponents
-import ChatUIThemes
+import AStudioFoundation
+import AStudioComponents
+import AStudioThemes
 
 public struct AppShellView<SidebarContent: View, DetailContent: View>: View {
     @ViewBuilder let sidebarContent: () -> SidebarContent
@@ -736,7 +736,7 @@ The system integrates with the existing Model Context Protocol infrastructure th
 #### Swift MCP Client
 
 ```swift
-// swift/ChatUIMCP/Sources/ChatUIMCP/MCPClient.swift
+// swift/AStudioMCP/Sources/AStudioMCP/MCPClient.swift
 import Foundation
 import Combine
 
@@ -818,10 +818,10 @@ public enum MCPError: Error {
 #### Native Widget Renderer
 
 ```swift
-// swift/ChatUIMCP/Sources/ChatUIMCP/WidgetRenderer.swift
+// swift/AStudioMCP/Sources/AStudioMCP/WidgetRenderer.swift
 import SwiftUI
-import ChatUIFoundation
-import ChatUIComponents
+import AStudioFoundation
+import AStudioComponents
 
 public struct WidgetRenderer: View {
     let widgetData: WidgetData
@@ -913,7 +913,7 @@ public struct WidgetItem: Codable, Identifiable {
 #### macOS Authentication Integration
 
 ```swift
-// swift/ChatUIMCP/Sources/ChatUIMCP/MCPAuthenticator.swift
+// swift/AStudioMCP/Sources/AStudioMCP/MCPAuthenticator.swift
 import Foundation
 import Security
 
@@ -1226,19 +1226,19 @@ Several properties were identified as logically redundant or could be combined f
 **Validates: Requirements 1.1, 1.2, 1.3, 1.4, 1.5**
 
 **Property 2: SwiftUI Foundation Semantic API Consistency**
-*For any* semantic color, typography, or spacing request, ChatUIFoundation should provide the same design values as React components through Asset Catalog integration and automatic light/dark mode support
+*For any* semantic color, typography, or spacing request, AStudioFoundation should provide the same design values as React components through Asset Catalog integration and automatic light/dark mode support
 **Validates: Requirements 2.1, 2.2, 2.3, 2.4, 2.5**
 
 **Property 3: Component Library API Parity**
-*For any* SwiftUI component in ChatUIComponents, the API and behavior should mirror the corresponding React component while providing native macOS interactions and consuming only semantic tokens from ChatUIFoundation
+*For any* SwiftUI component in AStudioComponents, the API and behavior should mirror the corresponding React component while providing native macOS interactions and consuming only semantic tokens from AStudioFoundation
 **Validates: Requirements 3.1, 3.2, 3.3, 3.4, 3.5**
 
 **Property 4: Theme System Visual Consistency**
-*For any* theme preset applied from ChatUIThemes, the visual output should be pixel-close to the corresponding React component rendering, with proper light/dark mode support and platform-appropriate materials
+*For any* theme preset applied from AStudioThemes, the visual output should be pixel-close to the corresponding React component rendering, with proper light/dark mode support and platform-appropriate materials
 **Validates: Requirements 4.1, 4.2, 4.3, 4.4, 4.5**
 
 **Property 5: Optional Shell Package Integration**
-*For any* shell component from ChatUIShellChatGPT, the integration with ChatUIFoundation and ChatUIComponents should be seamless, providing native macOS features while remaining completely optional
+*For any* shell component from AStudioShellChatGPT, the integration with AStudioFoundation and AStudioComponents should be seamless, providing native macOS features while remaining completely optional
 **Validates: Requirements 5.1, 5.2, 5.3, 5.4, 5.5**
 
 **Property 6: Enhanced Build Pipeline Completeness**
@@ -1246,7 +1246,7 @@ Several properties were identified as logically redundant or could be combined f
 **Validates: Requirements 6.1, 6.2, 6.3, 6.4, 6.5**
 
 **Property 7: MCP Tool Integration Compatibility**
-*For any* existing MCP tool call, SwiftUI applications should execute them through existing web-based infrastructure, render widgets using native views with ChatUIFoundation tokens, and handle macOS-specific authentication flows
+*For any* existing MCP tool call, SwiftUI applications should execute them through existing web-based infrastructure, render widgets using native views with AStudioFoundation tokens, and handle macOS-specific authentication flows
 **Validates: Requirements 7.1, 7.2, 7.3, 7.4, 7.5**
 
 **Property 8: Development Experience Quality**
@@ -1266,7 +1266,7 @@ Several properties were identified as logically redundant or could be combined f
 **Validates: Requirements 1.2, 2.1**
 
 **Property 12: Platform-Specific Behavior Adaptation**
-*For any* platform difference (iOS vs macOS), ChatUIFoundation should centralize conditional logic and provide appropriate hover states, corner radii, and interaction patterns, with Platform utilities providing consistent APIs across ChatUIComponents
+*For any* platform difference (iOS vs macOS), AStudioFoundation should centralize conditional logic and provide appropriate hover states, corner radii, and interaction patterns, with Platform utilities providing consistent APIs across AStudioComponents
 **Validates: Requirements 2.3, 3.3**
 
 ## Error Handling
@@ -1342,7 +1342,7 @@ export class TokenValidator {
 ### SwiftUI Component Errors
 
 ```swift
-// swift/ChatUIComponents/Sources/ChatUIComponents/Errors/ComponentError.swift
+// swift/AStudioComponents/Sources/AStudioComponents/Errors/ComponentError.swift
 import Foundation
 
 public enum ComponentError: Error, LocalizedError {
@@ -1499,9 +1499,9 @@ export class TokenWatcher {
 ```swift
 // apps/macos/ComponentGallery/Sources/ComponentGallery/ComponentGallery.swift
 import SwiftUI
-import ChatUIFoundation
-import ChatUIComponents
-import ChatUIThemes
+import AStudioFoundation
+import AStudioComponents
+import AStudioThemes
 
 /// Live documentation and testing app for all SwiftUI components
 struct ComponentGallery: App {
@@ -1576,7 +1576,7 @@ enum ThemeSelection {
 #### Snapshot Testing Framework
 
 ```swift
-// swift/ChatUITestSupport/Sources/ChatUITestSupport/SnapshotTesting.swift
+// swift/AStudioTestSupport/Sources/AStudioTestSupport/SnapshotTesting.swift
 import XCTest
 import SwiftUI
 
@@ -1677,12 +1677,12 @@ public enum AccessibilityVariant {
 #### Property-Based Testing Integration
 
 ```swift
-// swift/ChatUIComponents/Tests/ChatUIComponentsTests/Properties/ComponentPropertyTests.swift
+// swift/AStudioComponents/Tests/AStudioComponentsTests/Properties/ComponentPropertyTests.swift
 import XCTest
 import SwiftCheck
-@testable import ChatUIComponents
-@testable import ChatUIFoundation
-@testable import ChatUIThemes
+@testable import AStudioComponents
+@testable import AStudioFoundation
+@testable import AStudioThemes
 
 class ComponentPropertyTests: XCTestCase {
     func testProperty3ComponentLibraryAPIParity() {
@@ -1702,7 +1702,7 @@ class ComponentPropertyTests: XCTestCase {
     
     func testProperty10PackageModularityIndependence() {
         property("Package Modularity Independence") <- forAll { (useFoundation: Bool, useThemes: Bool) in
-            // ChatUIComponents should work with or without ChatUIThemes
+            // AStudioComponents should work with or without AStudioThemes
             if useFoundation {
                 // Can use FColor tokens
                 let color = FColor.textPrimary
@@ -1780,29 +1780,29 @@ jobs:
       - name: Validate token consistency
         run: pnpm tokens:validate
         
-      - name: Test ChatUIFoundation
+      - name: Test AStudioFoundation
         run: swift test
-        working-directory: swift/ChatUIFoundation
+        working-directory: swift/AStudioFoundation
         
-      - name: Test ChatUIComponents
+      - name: Test AStudioComponents
         run: swift test
-        working-directory: swift/ChatUIComponents
+        working-directory: swift/AStudioComponents
         
-      - name: Test ChatUIThemes
+      - name: Test AStudioThemes
         run: swift test
-        working-directory: swift/ChatUIThemes
+        working-directory: swift/AStudioThemes
         
-      - name: Test ChatUIShellChatGPT
+      - name: Test AStudioShellChatGPT
         run: swift test
-        working-directory: swift/ChatUIShellChatGPT
+        working-directory: swift/AStudioShellChatGPT
         
       - name: Run snapshot tests
         run: swift test --filter SnapshotTests
-        working-directory: swift/ChatUITestSupport
+        working-directory: swift/AStudioTestSupport
         
       - name: Run property-based tests
         run: swift test --filter PropertyTests
-        working-directory: swift/ChatUIComponents
+        working-directory: swift/AStudioComponents
         
       - name: Build component gallery
         run: swift build
@@ -1812,7 +1812,7 @@ jobs:
 #### Snapshot Testing Framework
 
 ```swift
-// swift/ChatUITestSupport/Sources/ChatUITestSupport/SnapshotTesting.swift
+// swift/AStudioTestSupport/Sources/AStudioTestSupport/SnapshotTesting.swift
 import XCTest
 import SwiftUI
 
@@ -1967,7 +1967,7 @@ export class TokenWatcher {
 #### Accessibility Testing Tools
 
 ```swift
-// swift/ChatUITestSupport/Sources/ChatUITestSupport/AccessibilityTesting.swift
+// swift/AStudioTestSupport/Sources/AStudioTestSupport/AccessibilityTesting.swift
 import XCTest
 import SwiftUI
 
@@ -2034,7 +2034,7 @@ public class AccessibilityTestCase: XCTestCase {
 #### Keyboard Navigation Testing
 
 ```swift
-// swift/ChatUITestSupport/Sources/ChatUITestSupport/KeyboardNavigationTesting.swift
+// swift/AStudioTestSupport/Sources/AStudioTestSupport/KeyboardNavigationTesting.swift
 import XCTest
 import SwiftUI
 
@@ -2160,12 +2160,12 @@ describe('Token Generation Properties', () => {
 #### Swift Property Tests
 
 ```swift
-// swift/ChatUIComponents/Tests/ChatUIComponentsTests/Properties/ComponentTests.swift
+// swift/AStudioComponents/Tests/AStudioComponentsTests/Properties/ComponentTests.swift
 import XCTest
 import SwiftCheck
-@testable import ChatUIComponents
-@testable import ChatUIFoundation
-@testable import ChatUIThemes
+@testable import AStudioComponents
+@testable import AStudioFoundation
+@testable import AStudioThemes
 
 class ComponentPropertyTests: XCTestCase {
     func testProperty3ComponentLibraryAPIParity() {
@@ -2185,7 +2185,7 @@ class ComponentPropertyTests: XCTestCase {
     
     func testProperty10PackageModularityIndependence() {
         property("Package Modularity Independence") <- forAll { (useFoundation: Bool, useThemes: Bool) in
-            // ChatUIComponents should work with or without ChatUIThemes
+            // AStudioComponents should work with or without AStudioThemes
             if useFoundation {
                 // Can use FColor tokens
                 let color = FColor.textPrimary
@@ -2289,11 +2289,11 @@ describe('EnhancedTokenGenerator', () => {
 #### SwiftUI Component Tests
 
 ```swift
-// swift/ChatUIComponents/Tests/ChatUIComponentsTests/SettingRowViewTests.swift
+// swift/AStudioComponents/Tests/AStudioComponentsTests/SettingRowViewTests.swift
 import XCTest
 import SwiftUI
-@testable import ChatUIComponents
-@testable import ChatUIFoundation
+@testable import AStudioComponents
+@testable import AStudioFoundation
 
 class SettingRowViewTests: XCTestCase {
     func testSettingRowViewRendersWithTitle() {
@@ -2326,10 +2326,10 @@ class SettingRowViewTests: XCTestCase {
     }
 }
 
-// swift/ChatUIFoundation/Tests/ChatUIFoundationTests/FColorTests.swift
+// swift/AStudioFoundation/Tests/AStudioFoundationTests/FColorTests.swift
 import XCTest
 import SwiftUI
-@testable import ChatUIFoundation
+@testable import AStudioFoundation
 
 class FColorTests: XCTestCase {
     func testSemanticColorsExist() {
@@ -2407,14 +2407,14 @@ jobs:
       - uses: actions/checkout@v3
       - name: Build Swift packages
         run: |
-          cd swift/ChatUIFoundation && swift build
-          cd ../ChatUIComponents && swift build
-          cd ../ChatUIThemes && swift build
-          cd ../ChatUIShellChatGPT && swift build
+          cd swift/AStudioFoundation && swift build
+          cd ../AStudioComponents && swift build
+          cd ../AStudioThemes && swift build
+          cd ../AStudioShellChatGPT && swift build
       - name: Run Swift tests
         run: |
-          cd swift/ChatUIFoundation && swift test --enable-code-coverage
-          cd ../ChatUIComponents && swift test --enable-code-coverage
+          cd swift/AStudioFoundation && swift test --enable-code-coverage
+          cd ../AStudioComponents && swift test --enable-code-coverage
       - name: Generate coverage report
         run: xcrun llvm-cov report .build/debug/*.xctest/Contents/MacOS/*
 ```
@@ -2430,7 +2430,7 @@ The modular architecture is designed to support future Apple platforms with mini
 #### visionOS Readiness
 
 ```swift
-// swift/ChatUIFoundation/Sources/ChatUIFoundation/Platform.swift
+// swift/AStudioFoundation/Sources/AStudioFoundation/Platform.swift
 public enum Platform {
     public static var isMac: Bool {
         #if os(macOS)
@@ -2473,9 +2473,9 @@ A dedicated macOS app for component development and design review:
 ```swift
 // apps/macos/ComponentGallery/ComponentGalleryApp.swift
 import SwiftUI
-import ChatUIFoundation
-import ChatUIComponents
-import ChatUIThemes
+import AStudioFoundation
+import AStudioComponents
+import AStudioThemes
 
 @main
 struct ComponentGalleryApp: App {
@@ -2628,7 +2628,7 @@ export class TokenWatcher {
 Automatic API documentation generation:
 
 ```swift
-// swift/ChatUIFoundation/Sources/ChatUIFoundation/FColor.swift
+// swift/AStudioFoundation/Sources/AStudioFoundation/FColor.swift
 /// Semantic color tokens that automatically adapt to light and dark mode.
 ///
 /// All colors are backed by Asset Catalog color sets, providing automatic
@@ -2681,19 +2681,19 @@ The modular structure enables selective loading:
 
 ```swift
 // Minimal app - only Foundation
-import ChatUIFoundation
+import AStudioFoundation
 // Binary size: ~50KB
 
 // With components
-import ChatUIFoundation
-import ChatUIComponents
+import AStudioFoundation
+import AStudioComponents
 // Binary size: ~200KB
 
 // Full ChatGPT experience
-import ChatUIFoundation
-import ChatUIComponents
-import ChatUIThemes
-import ChatUIShellChatGPT
+import AStudioFoundation
+import AStudioComponents
+import AStudioThemes
+import AStudioShellChatGPT
 // Binary size: ~500KB
 ```
 
@@ -2702,11 +2702,11 @@ import ChatUIShellChatGPT
 Package boundaries enable faster iteration:
 
 ```
-Change in ChatUIThemes:
-  ✅ Rebuild ChatUIThemes (fast)
+Change in AStudioThemes:
+  ✅ Rebuild AStudioThemes (fast)
   ✅ Rebuild dependent app (fast)
-  ❌ No rebuild of ChatUIFoundation
-  ❌ No rebuild of ChatUIComponents
+  ❌ No rebuild of AStudioFoundation
+  ❌ No rebuild of AStudioComponents
   
 Total rebuild time: ~2-5 seconds vs ~30+ seconds for monolithic package
 ```
@@ -2749,15 +2749,15 @@ The modular architecture enables parallel development:
 ```
 Team Structure:
 ├── Foundation Team (2 developers)
-│   └── Owns: ChatUIFoundation, token generation
+│   └── Owns: AStudioFoundation, token generation
 │   └── Stability: High (rarely changes)
 │
 ├── Components Team (3 developers)
-│   └── Owns: ChatUIComponents
+│   └── Owns: AStudioComponents
 │   └── Velocity: High (frequent additions)
 │
 ├── Design Team (2 developers)
-│   └── Owns: ChatUIThemes, visual constants
+│   └── Owns: AStudioThemes, visual constants
 │   └── Collaboration: Works with Foundation team
 │
 └── Platform Teams (4+ developers)
@@ -2781,10 +2781,10 @@ Each package maintains semantic versioning:
 ```swift
 // Package.swift dependencies
 dependencies: [
-    .package(url: "ChatUIFoundation", from: "1.0.0"),    // Stable API
-    .package(url: "ChatUIComponents", from: "2.3.0"),    // Active development
-    .package(url: "ChatUIThemes", from: "1.2.0"),        // Occasional updates
-    .package(url: "ChatUIShellChatGPT", from: "1.0.0")   // Stable layouts
+    .package(url: "AStudioFoundation", from: "1.0.0"),    // Stable API
+    .package(url: "AStudioComponents", from: "2.3.0"),    // Active development
+    .package(url: "AStudioThemes", from: "1.2.0"),        // Occasional updates
+    .package(url: "AStudioShellChatGPT", from: "1.0.0")   // Stable layouts
 ]
 ```
 
@@ -2802,14 +2802,14 @@ The modular structure makes selective sharing possible:
 ```swift
 // Open source just the foundation
 // Other developers can build their own components
-public package: ChatUIFoundation
+public package: AStudioFoundation
 ├── FColor (semantic tokens)
 ├── FType (typography)
 ├── FSpacing (spacing scale)
 └── Platform (utilities)
 
 // Keep proprietary
-private package: ChatUIThemes
+private package: AStudioThemes
 └── ChatGPTTheme (your brand-specific styling)
 ```
 
@@ -2827,7 +2827,7 @@ The modular architecture is designed to support future Apple platforms with mini
 ### Platform Detection Strategy
 
 ```swift
-// swift/ChatUIFoundation/Sources/ChatUIFoundation/Platform.swift
+// swift/AStudioFoundation/Sources/AStudioFoundation/Platform.swift
 public enum Platform {
     public static var isMac: Bool {
         #if os(macOS)
@@ -2873,7 +2873,7 @@ public enum Platform {
 Components can provide platform-optimized implementations while maintaining a consistent API:
 
 ```swift
-// swift/ChatUIShellChatGPT/Sources/ChatUIShellChatGPT/VisualEffectView.swift
+// swift/AStudioShellChatGPT/Sources/AStudioShellChatGPT/VisualEffectView.swift
 #if os(macOS)
 // macOS: Use NSVisualEffectView for native vibrancy
 public struct VisualEffectView: NSViewRepresentable {
@@ -3005,9 +3005,9 @@ A dedicated macOS app for viewing all components:
 ```swift
 // apps/macos/ComponentGallery/ComponentGalleryApp.swift
 import SwiftUI
-import ChatUIFoundation
-import ChatUIComponents
-import ChatUIThemes
+import AStudioFoundation
+import AStudioComponents
+import AStudioThemes
 
 @main
 struct ComponentGalleryApp: App {
@@ -3142,10 +3142,10 @@ struct SettingsPrimitivesGallery: View {
 Comprehensive API documentation generated from code:
 
 ```swift
-// swift/ChatUIFoundation/Sources/ChatUIFoundation/FColor.swift
+// swift/AStudioFoundation/Sources/AStudioFoundation/FColor.swift
 /// Semantic color tokens that automatically adapt to light and dark mode.
 ///
-/// `FColor` provides a consistent color API across all ChatUI components.
+/// `FColor` provides a consistent color API across all aStudio components.
 /// All colors are backed by Asset Catalog color sets that automatically
 /// switch between light and dark variants based on system appearance.
 ///
@@ -3186,11 +3186,11 @@ Generate documentation:
 
 ```bash
 # Generate DocC documentation for all packages
-cd swift/ChatUIFoundation
-swift package generate-documentation --target ChatUIFoundation
+cd swift/AStudioFoundation
+swift package generate-documentation --target AStudioFoundation
 
-cd ../ChatUIComponents
-swift package generate-documentation --target ChatUIComponents
+cd ../AStudioComponents
+swift package generate-documentation --target AStudioComponents
 
 # Result: Beautiful documentation site with:
 # - API reference
@@ -3324,7 +3324,7 @@ Applications only load the packages they need:
 
 ```swift
 // Minimal app - just tokens (smallest bundle size)
-import ChatUIFoundation
+import AStudioFoundation
 
 struct MinimalApp: App {
     var body: some Scene {
@@ -3336,10 +3336,10 @@ struct MinimalApp: App {
 }
 
 // Full-featured app - all packages
-import ChatUIFoundation
-import ChatUIComponents
-import ChatUIThemes
-import ChatUIShellChatGPT
+import AStudioFoundation
+import AStudioComponents
+import AStudioThemes
+import AStudioShellChatGPT
 
 struct FullApp: App {
     var body: some Scene {
@@ -3358,14 +3358,14 @@ struct FullApp: App {
 Changes to one package don't rebuild others:
 
 ```bash
-# Change a color in ChatUIFoundation
-# Result: Only ChatUIFoundation rebuilds
+# Change a color in AStudioFoundation
+# Result: Only AStudioFoundation rebuilds
 
-# Change a component in ChatUIComponents
-# Result: Only ChatUIComponents rebuilds (Foundation already built)
+# Change a component in AStudioComponents
+# Result: Only AStudioComponents rebuilds (Foundation already built)
 
-# Change a theme in ChatUIThemes
-# Result: Only ChatUIThemes rebuilds (Foundation and Components already built)
+# Change a theme in AStudioThemes
+# Result: Only AStudioThemes rebuilds (Foundation and Components already built)
 ```
 
 ### Asset Catalog Performance
@@ -3386,10 +3386,10 @@ New modular packages exist alongside old monolithic package:
 ```
 packages/ui-swift/          # Old package (still works)
 swift/
-  ├── ChatUIFoundation/     # New modular packages
-  ├── ChatUIComponents/
-  ├── ChatUIThemes/
-  └── ChatUIShellChatGPT/
+  ├── AStudioFoundation/     # New modular packages
+  ├── AStudioComponents/
+  ├── AStudioThemes/
+  └── AStudioShellChatGPT/
 ```
 
 ### Phase 2: Gradual Migration
@@ -3398,12 +3398,12 @@ Migrate components one by one:
 
 ```swift
 // Week 1: Migrate Button
-// Old: packages/ui-swift/Sources/ChatUISwift/Components/ChatUIButton.swift
-// New: swift/ChatUIComponents/Sources/ChatUIComponents/ChatUIButton.swift
+// Old: packages/ui-swift/Sources/AStudioSwift/Components/ChatUIButton.swift
+// New: swift/AStudioComponents/Sources/AStudioComponents/ChatUIButton.swift
 
 // Week 2: Migrate Card
-// Old: packages/ui-swift/Sources/ChatUISwift/Components/ChatUICard.swift
-// New: swift/ChatUIComponents/Sources/ChatUIComponents/ChatUICard.swift
+// Old: packages/ui-swift/Sources/AStudioSwift/Components/ChatUICard.swift
+// New: swift/AStudioComponents/Sources/AStudioComponents/ChatUICard.swift
 
 // Continue until all components migrated
 ```
@@ -3413,9 +3413,9 @@ Migrate components one by one:
 Once all components migrated, deprecate old package:
 
 ```swift
-// packages/ui-swift/Sources/ChatUISwift/ChatUISwift.swift
-@available(*, deprecated, message: "Use modular packages: ChatUIFoundation, ChatUIComponents, ChatUIThemes")
-public enum ChatUISwift {
+// packages/ui-swift/Sources/AStudioSwift/AStudioSwift.swift
+@available(*, deprecated, message: "Use modular packages: AStudioFoundation, AStudioComponents, AStudioThemes")
+public enum AStudioSwift {
     // Old API still works but shows deprecation warnings
 }
 ```

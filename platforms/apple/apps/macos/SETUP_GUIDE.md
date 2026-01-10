@@ -1,4 +1,4 @@
-# ChatUI Playground Setup Guide
+# aStudio Playground Setup Guide
 
 Last updated: 2026-01-04
 
@@ -10,9 +10,9 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-> Note: The primary macOS development app is `platforms/apple/apps/macos/ComponentGallery`. `ChatUIPlayground` is a lightweight companion for quick experiments with the modular Swift packages.
+> Note: The primary macOS development app is `platforms/apple/apps/macos/ComponentGallery`. `AStudioPlayground` is a lightweight companion for quick experiments with the modular Swift packages.
 
-This guide explains how to open and run the existing ChatUIPlayground Xcode project in this repo.
+This guide explains how to open and run the existing AStudioPlayground Xcode project in this repo.
 
 ## Table of contents
 
@@ -36,24 +36,24 @@ This guide explains how to open and run the existing ChatUIPlayground Xcode proj
 1. Open the project:
 
    ```bash
-   open platforms/apple/apps/macos/ChatUIPlayground/ChatUIPlayground.xcodeproj
+   open platforms/apple/apps/macos/AStudioPlayground/AStudioPlayground.xcodeproj
    ```
 
-2. Select the `ChatUIPlayground` scheme.
+2. Select the `AStudioPlayground` scheme.
 3. Build and run with `⌘R`.
 
 ## Package dependencies
 
-ChatUIPlayground uses local Swift packages:
+AStudioPlayground uses local Swift packages:
 
-- `platforms/apple/swift/ChatUIFoundation`
-- `platforms/apple/swift/ChatUIComponents`
-- `platforms/apple/swift/ChatUIThemes`
-- `platforms/apple/swift/ChatUIShellChatGPT`
+- `platforms/apple/swift/AStudioFoundation`
+- `platforms/apple/swift/AStudioComponents`
+- `platforms/apple/swift/AStudioThemes`
+- `platforms/apple/swift/AStudioShellChatGPT`
 
 If Xcode cannot resolve the modules:
 
-1. Select the ChatUIPlayground project and target.
+1. Select the AStudioPlayground project and target.
 2. Open **General** → **Frameworks, Libraries, and Embedded Content**.
 3. Click **+** → **Add Package Dependency...** → **Add Local...**.
 4. Add each path above and select its product.
@@ -61,7 +61,7 @@ If Xcode cannot resolve the modules:
 ## Swift Package Manager (command line)
 
 ```bash
-cd platforms/apple/apps/macos/ChatUIPlayground
+cd platforms/apple/apps/macos/AStudioPlayground
 swift build
 swift run
 ```
@@ -71,8 +71,8 @@ Note: SwiftUI previews are best in Xcode.
 ## Using the playground
 
 - Sidebar sections: Buttons, Inputs, Settings, Navigation.
-- Component entry point: `platforms/apple/apps/macos/ChatUIPlayground/ChatUIPlayground/ComponentGallery.swift`.
-- App shell: `platforms/apple/apps/macos/ChatUIPlayground/ChatUIPlayground/ContentView.swift`.
+- Component entry point: `platforms/apple/apps/macos/AStudioPlayground/AStudioPlayground/ComponentGallery.swift`.
+- App shell: `platforms/apple/apps/macos/AStudioPlayground/AStudioPlayground/ContentView.swift`.
 
 ## Troubleshooting
 
@@ -102,10 +102,10 @@ Once the playground runs:
 ## File structure
 
 ```
-platforms/apple/apps/macos/ChatUIPlayground/
-├── ChatUIPlayground.xcodeproj/
-└── ChatUIPlayground/
-    ├── ChatUIPlaygroundApp.swift
+platforms/apple/apps/macos/AStudioPlayground/
+├── AStudioPlayground.xcodeproj/
+└── AStudioPlayground/
+    ├── AStudioPlaygroundApp.swift
     ├── ContentView.swift
     ├── ComponentGallery.swift
     ├── PreviewScenarios.swift

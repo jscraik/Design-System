@@ -10,11 +10,11 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-ComponentGallery is the official Swift Storybook for ChatUI SwiftUI components.
+ComponentGallery is the official Swift Storybook for aStudio SwiftUI components.
 
 ## Overview
 
-Use ComponentGallery to browse SwiftUI components from ChatUIFoundation, ChatUIComponents, ChatUIThemes, and ChatUIShellChatGPT. It provides side-by-side light/dark rendering, accessibility checks, and deterministic component stories for reliable QA.
+Use ComponentGallery to browse SwiftUI components from AStudioFoundation, AStudioComponents, AStudioThemes, and AStudioShellChatGPT. It provides side-by-side light/dark rendering, accessibility checks, and deterministic component stories for reliable QA.
 
 ## Topics
 

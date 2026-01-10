@@ -11,8 +11,8 @@
 📄 **File**: `DEPENDENCY_RECONCILIATION_PLAN.md`
 
 - Comprehensive analysis of source app vs platform dependencies
-- Component mapping strategy (Radix UI → @chatui/ui)
-- Token integration strategy (source tokens → @chatui/tokens)
+- Component mapping strategy (Radix UI → @astudio/ui)
+- Token integration strategy (source tokens → @astudio/tokens)
 - Implementation phases and approach
 
 ### 2. Dependency Audit Summary  
@@ -36,14 +36,14 @@
 
 ### ✅ Perfect Dependency Alignment
 
-- **27/27 Radix UI components** already available via @chatui/ui
-- **15/15 supporting libraries** already available via @chatui/ui
+- **27/27 Radix UI components** already available via @astudio/ui
+- **15/15 supporting libraries** already available via @astudio/ui
 - **Design tokens** - Platform tokens are superset of source tokens
 - **Registry system** - Simple TypeScript, no build tools needed
 
 ### ✅ Apps SDK UI-First Compliance
 
-- All templates will use @chatui/ui as primary component source
+- All templates will use @astudio/ui as primary component source
 - Radix UI components accessed only via platform wrappers
 - No direct `@radix-ui/*` imports in template code
 - Import boundary linting will enforce compliance
@@ -64,7 +64,7 @@
 import { Button } from "@radix-ui/react-button"
 
 // AFTER (Platform)  
-import { Button } from "@chatui/ui/base"
+import { Button } from "@astudio/ui/base"
 ```
 
 ### Phase 2: Token Integration
@@ -74,7 +74,7 @@ import { Button } from "@chatui/ui/base"
 import { colors } from "../design-tokens"
 
 // AFTER (Platform)
-import { tokens } from "@chatui/tokens"
+import { tokens } from "@astudio/tokens"
 ```
 
 ### Phase 3: Registry Generation

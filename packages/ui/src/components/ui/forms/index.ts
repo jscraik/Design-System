@@ -16,3 +16,4 @@ export * from "./Combobox";
 export * from "./DatePicker";
 export * from "./Form";
 export * from "./RangeSlider";
+export * from "./TagInput";

@@ -47,7 +47,7 @@ Last updated: 2026-01-04
 
 ## Overview
 
-This document defines the module boundaries, state ownership, and dependencies for the modal system in ChatUI.
+This document defines the module boundaries, state ownership, and dependencies for the modal system in aStudio.
 
 ---
 
@@ -360,7 +360,7 @@ Parent
 
 **Use raw `<div role="dialog">` when:**
 
-- You need custom overlay behavior (e.g., multiple overlays)
+- You need custom overlay behavior (for example, multiple overlays)
 - You need to integrate with existing modal infrastructure
 - You need special z-index stacking
 

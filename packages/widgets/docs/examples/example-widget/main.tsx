@@ -1,5 +1,5 @@
-import { createEmbeddedHost, ensureMockOpenAI, HostProvider, useToolOutput } from "@chatui/runtime";
-import { AppsSDKButton, AppsSDKUIProvider, Card } from "@chatui/ui";
+import { createEmbeddedHost, ensureMockOpenAI, HostProvider, useToolOutput } from "@astudio/runtime";
+import { AppsSDKButton, AppsSDKUIProvider, Card } from "@astudio/ui";
 import { useState } from "react";
 
 import type { ExampleToolOutput } from "../../../src/shared/tool-output-types";

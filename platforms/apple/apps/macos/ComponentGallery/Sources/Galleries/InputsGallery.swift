@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
-import ChatUIFoundation
-import ChatUIComponents
-import ChatUIThemes
+import AStudioFoundation
+import AStudioComponents
+import AStudioThemes
 
 /// Gallery of input components.
 struct InputsGallery: View {
@@ -26,7 +26,7 @@ struct InputsGallery: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: FSpacing.s24) {
-            GallerySection(title: "InputView", subtitle: "Text input component from ChatUIComponents") {
+            GallerySection(title: "InputView", subtitle: "Text input component from AStudioComponents") {
                 VStack(alignment: .leading, spacing: FSpacing.s16) {
                     Text("Basic text input")
                         .font(FType.caption())

@@ -6,7 +6,7 @@ import * as MigrationStories from "./Migration.stories";
 
 # Migration Guide
 
-This guide helps you migrate between versions of the ChatUI library and understand breaking changes.
+This guide helps you migrate between versions of the aStudio library and understand breaking changes.
 
 ## 🚀 Latest Changes (v0.1.0)
 
@@ -109,18 +109,18 @@ Components are now organized by category for better tree-shaking and discoverabi
 
 ```tsx
 // Form components
-import { Button, Input, Toggle } from "@chatui/ui/base";
+import { Button, Input, Toggle } from "@astudio/ui/base";
 
 // Layout components
-import { Card } from "@chatui/ui/data-display";
-import { Dialog } from "@chatui/ui/feedback";
-import { Tabs, ModelSelector } from "@chatui/ui/navigation";
+import { Card } from "@astudio/ui/data-display";
+import { Dialog } from "@astudio/ui/feedback";
+import { Tabs, ModelSelector } from "@astudio/ui/navigation";
 
 // Chat-specific components
-import { ContextTag } from "@chatui/ui/overlays";
+import { ContextTag } from "@astudio/ui/overlays";
 
 // Or import everything from main entry
-import { Button, ModelSelector, ContextTag } from "@chatui/ui";
+import { Button, ModelSelector, ContextTag } from "@astudio/ui";
 ```
 
 ### Export Structure Changes
@@ -130,14 +130,14 @@ We've resolved naming conflicts between vendor components and custom UI componen
 **Before (potential conflicts):**
 
 ```tsx
-import { Button } from "@chatui/ui"; // Could be vendor or custom
+import { Button } from "@astudio/ui"; // Could be vendor or custom
 ```
 
 **After (explicit):**
 
 ```tsx
-import { Button } from "@chatui/ui"; // Always our custom Button
-import { Popover } from "@chatui/ui"; // Explicit vendor export
+import { Button } from "@astudio/ui"; // Always our custom Button
+import { Popover } from "@astudio/ui"; // Explicit vendor export
 ```
 
 ## 🛠️ Migration Steps
@@ -160,12 +160,12 @@ For better tree-shaking, consider using category imports:
 
 ```tsx
 // Before
-import { Button, Input, ModelSelector, ContextTag } from "@chatui/ui";
+import { Button, Input, ModelSelector, ContextTag } from "@astudio/ui";
 
 // After (optional, for better tree-shaking)
-import { Button, Input } from "@chatui/ui/base";
-import { ModelSelector } from "@chatui/ui/navigation";
-import { ContextTag } from "@chatui/ui/overlays";
+import { Button, Input } from "@astudio/ui/base";
+import { ModelSelector } from "@astudio/ui/navigation";
+import { ContextTag } from "@astudio/ui/overlays";
 ```
 
 ### 3. Test Your Components
@@ -182,7 +182,7 @@ pnpm storybook:test   # Run Storybook interaction tests
 ### Enhanced Development Tools
 
 ```tsx
-import { logProps, validateProps, measureRender } from "@chatui/ui";
+import { logProps, validateProps, measureRender } from "@astudio/ui";
 
 // Debug component props in development
 const MyComponent = (props) => {
@@ -195,7 +195,7 @@ const MyComponent = (props) => {
 ### Theme Utilities
 
 ```tsx
-import { colors, spacing, getCSSVar, setCSSVar } from "@chatui/ui";
+import { colors, spacing, getCSSVar, setCSSVar } from "@astudio/ui";
 
 // Use design tokens programmatically
 const styles = {
@@ -210,7 +210,7 @@ setCSSVar("--foundation-accent-blue", "#0066cc");
 ### Testing Utilities
 
 ```tsx
-import { TestWrapper, mockData, a11y } from "@chatui/ui";
+import { TestWrapper, mockData, a11y } from "@astudio/ui";
 
 // Wrap components for testing
 <TestWrapper>
@@ -256,7 +256,7 @@ After migration, verify:
 **Components not rendering correctly:**
 
 - Ensure you're importing from the correct paths
-- Check that CSS is properly imported: `import "@chatui/ui/styles.css"`
+- Check that CSS is properly imported: `import "@astudio/ui/styles.css"`
 
 **Bundle size increased:**
 

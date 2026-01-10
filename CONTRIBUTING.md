@@ -32,13 +32,13 @@ pnpm dev
 
 ## Project structure
 
-- `packages/ui` — UI components and layouts
-- `packages/runtime` — host adapters + mocks
-- `packages/tokens` — design tokens (CSS + TS)
-- `packages/widgets` — standalone widget bundles
-- `platforms/web/apps/web` — reference app
-- `platforms/web/apps/storybook` — component docs
-- `platforms/mcp` — MCP integration harness
+- `packages/ui`: UI components and layouts
+- `packages/runtime`: host adapters + mocks
+- `packages/tokens`: design tokens (CSS + TS)
+- `packages/widgets`: standalone widget bundles
+- `platforms/web/apps/web`: reference app
+- `platforms/web/apps/storybook`: component docs
+- `platforms/mcp`: MCP integration harness
 
 ## Code style
 

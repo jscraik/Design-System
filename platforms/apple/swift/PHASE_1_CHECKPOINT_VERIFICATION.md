@@ -14,9 +14,9 @@ Last updated: 2026-01-04
 - [Doc requirements](#doc-requirements)
 - [Definition of Done - Verification Results](#definition-of-done-verification-results)
   - [✅ 1. All four Swift packages compile successfully](#1-all-four-swift-packages-compile-successfully)
-  - [✅ 2. ChatUIFoundation provides semantic tokens via Asset Catalog](#2-chatuifoundation-provides-semantic-tokens-via-asset-catalog)
-  - [✅ 3. ChatUIThemes provides ChatGPT-style constants](#3-chatuithemes-provides-chatgpt-style-constants)
-  - [✅ 4. ChatUIComponents provides 6 settings primitives](#4-chatuicomponents-provides-6-settings-primitives)
+  - [✅ 2. AStudioFoundation provides semantic tokens via Asset Catalog](#2-astudiofoundation-provides-semantic-tokens-via-asset-catalog)
+  - [✅ 3. AStudioThemes provides ChatGPT-style constants](#3-astudiothemes-provides-chatgpt-style-constants)
+  - [✅ 4. AStudioComponents provides 6 settings primitives](#4-astudiocomponents-provides-6-settings-primitives)
   - [✅ 5. Example settings view renders pixel-close to React equivalent](#5-example-settings-view-renders-pixel-close-to-react-equivalent)
   - [✅ 6. Light/dark mode switching works automatically](#6-lightdark-mode-switching-works-automatically)
   - [✅ 7. macOS hover states work correctly](#7-macos-hover-states-work-correctly)
@@ -35,20 +35,20 @@ Last updated: 2026-01-04
 **Verification Method:** Command-line Swift Package Manager builds
 
 ```bash
-# ChatUIFoundation
-cd platforms/apple/swift/ChatUIFoundation && swift build
+# AStudioFoundation
+cd platforms/apple/swift/AStudioFoundation && swift build
 # Result: Build complete! (0.15s)
 
-# ChatUIComponents
-cd platforms/apple/swift/ChatUIComponents && swift build
+# AStudioComponents
+cd platforms/apple/swift/AStudioComponents && swift build
 # Result: Build complete! (0.52s)
 
-# ChatUIThemes
-cd platforms/apple/swift/ChatUIThemes && swift build
+# AStudioThemes
+cd platforms/apple/swift/AStudioThemes && swift build
 # Result: Build complete! (0.69s)
 
-# ChatUIShellChatGPT
-cd platforms/apple/swift/ChatUIShellChatGPT && swift build
+# AStudioShellChatGPT
+cd platforms/apple/swift/AStudioShellChatGPT && swift build
 # Result: Build complete! (1.81s)
 ```
 
@@ -58,14 +58,14 @@ cd platforms/apple/swift/ChatUIShellChatGPT && swift build
 
 ---
 
-### ✅ 2. ChatUIFoundation provides semantic tokens via Asset Catalog
+### ✅ 2. AStudioFoundation provides semantic tokens via Asset Catalog
 
 **Verification Method:** File system inspection and code review
 
 **Asset Catalog Structure:**
 
 ```
-platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets/
+platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Resources/Colors.xcassets/
 ├── foundation-bg-app.colorset/
 ├── foundation-bg-card.colorset/
 ├── foundation-bg-card-alt.colorset/
@@ -102,7 +102,7 @@ platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors
 
 ---
 
-### ✅ 3. ChatUIThemes provides ChatGPT-style constants
+### ✅ 3. AStudioThemes provides ChatGPT-style constants
 
 **Verification Method:** Code review of ChatGPTTheme.swift
 
@@ -123,7 +123,7 @@ platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors
 
 ---
 
-### ✅ 4. ChatUIComponents provides 6 settings primitives
+### ✅ 4. AStudioComponents provides 6 settings primitives
 
 **Verification Method:** Code review and compilation verification
 
@@ -174,14 +174,14 @@ platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors
 
 **SettingsExampleView Features:**
 
-- ✅ Section headers using `FType.sectionTitle()` ("Settings", "Preferences")
+- ✅ Section headers using `FType.sectionTitle()` with labels Settings and Preferences
 - ✅ Two `SettingsCardView` containers demonstrating composition
 - ✅ "General Settings" card with 3 rows (Profile, Notifications with toggle, Language dropdown)
 - ✅ "Preferences" card with 2 rows (Dark Mode toggle, Accent Color dropdown)
 - ✅ `SettingsDivider` between all rows within cards
 - ✅ Interactive controls: Toggle switches for Notifications and Dark Mode
 - ✅ Dropdown menus: Accent Color (5 options), Language (5 options)
-- ✅ Uses ChatUIFoundation tokens exclusively (FColor, FType, FSpacing)
+- ✅ Uses AStudioFoundation tokens exclusively (FColor, FType, FSpacing)
 - ✅ Follows ChatGPTTheme styling for pixel-perfect appearance
 
 **Preview Variants (documented, work in Xcode):**
@@ -291,7 +291,7 @@ private var rowBackground: some View {
 
 **Test Implementation Status:**
 
-- ✅ Unit tests created in `platforms/apple/swift/ChatUIComponents/Tests/ChatUIComponentsTests/`
+- ✅ Unit tests created in `platforms/apple/swift/AStudioComponents/Tests/AStudioComponentsTests/`
 - ✅ Alternative verification methods documented:
   - `ComponentVerification.swift`: Compile-time verification
   - `SettingsPrimitivesDemo.swift`: Runtime verification
@@ -313,7 +313,7 @@ Swift Package Manager command-line test execution has limitations with SwiftUI v
 **Recommendation:** Run tests in Xcode for full SwiftUI testing capabilities:
 
 ```bash
-open platforms/apple/swift/ChatUIComponents/Package.swift
+open platforms/apple/swift/AStudioComponents/Package.swift
 # Then: Product → Test (⌘U)
 ```
 
@@ -341,15 +341,15 @@ open platforms/apple/swift/ChatUIComponents/Package.swift
 
 **How to View Previews:**
 
-1. Open `platforms/apple/swift/ChatUIComponents/Package.swift` in Xcode
+1. Open `platforms/apple/swift/AStudioComponents/Package.swift` in Xcode
 2. Navigate to `SettingsExampleView.swift`
 3. Uncomment the preview code (remove `/*` and `*/`)
 4. Show Canvas: `⌥⌘⏎` (Option+Command+Enter)
 5. Resume previews: `⌥⌘P`
 
-**Alternative:** Use ChatUIPlayground app (modular packages):
+**Alternative:** Use AStudioPlayground app (modular packages):
 
-1. Open `platforms/apple/apps/macos/ChatUIPlayground/ChatUIPlayground.xcodeproj` in Xcode
+1. Open `platforms/apple/apps/macos/AStudioPlayground/AStudioPlayground.xcodeproj` in Xcode
 2. Navigate to "Settings" → "Complete Settings Example" in sidebar
 3. Run app: `⌘R`
 
@@ -366,9 +366,9 @@ open platforms/apple/swift/ChatUIComponents/Package.swift
 All 9 Definition of Done criteria have been verified and passed:
 
 1. ✅ All four Swift packages compile successfully
-2. ✅ ChatUIFoundation provides semantic tokens via Asset Catalog
-3. ✅ ChatUIThemes provides ChatGPT-style constants
-4. ✅ ChatUIComponents provides 6 settings primitives
+2. ✅ AStudioFoundation provides semantic tokens via Asset Catalog
+3. ✅ AStudioThemes provides ChatGPT-style constants
+4. ✅ AStudioComponents provides 6 settings primitives
 5. ✅ Example settings view renders pixel-close to React equivalent
 6. ✅ Light/dark mode switching works automatically
 7. ✅ macOS hover states work correctly
@@ -377,7 +377,7 @@ All 9 Definition of Done criteria have been verified and passed:
 
 **Key Achievements:**
 
-- Modular package architecture successfully refactored from monolithic ChatUISwift
+- Modular package architecture successfully refactored from monolithic AStudioSwift
 - Asset Catalog-based tokens provide automatic light/dark mode support
 - All 6 settings primitives implemented with pixel-perfect ChatGPT styling
 - Platform-specific behavior (macOS hover, iOS touch) correctly implemented
@@ -416,4 +416,3 @@ All 9 Definition of Done criteria have been verified and passed:
 
 ## Troubleshooting
 - TBD: Add the top 3 failure modes and fixes.
-

@@ -26,7 +26,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@chatui/tokens": path.resolve(__dirname, "../tokens/src"),
+      "@astudio/tokens": path.resolve(__dirname, "../tokens/src"),
+      "@astudio/runtime": path.resolve(__dirname, "../runtime/src"),
       // Mock the vendor re-exports to avoid apps-sdk-ui ESM issues
       "./integrations/apps-sdk/vendor": path.resolve(__dirname, "./src/testing/mocks/appsSdkUi.tsx"),
       "../integrations/apps-sdk/vendor": path.resolve(__dirname, "./src/testing/mocks/appsSdkUi.tsx"),

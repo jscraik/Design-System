@@ -13,5 +13,5 @@
 
 @import "tw-animate-css";
 
-/* ChatUI global styles (fonts, theme variables, base layer). */
-@import "@chatui/ui/styles.css";
+/* AStudio global styles (fonts, theme variables, base layer). */
+@import "@astudio/ui/styles.css";

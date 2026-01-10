@@ -44,15 +44,15 @@ export default [
       "jsx-a11y": jsxA11y,
       sonarjs,
       complexity,
-      "@chatui-dark-only-tokens": noDarkOnlyTokensRule,
-      "@chatui-ui-subpaths": uiSubpathImportsRule,
-      "@chatui-no-lucide-direct-imports": noLucideDirectImportsRule,
-      "@chatui-no-raw-tokens": noRawTokensRule,
-      "@chatui-no-console": noConsoleInProductionRule,
-      "@chatui-no-window-openai": noWindowOpenaiDirectAccessRule,
-      "@chatui-no-deprecated": noDeprecatedImportsRule,
-      "@chatui-apps-sdk-first": appsSdkFirstRule,
-      "@chatui-radix-fallback": radixFallbackOnlyRule,
+      "@astudio-dark-only-tokens": noDarkOnlyTokensRule,
+      "@astudio-ui-subpaths": uiSubpathImportsRule,
+      "@astudio-no-lucide-direct-imports": noLucideDirectImportsRule,
+      "@astudio-no-raw-tokens": noRawTokensRule,
+      "@astudio-no-console": noConsoleInProductionRule,
+      "@astudio-no-window-openai": noWindowOpenaiDirectAccessRule,
+      "@astudio-no-deprecated": noDeprecatedImportsRule,
+      "@astudio-apps-sdk-first": appsSdkFirstRule,
+      "@astudio-radix-fallback": radixFallbackOnlyRule,
     },
     languageOptions: {
       ecmaVersion: "latest",
@@ -91,9 +91,9 @@ export default [
           "patterns": ["**/_temp/**", "_temp/**"],
           "paths": [
             {
-              name: "@chatui/ui/dev",
+              name: "@astudio/ui/dev",
               message:
-                "Dev-only export. Use @chatui/ui/* or @chatui/ui/experimental outside local harnesses.",
+                "Dev-only export. Use @astudio/ui/* or @astudio/ui/experimental outside local harnesses.",
             },
           ],
         }
@@ -106,7 +106,7 @@ export default [
       "sonarjs/no-identical-conditions": "error",
       "sonarjs/no-identical-expressions": "error",
       // Prevent dark-only token usage (media mode)
-      "@chatui-dark-only-tokens/no-dark-only-tokens": [
+      "@astudio-dark-only-tokens/no-dark-only-tokens": [
         "error",
         {
           // Optional: allow specific patterns if needed
@@ -114,9 +114,9 @@ export default [
         },
       ],
       // Enforce UI package subpath imports
-      "@chatui-ui-subpaths/ui-subpath-imports": "error",
+      "@astudio-ui-subpaths/ui-subpath-imports": "error",
       // Enforce icon imports through canonical icon system
-      "@chatui-no-lucide-direct-imports/no-lucide-direct-imports": [
+      "@astudio-no-lucide-direct-imports/no-lucide-direct-imports": [
         "warn",
         {
           // Allow lucide-react in these patterns (e.g., reference/template code)
@@ -129,7 +129,7 @@ export default [
         },
       ],
       // Prevent console statements in production
-      "@chatui-no-console/no-console-in-production": [
+      "@astudio-no-console/no-console-in-production": [
         "warn",
         {
           // Allow console methods in these contexts
@@ -137,7 +137,7 @@ export default [
         },
       ],
       // Prevent direct window.openai access (use runtime host abstraction)
-      "@chatui-no-window-openai/no-window-openai-direct-access": [
+      "@astudio-no-window-openai/no-window-openai-direct-access": [
         "error",
         {
           // Allow window.openai access in these patterns
@@ -152,24 +152,24 @@ export default [
         },
       ],
       // Prevent imports from deprecated/archived paths
-      "@chatui-no-deprecated/no-deprecated-imports": [
+      "@astudio-no-deprecated/no-deprecated-imports": [
         "error",
         {
           deprecatedPatterns: [
             "**/_temp/**",
             "**/_temp_import/**",
           ],
-          deprecatedPaths: ["@chatui/ui/dev"],
+          deprecatedPaths: ["@astudio/ui/dev"],
           customMessages: {
-            "@chatui/ui/dev":
-              "Dev-only export. Use @chatui/ui/* or @chatui/ui/experimental outside local harnesses.",
+            "@astudio/ui/dev":
+              "Dev-only export. Use @astudio/ui/* or @astudio/ui/experimental outside local harnesses.",
           },
         },
       ],
       // Restrict Radix primitives to fallback components
-      "@chatui-radix-fallback/radix-fallback-only": "error",
+      "@astudio-radix-fallback/radix-fallback-only": "error",
       // Prefer Apps SDK UI re-exports where available
-      "@chatui-apps-sdk-first/apps-sdk-first": [
+      "@astudio-apps-sdk-first/apps-sdk-first": [
         "error",
         {
           allowInPatterns: [
@@ -187,7 +187,7 @@ export default [
     files: ["packages/ui/src/components/**/*.{ts,tsx}"],
     ignores: ["**/*.stories.*", "**/*.test.*", "**/dev/**"],
     rules: {
-      "@chatui-no-raw-tokens/no-raw-tokens": "error",
+      "@astudio-no-raw-tokens/no-raw-tokens": "error",
     },
   },
   {
@@ -351,15 +351,15 @@ export default [
           "patterns": ["**/_temp/**", "_temp/**"],
         },
       ],
-      // Allow @chatui/ui/dev imports in these specific files
-      "@chatui-no-deprecated/no-deprecated-imports": [
+      // Allow @astudio/ui/dev imports in these specific files
+      "@astudio-no-deprecated/no-deprecated-imports": [
         "error",
         {
           deprecatedPatterns: [
             "**/_temp/**",
             "**/_temp_import/**",
           ],
-          deprecatedPaths: [], // Don't flag @chatui/ui/dev here
+          deprecatedPaths: [], // Don't flag @astudio/ui/dev here
           customMessages: {},
         },
       ],

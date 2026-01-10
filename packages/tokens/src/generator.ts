@@ -537,7 +537,7 @@ extension Color {
 }
 
 // MARK: - Accessibility Extensions
-// Note: Accessibility view extensions are defined in ChatUIFoundation/FAccessibility.swift
+// Note: Accessibility view extensions are defined in AStudioFoundation/FAccessibility.swift
 `;
 
     return swiftContent;
@@ -1046,13 +1046,13 @@ ${this.generateCSSTypography()}
     // Determine output paths relative to packages/tokens
     const swiftOutputPath = join(
       process.cwd(),
-      "../../platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/DesignTokens.swift",
+      "../../platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/DesignTokens.swift",
     );
     const cssOutputPath = join(process.cwd(), "src/foundations.css");
     const manifestOutputPath = join(process.cwd(), "docs/outputs/manifest.json");
     const assetCatalogBasePath = join(
       process.cwd(),
-      "../../platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources",
+      "../../platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Resources",
     );
 
     await mkdir(dirname(swiftOutputPath), { recursive: true });

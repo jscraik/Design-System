@@ -1,6 +1,6 @@
-# ChatUI Storybook (platforms/web/apps/storybook)
+# aStudio Storybook (platforms/web/apps/storybook)
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Developers (intermediate)
@@ -10,7 +10,7 @@ Last updated: 2026-01-04
 - Review cadence: Quarterly (confirm)
 
 
-Storybook is the primary component documentation and QA surface for `@chatui/ui`.
+Storybook is the primary component documentation and QA surface for `@astudio/ui`.
 
 ## Table of contents
 
@@ -88,7 +88,7 @@ pnpm -C platforms/web/apps/storybook test:coverage
 **Stories render without styles**
 
 - Verify `@openai/apps-sdk-ui/css` is imported in the Storybook setup.
-- Rebuild `@chatui/ui` if you changed CSS variables.
+- Rebuild `@astudio/ui` if you changed CSS variables.
 
 ## Related docs
 

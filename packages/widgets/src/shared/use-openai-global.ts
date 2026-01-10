@@ -1,5 +1,5 @@
-import { useOpenAiGlobal as useOpenAiGlobalRuntime } from "@chatui/runtime";
-import type { OpenAiGlobals } from "@chatui/runtime";
+import { useOpenAiGlobal as useOpenAiGlobalRuntime } from "@astudio/runtime";
+import type { OpenAiGlobals } from "@astudio/runtime";
 
 /**
  * Reads a value from the OpenAI global runtime context.

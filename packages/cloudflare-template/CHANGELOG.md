@@ -1,6 +1,6 @@
-# @chatui/cloudflare-template
+# @astudio/cloudflare-template
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Contributors and release stakeholders
@@ -9,9 +9,11 @@ Last updated: 2026-01-04
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
 
+> Note: This package changelog is archived. Use the root `CHANGELOG.md` for current release history.
+> This file is retained for historical context only.
 
 ## 0.0.1
 
 ### Patch Changes
 
-- @chatui/widgets@0.0.1
+- @astudio/widgets@0.0.1

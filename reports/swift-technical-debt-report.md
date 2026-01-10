@@ -11,7 +11,7 @@ Last updated: 2026-01-04
 
 
 **Analysis Date:** 2026-01-02
-**Scope:** ChatUIComponents, ChatUIShellChatGPT, ChatUIFoundation, ui-swift
+**Scope:** AStudioComponents, AStudioShellChatGPT, AStudioFoundation, ui-swift
 **Total Files Analyzed:** 121 Swift source files
 **Brand:** [brAInwav]
 
@@ -28,7 +28,7 @@ The Swift codebase shows **moderate technical debt** with several critical areas
 
 ### Key Findings
 
-1. **Significant Code Duplication** between ChatUIComponents and ui-swift packages
+1. **Significant Code Duplication** between AStudioComponents and ui-swift packages
 2. **Duplicate DesignTokens** implementations creating maintenance burden
 3. **Icon bloat** (1,191 LOC) with potential for consolidation
 4. **Inconsistent token APIs** (FType/FColor/FSpacing vs DesignTokens)
@@ -43,13 +43,13 @@ The Swift codebase shows **moderate technical debt** with several critical areas
 **Severity:** Critical
 **Impact:** High maintenance cost, inconsistency risk
 **Locations:**
-- `/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ChatUIButton.swift` (284 LOC)
-- `/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/Components/ChatUIButton.swift` (410 LOC)
+- `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ChatUIButton.swift` (284 LOC)
+- `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/ui-swift/Sources/AStudioSwift/Components/ChatUIButton.swift` (410 LOC)
 
 **Issue:** Two nearly identical implementations of `ChatUIButton` with 95% code overlap.
 
 **Differences:**
-- ChatUIComponents uses: `FType.rowTitle()`, `FSpacing.s16`, `FColor.bgCard`
+- AStudioComponents uses: `FType.rowTitle()`, `FSpacing.s16`, `FColor.bgCard`
 - ui-swift uses: `DesignTokens.Typography.Body.size`, `DesignTokens.Spacing.sm`, `DesignTokens.Colors.Background.secondary`
 
 **Shared Code:**
@@ -61,7 +61,7 @@ The Swift codebase shows **moderate technical debt** with several critical areas
 
 **Recommendation:**
 ```swift
-// Create shared protocol in ChatUIFoundation
+// Create shared protocol in AStudioFoundation
 public protocol ChatUIButtonProtocol {
     associatedtype Content: View
     var variant: ChatUIButtonVariant { get }
@@ -94,14 +94,14 @@ public extension View {
 **Severity:** Critical
 **Impact:** Token drift, maintenance nightmare
 **Locations:**
-- `/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/DesignTokens.swift` (433 LOC)
-- `/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/DesignTokens.swift` (421 LOC)
+- `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/DesignTokens.swift` (433 LOC)
+- `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/ui-swift/Sources/AStudioSwift/DesignTokens.swift` (421 LOC)
 
 **Issue:** Two separate design token implementations with overlapping structure but different values.
 
 **Structural Differences:**
 ```swift
-// ChatUIFoundation version
+// AStudioFoundation version
 public enum DesignTokens {
     public enum Colors {
         public enum Accent {
@@ -129,18 +129,18 @@ public enum DesignTokens {
 - Accessibility extensions (split across files)
 
 **Recommendation:**
-1. Consolidate into single source in `ChatUIFoundation`
+1. Consolidate into single source in `AStudioFoundation`
 2. Use package-level re-exports in `ui-swift`
 3. Create migration guide for any breaking changes
 
 ```swift
-// In ChatUIFoundation/DesignTokens.swift (consolidated)
+// In AStudioFoundation/DesignTokens.swift (consolidated)
 public enum DesignTokens {
     // Single source of truth
 }
 
 // In ui-swift/DesignTokens.swift (re-export)
-@_exported import ChatUIFoundation
+@_exported import AStudioFoundation
 // Type aliases for any ui-swift specific naming
 public typealias UIDesignTokens = DesignTokens
 ```
@@ -155,9 +155,9 @@ public typealias UIDesignTokens = DesignTokens
 **Severity:** High
 **Impact:** Large binary size, maintenance overhead
 **Locations:**
-- `/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Icons/ChatGPTIcons.swift` (448 LOC)
-- `/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Icons/ChatGPTIconPaths.swift` (261 LOC)
-- `/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Icons/ChatGPTIconVectors.swift` (482 LOC)
+- `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Icons/ChatGPTIcons.swift` (448 LOC)
+- `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Icons/ChatGPTIconPaths.swift` (261 LOC)
+- `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Icons/ChatGPTIconVectors.swift` (482 LOC)
 
 **Total:** 1,191 LOC for icon definitions
 
@@ -217,14 +217,14 @@ public enum ChatGPTIcon {
 **Severity:** High
 **Impact:** Developer confusion, inconsistent styling
 **Locations:**
-- ChatUIComponents uses: `FType`, `FColor`, `FSpacing`
+- AStudioComponents uses: `FType`, `FColor`, `FSpacing`
 - ui-swift uses: `DesignTokens.Typography`, `DesignTokens.Colors`, `DesignTokens.Spacing`
 
 **Issue:** Two competing token APIs in the same codebase.
 
 **Usage Examples:**
 ```swift
-// ChatUIComponents pattern
+// AStudioComponents pattern
 Text("Hello")
     .font(FType.rowTitle())
     .foregroundColor(FColor.textPrimary)
@@ -276,14 +276,14 @@ extension Color {
 **Severity:** High
 **Impact:** Code duplication, inconsistent styling
 **Locations:**
-- `/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/SettingsCardView.swift`
-- `/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/Components/ChatUICard.swift`
+- `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/SettingsCardView.swift`
+- `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/ui-swift/Sources/AStudioSwift/Components/ChatUICard.swift`
 
 **Issue:** Multiple card/container implementations without shared base.
 
 **Recommendation:**
 ```swift
-// In ChatUIFoundation
+// In AStudioFoundation
 public struct ChatUICard<Content: View>: View {
     let elevation: CardElevation
     let padding: EdgeInsets
@@ -324,7 +324,7 @@ public enum CardElevation {
 **Severity:** High
 **Impact:** Inconsistent UX, duplicated accessibility logic
 **Locations:**
-- ChatUIComponents: `ModalDialogView.swift`, `AlertView.swift`
+- AStudioComponents: `ModalDialogView.swift`, `AlertView.swift`
 - ui-swift: `ChatUIModal.swift`
 
 **Recommendation:**
@@ -342,7 +342,7 @@ Create shared modal protocol and base implementations in Foundation.
 **Severity:** Medium
 **Impact:** Hard to test, hard to maintain
 **Location:**
-- `/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ComposeView.swift` (257 LOC)
+- `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ComposeView.swift` (257 LOC)
 
 **Issue:** Monolithic view with deeply nested VStacks and hardcoded logic.
 
@@ -399,7 +399,7 @@ struct TaskConfigurationSection: View { ... }
 **Severity:** Medium
 **Impact:** 641 LOC in single file, hard to navigate
 **Location:**
-- `/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/Components/ChatUIDataDisplay.swift`
+- `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/ui-swift/Sources/AStudioSwift/Components/ChatUIDataDisplay.swift`
 
 **Issue:** Multiple unrelated components in one file (Table, List, Badge, etc.).
 
@@ -487,7 +487,7 @@ public extension View {
 **Severity:** Medium
 **Impact:** Visual regressions
 **Location:**
-- Only `/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Tests/ChatUIComponentsTests/SnapshotTests.swift` (290 LOC)
+- Only `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioComponents/Tests/AStudioComponentsTests/SnapshotTests.swift` (290 LOC)
 
 **Issue:** Many components lack snapshot tests.
 
@@ -520,9 +520,9 @@ func testChatUIButton_variants() throws {
 **Issue:** Inconsistent grouping of components.
 
 **Current State:**
-- ChatUIComponents: Flat structure with some subfolders
+- AStudioComponents: Flat structure with some subfolders
 - ui-swift: Components/ folder but mixed content
-- ChatUIFoundation: Mixed token/utility files
+- AStudioFoundation: Mixed token/utility files
 
 **Recommendation:**
 Standardize structure:
@@ -612,27 +612,27 @@ if theme.surfaceStyle == .glass {
 
 **Current State:**
 ```
-ChatUIComponents -> ChatUIFoundation + ChatUIThemes
+AStudioComponents -> AStudioFoundation + AStudioThemes
 ui-swift -> (standalone, duplicates Foundation)
-ChatUIShellChatGPT -> ChatUIFoundation + ChatUIThemes
+AStudioShellChatGPT -> AStudioFoundation + AStudioThemes
 ```
 
 **Recommended:**
 ```
-ChatUIFoundation (core tokens, utilities, protocols)
+AStudioFoundation (core tokens, utilities, protocols)
     ↓
-ChatUIComponents (production components)
+AStudioComponents (production components)
     ↓
-ChatUIShellChatGPT (shell integration)
+AStudioShellChatGPT (shell integration)
     ↓
 ui-swift (reference/demo, re-exports everything)
 ```
 
 **Actions:**
-1. Make ui-swift depend on ChatUIFoundation
+1. Make ui-swift depend on AStudioFoundation
 2. Remove duplicate tokens from ui-swift
 3. Add deprecation warnings for ui-swift components
-4. Guide users to ChatUIComponents
+4. Guide users to AStudioComponents
 
 **Effort:** 8-12 hours
 **Risk:** Medium (breaking change)
@@ -645,7 +645,7 @@ ui-swift (reference/demo, re-exports everything)
 Define component protocols in Foundation:
 
 ```swift
-// ChatUIFoundation/Protocols/ComponentProtocols.swift
+// AStudioFoundation/Protocols/ComponentProtocols.swift
 
 public protocol ChatUIComponent {
     associatedtype Content: View
@@ -716,7 +716,7 @@ public protocol Accessible {
 
 | Category | Count | Total LOC | Avg LOC |
 |----------|-------|-----------|---------|
-| Components (ChatUIComponents) | 27 | ~5,400 | 200 |
+| Components (AStudioComponents) | 27 | ~5,400 | 200 |
 | Components (ui-swift) | 9 | ~7,200 | 800 |
 | Tokens/Foundation | 7 | ~2,100 | 300 |
 | Shell Integration | 6 | ~800 | 133 |
@@ -762,14 +762,14 @@ public protocol Accessible {
 
 ## 14. CONCLUSION
 
-The Swift codebase has solid fundamentals but suffers from **evolutionary duplication** between the ChatUIComponents and ui-swift packages. The primary issues are:
+The Swift codebase has solid fundamentals but suffers from **evolutionary duplication** between the AStudioComponents and ui-swift packages. The primary issues are:
 
 1. **Duplicate component implementations** (ChatUIButton, DesignTokens)
 2. **Inconsistent token APIs** (FType vs DesignTokens)
 3. **Missing shared abstractions** (cards, modals, accessibility)
 
 **Recommended approach:**
-- Consolidate to ChatUIFoundation as single source of truth
+- Consolidate to AStudioFoundation as single source of truth
 - Use ui-swift as reference/demo implementation
 - Phase out ui-swift as production library
 - Standardize on DesignTokens namespace

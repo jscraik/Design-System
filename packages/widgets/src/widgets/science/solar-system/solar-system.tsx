@@ -4,7 +4,7 @@ import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { AnimatePresence, motion } from "framer-motion";
 import { EffectComposer, Bloom, DepthOfField } from "@react-three/postprocessing";
-import { useHost } from "@chatui/runtime";
+import { useHost } from "@astudio/runtime";
 import { useNavigate, useParams, Routes, Route, BrowserRouter } from "react-router-dom";
 
 import { useWidgetProps } from "../../../shared/use-widget-props";

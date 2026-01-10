@@ -1,6 +1,6 @@
 # Cross-platform design
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Engineers and technical leads
@@ -15,8 +15,8 @@ Last updated: 2026-01-04
 All UI styling (React + Swift) is driven from one canonical DTCG token bundle:
 
 - Canonical: `packages/tokens/src/tokens/index.dtcg.json`
-- Generated web: `packages/ui/src/styles/tokens.css`, `packages/ui/src/styles/theme.css`
-- Generated swift: `platforms/apple/swift/ChatUIFoundation/.../Generated/Tokens.swift`
+- Generated web: `packages/ui/src/styles/ui.css`, `packages/ui/src/styles/theme.css` (imports `@astudio/tokens/tokens.css`)
+- Generated swift: `platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/DesignTokens.swift`
 - Token reference (authoritative mapping): `docs/theming/token-reference.md`
 
 ### Drift prevention

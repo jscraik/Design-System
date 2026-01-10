@@ -15,18 +15,18 @@ Last updated: 2026-01-04
   - [Key Findings](#key-findings)
   - [Critical Issues Identified](#critical-issues-identified)
 - [Package Analysis](#package-analysis)
-  - [1. ChatUIFoundation](#1-chatuifoundation)
-  - [2. ChatUIThemes](#2-chatuithemes)
-  - [3. ChatUIComponents](#3-chatuicomponents)
-  - [4. ChatUIShellChatGPT](#4-chatuishellchatgpt)
-  - [5. ChatUIMCP](#5-chatuimcp)
-  - [6. ChatUISystemIntegration](#6-chatuisystemintegration)
-  - [7. ChatUITestSupport](#7-chatuitestsupport)
+  - [1. AStudioFoundation](#1-astudiofoundation)
+  - [2. AStudioThemes](#2-astudiothemes)
+  - [3. AStudioComponents](#3-astudiocomponents)
+  - [4. AStudioShellChatGPT](#4-astudioshellchatgpt)
+  - [5. AStudioMCP](#5-astudiomcp)
+  - [6. AStudioSystemIntegration](#6-astudiosystemintegration)
+  - [7. AStudioTestSupport](#7-astudiotestsupport)
   - [8. ui-swift (Legacy)](#8-ui-swift-legacy)
 - [macOS Apps Analysis](#macos-apps-analysis)
-  - [1. ChatUIApp](#1-chatuiapp)
+  - [1. AStudioApp](#1-astudioapp)
   - [2. ComponentGallery](#2-componentgallery)
-  - [3. ChatUIPlayground](#3-chatuiplayground)
+  - [3. AStudioPlayground](#3-astudioplayground)
 - [Build System Analysis](#build-system-analysis)
   - [Swift Tools Version](#swift-tools-version)
   - [Package Dependencies](#package-dependencies)
@@ -34,8 +34,8 @@ Last updated: 2026-01-04
   - [Asset Catalogs](#asset-catalogs)
   - [Info.plist Files](#infoplist-files)
 - [Code Signing Configuration](#code-signing-configuration)
-  - [ChatUIPlayground (Xcode Project)](#chatuiplayground-xcode-project)
-  - [ChatUIApp](#chatuiapp)
+  - [AStudioPlayground (Xcode Project)](#astudioplayground-xcode-project)
+  - [AStudioApp](#astudioapp)
 - [Platform Support Matrix](#platform-support-matrix)
 - [Build Warnings & Errors](#build-warnings-errors)
   - [Critical Issues (Fix Required)](#critical-issues-fix-required)
@@ -58,7 +58,7 @@ Last updated: 2026-01-04
 
 
 **Generated**: 2026-01-02
-**Repository**: chatui
+**Repository**: astudio
 **Analysis Scope**: All Swift packages and macOS apps
 
 ---
@@ -70,26 +70,26 @@ This repository contains a well-structured modular Swift package architecture fo
 ### Key Findings
 
 - **8 Swift Packages** with modular architecture
-- **3 macOS Apps** (ChatUIApp, ComponentGallery, ChatUIPlayground)
+- **3 macOS Apps** (AStudioApp, ComponentGallery, AStudioPlayground)
 - **121 Swift source files** across all packages
 - **Build System**: Swift Package Manager + Xcode project hybrid
 - **Platform Support**: iOS 15+, macOS 13+, visionOS 1+
 
 ### Critical Issues Identified
 
-1. **Duplicate Package Dependency** in ChatUIPlayground Xcode project
+1. **Duplicate Package Dependency** in AStudioPlayground Xcode project
 2. **Inconsistent Swift Version** (5.0 specified, should be 5.9+)
-3. **Missing Product Declaration** in ChatUIPlayground Package.swift
+3. **Missing Product Declaration** in AStudioPlayground Package.swift
 4. **Platform Version Inconsistency** in ComponentGallery
-5. **Resource Path Issues** in ChatUIApp
+5. **Resource Path Issues** in AStudioApp
 
 ---
 
 ## Package Analysis
 
-### 1. ChatUIFoundation
+### 1. AStudioFoundation
 
-**Location**: `/platforms/apple/swift/ChatUIFoundation/`
+**Location**: `/platforms/apple/swift/AStudioFoundation/`
 **Type**: Library
 **Platforms**: iOS 15.0+, macOS 13.0+, visionOS 1.0+
 **Dependencies**: None (foundation layer)
@@ -98,8 +98,8 @@ This repository contains a well-structured modular Swift package architecture fo
 
 **Configuration**:
 - Swift Tools Version: 5.9
-- Products: 1 library (ChatUIFoundation)
-- Targets: 2 (ChatUIFoundation, ChatUIFoundationTests)
+- Products: 1 library (AStudioFoundation)
+- Targets: 2 (AStudioFoundation, AStudioFoundationTests)
 - Resources: Asset Catalog (Colors.xcassets)
 
 **Strengths**:
@@ -112,20 +112,20 @@ This repository contains a well-structured modular Swift package architecture fo
 
 ---
 
-### 2. ChatUIThemes
+### 2. AStudioThemes
 
-**Location**: `/platforms/apple/swift/ChatUIThemes/`
+**Location**: `/platforms/apple/swift/AStudioThemes/`
 **Type**: Library
 **Platforms**: iOS 15.0+, macOS 13.0+, visionOS 1.0+
-**Dependencies**: ChatUIFoundation (local)
+**Dependencies**: AStudioFoundation (local)
 
 **Status**: ✅ Healthy
 
 **Configuration**:
 - Swift Tools Version: 5.9
-- Products: 1 library (ChatUIThemes)
-- Targets: 2 (ChatUIThemes, ChatUIThemesTests)
-- Local package reference: `../ChatUIFoundation`
+- Products: 1 library (AStudioThemes)
+- Targets: 2 (AStudioThemes, AStudioThemesTests)
+- Local package reference: `../AStudioFoundation`
 
 **Strengths**:
 - Proper dependency chain
@@ -136,19 +136,19 @@ This repository contains a well-structured modular Swift package architecture fo
 
 ---
 
-### 3. ChatUIComponents
+### 3. AStudioComponents
 
-**Location**: `/platforms/apple/swift/ChatUIComponents/`
+**Location**: `/platforms/apple/swift/AStudioComponents/`
 **Type**: Library
 **Platforms**: iOS 15.0+, macOS 13.0+, visionOS 1.0+
-**Dependencies**: ChatUIFoundation, ChatUIThemes, ChatUITestSupport, SwiftCheck (remote)
+**Dependencies**: AStudioFoundation, AStudioThemes, AStudioTestSupport, SwiftCheck (remote)
 
 **Status**: ✅ Healthy
 
 **Configuration**:
 - Swift Tools Version: 5.9
-- Products: 1 library (ChatUIComponents)
-- Targets: 2 (ChatUIComponents, ChatUIComponentsTests)
+- Products: 1 library (AStudioComponents)
+- Targets: 2 (AStudioComponents, AStudioComponentsTests)
 - External Dependencies:
   - SwiftCheck 0.13.1 (property-based testing)
 
@@ -167,19 +167,19 @@ This repository contains a well-structured modular Swift package architecture fo
 
 ---
 
-### 4. ChatUIShellChatGPT
+### 4. AStudioShellChatGPT
 
-**Location**: `/platforms/apple/swift/ChatUIShellChatGPT/`
+**Location**: `/platforms/apple/swift/AStudioShellChatGPT/`
 **Type**: Library
 **Platforms**: iOS 15.0+, macOS 13.0+, visionOS 1.0+
-**Dependencies**: ChatUIFoundation, ChatUIComponents, ChatUIThemes, ChatUITestSupport
+**Dependencies**: AStudioFoundation, AStudioComponents, AStudioThemes, AStudioTestSupport
 
 **Status**: ✅ Healthy
 
 **Configuration**:
 - Swift Tools Version: 5.9
-- Products: 1 library (ChatUIShellChatGPT)
-- Targets: 2 (ChatUIShellChatGPT, ChatUIShellChatGPTTests)
+- Products: 1 library (AStudioShellChatGPT)
+- Targets: 2 (AStudioShellChatGPT, AStudioShellChatGPTTests)
 - Provides: Application shell layouts
 
 **Strengths**:
@@ -191,19 +191,19 @@ This repository contains a well-structured modular Swift package architecture fo
 
 ---
 
-### 5. ChatUIMCP
+### 5. AStudioMCP
 
-**Location**: `/platforms/apple/swift/ChatUIMCP/`
+**Location**: `/platforms/apple/swift/AStudioMCP/`
 **Type**: Library
 **Platforms**: macOS 13.0+, iOS 15.0+ (no visionOS)
-**Dependencies**: ChatUIFoundation, ChatUIComponents
+**Dependencies**: AStudioFoundation, AStudioComponents
 
 **Status**: ✅ Healthy
 
 **Configuration**:
 - Swift Tools Version: 5.9
-- Products: 1 library (ChatUIMCP)
-- Targets: 2 (ChatUIMCP, ChatUIMCPTests)
+- Products: 1 library (AStudioMCP)
+- Targets: 2 (AStudioMCP, AStudioMCPTests)
 
 **Observations**:
 - Missing visionOS support (unlike other packages)
@@ -213,9 +213,9 @@ This repository contains a well-structured modular Swift package architecture fo
 
 ---
 
-### 6. ChatUISystemIntegration
+### 6. AStudioSystemIntegration
 
-**Location**: `/platforms/apple/swift/ChatUISystemIntegration/`
+**Location**: `/platforms/apple/swift/AStudioSystemIntegration/`
 **Type**: Library
 **Platforms**: macOS 13.0+, iOS 15.0+ (no visionOS)
 **Dependencies**: None
@@ -224,8 +224,8 @@ This repository contains a well-structured modular Swift package architecture fo
 
 **Configuration**:
 - Swift Tools Version: 5.9
-- Products: 1 library (ChatUISystemIntegration)
-- Targets: 2 (ChatUISystemIntegration, ChatUISystemIntegrationTests)
+- Products: 1 library (AStudioSystemIntegration)
+- Targets: 2 (AStudioSystemIntegration, AStudioSystemIntegrationTests)
 - Provides: System-level integration (filesystem, notifications, sharing, spotlight)
 
 **Strengths**:
@@ -236,19 +236,19 @@ This repository contains a well-structured modular Swift package architecture fo
 
 ---
 
-### 7. ChatUITestSupport
+### 7. AStudioTestSupport
 
-**Location**: `/platforms/apple/swift/ChatUITestSupport/`
+**Location**: `/platforms/apple/swift/AStudioTestSupport/`
 **Type**: Library
 **Platforms**: iOS 15.0+, macOS 13.0+, visionOS 1.0+
-**Dependencies**: ChatUIThemes, swift-snapshot-testing (remote)
+**Dependencies**: AStudioThemes, swift-snapshot-testing (remote)
 
 **Status**: ✅ Healthy
 
 **Configuration**:
 - Swift Tools Version: 5.9
-- Products: 1 library (ChatUITestSupport)
-- Targets: 1 (ChatUITestSupport - no tests)
+- Products: 1 library (AStudioTestSupport)
+- Targets: 1 (AStudioTestSupport - no tests)
 - External Dependencies:
   - swift-snapshot-testing 1.18.7
 
@@ -271,8 +271,8 @@ This repository contains a well-structured modular Swift package architecture fo
 
 **Configuration**:
 - Swift Tools Version: 5.9
-- Products: 1 library (ChatUISwift)
-- Targets: 2 (ChatUISwift, ChatUISwiftTests)
+- Products: 1 library (AStudioSwift)
+- Targets: 2 (AStudioSwift, AStudioSwiftTests)
 
 **Observations**:
 - This is the monolithic package that was refactored
@@ -285,9 +285,9 @@ This repository contains a well-structured modular Swift package architecture fo
 
 ## macOS Apps Analysis
 
-### 1. ChatUIApp
+### 1. AStudioApp
 
-**Location**: `/platforms/apple/apps/macos/ChatUIApp/`
+**Location**: `/platforms/apple/apps/macos/AStudioApp/`
 **Type**: Executable
 **Platforms**: macOS 13.0+
 **Build System**: Swift Package Manager only
@@ -295,17 +295,17 @@ This repository contains a well-structured modular Swift package architecture fo
 **Status**: ⚠️ Configuration Issues
 
 **Dependencies**:
-- ChatUIFoundation
-- ChatUIComponents
-- ChatUIThemes
-- ChatUIShellChatGPT
-- ChatUIMCP
-- ChatUISystemIntegration
+- AStudioFoundation
+- AStudioComponents
+- AStudioThemes
+- AStudioShellChatGPT
+- AStudioMCP
+- AStudioSystemIntegration
 
 **Configuration**:
 - Swift Tools Version: 5.9
-- Products: 1 executable (ChatUIApp)
-- Targets: 2 (ChatUIApp, ChatUIAppTests)
+- Products: 1 executable (AStudioApp)
+- Targets: 2 (AStudioApp, AStudioAppTests)
 - Resources: Assets.xcassets
 
 **Issues Identified**:
@@ -316,7 +316,7 @@ This repository contains a well-structured modular Swift package architecture fo
    - Resources should be in: `Sources/Resources/Assets.xcassets`
 
 2. **Entitlements File Present**:
-   - Located at: `/Bundle/ChatUIApp.entitlements`
+   - Located at: `/Bundle/AStudioApp.entitlements`
    - Not referenced in Package.swift (SPM doesn't support entitlements directly)
    - Requires Xcode project for proper code signing
 
@@ -339,10 +339,10 @@ This repository contains a well-structured modular Swift package architecture fo
 **Status**: ⚠️ Platform Inconsistency
 
 **Dependencies**:
-- ChatUIFoundation
-- ChatUIComponents
-- ChatUIThemes
-- ChatUIShellChatGPT
+- AStudioFoundation
+- AStudioComponents
+- AStudioThemes
+- AStudioShellChatGPT
 
 **Configuration**:
 - Swift Tools Version: 5.9
@@ -362,9 +362,9 @@ This repository contains a well-structured modular Swift package architecture fo
 
 ---
 
-### 3. ChatUIPlayground
+### 3. AStudioPlayground
 
-**Location**: `/platforms/apple/apps/macos/ChatUIPlayground/`
+**Location**: `/platforms/apple/apps/macos/AStudioPlayground/`
 **Type**: Executable + Xcode Project
 **Platforms**: macOS 13.0+
 **Build System**: Swift Package Manager + Xcode Project
@@ -375,17 +375,17 @@ This repository contains a well-structured modular Swift package architecture fo
 
 **Development Team**: W46TZZ5CWC
 **Bundle Identifiers**:
-- Main app: `jscraik.ChatUIPlayground`
-- Tests: `jscraik.ChatUIPlaygroundTests`
-- UI Tests: `jscraik.ChatUIPlaygroundUITests`
+- Main app: `jscraik.AStudioPlayground`
+- Tests: `jscraik.AStudioPlaygroundTests`
+- UI Tests: `jscraik.AStudioPlaygroundUITests`
 
 **Issues Identified**:
 
 1. **CRITICAL: Duplicate Package Dependency**:
    ```
-   ChatUIComponents appears TWICE in the Xcode project:
-   - 746E70382F01E6E1003EEE5D /* ChatUIComponents */
-   - 746E70452F01EC46003EEE5D /* ChatUIComponents */
+   AStudioComponents appears TWICE in the Xcode project:
+   - 746E70382F01E6E1003EEE5D /* AStudioComponents */
+   - 746E70452F01EC46003EEE5D /* AStudioComponents */
    ```
    **Impact**: Causes linker warnings and potential build issues
    **Fix Required**: Remove duplicate package reference
@@ -412,7 +412,7 @@ This repository contains a well-structured modular Swift package architecture fo
 5. **Missing Entitlements File**:
    - App has sandbox and hardened runtime enabled
    - No entitlements file found
-   - **Fix Required**: Create ChatUIPlayground.entitlements
+   - **Fix Required**: Create AStudioPlayground.entitlements
 
 **Package.swift Issues**:
 
@@ -425,8 +425,8 @@ products: [
 // Should be:
 products: [
     .executable(
-        name: "ChatUIPlayground",
-        targets: ["ChatUIPlayground"]
+        name: "AStudioPlayground",
+        targets: ["AStudioPlayground"]
     )
 ]
 ```
@@ -462,22 +462,22 @@ products: [
 
 ### Asset Catalogs
 
-1. **ChatUIFoundation**: `/Sources/ChatUIFoundation/Resources/Colors.xcassets`
+1. **AStudioFoundation**: `/Sources/AStudioFoundation/Resources/Colors.xcassets`
    - ✅ Properly configured
    - ✅ Supports light/dark mode
    - ✅ Semantic color tokens
 
-2. **ChatUIApp**: `/Sources/Resources/Assets.xcassets`
+2. **AStudioApp**: `/Sources/Resources/Assets.xcassets`
    - ⚠️ Path issue (see above)
    - Resources not properly bundled
 
-3. **ChatUIPlayground**: `/ChatUIPlayground/Assets.xcassets`
+3. **AStudioPlayground**: `/AStudioPlayground/Assets.xcassets`
    - ✅ Properly configured in Xcode project
 
 ### Info.plist Files
 
-- **ChatUIApp**: Has Info.plist but not integrated
-- **ChatUIPlayground**: Generated automatically
+- **AStudioApp**: Has Info.plist but not integrated
+- **AStudioPlayground**: Generated automatically
 - **ComponentGallery**: Generated automatically
 
 **Recommendation**: Use Xcode projects for apps requiring custom Info.plist
@@ -486,7 +486,7 @@ products: [
 
 ## Code Signing Configuration
 
-### ChatUIPlayground (Xcode Project)
+### AStudioPlayground (Xcode Project)
 
 **Development Team**: W46TZZ5CWC
 **Code Signing Style**: Automatic
@@ -498,9 +498,9 @@ products: [
 
 **Status**: ✅ Properly configured
 
-### ChatUIApp
+### AStudioApp
 
-**Entitlements**: `/Bundle/ChatUIApp.entitlements`
+**Entitlements**: `/Bundle/AStudioApp.entitlements`
 - App Sandbox: ✅
 - Network Client: ✅
 - User-Selected Files: ✅
@@ -514,13 +514,13 @@ products: [
 
 | Package | iOS | macOS | visionOS | Notes |
 |---------|-----|-------|----------|-------|
-| ChatUIFoundation | 15.0+ | 13.0+ | 1.0+ | ✅ Complete |
-| ChatUIThemes | 15.0+ | 13.0+ | 1.0+ | ✅ Complete |
-| ChatUIComponents | 15.0+ | 13.0+ | 1.0+ | ✅ Complete |
-| ChatUIShellChatGPT | 15.0+ | 13.0+ | 1.0+ | ✅ Complete |
-| ChatUITestSupport | 15.0+ | 13.0+ | 1.0+ | ✅ Complete |
-| ChatUIMCP | 15.0+ | 13.0+ | ❌ | ⚠️ No visionOS |
-| ChatUISystemIntegration | 15.0+ | 13.0+ | ❌ | ⚠️ No visionOS |
+| AStudioFoundation | 15.0+ | 13.0+ | 1.0+ | ✅ Complete |
+| AStudioThemes | 15.0+ | 13.0+ | 1.0+ | ✅ Complete |
+| AStudioComponents | 15.0+ | 13.0+ | 1.0+ | ✅ Complete |
+| AStudioShellChatGPT | 15.0+ | 13.0+ | 1.0+ | ✅ Complete |
+| AStudioTestSupport | 15.0+ | 13.0+ | 1.0+ | ✅ Complete |
+| AStudioMCP | 15.0+ | 13.0+ | ❌ | ⚠️ No visionOS |
+| AStudioSystemIntegration | 15.0+ | 13.0+ | ❌ | ⚠️ No visionOS |
 | ui-swift | ❌ | 13.0+ | ❌ | Legacy macOS only |
 
 ---
@@ -529,22 +529,22 @@ products: [
 
 ### Critical Issues (Fix Required)
 
-1. **ChatUIPlayground Xcode Project**: Duplicate ChatUIComponents dependency
-2. **ChatUIPlayground Package.swift**: Missing product declaration
-3. **ChatUIPlayground Xcode Project**: Outdated Swift version (5.0 vs 5.9)
-4. **ChatUIApp**: Resource path mismatch in Package.swift
+1. **AStudioPlayground Xcode Project**: Duplicate AStudioComponents dependency
+2. **AStudioPlayground Package.swift**: Missing product declaration
+3. **AStudioPlayground Xcode Project**: Outdated Swift version (5.0 vs 5.9)
+4. **AStudioApp**: Resource path mismatch in Package.swift
 
 ### Medium Issues (Should Fix)
 
 1. **ComponentGallery**: Inconsistent iOS minimum version (16.0 vs 15.0)
-2. **ChatUIApp**: No Xcode project for entitlements/Info.plist
-3. **ChatUIPlayground**: Missing entitlements file
+2. **AStudioApp**: No Xcode project for entitlements/Info.plist
+3. **AStudioPlayground**: Missing entitlements file
 
 ### Low Priority (Nice to Have)
 
 1. **All projects**: Consider Swift 6.0 language mode
-2. **ChatUIMCP**: Add visionOS support for consistency
-3. **ChatUISystemIntegration**: Add visionOS support
+2. **AStudioMCP**: Add visionOS support for consistency
+3. **AStudioSystemIntegration**: Add visionOS support
 
 ---
 
@@ -552,27 +552,27 @@ products: [
 
 ### Immediate Actions (Required)
 
-1. **Fix ChatUIPlayground Package.swift**:
+1. **Fix AStudioPlayground Package.swift**:
    ```swift
    products: [
        .executable(
-           name: "ChatUIPlayground",
-           targets: ["ChatUIPlayground"]
+           name: "AStudioPlayground",
+           targets: ["AStudioPlayground"]
        )
    ]
    ```
 
-2. **Remove Duplicate ChatUIComponents** from ChatUIPlayground Xcode project
+2. **Remove Duplicate AStudioComponents** from AStudioPlayground Xcode project
 
-3. **Update Swift Version** in ChatUIPlayground Xcode project to 5.9 or 6.0
+3. **Update Swift Version** in AStudioPlayground Xcode project to 5.9 or 6.0
 
-4. **Fix ChatUIApp Resource Path**:
+4. **Fix AStudioApp Resource Path**:
    - Move resources to proper location OR
    - Update Package.swift resource path
 
 ### Short-term Improvements
 
-1. **Create Xcode Projects** for ChatUIApp and ComponentGallery
+1. **Create Xcode Projects** for AStudioApp and ComponentGallery
    - Enables proper entitlements support
    - Enables custom Info.plist
    - Better code signing control
@@ -580,7 +580,7 @@ products: [
 2. **Standardize Platform Versions**:
    - Align all packages to iOS 15.0+, macOS 13.0+, visionOS 1.0+
 
-3. **Add Entitlements** to ChatUIPlayground:
+3. **Add Entitlements** to AStudioPlayground:
    ```xml
    <?xml version="1.0" encoding="UTF-8"?>
    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -597,7 +597,7 @@ products: [
 ### Long-term Considerations
 
 1. **Swift 6 Migration**: Adopt Swift 6 language mode for concurrency safety
-2. **visionOS Support**: Add visionOS to ChatUIMCP and ChatUISystemIntegration
+2. **visionOS Support**: Add visionOS to AStudioMCP and AStudioSystemIntegration
 3. **Package Registry**: Consider publishing packages to Swift Package Index
 4. **CI/CD Integration**: Add automated build verification for all packages
 
@@ -606,49 +606,49 @@ products: [
 ## Dependency Graph
 
 ```
-ChatUITestSupport
+AStudioTestSupport
     └── swift-snapshot-testing (external)
-    └── ChatUIThemes
+    └── AStudioThemes
 
-ChatUIFoundation (no dependencies)
+AStudioFoundation (no dependencies)
     ├── Resources: Colors.xcassets
 
-ChatUIThemes
-    └── ChatUIFoundation
+AStudioThemes
+    └── AStudioFoundation
 
-ChatUIComponents
-    ├── ChatUIFoundation
-    ├── ChatUIThemes
-    ├── ChatUITestSupport
+AStudioComponents
+    ├── AStudioFoundation
+    ├── AStudioThemes
+    ├── AStudioTestSupport
     └── SwiftCheck (external)
 
-ChatUIShellChatGPT
-    ├── ChatUIFoundation
-    ├── ChatUIComponents
-    ├── ChatUIThemes
-    └── ChatUITestSupport
+AStudioShellChatGPT
+    ├── AStudioFoundation
+    ├── AStudioComponents
+    ├── AStudioThemes
+    └── AStudioTestSupport
 
-ChatUIMCP
-    ├── ChatUIFoundation
-    └── ChatUIComponents
+AStudioMCP
+    ├── AStudioFoundation
+    └── AStudioComponents
 
-ChatUISystemIntegration (no dependencies)
+AStudioSystemIntegration (no dependencies)
 
 Apps:
-ChatUIApp
+AStudioApp
     ├── All packages above
 
 ComponentGallery
-    ├── ChatUIFoundation
-    ├── ChatUIComponents
-    ├── ChatUIThemes
-    └── ChatUIShellChatGPT
+    ├── AStudioFoundation
+    ├── AStudioComponents
+    ├── AStudioThemes
+    └── AStudioShellChatGPT
 
-ChatUIPlayground
-    ├── ChatUIFoundation
-    ├── ChatUIComponents (DUPLICATE)
-    ├── ChatUIThemes
-    └── ChatUIShellChatGPT
+AStudioPlayground
+    ├── AStudioFoundation
+    ├── AStudioComponents (DUPLICATE)
+    ├── AStudioThemes
+    └── AStudioShellChatGPT
 ```
 
 ---
@@ -657,12 +657,12 @@ ChatUIPlayground
 
 ### Test Targets
 
-- ChatUIFoundationTests ✅
-- ChatUIThemesTests ✅
-- ChatUIComponentsTests ✅ (with SwiftCheck property testing)
-- ChatUIShellChatGPTTests ✅ (with snapshot testing)
-- ChatUIMCPTests ✅
-- ChatUISystemIntegrationTests ✅
+- AStudioFoundationTests ✅
+- AStudioThemesTests ✅
+- AStudioComponentsTests ✅ (with SwiftCheck property testing)
+- AStudioShellChatGPTTests ✅ (with snapshot testing)
+- AStudioMCPTests ✅
+- AStudioSystemIntegrationTests ✅
 
 ### Test Coverage
 
@@ -678,12 +678,12 @@ ChatUIPlayground
 
 ```bash
 # Build all packages
-cd /Users/jamiecraik/chatui/platforms/apple/swift/ChatUIFoundation && swift build
-cd ../ChatUIThemes && swift build
-cd ../ChatUIComponents && swift build
-cd ../ChatUIShellChatGPT && swift build
-cd ../ChatUIMCP && swift build
-cd ../ChatUISystemIntegration && swift build
+cd /Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioFoundation && swift build
+cd ../AStudioThemes && swift build
+cd ../AStudioComponents && swift build
+cd ../AStudioShellChatGPT && swift build
+cd ../AStudioMCP && swift build
+cd ../AStudioSystemIntegration && swift build
 cd ../ui-swift && swift build
 ```
 
@@ -691,12 +691,12 @@ cd ../ui-swift && swift build
 
 ```bash
 # Run tests for each package
-cd /Users/jamiecraik/chatui/platforms/apple/swift/ChatUIFoundation && swift test
-cd ../ChatUIThemes && swift test
-cd ../ChatUIComponents && swift test
-cd ../ChatUIShellChatGPT && swift test
-cd ../ChatUIMCP && swift test
-cd ../ChatUISystemIntegration && swift test
+cd /Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioFoundation && swift test
+cd ../AStudioThemes && swift test
+cd ../AStudioComponents && swift test
+cd ../AStudioShellChatGPT && swift test
+cd ../AStudioMCP && swift test
+cd ../AStudioSystemIntegration && swift test
 cd ../ui-swift && swift test
 ```
 
@@ -704,20 +704,20 @@ cd ../ui-swift && swift test
 
 ```bash
 # Build SPM apps
-cd /Users/jamiecraik/chatui/platforms/apple/apps/macos/ChatUIApp && swift build
+cd /Users/jamiecraik/dev/aStudio/platforms/apple/apps/macos/AStudioApp && swift build
 cd ../ComponentGallery && swift build
-cd ../ChatUIPlayground && swift build
+cd ../AStudioPlayground && swift build
 
 # Build Xcode project
-cd /Users/jamiecraik/chatui/platforms/apple/apps/macos/ChatUIPlayground
-xcodebuild -project ChatUIPlayground.xcodeproj -scheme ChatUIPlayground -configuration Debug build
+cd /Users/jamiecraik/dev/aStudio/platforms/apple/apps/macos/AStudioPlayground
+xcodebuild -project AStudioPlayground.xcodeproj -scheme AStudioPlayground -configuration Debug build
 ```
 
 ---
 
 ## Conclusion
 
-The ChatUI Swift package architecture is **well-designed** with clear separation of concerns and proper modularization. The build system is mostly healthy with only a few configuration issues that need attention:
+The aStudio Swift package architecture is **well-designed** with clear separation of concerns and proper modularization. The build system is mostly healthy with only a few configuration issues that need attention:
 
 ### Overall Health Score: **7.5/10**
 
@@ -730,10 +730,10 @@ The ChatUI Swift package architecture is **well-designed** with clear separation
 - ✅ Semantic token system
 
 **Areas for Improvement**:
-- 🔧 Fix duplicate package dependency in ChatUIPlayground
-- 🔧 Fix missing product declaration in ChatUIPlayground
+- 🔧 Fix duplicate package dependency in AStudioPlayground
+- 🔧 Fix missing product declaration in AStudioPlayground
 - 🔧 Update Swift version consistency
-- 🔧 Fix resource paths in ChatUIApp
+- 🔧 Fix resource paths in AStudioApp
 - 🔧 Standardize platform versions
 
 Once the critical issues are addressed, this will be a **production-ready** Swift package ecosystem for iOS, macOS, and visionOS development.

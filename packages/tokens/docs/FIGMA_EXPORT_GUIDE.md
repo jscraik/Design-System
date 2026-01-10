@@ -1,6 +1,6 @@
 # Design Tokens for Figma Export
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Developers (beginner to intermediate)
@@ -111,7 +111,7 @@ type.{web|ios|android}.{heading1|heading2|heading3|body|bodySmall|caption}.{size
 If you update the DTCG JSON file, regenerate the TypeScript and CSS files:
 
 ```bash
-pnpm --filter @chatui/tokens generate
+pnpm --filter @astudio/tokens generate
 ```
 
 This will:

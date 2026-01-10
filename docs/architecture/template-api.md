@@ -1,6 +1,6 @@
 # Template / Block API (Internal)
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Engineers and technical leads
@@ -31,7 +31,7 @@ This document defines the internal API for templates and blocks across React, wi
 
 ## React API (templates + blocks)
 
-**Exports:** `@chatui/ui/templates`
+**Exports:** `@astudio/ui/templates`
 
 ### Templates
 
@@ -39,7 +39,7 @@ This document defines the internal API for templates and blocks across React, wi
 - Access:
 
 ```tsx
-import { templateRegistry, getTemplate, ChatTemplate } from "@chatui/ui/templates";
+import { templateRegistry, getTemplate, ChatTemplate } from "@astudio/ui/templates";
 
 const template = getTemplate("chat");
 return template ? <template.Component /> : null;
@@ -51,7 +51,7 @@ return template ? <template.Component /> : null;
 - Access:
 
 ```tsx
-import { blockRegistry, getBlock, ChatHeaderBlock } from "@chatui/ui/templates";
+import { blockRegistry, getBlock, ChatHeaderBlock } from "@astudio/ui/templates";
 
 const block = getBlock("chat-header");
 return block ? <block.Component /> : null;
@@ -71,7 +71,7 @@ return block ? <block.Component /> : null;
 
 ## SwiftUI API (templates + blocks)
 
-**Location:** `platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/Templates`
+**Location:** `platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/Templates`
 
 ### Templates
 
@@ -100,17 +100,17 @@ template?.makeView()
 
 ### Blocks
 
-- Blocks are exposed as `*BlockView` (e.g., `ChatHeaderBlockView`).
+- Blocks are exposed as `*BlockView` (for example, `ChatHeaderBlockView`).
 - Use blocks directly inside template views to build compositions.
 
 ## Widgets (template-backed)
 
 **Location:** `packages/widgets/src/widgets/**/<widget-id>`
 
-Each widget renders a React template from `@chatui/ui/templates`:
+Each widget renders a React template from `@astudio/ui/templates`:
 
 ```tsx
-import { ChatTemplate } from "@chatui/ui/templates";
+import { ChatTemplate } from "@astudio/ui/templates";
 
 root.render(<ChatTemplate />);
 ```

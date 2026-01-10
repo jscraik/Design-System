@@ -18,21 +18,21 @@ Last updated: 2026-01-04
 
 ## 🏗️ What Was Built
 
-### 1. ChatUISwift Package (`platforms/apple/swift/ui-swift/`)
+### 1. AStudioSwift Package (`platforms/apple/swift/ui-swift/`)
 
 **Package Structure:**
 
 ```
 platforms/apple/swift/ui-swift/
 ├── Package.swift                     # Swift Package Manager manifest
-├── Sources/ChatUISwift/              # Source code
+├── Sources/AStudioSwift/              # Source code
 │   ├── DesignTokens.swift           # Design token constants matching React tokens
 │   ├── Components/                   # SwiftUI components
 │   │   ├── ChatUIButton.swift       # Button component with variants & sizes
 │   │   ├── ChatUIInput.swift        # Input component with native behaviors
 │   │   └── ChatUICard.swift         # Card container component
-│   └── ChatUISwift.swift            # Main module file
-├── Tests/ChatUISwiftTests/           # Unit tests
+│   └── AStudioSwift.swift            # Main module file
+├── Tests/AStudioSwiftTests/           # Unit tests
 ├── README.md                         # Comprehensive documentation
 ├── build.sh                          # Development script
 └── verify.swift                      # Structure verification script
@@ -47,15 +47,15 @@ platforms/apple/swift/ui-swift/
 - ✅ Comprehensive SwiftUI previews
 - ✅ Proper Swift Package Manager structure
 
-### 2. ChatUIPlayground App (`platforms/apple/apps/macos/ChatUIPlayground/`)
+### 2. AStudioPlayground App (`platforms/apple/apps/macos/AStudioPlayground/`)
 
 **App Structure:**
 
 ```
-platforms/apple/apps/macos/ChatUIPlayground/
-├── ChatUIPlayground.xcodeproj/       # Xcode project
-└── ChatUIPlayground/                 # App source
-    ├── ChatUIPlaygroundApp.swift    # App entry point
+platforms/apple/apps/macos/AStudioPlayground/
+├── AStudioPlayground.xcodeproj/       # Xcode project
+└── AStudioPlayground/                 # App source
+    ├── AStudioPlaygroundApp.swift    # App entry point
     ├── ContentView.swift             # Main navigation view
     ├── ComponentGallery.swift        # Interactive component examples
     ├── PreviewScenarios.swift        # Preview helper utilities
@@ -171,7 +171,7 @@ Due to SwiftUI preview limitations with Swift Package Manager executables, the p
 1. **Follow Setup Guide**: See `platforms/apple/apps/macos/SETUP_GUIDE.md` for detailed instructions
 2. **Create Xcode Project**: Use Xcode to create a new macOS SwiftUI app
 3. **Add Local Package**: Reference `../../../platforms/apple/swift/ui-swift` as a local package dependency
-4. **Copy Source Files**: Use the provided source files in `platforms/apple/apps/macos/ChatUIPlayground/Sources/`
+4. **Copy Source Files**: Use the provided source files in `platforms/apple/apps/macos/AStudioPlayground/Sources/`
 
 **Once Set Up:**
 
@@ -183,7 +183,7 @@ Due to SwiftUI preview limitations with Swift Package Manager executables, the p
 
 - Swift package can be added to any Xcode project
 - Local package reference: `../../../platforms/apple/swift/ui-swift`
-- Import with: `import ChatUISwift`
+- Import with: `import AStudioSwift`
 - All components and design tokens are public APIs
 
 ## 📋 Phase 1 Foundation Complete

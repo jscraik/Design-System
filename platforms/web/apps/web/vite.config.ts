@@ -22,39 +22,39 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes("@chatui/ui")) {
+          if (id.includes("@astudio/ui")) {
             if (id.includes("/dist/")) {
-              if (id.includes("/chat.")) return "chatui-chat";
+              if (id.includes("/chat.")) return "astudio-chat";
               if (
                 id.includes("/settings.") ||
                 id.includes("/account-") ||
                 id.includes("/SettingRow-") ||
                 id.includes("/DiscoverySettingsModal")
               ) {
-                return "chatui-settings";
+                return "astudio-settings";
               }
               if (id.includes("/forms.") || id.includes("/form-") || id.includes("/range-slider")) {
-                return "chatui-forms";
+                return "astudio-forms";
               }
               if (id.includes("/layout.") || id.includes("/tabs-")) {
-                return "chatui-navigation";
+                return "astudio-navigation";
               }
               if (id.includes("/progress-") || id.includes("/chart-")) {
-                return "chatui-data";
+                return "astudio-data";
               }
               if (id.includes("/button-") || id.includes("/icon-button") || id.includes("/card-")) {
-                return "chatui-base";
+                return "astudio-base";
               }
-              if (id.includes("/utils-")) return "chatui-utils";
-              if (id.includes("/templates.")) return "chatui-templates";
-              if (id.includes("/showcase.")) return "chatui-showcase";
-              if (id.includes("/dev.")) return "chatui-dev";
-              return "chatui-core";
+              if (id.includes("/utils-")) return "astudio-utils";
+              if (id.includes("/templates.")) return "astudio-templates";
+              if (id.includes("/showcase.")) return "astudio-showcase";
+              if (id.includes("/dev.")) return "astudio-dev";
+              return "astudio-core";
             }
-            return "chatui-core";
+            return "astudio-core";
           }
-          if (id.includes("@chatui/tokens") || id.includes("/packages/tokens/")) {
-            return "chatui-tokens";
+          if (id.includes("@astudio/tokens") || id.includes("/packages/tokens/")) {
+            return "astudio-tokens";
           }
           if (id.includes("node_modules")) {
             if (id.includes("react-dom") || id.includes("react")) {
@@ -75,32 +75,32 @@ export default defineConfig({
             return "vendor";
           }
           if (id.includes("/packages/ui/dist/")) {
-            if (id.includes("/chat.")) return "chatui-chat";
+            if (id.includes("/chat.")) return "astudio-chat";
             if (
               id.includes("/settings.") ||
               id.includes("/account-") ||
               id.includes("/SettingRow-") ||
               id.includes("/DiscoverySettingsModal")
             ) {
-              return "chatui-settings";
+              return "astudio-settings";
             }
             if (id.includes("/forms.") || id.includes("/form-") || id.includes("/range-slider")) {
-              return "chatui-forms";
+              return "astudio-forms";
             }
             if (id.includes("/layout.") || id.includes("/tabs-")) {
-              return "chatui-navigation";
+              return "astudio-navigation";
             }
             if (id.includes("/progress-") || id.includes("/chart-")) {
-              return "chatui-data";
+              return "astudio-data";
             }
             if (id.includes("/button-") || id.includes("/icon-button") || id.includes("/card-")) {
-              return "chatui-base";
+              return "astudio-base";
             }
-            if (id.includes("/utils-")) return "chatui-utils";
-            if (id.includes("/templates.")) return "chatui-templates";
-            if (id.includes("/showcase.")) return "chatui-showcase";
-            if (id.includes("/dev.")) return "chatui-dev";
-            return "chatui-core";
+            if (id.includes("/utils-")) return "astudio-utils";
+            if (id.includes("/templates.")) return "astudio-templates";
+            if (id.includes("/showcase.")) return "astudio-showcase";
+            if (id.includes("/dev.")) return "astudio-dev";
+            return "astudio-core";
           }
           return undefined;
         },

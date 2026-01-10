@@ -1,4 +1,4 @@
-import { AppsSDKBadge, AppsSDKButton, AppsSDKImage } from "@chatui/ui";
+import { AppsSDKBadge, AppsSDKButton, AppsSDKImage } from "@astudio/ui";
 
 import type { Album } from "../../../shared/data-types";
 

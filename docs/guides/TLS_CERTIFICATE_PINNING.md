@@ -60,7 +60,7 @@ Last updated: 2026-01-04
 
 ## Overview
 
-TLS certificate pinning is a security technique that ensures your Swift application communicates only with servers presenting trusted certificates. The `ChatUIMCP` library provides comprehensive certificate pinning support for MCP client connections.
+TLS certificate pinning is a security technique that ensures your Swift application communicates only with servers presenting trusted certificates. The `AStudioMCP` library provides comprehensive certificate pinning support for MCP client connections.
 
 ## What is Certificate Pinning?
 
@@ -76,10 +76,10 @@ This implementation uses **SPKI (Subject Public Key Info) pinning**, which is re
 
 ## Installation
 
-The certificate pinning functionality is included in `ChatUIMCP`:
+The certificate pinning functionality is included in `AStudioMCP`:
 
 ```swift
-import ChatUIMCP
+import AStudioMCP
 ```
 
 ## Basic Usage
@@ -87,7 +87,7 @@ import ChatUIMCP
 ### Production Mode (Strict)
 
 ```swift
-import ChatUIMCP
+import AStudioMCP
 
 // Pin your production certificates
 let pinnedHashes = [

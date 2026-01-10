@@ -16,7 +16,7 @@
     {
       "name": "SwiftLint Configuration",
       "status": "created",
-      "location": "/Users/jamiecraik/chatui/.swiftlint.yml",
+      "location": "/Users/jamiecraik/dev/aStudio/.swiftlint.yml",
       "file_created": true,
       "rules_configured": 15,
       "custom_security_rules": 11,
@@ -25,7 +25,7 @@
     {
       "name": "SwiftLint Package Configuration",
       "status": "created",
-      "location": "/Users/jamiecraik/chatui/platforms/apple/swift/.swiftlint.yml",
+      "location": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/.swiftlint.yml",
       "file_created": true,
       "extends_root_config": true,
       "package_specific_rules": 4,
@@ -34,7 +34,7 @@
     {
       "name": "CodeQL Configuration",
       "status": "created",
-      "location": "/Users/jamiecraik/chatui/.github/codeql-config.yml",
+      "location": "/Users/jamiecraik/dev/aStudio/.github/codeql-config.yml",
       "file_created": true,
       "query_suites_configured": 2,
       "security_checks_enabled": 9,
@@ -43,7 +43,7 @@
     {
       "name": "GitHub Actions Security Workflow",
       "status": "created",
-      "location": "/Users/jamiecraik/chatui/.github/workflows/swift-security.yml",
+      "location": "/Users/jamiecraik/dev/aStudio/.github/workflows/swift-security.yml",
       "file_created": true,
       "jobs_configured": 5,
       "security_gates_enabled": true,
@@ -52,7 +52,7 @@
     {
       "name": "Security Test Suite",
       "status": "created",
-      "location": "/Users/jamiecraik/chatui/platforms/apple/swift/SecurityTests/",
+      "location": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/SecurityTests/",
       "files_created": 4,
       "test_cases": 35,
       "coverage_threshold": 80,
@@ -64,13 +64,13 @@
       "files": [
         {
           "name": "Security Testing Guide",
-          "location": "/Users/jamiecraik/chatui/platforms/apple/swift/SECURITY_TESTING_GUIDE.md",
+          "location": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/SECURITY_TESTING_GUIDE.md",
           "sections": 8,
           "size_kb": 25
         },
         {
           "name": "Security Setup README",
-          "location": "/Users/jamiecraik/chatui/platforms/apple/swift/SECURITY_SETUP_README.md",
+          "location": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/SECURITY_SETUP_README.md",
           "sections": 10,
           "size_kb": 15
         }
@@ -83,13 +83,13 @@
       "files": [
         {
           "name": "Enforcement Plan",
-          "location": "/Users/jamiecraik/chatui/enforcement.plan.json",
+          "location": "/Users/jamiecraik/dev/aStudio/enforcement.plan.json",
           "sections": 9,
           "components_defined": 5
         },
         {
           "name": "Enforcement Results",
-          "location": "/Users/jamiecraik/chatui/enforcement.results.json",
+          "location": "/Users/jamiecraik/dev/aStudio/enforcement.results.json",
           "sections": 7,
           "components_verified": 5
         }

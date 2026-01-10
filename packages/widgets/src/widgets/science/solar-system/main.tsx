@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
-import { HostProvider, createEmbeddedHost, ensureMockOpenAI } from "@chatui/runtime";
-import { AppsSDKUIProvider } from "@chatui/ui";
+import { HostProvider, createEmbeddedHost, ensureMockOpenAI } from "@astudio/runtime";
+import { AppsSDKUIProvider } from "@astudio/ui";
 
 import "../../../styles/widget.css";
 

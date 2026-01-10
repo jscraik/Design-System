@@ -1,4 +1,4 @@
-# ChatUISwift Component Documentation
+# AStudioSwift Component Documentation
 
 Last updated: 2026-01-04
 
@@ -12,7 +12,7 @@ Last updated: 2026-01-04
 
 Generated on 2025-12-28T11:47:27Z
 
-This documentation provides comprehensive information about all SwiftUI components in the ChatUISwift package, including their APIs, usage examples, and accessibility features.
+This documentation provides comprehensive information about all SwiftUI components in the AStudioSwift package, including their APIs, usage examples, and accessibility features.
 
 ## Table of Contents
 
@@ -30,7 +30,7 @@ This documentation provides comprehensive information about all SwiftUI componen
 
 A native macOS button component that uses design tokens
 
-**File:** `Sources/ChatUISwift/Components/ChatUIButton.swift`
+**File:** `Sources/AStudioSwift/Components/ChatUIButton.swift`
 
 ### Properties
 
@@ -311,7 +311,7 @@ This component includes the following accessibility features:
 
 A native macOS card component that uses design tokens
 
-**File:** `Sources/ChatUISwift/Components/ChatUICard.swift`
+**File:** `Sources/AStudioSwift/Components/ChatUICard.swift`
 
 ### Properties
 
@@ -446,7 +446,7 @@ public func variant(_ variant: Variant) -> ChatUICard<Content> {
 
 A SwiftUI component that provides chatuidatadisplay functionality with design token integration.
 
-**File:** `Sources/ChatUISwift/Components/ChatUIDataDisplay.swift`
+**File:** `Sources/AStudioSwift/Components/ChatUIDataDisplay.swift`
 
 ### Properties
 
@@ -733,7 +733,7 @@ This component includes the following accessibility features:
 
 A native macOS text input component that uses design tokens
 
-**File:** `Sources/ChatUISwift/Components/ChatUIInput.swift`
+**File:** `Sources/AStudioSwift/Components/ChatUIInput.swift`
 
 ### Properties
 
@@ -1000,7 +1000,7 @@ This component includes the following accessibility features:
 
 A native macOS modal dialog component with proper focus management
 
-**File:** `Sources/ChatUISwift/Components/ChatUIModal.swift`
+**File:** `Sources/AStudioSwift/Components/ChatUIModal.swift`
 
 ### Properties
 
@@ -1143,7 +1143,7 @@ This component includes the following accessibility features:
 
 A native macOS navigation component following platform patterns
 
-**File:** `Sources/ChatUISwift/Components/ChatUINavigation.swift`
+**File:** `Sources/AStudioSwift/Components/ChatUINavigation.swift`
 
 ### Properties
 
@@ -1284,7 +1284,7 @@ This component includes the following accessibility features:
 
 A native macOS toast notification component with system integration
 
-**File:** `Sources/ChatUISwift/Components/ChatUIToast.swift`
+**File:** `Sources/AStudioSwift/Components/ChatUIToast.swift`
 
 ### Properties
 

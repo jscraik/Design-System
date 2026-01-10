@@ -11,28 +11,28 @@ import * as GettingStartedStories from "./GettingStarted.stories";
 
 <Meta of={GettingStartedStories} />
 
-# Getting Started with ChatUI
+# Getting Started with aStudio
 
-Welcome to the ChatUI component library! This guide will help you get up and running quickly with our comprehensive set of React components designed for ChatGPT Apps SDK and standalone applications.
+Welcome to the aStudio component library! This guide will help you get up and running quickly with our comprehensive set of React components designed for ChatGPT Apps SDK and standalone applications.
 
 ## Installation
 
 ```bash
-npm install @chatui/ui
+npm install @astudio/ui
 # or
-pnpm add @chatui/ui
+pnpm add @astudio/ui
 ```
 
 ## Basic Setup
 
-Every ChatUI application should be wrapped with `ChatUIRoot` to provide the necessary theme and context:
+Every aStudio application should be wrapped with `ChatUIRoot` to provide the necessary theme and context:
 
 <Canvas>
   <Story name="Basic Setup">
     <ChatUIRoot>
       <div className="p-4 space-y-4">
         <h3 className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary text-lg">
-          Your ChatUI App
+          Your aStudio App
         </h3>
         <Button>Get Started</Button>
       </div>
@@ -41,8 +41,8 @@ Every ChatUI application should be wrapped with `ChatUIRoot` to provide the nece
 </Canvas>
 
 ```tsx
-import { ChatUIRoot, Button } from "@chatui/ui";
-import "@chatui/ui/styles.css";
+import { ChatUIRoot, Button } from "@astudio/ui";
+import "@astudio/ui/styles.css";
 
 function App() {
   return (
@@ -84,7 +84,7 @@ Use `ChatShell` variants when you want to compose your own chat layout from slot
 </Canvas>
 
 ```tsx
-import { ChatVariantSplitSidebar } from "@chatui/ui";
+import { ChatVariantSplitSidebar } from "@astudio/ui";
 
 function App() {
   return (
@@ -191,7 +191,7 @@ Our components are organized into logical categories for better discoverability:
 
 ## Theming
 
-ChatUI uses CSS custom properties for consistent theming:
+aStudio uses CSS custom properties for consistent theming:
 
 ```css
 :root {

@@ -530,7 +530,7 @@ function installListToolsHandler(server) {
 
 function createEnhancedChatUiServer() {
   const server = new McpServer({
-    name: "chatui-enhanced",
+    name: "astudio-enhanced",
     version: "2.0.0",
   });
 
@@ -564,11 +564,11 @@ function createEnhancedChatUiServer() {
     }));
   });
 
-  // Main ChatUI widget resource
-  server.registerResource("chatui-widget", "ui://widget/chatui.html", {}, async () => ({
+  // Main aStudio widget resource
+  server.registerResource("astudio-widget", "ui://widget/astudio.html", {}, async () => ({
     contents: [
       {
-        uri: "ui://widget/chatui.html",
+        uri: "ui://widget/astudio.html",
         mimeType: "text/html+skybridge",
         text: readWidgetHtml(),
         _meta: {

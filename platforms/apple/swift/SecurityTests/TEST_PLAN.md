@@ -14,8 +14,8 @@ Last updated: 2026-01-04
 - [Doc requirements](#doc-requirements)
 - [Overview](#overview)
 - [Test Files](#test-files)
-  - [ChatUIMCP Security Tests](#chatuimcp-security-tests)
-  - [ChatUISystemIntegration Security Tests](#chatuisystemintegration-security-tests)
+  - [AStudioMCP Security Tests](#astudiomcp-security-tests)
+  - [AStudioSystemIntegration Security Tests](#astudiosystemintegration-security-tests)
 - [Test Execution](#test-execution)
   - [Running All Security Tests](#running-all-security-tests)
   - [Running Specific Test Suites](#running-specific-test-suites)
@@ -40,15 +40,15 @@ Last updated: 2026-01-04
 
 ## Overview
 
-This document describes the comprehensive security test suites created for the ChatUI Swift codebase. The tests cover authentication, client validation, rate limiting, search security, and cryptographic operations.
+This document describes the comprehensive security test suites created for the aStudio Swift codebase. The tests cover authentication, client validation, rate limiting, search security, and cryptographic operations.
 
 ## Test Files
 
-### ChatUIMCP Security Tests
+### AStudioMCP Security Tests
 
 #### 1. MCPAuthenticatorSecurityTests.swift
 
-**Location:** `platforms/apple/swift/ChatUIMCP/Tests/ChatUIMCPTests/Security/`
+**Location:** `platforms/apple/swift/AStudioMCP/Tests/AStudioMCPTests/Security/`
 
 **Coverage:**
 - Keychain accessibility controls
@@ -110,7 +110,7 @@ This document describes the comprehensive security test suites created for the C
 
 #### 2. MCPClientValidationTests.swift
 
-**Location:** `platforms/apple/swift/ChatUIMCP/Tests/ChatUIMCPTests/Security/`
+**Location:** `platforms/apple/swift/AStudioMCP/Tests/AStudioMCPTests/Security/`
 
 **Coverage:**
 - URL validation (HTTPS vs HTTP, localhost, blocked hosts)
@@ -155,7 +155,7 @@ This document describes the comprehensive security test suites created for the C
 
 #### 3. MCPRateLimiterTests.swift
 
-**Location:** `platforms/apple/swift/ChatUIMCP/Tests/ChatUIMCPTests/Security/`
+**Location:** `platforms/apple/swift/AStudioMCP/Tests/AStudioMCPTests/Security/`
 
 **Coverage:**
 - Rate limiting behavior
@@ -215,11 +215,11 @@ This document describes the comprehensive security test suites created for the C
 
 ---
 
-### ChatUISystemIntegration Security Tests
+### AStudioSystemIntegration Security Tests
 
 #### 4. SpotlightManagerSecurityTests.swift
 
-**Location:** `platforms/apple/swift/ChatUISystemIntegration/Tests/ChatUISystemIntegrationTests/Security/`
+**Location:** `platforms/apple/swift/AStudioSystemIntegration/Tests/AStudioSystemIntegrationTests/Security/`
 
 **Coverage:**
 - Query sanitization
@@ -281,7 +281,7 @@ This document describes the comprehensive security test suites created for the C
 
 #### 5. CryptoManagerTests.swift
 
-**Location:** `platforms/apple/swift/ChatUISystemIntegration/Tests/ChatUISystemIntegrationTests/Security/`
+**Location:** `platforms/apple/swift/AStudioSystemIntegration/Tests/AStudioSystemIntegrationTests/Security/`
 
 **Coverage:**
 - Encryption/decryption
@@ -354,12 +354,12 @@ This document describes the comprehensive security test suites created for the C
 ### Running All Security Tests
 
 ```bash
-# Run ChatUIMCP security tests
-cd platforms/apple/swift/ChatUIMCP
+# Run AStudioMCP security tests
+cd platforms/apple/swift/AStudioMCP
 swift test --filter SecurityTests
 
-# Run ChatUISystemIntegration security tests
-cd platforms/apple/swift/ChatUISystemIntegration
+# Run AStudioSystemIntegration security tests
+cd platforms/apple/swift/AStudioSystemIntegration
 swift test --filter SecurityTests
 ```
 

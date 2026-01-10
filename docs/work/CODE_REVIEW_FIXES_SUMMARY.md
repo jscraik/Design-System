@@ -51,7 +51,7 @@ All high and medium priority fixes from the code review have been successfully i
 
 ### 1. ✅ Fixed Deprecated MediaQueryList API
 
-**File:** `packages/ui/src/app/chat/ChatUIRoot.tsx`
+**File:** `packages/ui/src/app/chat/ChatUIRoot/ChatUIRoot.tsx`
 
 **Issue:** Using deprecated `addListener`/`removeListener` methods
 
@@ -301,7 +301,7 @@ function getSecurityHeaders(): Record<string, string> {
 
 ### Core Fixes
 
-- `packages/ui/src/app/chat/ChatUIRoot.tsx`
+- `packages/ui/src/app/chat/ChatUIRoot/ChatUIRoot.tsx`
 - `packages/widgets/src/shared/widget-base.tsx`
 - `platforms/mcp/server.js`
 - `platforms/mcp/enhanced-server.js`

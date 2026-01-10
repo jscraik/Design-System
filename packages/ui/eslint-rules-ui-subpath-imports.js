@@ -1,7 +1,7 @@
 /**
  * ESLint Rule: UI Subpath Imports
  *
- * Enforces that @chatui/ui imports only use published subpaths
+ * Enforces that @astudio/ui imports only use published subpaths
  * (prevents deep/internal imports that bypass the package surface).
  */
 
@@ -28,7 +28,7 @@ const uiSubpathImportsRule = {
     type: "problem",
     docs: {
       description:
-        "Require @chatui/ui imports to use published subpaths (no deep/internal imports).",
+        "Require @astudio/ui imports to use published subpaths (no deep/internal imports).",
       category: "Best Practices",
       recommended: "error",
       url: "https://github.com/your-repo/blob/main/docs/architecture/repo-map.md",
@@ -36,19 +36,19 @@ const uiSubpathImportsRule = {
     schema: [],
     messages: {
       disallowedSubpath:
-        "Invalid @chatui/ui subpath '{{subpath}}'. Use a published entry point ({{allowed}}).",
+        "Invalid @astudio/ui subpath '{{subpath}}'. Use a published entry point ({{allowed}}).",
       deepImport:
-        "Deep import '{{source}}' is not allowed. Import only from published @chatui/ui subpaths.",
+        "Deep import '{{source}}' is not allowed. Import only from published @astudio/ui subpaths.",
     },
   },
   create(context) {
     const allowedList = Array.from(ALLOWED_SUBPATHS).join(", ");
 
     const checkSource = (node, source) => {
-      if (source === "@chatui/ui") return;
-      if (!source.startsWith("@chatui/ui/")) return;
+      if (source === "@astudio/ui") return;
+      if (!source.startsWith("@astudio/ui/")) return;
 
-      const subpath = source.slice("@chatui/ui/".length);
+      const subpath = source.slice("@astudio/ui/".length);
       if (!subpath) return;
 
       if (subpath.includes("/")) {

@@ -30,8 +30,8 @@ Last updated: 2026-01-04
 ## Start Server
 
 ```bash
-pnpm mcp:dev          # Development mode (from root)
-pnpm dev              # Development mode (from platforms/mcp)
+pnpm mcp:dev                       # From repo root
+pnpm -C platforms/mcp dev          # From platforms/mcp
 ```
 
 ## Run Tests
@@ -39,8 +39,8 @@ pnpm dev              # Development mode (from platforms/mcp)
 ### All Tests
 
 ```bash
-pnpm mcp:test         # From root
-pnpm test             # From platforms/mcp
+pnpm mcp:test                       # From repo root
+pnpm -C platforms/mcp test          # From platforms/mcp
 ```
 
 ### Specific Tests

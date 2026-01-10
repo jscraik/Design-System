@@ -14,7 +14,7 @@ Last updated: 2026-01-04
 
 This implementation plan follows a modular SwiftUI library approach that enhances the existing React/Apps SDK UI system without disrupting it. The plan focuses on creating four distinct Swift packages that provide a scalable foundation for native macOS development while maintaining perfect design consistency with the existing web application.
 
-**Current State:** A single monolithic `ChatUISwift` package exists at `packages/ui-swift/` with hardcoded design tokens and several components (Button, Card, Input, Modal, Navigation, Toast, DataDisplay). This needs to be refactored into the modular architecture.
+**Current State:** A single monolithic `AStudioSwift` package exists at `packages/ui-swift/` with hardcoded design tokens and several components (Button, Card, Input, Modal, Navigation, Toast, DataDisplay). This needs to be refactored into the modular architecture.
 
 **Target State:** Four separate Swift packages (Foundation, Components, Themes, Shell) with Asset Catalog-based tokens, enhanced token generation, comprehensive testing infrastructure, development tools, and support for future platforms like visionOS.
 
@@ -22,19 +22,19 @@ This implementation plan follows a modular SwiftUI library approach that enhance
 
 Focus on creating the four core Swift packages with settings primitives as the first deliverable.
 
-- [x] 1. Refactor existing ChatUISwift into modular package architecture
+- [x] 1. Refactor existing AStudioSwift into modular package architecture
   - Rename `packages/ui-swift/` to `swift/` at repository root
-  - Create `swift/ChatUIFoundation/Package.swift` with no dependencies
-  - Create `swift/ChatUIComponents/Package.swift` depending on ChatUIFoundation
-  - Create `swift/ChatUIThemes/Package.swift` depending on ChatUIFoundation
-  - Create `swift/ChatUIShellChatGPT/Package.swift` depending on Foundation, Components, Themes
+  - Create `swift/AStudioFoundation/Package.swift` with no dependencies
+  - Create `swift/AStudioComponents/Package.swift` depending on AStudioFoundation
+  - Create `swift/AStudioThemes/Package.swift` depending on AStudioFoundation
+  - Create `swift/AStudioShellChatGPT/Package.swift` depending on Foundation, Components, Themes
   - Set up proper directory structure: `Sources/{PackageName}/` for each package
   - Configure for iOS 15+ and macOS 13+ deployment targets
-  - Migrate existing `DesignTokens.swift` to ChatUIFoundation temporarily (will be replaced by Asset Catalog)
+  - Migrate existing `DesignTokens.swift` to AStudioFoundation temporarily (will be replaced by Asset Catalog)
   - _Requirements: 2.1, 2.2, 3.1, 4.1, 5.1_
 
-- [x] 2. Implement ChatUIFoundation package with Asset Catalog integration
-  - Create Asset Catalog at `swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets/`
+- [x] 2. Implement AStudioFoundation package with Asset Catalog integration
+  - Create Asset Catalog at `swift/AStudioFoundation/Sources/AStudioFoundation/Resources/Colors.xcassets/`
   - Create `.colorset` folders for semantic colors with light/dark variants:
     - Surface colors: `foundation-bg-app`, `foundation-bg-card`, `foundation-bg-card-alt`
     - Text colors: `foundation-text-primary`, `foundation-text-secondary`, `foundation-text-tertiary`
@@ -58,7 +58,7 @@ Focus on creating the four core Swift packages with settings primitives as the f
   - _Requirements: 1.1, 1.2, 2.1, 2.2, 2.3, 2.4, 2.5_
 
 - [x] 2.1 Create Asset Catalog with light/dark color variants manually
-  - Generate Asset Catalog structure in `swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets/`
+  - Generate Asset Catalog structure in `swift/AStudioFoundation/Sources/AStudioFoundation/Resources/Colors.xcassets/`
   - Create `.colorset` folders for each semantic color with `Contents.json` files
   - Populate with initial color values from existing `DesignTokens.swift`
   - Ensure automatic light/dark mode switching through Asset Catalog
@@ -66,7 +66,7 @@ Focus on creating the four core Swift packages with settings primitives as the f
   - **Property 11: Asset Catalog Light/Dark Mode Consistency**
   - **Validates: Requirements 1.2, 2.1**
 
-- [x] 3. Implement ChatUIThemes package with ChatGPT preset
+- [x] 3. Implement AStudioThemes package with ChatGPT preset
   - Create `ChatGPTTheme.swift` with pixel-perfect constants:
     - Radii: `appCornerRadius` (18), `cardCornerRadius` (12), `rowCornerRadius` (10), `pillCornerRadius` (999)
     - Shadows: `appShadowOpacity` (0.45), `appShadowRadius` (30), `appShadowYOffset` (18)
@@ -77,7 +77,7 @@ Focus on creating the four core Swift packages with settings primitives as the f
   - Create `DefaultTheme.swift` with native macOS styling as alternative
   - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
 
-- [x] 4. Implement ChatUIComponents package - Settings primitives
+- [x] 4. Implement AStudioComponents package - Settings primitives
   - Create `SettingsDivider.swift`:
     - 1pt height rectangle using `FColor.divider`
     - Opacity varies by color scheme using `ChatGPTTheme` constants
@@ -122,7 +122,7 @@ Focus on creating the four core Swift packages with settings primitives as the f
     - Section headers using `FType.sectionTitle()`
     - `SettingsCardView` containing multiple rows
     - `SettingToggleView` for boolean preferences
-    - `SettingDropdownView` for selection (e.g., accent color)
+    - `SettingDropdownView` for selection (for example, accent color)
     - `SettingsDivider` between rows
   - Create SwiftUI previews for light/dark mode
   - Create macOS/iOS preview variants showing platform differences
@@ -132,9 +132,9 @@ Focus on creating the four core Swift packages with settings primitives as the f
 - [x] 6. Phase 1 checkpoint - Settings Primitives Complete
   **Definition of Done:**
   - [x] All four Swift packages compile successfully
-  - [x] ChatUIFoundation provides semantic tokens via Asset Catalog
-  - [x] ChatUIThemes provides ChatGPT-style constants
-  - [x] ChatUIComponents provides 6 settings primitives (Divider, Card, Row, Switch, Toggle, Dropdown)
+  - [x] AStudioFoundation provides semantic tokens via Asset Catalog
+  - [x] AStudioThemes provides ChatGPT-style constants
+  - [x] AStudioComponents provides 6 settings primitives (Divider, Card, Row, Switch, Toggle, Dropdown)
   - [x] Example settings view renders pixel-close to React equivalent
   - [x] Light/dark mode switching works automatically
   - [x] macOS hover states work correctly
@@ -157,7 +157,7 @@ Integrate with existing token system and add automated build pipeline.
   - Extend existing `packages/tokens/src/generator.ts` to produce Asset Catalog structure
   - Generate `.colorset` folders with `Contents.json` for each semantic color
   - Include light/dark variants from existing token definitions
-  - Output to `swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets/`
+  - Output to `swift/AStudioFoundation/Sources/AStudioFoundation/Resources/Colors.xcassets/`
   - Maintain deterministic output (no timestamps in generated files)
   - Create separate `packages/tokens/outputs/manifest.json` with SHA hashes for validation
   - Replace manual Asset Catalog from task 2.1 with generated version
@@ -176,9 +176,9 @@ Integrate with existing token system and add automated build pipeline.
   - **Property 6: Enhanced Build Pipeline Completeness**
   - **Validates: Requirements 6.1, 6.2, 6.3, 6.4, 6.5**
 
-- [x] 9. Expand ChatUIComponents with additional primitives
-  - Migrate existing `ChatUIButton.swift` from old package to new ChatUIComponents
-  - Update `ChatUIButton` to use `FColor`, `FType`, `FSpacing` from ChatUIFoundation
+- [x] 9. Expand AStudioComponents with additional primitives
+  - Migrate existing `ChatUIButton.swift` from old package to new AStudioComponents
+  - Update `ChatUIButton` to use `FColor`, `FType`, `FSpacing` from AStudioFoundation
   - Create `ListItemView.swift` for sidebar navigation:
     - Similar to `SettingRowView` but optimized for navigation lists
     - Supports selection state highlighting
@@ -190,7 +190,7 @@ Integrate with existing token system and add automated build pipeline.
   - Migrate and update other existing components (Card, Modal, etc.) as needed
   - _Requirements: 3.1, 3.2, 3.5_
 
-- [x] 10. Implement ChatUIShellChatGPT package (optional shell layouts)
+- [x] 10. Implement AStudioShellChatGPT package (optional shell layouts)
   - Create `VisualEffectView.swift`:
     - macOS: `NSViewRepresentable` wrapping `NSVisualEffectView`
     - iOS: Fallback using SwiftUI `Material`
@@ -214,7 +214,7 @@ Integrate with existing token system and add automated build pipeline.
     - Enable screenshot export for documentation
     - Integrate with token hot reload for instant preview updates
     - _Requirements: 11.1, 11.3, 11.4_
-  - [x] Set up snapshot testing framework in `swift/ChatUITestSupport/`
+  - [x] Set up snapshot testing framework in `swift/AStudioTestSupport/`
   - [x] Generate snapshot coverage for light/dark mode, high contrast, and reduced motion variants (test definitions)
   - [x] Test all settings primitives in both ChatGPT and Default themes (test definitions)
   - [x] Set up property-based testing with SwiftCheck for comprehensive input validation
@@ -231,8 +231,8 @@ Integrate with existing token system and add automated build pipeline.
   - [x] Token hot reload watcher provides instant feedback during development
   - [x] Build pipeline handles both React and SwiftUI builds
   - [x] Version synchronization works across package managers
-  - [x] ChatUIComponents includes 10+ reusable primitives
-  - [x] ChatUIShellChatGPT provides optional complete layouts
+  - [x] AStudioComponents includes 10+ reusable primitives
+  - [x] AStudioShellChatGPT provides optional complete layouts
   - [ ] Snapshot tests pass for all components
   - [x] Component Gallery app enables visual testing and design review
   - [x] CI/CD pipeline validates Swift package compilation
@@ -243,18 +243,18 @@ Integrate with existing token system and add automated build pipeline.
 Build complete native macOS application using the SwiftUI component library.
 
 - [x] 13. Create production macOS application structure
-  - Create new macOS app target in `apps/macos/ChatUIApp/` using SwiftUI App lifecycle
-  - Add dependencies on all four ChatUI Swift packages via Swift Package Manager
-  - Implement main window using `AppShellView` from ChatUIShellChatGPT
-  - Create settings panel using settings primitives from ChatUIComponents
+  - Create new macOS app target in `apps/macos/AStudioApp/` using SwiftUI App lifecycle
+  - Add dependencies on all four aStudio Swift packages via Swift Package Manager
+  - Implement main window using `AppShellView` from AStudioShellChatGPT
+  - Create settings panel using settings primitives from AStudioComponents
   - Add menu bar integration with standard macOS menus
   - Configure app bundle, icons, and Info.plist
   - _Requirements: 5.1, 5.2, 7.1_
 
 - [x] 14. Integrate with existing MCP tool system
-  - Create `swift/ChatUIMCP/` package for MCP integration
+  - Create `swift/AStudioMCP/` package for MCP integration
   - Implement Swift networking layer to call existing web-based MCP infrastructure at `apps/mcp/`
-  - Create widget renderer using SwiftUI components styled with ChatUIFoundation tokens
+  - Create widget renderer using SwiftUI components styled with AStudioFoundation tokens
   - Handle macOS-specific authentication flows (Keychain integration)
   - Ensure backward compatibility with all existing MCP tool contracts in `apps/mcp/tool-contracts.json`
   - **Property 7: MCP Tool Integration Compatibility**
@@ -300,7 +300,7 @@ Build complete native macOS application using the SwiftUI component library.
 ### Phase 1: Modular SwiftUI Foundation (Start Here - Settings Primitives)
 
 **Goal**: Refactor existing monolithic package into four core Swift packages with settings primitives as first deliverable
-**Current State**: Single `ChatUISwift` package at `packages/ui-swift/` with hardcoded tokens
+**Current State**: Single `AStudioSwift` package at `packages/ui-swift/` with hardcoded tokens
 **Risk**: Low-Medium (refactoring existing code)
 **Tasks**: 1-6
 **Deliverable**: Working settings UI matching React component appearance with modular architecture
@@ -328,7 +328,7 @@ Create a complete native macOS application using the SwiftUI component library, 
 ## Notes
 
 - **Start with Phase 1** - Refactor existing package into modular architecture, then build settings primitives
-- **Existing Code** - `packages/ui-swift/` contains a working `ChatUISwift` package that needs refactoring
+- **Existing Code** - `packages/ui-swift/` contains a working `AStudioSwift` package that needs refactoring
 - **Modular Architecture** - Four distinct packages enable incremental adoption and future platform support (visionOS)
 - **Asset Catalog** - Manual creation first (task 2.1), then automated generation (task 7)
 - **Hot Reload** - Token watcher (task 7.1) enables instant feedback: edit tokens → see changes in Xcode
@@ -348,18 +348,18 @@ Create a complete native macOS application using the SwiftUI component library, 
 
 ```
 swift/
-├── ChatUIFoundation/
+├── AStudioFoundation/
 │   ├── Package.swift
-│   └── Sources/ChatUIFoundation/
+│   └── Sources/AStudioFoundation/
 │       ├── FColor.swift          # Semantic colors via Asset Catalog
 │       ├── FType.swift           # Typography styles + tracking
 │       ├── FSpacing.swift        # Spacing constants
 │       ├── Platform.swift        # Platform detection helpers
 │       └── Resources/
 │           └── [Asset Catalog]   # Light/dark color variants
-├── ChatUIComponents/
+├── AStudioComponents/
 │   ├── Package.swift
-│   └── Sources/ChatUIComponents/
+│   └── Sources/AStudioComponents/
 │       ├── SettingsDivider.swift
 │       ├── SettingsCardView.swift
 │       ├── SettingRowView.swift
@@ -369,14 +369,14 @@ swift/
 │       ├── ListItemView.swift
 │       ├── ButtonView.swift
 │       └── InputView.swift
-├── ChatUIThemes/
+├── AStudioThemes/
 │   ├── Package.swift
-│   └── Sources/ChatUIThemes/
+│   └── Sources/AStudioThemes/
 │       ├── ChatGPTTheme.swift    # Pixel-perfect constants
 │       └── DefaultTheme.swift    # Native macOS styling
-└── ChatUIShellChatGPT/
+└── AStudioShellChatGPT/
     ├── Package.swift
-    └── Sources/ChatUIShellChatGPT/
+    └── Sources/AStudioShellChatGPT/
         ├── VisualEffectView.swift
         ├── RoundedAppContainer.swift
         └── AppShellView.swift
@@ -390,7 +390,7 @@ swift/
 
 **Platform Helpers**: Centralize iOS/macOS differences in `Platform.swift` rather than scattered `#if os(macOS)` checks
 
-**Theme Separation**: ChatGPT-specific styling lives in ChatUIThemes, keeping core components theme-agnostic
+**Theme Separation**: ChatGPT-specific styling lives in AStudioThemes, keeping core components theme-agnostic
 
 **Composition Over Inheritance**: `SettingToggleView` composes `SettingRowView` + `Toggle` rather than subclassing
 
@@ -400,7 +400,7 @@ swift/
 
 **SwiftUI Previews** (best for components):
 
-- Open component file (e.g., `ChatUIButton.swift`)
+- Open component file (for example, `ChatUIButton.swift`)
 - Show Canvas: `⌥⌘⏎` (Option+Command+Enter)
 - Resume previews: `⌥⌘P`
 - Use `#Preview { ... }` blocks for variants
@@ -416,9 +416,9 @@ swift/
 Create a consistent preview helper:
 
 ```swift
-// apps/macos/ChatUIPlayground/PreviewHelpers/PreviewScenarios.swift
+// apps/macos/AStudioPlayground/PreviewHelpers/PreviewScenarios.swift
 import SwiftUI
-import ChatUISwift
+import AStudioSwift
 
 struct PreviewScenarios<Content: View>: View {
     let content: () -> Content

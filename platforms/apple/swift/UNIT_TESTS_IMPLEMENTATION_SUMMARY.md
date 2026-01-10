@@ -43,7 +43,7 @@ All unit tests for settings primitives have been successfully written and are re
 
 ### 1. Comprehensive Test Coverage
 
-**ChatUIComponents Tests** (`platforms/apple/swift/ChatUIComponents/Tests/ChatUIComponentsTests/ChatUIComponentsTests.swift`):
+**AStudioComponents Tests** (`platforms/apple/swift/AStudioComponents/Tests/AStudioComponentsTests/AStudioComponentsTests.swift`):
 
 - ✅ SettingRowView with all trailing variants (.none, .chevron, .text, .custom)
 - ✅ SettingRowView with icons, subtitles, and action callbacks
@@ -57,7 +57,7 @@ All unit tests for settings primitives have been successfully written and are re
 - ✅ SettingTrailing enum validation
 - ✅ Legacy ChatUIButton tests (maintained)
 
-**ChatUIFoundation Tests** (`platforms/apple/swift/ChatUIFoundation/Tests/ChatUIFoundationTests/ChatUIFoundationTests.swift`):
+**AStudioFoundation Tests** (`platforms/apple/swift/AStudioFoundation/Tests/AStudioFoundationTests/AStudioFoundationTests.swift`):
 
 - ✅ Platform detection (isMac, isIOS, isVisionOS)
 - ✅ Spacing constants validation (s2, s4, s8, s12, s16, s24, s32)
@@ -70,10 +70,10 @@ All unit tests for settings primitives have been successfully written and are re
 All Swift packages build successfully:
 
 ```
-✅ ChatUIFoundation: Build complete (0.15s)
-✅ ChatUIComponents: Build complete (0.17s)
-✅ ChatUIThemes: Build complete (0.08s)
-✅ ChatUIShellChatGPT: Build complete
+✅ AStudioFoundation: Build complete (0.15s)
+✅ AStudioComponents: Build complete (0.17s)
+✅ AStudioThemes: Build complete (0.08s)
+✅ AStudioShellChatGPT: Build complete
 ```
 
 This confirms:
@@ -105,7 +105,7 @@ Created comprehensive test documentation:
 ### Test Structure
 
 ```swift
-// Example test from ChatUIComponentsTests.swift
+// Example test from AStudioComponentsTests.swift
 func testSettingRowViewWithAllTrailingVariants() {
     // Test .none trailing
     let noneRow = SettingRowView(title: "Test Title", trailing: .none)
@@ -150,7 +150,7 @@ The tests validate:
 1. ✅ Settings primitives (SettingRowView, SettingToggleView, SettingDropdownView) match React component behavior
 2. ✅ Layout primitives (SettingsCardView) mirror React card component styling
 3. ✅ Navigation interfaces (ListItemView) handle platform-specific interactions
-4. ✅ Components consume semantic tokens from ChatUIFoundation exclusively
+4. ✅ Components consume semantic tokens from AStudioFoundation exclusively
 5. ✅ Built-in accessibility support (VoiceOver labels, keyboard navigation, focus management)
 
 ## Known Limitation
@@ -166,29 +166,29 @@ error: no such module 'XCTest'
 **Solution**: Install Xcode from the Mac App Store, then run:
 
 ```bash
-cd platforms/apple/swift/ChatUIComponents
+cd platforms/apple/swift/AStudioComponents
 swift test
 ```
 
 **Alternative**: Open the package in Xcode and run tests with Cmd+U:
 
 ```bash
-open platforms/apple/swift/ChatUIComponents/Package.swift
+open platforms/apple/swift/AStudioComponents/Package.swift
 ```
 
 ## Files Created/Modified
 
 ### Created
 
-- `platforms/apple/swift/ChatUIComponents/Tests/TEST_STATUS.md` - Test status documentation
-- `platforms/apple/swift/ChatUIComponents/Tests/run_verification.swift` - XCTest-free verification script
+- `platforms/apple/swift/AStudioComponents/Tests/TEST_STATUS.md` - Test status documentation
+- `platforms/apple/swift/AStudioComponents/Tests/run_verification.swift` - XCTest-free verification script
 - `platforms/apple/swift/UNIT_TESTS_IMPLEMENTATION_SUMMARY.md` - This summary
 
 ### Existing (Verified)
 
-- `platforms/apple/swift/ChatUIComponents/Tests/ChatUIComponentsTests/ChatUIComponentsTests.swift` - Main test file
-- `platforms/apple/swift/ChatUIFoundation/Tests/ChatUIFoundationTests/ChatUIFoundationTests.swift` - Foundation tests
-- `platforms/apple/swift/ChatUIComponents/Tests/ComponentVerification.swift` - Verification script
+- `platforms/apple/swift/AStudioComponents/Tests/AStudioComponentsTests/AStudioComponentsTests.swift` - Main test file
+- `platforms/apple/swift/AStudioFoundation/Tests/AStudioFoundationTests/AStudioFoundationTests.swift` - Foundation tests
+- `platforms/apple/swift/AStudioComponents/Tests/ComponentVerification.swift` - Verification script
 
 ## Next Steps
 

@@ -69,18 +69,18 @@ This document outlines the step-by-step plan to consolidate duplicate code acros
 ## Phase 1: ChatUIButton Consolidation (Week 1-2)
 
 ### Current State
-- **ChatUIComponents**: `ChatUIButton.swift` (410 LOC)
+- **AStudioComponents**: `ChatUIButton.swift` (410 LOC)
 - **ui-swift**: `ChatUIButton.swift` (284 LOC)
 - **Overlap**: 95% identical code
 
 ### Source of Truth
-**ChatUIComponents** will be the canonical implementation.
+**AStudioComponents** will be the canonical implementation.
 
 ### Migration Steps
 
-#### Step 1: Verify ChatUIComponents Implementation
+#### Step 1: Verify AStudioComponents Implementation
 ```bash
-# File: platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ChatUIButton.swift
+# File: platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ChatUIButton.swift
 # Verify it has all necessary features:
 - ChatUIButtonVariant enum
 - ChatUIButtonSize enum
@@ -90,33 +90,33 @@ This document outlines the step-by-step plan to consolidate duplicate code acros
 
 #### Step 2: Update Dependent Code in ui-swift
 **Files to update:**
-- `platforms/apple/swift/ui-swift/Sources/ChatUISwift/Components/ChatUIButton.swift`
+- `platforms/apple/swift/ui-swift/Sources/AStudioSwift/Components/ChatUIButton.swift`
 
 **Action:** Replace entire file with:
 ```swift
-// Re-export from ChatUIComponents
-@_exported import ChatUIComponents
+// Re-export from AStudioComponents
+@_exported import AStudioComponents
 
 // Type alias for backward compatibility (if needed)
-public typealias ChatUIButton = ChatUIComponents.ChatUIButton
+public typealias ChatUIButton = AStudioComponents.ChatUIButton
 ```
 
 #### Step 3: Update ui-swift Package.swift
-Add ChatUIComponents as a dependency:
+Add AStudioComponents as a dependency:
 ```swift
-.package(path: "../ChatUIComponents")
+.package(path: "../AStudioComponents")
 
 .target(
     name: "ui-swift",
-    dependencies: ["ChatUIComponents", "ChatUIFoundation"]
+    dependencies: ["AStudioComponents", "AStudioFoundation"]
 )
 ```
 
 #### Step 4: Deprecation Notice
 Add deprecation notice to ui-swift ChatUIButton:
 ```swift
-@available(*, deprecated, message: "Use ChatUIComponents.ChatUIButton instead")
-public typealias ChatUIButton = ChatUIComponents.ChatUIButton
+@available(*, deprecated, message: "Use AStudioComponents.ChatUIButton instead")
+public typealias ChatUIButton = AStudioComponents.ChatUIButton
 ```
 
 ### Breaking Changes
@@ -131,26 +131,26 @@ Keep git commit with original ui-swift implementation for easy revert.
 ## Phase 2: DesignTokens Unification (Week 2-3)
 
 ### Current State
-- **ChatUIFoundation**: `DesignTokens.swift` (433 LOC with FType/FColor/FSpacing)
+- **AStudioFoundation**: `DesignTokens.swift` (433 LOC with FType/FColor/FSpacing)
 - **ui-swift**: `DesignTokens.swift` (421 LOC)
 - **Overlap**: 85% similar structure
 
 ### Source of Truth
-**ChatUIFoundation** will be the canonical token system.
+**AStudioFoundation** will be the canonical token system.
 
 ### Migration Steps
 
 #### Step 1: Audit Token Differences
 ```bash
 # Compare token definitions
-diff platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/DesignTokens.swift \
-     platforms/apple/swift/ui-swift/Sources/ChatUISwift/DesignTokens.swift
+diff platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/DesignTokens.swift \
+     platforms/apple/swift/ui-swift/Sources/AStudioSwift/DesignTokens.swift
 ```
 
-#### Step 2: Merge Missing Tokens to ChatUIFoundation
-Add any unique tokens from ui-swift to ChatUIFoundation:
+#### Step 2: Merge Missing Tokens to AStudioFoundation
+Add any unique tokens from ui-swift to AStudioFoundation:
 ```swift
-// File: ChatUIFoundation/DesignTokens.swift
+// File: AStudioFoundation/DesignTokens.swift
 // Add Interactive colors if missing
 public enum Interactive {
     public static let hover = ColorToken(hex: "#E5E5E5")
@@ -160,7 +160,7 @@ public enum Interactive {
 ```
 
 #### Step 3: Create Compatibility Layer
-In ChatUIFoundation, add compatibility shims:
+In AStudioFoundation, add compatibility shims:
 ```swift
 // Backward compatibility for old FType/FColor/FSpacing APIs
 @available(*, deprecated, renamed: "DesignTokens")
@@ -217,10 +217,10 @@ Keep old APIs with deprecation warnings for 2 release cycles.
 
 #### Step 1: Create Asset Catalog Structure
 ```bash
-mkdir -p platforms/apple/swift/ChatUIFoundation/Resources/Assets.xcassets/Icons
+mkdir -p platforms/apple/swift/AStudioFoundation/Resources/Assets.xcassets/Icons
 
 # Categories: Actions, Navigation, Social, etc.
-mkdir -p platforms/apple/swift/ChatUIFoundation/Resources/Assets.xcassets/Icons/{Actions,Navigation,Social,Media}
+mkdir -p platforms/apple/swift/AStudioFoundation/Resources/Assets.xcassets/Icons/{Actions,Navigation,Social,Media}
 ```
 
 #### Step 2: Extract Icon Definitions
@@ -246,8 +246,8 @@ import Foundation
 // Generate enum from asset catalog
 struct IconGenerator {
     static func main() {
-        let iconsPath = "Platforms/apple/swift/ChatUIFoundation/Resources/Assets.xcassets/Icons"
-        let outputPath = "Platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Generated/Icons.swift"
+        let iconsPath = "Platforms/apple/swift/AStudioFoundation/Resources/Assets.xcassets/Icons"
+        let outputPath = "Platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Generated/Icons.swift"
 
         // Scan asset catalog
         // Generate type-safe enum
@@ -262,7 +262,7 @@ IconGenerator.main()
 In Package.swift:
 ```swift
 .target(
-    name: "ChatUIFoundation",
+    name: "AStudioFoundation",
     dependencies: [],
     resources: [.process("Resources")],
     plugins: [.plugin(name: "GenerateIcons")]
@@ -292,13 +292,13 @@ Keep old icon files with deprecation warnings for 2 release cycles.
 ### 4.1 Card Components (75% similar)
 
 #### Current State
-- **SettingsCardView** (ChatUIComponents): Settings-specific card
+- **SettingsCardView** (AStudioComponents): Settings-specific card
 - **ChatUICard** (ui-swift): Generic card component
 
 #### Consolidation Plan
-1. Create base `CardView` in ChatUIFoundation:
+1. Create base `CardView` in AStudioFoundation:
 ```swift
-// File: ChatUIFoundation/Sources/ChatUIFoundation/Layout/CardView.swift
+// File: AStudioFoundation/Sources/AStudioFoundation/Layout/CardView.swift
 
 public struct CardView<Content: View>: View {
     public init(
@@ -316,7 +316,7 @@ public struct CardView<Content: View>: View {
 
 2. Create specialized variants:
 ```swift
-// ChatUIComponents
+// AStudioComponents
 public struct SettingsCardView<Content: View>: View {
     // Wrapper around CardView with settings-specific styling
 }
@@ -328,12 +328,12 @@ public typealias ChatUICard<Content: View> = CardView<Content>
 ### 4.2 Modal Components (70% similar)
 
 #### Current State
-- **ModalDialogView** (ChatUIComponents)
-- **AlertView** (ChatUIComponents)
+- **ModalDialogView** (AStudioComponents)
+- **AlertView** (AStudioComponents)
 - **ChatUIModal** (ui-swift)
 
 #### Consolidation Plan
-1. Create base `ModalView` in ChatUIFoundation:
+1. Create base `ModalView` in AStudioFoundation:
 ```swift
 public struct ModalView<Content: View>: View {
     public enum Style {
@@ -351,7 +351,7 @@ public struct ModalView<Content: View>: View {
 
 2. Create convenience wrappers:
 ```swift
-// ChatUIComponents
+// AStudioComponents
 public typealias ModalDialogView = ModalView<AnyView>
 public typealias AlertView = ModalView<AnyView>
 
@@ -362,12 +362,12 @@ public typealias ChatUIModal = ModalView<AnyView>
 ### 4.3 Input Components (72% similar)
 
 #### Current State
-- **InputView** (ChatUIComponents)
-- **ComposeTextArea** (ChatUIComponents)
+- **InputView** (AStudioComponents)
+- **ComposeTextArea** (AStudioComponents)
 - **ChatUIInput** (ui-swift)
 
 #### Consolidation Plan
-1. Create base `TextInputView` in ChatUIFoundation:
+1. Create base `TextInputView` in AStudioFoundation:
 ```swift
 public struct TextInputView: View {
     public enum Style {
@@ -382,7 +382,7 @@ public struct TextInputView: View {
 
 2. Create specialized variants:
 ```swift
-// ChatUIComponents
+// AStudioComponents
 public typealias InputView = TextInputView
 public typealias ComposeTextArea = TextInputView
 
@@ -482,20 +482,20 @@ public typealias ChatUIInput = TextInputView
 ## Appendix A: File Inventory
 
 ### Files to Modify
-1. `platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ChatUIButton.swift`
-2. `platforms/apple/swift/ui-swift/Sources/ChatUISwift/Components/ChatUIButton.swift`
-3. `platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/DesignTokens.swift`
-4. `platforms/apple/swift/ui-swift/Sources/ChatUISwift/DesignTokens.swift`
-5. `platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ChatGPTIcons.swift`
-6. `platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ChatGPTIconPaths.swift`
-7. `platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ChatGPTIconVectors.swift`
+1. `platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ChatUIButton.swift`
+2. `platforms/apple/swift/ui-swift/Sources/AStudioSwift/Components/ChatUIButton.swift`
+3. `platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/DesignTokens.swift`
+4. `platforms/apple/swift/ui-swift/Sources/AStudioSwift/DesignTokens.swift`
+5. `platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ChatGPTIcons.swift`
+6. `platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ChatGPTIconPaths.swift`
+7. `platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ChatGPTIconVectors.swift`
 
 ### Files to Create
-1. `platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Layout/CardView.swift`
-2. `platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Layout/ModalView.swift`
-3. `platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Inputs/TextInputView.swift`
+1. `platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Layout/CardView.swift`
+2. `platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Layout/ModalView.swift`
+3. `platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Inputs/TextInputView.swift`
 4. `scripts/generate-icons.swift`
-5. `platforms/apple/swift/ChatUIFoundation/Resources/Assets.xcassets/*`
+5. `platforms/apple/swift/AStudioFoundation/Resources/Assets.xcassets/*`
 
 ---
 

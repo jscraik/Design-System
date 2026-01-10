@@ -12,7 +12,7 @@ import { SettingRow } from "./SettingRow";
  *
  * ## Usage
  * ```tsx
- * import { SettingRow } from "@chatui/ui";
+ * import { SettingRow } from "@astudio/ui";
  *
  * <SettingRow
  *   icon={<IconSettings />}

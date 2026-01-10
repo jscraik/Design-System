@@ -2,7 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { AppsSDKButton } from "@chatui/ui";
+import { AppsSDKButton } from "@astudio/ui";
 
 import "../../../styles/widget.css";
 

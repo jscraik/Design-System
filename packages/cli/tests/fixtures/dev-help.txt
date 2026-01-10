@@ -1,4 +1,4 @@
-chatui dev [target]
+astudio dev [target]
 
 Start development servers
 

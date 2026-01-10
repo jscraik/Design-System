@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-import ChatUIFoundation
-import ChatUIComponents
+import AStudioFoundation
+import AStudioComponents
 
 /// Gallery of data display components.
 struct DataDisplayGallery: View {

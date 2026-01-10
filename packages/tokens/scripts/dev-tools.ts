@@ -7,7 +7,7 @@ import { join } from "path";
 import { TokenWatcher } from "./watch-tokens.js";
 
 /**
- * Development tools orchestrator for ChatUISwift
+ * Development tools orchestrator for AStudioSwift
  *
  * Coordinates hot reload, documentation generation, and debugging tools
  * for an integrated development experience.
@@ -39,7 +39,7 @@ class DevToolsOrchestrator {
    * Start all development tools
    */
   async start(): Promise<void> {
-    console.log("🚀 Starting ChatUISwift development tools...");
+    console.log("🚀 Starting AStudioSwift development tools...");
 
     if (this.config.verbose) {
       console.log("Configuration:", this.config);
@@ -126,7 +126,7 @@ class DevToolsOrchestrator {
 
     // Watch for Swift file changes
     const { watch } = await import("fs");
-    const componentsPath = join(swiftPackagePath, "Sources/ChatUISwift/Components");
+    const componentsPath = join(swiftPackagePath, "Sources/AStudioSwift/Components");
 
     watch(componentsPath, { recursive: true }, async (eventType, filename) => {
       if (filename && filename.endsWith(".swift") && eventType === "change") {
@@ -186,9 +186,9 @@ class DevToolsOrchestrator {
         res.writeHead(200, { "Content-Type": "text/html" });
         res.end(`
                     <html>
-                        <head><title>ChatUISwift Dev Tools</title></head>
+                        <head><title>AStudioSwift Dev Tools</title></head>
                         <body>
-                            <h1>🛠️ ChatUISwift Development Tools</h1>
+                            <h1>🛠️ AStudioSwift Development Tools</h1>
                             <p>Development tools are running. Check Xcode previews for performance metrics.</p>
                             <ul>
                                 <li>Token Hot Reload: ✅ Active</li>

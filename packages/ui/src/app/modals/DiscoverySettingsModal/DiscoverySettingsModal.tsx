@@ -23,10 +23,15 @@ function SectionHeader({
 }) {
   return (
     <>
-      <h3 className="text-body-small font-medium text-foundation-text-dark-primary mb-2">
+      <h3 className="text-body-small font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2">
         {title}
       </h3>
-      <p className={descriptionClassName ?? "text-caption text-foundation-text-dark-secondary mb-3"}>
+      <p
+        className={
+          descriptionClassName ??
+          "text-caption text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mb-3"
+        }
+      >
         {description}
       </p>
     </>
@@ -47,8 +52,10 @@ function RangeSlider({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <label className="text-caption text-foundation-text-dark-primary/80">{label}</label>
-        <span className="text-caption font-medium text-foundation-text-dark-primary">
+        <label className="text-caption text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+          {label}
+        </label>
+        <span className="text-caption font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
           {value}k
         </span>
       </div>
@@ -85,8 +92,8 @@ function SegmentedButtons<T extends string>({
           className={cn(
             "px-4 py-2 rounded-lg text-caption transition-colors flex-1 min-w-[80px]",
             value === option.value
-              ? "bg-foundation-accent-green text-white"
-              : "bg-foundation-bg-dark-3 text-foundation-text-dark-secondary hover:text-foundation-text-dark-primary",
+              ? "bg-foundation-accent-green-light text-foundation-text-dark-primary"
+              : "bg-foundation-bg-light-2 text-foundation-text-light-secondary hover:text-foundation-text-light-primary dark:bg-foundation-bg-dark-3 dark:text-foundation-text-dark-secondary dark:hover:text-foundation-text-dark-primary",
           )}
           aria-pressed={value === option.value}
         >
@@ -115,10 +122,10 @@ function ToggleRow({
       <div className="flex items-start gap-3">
         <div className="mt-0.5">{icon}</div>
         <div className="flex-1">
-          <div className="text-caption font-medium text-foundation-text-dark-primary mb-0.5">
+          <div className="text-caption font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-0.5">
             {title}
           </div>
-          <div className="text-caption font-normal text-foundation-text-dark-secondary">
+          <div className="text-caption font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
             {description}
           </div>
         </div>
@@ -128,7 +135,9 @@ function ToggleRow({
         onClick={onToggle}
         className={cn(
           "relative inline-flex h-5 w-9 items-center rounded-full transition-colors flex-shrink-0",
-          checked ? "bg-foundation-accent-green" : "bg-foundation-bg-dark-3",
+          checked
+            ? "bg-foundation-accent-green"
+            : "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3",
         )}
         role="switch"
         aria-checked={checked}
@@ -237,13 +246,13 @@ export function DiscoverySettingsModal({
       title="Discovery Settings"
       titleId="discovery-settings-title"
       maxWidth="420px"
-      className="bg-foundation-bg-dark-1 border border-foundation-text-dark-primary/10 rounded-[16px] shadow-2xl"
+      className="bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 border border-foundation-bg-light-3 dark:border-foundation-text-dark-primary/10 rounded-[16px] shadow-2xl"
       showOverlay={false}
     >
-      <div className="px-6 py-4 border-b border-foundation-text-dark-primary/10 flex items-center justify-between">
+      <div className="px-6 py-4 border-b border-foundation-bg-light-3 dark:border-foundation-text-dark-primary/10 flex items-center justify-between">
         <h2
           id="discovery-settings-title"
-          className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foundation-text-dark-primary"
+          className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary"
         >
           Discovery Settings
         </h2>
@@ -255,7 +264,7 @@ export function DiscoverySettingsModal({
           <SectionHeader
             title="Token Budgets"
             description="Sets the target size for your final prompt. Use 60k for ChatGPT (lite Pro context), higher for CLIAPI tools with larger context windows."
-            descriptionClassName="text-caption text-foundation-text-dark-secondary mb-3"
+            descriptionClassName="text-caption text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mb-3"
           />
           <RangeSlider
             label="Target size"
@@ -267,7 +276,7 @@ export function DiscoverySettingsModal({
             <button
               type="button"
               onClick={() => setShowAutoPlanBudget(!showAutoPlanBudget)}
-              className="flex items-center gap-2 text-caption font-normal text-foundation-text-dark-secondary hover:text-foundation-text-dark-primary transition-colors w-full"
+              className="flex items-center gap-2 text-caption font-normal text-foundation-text-light-secondary hover:text-foundation-text-light-primary dark:text-foundation-text-dark-secondary dark:hover:text-foundation-text-dark-primary transition-colors w-full"
             >
               <svg
                 className={`size-3 transition-transform ${showAutoPlanBudget ? "rotate-90" : ""}`}
@@ -285,12 +294,14 @@ export function DiscoverySettingsModal({
                 <path d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
               <span>Auto Plan Budget</span>
-              <span className="ml-auto text-foundation-text-dark-secondary">{autoPlanBudget}k</span>
+              <span className="ml-auto text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+                {autoPlanBudget}k
+              </span>
             </button>
 
             {showAutoPlanBudget && (
               <div className="mt-3 ml-5 space-y-3">
-                <p className="text-caption text-foundation-text-dark-secondary">
+                <p className="text-caption text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
                   Auto Plan runs use CLI/API calls which support larger context windows.
                 </p>
                 <RangeSlider
@@ -318,7 +329,7 @@ export function DiscoverySettingsModal({
             ]}
             onChange={handlePromptEnhancementChange}
           />
-          <p className="text-caption text-foundation-text-dark-secondary">
+          <p className="text-caption text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
             {getEnhancementDescription()}
           </p>
         </div>
@@ -327,7 +338,7 @@ export function DiscoverySettingsModal({
           <SectionHeader
             title="Clarifying Questions"
             description="Allow the agent to ask you questions during discovery to better understand your intent."
-            descriptionClassName="text-caption text-foundation-text-dark-secondary mb-3"
+            descriptionClassName="text-caption text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mb-3"
           />
           <div className="space-y-4">
             <ToggleRow
@@ -380,7 +391,7 @@ export function DiscoverySettingsModal({
           <SectionHeader title="Model Behavior" description="Adjust tone and verbosity." />
           <div className="space-y-4">
             <div>
-              <div className="text-caption font-medium text-foundation-text-dark-primary mb-1">
+              <div className="text-caption font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
                 Reasoning effort
               </div>
               <SegmentedButtons
@@ -394,7 +405,7 @@ export function DiscoverySettingsModal({
               />
             </div>
             <div>
-              <div className="text-caption font-medium text-foundation-text-dark-primary mb-1">
+              <div className="text-caption font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
                 Verbosity
               </div>
               <SegmentedButtons

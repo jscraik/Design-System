@@ -1,17 +1,17 @@
-chatui [command]
+astudio [command]
 
 Commands:
-  chatui help [command]         Show help for a command
-  chatui dev [target]           Start development servers
-  chatui build [target]         Build targets
-  chatui test [suite]           Run test suites
-  chatui mcp                    MCP server utilities
-  chatui tokens <command>       Generate or validate design tokens
-  chatui versions <command>     Sync version metadata across workspace
-  chatui components new <name>  Generate a new UI component
-  chatui lint                   Run lint checks
-  chatui format                 Format code or check formatting
-  chatui doctor                 Check environment and repo health
+  astudio help [command]         Show help for a command
+  astudio dev [target]           Start development servers
+  astudio build [target]         Build targets
+  astudio test [suite]           Run test suites
+  astudio mcp                    MCP server utilities
+  astudio tokens <command>       Generate or validate design tokens
+  astudio versions <command>     Sync version metadata across workspace
+  astudio components new <name>  Generate a new UI component
+  astudio lint                   Run lint checks
+  astudio format                 Format code or check formatting
+  astudio doctor                 Check environment and repo health
 
 Options:
       --version   Print version                                                            [boolean]

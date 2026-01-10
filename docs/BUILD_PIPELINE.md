@@ -1,6 +1,6 @@
 # Enhanced Monorepo Build Pipeline
 
-Last updated: 2026-01-07
+Last updated: 2026-01-09
 
 ## Doc requirements
 
@@ -108,7 +108,7 @@ pnpm generate:tokens
 **Outputs:**
 
 - `packages/tokens/src/foundations.css` - CSS custom properties
-- `platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets/` - Swift Asset Catalog
+- `platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Resources/Colors.xcassets/` - Swift Asset Catalog
 - `packages/tokens/docs/outputs/manifest.json` - Validation manifest
 
 ### 3. Token Validation
@@ -142,10 +142,10 @@ Builds all npm packages:
 
 Builds all Swift packages:
 
-- `platforms/apple/swift/ChatUIFoundation` - Foundation tokens and utilities
-- `platforms/apple/swift/ChatUIComponents` - SwiftUI components
-- `platforms/apple/swift/ChatUIThemes` - Theme presets
-- `platforms/apple/swift/ChatUIShellChatGPT` - Optional shell layouts
+- `platforms/apple/swift/AStudioFoundation` - Foundation tokens and utilities
+- `platforms/apple/swift/AStudioComponents` - SwiftUI components
+- `platforms/apple/swift/AStudioThemes` - Theme presets
+- `platforms/apple/swift/AStudioShellChatGPT` - Optional shell layouts
 
 ### 5. Testing
 
@@ -241,12 +241,12 @@ Options:
 **Swift Packages:**
 
 ```swift
-// platforms/apple/swift/ChatUIFoundation/Package.swift
+// platforms/apple/swift/AStudioFoundation/Package.swift
 // swift-tools-version: 5.9
-// Version: 0.0.0  // Synchronized by build pipeline
+// Version: 0.0.1  // Synchronized by build pipeline
 
 let package = Package(
-    name: "ChatUIFoundation",
+    name: "AStudioFoundation",
     platforms: [
         .iOS(.v15),
         .macOS(.v13)
@@ -259,8 +259,8 @@ let package = Package(
 
 ```json
 {
-  "name": "@chatui/ui",
-  "version": "0.0.0", // Synchronized by build pipeline
+  "name": "@astudio/ui",
+  "version": "0.0.1", // Synchronized by build pipeline
   "scripts": {
     "build": "tsc && vite build"
   }

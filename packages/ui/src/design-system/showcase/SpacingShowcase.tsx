@@ -1,4 +1,4 @@
-import { radiusTokens, spacingScale } from "@chatui/tokens";
+import { radiusTokens, spacingScale } from "@astudio/tokens";
 
 interface SpacingBoxProps {
   token: string;

@@ -8,7 +8,7 @@
  */
 
 import { execSync, spawn } from "child_process";
-import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
+import { existsSync, readFileSync, statSync, writeFileSync } from "fs";
 import { mkdir } from "fs/promises";
 import { createServer } from "net";
 import { dirname, join } from "path";
@@ -19,13 +19,13 @@ const CONFIG = {
   packages: {
     npm: ["packages/ui", "packages/runtime", "packages/tokens", "packages/widgets"],
     swift: [
-      "platforms/apple/swift/ChatUIFoundation",
-      "platforms/apple/swift/ChatUIComponents",
-      "platforms/apple/swift/ChatUIThemes",
-      "platforms/apple/swift/ChatUIShellChatGPT",
-      "platforms/apple/swift/ChatUISystemIntegration",
-      "platforms/apple/swift/ChatUIMCP",
-      "platforms/apple/apps/macos/ChatUIApp",
+      "platforms/apple/swift/AStudioFoundation",
+      "platforms/apple/swift/AStudioComponents",
+      "platforms/apple/swift/AStudioThemes",
+      "platforms/apple/swift/AStudioShellChatGPT",
+      "platforms/apple/swift/AStudioSystemIntegration",
+      "platforms/apple/swift/AStudioMCP",
+      "platforms/apple/apps/macos/AStudioApp",
     ],
   },
   outputs: {
@@ -36,13 +36,13 @@ const CONFIG = {
       "packages/widgets/dist",
     ],
     macos: [
-      "platforms/apple/swift/ChatUIFoundation/.build",
-      "platforms/apple/swift/ChatUIComponents/.build",
-      "platforms/apple/swift/ChatUIThemes/.build",
-      "platforms/apple/swift/ChatUIShellChatGPT/.build",
-      "platforms/apple/swift/ChatUISystemIntegration/.build",
-      "platforms/apple/swift/ChatUIMCP/.build",
-      "platforms/apple/apps/macos/ChatUIApp/.build",
+      "platforms/apple/swift/AStudioFoundation/.build",
+      "platforms/apple/swift/AStudioComponents/.build",
+      "platforms/apple/swift/AStudioThemes/.build",
+      "platforms/apple/swift/AStudioShellChatGPT/.build",
+      "platforms/apple/swift/AStudioSystemIntegration/.build",
+      "platforms/apple/swift/AStudioMCP/.build",
+      "platforms/apple/apps/macos/AStudioApp/.build",
     ],
   },
   cacheDir: ".build-cache",
@@ -176,7 +176,7 @@ class BuildPipeline {
       // Verify outputs exist
       const expectedOutputs = [
         "packages/tokens/src/foundations.css",
-        "platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets",
+        "platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Resources/Colors.xcassets",
         "packages/tokens/docs/outputs/manifest.json",
       ];
 
@@ -333,13 +333,13 @@ class BuildPipeline {
     if (platforms.includes("macos")) {
       // Swift tests for all four packages
       const swiftPackages = [
-        "platforms/apple/swift/ChatUIFoundation",
-        "platforms/apple/swift/ChatUIComponents",
-        "platforms/apple/swift/ChatUIThemes",
-        "platforms/apple/swift/ChatUIShellChatGPT",
-        "platforms/apple/swift/ChatUISystemIntegration",
-        "platforms/apple/swift/ChatUIMCP",
-        "platforms/apple/apps/macos/ChatUIApp",
+        "platforms/apple/swift/AStudioFoundation",
+        "platforms/apple/swift/AStudioComponents",
+        "platforms/apple/swift/AStudioThemes",
+        "platforms/apple/swift/AStudioShellChatGPT",
+        "platforms/apple/swift/AStudioSystemIntegration",
+        "platforms/apple/swift/AStudioMCP",
+        "platforms/apple/apps/macos/AStudioApp",
       ];
 
       for (const packagePath of swiftPackages) {
@@ -466,8 +466,8 @@ class BuildPipeline {
 
     const outputFiles = [
       "packages/tokens/src/foundations.css",
-      "platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/DesignTokens.swift",
-      "platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets",
+      "platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/DesignTokens.swift",
+      "platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Resources/Colors.xcassets",
     ];
 
     return this.needsRebuild(sourceFiles, outputFiles);

@@ -37,14 +37,14 @@ Last updated: 2026-01-04
 
 ## Overview
 
-The `ui-swift` package is now in maintenance mode. All new development should use the `ChatUIComponents` package for button components.
+The `ui-swift` package is now in maintenance mode. All new development should use the `AStudioComponents` package for button components.
 
 ## Why Migrate?
 
-| Feature | ChatUIComponents | ui-swift |
+| Feature | AStudioComponents | ui-swift |
 |---------|------------------|----------|
 | **Platform Support** | iOS 15+, macOS 13+, visionOS 1+ | macOS 13+ only |
-| **Token System** | ChatUIFoundation (FType, FSpacing, FColor) | Internal DesignTokens |
+| **Token System** | AStudioFoundation (FType, FSpacing, FColor) | Internal DesignTokens |
 | **Testing** | Property-based tests (SwiftCheck) | Traditional unit tests |
 | **Accessibility** | Full WCAG 2.2 AA support | Basic support |
 | **Maintenance** | ✅ Active | ⚠️ Legacy |
@@ -59,9 +59,9 @@ The `ui-swift` package is now in maintenance mode. All new development should us
 import ui_swift
 
 // After
-import ChatUIComponents
-import ChatUIFoundation
-import ChatUIThemes
+import AStudioComponents
+import AStudioFoundation
+import AStudioThemes
 ```
 
 ### Step 2: Update Type Names
@@ -92,17 +92,17 @@ targets: [
 **After (Package.swift):**
 ```swift
 dependencies: [
-    .package(path: "../ChatUIComponents"),
-    .package(path: "../ChatUIFoundation"),
-    .package(path: "../ChatUIThemes")
+    .package(path: "../AStudioComponents"),
+    .package(path: "../AStudioFoundation"),
+    .package(path: "../AStudioThemes")
 ],
 targets: [
     .target(
         name: "YourApp",
         dependencies: [
-            "ChatUIComponents",
-            "ChatUIFoundation",
-            "ChatUIThemes"
+            "AStudioComponents",
+            "AStudioFoundation",
+            "AStudioThemes"
         ]
     )
 ]
@@ -112,7 +112,7 @@ targets: [
 
 ### Dynamic Type Scaling
 
-**Note:** The ChatUIComponents version does not yet support dynamic type scaling.
+**Note:** The AStudioComponents version does not yet support dynamic type scaling.
 
 If you need this feature, please file an issue or use the ui-swift version temporarily:
 
@@ -124,13 +124,13 @@ let button = ui_swift.ChatUIButton("Text")  // Has dynamic type support
 
 ### Token Access
 
-**ChatUIComponents** uses `ChatUIFoundation` tokens:
+**AStudioComponents** uses `AStudioFoundation` tokens:
 
 ```swift
 // Instead of DesignTokens (ui-swift)
 let spacing = DesignTokens.Spacing.sm
 
-// Use FType (ChatUIFoundation)
+// Use FType (AStudioFoundation)
 let spacing = FSpacing.s12
 ```
 
@@ -146,7 +146,7 @@ let spacing = FSpacing.s12
 
 ### ⚠️ Different Implementations
 
-| Feature | ChatUIComponents | ui-swift |
+| Feature | AStudioComponents | ui-swift |
 |---------|------------------|----------|
 | Font API | `FType.rowTitle()` | `DesignTokens.Typography.Body.size` |
 | Spacing API | `FSpacing.s8` | `DesignTokens.Spacing.xs` |
@@ -155,7 +155,7 @@ let spacing = FSpacing.s12
 
 ### 🚧 Missing Features
 
-The following features exist in ui-swift but not yet in ChatUIComponents:
+The following features exist in ui-swift but not yet in AStudioComponents:
 
 - **Dynamic Type Scaling** - Planned for next release
 - **Public Test Helpers** - Use property-based tests instead
@@ -165,7 +165,7 @@ The following features exist in ui-swift but not yet in ChatUIComponents:
 ### Basic Button
 
 ```swift
-import ChatUIComponents
+import AStudioComponents
 
 ChatUIButton("Save Changes", variant: .default) {
     handleSave()
@@ -210,19 +210,19 @@ ChatUIButton("Submit", isDisabled: !isValid) {
 ## Support
 
 For questions or issues:
-1. Check [ChatUIComponents documentation](../platforms/apple/swift/ChatUIComponents/README.md)
+1. Check [AStudioComponents documentation](../platforms/apple/swift/AStudioComponents/README.md)
 2. File an issue on GitHub
-3. Contact the ChatUI team
+3. Contact the aStudio team
 
 ## Future Enhancements
 
-We're working on adding the following features to ChatUIComponents:
+We're working on adding the following features to AStudioComponents:
 
 1. **Dynamic Type Scaling** - Better accessibility support
 2. **Animation Presets** - Consistent animations across components
 3. **Theming Improvements** - More theme customization options
 
-Stay tuned for updates!
+Stay tuned for updates.
 
 ## Risks and assumptions
 - Assumptions: TBD (confirm)
@@ -234,4 +234,3 @@ Stay tuned for updates!
 
 ## Troubleshooting
 - TBD: Add the top 3 failure modes and fixes.
-

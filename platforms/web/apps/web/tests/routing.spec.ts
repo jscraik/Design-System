@@ -1,9 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 const routes = [
-  { path: "/settings", heading: "Settings" },
-  { path: "/profile", heading: "Profile" },
-  { path: "/about", heading: "About ChatUI" },
+  { path: "/templates", heading: "ChatGPT UI Templates" },
+  { path: "/templates/compose", heading: "ChatGPT UI Templates" },
 ];
 
 test.describe("apps/web routing", () => {
@@ -32,5 +31,26 @@ test.describe("apps/web routing", () => {
 
     await page.getByRole("button", { name: /Search Results/i }).click();
     await expect(page.getByRole("heading", { name: "Search Results" })).toBeVisible();
+  });
+
+  test("navigates from chat shell to templates via link", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("link", { name: "Templates" }).click();
+    await expect(page).toHaveURL(/\/templates/);
+    await expect(page.getByRole("heading", { name: "ChatGPT UI Templates" })).toBeVisible();
+  });
+
+  test("navigates back to widget gallery from templates", async ({ page }) => {
+    await page.goto("/templates");
+    await page.getByRole("button", { name: "Widget Gallery" }).click();
+    await expect(page).toHaveURL(/\/$/);
+  });
+
+  test("deep links to template by query param and path", async ({ page }) => {
+    await page.goto("/templates?id=template-shell");
+    await expect(page.getByRole("heading", { name: "Template Shell" })).toBeVisible();
+
+    await page.goto("/templates/template-shell");
+    await expect(page.getByRole("heading", { name: "Template Shell" })).toBeVisible();
   });
 });

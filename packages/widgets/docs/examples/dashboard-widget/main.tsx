@@ -1,7 +1,7 @@
-import { HostProvider, createEmbeddedHost, ensureMockOpenAI, useToolOutput } from "@chatui/runtime";
-import { AppsSDKUIProvider } from "@chatui/ui";
-import type { DashboardChat, DashboardStat } from "@chatui/ui/dev";
-import { DashboardPage } from "@chatui/ui/dev";
+import { HostProvider, createEmbeddedHost, ensureMockOpenAI, useToolOutput } from "@astudio/runtime";
+import { AppsSDKUIProvider } from "@astudio/ui";
+import type { DashboardChat, DashboardStat } from "@astudio/ui/dev";
+import { DashboardPage } from "@astudio/ui/dev";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "../../../src/styles.css";

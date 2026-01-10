@@ -25,7 +25,7 @@ import {
  *
  * ## Usage
  * ```tsx
- * import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@chatui/ui";
+ * import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@astudio/ui";
  *
  * <Dialog>
  *   <DialogTrigger asChild>

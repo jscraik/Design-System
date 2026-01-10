@@ -1,5 +1,5 @@
-import { AppsSDKButton, ModalBody, ModalDialog, ModalFooter, ModalHeader } from "@chatui/ui";
-import { DiscoverySettingsModal, IconPickerModal, SettingsModal } from "@chatui/ui/modals";
+import { AppsSDKButton, ModalBody, ModalDialog, ModalFooter, ModalHeader } from "@astudio/ui";
+import { DiscoverySettingsModal, IconPickerModal, SettingsModal } from "@astudio/ui/modals";
 import { useState } from "react";
 
 interface Widget {
@@ -249,7 +249,7 @@ export function HarnessPage() {
         <SettingsModal
           isOpen={isSettingsOpen}
           onClose={() => setIsSettingsOpen(false)}
-          account={{ email: "dev@chatui.test", phone: "(555) 123-4567", subscriptionLabel: "Pro" }}
+          account={{ email: "dev@astudio.test", phone: "(555) 123-4567", subscriptionLabel: "Pro" }}
           appInfo={{ versionLabel: "1.0.0" }}
         />
       )}

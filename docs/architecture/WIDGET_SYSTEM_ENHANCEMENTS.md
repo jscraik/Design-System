@@ -1,6 +1,6 @@
 # Enhanced Widget System Implementation
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Engineers and technical leads
@@ -39,7 +39,7 @@ Last updated: 2026-01-04
 
 ## Overview
 
-Successfully implemented an enhanced widget infrastructure inspired by the [Toolbase-AI OpenAI Apps SDK template](https://github.com/Toolbase-AI/openai-apps-sdk-cloudflare-vite-template), bringing automated discovery, content hashing, and standardized patterns to the ChatUI widget system.
+Successfully implemented an enhanced widget infrastructure inspired by the [Toolbase-AI OpenAI Apps SDK template](https://github.com/Toolbase-AI/openai-apps-sdk-cloudflare-vite-template), bringing automated discovery, content hashing, and standardized patterns to the aStudio widget system.
 
 ## 🎯 Key Improvements
 
@@ -219,4 +219,4 @@ mountWidget(<MyWidget />);
 - [ ] Implement widget testing utilities
 - [ ] Create widget development CLI tools
 
-This implementation brings the ChatUI widget system up to production standards while maintaining backward compatibility and providing a clear path for future enhancements.
+This implementation brings the aStudio widget system up to production standards while maintaining backward compatibility and providing a clear path for future enhancements.

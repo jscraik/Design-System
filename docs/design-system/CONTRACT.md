@@ -25,7 +25,7 @@ This index links all governing artifacts for the UI design system.
 
 ## Export Naming Policy
 
-- Apps SDK UI components are re-exported with the `AppsSDK*` prefix (e.g., `AppsSDKButton`).
+- Apps SDK UI components are re-exported with the `AppsSDK*` prefix (for example, `AppsSDKButton`).
 - Local components must not duplicate upstream Apps SDK UI capabilities; prefer wrappers or re-exports.
 - Any fallback component must live under `components/**/fallback/**` with required metadata headers.
 

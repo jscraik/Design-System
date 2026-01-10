@@ -1,6 +1,6 @@
-# ChatUI Test Plan
+# aStudio Test Plan
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Executive Summary
 
@@ -35,21 +35,21 @@ This test plan addresses the critical testing gaps identified in the codebase au
 - [ ] Checkbox (`packages/ui/src/components/ui/base/Checkbox/`)
 - [ ] Switch (`packages/ui/src/components/ui/base/Switch/`)
 - [ ] Select (`packages/ui/src/components/ui/base/Select/`)
-- [ ] Dialog/Modal (`packages/ui/src/components/ui/overlays/Dialog/`)
+- [ ] Dialog/Modal (`packages/ui/src/components/ui/overlays/Modal/`)
 - [ ] Tooltip (`packages/ui/src/components/ui/overlays/Tooltip/`)
 
 **Priority 2 - Chat Components**
-- [ ] ChatHeader (`packages/ui/src/components/ui/chat/ChatHeader/`)
-- [ ] ChatSidebar (`packages/ui/src/components/ui/chat/ChatSidebar/`)
-- [ ] ChatMessages (`packages/ui/src/components/ui/chat/ChatMessages/`)
-- [ ] ChatInput (`packages/ui/src/components/ui/chat/ChatInput/`)
-- [ ] MessageBubble (`packages/ui/src/components/ui/chat/MessageBubble/`)
+- [ ] ChatHeader (`packages/ui/src/app/chat/ChatHeader/`)
+- [ ] ChatSidebar (`packages/ui/src/app/chat/ChatSidebar/`)
+- [ ] ChatMessages (`packages/ui/src/app/chat/ChatMessages/`)
+- [ ] ChatInput (`packages/ui/src/app/chat/ChatInput/`)
+- [ ] Message rendering (in `packages/ui/src/app/chat/ChatMessages/`)
 
 **Priority 3 - Form Components**
-- [ ] FormField (`packages/ui/src/components/ui/forms/FormField/`)
-- [ ] FormLabel (`packages/ui/src/components/ui/forms/FormLabel/`)
-- [ ] FormDescription (`packages/ui/src/components/ui/forms/FormDescription/`)
-- [ ] FormError (`packages/ui/src/components/ui/forms/FormError/`)
+- [ ] FormField (`packages/ui/src/components/ui/forms/Form/` via FormField export)
+- [ ] FormLabel (`packages/ui/src/components/ui/forms/Form/` via FormLabel export)
+- [ ] FormDescription (`packages/ui/src/components/ui/forms/Form/` via FormDescription export)
+- [ ] FormError (`packages/ui/src/components/ui/forms/Form/` via FormMessage export)
 
 **Priority 4 - Navigation**
 - [ ] Tabs (`packages/ui/src/components/ui/navigation/Tabs/`)
@@ -57,9 +57,9 @@ This test plan addresses the critical testing gaps identified in the codebase au
 - [ ] ModelSelector (`packages/ui/src/components/ui/navigation/ModelSelector/`)
 
 **Priority 5 - Feedback**
-- [ ] Alert (`packages/ui/src/components/ui/feedback/Alert/`)
+- [ ] AlertDialog (`packages/ui/src/components/ui/feedback/AlertDialog/`)
 - [ ] Toast (`packages/ui/src/components/ui/feedback/Toast/`)
-- [ ] Progress (`packages/ui/src/components/ui/feedback/Progress/`)
+- [ ] Sonner (`packages/ui/src/components/ui/feedback/Sonner/`)
 
 ### 2. Integration Tests (Vitest)
 

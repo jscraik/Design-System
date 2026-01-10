@@ -7,6 +7,7 @@ interface Env {
   ASSETS: {
     fetch: (request: Request) => Promise<Response>;
   };
+  WIDGET_SERVER: DurableObjectNamespace;
   WORKER_DOMAIN_BASE?: string;
   WIDGET_DOMAIN?: string;
 }
@@ -425,11 +426,11 @@ export class ChatUIWidgetServer {
       });
     }
 
-    // Example: Enhanced example widget (widget-accessible for interactive demos)
-    if (widgetManifest["enhanced-example-widget"]) {
+    // Example: Kitchen-sink-lite demo widget (widget-accessible for interactive demos)
+    if (widgetManifest["kitchen-sink-lite"]) {
       this.tools.set("show_enhanced_example", {
         description:
-          "Display an enhanced example widget demonstrating OpenAI integration features including state management, theme detection, and tool calling",
+          "Display the kitchen-sink-lite demo widget showcasing OpenAI integration patterns including state management, theme detection, and tool calling",
         inputSchema: {
           type: "object",
           properties: {
@@ -443,17 +444,17 @@ export class ChatUIWidgetServer {
           additionalProperties: false,
         },
         _meta: {
-          "openai/outputTemplate": `ui://widget/${(widgetManifest["enhanced-example-widget"] as WidgetInfo).uri}`,
-          "openai/toolInvocation/invoking": "Preparing enhanced widget demo...",
-          "openai/toolInvocation/invoked": "Enhanced widget ready for interaction",
+          "openai/outputTemplate": `ui://widget/${(widgetManifest["kitchen-sink-lite"] as WidgetInfo).uri}`,
+          "openai/toolInvocation/invoking": "Preparing kitchen-sink-lite demo...",
+          "openai/toolInvocation/invoked": "kitchen-sink-lite demo ready for interaction",
           "openai/widgetAccessible": true,
           "openai/widgetDescription":
-            "Interactive demonstration of advanced widget capabilities including persistent state, theme adaptation, and OpenAI API integration",
+            "Kitchen-sink-lite demo widget showcasing advanced widget capabilities including state, theme adaptation, and OpenAI API integration patterns",
         },
         handler: async (args: Record<string, unknown>) => {
           const demoMode = (args?.demoMode as string) || "basic";
           return {
-            content: [{ type: "text", text: `Enhanced widget demo in ${demoMode} mode` }],
+            content: [{ type: "text", text: `Kitchen-sink-lite demo in ${demoMode} mode` }],
             structuredContent: {
               type: "enhanced_demo",
               mode: demoMode,
@@ -737,7 +738,7 @@ export class ChatUIWidgetServer {
     // Users can extend this method or create their own tool registration
 
     // Example: File processing tool (demonstrates file params and upload handling)
-    if (widgetManifest["enhanced-example-widget"]) {
+    if (widgetManifest["kitchen-sink-lite"]) {
       this.tools.set("process_image", {
         description:
           "Process and analyze uploaded images with interactive preview and editing capabilities",
@@ -770,7 +771,7 @@ export class ChatUIWidgetServer {
           additionalProperties: false,
         },
         _meta: {
-          "openai/outputTemplate": `ui://widget/${(widgetManifest["enhanced-example-widget"] as WidgetInfo).uri}`,
+          "openai/outputTemplate": `ui://widget/${(widgetManifest["kitchen-sink-lite"] as WidgetInfo).uri}`,
           "openai/toolInvocation/invoking": "Processing image...",
           "openai/toolInvocation/invoked": "Image processing complete",
           "openai/widgetAccessible": true,
@@ -858,6 +859,23 @@ export class ChatUIWidgetServer {
   }
 }
 
+export class ChatUIWidgetServerDO {
+  private server: ChatUIWidgetServer;
+  private initPromise: Promise<void>;
+
+  constructor(state: DurableObjectState, env: Env) {
+    this.server = new ChatUIWidgetServer(env);
+    this.initPromise = state.blockConcurrencyWhile(async () => {
+      await this.server.init();
+    });
+  }
+
+  async fetch(request: Request): Promise<Response> {
+    await this.initPromise;
+    return this.server.handleMcpRequest(request);
+  }
+}
+
 /**
  * Cloudflare Workers fetch handler
  */
@@ -867,7 +885,9 @@ export default {
 
     // Handle MCP endpoint
     if (url.pathname === "/mcp") {
-      return ChatUIWidgetServer.serve(request, env);
+      const id = env.WIDGET_SERVER.idFromName("default");
+      const stub = env.WIDGET_SERVER.get(id);
+      return stub.fetch(request);
     }
 
     // Handle widget assets (fallback to ASSETS)

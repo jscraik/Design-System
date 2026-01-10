@@ -9,7 +9,7 @@ import { ArchivedChatsPanel } from "./ArchivedChatsPanel";
  *
  * ## Usage
  * ```tsx
- * import { ArchivedChatsPanel } from "@chatui/ui";
+ * import { ArchivedChatsPanel } from "@astudio/ui";
  *
  * <ArchivedChatsPanel onBack={fn()} />
  * ```

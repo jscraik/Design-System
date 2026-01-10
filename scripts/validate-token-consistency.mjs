@@ -12,9 +12,9 @@ import { join } from "path";
 
 const CSS_PATH = "packages/tokens/src/foundations.css";
 const ASSET_CATALOG_PATH =
-  "platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets";
+  "platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Resources/Colors.xcassets";
 const SWIFT_TOKENS_PATH =
-  "platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/DesignTokens.swift";
+  "platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/DesignTokens.swift";
 
 const COLOR_MAPPINGS = [
   { name: "foundation-bg-app", light: "foundation-bg-light-1", dark: "foundation-bg-dark-1" },

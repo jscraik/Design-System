@@ -1,12 +1,12 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { colorTokens } from "@chatui/tokens";
+import { colorTokens } from "@astudio/tokens";
 
 const ROOT_DIR = resolve(process.cwd(), "..", "..");
 const COMPONENTS_DIR = join(ROOT_DIR, "packages/ui/src/components");
 
-const FOCUS_RING_REGEX = /focus(?:-visible)?\:ring-([a-z0-9-]+)(?:\/(\d+))?/g;
+const FOCUS_RING_REGEX = /focus(?:-visible)?:ring-([a-z0-9-]+)(?:\/(\d+))?/g;
 
 type Rgba = { r: number; g: number; b: number; a: number };
 

@@ -48,11 +48,11 @@ Last updated: 2026-01-04
 
 **Files to Fix:**
 
-- `packages/ui/src/app/chat/ComposeView.tsx`
-- `packages/ui/src/templates/blocks/TemplatePanel.tsx`
-- `packages/ui/src/templates/blocks/TemplateHeaderBar.tsx`
-- `packages/ui/src/templates/blocks/TemplateFooterBar.tsx`
-- `packages/ui/src/templates/blocks/TemplateFormField.tsx`
+- `packages/ui/src/app/chat/ComposeView/ComposeView.tsx`
+- `packages/ui/src/templates/blocks/TemplatePanel/TemplatePanel.tsx`
+- `packages/ui/src/templates/blocks/TemplateHeaderBar/TemplateHeaderBar.tsx`
+- `packages/ui/src/templates/blocks/TemplateFooterBar/TemplateFooterBar.tsx`
+- `packages/ui/src/templates/blocks/TemplateFormField/TemplateFormField.tsx`
 
 ### 2. **Chat Input (Light Mode)**
 
@@ -71,7 +71,7 @@ Last updated: 2026-01-04
 
 **Files Already Fixed:**
 
-- `packages/ui/src/app/chat/ChatInput.tsx`
+- `packages/ui/src/app/chat/ChatInput/ChatInput.tsx`
 
 ### 3. **Sidebar (Light Mode)**
 
@@ -89,7 +89,7 @@ Last updated: 2026-01-04
 
 **Files Already Fixed:**
 
-- `packages/ui/src/app/chat/ChatSidebar.tsx`
+- `packages/ui/src/app/chat/ChatSidebar/ChatSidebar.tsx`
 
 ### 4. **Foundation Colors**
 

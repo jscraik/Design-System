@@ -10,7 +10,7 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-This guide explains how to connect a deployed ChatUI MCP server to ChatGPT so widgets appear inside chats.
+This guide explains how to connect a deployed aStudio MCP server to ChatGPT so widgets appear inside chats.
 
 If you have not deployed the MCP server yet, start with `docs/guides/CLOUDFLARE_DEPLOYMENT.md`.
 
@@ -42,7 +42,7 @@ ChatGPT UI labels change over time. Look for **Apps**, **Connectors**, or **Tool
 2. Go to Settings and find the area for Apps/Connectors/Tools.
 3. Choose the option to add a new MCP server or connector.
 4. Provide:
-   - Name: `ChatUI Widgets` (or your team name)
+   - Name: `aStudio Widgets` (or your team name)
    - URL: `https://your-app.workers.dev/mcp`
 5. Save and confirm that ChatGPT lists your tools.
 

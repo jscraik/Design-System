@@ -9,7 +9,7 @@ import { AppsPanel } from "./AppsPanel";
  *
  * ## Usage
  * ```tsx
- * import { AppsPanel } from "@chatui/ui";
+ * import { AppsPanel } from "@astudio/ui";
  *
  * <AppsPanel onBack={fn()} />
  * ```

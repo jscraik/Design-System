@@ -89,7 +89,7 @@ Screen: Compose (macOS full)
 
 Screen: Widget Inline
 
-- Layout: Prompt Instructions card only + CTA "Open Fullscreen".
+- Layout: Prompt Instructions card only + CTA "Open Fullscreen"
 - Avoid nested scroll; use minimal height.
 - Primary actions: 1 max in inline.
 
@@ -120,10 +120,10 @@ Screen: Widget Fullscreen
 
 ### 7.1 Semantics and labels
 
-- Prompt Instructions editor: label "Prompt Instructions".
-- System Message: label "System Message".
-- Task Description: label varies by mode (Rewrite/Augment/Preserve).
-- Run button: label "Run Discovery" / "Rewrite".
+- Prompt Instructions editor: label "Prompt Instructions"
+- System Message: label "System Message"
+- Task Description: label varies by mode (Rewrite/Augment/Preserve)
+- Run button: label "Run Discovery" / "Rewrite"
 - Web-only icons: aria-label for tools, web search toggle.
 - SwiftUI: .accessibilityLabel for all buttons/fields.
 
@@ -277,8 +277,8 @@ export const Default: StoryObj<typeof ComposeWidgetView> = {};
 
 ```swift
 import SwiftUI
-import ChatUIComponents
-import ChatUIFoundation
+import AStudioComponents
+import AStudioFoundation
 
 public struct ComposeViewSwiftUI: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -401,13 +401,13 @@ final class ComposeViewController: NSViewController {
 
 # FILE_PLAN
 
-- packages/ui/src/app/chat/ComposeView.tsx (reference: web parity target)
+- packages/ui/src/app/chat/ComposeView/ComposeView.tsx (reference: web parity target)
 - packages/ui/src/app/chat/ComposeWidgetView.tsx (new widget view)
 - platforms/web/apps/web/src/pages/HarnessPage.tsx (add widget entry)
 - platforms/web/apps/web/src/widgets/compose-widget/index.html (new widget mount, if using existing widget harness pattern)
 - platforms/web/apps/web/src/widgets/compose-widget/main.tsx (widget entry)
 - platforms/web/apps/storybook/src/stories/ComposeWidgetView.stories.tsx
-- platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ComposeViewSwiftUI.swift
-- platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ComposeViewController.swift (AppKit wrapper)
+- platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ComposeViewSwiftUI.swift
+- platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ComposeViewController.swift (AppKit wrapper)
 - packages/tokens/src (add size/icon/border tokens if you want strict parity without ad-hoc values)
-- platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/DesignTokens.swift (regenerate for new tokens if added)
+- platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/DesignTokens.swift (regenerate for new tokens if added)

@@ -1,5 +1,5 @@
-import { HostProvider, createEmbeddedHost, ensureMockOpenAI, useToolOutput } from "@chatui/runtime";
-import { AppsSDKBadge, AppsSDKUIProvider } from "@chatui/ui";
+import { HostProvider, createEmbeddedHost, ensureMockOpenAI, useToolOutput } from "@astudio/runtime";
+import { AppsSDKBadge, AppsSDKUIProvider } from "@astudio/ui";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "../../../styles.css";

@@ -1,4 +1,4 @@
-# ChatUI Swift Adoption Guide
+# aStudio Swift Adoption Guide
 
 Last updated: 2026-01-04
 
@@ -10,7 +10,7 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-Complete guide for adopting the ChatUI Swift package architecture in your native iOS, macOS, and visionOS applications.
+Complete guide for adopting the aStudio Swift package architecture in your native iOS, macOS, and visionOS applications.
 
 ## Table of Contents
 
@@ -27,7 +27,7 @@ Complete guide for adopting the ChatUI Swift package architecture in your native
 
 ## Getting Started
 
-The ChatUI Swift architecture consists of four modular packages that work together to provide a complete design system for native Apple platform development.
+The aStudio Swift architecture consists of four modular packages that work together to provide a complete design system for native Apple platform development.
 
 ### Prerequisites
 
@@ -44,7 +44,7 @@ The ChatUI Swift architecture consists of four modular packages that work togeth
 
 ## Package Overview
 
-### ChatUIFoundation
+### AStudioFoundation
 
 **What it provides:**
 
@@ -60,7 +60,7 @@ The ChatUI Swift architecture consists of four modular packages that work togeth
 - Use for consistent colors, typography, and spacing
 - Use for platform-specific behavior
 
-### ChatUIThemes
+### AStudioThemes
 
 **What it provides:**
 
@@ -74,7 +74,7 @@ The ChatUI Swift architecture consists of four modular packages that work togeth
 - When you need pixel-perfect matching with web app
 - When you want native macOS alternatives
 
-### ChatUIComponents
+### AStudioComponents
 
 **What it provides:**
 
@@ -89,7 +89,7 @@ The ChatUI Swift architecture consists of four modular packages that work togeth
 - When you need pre-built UI primitives
 - When you want React-like component APIs
 
-### ChatUIShellChatGPT
+### AStudioShellChatGPT
 
 **What it provides:**
 
@@ -112,7 +112,7 @@ The ChatUI Swift architecture consists of four modular packages that work togeth
 2. Go to File → Add Package Dependencies
 3. Click "Add Local..."
 4. Navigate to the `platforms/apple/swift/` directory in the repository
-5. Select the package you want to add (e.g., `ChatUIFoundation`)
+5. Select the package you want to add (for example, `AStudioFoundation`)
 6. Repeat for other packages as needed
 
 ### Method 2: Swift Package Manager (Package.swift)
@@ -131,19 +131,19 @@ let package = Package(
         .visionOS(.v1)
     ],
     dependencies: [
-        .package(path: "../platforms/apple/swift/ChatUIFoundation"),
-        .package(path: "../platforms/apple/swift/ChatUIThemes"),
-        .package(path: "../platforms/apple/swift/ChatUIComponents"),
-        .package(path: "../platforms/apple/swift/ChatUIShellChatGPT"), // Optional
+        .package(path: "../platforms/apple/swift/AStudioFoundation"),
+        .package(path: "../platforms/apple/swift/AStudioThemes"),
+        .package(path: "../platforms/apple/swift/AStudioComponents"),
+        .package(path: "../platforms/apple/swift/AStudioShellChatGPT"), // Optional
     ],
     targets: [
         .target(
             name: "MyApp",
             dependencies: [
-                "ChatUIFoundation",
-                "ChatUIThemes",
-                "ChatUIComponents",
-                "ChatUIShellChatGPT", // Optional
+                "AStudioFoundation",
+                "AStudioThemes",
+                "AStudioComponents",
+                "AStudioShellChatGPT", // Optional
             ]
         )
     ]
@@ -156,9 +156,9 @@ let package = Package(
 
 ```swift
 import SwiftUI
-import ChatUIFoundation
-import ChatUIThemes
-import ChatUIComponents
+import AStudioFoundation
+import AStudioThemes
+import AStudioComponents
 ```
 
 ### Step 2: Use Foundation Tokens
@@ -208,9 +208,9 @@ Let's build a complete settings screen step by step.
 
 ```swift
 import SwiftUI
-import ChatUIFoundation
-import ChatUIThemes
-import ChatUIComponents
+import AStudioFoundation
+import AStudioThemes
+import AStudioComponents
 
 struct MySettingsView: View {
     var body: some View {
@@ -578,7 +578,7 @@ struct AnimatedView: View {
 
 ```swift
 import XCTest
-@testable import ChatUIComponents
+@testable import AStudioComponents
 
 final class SettingRowTests: XCTestCase {
     func testRowRendersTitle() {
@@ -629,7 +629,7 @@ final class SettingRowTests: XCTestCase {
 // In Package.swift
 .target(
     name: "YourTarget",
-    dependencies: ["ChatUIFoundation"],
+    dependencies: ["AStudioFoundation"],
     resources: [
         .process("Resources")
     ]
@@ -650,24 +650,24 @@ final class SettingRowTests: XCTestCase {
 
 ### SwiftUI Previews Not Loading
 
-**Problem:** Previews show "Cannot preview in this file".
+**Problem:** Previews show "Cannot preview in this file."
 
 **Solution:** Open the package directly in Xcode (not through Xcode project):
 
 ```bash
-cd platforms/apple/swift/ChatUIComponents
+cd platforms/apple/swift/AStudioComponents
 open Package.swift
 ```
 
 ### Build Errors with Asset Catalog
 
-**Problem:** "Cannot find 'foundation-text-primary' in scope".
+**Problem:** "Cannot find 'foundation-text-primary' in scope."
 
 **Solution:** Ensure you're using `Color("foundation-text-primary", bundle: .module)` or the `FColor` API.
 
 ### Type Mismatch Errors
 
-**Problem:** "Cannot convert value of type 'AnyView' to expected argument type 'Image'".
+**Problem:** "Cannot convert value of type 'AnyView' to expected argument type 'Image'."
 
 **Solution:** Wrap images in `AnyView`:
 
@@ -706,4 +706,3 @@ See repository root for license information.
 
 ## Verify
 - TBD: Add concrete verification steps and expected results.
-

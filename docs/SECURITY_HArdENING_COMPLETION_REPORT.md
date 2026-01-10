@@ -1,6 +1,6 @@
 # Security Hardening Completion Report
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Maintainers and security reviewers
@@ -75,26 +75,26 @@ All three major security initiatives have been completed successfully:
 ### Files Created/Modified
 
 **Security Implementations (3 new files):**
-- `ChatUIMCP/MCPClientValidation.swift` - URL validation logic
-- `ChatUIMCP/MCPRateLimiter.swift` - Rate limiting actor
-- `ChatUISystemIntegration/CryptoManager.swift` - AES-256 encryption
+- `AStudioMCP/MCPClientValidation.swift` - URL validation logic
+- `AStudioMCP/MCPRateLimiter.swift` - Rate limiting actor
+- `AStudioSystemIntegration/CryptoManager.swift` - AES-256 encryption
 
 **Files Modified (4 files):**
-- `ChatUIMCP/MCPAuthenticator.swift` - Keychain accessibility
-- `ChatUIMCP/MCPClient.swift` - Rate limiting + certificate pinning integration
-- `ChatUIMCP/MCPError.swift` - New error types
-- `ChatUISystemIntegration/SpotlightManager.swift` - Query sanitization
-- `ChatUISystemIntegration/AppLifecycleManager.swift` - Encryption support
-- `ChatUISystemIntegration/Package.swift` - CryptoKit linking
+- `AStudioMCP/MCPAuthenticator.swift` - Keychain accessibility
+- `AStudioMCP/MCPClient.swift` - Rate limiting + certificate pinning integration
+- `AStudioMCP/MCPError.swift` - New error types
+- `AStudioSystemIntegration/SpotlightManager.swift` - Query sanitization
+- `AStudioSystemIntegration/AppLifecycleManager.swift` - Encryption support
+- `AStudioSystemIntegration/Package.swift` - CryptoKit linking
 
 **Certificate Pinning (8 files):**
-- `ChatUIMCP/CertificatePinningValidator.swift` - Production pinning implementation
-- `ChatUIMCP/Tests/ChatUIMCPTests/CertificatePinningValidatorTests.swift` - 15+ tests
+- `AStudioMCP/CertificatePinningValidator.swift` - Production pinning implementation
+- `AStudioMCP/Tests/AStudioMCPTests/CertificatePinningValidatorTests.swift` - 15+ tests
 - `docs/guides/TLS_CERTIFICATE_PINNING.md` - Implementation guide
 - `docs/guides/CERTIFICATE_PINNING_QUICK_START.md` - Quick reference
 - `docs/guides/CERTIFICATE_PINNING_IMPLEMENTATION_SUMMARY.md` - Full documentation
 - `docs/examples/CertificatePinningExamples.swift` - Usage examples
-- `scripts/generate-test-certificate.sh` - Certificate generation script
+- `docs/guides/TLS_CERTIFICATE_PINNING.md` - OpenSSL commands for test certificate generation
 
 ---
 
@@ -133,7 +133,7 @@ All three major security initiatives have been completed successfully:
 
 ### Test Coverage by Package
 
-#### ChatUIMCP (70 tests)
+#### AStudioMCP (70 tests)
 - **MCPAuthenticatorSecurityTests.swift** - 24 tests
   - Keychain accessibility controls
   - Token storage/retrieval/deletion
@@ -151,7 +151,7 @@ All three major security initiatives have been completed successfully:
   - Usage statistics
   - Thread safety
 
-#### ChatUISystemIntegration (49 tests)
+#### AStudioSystemIntegration (49 tests)
 - **SpotlightManagerSecurityTests.swift** - 17 tests
   - Query sanitization
   - SQL injection prevention
@@ -188,15 +188,15 @@ All three major security initiatives have been completed successfully:
 **Approach:** Gradual migration with deprecation notices rather than breaking changes
 
 **Reasoning:**
-- ChatUIComponents and ui-swift use different token systems (incompatible)
-- ChatUIComponents doesn't yet support dynamic type scaling
-- Consumer apps already use ChatUIComponents directly
+- AStudioComponents and ui-swift use different token systems (incompatible)
+- AStudioComponents doesn't yet support dynamic type scaling
+- Consumer apps already use AStudioComponents directly
 - Lower risk with gradual migration
 
 **Actions Taken:**
 1. Added `@available(*, deprecated)` notices to ui-swift ChatUIButton
 2. Created migration guide: `docs/MIGRATION_GUIDE_CHATUIBUTTON.md`
-3. Documented ChatUIComponents as the canonical source
+3. Documented AStudioComponents as the canonical source
 
 ---
 
@@ -230,7 +230,7 @@ All three major security initiatives have been completed successfully:
 ## 6. Remaining Work
 
 ### High Priority
-1. **Dynamic Type Scaling** - Add to ChatUIComponents (est. 4 hours)
+1. **Dynamic Type Scaling** - Add to AStudioComponents (est. 4 hours)
 2. **Key Management** - Implement secure key storage for CryptoManager (est. 6 hours)
 3. **Audit Logging** - Add security event logging (est. 8 hours)
 
@@ -247,10 +247,10 @@ All three major security initiatives have been completed successfully:
 
 ```bash
 # All security tests
-cd platforms/apple/swift/ChatUIMCP
+cd platforms/apple/swift/AStudioMCP
 swift test --filter SecurityTests
 
-cd platforms/apple/swift/ChatUISystemIntegration
+cd platforms/apple/swift/AStudioSystemIntegration
 swift test --filter SecurityTests
 
 # With coverage
@@ -260,7 +260,7 @@ swift test --enable-code-coverage
 ### Using Certificate Pinning
 
 ```swift
-import ChatUIMCP
+import AStudioMCP
 
 // With certificate pinning
 let client = MCPClient(
@@ -317,7 +317,7 @@ openssl s_client -connect api.example.com:443 -showcerts \
 
 ### Short-term (Next 2 Weeks)
 1. **Begin consolidation Phase 2** - DesignTokens unification
-2. **Add dynamic type scaling** - Feature parity for ChatUIComponents
+2. **Add dynamic type scaling** - Feature parity for AStudioComponents
 3. **Set up key rotation** - Implement automated certificate rotation
 
 ### Medium-term (Next 6 Weeks)

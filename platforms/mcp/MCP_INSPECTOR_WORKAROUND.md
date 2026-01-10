@@ -61,10 +61,10 @@ We've implemented a comprehensive testing solution that doesn't rely on the brok
    - Works around the Inspector CLI bug
 
 3. **Updated Package Scripts**
-   - `pnpm test` - Run all tests
-   - `pnpm test:contract` - Tool contract validation
-   - `pnpm test:jsonrpc` - JSON-RPC integration tests
-   - `pnpm test:cli <method> [params]` - Manual CLI testing
+   - `pnpm mcp:test` - Run all tests
+   - `pnpm mcp:test:contract` - Tool contract validation
+   - `pnpm mcp:test:jsonrpc` - JSON-RPC integration tests
+   - `pnpm mcp:test:cli <method> [params]` - Manual CLI testing
 
 4. **Documentation**
    - `MCP_TESTING_GUIDE.md` - Comprehensive testing guide
@@ -74,19 +74,19 @@ We've implemented a comprehensive testing solution that doesn't rely on the brok
 ### Quick Start
 
 ```bash
-# From repo root or platforms/mcp
+# From repo root
 
 # 1. Start server (in one terminal)
-pnpm dev
+pnpm mcp:dev
 
 # 2. Run automated tests (in another terminal)
-pnpm test:contract    # Contract validation
-pnpm test:jsonrpc     # Integration tests
+pnpm mcp:test:contract    # Contract validation
+pnpm mcp:test:jsonrpc     # Integration tests
 
 # 3. Manual testing
-pnpm test:cli tools/list
-pnpm test:cli tools/call '{"name":"widget_name","arguments":{}}'
-pnpm test:cli resources/list
+pnpm mcp:test:cli tools/list
+pnpm mcp:test:cli tools/call '{"name":"widget_name","arguments":{}}'
+pnpm mcp:test:cli resources/list
 ```
 
 ### From Repo Root
@@ -117,7 +117,7 @@ pnpm mcp:test:cli tools/list  # Manual CLI
 While the CLI is broken, the Inspector UI works fine for visual/interactive testing:
 
 ```bash
-pnpm inspector
+pnpm mcp:inspector
 # or from root:
 pnpm mcp:inspector
 ```

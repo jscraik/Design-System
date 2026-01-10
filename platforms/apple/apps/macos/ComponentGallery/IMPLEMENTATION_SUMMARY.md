@@ -47,7 +47,7 @@ Last updated: 2026-01-04
 
 ## What Was Built
 
-A comprehensive macOS application for browsing, testing, and documenting all components from the modular ChatUI SwiftUI library.
+A comprehensive macOS application for browsing, testing, and documenting all components from the modular aStudio SwiftUI library.
 
 ### Application Structure
 
@@ -79,7 +79,7 @@ platforms/apple/apps/macos/ComponentGallery/
 - **7 Component Categories**: Foundation, Settings, Buttons, Inputs, Navigation, Themes, Accessibility
 - **NavigationSplitView Layout**: Sidebar for category selection, detail view for component showcase
 - **Live Examples**: All components are interactive and demonstrate real behavior
-- **Comprehensive Coverage**: Showcases all components from ChatUIFoundation, ChatUIComponents, ChatUIThemes
+- **Comprehensive Coverage**: Showcases all components from AStudioFoundation, AStudioComponents, AStudioThemes
 
 #### 2. Side-by-Side Light/Dark Mode Comparison ✅
 
@@ -108,7 +108,7 @@ platforms/apple/apps/macos/ComponentGallery/
 
 #### 5. Token Hot Reload Integration ✅
 
-- **Asset Catalog Integration**: Uses ChatUIFoundation's Asset Catalog for colors
+- **Asset Catalog Integration**: Uses AStudioFoundation's Asset Catalog for colors
 - **Automatic Updates**: SwiftUI previews refresh when Asset Catalog changes
 - **Token Watcher Compatible**: Works with `pnpm -C packages/tokens tokens:watch` workflow
 - **Instant Feedback**: Changes to design tokens reflect immediately in running app
@@ -191,14 +191,14 @@ platforms/apple/apps/macos/ComponentGallery/
 
 ### Dependencies
 
-The Component Gallery depends on all four modular ChatUI packages:
+The Component Gallery depends on all four modular aStudio packages:
 
 ```swift
 dependencies: [
-    .package(path: "../../../swift/ChatUIFoundation"),
-    .package(path: "../../../swift/ChatUIComponents"),
-    .package(path: "../../../swift/ChatUIThemes"),
-    .package(path: "../../../swift/ChatUIShellChatGPT")
+    .package(path: "../../../swift/AStudioFoundation"),
+    .package(path: "../../../swift/AStudioComponents"),
+    .package(path: "../../../swift/AStudioThemes"),
+    .package(path: "../../../swift/AStudioShellChatGPT")
 ]
 ```
 
@@ -303,12 +303,12 @@ Potential improvements for future iterations:
 
 ## Conclusion
 
-The Component Gallery application is complete and fully functional. It provides a comprehensive development tool for exploring, testing, and documenting all components from the modular ChatUI SwiftUI library. The application successfully demonstrates:
+The Component Gallery application is complete and fully functional. It provides a comprehensive development tool for exploring, testing, and documenting all components from the modular aStudio SwiftUI library. The application successfully demonstrates:
 
-- All components from ChatUIFoundation, ChatUIComponents, ChatUIThemes
+- All components from AStudioFoundation, AStudioComponents, AStudioThemes
 - Side-by-side light/dark mode comparison
 - Interactive accessibility testing with completion tracking
 - Screenshot export capability (infrastructure ready)
 - Token hot reload integration for instant feedback
 
-The Component Gallery is ready for use in development workflows and serves as living documentation for the ChatUI component library.
+The Component Gallery is ready for use in development workflows and serves as living documentation for the aStudio component library.

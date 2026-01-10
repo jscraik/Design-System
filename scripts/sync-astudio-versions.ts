@@ -3,8 +3,8 @@ import { join } from "path";
 
 const ROOT = process.cwd();
 const ASTUDIO_PACKAGES = [
-  "packages/astudio-tokens",
-  "packages/astudio-ui",
+  "packages/tokens",
+  "packages/ui",
   "packages/astudio-icons",
   "packages/astudio-make-template",
 ];

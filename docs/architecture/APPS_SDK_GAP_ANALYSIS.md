@@ -1,6 +1,6 @@
 # Apps SDK Gap Analysis - December 2025
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Engineers and technical leads
@@ -32,7 +32,7 @@ Last updated: 2026-01-04
 - [Verify (Re-run the Audit)](#verify-re-run-the-audit)
 
 
-This document analyzes our ChatUI implementation against the official Apps SDK documentation from:
+This document analyzes our aStudio implementation against the official Apps SDK documentation from:
 
 - <https://developers.openai.com/apps-sdk>
 - <https://github.com/openai/apps-sdk-ui>
@@ -48,7 +48,7 @@ We have strong foundations with most Apps SDK requirements implemented. Recent i
 ### ✅ What We're Doing Well
 
 - MCP server architecture and structured tool responses
-- Full `window.openai` API coverage in `@chatui/runtime`
+- Full `window.openai` API coverage in `@astudio/runtime`
 - Tool annotations + metadata (`readOnlyHint`, `openai/outputTemplate`, etc.)
 - Apps SDK UI integration with consistent UI primitives
 - Token/state patterns (`widgetState`, `setWidgetState`, `widgetSessionId`)

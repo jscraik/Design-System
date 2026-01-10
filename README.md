@@ -4,7 +4,7 @@
 
 Cross-Platform UI Workbench
 
-Last updated: 2026-01-07
+Last updated: 2026-01-09
 
 ## Doc requirements
 
@@ -21,15 +21,15 @@ This repository is a **library-first monorepo** for building consistent UI acros
 A cross-platform UI workbench for building ChatGPT-style interfaces across multiple platforms:
 
 - **ChatGPT Widgets** - Embedded widgets via OpenAI Apps SDK
-- **React Applications** - Standalone web applications using `@chatui/ui`
+- **React Applications** - Standalone web applications using `@astudio/ui`
 - **macOS Applications** - Native SwiftUI apps with aStudio Swift packages
 - **MCP Integration** - Model Context Protocol server for ChatGPT tool integration
 
 ## Primary Products
 
-- `@chatui/ui` - Reusable UI components (chat layout, header, sidebar, primitives)
-- `@chatui/runtime` - Host adapters + mocks (`window.openai` wrapper, HostProvider)
-- `@chatui/tokens` - Design tokens (CSS variables, Tailwind preset)
+- `@astudio/ui` - Reusable UI components (chat layout, header, sidebar, primitives)
+- `@astudio/runtime` - Host adapters + mocks (`window.openai` wrapper, HostProvider)
+- `@astudio/tokens` - Design tokens (CSS variables, Tailwind preset)
 - `packages/widgets` - Standalone widget bundles for ChatGPT
 - `packages/cloudflare-template` - Cloudflare Workers deployment template for MCP
 
@@ -38,8 +38,8 @@ A cross-platform UI workbench for building ChatGPT-style interfaces across multi
 - `platforms/web/apps/web` - Widget Gallery for visual testing and MCP widget builds
 - `platforms/web/apps/storybook` - Component documentation and interactive development
 - `platforms/mcp` - MCP server for ChatGPT integration
-- `platforms/apple/apps/macos/ChatUIApp` - Production macOS application with MCP integration
-- `platforms/apple/apps/macos/ChatUIPlayground` - SwiftUI experimentation harness
+- `platforms/apple/apps/macos/AStudioApp` - Production macOS application with MCP integration
+- `platforms/apple/apps/macos/AStudioPlayground` - SwiftUI experimentation harness
 - `platforms/apple/apps/macos/ComponentGallery` - Visual component browser for Swift packages
 
 ## Contents
@@ -76,10 +76,10 @@ A cross-platform UI workbench for building ChatGPT-style interfaces across multi
 
 ## Compatibility matrix
 
-- **React**: 19.x (required by `@chatui/ui` peerDependencies)
+- **React**: 19.x (required by `@astudio/ui` peerDependencies)
 - **TypeScript**: 5.9+ (workspace devDependency)
 - **Node.js**: 18+ (runtime baseline)
-- **Apps SDK UI**: ^0.2.1 (from `@chatui/ui` dependencies)
+- **Apps SDK UI**: ^0.2.1 (from `@astudio/ui` dependencies)
 - **Swift**: 5.9+ with Xcode 15+ (for macOS/iOS development)
 - **macOS**: 13+ (deployment target for macOS apps)
 - **iOS**: 15+ (deployment target for Swift packages)
@@ -143,7 +143,7 @@ pnpm build                  # Full build pipeline
 pnpm build:web              # Web-only build
 pnpm build:widgets          # Widget bundles for production
 pnpm build:widget           # Single-file widget HTML for MCP
-pnpm build:lib              # Build @chatui packages only
+pnpm build:lib              # Build @astudio packages only
 pnpm build:macos            # macOS app build
 
 # Utilities
@@ -185,7 +185,7 @@ The web app (`platforms/web/apps/web`) is a **Widget Gallery** for visual testin
 pnpm build:widget
 ```
 
-This creates `platforms/web/apps/web/dist/widget.html` — a single-file HTML bundle used by the MCP server.
+This creates `platforms/web/apps/web/dist/widget.html` (a single-file HTML bundle used by the MCP server).
 
 ### Adding Pages (for custom apps)
 
@@ -207,8 +207,8 @@ Use this table to jump to the canonical doc surface. For more detail, see
 | Swift integration       | `docs/SWIFT_INTEGRATION.md`      |
 | Restructure migration   | `docs/guides/repo-structure-migration.md` |
 | Swift packages overview | `platforms/apple/swift/README.md`                |
-| macOS aStudio app       | `platforms/apple/apps/macos/ChatUIApp/README.md` |
-| macOS Playground        | `platforms/apple/apps/macos/ChatUIPlayground/README.md` |
+| macOS aStudio app       | `platforms/apple/apps/macos/AStudioApp/README.md` |
+| macOS Playground        | `platforms/apple/apps/macos/AStudioPlayground/README.md` |
 | macOS Component Gallery | `platforms/apple/apps/macos/ComponentGallery/README.md` |
 | Web Widget Gallery      | `platforms/web/apps/web/README.md`             |
 | Storybook               | `platforms/web/apps/storybook/README.md`       |
@@ -292,7 +292,7 @@ This repo uses **Apps SDK UI** as the visual system. Import the CSS in both stan
 ```css
 @import "tailwindcss";
 @import "@openai/apps-sdk-ui/css";
-@import "@chatui/tokens/foundations.css";
+@import "@astudio/tokens/foundations.css";
 
 /* Tailwind v4 scanning */
 @source "../node_modules/@openai/apps-sdk-ui";
@@ -303,7 +303,7 @@ See: <https://developers.openai.com/apps-sdk/>
 
 ## Foundation tokens (audit layer)
 
-`@chatui/tokens` encodes the PDF “Figma foundations” as:
+`@astudio/tokens` encodes the PDF “Figma foundations” as:
 
 - `packages/tokens/src/foundations.css` (CSS variables)
 - `packages/tokens/src/*.ts` (TS exports for Storybook foundations pages)
@@ -317,7 +317,7 @@ These tokens are **audit/extension only**. Use Apps SDK UI classes/components in
 `packages/runtime` exposes a Host interface + provider, so components stay host-agnostic:
 
 ```ts
-import { HostProvider, createStandaloneHost } from "@chatui/runtime";
+import { HostProvider, createStandaloneHost } from "@astudio/runtime";
 
 const host = createStandaloneHost("http://localhost:8787");
 ```
@@ -331,15 +331,15 @@ Runtime details and widgetSessionId guidance live in `packages/runtime/README.md
 The UI package re-exports chat components and UI primitives from a single entry point.
 
 ```ts
-import { Button, ChatHeader, ChatSidebar } from "@chatui/ui";
+import { Button, ChatHeader, ChatSidebar } from "@astudio/ui";
 ```
 
 For production code, prefer subpath exports for better tree-shaking:
 
 ```ts
-import { Button } from "@chatui/ui/base";
-import { ModelSelector } from "@chatui/ui/navigation";
-import { ChatSidebar } from "@chatui/ui/chat";
+import { Button } from "@astudio/ui/base";
+import { ModelSelector } from "@astudio/ui/navigation";
+import { ChatSidebar } from "@astudio/ui/chat";
 ```
 
 ### Dev/demo exports
@@ -347,7 +347,7 @@ import { ChatSidebar } from "@chatui/ui/chat";
 Demo pages and sandbox utilities are exposed from a separate entry to keep the production surface clean:
 
 ```ts
-import { ChatUIApp, DesignSystemPage } from "@chatui/ui/dev";
+import { AStudioApp, DesignSystemPage } from "@astudio/ui/dev";
 ```
 
 ### Experimental exports
@@ -355,7 +355,7 @@ import { ChatUIApp, DesignSystemPage } from "@chatui/ui/dev";
 Experimental or fast-evolving APIs are exposed separately:
 
 ```ts
-import { ChatFullWidthTemplate } from "@chatui/ui/experimental";
+import { ChatFullWidthTemplate } from "@astudio/ui/experimental";
 ```
 
 ## Public API surface
@@ -365,24 +365,24 @@ import { ChatFullWidthTemplate } from "@chatui/ui/experimental";
 | Chat UI components | ChatUIRoot, ChatHeader, ChatSidebar, ChatMessages, ChatInput, ComposeView    |
 | UI primitives      | Button, Dialog, Tabs, Tooltip, and more                                      |
 | Icons              | Icons adapter, ChatGPTIcons                                                  |
-| Pages              | DesignSystemPage, TypographyPage, SpacingPage (via `@chatui/ui/dev`)         |
+| Pages              | DesignSystemPage, TypographyPage, SpacingPage (via `@astudio/ui/dev`)         |
 | Templates          | ChatFullWidthTemplate, ChatTwoPaneTemplate, DashboardTemplate (experimental) |
 | Utilities          | useControllableState                                                         |
 
 ## Public API policy
 
-- **Stable**: `@chatui/ui` root exports and the `@chatui/ui/app`, `@chatui/ui/chat`, `@chatui/ui/modals`,
-  `@chatui/ui/settings`, `@chatui/ui/base`, `@chatui/ui/data-display`, `@chatui/ui/feedback`,
-  `@chatui/ui/forms`, `@chatui/ui/layout`, `@chatui/ui/navigation`, `@chatui/ui/overlays`,
-  `@chatui/ui/icons`, and `@chatui/ui/showcase` subpaths.
-- **Experimental**: `@chatui/ui/experimental` and `@chatui/ui/templates` (subject to breaking changes).
-- **Dev-only**: `@chatui/ui/dev` is for Storybook, docs, and local harnesses — not production.
+- **Stable**: `@astudio/ui` root exports and the `@astudio/ui/app`, `@astudio/ui/chat`, `@astudio/ui/modals`,
+  `@astudio/ui/settings`, `@astudio/ui/base`, `@astudio/ui/data-display`, `@astudio/ui/feedback`,
+  `@astudio/ui/forms`, `@astudio/ui/layout`, `@astudio/ui/navigation`, `@astudio/ui/overlays`,
+  `@astudio/ui/icons`, and `@astudio/ui/showcase` subpaths.
+- **Experimental**: `@astudio/ui/experimental` and `@astudio/ui/templates` (subject to breaking changes).
+- **Dev-only**: `@astudio/ui/dev` is for Storybook, docs, and local harnesses (not production).
 
 ## Storybook navigation
 
-- Overview – onboarding, galleries, and page previews
-- Documentation – system docs + design system
-- Components – UI primitives, chat surfaces, templates, icons, integrations
+- Overview: onboarding, galleries, and page previews
+- Documentation: system docs + design system
+- Components: UI primitives, chat surfaces, templates, icons, integrations
 
 ## Release & versioning
 
@@ -417,9 +417,9 @@ If your other projects are in the same monorepo:
 ```json
 {
   "dependencies": {
-    "@chatui/ui": "workspace:*",
-    "@chatui/runtime": "workspace:*",
-    "@chatui/tokens": "workspace:*"
+    "@astudio/ui": "workspace:*",
+    "@astudio/runtime": "workspace:*",
+    "@astudio/tokens": "workspace:*"
   }
 }
 ```
@@ -429,7 +429,7 @@ If your other projects are in the same monorepo:
 Add this repo as a submodule in your project:
 
 ```bash
-git submodule add <repo-url> packages/chatui
+git submodule add <repo-url> packages/astudio
 ```
 
 Then reference in your package.json:
@@ -437,7 +437,7 @@ Then reference in your package.json:
 ```json
 {
   "dependencies": {
-    "@chatui/ui": "file:./packages/chatui/packages/ui"
+    "@astudio/ui": "file:./packages/astudio/packages/ui"
   }
 }
 ```
@@ -456,7 +456,7 @@ pnpm release
 Then install normally:
 
 ```bash
-pnpm add @chatui/ui @chatui/runtime @chatui/tokens
+pnpm add @astudio/ui @astudio/runtime @astudio/tokens
 ```
 
 ## Creating New Components
@@ -485,7 +485,7 @@ This creates the component file and a Storybook story.
 2. **Test in Widget Gallery** - `pnpm dev:web` - Visual testing of widget bundles in isolation
 3. **Build Widgets** - `pnpm build:widgets` - Create production widget bundles
 4. **Test in ChatGPT** - `pnpm mcp:start` - Run MCP server for ChatGPT integration
-5. **Test in macOS** - Open `platforms/apple/apps/macos/ChatUIApp` in Xcode for native app testing
+5. **Test in macOS** - Open `platforms/apple/apps/macos/AStudioApp` in Xcode for native app testing
 
 ## Architecture
 
@@ -500,17 +500,17 @@ This creates the component file and a Storybook story.
         ├────────────────┘                  │
         │                                   │
 ┌───────▼──────────────────┐    ┌───────────▼────────────────┐
-│   @chatui/ui (React)     │    │  ChatUI Swift Packages     │
+│   @astudio/ui (React)     │    │  aStudio Swift Packages     │
 │  Component Library       │    │  (SwiftUI)                 │
 ├──────────────────────────┤    ├────────────────────────────┤
-│  • Chat Components       │    │  • ChatUIFoundation        │
-│  • UI Primitives         │    │  • ChatUIComponents        │
-│  • Templates             │    │  • ChatUIThemes            │
-│  • Pages                 │    │  • ChatUIShellChatGPT      │
-└───────┬──────────────────┘    │  • ChatUIMCP               │
-        │                       │  • ChatUISystemIntegration │
+│  • Chat Components       │    │  • AStudioFoundation        │
+│  • UI Primitives         │    │  • AStudioComponents        │
+│  • Templates             │    │  • AStudioThemes            │
+│  • Pages                 │    │  • AStudioShellChatGPT      │
+└───────┬──────────────────┘    │  • AStudioMCP               │
+        │                       │  • AStudioSystemIntegration │
 ┌───────▼──────────────────┐    └────────────────────────────┘
-│   @chatui/runtime        │
+│   @astudio/runtime        │
 │  (Host Abstraction)      │
 ├──────────────────────────┤
 │  • createEmbeddedHost()  │
@@ -519,7 +519,7 @@ This creates the component file and a Storybook story.
 └───────┬──────────────────┘
         │
 ┌───────▼──────────────────┐
-│   @chatui/tokens         │
+│   @astudio/tokens         │
 │  (Design Tokens)         │
 ├──────────────────────────┤
 │  • CSS Variables         │
@@ -532,8 +532,8 @@ This creates the component file and a Storybook story.
 
 The repository supports both **React** (web/ChatGPT widgets) and **Swift** (macOS/iOS) implementations:
 
-- **React**: Uses `@chatui/ui`, `@chatui/runtime`, and `@chatui/tokens` packages
-- **Swift**: Uses modular Swift packages (`ChatUIFoundation`, `ChatUIComponents`, `ChatUIThemes`, etc.)
+- **React**: Uses `@astudio/ui`, `@astudio/runtime`, and `@astudio/tokens` packages
+- **Swift**: Uses modular Swift packages (`AStudioFoundation`, `AStudioComponents`, `AStudioThemes`, etc.)
 - **Design Parity**: Both platforms share the same design tokens and visual language from Apps SDK UI
 
 ---

@@ -10,7 +10,7 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-This guide explains how to work with the modular ChatUI Swift packages and the macOS Component Gallery.
+This guide explains how to work with the modular aStudio Swift packages and the macOS Component Gallery.
 
 ## Table of contents
 
@@ -61,19 +61,19 @@ swift run
 
 ```
 platforms/apple/swift/
-├── ChatUIFoundation/     # FColor, FType, FSpacing, Platform, FAccessibility
-├── ChatUIThemes/         # ChatGPT theme constants
-├── ChatUIComponents/     # SwiftUI primitives
-└── ChatUIShellChatGPT/   # Optional shell layouts
+├── AStudioFoundation/     # FColor, FType, FSpacing, Platform, FAccessibility
+├── AStudioThemes/         # ChatGPT theme constants
+├── AStudioComponents/     # SwiftUI primitives
+└── AStudioShellChatGPT/   # Optional shell layouts
 
 platforms/apple/apps/macos/
 ├── ComponentGallery/     # Primary dev app
-└── ChatUIPlayground/     # Secondary dev app (modular packages)
+└── AStudioPlayground/     # Secondary dev app (modular packages)
 ```
 
 ## Design tokens
 
-Use the semantic APIs from `ChatUIFoundation`:
+Use the semantic APIs from `AStudioFoundation`:
 
 ```swift
 Text("Hello")
@@ -116,11 +116,11 @@ pnpm test:swift:shell
 Use the Component Gallery accessibility panel and:
 
 - `platforms/apple/swift/ACCESSIBILITY_TESTING.md`
-- `platforms/apple/swift/ChatUIComponents/SETTINGS_EXAMPLE_SUMMARY.md`
+- `platforms/apple/swift/AStudioComponents/SETTINGS_EXAMPLE_SUMMARY.md`
 
 ## Legacy: ui-swift (monolithic package)
 
-The original `platforms/apple/swift/ui-swift` package is retained for historical reference. The current macOS apps (`ComponentGallery` and `ChatUIPlayground`) use the modular packages listed above.
+The original `platforms/apple/swift/ui-swift` package is retained for historical reference. The current macOS apps (`ComponentGallery` and `AStudioPlayground`) use the modular packages listed above.
 
 - `platforms/apple/swift/ui-swift/README.md`
 
@@ -128,7 +128,7 @@ The original `platforms/apple/swift/ui-swift` package is retained for historical
 
 **Xcode cannot find local packages**
 
-- See `platforms/apple/swift/ChatUIComponents/XCODE_INTEGRATION.md`.
+- See `platforms/apple/swift/AStudioComponents/XCODE_INTEGRATION.md`.
 - Ensure you open `Package.swift` directly for SwiftPM workflows.
 
 **SwiftUI previews not updating**
@@ -139,7 +139,7 @@ The original `platforms/apple/swift/ui-swift` package is retained for historical
 ## Verify
 
 - `ComponentGallery` runs and shows component sections.
-- `ChatUIPlayground` runs and switches between sidebar sections.
+- `AStudioPlayground` runs and switches between sidebar sections.
 
 ## Next steps
 

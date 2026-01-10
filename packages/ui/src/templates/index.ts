@@ -29,7 +29,7 @@ export * from "./SecurityPanelTemplate";
 // ============================================================================
 // NEW TEMPLATES FROM FIGMA EXPORT
 // ============================================================================
-// These are shipped via `@chatui/ui/dev` (gallery + showcases) to avoid
+// These are shipped via `@astudio/ui/dev` (gallery + showcases) to avoid
 // mixing demo surfaces into the production template API.
 
 // ============================================================================

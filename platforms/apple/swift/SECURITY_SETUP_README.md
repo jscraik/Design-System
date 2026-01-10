@@ -1,6 +1,6 @@
 # Swift CI/CD Security Scanning Setup
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Developers (intermediate)
@@ -15,7 +15,7 @@ Last updated: 2026-01-04
 - [What's Been Created](#whats-been-created)
   - [1. SwiftLint Configuration (`.swiftlint.yml`)](#1-swiftlint-configuration-swiftlintyml)
   - [2. CodeQL Configuration (`.github/codeql-config.yml`)](#2-codeql-configuration-githubcodeql-configyml)
-  - [3. GitHub Actions Workflow (`.github/workflows/swift-security.yml`)](#3-github-actions-workflow-githubworkflowsswift-securityyml)
+  - [3. GitHub Actions Workflow (`.github/workflows/ci.yml`)](#3-github-actions-workflow-githubworkflowsciyml)
   - [4. Security Test Suite](#4-security-test-suite)
   - [5. Documentation](#5-documentation)
 - [File Structure](#file-structure)
@@ -42,7 +42,7 @@ Last updated: 2026-01-04
 - [License](#license)
 
 
-This document provides an overview of the complete security scanning setup for the Swift codebase, including all configuration files, workflows, and testing infrastructure.
+This document provides an overview of the current security setup for the Swift codebase. Where dedicated automation is not yet present, the gaps are noted explicitly.
 
 ## What's Been Created
 
@@ -97,47 +97,15 @@ custom_rules:
 - `security-extended`
 - `security-and-quality`
 
-### 3. GitHub Actions Workflow (`.github/workflows/swift-security.yml`)
+### 3. GitHub Actions Workflow (`.github/workflows/ci.yml`)
 
-**Location:** `.github/workflows/`
+**Location:** `.github/workflows/ci.yml`
 
-**Triggers:**
-- Pull requests (Swift code changes)
-- Pushes to main/master
-- Daily scheduled runs (2 AM UTC)
-- Manual workflow dispatch
+**Current behavior:**
+- Runs macOS build steps with Swift setup as part of the CI matrix.
+- Runs web lint/format/compliance checks on web jobs.
 
-**Jobs:**
-
-#### A. SwiftLint Security Analysis
-- Caches SwiftLint installation
-- Runs strict linting with security rules
-- Generates JSON reports
-- Comments on PRs with results
-- Uploads artifacts (30-day retention)
-
-#### B. CodeQL Security Analysis
-- Initializes CodeQL for Swift
-- Builds all Swift packages
-- Runs automated security queries
-- Uploads results to GitHub Security tab
-- Supports security-and-quality query suite
-
-#### C. Dependency Security Scan
-- Installs Swift Package Audit
-- Scans all Package.resolved files
-- Generates dependency reports
-- Checks for known vulnerabilities
-
-#### D. Security Test Suite
-- Runs all security-focused tests
-- Enforces 80% coverage threshold
-- Generates coverage reports (LCOV format)
-- Uploads coverage artifacts
-
-#### E. Security Gate
-- Aggregates all job results
-- Fails if ANY security check fails
+**Gap:** There is no dedicated Swift security scanning workflow in this repo. Add a separate workflow if SwiftLint security gates or CodeQL automation are required.
 - Generates summary in GitHub Actions UI
 - Blocks merge on security failures
 
@@ -212,12 +180,12 @@ Setup overview and quick reference
 ## File Structure
 
 ```
-chatui/
+astudio/
 ├── .swiftlint.yml                           # Root SwiftLint config
 ├── .github/
 │   ├── codeql-config.yml                    # CodeQL configuration
 │   └── workflows/
-│       └── swift-security.yml               # Security scanning workflow
+│       └── ci.yml                            # CI workflow (includes Swift setup/build steps)
 └── platforms/apple/swift/
     ├── .swiftlint.yml                       # Package-specific SwiftLint
     ├── SecurityTests/
@@ -445,7 +413,7 @@ For questions or issues with the security setup:
 
 ## License
 
-This security setup is part of the ChatUI project and follows the same license terms.
+This security setup is part of the aStudio project and follows the same license terms.
 
 ## Risks and assumptions
 - Assumptions: TBD (confirm)
@@ -454,4 +422,3 @@ This security setup is part of the ChatUI project and follows the same license t
 
 ## Verify
 - TBD: Add concrete verification steps and expected results.
-

@@ -1,6 +1,6 @@
 # Documentation index for developers
 
-Last updated: 2026-01-07
+Last updated: 2026-01-09
 
 ## Doc requirements
 
@@ -55,7 +55,7 @@ pnpm doc:lint
 
 Requirements:
 
-- Vale installed locally (e.g., `brew install vale`).
+- Vale installed locally (for example, `brew install vale`).
 - `pnpm install` completed so repo scripts are available.
 
 ## Architecture docs

@@ -16,19 +16,19 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../../../swift/ChatUIFoundation"),
-        .package(path: "../../../swift/ChatUIComponents"),
-        .package(path: "../../../swift/ChatUIThemes"),
-        .package(path: "../../../swift/ChatUIShellChatGPT")
+        .package(path: "../../../swift/AStudioFoundation"),
+        .package(path: "../../../swift/AStudioComponents"),
+        .package(path: "../../../swift/AStudioThemes"),
+        .package(path: "../../../swift/AStudioShellChatGPT")
     ],
     targets: [
         .executableTarget(
             name: "ComponentGallery",
             dependencies: [
-                "ChatUIFoundation",
-                "ChatUIComponents",
-                "ChatUIThemes",
-                "ChatUIShellChatGPT"
+                "AStudioFoundation",
+                "AStudioComponents",
+                "AStudioThemes",
+                "AStudioShellChatGPT"
             ],
             path: "Sources"
         ),

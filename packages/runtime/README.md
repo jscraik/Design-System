@@ -1,6 +1,6 @@
-# @chatui/runtime
+# @astudio/runtime
 
-Last updated: 2026-01-07
+Last updated: 2026-01-09
 
 ## Doc requirements
 
@@ -30,15 +30,15 @@ Host adapters and helpers for ChatGPT Apps SDK widgets.
 ## Install
 
 ```bash
-pnpm add @chatui/runtime
+pnpm add @astudio/runtime
 # or
-npm install @chatui/runtime
+npm install @astudio/runtime
 ```
 
 ## Usage
 
 ```ts
-import { HostProvider, createEmbeddedHost } from "@chatui/runtime";
+import { HostProvider, createEmbeddedHost } from "@astudio/runtime";
 
 const host = createEmbeddedHost();
 

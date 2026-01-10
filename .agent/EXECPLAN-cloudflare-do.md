@@ -17,30 +17,64 @@ In this migration, the DO owns one `ChatUIWidgetServer` instance and forwards re
 ## Progress
 
 - [x] (2026-01-09T00:45Z) Created ExecPlan for migrating `ChatUIWidgetServer` to a Durable Object.
-- [ ] (TBD) Confirm DO routing strategy (singleton vs session-keyed) and document final choice.
-- [ ] (TBD) Update `wrangler.jsonc` to add DO binding `WIDGET_SERVER` and migrations for `ChatUIWidgetServerDO`.
-- [ ] (TBD) Update `src/worker/index.ts` to export `ChatUIWidgetServerDO` and route `/mcp` requests through the DO stub.
-- [ ] (TBD) Update `packages/cloudflare-template/README.md` to match DO-backed architecture.
+- [x] (2026-01-09T00:50Z) Step 1 complete: Updated `packages/cloudflare-template/wrangler.jsonc` to add DO binding `WIDGET_SERVER` and migrations (tag `v1`) introducing `ChatUIWidgetServerDO`.
+- [x] (2026-01-09T00:55Z) Step 2 complete: Updated `packages/cloudflare-template/src/worker/index.ts` to export `ChatUIWidgetServerDO` and route `/mcp` through the singleton DO stub via `env.WIDGET_SERVER.idFromName("default")`.
+- [x] (2026-01-09T01:00Z) Step 3 complete: Updated `packages/cloudflare-template/README.md` to document DO-hosted MCP server via binding `WIDGET_SERVER` (singleton) and clarify storage is available but not required.
+- [x] (2026-01-09T01:05Z) Validation attempt failed: `pnpm` not found when running `pnpm -C packages/cloudflare-template prebuild`.
+- [x] (2026-01-09T01:10Z) Validation attempt failed: `prebuild` failed under Node 24 due to a `fast-glob` ESM named export error when running `mise exec -- pnpm -C packages/cloudflare-template prebuild`.
+- [x] (2026-01-09T01:15Z) Fix: Updated `packages/cloudflare-template/scripts/build-widgets.mjs` to use a default import for `fast-glob` to avoid Node 24 ESM/CJS named export errors.
+- [x] (2026-01-09T01:18Z) Fix: Updated `packages/cloudflare-template/src/worker/index.ts` example tools to reference `kitchen-sink-lite` (manifest key) instead of `enhanced-example-widget`, resolving manifest/typecheck errors.
+- [x] (2026-01-09T01:20Z) Validation: `prebuild` succeeded via `mise exec -- pnpm -C packages/cloudflare-template prebuild`.
+- [x] (2026-01-09T01:22Z) Validation: `typecheck` succeeded via `mise exec -- pnpm -C packages/cloudflare-template typecheck`.
+- [x] (2026-01-09T01:24Z) Validation: `cf-typegen` succeeded via `mise exec -- pnpm -C packages/cloudflare-template cf-typegen`.
+- [x] (2026-01-09T01:26Z) Validation: `pnpm -C packages/cloudflare-template dev` encountered EMFILE watch errors; it briefly reported Ready on localhost before shutting down in this environment.
+- [x] (2026-01-09T01:35Z) Fix: Added explicit `env.development` DO config in `packages/cloudflare-template/wrangler.jsonc` and updated scripts to run `wrangler dev/types --env development` to surface `WIDGET_SERVER` bindings in local dev/types output.
+- [x] (2026-01-09T01:40Z) Validation: `cf-typegen --env development` now surfaces `WIDGET_SERVER` and `durableNamespaces` in the generated types after the env/config change.
+- [x] (2026-01-09T01:50Z) Dev verification: `ulimit -n 8192` + `pnpm dev` showed `WIDGET_SERVER` binding; `GET /mcp` and `POST /mcp` (`tools/list`) returned 200 with tool `_meta`; `/src/widgets/demo/kitchen-sink-lite/` returned 200 after redirect.
+- [x] (2026-01-09T01:55Z) Docs: Updated `packages/cloudflare-template/README.md` Troubleshooting to add EMFILE watch error guidance (raise `ulimit -n 8192`) and corrected the widgets reference to `@astudio/widgets` plus manifest path `src/worker/widget-manifest.generated.ts`.
+- [x] (2026-01-09T02:00Z) Docs: Added a macOS-specific EMFILE workaround note (`launchctl limit maxfiles`) to `packages/cloudflare-template/README.md` Troubleshooting.
 - [ ] (TBD) Run validation commands; record results and any issues.
 
 ## Surprises & Discoveries
 
-- Observation: (none yet)
-  Evidence: (none yet)
+- Observation: `packages/cloudflare-template` `prebuild` fails under Node 24 due to a `fast-glob` ESM named export error.
+  Evidence: Running `mise exec -- pnpm -C packages/cloudflare-template prebuild` triggers an error consistent with "Named export \"glob\" not found" / CJS-vs-ESM named export interop for `fast-glob` in `scripts/build-widgets.mjs` (`import { glob } from "fast-glob";`).
+- Observation: The widget manifest does not include `enhanced-example-widget`, so example tools were referencing a non-existent manifest key.
+  Evidence: `packages/cloudflare-template/src/worker/widget-manifest.generated.ts` lists `kitchen-sink-lite` but does not list `enhanced-example-widget`; the example tool registrations previously referenced `widgetManifest["enhanced-example-widget"]`, which caused manifest/typecheck errors until aligned.
+- Observation: `wrangler dev` can hit EMFILE watch errors in this environment even when prebuild/typecheck/typegen succeed.
+  Evidence: Running `pnpm -C packages/cloudflare-template dev` reported EMFILE watch errors and then shut down shortly after briefly showing Ready on `http://localhost:8787`.
+- Observation: Follow-up: EMFILE watch errors persisted, but the dev server still accepted requests when raising the file descriptor limit (e.g., `ulimit -n 8192`).
+  Evidence: With increased `ulimit`, `pnpm dev` surfaced the `WIDGET_SERVER` binding and returned 200s for `GET /mcp`, `POST /mcp` (`tools/list`), and widget asset requests (after redirect).
+- Observation: `wrangler dev` and `wrangler types` did not list the `WIDGET_SERVER` binding (only `ASSETS`/`ENVIRONMENT`), so Durable Object binding recognition needs verification.
+  Evidence: Wrangler output during `wrangler dev` / `wrangler types` only surfaced `ASSETS` and `ENVIRONMENT` bindings; generated `packages/cloudflare-template/worker-configuration.d.ts` does not include a `WIDGET_SERVER` binding declaration.
+- Observation: Follow-up: The `WIDGET_SERVER` Durable Object binding becomes visible to Wrangler type generation when using `--env development`.
+  Evidence: After switching to `wrangler types --env development` (via `pnpm -C packages/cloudflare-template cf-typegen`), the generated `packages/cloudflare-template/worker-configuration.d.ts` includes `WIDGET_SERVER` and `durableNamespaces`.
 
 ## Decision Log
 
 - Decision: Use binding name `WIDGET_SERVER` and DO class name `ChatUIWidgetServerDO`.
   Rationale: Explicit, short binding name that matches repo naming conventions; class name clarifies purpose.
-  Date/Author: TBD / Codex
+  Date/Author: 2026-01-09T00:50Z / Codex
 
 - Decision: Route `/mcp` to a singleton DO instance using `idFromName("default")` (initial migration).
   Rationale: Minimal scope and no need to introduce a session ID contract; can be upgraded later to session-keyed routing if required.
-  Date/Author: TBD / Codex
+  Date/Author: 2026-01-09T00:50Z / Codex
 
 - Decision: Keep `ChatUIWidgetServer` as the core protocol handler; add a thin DO wrapper that owns initialization and delegates to `handleMcpRequest`.
   Rationale: Minimal code churn; preserves existing MCP behavior, security headers, and tool/resource registration patterns.
-  Date/Author: TBD / Codex
+  Date/Author: 2026-01-09T00:50Z / Codex
+
+- Decision: Fix `fast-glob` Node 24 interop by using a default import in `packages/cloudflare-template/scripts/build-widgets.mjs`.
+  Rationale: Avoids named export interop failures in Node 24 ESM when `fast-glob` is CommonJS; keeps dependencies unchanged.
+  Date/Author: 2026-01-09T01:15Z / Codex
+
+- Decision: Align example tools to an existing widget key (`kitchen-sink-lite`) while keeping tool names stable.
+  Rationale: Prevents referencing non-existent manifest keys and unblocks typecheck and demo tool discoverability.
+  Date/Author: 2026-01-09T01:18Z / Codex
+
+- Decision: Add an explicit `env.development` config and run Wrangler with `--env development` for dev and type generation to ensure `WIDGET_SERVER` Durable Object bindings are surfaced.
+  Rationale: Wrangler output/types were not listing the DO binding in this environment; explicit env config reduces ambiguity and improves dev parity.
+  Date/Author: 2026-01-09T01:35Z / Codex
 
 ## Outcomes & Retrospective (complete after execution)
 
@@ -50,22 +84,27 @@ In this migration, the DO owns one `ChatUIWidgetServer` instance and forwards re
 
 ## Context and Orientation
 
-### Current state (pre-migration)
+### Current state (after steps 1–3)
 
 - `packages/cloudflare-template/src/worker/index.ts`
-  - Defines `ChatUIWidgetServer` with `init()` that registers widget resources and example tools from `widgetManifest`.
-  - Worker `fetch()` routes `/mcp` to `ChatUIWidgetServer.serve(request, env)` which constructs a new server per request.
+  - Exports `ChatUIWidgetServerDO` and routes `/mcp` through the singleton Durable Object stub via `env.WIDGET_SERVER.idFromName("default")`.
+  - Keeps widget asset routing (`/src/*`, `/assets/*`) delegated to `env.ASSETS.fetch(request)`.
 
 - `packages/cloudflare-template/wrangler.jsonc`
-  - Defines `ASSETS` binding for `./dist/client`.
-  - Does not currently declare Durable Objects bindings/migrations.
+  - Declares the `WIDGET_SERVER` Durable Object binding for class `ChatUIWidgetServerDO`.
+  - Includes a `v1` migration introducing `ChatUIWidgetServerDO`.
 
-### Target state (post-migration)
+- `packages/cloudflare-template/README.md`
+  - Documents that the MCP server is hosted in a Durable Object via binding `WIDGET_SERVER` (singleton) and clarifies that durable storage is available but not required for the template's current behavior.
 
-- `wrangler.jsonc` declares a Durable Object binding named `WIDGET_SERVER` with class `ChatUIWidgetServerDO`, plus a migration tag introducing that class.
-- `index.ts` exports `ChatUIWidgetServerDO`.
-- Worker `fetch()` routes `/mcp` to the DO stub `env.WIDGET_SERVER.get(id).fetch(request)`.
-- Tools remain discoverable via `GET /mcp` and `tools/list` responses, including tool `_meta` fields (needed for widget output templates).
+### Target state (remaining work: validation only)
+
+- Validation confirms the DO-backed `/mcp` endpoint works end-to-end:
+  - `GET /mcp` capabilities respond successfully.
+  - `POST /mcp` `tools/list` and `tools/call` behave as expected.
+  - Tool discovery includes tool `_meta` when defined (notably `openai/outputTemplate`).
+
+- Any environment-specific dev constraints (e.g., EMFILE watch limits) are either mitigated or documented as known limitations/workarounds.
 
 ## Plan of Work
 

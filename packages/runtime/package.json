@@ -1,6 +1,6 @@
 {
-  "name": "@chatui/runtime",
-  "version": "0.0.0",
+  "name": "@astudio/runtime",
+  "version": "0.0.1",
   "type": "module",
   "license": "MIT",
   "exports": {

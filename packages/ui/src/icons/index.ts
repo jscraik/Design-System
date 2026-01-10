@@ -11,7 +11,7 @@
 // - Brand icons (GitHub, Notion, Slack, etc.)
 // - Apps SDK UI icons (Download, Sparkles)
 //
-// Usage: import { IconCheckmark, IconSettings } from "@chatui/ui/icons"
+// Usage: import { IconCheckmark, IconSettings } from "@astudio/ui/icons"
 // ============================================================================
 
 import { chatGPTIconSizes } from "./ChatGPTIconSizes";

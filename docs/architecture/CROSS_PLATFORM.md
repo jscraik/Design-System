@@ -1,6 +1,6 @@
 # Cross-Platform Architecture: React + Swift + Apps SDK
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Engineers and technical leads
@@ -46,7 +46,7 @@ Last updated: 2026-01-04
 
 ## Executive Summary
 
-This document outlines a comprehensive strategy for expanding the ChatUI system to support three target platforms:
+This document outlines a comprehensive strategy for expanding the aStudio system to support three target platforms:
 
 1. **React Web/Apps SDK** (current)
 2. **Swift macOS Native** (new)
@@ -114,7 +114,7 @@ const buttonVariants = cva(
 **Swift Component (Proposed):**
 
 ```swift
-// platforms/apple/swift/ui-swift/Sources/ChatUISwift/Components/Button.swift
+// platforms/apple/swift/ui-swift/Sources/AStudioSwift/Components/Button.swift
 public struct ChatUIButton: View {
     public enum Variant {
         case `default`, destructive, outline, secondary, ghost, link
@@ -265,17 +265,20 @@ export class ChatStateManager {
 
 ### 2.3 JavaScript Core Bridge (Swift ↔ TypeScript)
 
+> Status: Historical concept only. There is no Swift JS bridge implementation in this repo today.
+> The current runtime integration is limited to web (`@astudio/runtime`) and native Swift uses direct Swift APIs.
+
 ```swift
-// platforms/apple/swift/ui-swift/Sources/ChatUISwift/Runtime/JSBridge.swift
+// platforms/apple/swift/ui-swift/Sources/AStudioSwift/Runtime/JSBridge.swift
 import JavaScriptCore
 
-public class ChatUIJSBridge {
+public class AStudioJSBridge {
     private let context: JSContext
     private let stateManager: JSValue
 
     public init() throws {
-        guard let jsPath = Bundle.module.path(forResource: "chatui-runtime", ofType: "js") else {
-            throw ChatUIError.runtimeNotFound
+        guard let jsPath = Bundle.module.path(forResource: "astudio-runtime", ofType: "js") else {
+            throw AStudioError.runtimeNotFound
         }
 
         let jsSource = try String(contentsOfFile: jsPath)
@@ -334,7 +337,7 @@ export type ChatConfig = z.infer<typeof ChatConfigSchema>;
 ### 3.1 Enhanced Monorepo Structure
 
 ```
-chatui/
+astudio/
 ├── packages/
 │   ├── tokens/              # Design system source of truth
 │   │   ├── src/            # Token definitions
@@ -352,7 +355,7 @@ chatui/
 │   ├── ui/                 # React components
 │   ├── platforms/apple/swift/ui-swift/           # Swift/SwiftUI components
 │   │   ├── Sources/
-│   │   │   └── ChatUISwift/
+│   │   │   └── AStudioSwift/
 │   │   │       ├── Components/  # SwiftUI components
 │   │   │       ├── Runtime/     # JS bridge
 │   │   │       └── Tokens/      # Generated design tokens
@@ -383,7 +386,7 @@ chatui/
 
 ```typescript
 // tools/build-tokens.ts
-import { colorTokens, typographyTokens } from "@chatui/tokens";
+import { colorTokens, typographyTokens } from "@astudio/tokens";
 
 interface TokenBuildConfig {
   platforms: ("css" | "swift" | "json")[];
@@ -462,8 +465,8 @@ export async function buildRuntime() {
     entryPoints: ["packages/runtime/src/core/index.ts"],
     bundle: true,
     format: "iife",
-    globalName: "ChatUIRuntime",
-    outfile: "platforms/apple/swift/ui-swift/Sources/ChatUISwift/Resources/chatui-runtime.js",
+    globalName: "AStudioRuntime",
+    outfile: "platforms/apple/swift/ui-swift/Sources/AStudioSwift/Resources/astudio-runtime.js",
     target: "es2017", // JavaScriptCore compatibility
     define: {
       "process.env.NODE_ENV": '"production"',
@@ -490,15 +493,15 @@ export async function buildRuntime() {
 import PackageDescription
 
 let package = Package(
-    name: "ChatUISwift",
+    name: "AStudioSwift",
     platforms: [
         .macOS(.v13),
         .iOS(.v16)
     ],
     products: [
         .library(
-            name: "ChatUISwift",
-            targets: ["ChatUISwift"]
+            name: "AStudioSwift",
+            targets: ["AStudioSwift"]
         ),
     ],
     dependencies: [
@@ -506,16 +509,16 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ChatUISwift",
+            name: "AStudioSwift",
             dependencies: [],
             resources: [
-                .process("Resources/chatui-runtime.js"), // Bundled JS runtime
+                .process("Resources/astudio-runtime.js"), // Bundled JS runtime
                 .process("Resources/DesignTokens.swift") // Generated tokens
             ]
         ),
         .testTarget(
-            name: "ChatUISwiftTests",
-            dependencies: ["ChatUISwift"]
+            name: "AStudioSwiftTests",
+            dependencies: ["AStudioSwift"]
         ),
     ]
 )

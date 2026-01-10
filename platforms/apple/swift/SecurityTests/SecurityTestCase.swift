@@ -7,8 +7,8 @@
 //
 
 import XCTest
-@testable import ChatUIFoundation
-@testable import ChatUIComponents
+@testable import AStudioFoundation
+@testable import AStudioComponents
 
 /// Base class for security tests providing common utilities
 public class SecurityTestCase: XCTestCase {

@@ -1,6 +1,6 @@
-# ChatUI CLI Spec (Gold Standard, Jan 2026)
+# aStudio CLI Spec (Gold Standard, Jan 2026)
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Developers (intermediate)
@@ -10,19 +10,19 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-This document defines the stable CLI surface for `chatui` and the contracts required for agentic use.
+This document defines the stable CLI surface for `astudio` and the contracts required for agentic use.
 
 ## 1. Name
 
-`chatui`
+`astudio`
 
 ## 2. One-liner
 
-Unified developer CLI for ChatUI (dev/build/test/mcp/tokens/versions).
+Unified developer CLI for aStudio (dev/build/test/mcp/tokens/versions).
 
 ## 3. USAGE
 
-- `chatui [global flags] <command> [args]`
+- `astudio [global flags] <command> [args]`
 
 ## 4. Commands
 
@@ -68,7 +68,7 @@ Unified developer CLI for ChatUI (dev/build/test/mcp/tokens/versions).
 
 - default: human-readable output, may include child process output
 - `--plain`: stable `key=value` lines; no child stdout/stderr unless `--verbose`/`--debug` or on error
-- `--json`: single JSON object with stable schema `chatui.command.v1`
+- `--json`: single JSON object with stable schema `astudio.command.v1`
 
 ## 8. Exit Codes
 
@@ -102,24 +102,24 @@ Unified developer CLI for ChatUI (dev/build/test/mcp/tokens/versions).
 Precedence: flags > env > project config > user config > system.
 
 Config files:
-- Project: `chatui.config.json`
-- User: `~/.config/chatui/config.json`
+- Project: `astudio.config.json`
+- User: `~/.config/astudio/config.json`
 
 Env vars:
-- `CHATUI_CONFIG` (config path override)
-- `CHATUI_CWD` (working directory override)
-- `CHATUI_COLOR=0|1` (force color on/off)
-- `CHATUI_PNPM` (pnpm binary path override)
+- `ASTUDIO_CONFIG` (config path override)
+- `ASTUDIO_CWD` (working directory override)
+- `ASTUDIO_COLOR=0|1` (force color on/off)
+- `ASTUDIO_PNPM` (pnpm binary path override)
 - `MCP_TEST_URL` (default: `http://127.0.0.1:8787`)
 - `MCP_ENDPOINT` (default: `/mcp`)
 - `MCP_PROTOCOL_VERSION` (default: `2024-11-05`)
 
 ## 12. Examples
 
-- `chatui dev --exec`
-- `chatui build web --exec --json`
-- `chatui test visual-storybook --update --exec`
-- `chatui mcp tools list --network --json`
-- `chatui mcp rpc tools/list --dry-run --plain`
-- `chatui tokens generate --write --exec`
-- `chatui doctor --json`
+- `astudio dev --exec`
+- `astudio build web --exec --json`
+- `astudio test visual-storybook --update --exec`
+- `astudio mcp tools list --network --json`
+- `astudio mcp rpc tools/list --dry-run --plain`
+- `astudio tokens generate --write --exec`
+- `astudio doctor --json`

@@ -5,128 +5,128 @@
 export const widgetManifest = {
   "auth-demo": {
     "name": "auth-demo",
-    "uri": "auth-demo.33edd7ac",
-    "hash": "33edd7ac",
+    "uri": "auth-demo.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/auth/auth-demo/index.html"
   },
   "past-orders": {
     "name": "past-orders",
-    "uri": "past-orders.201ba27d",
-    "hash": "201ba27d",
+    "uri": "past-orders.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/auth/past-orders/index.html"
   },
   "search-spotlight": {
     "name": "search-spotlight",
-    "uri": "search-spotlight.96ece3b2",
-    "hash": "96ece3b2",
+    "uri": "search-spotlight.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/auth/search-spotlight/index.html"
   },
   "chat-header": {
     "name": "chat-header",
-    "uri": "chat-header.050de3c8",
-    "hash": "050de3c8",
+    "uri": "chat-header.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/chat/chat-header/index.html"
   },
   "chat-input": {
     "name": "chat-input",
-    "uri": "chat-input.1a84fbdd",
-    "hash": "1a84fbdd",
+    "uri": "chat-input.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/chat/chat-input/index.html"
   },
   "chat-messages": {
     "name": "chat-messages",
-    "uri": "chat-messages.82872f21",
-    "hash": "82872f21",
+    "uri": "chat-messages.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/chat/chat-messages/index.html"
   },
   "chat-sidebar": {
     "name": "chat-sidebar",
-    "uri": "chat-sidebar.f501f395",
-    "hash": "f501f395",
+    "uri": "chat-sidebar.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/chat/chat-sidebar/index.html"
   },
   "chat-template": {
     "name": "chat-template",
-    "uri": "chat-template.fd163017",
-    "hash": "fd163017",
+    "uri": "chat-template.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/chat/chat-template/index.html"
   },
   "chat-view": {
     "name": "chat-view",
-    "uri": "chat-view.d40c25eb",
-    "hash": "d40c25eb",
+    "uri": "chat-view.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/chat/chat-view/index.html"
   },
   "compose-view": {
     "name": "compose-view",
-    "uri": "compose-view.af389073",
-    "hash": "af389073",
+    "uri": "compose-view.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/chat/compose-view/index.html"
   },
   "shopping-cart": {
     "name": "shopping-cart",
-    "uri": "shopping-cart.9b292cbe",
-    "hash": "9b292cbe",
+    "uri": "shopping-cart.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/commerce/shopping-cart/index.html"
   },
   "dashboard-widget": {
     "name": "dashboard-widget",
-    "uri": "dashboard-widget.477f0352",
-    "hash": "477f0352",
+    "uri": "dashboard-widget.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/dashboard/dashboard-widget/index.html"
   },
   "kitchen-sink-lite": {
     "name": "kitchen-sink-lite",
-    "uri": "kitchen-sink-lite.97347e91",
-    "hash": "97347e91",
+    "uri": "kitchen-sink-lite.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/demo/kitchen-sink-lite/index.html"
   },
   "pizzaz-carousel": {
     "name": "pizzaz-carousel",
-    "uri": "pizzaz-carousel.ad1ed5de",
-    "hash": "ad1ed5de",
+    "uri": "pizzaz-carousel.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/pizzaz/pizzaz-carousel/index.html"
   },
   "pizzaz-gallery": {
     "name": "pizzaz-gallery",
-    "uri": "pizzaz-gallery.c9a55928",
-    "hash": "c9a55928",
+    "uri": "pizzaz-gallery.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/pizzaz/pizzaz-gallery/index.html"
   },
   "pizzaz-map": {
     "name": "pizzaz-map",
-    "uri": "pizzaz-map.4d5bee94",
-    "hash": "4d5bee94",
+    "uri": "pizzaz-map.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/pizzaz/pizzaz-map/index.html"
   },
   "pizzaz-markdown": {
     "name": "pizzaz-markdown",
-    "uri": "pizzaz-markdown.3a5d685b",
-    "hash": "3a5d685b",
+    "uri": "pizzaz-markdown.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/pizzaz/pizzaz-markdown/index.html"
   },
   "pizzaz-shop": {
     "name": "pizzaz-shop",
-    "uri": "pizzaz-shop.a4ace7a2",
-    "hash": "a4ace7a2",
+    "uri": "pizzaz-shop.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/pizzaz/pizzaz-shop/index.html"
   },
   "pizzaz-table": {
     "name": "pizzaz-table",
-    "uri": "pizzaz-table.854d8701",
-    "hash": "854d8701",
+    "uri": "pizzaz-table.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/pizzaz/pizzaz-table/index.html"
   },
   "solar-system": {
     "name": "solar-system",
-    "uri": "solar-system.597df9e3",
-    "hash": "597df9e3",
+    "uri": "solar-system.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/science/solar-system/index.html"
   },
   "search-results": {
     "name": "search-results",
-    "uri": "search-results.c017e24a",
-    "hash": "c017e24a",
+    "uri": "search-results.dev-1767981980168",
+    "hash": "dev-1767981980168",
     "originalPath": "src/widgets/search/search-results/index.html"
   }
 } as const;

@@ -9,7 +9,7 @@ import { SecurityPanel } from "./SecurityPanel";
  *
  * ## Usage
  * ```tsx
- * import { SecurityPanel } from "@chatui/ui";
+ * import { SecurityPanel } from "@astudio/ui";
  *
  * <SecurityPanel onBack={fn()} />
  * ```

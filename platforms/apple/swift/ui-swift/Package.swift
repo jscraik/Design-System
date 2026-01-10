@@ -5,14 +5,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "ChatUISwift",
+    name: "AStudioSwift",
     platforms: [
         .macOS(.v13)
     ],
     products: [
         .library(
-            name: "ChatUISwift",
-            targets: ["ChatUISwift"]
+            name: "AStudioSwift",
+            targets: ["AStudioSwift"]
         ),
     ],
     dependencies: [
@@ -20,12 +20,12 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "ChatUISwift",
+            name: "AStudioSwift",
             dependencies: []
         ),
         .testTarget(
-            name: "ChatUISwiftTests",
-            dependencies: ["ChatUISwift"]
+            name: "AStudioSwiftTests",
+            dependencies: ["AStudioSwift"]
         ),
     ]
 )

@@ -13,8 +13,8 @@ Last updated: 2026-01-04
 
 - [Doc requirements](#doc-requirements)
 - [Test Files](#test-files)
-  - [ChatUIMCP Security Tests](#chatuimcp-security-tests)
-  - [ChatUISystemIntegration Security Tests](#chatuisystemintegration-security-tests)
+  - [AStudioMCP Security Tests](#astudiomcp-security-tests)
+  - [AStudioSystemIntegration Security Tests](#astudiosystemintegration-security-tests)
 - [Documentation](#documentation)
 - [Test Summary](#test-summary)
 - [Key Features](#key-features)
@@ -27,17 +27,17 @@ Last updated: 2026-01-04
 
 ## Test Files
 
-### ChatUIMCP Security Tests
+### AStudioMCP Security Tests
 ```
-platforms/apple/swift/ChatUIMCP/Tests/ChatUIMCPTests/Security/
+platforms/apple/swift/AStudioMCP/Tests/AStudioMCPTests/Security/
 ├── MCPAuthenticatorSecurityTests.swift (24 tests)
 ├── MCPClientValidationTests.swift (19 tests)
 └── MCPRateLimiterTests.swift (27 tests)
 ```
 
-### ChatUISystemIntegration Security Tests
+### AStudioSystemIntegration Security Tests
 ```
-platforms/apple/swift/ChatUISystemIntegration/Tests/ChatUISystemIntegrationTests/Security/
+platforms/apple/swift/AStudioSystemIntegration/Tests/AStudioSystemIntegrationTests/Security/
 ├── SpotlightManagerSecurityTests.swift (17 tests)
 └── CryptoManagerTests.swift (32 tests)
 ```
@@ -77,10 +77,10 @@ platforms/apple/swift/SecurityTests/
 
 ```bash
 # All security tests
-cd platforms/apple/swift/ChatUIMCP
+cd platforms/apple/swift/AStudioMCP
 swift test --filter SecurityTests
 
-cd platforms/apple/swift/ChatUISystemIntegration
+cd platforms/apple/swift/AStudioSystemIntegration
 swift test --filter SecurityTests
 
 # Specific test suite
@@ -102,7 +102,7 @@ Add to your CI pipeline:
 # Example GitHub Actions
 - name: Run Security Tests
   run: |
-    cd platforms/apple/swift/ChatUIMCP
+    cd platforms/apple/swift/AStudioMCP
     swift test --enable-code-coverage --filter SecurityTests
     
 - name: Check Coverage

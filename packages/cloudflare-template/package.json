@@ -1,24 +1,24 @@
 {
-  "name": "@chatui/cloudflare-template",
-  "version": "0.1.0",
+  "name": "@astudio/cloudflare-template",
+  "version": "0.0.1",
   "description": "Cloudflare Workers deployment template for ChatUI widgets",
   "type": "module",
   "private": true,
   "scripts": {
     "prebuild": "node scripts/build-widgets.mjs",
-    "dev": "pnpm run prebuild && wrangler dev",
+    "dev": "pnpm run prebuild && wrangler dev --env development",
     "build": "vite build",
     "deploy": "wrangler deploy",
     "build-deploy": "pnpm run build && pnpm run deploy",
-    "cf-typegen": "wrangler types",
+    "cf-typegen": "wrangler types --env development",
     "typecheck": "tsc --noEmit",
     "check": "pnpm run typecheck && pnpm run build && wrangler deploy --dry-run"
   },
   "dependencies": {
-    "@chatui/widgets": "workspace:*",
-    "@modelcontextprotocol/sdk": "^1.25.2",
+    "@astudio/widgets": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.20.0",
     "agents": "^0.2.13",
-    "zod": "^4.3.5"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.13.12",
@@ -32,7 +32,7 @@
   "cloudflare": {
     "bindings": {
       "WORKER_DOMAIN_BASE": {
-        "description": "The domain of this worker where assets will be served. Example: https://my-chatui-widgets.example.workers.dev"
+        "description": "The domain of this worker where assets will be served. Example: https://my-astudio-widgets.example.workers.dev"
       },
       "WIDGET_DOMAIN": {
         "description": "The widget domain for OpenAI sandbox. Example: https://example.com"

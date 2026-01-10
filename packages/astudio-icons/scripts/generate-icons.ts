@@ -112,19 +112,19 @@ const normalizeSvg = (markup: string) => {
     svg = svg.replace("<svg", '<svg xmlns="http://www.w3.org/2000/svg"');
   }
 
-  svg = svg.replace(/\sclass=\"[^\"]*\"/g, "");
+  svg = svg.replace(/\sclass="[^"]*"/g, "");
 
-  const divStyleMatch = markup.match(/<div[^>]*style=\"([^\"]*)\"[^>]*>/);
+  const divStyleMatch = markup.match(/<div[^>]*style="([^"]*)"[^>]*>/);
   if (divStyleMatch && divStyleMatch[1]) {
     const styleValue = divStyleMatch[1].trim();
     if (styleValue.length > 0) {
       if (svg.includes("style=\"")) {
-        svg = svg.replace(/style=\"([^\"]*)\"/, (full, existing) => {
+        svg = svg.replace(/style="([^"]*)"/, (full, existing) => {
           const merged = `${existing};${styleValue}`;
-          return `style=\"${merged}\"`;
+          return `style="${merged}"`;
         });
       } else {
-        svg = svg.replace("<svg", `<svg style=\"${styleValue}\"`);
+        svg = svg.replace("<svg", `<svg style="${styleValue}"`);
       }
     }
   }
@@ -243,7 +243,7 @@ const writeRegistry = (records: IconRecord[]) => {
 
   lines.push("\nexport const iconRegistry = {");
   for (const record of sorted) {
-    lines.push(`  \"${record.iconName}\": ${record.componentName},`);
+    lines.push(`  "${record.iconName}": ${record.componentName},`);
   }
   lines.push("} as const;\n");
 
@@ -251,8 +251,8 @@ const writeRegistry = (records: IconRecord[]) => {
 };
 
 const writeTypes = (records: IconRecord[]) => {
-  const iconNames = [...records].map((record) => `  | \"${record.iconName}\"`).sort();
-  const categories = CATEGORIES.map((category) => `  | \"${category}\"`).join("\n");
+  const iconNames = [...records].map((record) => `  | "${record.iconName}"`).sort();
+  const categories = CATEGORIES.map((category) => `  | "${category}"`).join("\n");
 
   const content = `export type IconName =\n${iconNames.join("\n")};\n\nexport type IconCategory =\n${categories};\n\nexport const ICON_CATEGORIES = ${JSON.stringify(CATEGORIES, null, 2)} as const;\n`;
   writeFileSync(join(ROOT, "packages/astudio-icons/src/types.ts"), `${content}\n`);

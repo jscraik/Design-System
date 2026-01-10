@@ -1,5 +1,5 @@
-import { useOpenAiGlobal as useRuntimeOpenAiGlobal } from "@chatui/runtime";
-import type { OpenAiGlobals } from "@chatui/runtime";
+import { useOpenAiGlobal as useRuntimeOpenAiGlobal } from "@astudio/runtime";
+import type { OpenAiGlobals } from "@astudio/runtime";
 
 export function useOpenAiGlobal<K extends keyof OpenAiGlobals>(
   key: K,

@@ -19,8 +19,8 @@ const rootDir = join(__dirname, "..");
 const BUDGETS = {
   // Web app bundles - increased for current size + buffer
   "platforms/web/apps/web/dist/assets/index": { max: 550, warn: 500 },
-  "platforms/web/apps/web/dist/assets/chatui-core": { max: 1300, warn: 1100 },
-  "platforms/web/apps/web/dist/assets/chatui-chat": { max: 180, warn: 150 },
+  "platforms/web/apps/web/dist/assets/astudio-core": { max: 1300, warn: 1100 },
+  "platforms/web/apps/web/dist/assets/astudio-chat": { max: 180, warn: 150 },
   "platforms/web/apps/web/dist/assets/react": { max: 220, warn: 200 },
   "platforms/web/apps/web/dist/assets/radix": { max: 280, warn: 250 },
   "platforms/web/apps/web/dist/assets/vendor": { max: 350, warn: 300 },

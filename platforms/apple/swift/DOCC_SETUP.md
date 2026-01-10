@@ -10,7 +10,7 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-Complete guide for generating and publishing DocC documentation for ChatUI Swift packages.
+Complete guide for generating and publishing DocC documentation for aStudio Swift packages.
 
 ## Table of Contents
 
@@ -89,22 +89,22 @@ Package/
 For each package, create a `.docc` directory:
 
 ```bash
-cd platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation
-mkdir ChatUIFoundation.docc
+cd platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation
+mkdir AStudioFoundation.docc
 ```
 
 ### Step 2: Create Landing Page
 
-Create `ChatUIFoundation.docc/ChatUIFoundation.md`:
+Create `AStudioFoundation.docc/AStudioFoundation.md`:
 
 ```markdown
-# `ChatUIFoundation`
+# `AStudioFoundation`
 
 Semantic design tokens, platform utilities, and accessibility helpers for native SwiftUI development.
 
 ## Overview
 
-ChatUIFoundation provides the foundation layer for the ChatUI Swift package architecture, including semantic color tokens with automatic light/dark mode, typography styles matching React components, and comprehensive accessibility helpers.
+AStudioFoundation provides the foundation layer for the aStudio Swift package architecture, including semantic color tokens with automatic light/dark mode, typography styles matching React components, and comprehensive accessibility helpers.
 
 ## Topics
 
@@ -297,7 +297,7 @@ public struct SettingRowView: View {
 Generate documentation for a single package:
 
 ```bash
-cd platforms/apple/swift/ChatUIFoundation
+cd platforms/apple/swift/AStudioFoundation
 swift package generate-documentation
 ```
 
@@ -327,7 +327,7 @@ swift package generate-documentation \
 # Generate and open
 swift package generate-documentation \
     --output-path ./docs
-open ./docs/documentation/chatuifoundation/index.html
+open ./docs/documentation/astudiofoundation/index.html
 ```
 
 ## Publishing Documentation
@@ -339,7 +339,7 @@ open ./docs/documentation/chatuifoundation/index.html
    ```bash
    swift package generate-documentation \
        --output-path ./docs \
-       --hosting-base-path /ChatUI
+       --hosting-base-path /aStudio
    ```
 
 2. **Commit Documentation:**
@@ -357,7 +357,7 @@ open ./docs/documentation/chatuifoundation/index.html
    - Save
 
 4. **Access Documentation:**
-   - <https://yourusername.github.io/ChatUI/documentation/chatuifoundation/>
+   - <https://yourusername.github.io/aStudio/documentation/astudiofoundation/>
 
 ### Custom Domain
 
@@ -392,15 +392,15 @@ jobs:
 
       - name: Generate Documentation
         run: |
-          cd platforms/apple/swift/ChatUIFoundation
+          cd platforms/apple/swift/AStudioFoundation
           swift package generate-documentation \
             --output-path ../../docs/foundation \
-            --hosting-base-path /ChatUI
+            --hosting-base-path /aStudio
 
-          cd ../ChatUIComponents
+          cd ../AStudioComponents
           swift package generate-documentation \
             --output-path ../../docs/components \
-            --hosting-base-path /ChatUI
+            --hosting-base-path /aStudio
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -504,7 +504,7 @@ Document version requirements:
 ```swift
 /// A modern settings row component.
 ///
-/// - Since: ChatUIComponents 1.0
+/// - Since: AStudioComponents 1.0
 /// - Requires: iOS 15.0+, macOS 13.0+
 ```
 
@@ -521,7 +521,7 @@ public func oldFunction() { }
 ## Verify
 
 1. Generate docs: `swift package generate-documentation --output-path ./docs`.
-2. Open the landing page: `open ./docs/documentation/chatuifoundation/index.html`.
+2. Open the landing page: `open ./docs/documentation/astudiofoundation/index.html`.
 3. Confirm symbol links resolve and search returns your public types.
 
 ## Troubleshooting
@@ -587,14 +587,14 @@ public func oldFunction() { }
 
 2. **Check Symbol Name:**
    - Must match exactly
-   - Include module if ambiguous: `ChatUIFoundation/FColor`
+   - Include module if ambiguous: `AStudioFoundation/FColor`
 
 3. **Check Visibility:**
    - Can only link to public symbols
 
 ## Next Steps
 
-1. **Add Documentation to All Packages**: Start with ChatUIFoundation
+1. **Add Documentation to All Packages**: Start with AStudioFoundation
 2. **Generate and Review**: Build documentation and review in Xcode
 3. **Publish to GitHub Pages**: Make documentation publicly accessible
 4. **Automate**: Add documentation generation to CI/CD

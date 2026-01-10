@@ -1,6 +1,6 @@
 # aStudio Widget Gallery (platforms/web/apps/web)
 
-Last updated: 2026-01-07
+Last updated: 2026-01-09
 
 ## Doc requirements
 
@@ -29,7 +29,7 @@ Last updated: 2026-01-07
 
 - **Widget Gallery**: Visual browser for all ChatGPT widgets in an iframe gallery
 - **Widget Build**: Builds single-file `widget.html` used by the MCP server
-- **Standalone Host**: Reference implementation for `@chatui/runtime`
+- **Standalone Host**: Reference implementation for `@astudio/runtime`
 
 ## Quick Start
 
@@ -54,7 +54,7 @@ The MCP server uses the widget build:
 pnpm -C platforms/web/apps/web build:widget
 ```
 
-Creates `platforms/web/apps/web/dist/widget.html` — a single-file HTML bundle used by the MCP server.
+Creates `platforms/web/apps/web/dist/widget.html`: a single-file HTML bundle used by the MCP server.
 
 Render a single template by ID:
 
@@ -64,16 +64,16 @@ VITE_TEMPLATE_ID=chat-input pnpm -C platforms/web/apps/web build:widget
 
 ## Environment Variables
 
-- `VITE_API_BASE` (optional) — defaults to `http://localhost:8787`
-- `VITE_WIDGETS_BASE` (optional) — defaults to `http://localhost:5173`
-- `VITE_TEMPLATE_ID` (optional) — render a single template by ID for `build:widget`
+- `VITE_API_BASE` (optional): defaults to `http://localhost:8787`
+- `VITE_WIDGETS_BASE` (optional): defaults to `http://localhost:5173`
+- `VITE_TEMPLATE_ID` (optional): render a single template by ID for `build:widget`
 
 ## Key Files
 
-- `src/app/Router.tsx` — simplified router (harness + utility routes)
-- `src/pages/HarnessPage.tsx` — widget gallery UI
-- `src/pages/TemplateWidgetPage.tsx` — single-template widget shell
-- `scripts/inline-widget.mjs` — widget bundler for MCP
+- `src/app/Router.tsx`: simplified router (harness + utility routes)
+- `src/pages/HarnessPage.tsx`: widget gallery UI
+- `src/pages/TemplateWidgetPage.tsx`: single-template widget shell
+- `scripts/inline-widget.mjs`: widget bundler for MCP
 
 ## Verify
 
@@ -97,4 +97,4 @@ pnpm -C platforms/web/apps/web dev -- --port 5174
 
 ## Routes
 
-- `/` — Widget gallery UI (HarnessPage)
+- `/`: Widget gallery UI (HarnessPage)

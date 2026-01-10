@@ -2,9 +2,9 @@
   "reportMetadata": {
     "generatedAt": "2026-01-02T00:37:00Z",
     "scope": [
-      "ChatUIComponents",
-      "ChatUIShellChatGPT",
-      "ChatUIFoundation",
+      "AStudioComponents",
+      "AStudioShellChatGPT",
+      "AStudioFoundation",
       "ui-swift"
     ],
     "totalFilesAnalyzed": 121,
@@ -27,15 +27,15 @@
       "severity": "critical",
       "category": "code_duplication",
       "title": "ChatUIButton Implementation Duplication",
-      "description": "Two nearly identical implementations of ChatUIButton with 95% code overlap between ChatUIComponents and ui-swift packages",
+      "description": "Two nearly identical implementations of ChatUIButton with 95% code overlap between AStudioComponents and ui-swift packages",
       "locations": [
         {
-          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ChatUIButton.swift",
+          "file": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ChatUIButton.swift",
           "lineCount": 284,
           "issues": ["Uses FType/FColor/FSpacing tokens", "Duplicate enum definitions"]
         },
         {
-          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/Components/ChatUIButton.swift",
+          "file": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/ui-swift/Sources/AStudioSwift/Components/ChatUIButton.swift",
           "lineCount": 410,
           "issues": ["Uses DesignTokens namespace", "More sophisticated styling logic"]
         }
@@ -47,7 +47,7 @@
         "accessibilityLabelIfPresent extension",
         "accessibilityHintIfPresent extension"
       ],
-      "recommendation": "Create shared protocol in ChatUIFoundation, move shared enums and accessibility helpers",
+      "recommendation": "Create shared protocol in AStudioFoundation, move shared enums and accessibility helpers",
       "estimatedEffortHours": 5,
       "risk": "low",
       "impact": "High maintenance cost, inconsistency risk"
@@ -57,15 +57,15 @@
       "severity": "critical",
       "category": "code_duplication",
       "title": "DesignTokens Duplication",
-      "description": "Two separate design token implementations with overlapping structure but different values between ChatUIFoundation and ui-swift",
+      "description": "Two separate design token implementations with overlapping structure but different values between AStudioFoundation and ui-swift",
       "locations": [
         {
-          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/DesignTokens.swift",
+          "file": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/DesignTokens.swift",
           "lineCount": 433,
           "issues": ["Contains Interactive enum", "More complete implementation"]
         },
         {
-          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/DesignTokens.swift",
+          "file": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/ui-swift/Sources/AStudioSwift/DesignTokens.swift",
           "lineCount": 421,
           "issues": ["Missing Interactive enum", "Different hex values for same tokens"]
         }
@@ -75,7 +75,7 @@
         "ui-swift missing some accessibility extensions",
         "Same token names with different hex values"
       ],
-      "recommendation": "Consolidate into single source in ChatUIFoundation, use package-level re-exports in ui-swift",
+      "recommendation": "Consolidate into single source in AStudioFoundation, use package-level re-exports in ui-swift",
       "estimatedEffortHours": 10,
       "risk": "medium",
       "impact": "Token drift, maintenance nightmare"
@@ -88,17 +88,17 @@
       "description": "1,191 LOC of hand-coded icon data that should be asset-catalog based or generated",
       "locations": [
         {
-          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Icons/ChatGPTIcons.swift",
+          "file": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Icons/ChatGPTIcons.swift",
           "lineCount": 448,
           "issues": ["100+ static properties", "Repetitive code"]
         },
         {
-          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Icons/ChatGPTIconPaths.swift",
+          "file": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Icons/ChatGPTIconPaths.swift",
           "lineCount": 261,
           "issues": ["SVG path strings", "Should be in assets"]
         },
         {
-          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Icons/ChatGPTIconVectors.swift",
+          "file": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Icons/ChatGPTIconVectors.swift",
           "lineCount": 482,
           "issues": ["Vector path data", "Duplicate of paths"]
         }
@@ -117,7 +117,7 @@
       "description": "Two competing token APIs in the same codebase - FType/FColor/FSpacing vs DesignTokens",
       "locations": [
         {
-          "file": "ChatUIComponents (multiple files)",
+          "file": "AStudioComponents (multiple files)",
           "pattern": "FType.rowTitle(), FColor.textPrimary, FSpacing.s16"
         },
         {
@@ -138,10 +138,10 @@
       "description": "Multiple card/container implementations without shared base between SettingsCardView and ChatUICard",
       "locations": [
         {
-          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/SettingsCardView.swift"
+          "file": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/SettingsCardView.swift"
         },
         {
-          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/Components/ChatUICard.swift"
+          "file": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/ui-swift/Sources/AStudioSwift/Components/ChatUICard.swift"
         }
       ],
       "recommendation": "Create shared ChatUICard component in Foundation with elevation and padding variants",
@@ -157,13 +157,13 @@
       "description": "Multiple modal/dialog implementations without shared base across packages",
       "locations": [
         {
-          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ModalDialogView.swift"
+          "file": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ModalDialogView.swift"
         },
         {
-          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/AlertView.swift"
+          "file": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/AlertView.swift"
         },
         {
-          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/Components/ChatUIModal.swift"
+          "file": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/ui-swift/Sources/AStudioSwift/Components/ChatUIModal.swift"
         }
       ],
       "recommendation": "Create shared modal protocol and base implementations in Foundation",
@@ -179,7 +179,7 @@
       "description": "257 LOC with deeply nested VStacks and hardcoded logic, hard to test and maintain",
       "locations": [
         {
-          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/ComposeView.swift",
+          "file": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ComposeView.swift",
           "lineCount": 257,
           "issues": ["Monolithic view", "Deeply nested structure", "Hardcoded business logic"]
         }
@@ -197,7 +197,7 @@
       "description": "641 LOC in single file containing multiple unrelated components (Table, List, Badge, etc.)",
       "locations": [
         {
-          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ui-swift/Sources/ChatUISwift/Components/ChatUIDataDisplay.swift",
+          "file": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/ui-swift/Sources/AStudioSwift/Components/ChatUIDataDisplay.swift",
           "lineCount": 641,
           "issues": ["Multiple components in one file", "Hard to navigate"]
         }
@@ -250,7 +250,7 @@
       "description": "Many components lack snapshot tests, only SnapshotTests.swift (290 LOC) exists",
       "locations": [
         {
-          "file": "/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIComponents/Tests/ChatUIComponentsTests/SnapshotTests.swift",
+          "file": "/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioComponents/Tests/AStudioComponentsTests/SnapshotTests.swift",
           "lineCount": 290,
           "issues": ["Covers only some components", "Missing variant tests"]
         }
@@ -268,7 +268,7 @@
       "description": "Inconsistent grouping of components across packages",
       "locations": [
         {
-          "file": "ChatUIComponents",
+          "file": "AStudioComponents",
           "structure": "Flat structure with some subfolders"
         },
         {
@@ -276,7 +276,7 @@
           "structure": "Components/ folder but mixed content"
         },
         {
-          "file": "ChatUIFoundation",
+          "file": "AStudioFoundation",
           "structure": "Mixed token/utility files"
         }
       ],
@@ -337,7 +337,7 @@
     },
     "packageStats": [
       {
-        "name": "ChatUIComponents",
+        "name": "AStudioComponents",
         "fileCount": 27,
         "totalLOC": 5400,
         "avgLOC": 200
@@ -349,13 +349,13 @@
         "avgLOC": 800
       },
       {
-        "name": "ChatUIFoundation",
+        "name": "AStudioFoundation",
         "fileCount": 7,
         "totalLOC": 2100,
         "avgLOC": 300
       },
       {
-        "name": "ChatUIShellChatGPT",
+        "name": "AStudioShellChatGPT",
         "fileCount": 6,
         "totalLOC": 800,
         "avgLOC": 133

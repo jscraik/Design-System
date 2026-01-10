@@ -2,8 +2,8 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { HostProvider, createEmbeddedHost, ensureMockOpenAI, useHost } from "@chatui/runtime";
-import { AppsSDKButton, AppsSDKUIProvider } from "@chatui/ui";
+import { HostProvider, createEmbeddedHost, ensureMockOpenAI, useHost } from "@astudio/runtime";
+import { AppsSDKButton, AppsSDKUIProvider } from "@astudio/ui";
 
 import "../../../styles/widget.css";
 

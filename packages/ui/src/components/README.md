@@ -1,6 +1,6 @@
 # UI Library Organization
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Developers (intermediate)
@@ -65,7 +65,7 @@ Chat-specific components for the main chat interface.
 **Usage:**
 
 ```tsx
-import { ChatHeader, ChatInput, ChatMessages } from "@chatui/ui";
+import { ChatHeader, ChatInput, ChatMessages } from "@astudio/ui";
 ```
 
 ### `app/modals` - Modal Dialogs
@@ -81,7 +81,7 @@ Reusable modal dialog components.
 **Usage:**
 
 ```tsx
-import { SettingsModal } from "@chatui/ui/modals";
+import { SettingsModal } from "@astudio/ui/modals";
 ```
 
 ### `app/settings` - Settings System
@@ -109,7 +109,7 @@ Modular settings panels and reusable setting controls.
 **Usage:**
 
 ```tsx
-import { SettingRow, SettingToggle } from "@chatui/ui/settings";
+import { SettingRow, SettingToggle } from "@astudio/ui/settings";
 ```
 
 ### `design-system/showcase` - Design System Documentation
@@ -129,7 +129,7 @@ Components that demonstrate and document the design system.
 **Usage:**
 
 ```tsx
-import { DesignSystemDocs } from "@chatui/ui/showcase";
+import { DesignSystemDocs } from "@astudio/ui/showcase";
 ```
 
 ### `integrations/figma` - Figma Utilities
@@ -147,7 +147,7 @@ ChatGPT icon system (canonical source).
 **Usage:**
 
 ```tsx
-import { IconSettings, IconUser } from "@chatui/ui";
+import { IconSettings, IconUser } from "@astudio/ui";
 ```
 
 ### `components/ui` - Base UI Primitives
@@ -168,12 +168,12 @@ components/ui/
 └── overlays/       # Modals, popovers, tooltips
 ```
 
-**Naming:** Component folders and files use `PascalCase` (e.g. `Button/Button.tsx`), while category folders stay `kebab-case` (e.g. `data-display`).
+**Naming:** Component folders and files use `PascalCase` (for example `Button/Button.tsx`), while category folders stay `kebab-case` (for example `data-display`).
 
 **Usage:**
 
 ```tsx
-import { Button, Card, Toggle } from "@chatui/ui";
+import { Button, Card, Toggle } from "@astudio/ui";
 ```
 
 ## Import Patterns
@@ -181,8 +181,8 @@ import { Button, Card, Toggle } from "@chatui/ui";
 ### Direct Imports (Recommended)
 
 ```tsx
-import { ChatHeader } from "@chatui/ui";
-import { SettingRow } from "@chatui/ui/settings";
+import { ChatHeader } from "@astudio/ui";
+import { SettingRow } from "@astudio/ui/settings";
 ```
 
 ### Barrel Imports
@@ -190,8 +190,8 @@ import { SettingRow } from "@chatui/ui/settings";
 Each category has an `index.ts` for convenient imports:
 
 ```tsx
-import { SettingsModal, IconPickerModal } from "@chatui/ui/modals";
-import { DesignSystemDocs } from "@chatui/ui/showcase";
+import { SettingsModal, IconPickerModal } from "@astudio/ui/modals";
+import { DesignSystemDocs } from "@astudio/ui/showcase";
 ```
 
 ## Adding New Components

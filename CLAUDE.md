@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Developers (intermediate)
@@ -163,21 +163,21 @@ pnpm release              # Publish packages
 ### Production code (prefer subpath exports for tree-shaking):
 
 ```ts
-import { Button } from "@chatui/ui/base";
-import { ModelSelector } from "@chatui/ui/navigation";
-import { ChatSidebar } from "@chatui/ui/chat";
+import { Button } from "@astudio/ui/base";
+import { ModelSelector } from "@astudio/ui/navigation";
+import { ChatSidebar } from "@astudio/ui/chat";
 ```
 
 ### Dev/demo exports:
 
 ```ts
-import { ChatUIApp, DesignSystemPage } from "@chatui/ui/dev";
+import { AStudioApp, DesignSystemPage } from "@astudio/ui/dev";
 ```
 
 ### Experimental APIs (subject to breaking changes):
 
 ```ts
-import { ChatFullWidthTemplate } from "@chatui/ui/experimental";
+import { ChatFullWidthTemplate } from "@astudio/ui/experimental";
 ```
 
 ## Styling System
@@ -187,7 +187,7 @@ import { ChatFullWidthTemplate } from "@chatui/ui/experimental";
 ```css
 @import "tailwindcss";
 @import "@openai/apps-sdk-ui/css";
-@import "@chatui/tokens/foundations.css";
+@import "@astudio/tokens/foundations.css";
 
 /* Tailwind v4 scanning */
 @source "../node_modules/@openai/apps-sdk-ui";
@@ -196,7 +196,7 @@ import { ChatFullWidthTemplate } from "@chatui/ui/experimental";
 
 ### Design Tokens
 
-- `@chatui/tokens` encodes Figma foundations as CSS variables
+- `@astudio/tokens` encodes Figma foundations as CSS variables
 - Source: `packages/tokens/src/foundations.css`
 - These are **audit/extension only** - use Apps SDK UI classes in UI
 - TS exports available for Storybook documentation pages
@@ -206,7 +206,7 @@ import { ChatFullWidthTemplate } from "@chatui/ui/experimental";
 The runtime keeps components host-agnostic:
 
 ```ts
-import { HostProvider, createStandaloneHost } from "@chatui/runtime";
+import { HostProvider, createStandaloneHost } from "@astudio/runtime";
 
 const host = createStandaloneHost("http://localhost:8787");
 ```
@@ -223,7 +223,7 @@ For embedded ChatGPT apps, use `createEmbeddedHost()` which wraps `window.openai
 
 ### Swift (modular packages)
 
-- `platforms/apple/swift/ChatUIFoundation`, `platforms/apple/swift/ChatUIComponents`, `platforms/apple/swift/ChatUIThemes`, `platforms/apple/swift/ChatUIShellChatGPT`
+- `platforms/apple/swift/AStudioFoundation`, `platforms/apple/swift/AStudioComponents`, `platforms/apple/swift/AStudioThemes`, `platforms/apple/swift/AStudioShellChatGPT`
 - `platforms/apple/apps/macos/ComponentGallery` for development and accessibility checks
 
 ## Page System
@@ -245,14 +245,14 @@ See `docs/guides/PAGES_QUICK_START.md` for adding pages.
 | Chat UI components | ChatUIRoot, ChatHeader, ChatSidebar, ChatMessages, ChatInput |
 | UI primitives      | Button, Dialog, Tabs, Tooltip                                |
 | Icons              | Icons adapter, ChatGPTIcons                                  |
-| Pages              | DesignSystemPage (via `@chatui/ui/dev`)                      |
+| Pages              | DesignSystemPage (via `@astudio/ui/dev`)                      |
 | Templates          | ChatFullWidthTemplate, DashboardTemplate (experimental)      |
 | Utilities          | useControllableState                                         |
 
 ### API Stability
 
-- **Stable**: Root exports, `@chatui/ui/app`, `@chatui/ui/chat`, `@chatui/ui/modals`, `@chatui/ui/settings`,
-  `@chatui/ui/base`, `@chatui/ui/data-display`, `@chatui/ui/feedback`, `@chatui/ui/navigation`,
-  `@chatui/ui/overlays`, `@chatui/ui/icons`
-- **Experimental**: `@chatui/ui/experimental`, `@chatui/ui/templates`
-- **Dev-only**: `@chatui/ui/dev` (for Storybook/docs only)
+- **Stable**: Root exports, `@astudio/ui/app`, `@astudio/ui/chat`, `@astudio/ui/modals`, `@astudio/ui/settings`,
+  `@astudio/ui/base`, `@astudio/ui/data-display`, `@astudio/ui/feedback`, `@astudio/ui/navigation`,
+  `@astudio/ui/overlays`, `@astudio/ui/icons`
+- **Experimental**: `@astudio/ui/experimental`, `@astudio/ui/templates`
+- **Dev-only**: `@astudio/ui/dev` (for Storybook/docs only)

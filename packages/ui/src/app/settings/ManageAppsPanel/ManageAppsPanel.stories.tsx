@@ -9,7 +9,7 @@ import { ManageAppsPanel } from "./ManageAppsPanel";
  *
  * ## Usage
  * ```tsx
- * import { ManageAppsPanel } from "@chatui/ui";
+ * import { ManageAppsPanel } from "@astudio/ui";
  *
  * <ManageAppsPanel onBack={fn()} />
  * ```

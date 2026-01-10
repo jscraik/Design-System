@@ -15,3 +15,4 @@ export * from "../base/Separator";
 export * from "../overlays/Sheet";
 export * from "../navigation/Sidebar";
 export * from "../navigation/Tabs";
+export * from "./Transition";

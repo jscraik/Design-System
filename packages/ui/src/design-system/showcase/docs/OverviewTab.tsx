@@ -49,7 +49,7 @@ export function OverviewTab() {
               </span>
               Import Foundation CSS
             </h3>
-            <CodeBlock code={`import '@chatui/ui/styles/foundation.css';`} language="ts" />
+            <CodeBlock code={`import '@astudio/ui/styles/foundation.css';`} language="ts" />
           </Card>
           <Card>
             <h3 className="text-sm font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-3 flex items-center gap-2">
@@ -72,7 +72,7 @@ export function OverviewTab() {
               </span>
               Import Components
             </h3>
-            <CodeBlock code={`import { Button, Card, IconButton } from '@chatui/ui';`} language="ts" />
+            <CodeBlock code={`import { Button, Card, IconButton } from '@astudio/ui';`} language="ts" />
           </Card>
         </div>
       </Section>

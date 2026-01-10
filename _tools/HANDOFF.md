@@ -14,7 +14,7 @@ This document captures the current tool surface area in `platforms/mcp/server.js
 
 ## App-level metadata (global)
 
-- **Name**: `chatui` (MCP server name)
+- **Name**: `astudio` (MCP server name)
 - **Version**: `1.0.0`
 - **Auth**: `noauth` (all tools declare `securitySchemes: [{ type: "noauth" }]`)
 
@@ -227,7 +227,7 @@ Avoid:
 
 ## Widget runtime bridge (window.openai) quick reference
 
-Use the host bridge for UI state and actions. Recommended hooks exist in `@chatui/runtime`:
+Use the host bridge for UI state and actions. Recommended hooks exist in `@astudio/runtime`:
 
 - `useToolInput()`, `useToolOutput()`, `useToolResponseMetadata()`
 - `useTheme()`, `useDisplayMode()`, `useMaxHeight()`, `useLocale()`, `useUserAgent()`

@@ -56,7 +56,7 @@ npx @modelcontextprotocol/inspector --cli --transport http --server-url http://1
 Tests that all registered tools have proper metadata and contracts:
 
 ```bash
-pnpm test:contract
+pnpm -C platforms/mcp test:contract
 # or from root:
 pnpm mcp:test:contract
 ```
@@ -75,10 +75,10 @@ Tests the server via direct HTTP JSON-RPC calls:
 
 ```bash
 # Terminal 1: Start the server
-pnpm dev
+pnpm -C platforms/mcp dev
 
 # Terminal 2: Run integration tests
-pnpm test:jsonrpc
+pnpm -C platforms/mcp test:jsonrpc
 
 # or from root:
 pnpm mcp:test:jsonrpc
@@ -98,18 +98,18 @@ Custom JSON-RPC test CLI for interactive testing:
 
 ```bash
 # Terminal 1: Start the server
-pnpm dev
+pnpm -C platforms/mcp dev
 
 # Terminal 2: Test specific methods
-pnpm test:cli tools/list
-pnpm test:cli resources/list
-pnpm test:cli tools/call '{"name":"widget_name","arguments":{}}'
+pnpm -C platforms/mcp test:cli tools/list
+pnpm -C platforms/mcp test:cli resources/list
+pnpm -C platforms/mcp test:cli tools/call '{"name":"widget_name","arguments":{}}'
 
 # With custom server URL
-MCP_TEST_URL=http://localhost:8797 pnpm test:cli tools/list
+MCP_TEST_URL=http://localhost:8797 pnpm -C platforms/mcp test:cli tools/list
 
 # See all options
-pnpm test:cli --help
+pnpm -C platforms/mcp test:cli --help
 ```
 
 **Available methods:**
@@ -126,7 +126,7 @@ pnpm test:cli --help
 While the CLI is broken, the UI still works for visual testing:
 
 ```bash
-pnpm inspector
+pnpm -C platforms/mcp inspector
 ```
 
 This launches a web-based interface for testing the MCP server interactively.
@@ -136,7 +136,7 @@ This launches a web-based interface for testing the MCP server interactively.
 Run all tests together:
 
 ```bash
-pnpm test
+pnpm -C platforms/mcp test
 # or from root:
 pnpm mcp:test
 ```
@@ -145,26 +145,26 @@ pnpm mcp:test
 
 ```bash
 # 1. Build widgets (if not already built)
-cd /path/to/chatui
+cd /path/to/astudio
 pnpm build:widgets
 
 # 2. Start MCP server
 cd platforms/mcp
-pnpm dev &
+pnpm -C platforms/mcp dev &
 
 # 3. Run contract tests
-pnpm test:contract
+pnpm -C platforms/mcp test:contract
 
 # 4. Run integration tests
-pnpm test:jsonrpc
+pnpm -C platforms/mcp test:jsonrpc
 
 # 5. Manual testing
-pnpm test:cli tools/list
-pnpm test:cli resources/list
+pnpm -C platforms/mcp test:cli tools/list
+pnpm -C platforms/mcp test:cli resources/list
 
 # 6. Get first tool name and test calling it
-TOOL_NAME=$(pnpm -s test:cli tools/list | grep '"name":' | head -1 | cut -d'"' -f4)
-pnpm test:cli tools/call "{\"name\":\"$TOOL_NAME\",\"arguments\":{}}"
+TOOL_NAME=$(pnpm -C platforms/mcp -s test:cli tools/list | grep '"name":' | head -1 | cut -d'"' -f4)
+pnpm -C platforms/mcp test:cli tools/call "{\"name\":\"$TOOL_NAME\",\"arguments\":{}}"
 ```
 
 ## Direct JSON-RPC with curl
@@ -224,7 +224,7 @@ The JSON-RPC integration tests can run in CI:
 lsof -i :8787
 
 # Check server logs
-pnpm dev
+pnpm -C platforms/mcp dev
 ```
 
 ### Connection refused
@@ -232,13 +232,13 @@ pnpm dev
 Make sure the server is running on the expected port:
 
 ```bash
-PORT=8797 pnpm dev
+PORT=8797 pnpm -C platforms/mcp dev
 ```
 
 Then test with:
 
 ```bash
-MCP_TEST_URL=http://localhost:8797 pnpm test:cli tools/list
+MCP_TEST_URL=http://localhost:8797 pnpm -C platforms/mcp test:cli tools/list
 ```
 
 ### Widget not found errors
@@ -268,4 +268,3 @@ pnpm build:widgets
 
 ## Verify
 - TBD: Add concrete verification steps and expected results.
-

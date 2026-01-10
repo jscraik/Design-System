@@ -26,7 +26,7 @@ export function ChatSidebarHistory({
 
   return (
     <div className="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
-      <div className="px-3 pb-2 text-[11px] text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary font-medium tracking-wide uppercase">
+      <div className="px-3 pb-2 text-[11px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary font-medium tracking-wide uppercase">
         Recent
       </div>
       {filteredHistory.map((item, index) => {

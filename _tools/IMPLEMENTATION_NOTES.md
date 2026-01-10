@@ -293,7 +293,7 @@ The enhanced widget system now provides a production-ready foundation with advan
 
 ### Complete Production Pipeline
 
-The ChatUI widget library now has a complete production deployment pipeline inspired by the Toolbase-AI template:
+The aStudio widget library now has a complete production deployment pipeline inspired by the Toolbase-AI template:
 
 1. **Development**: Enhanced widget infrastructure with auto-discovery and advanced hooks
 2. **Building**: Automatic asset processing with content hashing and manifest generation
@@ -314,4 +314,4 @@ The ChatUI widget library now has a complete production deployment pipeline insp
 - **For Users**: Seamless integration with global performance
 - **For Organizations**: Production scalability with cost-effective deployment
 
-The implementation successfully adapts all key benefits from the Toolbase-AI template to work with the ChatUI library architecture, providing a robust foundation for building and deploying interactive widgets at scale.
+The implementation successfully adapts all key benefits from the Toolbase-AI template to work with the aStudio library architecture, providing a robust foundation for building and deploying interactive widgets at scale.

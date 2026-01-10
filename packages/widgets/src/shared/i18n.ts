@@ -10,7 +10,7 @@
  * For production apps, prefer a full i18n library (for example, react-intl).
  */
 
-import { getOpenAiGlobal } from "@chatui/runtime";
+import { getOpenAiGlobal } from "@astudio/runtime";
 
 // Default locale
 const DEFAULT_LOCALE = "en-US";

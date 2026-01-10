@@ -10,7 +10,7 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-Complete guide for testing and ensuring accessibility compliance in ChatUI Swift applications.
+Complete guide for testing and ensuring accessibility compliance in aStudio Swift applications.
 
 ## Table of Contents
 
@@ -25,7 +25,7 @@ Complete guide for testing and ensuring accessibility compliance in ChatUI Swift
 
 ## Overview
 
-Accessibility ensures your application is usable by everyone, including people with disabilities. ChatUI Swift components include built-in accessibility support, but proper testing is essential.
+Accessibility ensures your application is usable by everyone, including people with disabilities. aStudio Swift components include built-in accessibility support, but proper testing is essential.
 
 ### Why Accessibility Matters
 
@@ -45,7 +45,7 @@ Accessibility ensures your application is usable by everyone, including people w
 
 ### WCAG 2.1 Level AA Compliance
 
-ChatUI Swift components aim for WCAG 2.1 Level AA compliance:
+aStudio Swift components aim for WCAG 2.1 Level AA compliance:
 
 **Perceivable:**
 
@@ -627,7 +627,7 @@ jobs:
 
       - name: Run Accessibility Tests
         run: |
-          cd platforms/apple/swift/ChatUIComponents
+          cd platforms/apple/swift/AStudioComponents
           swift test --filter AccessibilityTests
 ```
 

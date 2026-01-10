@@ -64,12 +64,12 @@ Last updated: 2026-01-04
 
 ## Overview
 
-Successfully implemented comprehensive TLS certificate pinning for the ChatUIMCP Swift client, providing production-ready security for MCP server connections.
+Successfully implemented comprehensive TLS certificate pinning for the AStudioMCP Swift client, providing production-ready security for MCP server connections.
 
 ## Files Created
 
 ### 1. Core Implementation
-- **`/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIMCP/Sources/ChatUIMCP/CertificatePinningValidator.swift`**
+- **`/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP/Sources/AStudioMCP/CertificatePinningValidator.swift`**
   - 420+ lines of production-ready certificate pinning logic
   - Supports SPKI and certificate hash validation
   - Includes strict/relaxed validation modes
@@ -77,26 +77,26 @@ Successfully implemented comprehensive TLS certificate pinning for the ChatUIMCP
   - CryptoKit-based implementation
 
 ### 2. Unit Tests
-- **`/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIMCP/Tests/ChatUIMCPTests/CertificatePinningValidatorTests.swift`**
+- **`/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP/Tests/AStudioMCPTests/CertificatePinningValidatorTests.swift`**
   - Comprehensive test coverage
   - Tests for hash extraction, validation modes, rotation
   - Performance benchmarks included
   - Error handling validation
 
 ### 3. Documentation
-- **`/Users/jamiecraik/chatui/docs/guides/TLS_CERTIFICATE_PINNING.md`**
+- **`/Users/jamiecraik/dev/aStudio/docs/guides/TLS_CERTIFICATE_PINNING.md`**
   - Complete implementation guide
   - Certificate extraction instructions
   - Best practices and security considerations
   - Troubleshooting section
 
-- **`/Users/jamiecraik/chatui/docs/guides/CERTIFICATE_PINNING_QUICK_START.md`**
+- **`/Users/jamiecraik/dev/aStudio/docs/guides/CERTIFICATE_PINNING_QUICK_START.md`**
   - 30-second setup guide
   - Common configuration patterns
   - Quick reference for developers
 
 ### 4. Developer Tools
-- **`/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIMCP/scripts/generate-test-certificate.sh`**
+- **`/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP/scripts/generate-test-certificate.sh`**
   - Bash script to generate test certificates
   - Automatic SPKI hash extraction
   - Generates Swift configuration file for testing
@@ -104,17 +104,17 @@ Successfully implemented comprehensive TLS certificate pinning for the ChatUIMCP
 ## Files Modified
 
 ### 1. MCP Error Types
-- **`/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIMCP/Sources/ChatUIMCP/MCPError.swift`**
+- **`/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP/Sources/AStudioMCP/MCPError.swift`**
   - Added `certificatePinningFailed(String)` error
   - Added `certificateValidationFailed(String)` error
 
 ### 2. MCP Client Integration
-- **`/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIMCP/Sources/ChatUIMCP/MCPClient.swift`**
+- **`/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP/Sources/AStudioMCP/MCPClient.swift`**
   - Added convenience initializer with certificate pinning support
   - Integrates seamlessly with existing API
 
 ### 3. Validation Extension (Bug Fix)
-- **`/Users/jamiecraik/chatui/platforms/apple/swift/ChatUIMCP/Sources/ChatUIMCP/MCPClientValidation.swift`**
+- **`/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP/Sources/AStudioMCP/MCPClientValidation.swift`**
   - Fixed access control for validation methods (changed from private to internal)
 
 ## Key Features
@@ -210,7 +210,7 @@ let spkiHash = try CertificatePinningValidator.extractSPKIHash(from: certificate
 
 ### Generate Test Certificates
 ```bash
-cd /Users/jamiecraik/chatui/platforms/apple/swift/ChatUIMCP
+cd /Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP
 ./scripts/generate-test-certificate.sh
 ```
 
@@ -222,7 +222,7 @@ cd /Users/jamiecraik/chatui/platforms/apple/swift/ChatUIMCP
 
 ### Run Unit Tests
 ```bash
-cd /Users/jamiecraik/chatui/platforms/apple/swift/ChatUIMCP
+cd /Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP
 swift test --filter CertificatePinningValidatorTests
 ```
 

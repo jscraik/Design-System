@@ -1,6 +1,6 @@
 {
-  "name": "@chatui/tokens",
-  "version": "0.0.0",
+  "name": "@astudio/tokens",
+  "version": "0.0.1",
   "type": "module",
   "license": "MIT",
   "exports": {

@@ -131,7 +131,7 @@ pnpm exec playwright test -c platforms/web/apps/web/playwright.config.ts sidebar
 
 **Accessibility:**
 
-- ✅ Proper ARIA attributes (role="navigation", aria-label)
+- ✅ Proper ARIA attributes (role="navigation" and aria-label)
 - ✅ Rail buttons have accessible names
 - ✅ Axe-core accessibility scan (expanded)
 - ✅ Axe-core accessibility scan (collapsed)
@@ -413,4 +413,3 @@ These tests run in CI on every PR:
 
 ## Troubleshooting
 - TBD: Add the top 3 failure modes and fixes.
-

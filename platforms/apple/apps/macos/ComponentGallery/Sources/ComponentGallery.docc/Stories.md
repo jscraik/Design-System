@@ -28,7 +28,7 @@ ComponentGallery organizes stories by category. Each gallery section is a determ
 2. Provide a clear title and subtitle describing the scenario.
 3. Keep data deterministic to avoid visual diffs.
 4. Ensure icon-only controls include accessibility labels.
-5. Prefer ChatUIFoundation tokens (FColor, FType, FSpacing) for styling.
+5. Prefer AStudioFoundation tokens (FColor, FType, FSpacing) for styling.
 
 ## UI Test Harness
 

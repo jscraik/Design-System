@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
-import ChatUIFoundation
-import ChatUIThemes
+import AStudioFoundation
+import AStudioThemes
 
 /// Gallery of foundation tokens and primitives.
 struct FoundationGallery: View {
     var body: some View {
         VStack(alignment: .leading, spacing: FSpacing.s24) {
             // Colors Section
-            GallerySection(title: "Colors", subtitle: "Semantic color tokens from ChatUIFoundation") {
+            GallerySection(title: "Colors", subtitle: "Semantic color tokens from AStudioFoundation") {
                 VStack(alignment: .leading, spacing: FSpacing.s16) {
                     ColorGroup(title: "Surface Colors", colors: [
                         ("bgApp", FColor.bgApp, "Window background"),
@@ -49,7 +49,7 @@ struct FoundationGallery: View {
             }
             
             // Typography Section
-            GallerySection(title: "Typography", subtitle: "Typography styles from ChatUIFoundation") {
+            GallerySection(title: "Typography", subtitle: "Typography styles from AStudioFoundation") {
                 VStack(alignment: .leading, spacing: FSpacing.s12) {
                     TypographyExample(name: "title()", font: FType.title(), text: "Section Title - 16pt Semibold")
                     TypographyExample(name: "sectionTitle()", font: FType.sectionTitle(), text: "Subsection Title - 13pt Semibold")
@@ -87,7 +87,7 @@ struct FoundationGallery: View {
             }
             
             // Spacing Section
-            GallerySection(title: "Spacing", subtitle: "Spacing scale from ChatUIFoundation") {
+            GallerySection(title: "Spacing", subtitle: "Spacing scale from AStudioFoundation") {
                 VStack(alignment: .leading, spacing: FSpacing.s12) {
                     SpacingExample(name: "s2", value: FSpacing.s2)
                     SpacingExample(name: "s4", value: FSpacing.s4)
@@ -100,7 +100,7 @@ struct FoundationGallery: View {
             }
             
             // Platform Section
-            GallerySection(title: "Platform Detection", subtitle: "Platform utilities from ChatUIFoundation") {
+            GallerySection(title: "Platform Detection", subtitle: "Platform utilities from AStudioFoundation") {
                 VStack(alignment: .leading, spacing: FSpacing.s12) {
                     PlatformInfo(label: "Platform.isMac", value: Platform.isMac)
                     PlatformInfo(label: "Platform.isVisionOS", value: Platform.isVisionOS)

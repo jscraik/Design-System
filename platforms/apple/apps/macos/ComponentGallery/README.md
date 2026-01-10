@@ -10,7 +10,7 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-Interactive component browser for the ChatUI SwiftUI library, demonstrating all components from the modular package architecture.
+Interactive component browser for the aStudio SwiftUI library, demonstrating all components from the modular package architecture.
 
 ## Table of contents
 
@@ -31,7 +31,7 @@ Interactive component browser for the ChatUI SwiftUI library, demonstrating all 
 
 The Component Gallery is a macOS and iOS application that provides:
 
-- **Interactive Component Browser**: Explore all components from ChatUIFoundation, ChatUIComponents, ChatUIThemes, and ChatUIShellChatGPT
+- **Interactive Component Browser**: Explore all components from AStudioFoundation, AStudioComponents, AStudioThemes, and AStudioShellChatGPT
 - **Search & Filtering**: Quickly find components and sections by name
 - **Side-by-Side Light/Dark Mode**: Compare component appearance in both color schemes simultaneously
 - **Accessibility Testing Interface**: Built-in checklist and testing tools for VoiceOver, keyboard navigation, focus management, and high contrast
@@ -43,7 +43,7 @@ The Component Gallery is a macOS and iOS application that provides:
 
 ### Component Categories
 
-1. **Foundation**: Colors, typography, spacing, and platform utilities from ChatUIFoundation
+1. **Foundation**: Colors, typography, spacing, and platform utilities from AStudioFoundation
 2. **Settings**: All settings primitives (SettingsDivider, SettingsCardView, SettingRowView, SettingToggleView, SettingDropdownView, FoundationSwitchStyle)
 3. **Buttons**: ChatUIButton with variants and platform-specific behaviors
 4. **Inputs**: InputView with accessibility features
@@ -119,7 +119,7 @@ UI tests require an Xcode project or a manually added UI test target (SPM execut
 
 Notes:
 
-- The interaction harness uses accessibility identifiers (e.g., `interaction.input`, `interaction.toggle`) to keep UI tests stable.
+- The interaction harness uses accessibility identifiers (for example, `interaction.input`, `interaction.toggle`) to keep UI tests stable.
 - If the UI test target cannot see the identifiers, ensure the accessibility options are enabled in the test scheme.
 
 ## Unit Tests
@@ -133,14 +133,14 @@ swift test
 
 ## Architecture
 
-The Component Gallery is built as a Swift Package Manager executable that depends on all four ChatUI packages:
+The Component Gallery is built as a Swift Package Manager executable that depends on all four aStudio packages:
 
 ```
 ComponentGallery
-├── ChatUIFoundation (semantic tokens, platform utilities)
-├── ChatUIComponents (reusable primitives)
-├── ChatUIThemes (ChatGPT theme constants)
-└── ChatUIShellChatGPT (optional shell layouts)
+├── AStudioFoundation (semantic tokens, platform utilities)
+├── AStudioComponents (reusable primitives)
+├── AStudioThemes (ChatGPT theme constants)
+└── AStudioShellChatGPT (optional shell layouts)
 ```
 
 ### Project Structure
@@ -200,7 +200,7 @@ Sources/
 
 To add a new component to the gallery:
 
-1. Add the component to the appropriate ChatUI package
+1. Add the component to the appropriate aStudio package
 2. Create or update the corresponding gallery view in `Sources/Galleries/`
 3. Build and test in the Component Gallery
 
@@ -265,4 +265,4 @@ This Component Gallery satisfies the following requirements from Task 11.1:
 
 ## License
 
-This Component Gallery is part of the ChatUI project and follows the same license.
+This Component Gallery is part of the aStudio project and follows the same license.

@@ -1,6 +1,6 @@
-import { HostProvider, createEmbeddedHost, ensureMockOpenAI } from "@chatui/runtime";
-import { AppsSDKUIProvider } from "@chatui/ui";
-import { ComposeTemplate } from "@chatui/ui/templates";
+import { HostProvider, createEmbeddedHost, ensureMockOpenAI } from "@astudio/runtime";
+import { AppsSDKUIProvider } from "@astudio/ui";
+import { ComposeTemplate } from "@astudio/ui/templates";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 

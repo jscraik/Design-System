@@ -71,11 +71,11 @@ type JsonEnvelope = {
   errors: JsonError[];
 };
 
-const TOOL_NAME = "chatui";
+const TOOL_NAME = "astudio";
 const MCP_DEFAULT_SERVER = "http://127.0.0.1:8787";
 const MCP_DEFAULT_ENDPOINT = "/mcp";
 const MCP_DEFAULT_PROTOCOL_VERSION = "2024-11-05";
-const COMMAND_SCHEMA = "chatui.command.v1";
+const COMMAND_SCHEMA = "astudio.command.v1";
 const DEFAULT_HINT_USAGE = "Use --help to see available options.";
 const MCP_ENDPOINT_OPTION = "MCP endpoint";
 const MCP_PROTOCOL_VERSION_OPTION = "MCP protocol version";
@@ -166,7 +166,7 @@ function getToolVersion(): string {
 }
 
 function shouldColor(opts: GlobalOptions): boolean {
-  const colorPref = parseBooleanEnv(process.env.CHATUI_COLOR);
+  const colorPref = parseBooleanEnv(process.env.ASTUDIO_COLOR);
   if (opts.noColor) return false;
   if (opts.json || opts.plain) return false;
   if (process.env.NO_COLOR) return false;
@@ -182,7 +182,7 @@ function baseEnv(opts: GlobalOptions): NodeJS.ProcessEnv {
   if (!shouldColor(opts)) {
     env.NO_COLOR = "1";
     env.FORCE_COLOR = "0";
-  } else if (parseBooleanEnv(process.env.CHATUI_COLOR) === true) {
+  } else if (parseBooleanEnv(process.env.ASTUDIO_COLOR) === true) {
     env.FORCE_COLOR = "1";
   }
   return env;
@@ -281,7 +281,7 @@ function requireNetwork(opts: CliArgs, action: string): void {
 }
 
 function resolvePnpmCommand(): string {
-  return process.env.CHATUI_PNPM?.trim() || "pnpm";
+  return process.env.ASTUDIO_PNPM?.trim() || "pnpm";
 }
 
 function mergeMcpConfigs(...configs: Array<ChatUIConfig["mcp"] | null | undefined>): ChatUIConfig["mcp"] | undefined {
@@ -336,9 +336,9 @@ function findRepoRoot(start: string): string | null {
 async function resolveConfig(opts: GlobalOptions): Promise<ChatUIConfig> {
   const cwd = resolveCwd(opts);
   const repoRoot = findRepoRoot(cwd);
-  const projectConfigPath = repoRoot ? path.join(repoRoot, "chatui.config.json") : null;
-  const userConfigPath = path.join(os.homedir(), ".config", "chatui", "config.json");
-  const explicitConfigPath = opts.config ?? process.env.CHATUI_CONFIG ?? null;
+  const projectConfigPath = repoRoot ? path.join(repoRoot, "astudio.config.json") : null;
+  const userConfigPath = path.join(os.homedir(), ".config", "astudio", "config.json");
+  const explicitConfigPath = opts.config ?? process.env.ASTUDIO_CONFIG ?? null;
 
   const systemConfig: ChatUIConfig = {};
   const userConfig = await readJsonFile(userConfigPath);
@@ -355,9 +355,9 @@ async function resolveConfig(opts: GlobalOptions): Promise<ChatUIConfig> {
 
   const merged: ChatUIConfig = {
     ...systemConfig,
-    ...userConfig,
-    ...projectConfig,
-    ...explicitConfig,
+    ...(userConfig ?? {}),
+    ...(projectConfig ?? {}),
+    ...(explicitConfig ?? {}),
   };
 
   merged.mcp = mergeMcpConfigs(
@@ -395,7 +395,7 @@ async function resolveMcpConfigWithOverrides(argv: Record<string, unknown>): Pro
 
 function resolveCwd(opts: GlobalOptions): string {
   if (opts.cwd) return path.resolve(opts.cwd);
-  if (process.env.CHATUI_CWD) return path.resolve(process.env.CHATUI_CWD);
+  if (process.env.ASTUDIO_CWD) return path.resolve(process.env.ASTUDIO_CWD);
   return process.cwd();
 }
 

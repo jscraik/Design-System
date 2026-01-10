@@ -26,9 +26,9 @@ UX scope: ChatGPT widgets + React UI; record changes for SwiftUI parity.
 ## 2025-12-29
 
 - Start audit. Sequence: packages/ui → packages/widgets → platforms/web/apps/web → platforms/web/apps/storybook.
-- [CLEAN][A11Y][DX] `packages/ui/src/app/chat/ChatInput.tsx`: removed console logs, added action callbacks (`onSendMessage`, `onAttachmentAction`, `onToolAction`, `onSearchToggle`, `onResearchToggle`), and removed misleading `cursor-pointer` on non-interactive tool rows.
-- [CLEAN][DX] `packages/ui/src/app/chat/ChatMessages.tsx`: removed console logs; added `onMessageAction` callback for copy/feedback actions.
-- [CLEAN][DX] `packages/ui/src/app/chat/ChatSidebar.tsx`: removed console logs; added `onAction` callback; wired menu items and rail buttons to state + callbacks; added logout + memory-option hooks; added `ChatSidebarAction` type.
+- [CLEAN][A11Y][DX] `packages/ui/src/app/chat/ChatInput/ChatInput.tsx`: removed console logs, added action callbacks (`onSendMessage`, `onAttachmentAction`, `onToolAction`, `onSearchToggle`, `onResearchToggle`), and removed misleading `cursor-pointer` on non-interactive tool rows.
+- [CLEAN][DX] `packages/ui/src/app/chat/ChatMessages/ChatMessages.tsx`: removed console logs; added `onMessageAction` callback for copy/feedback actions.
+- [CLEAN][DX] `packages/ui/src/app/chat/ChatSidebar/ChatSidebar.tsx`: removed console logs; added `onAction` callback; wired menu items and rail buttons to state + callbacks; added logout + memory-option hooks; added `ChatSidebarAction` type.
 - [BUG][DX] `packages/widgets/src/shared/openai-hooks.ts`: added SSR-safe guards for `window` access in `useOpenAIGlobal`, `useDisplayMode`, and `useCallTool` to prevent server render crashes.
 - [BUG][PERF] `packages/widgets/src/shared/widget-base.tsx`: removed side effects during render, added root caching for `mountWidget`, and replaced dynamic Tailwind `maxHeight` class with inline style support via new `style` prop on `WidgetBase`.
 - [BUG][DX] `packages/widgets/docs/examples/example-widget/main.tsx` and `packages/widgets/docs/examples/enhanced-example-widget/main.tsx`: explicit `mountWidget` usage to avoid auto-mounting side effects in `createWidget`.
@@ -46,7 +46,7 @@ UX scope: ChatGPT widgets + React UI; record changes for SwiftUI parity.
 - [A11Y][BUG] `packages/ui/src/components/ui/overlays/Modal/Modal.tsx`: ensured `aria-describedby` always targets a real element and added hidden description node; stabilized IDs to avoid `undefined-description`.
 - [A11Y][BUG] `packages/ui/src/components/ui/navigation/ModelSelector/ModelSelector.tsx`: added `type="button"` to non-submit buttons and preserved disabled behavior for safer form embedding.
 - [A11Y][BUG] Added explicit `type="button"` to non-submit buttons across settings panels, modals, chat components, and UI primitives to prevent accidental form submissions.
-- [CLEAN][DX] `packages/ui/src/app/chat/ChatInput.tsx`: removed dead internal `activeTag` state; added controlled `activeTag` and `onClearActiveTag` props.
+- [CLEAN][DX] `packages/ui/src/app/chat/ChatInput/ChatInput.tsx`: removed dead internal `activeTag` state; added controlled `activeTag` and `onClearActiveTag` props.
 - [SEC] `packages/widgets/src/pizzaz-markdown/main.tsx`: added `noopener` to external link rel for `target="_blank"`.
 - [CLEAN][PERF] Replaced index keys with stable keys in lists:
   - `packages/widgets/docs/examples/example-widget/main.tsx`
@@ -57,18 +57,18 @@ UX scope: ChatGPT widgets + React UI; record changes for SwiftUI parity.
 - [A11Y] `packages/ui/src/components/ui/base/Toggle/Toggle.stories.tsx`: added `ariaLabel` for standalone Toggle story examples.
 - [A11Y] `packages/ui/src/components/ui/base/SegmentedControl/SegmentedControl.tsx`: added `role="radiogroup"` and `role="radio"` + `aria-checked` for better screen reader support.
 - [CLEAN][PERF] Replaced index keys with stable keys in settings lists:
-  - `packages/ui/src/app/settings/ArchivedChatsPanel.tsx`
-  - `packages/ui/src/app/settings/AppsPanel.tsx`
-  - `packages/ui/src/app/settings/ManageAppsPanel.tsx`
+  - `packages/ui/src/app/settings/ArchivedChatsPanel/ArchivedChatsPanel.tsx`
+  - `packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx`
+  - `packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.tsx`
 - [CLEAN][PERF] `packages/widgets/src/solar-system/solar-system.tsx`: removed unused key on `motion.span` and used stable key for streamed words.
 - [A11Y][BUG] `platforms/web/apps/web/src/pages/HarnessPage.tsx`: added explicit `type="button"` for widget selection buttons to prevent unintended form submits.
-- [A11Y] `packages/ui/src/components/ui/overlays/Tooltip/Tooltip.tsx`: added light fill token for tooltip arrow to avoid dark-only token usage.
-- [A11Y] `packages/ui/src/app/settings/ArchivedChatsPanel.tsx`: added labeled back control and search input aria-label for archived chat search.
-- [A11Y] `packages/ui/src/app/settings/DataControlsPanel.tsx`: upgraded switch buttons to `role="switch"` with `aria-checked` and label associations; labeled back control.
-- [A11Y] `packages/ui/src/app/settings/SecurityPanel.tsx`: upgraded MFA switch to `role="switch"` with label association; labeled back control.
+- [A11Y] `packages/ui/src/components/ui/overlays/Tooltip/fallback/Tooltip.tsx`: added light fill token for tooltip arrow to avoid dark-only token usage.
+- [A11Y] `packages/ui/src/app/settings/ArchivedChatsPanel/ArchivedChatsPanel.tsx`: added labeled back control and search input aria-label for archived chat search.
+- [A11Y] `packages/ui/src/app/settings/DataControlsPanel/DataControlsPanel.tsx`: upgraded switch buttons to `role="switch"` with `aria-checked` and label associations; labeled back control.
+- [A11Y] `packages/ui/src/app/settings/SecurityPanel/SecurityPanel.tsx`: upgraded MFA switch to `role="switch"` with label association; labeled back control.
 - [A11Y] `packages/ui/src/components/ui/forms/RangeSlider/RangeSlider.tsx`: added `useId` + `htmlFor` label wiring and fallback `aria-label` prop for unlabeled sliders.
 - [A11Y] `packages/ui/src/components/ui/base/IconButton/IconButton.tsx`: accepted standard `aria-label`/`aria-labelledby` props and wired them to the underlying button for lint/a11y parity.
-- [A11Y] `packages/ui/src/components/ui/base/RadioGroup/RadioGroup.tsx`: paired dark-only background token with a light-mode counterpart.
-- [A11Y] `packages/ui/src/components/ui/base/Select/Select.tsx`: added light hover token to pair with dark hover styles under media-based theming.
+- [A11Y] `packages/ui/src/components/ui/base/RadioGroup/fallback/RadioGroup.tsx`: paired dark-only background token with a light-mode counterpart.
+- [A11Y] `packages/ui/src/components/ui/base/Select/fallback/Select.tsx`: added light hover token to pair with dark hover styles under media-based theming.
 - [A11Y] `packages/ui/src/components/ui/overlays/Modal/Modal.tsx`: wired focus-trap ref to the dialog element to ensure correct focus management.
-- [BUG] `packages/ui/src/app/chat/ChatSidebar.tsx`: removed duplicate `type` attribute on collapse/expand button.
+- [BUG] `packages/ui/src/app/chat/ChatSidebar/ChatSidebar.tsx`: removed duplicate `type` attribute on collapse/expand button.

@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
-import ChatUIFoundation
-import ChatUIComponents
-import ChatUIThemes
+import AStudioFoundation
+import AStudioComponents
+import AStudioThemes
 #if os(macOS)
 import AppKit
 #endif
@@ -159,7 +159,7 @@ struct DetailView: View {
                         .font(FType.title())
                         .foregroundStyle(FColor.textPrimary)
                     
-                    Text("Explore \(galleryState.selectedCategory.rawValue.lowercased()) components from the ChatUI library")
+                    Text("Explore \(galleryState.selectedCategory.rawValue.lowercased()) components from the aStudio library")
                         .font(FType.rowTitle())
                         .foregroundStyle(FColor.textSecondary)
                 }

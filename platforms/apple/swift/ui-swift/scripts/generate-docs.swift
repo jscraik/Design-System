@@ -3,7 +3,7 @@
 import Foundation
 
 /**
- * Swift Documentation Generator for ChatUISwift Components
+ * Swift Documentation Generator for AStudioSwift Components
  * 
  * This script analyzes Swift source files and generates comprehensive documentation
  * including component APIs, usage examples, and accessibility features.
@@ -77,7 +77,7 @@ class DocumentationGenerator {
     
     private func analyzeComponents() throws -> [ComponentDocumentation] {
         let fileManager = FileManager.default
-        let componentsPath = "\(sourcePath)/Sources/ChatUISwift/Components"
+        let componentsPath = "\(sourcePath)/Sources/AStudioSwift/Components"
         
         guard fileManager.fileExists(atPath: componentsPath) else {
             throw DocumentationError.componentsDirectoryNotFound(componentsPath)
@@ -378,11 +378,11 @@ class DocumentationGenerator {
     
     private func generateMarkdown(for components: [ComponentDocumentation]) -> String {
         var markdown = """
-        # ChatUISwift Component Documentation
+        # AStudioSwift Component Documentation
         
         Generated on \(ISO8601DateFormatter().string(from: Date()))
         
-        This documentation provides comprehensive information about all SwiftUI components in the ChatUISwift package, including their APIs, usage examples, and accessibility features.
+        This documentation provides comprehensive information about all SwiftUI components in the AStudioSwift package, including their APIs, usage examples, and accessibility features.
         
         ## Table of Contents
         

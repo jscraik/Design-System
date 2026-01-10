@@ -24,7 +24,7 @@ Complete guide for setting up Asset Catalog colors and enabling hot reload durin
 
 ## Overview
 
-The ChatUI Swift architecture uses Xcode Asset Catalogs for color management, providing:
+The aStudio Swift architecture uses Xcode Asset Catalogs for color management, providing:
 
 - **Automatic Light/Dark Mode**: Colors adapt to system appearance without manual logic
 - **High Contrast Support**: Asset Catalog handles accessibility automatically
@@ -37,7 +37,7 @@ The ChatUI Swift architecture uses Xcode Asset Catalogs for color management, pr
 Asset Catalogs are located at:
 
 ```
-platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets/
+platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Resources/Colors.xcassets/
 ```
 
 Each color is defined as a `.colorset` directory containing a `Contents.json` file:
@@ -110,7 +110,7 @@ Each `.colorset/Contents.json` defines light and dark variants:
 ### Step 1: Create Asset Catalog
 
 1. Open Xcode
-2. Navigate to `platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/`
+2. Navigate to `platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/`
 3. Right-click → New File → Asset Catalog
 4. Name it `Colors.xcassets`
 5. Move it to `Resources/` directory
@@ -120,7 +120,7 @@ Each `.colorset/Contents.json` defines light and dark variants:
 1. Select `Colors.xcassets` in Xcode
 2. Click + button at bottom
 3. Choose "Color Set"
-4. Name it (e.g., `foundation-text-primary`)
+4. Name it (for example, `foundation-text-primary`)
 
 ### Step 3: Configure Light/Dark Variants
 
@@ -138,7 +138,7 @@ Ensure `Package.swift` includes the Asset Catalog:
 
 ```swift
 .target(
-    name: "ChatUIFoundation",
+    name: "AStudioFoundation",
     dependencies: [],
     resources: [
         .process("Resources")
@@ -152,7 +152,7 @@ Use the `FColor` semantic API:
 
 ```swift
 import SwiftUI
-import ChatUIFoundation
+import AStudioFoundation
 
 struct MyView: View {
     var body: some View {
@@ -174,7 +174,7 @@ Located at `packages/tokens/src/generator.ts`, the generator:
 1. Reads design tokens from `packages/tokens/src/colors.ts`
 2. Maps CSS light/dark pairs to Swift colorsets
 3. Generates `.colorset/Contents.json` files
-4. Outputs to `platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets/`
+4. Outputs to `platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Resources/Colors.xcassets/`
 
 ### Running Token Generation
 
@@ -312,7 +312,7 @@ Hot reload works for:
 
    ```swift
    .target(
-       name: "ChatUIFoundation",
+       name: "AStudioFoundation",
        resources: [
            .process("Resources")  // Must include this
        ]
@@ -322,7 +322,7 @@ Hot reload works for:
 2. **Verify Directory Structure**:
 
    ```
-   Sources/ChatUIFoundation/
+   Sources/AStudioFoundation/
    └── Resources/
        └── Colors.xcassets/
    ```
@@ -330,7 +330,7 @@ Hot reload works for:
 3. **Clean and Rebuild**:
 
    ```bash
-   cd platforms/apple/swift/ChatUIFoundation
+   cd platforms/apple/swift/AStudioFoundation
    swift package clean
    swift build
    ```
@@ -349,7 +349,7 @@ Hot reload works for:
 
    ```bash
    # Ensure write permissions
-   chmod -R u+w platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/
+   chmod -R u+w platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Resources/
    ```
 
 3. **Review Error Messages**:
@@ -358,14 +358,14 @@ Hot reload works for:
 
 ### SwiftUI Previews Not Loading
 
-**Problem:** Previews show "Cannot preview in this file".
+**Problem:** Previews show "Cannot preview in this file."
 
 **Solutions:**
 
 1. **Open Package Directly**:
 
    ```bash
-   cd platforms/apple/swift/ChatUIFoundation
+   cd platforms/apple/swift/AStudioFoundation
    open Package.swift
    ```
 
@@ -444,7 +444,7 @@ Text("Hello")
 **Commit Asset Catalog changes:**
 
 ```bash
-git add platforms/apple/swift/ChatUIFoundation/Sources/ChatUIFoundation/Resources/Colors.xcassets/
+git add platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Resources/Colors.xcassets/
 git commit -m "Update color tokens"
 ```
 
@@ -519,7 +519,7 @@ Add to CI pipeline:
 
 - name: Build Swift Packages
   run: |
-    cd platforms/apple/swift/ChatUIFoundation
+    cd platforms/apple/swift/AStudioFoundation
     swift build
 ```
 
@@ -559,4 +559,3 @@ See repository root for license information.
 
 ## Verify
 - TBD: Add concrete verification steps and expected results.
-

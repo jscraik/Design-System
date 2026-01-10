@@ -9,7 +9,7 @@ import { NotificationsPanel } from "./NotificationsPanel";
  *
  * ## Usage
  * ```tsx
- * import { NotificationsPanel } from "@chatui/ui";
+ * import { NotificationsPanel } from "@astudio/ui";
  *
  * <NotificationsPanel onBack={fn()} />
  * ```

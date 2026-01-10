@@ -1,5 +1,5 @@
 {
-  "name": "@chatui/web",
+  "name": "@astudio/web",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -12,8 +12,8 @@
     "registry:check": "tsx scripts/generate-template-registry.ts --check"
   },
   "dependencies": {
-    "@chatui/runtime": "workspace:*",
-    "@chatui/ui": "workspace:*",
+    "@astudio/runtime": "workspace:*",
+    "@astudio/ui": "workspace:*",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "tw-animate-css": "1.3.8"

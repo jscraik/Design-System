@@ -1,3 +1,4 @@
+import { resolve } from "path";
 import { fileURLToPath } from "url";
 
 import tailwindcss from "@tailwindcss/vite";
@@ -55,5 +56,11 @@ export default defineConfig({
     },
     outDir: "dist",
     emptyOutDir: true,
+  },
+  resolve: {
+    alias: {
+      "@astudio/runtime": resolve(__dirname, "../runtime/src"),
+      "@astudio/tokens": resolve(__dirname, "../tokens/src"),
+    },
   },
 });

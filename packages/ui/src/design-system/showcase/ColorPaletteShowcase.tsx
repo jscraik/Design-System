@@ -1,4 +1,4 @@
-import { colorTokens } from "@chatui/tokens";
+import { colorTokens } from "@astudio/tokens";
 
 type SectionItem = { name: string; value: string };
 type Section = { title: string; items: SectionItem[]; darkSurface?: boolean };

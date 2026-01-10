@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://chatui.dev/schemas/template-registry.schema.json",
+    "$id": "https://astudio.dev/schemas/template-registry.schema.json",
     "title": "Template Registry Schema",
-    "description": "Schema for ChatGPT UI template metadata",
+    "description": "Schema for aStudio template metadata",
     "type": "object",
     "properties": {
         "templates": {

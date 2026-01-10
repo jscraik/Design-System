@@ -181,6 +181,88 @@ type DtcgRoot = {
         tracking: DtcgToken;
       };
     };
+    ios: {
+      heading1: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      heading2: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      heading3: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      body: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        emphasisWeight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      bodySmall: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        emphasisWeight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      caption: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        emphasisWeight: DtcgToken;
+        tracking: DtcgToken;
+      };
+    };
+    android: {
+      heading1: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      heading2: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      heading3: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      body: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        emphasisWeight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      bodySmall: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        emphasisWeight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      caption: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        weight: DtcgToken;
+        emphasisWeight: DtcgToken;
+        tracking: DtcgToken;
+      };
+    };
   };
 };
 
@@ -307,6 +389,24 @@ function buildSpacing(dtcg: DtcgRoot) {
   ] as const;
 }
 
+function buildSpacingTokens(dtcg: DtcgRoot) {
+  const space = dtcg.space;
+  return {
+    s128: getValue(space.s128, "space.s128"),
+    s64: getValue(space.s64, "space.s64"),
+    s48: getValue(space.s48, "space.s48"),
+    s40: getValue(space.s40, "space.s40"),
+    s32: getValue(space.s32, "space.s32"),
+    s24: getValue(space.s24, "space.s24"),
+    s16: getValue(space.s16, "space.s16"),
+    s12: getValue(space.s12, "space.s12"),
+    s8: getValue(space.s8, "space.s8"),
+    s4: getValue(space.s4, "space.s4"),
+    s2: getValue(space.s2, "space.s2"),
+    s0: getValue(space.s0, "space.s0"),
+  } as const;
+}
+
 function buildRadius(dtcg: DtcgRoot) {
   const radius = dtcg.radius;
   return {
@@ -420,15 +520,111 @@ function buildTypography(dtcg: DtcgRoot) {
   } as const;
 }
 
+function buildPlatformTypography(
+  platform: "ios" | "android",
+  dtcg: DtcgRoot,
+) {
+  const type = dtcg.type[platform];
+  return {
+    heading1: {
+      size: getValue(type.heading1.size, `type.${platform}.heading1.size`),
+      lineHeight: getValue(
+        type.heading1.lineHeight,
+        `type.${platform}.heading1.lineHeight`,
+      ),
+      weight: getValue(type.heading1.weight, `type.${platform}.heading1.weight`),
+      tracking: getValue(
+        type.heading1.tracking,
+        `type.${platform}.heading1.tracking`,
+      ),
+    },
+    heading2: {
+      size: getValue(type.heading2.size, `type.${platform}.heading2.size`),
+      lineHeight: getValue(
+        type.heading2.lineHeight,
+        `type.${platform}.heading2.lineHeight`,
+      ),
+      weight: getValue(type.heading2.weight, `type.${platform}.heading2.weight`),
+      tracking: getValue(
+        type.heading2.tracking,
+        `type.${platform}.heading2.tracking`,
+      ),
+    },
+    heading3: {
+      size: getValue(type.heading3.size, `type.${platform}.heading3.size`),
+      lineHeight: getValue(
+        type.heading3.lineHeight,
+        `type.${platform}.heading3.lineHeight`,
+      ),
+      weight: getValue(type.heading3.weight, `type.${platform}.heading3.weight`),
+      tracking: getValue(
+        type.heading3.tracking,
+        `type.${platform}.heading3.tracking`,
+      ),
+    },
+    body: {
+      size: getValue(type.body.size, `type.${platform}.body.size`),
+      lineHeight: getValue(
+        type.body.lineHeight,
+        `type.${platform}.body.lineHeight`,
+      ),
+      weight: getValue(type.body.weight, `type.${platform}.body.weight`),
+      emphasisWeight: getValue(
+        type.body.emphasisWeight,
+        `type.${platform}.body.emphasisWeight`,
+      ),
+      tracking: getValue(type.body.tracking, `type.${platform}.body.tracking`),
+    },
+    bodySmall: {
+      size: getValue(type.bodySmall.size, `type.${platform}.bodySmall.size`),
+      lineHeight: getValue(
+        type.bodySmall.lineHeight,
+        `type.${platform}.bodySmall.lineHeight`,
+      ),
+      weight: getValue(
+        type.bodySmall.weight,
+        `type.${platform}.bodySmall.weight`,
+      ),
+      emphasisWeight: getValue(
+        type.bodySmall.emphasisWeight,
+        `type.${platform}.bodySmall.emphasisWeight`,
+      ),
+      tracking: getValue(
+        type.bodySmall.tracking,
+        `type.${platform}.bodySmall.tracking`,
+      ),
+    },
+    caption: {
+      size: getValue(type.caption.size, `type.${platform}.caption.size`),
+      lineHeight: getValue(
+        type.caption.lineHeight,
+        `type.${platform}.caption.lineHeight`,
+      ),
+      weight: getValue(type.caption.weight, `type.${platform}.caption.weight`),
+      emphasisWeight: getValue(
+        type.caption.emphasisWeight,
+        `type.${platform}.caption.emphasisWeight`,
+      ),
+      tracking: getValue(
+        type.caption.tracking,
+        `type.${platform}.caption.tracking`,
+      ),
+    },
+  } as const;
+}
+
 const dtcgRaw = await readFile(dtcgPath, "utf8");
 const dtcg = JSON.parse(dtcgRaw);
 
 const colorTokens = buildColors(dtcg);
 const spacingScale = buildSpacing(dtcg);
+const spaceTokens = buildSpacingTokens(dtcg);
 const radiusTokens = buildRadius(dtcg);
 const shadowTokens = buildShadows(dtcg);
 const sizeTokens = buildSizes(dtcg);
 const typographyTokens = buildTypography(dtcg);
+const typographyTokensIos = buildPlatformTypography("ios", dtcg);
+const typographyTokensAndroid = buildPlatformTypography("android", dtcg);
 
 await writeFile(
   colorsPath,
@@ -441,16 +637,16 @@ await writeFile(
 await writeFile(
   spacingPath,
   formatTokenFile(
-    "Spacing scale values in descending order (px).",
-    `export const spacingScale = ${JSON.stringify(spacingScale)} as const;`,
+    "Spacing scale values (px), including named values and a descending scale.",
+    `export const spaceTokens = ${JSON.stringify(spaceTokens, null, 2)} as const;\nexport const spacingScale = ${JSON.stringify(spacingScale)} as const;`,
   ),
 );
 
 await writeFile(
   typographyPath,
   formatTokenFile(
-    "Typography tokens for web usage. Sizes, line heights, and tracking are numeric CSS values.",
-    `export const typographyTokens = ${JSON.stringify(typographyTokens, null, 2)} as const;`,
+    "Typography tokens for web, iOS, and Android usage. Sizes, line heights, and tracking are numeric values.",
+    `export const typographyTokens = ${JSON.stringify(typographyTokens, null, 2)} as const;\nexport const typographyTokensIos = ${JSON.stringify(typographyTokensIos, null, 2)} as const;\nexport const typographyTokensAndroid = ${JSON.stringify(typographyTokensAndroid, null, 2)} as const;`,
   ),
 );
 

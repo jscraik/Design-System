@@ -10,7 +10,7 @@
  * Usage:
  *   {
  *     "plugins": { "./eslint-rules-no-dark-only-tokens" },
- *     "rules": { "@chatui/no-dark-only-tokens": "error" }
+ *     "rules": { "@astudio/no-dark-only-tokens": "error" }
  *   }
  */
 

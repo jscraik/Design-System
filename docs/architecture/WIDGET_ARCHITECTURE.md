@@ -1,6 +1,6 @@
 # Widget Architecture Summary
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Engineers and technical leads
@@ -59,7 +59,7 @@ Your codebase now supports both **standalone React apps** and **ChatGPT widget i
 
 ### 4. Development Tools ✅
 
-- **Widget harness** (`platforms/web/apps/web/harness`) - Preview widgets in iframe
+- **Widget harness** (`platforms/web/apps/web/src/pages/HarnessPage.tsx`) - Preview widgets in iframe
 - **MCP server** - Serves widgets to ChatGPT
 - **Storybook** - Component development
 

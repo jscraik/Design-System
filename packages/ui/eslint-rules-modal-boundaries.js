@@ -11,7 +11,7 @@
  *    {
  *      "plugins": ["./eslint-rules-modal-boundaries"],
  *      "rules": {
- *        "@chatui/modal-boundaries": "error"
+ *        "@astudio/modal-boundaries": "error"
  *      }
  *    }
  */
@@ -60,7 +60,7 @@ const PATHS = {
 };
 
 /**
- * Rule: @chatui/modal-boundaries
+ * Rule: @astudio/modal-boundaries
  *
  * Enforces:
  * 1. Infrastructure CANNOT import from modals, settings, or panels
@@ -227,6 +227,6 @@ const modalBoundariesRule = {
 
 export default {
   rules: {
-    "@chatui/modal-boundaries": modalBoundariesRule,
+    "@astudio/modal-boundaries": modalBoundariesRule,
   },
 };

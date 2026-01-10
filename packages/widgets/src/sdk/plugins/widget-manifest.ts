@@ -84,7 +84,7 @@ export function widgetManifest(): Plugin {
   let widgets: Widget[] = [];
 
   return {
-    name: "chatui-widget-manifest",
+    name: "astudio-widget-manifest",
     sharedDuringBuild: true,
 
     config(_config) {

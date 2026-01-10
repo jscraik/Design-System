@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import ChatUIFoundation
+@testable import AStudioFoundation
 
 /// Tests for authorization security
 final class AuthorizationTests: SecurityTestCase {

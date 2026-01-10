@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, type SetStateAction } from "react";
-import { useHost, useOpenAiGlobal as useOpenAiGlobalRuntime } from "@chatui/runtime";
+import { useHost, useOpenAiGlobal as useOpenAiGlobalRuntime } from "@astudio/runtime";
 
 import type { UnknownObject } from "./types";
 import { validateWidgetStateBudget } from "./widget-state-budget";

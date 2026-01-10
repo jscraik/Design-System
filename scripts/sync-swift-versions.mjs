@@ -11,15 +11,15 @@ import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 
 const SWIFT_PACKAGES = [
-  "platforms/apple/swift/ChatUIFoundation",
-  "platforms/apple/swift/ChatUIComponents",
-  "platforms/apple/swift/ChatUIThemes",
-  "platforms/apple/swift/ChatUIShellChatGPT",
-  "platforms/apple/swift/ChatUITestSupport",
-  "platforms/apple/swift/ChatUISystemIntegration",
-  "platforms/apple/swift/ChatUIMCP",
+  "platforms/apple/swift/AStudioFoundation",
+  "platforms/apple/swift/AStudioComponents",
+  "platforms/apple/swift/AStudioThemes",
+  "platforms/apple/swift/AStudioShellChatGPT",
+  "platforms/apple/swift/AStudioTestSupport",
+  "platforms/apple/swift/AStudioSystemIntegration",
+  "platforms/apple/swift/AStudioMCP",
   "platforms/apple/swift/ui-swift",
-  "platforms/apple/apps/macos/ChatUIApp",
+  "platforms/apple/apps/macos/AStudioApp",
 ];
 
 function syncVersions() {

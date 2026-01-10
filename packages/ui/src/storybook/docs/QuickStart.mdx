@@ -11,10 +11,10 @@ Get started quickly with common patterns and examples.
 
 ```bash
 # Install the UI package
-pnpm install @chatui/ui
+pnpm install @astudio/ui
 
 # Or with npm
-npm install @chatui/ui
+npm install @astudio/ui
 ```
 
 ## Basic Setup
@@ -22,19 +22,19 @@ npm install @chatui/ui
 ### 1. Import Styles
 
 ```tsx
-import "@chatui/ui/styles";
+import "@astudio/ui/styles";
 ```
 
 Or in your CSS:
 
 ```css
-@import "@chatui/ui/styles";
+@import "@astudio/ui/styles";
 ```
 
 ### 2. Import Components
 
 ```tsx
-import { Button, ChatHeader, ChatInput } from "@chatui/ui";
+import { Button, ChatHeader, ChatInput } from "@astudio/ui";
 ```
 
 ## Common Patterns
@@ -42,7 +42,7 @@ import { Button, ChatHeader, ChatInput } from "@chatui/ui";
 ### Pattern 1: Simple Button
 
 ```tsx
-import { Button } from "@chatui/ui";
+import { Button } from "@astudio/ui";
 
 export function Example() {
   return (
@@ -61,7 +61,7 @@ import {
   ChatSidebar,
   ChatMessages,
   ChatInput,
-} from "@chatui/ui";
+} from "@astudio/ui";
 
 export function ChatApp() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -104,7 +104,7 @@ export function ChatApp() {
 ### Pattern 3: Settings Panel
 
 ```tsx
-import { SettingRow, SettingToggle } from "@chatui/ui";
+import { SettingRow, SettingToggle } from "@astudio/ui";
 
 export function SettingsPanel() {
   const [darkMode, setDarkMode] = useState(false);
@@ -139,7 +139,7 @@ export function SettingsPanel() {
 ### Pattern 4: Form with Validation
 
 ```tsx
-import { Input, Button } from "@chatui/ui";
+import { Input, Button } from "@astudio/ui";
 
 export function ContactForm() {
   const [email, setEmail] = useState("");
@@ -179,7 +179,7 @@ export function ContactForm() {
 ### Pattern 5: Modal Dialog
 
 ```tsx
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@chatui/ui";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@astudio/ui";
 
 export function Example() {
   const [isOpen, setIsOpen] = useState(false);
@@ -212,7 +212,7 @@ export function Example() {
 ### Pattern 6: Tabbed Interface
 
 ```tsx
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@chatui/ui";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@astudio/ui";
 
 export function TabbedExample() {
   return (
@@ -239,7 +239,7 @@ export function TabbedExample() {
 ### Pattern 7: Toast Notification
 
 ```tsx
-import { Toast } from "@chatui/ui";
+import { Toast } from "@astudio/ui";
 
 export function ToastExample() {
   const [showToast, setShowToast] = useState(false);
@@ -266,11 +266,11 @@ export function ToastExample() {
 ### Pattern 8: Full Template Layout
 
 ```tsx
-import { DashboardTemplate } from "@chatui/ui";
-import { ChatHeader } from "@chatui/ui/chat";
-import { ChatSidebar } from "@chatui/ui/chat";
-import { ChatMessages } from "@chatui/ui/chat";
-import { ChatInput } from "@chatui/ui/chat";
+import { DashboardTemplate } from "@astudio/ui";
+import { ChatHeader } from "@astudio/ui/chat";
+import { ChatSidebar } from "@astudio/ui/chat";
+import { ChatMessages } from "@astudio/ui/chat";
+import { ChatInput } from "@astudio/ui/chat";
 
 export function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -314,7 +314,7 @@ export function App() {
 ### Using Design Tokens
 
 ```tsx
-import { FColor, FSpacing, FType } from "@chatui/ui/foundation";
+import { FColor, FSpacing, FType } from "@astudio/ui/foundation";
 
 // Tokens are available as CSS variables
 const styles = {
@@ -342,7 +342,7 @@ const styles = {
 ## Icons
 
 ```tsx
-import { IconSettings, IconUser, IconChat } from "@chatui/ui";
+import { IconSettings, IconUser, IconChat } from "@astudio/ui";
 
 // Use icons in your components
 <div>

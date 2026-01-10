@@ -20,20 +20,34 @@ const schema = JSON.parse(readFileSync(schemaPath, "utf8"));
 const ajv = new Ajv({ strict: true, allErrors: true });
 const validate = ajv.compile(schema);
 
+const kebabChar = fc.constantFrom(
+    ..."abcdefghijklmnopqrstuvwxyz0123456789".split("")
+);
+
+const kebabToken = (maxLength) =>
+    fc
+        .array(
+            fc.stringOf(kebabChar, { minLength: 1, maxLength: 8 }),
+            { minLength: 1, maxLength: 4 }
+        )
+        .map((parts) => parts.join("-"))
+        .filter((value) => value.length <= maxLength);
+
+const routeToken = kebabToken(12);
+
 /**
  * Property 1: Metadata Completeness
  * For any template in the registry, the template SHALL have complete, schema-valid metadata.
  */
 describe("Template Registry Schema Validation Property", () => {
-    test("Property 1: Metadata Completeness", async () => {
-        await fc.assert(
-            fc.asyncProperty(
+    test("Property 1: Metadata Completeness", () => {
+        fc.assert(
+            fc.property(
                 // Generate valid template registry data
                 fc.record({
                     templates: fc.array(
                         fc.record({
-                            id: fc.string({ minLength: 1, maxLength: 50 })
-                                .filter(s => /^[a-z0-9]+(-[a-z0-9]+)*$/.test(s)),
+                            id: kebabToken(50),
                             title: fc.string({ minLength: 1, maxLength: 100 }),
                             description: fc.string({ minLength: 1, maxLength: 500 }),
                             category: fc.constantFrom(
@@ -46,23 +60,19 @@ describe("Template Registry Schema Validation Property", () => {
                                 "modals",
                                 "panels"
                             ),
-                            tags: fc.array(
-                                fc.string({ minLength: 1, maxLength: 30 })
-                                    .filter(s => /^[a-z0-9]+(-[a-z0-9]+)*$/.test(s)),
-                                { minLength: 0, maxLength: 10 }
-                            ).map(tags => [...new Set(tags)]), // Ensure uniqueness
+                            tags: fc.array(routeToken, { minLength: 0, maxLength: 10 })
+                                .map(tags => [...new Set(tags)]), // Ensure uniqueness
                             status: fc.constantFrom("alpha", "beta", "stable"),
-                            route: fc.string({ minLength: 2, maxLength: 50 })
-                                .filter(s => /^\/[a-z0-9/-]+$/.test(s)),
-                            entry: fc.string({ minLength: 1, maxLength: 50 })
-                                .filter(s => /^[A-Z][a-zA-Z0-9]*$/.test(s)),
-                            sourcePath: fc.string({ minLength: 10, maxLength: 100 })
-                                .filter(s => /^src\/templates\/.+\.tsx$/.test(s))
+                            route: fc.array(routeToken, { minLength: 1, maxLength: 4 })
+                                .map((parts) => `/${parts.join("/")}`),
+                            entry: fc.stringMatching(/^[A-Z][a-zA-Z0-9]*$/),
+                            sourcePath: fc.array(routeToken, { minLength: 1, maxLength: 4 })
+                                .map((parts) => `src/templates/${parts.join("/")}.tsx`)
                         }),
                         { minLength: 0, maxLength: 20 }
                     )
                 }),
-                async (registryData) => {
+                (registryData) => {
                     // Validate against schema
                     const isValid = validate(registryData);
 
@@ -115,7 +125,6 @@ describe("Template Registry Schema Validation Property", () => {
                         expect(validStatuses).toContain(template.status);
                     }
 
-                    return true;
                 }
             ),
             {
@@ -126,9 +135,9 @@ describe("Template Registry Schema Validation Property", () => {
         );
     });
 
-    test("Schema rejects invalid template data", async () => {
-        await fc.assert(
-            fc.asyncProperty(
+    test("Schema rejects invalid template data", () => {
+        fc.assert(
+            fc.property(
                 // Generate invalid template data
                 fc.oneof(
                     // Invalid id (not kebab-case)
@@ -168,7 +177,7 @@ describe("Template Registry Schema Validation Property", () => {
                         }), { minLength: 1, maxLength: 1 })
                     })
                 ),
-                async (invalidData) => {
+                (invalidData) => {
                     const isValid = validate(invalidData);
 
                     // Invalid data should fail validation
@@ -176,7 +185,6 @@ describe("Template Registry Schema Validation Property", () => {
                     expect(validate.errors).toBeTruthy();
                     expect(validate.errors.length).toBeGreaterThan(0);
 
-                    return true;
                 }
             ),
             {

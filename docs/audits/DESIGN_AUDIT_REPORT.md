@@ -90,18 +90,18 @@ Comprehensive audit of all UI components against ChatGPT design standards as def
 
 #### Critical (Must Fix)
 
-**File: `packages/ui/src/app/modals/DiscoverySettingsModal.tsx`**
+**File: `packages/ui/src/app/modals/DiscoverySettingsModal/DiscoverySettingsModal.tsx`**
 
 - **Line 84**: Reset button uses `#4ade80` → Should be `#40C977`
 - **Line 496**: Enhancement label uses `#4ade80` → Should be `#40C977`
 
-**File: `packages/ui/src/app/chat/ChatSidebar.tsx`**
+**File: `packages/ui/src/app/chat/ChatSidebar/ChatSidebar.tsx`**
 
 - **Line 284**: User menu uses `#2a2a2a` background → Should be `#171717` for modal-type surfaces
 - **Line 328**: Project modal uses `#2a2a2a` → Should be `#171717` (PRIMARY MODAL BG)
 - **Line 457**: Settings modal uses `#2a2a2a` → Should be `#171717` (PRIMARY MODAL BG)
 
-**File: `packages/ui/src/app/modals/SettingsModal.tsx`**
+**File: `packages/ui/src/app/modals/SettingsModal/SettingsModal.tsx`**
 
 - **Line 131**: Main modal uses `#2a2a2a` → Should be `#171717` (PRIMARY MODAL BG)
 

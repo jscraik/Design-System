@@ -158,7 +158,7 @@ export const Usage: Story = {
               In Components
             </h3>
             <pre className="bg-foundation-bg-dark-2 p-4 rounded-lg text-foundation-text-dark-secondary text-sm overflow-x-auto">
-              {`import { colors, spacing } from "@chatui/ui";
+              {`import { colors, spacing } from "@astudio/ui";
 
 const styles = {
   backgroundColor: colors.bg.dark1,

@@ -1,6 +1,6 @@
 # Architecture Documentation
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Developers (intermediate)
@@ -10,7 +10,7 @@ Last updated: 2026-01-04
 - Review cadence: TBD (confirm)
 
 
-Technical architecture and design decisions for the ChatUI system.
+Technical architecture and design decisions for the aStudio system.
 
 ## Table of contents
 

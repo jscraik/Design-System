@@ -45,7 +45,7 @@ export function UsageTab() {
             Type-safe token access for dynamic styling
           </p>
           <CodeBlock
-            code={`import { colorTokens } from '@chatui/tokens';
+            code={`import { colorTokens } from '@astudio/tokens';
 
 const bgColor = colorTokens.background.dark.primary; // '#212121'`}
             language="ts"

@@ -1,4 +1,4 @@
-import { colorTokens } from "@chatui/tokens";
+import { colorTokens } from "@astudio/tokens";
 import { useCallback, useState } from "react";
 
 import { cn } from "../../components/ui/utils";

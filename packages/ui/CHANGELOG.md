@@ -1,6 +1,6 @@
-# @chatui/ui
+# @astudio/ui
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Contributors and release stakeholders
@@ -9,8 +9,12 @@ Last updated: 2026-01-04
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
 
+> Note: This package changelog is archived. Use the root `CHANGELOG.md` for current release history.
+> This file is retained for historical context only.
 
 ## [Unreleased]
+
+## [0.0.1] - 2026-01-09
 
 ### Added
 - Tabbed interface to FoundationsShowcase for better navigation between design system sections (Colors, Typography, Spacing, Icons)
@@ -55,4 +59,4 @@ Last updated: 2026-01-04
 ### Patch Changes
 
 - Updated dependencies
-  - @chatui/tokens@0.1.0
+  - @astudio/tokens@0.1.0

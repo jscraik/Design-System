@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Build script for ChatUISwift package
+# Build script for AStudioSwift package
 # This script provides common development tasks
 
 set -e
@@ -29,11 +29,11 @@ cd "$(dirname "$0")"
 
 case "$1" in
     "build")
-        print_status "Building ChatUISwift package..."
+        print_status "Building AStudioSwift package..."
         swift build
         
         # Generate documentation if in development mode
-        if [ "${CHATUI_DEV_MODE:-false}" = "true" ]; then
+        if [ "${ASTUDIO_DEV_MODE:-false}" = "true" ]; then
             print_status "Generating component documentation..."
             if [ -f "scripts/generate-docs.swift" ]; then
                 swift scripts/generate-docs.swift . docs/components.md
@@ -47,8 +47,8 @@ case "$1" in
         ;;
     "dev")
         print_status "Starting development mode with tools..."
-        export CHATUI_DEV_MODE=true
-        export CHATUI_PERFORMANCE_MONITORING=true
+        export ASTUDIO_DEV_MODE=true
+        export ASTUDIO_PERFORMANCE_MONITORING=true
         
         # Generate initial documentation
         if [ -f "scripts/generate-docs.swift" ]; then
@@ -75,7 +75,7 @@ case "$1" in
         fi
         ;;
     "test")
-        print_status "Running tests for ChatUISwift package..."
+        print_status "Running tests for AStudioSwift package..."
         swift test
         print_status "Tests completed successfully!"
         ;;
@@ -86,14 +86,14 @@ case "$1" in
         ;;
     "playground")
         print_status "Opening playground app in Xcode..."
-        open ../../apps/macos/ChatUIPlayground/ChatUIPlayground.xcodeproj
+        open ../../apps/macos/AStudioPlayground/AStudioPlayground.xcodeproj
         ;;
     "package")
         print_status "Opening Swift package in Xcode..."
         open Package.swift
         ;;
     "help"|"")
-        echo "ChatUISwift Build Script"
+        echo "AStudioSwift Build Script"
         echo ""
         echo "Usage: ./build.sh [command]"
         echo ""

@@ -4,8 +4,8 @@ import type { Preview } from "@storybook/react-vite";
 import { fn } from "@storybook/test";
 import React from "react";
 
-import { HostProvider, createMockHost } from "@chatui/runtime";
-import { AppsSDKUIProvider } from "@chatui/ui";
+import { HostProvider, createMockHost } from "@astudio/runtime";
+import { AppsSDKUIProvider } from "@astudio/ui";
 
 // Make React available globally for MDX files
 (globalThis as any).React = React;

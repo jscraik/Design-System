@@ -1,6 +1,6 @@
 # UI Structure Map
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Engineers and technical leads
@@ -105,9 +105,9 @@ packages/ui/src/
 
 ## Conventions
 - Per-component folders: a component and its stories/tests live together.
-- Component folders and files use `PascalCase` (e.g. `Button/Button.tsx`); category folders stay `kebab-case` (e.g. `data-display`).
+- Component folders and files use `PascalCase` (for example `Button/Button.tsx`); category folders stay `kebab-case` (for example `data-display`).
 - Component folders export from `index.ts`, so imports can stay at the folder root.
-- Shared utilities and types live under a `shared/` folder (e.g. `app/chat/shared/types.ts`).
+- Shared utilities and types live under a `shared/` folder (for example `app/chat/shared/types.ts`).
 - Templates follow the same per-component convention, including `*.figmaConnect.tsx` files.
 
 ## Adding new components

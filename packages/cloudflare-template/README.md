@@ -1,6 +1,6 @@
 # aStudio Cloudflare Workers Deployment Template
 
-Last updated: 2026-01-07
+Last updated: 2026-01-09
 
 ## Doc requirements
 
@@ -38,7 +38,7 @@ Deploy your aStudio widgets to Cloudflare Workers with automatic widget discover
 cd packages/cloudflare-template
 
 # Copy environment variables
-cp .env.example .env
+cp packages/cloudflare-template/.env.example packages/cloudflare-template/.env
 
 # Edit .env with your Cloudflare Workers domain
 # WORKER_DOMAIN_BASE="https://your-app.your-subdomain.workers.dev"
@@ -48,23 +48,25 @@ cp .env.example .env
 
 ```bash
 # Start local development server
-pnpm dev
+pnpm -C packages/cloudflare-template dev
 
 # Your MCP server will be available at:
 # http://localhost:8787/mcp
 ```
 
-> **Note:** `pnpm dev` runs `prebuild` to copy widget assets and generate the worker manifest. If you skip `dev`, run `pnpm -C packages/widgets build` before invoking `pnpm run prebuild` so the manifest/assets exist.
+> **Note:** `pnpm -C packages/cloudflare-template dev` runs `wrangler dev --env development` (after `prebuild`) so the `WIDGET_SERVER` Durable Object binding is available in local dev/types.
+
+> **Note:** `pnpm -C packages/cloudflare-template dev` runs `prebuild` to copy widget assets and generate the worker manifest. If you skip `dev`, run `pnpm -C packages/widgets build` before invoking `pnpm -C packages/cloudflare-template run prebuild` so the manifest/assets exist.
 
 ### 3. Deployment
 
 ```bash
 # Build and deploy to Cloudflare Workers
-pnpm build-deploy
+pnpm -C packages/cloudflare-template build-deploy
 
 # Or deploy separately
-pnpm build
-pnpm deploy
+pnpm -C packages/cloudflare-template build
+pnpm -C packages/cloudflare-template deploy
 ```
 
 ### 4. Add to ChatGPT
@@ -80,12 +82,12 @@ After deployment, integrate with ChatGPT. UI labels change over time, so follow 
 
 For full steps and troubleshooting, see `docs/guides/CHATGPT_INTEGRATION.md`.
 
-🎉 **You're done!** Your widgets are now available in ChatGPT.
+🎉 **You're done.** Your widgets are now available in ChatGPT.
 
 ## Verify
 
 - `wrangler dev` responds at `http://localhost:8787/mcp`.
-- `pnpm build-deploy` completes without errors.
+- `pnpm -C packages/cloudflare-template build-deploy` completes without errors.
 - The MCP URL serves widgets in ChatGPT after connecting.
 
 ## 📁 Project Structure
@@ -148,14 +150,14 @@ this.server.registerTool(
 
 ### ✅ **Auto-Discovery**
 
-- Automatically discovers all widgets from `@chatui/widgets`
+- Automatically discovers all widgets from `@astudio/widgets`
 - Generates content-hashed URIs for cache busting
 - No manual widget registration required
 
 ### ✅ **Production Ready**
 
 - Cloudflare Workers edge deployment
-- Durable Objects for persistent state
+- Durable Object-hosted MCP server (binding `WIDGET_SERVER`, singleton DO); durable storage available for future use but not required for current behavior
 - Environment-aware CSP configuration
 - Error handling and logging
 
@@ -207,13 +209,19 @@ After deployment, add your MCP server to ChatGPT:
 
 **Widgets not loading**
 
-- Check that `@chatui/widgets` is built: `pnpm -C packages/widgets build`
-- Verify widget manifest is generated in `src/generated/`
+- Check that `@astudio/widgets` is built: `pnpm -C packages/widgets build`
+- Verify widget manifest is generated in `src/worker/widget-manifest.generated.ts`
 
 **MCP server not responding**
 
 - Check Cloudflare Workers logs: `wrangler tail`
 - Verify environment variables are set in Cloudflare dashboard
+
+**Development fails with EMFILE watch errors**
+
+- Wrangler can exceed file watch / open file limits in some environments.
+- Try raising the file descriptor limit before starting dev: `ulimit -n 8192`, then run `pnpm -C packages/cloudflare-template dev`.
+- On macOS, you can also raise limits via `launchctl limit maxfiles` if needed.
 
 ### Development Tips
 

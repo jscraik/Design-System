@@ -1,0 +1,643 @@
+/* eslint-disable */
+// THIS FILE IS AUTO-GENERATED. DO NOT EDIT BY HAND.
+import { ComponentsShowcaseTemplate } from "../templates/components/ComponentsShowcaseTemplate";
+import { ColorShowcase } from "../templates/design-system/ColorShowcaseTemplate";
+import { DesignSystemDocs } from "../templates/design-system/DesignSystemDocsTemplate";
+import { FoundationsShowcase } from "../templates/design-system/FoundationsShowcaseTemplate";
+import { IconographyShowcase } from "../templates/design-system/IconographyShowcaseTemplate";
+import { SpacingShowcase } from "../templates/design-system/SpacingShowcaseTemplate";
+import { TypographyShowcase } from "../templates/design-system/TypographyShowcaseTemplate";
+import { EducationalStarterTemplate } from "../templates/educational/EducationalStarterTemplate";
+import { AppsPanelTemplate, ArchivedChatsPanelTemplate, AudioSettingsPanelTemplate, ChatFullWidthTemplate, ChatHeaderTemplate, ChatInputTemplate, ChatMessagesTemplate, ChatSidebarTemplate, ChatTemplate, ChatTwoPaneTemplate, ChatVariantsTemplate, CheckForUpdatesPanelTemplate, ComposeTemplate, DashboardTemplate, DataControlsPanelTemplate, DiscoverySettingsModalTemplate, IconPickerModalTemplate, ManageAppsPanelTemplate, NotificationsPanelTemplate, PersonalizationPanelTemplate, SecurityPanelTemplate, SettingDropdownBlockSample, SettingRowBlockSample, SettingToggleBlockSample, SettingsModalTemplate, TemplateFieldGroupSample, TemplateFooterBarSample, TemplateFormFieldSample, TemplateHeaderBarSample, TemplatePanelSample, TemplateShellSample } from "../templates/registry";
+import type { ComponentType } from "react";
+
+export type TemplateCategory = "educational" | "templates" | "components" | "design-system" | "layouts" | "settings" | "modals" | "panels";
+export type TemplateStatus = "alpha" | "beta" | "stable";
+
+export type TemplateRegistryEntry = {
+  id: string;
+  title: string;
+  description: string;
+  category: TemplateCategory;
+  tags: string[];
+  status: TemplateStatus;
+  route: string;
+  entry: string;
+  sourcePath: string;
+  Component: ComponentType;
+};
+
+export const templateCategoryLabels: Record<TemplateCategory, string> = {
+  "educational": "Educational",
+  "templates": "Templates",
+  "components": "Components",
+  "design-system": "Design System",
+  "layouts": "Layouts",
+  "settings": "Settings",
+  "modals": "Modals",
+  "panels": "Panels"
+};
+
+export const templateRegistry: TemplateRegistryEntry[] = [
+  {
+    "id": "educational-starter",
+    "title": "Educational Starter",
+    "description": "A compact learning hub template with quick actions and lesson highlights.",
+    "category": "educational",
+    "tags": [
+      "education",
+      "overview",
+      "starter"
+    ],
+    "status": "beta",
+    "route": "/templates/educational-starter",
+    "entry": "EducationalStarterTemplate",
+    "sourcePath": "src/templates/educational/EducationalStarterTemplate.tsx",
+    Component: EducationalStarterTemplate
+  },
+  {
+    "id": "template-field-group",
+    "title": "Template Field Group",
+    "description": "Grouped fields with shared label and actions.",
+    "category": "templates",
+    "tags": [
+      "form",
+      "grouping",
+      "templates"
+    ],
+    "status": "stable",
+    "route": "/templates/template-field-group",
+    "entry": "TemplateFieldGroupSample",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: TemplateFieldGroupSample
+  },
+  {
+    "id": "template-footer-bar",
+    "title": "Template Footer Bar",
+    "description": "Footer bar with status and actions.",
+    "category": "templates",
+    "tags": [
+      "actions",
+      "footer",
+      "templates"
+    ],
+    "status": "stable",
+    "route": "/templates/template-footer-bar",
+    "entry": "TemplateFooterBarSample",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: TemplateFooterBarSample
+  },
+  {
+    "id": "template-form-field",
+    "title": "Template Form Field",
+    "description": "Form field wrapper with label and helper text.",
+    "category": "templates",
+    "tags": [
+      "form",
+      "input",
+      "templates"
+    ],
+    "status": "stable",
+    "route": "/templates/template-form-field",
+    "entry": "TemplateFormFieldSample",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: TemplateFormFieldSample
+  },
+  {
+    "id": "template-header-bar",
+    "title": "Template Header Bar",
+    "description": "Header bar with title and optional actions.",
+    "category": "templates",
+    "tags": [
+      "header",
+      "navigation",
+      "templates"
+    ],
+    "status": "stable",
+    "route": "/templates/template-header-bar",
+    "entry": "TemplateHeaderBarSample",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: TemplateHeaderBarSample
+  },
+  {
+    "id": "template-panel",
+    "title": "Template Panel",
+    "description": "Container with optional header, footer, and variants.",
+    "category": "templates",
+    "tags": [
+      "container",
+      "panel",
+      "templates"
+    ],
+    "status": "stable",
+    "route": "/templates/template-panel",
+    "entry": "TemplatePanelSample",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: TemplatePanelSample
+  },
+  {
+    "id": "template-shell",
+    "title": "Template Shell",
+    "description": "Layout shell with sidebar, header, body, footer, and detail slots.",
+    "category": "templates",
+    "tags": [
+      "layout",
+      "shell",
+      "templates"
+    ],
+    "status": "stable",
+    "route": "/templates/template-shell",
+    "entry": "TemplateShellSample",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: TemplateShellSample
+  },
+  {
+    "id": "components-showcase",
+    "title": "Components Showcase",
+    "description": "Lightweight reference for core inputs, badges, and actions.",
+    "category": "components",
+    "tags": [
+      "actions",
+      "components",
+      "inputs"
+    ],
+    "status": "stable",
+    "route": "/templates/components-showcase",
+    "entry": "ComponentsShowcaseTemplate",
+    "sourcePath": "src/templates/components/ComponentsShowcaseTemplate.tsx",
+    Component: ComponentsShowcaseTemplate
+  },
+  {
+    "id": "color-showcase",
+    "title": "Color Showcase",
+    "description": "Color palette with light and dark modes.",
+    "category": "design-system",
+    "tags": [
+      "color",
+      "design-system"
+    ],
+    "status": "stable",
+    "route": "/templates/color-showcase",
+    "entry": "ColorShowcase",
+    "sourcePath": "src/templates/design-system/ColorShowcaseTemplate.tsx",
+    Component: ColorShowcase
+  },
+  {
+    "id": "design-system-docs",
+    "title": "Design System Documentation",
+    "description": "Documentation for design tokens and usage guidance.",
+    "category": "design-system",
+    "tags": [
+      "design-system",
+      "docs"
+    ],
+    "status": "stable",
+    "route": "/templates/design-system-docs",
+    "entry": "DesignSystemDocs",
+    "sourcePath": "src/templates/design-system/DesignSystemDocsTemplate.tsx",
+    Component: DesignSystemDocs
+  },
+  {
+    "id": "foundations-showcase",
+    "title": "Foundations Showcase",
+    "description": "Design system hub with foundational tokens.",
+    "category": "design-system",
+    "tags": [
+      "design-system",
+      "foundations"
+    ],
+    "status": "stable",
+    "route": "/templates/foundations-showcase",
+    "entry": "FoundationsShowcase",
+    "sourcePath": "src/templates/design-system/FoundationsShowcaseTemplate.tsx",
+    Component: FoundationsShowcase
+  },
+  {
+    "id": "iconography-showcase",
+    "title": "Iconography Showcase",
+    "description": "Icon library overview with categories and guidelines.",
+    "category": "design-system",
+    "tags": [
+      "design-system",
+      "icons"
+    ],
+    "status": "stable",
+    "route": "/templates/iconography-showcase",
+    "entry": "IconographyShowcase",
+    "sourcePath": "src/templates/design-system/IconographyShowcaseTemplate.tsx",
+    Component: IconographyShowcase
+  },
+  {
+    "id": "spacing-showcase",
+    "title": "Spacing Showcase",
+    "description": "Spacing scale and layout examples.",
+    "category": "design-system",
+    "tags": [
+      "design-system",
+      "spacing"
+    ],
+    "status": "stable",
+    "route": "/templates/spacing-showcase",
+    "entry": "SpacingShowcase",
+    "sourcePath": "src/templates/design-system/SpacingShowcaseTemplate.tsx",
+    Component: SpacingShowcase
+  },
+  {
+    "id": "typography-showcase",
+    "title": "Typography Showcase",
+    "description": "Typography system with font families, sizes, and weights.",
+    "category": "design-system",
+    "tags": [
+      "design-system",
+      "typography"
+    ],
+    "status": "stable",
+    "route": "/templates/typography-showcase",
+    "entry": "TypographyShowcase",
+    "sourcePath": "src/templates/design-system/TypographyShowcaseTemplate.tsx",
+    Component: TypographyShowcase
+  },
+  {
+    "id": "chat",
+    "title": "Chat",
+    "description": "Full chat experience with sidebar, header, messages, and composer.",
+    "category": "layouts",
+    "tags": [
+      "chat",
+      "complete"
+    ],
+    "status": "stable",
+    "route": "/templates/chat",
+    "entry": "ChatTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: ChatTemplate
+  },
+  {
+    "id": "chat-full-width",
+    "title": "Chat Full Width",
+    "description": "Full-width chat layout with header, messages, and composer.",
+    "category": "layouts",
+    "tags": [
+      "chat",
+      "layout"
+    ],
+    "status": "stable",
+    "route": "/templates/chat-full-width",
+    "entry": "ChatFullWidthTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: ChatFullWidthTemplate
+  },
+  {
+    "id": "chat-header",
+    "title": "Chat Header",
+    "description": "Top navigation header for chat surfaces.",
+    "category": "layouts",
+    "tags": [
+      "chat",
+      "header"
+    ],
+    "status": "stable",
+    "route": "/templates/chat-header",
+    "entry": "ChatHeaderTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: ChatHeaderTemplate
+  },
+  {
+    "id": "chat-input",
+    "title": "Chat Input",
+    "description": "Composer bar with attachments and send controls.",
+    "category": "layouts",
+    "tags": [
+      "chat",
+      "input"
+    ],
+    "status": "stable",
+    "route": "/templates/chat-input",
+    "entry": "ChatInputTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: ChatInputTemplate
+  },
+  {
+    "id": "chat-messages",
+    "title": "Chat Messages",
+    "description": "Message list with assistant and user messages.",
+    "category": "layouts",
+    "tags": [
+      "chat",
+      "messages"
+    ],
+    "status": "stable",
+    "route": "/templates/chat-messages",
+    "entry": "ChatMessagesTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: ChatMessagesTemplate
+  },
+  {
+    "id": "chat-sidebar",
+    "title": "Chat Sidebar",
+    "description": "Sidebar layout with chat history list.",
+    "category": "layouts",
+    "tags": [
+      "chat",
+      "sidebar"
+    ],
+    "status": "stable",
+    "route": "/templates/chat-sidebar",
+    "entry": "ChatSidebarTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: ChatSidebarTemplate
+  },
+  {
+    "id": "chat-two-pane",
+    "title": "Chat Two Pane",
+    "description": "Two-pane chat layout with sidebar and main content slots.",
+    "category": "layouts",
+    "tags": [
+      "chat",
+      "layout"
+    ],
+    "status": "stable",
+    "route": "/templates/chat-two-pane",
+    "entry": "ChatTwoPaneTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: ChatTwoPaneTemplate
+  },
+  {
+    "id": "chat-variants",
+    "title": "Chat Variants",
+    "description": "Slot-based chat layout variations (split, compact, rail).",
+    "category": "layouts",
+    "tags": [
+      "chat",
+      "slots",
+      "variants"
+    ],
+    "status": "stable",
+    "route": "/templates/chat-variants",
+    "entry": "ChatVariantsTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: ChatVariantsTemplate
+  },
+  {
+    "id": "compose",
+    "title": "Compose",
+    "description": "Prompt builder and compose workflow template.",
+    "category": "layouts",
+    "tags": [
+      "chat",
+      "compose"
+    ],
+    "status": "stable",
+    "route": "/templates/compose",
+    "entry": "ComposeTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: ComposeTemplate
+  },
+  {
+    "id": "dashboard",
+    "title": "Dashboard",
+    "description": "Dashboard template for widgets and cards.",
+    "category": "layouts",
+    "tags": [
+      "dashboard",
+      "layout"
+    ],
+    "status": "stable",
+    "route": "/templates/dashboard",
+    "entry": "DashboardTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: DashboardTemplate
+  },
+  {
+    "id": "setting-dropdown-block",
+    "title": "Setting Dropdown Block",
+    "description": "Dropdown selection block for settings.",
+    "category": "settings",
+    "tags": [
+      "dropdown",
+      "settings"
+    ],
+    "status": "stable",
+    "route": "/templates/setting-dropdown-block",
+    "entry": "SettingDropdownBlockSample",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: SettingDropdownBlockSample
+  },
+  {
+    "id": "setting-row-block",
+    "title": "Setting Row Block",
+    "description": "Static row for navigation or quick settings.",
+    "category": "settings",
+    "tags": [
+      "navigation",
+      "settings"
+    ],
+    "status": "stable",
+    "route": "/templates/setting-row-block",
+    "entry": "SettingRowBlockSample",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: SettingRowBlockSample
+  },
+  {
+    "id": "setting-toggle-block",
+    "title": "Setting Toggle Block",
+    "description": "Toggle row for settings control.",
+    "category": "settings",
+    "tags": [
+      "settings",
+      "toggle"
+    ],
+    "status": "stable",
+    "route": "/templates/setting-toggle-block",
+    "entry": "SettingToggleBlockSample",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: SettingToggleBlockSample
+  },
+  {
+    "id": "discovery-settings-modal",
+    "title": "Discovery Settings Modal",
+    "description": "Modal for configuring prompt enhancement and discovery settings.",
+    "category": "modals",
+    "tags": [
+      "modals",
+      "settings"
+    ],
+    "status": "stable",
+    "route": "/templates/discovery-settings-modal",
+    "entry": "DiscoverySettingsModalTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: DiscoverySettingsModalTemplate
+  },
+  {
+    "id": "icon-picker-modal",
+    "title": "Icon Picker Modal",
+    "description": "Modal for selecting project icons with color choices.",
+    "category": "modals",
+    "tags": [
+      "icons",
+      "modals"
+    ],
+    "status": "stable",
+    "route": "/templates/icon-picker-modal",
+    "entry": "IconPickerModalTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: IconPickerModalTemplate
+  },
+  {
+    "id": "settings-modal",
+    "title": "Settings Modal",
+    "description": "Full settings modal with nested panels.",
+    "category": "modals",
+    "tags": [
+      "modals",
+      "settings"
+    ],
+    "status": "stable",
+    "route": "/templates/settings-modal",
+    "entry": "SettingsModalTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: SettingsModalTemplate
+  },
+  {
+    "id": "apps-panel",
+    "title": "Apps Panel",
+    "description": "Apps settings panel template.",
+    "category": "panels",
+    "tags": [
+      "apps",
+      "settings"
+    ],
+    "status": "stable",
+    "route": "/templates/apps-panel",
+    "entry": "AppsPanelTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: AppsPanelTemplate
+  },
+  {
+    "id": "archived-chats-panel",
+    "title": "Archived Chats Panel",
+    "description": "Archived chats panel template.",
+    "category": "panels",
+    "tags": [
+      "chats",
+      "settings"
+    ],
+    "status": "stable",
+    "route": "/templates/archived-chats-panel",
+    "entry": "ArchivedChatsPanelTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: ArchivedChatsPanelTemplate
+  },
+  {
+    "id": "audio-settings-panel",
+    "title": "Audio Settings Panel",
+    "description": "Audio settings panel template.",
+    "category": "panels",
+    "tags": [
+      "audio",
+      "settings"
+    ],
+    "status": "stable",
+    "route": "/templates/audio-settings-panel",
+    "entry": "AudioSettingsPanelTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: AudioSettingsPanelTemplate
+  },
+  {
+    "id": "check-for-updates-panel",
+    "title": "Check for Updates Panel",
+    "description": "Check for updates panel template.",
+    "category": "panels",
+    "tags": [
+      "settings",
+      "updates"
+    ],
+    "status": "stable",
+    "route": "/templates/check-for-updates-panel",
+    "entry": "CheckForUpdatesPanelTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: CheckForUpdatesPanelTemplate
+  },
+  {
+    "id": "data-controls-panel",
+    "title": "Data Controls Panel",
+    "description": "Data controls panel template.",
+    "category": "panels",
+    "tags": [
+      "data",
+      "settings"
+    ],
+    "status": "stable",
+    "route": "/templates/data-controls-panel",
+    "entry": "DataControlsPanelTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: DataControlsPanelTemplate
+  },
+  {
+    "id": "manage-apps-panel",
+    "title": "Manage Apps Panel",
+    "description": "Manage apps panel template.",
+    "category": "panels",
+    "tags": [
+      "apps",
+      "settings"
+    ],
+    "status": "stable",
+    "route": "/templates/manage-apps-panel",
+    "entry": "ManageAppsPanelTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: ManageAppsPanelTemplate
+  },
+  {
+    "id": "notifications-panel",
+    "title": "Notifications Panel",
+    "description": "Notifications panel template.",
+    "category": "panels",
+    "tags": [
+      "notifications",
+      "settings"
+    ],
+    "status": "stable",
+    "route": "/templates/notifications-panel",
+    "entry": "NotificationsPanelTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: NotificationsPanelTemplate
+  },
+  {
+    "id": "personalization-panel",
+    "title": "Personalization Panel",
+    "description": "Personalization panel template.",
+    "category": "panels",
+    "tags": [
+      "personalization",
+      "settings"
+    ],
+    "status": "stable",
+    "route": "/templates/personalization-panel",
+    "entry": "PersonalizationPanelTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: PersonalizationPanelTemplate
+  },
+  {
+    "id": "security-panel",
+    "title": "Security Panel",
+    "description": "Security panel template.",
+    "category": "panels",
+    "tags": [
+      "security",
+      "settings"
+    ],
+    "status": "stable",
+    "route": "/templates/security-panel",
+    "entry": "SecurityPanelTemplate",
+    "sourcePath": "src/templates/registry.tsx",
+    Component: SecurityPanelTemplate
+  },
+];
+
+export const getTemplateById = (id: string) =>
+  templateRegistry.find((template) => template.id === id);
+
+export const getTemplatesByCategory = (category: TemplateCategory) =>
+  templateRegistry.filter((template) => template.category === category);
+

@@ -8,7 +8,7 @@
  * - The runtime package provides a host abstraction layer
  * - Direct window.openai access creates tight coupling to ChatGPT
  * - Using createEmbeddedHost() enables testing and standalone modes
- * - Maintains host-agnostic components in @chatui/ui
+ * - Maintains host-agnostic components in @astudio/ui
  *
  * Allowed:
  * - packages/runtime (implements the host abstraction)
@@ -28,7 +28,7 @@ const noWindowOpenaiDirectAccessRule = {
         "Disallow direct window.openai access. Use the runtime host abstraction instead.",
       category: "Best Practices",
       recommended: "error",
-      url: "https://github.com/chatui/chatui/blob/main/CLAUDE.md#host-adapter-pattern",
+      url: "https://github.com/astudio/astudio/blob/main/CLAUDE.md#host-adapter-pattern",
     },
     schema: [
       {
@@ -47,7 +47,7 @@ const noWindowOpenaiDirectAccessRule = {
     messages: {
       directAccess:
         "Direct access to 'window.openai' is not allowed. Use the runtime host abstraction instead. " +
-        "Import { createEmbeddedHost } from '@chatui/runtime' for ChatGPT apps, " +
+        "Import { createEmbeddedHost } from '@astudio/runtime' for ChatGPT apps, " +
         "or { createStandaloneHost } for standalone mode.",
     },
   },

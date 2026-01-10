@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import ChatUIFoundation
+@testable import AStudioFoundation
 
 /// Tests for input validation security
 final class InputValidationTests: SecurityTestCase {

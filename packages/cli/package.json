@@ -1,10 +1,10 @@
 {
-  "name": "@chatui/cli",
-  "version": "0.0.0",
+  "name": "@astudio/cli",
+  "version": "0.0.1",
   "private": true,
   "type": "module",
   "bin": {
-    "chatui": "dist/index.js"
+    "astudio": "dist/index.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

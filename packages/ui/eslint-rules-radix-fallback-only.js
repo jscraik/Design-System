@@ -24,7 +24,7 @@ const radixFallbackOnlyRule = {
     const filename = context.filename.replace(/\\/g, "/");
     const isFallbackPath = filename.includes("/fallback/");
     const comments = context.getSourceCode().getAllComments();
-    const waiverRegex = /@chatui-waiver\s+radix-fallback:\s*.+\(expires\s+\d{4}-\d{2}-\d{2}\)/i;
+    const waiverRegex = /@astudio-waiver\s+radix-fallback:\s*.+\(expires\s+\d{4}-\d{2}-\d{2}\)/i;
     const hasWaiver = comments.some((comment) => waiverRegex.test(comment.value));
 
     return {

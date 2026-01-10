@@ -6,7 +6,7 @@ import {
   type OpenAiDisplayMode,
   type OpenAiGlobals as RuntimeOpenAiGlobals,
   type OpenAiTheme,
-} from "@chatui/runtime";
+} from "@astudio/runtime";
 
 import { validateWidgetStateBudget } from "./widget-state-budget";
 

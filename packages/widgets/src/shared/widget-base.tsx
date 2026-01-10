@@ -1,6 +1,6 @@
 import React, { ReactNode, StrictMode } from "react";
 import { createRoot, type Root } from "react-dom/client";
-import { HostProvider, createHostAdapter, ensureMockOpenAI } from "@chatui/runtime";
+import { HostProvider, createHostAdapter, ensureMockOpenAI } from "@astudio/runtime";
 
 /**
  * Props for the base widget wrapper.

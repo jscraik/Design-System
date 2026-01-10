@@ -312,7 +312,7 @@ export function ChatGPTIconCatalog() {
           <div className="space-y-2 text-sm font-mono text-foundation-text-dark-secondary">
             <p>
               <span className="text-foundation-accent-green">import</span> {`{ IconCheckmark }`} <span className="text-foundation-accent-green">from</span>{" "}
-              {'"@chatui/ui/icons"'};
+              {'"@astudio/ui/icons"'};
             </p>
             <p className="mt-4 text-foundation-text-dark-tertiary">
               {`// Use in your components`}

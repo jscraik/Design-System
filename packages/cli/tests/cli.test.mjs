@@ -62,8 +62,8 @@ test("doctor --json emits valid envelope", async () => {
   const { code, stdout } = await runCli(["doctor", "--json"]);
   assert.equal(code, 0);
   const payload = JSON.parse(stdout);
-  assert.equal(payload.schema, "chatui.command.v1");
-  assert.equal(payload.meta.tool, "chatui");
+  assert.equal(payload.schema, "astudio.command.v1");
+  assert.equal(payload.meta.tool, "astudio");
   assert.equal(typeof payload.meta.version, "string");
   assert.ok(["success", "warn", "error"].includes(payload.status));
   assert.ok(Array.isArray(payload.errors));

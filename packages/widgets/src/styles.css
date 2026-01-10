@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "@openai/apps-sdk-ui/css";
-@import "@chatui/tokens/foundations.css";
+@import "@astudio/tokens/foundations.css";
 /* Enhanced scrollbar styling inspired by Toolbase-AI template */
 @layer utilities {
   .widget-scrollable .overflow-auto > *,

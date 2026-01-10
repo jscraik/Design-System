@@ -1,5 +1,5 @@
 import { Star } from "lucide-react";
-import { AppsSDKButton, AppsSDKImage } from "@chatui/ui";
+import { AppsSDKButton, AppsSDKImage } from "@astudio/ui";
 
 type Place = {
   id: string;

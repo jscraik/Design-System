@@ -61,7 +61,7 @@ These differences are imperceptible and within acceptable tolerance for "pixel-c
 - Testing recommendations
 - Conclusion and checkpoint status
 
-**Location**: `platforms/apple/swift/ChatUIComponents/SETTINGS_PARITY_VERIFICATION.md`
+**Location**: `platforms/apple/swift/AStudioComponents/SETTINGS_PARITY_VERIFICATION.md`
 
 ## How to View
 
@@ -75,7 +75,7 @@ These differences are imperceptible and within acceptable tolerance for "pixel-c
 
 ### SwiftUI Previews
 
-1. Open `platforms/apple/swift/ChatUIComponents/Sources/ChatUIComponents/SettingsExampleView.swift` in Xcode
+1. Open `platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/SettingsExampleView.swift` in Xcode
 2. Show Canvas: ⌥⌘⏎ (Option+Command+Enter)
 3. Resume previews: ⌥⌘P
 4. View light/dark mode variants
@@ -91,9 +91,9 @@ These differences are imperceptible and within acceptable tolerance for "pixel-c
 This task was part of the Phase 1 checkpoint "Settings Primitives Complete". Current status:
 
 - ✅ All four Swift packages compile successfully
-- ✅ ChatUIFoundation provides semantic tokens via Asset Catalog
-- ✅ ChatUIThemes provides ChatGPT-style constants
-- ✅ ChatUIComponents provides 6 settings primitives
+- ✅ AStudioFoundation provides semantic tokens via Asset Catalog
+- ✅ AStudioThemes provides ChatGPT-style constants
+- ✅ AStudioComponents provides 6 settings primitives
 - ✅ **Example settings view renders pixel-close to React equivalent** ← This task
 - ⚠️ Light/dark mode switching works automatically (needs verification)
 - ⚠️ macOS hover states work correctly (needs verification)
@@ -106,7 +106,7 @@ The remaining Phase 1 checkpoint items should be verified:
 
 1. Test light/dark mode switching in Component Gallery
 2. Test macOS hover states (requires macOS environment)
-3. Run unit tests: `swift test` in `platforms/apple/swift/ChatUIComponents/`
+3. Run unit tests: `swift test` in `platforms/apple/swift/AStudioComponents/`
 4. Verify SwiftUI previews render in Xcode
 
 ## Conclusion

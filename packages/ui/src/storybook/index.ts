@@ -1,4 +1,4 @@
-export { default as ChatUIApp } from "./App";
+export { default as AStudioApp } from "./App";
 export * from "./design-system/DesignTokens";
 export * from "./pages/DashboardPage";
 export * from "./pages/DesignSystemPage";

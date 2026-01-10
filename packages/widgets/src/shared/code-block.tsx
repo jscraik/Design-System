@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cn } from "@chatui/ui";
+import { cn } from "@astudio/ui";
 
 type CodeBlockProps = {
   children: ReactNode;

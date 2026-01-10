@@ -1,13 +1,13 @@
 #!/usr/bin/env swift
 
-// Example usage of the new modular ChatUI Swift packages
+// Example usage of the new modular aStudio Swift packages
 // This demonstrates that all four packages work together correctly
 
 import SwiftUI
-import ChatUIFoundation
-import ChatUIComponents
-import ChatUIThemes
-import ChatUIShellChatGPT
+import AStudioFoundation
+import AStudioComponents
+import AStudioThemes
+import AStudioShellChatGPT
 
 // Example view using the new modular architecture
 struct ExampleSettingsView: View {
@@ -64,23 +64,23 @@ struct ExampleSettingsView: View {
 }
 
 // This example demonstrates:
-// 1. ChatUIFoundation: FColor, FType, FSpacing semantic tokens
-// 2. ChatUIComponents: SettingsCardView, SettingToggleView, SettingDropdownView, SettingsDivider
-// 3. ChatUIThemes: (implicitly used by components for styling constants)
-// 4. ChatUIShellChatGPT: AppShellView for complete application layout
+// 1. AStudioFoundation: FColor, FType, FSpacing semantic tokens
+// 2. AStudioComponents: SettingsCardView, SettingToggleView, SettingDropdownView, SettingsDivider
+// 3. AStudioThemes: (implicitly used by components for styling constants)
+// 4. AStudioShellChatGPT: AppShellView for complete application layout
 
-print("✅ All four modular ChatUI Swift packages imported successfully!")
-print("✅ ChatUIFoundation: Semantic tokens (FColor, FType, FSpacing, Platform, FAccessibility)")
-print("✅ ChatUIComponents: Settings primitives (SettingsCardView, SettingRowView, SettingToggleView, etc.)")
-print("✅ ChatUIThemes: Theme constants (ChatGPTTheme, DefaultTheme)")
-print("✅ ChatUIShellChatGPT: Application shell layouts (AppShellView, VisualEffectView, RoundedAppContainer)")
+print("✅ All four modular aStudio Swift packages imported successfully!")
+print("✅ AStudioFoundation: Semantic tokens (FColor, FType, FSpacing, Platform, FAccessibility)")
+print("✅ AStudioComponents: Settings primitives (SettingsCardView, SettingRowView, SettingToggleView, etc.)")
+print("✅ AStudioThemes: Theme constants (ChatGPTTheme, DefaultTheme)")
+print("✅ AStudioShellChatGPT: Application shell layouts (AppShellView, VisualEffectView, RoundedAppContainer)")
 print("")
 print("🎉 Modular package architecture refactoring complete!")
 print("📁 Packages located at:")
-print("   - platforms/apple/swift/ChatUIFoundation/")
-print("   - platforms/apple/swift/ChatUIComponents/")
-print("   - platforms/apple/swift/ChatUIThemes/")
-print("   - platforms/apple/swift/ChatUIShellChatGPT/")
+print("   - platforms/apple/swift/AStudioFoundation/")
+print("   - platforms/apple/swift/AStudioComponents/")
+print("   - platforms/apple/swift/AStudioThemes/")
+print("   - platforms/apple/swift/AStudioShellChatGPT/")
 print("")
 print("🔧 Next steps:")
 print("   1. Update playground app to use new packages")

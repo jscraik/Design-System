@@ -1,6 +1,6 @@
 # Migration Guide
 
-Last updated: 2026-01-04
+Last updated: 2026-01-09
 
 ## Doc requirements
 - Audience: Developers (intermediate)
@@ -21,18 +21,18 @@ The library now has organized exports to prevent naming conflicts:
 **Before:**
 
 ```tsx
-import { Button } from "@chatui/ui"; // Could conflict with vendor Button
+import { Button } from "@astudio/ui"; // Could conflict with vendor Button
 ```
 
 **After:**
 
 ```tsx
 // Explicit imports (recommended)
-import { Button } from "@chatui/ui/base";
-import { ModelSelector } from "@chatui/ui/navigation";
+import { Button } from "@astudio/ui/base";
+import { ModelSelector } from "@astudio/ui/navigation";
 
 // Or use main export (all components available)
-import { Button, ModelSelector } from "@chatui/ui";
+import { Button, ModelSelector } from "@astudio/ui";
 ```
 
 #### Component API Changes
@@ -82,22 +82,22 @@ Components are now organized by category for better tree-shaking:
 
 ```tsx
 // Form components
-import { Button, Input, Toggle } from "@chatui/ui/base";
+import { Button, Input, Toggle } from "@astudio/ui/base";
 
 // Layout components
-import { Card } from "@chatui/ui/data-display";
-import { Dialog } from "@chatui/ui/feedback";
-import { Tabs } from "@chatui/ui/navigation";
+import { Card } from "@astudio/ui/data-display";
+import { Dialog } from "@astudio/ui/feedback";
+import { Tabs } from "@astudio/ui/navigation";
 
 // Chat-specific components
-import { ModelSelector } from "@chatui/ui/navigation";
-import { ContextTag } from "@chatui/ui/overlays";
+import { ModelSelector } from "@astudio/ui/navigation";
+import { ContextTag } from "@astudio/ui/overlays";
 ```
 
 #### Enhanced Development Tools
 
 ```tsx
-import { logProps, measureRender, validateProps } from "@chatui/ui";
+import { logProps, measureRender, validateProps } from "@astudio/ui";
 
 // Debug component props in development
 const MyComponent = (props) => {
@@ -110,7 +110,7 @@ const MyComponent = (props) => {
 #### Theme Utilities
 
 ```tsx
-import { colors, spacing, getCSSVar, setCSSVar } from "@chatui/ui";
+import { colors, spacing, getCSSVar, setCSSVar } from "@astudio/ui";
 
 // Use design tokens
 const styles = {
@@ -144,9 +144,9 @@ setCSSVar("--foundation-accent-blue", "#0066cc");
 4. **Test Components**
 
    ```bash
-   pnpm storybook:dev   # Visual testing
-   pnpm storybook:test  # Storybook interaction tests
-   pnpm type-check      # TypeScript validation
+   pnpm storybook:dev                # Visual testing
+   pnpm storybook:test               # Storybook interaction tests
+   pnpm -C packages/ui type-check    # TypeScript validation
    ```
 
 ### Compatibility

@@ -11,10 +11,6 @@ export default defineConfig({
     exclude: ["node_modules", "dist", ".build-cache", ".test-build-pipeline"],
     reporter: ["verbose"],
     pool: "forks",
-    poolOptions: {
-      forks: {
-        singleFork: true,
-      },
-    },
+    singleThread: true,
   },
 });

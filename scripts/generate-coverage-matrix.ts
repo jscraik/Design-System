@@ -225,7 +225,7 @@ async function collectFallbackComponents(): Promise<Map<string, FallbackMetadata
 async function collectWidgetUsage(): Promise<Map<string, string[]>> {
   const files = await walkFiles(WIDGETS_DIR);
   const usage = new Map<string, string[]>();
-  const importRegex = /import\s+\{([^}]+)\}\s+from\s+["']@chatui\/ui[^"']*["'];/g;
+  const importRegex = /import\s+\{([^}]+)\}\s+from\s+["']@astudio\/ui[^"']*["'];/g;
 
   for (const filePath of files) {
     if (!filePath.endsWith(".ts") && !filePath.endsWith(".tsx")) continue;

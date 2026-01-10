@@ -1,6 +1,6 @@
-# @chatui/cli
+# @astudio/cli
 
-Last updated: 2026-01-07
+Last updated: 2026-01-09
 
 ## Doc requirements
 
@@ -55,21 +55,21 @@ pnpm astudio doctor
 
 - Default: human-readable
 - `--plain`: stable `key=value` lines (no child output unless `--verbose`/`--debug` or on error)
-- `--json`: single JSON object (no logs; stable schema `chatui.command.v1`)
+- `--json`: single JSON object (no logs; stable schema `astudio.command.v1`)
 
 ## Config & env
 
 Precedence: flags > env > project config > user config > system.
 
-- Project config: `chatui.config.json`
-- User config: `~/.config/chatui/config.json`
+- Project config: `astudio.config.json`
+- User config: `~/.config/astudio/config.json`
 
 Environment variables:
 
-- `CHATUI_CONFIG` (config path override)
-- `CHATUI_CWD` (working directory override)
-- `CHATUI_COLOR=0|1` (force color off/on)
-- `CHATUI_PNPM` (pnpm binary path override)
+- `ASTUDIO_CONFIG` (config path override)
+- `ASTUDIO_CWD` (working directory override)
+- `ASTUDIO_COLOR=0|1` (force color off/on)
+- `ASTUDIO_PNPM` (pnpm binary path override)
 - `MCP_TEST_URL` (default: `http://127.0.0.1:8787`)
 - `MCP_ENDPOINT` (default: `/mcp`)
 - `MCP_PROTOCOL_VERSION` (default: `2024-11-05`)

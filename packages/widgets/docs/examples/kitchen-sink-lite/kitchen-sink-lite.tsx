@@ -11,7 +11,7 @@
  * Styling uses Apps SDK UI components/tokens with minimal custom CSS for code sizing.
  */
 import React, { useEffect, useMemo, useState } from "react";
-import { AppsSDKBadge, AppsSDKButton, AppsSDKCheckbox, AppsSDKInput, AppsSDKTextarea } from "@chatui/ui";
+import { AppsSDKBadge, AppsSDKButton, AppsSDKCheckbox, AppsSDKInput, AppsSDKTextarea } from "@astudio/ui";
 
 import { CodeBlock } from "../../../src/shared/code-block";
 import { useOpenAiGlobal } from "../../../src/shared/use-openai-global";

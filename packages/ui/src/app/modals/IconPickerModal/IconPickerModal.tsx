@@ -318,13 +318,11 @@ export function IconPickerModal({
           <div className="flex-1">
             <h2
               className="text-[16px] font-medium leading-[26px] tracking-[-0.4px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary"
-              aria-hidden="true"
             >
               Choose icon
             </h2>
             <p
               className="text-[12px] font-normal leading-[16px] tracking-[-0.1px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-0.5"
-              aria-hidden="true"
             >
               {projectName}
             </p>
