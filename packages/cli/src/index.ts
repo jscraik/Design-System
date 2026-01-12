@@ -9,6 +9,14 @@ import { fileURLToPath } from "node:url";
 
 import yargs, { type Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
+import {
+  RemoteSkillClient,
+  installSkillFromZip,
+  platformRootPath,
+  platformStorageKey,
+  type SkillPlatform,
+  publishSkill,
+} from "@astudio/skill-ingestion";
 
 type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 
@@ -220,6 +228,65 @@ function outputPlainRecord(record: Record<string, JsonValue | undefined>): void 
     .filter(([, value]) => value !== undefined)
     .map(([key, value]) => `${key}=${formatPlainValue(value as JsonValue)}`);
   outputPlain(lines);
+}
+
+function emitSkillResults(
+  argv: CliArgs,
+  results: Array<{ slug: string; displayName: string; summary?: string; latestVersion?: string }>,
+): void {
+  if (argv.json) {
+    outputJson(
+      createEnvelope("skills.search", "success", {
+        items: results.map((r) => ({
+          slug: r.slug,
+          name: r.displayName,
+          summary: r.summary ?? null,
+          version: r.latestVersion ?? null,
+        })),
+      }),
+    );
+    return;
+  }
+  const lines = results.map(
+    (r) =>
+      `${r.slug.padEnd(24, " ")} ${r.displayName}${
+        r.latestVersion ? ` (v${r.latestVersion})` : ""
+      }${r.summary ? ` — ${r.summary}` : ""}`,
+  );
+  outputPlain(lines);
+}
+
+function emitSkillInstall(argv: CliArgs, paths: string[], platform: SkillPlatform): void {
+  if (argv.json) {
+    outputJson(createEnvelope("skills.install", "success", { platform, paths }));
+    return;
+  }
+  outputPlain(["Installed to:", ...paths.map((p) => `- ${p}`)]);
+}
+
+function emitPublishResult(
+  argv: CliArgs,
+  result: { version: string; skipped: boolean; command?: string[] },
+  slug: string,
+): void {
+  if (argv.json) {
+    outputJson(
+      createEnvelope("skills.publish", "success", {
+        slug,
+        version: result.version,
+        skipped: result.skipped,
+        command: result.command ?? null,
+      }),
+    );
+    return;
+  }
+  if (result.skipped) {
+    outputPlain([`No changes detected for ${slug}; publish skipped.`]);
+  } else if (result.command) {
+    outputPlain([`[dry-run] ${result.command.join(" ")}`]);
+  } else {
+    outputPlain([`Published ${slug} v${result.version}`]);
+  }
 }
 
 function createEnvelope(summary: string, status: JsonEnvelope["status"], data: Record<string, JsonValue>, errors: JsonError[] = []): JsonEnvelope {
@@ -1203,6 +1270,106 @@ const cli = yargs(hideBin(process.argv))
       const script = argv.command === "sync" ? "sync:versions" : "sync:swift-versions";
       const code = await handleRun(argv as CliArgs, [script], `versions ${argv.command}`, argv.command as string);
       process.exitCode = code;
+    },
+  )
+  .command(
+    "skills",
+    "Discover, install, and publish skills (Clawdhub)",
+    (skills) =>
+      skills
+        .command(
+          "search <query>",
+          "Search Clawdhub skills",
+          (cmd) =>
+            cmd
+              .positional("query", { type: "string", demandOption: true })
+              .option("limit", { type: "number", default: 20 })
+              .option("allow-unsafe", {
+                type: "boolean",
+                default: false,
+                describe: "Allow requests without checksum enforcement",
+              }),
+          async (argv) => {
+            const client = new RemoteSkillClient({ strictIntegrity: !argv["allow-unsafe"] });
+            const results = await client.search(argv.query as string, argv.limit as number);
+            emitSkillResults(argv as CliArgs, results);
+          },
+        )
+        .command(
+          "install <slug>",
+          "Download and install a skill",
+          (cmd) =>
+            cmd
+              .positional("slug", { type: "string", demandOption: true })
+              .option("platform", {
+                type: "string",
+                choices: ["codex", "claude", "opencode", "copilot"],
+                demandOption: true,
+              })
+              .option("version", { type: "string", describe: "Version to install (defaults to latest)" })
+              .option("checksum", { type: "string", describe: "Expected SHA-256 checksum of the zip (required in strict mode)" })
+              .option("destination", { type: "string", describe: "Override install root (defaults to platform root)" })
+              .option("allow-unsafe", {
+                type: "boolean",
+                default: false,
+                describe: "Allow install without checksum (NOT recommended)",
+              }),
+          async (argv) => {
+            const platform = argv.platform as SkillPlatform;
+            const strict = !argv["allow-unsafe"];
+            const checksum = argv.checksum as string | undefined;
+            if (strict && !checksum) {
+              throw new CliError("Checksum is required in strict mode. Pass --checksum <sha256> or --allow-unsafe.", {
+                code: ERROR_CODES.policy,
+                exitCode: EXIT_CODES.policy,
+              });
+            }
+            const client = new RemoteSkillClient({ strictIntegrity: strict });
+            const download = await client.download(argv.slug as string, {
+              version: argv.version as string | undefined,
+              expectedChecksum: checksum,
+              strictIntegrity: strict,
+            });
+            const root = (argv.destination as string | undefined) ?? platformRootPath(platform);
+            const result = await installSkillFromZip(
+              download.zipPath,
+              [{ rootPath: root, storageKey: platformStorageKey(platform) }],
+              { slug: argv.slug as string, version: (argv.version as string | null) ?? null },
+            );
+            emitSkillInstall(argv as CliArgs, result.installPaths, platform);
+          },
+        )
+        .command(
+          "publish <path>",
+          "Publish or update a local skill using bunx clawdhub",
+          (cmd) =>
+            cmd
+              .positional("path", { type: "string", demandOption: true })
+              .option("slug", { type: "string", describe: "Skill slug (defaults to folder name)" })
+              .option("latest-version", { type: "string", describe: "Current published version (semantic)" })
+              .option("bump", { type: "string", choices: ["major", "minor", "patch"], default: "patch" })
+              .option("changelog", { type: "string" })
+              .option("tags", { type: "string", describe: "Comma-separated tags" })
+              .option("dry-run", { type: "boolean", default: false }),
+          async (argv) => {
+            const skillPath = path.resolve(argv.path as string);
+            const slug = (argv.slug as string | undefined) ?? path.basename(skillPath);
+            const tags = (argv.tags as string | undefined)?.split(",").map((t) => t.trim()).filter(Boolean);
+            const result = await publishSkill({
+              skillPath,
+              slug,
+              latestVersion: argv["latest-version"] as string | undefined,
+              bump: (argv.bump as "major" | "minor" | "patch") ?? "patch",
+              changelog: argv.changelog as string | undefined,
+              tags,
+              dryRun: argv["dry-run"] as boolean | undefined,
+            });
+            emitPublishResult(argv as CliArgs, result, slug);
+          },
+        )
+        .demandCommand(1, "Specify a skills subcommand"),
+    () => {
+      process.exitCode = EXIT_CODES.usage;
     },
   )
   .command(

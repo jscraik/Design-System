@@ -5,6 +5,7 @@ import SwiftUI
 enum AppSection: String, CaseIterable, Identifiable, Sendable {
     case chat
     case templates
+    case skills
     case tools
     case settings
 
@@ -16,6 +17,8 @@ enum AppSection: String, CaseIterable, Identifiable, Sendable {
             return "Chat"
         case .templates:
             return "Templates"
+        case .skills:
+            return "Skills"
         case .tools:
             return "Tools"
         case .settings:
@@ -29,6 +32,8 @@ enum AppSection: String, CaseIterable, Identifiable, Sendable {
             return "bubble.left.and.bubble.right"
         case .templates:
             return "square.grid.2x2"
+        case .skills:
+            return "shippingbox"
         case .tools:
             return "hammer"
         case .settings:

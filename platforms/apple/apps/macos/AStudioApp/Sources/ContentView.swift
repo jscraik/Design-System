@@ -138,6 +138,8 @@ struct DetailView: View {
                 ChatView(mcpClient: mcpClient)
             case .templates:
                 TemplatesView()
+            case .skills:
+                SkillsView()
             case .tools:
                 ToolsView(mcpClient: mcpClient)
             case .settings:

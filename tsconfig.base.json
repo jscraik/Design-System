@@ -9,6 +9,9 @@
     "skipLibCheck": true,
     "noEmit": true,
     "types": ["vite/client"],
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@astudio/skill-ingestion": ["packages/skill-ingestion/dist/index.d.ts"]
+    }
   }
 }

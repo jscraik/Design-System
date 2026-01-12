@@ -14,6 +14,7 @@
     "test": "node --test tests/cli.test.mjs"
   },
   "dependencies": {
+    "@astudio/skill-ingestion": "workspace:*",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
