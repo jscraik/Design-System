@@ -15,7 +15,7 @@
 - Token integration strategy (source tokens → @astudio/tokens)
 - Implementation phases and approach
 
-### 2. Dependency Audit Summary  
+### 2. Dependency Audit Summary
 
 📄 **File**: `DEPENDENCY_AUDIT_SUMMARY.md`
 
@@ -61,20 +61,20 @@
 
 ```typescript
 // BEFORE (Source App)
-import { Button } from "@radix-ui/react-button"
+import { Button } from "@radix-ui/react-button";
 
-// AFTER (Platform)  
-import { Button } from "@astudio/ui/base"
+// AFTER (Platform)
+import { Button } from "@astudio/ui/base";
 ```
 
 ### Phase 2: Token Integration
 
 ```typescript
 // BEFORE (Source App)
-import { colors } from "../design-tokens"
+import { colors } from "../design-tokens";
 
 // AFTER (Platform)
-import { tokens } from "@astudio/tokens"
+import { tokens } from "@astudio/tokens";
 ```
 
 ### Phase 3: Registry Generation
@@ -88,7 +88,7 @@ import { tokens } from "@astudio/tokens"
 ✅ **Requirement 8.1**: Workspace dependencies preferred - All dependencies available via workspace packages  
 ✅ **Requirement 8.2**: Radix fallbacks only when needed - Strategy documented  
 ✅ **Requirement 8.3**: Dependency deduplication - No duplicates introduced  
-✅ **Requirement 8.4**: Build system compatibility - Vite/Tailwind preserved  
+✅ **Requirement 8.4**: Build system compatibility - Vite/Tailwind preserved
 
 ## Next Steps
 
@@ -97,7 +97,7 @@ The dependency audit is complete and the platform is ready for template porting.
 ## Files Created/Modified
 
 1. `platforms/web/apps/web/DEPENDENCY_RECONCILIATION_PLAN.md` (new)
-2. `platforms/web/apps/web/DEPENDENCY_AUDIT_SUMMARY.md` (new)  
+2. `platforms/web/apps/web/DEPENDENCY_AUDIT_SUMMARY.md` (new)
 3. `platforms/web/apps/web/package.json` (updated)
 4. `platforms/web/apps/web/TASK_1_COMPLETION_SUMMARY.md` (new)
 

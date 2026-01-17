@@ -114,21 +114,15 @@ That's all folks!`;
               </Alert>
               <Alert variant="success" onClose={() => console.log("closed")}>
                 <AlertTitle>Success!</AlertTitle>
-                <AlertDescription>
-                  Your changes have been saved successfully.
-                </AlertDescription>
+                <AlertDescription>Your changes have been saved successfully.</AlertDescription>
               </Alert>
               <Alert variant="warning">
                 <AlertTitle>Warning</AlertTitle>
-                <AlertDescription>
-                  Please review your settings before continuing.
-                </AlertDescription>
+                <AlertDescription>Please review your settings before continuing.</AlertDescription>
               </Alert>
               <Alert variant="error">
                 <AlertTitle>Error</AlertTitle>
-                <AlertDescription>
-                  Something went wrong. Please try again.
-                </AlertDescription>
+                <AlertDescription>Something went wrong. Please try again.</AlertDescription>
               </Alert>
             </div>
           </div>
@@ -240,11 +234,7 @@ That's all folks!`;
             <h3 className="text-lg font-medium text-foundation-text-dark-primary">
               DatePicker Component
             </h3>
-            <DatePicker
-              date={date}
-              onDateChange={setDate}
-              placeholder="Select a date"
-            />
+            <DatePicker date={date} onDateChange={setDate} placeholder="Select a date" />
           </div>
 
           {/* DateRangePicker */}
@@ -307,9 +297,7 @@ That's all folks!`;
             <h2 className="text-2xl font-semibold text-foundation-text-dark-primary mb-2">
               Phase 3: Polish & Advanced Components
             </h2>
-            <p className="text-foundation-text-dark-tertiary">
-              Advanced UI patterns and utilities
-            </p>
+            <p className="text-foundation-text-dark-tertiary">Advanced UI patterns and utilities</p>
           </div>
 
           {/* Menu */}
@@ -386,20 +374,14 @@ That's all folks!`;
             </h3>
             <div className="grid md:grid-cols-3 gap-4">
               <div>
-                <p className="text-sm text-foundation-text-dark-tertiary mb-2">Avatar with fallback</p>
-                <AvatarImage
-                  src="https://i.pravatar.cc/150?img=1"
-                  name="John Doe"
-                  size="xl"
-                />
+                <p className="text-sm text-foundation-text-dark-tertiary mb-2">
+                  Avatar with fallback
+                </p>
+                <AvatarImage src="https://i.pravatar.cc/150?img=1" name="John Doe" size="xl" />
               </div>
               <div>
                 <p className="text-sm text-foundation-text-dark-tertiary mb-2">Error state</p>
-                <Image
-                  src="invalid-url"
-                  alt="Error demo"
-                  className="w-full h-32 rounded-lg"
-                />
+                <Image src="invalid-url" alt="Error demo" className="w-full h-32 rounded-lg" />
               </div>
               <div>
                 <p className="text-sm text-foundation-text-dark-tertiary mb-2">Loading state</p>
@@ -456,10 +438,7 @@ That's all folks!`;
 
               <Stagger staggerDelay={0.1}>
                 {["First", "Second", "Third"].map((item) => (
-                  <div
-                    key={item}
-                    className="p-3 bg-foundation-bg-dark-2 rounded-lg mb-2"
-                  >
+                  <div key={item} className="p-3 bg-foundation-bg-dark-2 rounded-lg mb-2">
                     {item} item with stagger animation
                   </div>
                 ))}

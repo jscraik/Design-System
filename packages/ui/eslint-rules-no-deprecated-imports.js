@@ -19,8 +19,7 @@ const noDeprecatedImportsRule = {
   meta: {
     type: "problem",
     docs: {
-      description:
-        "Disallow imports from deprecated package paths and archived code.",
+      description: "Disallow imports from deprecated package paths and archived code.",
       category: "Best Practices",
       recommended: "error",
     },
@@ -31,8 +30,7 @@ const noDeprecatedImportsRule = {
           deprecatedPatterns: {
             type: "array",
             items: { type: "string" },
-            description:
-              "Array of import patterns to disallow (supports wildcards)",
+            description: "Array of import patterns to disallow (supports wildcards)",
           },
           deprecatedPaths: {
             type: "array",
@@ -42,16 +40,14 @@ const noDeprecatedImportsRule = {
           customMessages: {
             type: "object",
             additionalProperties: { type: "string" },
-            description:
-              "Custom error messages for specific deprecated imports",
+            description: "Custom error messages for specific deprecated imports",
           },
         },
         additionalProperties: false,
       },
     ],
     messages: {
-      deprecatedImport:
-        "Import from '{{source}}' is deprecated. {{message}}",
+      deprecatedImport: "Import from '{{source}}' is deprecated. {{message}}",
     },
   },
   create(context) {
@@ -94,8 +90,7 @@ const noDeprecatedImportsRule = {
             data: {
               source,
               message:
-                customMessages[source] ||
-                `This import path is deprecated and should not be used.`,
+                customMessages[source] || `This import path is deprecated and should not be used.`,
             },
           });
           return;

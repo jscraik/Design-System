@@ -181,9 +181,7 @@ export function ModelSelectorDemo() {
               legacyModels={defaultLegacyModels}
             />
             <div className="mt-4 text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
-              <p className="text-[13px]">
-                Click to see legacy models in the nested menu
-              </p>
+              <p className="text-[13px]">Click to see legacy models in the nested menu</p>
             </div>
           </div>
         </div>
@@ -227,9 +225,7 @@ export function ModelSelectorDemo() {
               legacyModels={[]}
             />
             <div className="mt-4 text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
-              <p className="text-[13px]">
-                No legacy models menu (empty array)
-              </p>
+              <p className="text-[13px]">No legacy models menu (empty array)</p>
             </div>
           </div>
         </div>
@@ -353,9 +349,7 @@ export function ModelSelectorDemo() {
             </div>
             <div className="p-8 min-h-[300px] flex items-center justify-center">
               <div className="text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
-                <p className="text-[14px]">
-                  Select a model and start chatting
-                </p>
+                <p className="text-[14px]">Select a model and start chatting</p>
               </div>
             </div>
           </div>

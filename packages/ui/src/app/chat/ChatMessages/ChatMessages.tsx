@@ -107,42 +107,42 @@ export function ChatMessages({ emptyState, messages, onMessageAction }: ChatMess
                         }
                       }}
                     >
-                  <IconCopy className={iconMd} />
+                      <IconCopy className={iconMd} />
                     </button>
                     <button
                       className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary hover:text-foundation-icon-light-primary dark:hover:text-foundation-icon-dark-primary"
                       title="Good response"
                       onClick={() => onMessageAction?.("thumbs-up", message)}
                     >
-                  <IconThumbUp className={iconMd} />
+                      <IconThumbUp className={iconMd} />
                     </button>
                     <button
                       className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary hover:text-foundation-icon-light-primary dark:hover:text-foundation-icon-dark-primary"
                       title="Bad response"
                       onClick={() => onMessageAction?.("thumbs-down", message)}
                     >
-                  <IconThumbDown className={iconMd} />
+                      <IconThumbDown className={iconMd} />
                     </button>
                     <button
                       className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary hover:text-foundation-icon-light-primary dark:hover:text-foundation-icon-dark-primary"
                       title="Share"
                       onClick={() => onMessageAction?.("share", message)}
                     >
-                  <IconShare className={iconMd} />
+                      <IconShare className={iconMd} />
                     </button>
                     <button
                       className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary hover:text-foundation-icon-light-primary dark:hover:text-foundation-icon-dark-primary"
                       title="Regenerate"
                       onClick={() => onMessageAction?.("regenerate", message)}
                     >
-                  <IconRegenerate className={iconMd} />
+                      <IconRegenerate className={iconMd} />
                     </button>
                     <button
                       className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary hover:text-foundation-icon-light-primary dark:hover:text-foundation-icon-dark-primary"
                       title="More"
                       onClick={() => onMessageAction?.("more", message)}
                     >
-                  <IconDotsHorizontal className={iconMd} />
+                      <IconDotsHorizontal className={iconMd} />
                     </button>
                   </div>
                 </div>
@@ -170,14 +170,14 @@ export function ChatMessages({ emptyState, messages, onMessageAction }: ChatMess
                       className="p-1.5 rounded-lg hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary hover:text-foundation-icon-light-primary dark:hover:text-foundation-icon-dark-primary transition-colors"
                       title="Copy"
                     >
-                    <IconCopy className={iconMd} />
+                      <IconCopy className={iconMd} />
                     </button>
                     <button
                       onClick={() => onMessageAction?.("edit", message)}
                       className="p-1.5 rounded-lg hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary transition-colors"
                       title="Edit"
                     >
-                    <IconEdit className={iconMd} />
+                      <IconEdit className={iconMd} />
                     </button>
                   </div>
                 </div>

@@ -221,223 +221,220 @@ export function AttachmentMenu({
         </button>
       </PopoverTrigger>
 
-      
-        <PopoverContent
-          side="top"
-          align="start"
-          sideOffset={10}
-          className={cn(
-            "z-[60] w-[240px] rounded-xl border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
-            "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 shadow-2xl outline-none p-2",
-            "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
-            "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-          )}
-        >
-          {/* Primary Actions */}
-          <MenuItem onClick={() => handleAction("add-photos-files")}>
-            <IconPaperclip className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
-            <span>Add photos & files</span>
-          </MenuItem>
+      <PopoverContent
+        side="top"
+        align="start"
+        sideOffset={10}
+        className={cn(
+          "z-[60] w-[240px] rounded-xl border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
+          "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 shadow-2xl outline-none p-2",
+          "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
+          "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+        )}
+      >
+        {/* Primary Actions */}
+        <MenuItem onClick={() => handleAction("add-photos-files")}>
+          <IconPaperclip className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+          <span>Add photos & files</span>
+        </MenuItem>
 
-          <MenuItem onClick={() => handleAction("deep-research")}>
-            <TelescopeIcon className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
-            <span>Deep research</span>
-          </MenuItem>
+        <MenuItem onClick={() => handleAction("deep-research")}>
+          <TelescopeIcon className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+          <span>Deep research</span>
+        </MenuItem>
 
-          <MenuItem onClick={() => handleAction("shopping-research")}>
-            <ShoppingIcon className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
-            <span>Shopping research</span>
-          </MenuItem>
+        <MenuItem onClick={() => handleAction("shopping-research")}>
+          <ShoppingIcon className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+          <span>Shopping research</span>
+        </MenuItem>
 
-          <MenuItem onClick={() => handleAction("agent-mode")}>
-            <AgentIcon className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
-            <span>Agent mode</span>
-          </MenuItem>
+        <MenuItem onClick={() => handleAction("agent-mode")}>
+          <AgentIcon className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+          <span>Agent mode</span>
+        </MenuItem>
 
-          <MenuItem onClick={() => handleAction("create-image")}>
-            <IconImage className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
-            <span>Create image</span>
-          </MenuItem>
+        <MenuItem onClick={() => handleAction("create-image")}>
+          <IconImage className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+          <span>Create image</span>
+        </MenuItem>
 
-          {/* More submenu with nested popover */}
-          <Popover modal={false}>
-            <PopoverTrigger asChild>
-              <MenuItem className="justify-between data-[state=open]:bg-foundation-bg-light-3 dark:data-[state=open]:bg-foundation-bg-dark-3">
-                <div className="flex items-center gap-3">
-                  <IconDotsVertical className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
-                  <span>More</span>
-                </div>
-                <ChevronRightIcon className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-secondary dark:group-hover:text-foundation-text-dark-secondary transition-colors" />
-              </MenuItem>
-            </PopoverTrigger>
+        {/* More submenu with nested popover */}
+        <Popover modal={false}>
+          <PopoverTrigger asChild>
+            <MenuItem className="justify-between data-[state=open]:bg-foundation-bg-light-3 dark:data-[state=open]:bg-foundation-bg-dark-3">
+              <div className="flex items-center gap-3">
+                <IconDotsVertical className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+                <span>More</span>
+              </div>
+              <ChevronRightIcon className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-secondary dark:group-hover:text-foundation-text-dark-secondary transition-colors" />
+            </MenuItem>
+          </PopoverTrigger>
 
-            
-              <PopoverContent
-                side="right"
-                align="start"
-                sideOffset={8}
-                className={cn(
-                  "z-[70] w-[240px] rounded-xl border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
-                  "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 shadow-2xl outline-none p-2",
-                  "max-h-[400px] overflow-y-auto",
-                  "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
-                  "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-                )}
+          <PopoverContent
+            side="right"
+            align="start"
+            sideOffset={8}
+            className={cn(
+              "z-[70] w-[240px] rounded-xl border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
+              "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 shadow-2xl outline-none p-2",
+              "max-h-[400px] overflow-y-auto",
+              "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
+              "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+            )}
+          >
+            {/* Add sources header */}
+            <div className="px-3 py-2 text-[13px] text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary font-normal leading-[18px] tracking-[-0.3px]">
+              Add sources
+            </div>
+
+            <MenuItem onClick={() => handleMoreAction("study-learn")}>
+              <svg
+                className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
               >
-                {/* Add sources header */}
-                <div className="px-3 py-2 text-[13px] text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary font-normal leading-[18px] tracking-[-0.3px]">
-                  Add sources
-                </div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                />
+              </svg>
+              <span>Study and learn</span>
+            </MenuItem>
 
-                <MenuItem onClick={() => handleMoreAction("study-learn")}>
-                  <svg
-                    className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
-                    />
-                  </svg>
-                  <span>Study and learn</span>
-                </MenuItem>
-
-                <MenuItem
-                  onClick={handleWebSearch}
+            <MenuItem
+              onClick={handleWebSearch}
+              className={cn(
+                "justify-between",
+                isWebSearchActive &&
+                  "text-foundation-accent-blue-light dark:text-foundation-accent-blue",
+              )}
+            >
+              <div className="flex items-center gap-3">
+                <IconPublic
                   className={cn(
-                    "justify-between",
-                    isWebSearchActive && "text-foundation-accent-blue-light dark:text-foundation-accent-blue",
+                    "size-5 transition-colors",
+                    isWebSearchActive
+                      ? "text-foundation-accent-blue-light dark:text-foundation-accent-blue"
+                      : "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary",
                   )}
-                >
-                  <div className="flex items-center gap-3">
-                    <IconPublic
-                      className={cn(
-                        "size-5 transition-colors",
-                        isWebSearchActive
-                          ? "text-foundation-accent-blue-light dark:text-foundation-accent-blue"
-                          : "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary",
-                      )}
-                    />
-                    <span>Web search</span>
-                  </div>
-                  {isWebSearchActive && (
-                    <CheckIcon className="size-5 text-foundation-accent-blue-light dark:text-foundation-accent-blue" />
-                  )}
-                </MenuItem>
+                />
+                <span>Web search</span>
+              </div>
+              {isWebSearchActive && (
+                <CheckIcon className="size-5 text-foundation-accent-blue-light dark:text-foundation-accent-blue" />
+              )}
+            </MenuItem>
 
-                {/* Additional integrations would go here */}
-                <MenuItem onClick={() => handleMoreAction("browser-memory")}>
-                  <svg
-                    className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
-                    />
-                  </svg>
-                  <span>Browser memory</span>
-                </MenuItem>
+            {/* Additional integrations would go here */}
+            <MenuItem onClick={() => handleMoreAction("browser-memory")}>
+              <svg
+                className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
+                />
+              </svg>
+              <span>Browser memory</span>
+            </MenuItem>
 
-                <MenuItem onClick={() => handleMoreAction("canva")}>
-                  <CanvaIcon className="size-5 transition-colors" />
-                  <span>Canva</span>
-                </MenuItem>
+            <MenuItem onClick={() => handleMoreAction("canva")}>
+              <CanvaIcon className="size-5 transition-colors" />
+              <span>Canva</span>
+            </MenuItem>
 
-                <MenuItem onClick={() => handleMoreAction("quizzes")}>
-                  <svg
-                    className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
-                    />
-                  </svg>
-                  <span>Quizzes</span>
-                </MenuItem>
+            <MenuItem onClick={() => handleMoreAction("quizzes")}>
+              <svg
+                className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"
+                />
+              </svg>
+              <span>Quizzes</span>
+            </MenuItem>
 
-                <MenuItem onClick={() => handleMoreAction("slack")}>
-                  <SlackIcon className="size-5 transition-colors" />
-                  <span>Slack</span>
-                </MenuItem>
+            <MenuItem onClick={() => handleMoreAction("slack")}>
+              <SlackIcon className="size-5 transition-colors" />
+              <span>Slack</span>
+            </MenuItem>
 
-                <MenuItem onClick={() => handleMoreAction("figma")}>
-                  <FigmaIcon className="size-5 transition-colors" />
-                  <span>Figma</span>
-                </MenuItem>
+            <MenuItem onClick={() => handleMoreAction("figma")}>
+              <FigmaIcon className="size-5 transition-colors" />
+              <span>Figma</span>
+            </MenuItem>
 
-                <MenuItem onClick={() => handleMoreAction("year-with-chatgpt")}>
-                  <svg
-                    className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"
-                    />
-                  </svg>
-                  <span>Your Year with ChatGPT</span>
-                </MenuItem>
+            <MenuItem onClick={() => handleMoreAction("year-with-chatgpt")}>
+              <svg
+                className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"
+                />
+              </svg>
+              <span>Your Year with ChatGPT</span>
+            </MenuItem>
 
-                <MenuItem onClick={() => handleMoreAction("dropbox")}>
-                  <DropboxIcon className="size-5 transition-colors" />
-                  <span>Dropbox</span>
-                </MenuItem>
+            <MenuItem onClick={() => handleMoreAction("dropbox")}>
+              <DropboxIcon className="size-5 transition-colors" />
+              <span>Dropbox</span>
+            </MenuItem>
 
-                <MenuItem onClick={() => handleMoreAction("github")}>
-                  <GitHubIcon className="size-5 transition-colors" />
-                  <span>GitHub</span>
-                </MenuItem>
+            <MenuItem onClick={() => handleMoreAction("github")}>
+              <GitHubIcon className="size-5 transition-colors" />
+              <span>GitHub</span>
+            </MenuItem>
 
-                <MenuItem onClick={() => handleMoreAction("linear")}>
-                  <LinearIcon className="size-5 transition-colors" />
-                  <span>Linear</span>
-                </MenuItem>
+            <MenuItem onClick={() => handleMoreAction("linear")}>
+              <LinearIcon className="size-5 transition-colors" />
+              <span>Linear</span>
+            </MenuItem>
 
-                <MenuItem onClick={() => handleMoreAction("notion")}>
-                  <NotionIcon className="size-5 transition-colors" />
-                  <span>Notion</span>
-                </MenuItem>
+            <MenuItem onClick={() => handleMoreAction("notion")}>
+              <NotionIcon className="size-5 transition-colors" />
+              <span>Notion</span>
+            </MenuItem>
 
-                <MenuItem onClick={() => handleMoreAction("sharepoint")}>
-                  <SharePointIcon className="size-5 transition-colors" />
-                  <span>SharePoint</span>
-                </MenuItem>
+            <MenuItem onClick={() => handleMoreAction("sharepoint")}>
+              <SharePointIcon className="size-5 transition-colors" />
+              <span>SharePoint</span>
+            </MenuItem>
 
-                <MenuItem onClick={() => handleMoreAction("teams")}>
-                  <TeamsIcon className="size-5 transition-colors" />
-                  <span>Teams</span>
-                </MenuItem>
+            <MenuItem onClick={() => handleMoreAction("teams")}>
+              <TeamsIcon className="size-5 transition-colors" />
+              <span>Teams</span>
+            </MenuItem>
 
-                {/* Divider */}
-                <div className="my-2 border-t border-foundation-bg-light-3 dark:border-foundation-bg-dark-3" />
+            {/* Divider */}
+            <div className="my-2 border-t border-foundation-bg-light-3 dark:border-foundation-bg-dark-3" />
 
-                <MenuItem onClick={() => handleMoreAction("explore-apps")}>
-                  <IconSearch className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
-                  <span>Explore apps</span>
-                </MenuItem>
-              </PopoverContent>
-            
-          </Popover>
-        </PopoverContent>
-      
+            <MenuItem onClick={() => handleMoreAction("explore-apps")}>
+              <IconSearch className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+              <span>Explore apps</span>
+            </MenuItem>
+          </PopoverContent>
+        </Popover>
+      </PopoverContent>
     </Popover>
   );
 }

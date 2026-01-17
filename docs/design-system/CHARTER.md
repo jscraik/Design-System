@@ -39,8 +39,8 @@ Out of scope:
 
 Apps SDK UI (`@openai/apps-sdk-ui`) is the canonical foundation for all ChatGPT-embedded surfaces and the baseline for web UI foundations. Custom tokens or components must either:
 
-1) Alias or extend Apps SDK UI foundations, or
-2) Use Radix primitives strictly as a fallback when Apps SDK UI lacks required coverage, while still adhering to Apps SDK UI tokens, accessibility, and interaction conventions.
+1. Alias or extend Apps SDK UI foundations, or
+2. Use Radix primitives strictly as a fallback when Apps SDK UI lacks required coverage, while still adhering to Apps SDK UI tokens, accessibility, and interaction conventions.
 
 ## Radix Fallback Policy
 

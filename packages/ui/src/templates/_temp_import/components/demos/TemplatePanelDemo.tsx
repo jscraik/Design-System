@@ -539,8 +539,8 @@ export function TemplatePanelDemo() {
             }
           >
             <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-              This panel has a drag handle at the top. In a real implementation, you'd use
-              react-dnd or a similar library for drag-and-drop functionality.
+              This panel has a drag handle at the top. In a real implementation, you'd use react-dnd
+              or a similar library for drag-and-drop functionality.
             </p>
           </TemplatePanel>
         </div>

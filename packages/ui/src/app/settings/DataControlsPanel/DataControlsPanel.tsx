@@ -63,10 +63,7 @@ export function DataControlsPanel({ onBack }: SettingsPanelProps) {
           <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary px-3 mt-1">
             Allow your content to be used to train our models, which makes ChatGPT better for you
             and everyone who uses it. We take steps to protect your privacy.{" "}
-            <button
-              type="button"
-              className="text-foundation-accent-blue hover:underline"
-            >
+            <button type="button" className="text-foundation-accent-blue hover:underline">
               Learn more
             </button>
           </p>
@@ -127,10 +124,7 @@ export function DataControlsPanel({ onBack }: SettingsPanelProps) {
             <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary px-3 mt-1">
               Include your audio or video recordings from Voice Mode to train our models.
               Transcripts and other data are covered by "Improve the model for everyone".{" "}
-              <button
-                type="button"
-                className="text-foundation-accent-blue hover:underline"
-              >
+              <button type="button" className="text-foundation-accent-blue hover:underline">
                 Learn more
               </button>
             </p>

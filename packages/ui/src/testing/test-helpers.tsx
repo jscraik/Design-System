@@ -12,10 +12,7 @@ import { vi } from "vitest";
 /**
  * Custom render function that includes any required providers
  */
-export function renderWithProviders(
-  ui: ReactElement,
-  options?: Omit<RenderOptions, "wrapper">
-) {
+export function renderWithProviders(ui: ReactElement, options?: Omit<RenderOptions, "wrapper">) {
   // Add any required providers here (ThemeProvider, etc.)
   return render(ui, options);
 }
@@ -83,32 +80,24 @@ export function setupTestMocks() {
 /**
  * Wait for a specified delay (useful for animations, debounces)
  */
-export const delay = (ms: number) =>
-  new Promise((resolve) => setTimeout(resolve, ms));
+export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
  * Flush all pending promises
  */
-export const flushPromises = () =>
-  new Promise((resolve) => setImmediate(resolve));
+export const flushPromises = () => new Promise((resolve) => setImmediate(resolve));
 
 /**
  * Get data attribute value from element
  */
-export function getDataAttribute(
-  element: HTMLElement,
-  attribute: string
-): string | undefined {
+export function getDataAttribute(element: HTMLElement, attribute: string): string | undefined {
   return element.getAttribute(`data-${attribute}`) || undefined;
 }
 
 /**
  * Type assertion for test elements
  */
-export function getRequiredElement(
-  container: HTMLElement,
-  selector: string
-): HTMLElement {
+export function getRequiredElement(container: HTMLElement, selector: string): HTMLElement {
   const element = container.querySelector(selector);
   if (!element) {
     throw new Error(`Element not found: ${selector}`);

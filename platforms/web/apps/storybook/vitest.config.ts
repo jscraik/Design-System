@@ -16,9 +16,7 @@ const argosVitestPluginUrl = pathToFileURL(
 const argosVitestSetupFilePath = path.join(argosStorybookRoot, "dist", "vitest-setup-file.js");
 const { argosVitestPlugin } = await import(argosVitestPluginUrl);
 const enableArgosVitest =
-  process.env.ARGOS_VITEST === "1" ||
-  process.env.ARGOS_VITEST === "true" ||
-  !!process.env.CI;
+  process.env.ARGOS_VITEST === "1" || process.env.ARGOS_VITEST === "true" || !!process.env.CI;
 
 export default defineConfig({
   resolve: {

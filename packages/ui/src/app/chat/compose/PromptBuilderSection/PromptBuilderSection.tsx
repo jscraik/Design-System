@@ -63,9 +63,23 @@ export function PromptBuilderSection({
                 aria-label="Run discovery"
                 className="flex items-center gap-2 px-3 py-1.5 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-2/80 dark:hover:bg-foundation-bg-dark-2/80 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary rounded-lg transition-colors text-caption leading-5"
               >
-                <svg className="size-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <svg
+                  className="size-[18px]"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
                 </svg>
                 Run Discovery
               </button>
@@ -82,8 +96,12 @@ export function PromptBuilderSection({
                   <div className="bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg px-3 py-2.5">
                     <div className="flex items-center justify-between">
                       <div>
-                        <div className="text-body-small font-medium leading-5 text-foundation-text-light-primary dark:text-foundation-text-dark-primary">Selected Model</div>
-                        <div className="text-caption leading-4 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">Model description</div>
+                        <div className="text-body-small font-medium leading-5 text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+                          Selected Model
+                        </div>
+                        <div className="text-caption leading-4 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+                          Model description
+                        </div>
                       </div>
                       <IconChevronDownMd className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary flex-shrink-0" />
                     </div>
@@ -118,8 +136,18 @@ export function PromptBuilderSection({
                         onMouseEnter={() => setShowTooltip(true)}
                         onMouseLeave={() => setShowTooltip(false)}
                       >
-                        <svg className="size-4 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg
+                          className="size-4 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
                         </svg>
                       </button>
 
@@ -177,9 +205,23 @@ export function PromptBuilderSection({
                         </div>
                       )}
                     </div>
-                    <button type="button" aria-label="Clear task" className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded transition-colors">
-                      <svg className="size-4 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    <button
+                      type="button"
+                      aria-label="Clear task"
+                      className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded transition-colors"
+                    >
+                      <svg
+                        className="size-4 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
                       </svg>
                     </button>
                   </>
@@ -212,7 +254,9 @@ export function PromptBuilderSection({
             {/* Auto Create and Mode Selector */}
             <div className="flex items-center justify-between pt-5 border-t border-foundation-bg-light-3 dark:border-foundation-bg-dark-3">
               <div className="flex items-center gap-2">
-                <div className="text-caption leading-5 text-foundation-text-light-primary dark:text-foundation-text-dark-primary">Auto Create</div>
+                <div className="text-caption leading-5 text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+                  Auto Create
+                </div>
                 <div className="text-caption text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
                   Generate a prompt automatically after discovery
                 </div>
@@ -220,8 +264,15 @@ export function PromptBuilderSection({
 
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
-                  <span className="text-caption text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">Plan mode</span>
-                  <ModeSelector value={previewMode} onChange={onModeSelect} modes={modes} showPreview={true} />
+                  <span className="text-caption text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+                    Plan mode
+                  </span>
+                  <ModeSelector
+                    value={previewMode}
+                    onChange={onModeSelect}
+                    modes={modes}
+                    showPreview={true}
+                  />
                 </div>
 
                 <Toggle checked={autoPlan} onChange={onAutoPlanChange} ariaLabel="Auto create" />

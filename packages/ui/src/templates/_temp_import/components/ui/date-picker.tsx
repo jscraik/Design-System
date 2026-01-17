@@ -30,7 +30,7 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
       minDate,
       maxDate,
     },
-    ref
+    ref,
   ) => {
     const [isOpen, setIsOpen] = React.useState(false);
 
@@ -49,7 +49,7 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
             className={cn(
               "w-full justify-start text-left font-normal",
               !date && "text-foundation-text-dark-tertiary",
-              className
+              className,
             )}
           >
             <CalendarIcon className="mr-2 size-4" />
@@ -71,7 +71,7 @@ const DatePicker = React.forwardRef<HTMLButtonElement, DatePickerProps>(
         </PopoverContent>
       </Popover>
     );
-  }
+  },
 );
 DatePicker.displayName = "DatePicker";
 

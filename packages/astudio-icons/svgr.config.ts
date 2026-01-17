@@ -14,12 +14,12 @@ const config: Config = {
         params: {
           overrides: {
             removeViewBox: false,
-            removeTitle: false
-          }
-        }
+            removeTitle: false,
+          },
+        },
       },
-      "removeDimensions"
-    ]
+      "removeDimensions",
+    ],
   },
   template: (variables, { tpl }) => {
     return tpl`
@@ -34,7 +34,7 @@ ${variables.componentName}.displayName = "${variables.componentName}";
 
 export default ${variables.componentName};
 `;
-  }
+  },
 };
 
 export default config;

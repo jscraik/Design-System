@@ -14,10 +14,7 @@ import { cn } from "../../utils";
  * @param props - Resizable panel group props.
  * @returns A resizable panel group element.
  */
-function ResizablePanelGroup({
-  className,
-  ...props
-}: React.ComponentProps<typeof Group>) {
+function ResizablePanelGroup({ className, ...props }: React.ComponentProps<typeof Group>) {
   return (
     <Group
       data-slot="resizable-panel-group"

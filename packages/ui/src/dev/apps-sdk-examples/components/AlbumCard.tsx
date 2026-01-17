@@ -7,7 +7,13 @@ export type Album = {
   photos: Array<{ id: string; title?: string; url: string }>;
 };
 
-export function AlbumCard({ album, onSelect }: { album: Album; onSelect?: (album: Album) => void }) {
+export function AlbumCard({
+  album,
+  onSelect,
+}: {
+  album: Album;
+  onSelect?: (album: Album) => void;
+}) {
   return (
     <button
       type="button"
@@ -17,7 +23,12 @@ export function AlbumCard({ album, onSelect }: { album: Album; onSelect?: (album
     >
       <div className="flex w-full flex-col gap-2">
         <div className="relative aspect-[4/3] w-full overflow-hidden rounded-16 shadow-foundation-card border border-border-subtle">
-          <img src={album.cover} alt={album.title} className="h-full w-full object-cover" loading="lazy" />
+          <img
+            src={album.cover}
+            alt={album.title}
+            className="h-full w-full object-cover"
+            loading="lazy"
+          />
           <Badge
             variant="secondary"
             className="absolute left-3 top-3 bg-card/70 text-foreground backdrop-blur"

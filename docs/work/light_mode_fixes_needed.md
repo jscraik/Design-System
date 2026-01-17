@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -24,7 +25,6 @@ Last updated: 2026-01-04
   - [Low Priority](#low-priority)
 - [Next Steps](#next-steps)
 - [Key Principle](#key-principle)
-
 
 ## Current Issues vs Figma Designs
 

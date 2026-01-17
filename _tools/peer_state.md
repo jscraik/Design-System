@@ -3,12 +3,12 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 ## Current Focus
 
@@ -308,7 +308,7 @@ Last updated: 2026-01-04
 | Widget manifest     | `packages/widgets/src/plugins/widget-manifest.ts` | Auto-discovery & content hashing plugin  |
 | Widget registry     | `packages/widgets/src/shared/widget-registry.ts`  | Standardized tool creation helpers       |
 | Widget base         | `packages/widgets/src/shared/widget-base.tsx`     | Consistent widget components & mounting  |
-| Enhanced MCP        | `platforms/mcp/enhanced-server.js`                     | Auto-discovery MCP server implementation |
+| Enhanced MCP        | `platforms/mcp/enhanced-server.js`                | Auto-discovery MCP server implementation |
 
 ## Session Notes
 

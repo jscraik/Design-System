@@ -3,6 +3,7 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Engineers and technical leads
 - Scope: System architecture and component relationships
 - Non-scope: Step-by-step operational procedures
@@ -30,7 +31,6 @@ Last updated: 2026-01-09
   - [Nice to Have](#nice-to-have)
 - [Conclusion](#conclusion)
 - [Verify (Re-run the Audit)](#verify-re-run-the-audit)
-
 
 This document analyzes our aStudio implementation against the official Apps SDK documentation from:
 

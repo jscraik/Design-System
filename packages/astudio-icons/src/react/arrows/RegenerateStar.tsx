@@ -1,5 +1,18 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const RegenerateStar = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" preserveAspectRatio="none" viewBox="0 0 24 24" ref={ref} {...props}><g fill="currentColor"><path d="M3.07 10.876C3.624 6.436 7.41 3 12 3c2.281 0 4.402.85 6.012 2.254V4a1 1 0 1 1 2 0v4a1 1 0 0 1-1.029 1h-3.97a1 1 0 1 1 0-2h1.945A7.15 7.15 0 0 0 12 5a7 7 0 0 0-6.946 6.124 1 1 0 1 1-1.985-.248M4 16a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2H7.043A7.15 7.15 0 0 0 12 19a1 1 0 1 1 0 2 9.15 9.15 0 0 1-6-2.244V20a1 1 0 1 1-2 0zM18.334 13.333c.26 0 .478.196.507.454.54 1.642 1.064 2.165 2.693 2.704a.511.511 0 0 1 0 1.018c-1.63.539-2.153 1.062-2.691 2.69a.511.511 0 0 1-1.019.002c-.538-1.63-1.062-2.153-2.704-2.693a.511.511 0 0 1 0-1.016c1.642-.54 2.166-1.063 2.706-2.706a.51.51 0 0 1 .508-.453" /></g></svg>);
+const RegenerateStar = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    preserveAspectRatio="none"
+    viewBox="0 0 24 24"
+    ref={ref}
+    {...props}
+  >
+    <g fill="currentColor">
+      <path d="M3.07 10.876C3.624 6.436 7.41 3 12 3c2.281 0 4.402.85 6.012 2.254V4a1 1 0 1 1 2 0v4a1 1 0 0 1-1.029 1h-3.97a1 1 0 1 1 0-2h1.945A7.15 7.15 0 0 0 12 5a7 7 0 0 0-6.946 6.124 1 1 0 1 1-1.985-.248M4 16a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2H7.043A7.15 7.15 0 0 0 12 19a1 1 0 1 1 0 2 9.15 9.15 0 0 1-6-2.244V20a1 1 0 1 1-2 0zM18.334 13.333c.26 0 .478.196.507.454.54 1.642 1.064 2.165 2.693 2.704a.511.511 0 0 1 0 1.018c-1.63.539-2.153 1.062-2.691 2.69a.511.511 0 0 1-1.019.002c-.538-1.63-1.062-2.153-2.704-2.693a.511.511 0 0 1 0-1.016c1.642-.54 2.166-1.063 2.706-2.706a.51.51 0 0 1 .508-.453" />
+    </g>
+  </svg>
+));
 RegenerateStar.displayName = "RegenerateStar";
 export default RegenerateStar;

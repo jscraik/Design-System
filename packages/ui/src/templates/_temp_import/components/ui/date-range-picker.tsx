@@ -33,7 +33,7 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
       maxDate,
       numberOfMonths = 2,
     },
-    ref
+    ref,
   ) => {
     const [isOpen, setIsOpen] = React.useState(false);
 
@@ -55,15 +55,14 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
               disabled={disabled}
               className={cn(
                 "w-full justify-start text-left font-normal",
-                !dateRange && "text-foundation-text-dark-tertiary"
+                !dateRange && "text-foundation-text-dark-tertiary",
               )}
             >
               <CalendarIcon className="mr-2 size-4" />
               {dateRange?.from ? (
                 dateRange.to ? (
                   <>
-                    {format(dateRange.from, formatStr)} -{" "}
-                    {format(dateRange.to, formatStr)}
+                    {format(dateRange.from, formatStr)} - {format(dateRange.to, formatStr)}
                   </>
                 ) : (
                   format(dateRange.from, formatStr)
@@ -91,7 +90,7 @@ const DateRangePicker = React.forwardRef<HTMLButtonElement, DateRangePickerProps
         </Popover>
       </div>
     );
-  }
+  },
 );
 DateRangePicker.displayName = "DateRangePicker";
 

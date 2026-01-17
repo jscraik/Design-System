@@ -105,7 +105,8 @@ export function IconButton({
     ghost: "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
     outline:
       "border border-foundation-bg-dark-3 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2",
-    solid: "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
+    solid:
+      "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
   };
 
   const iconElement = isValidElement(icon)

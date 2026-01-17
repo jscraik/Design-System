@@ -20,7 +20,8 @@ export function TemplateHeaderBarDemo() {
             Header Bar Component
           </h1>
           <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-            A flexible header component with multiple variants, sizes, and compound components for common patterns.
+            A flexible header component with multiple variants, sizes, and compound components for
+            common patterns.
           </p>
         </div>
 

@@ -35,7 +35,8 @@ function DemoContent() {
               </h3>
             </div>
             <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-              Status: <span className="font-medium">{sidebarCollapsed ? "Collapsed" : "Expanded"}</span>
+              Status:{" "}
+              <span className="font-medium">{sidebarCollapsed ? "Collapsed" : "Expanded"}</span>
             </p>
           </div>
 
@@ -47,7 +48,8 @@ function DemoContent() {
               </h3>
             </div>
             <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-              Status: <span className="font-medium">{detailCollapsed ? "Collapsed" : "Expanded"}</span>
+              Status:{" "}
+              <span className="font-medium">{detailCollapsed ? "Collapsed" : "Expanded"}</span>
             </p>
           </div>
         </div>
@@ -60,27 +62,40 @@ function DemoContent() {
           <ul className="space-y-2 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
             <li className="flex items-start gap-2">
               <span className="text-foundation-accent-green mt-1">✓</span>
-              <span><strong>Collapsible panels</strong> - Toggle sidebar and detail panel visibility</span>
+              <span>
+                <strong>Collapsible panels</strong> - Toggle sidebar and detail panel visibility
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-foundation-accent-green mt-1">✓</span>
-              <span><strong>Smooth animations</strong> - Animated transitions with configurable timing</span>
+              <span>
+                <strong>Smooth animations</strong> - Animated transitions with configurable timing
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-foundation-accent-green mt-1">✓</span>
-              <span><strong>ScrollArea integration</strong> - Body content scrolls independently</span>
+              <span>
+                <strong>ScrollArea integration</strong> - Body content scrolls independently
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-foundation-accent-green mt-1">✓</span>
-              <span><strong>Context API</strong> - Access shell state from any child component</span>
+              <span>
+                <strong>Context API</strong> - Access shell state from any child component
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-foundation-accent-green mt-1">✓</span>
-              <span><strong>Configurable widths</strong> - Set custom widths for sidebar and detail panel</span>
+              <span>
+                <strong>Configurable widths</strong> - Set custom widths for sidebar and detail
+                panel
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-foundation-accent-green mt-1">✓</span>
-              <span><strong>ARIA support</strong> - Built-in accessibility attributes</span>
+              <span>
+                <strong>ARIA support</strong> - Built-in accessibility attributes
+              </span>
             </li>
           </ul>
         </div>
@@ -95,7 +110,8 @@ function DemoContent() {
               Content Block {i + 1}
             </h3>
             <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-              This demonstrates scrollable content in the body section. The sidebar and detail panel remain fixed while this content scrolls.
+              This demonstrates scrollable content in the body section. The sidebar and detail panel
+              remain fixed while this content scrolls.
             </p>
           </div>
         ))}

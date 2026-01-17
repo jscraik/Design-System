@@ -157,13 +157,27 @@ function EnhancedExampleCore() {
       <Card className="p-4">
         <h2 className="text-lg font-semibold text-white mb-3">Interactive Elements</h2>
         <div className="flex flex-wrap items-center gap-3 mb-4">
-          <AppsSDKButton onClick={() => setLocalCount((c) => c + 1)} variant="solid" color="primary">
+          <AppsSDKButton
+            onClick={() => setLocalCount((c) => c + 1)}
+            variant="solid"
+            color="primary"
+          >
             Local Count: {localCount}
           </AppsSDKButton>
-          <AppsSDKButton onClick={handleCallTool} variant="ghost" color="secondary" disabled={!callTool}>
+          <AppsSDKButton
+            onClick={handleCallTool}
+            variant="ghost"
+            color="secondary"
+            disabled={!callTool}
+          >
             Call Tool
           </AppsSDKButton>
-          <AppsSDKButton onClick={handleToggleFullscreen} variant="outline" color="secondary" disabled={!requestMode}>
+          <AppsSDKButton
+            onClick={handleToggleFullscreen}
+            variant="outline"
+            color="secondary"
+            disabled={!requestMode}
+          >
             Toggle Fullscreen
           </AppsSDKButton>
         </div>

@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -56,7 +57,6 @@ Last updated: 2026-01-04
   - [Network Capture Tools](#network-capture-tools)
 - [References](#references)
 - [Support](#support)
-
 
 ## Overview
 
@@ -293,6 +293,7 @@ CertificatePinningValidator.debugPrintCertificate(certificateData: certificateDa
 ```
 
 Output:
+
 ```
 Certificate Subject: CN=localhost
 SPKI SHA-256: YOurBase64EncodedHashHere==
@@ -308,6 +309,7 @@ Certificate pinning failed: Certificate hash mismatch
 ```
 
 **Solution**: Verify you're pinning the correct hash:
+
 ```bash
 # Extract the actual hash from the server's certificate
 openssl s_client -connect api.example.com:443 -showcerts \
@@ -321,6 +323,7 @@ openssl s_client -connect api.example.com:443 -showcerts \
 #### 2. Localhost Connections Failing
 
 **Solution**: Localhost connections should automatically skip pinning. If they don't, verify the host is recognized:
+
 ```swift
 // The validator automatically skips pinning for:
 // - localhost
@@ -332,6 +335,7 @@ openssl s_client -connect api.example.com:443 -showcerts \
 #### 3. Certificate Rotation Issues
 
 **Solution**: Always pin both old and new certificates during rotation:
+
 ```swift
 let pinnedHashes = [
     "oldCertificateHash==",  // Still valid
@@ -443,11 +447,13 @@ func testMCPClientWithPinning() async throws {
 ### From Default URLSession
 
 **Before:**
+
 ```swift
 let client = MCPClient(baseURL: url)
 ```
 
 **After:**
+
 ```swift
 let client = MCPClient(
     baseURL: url,
@@ -489,15 +495,17 @@ let client = MCPClient(baseURL: url, pinnedHashes: hashes)
 ## Support
 
 For issues or questions:
+
 1. Check the troubleshooting section
 2. Review the unit tests in `CertificatePinningValidatorTests.swift`
 3. Enable debug logging to see detailed validation output
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
-- TBD: Add concrete verification steps and expected results.
 
+- TBD: Add concrete verification steps and expected results.

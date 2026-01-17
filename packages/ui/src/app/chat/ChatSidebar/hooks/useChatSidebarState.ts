@@ -55,17 +55,20 @@ export function useChatSidebarState(initialProjects: SidebarItem[]) {
     setShowNewProjectModal(false);
   }, []);
 
-  const handleIconChange = useCallback((iconId: string, color: string, getProjectIcon: (id: string) => ReactNode) => {
-    if (selectedProjectForIcon) {
-      const newIcon = getProjectIcon(iconId);
-      const updatedProjects = projectsData.map((project) =>
-        project.id === selectedProjectForIcon.id ? { ...project, icon: newIcon, color } : project,
-      );
-      setProjectsData(updatedProjects);
-    }
-    setShowIconPicker(false);
-    setSelectedProjectForIcon(null);
-  }, [selectedProjectForIcon, projectsData]);
+  const handleIconChange = useCallback(
+    (iconId: string, color: string, getProjectIcon: (id: string) => ReactNode) => {
+      if (selectedProjectForIcon) {
+        const newIcon = getProjectIcon(iconId);
+        const updatedProjects = projectsData.map((project) =>
+          project.id === selectedProjectForIcon.id ? { ...project, icon: newIcon, color } : project,
+        );
+        setProjectsData(updatedProjects);
+      }
+      setShowIconPicker(false);
+      setSelectedProjectForIcon(null);
+    },
+    [selectedProjectForIcon, projectsData],
+  );
 
   const handleNewProjectIconChange = useCallback((iconId: string, color: string) => {
     setNewProjectIcon(iconId);
@@ -73,12 +76,15 @@ export function useChatSidebarState(initialProjects: SidebarItem[]) {
     setShowIconPicker(false);
   }, []);
 
-  const handleProjectSelect = useCallback((project: SidebarItem, onProjectSelect?: (project: SidebarItem) => void) => {
-    setSelectedAction(project.id);
-    if (onProjectSelect) {
-      onProjectSelect(project);
-    }
-  }, []);
+  const handleProjectSelect = useCallback(
+    (project: SidebarItem, onProjectSelect?: (project: SidebarItem) => void) => {
+      setSelectedAction(project.id);
+      if (onProjectSelect) {
+        onProjectSelect(project);
+      }
+    },
+    [],
+  );
 
   return {
     // State

@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -61,7 +62,6 @@ Last updated: 2026-01-04
 - [Next Steps](#next-steps)
 - [Support](#support)
 
-
 ## Overview
 
 Successfully implemented comprehensive TLS certificate pinning for the AStudioMCP Swift client, providing production-ready security for MCP server connections.
@@ -69,6 +69,7 @@ Successfully implemented comprehensive TLS certificate pinning for the AStudioMC
 ## Files Created
 
 ### 1. Core Implementation
+
 - **`/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP/Sources/AStudioMCP/CertificatePinningValidator.swift`**
   - 420+ lines of production-ready certificate pinning logic
   - Supports SPKI and certificate hash validation
@@ -77,6 +78,7 @@ Successfully implemented comprehensive TLS certificate pinning for the AStudioMC
   - CryptoKit-based implementation
 
 ### 2. Unit Tests
+
 - **`/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP/Tests/AStudioMCPTests/CertificatePinningValidatorTests.swift`**
   - Comprehensive test coverage
   - Tests for hash extraction, validation modes, rotation
@@ -84,6 +86,7 @@ Successfully implemented comprehensive TLS certificate pinning for the AStudioMC
   - Error handling validation
 
 ### 3. Documentation
+
 - **`/Users/jamiecraik/dev/aStudio/docs/guides/TLS_CERTIFICATE_PINNING.md`**
   - Complete implementation guide
   - Certificate extraction instructions
@@ -96,6 +99,7 @@ Successfully implemented comprehensive TLS certificate pinning for the AStudioMC
   - Quick reference for developers
 
 ### 4. Developer Tools
+
 - **`/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP/scripts/generate-test-certificate.sh`**
   - Bash script to generate test certificates
   - Automatic SPKI hash extraction
@@ -104,22 +108,26 @@ Successfully implemented comprehensive TLS certificate pinning for the AStudioMC
 ## Files Modified
 
 ### 1. MCP Error Types
+
 - **`/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP/Sources/AStudioMCP/MCPError.swift`**
   - Added `certificatePinningFailed(String)` error
   - Added `certificateValidationFailed(String)` error
 
 ### 2. MCP Client Integration
+
 - **`/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP/Sources/AStudioMCP/MCPClient.swift`**
   - Added convenience initializer with certificate pinning support
   - Integrates seamlessly with existing API
 
 ### 3. Validation Extension (Bug Fix)
+
 - **`/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP/Sources/AStudioMCP/MCPClientValidation.swift`**
   - Fixed access control for validation methods (changed from private to internal)
 
 ## Key Features
 
 ### 1. SPKI Pinning (Recommended)
+
 ```swift
 let client = MCPClient(
     baseURL: URL(string: "https://api.example.com")!,
@@ -130,12 +138,14 @@ let client = MCPClient(
 ```
 
 **Benefits:**
+
 - Supports certificate rotation without app updates
 - Pins to public key, not certificate metadata
 - Follows RFC 7469 guidelines
 - Industry best practice
 
 ### 2. Certificate Pinning (Alternative)
+
 ```swift
 let client = MCPClient(
     baseURL: URL(string: "https://api.example.com")!,
@@ -146,16 +156,19 @@ let client = MCPClient(
 ```
 
 ### 3. Development Mode
+
 ```swift
 // Automatic localhost detection - no pinning needed
 let client = MCPClient(baseURL: URL(string: "http://localhost:8787")!)
 ```
 
 **Recognized as development:**
+
 - localhost, 127.0.0.1, ::1
 - Common development ports: 3000, 5000, 8000, 8080, 8787, 9000
 
 ### 4. Certificate Rotation Support
+
 ```swift
 // Pin multiple certificates for seamless rotation
 let pinnedHashes = [
@@ -168,6 +181,7 @@ let pinnedHashes = [
 ## Security Considerations
 
 ### DO's ✅
+
 1. Use SPKI pinning for production
 2. Pin multiple certificates for rotation
 3. Store hashes securely (not hardcoded in production)
@@ -175,6 +189,7 @@ let pinnedHashes = [
 5. Monitor certificate expiry
 
 ### DON'Ts ❌
+
 1. Don't use sample hashes in production
 2. Don't pin only one certificate
 3. Don't ignore pinning errors
@@ -184,6 +199,7 @@ let pinnedHashes = [
 ## Certificate Hash Extraction
 
 ### Command Line (One-liner)
+
 ```bash
 openssl s_client -connect api.example.com:443 -showcerts 2>/dev/null \
   | openssl x509 -pubkey -noout \
@@ -193,6 +209,7 @@ openssl s_client -connect api.example.com:443 -showcerts 2>/dev/null \
 ```
 
 ### From PEM File
+
 ```bash
 openssl x509 -in certificate.pem -pubkey -noout \
   | openssl pkey -pubin -outform der \
@@ -201,6 +218,7 @@ openssl x509 -in certificate.pem -pubkey -noout \
 ```
 
 ### Using Swift API
+
 ```swift
 let certificateURL = URL(fileURLWithPath: "/path/to/certificate.pem")
 let spkiHash = try CertificatePinningValidator.extractSPKIHash(from: certificateURL)
@@ -209,18 +227,21 @@ let spkiHash = try CertificatePinningValidator.extractSPKIHash(from: certificate
 ## Testing
 
 ### Generate Test Certificates
+
 ```bash
 cd /Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP
 ./scripts/generate-test-certificate.sh
 ```
 
 **Output:**
+
 - RSA and ECDSA test certificates
 - SPKI hashes for each
 - Swift configuration file for unit tests
 - README with usage instructions
 
 ### Run Unit Tests
+
 ```bash
 cd /Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioMCP
 swift test --filter CertificatePinningValidatorTests
@@ -229,6 +250,7 @@ swift test --filter CertificatePinningValidatorTests
 ## Build Verification
 
 ✅ **Build Status:** Successful
+
 ```bash
 swift build
 # Build complete! (0.76s)
@@ -241,19 +263,23 @@ swift build
 ## API Surface
 
 ### Types
+
 - `PinningMode`: `.strict` | `.relaxed`
 - `PinningHashType`: `.spkiSHA256` | `.certificateSHA256`
 
 ### Main Class
+
 - `CertificatePinningValidator`: Core pinning validator
 
 ### Convenience Methods
+
 - `CertificatePinningValidator.production(hashes:)` - Production validator
 - `CertificatePinningValidator.development(hashes:)` - Development validator
 - `extractSPKIHash(from:)` - Extract SPKI hash from certificate
 - `extractCertificateHash(from:)` - Extract full certificate hash
 
 ### Debug Support
+
 ```swift
 #if DEBUG
 CertificatePinningValidator.debugPrintCertificate(certificateData: data)
@@ -277,6 +303,7 @@ CertificatePinningValidator.debugPrintCertificate(certificateData: data)
 ## Migration Guide
 
 ### From Default URLSession
+
 ```swift
 // Before
 let client = MCPClient(baseURL: url)
@@ -290,6 +317,7 @@ let client = MCPClient(
 ```
 
 ### Gradual Rollout Strategy
+
 1. **Phase 1:** Deploy with relaxed mode and monitor logs
 2. **Phase 2:** Update app with strict mode for new installs
 3. **Phase 3:** Force update for remaining users
@@ -297,6 +325,7 @@ let client = MCPClient(
 ## Error Handling
 
 ### Certificate Mismatch
+
 ```swift
 do {
     let tools = try await client.listTools()
@@ -307,6 +336,7 @@ do {
 ```
 
 ### Debug Mode Logging
+
 ```swift
 #if DEBUG
 // Enable detailed logging to diagnose pinning issues
@@ -316,6 +346,7 @@ do {
 ## Sample Configuration
 
 ### Production
+
 ```swift
 let pinnedHashes = [
     "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",  // Primary
@@ -331,6 +362,7 @@ let client = MCPClient(
 ```
 
 ### Staging
+
 ```swift
 let client = MCPClient(
     baseURL: stagingURL,
@@ -341,6 +373,7 @@ let client = MCPClient(
 ```
 
 ### Development
+
 ```swift
 // Automatic pinning bypass for localhost
 let client = MCPClient(baseURL: URL(string: "http://localhost:8787")!)
@@ -349,6 +382,7 @@ let client = MCPClient(baseURL: URL(string: "http://localhost:8787")!)
 ## Review Findings
 
 ### ✅ Strengths
+
 1. Comprehensive implementation with both SPKI and certificate pinning
 2. Production-ready error handling and validation
 3. Automatic localhost detection for development
@@ -359,6 +393,7 @@ let client = MCPClient(baseURL: URL(string: "http://localhost:8787")!)
 8. Follows security best practices
 
 ### 📋 Recommendations
+
 1. **Security:** Always use SPKI pinning in production
 2. **Testing:** Test certificate rotation procedure before deployment
 3. **Monitoring:** Add logging for pinning failures in production
@@ -376,6 +411,7 @@ let client = MCPClient(baseURL: URL(string: "http://localhost:8787")!)
 ## Support
 
 For issues or questions:
+
 1. Check troubleshooting section in documentation
 2. Review unit tests in `CertificatePinningValidatorTests.swift`
 3. Enable debug logging for detailed output

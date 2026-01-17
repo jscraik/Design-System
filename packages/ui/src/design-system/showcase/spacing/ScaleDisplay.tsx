@@ -11,13 +11,7 @@ interface ScaleBarProps {
 }
 
 /** Scale bar component displaying spacing token as horizontal bar. */
-export function ScaleBar({
-  token,
-  value,
-  maxValue,
-  onCopy,
-  copiedValue,
-}: ScaleBarProps) {
+export function ScaleBar({ token, value, maxValue, onCopy, copiedValue }: ScaleBarProps) {
   const pxValue = `${value}px`;
   const percentage = maxValue > 0 ? (value / maxValue) * 100 : 0;
   const isCopied = copiedValue === pxValue;

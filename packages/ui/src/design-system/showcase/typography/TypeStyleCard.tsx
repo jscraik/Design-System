@@ -22,12 +22,7 @@ interface TypeStyleCardProps {
 }
 
 /** TypeStyleCard displays a typography style with preview, specs, and code views. */
-export function TypeStyleCard({
-  style,
-  onCopy,
-  copiedValue,
-  viewMode,
-}: TypeStyleCardProps) {
+export function TypeStyleCard({ style, onCopy, copiedValue, viewMode }: TypeStyleCardProps) {
   const cssCode = `.${style.name} {\n  font-size: ${style.size};\n  font-weight: ${style.weight};\n  line-height: ${style.lineHeight};\n  letter-spacing: ${style.letterSpacing};\n}`;
   const tailwindCode = `className="${style.className}"`;
 

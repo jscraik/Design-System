@@ -82,7 +82,8 @@ const meta: Meta<typeof DashboardTemplate> = {
     layout: "fullscreen",
     docs: {
       description: {
-        component: "Full application layout with header, sidebar, main content area, and optional details panel. Use this template as the starting point for complete ChatGPT-style applications.",
+        component:
+          "Full application layout with header, sidebar, main content area, and optional details panel. Use this template as the starting point for complete ChatGPT-style applications.",
       },
     },
   },

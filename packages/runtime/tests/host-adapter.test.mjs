@@ -1,11 +1,7 @@
 import { afterEach, describe, it } from "node:test";
 import assert from "node:assert/strict";
 
-import {
-  createHostAdapter,
-  createMockHost,
-  createStandaloneHost,
-} from "../dist/index.js";
+import { createHostAdapter, createMockHost, createStandaloneHost } from "../dist/index.js";
 
 const originalWindow = globalThis.window;
 

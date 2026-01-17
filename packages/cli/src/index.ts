@@ -106,8 +106,6 @@ const MCP_CONFIG_OPTIONS = [
 const MCP_METHOD_TOOLS_LIST = "tools/list";
 const MCP_CHECK_METHOD = MCP_METHOD_TOOLS_LIST;
 
-
-
 const TOOL_VERSION = getToolVersion();
 const EXIT_CODES = {
   success: 0,
@@ -139,7 +137,12 @@ class CliError extends Error {
 
   constructor(
     message: string,
-    options: { code: ErrorCode; exitCode: number; hint?: string; details?: Record<string, JsonValue> },
+    options: {
+      code: ErrorCode;
+      exitCode: number;
+      hint?: string;
+      details?: Record<string, JsonValue>;
+    },
   ) {
     super(message);
     this.code = options.code;
@@ -289,7 +292,12 @@ function emitPublishResult(
   }
 }
 
-function createEnvelope(summary: string, status: JsonEnvelope["status"], data: Record<string, JsonValue>, errors: JsonError[] = []): JsonEnvelope {
+function createEnvelope(
+  summary: string,
+  status: JsonEnvelope["status"],
+  data: Record<string, JsonValue>,
+  errors: JsonError[] = [],
+): JsonEnvelope {
   return {
     schema: COMMAND_SCHEMA,
     meta: { tool: TOOL_NAME, version: TOOL_VERSION, timestamp: nowIso() },
@@ -322,7 +330,10 @@ function normalizeFailure(msg?: string, err?: Error): CliError {
   if (err) {
     return new CliError(err.message, { code: ERROR_CODES.internal, exitCode: EXIT_CODES.failure });
   }
-  return new CliError("Unknown error", { code: ERROR_CODES.internal, exitCode: EXIT_CODES.failure });
+  return new CliError("Unknown error", {
+    code: ERROR_CODES.internal,
+    exitCode: EXIT_CODES.failure,
+  });
 }
 
 function requireExec(opts: CliArgs, action: string): void {
@@ -351,7 +362,9 @@ function resolvePnpmCommand(): string {
   return process.env.ASTUDIO_PNPM?.trim() || "pnpm";
 }
 
-function mergeMcpConfigs(...configs: Array<ChatUIConfig["mcp"] | null | undefined>): ChatUIConfig["mcp"] | undefined {
+function mergeMcpConfigs(
+  ...configs: Array<ChatUIConfig["mcp"] | null | undefined>
+): ChatUIConfig["mcp"] | undefined {
   const merged: ChatUIConfig["mcp"] = {};
   for (const config of configs) {
     if (!config) continue;
@@ -440,9 +453,12 @@ async function resolveConfig(opts: GlobalOptions): Promise<ChatUIConfig> {
 
 async function resolveMcpConfigWithOverrides(argv: Record<string, unknown>): Promise<ChatUIConfig> {
   const config = await resolveConfig(argv as GlobalOptions);
-  const serverUrl = (argv as { serverUrl?: string }).serverUrl ?? (argv as Record<string, string | undefined>)[MCP_SERVER_URL_KEY];
+  const serverUrl =
+    (argv as { serverUrl?: string }).serverUrl ??
+    (argv as Record<string, string | undefined>)[MCP_SERVER_URL_KEY];
   const endpoint = (argv as { endpoint?: string }).endpoint;
-  const protocolVersion = (argv as { protocolVersion?: string }).protocolVersion ??
+  const protocolVersion =
+    (argv as { protocolVersion?: string }).protocolVersion ??
     (argv as Record<string, string | undefined>)[MCP_PROTOCOL_VERSION_KEY];
   const mcpOverrides = {
     serverUrl,
@@ -577,7 +593,10 @@ async function runPnpm(
   });
 }
 
-async function runCommandCapture(command: string, args: string[]): Promise<{ code: number; stdout: string; stderr: string }> {
+async function runCommandCapture(
+  command: string,
+  args: string[],
+): Promise<{ code: number; stdout: string; stderr: string }> {
   return new Promise((resolve) => {
     const child = spawn(command, args, { stdio: ["ignore", "pipe", "pipe"] });
     let stdout = "";
@@ -586,7 +605,11 @@ async function runCommandCapture(command: string, args: string[]): Promise<{ cod
     child.stderr?.on("data", (chunk) => (stderr += chunk.toString()));
     child.on("close", (code) => resolve({ code: code ?? 1, stdout, stderr }));
     child.on("error", (err) => {
-      resolve({ code: 1, stdout: "", stderr: err instanceof Error ? err.message : "Failed to start command" });
+      resolve({
+        code: 1,
+        stdout: "",
+        stderr: err instanceof Error ? err.message : "Failed to start command",
+      });
     });
   });
 }
@@ -690,7 +713,9 @@ function emitResult(opts: GlobalOptions, result: RunResult, summary: string): vo
   const status = result.exitCode === 0 ? "success" : "error";
 
   if (opts.json) {
-    outputJson(createEnvelope(summary, status, buildRunResultData(result), buildRunResultError(result)));
+    outputJson(
+      createEnvelope(summary, status, buildRunResultData(result), buildRunResultError(result)),
+    );
     return;
   }
 
@@ -707,8 +732,8 @@ function emitResult(opts: GlobalOptions, result: RunResult, summary: string): vo
       exit_code: data.exit_code,
       duration_ms: data.duration_ms,
       dry_run: data.dry_run,
-      stdout: includeOutput ? data.stdout ?? null : undefined,
-      stderr: includeOutput ? data.stderr ?? null : undefined,
+      stdout: includeOutput ? (data.stdout ?? null) : undefined,
+      stderr: includeOutput ? (data.stderr ?? null) : undefined,
       error_code: result.exitCode === 0 ? undefined : ERROR_CODES.exec,
       error_message: result.exitCode === 0 ? undefined : "Command failed",
     });
@@ -738,7 +763,12 @@ function emitMcpResult(
   opts: CliArgs,
   summary: string,
   baseData: Record<string, JsonValue>,
-  outcome: { status: "success" | "error"; durationMs: number; result?: JsonValue; error?: CliError },
+  outcome: {
+    status: "success" | "error";
+    durationMs: number;
+    result?: JsonValue;
+    error?: CliError;
+  },
 ): void {
   const status = outcome.status;
   const payload: Record<string, JsonValue> = {
@@ -750,7 +780,9 @@ function emitMcpResult(
   }
 
   if (opts.json) {
-    outputJson(createEnvelope(summary, status, payload, outcome.error ? [toJsonError(outcome.error)] : []));
+    outputJson(
+      createEnvelope(summary, status, payload, outcome.error ? [toJsonError(outcome.error)] : []),
+    );
     return;
   }
 
@@ -817,7 +849,11 @@ async function handleMcpRpc(
   if (opts.dryRun) {
     const durationMs = Date.now() - started;
     if (opts.json || opts.plain) {
-      emitMcpResult(opts, summary, baseData, { status: "success", durationMs, result: { [MCP_DRY_RUN_LABEL]: true, [MCP_URL_LABEL]: url } });
+      emitMcpResult(opts, summary, baseData, {
+        status: "success",
+        durationMs,
+        result: { [MCP_DRY_RUN_LABEL]: true, [MCP_URL_LABEL]: url },
+      });
     } else {
       process.stdout.write(`dry_run=1 method=${method} url=${url}` + "\n");
     }
@@ -834,12 +870,13 @@ async function handleMcpRpc(
     }
     return EXIT_CODES.success;
   } catch (err) {
-    const error = err instanceof CliError
-      ? err
-      : new CliError(err instanceof Error ? err.message : "Request failed", {
-          code: ERROR_CODES.internal,
-          exitCode: EXIT_CODES.failure,
-        });
+    const error =
+      err instanceof CliError
+        ? err
+        : new CliError(err instanceof Error ? err.message : "Request failed", {
+            code: ERROR_CODES.internal,
+            exitCode: EXIT_CODES.failure,
+          });
     const durationMs = Date.now() - started;
     emitMcpResult(opts, summary, baseData, { status: "error", durationMs, error });
     if (opts.verbose && !opts.json && !opts.plain) {
@@ -849,7 +886,9 @@ async function handleMcpRpc(
   }
 }
 
-async function checkPnpm(execAllowed: boolean): Promise<{ name: string; status: "ok" | "warn" | "error"; details: string }> {
+async function checkPnpm(
+  execAllowed: boolean,
+): Promise<{ name: string; status: "ok" | "warn" | "error"; details: string }> {
   if (!execAllowed) {
     return { name: "pnpm", status: "warn", details: "skipped (exec disabled)" };
   }
@@ -861,7 +900,9 @@ async function checkPnpm(execAllowed: boolean): Promise<{ name: string; status: 
   };
 }
 
-async function checkXcode(execAllowed: boolean): Promise<{ name: string; status: "ok" | "warn" | "error"; details: string } | null> {
+async function checkXcode(
+  execAllowed: boolean,
+): Promise<{ name: string; status: "ok" | "warn" | "error"; details: string } | null> {
   if (process.platform !== "darwin") return null;
   if (!execAllowed) {
     return { name: "xcode", status: "warn", details: "skipped (exec disabled)" };
@@ -877,7 +918,9 @@ async function checkXcode(execAllowed: boolean): Promise<{ name: string; status:
   }
 }
 
-async function checkMcp(opts: CliArgs): Promise<{ name: string; status: "ok" | "warn" | "error"; details: string } | null> {
+async function checkMcp(
+  opts: CliArgs,
+): Promise<{ name: string; status: "ok" | "warn" | "error"; details: string } | null> {
   if (!opts.network) return null;
   if (opts.dryRun) {
     return { name: "mcp", status: "warn", details: "skipped (dry-run)" };
@@ -938,7 +981,9 @@ async function doctor(opts: CliArgs): Promise<number> {
       }),
     );
   } else if (opts.plain) {
-    const lines = checks.map((check) => `check=${check.name} status=${check.status} ${check.details}`);
+    const lines = checks.map(
+      (check) => `check=${check.name} status=${check.status} ${check.details}`,
+    );
     outputPlain(lines);
   } else {
     for (const check of checks) {
@@ -1124,7 +1169,12 @@ const cli = yargs(hideBin(process.argv))
           "Launch MCP inspector",
           (cmd) => cmd,
           async (argv) => {
-            const code = await handleRun(argv as CliArgs, ["mcp:inspector"], "mcp inspector", "inspector");
+            const code = await handleRun(
+              argv as CliArgs,
+              ["mcp:inspector"],
+              "mcp inspector",
+              "inspector",
+            );
             process.exitCode = code;
           },
         )
@@ -1135,11 +1185,24 @@ const cli = yargs(hideBin(process.argv))
             cmd
               .positional("method", { type: "string", demandOption: true })
               .option("params", { type: "string", description: "JSON params or @file or -" })
-              .options(Object.fromEntries(MCP_CONFIG_OPTIONS.map(([key, description]) => [key, { type: "string", description }]))),
+              .options(
+                Object.fromEntries(
+                  MCP_CONFIG_OPTIONS.map(([key, description]) => [
+                    key,
+                    { type: "string", description },
+                  ]),
+                ),
+              ),
           async (argv) => {
             const config = await resolveMcpConfigWithOverrides(argv);
             const params = await readParamsInput(argv.params as string | undefined);
-            const code = await handleMcpRpc(argv as CliArgs, config, argv.method as string, params, argv.method as string);
+            const code = await handleMcpRpc(
+              argv as CliArgs,
+              config,
+              argv.method as string,
+              params,
+              argv.method as string,
+            );
             process.exitCode = code;
           },
         )
@@ -1148,14 +1211,31 @@ const cli = yargs(hideBin(process.argv))
           "List or call MCP tools",
           (cmd) =>
             cmd
-              .positional("action", { type: "string", choices: ["list", "call"], demandOption: true })
+              .positional("action", {
+                type: "string",
+                choices: ["list", "call"],
+                demandOption: true,
+              })
               .option("name", { type: "string", description: "Tool name" })
               .option("args", { type: "string", description: "JSON args or @file or -" })
-              .options(Object.fromEntries(MCP_CONFIG_OPTIONS.map(([key, description]) => [key, { type: "string", description }]))),
+              .options(
+                Object.fromEntries(
+                  MCP_CONFIG_OPTIONS.map(([key, description]) => [
+                    key,
+                    { type: "string", description },
+                  ]),
+                ),
+              ),
           async (argv) => {
             const config = await resolveMcpConfigWithOverrides(argv);
             if (argv.action === "list") {
-              const code = await handleMcpRpc(argv as CliArgs, config, MCP_METHOD_TOOLS_LIST, undefined, MCP_METHOD_TOOLS_LIST);
+              const code = await handleMcpRpc(
+                argv as CliArgs,
+                config,
+                MCP_METHOD_TOOLS_LIST,
+                undefined,
+                MCP_METHOD_TOOLS_LIST,
+              );
               process.exitCode = code;
               return;
             }
@@ -1167,7 +1247,13 @@ const cli = yargs(hideBin(process.argv))
               });
             }
             const args = await readParamsInput(argv.args as string | undefined);
-            const code = await handleMcpRpc(argv as CliArgs, config, "tools/call", { name, arguments: args ?? {} }, "tools/call");
+            const code = await handleMcpRpc(
+              argv as CliArgs,
+              config,
+              "tools/call",
+              { name, arguments: args ?? {} },
+              "tools/call",
+            );
             process.exitCode = code;
           },
         )
@@ -1176,13 +1262,30 @@ const cli = yargs(hideBin(process.argv))
           "List or read MCP resources",
           (cmd) =>
             cmd
-              .positional("action", { type: "string", choices: ["list", "read"], demandOption: true })
+              .positional("action", {
+                type: "string",
+                choices: ["list", "read"],
+                demandOption: true,
+              })
               .option("uri", { type: "string", description: "Resource URI" })
-              .options(Object.fromEntries(MCP_CONFIG_OPTIONS.map(([key, description]) => [key, { type: "string", description }]))),
+              .options(
+                Object.fromEntries(
+                  MCP_CONFIG_OPTIONS.map(([key, description]) => [
+                    key,
+                    { type: "string", description },
+                  ]),
+                ),
+              ),
           async (argv) => {
             const config = await resolveMcpConfigWithOverrides(argv);
             if (argv.action === "list") {
-              const code = await handleMcpRpc(argv as CliArgs, config, "resources/list", undefined, "resources/list");
+              const code = await handleMcpRpc(
+                argv as CliArgs,
+                config,
+                "resources/list",
+                undefined,
+                "resources/list",
+              );
               process.exitCode = code;
               return;
             }
@@ -1193,7 +1296,13 @@ const cli = yargs(hideBin(process.argv))
                 exitCode: EXIT_CODES.usage,
               });
             }
-            const code = await handleMcpRpc(argv as CliArgs, config, "resources/read", { uri }, "resources/read");
+            const code = await handleMcpRpc(
+              argv as CliArgs,
+              config,
+              "resources/read",
+              { uri },
+              "resources/read",
+            );
             process.exitCode = code;
           },
         )
@@ -1202,13 +1311,30 @@ const cli = yargs(hideBin(process.argv))
           "List or get MCP prompts",
           (cmd) =>
             cmd
-              .positional("action", { type: "string", choices: ["list", "get"], demandOption: true })
+              .positional("action", {
+                type: "string",
+                choices: ["list", "get"],
+                demandOption: true,
+              })
               .option("name", { type: "string", description: "Prompt name" })
-              .options(Object.fromEntries(MCP_CONFIG_OPTIONS.map(([key, description]) => [key, { type: "string", description }]))),
+              .options(
+                Object.fromEntries(
+                  MCP_CONFIG_OPTIONS.map(([key, description]) => [
+                    key,
+                    { type: "string", description },
+                  ]),
+                ),
+              ),
           async (argv) => {
             const config = await resolveMcpConfigWithOverrides(argv);
             if (argv.action === "list") {
-              const code = await handleMcpRpc(argv as CliArgs, config, "prompts/list", undefined, "prompts/list");
+              const code = await handleMcpRpc(
+                argv as CliArgs,
+                config,
+                "prompts/list",
+                undefined,
+                "prompts/list",
+              );
               process.exitCode = code;
               return;
             }
@@ -1219,7 +1345,13 @@ const cli = yargs(hideBin(process.argv))
                 exitCode: EXIT_CODES.usage,
               });
             }
-            const code = await handleMcpRpc(argv as CliArgs, config, "prompts/get", { name }, "prompts/get");
+            const code = await handleMcpRpc(
+              argv as CliArgs,
+              config,
+              "prompts/get",
+              { name },
+              "prompts/get",
+            );
             process.exitCode = code;
           },
         )
@@ -1244,11 +1376,21 @@ const cli = yargs(hideBin(process.argv))
             hint: TOKEN_WRITE_HINT,
           });
         }
-        const code = await handleRun(argv as CliArgs, ["generate:tokens"], "tokens generate", "generate");
+        const code = await handleRun(
+          argv as CliArgs,
+          ["generate:tokens"],
+          "tokens generate",
+          "generate",
+        );
         process.exitCode = code;
         return;
       }
-      const code = await handleRun(argv as CliArgs, ["validate:tokens"], "tokens validate", "validate");
+      const code = await handleRun(
+        argv as CliArgs,
+        ["validate:tokens"],
+        "tokens validate",
+        "validate",
+      );
       process.exitCode = code;
     },
   )
@@ -1268,7 +1410,12 @@ const cli = yargs(hideBin(process.argv))
         });
       }
       const script = argv.command === "sync" ? "sync:versions" : "sync:swift-versions";
-      const code = await handleRun(argv as CliArgs, [script], `versions ${argv.command}`, argv.command as string);
+      const code = await handleRun(
+        argv as CliArgs,
+        [script],
+        `versions ${argv.command}`,
+        argv.command as string,
+      );
       process.exitCode = code;
     },
   )
@@ -1306,9 +1453,18 @@ const cli = yargs(hideBin(process.argv))
                 choices: ["codex", "claude", "opencode", "copilot"],
                 demandOption: true,
               })
-              .option("version", { type: "string", describe: "Version to install (defaults to latest)" })
-              .option("checksum", { type: "string", describe: "Expected SHA-256 checksum of the zip (required in strict mode)" })
-              .option("destination", { type: "string", describe: "Override install root (defaults to platform root)" })
+              .option("version", {
+                type: "string",
+                describe: "Version to install (defaults to latest)",
+              })
+              .option("checksum", {
+                type: "string",
+                describe: "Expected SHA-256 checksum of the zip (required in strict mode)",
+              })
+              .option("destination", {
+                type: "string",
+                describe: "Override install root (defaults to platform root)",
+              })
               .option("allow-unsafe", {
                 type: "boolean",
                 default: false,
@@ -1319,10 +1475,13 @@ const cli = yargs(hideBin(process.argv))
             const strict = !argv["allow-unsafe"];
             const checksum = argv.checksum as string | undefined;
             if (strict && !checksum) {
-              throw new CliError("Checksum is required in strict mode. Pass --checksum <sha256> or --allow-unsafe.", {
-                code: ERROR_CODES.policy,
-                exitCode: EXIT_CODES.policy,
-              });
+              throw new CliError(
+                "Checksum is required in strict mode. Pass --checksum <sha256> or --allow-unsafe.",
+                {
+                  code: ERROR_CODES.policy,
+                  exitCode: EXIT_CODES.policy,
+                },
+              );
             }
             const client = new RemoteSkillClient({ strictIntegrity: strict });
             const download = await client.download(argv.slug as string, {
@@ -1346,15 +1505,25 @@ const cli = yargs(hideBin(process.argv))
             cmd
               .positional("path", { type: "string", demandOption: true })
               .option("slug", { type: "string", describe: "Skill slug (defaults to folder name)" })
-              .option("latest-version", { type: "string", describe: "Current published version (semantic)" })
-              .option("bump", { type: "string", choices: ["major", "minor", "patch"], default: "patch" })
+              .option("latest-version", {
+                type: "string",
+                describe: "Current published version (semantic)",
+              })
+              .option("bump", {
+                type: "string",
+                choices: ["major", "minor", "patch"],
+                default: "patch",
+              })
               .option("changelog", { type: "string" })
               .option("tags", { type: "string", describe: "Comma-separated tags" })
               .option("dry-run", { type: "boolean", default: false }),
           async (argv) => {
             const skillPath = path.resolve(argv.path as string);
             const slug = (argv.slug as string | undefined) ?? path.basename(skillPath);
-            const tags = (argv.tags as string | undefined)?.split(",").map((t) => t.trim()).filter(Boolean);
+            const tags = (argv.tags as string | undefined)
+              ?.split(",")
+              .map((t) => t.trim())
+              .filter(Boolean);
             const result = await publishSkill({
               skillPath,
               slug,
@@ -1402,7 +1571,12 @@ const cli = yargs(hideBin(process.argv))
     (cmd) => cmd.option("compliance", { type: "boolean" }),
     async (argv) => {
       const args = argv.compliance ? ["lint:compliance"] : ["lint"];
-      const code = await handleRun(argv as CliArgs, args, "lint", argv.compliance ? "compliance" : "default");
+      const code = await handleRun(
+        argv as CliArgs,
+        args,
+        "lint",
+        argv.compliance ? "compliance" : "default",
+      );
       process.exitCode = code;
     },
   )

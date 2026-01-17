@@ -12,7 +12,7 @@ We want one consolidated MCP implementation that exposes widget testing capabili
 - [x] (2026-01-09 02:00Z) Added auto-generated widget preview tools backed by the widget manifest.
 - [x] (2026-01-09 02:05Z) Updated tool-contract tests to require core tool contracts and allow generated widget preview tools.
 - [x] (2026-01-09 02:20Z) Run MCP contract and JSON-RPC tests; record results.
-  Evidence: `pnpm -C platforms/mcp test:contract` (6 passed) and `pnpm -C platforms/mcp test:jsonrpc` (6 passed).
+      Evidence: `pnpm -C platforms/mcp test:contract` (6 passed) and `pnpm -C platforms/mcp test:jsonrpc` (6 passed).
 
 ## Surprises & Discoveries
 
@@ -42,6 +42,7 @@ We want one consolidated MCP implementation that exposes widget testing capabili
 The MCP implementation lives in `platforms/mcp/server.js` (legacy) and `platforms/mcp/enhanced-server.js` (enhanced). Both files currently duplicate resource registration, tool schemas, and HTTP transport wiring. Widget resources are built from `packages/widgets/dist/src` and a manifest at `packages/widgets/src/sdk/generated/widget-manifest.js`. Tool contracts are validated by `platforms/mcp/tests/tool-contract.test.mjs`, which currently requires exact parity with `platforms/mcp/tool-contracts.json`.
 
 Key terms used in this plan:
+
 - "Widget preview tool": a tool that renders a specific widget via `openai/outputTemplate` metadata so it can be inspected in Apps SDK clients.
 - "Server factory": a shared module that creates and returns an `McpServer` instance with all tools/resources registered.
 
@@ -59,21 +60,22 @@ Finally, run MCP contract and JSON-RPC tests from `platforms/mcp` and record out
 
 ## Concrete Steps
 
-1) Create shared module:
+1. Create shared module:
    - `platforms/mcp/lib/http-server.js`
 
-2) Update entry points:
+2. Update entry points:
    - `platforms/mcp/enhanced-server.js`
    - `platforms/mcp/server.js`
 
-3) Update contract tests:
+3. Update contract tests:
    - `platforms/mcp/tests/tool-contract.test.mjs`
 
-4) Run tests (from repo root or `platforms/mcp`):
+4. Run tests (from repo root or `platforms/mcp`):
    - `pnpm -C platforms/mcp test:contract`
    - `pnpm -C platforms/mcp test:jsonrpc`
 
 Expected outcomes:
+
 - `tools/list` contains `widget_preview_<widgetName>` for each widget in the manifest.
 - Contract tests pass, verifying core tools and generated preview tools.
 - JSON-RPC tests pass.
@@ -81,6 +83,7 @@ Expected outcomes:
 ## Validation and Acceptance
 
 Acceptance is achieved when:
+
 - Running the MCP server and calling `tools/list` shows the widget preview tools.
 - Running `pnpm -C platforms/mcp test:contract` passes with no missing or extra core tools.
 - Running `pnpm -C platforms/mcp test:jsonrpc` passes.
@@ -96,10 +99,12 @@ Include short command outputs in the Progress section after running tests. Keep 
 ## Interfaces and Dependencies
 
 The shared factory should export:
+
 - `createChatUiServer()` and `createEnhancedChatUiServer()` returning `McpServer` instances.
 - A helper `createHttpServer({ createServer, label })` that starts Streamable HTTP handling.
 
 The widget preview tool handler must return:
+
 - `structuredContent: { widgetName: string, payload?: object, locale?: string }`
 - `content` with a JSON fallback string.
 

@@ -43,10 +43,7 @@ export function SecurityPanel({ onBack }: SettingsPanelProps) {
           />
           <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary px-3 mt-1">
             You'll only be able to log in using Google while this is on.{" "}
-            <button
-              type="button"
-              className="text-foundation-accent-blue hover:underline"
-            >
+            <button type="button" className="text-foundation-accent-blue hover:underline">
               Learn more
             </button>
           </p>

@@ -82,10 +82,9 @@ export class RemoteSkillClient {
   async fetchDetail(slug: string, signal?: AbortSignal): Promise<RemoteSkillOwner | null> {
     const url = new URL("/api/skill", this.baseURL);
     url.searchParams.set("slug", slug);
-    const data = await this.jsonFetch<{ owner?: { handle?: string; displayName?: string; image?: string } }>(
-      url,
-      signal,
-    );
+    const data = await this.jsonFetch<{
+      owner?: { handle?: string; displayName?: string; image?: string };
+    }>(url, signal);
     if (!data.owner) return null;
     return {
       handle: data.owner.handle,
@@ -100,10 +99,7 @@ export class RemoteSkillClient {
     return data.latestVersion?.version ?? null;
   }
 
-  async download(
-    slug: string,
-    options?: DownloadOptions,
-  ): Promise<DownloadedSkill> {
+  async download(slug: string, options?: DownloadOptions): Promise<DownloadedSkill> {
     const url = new URL("/api/v1/download", this.baseURL);
     url.searchParams.set("slug", slug);
     if (options?.version) {

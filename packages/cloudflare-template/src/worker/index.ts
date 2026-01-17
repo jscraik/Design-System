@@ -157,10 +157,10 @@ export class ChatUIWidgetServer {
                 description: this.tools.get(name)?.description || `Tool: ${name}`,
                 inputSchema: this.tools.get(name)?.inputSchema || {
                   type: "object",
-                  properties: {}
+                  properties: {},
                 },
-                _meta: this.tools.get(name)?._meta
-              }))
+                _meta: this.tools.get(name)?._meta,
+              })),
             }),
             {
               headers: {
@@ -215,8 +215,8 @@ export class ChatUIWidgetServer {
                     type: "object",
                     properties: {},
                   },
-                  _meta: this.tools.get(name)?._meta
-                }))
+                  _meta: this.tools.get(name)?._meta,
+                })),
               }),
               {
                 headers: {

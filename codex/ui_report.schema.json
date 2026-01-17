@@ -7,12 +7,7 @@
     },
     "status": {
       "type": "string",
-      "enum": [
-        "triaged",
-        "fixed",
-        "not_fixed",
-        "needs_input"
-      ]
+      "enum": ["triaged", "fixed", "not_fixed", "needs_input"]
     },
     "issue": {
       "type": "string"
@@ -51,10 +46,7 @@
       "type": "string"
     },
     "after_screenshot": {
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": ["string", "null"]
     },
     "checks": {
       "type": "object",
@@ -66,23 +58,13 @@
           "properties": {
             "status": {
               "type": "string",
-              "enum": [
-                "pass",
-                "fail",
-                "not_run"
-              ]
+              "enum": ["pass", "fail", "not_run"]
             },
             "command": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
-          "required": [
-            "status",
-            "command"
-          ]
+          "required": ["status", "command"]
         },
         "typecheck": {
           "type": "object",
@@ -90,23 +72,13 @@
           "properties": {
             "status": {
               "type": "string",
-              "enum": [
-                "pass",
-                "fail",
-                "not_run"
-              ]
+              "enum": ["pass", "fail", "not_run"]
             },
             "command": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
-          "required": [
-            "status",
-            "command"
-          ]
+          "required": ["status", "command"]
         },
         "tests": {
           "type": "object",
@@ -114,23 +86,13 @@
           "properties": {
             "status": {
               "type": "string",
-              "enum": [
-                "pass",
-                "fail",
-                "not_run"
-              ]
+              "enum": ["pass", "fail", "not_run"]
             },
             "command": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
-          "required": [
-            "status",
-            "command"
-          ]
+          "required": ["status", "command"]
         },
         "build": {
           "type": "object",
@@ -138,31 +100,16 @@
           "properties": {
             "status": {
               "type": "string",
-              "enum": [
-                "pass",
-                "fail",
-                "not_run"
-              ]
+              "enum": ["pass", "fail", "not_run"]
             },
             "command": {
-              "type": [
-                "string",
-                "null"
-              ]
+              "type": ["string", "null"]
             }
           },
-          "required": [
-            "status",
-            "command"
-          ]
+          "required": ["status", "command"]
         }
       },
-      "required": [
-        "lint",
-        "typecheck",
-        "tests",
-        "build"
-      ]
+      "required": ["lint", "typecheck", "tests", "build"]
     },
     "notes": {
       "type": "array",

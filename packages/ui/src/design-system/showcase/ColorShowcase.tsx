@@ -9,7 +9,13 @@ const colors = colorTokens;
 
 function IconCopy({ className }: { className?: string }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -21,7 +27,13 @@ function IconCopy({ className }: { className?: string }) {
 
 function IconCheck({ className }: { className?: string }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
     </svg>
   );
@@ -29,7 +41,13 @@ function IconCheck({ className }: { className?: string }) {
 
 function IconPalette({ className }: { className?: string }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -41,7 +59,13 @@ function IconPalette({ className }: { className?: string }) {
 
 function IconType({ className }: { className?: string }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
     </svg>
   );
@@ -49,7 +73,13 @@ function IconType({ className }: { className?: string }) {
 
 function IconSparkles({ className }: { className?: string }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -61,7 +91,13 @@ function IconSparkles({ className }: { className?: string }) {
 
 function IconGrid({ className }: { className?: string }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -73,7 +109,13 @@ function IconGrid({ className }: { className?: string }) {
 
 function IconLayers({ className }: { className?: string }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -85,7 +127,13 @@ function IconLayers({ className }: { className?: string }) {
 
 function IconSwatches({ className }: { className?: string }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -525,7 +573,9 @@ export function ColorShowcase() {
                   : "text-foundation-text-dark-tertiary hover:text-foundation-text-dark-secondary hover:bg-foundation-bg-dark-3/50",
               )}
             >
-              <IconGrid className={cn("size-4", viewMode === "grid" && "text-foundation-accent-blue")} />
+              <IconGrid
+                className={cn("size-4", viewMode === "grid" && "text-foundation-accent-blue")}
+              />
               <span>Grid</span>
             </button>
             <button
@@ -540,15 +590,25 @@ export function ColorShowcase() {
                   : "text-foundation-text-dark-tertiary hover:text-foundation-text-dark-secondary hover:bg-foundation-bg-dark-3/50",
               )}
             >
-              <IconLayers className={cn("size-4", viewMode === "detailed" && "text-foundation-accent-blue")} />
+              <IconLayers
+                className={cn("size-4", viewMode === "detailed" && "text-foundation-accent-blue")}
+              />
               <span>Detailed</span>
             </button>
           </div>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <StatCard label="Total Colors" value={totalColors} icon={<IconPalette className="size-5" />} />
-          <StatCard label="Categories" value={categories} icon={<IconLayers className="size-5" />} />
+          <StatCard
+            label="Total Colors"
+            value={totalColors}
+            icon={<IconPalette className="size-5" />}
+          />
+          <StatCard
+            label="Categories"
+            value={categories}
+            icon={<IconLayers className="size-5" />}
+          />
           <StatCard label="Themes" value={2} icon={<IconSparkles className="size-5" />} />
           <StatCard label="View Modes" value={2} icon={<IconGrid className="size-5" />} />
         </div>
@@ -566,10 +626,34 @@ export function ColorShowcase() {
               <div className="h-px flex-1 bg-foundation-bg-dark-3" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <ColorGroup title="Backgrounds" colors={colors.background.dark} isDark onCopy={copyToClipboard} copiedValue={copiedValue} />
-              <ColorGroup title="Text" colors={colors.text.dark} isDark onCopy={copyToClipboard} copiedValue={copiedValue} />
-              <ColorGroup title="Icons" colors={colors.icon.dark} isDark onCopy={copyToClipboard} copiedValue={copiedValue} />
-              <ColorGroup title="Accents" colors={colors.accent.dark} isDark onCopy={copyToClipboard} copiedValue={copiedValue} />
+              <ColorGroup
+                title="Backgrounds"
+                colors={colors.background.dark}
+                isDark
+                onCopy={copyToClipboard}
+                copiedValue={copiedValue}
+              />
+              <ColorGroup
+                title="Text"
+                colors={colors.text.dark}
+                isDark
+                onCopy={copyToClipboard}
+                copiedValue={copiedValue}
+              />
+              <ColorGroup
+                title="Icons"
+                colors={colors.icon.dark}
+                isDark
+                onCopy={copyToClipboard}
+                copiedValue={copiedValue}
+              />
+              <ColorGroup
+                title="Accents"
+                colors={colors.accent.dark}
+                isDark
+                onCopy={copyToClipboard}
+                copiedValue={copiedValue}
+              />
             </div>
           </section>
 
@@ -583,10 +667,34 @@ export function ColorShowcase() {
               <div className="h-px flex-1 bg-foundation-bg-dark-3" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <ColorGroup title="Backgrounds" colors={colors.background.light} isDark={false} onCopy={copyToClipboard} copiedValue={copiedValue} />
-              <ColorGroup title="Text" colors={colors.text.light} isDark={false} onCopy={copyToClipboard} copiedValue={copiedValue} />
-              <ColorGroup title="Icons" colors={colors.icon.light} isDark={false} onCopy={copyToClipboard} copiedValue={copiedValue} />
-              <ColorGroup title="Accents" colors={colors.accent.light} isDark={false} onCopy={copyToClipboard} copiedValue={copiedValue} />
+              <ColorGroup
+                title="Backgrounds"
+                colors={colors.background.light}
+                isDark={false}
+                onCopy={copyToClipboard}
+                copiedValue={copiedValue}
+              />
+              <ColorGroup
+                title="Text"
+                colors={colors.text.light}
+                isDark={false}
+                onCopy={copyToClipboard}
+                copiedValue={copiedValue}
+              />
+              <ColorGroup
+                title="Icons"
+                colors={colors.icon.light}
+                isDark={false}
+                onCopy={copyToClipboard}
+                copiedValue={copiedValue}
+              />
+              <ColorGroup
+                title="Accents"
+                colors={colors.accent.light}
+                isDark={false}
+                onCopy={copyToClipboard}
+                copiedValue={copiedValue}
+              />
             </div>
           </section>
 
@@ -594,8 +702,16 @@ export function ColorShowcase() {
             <div className="flex items-center gap-3">
               <div className="h-px flex-1 bg-foundation-bg-dark-3" />
               <h2 className="text-lg font-semibold text-foundation-text-dark-primary flex items-center gap-2">
-                <svg className="size-5 text-foundation-accent-blue" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                <svg
+                  className="size-5 text-foundation-accent-blue"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
                 </svg>
                 CSS Variables (Live)
               </h2>
@@ -651,14 +767,78 @@ export function ColorShowcase() {
 
       {viewMode === "detailed" && (
         <div className="space-y-6">
-          <ColorGroup title="Backgrounds / Light Mode" colors={colors.background.light} isDark={false} onCopy={copyToClipboard} copiedValue={copiedValue} variant="detailed" icon={getCategoryIcon("background")} />
-          <ColorGroup title="Backgrounds / Dark Mode" colors={colors.background.dark} isDark onCopy={copyToClipboard} copiedValue={copiedValue} variant="detailed" icon={getCategoryIcon("background")} />
-          <ColorGroup title="Text / Light Mode" colors={colors.text.light} isDark={false} onCopy={copyToClipboard} copiedValue={copiedValue} variant="detailed" icon={getCategoryIcon("text")} />
-          <ColorGroup title="Text / Dark Mode" colors={colors.text.dark} isDark onCopy={copyToClipboard} copiedValue={copiedValue} variant="detailed" icon={getCategoryIcon("text")} />
-          <ColorGroup title="Icons / Light Mode" colors={colors.icon.light} isDark={false} onCopy={copyToClipboard} copiedValue={copiedValue} variant="detailed" icon={getCategoryIcon("icon")} />
-          <ColorGroup title="Icons / Dark Mode" colors={colors.icon.dark} isDark onCopy={copyToClipboard} copiedValue={copiedValue} variant="detailed" icon={getCategoryIcon("icon")} />
-          <ColorGroup title="Accents / Light Mode" colors={colors.accent.light} isDark={false} onCopy={copyToClipboard} copiedValue={copiedValue} variant="detailed" icon={getCategoryIcon("accent")} />
-          <ColorGroup title="Accents / Dark Mode" colors={colors.accent.dark} isDark onCopy={copyToClipboard} copiedValue={copiedValue} variant="detailed" icon={getCategoryIcon("accent")} />
+          <ColorGroup
+            title="Backgrounds / Light Mode"
+            colors={colors.background.light}
+            isDark={false}
+            onCopy={copyToClipboard}
+            copiedValue={copiedValue}
+            variant="detailed"
+            icon={getCategoryIcon("background")}
+          />
+          <ColorGroup
+            title="Backgrounds / Dark Mode"
+            colors={colors.background.dark}
+            isDark
+            onCopy={copyToClipboard}
+            copiedValue={copiedValue}
+            variant="detailed"
+            icon={getCategoryIcon("background")}
+          />
+          <ColorGroup
+            title="Text / Light Mode"
+            colors={colors.text.light}
+            isDark={false}
+            onCopy={copyToClipboard}
+            copiedValue={copiedValue}
+            variant="detailed"
+            icon={getCategoryIcon("text")}
+          />
+          <ColorGroup
+            title="Text / Dark Mode"
+            colors={colors.text.dark}
+            isDark
+            onCopy={copyToClipboard}
+            copiedValue={copiedValue}
+            variant="detailed"
+            icon={getCategoryIcon("text")}
+          />
+          <ColorGroup
+            title="Icons / Light Mode"
+            colors={colors.icon.light}
+            isDark={false}
+            onCopy={copyToClipboard}
+            copiedValue={copiedValue}
+            variant="detailed"
+            icon={getCategoryIcon("icon")}
+          />
+          <ColorGroup
+            title="Icons / Dark Mode"
+            colors={colors.icon.dark}
+            isDark
+            onCopy={copyToClipboard}
+            copiedValue={copiedValue}
+            variant="detailed"
+            icon={getCategoryIcon("icon")}
+          />
+          <ColorGroup
+            title="Accents / Light Mode"
+            colors={colors.accent.light}
+            isDark={false}
+            onCopy={copyToClipboard}
+            copiedValue={copiedValue}
+            variant="detailed"
+            icon={getCategoryIcon("accent")}
+          />
+          <ColorGroup
+            title="Accents / Dark Mode"
+            colors={colors.accent.dark}
+            isDark
+            onCopy={copyToClipboard}
+            copiedValue={copiedValue}
+            variant="detailed"
+            icon={getCategoryIcon("accent")}
+          />
         </div>
       )}
 

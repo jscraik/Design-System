@@ -301,6 +301,5 @@ export const ICON_CATEGORIES = [
   "chat-tools",
   "account-user",
   "platform",
-  "misc"
+  "misc",
 ] as const;
-

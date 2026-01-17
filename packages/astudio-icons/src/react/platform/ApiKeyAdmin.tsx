@@ -1,5 +1,19 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const ApiKeyAdmin = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" preserveAspectRatio="none" viewBox="0 0 24 24" ref={ref} {...props}><path fill="currentColor" d="M13.677 4a4.824 4.824 0 0 0-4.617 6.225 1 1 0 0 1-.25.997l-4.664 4.663A.5.5 0 0 0 4 16.24V18.5h2.261a.5.5 0 0 0 .354-.146L7 17.968V16.5a1 1 0 1 1 2 0v1.882a1 1 0 0 1-.293.707l-.678.679a2.5 2.5 0 0 1-1.768.732H3a1 1 0 0 1-1-1v-3.261a2.5 2.5 0 0 1 .732-1.768l4.262-4.262a6.824 6.824 0 0 1 12.94-4.108 1 1 0 0 1-1.832.798A4.83 4.83 0 0 0 13.677 4m2.823 7a1.5 1.5 0 0 1 1.5 1.5v1h-3v-1a1.5 1.5 0 0 1 1.5-1.5m3.5 2.67V12.5a3.5 3.5 0 1 0-7 0v1.17a3 3 0 0 0-2 2.83v2a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3v-2a3 3 0 0 0-2-2.83m-6 1.83h5a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1" /></svg>);
+const ApiKeyAdmin = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    preserveAspectRatio="none"
+    viewBox="0 0 24 24"
+    ref={ref}
+    {...props}
+  >
+    <path
+      fill="currentColor"
+      d="M13.677 4a4.824 4.824 0 0 0-4.617 6.225 1 1 0 0 1-.25.997l-4.664 4.663A.5.5 0 0 0 4 16.24V18.5h2.261a.5.5 0 0 0 .354-.146L7 17.968V16.5a1 1 0 1 1 2 0v1.882a1 1 0 0 1-.293.707l-.678.679a2.5 2.5 0 0 1-1.768.732H3a1 1 0 0 1-1-1v-3.261a2.5 2.5 0 0 1 .732-1.768l4.262-4.262a6.824 6.824 0 0 1 12.94-4.108 1 1 0 0 1-1.832.798A4.83 4.83 0 0 0 13.677 4m2.823 7a1.5 1.5 0 0 1 1.5 1.5v1h-3v-1a1.5 1.5 0 0 1 1.5-1.5m3.5 2.67V12.5a3.5 3.5 0 1 0-7 0v1.17a3 3 0 0 0-2 2.83v2a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3v-2a3 3 0 0 0-2-2.83m-6 1.83h5a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1"
+    />
+  </svg>
+));
 ApiKeyAdmin.displayName = "ApiKeyAdmin";
 export default ApiKeyAdmin;

@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -43,7 +44,6 @@ Last updated: 2026-01-04
   - [Infrastructure Tests](#infrastructure-tests)
   - [Component Tests](#component-tests)
 - [Summary](#summary)
-
 
 ## Overview
 

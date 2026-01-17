@@ -68,7 +68,13 @@ const bgColor = colorTokens.background.dark.primary; // '#212121'`}
                 href={link.href}
                 className="flex items-center gap-2 text-sm text-foundation-accent-blue hover:underline"
               >
-                <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg
+                  className="size-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
                 {link.label}

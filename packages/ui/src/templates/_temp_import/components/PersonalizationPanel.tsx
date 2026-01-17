@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-import { IconBook, IconChevronDownMd, IconChevronLeftMd, IconChevronRightMd } from "./icons/ChatGPTIcons";
+import {
+  IconBook,
+  IconChevronDownMd,
+  IconChevronLeftMd,
+  IconChevronRightMd,
+} from "./icons/ChatGPTIcons";
 import { SettingDropdown, type DropdownOption } from "./SettingDropdown";
 import { SettingToggle } from "./SettingToggle";
 import { SettingRow } from "./SettingRow";
@@ -9,13 +14,13 @@ import type { SettingsPanelProps } from "./types";
 export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
   // Base style state
   const [baseStyle, setBaseStyle] = useState("Efficient");
-  
+
   // Characteristics state
   const [warmStyle, setWarmStyle] = useState("Default");
   const [enthusiasticStyle, setEnthusiasticStyle] = useState("Default");
   const [headersListsStyle, setHeadersListsStyle] = useState("Default");
   const [emojiStyle, setEmojiStyle] = useState("Default");
-  
+
   // Advanced section state
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [webSearch, setWebSearch] = useState(true);
@@ -122,7 +127,7 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
           <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-primary)] mb-2 px-3">
             Custom instructions
           </h3>
-          <textarea 
+          <textarea
             className="w-full px-3 py-2 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-primary)] bg-[var(--foundation-bg-dark-2)] border border-[var(--foundation-text-dark-primary)]/10 rounded-lg resize-none focus:outline-none focus:ring-1 focus:ring-[var(--foundation-text-dark-primary)]/20 transition-all"
             rows={2}
             defaultValue="Be habitual and conversational"
@@ -175,7 +180,9 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
             icon={<IconBook className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
             label="Memory"
             onClick={() => {}}
-            right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+            right={
+              <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+            }
           />
         </div>
 

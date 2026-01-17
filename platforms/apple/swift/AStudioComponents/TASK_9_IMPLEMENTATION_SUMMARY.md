@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -33,7 +34,6 @@ Last updated: 2026-01-04
 - [File Structure](#file-structure)
 - [Next Steps (Not Part of This Task)](#next-steps-not-part-of-this-task)
 - [Summary](#summary)
-
 
 ## Overview
 

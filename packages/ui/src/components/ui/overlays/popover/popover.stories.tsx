@@ -54,6 +54,8 @@ export const KeyboardSmoke: Story = {
     await expect(body.getByText("Popover content with a little context.")).toBeInTheDocument();
 
     await userEvent.keyboard("{Escape}");
-    await expect(body.queryByText("Popover content with a little context.")).not.toBeInTheDocument();
+    await expect(
+      body.queryByText("Popover content with a little context."),
+    ).not.toBeInTheDocument();
   },
 };

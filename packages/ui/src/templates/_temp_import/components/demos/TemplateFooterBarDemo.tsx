@@ -37,7 +37,8 @@ export function TemplateFooterBarDemo() {
             Footer Bar Component
           </h1>
           <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-            A flexible footer component with variants, status indicators, progress tracking, and compound components.
+            A flexible footer component with variants, status indicators, progress tracking, and
+            compound components.
           </p>
         </div>
 
@@ -178,9 +179,7 @@ export function TemplateFooterBarDemo() {
               </div>
               <TemplateFooterBar
                 status={{ type: "info", message: "Auto-save is enabled" }}
-                trailing={
-                  <TemplateFooterLink>Settings</TemplateFooterLink>
-                }
+                trailing={<TemplateFooterLink>Settings</TemplateFooterLink>}
               />
             </div>
           </div>
@@ -279,7 +278,10 @@ export function TemplateFooterBarDemo() {
             </div>
             <TemplateFooterBar
               leading={
-                <TemplateFooterText icon={<CheckCircle2 className="w-3.5 h-3.5" />} variant="success">
+                <TemplateFooterText
+                  icon={<CheckCircle2 className="w-3.5 h-3.5" />}
+                  variant="success"
+                >
                   All changes saved
                 </TemplateFooterText>
               }
@@ -323,7 +325,9 @@ export function TemplateFooterBarDemo() {
               </div>
               <TemplateFooterBar
                 variant="elevated"
-                leading={<TemplateFooterText variant="muted">Elevated with shadow</TemplateFooterText>}
+                leading={
+                  <TemplateFooterText variant="muted">Elevated with shadow</TemplateFooterText>
+                }
                 trailing={<TemplateFooterButton size="sm">Action</TemplateFooterButton>}
               />
             </div>
@@ -417,10 +421,18 @@ export function TemplateFooterBarDemo() {
               }
               center={
                 <>
-                  <TemplateFooterButton variant="ghost" size="sm" icon={<Download className="w-3.5 h-3.5" />}>
+                  <TemplateFooterButton
+                    variant="ghost"
+                    size="sm"
+                    icon={<Download className="w-3.5 h-3.5" />}
+                  >
                     Download
                   </TemplateFooterButton>
-                  <TemplateFooterButton variant="ghost" size="sm" icon={<Share2 className="w-3.5 h-3.5" />}>
+                  <TemplateFooterButton
+                    variant="ghost"
+                    size="sm"
+                    icon={<Share2 className="w-3.5 h-3.5" />}
+                  >
                     Share
                   </TemplateFooterButton>
                 </>

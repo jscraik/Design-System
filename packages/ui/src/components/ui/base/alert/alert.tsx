@@ -7,17 +7,17 @@ import { cn } from "../../utils";
  * Defines base class names and variant mappings for alerts.
  */
 const alertVariants = cva("relative w-full rounded-lg border p-4", {
-	variants: {
-		variant: {
-			default:
-				"bg-foundation-bg-dark-2 text-foundation-text-dark-primary border-foundation-text-dark-primary/10",
-			destructive:
-				"border-foundation-accent-red/50 text-foundation-accent-red dark:border-foundation-accent-red [&>svg]:text-foundation-accent-red",
-		},
-	},
-	defaultVariants: {
-		variant: "default",
-	},
+  variants: {
+    variant: {
+      default:
+        "bg-foundation-bg-dark-2 text-foundation-text-dark-primary border-foundation-text-dark-primary/10",
+      destructive:
+        "border-foundation-accent-red/50 text-foundation-accent-red dark:border-foundation-accent-red [&>svg]:text-foundation-accent-red",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
 });
 
 /**
@@ -30,16 +30,16 @@ const alertVariants = cva("relative w-full rounded-lg border p-4", {
  * @returns An alert element.
  */
 const Alert = React.forwardRef<
-	HTMLDivElement,
-	React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
 >(({ className, variant, ...props }, ref) => (
-	<div
-		ref={ref}
-		role="alert"
-		data-slot="alert"
-		className={cn(alertVariants({ variant }), className)}
-		{...props}
-	/>
+  <div
+    ref={ref}
+    role="alert"
+    data-slot="alert"
+    className={cn(alertVariants({ variant }), className)}
+    {...props}
+  />
 ));
 Alert.displayName = "Alert";
 
@@ -49,17 +49,16 @@ Alert.displayName = "Alert";
  * @param props - Heading props for the title.
  * @returns An alert title element.
  */
-const AlertTitle = React.forwardRef<
-	HTMLParagraphElement,
-	React.HTMLAttributes<HTMLHeadingElement>
->(({ className, ...props }, ref) => (
-	<h5
-		ref={ref}
-		data-slot="alert-title"
-		className={cn("mb-1 font-medium leading-none tracking-tight line-clamp-1", className)}
-		{...props}
-	/>
-));
+const AlertTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
+  ({ className, ...props }, ref) => (
+    <h5
+      ref={ref}
+      data-slot="alert-title"
+      className={cn("mb-1 font-medium leading-none tracking-tight line-clamp-1", className)}
+      {...props}
+    />
+  ),
+);
 AlertTitle.displayName = "AlertTitle";
 
 /**
@@ -69,15 +68,15 @@ AlertTitle.displayName = "AlertTitle";
  * @returns An alert description element.
  */
 const AlertDescription = React.forwardRef<
-	HTMLParagraphElement,
-	React.HTMLAttributes<HTMLParagraphElement>
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-	<div
-		ref={ref}
-		data-slot="alert-description"
-		className={cn("text-sm [&_p]:leading-relaxed", className)}
-		{...props}
-	/>
+  <div
+    ref={ref}
+    data-slot="alert-description"
+    className={cn("text-sm [&_p]:leading-relaxed", className)}
+    {...props}
+  />
 ));
 AlertDescription.displayName = "AlertDescription";
 

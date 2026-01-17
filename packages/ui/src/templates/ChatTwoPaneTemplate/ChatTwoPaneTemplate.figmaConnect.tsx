@@ -19,10 +19,5 @@ figma.connect(ChatTwoPaneTemplate, {
     main: figma.string("Main chat area"),
   },
 
-  example: (
-    <ChatTwoPaneTemplate
-      sidebar={<div>Chat Sidebar</div>}
-      main={<div>Chat Main</div>}
-    />
-  ),
+  example: <ChatTwoPaneTemplate sidebar={<div>Chat Sidebar</div>} main={<div>Chat Main</div>} />,
 });

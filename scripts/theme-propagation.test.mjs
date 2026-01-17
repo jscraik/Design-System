@@ -83,9 +83,7 @@ describe("Theme Propagation Property", () => {
         const environment = createMockEnvironment("light");
         withMockedGlobals(environment, () => {
           applyTheme(theme);
-          expect(environment.document.documentElement.getAttribute("data-theme")).toBe(
-            theme,
-          );
+          expect(environment.document.documentElement.getAttribute("data-theme")).toBe(theme);
         });
       }),
       { numRuns: 20, timeout: 5000 },
@@ -99,9 +97,7 @@ describe("Theme Propagation Property", () => {
         withMockedGlobals(environment, () => {
           setThemePreference(theme);
           expect(getStoredThemePreference()).toBe(theme);
-          expect(environment.document.documentElement.getAttribute("data-theme")).toBe(
-            theme,
-          );
+          expect(environment.document.documentElement.getAttribute("data-theme")).toBe(theme);
         });
       }),
       { numRuns: 20, timeout: 5000 },
@@ -116,9 +112,7 @@ describe("Theme Propagation Property", () => {
           setThemePreference(systemTheme === "dark" ? "light" : "dark");
           clearThemePreference();
           expect(getStoredThemePreference()).toBe(null);
-          expect(environment.document.documentElement.getAttribute("data-theme")).toBe(
-            systemTheme,
-          );
+          expect(environment.document.documentElement.getAttribute("data-theme")).toBe(systemTheme);
         });
       }),
       { numRuns: 20, timeout: 5000 },

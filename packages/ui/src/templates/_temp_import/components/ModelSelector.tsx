@@ -171,7 +171,7 @@ export function ModelSelector({
   const [isOpen, setIsOpen] = useState(false);
   const [isLegacyOpen, setIsLegacyOpen] = useState(false);
 
-  const modelName = typeof value === "string" ? value : value?.shortName ?? models[0]?.shortName;
+  const modelName = typeof value === "string" ? value : (value?.shortName ?? models[0]?.shortName);
 
   const handleSelect = (model: ModelConfig) => {
     onChange?.(model);
@@ -340,9 +340,12 @@ interface ModelOptionProps {
 
 function ModelOption({ model, isSelected, onSelect }: ModelOptionProps) {
   const badgeColors = {
-    default: "bg-foundation-accent-blue/10 text-foundation-accent-blue dark:bg-foundation-accent-blue/20",
-    success: "bg-foundation-accent-green/10 text-foundation-accent-green dark:bg-foundation-accent-green/20",
-    warning: "bg-foundation-accent-orange/10 text-foundation-accent-orange dark:bg-foundation-accent-orange/20",
+    default:
+      "bg-foundation-accent-blue/10 text-foundation-accent-blue dark:bg-foundation-accent-blue/20",
+    success:
+      "bg-foundation-accent-green/10 text-foundation-accent-green dark:bg-foundation-accent-green/20",
+    warning:
+      "bg-foundation-accent-orange/10 text-foundation-accent-orange dark:bg-foundation-accent-orange/20",
   };
 
   return (

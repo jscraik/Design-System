@@ -31,7 +31,7 @@ const ShimmerText = React.forwardRef<HTMLDivElement, ShimmerTextProps>(
           }
           return `${85 + Math.random() * 15}%`;
         }),
-      [lines]
+      [lines],
     );
 
     return (
@@ -47,7 +47,7 @@ const ShimmerText = React.forwardRef<HTMLDivElement, ShimmerTextProps>(
             key={index}
             className={cn(
               heights[lineHeight],
-              "rounded-md bg-gradient-to-r from-foundation-bg-dark-3/60 via-foundation-text-dark-primary/20 to-foundation-bg-dark-3/60 bg-[length:200%_100%] animate-shimmer"
+              "rounded-md bg-gradient-to-r from-foundation-bg-dark-3/60 via-foundation-text-dark-primary/20 to-foundation-bg-dark-3/60 bg-[length:200%_100%] animate-shimmer",
             )}
             style={{
               width,
@@ -58,13 +58,12 @@ const ShimmerText = React.forwardRef<HTMLDivElement, ShimmerTextProps>(
         <span className="sr-only">Loading...</span>
       </div>
     );
-  }
+  },
 );
 ShimmerText.displayName = "ShimmerText";
 
 // Inline variant for single line shimmer
-export interface ShimmerInlineProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface ShimmerInlineProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string | number;
   height?: string | number;
 }
@@ -78,7 +77,7 @@ const ShimmerInline = React.forwardRef<HTMLDivElement, ShimmerInlineProps>(
         aria-label="Loading"
         className={cn(
           "rounded-md bg-gradient-to-r from-foundation-bg-dark-3/60 via-foundation-text-dark-primary/20 to-foundation-bg-dark-3/60 bg-[length:200%_100%] animate-shimmer",
-          className
+          className,
         )}
         style={{
           width: typeof width === "number" ? `${width}px` : width,
@@ -89,7 +88,7 @@ const ShimmerInline = React.forwardRef<HTMLDivElement, ShimmerInlineProps>(
         <span className="sr-only">Loading...</span>
       </div>
     );
-  }
+  },
 );
 ShimmerInline.displayName = "ShimmerInline";
 

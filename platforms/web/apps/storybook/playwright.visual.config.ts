@@ -11,10 +11,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
  */
 const defaultPort = 6006;
 const storybookPort = Number(
-  process.env.PLAYWRIGHT_STORYBOOK_PORT ?? process.env.STORYBOOK_PORT ?? process.env.PORT ?? defaultPort,
+  process.env.PLAYWRIGHT_STORYBOOK_PORT ??
+    process.env.STORYBOOK_PORT ??
+    process.env.PORT ??
+    defaultPort,
 );
-const baseURL =
-  process.env.PLAYWRIGHT_STORYBOOK_BASE_URL ?? `http://localhost:${storybookPort}`;
+const baseURL = process.env.PLAYWRIGHT_STORYBOOK_BASE_URL ?? `http://localhost:${storybookPort}`;
 const reuseExistingServer =
   process.env.PLAYWRIGHT_REUSE_SERVER === "1" ||
   process.env.PLAYWRIGHT_REUSE_SERVER === "true" ||

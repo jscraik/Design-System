@@ -27,7 +27,8 @@ export function TemplateFormFieldDemo() {
             Form Field Component
           </h1>
           <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-            A flexible form field component with validation, hints, and compound components for common patterns.
+            A flexible form field component with validation, hints, and compound components for
+            common patterns.
           </p>
         </div>
 

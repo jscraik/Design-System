@@ -61,6 +61,7 @@ After this change, developers can browse, search, and deep-link to production-re
 The web platform app lives at `platforms/web/apps/web`. It currently renders a widget gallery at `/` with a minimal router and a `TemplateWidgetPage` for widget previews. The repo already contains an Apps SDK UI component library at `packages/ui` (published as `@astudio/ui`) and tokens at `packages/tokens` (published as `@astudio/tokens`). The source template app is stored under `_temp/ChatGPT UI Templates` and contains a template registry and educational templates not yet integrated into the web platform.
 
 Key files:
+
 - `platforms/web/apps/web/src/app/App.tsx` and `platforms/web/apps/web/src/app/Router.tsx` control routing and top-level UI.
 - `platforms/web/apps/web/src/pages/HarnessPage.tsx` is the widget gallery.
 - `platforms/web/apps/web/src/pages/TemplateWidgetPage.tsx` renders individual templates by ID.
@@ -116,6 +117,7 @@ Registry generation is idempotent. Re-running the generator should not change ou
 ## Artifacts and Notes
 
 Key generated files:
+
 - `platforms/web/apps/web/TEMPLATE_REGISTRY.json`
 - `platforms/web/apps/web/TEMPLATE_REGISTRY.md`
 - `platforms/web/apps/web/src/generated/template-registry.ts`

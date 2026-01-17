@@ -21,10 +21,10 @@ export function Example() {
 
 ## Principles
 
-1) Apps SDK UI first: prefer `@astudio/ui` components over custom primitives.
-2) Semantic tokens only: use `@astudio/tokens` values or CSS variables, never hardcoded colors.
-3) Accessibility: components are built for WCAG 2.2 AA; preserve labels and keyboard support.
-4) Theme support: light/dark and high-contrast modes are supported by tokens.
+1. Apps SDK UI first: prefer `@astudio/ui` components over custom primitives.
+2. Semantic tokens only: use `@astudio/tokens` values or CSS variables, never hardcoded colors.
+3. Accessibility: components are built for WCAG 2.2 AA; preserve labels and keyboard support.
+4. Theme support: light/dark and high-contrast modes are supported by tokens.
 
 ## See also
 

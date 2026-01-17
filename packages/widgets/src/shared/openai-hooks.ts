@@ -128,7 +128,9 @@ export type CallTool = (name: string, args: Record<string, unknown>) => Promise<
 export function useOpenAIGlobal<T extends GlobalOutput, K extends keyof OpenAiGlobals<T>>(
   key: K,
 ): OpenAiGlobals<T>[K] | undefined {
-  return useRuntimeOpenAiGlobal(key as keyof RuntimeOpenAiGlobals) as OpenAiGlobals<T>[K] | undefined;
+  return useRuntimeOpenAiGlobal(key as keyof RuntimeOpenAiGlobals) as
+    | OpenAiGlobals<T>[K]
+    | undefined;
 }
 
 /**

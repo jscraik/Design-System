@@ -12,8 +12,8 @@ Enable aStudio to discover skills from the Clawdhub marketplace, safely ingest a
 - [ ] (YYYY-MM-DD HH:MMZ) Baseline repo checks (lint/tests) to ensure green starting point.
 - [x] (2026-01-11 16:27Z) Skill metadata parsing + hashing module implemented with unit tests (packages/skill-ingestion/src/metadata.ts, hash.ts).
 - [x] (2026-01-11 16:27Z) Remote client with integrity guard and checksum tests (packages/skill-ingestion/src/remoteClient.ts + test).
-- [x] (2026-01-11 16:27Z) Safe install/import helpers with origin writing and unique destination logic plus utility + zip integration tests (packages/skill-ingestion/src/installer*.ts + tests).
-- [x] (2026-01-11 16:27Z) Publish/update flow with semantic bump + hash gating, process stubs, and skip-on-same-hash integration tests (packages/skill-ingestion/src/publisher*.ts + tests).
+- [x] (2026-01-11 16:27Z) Safe install/import helpers with origin writing and unique destination logic plus utility + zip integration tests (packages/skill-ingestion/src/installer\*.ts + tests).
+- [x] (2026-01-11 16:27Z) Publish/update flow with semantic bump + hash gating, process stubs, and skip-on-same-hash integration tests (packages/skill-ingestion/src/publisher\*.ts + tests).
 - [x] (2026-01-11 16:27Z) CLI wiring for skills search/install/publish with strict checksum default (packages/cli/src/index.ts).
 - [x] (2026-01-11 16:40Z) SwiftUI UI integration for list/detail display of installed skills (AStudioApp SkillsView) with refresh and error states; no install/update actions yet.
 - [ ] (YYYY-MM-DD HH:MMZ) Optional Sparkle packaging template adapted and documented.
@@ -39,6 +39,7 @@ Summarize outcomes, remaining gaps, and lessons when major milestones close or a
 aStudio is a pnpm monorepo with React/web and Apple targets; coding standards include Biome/PNPM for JS/TS and SwiftPM for Swift. There is no existing end-to-end skill ingestion/publish flow. The reference implementation is the OSS CodexSkillManager (SwiftPM macOS app) cloned for research; it scans skill folders, renders SKILL.md via MarkdownUI, downloads from Clawdhub via simple REST endpoints, installs zip payloads into platform-specific skill directories, and publishes through bunx clawdhub. Gaps to fix while porting: downloaded zips are not integrity-checked or signed, tests are minimal, and platform floor is macOS 26/Swift 6.2 (we may target broader environments inside aStudio).
 
 Key concepts:
+
 - Skill: folder containing SKILL.md, optional references/assets/scripts/templates.
 - Clawdhub: public skill registry with REST endpoints for listing/searching/downloading skills and bunx CLI for publishing.
 - Platforms: codex, claude, opencode, copilot with canonical skill paths (e.g., ~/.codex/skills/public).
@@ -66,42 +67,42 @@ Stage 8 – Testing and validation: Add unit tests for parsing, hashing, install
 
 Run from repo root unless noted.
 
-1) Baseline: 
-    pnpm lint
-    pnpm test
-    (Add swift test if a Swift target is created.)
+1. Baseline:
+   pnpm lint
+   pnpm test
+   (Add swift test if a Swift target is created.)
 
-2) Create package/module:
-    - Add packages/skill-ingestion/ with source and test directories (or Swift equivalent under platforms/apple/swift if integrating natively). Export types and helpers.
+2. Create package/module:
+   - Add packages/skill-ingestion/ with source and test directories (or Swift equivalent under platforms/apple/swift if integrating natively). Export types and helpers.
 
-3) Implement parsing + hashing:
-    - Add metadata parser, stripFrontmatter, formatTitle helpers, and folder hasher.
-    - Tests: metadata.test.* and hash stability tests with fixture folders.
+3. Implement parsing + hashing:
+   - Add metadata parser, stripFrontmatter, formatTitle helpers, and folder hasher.
+   - Tests: metadata.test.\* and hash stability tests with fixture folders.
 
-4) Implement remote client:
-    - Add fetchLatest, search, fetchDetail, fetchLatestVersion, download with checksum/signature verification.
-    - Tests: mock HTTP, success/error/status non-2xx, checksum mismatch.
+4. Implement remote client:
+   - Add fetchLatest, search, fetchDetail, fetchLatestVersion, download with checksum/signature verification.
+   - Tests: mock HTTP, success/error/status non-2xx, checksum mismatch.
 
-5) Implement installer/importer:
-    - Add unzip via ditto/unzip or library; guard traversal; write origin.json; atomic move.
-    - Tests: zip/folder imports, duplicate name resolution, traversal rejection, temp cleanup.
+5. Implement installer/importer:
+   - Add unzip via ditto/unzip or library; guard traversal; write origin.json; atomic move.
+   - Tests: zip/folder imports, duplicate name resolution, traversal rejection, temp cleanup.
 
-6) Implement publisher:
-    - Add bunx resolution, publish/update/status commands, hash-based “needs publish”, semantic bump helper.
-    - Tests: process stubs for bun missing, login required, publish success/fail, bump edges.
+6. Implement publisher:
+   - Add bunx resolution, publish/update/status commands, hash-based “needs publish”, semantic bump helper.
+   - Tests: process stubs for bun missing, login required, publish success/fail, bump edges.
 
-7) Wire UI/CLI:
-    - CLI: register commands (skills:search/install/update/publish/status) with flags for platform, checksum, dry-run, custom path.
-    - UI: add list/detail components, actions, and loading/error states; ensure a11y labels; wire to stores.
+7. Wire UI/CLI:
+   - CLI: register commands (skills:search/install/update/publish/status) with flags for platform, checksum, dry-run, custom path.
+   - UI: add list/detail components, actions, and loading/error states; ensure a11y labels; wire to stores.
 
-8) Optional Sparkle template:
-    - Add docs/scripts/sparkle/ with adapted package_app.sh, sign-and-notarize, make_appcast instructions; document env expectations and when to enable.
+8. Optional Sparkle template:
+   - Add docs/scripts/sparkle/ with adapted package_app.sh, sign-and-notarize, make_appcast instructions; document env expectations and when to enable.
 
-9) Validation:
-    pnpm lint
-    pnpm test
-    (plus swift test if applicable)
-    - Manual e2e with mocked API: search → install with checksum → view detail → publish dry-run.
+9. Validation:
+   pnpm lint
+   pnpm test
+   (plus swift test if applicable)
+   - Manual e2e with mocked API: search → install with checksum → view detail → publish dry-run.
 
 ## Validation and Acceptance
 
@@ -114,12 +115,12 @@ Install and update operations are idempotent: reruns overwrite targets atomicall
 ## Artifacts and Notes
 
 Keep concise evidence as you work (test outputs, sample origin.json, command transcripts) appended here as indented snippets. Example origin.json:
-    {
-      "slug": "my-skill",
-      "version": "1.2.3",
-      "source": "clawdhub",
-      "installedAt": 1762800000
-    }
+{
+"slug": "my-skill",
+"version": "1.2.3",
+"source": "clawdhub",
+"installedAt": 1762800000
+}
 
 ## Interfaces and Dependencies
 
@@ -128,97 +129,97 @@ Keep concise evidence as you work (test outputs, sample origin.json, command tra
 - SkillStats: { references: number; assets: number; scripts: number; templates: number }
 - SkillPlatform enum: codex | claude | opencode | copilot with helpers storageKey, relativePath, rootPath(base?: string), description/badge if UI needs them.
 - RemoteSkillClient:
-    fetchLatest(limit: number) → RemoteSkill[]
-    search(query: string, limit: number) → RemoteSkill[]
-    download(slug: string, version?: string, checksum?: string, signature?: string) → DownloadedSkill { tempDir, skillRoot, checksumVerified }
-    fetchDetail(slug: string) → RemoteSkillOwner | null
-    fetchLatestVersion(slug: string) → string | null
+  fetchLatest(limit: number) → RemoteSkill[]
+  search(query: string, limit: number) → RemoteSkill[]
+  download(slug: string, version?: string, checksum?: string, signature?: string) → DownloadedSkill { tempDir, skillRoot, checksumVerified }
+  fetchDetail(slug: string) → RemoteSkillOwner | null
+  fetchLatestVersion(slug: string) → string | null
 - Installer:
-    scanSkills(base: URL, storageKey: string) → SkillSummary[]
-    install(download: DownloadedSkill, destinations: InstallDestination[], writeOrigin: boolean) → { selectedId?: string }
-    computeHash(skillRoot: URL) → sha256 string
-    delete(ids or paths) → void
+  scanSkills(base: URL, storageKey: string) → SkillSummary[]
+  install(download: DownloadedSkill, destinations: InstallDestination[], writeOrigin: boolean) → { selectedId?: string }
+  computeHash(skillRoot: URL) → sha256 string
+  delete(ids or paths) → void
 - Publisher:
-    status() → { bunInstalled: boolean; loggedIn: boolean; username?: string; error?: string }
-    publish(skillPath, bump, changelog?, tags[], dryRun?) → version string
-    nextVersion(current, bump) → string
+  status() → { bunInstalled: boolean; loggedIn: boolean; username?: string; error?: string }
+  publish(skillPath, bump, changelog?, tags[], dryRun?) → version string
+  nextVersion(current, bump) → string
 - External deps: prefer stdlib (crypto, fs, URL fetch). Use system ditto/unzip or a small unzip lib that supports streaming and prevents traversal. bunx required for publish; document PATH resolution and user-facing error when absent. Integrity enforcement should use built-in crypto (Node crypto or Swift CryptoKit) and fail closed on mismatch.
 
 ## State Machines (paths, failure modes, invariants)
 
 State machine: RemoteSkillClient.download (strict by default; invariant: checksum must match in strict mode)
-    stateDiagram-v2
-      [*] --> BuildURL
-      BuildURL --> FetchZip : HTTP GET /api/v1/download
-      FetchZip --> ValidateHTTP : response.ok?
-      ValidateHTTP --> ErrorHTTP : no
-      ValidateHTTP --> SaveTemp : yes
-      SaveTemp --> ComputeChecksum
-      ComputeChecksum --> CheckStrict
-      CheckStrict --> ErrorMissingChecksum : strict && !expectedChecksum
-      CheckStrict --> VerifyChecksum
-      VerifyChecksum --> ErrorChecksumMismatch : checksum != expected
-      VerifyChecksum --> Success : checksum ok
-      ErrorHTTP --> [*]
-      ErrorMissingChecksum --> [*]
-      ErrorChecksumMismatch --> [*]
-      Success --> [*]
+stateDiagram-v2
+[*] --> BuildURL
+BuildURL --> FetchZip : HTTP GET /api/v1/download
+FetchZip --> ValidateHTTP : response.ok?
+ValidateHTTP --> ErrorHTTP : no
+ValidateHTTP --> SaveTemp : yes
+SaveTemp --> ComputeChecksum
+ComputeChecksum --> CheckStrict
+CheckStrict --> ErrorMissingChecksum : strict && !expectedChecksum
+CheckStrict --> VerifyChecksum
+VerifyChecksum --> ErrorChecksumMismatch : checksum != expected
+VerifyChecksum --> Success : checksum ok
+ErrorHTTP --> [*]
+ErrorMissingChecksum --> [*]
+ErrorChecksumMismatch --> [*]
+Success --> [*]
 
 State machine: installSkillFromZip (invariant: SKILL.md present; temp dir always cleaned)
-    stateDiagram-v2
-      [*] --> Unzip
-      Unzip --> ErrorUnzip : ditto exit != 0
-      Unzip --> LocateRoot
-      LocateRoot --> ErrorNoSkill : strictSingleSkill && not exactly one SKILL.md
-      LocateRoot --> CopyToDest
-      CopyToDest --> WriteOrigin
-      WriteOrigin --> NextDest? : more destinations
-      NextDest? --> CopyToDest : yes
-      NextDest? --> Success : no
-      ErrorUnzip --> Cleanup --> [*]
-      ErrorNoSkill --> Cleanup --> [*]
-      Success --> Cleanup --> [*]
+stateDiagram-v2
+[*] --> Unzip
+Unzip --> ErrorUnzip : ditto exit != 0
+Unzip --> LocateRoot
+LocateRoot --> ErrorNoSkill : strictSingleSkill && not exactly one SKILL.md
+LocateRoot --> CopyToDest
+CopyToDest --> WriteOrigin
+WriteOrigin --> NextDest? : more destinations
+NextDest? --> CopyToDest : yes
+NextDest? --> Success : no
+ErrorUnzip --> Cleanup --> [*]
+ErrorNoSkill --> Cleanup --> [*]
+Success --> Cleanup --> [*]
 
 State machine: publishSkill (invariant: skip if hash unchanged; requires bunx)
-    stateDiagram-v2
-      [*] --> LoadHash
-      LoadHash --> SkipPublish : storedHash == currentHash && !dryRun
-      LoadHash --> ResolveBunx
-      ResolveBunx --> ErrorBunxMissing : not found
-      ResolveBunx --> BuildArgs
-      BuildArgs --> DryRun? : dryRun
-      DryRun? --> EmitCommand : yes
-      DryRun? --> SpawnPublish : no
-      SpawnPublish --> ErrorProcess : exit != 0
-      SpawnPublish --> SaveHash : exit == 0
-      SaveHash --> Success
-      SkipPublish --> Success
-      ErrorBunxMissing --> [*]
-      ErrorProcess --> [*]
-      EmitCommand --> [*]
-      Success --> [*]
+stateDiagram-v2
+[*] --> LoadHash
+LoadHash --> SkipPublish : storedHash == currentHash && !dryRun
+LoadHash --> ResolveBunx
+ResolveBunx --> ErrorBunxMissing : not found
+ResolveBunx --> BuildArgs
+BuildArgs --> DryRun? : dryRun
+DryRun? --> EmitCommand : yes
+DryRun? --> SpawnPublish : no
+SpawnPublish --> ErrorProcess : exit != 0
+SpawnPublish --> SaveHash : exit == 0
+SaveHash --> Success
+SkipPublish --> Success
+ErrorBunxMissing --> [*]
+ErrorProcess --> [*]
+EmitCommand --> [*]
+Success --> [*]
 
 State machine: CLI skills install (invariant: checksum required unless --allow-unsafe)
-    stateDiagram-v2
-      [*] --> ParseArgs
-      ParseArgs --> ErrorNoChecksum : strict && !checksum
-      ParseArgs --> DownloadZip
-      DownloadZip --> ErrorDownload : HTTP error/ checksum mismatch
-      DownloadZip --> InstallZip
-      InstallZip --> ErrorInstall : unzip/skill root not found
-      InstallZip --> EmitPaths
-      EmitPaths --> [*]
-      ErrorNoChecksum --> [*]
-      ErrorDownload --> [*]
-      ErrorInstall --> [*]
+stateDiagram-v2
+[*] --> ParseArgs
+ParseArgs --> ErrorNoChecksum : strict && !checksum
+ParseArgs --> DownloadZip
+DownloadZip --> ErrorDownload : HTTP error/ checksum mismatch
+DownloadZip --> InstallZip
+InstallZip --> ErrorInstall : unzip/skill root not found
+InstallZip --> EmitPaths
+EmitPaths --> [*]
+ErrorNoChecksum --> [*]
+ErrorDownload --> [*]
+ErrorInstall --> [*]
 
 State machine: SkillsView (SwiftUI)
-    stateDiagram-v2
-      [*] --> Idle
-      Idle --> Loading : onAppear/refresh
-      Loading --> Loaded : load success
-      Loading --> Failed : load error
-      Failed --> Loading : Retry
-      Loaded --> Loading : Pull-to-refresh/Reload
-      Failed --> [*] : close view
-      Loaded --> [*] : close view
+stateDiagram-v2
+[*] --> Idle
+Idle --> Loading : onAppear/refresh
+Loading --> Loaded : load success
+Loading --> Failed : load error
+Failed --> Loading : Retry
+Loaded --> Loading : Pull-to-refresh/Reload
+Failed --> [*] : close view
+Loaded --> [*] : close view

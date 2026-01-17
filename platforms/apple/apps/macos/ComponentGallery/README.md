@@ -3,12 +3,12 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Overview and essential workflows for this area
 - Non-scope: Deep API reference or internal design rationale
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 Interactive component browser for the aStudio SwiftUI library, demonstrating all components from the modular package architecture.
 

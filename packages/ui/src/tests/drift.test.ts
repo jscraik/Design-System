@@ -57,9 +57,7 @@ function loadUpstreamExports(): Set<string> {
 
 describe("Apps SDK UI drift suite", () => {
   it("keeps local Apps SDK UI re-exports stable", () => {
-    const localExports = parseIntegrationExports().map(
-      (entry) => `${entry.name}::${entry.module}`,
-    );
+    const localExports = parseIntegrationExports().map((entry) => `${entry.name}::${entry.module}`);
     expect(localExports).toMatchInlineSnapshot(`
       [
         "AppsSDKUIProvider::@openai/apps-sdk-ui/components/AppsSDKUIProvider",

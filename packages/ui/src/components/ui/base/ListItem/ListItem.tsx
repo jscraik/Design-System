@@ -74,15 +74,16 @@ export function ListItem({
   const iconSizeClass = size === "lg" ? "size-6" : size === "sm" ? "size-4" : "size-5";
   const iconWrapperSizeClass =
     size === "lg" ? "[&>svg]:size-6" : size === "sm" ? "[&>svg]:size-4" : "[&>svg]:size-5";
-  const iconElement = isValidElement(icon) && typeof icon.type !== "string"
-    ? cloneElement(icon as ReactElement<{ className?: string }>, {
-        className: (() => {
-          const existing = (icon.props as { className?: string }).className ?? "";
-          const hasExplicitSize = /\bsize-\d+\b/.test(existing);
-          return cn(existing, hasExplicitSize ? null : iconSizeClass);
-        })(),
-      })
-    : icon;
+  const iconElement =
+    isValidElement(icon) && typeof icon.type !== "string"
+      ? cloneElement(icon as ReactElement<{ className?: string }>, {
+          className: (() => {
+            const existing = (icon.props as { className?: string }).className ?? "";
+            const hasExplicitSize = /\bsize-\d+\b/.test(existing);
+            return cn(existing, hasExplicitSize ? null : iconSizeClass);
+          })(),
+        })
+      : icon;
   const sizes = {
     sm: "px-3 py-2",
     md: "px-4 py-3",

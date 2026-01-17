@@ -27,7 +27,8 @@ export function TemplateFormFieldDemo() {
             Form Field Component
           </h1>
           <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-            A flexible form field component with validation, hints, and compound components for common patterns.
+            A flexible form field component with validation, hints, and compound components for
+            common patterns.
           </p>
         </div>
 
@@ -98,11 +99,7 @@ export function TemplateFormFieldDemo() {
                 actions={
                   <TemplateFormFieldIconButton
                     icon={
-                      showPassword ? (
-                        <EyeOff className="w-4 h-4" />
-                      ) : (
-                        <Eye className="w-4 h-4" />
-                      )
+                      showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />
                     }
                     onClick={() => setShowPassword(!showPassword)}
                     aria-label={showPassword ? "Hide password" : "Show password"}

@@ -15,9 +15,11 @@ This repo uses SwiftPM for macOS apps. To enable Sparkle updates without an Xcod
 - Distribution: upload zip + appcast to your release host (GitHub Release or static hosting).
 
 Minimal app configuration:
+
 - Add `ENABLE_SPARKLE` compiler flag and `SUPublicEDKey`/`SUFeedURL` in Info.plist or Bundle info.
 - Only enable Sparkle when the app is Developer ID–signed and keys/feed are present (gate at runtime).
 
 Safety:
+
 - Do not ship Sparkle enabled for unsigned local builds.
-- Keep private Sparkle key outside the repo; never commit it.***
+- Keep private Sparkle key outside the repo; never commit it.\*\*\*

@@ -208,8 +208,7 @@ export function IconographyShowcase() {
   );
 
   const filteredIcons = useMemo(
-    () =>
-      iconEntries.filter(([name]) => name.toLowerCase().includes(searchQuery.toLowerCase())),
+    () => iconEntries.filter(([name]) => name.toLowerCase().includes(searchQuery.toLowerCase())),
     [iconEntries, searchQuery],
   );
 
@@ -444,8 +443,16 @@ export function IconographyShowcase() {
 
           {/* Stats */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <StatCard label="Total Icons" value={totalIcons} icon={<IconSparkles className="size-5" />} />
-            <StatCard label="Categories" value={Object.keys(categories).length - 1} icon={<IconGrid className="size-5" />} />
+            <StatCard
+              label="Total Icons"
+              value={totalIcons}
+              icon={<IconSparkles className="size-5" />}
+            />
+            <StatCard
+              label="Categories"
+              value={Object.keys(categories).length - 1}
+              icon={<IconGrid className="size-5" />}
+            />
             <StatCard
               label="Search Results"
               value={displayedIcons.length}
@@ -455,7 +462,13 @@ export function IconographyShowcase() {
               label="Format"
               value="SVG"
               icon={
-                <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg
+                  className="size-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
                 </svg>
               }
@@ -502,7 +515,8 @@ export function IconographyShowcase() {
               >
                 {Object.keys(categories).map((category) => (
                   <option key={category} value={category}>
-                    {category.charAt(0).toUpperCase() + category.slice(1)} ({categories[category as keyof typeof categories].length})
+                    {category.charAt(0).toUpperCase() + category.slice(1)} (
+                    {categories[category as keyof typeof categories].length})
                   </option>
                 ))}
               </select>

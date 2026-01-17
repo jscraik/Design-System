@@ -22,7 +22,7 @@ const CATEGORIES = [
   "chat-tools",
   "account-user",
   "platform",
-  "misc"
+  "misc",
 ] as const;
 
 type Category = (typeof CATEGORIES)[number];
@@ -47,7 +47,7 @@ const MODULE_SOURCES: ModuleSource[] = [
   { path: "packages/ui/src/icons/chatgpt/ChatGPTIconsFixed.tsx", infer: true },
   { path: "packages/ui/src/icons/chatgpt/additional-icons.tsx", infer: true },
   { path: "packages/ui/src/icons/chatgpt/missing-icons.tsx", infer: true },
-  { path: "packages/ui/src/icons/brands/index.tsx", category: "misc" }
+  { path: "packages/ui/src/icons/brands/index.tsx", category: "misc" },
 ];
 
 const ensureDir = (path: string) => {
@@ -72,7 +72,18 @@ const toComponentName = (value: string) => {
 const inferCategoryFromName = (name: string): Category => {
   const target = name.toLowerCase();
 
-  const arrowKeywords = ["arrow", "chevron", "expand", "collapse", "shuffle", "reply", "undo", "redo", "rotate", "refresh"];
+  const arrowKeywords = [
+    "arrow",
+    "chevron",
+    "expand",
+    "collapse",
+    "shuffle",
+    "reply",
+    "undo",
+    "redo",
+    "rotate",
+    "refresh",
+  ];
   if (arrowKeywords.some((word) => target.includes(word))) {
     return "arrows";
   }
@@ -82,17 +93,52 @@ const inferCategoryFromName = (name: string): Category => {
     return "settings";
   }
 
-  const accountKeywords = ["user", "account", "profile", "person", "avatar", "member", "group", "team"];
+  const accountKeywords = [
+    "user",
+    "account",
+    "profile",
+    "person",
+    "avatar",
+    "member",
+    "group",
+    "team",
+  ];
   if (accountKeywords.some((word) => target.includes(word))) {
     return "account-user";
   }
 
-  const platformKeywords = ["battery", "wifi", "signal", "desktop", "monitor", "laptop", "phone", "mobile", "cloud", "server", "plug", "battery"];
+  const platformKeywords = [
+    "battery",
+    "wifi",
+    "signal",
+    "desktop",
+    "monitor",
+    "laptop",
+    "phone",
+    "mobile",
+    "cloud",
+    "server",
+    "plug",
+    "battery",
+  ];
   if (platformKeywords.some((word) => target.includes(word))) {
     return "platform";
   }
 
-  const chatKeywords = ["chat", "message", "prompt", "tool", "wrench", "hammer", "bot", "spark", "magic", "wand", "microphone", "mic"];
+  const chatKeywords = [
+    "chat",
+    "message",
+    "prompt",
+    "tool",
+    "wrench",
+    "hammer",
+    "bot",
+    "spark",
+    "magic",
+    "wand",
+    "microphone",
+    "mic",
+  ];
   if (chatKeywords.some((word) => target.includes(word))) {
     return "chat-tools";
   }
@@ -118,7 +164,7 @@ const normalizeSvg = (markup: string) => {
   if (divStyleMatch && divStyleMatch[1]) {
     const styleValue = divStyleMatch[1].trim();
     if (styleValue.length > 0) {
-      if (svg.includes("style=\"")) {
+      if (svg.includes('style="')) {
         svg = svg.replace(/style="([^"]*)"/, (full, existing) => {
           const merged = `${existing};${styleValue}`;
           return `style="${merged}"`;
@@ -201,9 +247,9 @@ const writeReactComponents = async (records: IconRecord[]) => {
       {
         ...svgrConfig,
         icon: false,
-        typescript: true
+        typescript: true,
       },
-      { componentName: record.componentName, filePath: svgPath }
+      { componentName: record.componentName, filePath: svgPath },
     );
 
     const outDir = join(REACT_ROOT, record.category);
@@ -228,7 +274,9 @@ const writeCategoryIndexes = (records: IconRecord[]) => {
     const dir = join(REACT_ROOT, category);
     ensureDir(dir);
     const indexPath = join(dir, "index.ts");
-    const lines = entries.map((record) => `export { default as ${record.componentName} } from "./${record.componentName}";`);
+    const lines = entries.map(
+      (record) => `export { default as ${record.componentName} } from "./${record.componentName}";`,
+    );
     writeFileSync(indexPath, `${lines.join("\n")}\n`);
   }
 };
@@ -238,7 +286,9 @@ const writeRegistry = (records: IconRecord[]) => {
   const sorted = [...records].sort((a, b) => a.iconName.localeCompare(b.iconName));
 
   for (const record of sorted) {
-    lines.push(`import ${record.componentName} from "./react/${record.category}/${record.componentName}";`);
+    lines.push(
+      `import ${record.componentName} from "./react/${record.category}/${record.componentName}";`,
+    );
   }
 
   lines.push("\nexport const iconRegistry = {");

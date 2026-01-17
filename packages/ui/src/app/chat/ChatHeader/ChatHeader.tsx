@@ -233,124 +233,124 @@ export function ChatHeader({
                 "animate-in fade-in-0 zoom-in-95 slide-in-from-top-2 duration-200",
               )}
             >
-                <div className="p-2">
-                  {/* Available Models */}
-                  <div className="space-y-0.5">
-                    {models.map((model) => (
-                      <button
-                        key={model.name}
-                        type="button"
-                        onClick={() => handleModelSelect(model)}
-                        className={cn(
-                          "w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-150",
-                          "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
-                          "active:scale-[0.98]",
-                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue/50",
-                          "text-left group",
-                          isModelSelected(model) &&
-                            "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
-                        )}
-                      >
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                              {model.name}
-                            </span>
-                            {model.badge && (
-                              <span
-                                className={cn(
-                                  "text-[10px] font-semibold px-1.5 py-0.5 rounded-md uppercase tracking-wide",
-                                  model.badge === "New"
-                                    ? "bg-foundation-accent-green/10 text-foundation-accent-green dark:bg-foundation-accent-green/20"
-                                    : "bg-foundation-accent-blue/10 text-foundation-accent-blue dark:bg-foundation-accent-blue/20",
-                                )}
-                              >
-                                {model.badge}
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-1 leading-tight">
-                            {model.description}
-                          </p>
-                        </div>
-                        {isModelSelected(model) && (
-                          <IconCheck className="size-4 text-foundation-accent-green shrink-0 ml-2" />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Divider */}
-                  <div className="h-px bg-foundation-border-light dark:bg-foundation-border-dark my-2" />
-
-                  {/* Legacy Models Submenu */}
-                  <Popover open={isLegacyOpen} onOpenChange={setIsLegacyOpen}>
-                    <PopoverTrigger asChild>
-                      <button
-                        type="button"
-                        className={cn(
-                          "w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-150",
-                          "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
-                          "active:scale-[0.98]",
-                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue/50",
-                          "text-left",
-                          isLegacyOpen && "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
-                        )}
-                      >
-                        <span className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                          Legacy models
-                        </span>
-                        <IconChevronRight
-                          className={cn(
-                            "size-4 text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary transition-transform duration-200",
-                            isLegacyOpen && "rotate-90",
-                          )}
-                        />
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent
-                      forceMount
-                      side="right"
-                      align="start"
-                      sideOffset={8}
+              <div className="p-2">
+                {/* Available Models */}
+                <div className="space-y-0.5">
+                  {models.map((model) => (
+                    <button
+                      key={model.name}
+                      type="button"
+                      onClick={() => handleModelSelect(model)}
                       className={cn(
-                        "z-50 w-[280px] rounded-2xl overflow-hidden",
-                        "border border-foundation-border-light dark:border-foundation-border-dark",
-                        "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2",
-                        "shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.24)]",
-                        "animate-in fade-in-0 zoom-in-95 slide-in-from-left-2 duration-200",
+                        "w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-150",
+                        "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
+                        "active:scale-[0.98]",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue/50",
+                        "text-left group",
+                        isModelSelected(model) &&
+                          "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
                       )}
                     >
-                        <div className="p-2 max-h-[320px] overflow-y-auto scrollbar-thin scrollbar-thumb-foundation-bg-light-3 dark:scrollbar-thumb-foundation-bg-dark-3 scrollbar-track-transparent">
-                          <div className="space-y-0.5">
-                            {legacyModels.map((model) => (
-                              <button
-                                key={model.name}
-                                type="button"
-                                onClick={() => handleModelSelect(model)}
-                                className={cn(
-                                  "w-full flex items-center justify-between px-3 py-2 rounded-lg transition-all duration-150",
-                                  "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
-                                  "active:scale-[0.98]",
-                                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue/50",
-                                  "text-left",
-                                  isModelSelected(model) &&
-                                    "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
-                                )}
-                              >
-                                <span className="text-sm text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                                  {model.name}
-                                </span>
-                                {isModelSelected(model) && (
-                                  <IconCheck className="size-4 text-foundation-accent-green shrink-0 ml-2" />
-                                )}
-                              </button>
-                            ))}
-                          </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+                            {model.name}
+                          </span>
+                          {model.badge && (
+                            <span
+                              className={cn(
+                                "text-[10px] font-semibold px-1.5 py-0.5 rounded-md uppercase tracking-wide",
+                                model.badge === "New"
+                                  ? "bg-foundation-accent-green/10 text-foundation-accent-green dark:bg-foundation-accent-green/20"
+                                  : "bg-foundation-accent-blue/10 text-foundation-accent-blue dark:bg-foundation-accent-blue/20",
+                              )}
+                            >
+                              {model.badge}
+                            </span>
+                          )}
                         </div>
-                    </PopoverContent>
-                  </Popover>
+                        <p className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-1 leading-tight">
+                          {model.description}
+                        </p>
+                      </div>
+                      {isModelSelected(model) && (
+                        <IconCheck className="size-4 text-foundation-accent-green shrink-0 ml-2" />
+                      )}
+                    </button>
+                  ))}
                 </div>
+
+                {/* Divider */}
+                <div className="h-px bg-foundation-border-light dark:bg-foundation-border-dark my-2" />
+
+                {/* Legacy Models Submenu */}
+                <Popover open={isLegacyOpen} onOpenChange={setIsLegacyOpen}>
+                  <PopoverTrigger asChild>
+                    <button
+                      type="button"
+                      className={cn(
+                        "w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-150",
+                        "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
+                        "active:scale-[0.98]",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue/50",
+                        "text-left",
+                        isLegacyOpen && "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
+                      )}
+                    >
+                      <span className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+                        Legacy models
+                      </span>
+                      <IconChevronRight
+                        className={cn(
+                          "size-4 text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary transition-transform duration-200",
+                          isLegacyOpen && "rotate-90",
+                        )}
+                      />
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    forceMount
+                    side="right"
+                    align="start"
+                    sideOffset={8}
+                    className={cn(
+                      "z-50 w-[280px] rounded-2xl overflow-hidden",
+                      "border border-foundation-border-light dark:border-foundation-border-dark",
+                      "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2",
+                      "shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.24)]",
+                      "animate-in fade-in-0 zoom-in-95 slide-in-from-left-2 duration-200",
+                    )}
+                  >
+                    <div className="p-2 max-h-[320px] overflow-y-auto scrollbar-thin scrollbar-thumb-foundation-bg-light-3 dark:scrollbar-thumb-foundation-bg-dark-3 scrollbar-track-transparent">
+                      <div className="space-y-0.5">
+                        {legacyModels.map((model) => (
+                          <button
+                            key={model.name}
+                            type="button"
+                            onClick={() => handleModelSelect(model)}
+                            className={cn(
+                              "w-full flex items-center justify-between px-3 py-2 rounded-lg transition-all duration-150",
+                              "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
+                              "active:scale-[0.98]",
+                              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue/50",
+                              "text-left",
+                              isModelSelected(model) &&
+                                "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
+                            )}
+                          >
+                            <span className="text-sm text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+                              {model.name}
+                            </span>
+                            {isModelSelected(model) && (
+                              <IconCheck className="size-4 text-foundation-accent-green shrink-0 ml-2" />
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
             </PopoverContent>
           </Popover>
         )}

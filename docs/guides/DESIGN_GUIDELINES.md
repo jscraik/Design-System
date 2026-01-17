@@ -713,13 +713,13 @@ Only icons for truly universal actions
 
 IMPLEMENTATION (using @astudio/ui):
 <Button>
-  <Icon name="bell" />
-  <span>Notifications</span>
+<Icon name="bell" />
+<span>Notifications</span>
 </Button>
 
-/*Not this*/
+/_Not this_/
 <Button aria-label="Notifications">
-  <Icon name="custom-bell-variant" />
+<Icon name="custom-bell-variant" />
 </Button>
 
 ```
@@ -807,9 +807,9 @@ RESEARCH SHOWS:
 
 BAD IMPLEMENTATION:
 <Carousel autoAdvance={5000}>
-  <Slide>Important Message 1</Slide>
-  <Slide>Important Message 2</Slide>
-  <Slide>Important Message 3</Slide>
+<Slide>Important Message 1</Slide>
+<Slide>Important Message 2</Slide>
+<Slide>Important Message 3</Slide>
 </Carousel>
 
 THE FIX:
@@ -849,7 +849,7 @@ EXAMPLES:
 - Labels that use internal jargon
 
 BAD:
-[🏠] [📊] [⚙️] [👤]  // What are these?
+[🏠] [📊] [⚙️] [👤] // What are these?
 
 [≡] ← Everything hidden here
 
@@ -901,12 +901,12 @@ GOOD VALIDATION TIMING:
 GOOD PATTERNS (using @astudio/ui):
 // Show requirements upfront, not as errors
 <PasswordField>
-  <Requirement met={hasUppercase}>
-    One uppercase letter
-  </Requirement>
-  <Requirement met={hasNumber}>
-    One number
-  </Requirement>
+<Requirement met={hasUppercase}>
+One uppercase letter
+</Requirement>
+<Requirement met={hasNumber}>
+One number
+</Requirement>
 </PasswordField>
 
 // Validate on blur
@@ -914,7 +914,7 @@ GOOD PATTERNS (using @astudio/ui):
 
 // Inline success
 <EmailField>
-  {isValid && <CheckIcon />}
+{isValid && <CheckIcon />}
 </EmailField>
 
 ```
@@ -945,7 +945,7 @@ Hidden unsubscribe:
 Unsubscribe link in 6pt font, gray on gray
 
 Misdirection:
-[Subscribe Now!]  [No thanks, continue in tiny text]
+[Subscribe Now!] [No thanks, continue in tiny text]
 
 Bait and switch:
 "Free Trial" → requires credit card → auto-charges
@@ -1519,35 +1519,35 @@ COMPONENT OWNERSHIP:
 Breakpoint strategy:
 
 STANDARD BREAKPOINTS (Tailwind):
-sm:  640px  - Large phones, portrait tablets
-md:  768px  - Tablets
-lg:  1024px - Small desktops, landscape tablets
-xl:  1280px - Desktops
+sm: 640px - Large phones, portrait tablets
+md: 768px - Tablets
+lg: 1024px - Small desktops, landscape tablets
+xl: 1280px - Desktops
 2xl: 1536px - Large desktops
 
 COMMON DEVICE WIDTHS (2024):
-320px  - Older iPhones (SE)
-375px  - iPhone 12/13 mini
-390px  - iPhone 14/15
-428px  - iPhone 14/15 Plus/Pro Max
-768px  - iPad Mini
-820px  - iPad Air
+320px - Older iPhones (SE)
+375px - iPhone 12/13 mini
+390px - iPhone 14/15
+428px - iPhone 14/15 Plus/Pro Max
+768px - iPad Mini
+820px - iPad Air
 1024px - iPad Pro 11"
 1366px - Common laptop
 1920px - Full HD desktop
 
 MOBILE-FIRST APPROACH:
-/*Base styles (mobile)*/
+/_Base styles (mobile)_/
 .component { width: 100%; }
 
-/*Tablet and up*/
+/_Tablet and up_/
 @media (min-width: 768px) {
-  .component { width: 50%; }
+.component { width: 50%; }
 }
 
-/*Desktop and up*/
+/_Desktop and up_/
 @media (min-width: 1024px) {
-  .component { width: 33.33%; }
+.component { width: 33.33%; }
 }
 
 BREAKPOINT RULES:
@@ -1612,16 +1612,16 @@ import { Home, Settings, User } from 'lucide-react';
 
 // Size system
 const iconSizes = {
-  sm: 16,
-  md: 20,
-  lg: 24,
-  xl: 32,
+sm: 16,
+md: 20,
+lg: 24,
+xl: 32,
 };
 
 // Wrapper component
 function Icon({ name, size = 'md', ...props }) {
-  const IconComponent = icons[name];
-  return <IconComponent size={iconSizes[size]} {...props} />;
+const IconComponent = icons[name];
+return <IconComponent size={iconSizes[size]} {...props} />;
 }
 
 ```
@@ -1669,28 +1669,28 @@ linear: Opacity, looping animations
 
 CSS-FIRST APPROACH:
 .button {
-  transition:
-    background-color 150ms ease-out,
-    transform 100ms ease-out;
+transition:
+background-color 150ms ease-out,
+transform 100ms ease-out;
 }
 
 .button:hover {
-  background-color: var(--primary-hover);
+background-color: var(--primary-hover);
 }
 
 .button:active {
-  transform: scale(0.98);
+transform: scale(0.98);
 }
 
 REDUCED MOTION:
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-  }
+_,
+_::before,
+\*::after {
+animation-duration: 0.01ms !important;
+transition-duration: 0.01ms !important;
+animation-iteration-count: 1 !important;
+}
 }
 
 ```
@@ -1729,21 +1729,21 @@ IMPLEMENTATION:
 
 CSS Variables approach:
 :root {
-  --bg-primary: white;
-  --text-primary: #1a1a1a;
+--bg-primary: white;
+--text-primary: #1a1a1a;
 }
 
 [data-theme="dark"] {
-  --bg-primary: #1a1a1a;
-  --text-primary: #fafafa;
+--bg-primary: #1a1a1a;
+--text-primary: #fafafa;
 }
 
-/*Or system preference*/
+/_Or system preference_/
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg-primary: #1a1a1a;
-    --text-primary: #fafafa;
-  }
+:root {
+--bg-primary: #1a1a1a;
+--text-primary: #fafafa;
+}
 }
 
 DARK MODE PITFALLS:
@@ -1785,18 +1785,18 @@ Form field decision:
 
 OUTLINED (Recommended default):
 ┌─────────────────────────────────┐
-│ placeholder                     │
+│ placeholder │
 └─────────────────────────────────┘
 
 Label above:
 Email
 ┌─────────────────────────────────┐
-│ <john@example.com>                │
+│ <john@example.com> │
 └─────────────────────────────────┘
 
 FILLED:
 ╔═════════════════════════════════╗
-║ placeholder                     ║
+║ placeholder ║
 ╚═════════════════════════════════╝
 
 UNDERLINED:
@@ -1804,9 +1804,9 @@ placeholder
 ─────────────────────────────────
 
 FLOATING LABEL:
-      Email
+Email
 ┌─────────────────────────────────┐
-│ <john@example.com>                │
+│ <john@example.com> │
 └─────────────────────────────────┘
 
 ACCESSIBILITY CHECKLIST:
@@ -1817,6 +1817,7 @@ ACCESSIBILITY CHECKLIST:
 □ Contrast meets WCAG
 
 RECOMMENDED PATTERN:
+
 <div class="field">
   <label for="email">Email</label>
   <input id="email" type="email" />
@@ -1834,11 +1835,11 @@ RECOMMENDED PATTERN:
 
 **Options:**
 
-| Approach | Pros | Cons | Choose When |
-|----------|------|------|-------------|
-| **Flat** | Simple, quick | Doesn't scale, no theming | Small project |
-| **Semantic** | Meaningful names | More abstraction | Medium project |
-| **Multi-tier** | Maximum flexibility | Complex | Large project, multi-brand |
+| Approach       | Pros                | Cons                      | Choose When                |
+| -------------- | ------------------- | ------------------------- | -------------------------- |
+| **Flat**       | Simple, quick       | Doesn't scale, no theming | Small project              |
+| **Semantic**   | Meaningful names    | More abstraction          | Medium project             |
+| **Multi-tier** | Maximum flexibility | Complex                   | Large project, multi-brand |
 
 **Framework:**
 
@@ -3097,13 +3098,13 @@ Critical decision points that determine user experience success.
 
 **Options:**
 
-| Method | Pros | Cons | Choose When |
-|--------|------|------|-------------|
-| **User Interviews** | Deep insights, context, "why" | Time-intensive, small sample | Understanding motivations, new problems |
-| **Usability Testing** | Observes real behavior | Lab vs. reality gap | Validating designs, finding issues |
-| **Surveys** | Large sample, quantifiable | Surface-level, bias-prone | Measuring attitudes, demographics |
-| **Analytics** | Real behavior, scale | No "why," what happened only | Understanding patterns, funnel analysis |
-| **A/B Testing** | Causal, production real | Needs traffic, narrow scope | Optimizing specific elements |
+| Method                | Pros                          | Cons                         | Choose When                             |
+| --------------------- | ----------------------------- | ---------------------------- | --------------------------------------- |
+| **User Interviews**   | Deep insights, context, "why" | Time-intensive, small sample | Understanding motivations, new problems |
+| **Usability Testing** | Observes real behavior        | Lab vs. reality gap          | Validating designs, finding issues      |
+| **Surveys**           | Large sample, quantifiable    | Surface-level, bias-prone    | Measuring attitudes, demographics       |
+| **Analytics**         | Real behavior, scale          | No "why," what happened only | Understanding patterns, funnel analysis |
+| **A/B Testing**       | Causal, production real       | Needs traffic, narrow scope  | Optimizing specific elements            |
 
 **Framework:**
 
@@ -3149,12 +3150,12 @@ Interviews: Explains why it's happening
 
 **Options:**
 
-| Approach | Pros | Cons | Choose When |
-|----------|------|------|-------------|
-| **Task-based** | Maps to user goals | May split related content | Productivity apps, tools |
-| **Topic-based** | Logical groupings | May not match user goals | Content-heavy sites |
-| **Audience-based** | Personalized experience | Duplicate content possible | Multiple distinct personas |
-| **Hybrid** | Flexible, covers bases | More complex | Large products, multiple contexts |
+| Approach           | Pros                    | Cons                       | Choose When                       |
+| ------------------ | ----------------------- | -------------------------- | --------------------------------- |
+| **Task-based**     | Maps to user goals      | May split related content  | Productivity apps, tools          |
+| **Topic-based**    | Logical groupings       | May not match user goals   | Content-heavy sites               |
+| **Audience-based** | Personalized experience | Duplicate content possible | Multiple distinct personas        |
+| **Hybrid**         | Flexible, covers bases  | More complex               | Large products, multiple contexts |
 
 **Framework:**
 
@@ -3219,13 +3220,13 @@ VALIDATION METHODS:
 
 **Options:**
 
-| Pattern | Pros | Cons | Choose When |
-|---------|------|------|-------------|
-| **Top nav** | Standard, visible, scan-friendly | Limited items, takes vertical space | Marketing sites, simple apps |
-| **Side nav** | Many items, persistent | Uses horizontal space, mobile challenge | Complex apps, dashboards |
-| **Bottom nav (mobile)** | Thumb-friendly, visible | Limited to 5 items | Mobile-first apps |
-| **Hamburger menu** | Saves space | Hidden, poor discovery | Secondary nav, space-constrained |
-| **Tab bar** | Clear sections, easy switching | Limited items | Single-purpose apps |
+| Pattern                 | Pros                             | Cons                                    | Choose When                      |
+| ----------------------- | -------------------------------- | --------------------------------------- | -------------------------------- |
+| **Top nav**             | Standard, visible, scan-friendly | Limited items, takes vertical space     | Marketing sites, simple apps     |
+| **Side nav**            | Many items, persistent           | Uses horizontal space, mobile challenge | Complex apps, dashboards         |
+| **Bottom nav (mobile)** | Thumb-friendly, visible          | Limited to 5 items                      | Mobile-first apps                |
+| **Hamburger menu**      | Saves space                      | Hidden, poor discovery                  | Secondary nav, space-constrained |
+| **Tab bar**             | Clear sections, easy switching   | Limited items                           | Single-purpose apps              |
 
 **Framework:**
 
@@ -3272,13 +3273,13 @@ NAVIGATION TESTING:
 
 **Options:**
 
-| Strategy | Pros | Cons | Choose When |
-|----------|------|------|-------------|
-| **No onboarding** | Immediate value, no barrier | Users may be lost | Simple, self-explanatory products |
-| **Guided tour** | Teaches features, low effort | Can be skippable/ignored | Complex products, many features |
-| **Progressive disclosure** | Learn by doing, contextual | May miss features | Moderate complexity |
-| **Checklist** | Clear goals, flexible pace | Can feel like homework | Products needing setup |
-| **Interactive tutorial** | Hands-on learning | Longer time to value | Complex workflows |
+| Strategy                   | Pros                         | Cons                     | Choose When                       |
+| -------------------------- | ---------------------------- | ------------------------ | --------------------------------- |
+| **No onboarding**          | Immediate value, no barrier  | Users may be lost        | Simple, self-explanatory products |
+| **Guided tour**            | Teaches features, low effort | Can be skippable/ignored | Complex products, many features   |
+| **Progressive disclosure** | Learn by doing, contextual   | May miss features        | Moderate complexity               |
+| **Checklist**              | Clear goals, flexible pace   | Can feel like homework   | Products needing setup            |
+| **Interactive tutorial**   | Hands-on learning            | Longer time to value     | Complex workflows                 |
 
 **Framework:**
 
@@ -3337,13 +3338,13 @@ Feature discovery rate
 
 **Options:**
 
-| Approach | Pros | Cons | Choose When |
-|----------|------|------|-------------|
-| **Prevent errors** | Best UX, no recovery needed | Not always possible | High-stakes, predictable inputs |
-| **Inline validation** | Immediate feedback | Can be noisy | Form inputs, known formats |
-| **Error messages** | Clear communication | Reactive, not proactive | After-the-fact errors |
-| **Error recovery** | Keeps users moving | May mask underlying issues | Common, recoverable errors |
-| **Fallback/degradation** | Something works | May confuse expectations | System-level failures |
+| Approach                 | Pros                        | Cons                       | Choose When                     |
+| ------------------------ | --------------------------- | -------------------------- | ------------------------------- |
+| **Prevent errors**       | Best UX, no recovery needed | Not always possible        | High-stakes, predictable inputs |
+| **Inline validation**    | Immediate feedback          | Can be noisy               | Form inputs, known formats      |
+| **Error messages**       | Clear communication         | Reactive, not proactive    | After-the-fact errors           |
+| **Error recovery**       | Keeps users moving          | May mask underlying issues | Common, recoverable errors      |
+| **Fallback/degradation** | Something works             | May confuse expectations   | System-level failures           |
 
 **Framework:**
 
@@ -3398,12 +3399,12 @@ PREVENTION METHODS:
 
 **Options:**
 
-| Strategy | Pros | Cons | Choose When |
-|----------|------|------|-------------|
-| **Mobile-first** | Forces prioritization, clean | Desktop may feel sparse | Mobile is primary platform |
-| **Desktop-first** | Familiar workflow | Mobile often afterthought | Desktop is primary platform |
-| **Responsive** | One codebase, adapts | Compromise in both contexts | Similar experiences needed |
-| **Separate apps** | Optimized per platform | Expensive, maintenance burden | Very different needs per platform |
+| Strategy          | Pros                         | Cons                          | Choose When                       |
+| ----------------- | ---------------------------- | ----------------------------- | --------------------------------- |
+| **Mobile-first**  | Forces prioritization, clean | Desktop may feel sparse       | Mobile is primary platform        |
+| **Desktop-first** | Familiar workflow            | Mobile often afterthought     | Desktop is primary platform       |
+| **Responsive**    | One codebase, adapts         | Compromise in both contexts   | Similar experiences needed        |
+| **Separate apps** | Optimized per platform       | Expensive, maintenance burden | Very different needs per platform |
 
 **Framework:**
 
@@ -3459,12 +3460,12 @@ Touch: → Larger tap targets
 
 **Options:**
 
-| Level | Pros | Cons | Choose When |
-|-------|------|------|-------------|
-| **WCAG A** | Basic access, legal minimum | Excludes many users | Minimum legal requirement |
-| **WCAG AA** | Most users included | Some investment needed | Standard for most products |
-| **WCAG AAA** | Maximum inclusion | Significant effort | Government, education, healthcare |
-| **Beyond WCAG** | Exceptional experience | Custom work required | When a11y is competitive advantage |
+| Level           | Pros                        | Cons                   | Choose When                        |
+| --------------- | --------------------------- | ---------------------- | ---------------------------------- |
+| **WCAG A**      | Basic access, legal minimum | Excludes many users    | Minimum legal requirement          |
+| **WCAG AA**     | Most users included         | Some investment needed | Standard for most products         |
+| **WCAG AAA**    | Maximum inclusion           | Significant effort     | Government, education, healthcare  |
+| **Beyond WCAG** | Exceptional experience      | Custom work required   | When a11y is competitive advantage |
 
 **Framework:**
 
@@ -3526,13 +3527,13 @@ TESTING:
 
 **Options:**
 
-| Channel | Pros | Cons | Choose When |
-|---------|------|------|-------------|
-| **In-app toast** | Contextual, non-intrusive | Missed if not in app | UI feedback, confirmations |
-| **In-app badge** | Persistent, draws attention | Can be noisy | Actionable items awaiting |
-| **Push notification** | Reaches outside app | Can be annoying, opt-out | Time-sensitive, important |
-| **Email** | Permanent record, reaches all | Slow, inbox competition | Not time-sensitive, formal |
-| **SMS** | High open rate, urgent | Very intrusive, costly | Critical, time-sensitive |
+| Channel               | Pros                          | Cons                     | Choose When                |
+| --------------------- | ----------------------------- | ------------------------ | -------------------------- |
+| **In-app toast**      | Contextual, non-intrusive     | Missed if not in app     | UI feedback, confirmations |
+| **In-app badge**      | Persistent, draws attention   | Can be noisy             | Actionable items awaiting  |
+| **Push notification** | Reaches outside app           | Can be annoying, opt-out | Time-sensitive, important  |
+| **Email**             | Permanent record, reaches all | Slow, inbox competition  | Not time-sensitive, formal |
+| **SMS**               | High open rate, urgent        | Very intrusive, costly   | Critical, time-sensitive   |
 
 **Framework:**
 
@@ -3592,12 +3593,12 @@ NOTIFICATION CONTENT:
 
 **Options:**
 
-| Approach | Pros | Cons | Choose When |
-|----------|------|------|-------------|
-| **Educational** | Teaches users what to do | May feel like homework | New users, complex features |
-| **Motivational** | Encourages action | Can feel pushy | Creating content, goals |
-| **Template/starter** | Quick start, shows value | May not match needs | Creative tools, documents |
-| **Minimal** | Clean, not overwhelming | No guidance | Power users, simple actions |
+| Approach             | Pros                     | Cons                   | Choose When                 |
+| -------------------- | ------------------------ | ---------------------- | --------------------------- |
+| **Educational**      | Teaches users what to do | May feel like homework | New users, complex features |
+| **Motivational**     | Encourages action        | Can feel pushy         | Creating content, goals     |
+| **Template/starter** | Quick start, shows value | May not match needs    | Creative tools, documents   |
+| **Minimal**          | Clean, not overwhelming  | No guidance            | Power users, simple actions |
 
 **Framework:**
 
@@ -3663,12 +3664,12 @@ Cleared content:
 
 **Options:**
 
-| Frequency | Pros | Cons | Choose When |
-|-----------|------|------|-------------|
-| **Per feature** | Validates each before dev | Time/resource intensive | High-risk features |
-| **Per sprint** | Regular cadence | May not align with design work | Agile teams |
-| **Weekly standing** | Continuous learning | Overhead of recruiting | Mature product, dedicated researcher |
-| **As needed** | Flexible, resource-efficient | May skip important tests | Resource-constrained teams |
+| Frequency           | Pros                         | Cons                           | Choose When                          |
+| ------------------- | ---------------------------- | ------------------------------ | ------------------------------------ |
+| **Per feature**     | Validates each before dev    | Time/resource intensive        | High-risk features                   |
+| **Per sprint**      | Regular cadence              | May not align with design work | Agile teams                          |
+| **Weekly standing** | Continuous learning          | Overhead of recruiting         | Mature product, dedicated researcher |
+| **As needed**       | Flexible, resource-efficient | May skip important tests       | Resource-constrained teams           |
 
 **Framework:**
 
@@ -3862,11 +3863,11 @@ For each feature, ask:
 3. How critical is it when needed?
 
 Feature Priority Matrix:
-              │ Many Users │ Few Users
+│ Many Users │ Few Users
 ─────────────┼────────────┼───────────
-Frequent Use │ CORE       │ CONSIDER
+Frequent Use │ CORE │ CONSIDER
 ─────────────┼────────────┼───────────
-Rare Use     │ ACCESSIBLE │ HIDE/CUT
+Rare Use │ ACCESSIBLE │ HIDE/CUT
 
 CORE: Primary navigation, always visible
 CONSIDER: Could be core, needs validation
@@ -3976,8 +3977,9 @@ TESTING DISCOVERABILITY:
 First-click test:
 "How would you [action]?"
 Track where users click
->70% correct = discoverable
-<50% correct = hidden
+
+> 70% correct = discoverable
+> <50% correct = hidden
 
 ```
 
@@ -4001,7 +4003,7 @@ Pick your plan:
 □ Enterprise ($149)
 □ Custom (Contact us)
 
-User: *closes tab*
+User: _closes tab_
 
 THE FIX:
 Pick your plan:
@@ -4152,15 +4154,15 @@ Error:
 
 IMPLEMENTATION PATTERN:
 onClick = async () => {
-  setLoading(true)      // Immediate feedback
-  try {
-    await action()
-    showSuccess()       // Completion feedback
-  } catch (e) {
-    showError(e)        // Error feedback
-  } finally {
-    setLoading(false)
-  }
+setLoading(true) // Immediate feedback
+try {
+await action()
+showSuccess() // Completion feedback
+} catch (e) {
+showError(e) // Error feedback
+} finally {
+setLoading(false)
+}
 }
 
 ```
@@ -4229,22 +4231,22 @@ actually want to, having seen the value
 ```
 
 THE HELL FORM:
-Name:           [***************]
-Email:          [***************]
-Phone:          [***************]
+Name: [***************]
+Email: [***************]
+Phone: [***************]
 Address Line 1: [***************]
 Address Line 2: [***************]
-City:           [***************]
-State:          [dropdown with 50 options]
-ZIP:            [***************]
-Country:        [dropdown with 195 options]
-Password:       [***************]
-Confirm:        [***************]
-Birthday:       [***************]
-Gender:         [***************]
-Occupation:     [***************]
-Company:        [***************]
-How heard:      [***************]
+City: [***************]
+State: [dropdown with 50 options]
+ZIP: [***************]
+Country: [dropdown with 195 options]
+Password: [***************]
+Confirm: [***************]
+Birthday: [***************]
+Gender: [***************]
+Occupation: [***************]
+Company: [***************]
+How heard: [***************]
 [Terms checkbox wall of text]
 [Submit]
 

@@ -40,7 +40,8 @@ export function getTaskSectionConfig(promptEnhancement: PromptEnhancement) {
     case "augment":
       return {
         label: "Additional Context (Optional)",
-        placeholder: "Add extra details to help the agent find relevant files and enhance your prompt",
+        placeholder:
+          "Add extra details to help the agent find relevant files and enhance your prompt",
         tooltip:
           "Add extra context to help the agent.\n\nThe agent will:\n• Keep your existing instructions\n• Add relevant context from discoveries\n• Select appropriate files\n\nLeave empty to just enhance with file context.",
         buttonText: "Augment",

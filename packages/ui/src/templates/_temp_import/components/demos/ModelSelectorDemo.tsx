@@ -77,7 +77,10 @@ export function ModelSelectorDemo() {
             Default model selector with available and legacy models
           </p>
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-6">
-            <ModelSelector value={model1} onChange={(model) => setModel1(typeof model === "string" ? model : model.name)} />
+            <ModelSelector
+              value={model1}
+              onChange={(model) => setModel1(typeof model === "string" ? model : model.name)}
+            />
             <div className="mt-4 text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
               <p className="text-[13px]">
                 Selected: <span className="font-medium">{model1}</span>
@@ -138,11 +141,12 @@ export function ModelSelectorDemo() {
             Model selector with a legacy model pre-selected
           </p>
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-6">
-            <ModelSelector value={model4} onChange={(model) => setModel4(typeof model === "string" ? model : model.name)} />
+            <ModelSelector
+              value={model4}
+              onChange={(model) => setModel4(typeof model === "string" ? model : model.name)}
+            />
             <div className="mt-4 text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
-              <p className="text-[13px]">
-                Click to see legacy models in the nested menu
-              </p>
+              <p className="text-[13px]">Click to see legacy models in the nested menu</p>
             </div>
           </div>
         </div>
@@ -186,9 +190,7 @@ export function ModelSelectorDemo() {
               legacyModels={[]}
             />
             <div className="mt-4 text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
-              <p className="text-[13px]">
-                No legacy models menu (empty array)
-              </p>
+              <p className="text-[13px]">No legacy models menu (empty array)</p>
             </div>
           </div>
         </div>
@@ -308,9 +310,7 @@ export function ModelSelectorDemo() {
             </div>
             <div className="p-8 min-h-[300px] flex items-center justify-center">
               <div className="text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
-                <p className="text-[14px]">
-                  Select a model and start chatting
-                </p>
+                <p className="text-[14px]">Select a model and start chatting</p>
               </div>
             </div>
           </div>

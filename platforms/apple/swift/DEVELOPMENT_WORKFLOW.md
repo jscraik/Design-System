@@ -3,12 +3,12 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 Complete guide for developing with aStudio Swift packages including hot reload, testing, and debugging.
 
@@ -690,13 +690,15 @@ For development support:
 See repository root for license information.
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.
 
 ## Troubleshooting
-- TBD: Add the top 3 failure modes and fixes.
 
+- TBD: Add the top 3 failure modes and fixes.

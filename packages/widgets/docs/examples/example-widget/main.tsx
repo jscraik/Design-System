@@ -1,4 +1,9 @@
-import { createEmbeddedHost, ensureMockOpenAI, HostProvider, useToolOutput } from "@astudio/runtime";
+import {
+  createEmbeddedHost,
+  ensureMockOpenAI,
+  HostProvider,
+  useToolOutput,
+} from "@astudio/runtime";
 import { AppsSDKButton, AppsSDKUIProvider, Card } from "@astudio/ui";
 import { useState } from "react";
 
@@ -57,7 +62,11 @@ function ExampleWidgetCore() {
       <Card className="p-4">
         <h2 className="text-lg font-semibold text-white mb-2">Interactive Elements</h2>
         <div className="flex items-center gap-4 mb-4">
-          <AppsSDKButton onClick={() => setLocalCount((c) => c + 1)} variant="solid" color="primary">
+          <AppsSDKButton
+            onClick={() => setLocalCount((c) => c + 1)}
+            variant="solid"
+            color="primary"
+          >
             Local Count: {localCount}
           </AppsSDKButton>
           <AppsSDKButton onClick={handleCallTool} variant="ghost" color="secondary">

@@ -15,9 +15,20 @@ import { cn } from "../../../utils";
 import { Button } from "../../../base/Button";
 import { Input } from "../../../base/Input";
 import { Separator } from "../../../base/Separator";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "../../../overlays/Sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "../../../overlays/Sheet";
 import { Skeleton } from "../../../base/Skeleton";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../../overlays/Tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../../../overlays/Tooltip";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;

@@ -45,16 +45,8 @@ const transitionVariants: Record<string, Variants> = {
 
 const Transition = React.forwardRef<HTMLDivElement, TransitionProps>(
   (
-    {
-      show = true,
-      variant = "fade",
-      duration = 0.3,
-      delay = 0,
-      className,
-      children,
-      ...props
-    },
-    ref
+    { show = true, variant = "fade", duration = 0.3, delay = 0, className, children, ...props },
+    ref,
   ) => {
     const variants = transitionVariants[variant];
 
@@ -76,7 +68,7 @@ const Transition = React.forwardRef<HTMLDivElement, TransitionProps>(
         {children}
       </motion.div>
     );
-  }
+  },
 );
 Transition.displayName = "Transition";
 
@@ -89,15 +81,8 @@ export interface StaggerProps extends Omit<HTMLMotionProps<"div">, "variants"> {
 
 const Stagger = React.forwardRef<HTMLDivElement, StaggerProps>(
   (
-    {
-      staggerDelay = 0.1,
-      variant = "fade",
-      duration = 0.3,
-      className,
-      children,
-      ...props
-    },
-    ref
+    { staggerDelay = 0.1, variant = "fade", duration = 0.3, className, children, ...props },
+    ref,
   ) => {
     const containerVariants: Variants = {
       hidden: {},
@@ -128,7 +113,7 @@ const Stagger = React.forwardRef<HTMLDivElement, StaggerProps>(
         ))}
       </motion.div>
     );
-  }
+  },
 );
 Stagger.displayName = "Stagger";
 
@@ -159,7 +144,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>(
         {children}
       </motion.div>
     );
-  }
+  },
 );
 Collapse.displayName = "Collapse";
 
@@ -173,16 +158,8 @@ export interface SlideInProps extends Omit<HTMLMotionProps<"div">, "variants"> {
 
 const SlideIn = React.forwardRef<HTMLDivElement, SlideInProps>(
   (
-    {
-      from = "left",
-      show = true,
-      duration = 0.3,
-      distance = 100,
-      className,
-      children,
-      ...props
-    },
-    ref
+    { from = "left", show = true, duration = 0.3, distance = 100, className, children, ...props },
+    ref,
   ) => {
     const getInitialPosition = () => {
       switch (from) {
@@ -201,11 +178,7 @@ const SlideIn = React.forwardRef<HTMLDivElement, SlideInProps>(
       <motion.div
         ref={ref}
         initial={{ ...getInitialPosition(), opacity: 0 }}
-        animate={
-          show
-            ? { x: 0, y: 0, opacity: 1 }
-            : { ...getInitialPosition(), opacity: 0 }
-        }
+        animate={show ? { x: 0, y: 0, opacity: 1 } : { ...getInitialPosition(), opacity: 0 }}
         transition={{
           duration,
           ease: "easeInOut",
@@ -216,7 +189,7 @@ const SlideIn = React.forwardRef<HTMLDivElement, SlideInProps>(
         {children}
       </motion.div>
     );
-  }
+  },
 );
 SlideIn.displayName = "SlideIn";
 

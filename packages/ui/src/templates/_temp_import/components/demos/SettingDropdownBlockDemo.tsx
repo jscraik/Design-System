@@ -49,9 +49,24 @@ export function SettingDropdownBlockDemo() {
 
   // Theme options with icons
   const themeOptions: SettingDropdownOption[] = [
-    { value: "light", label: "Light", description: "Use light theme", icon: <Sun className="size-4" /> },
-    { value: "dark", label: "Dark", description: "Use dark theme", icon: <Moon className="size-4" /> },
-    { value: "system", label: "System", description: "Match system preference", icon: <Laptop className="size-4" /> },
+    {
+      value: "light",
+      label: "Light",
+      description: "Use light theme",
+      icon: <Sun className="size-4" />,
+    },
+    {
+      value: "dark",
+      label: "Dark",
+      description: "Use dark theme",
+      icon: <Moon className="size-4" />,
+    },
+    {
+      value: "system",
+      label: "System",
+      description: "Match system preference",
+      icon: <Laptop className="size-4" />,
+    },
   ];
 
   // Language options with groups
@@ -150,24 +165,74 @@ export function SettingDropdownBlockDemo() {
 
   // Network mode options
   const networkModeOptions: SettingDropdownOption[] = [
-    { value: "auto", label: "Automatic", description: "Auto-select best network", icon: <Wifi className="size-4" /> },
-    { value: "wifi", label: "Wi-Fi only", description: "Connect via Wi-Fi only", icon: <Wifi className="size-4" /> },
-    { value: "cellular", label: "Cellular only", description: "Use mobile data only", icon: <Smartphone className="size-4" /> },
-    { value: "offline", label: "Offline mode", description: "Work without connection", disabled: true },
+    {
+      value: "auto",
+      label: "Automatic",
+      description: "Auto-select best network",
+      icon: <Wifi className="size-4" />,
+    },
+    {
+      value: "wifi",
+      label: "Wi-Fi only",
+      description: "Connect via Wi-Fi only",
+      icon: <Wifi className="size-4" />,
+    },
+    {
+      value: "cellular",
+      label: "Cellular only",
+      description: "Use mobile data only",
+      icon: <Smartphone className="size-4" />,
+    },
+    {
+      value: "offline",
+      label: "Offline mode",
+      description: "Work without connection",
+      disabled: true,
+    },
   ];
 
   // Power mode options
   const powerModeOptions: SettingDropdownOption[] = [
-    { value: "performance", label: "Performance", description: "Maximum performance", icon: <Zap className="size-4" /> },
-    { value: "balanced", label: "Balanced", description: "Balance performance and battery", icon: <Battery className="size-4" /> },
-    { value: "saver", label: "Power Saver", description: "Extend battery life", icon: <Battery className="size-4 opacity-50" /> },
+    {
+      value: "performance",
+      label: "Performance",
+      description: "Maximum performance",
+      icon: <Zap className="size-4" />,
+    },
+    {
+      value: "balanced",
+      label: "Balanced",
+      description: "Balance performance and battery",
+      icon: <Battery className="size-4" />,
+    },
+    {
+      value: "saver",
+      label: "Power Saver",
+      description: "Extend battery life",
+      icon: <Battery className="size-4 opacity-50" />,
+    },
   ];
 
   // Storage options
   const storageOptions: SettingDropdownOption[] = [
-    { value: "cloud", label: "Cloud Storage", description: "Sync across devices", icon: <Database className="size-4" /> },
-    { value: "local", label: "Local Storage", description: "Store on device only", icon: <HardDrive className="size-4" /> },
-    { value: "hybrid", label: "Hybrid", description: "Both cloud and local", icon: <Database className="size-4" /> },
+    {
+      value: "cloud",
+      label: "Cloud Storage",
+      description: "Sync across devices",
+      icon: <Database className="size-4" />,
+    },
+    {
+      value: "local",
+      label: "Local Storage",
+      description: "Store on device only",
+      icon: <HardDrive className="size-4" />,
+    },
+    {
+      value: "hybrid",
+      label: "Hybrid",
+      description: "Both cloud and local",
+      icon: <Database className="size-4" />,
+    },
   ];
 
   // Device options
@@ -193,8 +258,8 @@ export function SettingDropdownBlockDemo() {
             Setting Dropdown Block
           </h1>
           <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-            Comprehensive dropdown component with 4 variants, 3 sizes, searchable options, grouped options,
-            icons, badges, loading states, and full accessibility support.
+            Comprehensive dropdown component with 4 variants, 3 sizes, searchable options, grouped
+            options, icons, badges, loading states, and full accessibility support.
           </p>
         </div>
 
@@ -525,7 +590,10 @@ export function SettingDropdownBlockDemo() {
           </div>
 
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
-            <SettingDropdownGroup label="Display Settings" description="Customize your visual experience">
+            <SettingDropdownGroup
+              label="Display Settings"
+              description="Customize your visual experience"
+            >
               <SettingDropdownBlock
                 icon={<Palette />}
                 label="Theme"

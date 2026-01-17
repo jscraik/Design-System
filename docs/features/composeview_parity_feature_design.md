@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -35,7 +36,6 @@ Last updated: 2026-01-04
 - [Apps SDK widget (React + Apps SDK UI)](#apps-sdk-widget-react-apps-sdk-ui)
 - [SwiftUI (macOS)](#swiftui-macos)
 - [AppKit (macOS parity)](#appkit-macos-parity)
-
 
 ## 0) Summary
 

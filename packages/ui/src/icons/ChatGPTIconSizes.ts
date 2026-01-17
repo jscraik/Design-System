@@ -12,13 +12,15 @@ export type ChatGPTIconSizes = typeof chatGPTIconSizes;
 // Helper to get Tailwind size class from pixel size
 export function getSizeClass(size: keyof typeof chatGPTIconSizes): string {
   const pixelSize = chatGPTIconSizes[size];
-  if (typeof pixelSize === 'object') {
+  if (typeof pixelSize === "object") {
     return `w-[${pixelSize.width}px] h-[${pixelSize.height}px]`;
   }
   return `size-[${pixelSize}px]`;
 }
 
 // Utility for dynamic icon sizing
-export function getIconSizeInPixels(size: keyof typeof chatGPTIconSizes): number | { width: number; height: number } {
+export function getIconSizeInPixels(
+  size: keyof typeof chatGPTIconSizes,
+): number | { width: number; height: number } {
   return chatGPTIconSizes[size];
 }

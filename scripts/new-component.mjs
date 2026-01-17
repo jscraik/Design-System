@@ -27,9 +27,7 @@ if (!name) {
 
 const ACRONYMS = new Set(["OTP"]);
 const toPascalCase = (value) => {
-  const spaced = value
-    .replace(/[_\\s-]+/g, " ")
-    .replace(/([a-z0-9])([A-Z])/g, "$1 $2");
+  const spaced = value.replace(/[_\\s-]+/g, " ").replace(/([a-z0-9])([A-Z])/g, "$1 $2");
   return spaced
     .split(" ")
     .filter(Boolean)

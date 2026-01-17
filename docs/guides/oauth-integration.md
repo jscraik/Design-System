@@ -22,16 +22,13 @@ Tools can declare their authentication requirements via `securitySchemes`:
 
 ```javascript
 // No authentication required
-securitySchemes: [{ type: "noauth" }]
+securitySchemes: [{ type: "noauth" }];
 
 // OAuth required
-securitySchemes: [{ type: "oauth2", scopes: ["read", "write"] }]
+securitySchemes: [{ type: "oauth2", scopes: ["read", "write"] }];
 
 // Mixed: works without auth, enhanced with auth
-securitySchemes: [
-  { type: "noauth" },
-  { type: "oauth2", scopes: [] }
-]
+securitySchemes: [{ type: "noauth" }, { type: "oauth2", scopes: [] }];
 ```
 
 ## Tool Definition with OAuth
@@ -42,7 +39,9 @@ const tools = [
     name: "protected_tool",
     title: "Protected Action",
     description: "Requires authentication to access user data.",
-    inputSchema: { /* ... */ },
+    inputSchema: {
+      /* ... */
+    },
     securitySchemes: [{ type: "oauth2", scopes: [] }],
     annotations: {
       destructiveHint: false,
@@ -83,9 +82,7 @@ function oauthErrorResult(userMessage, error = "invalid_request", description) {
   return {
     content: [{ type: "text", text: userMessage }],
     _meta: {
-      "mcp/www_authenticate": [
-        buildWwwAuthenticateValue(error, description || userMessage)
-      ]
+      "mcp/www_authenticate": [buildWwwAuthenticateValue(error, description || userMessage)],
     },
     isError: true,
   };
@@ -109,29 +106,31 @@ function getBearerTokenFromRequest(request) {
 ```javascript
 async function handleProtectedTool(request, args) {
   const token = getBearerTokenFromRequest(request);
-  
+
   if (!token) {
     return oauthErrorResult(
       "Authentication required: no access token provided.",
       "invalid_request",
-      "No access token was provided"
+      "No access token was provided",
     );
   }
-  
+
   // Validate token (verify JWT, check expiry, etc.)
   const isValid = await validateToken(token);
   if (!isValid) {
     return oauthErrorResult(
       "Authentication failed: invalid or expired token.",
       "invalid_token",
-      "The access token is invalid or expired"
+      "The access token is invalid or expired",
     );
   }
-  
+
   // Proceed with authenticated request
   return {
     content: [{ type: "text", text: "Success!" }],
-    structuredContent: { /* widget data */ },
+    structuredContent: {
+      /* widget data */
+    },
   };
 }
 ```
@@ -181,16 +180,16 @@ Some tools work without auth but provide enhanced functionality when authenticat
 
 async function handleSearch(request, args) {
   const token = getBearerTokenFromRequest(request);
-  
+
   // Basic results for unauthenticated users
   const results = await searchPublicItems(args.query);
-  
+
   // Enhanced results for authenticated users
   if (token && await validateToken(token)) {
     const personalizedResults = await searchPersonalizedItems(args.query, token);
     results.push(...personalizedResults);
   }
-  
+
   return {
     content: [{ type: "text", text: `Found ${results.length} results` }],
     structuredContent: { results },
@@ -212,7 +211,9 @@ if (!authStatus?.authenticated) {
 }
 
 // Call protected tool
-const result = await window.openai?.callTool("protected_tool", { /* args */ });
+const result = await window.openai?.callTool("protected_tool", {
+  /* args */
+});
 ```
 
 ## Testing

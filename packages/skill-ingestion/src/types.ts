@@ -19,11 +19,7 @@ export type SkillStats = {
   templates: number;
 };
 
-export type SkillPlatform =
-  | "codex"
-  | "claude"
-  | "opencode"
-  | "copilot";
+export type SkillPlatform = "codex" | "claude" | "opencode" | "copilot";
 
 export type SkillSummary = {
   id: string;
@@ -84,10 +80,7 @@ export const skillPlatformMeta: Record<
   copilot: { storageKey: "copilot", relativePath: ".copilot/skills" },
 };
 
-export function platformRootPath(
-  platform: SkillPlatform,
-  baseDir: string = os.homedir(),
-): string {
+export function platformRootPath(platform: SkillPlatform, baseDir: string = os.homedir()): string {
   const info = skillPlatformMeta[platform];
   return path.join(baseDir, info.relativePath);
 }

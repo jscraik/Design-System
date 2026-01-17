@@ -43,8 +43,8 @@ function InspectorCard({ place, onClose }: { place: Place; onClose: (() => void)
               </Button>
             </div>
             <div className="text-sm mt-5 text-text-secondary">
-              {place.description} Enjoy a slice at one of SF's favorites. Fresh ingredients, great crust,
-              and cozy vibes.
+              {place.description} Enjoy a slice at one of SF's favorites. Fresh ingredients, great
+              crust, and cozy vibes.
             </div>
           </div>
 

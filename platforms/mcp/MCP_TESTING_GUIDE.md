@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (beginner to intermediate)
 - Scope: Task-focused instructions for this topic
 - Non-scope: Comprehensive architecture reference
@@ -29,7 +30,6 @@ Last updated: 2026-01-04
   - [Widget not found errors](#widget-not-found-errors)
 - [Files](#files)
 - [Related Documentation](#related-documentation)
-
 
 ## Overview
 
@@ -207,7 +207,7 @@ The JSON-RPC integration tests can run in CI:
 
 - name: Start MCP server
   run: pnpm -C platforms/mcp dev &
-  
+
 - name: Wait for server
   run: sleep 2
 
@@ -262,9 +262,11 @@ pnpm build:widgets
 - [ChatGPT Integration Guide](../../docs/guides/CHATGPT_INTEGRATION.md)
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.

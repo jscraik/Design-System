@@ -29,12 +29,11 @@ const textLinkVariants = cva(
       variant: "default",
       size: "md",
     },
-  }
+  },
 );
 
 export interface TextLinkProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
-    VariantProps<typeof textLinkVariants> {
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement>, VariantProps<typeof textLinkVariants> {
   external?: boolean;
   showExternalIcon?: boolean;
 }
@@ -51,7 +50,7 @@ const TextLink = React.forwardRef<HTMLAnchorElement, TextLinkProps>(
       href,
       ...props
     },
-    ref
+    ref,
   ) => {
     const isExternal = external || href?.startsWith("http");
 
@@ -72,7 +71,7 @@ const TextLink = React.forwardRef<HTMLAnchorElement, TextLinkProps>(
         )}
       </a>
     );
-  }
+  },
 );
 TextLink.displayName = "TextLink";
 

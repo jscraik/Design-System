@@ -3,12 +3,12 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 ## Deploy aStudio Widgets to Cloudflare Workers
 
@@ -292,9 +292,11 @@ npx wrangler status
 The Cloudflare Workers integration makes the aStudio widget library production-ready with minimal configuration, providing a robust foundation for deploying interactive widgets at scale.
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.

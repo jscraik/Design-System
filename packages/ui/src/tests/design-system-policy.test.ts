@@ -78,8 +78,7 @@ describe("Design system policy checks", () => {
     const rows = readCoverageMatrix();
     const missingUpstream = rows.filter(
       (row) =>
-        (row.source === "upstream_reexport" || row.source === "upstream_wrapper") &&
-        !row.upstream,
+        (row.source === "upstream_reexport" || row.source === "upstream_wrapper") && !row.upstream,
     );
     const missingFallbackMeta = rows.filter(
       (row) =>
@@ -94,9 +93,7 @@ describe("Design system policy checks", () => {
   test("Coverage matrix docs include entries and upstream version reference", () => {
     const rows = readCoverageMatrix();
     const docContent = readFileSync(MATRIX_DOC_PATH, "utf8");
-    const missingEntries = rows.filter(
-      (row) => !docContent.includes(`| ${row.name} |`),
-    );
+    const missingEntries = rows.filter((row) => !docContent.includes(`| ${row.name} |`));
 
     expect(docContent).toMatch(/Upstream version:\s+@openai\/apps-sdk-ui\s+/);
     expect(missingEntries).toEqual([]);

@@ -416,74 +416,73 @@ export function ChatInputReference({
                     <IconPlus className="size-5" />
                   </button>
                 </PopoverTrigger>
-                
-                  <PopoverContent
-                    side="top"
-                    align="start"
-                    sideOffset={8}
-                    className={cn(
-                      "z-50 w-[260px] rounded-2xl overflow-hidden",
-                      "border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
-                      "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2",
-                      "shadow-xl dark:shadow-black/20",
-                      "animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-2 duration-200",
-                    )}
-                  >
-                    <div className="p-2 space-y-0.5">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          onAttachmentAction?.("add-photos-files");
-                          setAttachmentMenuOpen(false);
-                        }}
-                        className={cn(
-                          "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left",
-                          "text-[15px] font-normal leading-[22px] tracking-[-0.3px] group",
-                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue",
-                          "text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-                          "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
-                        )}
-                      >
-                        <IconPaperclip className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
-                        <span>Add photos & files</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          onAttachmentAction?.("deep-research");
-                          setAttachmentMenuOpen(false);
-                        }}
-                        className={cn(
-                          "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left",
-                          "text-[15px] font-normal leading-[22px] tracking-[-0.3px] group",
-                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue",
-                          "text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-                          "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
-                        )}
-                      >
-                        <IconTelescope className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
-                        <span>Deep research</span>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          onAttachmentAction?.("create-image");
-                          setAttachmentMenuOpen(false);
-                        }}
-                        className={cn(
-                          "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left",
-                          "text-[15px] font-normal leading-[22px] tracking-[-0.3px] group",
-                          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue",
-                          "text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-                          "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
-                        )}
-                      >
-                        <IconImage className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
-                        <span>Create image</span>
-                      </button>
-                    </div>
-                  </PopoverContent>
-                
+
+                <PopoverContent
+                  side="top"
+                  align="start"
+                  sideOffset={8}
+                  className={cn(
+                    "z-50 w-[260px] rounded-2xl overflow-hidden",
+                    "border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
+                    "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2",
+                    "shadow-xl dark:shadow-black/20",
+                    "animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-2 duration-200",
+                  )}
+                >
+                  <div className="p-2 space-y-0.5">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onAttachmentAction?.("add-photos-files");
+                        setAttachmentMenuOpen(false);
+                      }}
+                      className={cn(
+                        "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left",
+                        "text-[15px] font-normal leading-[22px] tracking-[-0.3px] group",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue",
+                        "text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
+                        "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
+                      )}
+                    >
+                      <IconPaperclip className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+                      <span>Add photos & files</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onAttachmentAction?.("deep-research");
+                        setAttachmentMenuOpen(false);
+                      }}
+                      className={cn(
+                        "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left",
+                        "text-[15px] font-normal leading-[22px] tracking-[-0.3px] group",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue",
+                        "text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
+                        "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
+                      )}
+                    >
+                      <IconTelescope className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+                      <span>Deep research</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onAttachmentAction?.("create-image");
+                        setAttachmentMenuOpen(false);
+                      }}
+                      className={cn(
+                        "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left",
+                        "text-[15px] font-normal leading-[22px] tracking-[-0.3px] group",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue",
+                        "text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
+                        "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
+                      )}
+                    >
+                      <IconImage className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+                      <span>Create image</span>
+                    </button>
+                  </div>
+                </PopoverContent>
               </Popover>
 
               {/* Search Toggle */}

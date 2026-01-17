@@ -347,7 +347,7 @@ export function IconPickerModal({
           "border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
           "rounded-2xl shadow-2xl",
           // Hide default close button
-          "[&>button]:hidden"
+          "[&>button]:hidden",
         )}
       >
         {/* Accessible title and description (visually hidden but available for screen readers) */}
@@ -394,11 +394,7 @@ export function IconPickerModal({
                 stroke="currentColor"
                 strokeWidth={2}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>

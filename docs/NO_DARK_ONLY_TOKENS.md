@@ -3,6 +3,7 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -34,7 +35,6 @@ Last updated: 2026-01-09
   - [Step 3: Or use a utility pair](#step-3-or-use-a-utility-pair)
 - [Testing](#testing)
 - [Related Documentation](#related-documentation)
-
 
 ## Overview
 
@@ -278,12 +278,15 @@ pnpm lint -- packages/ui/src
 - [ESLint Modal Rules](./ESLINT_MODAL_RULES.md)
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.
 
 ## Troubleshooting
+
 - TBD: Add the top 3 failure modes and fixes.

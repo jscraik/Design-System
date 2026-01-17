@@ -14,9 +14,7 @@ function AppIcon({ name, color }: { name: string; color: string }) {
       className="size-5 rounded flex items-center justify-center flex-shrink-0"
       style={{ backgroundColor: color }}
     >
-      <span className="text-white text-[11px] font-semibold">
-        {getIconContent(name)}
-      </span>
+      <span className="text-white text-[11px] font-semibold">{getIconContent(name)}</span>
     </div>
   );
 }

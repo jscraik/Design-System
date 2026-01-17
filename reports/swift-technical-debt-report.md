@@ -3,12 +3,12 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 **Analysis Date:** 2026-01-02
 **Scope:** AStudioComponents, AStudioShellChatGPT, AStudioFoundation, ui-swift
@@ -43,16 +43,19 @@ The Swift codebase shows **moderate technical debt** with several critical areas
 **Severity:** Critical
 **Impact:** High maintenance cost, inconsistency risk
 **Locations:**
+
 - `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ChatUIButton.swift` (284 LOC)
 - `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/ui-swift/Sources/AStudioSwift/Components/ChatUIButton.swift` (410 LOC)
 
 **Issue:** Two nearly identical implementations of `ChatUIButton` with 95% code overlap.
 
 **Differences:**
+
 - AStudioComponents uses: `FType.rowTitle()`, `FSpacing.s16`, `FColor.bgCard`
 - ui-swift uses: `DesignTokens.Typography.Body.size`, `DesignTokens.Spacing.sm`, `DesignTokens.Colors.Background.secondary`
 
 **Shared Code:**
+
 - `ChatUIButtonVariant` enum (identical)
 - `ChatUIButtonSize` enum (identical)
 - `resolveAccessibilityLabel()` function (identical)
@@ -60,6 +63,7 @@ The Swift codebase shows **moderate technical debt** with several critical areas
 - Overall structure and initialization patterns
 
 **Recommendation:**
+
 ```swift
 // Create shared protocol in AStudioFoundation
 public protocol ChatUIButtonProtocol {
@@ -94,12 +98,14 @@ public extension View {
 **Severity:** Critical
 **Impact:** Token drift, maintenance nightmare
 **Locations:**
+
 - `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/DesignTokens.swift` (433 LOC)
 - `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/ui-swift/Sources/AStudioSwift/DesignTokens.swift` (421 LOC)
 
 **Issue:** Two separate design token implementations with overlapping structure but different values.
 
 **Structural Differences:**
+
 ```swift
 // AStudioFoundation version
 public enum DesignTokens {
@@ -123,12 +129,14 @@ public enum DesignTokens {
 ```
 
 **Overlapping but Divergent:**
+
 - Typography scale (same structure, slight value differences)
 - Spacing scale (same structure, different naming)
 - Corner radius (same structure, different values)
 - Accessibility extensions (split across files)
 
 **Recommendation:**
+
 1. Consolidate into single source in `AStudioFoundation`
 2. Use package-level re-exports in `ui-swift`
 3. Create migration guide for any breaking changes
@@ -155,6 +163,7 @@ public typealias UIDesignTokens = DesignTokens
 **Severity:** High
 **Impact:** Large binary size, maintenance overhead
 **Locations:**
+
 - `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Icons/ChatGPTIcons.swift` (448 LOC)
 - `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Icons/ChatGPTIconPaths.swift` (261 LOC)
 - `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Icons/ChatGPTIconVectors.swift` (482 LOC)
@@ -164,6 +173,7 @@ public typealias UIDesignTokens = DesignTokens
 **Issue:** Massive hand-coded icon data that should be asset-catalog based or generated.
 
 **Current Pattern:**
+
 ```swift
 // ChatGPTIcons.swift - 448 lines of repetitive code
 public struct ChatGPTIcon {
@@ -186,6 +196,7 @@ public struct ChatGPTIconVector {
 ```
 
 **Recommendation:**
+
 1. Migrate to Asset Catalog with color assets
 2. Use code generation for icon type-safe accessors
 3. Remove vector path data (use SF Symbols or Asset Catalog)
@@ -217,12 +228,14 @@ public enum ChatGPTIcon {
 **Severity:** High
 **Impact:** Developer confusion, inconsistent styling
 **Locations:**
+
 - AStudioComponents uses: `FType`, `FColor`, `FSpacing`
 - ui-swift uses: `DesignTokens.Typography`, `DesignTokens.Colors`, `DesignTokens.Spacing`
 
 **Issue:** Two competing token APIs in the same codebase.
 
 **Usage Examples:**
+
 ```swift
 // AStudioComponents pattern
 Text("Hello")
@@ -238,6 +251,7 @@ Text("Hello")
 ```
 
 **Recommendation:**
+
 1. Standardize on `DesignTokens` namespace (more explicit)
 2. Create convenience extensions for common patterns
 3. Deprecate FType/FColor/FSpacing with migration path
@@ -276,12 +290,14 @@ extension Color {
 **Severity:** High
 **Impact:** Code duplication, inconsistent styling
 **Locations:**
+
 - `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/SettingsCardView.swift`
 - `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/ui-swift/Sources/AStudioSwift/Components/ChatUICard.swift`
 
 **Issue:** Multiple card/container implementations without shared base.
 
 **Recommendation:**
+
 ```swift
 // In AStudioFoundation
 public struct ChatUICard<Content: View>: View {
@@ -324,6 +340,7 @@ public enum CardElevation {
 **Severity:** High
 **Impact:** Inconsistent UX, duplicated accessibility logic
 **Locations:**
+
 - AStudioComponents: `ModalDialogView.swift`, `AlertView.swift`
 - ui-swift: `ChatUIModal.swift`
 
@@ -342,11 +359,13 @@ Create shared modal protocol and base implementations in Foundation.
 **Severity:** Medium
 **Impact:** Hard to test, hard to maintain
 **Location:**
+
 - `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ComposeView.swift` (257 LOC)
 
 **Issue:** Monolithic view with deeply nested VStacks and hardcoded logic.
 
 **Current Structure:**
+
 ```swift
 public var body: some View {
     ScrollView {
@@ -399,12 +418,14 @@ struct TaskConfigurationSection: View { ... }
 **Severity:** Medium
 **Impact:** 641 LOC in single file, hard to navigate
 **Location:**
+
 - `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/ui-swift/Sources/AStudioSwift/Components/ChatUIDataDisplay.swift`
 
 **Issue:** Multiple unrelated components in one file (Table, List, Badge, etc.).
 
 **Recommendation:**
 Split into separate files:
+
 - `ChatUITable.swift`
 - `ChatUIList.swift`
 - `ChatUIBadge.swift`
@@ -426,6 +447,7 @@ Split into separate files:
 **Issue:** Some components have accessibility labels, others don't.
 
 **Examples:**
+
 ```swift
 // Good - ChatUIButton
 Button(action: action) {
@@ -442,6 +464,7 @@ Button { } label: {
 ```
 
 **Recommendation:**
+
 1. Create accessibility linting rules
 2. Add accessibility requirements to component template
 3. Run accessibility audit on all components
@@ -487,12 +510,14 @@ public extension View {
 **Severity:** Medium
 **Impact:** Visual regressions
 **Location:**
+
 - Only `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/AStudioComponents/Tests/AStudioComponentsTests/SnapshotTests.swift` (290 LOC)
 
 **Issue:** Many components lack snapshot tests.
 
 **Recommendation:**
 Add snapshot tests for all components:
+
 ```swift
 func testChatUIButton_variants() throws {
     for variant in ChatUIButtonVariant.allCases {
@@ -520,12 +545,14 @@ func testChatUIButton_variants() throws {
 **Issue:** Inconsistent grouping of components.
 
 **Current State:**
+
 - AStudioComponents: Flat structure with some subfolders
 - ui-swift: Components/ folder but mixed content
 - AStudioFoundation: Mixed token/utility files
 
 **Recommendation:**
 Standardize structure:
+
 ```
 Sources/
 ├── Components/
@@ -555,7 +582,8 @@ Sources/
 
 **Recommendation:**
 Add doc comments to all public APIs:
-```swift
+
+````swift
 /// A native button component with ChatGPT styling
 ///
 /// Use `ChatUIButton` for primary, secondary, and destructive actions.
@@ -571,7 +599,7 @@ Add doc comments to all public APIs:
 /// }
 /// ```
 public struct ChatUIButton<Content: View>: View { ... }
-```
+````
 
 **Effort:** 12-16 hours
 **Risk:** None
@@ -590,6 +618,7 @@ public struct ChatUIButton<Content: View>: View { ... }
 
 **Recommendation:**
 Audit all `#if os(macOS)` and `@available` checks:
+
 ```swift
 // Review if still needed
 #if os(macOS)
@@ -611,6 +640,7 @@ if theme.surfaceStyle == .glass {
 ### 9.1 Package Dependency Cleanup
 
 **Current State:**
+
 ```
 AStudioComponents -> AStudioFoundation + AStudioThemes
 ui-swift -> (standalone, duplicates Foundation)
@@ -618,6 +648,7 @@ AStudioShellChatGPT -> AStudioFoundation + AStudioThemes
 ```
 
 **Recommended:**
+
 ```
 AStudioFoundation (core tokens, utilities, protocols)
     ↓
@@ -629,6 +660,7 @@ ui-swift (reference/demo, re-exports everything)
 ```
 
 **Actions:**
+
 1. Make ui-swift depend on AStudioFoundation
 2. Remove duplicate tokens from ui-swift
 3. Add deprecation warnings for ui-swift components
@@ -670,21 +702,25 @@ public protocol Accessible {
 ## 10. PRIORITIZED ACTION PLAN
 
 ### Phase 1: Critical (Week 1-2)
+
 1. **Consolidate DesignTokens** - Create single source of truth
 2. **Extract ChatUIButton shared code** - Move to Foundation
 3. **Create shared accessibility helpers** - Reduce duplication
 
 ### Phase 2: High Priority (Week 3-4)
+
 4. **Standardize token APIs** - Deprecate FType/FColor/FSpacing
 5. **Create card/modal abstractions** - Reduce component duplication
 6. **Icon consolidation** - Migrate to asset catalog
 
 ### Phase 3: Medium Priority (Week 5-6)
+
 7. **Split complex views** - ComposeView, ChatUIDataDisplay
 8. **Accessibility audit** - Add missing labels, focus management
 9. **Add snapshot tests** - Cover all components
 
 ### Phase 4: Low Priority (Week 7-8)
+
 10. **Reorganize file structure** - Standardize across packages
 11. **Add documentation** - Doc comments for public APIs
 12. **Remove dead code** - Audit platform conditionals
@@ -694,17 +730,20 @@ public protocol Accessible {
 ## 11. ESTIMATED IMPACT
 
 ### Code Reduction
+
 - **Current:** ~19,210 LOC (excluding build artifacts)
 - **After refactoring:** ~14,500 LOC (24% reduction)
 - **Duplication elimination:** ~3,200 LOC
 - **Asset migration:** ~1,500 LOC (icons to asset catalog)
 
 ### Maintainability Improvement
+
 - **Duplication index:** 35% → 12%
 - **Average file size:** 210 LOC → 160 LOC
 - **Test coverage:** 15% → 65%
 
 ### Developer Experience
+
 - Single, consistent token API
 - Clear component abstractions
 - Better documentation
@@ -714,21 +753,23 @@ public protocol Accessible {
 
 ## 12. METRICS SUMMARY
 
-| Category | Count | Total LOC | Avg LOC |
-|----------|-------|-----------|---------|
-| Components (AStudioComponents) | 27 | ~5,400 | 200 |
-| Components (ui-swift) | 9 | ~7,200 | 800 |
-| Tokens/Foundation | 7 | ~2,100 | 300 |
-| Shell Integration | 6 | ~800 | 133 |
-| Icons | 3 | ~1,191 | 397 |
+| Category                       | Count | Total LOC | Avg LOC |
+| ------------------------------ | ----- | --------- | ------- |
+| Components (AStudioComponents) | 27    | ~5,400    | 200     |
+| Components (ui-swift)          | 9     | ~7,200    | 800     |
+| Tokens/Foundation              | 7     | ~2,100    | 300     |
+| Shell Integration              | 6     | ~800      | 133     |
+| Icons                          | 3     | ~1,191    | 397     |
 
 ### Duplication Analysis
+
 - **Critical duplicates:** 3 (ChatUIButton, DesignTokens, accessibility helpers)
 - **High duplicates:** 7 (cards, modals, patterns)
 - **Medium duplicates:** 12 (view modifiers, extensions)
 - **Estimated duplicate code:** ~4,800 LOC (25%)
 
 ### Complexity Metrics
+
 - **Functions > 30 LOC:** 15
 - **Files > 300 LOC:** 12
 - **Nesting depth > 4:** 23
@@ -739,16 +780,19 @@ public protocol Accessible {
 ## 13. RECOMMENDED TOOLS
 
 1. **Periphery** - Detect dead code
+
    ```bash
    periphery scan --setup periphery.yml
    ```
 
 2. **SwiftLint** - Enforce consistent style
+
    ```bash
    swiftlint lint --strict
    ```
 
 3. **SwiftFormat** - Consistent formatting
+
    ```bash
    swiftformat .
    ```
@@ -769,6 +813,7 @@ The Swift codebase has solid fundamentals but suffers from **evolutionary duplic
 3. **Missing shared abstractions** (cards, modals, accessibility)
 
 **Recommended approach:**
+
 - Consolidate to AStudioFoundation as single source of truth
 - Use ui-swift as reference/demo implementation
 - Phase out ui-swift as production library
@@ -778,6 +823,7 @@ The Swift codebase has solid fundamentals but suffers from **evolutionary duplic
 **Estimated effort:** 120-160 hours (4-6 weeks with dedicated focus)
 
 **ROI:**
+
 - 24% code reduction
 - 65% reduction in duplication
 - Significantly improved maintainability

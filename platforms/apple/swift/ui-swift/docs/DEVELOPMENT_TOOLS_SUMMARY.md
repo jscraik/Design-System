@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -29,7 +30,6 @@ Last updated: 2026-01-04
   - [New Files](#new-files)
   - [Modified Files](#modified-files)
 - [Status: COMPLETED ✅](#status-completed)
-
 
 > Legacy context: This summary applies to `platforms/apple/swift/ui-swift`, which is retained for reference.
 

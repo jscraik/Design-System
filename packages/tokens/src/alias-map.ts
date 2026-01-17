@@ -58,9 +58,7 @@ function buildModeMap(
 }
 
 function buildSpaceMap(values: readonly number[]): Record<string, AliasValue> {
-  return Object.fromEntries(
-    values.map((value) => [String(value), { path: `space.s${value}` }]),
-  );
+  return Object.fromEntries(values.map((value) => [String(value), { path: `space.s${value}` }]));
 }
 
 function buildRecordMap<T extends Record<string, unknown>>(
@@ -70,9 +68,7 @@ function buildRecordMap<T extends Record<string, unknown>>(
   return Object.fromEntries(Object.keys(record).map((key) => [key, { path: `${prefix}.${key}` }]));
 }
 
-function buildTypographyMap(
-  record: typeof typographyTokens,
-): Record<string, AliasValue> {
+function buildTypographyMap(record: typeof typographyTokens): Record<string, AliasValue> {
   return Object.fromEntries(
     Object.keys(record).map((key) => {
       if (key === "fontFamily") {

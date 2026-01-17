@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -25,7 +26,6 @@ Last updated: 2026-01-04
 - [Testing Coverage](#testing-coverage)
 - [Next Steps](#next-steps)
 - [See Also](#see-also)
-
 
 ## Problem
 
@@ -141,7 +141,7 @@ This launches a web-based interface for testing the server.
 ✅ Resource listing  
 ✅ Error handling  
 ✅ Malformed request handling  
-✅ Manual interactive testing  
+✅ Manual interactive testing
 
 ## Next Steps
 

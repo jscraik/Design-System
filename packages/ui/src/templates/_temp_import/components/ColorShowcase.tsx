@@ -367,7 +367,12 @@ function ColorGroup({
   }
 
   return (
-    <div className={cn("rounded-xl p-5 border shadow-sm hover:shadow-md transition-all duration-200", groupClass)}>
+    <div
+      className={cn(
+        "rounded-xl p-5 border shadow-sm hover:shadow-md transition-all duration-200",
+        groupClass,
+      )}
+    >
       <h3 className={cn("text-sm font-semibold mb-4", textClass)}>{title}</h3>
       <div className="space-y-0.5">
         {entries.map(([n, v]) => (
@@ -454,7 +459,9 @@ function Toast({ message, value, visible }: { message: string; value: string; vi
         "border border-foundation-bg-dark-3",
         "flex items-center gap-3",
         "transition-all duration-300 ease-out",
-        visible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95 pointer-events-none",
+        visible
+          ? "opacity-100 translate-y-0 scale-100"
+          : "opacity-0 translate-y-4 scale-95 pointer-events-none",
       )}
       role="status"
       aria-live="polite"
@@ -463,8 +470,12 @@ function Toast({ message, value, visible }: { message: string; value: string; vi
         <IconCheck className="size-5 text-foundation-accent-success" />
       </div>
       <div className="min-w-0">
-        <p className="text-sm font-semibold text-foundation-text-dark-primary leading-tight">{message}</p>
-        <p className="text-xs font-mono text-foundation-text-dark-secondary mt-0.5 truncate leading-tight">{value}</p>
+        <p className="text-sm font-semibold text-foundation-text-dark-primary leading-tight">
+          {message}
+        </p>
+        <p className="text-xs font-mono text-foundation-text-dark-secondary mt-0.5 truncate leading-tight">
+          {value}
+        </p>
       </div>
     </div>
   );
@@ -528,7 +539,7 @@ export function ColorShowcase() {
   };
 
   // Calculate stats
-  const totalColors = 
+  const totalColors =
     Object.keys(colors.background.dark).length +
     Object.keys(colors.background.light).length +
     Object.keys(colors.text.dark).length +
@@ -560,7 +571,7 @@ export function ColorShowcase() {
               </div>
             </div>
           </div>
-          
+
           {/* View Mode Toggle */}
           <div className="flex gap-1.5 p-1.5 rounded-xl bg-foundation-bg-dark-2 border border-foundation-bg-dark-3 shadow-sm">
             <button
@@ -575,7 +586,9 @@ export function ColorShowcase() {
                   : "text-foundation-text-dark-tertiary hover:text-foundation-text-dark-secondary hover:bg-foundation-bg-dark-3/50",
               )}
             >
-              <IconGrid className={cn("size-4", viewMode === "grid" && "text-foundation-accent-blue")} />
+              <IconGrid
+                className={cn("size-4", viewMode === "grid" && "text-foundation-accent-blue")}
+              />
               <span>Grid</span>
             </button>
             <button
@@ -590,7 +603,9 @@ export function ColorShowcase() {
                   : "text-foundation-text-dark-tertiary hover:text-foundation-text-dark-secondary hover:bg-foundation-bg-dark-3/50",
               )}
             >
-              <IconLayers className={cn("size-4", viewMode === "detailed" && "text-foundation-accent-blue")} />
+              <IconLayers
+                className={cn("size-4", viewMode === "detailed" && "text-foundation-accent-blue")}
+              />
               <span>Detailed</span>
             </button>
           </div>
@@ -608,16 +623,8 @@ export function ColorShowcase() {
             value={categories}
             icon={<IconLayers className="size-5" />}
           />
-          <StatCard
-            label="Themes"
-            value={2}
-            icon={<IconSparkles className="size-5" />}
-          />
-          <StatCard
-            label="View Modes"
-            value={2}
-            icon={<IconGrid className="size-5" />}
-          />
+          <StatCard label="Themes" value={2} icon={<IconSparkles className="size-5" />} />
+          <StatCard label="View Modes" value={2} icon={<IconGrid className="size-5" />} />
         </div>
       </div>
 
@@ -713,8 +720,16 @@ export function ColorShowcase() {
             <div className="flex items-center gap-3">
               <div className="h-px flex-1 bg-foundation-bg-dark-3" />
               <h2 className="text-lg font-semibold text-foundation-text-dark-primary flex items-center gap-2">
-                <svg className="size-5 text-foundation-accent-blue" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                <svg
+                  className="size-5 text-foundation-accent-blue"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
                 </svg>
                 CSS Variables (Live)
               </h2>

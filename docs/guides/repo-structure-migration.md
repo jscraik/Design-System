@@ -3,6 +3,7 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -22,7 +23,6 @@ Last updated: 2026-01-09
   - [Widgets](#widgets)
 - [Tooling updates to check](#tooling-updates-to-check)
 - [Verification checklist](#verification-checklist)
-
 
 This guide documents the 2026 restructure that improved discoverability and normalized package layouts. Use it to update local tooling, scripts, and bookmarks.
 
@@ -125,12 +125,15 @@ Use the published subpaths for UI primitives and app surfaces:
 - Token generation writes manifest to `packages/tokens/docs/outputs/manifest.json`.
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.
 
 ## Troubleshooting
+
 - TBD: Add the top 3 failure modes and fixes.

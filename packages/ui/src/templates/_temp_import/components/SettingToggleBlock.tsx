@@ -151,7 +151,9 @@ export function SettingToggleBlock({
         className={cn(
           "flex items-center justify-between gap-3",
           content,
-          !disabled && !loading && "cursor-pointer hover:bg-foundation-bg-light-2/50 dark:hover:bg-foundation-bg-dark-2/50 rounded-lg transition-colors",
+          !disabled &&
+            !loading &&
+            "cursor-pointer hover:bg-foundation-bg-light-2/50 dark:hover:bg-foundation-bg-dark-2/50 rounded-lg transition-colors",
         )}
         onClick={handleToggle}
         onKeyDown={handleKeyDown}

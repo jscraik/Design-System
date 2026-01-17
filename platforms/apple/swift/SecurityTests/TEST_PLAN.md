@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Maintainers and security reviewers
 - Scope: Security posture, guidance, and required practices
 - Non-scope: Feature usage or product marketing
@@ -37,7 +38,6 @@ Last updated: 2026-01-04
 - [Future Enhancements](#future-enhancements)
 - [Summary](#summary)
 
-
 ## Overview
 
 This document describes the comprehensive security test suites created for the aStudio Swift codebase. The tests cover authentication, client validation, rate limiting, search security, and cryptographic operations.
@@ -51,6 +51,7 @@ This document describes the comprehensive security test suites created for the a
 **Location:** `platforms/apple/swift/AStudioMCP/Tests/AStudioMCPTests/Security/`
 
 **Coverage:**
+
 - Keychain accessibility controls
 - Token storage and retrieval
 - Token deletion
@@ -59,6 +60,7 @@ This document describes the comprehensive security test suites created for the a
 - Edge cases
 
 **Test Categories:**
+
 - **Keychain Accessibility Tests**
   - Verify `kSecAttrAccessibleWhenUnlockedThisDeviceOnly` is set
   - Confirm items are not synchronizable via iCloud
@@ -113,12 +115,14 @@ This document describes the comprehensive security test suites created for the a
 **Location:** `platforms/apple/swift/AStudioMCP/Tests/AStudioMCPTests/Security/`
 
 **Coverage:**
+
 - URL validation (HTTPS vs HTTP, localhost, blocked hosts)
 - Tool name validation (format, length)
 - Endpoint validation
 - SSRF prevention
 
 **Test Categories:**
+
 - **URL Validation Tests**
   - HTTPS URLs accepted
   - Localhost HTTP URLs accepted
@@ -158,12 +162,14 @@ This document describes the comprehensive security test suites created for the a
 **Location:** `platforms/apple/swift/AStudioMCP/Tests/AStudioMCPTests/Security/`
 
 **Coverage:**
+
 - Rate limiting behavior
 - Window expiration
 - Concurrent requests
 - Usage statistics
 
 **Test Categories:**
+
 - **Basic Rate Limiting Tests**
   - Requests under limit
   - Reset after window
@@ -222,12 +228,14 @@ This document describes the comprehensive security test suites created for the a
 **Location:** `platforms/apple/swift/AStudioSystemIntegration/Tests/AStudioSystemIntegrationTests/Security/`
 
 **Coverage:**
+
 - Query sanitization
 - SQL injection prevention
 - Length validation
 - Input validation
 
 **Test Categories:**
+
 - **Query Sanitization Tests**
   - Special characters removed
   - Wildcards handled safely
@@ -284,12 +292,14 @@ This document describes the comprehensive security test suites created for the a
 **Location:** `platforms/apple/swift/AStudioSystemIntegration/Tests/AStudioSystemIntegrationTests/Security/`
 
 **Coverage:**
+
 - Encryption/decryption
 - Key management
 - Invalid data handling
 - Security properties
 
 **Test Categories:**
+
 - **Basic Encryption/Decryption Tests**
   - Data round-trip
   - String round-trip
@@ -395,22 +405,26 @@ swift test --enable-code-coverage --filter SecurityTests
 The following quality gates should be enforced in CI:
 
 ### Coverage Requirements
+
 - **Line Coverage:** ≥85% for security modules
 - **Branch Coverage:** ≥80% for security modules
 - All security-critical paths must be covered
 
 ### Security Requirements
+
 - All SSRF prevention tests must pass
 - All injection prevention tests must pass
 - All encryption/decryption tests must pass
 - All authentication tests must pass
 
 ### Performance Requirements
+
 - Encryption/decryption: <100ms for 1MB data
 - Rate limiter overhead: <1ms per request
 - Query sanitization: <10ms per query
 
 ### Flakiness Budget
+
 - <0.5% flake rate for security tests
 - No flaky tests allowed for security-critical functionality
 
@@ -505,25 +519,27 @@ static func generateMessage(id: String, content: String) -> ChatMessage {
 
 ## Summary
 
-| Test Suite | Test Count | Coverage | Key Areas |
-|------------|-----------|----------|-----------|
-| MCPAuthenticatorSecurityTests | 35+ | Keychain operations | Token lifecycle, access control |
-| MCPClientValidationTests | 40+ | Input validation | URL validation, SSRF prevention |
-| MCPRateLimiterTests | 45+ | Rate limiting | DoS prevention, concurrency |
-| SpotlightManagerSecurityTests | 40+ | Search security | Injection prevention, sanitization |
-| CryptoManagerTests | 50+ | Cryptography | Encryption, key management |
-| **Total** | **210+** | **Comprehensive** | **All security-critical code** |
+| Test Suite                    | Test Count | Coverage            | Key Areas                          |
+| ----------------------------- | ---------- | ------------------- | ---------------------------------- |
+| MCPAuthenticatorSecurityTests | 35+        | Keychain operations | Token lifecycle, access control    |
+| MCPClientValidationTests      | 40+        | Input validation    | URL validation, SSRF prevention    |
+| MCPRateLimiterTests           | 45+        | Rate limiting       | DoS prevention, concurrency        |
+| SpotlightManagerSecurityTests | 40+        | Search security     | Injection prevention, sanitization |
+| CryptoManagerTests            | 50+        | Cryptography        | Encryption, key management         |
+| **Total**                     | **210+**   | **Comprehensive**   | **All security-critical code**     |
 
 All tests follow XCTest best practices with async/await support, table-driven test patterns, comprehensive edge case coverage, and performance benchmarks.
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.
 
 ## Troubleshooting
-- TBD: Add the top 3 failure modes and fixes.
 
+- TBD: Add the top 3 failure modes and fixes.

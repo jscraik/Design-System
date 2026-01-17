@@ -3,12 +3,12 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 This guide explains how to connect a deployed aStudio MCP server to ChatGPT so widgets appear inside chats.
 
@@ -99,10 +99,11 @@ When tools or widgets change:
 - Apps SDK UI: `https://developers.openai.com/apps-sdk/`
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
-- TBD: Add concrete verification steps and expected results.
 
+- TBD: Add concrete verification steps and expected results.

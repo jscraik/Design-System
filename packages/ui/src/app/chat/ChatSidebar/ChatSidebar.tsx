@@ -11,7 +11,11 @@
 
 import { useRef } from "react";
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../../components/ui/base/Collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "../../../components/ui/base/Collapsible";
 import { Input } from "../../../components/ui/base/Input";
 import { ListItem } from "../../../components/ui/base/ListItem";
 import {

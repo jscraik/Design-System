@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Maintainers and security reviewers
 - Scope: Security posture, guidance, and required practices
 - Non-scope: Feature usage or product marketing
@@ -24,10 +25,10 @@ Last updated: 2026-01-04
 - [Next Steps](#next-steps)
 - [Support](#support)
 
-
 ## Test Files
 
 ### AStudioMCP Security Tests
+
 ```
 platforms/apple/swift/AStudioMCP/Tests/AStudioMCPTests/Security/
 ├── MCPAuthenticatorSecurityTests.swift (24 tests)
@@ -36,6 +37,7 @@ platforms/apple/swift/AStudioMCP/Tests/AStudioMCPTests/Security/
 ```
 
 ### AStudioSystemIntegration Security Tests
+
 ```
 platforms/apple/swift/AStudioSystemIntegration/Tests/AStudioSystemIntegrationTests/Security/
 ├── SpotlightManagerSecurityTests.swift (17 tests)
@@ -53,14 +55,14 @@ platforms/apple/swift/SecurityTests/
 
 ## Test Summary
 
-| File | Tests | Lines | Coverage |
-|------|-------|-------|----------|
-| MCPAuthenticatorSecurityTests.swift | 24 | ~550 | Keychain security |
-| MCPClientValidationTests.swift | 19 | ~580 | Input validation, SSRF |
-| MCPRateLimiterTests.swift | 27 | ~700 | DoS prevention |
-| SpotlightManagerSecurityTests.swift | 17 | ~620 | Injection prevention |
-| CryptoManagerTests.swift | 32 | ~655 | Cryptography |
-| **Total** | **119** | **3,105** | **Comprehensive** |
+| File                                | Tests   | Lines     | Coverage               |
+| ----------------------------------- | ------- | --------- | ---------------------- |
+| MCPAuthenticatorSecurityTests.swift | 24      | ~550      | Keychain security      |
+| MCPClientValidationTests.swift      | 19      | ~580      | Input validation, SSRF |
+| MCPRateLimiterTests.swift           | 27      | ~700      | DoS prevention         |
+| SpotlightManagerSecurityTests.swift | 17      | ~620      | Injection prevention   |
+| CryptoManagerTests.swift            | 32      | ~655      | Cryptography           |
+| **Total**                           | **119** | **3,105** | **Comprehensive**      |
 
 ## Key Features
 
@@ -104,7 +106,7 @@ Add to your CI pipeline:
   run: |
     cd platforms/apple/swift/AStudioMCP
     swift test --enable-code-coverage --filter SecurityTests
-    
+
 - name: Check Coverage
   run: |
     # Verify ≥85% line coverage
@@ -128,6 +130,7 @@ Add to your CI pipeline:
 ## Support
 
 For questions or issues, refer to:
+
 - TEST_PLAN.md for detailed documentation
 - QUALITY_REPORT.md for analysis and recommendations
 - Individual test files for inline documentation

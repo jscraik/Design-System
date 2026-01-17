@@ -17,7 +17,7 @@ export function Icon({
   color = "currentColor",
   className,
   "aria-label": ariaLabel,
-  "aria-hidden": ariaHidden
+  "aria-hidden": ariaHidden,
 }: IconProps) {
   const IconComponent = iconRegistry[name] as ComponentType<SVGProps<SVGSVGElement>> | undefined;
 

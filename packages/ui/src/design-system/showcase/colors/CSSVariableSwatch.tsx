@@ -8,12 +8,7 @@ interface CSSVariableSwatchProps {
 }
 
 /** CSSVariableSwatch displays a CSS variable with live preview and copy functionality. */
-export function CSSVariableSwatch({
-  name,
-  description,
-  onCopy,
-  isCopied,
-}: CSSVariableSwatchProps) {
+export function CSSVariableSwatch({ name, description, onCopy, isCopied }: CSSVariableSwatchProps) {
   const copyValue = `var(${name})`;
   return (
     <button

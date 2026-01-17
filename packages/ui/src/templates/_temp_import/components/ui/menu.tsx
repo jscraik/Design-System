@@ -24,7 +24,7 @@ const MenuSubTrigger = React.forwardRef<
       "focus:bg-foundation-bg-dark-3 data-[state=open]:bg-foundation-bg-dark-3",
       "text-foundation-text-dark-primary",
       inset && "pl-8",
-      className
+      className,
     )}
     {...props}
   >
@@ -47,7 +47,7 @@ const MenuSubContent = React.forwardRef<
       "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
       "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2",
       "data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-      className
+      className,
     )}
     {...props}
   />
@@ -69,7 +69,7 @@ const MenuContent = React.forwardRef<
         "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
         "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2",
         "data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-        className
+        className,
       )}
       {...props}
     />
@@ -93,7 +93,7 @@ const MenuItem = React.forwardRef<
         ? "text-foundation-accent-red focus:text-foundation-accent-red"
         : "text-foundation-text-dark-primary",
       inset && "pl-8",
-      className
+      className,
     )}
     {...props}
   />
@@ -110,7 +110,7 @@ const MenuCheckboxItem = React.forwardRef<
       "relative flex cursor-default select-none items-center gap-2 rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors",
       "focus:bg-foundation-bg-dark-3 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       "text-foundation-text-dark-primary",
-      className
+      className,
     )}
     checked={checked}
     {...props}
@@ -135,7 +135,7 @@ const MenuRadioItem = React.forwardRef<
       "relative flex cursor-default select-none items-center gap-2 rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors",
       "focus:bg-foundation-bg-dark-3 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       "text-foundation-text-dark-primary",
-      className
+      className,
     )}
     {...props}
   >
@@ -160,7 +160,7 @@ const MenuLabel = React.forwardRef<
     className={cn(
       "px-2 py-1.5 text-sm font-semibold text-foundation-text-dark-secondary",
       inset && "pl-8",
-      className
+      className,
     )}
     {...props}
   />
@@ -179,15 +179,12 @@ const MenuSeparator = React.forwardRef<
 ));
 MenuSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;
 
-const MenuShortcut = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLSpanElement>) => {
+const MenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
   return (
     <span
       className={cn(
         "ml-auto text-xs tracking-widest text-foundation-text-dark-tertiary",
-        className
+        className,
       )}
       {...props}
     />

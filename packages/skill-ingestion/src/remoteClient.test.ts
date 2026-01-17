@@ -11,7 +11,10 @@ describe("RemoteSkillClient", () => {
   });
 
   it("rejects when strictIntegrity enabled without checksum", async () => {
-    const client = new RemoteSkillClient({ baseURL: "https://example.test", strictIntegrity: true });
+    const client = new RemoteSkillClient({
+      baseURL: "https://example.test",
+      strictIntegrity: true,
+    });
     mockFetchOnce(Buffer.from("zip"));
     await expect(client.download("demo")).rejects.toThrow(/Checksum is required/);
   });
@@ -28,9 +31,9 @@ describe("RemoteSkillClient", () => {
   it("fails on checksum mismatch", async () => {
     const client = new RemoteSkillClient({ baseURL: "https://example.test" });
     mockFetchOnce(Buffer.from("different"));
-    await expect(
-      client.download("demo", { expectedChecksum: "deadbeef" }),
-    ).rejects.toThrow(/checksum/i);
+    await expect(client.download("demo", { expectedChecksum: "deadbeef" })).rejects.toThrow(
+      /checksum/i,
+    );
   });
 });
 
@@ -43,5 +46,4 @@ function mockFetchOnce(body: Buffer) {
   globalThis.fetch = fetchMock;
 }
 
-const cryptoChecksum = (data: Buffer): string =>
-  createHash("sha256").update(data).digest("hex");
+const cryptoChecksum = (data: Buffer): string => createHash("sha256").update(data).digest("hex");

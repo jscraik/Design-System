@@ -34,7 +34,7 @@ const parseMarkdown = (content: string) => {
             code={codeContent.trim()}
             language={codeLanguage}
             className="my-4"
-          />
+          />,
         );
       }
       return;
@@ -50,19 +50,19 @@ const parseMarkdown = (content: string) => {
       elements.push(
         <h3 key={index} className="mt-6 mb-2 text-lg font-semibold">
           {line.slice(4)}
-        </h3>
+        </h3>,
       );
     } else if (line.startsWith("## ")) {
       elements.push(
         <h2 key={index} className="mt-8 mb-3 text-xl font-semibold">
           {line.slice(3)}
-        </h2>
+        </h2>,
       );
     } else if (line.startsWith("# ")) {
       elements.push(
         <h1 key={index} className="mt-8 mb-4 text-2xl font-semibold">
           {line.slice(2)}
-        </h1>
+        </h1>,
       );
     }
     // Unordered list
@@ -70,7 +70,7 @@ const parseMarkdown = (content: string) => {
       elements.push(
         <li key={index} className="ml-4">
           {parseInline(line.slice(2))}
-        </li>
+        </li>,
       );
     }
     // Ordered list
@@ -78,7 +78,7 @@ const parseMarkdown = (content: string) => {
       elements.push(
         <li key={index} className="ml-4">
           {parseInline(line.replace(/^\d+\. /, ""))}
-        </li>
+        </li>,
       );
     }
     // Blockquote
@@ -89,24 +89,19 @@ const parseMarkdown = (content: string) => {
           className="border-l-4 border-foundation-accent-blue pl-4 italic text-foundation-text-dark-secondary my-4"
         >
           {parseInline(line.slice(2))}
-        </blockquote>
+        </blockquote>,
       );
     }
     // Horizontal rule
     else if (line.match(/^---+$/)) {
-      elements.push(
-        <hr
-          key={index}
-          className="my-8 border-foundation-text-dark-primary/10"
-        />
-      );
+      elements.push(<hr key={index} className="my-8 border-foundation-text-dark-primary/10" />);
     }
     // Paragraph
     else if (line.trim()) {
       elements.push(
         <p key={index} className="my-2 leading-relaxed">
           {parseInline(line)}
-        </p>
+        </p>,
       );
     }
     // Empty line
@@ -129,12 +124,7 @@ const parseInline = (text: string): React.ReactNode => {
     {
       regex: /\[([^\]]+)\]\(([^)]+)\)/,
       render: (match: RegExpMatchArray) => (
-        <TextLink
-          key={`link-${key++}`}
-          href={match[2]}
-          variant="default"
-          showExternalIcon
-        >
+        <TextLink key={`link-${key++}`} href={match[2]} variant="default" showExternalIcon>
           {match[1]}
         </TextLink>
       ),
@@ -142,16 +132,12 @@ const parseInline = (text: string): React.ReactNode => {
     // Bold **text**
     {
       regex: /\*\*([^*]+)\*\*/,
-      render: (match: RegExpMatchArray) => (
-        <strong key={`bold-${key++}`}>{match[1]}</strong>
-      ),
+      render: (match: RegExpMatchArray) => <strong key={`bold-${key++}`}>{match[1]}</strong>,
     },
     // Italic *text*
     {
       regex: /\*([^*]+)\*/,
-      render: (match: RegExpMatchArray) => (
-        <em key={`italic-${key++}`}>{match[1]}</em>
-      ),
+      render: (match: RegExpMatchArray) => <em key={`italic-${key++}`}>{match[1]}</em>,
     },
     // Inline code `code`
     {
@@ -206,14 +192,14 @@ const Markdown = React.forwardRef<HTMLDivElement, MarkdownProps>(
           "prose prose-invert max-w-none",
           "text-foundation-text-dark-primary",
           "[&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
-          className
+          className,
         )}
         {...props}
       >
         {elements}
       </div>
     );
-  }
+  },
 );
 Markdown.displayName = "Markdown";
 

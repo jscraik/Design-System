@@ -3,6 +3,7 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Engineers and technical leads
 - Scope: System architecture and component relationships
 - Non-scope: Step-by-step operational procedures
@@ -30,7 +31,6 @@ Last updated: 2026-01-09
   - [For ChatGPT Widgets](#for-chatgpt-widgets)
 - [Next Steps](#next-steps)
 - [Verify](#verify)
-
 
 ## Overview
 

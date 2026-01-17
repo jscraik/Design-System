@@ -12,7 +12,8 @@ export function ChatInputDemo() {
               Chat Input Component
             </h2>
             <p className="text-[16px] font-normal leading-[26px] tracking-[-0.4px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-              Complete chat input with attachments, search toggle, research toggle, and voice input - fully compliant with ChatGPT design tokens
+              Complete chat input with attachments, search toggle, research toggle, and voice input
+              - fully compliant with ChatGPT design tokens
             </p>
           </div>
           <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg overflow-hidden bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1">

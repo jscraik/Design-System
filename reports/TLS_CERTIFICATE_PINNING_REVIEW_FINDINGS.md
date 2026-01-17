@@ -3,12 +3,12 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 ```json
 {
@@ -180,9 +180,7 @@ Last updated: 2026-01-04
       "PinningMode: .strict | .relaxed",
       "PinningHashType: .spkiSHA256 | .certificateSHA256"
     ],
-    "classes": [
-      "CertificatePinningValidator"
-    ],
+    "classes": ["CertificatePinningValidator"],
     "methods": [
       "CertificatePinningValidator.init(pinnedHashes:hashType:mode:)",
       "CertificatePinningValidator.production(hashes:)",
@@ -190,15 +188,10 @@ Last updated: 2026-01-04
       "CertificatePinningValidator.extractSPKIHash(from:)",
       "CertificatePinningValidator.extractCertificateHash(from:)"
     ],
-    "extensions": [
-      "MCPClient convenience init with pinning support"
-    ]
+    "extensions": ["MCPClient convenience init with pinning support"]
   },
   "dependencies": {
-    "required": [
-      "Foundation (Apple)",
-      "CryptoKit (Apple)"
-    ],
+    "required": ["Foundation (Apple)", "CryptoKit (Apple)"],
     "external": [],
     "recommendations": []
   },
@@ -247,6 +240,7 @@ Last updated: 2026-01-04
 The TLS certificate pinning implementation for AStudioMCP is **PRODUCTION-READY** with the following key achievements:
 
 ### ✅ Completed
+
 1. Comprehensive CertificatePinningValidator implementation (420+ lines)
 2. Full unit test coverage with 15+ test cases
 3. Integration with MCPClient via convenience initializers
@@ -256,6 +250,7 @@ The TLS certificate pinning implementation for AStudioMCP is **PRODUCTION-READY*
 7. Security review: **APPROVED**
 
 ### 📋 Recommendations
+
 1. Extract real production server certificate hashes
 2. Implement secure hash storage (Keychain recommended)
 3. Add integration tests with staging environment
@@ -263,6 +258,7 @@ The TLS certificate pinning implementation for AStudioMCP is **PRODUCTION-READY*
 5. Add monitoring for pinning failures in production
 
 ### 🔒 Security Posture
+
 - **SPKI Pinning**: ✅ Industry best practice
 - **Certificate Rotation**: ✅ Supported via multiple hashes
 - **Development Support**: ✅ Automatic localhost detection
@@ -270,6 +266,7 @@ The TLS certificate pinning implementation for AStudioMCP is **PRODUCTION-READY*
 - **API Security**: ✅ Uses latest Apple Security frameworks
 
 ### 📊 Metrics
+
 - **Build Time**: 0.76s
 - **Hash Computation**: < 1ms per certificate
 - **Memory Overhead**: Minimal

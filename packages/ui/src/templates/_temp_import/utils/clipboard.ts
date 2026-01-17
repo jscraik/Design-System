@@ -13,37 +13,37 @@ export async function copyToClipboard(text: string): Promise<boolean> {
       return true;
     } catch (err) {
       // Fall through to legacy method
-      console.warn('Clipboard API failed, using fallback method:', err);
+      console.warn("Clipboard API failed, using fallback method:", err);
     }
   }
 
   // Fallback: use the older document.execCommand method
   try {
-    const textArea = document.createElement('textarea');
+    const textArea = document.createElement("textarea");
     textArea.value = text;
-    
+
     // Make the textarea invisible and non-interactive
-    textArea.style.position = 'fixed';
-    textArea.style.top = '-9999px';
-    textArea.style.left = '-9999px';
-    textArea.style.opacity = '0';
-    textArea.setAttribute('readonly', '');
-    
+    textArea.style.position = "fixed";
+    textArea.style.top = "-9999px";
+    textArea.style.left = "-9999px";
+    textArea.style.opacity = "0";
+    textArea.setAttribute("readonly", "");
+
     document.body.appendChild(textArea);
-    
+
     // Select the text
     textArea.select();
     textArea.setSelectionRange(0, text.length);
-    
+
     // Copy using execCommand
-    const success = document.execCommand('copy');
-    
+    const success = document.execCommand("copy");
+
     // Clean up
     document.body.removeChild(textArea);
-    
+
     return success;
   } catch (err) {
-    console.error('Failed to copy to clipboard:', err);
+    console.error("Failed to copy to clipboard:", err);
     return false;
   }
 }

@@ -196,9 +196,7 @@ function validateTokenConsistency() {
     const swiftSpacing = extractSwiftSpacing(swiftContent);
     const spacingDiff = compareNumberSets(cssSpacing, swiftSpacing);
     if (spacingDiff.missingInSwift.length > 0) {
-      errors.push(
-        `❌ Swift spacing scale missing: ${spacingDiff.missingInSwift.join(", ")}`,
-      );
+      errors.push(`❌ Swift spacing scale missing: ${spacingDiff.missingInSwift.join(", ")}`);
     }
     if (spacingDiff.missingInCss.length > 0) {
       errors.push(`❌ CSS spacing scale missing: ${spacingDiff.missingInCss.join(", ")}`);
@@ -211,9 +209,7 @@ function validateTokenConsistency() {
     const swiftFontFamily = extractSwiftFontFamily(swiftContent);
 
     if (fontFamily && swiftFontFamily && fontFamily !== swiftFontFamily) {
-      errors.push(
-        `❌ Font family mismatch (CSS ${fontFamily} vs Swift ${swiftFontFamily})`,
-      );
+      errors.push(`❌ Font family mismatch (CSS ${fontFamily} vs Swift ${swiftFontFamily})`);
     }
 
     for (const mapping of TYPOGRAPHY_MAPPINGS) {
@@ -267,7 +263,9 @@ function validateTokenConsistency() {
       console.log("✅ All tokens are consistent!");
       console.log(`   ${COLOR_MAPPINGS.length} key colors validated across CSS and Swift`);
       console.log(`   ${cssSpacing.size} spacing tokens validated across CSS and Swift`);
-      console.log(`   ${TYPOGRAPHY_MAPPINGS.length} typography groups validated across CSS and Swift`);
+      console.log(
+        `   ${TYPOGRAPHY_MAPPINGS.length} typography groups validated across CSS and Swift`,
+      );
       return true;
     }
 
@@ -304,8 +302,7 @@ function validateTokenConsistency() {
  */
 function extractCSSVariables(cssContent) {
   const vars = new Map();
-  const baseContent =
-    cssContent.split("@media (prefers-contrast: high)")[0] ?? cssContent;
+  const baseContent = cssContent.split("@media (prefers-contrast: high)")[0] ?? cssContent;
   const colorRegex = /--foundation-([\w-]+):\s*([^;]+);/g;
   let match;
 
@@ -372,9 +369,7 @@ function componentToHex(value) {
 }
 
 function extractColorsetHex(colorset) {
-  const light = colorset.colors.find(
-    (c) => !c.appearances || c.appearances.length === 0,
-  );
+  const light = colorset.colors.find((c) => !c.appearances || c.appearances.length === 0);
   const dark = colorset.colors.find(
     (c) => c.appearances && c.appearances.some((a) => a.value === "dark"),
   );
@@ -465,11 +460,7 @@ function extractSwiftTypography(swiftContent) {
       }
     }
 
-    if (
-      [size, lineHeight, weight, tracking, emphasisWeight].some((value) =>
-        Number.isNaN(value),
-      )
-    ) {
+    if ([size, lineHeight, weight, tracking, emphasisWeight].some((value) => Number.isNaN(value))) {
       continue;
     }
 

@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Documentation maintainers and reviewers
 - Scope: QA checklist for Markdown documentation updates
 - Non-scope: Code review checklists or CI enforcement rules

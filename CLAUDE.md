@@ -3,12 +3,12 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
@@ -245,7 +245,7 @@ See `docs/guides/PAGES_QUICK_START.md` for adding pages.
 | Chat UI components | ChatUIRoot, ChatHeader, ChatSidebar, ChatMessages, ChatInput |
 | UI primitives      | Button, Dialog, Tabs, Tooltip                                |
 | Icons              | Icons adapter, ChatGPTIcons                                  |
-| Pages              | DesignSystemPage (via `@astudio/ui/dev`)                      |
+| Pages              | DesignSystemPage (via `@astudio/ui/dev`)                     |
 | Templates          | ChatFullWidthTemplate, DashboardTemplate (experimental)      |
 | Utilities          | useControllableState                                         |
 

@@ -201,18 +201,18 @@ const config = {
 
     viteConfig.optimizeDeps = {
       ...(viteConfig.optimizeDeps ?? {}),
-      include: [
-        "@storybook/addon-docs",
-        "@storybook/addon-a11y",
-        "@storybook/addon-docs/blocks",
-      ],
+      include: ["@storybook/addon-docs", "@storybook/addon-a11y", "@storybook/addon-docs/blocks"],
     };
 
     viteConfig.build = {
       ...(viteConfig.build ?? {}),
       rollupOptions: {
         ...(viteConfig.build?.rollupOptions ?? {}),
-        external: ["@storybook/addon-docs", "@storybook/addon-docs/blocks", "@storybook/addon-a11y"],
+        external: [
+          "@storybook/addon-docs",
+          "@storybook/addon-docs/blocks",
+          "@storybook/addon-a11y",
+        ],
       },
       minify: false,
     };

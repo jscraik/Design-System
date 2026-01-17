@@ -443,11 +443,7 @@ describe("Token Generation Properties", () => {
     const swiftOutput = await generator.generateSwift();
     const cssOutput = await generator.generateCSS();
     const assetCatalogOutput = await generator.generateAssetCatalog();
-    const manifest = await generator.generateManifest(
-      swiftOutput,
-      cssOutput,
-      assetCatalogOutput,
-    );
+    const manifest = await generator.generateManifest(swiftOutput, cssOutput, assetCatalogOutput);
 
     expect(manifest.schemaVersion).toBeTruthy();
     expect(manifest.appsSdkUiVersion).toBeTruthy();

@@ -14,7 +14,8 @@ const textLinkVariants = cva(
         inline:
           "text-foreground underline underline-offset-4 decoration-muted-foreground hover:decoration-accent",
         nav: "text-muted-foreground hover:text-foreground no-underline",
-        destructive: "text-destructive hover:text-destructive/80 underline-offset-4 hover:underline",
+        destructive:
+          "text-destructive hover:text-destructive/80 underline-offset-4 hover:underline",
       },
       size: {
         sm: "text-sm",
@@ -30,8 +31,7 @@ const textLinkVariants = cva(
 );
 
 export interface TextLinkProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
-    VariantProps<typeof textLinkVariants> {
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement>, VariantProps<typeof textLinkVariants> {
   external?: boolean;
   showExternalIcon?: boolean;
 }

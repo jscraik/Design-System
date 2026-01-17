@@ -16,7 +16,10 @@ export function ColorsTab() {
   );
 
   return (
-    <Section title="Color Tokens" description="38 color tokens for backgrounds, text, icons, and accents">
+    <Section
+      title="Color Tokens"
+      description="38 color tokens for backgrounds, text, icons, and accents"
+    >
       <div className="space-y-6">
         {Object.entries(groupedColors).map(([group, swatches]) => (
           <Card key={group}>

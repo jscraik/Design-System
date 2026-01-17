@@ -5,11 +5,7 @@
       "title": "Educational Starter",
       "description": "A compact learning hub template with quick actions and lesson highlights.",
       "category": "educational",
-      "tags": [
-        "education",
-        "overview",
-        "starter"
-      ],
+      "tags": ["education", "overview", "starter"],
       "status": "beta",
       "route": "/templates/educational-starter",
       "entry": "EducationalStarterTemplate",
@@ -20,11 +16,7 @@
       "title": "Template Field Group",
       "description": "Grouped fields with shared label and actions.",
       "category": "templates",
-      "tags": [
-        "form",
-        "grouping",
-        "templates"
-      ],
+      "tags": ["form", "grouping", "templates"],
       "status": "stable",
       "route": "/templates/template-field-group",
       "entry": "TemplateFieldGroupSample",
@@ -35,11 +27,7 @@
       "title": "Template Footer Bar",
       "description": "Footer bar with status and actions.",
       "category": "templates",
-      "tags": [
-        "actions",
-        "footer",
-        "templates"
-      ],
+      "tags": ["actions", "footer", "templates"],
       "status": "stable",
       "route": "/templates/template-footer-bar",
       "entry": "TemplateFooterBarSample",
@@ -50,11 +38,7 @@
       "title": "Template Form Field",
       "description": "Form field wrapper with label and helper text.",
       "category": "templates",
-      "tags": [
-        "form",
-        "input",
-        "templates"
-      ],
+      "tags": ["form", "input", "templates"],
       "status": "stable",
       "route": "/templates/template-form-field",
       "entry": "TemplateFormFieldSample",
@@ -65,11 +49,7 @@
       "title": "Template Header Bar",
       "description": "Header bar with title and optional actions.",
       "category": "templates",
-      "tags": [
-        "header",
-        "navigation",
-        "templates"
-      ],
+      "tags": ["header", "navigation", "templates"],
       "status": "stable",
       "route": "/templates/template-header-bar",
       "entry": "TemplateHeaderBarSample",
@@ -80,11 +60,7 @@
       "title": "Template Panel",
       "description": "Container with optional header, footer, and variants.",
       "category": "templates",
-      "tags": [
-        "container",
-        "panel",
-        "templates"
-      ],
+      "tags": ["container", "panel", "templates"],
       "status": "stable",
       "route": "/templates/template-panel",
       "entry": "TemplatePanelSample",
@@ -95,11 +71,7 @@
       "title": "Template Shell",
       "description": "Layout shell with sidebar, header, body, footer, and detail slots.",
       "category": "templates",
-      "tags": [
-        "layout",
-        "shell",
-        "templates"
-      ],
+      "tags": ["layout", "shell", "templates"],
       "status": "stable",
       "route": "/templates/template-shell",
       "entry": "TemplateShellSample",
@@ -110,11 +82,7 @@
       "title": "Components Showcase",
       "description": "Lightweight reference for core inputs, badges, and actions.",
       "category": "components",
-      "tags": [
-        "actions",
-        "components",
-        "inputs"
-      ],
+      "tags": ["actions", "components", "inputs"],
       "status": "stable",
       "route": "/templates/components-showcase",
       "entry": "ComponentsShowcaseTemplate",
@@ -125,10 +93,7 @@
       "title": "Color Showcase",
       "description": "Color palette with light and dark modes.",
       "category": "design-system",
-      "tags": [
-        "color",
-        "design-system"
-      ],
+      "tags": ["color", "design-system"],
       "status": "stable",
       "route": "/templates/color-showcase",
       "entry": "ColorShowcase",
@@ -139,10 +104,7 @@
       "title": "Design System Documentation",
       "description": "Documentation for design tokens and usage guidance.",
       "category": "design-system",
-      "tags": [
-        "design-system",
-        "docs"
-      ],
+      "tags": ["design-system", "docs"],
       "status": "stable",
       "route": "/templates/design-system-docs",
       "entry": "DesignSystemDocs",
@@ -153,10 +115,7 @@
       "title": "Foundations Showcase",
       "description": "Design system hub with foundational tokens.",
       "category": "design-system",
-      "tags": [
-        "design-system",
-        "foundations"
-      ],
+      "tags": ["design-system", "foundations"],
       "status": "stable",
       "route": "/templates/foundations-showcase",
       "entry": "FoundationsShowcase",
@@ -167,10 +126,7 @@
       "title": "Iconography Showcase",
       "description": "Icon library overview with categories and guidelines.",
       "category": "design-system",
-      "tags": [
-        "design-system",
-        "icons"
-      ],
+      "tags": ["design-system", "icons"],
       "status": "stable",
       "route": "/templates/iconography-showcase",
       "entry": "IconographyShowcase",
@@ -181,10 +137,7 @@
       "title": "Spacing Showcase",
       "description": "Spacing scale and layout examples.",
       "category": "design-system",
-      "tags": [
-        "design-system",
-        "spacing"
-      ],
+      "tags": ["design-system", "spacing"],
       "status": "stable",
       "route": "/templates/spacing-showcase",
       "entry": "SpacingShowcase",
@@ -195,10 +148,7 @@
       "title": "Typography Showcase",
       "description": "Typography system with font families, sizes, and weights.",
       "category": "design-system",
-      "tags": [
-        "design-system",
-        "typography"
-      ],
+      "tags": ["design-system", "typography"],
       "status": "stable",
       "route": "/templates/typography-showcase",
       "entry": "TypographyShowcase",
@@ -209,10 +159,7 @@
       "title": "Chat",
       "description": "Full chat experience with sidebar, header, messages, and composer.",
       "category": "layouts",
-      "tags": [
-        "chat",
-        "complete"
-      ],
+      "tags": ["chat", "complete"],
       "status": "stable",
       "route": "/templates/chat",
       "entry": "ChatTemplate",
@@ -223,10 +170,7 @@
       "title": "Chat Full Width",
       "description": "Full-width chat layout with header, messages, and composer.",
       "category": "layouts",
-      "tags": [
-        "chat",
-        "layout"
-      ],
+      "tags": ["chat", "layout"],
       "status": "stable",
       "route": "/templates/chat-full-width",
       "entry": "ChatFullWidthTemplate",
@@ -237,10 +181,7 @@
       "title": "Chat Header",
       "description": "Top navigation header for chat surfaces.",
       "category": "layouts",
-      "tags": [
-        "chat",
-        "header"
-      ],
+      "tags": ["chat", "header"],
       "status": "stable",
       "route": "/templates/chat-header",
       "entry": "ChatHeaderTemplate",
@@ -251,10 +192,7 @@
       "title": "Chat Input",
       "description": "Composer bar with attachments and send controls.",
       "category": "layouts",
-      "tags": [
-        "chat",
-        "input"
-      ],
+      "tags": ["chat", "input"],
       "status": "stable",
       "route": "/templates/chat-input",
       "entry": "ChatInputTemplate",
@@ -265,10 +203,7 @@
       "title": "Chat Messages",
       "description": "Message list with assistant and user messages.",
       "category": "layouts",
-      "tags": [
-        "chat",
-        "messages"
-      ],
+      "tags": ["chat", "messages"],
       "status": "stable",
       "route": "/templates/chat-messages",
       "entry": "ChatMessagesTemplate",
@@ -279,10 +214,7 @@
       "title": "Chat Sidebar",
       "description": "Sidebar layout with chat history list.",
       "category": "layouts",
-      "tags": [
-        "chat",
-        "sidebar"
-      ],
+      "tags": ["chat", "sidebar"],
       "status": "stable",
       "route": "/templates/chat-sidebar",
       "entry": "ChatSidebarTemplate",
@@ -293,10 +225,7 @@
       "title": "Chat Two Pane",
       "description": "Two-pane chat layout with sidebar and main content slots.",
       "category": "layouts",
-      "tags": [
-        "chat",
-        "layout"
-      ],
+      "tags": ["chat", "layout"],
       "status": "stable",
       "route": "/templates/chat-two-pane",
       "entry": "ChatTwoPaneTemplate",
@@ -307,11 +236,7 @@
       "title": "Chat Variants",
       "description": "Slot-based chat layout variations (split, compact, rail).",
       "category": "layouts",
-      "tags": [
-        "chat",
-        "slots",
-        "variants"
-      ],
+      "tags": ["chat", "slots", "variants"],
       "status": "stable",
       "route": "/templates/chat-variants",
       "entry": "ChatVariantsTemplate",
@@ -322,10 +247,7 @@
       "title": "Compose",
       "description": "Prompt builder and compose workflow template.",
       "category": "layouts",
-      "tags": [
-        "chat",
-        "compose"
-      ],
+      "tags": ["chat", "compose"],
       "status": "stable",
       "route": "/templates/compose",
       "entry": "ComposeTemplate",
@@ -336,10 +258,7 @@
       "title": "Dashboard",
       "description": "Dashboard template for widgets and cards.",
       "category": "layouts",
-      "tags": [
-        "dashboard",
-        "layout"
-      ],
+      "tags": ["dashboard", "layout"],
       "status": "stable",
       "route": "/templates/dashboard",
       "entry": "DashboardTemplate",
@@ -350,10 +269,7 @@
       "title": "Setting Dropdown Block",
       "description": "Dropdown selection block for settings.",
       "category": "settings",
-      "tags": [
-        "dropdown",
-        "settings"
-      ],
+      "tags": ["dropdown", "settings"],
       "status": "stable",
       "route": "/templates/setting-dropdown-block",
       "entry": "SettingDropdownBlockSample",
@@ -364,10 +280,7 @@
       "title": "Setting Row Block",
       "description": "Static row for navigation or quick settings.",
       "category": "settings",
-      "tags": [
-        "navigation",
-        "settings"
-      ],
+      "tags": ["navigation", "settings"],
       "status": "stable",
       "route": "/templates/setting-row-block",
       "entry": "SettingRowBlockSample",
@@ -378,10 +291,7 @@
       "title": "Setting Toggle Block",
       "description": "Toggle row for settings control.",
       "category": "settings",
-      "tags": [
-        "settings",
-        "toggle"
-      ],
+      "tags": ["settings", "toggle"],
       "status": "stable",
       "route": "/templates/setting-toggle-block",
       "entry": "SettingToggleBlockSample",
@@ -392,10 +302,7 @@
       "title": "Discovery Settings Modal",
       "description": "Modal for configuring prompt enhancement and discovery settings.",
       "category": "modals",
-      "tags": [
-        "modals",
-        "settings"
-      ],
+      "tags": ["modals", "settings"],
       "status": "stable",
       "route": "/templates/discovery-settings-modal",
       "entry": "DiscoverySettingsModalTemplate",
@@ -406,10 +313,7 @@
       "title": "Icon Picker Modal",
       "description": "Modal for selecting project icons with color choices.",
       "category": "modals",
-      "tags": [
-        "icons",
-        "modals"
-      ],
+      "tags": ["icons", "modals"],
       "status": "stable",
       "route": "/templates/icon-picker-modal",
       "entry": "IconPickerModalTemplate",
@@ -420,10 +324,7 @@
       "title": "Settings Modal",
       "description": "Full settings modal with nested panels.",
       "category": "modals",
-      "tags": [
-        "modals",
-        "settings"
-      ],
+      "tags": ["modals", "settings"],
       "status": "stable",
       "route": "/templates/settings-modal",
       "entry": "SettingsModalTemplate",
@@ -434,10 +335,7 @@
       "title": "Apps Panel",
       "description": "Apps settings panel template.",
       "category": "panels",
-      "tags": [
-        "apps",
-        "settings"
-      ],
+      "tags": ["apps", "settings"],
       "status": "stable",
       "route": "/templates/apps-panel",
       "entry": "AppsPanelTemplate",
@@ -448,10 +346,7 @@
       "title": "Archived Chats Panel",
       "description": "Archived chats panel template.",
       "category": "panels",
-      "tags": [
-        "chats",
-        "settings"
-      ],
+      "tags": ["chats", "settings"],
       "status": "stable",
       "route": "/templates/archived-chats-panel",
       "entry": "ArchivedChatsPanelTemplate",
@@ -462,10 +357,7 @@
       "title": "Audio Settings Panel",
       "description": "Audio settings panel template.",
       "category": "panels",
-      "tags": [
-        "audio",
-        "settings"
-      ],
+      "tags": ["audio", "settings"],
       "status": "stable",
       "route": "/templates/audio-settings-panel",
       "entry": "AudioSettingsPanelTemplate",
@@ -476,10 +368,7 @@
       "title": "Check for Updates Panel",
       "description": "Check for updates panel template.",
       "category": "panels",
-      "tags": [
-        "settings",
-        "updates"
-      ],
+      "tags": ["settings", "updates"],
       "status": "stable",
       "route": "/templates/check-for-updates-panel",
       "entry": "CheckForUpdatesPanelTemplate",
@@ -490,10 +379,7 @@
       "title": "Data Controls Panel",
       "description": "Data controls panel template.",
       "category": "panels",
-      "tags": [
-        "data",
-        "settings"
-      ],
+      "tags": ["data", "settings"],
       "status": "stable",
       "route": "/templates/data-controls-panel",
       "entry": "DataControlsPanelTemplate",
@@ -504,10 +390,7 @@
       "title": "Manage Apps Panel",
       "description": "Manage apps panel template.",
       "category": "panels",
-      "tags": [
-        "apps",
-        "settings"
-      ],
+      "tags": ["apps", "settings"],
       "status": "stable",
       "route": "/templates/manage-apps-panel",
       "entry": "ManageAppsPanelTemplate",
@@ -518,10 +401,7 @@
       "title": "Notifications Panel",
       "description": "Notifications panel template.",
       "category": "panels",
-      "tags": [
-        "notifications",
-        "settings"
-      ],
+      "tags": ["notifications", "settings"],
       "status": "stable",
       "route": "/templates/notifications-panel",
       "entry": "NotificationsPanelTemplate",
@@ -532,10 +412,7 @@
       "title": "Personalization Panel",
       "description": "Personalization panel template.",
       "category": "panels",
-      "tags": [
-        "personalization",
-        "settings"
-      ],
+      "tags": ["personalization", "settings"],
       "status": "stable",
       "route": "/templates/personalization-panel",
       "entry": "PersonalizationPanelTemplate",
@@ -546,10 +423,7 @@
       "title": "Security Panel",
       "description": "Security panel template.",
       "category": "panels",
-      "tags": [
-        "security",
-        "settings"
-      ],
+      "tags": ["security", "settings"],
       "status": "stable",
       "route": "/templates/security-panel",
       "entry": "SecurityPanelTemplate",

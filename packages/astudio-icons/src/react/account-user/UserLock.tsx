@@ -1,5 +1,18 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const UserLock = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" preserveAspectRatio="none" viewBox="0 0 24 24" ref={ref} {...props}><g fill="currentColor"><path d="M12 4a3 3 0 1 0 0 6 3 3 0 0 0 0-6M7 7a5 5 0 1 1 10 0A5 5 0 0 1 7 7m10.5 7.5a1 1 0 0 1 1 1v.5h-2v-.5a1 1 0 0 1 1-1m3 1.708V15.5a3 3 0 1 0-6 0v.708A2.5 2.5 0 0 0 13 18.5v2a2.5 2.5 0 0 0 2.5 2.5h4a2.5 2.5 0 0 0 2.5-2.5v-2a2.5 2.5 0 0 0-1.5-2.292M15.5 18h4a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5M11.992 13.938a1 1 0 0 1-.869 1.116C7.894 15.456 5.5 18.014 5.5 21a1 1 0 1 1-2 0c0-4.113 3.267-7.42 7.377-7.93a1 1 0 0 1 1.115.868" /></g></svg>);
+const UserLock = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    preserveAspectRatio="none"
+    viewBox="0 0 24 24"
+    ref={ref}
+    {...props}
+  >
+    <g fill="currentColor">
+      <path d="M12 4a3 3 0 1 0 0 6 3 3 0 0 0 0-6M7 7a5 5 0 1 1 10 0A5 5 0 0 1 7 7m10.5 7.5a1 1 0 0 1 1 1v.5h-2v-.5a1 1 0 0 1 1-1m3 1.708V15.5a3 3 0 1 0-6 0v.708A2.5 2.5 0 0 0 13 18.5v2a2.5 2.5 0 0 0 2.5 2.5h4a2.5 2.5 0 0 0 2.5-2.5v-2a2.5 2.5 0 0 0-1.5-2.292M15.5 18h4a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5M11.992 13.938a1 1 0 0 1-.869 1.116C7.894 15.456 5.5 18.014 5.5 21a1 1 0 1 1-2 0c0-4.113 3.267-7.42 7.377-7.93a1 1 0 0 1 1.115.868" />
+    </g>
+  </svg>
+));
 UserLock.displayName = "UserLock";
 export default UserLock;

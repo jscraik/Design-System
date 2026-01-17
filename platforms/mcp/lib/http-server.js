@@ -36,11 +36,7 @@ function checkRateLimit(ip) {
   return true;
 }
 
-export function startMcpHttpServer({
-  createServerInstance,
-  rootMessage,
-  onListen,
-} = {}) {
+export function startMcpHttpServer({ createServerInstance, rootMessage, onListen } = {}) {
   if (typeof createServerInstance !== "function") {
     throw new Error("startMcpHttpServer requires a createServerInstance function");
   }

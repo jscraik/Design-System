@@ -9,6 +9,7 @@ This test plan addresses the critical testing gaps identified in the codebase au
 ## Current State
 
 ### Existing Tests
+
 - **15 test files** exist (excluding node_modules)
 - **Vitest** is configured as the test runner
 - **Playwright** is configured for E2E testing
@@ -16,6 +17,7 @@ This test plan addresses the critical testing gaps identified in the codebase au
 - **Accessibility tests** exist for widgets
 
 ### Critical Gaps
+
 - No unit tests for core UI components (Button, Input, Modal, etc.)
 - No integration tests for widget functionality
 - Chat components lack comprehensive testing
@@ -29,6 +31,7 @@ This test plan addresses the critical testing gaps identified in the codebase au
 **Goal:** Test individual components in isolation
 
 **Priority 1 - Core Primitives**
+
 - [ ] Button (`packages/ui/src/components/ui/base/Button/`)
 - [ ] Input (`packages/ui/src/components/ui/base/Input/`)
 - [ ] Textarea (`packages/ui/src/components/ui/base/Textarea/`)
@@ -39,6 +42,7 @@ This test plan addresses the critical testing gaps identified in the codebase au
 - [ ] Tooltip (`packages/ui/src/components/ui/overlays/Tooltip/`)
 
 **Priority 2 - Chat Components**
+
 - [ ] ChatHeader (`packages/ui/src/app/chat/ChatHeader/`)
 - [ ] ChatSidebar (`packages/ui/src/app/chat/ChatSidebar/`)
 - [ ] ChatMessages (`packages/ui/src/app/chat/ChatMessages/`)
@@ -46,17 +50,20 @@ This test plan addresses the critical testing gaps identified in the codebase au
 - [ ] Message rendering (in `packages/ui/src/app/chat/ChatMessages/`)
 
 **Priority 3 - Form Components**
+
 - [ ] FormField (`packages/ui/src/components/ui/forms/Form/` via FormField export)
 - [ ] FormLabel (`packages/ui/src/components/ui/forms/Form/` via FormLabel export)
 - [ ] FormDescription (`packages/ui/src/components/ui/forms/Form/` via FormDescription export)
 - [ ] FormError (`packages/ui/src/components/ui/forms/Form/` via FormMessage export)
 
 **Priority 4 - Navigation**
+
 - [ ] Tabs (`packages/ui/src/components/ui/navigation/Tabs/`)
 - [ ] Breadcrumb (`packages/ui/src/components/ui/navigation/Breadcrumb/`)
 - [ ] ModelSelector (`packages/ui/src/components/ui/navigation/ModelSelector/`)
 
 **Priority 5 - Feedback**
+
 - [ ] AlertDialog (`packages/ui/src/components/ui/feedback/AlertDialog/`)
 - [ ] Toast (`packages/ui/src/components/ui/feedback/Toast/`)
 - [ ] Sonner (`packages/ui/src/components/ui/feedback/Sonner/`)
@@ -66,17 +73,20 @@ This test plan addresses the critical testing gaps identified in the codebase au
 **Goal:** Test component interactions and composition
 
 **Priority 1 - Chat Workflows**
+
 - [ ] Complete chat flow (send message → receive response)
 - [ ] Chat mode switching (browse, create, casual)
 - [ ] Thread management (create, delete, rename)
 - [ ] Attachment handling
 
 **Priority 2 - Form Workflows**
+
 - [ ] Multi-step form completion
 - [ ] Form validation
 - [ ] Error handling
 
 **Priority 3 - Widget Integration**
+
 - [ ] Widget mounting/unmounting
 - [ ] Host adapter switching (embedded vs standalone)
 - [ ] Event handling
@@ -86,17 +96,20 @@ This test plan addresses the critical testing gaps identified in the codebase au
 **Goal:** Test complete user workflows
 
 **Priority 1 - Core Chat**
+
 - [ ] New chat creation
 - [ ] Message sending and receiving
 - [ ] History navigation
 - [ ] Settings modification
 
 **Priority 2 - Widget Embedding**
+
 - [ ] Widget loads correctly
 - [ ] Widget responds to host events
 - [ ] Widget sends events to host
 
 **Priority 3 - Cross-browser**
+
 - [ ] Chrome compatibility
 - [ ] Firefox compatibility
 - [ ] Safari compatibility
@@ -107,12 +120,14 @@ This test plan addresses the critical testing gaps identified in the codebase au
 **Goal:** Catch unintended visual changes
 
 **Priority 1 - Component States**
+
 - [ ] Button (default, hover, active, disabled, loading)
 - [ ] Input (default, focus, error, disabled)
 - [ ] Dialog (open, closed, with/without backdrop)
 - [ ] Message bubble (user, assistant, system)
 
 **Priority 2 - Theme Variants**
+
 - [ ] Light mode
 - [ ] Dark mode
 - [ ] High contrast mode (if applicable)
@@ -122,16 +137,19 @@ This test plan addresses the critical testing gaps identified in the codebase au
 **Goal:** Ensure WCAG 2.2 AA compliance
 
 **Priority 1 - Keyboard Navigation**
+
 - [ ] All interactive elements are keyboard accessible
 - [ ] Tab order is logical
 - [ ] Focus indicators are visible
 
 **Priority 2 - Screen Reader**
+
 - [ ] ARIA labels are correct
 - [ ] Role attributes are appropriate
 - [ ] State changes are announced
 
 **Priority 3 - Color Contrast**
+
 - [ ] All text meets WCAG AA contrast ratios
 - [ ] Interactive elements have sufficient contrast
 
@@ -168,33 +186,37 @@ Create shared test utilities in `packages/ui/src/testing/`:
 
 ## Coverage Targets
 
-| Category | Current | Target | Priority |
-|----------|---------|--------|----------|
-| Core Primitives | ~10% | 90% | P0 |
-| Chat Components | ~5% | 85% | P0 |
-| Form Components | 0% | 80% | P1 |
-| Navigation | 0% | 80% | P1 |
-| Feedback | 0% | 75% | P2 |
-| **Overall** | **<20%** | **80%** | - |
+| Category        | Current  | Target  | Priority |
+| --------------- | -------- | ------- | -------- |
+| Core Primitives | ~10%     | 90%     | P0       |
+| Chat Components | ~5%      | 85%     | P0       |
+| Form Components | 0%       | 80%     | P1       |
+| Navigation      | 0%       | 80%     | P1       |
+| Feedback        | 0%       | 75%     | P2       |
+| **Overall**     | **<20%** | **80%** | -        |
 
 ## Implementation Timeline
 
 ### Phase 1: Foundation (Week 1)
+
 - [ ] Set up test utilities (`test-helpers.tsx`, `host-mock.ts`)
 - [ ] Configure Vitest for better coverage reporting
 - [ ] Write tests for 5 core primitives (Button, Input, Dialog, etc.)
 
 ### Phase 2: Core Components (Week 2-3)
+
 - [ ] Complete all Priority 1 component tests
 - [ ] Set up integration test framework
 - [ ] Write chat flow integration tests
 
 ### Phase 3: Extended Coverage (Week 4-5)
+
 - [ ] Complete Priority 2-4 component tests
 - [ ] Expand integration test coverage
 - [ ] Set up visual regression testing
 
 ### Phase 4: E2E & Accessibility (Week 6)
+
 - [ ] Write critical E2E tests
 - [ ] Complete accessibility audit
 - [ ] Document testing guidelines

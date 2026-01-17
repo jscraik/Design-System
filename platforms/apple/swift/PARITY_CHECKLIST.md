@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Operators and maintainers
 - Scope: Operational steps and verification
 - Non-scope: Long-form design history
@@ -53,7 +54,6 @@ Last updated: 2026-01-04
 - [Next Steps](#next-steps)
 - [Contributing](#contributing)
 - [License](#license)
-
 
 This document tracks the parity between React components in `packages/ui` and SwiftUI components in `platforms/apple/swift/AStudioComponents`.
 
@@ -145,14 +145,14 @@ This document tracks the parity between React components in `packages/ui` and Sw
 
 ## Layout Components
 
-| Component        | React               | SwiftUI                          | Status | Notes                            |
-| ---------------- | ------------------- | -------------------------------- | ------ | -------------------------------- |
-| AppShell         | Custom layouts      | `AppShellView.swift`             | ✅     | NavigationSplitView-based        |
-| ChatShell        | `ChatShell.tsx`     | `ChatShell.swift`                | ✅     | Slot-based layout container      |
+| Component        | React                           | SwiftUI                          | Status | Notes                            |
+| ---------------- | ------------------------------- | -------------------------------- | ------ | -------------------------------- |
+| AppShell         | Custom layouts                  | `AppShellView.swift`             | ✅     | NavigationSplitView-based        |
+| ChatShell        | `ChatShell.tsx`                 | `ChatShell.swift`                | ✅     | Slot-based layout container      |
 | Chat Variants    | `ChatVariants/ChatVariants.tsx` | `ChatVariantsTemplateView.swift` | ✅     | Split/compact/context-rail demos |
-| RoundedContainer | Custom styling      | `RoundedAppContainer.swift`      | ✅     | ChatGPT-style clipping           |
-| VisualEffect     | ➖                  | `VisualEffectView.swift`         | ✅     | macOS vibrancy, iOS fallback     |
-| ScrollArea       | `ScrollArea.tsx`    | ➖                               | ➖     | Use native ScrollView            |
+| RoundedContainer | Custom styling                  | `RoundedAppContainer.swift`      | ✅     | ChatGPT-style clipping           |
+| VisualEffect     | ➖                              | `VisualEffectView.swift`         | ✅     | macOS vibrancy, iOS fallback     |
+| ScrollArea       | `ScrollArea.tsx`                | ➖                               | ➖     | Use native ScrollView            |
 
 ## Form Components
 
@@ -437,13 +437,15 @@ When adding new components:
 See repository root for license information.
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.
 
 ## Troubleshooting
-- TBD: Add the top 3 failure modes and fixes.
 
+- TBD: Add the top 3 failure modes and fixes.

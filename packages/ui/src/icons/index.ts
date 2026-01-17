@@ -41,7 +41,12 @@ export {
   IconReply,
   IconShuffle,
 } from "./legacy/chatgpt/arrows";
-export { IconGroup, IconGroupFilled, IconUserAdd, IconUserLock as IconUserLockLegacy } from "./legacy/chatgpt/account";
+export {
+  IconGroup,
+  IconGroupFilled,
+  IconUserAdd,
+  IconUserLock as IconUserLockLegacy,
+} from "./legacy/chatgpt/account";
 export {
   IconNotification,
   IconNotificationFilled,
@@ -118,13 +123,17 @@ export {
   IconPlusCircle,
   IconX,
 } from "./chatgpt/missing-icons";
-export { IconCloseBold, IconDotsHorizontal, IconPlusSm, IconSidebar } from "./legacy/chatgpt/interface";
+export {
+  IconCloseBold,
+  IconDotsHorizontal,
+  IconPlusSm,
+  IconSidebar,
+} from "./legacy/chatgpt/interface";
 export { IconRadio, IconRefreshCw as IconRefresh } from "./legacy/chatgpt/platform";
 
 // ----------------------------------------------------------------------------
 // ICON CATALOG (for browsing all icons)
 // ----------------------------------------------------------------------------
-
 
 // ----------------------------------------------------------------------------
 // SIZE UTILITIES

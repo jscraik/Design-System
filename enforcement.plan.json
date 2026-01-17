@@ -45,11 +45,7 @@
           "string_concat_in_sql",
           "weak_crypto"
         ],
-        "warnings": [
-          "insecure_urls",
-          "print_in_production",
-          "insecure_random"
-        ]
+        "warnings": ["insecure_urls", "print_in_production", "insecure_random"]
       }
     },
     {
@@ -58,10 +54,7 @@
       "type": "static_analysis",
       "status": "created",
       "description": "Automated security vulnerability scanning",
-      "query_suites": [
-        "security-extended",
-        "security-and-quality"
-      ],
+      "query_suites": ["security-extended", "security-and-quality"],
       "checks": [
         "tainted-flow",
         "unsafe-code",
@@ -90,10 +83,7 @@
       "status": "created",
       "description": "Automated scanning of Swift Package dependencies",
       "tool": "swift-package-audit",
-      "scope": [
-        "Package.resolved",
-        "Package.swift"
-      ],
+      "scope": ["Package.resolved", "Package.swift"],
       "enforcement": {
         "block_on_vulnerabilities": true,
         "severity_threshold": "medium"
@@ -130,12 +120,7 @@
       "type": "enforcement",
       "status": "created",
       "description": "Automated security checks that block merge on failure",
-      "gates": [
-        "swiftlint",
-        "codeql",
-        "dependency_security",
-        "security_tests"
-      ],
+      "gates": ["swiftlint", "codeql", "dependency_security", "security_tests"],
       "enforcement": {
         "all_must_pass": true,
         "block_on_failure": true,
@@ -147,12 +132,7 @@
 
   "workflow": {
     "name": "Swift Security Scanning",
-    "triggers": [
-      "pull_request",
-      "push:main",
-      "schedule:daily",
-      "workflow_dispatch"
-    ],
+    "triggers": ["pull_request", "push:main", "schedule:daily", "workflow_dispatch"],
     "jobs": [
       {
         "name": "swiftlint",
@@ -163,9 +143,7 @@
           "tool": "swiftlint",
           "path": "/usr/local/bin/swiftlint"
         },
-        "outputs": [
-          "swiftlint-report.json"
-        ],
+        "outputs": ["swiftlint-report.json"],
         "artifacts": {
           "name": "swiftlint-results",
           "retention_days": 30
@@ -176,9 +154,7 @@
         "purpose": "Automated vulnerability scanning",
         "timeout_minutes": 60,
         "run_on": "macos-latest",
-        "outputs": [
-          "codeql-sarif.sarif"
-        ],
+        "outputs": ["codeql-sarif.sarif"],
         "upload_to": "github_security"
       },
       {
@@ -186,9 +162,7 @@
         "purpose": "Scan dependencies for vulnerabilities",
         "timeout_minutes": 10,
         "run_on": "macos-latest",
-        "outputs": [
-          "dependency-security-report.md"
-        ],
+        "outputs": ["dependency-security-report.md"],
         "artifacts": {
           "name": "dependency-security-report",
           "retention_days": 30
@@ -199,10 +173,7 @@
         "purpose": "Run security test suite",
         "timeout_minutes": 30,
         "run_on": "macos-latest",
-        "outputs": [
-          "security-coverage.txt",
-          "security-coverage.lcov"
-        ],
+        "outputs": ["security-coverage.txt", "security-coverage.lcov"],
         "artifacts": {
           "name": "security-test-coverage",
           "retention_days": 30
@@ -217,12 +188,7 @@
         "purpose": "Aggregate and enforce all security checks",
         "timeout_minutes": 5,
         "run_on": "ubuntu-latest",
-        "depends_on": [
-          "swiftlint",
-          "codeql",
-          "dependency-security",
-          "security-tests"
-        ],
+        "depends_on": ["swiftlint", "codeql", "dependency-security", "security-tests"],
         "enforcement": {
           "fail_on_any_error": true
         }

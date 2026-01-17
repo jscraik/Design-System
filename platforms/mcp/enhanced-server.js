@@ -220,7 +220,10 @@ const _showCartInputSchema = z
 // Pizzaz Shop schemas
 const _showShopInputSchema = z
   .object({
-    view: z.enum(["cart", "checkout", "confirmation"]).optional().describe("Initial view to display"),
+    view: z
+      .enum(["cart", "checkout", "confirmation"])
+      .optional()
+      .describe("Initial view to display"),
     items: z.array(cartItemSchema).optional().describe("Pre-populate cart with items"),
   })
   .strict();
@@ -490,7 +493,10 @@ const toolListSchemaMap = {
     output: displayDashboardOutputJsonSchema,
   },
   add_to_cart: { input: addToCartInputJsonSchema, output: addToCartOutputJsonSchema },
-  remove_from_cart: { input: removeFromCartInputJsonSchema, output: removeFromCartOutputJsonSchema },
+  remove_from_cart: {
+    input: removeFromCartInputJsonSchema,
+    output: removeFromCartOutputJsonSchema,
+  },
   show_cart: { input: showCartInputJsonSchema, output: showCartOutputJsonSchema },
   show_shop: { input: showShopInputJsonSchema, output: showShopOutputJsonSchema },
   place_order: { input: placeOrderInputJsonSchema, output: placeOrderOutputJsonSchema },
@@ -508,7 +514,9 @@ function installListToolsHandler(server) {
         const schemas = toolListSchemaMap[name] ?? {};
         const inputSchema =
           schemas.input ??
-          (tool.inputSchema ? toJsonSchema(tool.inputSchema, `${name}Input`) : emptyInputJsonSchema);
+          (tool.inputSchema
+            ? toJsonSchema(tool.inputSchema, `${name}Input`)
+            : emptyInputJsonSchema);
         const outputSchema =
           schemas.output ??
           (tool.outputSchema ? toJsonSchema(tool.outputSchema, `${name}Output`) : undefined);
@@ -1150,28 +1158,100 @@ function getOutputSchemaForTool(toolName) {
 
 function getAnnotationsForTool(toolName) {
   const annotationsMap = {
-    display_chat: { readOnlyHint: true, destructiveHint: false, openWorldHint: false, idempotentHint: true },
-    display_search_results: { readOnlyHint: true, destructiveHint: false, openWorldHint: false, idempotentHint: true },
-    display_table: { readOnlyHint: true, destructiveHint: false, openWorldHint: false, idempotentHint: true },
-    display_dashboard: { readOnlyHint: true, destructiveHint: false, openWorldHint: false, idempotentHint: true },
-    display_demo: { readOnlyHint: true, destructiveHint: false, openWorldHint: false, idempotentHint: true },
-    add_to_cart: { readOnlyHint: false, destructiveHint: false, openWorldHint: false, idempotentHint: false },
-    remove_from_cart: { readOnlyHint: false, destructiveHint: true, openWorldHint: false, idempotentHint: true },
-    show_cart: { readOnlyHint: true, destructiveHint: false, openWorldHint: false, idempotentHint: true },
-    show_shop: { readOnlyHint: true, destructiveHint: false, openWorldHint: false, idempotentHint: true },
-    place_order: { readOnlyHint: false, destructiveHint: false, openWorldHint: false, idempotentHint: false },
-    auth_status: { readOnlyHint: true, destructiveHint: false, openWorldHint: false, idempotentHint: true },
-    auth_login: { readOnlyHint: false, destructiveHint: false, openWorldHint: true, idempotentHint: false },
-    auth_logout: { readOnlyHint: false, destructiveHint: true, openWorldHint: false, idempotentHint: true },
-    auth_refresh: { readOnlyHint: false, destructiveHint: false, openWorldHint: true, idempotentHint: true },
+    display_chat: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: false,
+      idempotentHint: true,
+    },
+    display_search_results: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: false,
+      idempotentHint: true,
+    },
+    display_table: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: false,
+      idempotentHint: true,
+    },
+    display_dashboard: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: false,
+      idempotentHint: true,
+    },
+    display_demo: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: false,
+      idempotentHint: true,
+    },
+    add_to_cart: {
+      readOnlyHint: false,
+      destructiveHint: false,
+      openWorldHint: false,
+      idempotentHint: false,
+    },
+    remove_from_cart: {
+      readOnlyHint: false,
+      destructiveHint: true,
+      openWorldHint: false,
+      idempotentHint: true,
+    },
+    show_cart: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: false,
+      idempotentHint: true,
+    },
+    show_shop: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: false,
+      idempotentHint: true,
+    },
+    place_order: {
+      readOnlyHint: false,
+      destructiveHint: false,
+      openWorldHint: false,
+      idempotentHint: false,
+    },
+    auth_status: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      openWorldHint: false,
+      idempotentHint: true,
+    },
+    auth_login: {
+      readOnlyHint: false,
+      destructiveHint: false,
+      openWorldHint: true,
+      idempotentHint: false,
+    },
+    auth_logout: {
+      readOnlyHint: false,
+      destructiveHint: true,
+      openWorldHint: false,
+      idempotentHint: true,
+    },
+    auth_refresh: {
+      readOnlyHint: false,
+      destructiveHint: false,
+      openWorldHint: true,
+      idempotentHint: true,
+    },
   };
 
-  return annotationsMap[toolName] ?? {
-    readOnlyHint: false,
-    destructiveHint: false,
-    openWorldHint: false,
-    idempotentHint: false,
-  };
+  return (
+    annotationsMap[toolName] ?? {
+      readOnlyHint: false,
+      destructiveHint: false,
+      openWorldHint: false,
+      idempotentHint: false,
+    }
+  );
 }
 
 export { createEnhancedChatUiServer };

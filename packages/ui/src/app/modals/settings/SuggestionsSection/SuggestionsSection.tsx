@@ -22,21 +22,27 @@ export function SuggestionsSection({
       </h3>
       <div className="space-y-0.5">
         <SettingToggle
-          icon={<IconCheckCircle className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />}
+          icon={
+            <IconCheckCircle className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
+          }
           label="Autocomplete"
           checked={autocomplete}
           onCheckedChange={() => onToggle("autocomplete")}
         />
 
         <SettingToggle
-          icon={<IconBarChart className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />}
+          icon={
+            <IconBarChart className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
+          }
           label="Trending searches"
           checked={trendingSearches}
           onCheckedChange={() => onToggle("trendingSearches")}
         />
 
         <SettingToggle
-          icon={<IconLightBulb className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />}
+          icon={
+            <IconLightBulb className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
+          }
           label="Follow-up suggestions"
           checked={followUpSuggestions}
           onCheckedChange={() => onToggle("followUpSuggestions")}

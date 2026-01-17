@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -33,21 +34,23 @@ Last updated: 2026-01-04
 - [Install / update dependencies](#install-update-dependencies)
 - [Related docs](#related-docs)
 
-
 This guide maps the approved UI tooling to this repo in the order you should use it.
 
 ## Web (React + Tailwind + Vite)
 
 ### 1) Author components + stories
+
 - Components live in `packages/ui/src/components/**` and `packages/ui/src/templates/**`.
 - Stories are colocated as `*.stories.tsx` and aggregated in `packages/ui/src/storybook/**`.
 - Start new components with `pnpm new:component`.
 
 ### 2) Run Storybook for component development
+
 - Command: `pnpm dev:storybook`
 - Storybook app: `platforms/web/apps/storybook/`
 
 ### 3) View in iOS Simulator (Safari)
+
 - Commands:
   - Web app: `pnpm dev:ios`
   - Storybook: `pnpm storybook:ios`
@@ -62,19 +65,23 @@ This guide maps the approved UI tooling to this repo in the order you should use
   - `IOS_WEB_PATH` (default: `/`)
 
 ### 4) Interaction tests (Storybook + Vitest)
+
 - Command: `pnpm storybook:test`
 - Optional port override: `VITEST_BROWSER_PORT=63315 pnpm storybook:test`
 
 ### 5) Visual regression (Storybook + Playwright)
+
 - Command: `pnpm test:visual:storybook`
 - Update baselines: `pnpm test:visual:storybook:update`
 - Config: `platforms/web/apps/storybook/playwright.visual.config.ts`
 
 ### 6) Visual regression (Web app + Playwright)
+
 - Command: `pnpm test:visual:web`
 - Config: `platforms/web/apps/web/playwright.visual.config.ts`
 
 ### 7) Accessibility regression (widgets)
+
 - Command: `pnpm test:a11y:widgets`
 - Config: `packages/widgets/playwright.a11y.config.ts`
 
@@ -83,24 +90,29 @@ This guide maps the approved UI tooling to this repo in the order you should use
 Argos uploads are wired into Playwright configs and Storybook Vitest runs. Uploads are only enabled in CI.
 
 ### Storybook Vitest uploads
+
 - Config: `platforms/web/apps/storybook/vitest.config.ts`
 - Uses `@storybook/addon-vitest` and `@argos-ci/storybook` Vitest plugin.
 
 ### Playwright uploads (web + Storybook)
+
 - Configs:
   - `platforms/web/apps/web/playwright.visual.config.ts`
   - `platforms/web/apps/storybook/playwright.visual.config.ts`
 - Uses `@argos-ci/playwright` reporter.
 
 ### First baseline build (required by Argos)
+
 1. Ensure the Argos project is connected to the repo (GitHub App or token-based).
 2. Run CI on `main` to generate the first baseline build.
 3. Open a PR to see visual diffs and checks.
 
 ### Argos auth
+
 - If you are not using the GitHub App integration, set `ARGOS_TOKEN` in CI secrets.
 
 ### Argos CLI upload (when you generate screenshots yourself)
+
 - Install: `pnpm add -D @argos-ci/cli`
 - Upload (repo script): `pnpm argos:upload` (uses `ARGOS_TOKEN`)
 - Upload (direct): `pnpm exec -- argos upload ./screenshots`
@@ -110,13 +122,16 @@ Argos uploads are wired into Playwright configs and Storybook Vitest runs. Uploa
 ## iOS (SwiftUI)
 
 ### 1) Component catalog
+
 - Swift packages live in `platforms/apple/swift/**`.
 - Tests run via `pnpm test:swift` or the package-specific scripts in root `package.json`.
 
 ### 2) Snapshot regression (recommended next)
+
 - Add snapshot tests alongside existing XCTest targets in each Swift package.
 
 ### 3) Accessibility regression (recommended next)
+
 - Add accessibility hierarchy snapshots for key views.
 
 ## Install / update dependencies
@@ -133,12 +148,15 @@ pnpm install
 - `docs/KEYBOARD_NAVIGATION_TESTS.md`
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.
 
 ## Troubleshooting
+
 - TBD: Add the top 3 failure modes and fixes.

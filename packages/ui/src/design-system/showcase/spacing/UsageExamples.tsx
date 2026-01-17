@@ -9,13 +9,7 @@ interface UsageCardProps {
 }
 
 /** Card component displaying usage examples for spacing tokens. */
-export function UsageCard({
-  title,
-  description,
-  token,
-  value,
-  example,
-}: UsageCardProps) {
+export function UsageCard({ title, description, token, value, example }: UsageCardProps) {
   return (
     <div className="rounded-2xl border border-foundation-bg-dark-3 bg-foundation-bg-dark-2 overflow-hidden">
       <div className="p-5 border-b border-foundation-bg-dark-3">

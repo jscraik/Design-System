@@ -3,12 +3,12 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 This document defines the stable CLI surface for `astudio` and the contracts required for agentic use.
 
@@ -102,10 +102,12 @@ Unified developer CLI for aStudio (dev/build/test/mcp/tokens/versions).
 Precedence: flags > env > project config > user config > system.
 
 Config files:
+
 - Project: `astudio.config.json`
 - User: `~/.config/astudio/config.json`
 
 Env vars:
+
 - `ASTUDIO_CONFIG` (config path override)
 - `ASTUDIO_CWD` (working directory override)
 - `ASTUDIO_COLOR=0|1` (force color on/off)

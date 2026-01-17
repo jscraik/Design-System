@@ -103,9 +103,7 @@ export function NewProjectModal({
                         : "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 hover:bg-foundation-bg-light-2/80 dark:hover:bg-foundation-bg-dark-2/80"
                     }`}
                   >
-                    <span className={categoryIconColors[category]}>
-                      {categoryIcons[category]}
-                    </span>
+                    <span className={categoryIconColors[category]}>{categoryIcons[category]}</span>
                     <span>{category}</span>
                   </button>
                 );

@@ -4,9 +4,9 @@ This guide describes how to configure the Figma org private npm registry for the
 
 ## Registry configuration
 
-1) Generate an admin token in the Figma Make settings for your org.
-2) Copy `.npmrc.figma.template` to `.npmrc` in the repository root or your user home directory.
-3) Replace `<AUTH_TOKEN>` with the generated token.
+1. Generate an admin token in the Figma Make settings for your org.
+2. Copy `.npmrc.figma.template` to `.npmrc` in the repository root or your user home directory.
+3. Replace `<AUTH_TOKEN>` with the generated token.
 
 Example:
 

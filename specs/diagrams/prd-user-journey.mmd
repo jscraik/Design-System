@@ -1,0 +1,9 @@
+flowchart TD
+  A[Need new component] --> B[Open component creation guide]
+  B --> C[Create React component]
+  C --> D[Apply UX states + accessibility checklist]
+  D --> E[Update parity checklist]
+  E --> F[Run required tests]
+  F --> G{Pass?}
+  G -->|Yes| H[Release component]
+  G -->|No| D

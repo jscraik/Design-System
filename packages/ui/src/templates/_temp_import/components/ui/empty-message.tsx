@@ -12,18 +12,7 @@ export interface EmptyMessageProps extends React.HTMLAttributes<HTMLDivElement> 
 }
 
 const EmptyMessage = React.forwardRef<HTMLDivElement, EmptyMessageProps>(
-  (
-    {
-      icon,
-      title,
-      description,
-      action,
-      variant = "default",
-      className,
-      ...props
-    },
-    ref
-  ) => {
+  ({ icon, title, description, action, variant = "default", className, ...props }, ref) => {
     const defaultIcons = {
       default: FileQuestion,
       search: Search,
@@ -32,47 +21,37 @@ const EmptyMessage = React.forwardRef<HTMLDivElement, EmptyMessageProps>(
     };
 
     const Icon = icon || defaultIcons[variant];
-    const iconNode = React.isValidElement(Icon)
-      ? Icon
-      : typeof Icon === "function"
-        ? <Icon className="size-8 text-foundation-text-dark-tertiary" />
-        : null;
+    const iconNode = React.isValidElement(Icon) ? (
+      Icon
+    ) : typeof Icon === "function" ? (
+      <Icon className="size-8 text-foundation-text-dark-tertiary" />
+    ) : null;
 
     return (
       <div
         ref={ref}
         className={cn(
           "flex flex-col items-center justify-center gap-4 py-16 px-6 text-center",
-          className
+          className,
         )}
         {...props}
       >
         {/* Icon */}
-        <div className="rounded-full bg-foundation-bg-dark-2 p-6">
-          {iconNode}
-        </div>
+        <div className="rounded-full bg-foundation-bg-dark-2 p-6">{iconNode}</div>
 
         {/* Content */}
         <div className="max-w-md space-y-2">
-          <h3 className="font-semibold text-foundation-text-dark-primary">
-            {title}
-          </h3>
+          <h3 className="font-semibold text-foundation-text-dark-primary">{title}</h3>
           {description && (
-            <p className="text-sm text-foundation-text-dark-tertiary">
-              {description}
-            </p>
+            <p className="text-sm text-foundation-text-dark-tertiary">{description}</p>
           )}
         </div>
 
         {/* Action */}
-        {action && (
-          <div className="mt-2">
-            {action}
-          </div>
-        )}
+        {action && <div className="mt-2">{action}</div>}
       </div>
     );
-  }
+  },
 );
 EmptyMessage.displayName = "EmptyMessage";
 

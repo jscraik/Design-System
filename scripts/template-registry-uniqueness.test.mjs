@@ -41,14 +41,16 @@ describe("Template Registry Uniqueness Property", () => {
   test("Property 3: Unique IDs + Routes", async () => {
     await fc.assert(
       fc.asyncProperty(
-        fc.integer({ min: 0, max: 25 }).chain((size) =>
-          fc
-            .tuple(
-              fc.uniqueArray(idArb, { minLength: size, maxLength: size }),
-              fc.uniqueArray(routeArb, { minLength: size, maxLength: size }),
-            )
-            .map(([ids, routes]) => buildTemplates(ids, routes)),
-        ),
+        fc
+          .integer({ min: 0, max: 25 })
+          .chain((size) =>
+            fc
+              .tuple(
+                fc.uniqueArray(idArb, { minLength: size, maxLength: size }),
+                fc.uniqueArray(routeArb, { minLength: size, maxLength: size }),
+              )
+              .map(([ids, routes]) => buildTemplates(ids, routes)),
+          ),
         async (templates) => {
           expect(hasUniqueIdsAndRoutes(templates)).toBe(true);
           return true;

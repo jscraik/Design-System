@@ -3,6 +3,7 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Overview and essential workflows for this area
 - Non-scope: Deep API reference or internal design rationale
@@ -41,7 +42,6 @@ Last updated: 2026-01-09
 - [Support](#support)
 - [License](#license)
 
-
 This document provides an overview of the current security setup for the Swift codebase. Where dedicated automation is not yet present, the gaps are noted explicitly.
 
 ## What's Been Created
@@ -51,6 +51,7 @@ This document provides an overview of the current security setup for the Swift c
 **Location:** Root directory
 
 **Features:**
+
 - Security-focused rules enabled
 - Custom rules for detecting:
   - Hardcoded credentials
@@ -65,6 +66,7 @@ This document provides an overview of the current security setup for the Swift c
 - Configured for GitHub Actions logging output
 
 **Key Security Rules:**
+
 ```yaml
 custom_rules:
   no_hardcoded_credentials:
@@ -82,6 +84,7 @@ custom_rules:
 **Location:** `.github/`
 
 **Features:**
+
 - Swift-specific security queries enabled
 - Scans Swift packages and apps
 - Excludes test files from scanning
@@ -94,6 +97,7 @@ custom_rules:
   - Path traversal
 
 **Query Suites:**
+
 - `security-extended`
 - `security-and-quality`
 
@@ -102,10 +106,12 @@ custom_rules:
 **Location:** `.github/workflows/ci.yml`
 
 **Current behavior:**
+
 - Runs macOS build steps with Swift setup as part of the CI matrix.
 - Runs web lint/format/compliance checks on web jobs.
 
 **Gap:** There is no dedicated Swift security scanning workflow in this repo. Add a separate workflow if SwiftLint security gates or CodeQL automation are required.
+
 - Generates summary in GitHub Actions UI
 - Blocks merge on security failures
 
@@ -116,7 +122,9 @@ custom_rules:
 **Test Files:**
 
 #### A. `SecurityTestCase.swift`
+
 Base class providing:
+
 - Common assertion helpers:
   - `assertStringSanitized()`
   - `assertURLSecure()`
@@ -128,7 +136,9 @@ Base class providing:
   - `generateEdgeCases()`
 
 #### B. `InputValidationTests.swift`
+
 Tests for:
+
 - XSS prevention
 - SQL injection prevention
 - Path traversal prevention
@@ -140,7 +150,9 @@ Tests for:
 - JSON validation
 
 #### C. `AuthenticationTests.swift`
+
 Tests for:
+
 - Password hashing (salted, non-reversible)
 - Password complexity requirements
 - Secure token generation
@@ -152,7 +164,9 @@ Tests for:
 - Keychain usage verification
 
 #### D. `AuthorizationTests.swift`
+
 Tests for:
+
 - Role-based access control (RBAC)
 - Resource ownership checks
 - Privilege escalation prevention
@@ -165,7 +179,9 @@ Tests for:
 ### 5. Documentation
 
 #### A. `SECURITY_TESTING_GUIDE.md`
+
 Comprehensive guide covering:
+
 - Overview of security testing framework
 - Running security tests locally
 - Writing security tests
@@ -175,6 +191,7 @@ Comprehensive guide covering:
 - Common vulnerabilities and prevention
 
 #### B. `SECURITY_SETUP_README.md` (this file)
+
 Setup overview and quick reference
 
 ## File Structure
@@ -281,7 +298,7 @@ Edit `.swiftlint.yml`:
 # Change severity
 custom_rules:
   no_print_in_production:
-    severity: error  # Change from warning to error
+    severity: error # Change from warning to error
 
 # Disable specific rules in certain files
 excluded:
@@ -350,11 +367,13 @@ brew install codeql
 ### Tests Failing Locally
 
 1. Ensure dependencies are built:
+
    ```bash
    swift build
    ```
 
 2. Clean build if needed:
+
    ```bash
    swift package clean
    ```
@@ -367,11 +386,13 @@ brew install codeql
 ### Coverage Below Threshold
 
 1. Run tests with coverage:
+
    ```bash
    swift test --enable-code-coverage
    ```
 
 2. Generate report:
+
    ```bash
    xcrun llvm-cov report $(find . -name "*.profdata")
    ```
@@ -416,9 +437,11 @@ For questions or issues with the security setup:
 This security setup is part of the aStudio project and follows the same license terms.
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.

@@ -1,5 +1,19 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const ApiKey = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" preserveAspectRatio="none" viewBox="0 0 24 24" ref={ref} {...props}><g fill="currentColor"><path d="M16 9.75a1.75 1.75 0 1 0 0-3.5 1.75 1.75 0 0 0 0 3.5" /><path d="M15 2a7 7 0 0 0-6.852 8.438l-4.416 4.416A2.5 2.5 0 0 0 3 16.62V20a1 1 0 0 0 1 1h3.379a2.5 2.5 0 0 0 1.767-.732l1.061-1.06a1 1 0 0 0 .293-.708v-1h1a1 1 0 0 0 .707-.293l1.355-1.355q.699.147 1.438.148a7 7 0 1 0 0-14m-5 7a5 5 0 1 1 3.547 4.786 1 1 0 0 0-.997.25L11.086 15.5H9.5a1 1 0 0 0-1 1v1.586l-.768.768A.5.5 0 0 1 7.38 19H5v-2.379a.5.5 0 0 1 .146-.353l4.818-4.818a1 1 0 0 0 .25-.997A5 5 0 0 1 10 9" /></g></svg>);
+const ApiKey = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    preserveAspectRatio="none"
+    viewBox="0 0 24 24"
+    ref={ref}
+    {...props}
+  >
+    <g fill="currentColor">
+      <path d="M16 9.75a1.75 1.75 0 1 0 0-3.5 1.75 1.75 0 0 0 0 3.5" />
+      <path d="M15 2a7 7 0 0 0-6.852 8.438l-4.416 4.416A2.5 2.5 0 0 0 3 16.62V20a1 1 0 0 0 1 1h3.379a2.5 2.5 0 0 0 1.767-.732l1.061-1.06a1 1 0 0 0 .293-.708v-1h1a1 1 0 0 0 .707-.293l1.355-1.355q.699.147 1.438.148a7 7 0 1 0 0-14m-5 7a5 5 0 1 1 3.547 4.786 1 1 0 0 0-.997.25L11.086 15.5H9.5a1 1 0 0 0-1 1v1.586l-.768.768A.5.5 0 0 1 7.38 19H5v-2.379a.5.5 0 0 1 .146-.353l4.818-4.818a1 1 0 0 0 .25-.997A5 5 0 0 1 10 9" />
+    </g>
+  </svg>
+));
 ApiKey.displayName = "ApiKey";
 export default ApiKey;

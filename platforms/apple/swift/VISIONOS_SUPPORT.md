@@ -3,12 +3,12 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 Complete guide for visionOS support and future platform considerations in aStudio Swift packages.
 
@@ -35,8 +35,8 @@ aStudio Swift packages are designed with future platform support in mind. While 
 
 ### Platform Support Matrix
 
-| Package            | iOS 15+ | macOS 13+ | visionOS 1+ | Future Platforms |
-| ------------------ | ------- | --------- | ----------- | ---------------- |
+| Package             | iOS 15+ | macOS 13+ | visionOS 1+ | Future Platforms |
+| ------------------- | ------- | --------- | ----------- | ---------------- |
 | AStudioFoundation   | ✅      | ✅        | ✅          | ✅               |
 | AStudioThemes       | ✅      | ✅        | ✅          | ✅               |
 | AStudioComponents   | ✅      | ✅        | ✅          | ✅               |

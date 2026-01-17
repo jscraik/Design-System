@@ -1,4 +1,9 @@
-import { HostProvider, createEmbeddedHost, ensureMockOpenAI, useToolOutput } from "@astudio/runtime";
+import {
+  HostProvider,
+  createEmbeddedHost,
+  ensureMockOpenAI,
+  useToolOutput,
+} from "@astudio/runtime";
 import { AppsSDKUIProvider } from "@astudio/ui";
 import type { DashboardChat, DashboardStat } from "@astudio/ui/dev";
 import { DashboardPage } from "@astudio/ui/dev";

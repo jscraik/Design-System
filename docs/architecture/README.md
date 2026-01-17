@@ -3,12 +3,12 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Overview and essential workflows for this area
 - Non-scope: Deep API reference or internal design rationale
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 Technical architecture and design decisions for the aStudio system.
 

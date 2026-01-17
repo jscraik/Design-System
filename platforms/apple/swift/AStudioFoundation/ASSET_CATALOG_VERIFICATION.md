@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -26,7 +27,6 @@ Last updated: 2026-01-04
   - [Requirements Validated](#requirements-validated)
   - [Next Steps](#next-steps)
   - [Related Documentation](#related-documentation)
-
 
 ## Task Status: ✅ COMPLETED
 
@@ -305,13 +305,15 @@ The AStudioFoundation package is complete and ready for use by:
 **Status:** ✅ COMPLETE - AStudioFoundation provides semantic tokens via Asset Catalog with automatic light/dark mode support and compile-time safety.
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.
 
 ## Troubleshooting
-- TBD: Add the top 3 failure modes and fixes.
 
+- TBD: Add the top 3 failure modes and fixes.

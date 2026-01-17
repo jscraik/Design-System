@@ -293,9 +293,7 @@
       "platforms/apple/swift/.swiftlint.yml",
       ".github/codeql-config.yml"
     ],
-    "workflow_files": [
-      ".github/workflows/swift-security.yml"
-    ],
+    "workflow_files": [".github/workflows/swift-security.yml"],
     "test_files": [
       "platforms/apple/swift/SecurityTests/SecurityTestCase.swift",
       "platforms/apple/swift/SecurityTests/InputValidationTests.swift",
@@ -306,10 +304,7 @@
       "platforms/apple/swift/SECURITY_TESTING_GUIDE.md",
       "platforms/apple/swift/SECURITY_SETUP_README.md"
     ],
-    "enforcement_files": [
-      "enforcement.plan.json",
-      "enforcement.results.json"
-    ]
+    "enforcement_files": ["enforcement.plan.json", "enforcement.results.json"]
   },
 
   "verification": {

@@ -3,12 +3,12 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Developers (beginner to intermediate)
 - Scope: Task-focused instructions for this topic
 - Non-scope: Comprehensive architecture reference
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 This guide explains which files to copy from the codebase to Figma for design token synchronization.
 

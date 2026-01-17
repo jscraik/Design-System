@@ -69,7 +69,10 @@ for (const variant of serverVariants) {
       );
 
       const outputTemplate = meta["openai/outputTemplate"];
-      assert.ok(typeof outputTemplate === "string", `${name} (${variant.label}): openai/outputTemplate missing`);
+      assert.ok(
+        typeof outputTemplate === "string",
+        `${name} (${variant.label}): openai/outputTemplate missing`,
+      );
       assert.ok(
         outputTemplate.includes(contract.outputTemplateIncludes),
         `${name} (${variant.label}): openai/outputTemplate should include ${contract.outputTemplateIncludes}`,
@@ -111,7 +114,10 @@ for (const variant of serverVariants) {
       );
 
       const outputTemplate = meta["openai/outputTemplate"];
-      assert.ok(typeof outputTemplate === "string", `${name} (${variant.label}): openai/outputTemplate missing`);
+      assert.ok(
+        typeof outputTemplate === "string",
+        `${name} (${variant.label}): openai/outputTemplate missing`,
+      );
       assert.ok(
         outputTemplate.includes(widgetName),
         `${name} (${variant.label}): openai/outputTemplate should include ${widgetName}`,

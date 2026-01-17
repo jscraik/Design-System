@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -23,7 +24,6 @@ Last updated: 2026-01-04
   - [✅ 8. Unit tests pass for all primitives](#8-unit-tests-pass-for-all-primitives)
   - [✅ 9. SwiftUI previews render in Xcode](#9-swiftui-previews-render-in-xcode)
 - [Summary](#summary)
-
 
 **Date:** December 28, 2024
 **Status:** ✅ COMPLETE
@@ -407,12 +407,15 @@ All 9 Definition of Done criteria have been verified and passed:
 **Spec:** `.kiro/specs/native-macos-bridge/`
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.
 
 ## Troubleshooting
+
 - TBD: Add the top 3 failure modes and fixes.

@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Documentation maintainers and reviewers
 - Scope: QA checklist for code-level docs (JSDoc/DocC/config docs)
 - Non-scope: User-facing Markdown guides and policies

@@ -319,7 +319,8 @@ export function SettingRowBadge({
       "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
     primary: "bg-foundation-accent-blue text-white",
     success: "bg-foundation-accent-green text-white",
-    warning: "bg-foundation-accent-orange text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
+    warning:
+      "bg-foundation-accent-orange text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
     error: "bg-foundation-accent-red text-white",
     new: "bg-foundation-accent-blue/10 text-foundation-accent-blue",
   };

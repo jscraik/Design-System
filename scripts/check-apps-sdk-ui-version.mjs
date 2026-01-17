@@ -30,5 +30,7 @@ if (output) {
   execSync(`printf '${line}' >> ${output}`);
 }
 
-console.log(`apps-sdk-ui version (base: ${baseVersion ?? "unknown"}, head: ${headVersion ?? "unknown"})`);
+console.log(
+  `apps-sdk-ui version (base: ${baseVersion ?? "unknown"}, head: ${headVersion ?? "unknown"})`,
+);
 console.log(`apps-sdk-ui changed: ${changed ? "true" : "false"}`);

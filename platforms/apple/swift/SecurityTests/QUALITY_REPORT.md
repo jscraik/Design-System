@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Maintainers and security reviewers
 - Scope: Security posture, guidance, and required practices
 - Non-scope: Feature usage or product marketing
@@ -48,18 +49,19 @@ Last updated: 2026-01-04
   - [Long-term Enhancements](#long-term-enhancements)
 - [Conclusion](#conclusion)
 
-
 ## Executive Summary
 
 Comprehensive security test suites have been created for the aStudio Swift codebase, covering authentication, client validation, rate limiting, search security, and cryptographic operations.
 
 **Total Deliverables:**
+
 - 5 test files
 - 119 test methods
 - 3,105 lines of test code
 - Complete test plan documentation
 
 **Test Coverage:**
+
 - All security-critical code paths
 - Edge cases and error conditions
 - Concurrent access patterns
@@ -71,11 +73,13 @@ Comprehensive security test suites have been created for the aStudio Swift codeb
 ## Files Delivered
 
 ### 1. MCPAuthenticatorSecurityTests.swift
+
 **Location:** `platforms/apple/swift/AStudioMCP/Tests/AStudioMCPTests/Security/`
 
 **Test Count:** 24 methods
 
 **Key Test Categories:**
+
 - Keychain accessibility controls (3 tests)
 - Token storage edge cases (6 tests)
 - Token retrieval edge cases (2 tests)
@@ -87,6 +91,7 @@ Comprehensive security test suites have been created for the aStudio Swift codeb
 - Security invariants (1 test)
 
 **Security Properties Verified:**
+
 - Tokens are stored with `kSecAttrAccessibleWhenUnlockedThisDeviceOnly`
 - Items are not synchronizable via iCloud
 - Account isolation is maintained
@@ -95,11 +100,13 @@ Comprehensive security test suites have been created for the aStudio Swift codeb
 ---
 
 ### 2. MCPClientValidationTests.swift
+
 **Location:** `platforms/apple/swift/AStudioMCP/Tests/AStudioMCPTests/Security/`
 
 **Test Count:** 19 methods
 
 **Key Test Categories:**
+
 - URL validation (8 tests)
 - Tool name validation (3 tests)
 - Endpoint validation (2 tests)
@@ -108,6 +115,7 @@ Comprehensive security test suites have been created for the aStudio Swift codeb
 - Path traversal (2 tests)
 
 **Security Properties Verified:**
+
 - Only HTTPS or localhost HTTP allowed
 - Cloud metadata endpoints blocked (AWS, GCP, Azure)
 - Tool names strictly validated (alphanumeric, underscore, dash, max 64 chars)
@@ -117,11 +125,13 @@ Comprehensive security test suites have been created for the aStudio Swift codeb
 ---
 
 ### 3. MCPRateLimiterTests.swift
+
 **Location:** `platforms/apple/swift/AStudioMCP/Tests/AStudioMCPTests/Security/`
 
 **Test Count:** 27 methods
 
 **Key Test Categories:**
+
 - Basic rate limiting (3 tests)
 - Window expiration (3 tests)
 - Concurrent requests (3 tests)
@@ -135,6 +145,7 @@ Comprehensive security test suites have been created for the aStudio Swift codeb
 - Actor isolation (1 test)
 
 **Security Properties Verified:**
+
 - DoS protection via rate limiting
 - Sliding window algorithm correctness
 - Concurrent request handling
@@ -144,11 +155,13 @@ Comprehensive security test suites have been created for the aStudio Swift codeb
 ---
 
 ### 4. SpotlightManagerSecurityTests.swift
+
 **Location:** `platforms/apple/swift/AStudioSystemIntegration/Tests/AStudioSystemIntegrationTests/Security/`
 
 **Test Count:** 17 methods
 
 **Key Test Categories:**
+
 - Query sanitization (3 tests)
 - SQL injection prevention (2 tests)
 - Input validation (3 tests)
@@ -162,6 +175,7 @@ Comprehensive security test suites have been created for the aStudio Swift codeb
 - Edge cases (2 tests)
 
 **Security Properties Verified:**
+
 - SQL injection attacks blocked
 - Command injection prevented
 - XSS attacks mitigated
@@ -172,11 +186,13 @@ Comprehensive security test suites have been created for the aStudio Swift codeb
 ---
 
 ### 5. CryptoManagerTests.swift
+
 **Location:** `platforms/apple/swift/AStudioSystemIntegration/Tests/AStudioSystemIntegrationTests/Security/`
 
 **Test Count:** 32 methods
 
 **Key Test Categories:**
+
 - Basic encryption/decryption (4 tests)
 - Data size handling (5 tests)
 - Invalid data handling (5 tests)
@@ -191,6 +207,7 @@ Comprehensive security test suites have been created for the aStudio Swift codeb
 - Edge cases (2 tests)
 
 **Security Properties Verified:**
+
 - AES-256-GCM encryption correctly implemented
 - Confidentiality maintained (plaintext not visible)
 - Integrity verified (authentication tag detects tampering)
@@ -203,6 +220,7 @@ Comprehensive security test suites have been created for the aStudio Swift codeb
 ## Testing Best Practices Applied
 
 ### 1. Table-Driven Tests
+
 Multiple test suites use table-driven testing for comprehensive scenario coverage:
 
 ```swift
@@ -220,11 +238,13 @@ for testCase in testCases {
 ```
 
 **Benefits:**
+
 - Easy to add new test cases
 - Clear documentation of expected behavior
 - Reduced code duplication
 
 ### 2. Async/Await Patterns
+
 All async operations use modern Swift concurrency:
 
 ```swift
@@ -236,12 +256,15 @@ func testConcurrentAccess() async throws {
 ```
 
 **Benefits:**
+
 - Proper thread safety
 - Structured concurrency
 - Clear error propagation
 
 ### 3. Edge Case Coverage
+
 Every test suite includes comprehensive edge cases:
+
 - Empty inputs
 - Maximum/minimum boundaries
 - Special characters
@@ -250,6 +273,7 @@ Every test suite includes comprehensive edge cases:
 - Error conditions
 
 ### 4. Mock Data Generation
+
 Tests use generators for creating realistic test data:
 
 ```swift
@@ -261,11 +285,13 @@ let specialTokens = [
 ```
 
 **Benefits:**
+
 - Tests real-world scenarios
 - Easy to extend
 - Maintainable
 
 ### 5. Performance Testing
+
 Critical operations include performance benchmarks:
 
 ```swift
@@ -279,6 +305,7 @@ func testEncryptionPerformance() throws {
 ```
 
 **Benefits:**
+
 - Detects performance regressions
 - Establishes baselines
 - Documents expected performance
@@ -288,22 +315,26 @@ func testEncryptionPerformance() throws {
 ## Quality Gates Established
 
 ### Coverage Requirements
+
 - Line coverage: ≥85% for security modules
 - Branch coverage: ≥80% for security modules
 - All security-critical paths must be covered
 
 ### Security Requirements
+
 - All SSRF prevention tests must pass
 - All injection prevention tests must pass
 - All encryption/decryption tests must pass
 - All authentication tests must pass
 
 ### Performance Requirements
+
 - Encryption/decryption: <100ms for 1MB data
 - Rate limiter overhead: <1ms per request
 - Query sanitization: <10ms per query
 
 ### Flakiness Budget
+
 - <0.5% flake rate for security tests
 - No flaky tests for security-critical functionality
 
@@ -312,6 +343,7 @@ func testEncryptionPerformance() throws {
 ## Test Maintenance Guidelines
 
 ### Adding New Tests
+
 1. Follow naming convention: `*SecurityTests.swift`
 2. Use table-driven tests for multiple similar cases
 3. Include edge cases, error cases, and performance tests
@@ -319,6 +351,7 @@ func testEncryptionPerformance() throws {
 5. Use descriptive test names
 
 ### Test Anti-Patterns to Avoid
+
 1. Brittle assertions (for example, exact encrypted values)
 2. Timing-dependent tests
 3. Hardcoded values (use generators)
@@ -326,6 +359,7 @@ func testEncryptionPerformance() throws {
 5. Missing edge cases
 
 ### When to Update Tests
+
 - Adding new security features → Add corresponding tests
 - Fixing security issues → Add regression tests
 - Refactoring code → Ensure all tests pass
@@ -359,9 +393,11 @@ func testEncryptionPerformance() throws {
 ## Gap Analysis
 
 ### Coverage Gaps
+
 None identified - all security features have corresponding tests.
 
 ### Potential Enhancements
+
 1. **Fuzzing Tests**
    - Property-based fuzzing for encryption/decryption
    - Randomized input generation
@@ -383,10 +419,12 @@ None identified - all security features have corresponding tests.
 ## Specification Ambiguities
 
 ### Resolved
+
 - All test requirements were clear
 - Security properties well-defined
 
 ### Documented Assumptions
+
 - Spotlight indexing may take time (tests account for this)
 - Keychain operations are synchronous
 - Rate limiter uses sliding window algorithm
@@ -396,35 +434,38 @@ None identified - all security features have corresponding tests.
 
 ## Summary Statistics
 
-| Metric | Value |
-|--------|-------|
-| Total Test Files | 5 |
-| Total Test Methods | 119 |
-| Lines of Test Code | 3,105 |
-| Documentation Lines | 400+ |
-| Security Features Covered | 5 |
-| Test Categories | 50+ |
-| Edge Cases Tested | 200+ |
-| Performance Benchmarks | 10 |
-| Table-Driven Test Suites | 3 |
+| Metric                    | Value |
+| ------------------------- | ----- |
+| Total Test Files          | 5     |
+| Total Test Methods        | 119   |
+| Lines of Test Code        | 3,105 |
+| Documentation Lines       | 400+  |
+| Security Features Covered | 5     |
+| Test Categories           | 50+   |
+| Edge Cases Tested         | 200+  |
+| Performance Benchmarks    | 10    |
+| Table-Driven Test Suites  | 3     |
 
 ---
 
 ## Recommendations
 
 ### Immediate Actions
+
 1. Integrate tests into CI/CD pipeline
 2. Set up coverage reporting
 3. Establish performance baselines
 4. Configure flakiness detection
 
 ### Short-term Improvements
+
 1. Add fuzzing tests for CryptoManager
 2. Create integration tests for MCPClient
 3. Set up mutation testing
 4. Document test maintenance procedures
 
 ### Long-term Enhancements
+
 1. Continuous security monitoring
 2. Automated regression detection
 3. Performance regression alerts

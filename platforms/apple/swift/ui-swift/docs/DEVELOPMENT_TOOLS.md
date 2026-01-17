@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -40,7 +41,6 @@ Last updated: 2026-01-04
 - [Requirements](#requirements)
 - [Verify](#verify)
 - [Validation: Requirements 7.1, 7.4](#validation-requirements-71-74)
-
 
 > Legacy: `platforms/apple/swift/ui-swift` is retained for reference. The current macOS apps use the modular Swift packages in `platforms/apple/swift/`.
 

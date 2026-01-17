@@ -35,7 +35,7 @@ export function ChatTemplate({ initialViewMode = "chat" }: ChatTemplateProps) {
   const [selectedModel, setSelectedModel] = useState(sampleModels[0]);
   const [viewMode, setViewMode] = useState<"chat" | "compose">(initialViewMode);
 
-  const handleModelChange = (model: string | typeof sampleModels[number]) => {
+  const handleModelChange = (model: string | (typeof sampleModels)[number]) => {
     if (typeof model === "string") {
       const resolved = [...sampleModels, ...sampleLegacyModels].find(
         (candidate) => candidate.name === model || candidate.shortName === model,

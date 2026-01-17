@@ -28,11 +28,11 @@ function EmptyMessage({
   ...props
 }: EmptyMessageProps) {
   const Icon = icon || defaultIcons[variant];
-  const iconNode = React.isValidElement(Icon)
-    ? Icon
-    : typeof Icon === "function"
-      ? <Icon className="size-8 text-muted-foreground" />
-      : null;
+  const iconNode = React.isValidElement(Icon) ? (
+    Icon
+  ) : typeof Icon === "function" ? (
+    <Icon className="size-8 text-muted-foreground" />
+  ) : null;
 
   return (
     <div

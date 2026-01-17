@@ -48,7 +48,7 @@ const SelectControl = React.forwardRef<HTMLButtonElement, SelectControlProps>(
       searchable = true,
       clearable = false,
     },
-    ref
+    ref,
   ) => {
     const [open, setOpen] = React.useState(false);
 
@@ -77,18 +77,14 @@ const SelectControl = React.forwardRef<HTMLButtonElement, SelectControlProps>(
             className={cn(
               "w-full justify-between font-normal",
               !value && "text-foundation-text-dark-tertiary",
-              className
+              className,
             )}
           >
             <div className="flex items-center gap-2 truncate">
               {selectedOption?.icon && (
-                <span className="inline-flex shrink-0">
-                  {selectedOption.icon}
-                </span>
+                <span className="inline-flex shrink-0">{selectedOption.icon}</span>
               )}
-              <span className="truncate">
-                {selectedOption?.label || placeholder}
-              </span>
+              <span className="truncate">{selectedOption?.label || placeholder}</span>
             </div>
             <div className="flex items-center gap-1 shrink-0">
               {clearable && value && (
@@ -106,12 +102,7 @@ const SelectControl = React.forwardRef<HTMLButtonElement, SelectControlProps>(
         </PopoverTrigger>
         <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
           <Command>
-            {searchable && (
-              <CommandInput
-                placeholder={searchPlaceholder}
-                className="h-9"
-              />
-            )}
+            {searchable && <CommandInput placeholder={searchPlaceholder} className="h-9" />}
             <CommandList>
               <CommandEmpty>{emptyMessage}</CommandEmpty>
               <CommandGroup>
@@ -123,11 +114,7 @@ const SelectControl = React.forwardRef<HTMLButtonElement, SelectControlProps>(
                     disabled={option.disabled}
                     className="gap-2"
                   >
-                    {option.icon && (
-                      <span className="inline-flex shrink-0">
-                        {option.icon}
-                      </span>
-                    )}
+                    {option.icon && <span className="inline-flex shrink-0">{option.icon}</span>}
                     <div className="flex flex-col flex-1 min-w-0">
                       <span className="truncate">{option.label}</span>
                       {option.description && (
@@ -139,7 +126,7 @@ const SelectControl = React.forwardRef<HTMLButtonElement, SelectControlProps>(
                     <Check
                       className={cn(
                         "size-4 shrink-0",
-                        value === option.value ? "opacity-100" : "opacity-0"
+                        value === option.value ? "opacity-100" : "opacity-0",
                       )}
                     />
                   </CommandItem>
@@ -150,22 +137,21 @@ const SelectControl = React.forwardRef<HTMLButtonElement, SelectControlProps>(
         </PopoverContent>
       </Popover>
     );
-  }
+  },
 );
 SelectControl.displayName = "SelectControl";
 
 // Multi-select variant
-export interface MultiSelectControlProps
-  extends Omit<SelectControlProps, "value" | "onValueChange"> {
+export interface MultiSelectControlProps extends Omit<
+  SelectControlProps,
+  "value" | "onValueChange"
+> {
   values?: string[];
   onValuesChange?: (values: string[]) => void;
   maxSelections?: number;
 }
 
-const MultiSelectControl = React.forwardRef<
-  HTMLButtonElement,
-  MultiSelectControlProps
->(
+const MultiSelectControl = React.forwardRef<HTMLButtonElement, MultiSelectControlProps>(
   (
     {
       options,
@@ -179,17 +165,15 @@ const MultiSelectControl = React.forwardRef<
       searchable = true,
       maxSelections,
     },
-    ref
+    ref,
   ) => {
     const [open, setOpen] = React.useState(false);
 
-    const selectedOptions = options.filter((option) =>
-      values.includes(option.value)
-    );
+    const selectedOptions = options.filter((option) => values.includes(option.value));
 
     const handleSelect = (currentValue: string) => {
       let newValues: string[];
-      
+
       if (values.includes(currentValue)) {
         // Remove value
         newValues = values.filter((v) => v !== currentValue);
@@ -200,7 +184,7 @@ const MultiSelectControl = React.forwardRef<
         }
         newValues = [...values, currentValue];
       }
-      
+
       onValuesChange?.(newValues);
     };
 
@@ -223,7 +207,7 @@ const MultiSelectControl = React.forwardRef<
             className={cn(
               "w-full justify-between font-normal",
               values.length === 0 && "text-foundation-text-dark-tertiary",
-              className
+              className,
             )}
           >
             <span className="truncate">{displayText}</span>
@@ -232,12 +216,7 @@ const MultiSelectControl = React.forwardRef<
         </PopoverTrigger>
         <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
           <Command>
-            {searchable && (
-              <CommandInput
-                placeholder={searchPlaceholder}
-                className="h-9"
-              />
-            )}
+            {searchable && <CommandInput placeholder={searchPlaceholder} className="h-9" />}
             <CommandList>
               <CommandEmpty>{emptyMessage}</CommandEmpty>
               <CommandGroup>
@@ -245,9 +224,7 @@ const MultiSelectControl = React.forwardRef<
                   const isSelected = values.includes(option.value);
                   const isDisabled =
                     option.disabled ||
-                    (!isSelected &&
-                      maxSelections !== undefined &&
-                      values.length >= maxSelections);
+                    (!isSelected && maxSelections !== undefined && values.length >= maxSelections);
 
                   return (
                     <CommandItem
@@ -260,17 +237,12 @@ const MultiSelectControl = React.forwardRef<
                       <div
                         className={cn(
                           "flex size-4 items-center justify-center rounded-sm border border-foundation-text-dark-primary/20",
-                          isSelected &&
-                            "bg-foundation-accent-blue border-foundation-accent-blue"
+                          isSelected && "bg-foundation-accent-blue border-foundation-accent-blue",
                         )}
                       >
                         {isSelected && <Check className="size-3 text-white" />}
                       </div>
-                      {option.icon && (
-                        <span className="inline-flex shrink-0">
-                          {option.icon}
-                        </span>
-                      )}
+                      {option.icon && <span className="inline-flex shrink-0">{option.icon}</span>}
                       <div className="flex flex-col flex-1 min-w-0">
                         <span className="truncate">{option.label}</span>
                         {option.description && (
@@ -288,7 +260,7 @@ const MultiSelectControl = React.forwardRef<
         </PopoverContent>
       </Popover>
     );
-  }
+  },
 );
 MultiSelectControl.displayName = "MultiSelectControl";
 

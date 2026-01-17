@@ -10,6 +10,7 @@ Welcome to the aStudio Design System. This library provides a comprehensive set 
 ## Quick Navigation
 
 ### 📱 Templates
+
 Pre-built layout combinations for common application patterns.
 
 - **[Dashboard Template](/docs/templates-dashboard-template--docs)** - Full app layout with sidebar navigation
@@ -20,6 +21,7 @@ Pre-built layout combinations for common application patterns.
 - **[Compose Template](/docs/templates-compose-template--docs)** - Compose mode for prompts
 
 ### 💬 Chat Components
+
 Core components for building chat interfaces.
 
 - **[ChatHeader](/docs/components-chat-chat-header--docs)** - Top navigation bar with model selector
@@ -29,6 +31,7 @@ Core components for building chat interfaces.
 - **[ComposeView](/docs/components-chat-compose-view--docs)** - Advanced compose interface
 
 ### ⚙️ Settings Components
+
 Modular settings panels and controls.
 
 - **[SettingRow](/docs/components-settings-setting-row--docs)** - Base settings row component
@@ -41,6 +44,7 @@ Modular settings panels and controls.
 ### 🎨 UI Primitives
 
 #### Base Components
+
 - **[Button](/docs/components-ui-base-button--docs)** - Primary, secondary, destructive variants
 - **[Input](/docs/components-ui-base-input--docs)** - Text input with validation
 - **[Textarea](/docs/components-ui-base-textarea--docs)** - Multi-line text input
@@ -49,6 +53,7 @@ Modular settings panels and controls.
 - **[Avatar](/docs/components-ui-base-avatar--docs)** - User avatar display
 
 #### Form Components
+
 - **[Select](/docs/components-ui-base-select--docs)** - Dropdown selection
 - **[Checkbox](/docs/components-ui-base-checkbox--docs)** - Checkbox input
 - **[Radio Group](/docs/components-ui-base-radio-group--docs)** - Radio button groups
@@ -58,6 +63,7 @@ Modular settings panels and controls.
 - **[Form](/docs/components-ui-forms-form--docs)** - Form with validation
 
 #### Navigation Components
+
 - **[Tabs](/docs/components-ui-navigation-tabs--docs)** - Tabbed navigation
 - **[Breadcrumb](/docs/components-ui-navigation-breadcrumb--docs)** - Breadcrumb trail
 - **[Sidebar](/docs/components-ui-navigation-sidebar--docs)** - Collapsible sidebar
@@ -66,6 +72,7 @@ Modular settings panels and controls.
 - **[View Mode Toggle](/docs/components-ui-navigation-view-mode-toggle--docs)** - View switching control
 
 #### Overlay Components
+
 - **[Dialog](/docs/components-ui-feedback-dialog--docs)** - Modal dialogs
 - **[Modal](/docs/components-ui-overlays-modal--docs)** - Modal overlay
 - **[Tooltip](/docs/components-ui-overlays-tooltip--docs)** - Hover tooltips
@@ -74,18 +81,21 @@ Modular settings panels and controls.
 - **[Dropdown Menu](/docs/components-ui-overlays-dropdown-menu--docs)** - Context menus
 
 #### Feedback Components
+
 - **[Toast](/docs/components-ui-feedback-toast--docs)** - Toast notifications
 - **[Alert](/docs/components-ui-base-alert--docs)** - Alert banners
 - **[Progress](/docs/components-ui-data-display-progress--docs)** - Progress indicators
 - **[Skeleton](/docs/components-ui-base-skeleton--docs)** - Loading skeletons
 
 #### Data Display Components
+
 - **[Card](/docs/components-ui-data-display-card--docs)** - Content cards
 - **[Table](/docs/components-ui-base-table--docs)** - Data tables
 - **[Chart](/docs/components-ui-data-display-chart--docs)** - Data visualization
 - **[List Item](/docs/components-ui-base-list-item--docs)** - List rows
 
 ### 🎭 Modals
+
 Pre-built modal dialogs.
 
 - **[Settings Modal](/docs/components-modals-settings-modal--docs)** - Main settings dialog
@@ -93,6 +103,7 @@ Pre-built modal dialogs.
 - **[Discovery Settings Modal](/docs/components-modals-discovery-settings-modal--docs)** - Discovery configuration
 
 ### 📄 App Pages
+
 Complete page examples.
 
 - **[Design System Page](/docs/pages-design-system-page--docs)** - Full design system documentation
@@ -102,24 +113,24 @@ Complete page examples.
 
 ### By Purpose
 
-| Purpose | Components |
-|---------|------------|
-| **Chat Interface** | ChatHeader, ChatSidebar, ChatMessages, ChatInput, ComposeView |
-| **Settings** | SettingRow, SettingToggle, SettingDropdown, various panels |
-| **Forms** | Input, Textarea, Select, Checkbox, Radio, Combobox, DatePicker |
-| **Navigation** | Tabs, Breadcrumb, Sidebar, Pagination, Menus |
-| **Feedback** | Toast, Alert, Dialog, Modal, Progress |
-| **Layout** | Card, Separator, ScrollArea, Resizable |
-| **Data Display** | Table, Chart, Badge, Avatar, ListItem |
+| Purpose            | Components                                                     |
+| ------------------ | -------------------------------------------------------------- |
+| **Chat Interface** | ChatHeader, ChatSidebar, ChatMessages, ChatInput, ComposeView  |
+| **Settings**       | SettingRow, SettingToggle, SettingDropdown, various panels     |
+| **Forms**          | Input, Textarea, Select, Checkbox, Radio, Combobox, DatePicker |
+| **Navigation**     | Tabs, Breadcrumb, Sidebar, Pagination, Menus                   |
+| **Feedback**       | Toast, Alert, Dialog, Modal, Progress                          |
+| **Layout**         | Card, Separator, ScrollArea, Resizable                         |
+| **Data Display**   | Table, Chart, Badge, Avatar, ListItem                          |
 
 ### By Complexity
 
-| Level | Description | Examples |
-|-------|-------------|----------|
-| **Foundation** | Low-level primitives | Button, Input, Badge |
-| **Composite** | Built from foundations | SettingRow, ChatInput, Form |
-| **Templates** | Full-page layouts | DashboardTemplate, ChatTemplate |
-| **Features** | Complex features | ChatShell, SettingsModal |
+| Level          | Description            | Examples                        |
+| -------------- | ---------------------- | ------------------------------- |
+| **Foundation** | Low-level primitives   | Button, Input, Badge            |
+| **Composite**  | Built from foundations | SettingRow, ChatInput, Form     |
+| **Templates**  | Full-page layouts      | DashboardTemplate, ChatTemplate |
+| **Features**   | Complex features       | ChatShell, SettingsModal        |
 
 ## Design System Docs
 
@@ -168,23 +179,14 @@ import { useState } from "react";
 
 export function Example() {
   const [count, setCount] = useState(0);
-  return (
-    <Button onClick={() => setCount(c => c + 1)}>
-      Count: {count}
-    </Button>
-  );
+  return <Button onClick={() => setCount((c) => c + 1)}>Count: {count}</Button>;
 }
 ```
 
 ### Chat Interface
 
 ```tsx
-import {
-  ChatHeader,
-  ChatSidebar,
-  ChatMessages,
-  ChatInput,
-} from "@astudio/ui";
+import { ChatHeader, ChatSidebar, ChatMessages, ChatInput } from "@astudio/ui";
 
 export function ChatApp() {
   return (

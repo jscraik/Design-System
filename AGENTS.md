@@ -15,7 +15,7 @@ Last updated: 2026-01-07
 This is a pnpm workspace monorepo. Key locations:
 
 - `platforms/mcp/` — MCP server + tool contracts for ChatGPT integration.
-- `packages/` — reusable libraries (`ui`, `runtime`, `tokens`, `widgets`, `cloudflare-template`, `cli`).
+- `packages/` — reusable libraries (`ui`, `runtime`, `tokens`, `widgets`, `cloudflare-template`, `cli`, `astudio-icons`, `astudio-make-template`, `skill-ingestion`).
 - `platforms/apple/apps/macos/` — macOS apps (Xcode/SwiftPM).
 - `platforms/apple/swift/` — Swift packages and macOS/iOS components; legacy Swift package lives in `platforms/apple/swift/ui-swift/`.
 - `docs/` — architecture, guides, audits, and build pipeline docs.

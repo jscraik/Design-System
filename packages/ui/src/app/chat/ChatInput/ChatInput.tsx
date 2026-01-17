@@ -152,11 +152,7 @@ export function ChatInput({
         className,
       )}
     >
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-3xl mx-auto"
-        data-testid="chat-input"
-      >
+      <form onSubmit={handleSubmit} className="max-w-3xl mx-auto" data-testid="chat-input">
         <div
           className={cn(
             "rounded-[24px] overflow-hidden transition-all duration-200",
@@ -180,7 +176,7 @@ export function ChatInput({
                     "text-[13px] font-medium leading-[18px] tracking-[-0.3px]",
                   )}
                 >
-                <IconGlobe className={iconSm} />
+                  <IconGlobe className={iconSm} />
                   <span>Search</span>
                 </div>
               </div>
@@ -305,21 +301,21 @@ export function ChatInput({
                   type="button"
                   onClick={onAutoClear}
                   title="Auto-clear conversation"
-                className={cn(
-                  "flex items-center gap-1.5 px-3 py-1.5 rounded-full",
-                  "text-[13px] font-normal leading-[18px] tracking-[-0.3px]",
-                  "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3",
+                  className={cn(
+                    "flex items-center gap-1.5 px-3 py-1.5 rounded-full",
+                    "text-[13px] font-normal leading-[18px] tracking-[-0.3px]",
+                    "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3",
                     "hover:bg-foundation-bg-light-3/80 dark:hover:bg-foundation-bg-dark-3/80",
                     "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
                     "hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
                     "transition-all duration-200",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue focus-visible:ring-offset-1",
-                )}
-              >
-                <IconRefresh className={iconMd} />
-                <span>Auto-clear</span>
-              </button>
-            )}
+                  )}
+                >
+                  <IconRefresh className={iconMd} />
+                  <span>Auto-clear</span>
+                </button>
+              )}
 
               {composerRight}
 

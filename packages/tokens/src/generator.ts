@@ -766,7 +766,14 @@ ${this.generateCSSTypography()}
   }
 
   private countTokens(): GenerationManifest["tokenCount"] {
-    const colorCategories = ["background", "text", "icon", "border", "accent", "interactive"] as const;
+    const colorCategories = [
+      "background",
+      "text",
+      "icon",
+      "border",
+      "accent",
+      "interactive",
+    ] as const;
     const colors = colorCategories.reduce((count, category) => {
       const keys = Object.keys(this.tokens.colors[category].light);
       return count + keys.length;
@@ -797,8 +804,7 @@ ${this.generateCSSTypography()}
     const r = parseInt(cleanHex.substring(0, 2), 16) / 255;
     const g = parseInt(cleanHex.substring(2, 4), 16) / 255;
     const b = parseInt(cleanHex.substring(4, 6), 16) / 255;
-    const a =
-      cleanHex.length >= 8 ? parseInt(cleanHex.substring(6, 8), 16) / 255 : 1;
+    const a = cleanHex.length >= 8 ? parseInt(cleanHex.substring(6, 8), 16) / 255 : 1;
 
     return {
       red: r.toFixed(3),

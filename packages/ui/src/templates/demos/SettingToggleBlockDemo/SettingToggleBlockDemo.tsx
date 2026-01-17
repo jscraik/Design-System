@@ -54,7 +54,8 @@ export function SettingToggleBlockDemo() {
             Setting Toggle Block Component
           </h1>
           <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-            A comprehensive toggle switch component with 4 variants, 3 sizes, badges, loading states, error handling, and compound components for grouping.
+            A comprehensive toggle switch component with 4 variants, 3 sizes, badges, loading
+            states, error handling, and compound components for grouping.
           </p>
         </div>
 

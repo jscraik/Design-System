@@ -35,7 +35,7 @@ import {
   IconUndo,
   IconUserLock,
   IconWarning,
-  IconX
+  IconX,
 } from "./icons/ChatGPTIcons";
 import {
   AppsPanel,
@@ -153,7 +153,11 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 
   return (
     <div
-      className={isPreviewMode ? "" : "fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200]"}
+      className={
+        isPreviewMode
+          ? ""
+          : "fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[200]"
+      }
       onClick={isPreviewMode ? undefined : onClose}
     >
       <div
@@ -183,7 +187,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               <Section title="Account">
                 <div className="space-y-0.5">
                   <SettingRow
-                    icon={<IconEmail className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconEmail className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Email"
                     right={
                       <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-secondary)]">
@@ -192,7 +198,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     }
                   />
                   <SettingRow
-                    icon={<IconPhone className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconPhone className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Phone number"
                     right={
                       <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-secondary)]">
@@ -201,7 +209,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     }
                   />
                   <SettingRow
-                    icon={<IconCreditCard className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconCreditCard className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Subscription"
                     right={
                       <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-secondary)]">
@@ -210,46 +220,74 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                     }
                   />
                   <SettingRow
-                    icon={<IconSuitcase className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconSuitcase className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Orders"
                     onClick={() => {}}
-                    right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+                    right={
+                      <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                    }
                   />
                   <SettingRow
-                    icon={<IconStarFilled className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconStarFilled className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Personalization"
                     onClick={() => setCurrentView("personalization")}
-                    right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+                    right={
+                      <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                    }
                   />
                   <SettingRow
-                    icon={<IconStatus className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconStatus className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Notifications"
                     onClick={() => setCurrentView("notifications")}
-                    right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+                    right={
+                      <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                    }
                   />
                   <SettingRow
-                    icon={<IconCategory className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconCategory className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Apps"
                     onClick={() => setCurrentView("apps")}
-                    right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+                    right={
+                      <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                    }
                   />
                   <SettingRow
-                    icon={<IconUserLock className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconUserLock className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Data controls"
                     onClick={() => setCurrentView("dataControls")}
-                    right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+                    right={
+                      <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                    }
                   />
                   <SettingRow
-                    icon={<IconArchive className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconArchive className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Archived chats"
                     onClick={() => setCurrentView("archivedChats")}
-                    right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+                    right={
+                      <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                    }
                   />
                   <SettingRow
-                    icon={<IconUserLock className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconUserLock className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Security"
                     onClick={() => setCurrentView("security")}
-                    right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+                    right={
+                      <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                    }
                   />
                 </div>
               </Section>
@@ -258,7 +296,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                 <div className="space-y-0.5">
                   <SettingRow
                     onClick={() => {}}
-                    icon={<IconGlobe className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconGlobe className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="App language"
                     right={
                       <div className="flex items-center gap-2">
@@ -290,7 +330,10 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                       </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="min-w-[200px]">
-                      <DropdownMenuRadioGroup value={showInMenuBar} onValueChange={setShowInMenuBar}>
+                      <DropdownMenuRadioGroup
+                        value={showInMenuBar}
+                        onValueChange={setShowInMenuBar}
+                      >
                         <DropdownMenuRadioItem value="Always">Always</DropdownMenuRadioItem>
                         <DropdownMenuRadioItem value="When app is running">
                           When app is running
@@ -341,7 +384,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   </DropdownMenu>
 
                   <SettingToggle
-                    icon={<IconComment className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconComment className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Show additional models"
                     checked={showAdditionalModels}
                     onCheckedChange={setShowAdditionalModels}
@@ -349,7 +394,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   />
 
                   <SettingToggle
-                    icon={<IconCheckmark className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconCheckmark className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Correct spelling automatically"
                     checked={correctSpelling}
                     onCheckedChange={setCorrectSpelling}
@@ -357,7 +404,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   />
 
                   <SettingToggle
-                    icon={<IconLink className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconLink className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Open ChatGPT links in desktop app"
                     checked={openLinksInApp}
                     onCheckedChange={setOpenLinksInApp}
@@ -365,10 +414,14 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   />
 
                   <SettingRow
-                    icon={<IconRegenerate className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconRegenerate className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Check for updates..."
                     onClick={() => setCurrentView("checkForUpdates")}
-                    right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+                    right={
+                      <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                    }
                   />
                 </div>
               </Section>
@@ -377,7 +430,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                 <div className="space-y-0.5">
                   <SettingRow
                     onClick={() => {}}
-                    icon={<IconMessaging className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconMessaging className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Position on screen"
                     right={
                       <div className="flex items-center gap-2">
@@ -393,7 +448,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
 
                   <SettingRow
                     onClick={() => {}}
-                    icon={<IconUndo className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconUndo className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Reset to new chat"
                     right={
                       <div className="flex items-center gap-2">
@@ -408,7 +465,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   />
 
                   <SettingRow
-                    icon={<IconTerminal className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconTerminal className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Keyboard shortcut"
                     right={
                       <div className="flex items-center gap-2">
@@ -426,7 +485,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   />
 
                   <SettingRow
-                    icon={<IconMessaging className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconMessaging className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Open new chats"
                     right={
                       <div className="flex items-center gap-2">
@@ -445,7 +506,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               <Section title="Work with Apps">
                 <div className="space-y-0.5">
                   <SettingToggle
-                    icon={<IconPro className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconPro className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Enable Work with Apps"
                     checked={enableWorkWithApps}
                     onCheckedChange={setEnableWorkWithApps}
@@ -453,7 +516,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   />
 
                   <SettingRow
-                    icon={<IconCheckCircle className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconCheckCircle className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Toggle pairing"
                     right={
                       <div className="flex items-center gap-2">
@@ -468,7 +533,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   />
 
                   <SettingRow
-                    icon={<IconStack className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconStack className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Unpair apps"
                     right={
                       <div className="flex items-center gap-2">
@@ -483,14 +550,20 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   />
 
                   <SettingRow
-                    icon={<IconSettings className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconSettings className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Manage Apps"
                     onClick={() => setCurrentView("manageApps")}
-                    right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+                    right={
+                      <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                    }
                   />
 
                   <SettingToggle
-                    icon={<IconLightBulb className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconLightBulb className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Automatically Pair with Apps from Chat Bar"
                     checked={autoFairWithApps}
                     onCheckedChange={setAutoFairWithApps}
@@ -508,7 +581,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               <Section title="Speech">
                 <div className="space-y-0.5">
                   <SettingRow
-                    icon={<IconMic className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconMic className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Voice"
                     right={
                       <div className="flex items-center gap-2">
@@ -521,7 +596,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   />
 
                   <SettingRow
-                    icon={<IconGlobe className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconGlobe className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Main language"
                     right={
                       <div className="flex items-center gap-2">
@@ -536,10 +613,14 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   />
 
                   <SettingRow
-                    icon={<IconSoundOn className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconSoundOn className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Audio settings"
                     onClick={() => setCurrentView("audioSettings")}
-                    right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+                    right={
+                      <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                    }
                   />
 
                   <div className="px-3 py-2">
@@ -554,7 +635,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               <Section title="Suggestions">
                 <div className="space-y-0.5">
                   <SettingToggle
-                    icon={<IconCheckCircle className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconCheckCircle className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Autocomplete"
                     checked={autocomplete}
                     onCheckedChange={setAutocomplete}
@@ -562,7 +645,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   />
 
                   <SettingToggle
-                    icon={<IconBarChart className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconBarChart className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Trending searches"
                     checked={trendingSearches}
                     onCheckedChange={setTrendingSearches}
@@ -570,7 +655,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   />
 
                   <SettingToggle
-                    icon={<IconLightBulb className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconLightBulb className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Follow-up suggestions"
                     checked={followUpSuggestions}
                     onCheckedChange={setFollowUpSuggestions}
@@ -582,31 +669,49 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               <Section title="About">
                 <div className="space-y-0.5">
                   <SettingRow
-                    icon={<IconWarning className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconWarning className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Report bug"
                     onClick={() => {}}
-                    right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+                    right={
+                      <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                    }
                   />
                   <SettingRow
-                    icon={<IconQuestion className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconQuestion className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Help Center"
                     onClick={() => {}}
-                    right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+                    right={
+                      <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                    }
                   />
                   <SettingRow
-                    icon={<IconBook className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconBook className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Terms of Use"
                     onClick={() => {}}
-                    right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+                    right={
+                      <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                    }
                   />
                   <SettingRow
-                    icon={<IconUserLock className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconUserLock className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="Privacy Policy"
                     onClick={() => {}}
-                    right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+                    right={
+                      <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                    }
                   />
                   <SettingRow
-                    icon={<IconInfo className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+                    icon={
+                      <IconInfo className="size-4 text-[var(--foundation-icon-dark-secondary)]" />
+                    }
                     label="ChatGPT for macOS"
                     right={
                       <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-[var(--foundation-text-dark-secondary)]">
@@ -617,7 +722,9 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                   <SettingRow
                     label="Log out"
                     onClick={() => {}}
-                    right={<IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />}
+                    right={
+                      <IconChevronRightMd className="size-4 text-[var(--foundation-icon-dark-tertiary)]" />
+                    }
                   />
                 </div>
               </Section>

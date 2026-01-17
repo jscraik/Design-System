@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -31,7 +32,6 @@ Last updated: 2026-01-04
   - [Immediate (Phase 1)](#immediate-phase-1)
   - [Future (Phase 2)](#future-phase-2)
 - [Conclusion](#conclusion)
-
 
 ## Task Completed: 4.1 Write unit tests for settings primitives
 

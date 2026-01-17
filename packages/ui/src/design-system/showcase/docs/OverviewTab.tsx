@@ -15,8 +15,8 @@ export function OverviewTab() {
             ChatGPT Design System
           </h2>
           <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mb-6">
-            A complete, production-ready design system featuring 350+ icons and official ChatUI design
-            tokens with full Tailwind CSS integration.
+            A complete, production-ready design system featuring 350+ icons and official ChatUI
+            design tokens with full Tailwind CSS integration.
           </p>
           <div className="flex flex-wrap gap-2">
             {["Tailwind CSS", "Design Tokens", "Dark Mode", "Accessible"].map((tag) => (
@@ -33,10 +33,22 @@ export function OverviewTab() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard label="Icon Families" value={iconCategories.length} description="Organized categories" />
-        <StatCard label="Spacing Tokens" value={spacingScale.length} description="8px grid system" />
+        <StatCard
+          label="Icon Families"
+          value={iconCategories.length}
+          description="Organized categories"
+        />
+        <StatCard
+          label="Spacing Tokens"
+          value={spacingScale.length}
+          description="8px grid system"
+        />
         <StatCard label="Typography Styles" value="6" description="Heading & body" />
-        <StatCard label="Color Tokens" value={colorSwatches.length} description="Light & dark modes" />
+        <StatCard
+          label="Color Tokens"
+          value={colorSwatches.length}
+          description="Light & dark modes"
+        />
       </div>
 
       {/* Quick Start */}
@@ -72,7 +84,10 @@ export function OverviewTab() {
               </span>
               Import Components
             </h3>
-            <CodeBlock code={`import { Button, Card, IconButton } from '@astudio/ui';`} language="ts" />
+            <CodeBlock
+              code={`import { Button, Card, IconButton } from '@astudio/ui';`}
+              language="ts"
+            />
           </Card>
         </div>
       </Section>

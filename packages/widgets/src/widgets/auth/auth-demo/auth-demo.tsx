@@ -63,7 +63,9 @@ function AuthDemoBody({ authStatus, meetsRequiredLevel, user }: AuthDemoProps) {
       {typeof meetsRequiredLevel === "boolean" && (
         <div
           className={`rounded-lg px-3 py-2 text-xs ${
-            meetsRequiredLevel ? "bg-emerald-500/10 text-emerald-200" : "bg-amber-500/10 text-amber-200"
+            meetsRequiredLevel
+              ? "bg-emerald-500/10 text-emerald-200"
+              : "bg-amber-500/10 text-amber-200"
           }`}
         >
           {meetsRequiredLevel

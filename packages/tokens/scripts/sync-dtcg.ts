@@ -520,95 +520,53 @@ function buildTypography(dtcg: DtcgRoot) {
   } as const;
 }
 
-function buildPlatformTypography(
-  platform: "ios" | "android",
-  dtcg: DtcgRoot,
-) {
+function buildPlatformTypography(platform: "ios" | "android", dtcg: DtcgRoot) {
   const type = dtcg.type[platform];
   return {
     heading1: {
       size: getValue(type.heading1.size, `type.${platform}.heading1.size`),
-      lineHeight: getValue(
-        type.heading1.lineHeight,
-        `type.${platform}.heading1.lineHeight`,
-      ),
+      lineHeight: getValue(type.heading1.lineHeight, `type.${platform}.heading1.lineHeight`),
       weight: getValue(type.heading1.weight, `type.${platform}.heading1.weight`),
-      tracking: getValue(
-        type.heading1.tracking,
-        `type.${platform}.heading1.tracking`,
-      ),
+      tracking: getValue(type.heading1.tracking, `type.${platform}.heading1.tracking`),
     },
     heading2: {
       size: getValue(type.heading2.size, `type.${platform}.heading2.size`),
-      lineHeight: getValue(
-        type.heading2.lineHeight,
-        `type.${platform}.heading2.lineHeight`,
-      ),
+      lineHeight: getValue(type.heading2.lineHeight, `type.${platform}.heading2.lineHeight`),
       weight: getValue(type.heading2.weight, `type.${platform}.heading2.weight`),
-      tracking: getValue(
-        type.heading2.tracking,
-        `type.${platform}.heading2.tracking`,
-      ),
+      tracking: getValue(type.heading2.tracking, `type.${platform}.heading2.tracking`),
     },
     heading3: {
       size: getValue(type.heading3.size, `type.${platform}.heading3.size`),
-      lineHeight: getValue(
-        type.heading3.lineHeight,
-        `type.${platform}.heading3.lineHeight`,
-      ),
+      lineHeight: getValue(type.heading3.lineHeight, `type.${platform}.heading3.lineHeight`),
       weight: getValue(type.heading3.weight, `type.${platform}.heading3.weight`),
-      tracking: getValue(
-        type.heading3.tracking,
-        `type.${platform}.heading3.tracking`,
-      ),
+      tracking: getValue(type.heading3.tracking, `type.${platform}.heading3.tracking`),
     },
     body: {
       size: getValue(type.body.size, `type.${platform}.body.size`),
-      lineHeight: getValue(
-        type.body.lineHeight,
-        `type.${platform}.body.lineHeight`,
-      ),
+      lineHeight: getValue(type.body.lineHeight, `type.${platform}.body.lineHeight`),
       weight: getValue(type.body.weight, `type.${platform}.body.weight`),
-      emphasisWeight: getValue(
-        type.body.emphasisWeight,
-        `type.${platform}.body.emphasisWeight`,
-      ),
+      emphasisWeight: getValue(type.body.emphasisWeight, `type.${platform}.body.emphasisWeight`),
       tracking: getValue(type.body.tracking, `type.${platform}.body.tracking`),
     },
     bodySmall: {
       size: getValue(type.bodySmall.size, `type.${platform}.bodySmall.size`),
-      lineHeight: getValue(
-        type.bodySmall.lineHeight,
-        `type.${platform}.bodySmall.lineHeight`,
-      ),
-      weight: getValue(
-        type.bodySmall.weight,
-        `type.${platform}.bodySmall.weight`,
-      ),
+      lineHeight: getValue(type.bodySmall.lineHeight, `type.${platform}.bodySmall.lineHeight`),
+      weight: getValue(type.bodySmall.weight, `type.${platform}.bodySmall.weight`),
       emphasisWeight: getValue(
         type.bodySmall.emphasisWeight,
         `type.${platform}.bodySmall.emphasisWeight`,
       ),
-      tracking: getValue(
-        type.bodySmall.tracking,
-        `type.${platform}.bodySmall.tracking`,
-      ),
+      tracking: getValue(type.bodySmall.tracking, `type.${platform}.bodySmall.tracking`),
     },
     caption: {
       size: getValue(type.caption.size, `type.${platform}.caption.size`),
-      lineHeight: getValue(
-        type.caption.lineHeight,
-        `type.${platform}.caption.lineHeight`,
-      ),
+      lineHeight: getValue(type.caption.lineHeight, `type.${platform}.caption.lineHeight`),
       weight: getValue(type.caption.weight, `type.${platform}.caption.weight`),
       emphasisWeight: getValue(
         type.caption.emphasisWeight,
         `type.${platform}.caption.emphasisWeight`,
       ),
-      tracking: getValue(
-        type.caption.tracking,
-        `type.${platform}.caption.tracking`,
-      ),
+      tracking: getValue(type.caption.tracking, `type.${platform}.caption.tracking`),
     },
   } as const;
 }

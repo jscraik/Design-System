@@ -1,15 +1,19 @@
 import { OriginMetadata, InstallDestination } from "./types.js";
 export type InstallOptions = {
-    slug: string;
-    version?: string | null;
-    source?: string;
-    strictSingleSkill?: boolean;
+  slug: string;
+  version?: string | null;
+  source?: string;
+  strictSingleSkill?: boolean;
 };
 export type InstallResult = {
-    selectedId?: string;
-    installPaths: string[];
+  selectedId?: string;
+  installPaths: string[];
 };
-export declare function installSkillFromZip(zipPath: string, destinations: InstallDestination[], options: InstallOptions): Promise<InstallResult>;
+export declare function installSkillFromZip(
+  zipPath: string,
+  destinations: InstallDestination[],
+  options: InstallOptions,
+): Promise<InstallResult>;
 export declare function findSkillRoot(rootDir: string, strictSingleSkill: boolean): string;
 export declare function writeOrigin(destination: string, origin: OriginMetadata): void;
 export declare function buildOrigin(options: InstallOptions): OriginMetadata;

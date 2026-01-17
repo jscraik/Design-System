@@ -14,10 +14,17 @@ export interface SettingRowProps {
  * Can be used as a display row or clickable button
  * Supports optional icon on the left
  */
-export function SettingRow({ icon, label, description, right, onClick, className = "" }: SettingRowProps) {
+export function SettingRow({
+  icon,
+  label,
+  description,
+  right,
+  onClick,
+  className = "",
+}: SettingRowProps) {
   const baseClasses = "flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors";
   const hoverClasses = onClick ? "hover:bg-[var(--foundation-bg-dark-2)] cursor-pointer" : "";
-  
+
   const content = (
     <>
       <div className="flex items-center gap-3 min-w-0 flex-1">

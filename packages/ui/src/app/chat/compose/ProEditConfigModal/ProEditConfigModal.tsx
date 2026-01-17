@@ -38,7 +38,9 @@ export function ProEditConfigModal({
       <div className="fixed inset-0 bg-foundation-bg-dark-1/60 z-50" onClick={onClose} />
 
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[60] w-[720px] bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-[12px] shadow-2xl p-8">
-        <h2 className="text-heading-3 font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-4">Pro Edit Settings</h2>
+        <h2 className="text-heading-3 font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-4">
+          Pro Edit Settings
+        </h2>
 
         <div className="flex items-center gap-2 mb-4">
           <IconCheckmark className="size-4 text-foundation-accent-green-light dark:text-foundation-accent-green" />
@@ -48,8 +50,8 @@ export function ProEditConfigModal({
         </div>
 
         <p className="text-body-small font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mb-6">
-          Pro Edit mode uses your selected AI model to plan edits, while delegate edit agents or models apply
-          those edits simultaneously.
+          Pro Edit mode uses your selected AI model to plan edits, while delegate edit agents or
+          models apply those edits simultaneously.
         </p>
 
         <div className="inline-flex items-center gap-0 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 rounded-lg p-1 mb-6">
@@ -79,14 +81,18 @@ export function ProEditConfigModal({
 
         {proEditMode === "agent" && (
           <div>
-            <h3 className="text-body font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2">Agent Configuration</h3>
+            <h3 className="text-body font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2">
+              Agent Configuration
+            </h3>
             <p className="text-body-small font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mb-4">
               Runs a headless agent for each file to apply edits in parallel within a sandbox.
             </p>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-body-small font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mb-2">Agent</label>
+                <label className="block text-body-small font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mb-2">
+                  Agent
+                </label>
                 <div className="relative">
                   <select
                     value={selectedAgent}
@@ -102,7 +108,9 @@ export function ProEditConfigModal({
               </div>
 
               <div>
-                <label className="block text-body-small font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mb-2">Model</label>
+                <label className="block text-body-small font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mb-2">
+                  Model
+                </label>
                 <div className="relative">
                   <select
                     value={selectedModelConfig}

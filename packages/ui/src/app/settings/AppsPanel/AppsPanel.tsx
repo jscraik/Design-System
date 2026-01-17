@@ -133,10 +133,7 @@ export function AppsPanel({ onBack }: SettingsPanelProps) {
             <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary">
               ChatGPT can access information from connected apps. Your permissions are always
               respected.{" "}
-              <button
-                type="button"
-                className="text-foundation-accent-blue hover:underline"
-              >
+              <button type="button" className="text-foundation-accent-blue hover:underline">
                 Learn more
               </button>
             </p>

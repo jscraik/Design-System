@@ -16,7 +16,7 @@ const segmentedControlVariants = cva(
     defaultVariants: {
       size: "md",
     },
-  }
+  },
 );
 
 const segmentVariants = cva(
@@ -37,7 +37,7 @@ const segmentVariants = cva(
       size: "md",
       selected: false,
     },
-  }
+  },
 );
 
 export interface SegmentedControlOption {
@@ -48,7 +48,8 @@ export interface SegmentedControlOption {
 }
 
 export interface SegmentedControlProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
+  extends
+    Omit<React.HTMLAttributes<HTMLDivElement>, "onChange">,
     VariantProps<typeof segmentedControlVariants> {
   options: SegmentedControlOption[];
   value: string;
@@ -57,27 +58,12 @@ export interface SegmentedControlProps
 }
 
 const SegmentedControl = React.forwardRef<HTMLDivElement, SegmentedControlProps>(
-  (
-    {
-      options,
-      value,
-      onChange,
-      size,
-      fullWidth = false,
-      className,
-      ...props
-    },
-    ref
-  ) => {
+  ({ options, value, onChange, size, fullWidth = false, className, ...props }, ref) => {
     return (
       <div
         ref={ref}
         role="tablist"
-        className={cn(
-          segmentedControlVariants({ size }),
-          fullWidth && "w-full",
-          className
-        )}
+        className={cn(segmentedControlVariants({ size }), fullWidth && "w-full", className)}
         {...props}
       >
         {options.map((option) => {
@@ -93,19 +79,17 @@ const SegmentedControl = React.forwardRef<HTMLDivElement, SegmentedControlProps>
               className={cn(
                 segmentVariants({ size, selected: isSelected }),
                 fullWidth && "flex-1",
-                "gap-2"
+                "gap-2",
               )}
             >
-              {option.icon && (
-                <span className="inline-flex">{option.icon}</span>
-              )}
+              {option.icon && <span className="inline-flex">{option.icon}</span>}
               {option.label}
             </button>
           );
         })}
       </div>
     );
-  }
+  },
 );
 SegmentedControl.displayName = "SegmentedControl";
 

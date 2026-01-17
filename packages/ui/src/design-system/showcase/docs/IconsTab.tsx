@@ -16,7 +16,9 @@ export function IconsTab() {
     ? iconCategories
         .map((cat) => ({
           ...cat,
-          items: cat.items.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase())),
+          items: cat.items.filter((item) =>
+            item.name.toLowerCase().includes(searchQuery.toLowerCase()),
+          ),
         }))
         .filter((cat) => cat.items.length > 0)
     : iconCategories;

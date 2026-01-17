@@ -25,7 +25,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
       onError,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(false);
@@ -68,7 +68,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
           className={cn(
             "flex items-center justify-center bg-foundation-bg-dark-2 text-foundation-text-dark-tertiary",
             aspectRatioClasses[aspectRatio],
-            className
+            className,
           )}
         >
           {fallback || (
@@ -88,7 +88,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
           <div
             className={cn(
               "absolute inset-0 flex items-center justify-center bg-foundation-bg-dark-2",
-              aspectRatioClasses[aspectRatio]
+              aspectRatioClasses[aspectRatio],
             )}
           >
             <ShimmerInline width="100%" height="100%" />
@@ -107,13 +107,13 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
             loading ? "opacity-0" : "opacity-100",
             aspectRatioClasses[aspectRatio],
             objectFitClasses[objectFit],
-            "w-full h-full"
+            "w-full h-full",
           )}
           {...props}
         />
       </div>
     );
-  }
+  },
 );
 Image.displayName = "Image";
 
@@ -143,7 +143,7 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
       <div
         className={cn(
           "flex items-center justify-center rounded-full bg-foundation-accent-blue text-white font-medium",
-          sizeClasses[size]
+          sizeClasses[size],
         )}
       >
         {initials || "?"}
@@ -160,7 +160,7 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
         {...props}
       />
     );
-  }
+  },
 );
 AvatarImage.displayName = "AvatarImage";
 

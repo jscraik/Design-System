@@ -78,9 +78,7 @@ export function ModalDialog({
 
   // Generate unique IDs using useId() for guaranteed uniqueness
   const generatedTitleId = titleId || (title ? `modal-title-${baseId}` : undefined);
-  const descriptionId = description
-    ? `modal-description-${baseId}`
-    : undefined;
+  const descriptionId = description ? `modal-description-${baseId}` : undefined;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center" role="presentation">

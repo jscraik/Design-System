@@ -19,10 +19,5 @@ figma.connect(DashboardTemplate, {
     widgets: figma.children("Widget cards"),
   },
 
-  example: (
-    <DashboardTemplate
-      title="Dashboard"
-      widgets={<div>Widget Cards</div>}
-    />
-  ),
+  example: <DashboardTemplate title="Dashboard" widgets={<div>Widget Cards</div>} />,
 });

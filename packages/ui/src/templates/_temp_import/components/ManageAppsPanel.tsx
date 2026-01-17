@@ -8,9 +8,7 @@ function AppIcon({ name, color }: { name: string; color: string }) {
       className="size-5 rounded flex items-center justify-center flex-shrink-0"
       style={{ backgroundColor: color }}
     >
-      <span className="text-white text-[11px] font-semibold">
-        {name.charAt(0).toUpperCase()}
-      </span>
+      <span className="text-white text-[11px] font-semibold">{name.charAt(0).toUpperCase()}</span>
     </div>
   );
 }

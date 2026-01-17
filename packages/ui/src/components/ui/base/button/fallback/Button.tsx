@@ -17,16 +17,13 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "bg-foreground text-text-inverted hover:bg-foreground/90",
+        default: "bg-foreground text-text-inverted hover:bg-foreground/90",
         destructive:
           "bg-foundation-accent-red text-text-inverted hover:bg-foundation-accent-red/90 focus-visible:ring-foundation-text-light-primary dark:focus-visible:ring-foundation-text-dark-primary",
         outline:
           "border border-border-strong bg-transparent text-foreground hover:bg-secondary/60 focus-visible:ring-foundation-text-light-primary dark:focus-visible:ring-foundation-text-dark-primary",
-        secondary:
-          "bg-muted text-foreground hover:bg-secondary/70",
-        ghost:
-          "bg-transparent text-foreground hover:bg-secondary/60 hover:text-foreground",
+        secondary: "bg-muted text-foreground hover:bg-secondary/70",
+        ghost: "bg-transparent text-foreground hover:bg-secondary/60 hover:text-foreground",
         link: "text-foundation-text-dark-primary underline decoration-foundation-accent-blue underline-offset-4 hover:decoration-foundation-accent-blue/70",
       },
       size: {

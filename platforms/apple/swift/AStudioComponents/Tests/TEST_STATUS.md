@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -32,7 +33,6 @@ Last updated: 2026-01-04
 - [Validation](#validation)
 - [Next Steps](#next-steps)
 - [Status: ✅ READY](#status-ready)
-
 
 ## Summary
 
@@ -159,13 +159,15 @@ These will be implemented using SwiftCheck in a future phase.
 All unit tests are written, syntactically correct, and ready to run in Xcode. The packages build successfully, confirming the test code is valid.
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.
 
 ## Troubleshooting
-- TBD: Add the top 3 failure modes and fixes.
 
+- TBD: Add the top 3 failure modes and fixes.

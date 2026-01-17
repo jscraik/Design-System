@@ -4,131 +4,137 @@
  */
 export const widgetManifest = {
   "auth-demo": {
-    "name": "auth-demo",
-    "uri": "auth-demo.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/auth/auth-demo/index.html"
+    name: "auth-demo",
+    uri: "auth-demo.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/auth/auth-demo/index.html",
   },
   "past-orders": {
-    "name": "past-orders",
-    "uri": "past-orders.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/auth/past-orders/index.html"
+    name: "past-orders",
+    uri: "past-orders.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/auth/past-orders/index.html",
   },
   "search-spotlight": {
-    "name": "search-spotlight",
-    "uri": "search-spotlight.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/auth/search-spotlight/index.html"
+    name: "search-spotlight",
+    uri: "search-spotlight.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/auth/search-spotlight/index.html",
   },
   "chat-header": {
-    "name": "chat-header",
-    "uri": "chat-header.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/chat/chat-header/index.html"
+    name: "chat-header",
+    uri: "chat-header.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/chat/chat-header/index.html",
   },
   "chat-input": {
-    "name": "chat-input",
-    "uri": "chat-input.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/chat/chat-input/index.html"
+    name: "chat-input",
+    uri: "chat-input.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/chat/chat-input/index.html",
   },
   "chat-messages": {
-    "name": "chat-messages",
-    "uri": "chat-messages.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/chat/chat-messages/index.html"
+    name: "chat-messages",
+    uri: "chat-messages.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/chat/chat-messages/index.html",
   },
   "chat-sidebar": {
-    "name": "chat-sidebar",
-    "uri": "chat-sidebar.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/chat/chat-sidebar/index.html"
+    name: "chat-sidebar",
+    uri: "chat-sidebar.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/chat/chat-sidebar/index.html",
   },
   "chat-template": {
-    "name": "chat-template",
-    "uri": "chat-template.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/chat/chat-template/index.html"
+    name: "chat-template",
+    uri: "chat-template.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/chat/chat-template/index.html",
   },
   "chat-view": {
-    "name": "chat-view",
-    "uri": "chat-view.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/chat/chat-view/index.html"
+    name: "chat-view",
+    uri: "chat-view.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/chat/chat-view/index.html",
   },
   "compose-view": {
-    "name": "compose-view",
-    "uri": "compose-view.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/chat/compose-view/index.html"
+    name: "compose-view",
+    uri: "compose-view.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/chat/compose-view/index.html",
   },
   "shopping-cart": {
-    "name": "shopping-cart",
-    "uri": "shopping-cart.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/commerce/shopping-cart/index.html"
+    name: "shopping-cart",
+    uri: "shopping-cart.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/commerce/shopping-cart/index.html",
   },
   "dashboard-widget": {
-    "name": "dashboard-widget",
-    "uri": "dashboard-widget.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/dashboard/dashboard-widget/index.html"
+    name: "dashboard-widget",
+    uri: "dashboard-widget.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/dashboard/dashboard-widget/index.html",
+  },
+  "json-render-demo": {
+    name: "json-render-demo",
+    uri: "json-render-demo.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/demo/json-render-demo/index.html",
   },
   "kitchen-sink-lite": {
-    "name": "kitchen-sink-lite",
-    "uri": "kitchen-sink-lite.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/demo/kitchen-sink-lite/index.html"
+    name: "kitchen-sink-lite",
+    uri: "kitchen-sink-lite.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/demo/kitchen-sink-lite/index.html",
   },
   "pizzaz-carousel": {
-    "name": "pizzaz-carousel",
-    "uri": "pizzaz-carousel.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/pizzaz/pizzaz-carousel/index.html"
+    name: "pizzaz-carousel",
+    uri: "pizzaz-carousel.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/pizzaz/pizzaz-carousel/index.html",
   },
   "pizzaz-gallery": {
-    "name": "pizzaz-gallery",
-    "uri": "pizzaz-gallery.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/pizzaz/pizzaz-gallery/index.html"
+    name: "pizzaz-gallery",
+    uri: "pizzaz-gallery.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/pizzaz/pizzaz-gallery/index.html",
   },
   "pizzaz-map": {
-    "name": "pizzaz-map",
-    "uri": "pizzaz-map.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/pizzaz/pizzaz-map/index.html"
+    name: "pizzaz-map",
+    uri: "pizzaz-map.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/pizzaz/pizzaz-map/index.html",
   },
   "pizzaz-markdown": {
-    "name": "pizzaz-markdown",
-    "uri": "pizzaz-markdown.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/pizzaz/pizzaz-markdown/index.html"
+    name: "pizzaz-markdown",
+    uri: "pizzaz-markdown.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/pizzaz/pizzaz-markdown/index.html",
   },
   "pizzaz-shop": {
-    "name": "pizzaz-shop",
-    "uri": "pizzaz-shop.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/pizzaz/pizzaz-shop/index.html"
+    name: "pizzaz-shop",
+    uri: "pizzaz-shop.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/pizzaz/pizzaz-shop/index.html",
   },
   "pizzaz-table": {
-    "name": "pizzaz-table",
-    "uri": "pizzaz-table.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/pizzaz/pizzaz-table/index.html"
+    name: "pizzaz-table",
+    uri: "pizzaz-table.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/pizzaz/pizzaz-table/index.html",
   },
   "solar-system": {
-    "name": "solar-system",
-    "uri": "solar-system.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/science/solar-system/index.html"
+    name: "solar-system",
+    uri: "solar-system.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/science/solar-system/index.html",
   },
   "search-results": {
-    "name": "search-results",
-    "uri": "search-results.dev-1767981980168",
-    "hash": "dev-1767981980168",
-    "originalPath": "src/widgets/search/search-results/index.html"
-  }
+    name: "search-results",
+    uri: "search-results.dev-1768605560029",
+    hash: "dev-1768605560029",
+    originalPath: "src/widgets/search/search-results/index.html",
+  },
 } as const;
 
 /**

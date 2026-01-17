@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -54,12 +55,12 @@ Last updated: 2026-01-04
   - [Files to Create](#files-to-create)
 - [Appendix B: Commands Reference](#appendix-b-commands-reference)
 
-
 ## Executive Summary
 
 This document outlines the step-by-step plan to consolidate duplicate code across the Swift packages, reducing code duplication from ~25% to <5%.
 
 **Target Impact:**
+
 - Code reduction: ~4,800 LOC
 - Duplication reduction: 80%
 - Estimated effort: 140 hours (4-6 weeks)
@@ -69,16 +70,19 @@ This document outlines the step-by-step plan to consolidate duplicate code acros
 ## Phase 1: ChatUIButton Consolidation (Week 1-2)
 
 ### Current State
+
 - **AStudioComponents**: `ChatUIButton.swift` (410 LOC)
 - **ui-swift**: `ChatUIButton.swift` (284 LOC)
 - **Overlap**: 95% identical code
 
 ### Source of Truth
+
 **AStudioComponents** will be the canonical implementation.
 
 ### Migration Steps
 
 #### Step 1: Verify AStudioComponents Implementation
+
 ```bash
 # File: platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ChatUIButton.swift
 # Verify it has all necessary features:
@@ -89,10 +93,13 @@ This document outlines the step-by-step plan to consolidate duplicate code acros
 ```
 
 #### Step 2: Update Dependent Code in ui-swift
+
 **Files to update:**
+
 - `platforms/apple/swift/ui-swift/Sources/AStudioSwift/Components/ChatUIButton.swift`
 
 **Action:** Replace entire file with:
+
 ```swift
 // Re-export from AStudioComponents
 @_exported import AStudioComponents
@@ -102,7 +109,9 @@ public typealias ChatUIButton = AStudioComponents.ChatUIButton
 ```
 
 #### Step 3: Update ui-swift Package.swift
+
 Add AStudioComponents as a dependency:
+
 ```swift
 .package(path: "../AStudioComponents")
 
@@ -113,17 +122,21 @@ Add AStudioComponents as a dependency:
 ```
 
 #### Step 4: Deprecation Notice
+
 Add deprecation notice to ui-swift ChatUIButton:
+
 ```swift
 @available(*, deprecated, message: "Use AStudioComponents.ChatUIButton instead")
 public typealias ChatUIButton = AStudioComponents.ChatUIButton
 ```
 
 ### Breaking Changes
+
 - None for consumers (type alias maintains compatibility)
 - Internal: Import path changes
 
 ### Rollback Strategy
+
 Keep git commit with original ui-swift implementation for easy revert.
 
 ---
@@ -131,16 +144,19 @@ Keep git commit with original ui-swift implementation for easy revert.
 ## Phase 2: DesignTokens Unification (Week 2-3)
 
 ### Current State
+
 - **AStudioFoundation**: `DesignTokens.swift` (433 LOC with FType/FColor/FSpacing)
 - **ui-swift**: `DesignTokens.swift` (421 LOC)
 - **Overlap**: 85% similar structure
 
 ### Source of Truth
+
 **AStudioFoundation** will be the canonical token system.
 
 ### Migration Steps
 
 #### Step 1: Audit Token Differences
+
 ```bash
 # Compare token definitions
 diff platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/DesignTokens.swift \
@@ -148,7 +164,9 @@ diff platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/DesignTok
 ```
 
 #### Step 2: Merge Missing Tokens to AStudioFoundation
+
 Add any unique tokens from ui-swift to AStudioFoundation:
+
 ```swift
 // File: AStudioFoundation/DesignTokens.swift
 // Add Interactive colors if missing
@@ -160,7 +178,9 @@ public enum Interactive {
 ```
 
 #### Step 3: Create Compatibility Layer
+
 In AStudioFoundation, add compatibility shims:
+
 ```swift
 // Backward compatibility for old FType/FColor/FSpacing APIs
 @available(*, deprecated, renamed: "DesignTokens")
@@ -174,15 +194,19 @@ public typealias FSpacing = DesignTokens.Spacing
 ```
 
 #### Step 4: Update Consumers
+
 **Files to update:**
+
 - All files using `FType`, `FColor`, `FSpacing`
 
 **Find affected files:**
+
 ```bash
 grep -r "FType\|FColor\|FSpacing" platforms/apple/swift --include="*.swift"
 ```
 
 **Replace patterns:**
+
 ```swift
 // Before
 let color = FColor.Text.primary
@@ -192,10 +216,12 @@ let color = DesignTokens.Color.textPrimary
 ```
 
 ### Breaking Changes
+
 - Deprecated APIs remain functional but emit warnings
 - New code should use DesignTokens directly
 
 ### Rollback Strategy
+
 Keep old APIs with deprecation warnings for 2 release cycles.
 
 ---
@@ -203,12 +229,14 @@ Keep old APIs with deprecation warnings for 2 release cycles.
 ## Phase 3: Icon Migration to Asset Catalog (Week 3-4)
 
 ### Current State
+
 - **ChatGPTIcons.swift**: 448 LOC (enum definitions)
 - **ChatGPTIconPaths.swift**: 261 LOC (SVG path strings)
 - **ChatGPTIconVectors.swift**: 482 LOC (SwiftUI Shape views)
 - **Total**: 1,191 LOC
 
 ### Target State
+
 - Asset Catalog with vector assets
 - Code generation for type-safe access
 - **New LOC**: ~50 (code generator only)
@@ -216,6 +244,7 @@ Keep old APIs with deprecation warnings for 2 release cycles.
 ### Migration Steps
 
 #### Step 1: Create Asset Catalog Structure
+
 ```bash
 mkdir -p platforms/apple/swift/AStudioFoundation/Resources/Assets.xcassets/Icons
 
@@ -224,7 +253,9 @@ mkdir -p platforms/apple/swift/AStudioFoundation/Resources/Assets.xcassets/Icons
 ```
 
 #### Step 2: Extract Icon Definitions
+
 From ChatGPTIconPaths.swift, create individual `.svg` files:
+
 ```python
 # Script: scripts/extract_icons.py
 import re
@@ -237,6 +268,7 @@ with open('ChatGPTIconPaths.swift', 'r') as f:
 ```
 
 #### Step 3: Create Code Generator
+
 ```swift
 // File: scripts/generate-icons.swift
 #!/usr/bin/env swift
@@ -259,7 +291,9 @@ IconGenerator.main()
 ```
 
 #### Step 4: Add to Build Phase
+
 In Package.swift:
+
 ```swift
 .target(
     name: "AStudioFoundation",
@@ -270,7 +304,9 @@ In Package.swift:
 ```
 
 #### Step 5: Deprecate Old Icon Files
+
 Add deprecation warnings:
+
 ```swift
 @available(*, deprecated, message: "Use Icons.iconName from asset catalog instead")
 public enum ChatGPTIcons {
@@ -279,10 +315,12 @@ public enum ChatGPTIcons {
 ```
 
 ### Breaking Changes
+
 - Icon access changes from `ChatGPTIcons.send` to `Icons.send`
 - SVG assets are now bundled resources
 
 ### Rollback Strategy
+
 Keep old icon files with deprecation warnings for 2 release cycles.
 
 ---
@@ -292,11 +330,14 @@ Keep old icon files with deprecation warnings for 2 release cycles.
 ### 4.1 Card Components (75% similar)
 
 #### Current State
+
 - **SettingsCardView** (AStudioComponents): Settings-specific card
 - **ChatUICard** (ui-swift): Generic card component
 
 #### Consolidation Plan
+
 1. Create base `CardView` in AStudioFoundation:
+
 ```swift
 // File: AStudioFoundation/Sources/AStudioFoundation/Layout/CardView.swift
 
@@ -315,6 +356,7 @@ public struct CardView<Content: View>: View {
 ```
 
 2. Create specialized variants:
+
 ```swift
 // AStudioComponents
 public struct SettingsCardView<Content: View>: View {
@@ -328,12 +370,15 @@ public typealias ChatUICard<Content: View> = CardView<Content>
 ### 4.2 Modal Components (70% similar)
 
 #### Current State
+
 - **ModalDialogView** (AStudioComponents)
 - **AlertView** (AStudioComponents)
 - **ChatUIModal** (ui-swift)
 
 #### Consolidation Plan
+
 1. Create base `ModalView` in AStudioFoundation:
+
 ```swift
 public struct ModalView<Content: View>: View {
     public enum Style {
@@ -350,6 +395,7 @@ public struct ModalView<Content: View>: View {
 ```
 
 2. Create convenience wrappers:
+
 ```swift
 // AStudioComponents
 public typealias ModalDialogView = ModalView<AnyView>
@@ -362,12 +408,15 @@ public typealias ChatUIModal = ModalView<AnyView>
 ### 4.3 Input Components (72% similar)
 
 #### Current State
+
 - **InputView** (AStudioComponents)
 - **ComposeTextArea** (AStudioComponents)
 - **ChatUIInput** (ui-swift)
 
 #### Consolidation Plan
+
 1. Create base `TextInputView` in AStudioFoundation:
+
 ```swift
 public struct TextInputView: View {
     public enum Style {
@@ -381,6 +430,7 @@ public struct TextInputView: View {
 ```
 
 2. Create specialized variants:
+
 ```swift
 // AStudioComponents
 public typealias InputView = TextInputView
@@ -395,16 +445,19 @@ public typealias ChatUIInput = TextInputView
 ## Phase 5: Testing & Validation (Week 5-6)
 
 ### Unit Tests
+
 1. Add tests for consolidated components
 2. Verify API compatibility
 3. Test rendering consistency
 
 ### Integration Tests
+
 1. Build all packages with new structure
 2. Run macOS apps with consolidated code
 3. Verify no regressions
 
 ### Migration Checklist
+
 - [ ] All packages compile without errors
 - [ ] All tests pass
 - [ ] Snapshot tests updated
@@ -416,32 +469,38 @@ public typealias ChatUIInput = TextInputView
 
 ## Timeline Summary
 
-| Week | Phase | Deliverables |
-|------|-------|--------------|
-| 1-2 | ChatUIButton Consolidation | Single ChatUIButton implementation |
-| 2-3 | DesignTokens Unification | Unified token system |
-| 3-4 | Icon Migration | Asset catalog + code generation |
-| 4-5 | Shared Components | Base components in Foundation |
-| 5-6 | Testing & Validation | All tests passing, documentation |
+| Week | Phase                      | Deliverables                       |
+| ---- | -------------------------- | ---------------------------------- |
+| 1-2  | ChatUIButton Consolidation | Single ChatUIButton implementation |
+| 2-3  | DesignTokens Unification   | Unified token system               |
+| 3-4  | Icon Migration             | Asset catalog + code generation    |
+| 4-5  | Shared Components          | Base components in Foundation      |
+| 5-6  | Testing & Validation       | All tests passing, documentation   |
 
 ---
 
 ## Risk Mitigation
 
 ### Risk 1: Breaking Changes in Dependent Packages
+
 **Mitigation:**
+
 - Use type aliases for backward compatibility
 - Deprecation warnings before removal
 - Comprehensive testing before release
 
 ### Risk 2: Icon Asset Catalog Issues
+
 **Mitigation:**
+
 - Keep old icon implementation as fallback
 - Generate assets offline, validate in CI
 - Document migration process
 
 ### Risk 3: Foundation Package Bloat
+
 **Mitigation:**
+
 - Keep base components minimal
 - Use protocols for extensibility
 - Document single responsibility for each component
@@ -450,29 +509,32 @@ public typealias ChatUIInput = TextInputView
 
 ## Success Metrics
 
-| Metric | Current | Target |
-|--------|---------|--------|
-| Code Duplication | 25% | <5% |
-| Total LOC | 19,210 | ~14,500 |
-| Icon Implementation | 1,191 LOC | ~50 LOC |
-| Shared Components | 3 implementations each | 1 base + wrappers |
-| Test Coverage | 15% | 65% |
+| Metric              | Current                | Target            |
+| ------------------- | ---------------------- | ----------------- |
+| Code Duplication    | 25%                    | <5%               |
+| Total LOC           | 19,210                 | ~14,500           |
+| Icon Implementation | 1,191 LOC              | ~50 LOC           |
+| Shared Components   | 3 implementations each | 1 base + wrappers |
+| Test Coverage       | 15%                    | 65%               |
 
 ---
 
 ## Post-Migration Cleanup
 
 ### Release 1 (Immediate)
+
 - Add deprecation warnings to old APIs
 - Update documentation
 - Migration guide for consumers
 
 ### Release 2 (2 releases later)
+
 - Remove deprecated APIs
 - Clean up compatibility shims
 - Finalize API surface
 
 ### Release 3 (Future)
+
 - Remove all legacy code
 - Final documentation update
 - Performance optimization
@@ -482,6 +544,7 @@ public typealias ChatUIInput = TextInputView
 ## Appendix A: File Inventory
 
 ### Files to Modify
+
 1. `platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ChatUIButton.swift`
 2. `platforms/apple/swift/ui-swift/Sources/AStudioSwift/Components/ChatUIButton.swift`
 3. `platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/DesignTokens.swift`
@@ -491,6 +554,7 @@ public typealias ChatUIInput = TextInputView
 7. `platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/ChatGPTIconVectors.swift`
 
 ### Files to Create
+
 1. `platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Layout/CardView.swift`
 2. `platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Layout/ModalView.swift`
 3. `platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Inputs/TextInputView.swift`
@@ -520,13 +584,15 @@ xcrun llvm-cov report --instr-profile=.build/debug/codecov/default.profdata \
 ```
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.
 
 ## Troubleshooting
-- TBD: Add the top 3 failure modes and fixes.
 
+- TBD: Add the top 3 failure modes and fixes.

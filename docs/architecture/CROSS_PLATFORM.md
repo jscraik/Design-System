@@ -3,6 +3,7 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Engineers and technical leads
 - Scope: System architecture and component relationships
 - Non-scope: Step-by-step operational procedures
@@ -39,7 +40,6 @@ Last updated: 2026-01-09
   - [Benefits](#benefits)
   - [Trade-offs](#trade-offs)
 - [6. Success Metrics](#6-success-metrics)
-
 
 > Status: This document includes historical proposals that reference the legacy `platforms/apple/swift/ui-swift` package.
 > For the current Swift architecture, see `platforms/apple/swift/README.md` and `docs/SWIFT_INTEGRATION.md`.

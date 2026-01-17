@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -47,7 +48,6 @@ Last updated: 2026-01-04
   - [1. SwiftUI Preview Macros](#1-swiftui-preview-macros)
   - [2. Opacity Adjustments](#2-opacity-adjustments)
 - [Conclusion](#conclusion)
-
 
 **Task:** Verify that light/dark mode switching works automatically
 **Status:** ✅ VERIFIED
@@ -541,13 +541,15 @@ This is theme-specific styling, not color selection. The base color (`FColor.div
 **Task:** `.kiro/specs/native-macos-bridge/tasks.md` - Task 6 (Light/dark mode switching)
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.
 
 ## Troubleshooting
-- TBD: Add the top 3 failure modes and fixes.
 
+- TBD: Add the top 3 failure modes and fixes.

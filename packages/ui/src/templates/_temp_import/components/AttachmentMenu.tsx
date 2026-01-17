@@ -290,7 +290,8 @@ export function AttachmentMenu({
                   onClick={handleWebSearch}
                   className={cn(
                     "justify-between",
-                    isWebSearchActive && "text-foundation-accent-blue-light dark:text-foundation-accent-blue",
+                    isWebSearchActive &&
+                      "text-foundation-accent-blue-light dark:text-foundation-accent-blue",
                   )}
                 >
                   <div className="flex items-center gap-3">

@@ -40,9 +40,9 @@ describe("Icon generation round-trip", () => {
         {
           ...svgrConfig,
           icon: false,
-          typescript: true
+          typescript: true,
         },
-        { componentName, filePath: svgPath }
+        { componentName, filePath: svgPath },
       );
 
       const componentPath = join(REACT_ROOT, file.category, `${componentName}.tsx`);

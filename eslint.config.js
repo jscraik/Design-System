@@ -88,19 +88,19 @@ export default [
       "no-restricted-imports": [
         "error",
         {
-          "patterns": ["**/_temp/**", "_temp/**"],
-          "paths": [
+          patterns: ["**/_temp/**", "_temp/**"],
+          paths: [
             {
               name: "@astudio/ui/dev",
               message:
                 "Dev-only export. Use @astudio/ui/* or @astudio/ui/experimental outside local harnesses.",
             },
           ],
-        }
+        },
       ],
       // Complexity rules (warnings initially, can be escalated to errors)
       "sonarjs/cognitive-complexity": ["warn", 25],
-      "complexity": ["warn", 15],
+      complexity: ["warn", 15],
       "sonarjs/max-switch-cases": ["warn", 15],
       "sonarjs/no-duplicate-string": "warn",
       "sonarjs/no-identical-conditions": "error",
@@ -155,10 +155,7 @@ export default [
       "@astudio-no-deprecated/no-deprecated-imports": [
         "error",
         {
-          deprecatedPatterns: [
-            "**/_temp/**",
-            "**/_temp_import/**",
-          ],
+          deprecatedPatterns: ["**/_temp/**", "**/_temp_import/**"],
           deprecatedPaths: ["@astudio/ui/dev"],
           customMessages: {
             "@astudio/ui/dev":
@@ -216,7 +213,7 @@ export default [
     files: ["packages/ui/src/templates/**/*.{ts,tsx}"],
     rules: {
       "sonarjs/cognitive-complexity": "off",
-      "complexity": "off",
+      complexity: "off",
       "sonarjs/no-duplicate-string": "off",
     },
   },
@@ -238,7 +235,7 @@ export default [
     ],
     rules: {
       "sonarjs/cognitive-complexity": "off",
-      "complexity": "off",
+      complexity: "off",
       "sonarjs/no-duplicate-string": "off",
     },
   },
@@ -250,7 +247,7 @@ export default [
     ],
     rules: {
       "sonarjs/cognitive-complexity": "off",
-      "complexity": "off",
+      complexity: "off",
     },
   },
   // Allow higher complexity for tests
@@ -258,7 +255,7 @@ export default [
     files: ["**/*.{test,spec}.{js,jsx,ts,tsx,mjs,cjs}"],
     rules: {
       "sonarjs/cognitive-complexity": ["off"],
-      "complexity": ["off"],
+      complexity: ["off"],
       "sonarjs/no-duplicate-string": ["off"],
     },
   },
@@ -348,17 +345,14 @@ export default [
       "no-restricted-imports": [
         "error",
         {
-          "patterns": ["**/_temp/**", "_temp/**"],
+          patterns: ["**/_temp/**", "_temp/**"],
         },
       ],
       // Allow @astudio/ui/dev imports in these specific files
       "@astudio-no-deprecated/no-deprecated-imports": [
         "error",
         {
-          deprecatedPatterns: [
-            "**/_temp/**",
-            "**/_temp_import/**",
-          ],
+          deprecatedPatterns: ["**/_temp/**", "**/_temp_import/**"],
           deprecatedPaths: [], // Don't flag @astudio/ui/dev here
           customMessages: {},
         },

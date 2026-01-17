@@ -13,7 +13,7 @@
 **Compatibility Status:**
 
 - ✅ **27/27 Radix UI components** - Already included in @astudio/ui
-- ✅ **15/15 supporting libraries** - Already included in @astudio/ui  
+- ✅ **15/15 supporting libraries** - Already included in @astudio/ui
 - ✅ **Design tokens** - Platform tokens are superset of source tokens
 - ✅ **Registry system** - Simple TypeScript, no additional dependencies needed
 
@@ -28,11 +28,11 @@
 
 All dependency versions in @astudio/ui are compatible with or newer than source app requirements:
 
-| Package | Source | Platform | Status |
-|---------|--------|----------|--------|
-| @radix-ui/* | Various | Various | ✅ Compatible |
-| react-day-picker | ^8.10.1 | ^9.13.0 | ✅ Newer version |
-| All others | Various | Various | ✅ Compatible |
+| Package          | Source  | Platform | Status           |
+| ---------------- | ------- | -------- | ---------------- |
+| @radix-ui/\*     | Various | Various  | ✅ Compatible    |
+| react-day-picker | ^8.10.1 | ^9.13.0  | ✅ Newer version |
+| All others       | Various | Various  | ✅ Compatible    |
 
 ## Implementation Strategy
 
@@ -42,12 +42,12 @@ Templates will be updated to use platform imports:
 
 ```typescript
 // BEFORE (Source App)
-import { Button } from "@radix-ui/react-button"
-import { Dialog } from "@radix-ui/react-dialog"
+import { Button } from "@radix-ui/react-button";
+import { Dialog } from "@radix-ui/react-dialog";
 
 // AFTER (Platform)
-import { Button } from "@astudio/ui/base"
-import { Dialog } from "@astudio/ui/feedback"
+import { Button } from "@astudio/ui/base";
+import { Dialog } from "@astudio/ui/feedback";
 ```
 
 ### Phase 2: Token Integration
@@ -56,10 +56,10 @@ Templates will use platform tokens:
 
 ```typescript
 // BEFORE (Source App)
-import { colors, space } from "../design-tokens"
+import { colors, space } from "../design-tokens";
 
 // AFTER (Platform)
-import { tokens } from "@astudio/tokens"
+import { tokens } from "@astudio/tokens";
 ```
 
 ### Phase 3: Registry Generation

@@ -47,11 +47,7 @@ function resolveTokenHex(token: string, mode: "light" | "dark"): string | null {
   const category = parts[0];
   const name = parts.slice(1).join("-");
 
-  const forcedMode = name.startsWith("light-")
-    ? "light"
-    : name.startsWith("dark-")
-      ? "dark"
-      : null;
+  const forcedMode = name.startsWith("light-") ? "light" : name.startsWith("dark-") ? "dark" : null;
   const normalizedName = forcedMode ? name.replace(/^(light|dark)-/, "") : name;
   if (forcedMode && forcedMode !== mode) return null;
 
@@ -85,9 +81,7 @@ function applyAlpha(color: Rgba, background: Rgba): Rgba {
 
 function channelToLinear(channel: number): number {
   const normalized = channel / 255;
-  return normalized <= 0.03928
-    ? normalized / 12.92
-    : Math.pow((normalized + 0.055) / 1.055, 2.4);
+  return normalized <= 0.03928 ? normalized / 12.92 : Math.pow((normalized + 0.055) / 1.055, 2.4);
 }
 
 function relativeLuminance(color: Rgba): number {

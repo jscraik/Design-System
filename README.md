@@ -196,27 +196,27 @@ If you're building a custom application with page routing, see [PAGES_QUICK_STAR
 Use this table to jump to the canonical doc surface. For more detail, see
 [`docs/README.md`](./docs/README.md).
 
-| Area                    | Doc                              |
-| ----------------------- | -------------------------------- |
-| Project overview        | `README.md`                      |
-| Docs index              | `docs/README.md`                 |
-| Guides index            | `docs/guides/README.md`          |
-| Architecture            | `docs/architecture/README.md`    |
-| Repo map                | `docs/architecture/repo-map.md`  |
-| Build pipeline          | `docs/BUILD_PIPELINE.md`         |
-| Swift integration       | `docs/SWIFT_INTEGRATION.md`      |
-| Restructure migration   | `docs/guides/repo-structure-migration.md` |
-| Swift packages overview | `platforms/apple/swift/README.md`                |
-| macOS aStudio app       | `platforms/apple/apps/macos/AStudioApp/README.md` |
+| Area                    | Doc                                                      |
+| ----------------------- | -------------------------------------------------------- |
+| Project overview        | `README.md`                                              |
+| Docs index              | `docs/README.md`                                         |
+| Guides index            | `docs/guides/README.md`                                  |
+| Architecture            | `docs/architecture/README.md`                            |
+| Repo map                | `docs/architecture/repo-map.md`                          |
+| Build pipeline          | `docs/BUILD_PIPELINE.md`                                 |
+| Swift integration       | `docs/SWIFT_INTEGRATION.md`                              |
+| Restructure migration   | `docs/guides/repo-structure-migration.md`                |
+| Swift packages overview | `platforms/apple/swift/README.md`                        |
+| macOS aStudio app       | `platforms/apple/apps/macos/AStudioApp/README.md`        |
 | macOS Playground        | `platforms/apple/apps/macos/AStudioPlayground/README.md` |
-| macOS Component Gallery | `platforms/apple/apps/macos/ComponentGallery/README.md` |
-| Web Widget Gallery      | `platforms/web/apps/web/README.md`             |
-| Storybook               | `platforms/web/apps/storybook/README.md`       |
-| MCP server              | `platforms/mcp/README.md`             |
-| Tokens                  | `packages/tokens/README.md`      |
-| UI components (React)   | `packages/ui/README.md`          |
-| Runtime host            | `packages/runtime/README.md`     |
-| Widgets                 | `packages/widgets/README.md`     |
+| macOS Component Gallery | `platforms/apple/apps/macos/ComponentGallery/README.md`  |
+| Web Widget Gallery      | `platforms/web/apps/web/README.md`                       |
+| Storybook               | `platforms/web/apps/storybook/README.md`                 |
+| MCP server              | `platforms/mcp/README.md`                                |
+| Tokens                  | `packages/tokens/README.md`                              |
+| UI components (React)   | `packages/ui/README.md`                                  |
+| Runtime host            | `packages/runtime/README.md`                             |
+| Widgets                 | `packages/widgets/README.md`                             |
 
 ## Troubleshooting
 
@@ -365,7 +365,7 @@ import { ChatFullWidthTemplate } from "@astudio/ui/experimental";
 | Chat UI components | ChatUIRoot, ChatHeader, ChatSidebar, ChatMessages, ChatInput, ComposeView    |
 | UI primitives      | Button, Dialog, Tabs, Tooltip, and more                                      |
 | Icons              | Icons adapter, ChatGPTIcons                                                  |
-| Pages              | DesignSystemPage, TypographyPage, SpacingPage (via `@astudio/ui/dev`)         |
+| Pages              | DesignSystemPage, TypographyPage, SpacingPage (via `@astudio/ui/dev`)        |
 | Templates          | ChatFullWidthTemplate, ChatTwoPaneTemplate, DashboardTemplate (experimental) |
 | Utilities          | useControllableState                                                         |
 

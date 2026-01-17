@@ -3,24 +3,19 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
 
-
 A comprehensive icon library with **350+ production-ready React components** integrated into your ChatGPT-style UI component library.
 
 ## 📦 Quick Start
 
 ```tsx
-import { 
-  IconCheckmark, 
-  IconArrowUpSm, 
-  IconPlay, 
-  IconUser 
-} from './icons/ChatGPTIcons';
+import { IconCheckmark, IconArrowUpSm, IconPlay, IconUser } from "./icons/ChatGPTIcons";
 
 function MyComponent() {
   return (
@@ -35,25 +30,25 @@ function MyComponent() {
 
 ## 📊 Icon Library
 
-| Category | Count | File |
-|----------|-------|------|
-| Arrows & Navigation | 40+ | `chatgpt/arrows.tsx` |
-| Media & Audio | 70+ | `chatgpt/media.tsx` |
-| General UI | 100+ | `chatgpt/general-ui.tsx` |
-| Interface | 15+ | `chatgpt/interface.tsx` |
-| Platform | 25+ | `chatgpt/platform.tsx` |
-| Account/User | 25+ | `chatgpt/account.tsx` |
-| Public/Chat | 10+ | `chatgpt/public.tsx` |
-| Settings | 5+ | `chatgpt/settings.tsx` |
-| Miscellaneous | 15+ | `chatgpt/misc.tsx` |
-| **TOTAL** | **350+** | **9 files** |
+| Category            | Count    | File                     |
+| ------------------- | -------- | ------------------------ |
+| Arrows & Navigation | 40+      | `chatgpt/arrows.tsx`     |
+| Media & Audio       | 70+      | `chatgpt/media.tsx`      |
+| General UI          | 100+     | `chatgpt/general-ui.tsx` |
+| Interface           | 15+      | `chatgpt/interface.tsx`  |
+| Platform            | 25+      | `chatgpt/platform.tsx`   |
+| Account/User        | 25+      | `chatgpt/account.tsx`    |
+| Public/Chat         | 10+      | `chatgpt/public.tsx`     |
+| Settings            | 5+       | `chatgpt/settings.tsx`   |
+| Miscellaneous       | 15+      | `chatgpt/misc.tsx`       |
+| **TOTAL**           | **350+** | **9 files**              |
 
 ## 🎨 Visual Catalog
 
 Browse all icons interactively:
 
 ```tsx
-import ChatGPTIconCatalog from './icons/ChatGPTIconCatalog';
+import ChatGPTIconCatalog from "./icons/ChatGPTIconCatalog";
 
 function App() {
   return <ChatGPTIconCatalog />;
@@ -61,6 +56,7 @@ function App() {
 ```
 
 Features:
+
 - 🔍 Search by icon name
 - 🏷️ Filter by category
 - 📋 Click to copy icon name
@@ -89,6 +85,7 @@ import { chatGPTIconSizes, getSizeClass } from './icons/ChatGPTIcons';
 ## 🎯 Common Patterns
 
 ### Icon Button
+
 ```tsx
 <button className="p-2 hover:bg-foundation-bg-dark-3/40 rounded-lg">
   <IconTrash className="size-5 text-[#ececec]" />
@@ -96,6 +93,7 @@ import { chatGPTIconSizes, getSizeClass } from './icons/ChatGPTIcons';
 ```
 
 ### Button with Icon
+
 ```tsx
 <button className="flex items-center gap-2 px-4 py-2 bg-foundation-accent-green text-accent-foreground rounded-lg">
   <IconPlus className="size-5" />
@@ -104,15 +102,19 @@ import { chatGPTIconSizes, getSizeClass } from './icons/ChatGPTIcons';
 ```
 
 ### Conditional State
+
 ```tsx
-{isMuted ? (
-  <IconMicOff className="size-6 text-accent-red" />
-) : (
-  <IconMic className="size-6 text-[#2f7a4f]" />
-)}
+{
+  isMuted ? (
+    <IconMicOff className="size-6 text-accent-red" />
+  ) : (
+    <IconMic className="size-6 text-[#2f7a4f]" />
+  );
+}
 ```
 
 ### Animated Icon
+
 ```tsx
 <IconSpinner className="size-6 animate-spin text-[#2f7a4f]" />
 ```
@@ -153,7 +155,7 @@ border-[#2f7a4f]    // Active
 ✅ Visual catalog component  
 ✅ Size utilities  
 ✅ Responsive & accessible  
-✅ Click-to-copy in catalog  
+✅ Click-to-copy in catalog
 
 ## 🚀 Status
 

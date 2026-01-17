@@ -3,12 +3,12 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Operators and maintainers
 - Scope: Operational steps and verification
 - Non-scope: Long-form design history
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 This repo uses Changesets + GitHub Actions for versioning and publishing.
 The `release` workflow runs on merges to `main` and will either open a
@@ -50,12 +50,15 @@ If CI publishing is unavailable, publish manually after versioning:
 - [ ] `pnpm release`
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.
 
 ## Troubleshooting
+
 - TBD: Add the top 3 failure modes and fixes.

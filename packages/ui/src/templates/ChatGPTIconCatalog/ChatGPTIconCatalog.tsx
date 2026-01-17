@@ -196,7 +196,10 @@ export function ChatGPTIconCatalog() {
     ),
     settings: filteredIcons.filter(
       ([name]) =>
-        name.includes("Sun") || name.includes("Moon") || name.includes("LightBulb") || name.includes("Error"),
+        name.includes("Sun") ||
+        name.includes("Moon") ||
+        name.includes("LightBulb") ||
+        name.includes("Error"),
     ),
   };
 
@@ -255,7 +258,8 @@ export function ChatGPTIconCatalog() {
                       : "px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-foundation-bg-dark-1 text-foundation-text-dark-secondary hover:text-foundation-text-dark-primary"
                   }
                 >
-                  {category.charAt(0).toUpperCase() + category.slice(1)} ({categories[category as keyof typeof categories].length})
+                  {category.charAt(0).toUpperCase() + category.slice(1)} (
+                  {categories[category as keyof typeof categories].length})
                 </button>
               ))}
             </div>
@@ -311,15 +315,11 @@ export function ChatGPTIconCatalog() {
           </h3>
           <div className="space-y-2 text-sm font-mono text-foundation-text-dark-secondary">
             <p>
-              <span className="text-foundation-accent-green">import</span> {`{ IconCheckmark }`} <span className="text-foundation-accent-green">from</span>{" "}
-              {'"@astudio/ui/icons"'};
+              <span className="text-foundation-accent-green">import</span> {`{ IconCheckmark }`}{" "}
+              <span className="text-foundation-accent-green">from</span> {'"@astudio/ui/icons"'};
             </p>
-            <p className="mt-4 text-foundation-text-dark-tertiary">
-              {`// Use in your components`}
-            </p>
-            <p>
-              {'<IconCheckmark className="size-6" />'}
-            </p>
+            <p className="mt-4 text-foundation-text-dark-tertiary">{`// Use in your components`}</p>
+            <p>{'<IconCheckmark className="size-6" />'}</p>
           </div>
         </div>
       </div>

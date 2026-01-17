@@ -2,7 +2,7 @@
 // Comprehensive icon library with 350+ production-ready icons
 
 // Export all fixed icons (core UI icons with hardcoded SVGs)
-export * from './ChatGPTIconsFixed';
+export * from "./ChatGPTIconsFixed";
 
 // Export additional icons (non-duplicated)
 export {
@@ -11,10 +11,10 @@ export {
   IconArrowLeft,
   IconArrowRight,
   IconRedo,
-} from './additional-icons';
+} from "./additional-icons";
 
 // Export missing icons
-export * from './missing-icons';
+export * from "./missing-icons";
 
 // Re-export common icon types
 export interface IconProps {

@@ -182,12 +182,13 @@ export function SpacingShowcase() {
               className="rounded-xl p-4 bg-foundation-bg-dark-2 border border-foundation-text-dark-primary/10"
             >
               <div className="mb-3">
-                <div className="text-sm font-medium text-foundation-text-dark-primary">
-                  {size}
-                </div>
+                <div className="text-sm font-medium text-foundation-text-dark-primary">{size}</div>
                 <div className="text-xs font-mono text-foundation-text-dark-tertiary">{value}</div>
               </div>
-              <div className="w-full h-16 bg-foundation-accent-purple" style={{ borderRadius: value }} />
+              <div
+                className="w-full h-16 bg-foundation-accent-purple"
+                style={{ borderRadius: value }}
+              />
             </div>
           ))}
         </div>
@@ -208,7 +209,8 @@ export function SpacingShowcase() {
                 Major Sections
               </div>
               <div className="text-body-small text-foundation-text-dark-secondary">
-                Use <code className="text-foundation-accent-blue">space-64</code> (128px) for major page sections
+                Use <code className="text-foundation-accent-blue">space-64</code> (128px) for major
+                page sections
               </div>
             </div>
             <div>
@@ -216,7 +218,8 @@ export function SpacingShowcase() {
                 Component Spacing
               </div>
               <div className="text-body-small text-foundation-text-dark-secondary">
-                Use <code className="text-foundation-accent-blue">space-24</code> (48px) between unrelated components
+                Use <code className="text-foundation-accent-blue">space-24</code> (48px) between
+                unrelated components
               </div>
             </div>
             <div>
@@ -224,7 +227,8 @@ export function SpacingShowcase() {
                 Element Spacing
               </div>
               <div className="text-body-small text-foundation-text-dark-secondary">
-                Use <code className="text-foundation-accent-blue">space-8</code> (16px) between related elements
+                Use <code className="text-foundation-accent-blue">space-8</code> (16px) between
+                related elements
               </div>
             </div>
             <div>
@@ -232,7 +236,8 @@ export function SpacingShowcase() {
                 Tight Spacing
               </div>
               <div className="text-body-small text-foundation-text-dark-secondary">
-                Use <code className="text-foundation-accent-blue">space-4</code> (8px) for tight groupings
+                Use <code className="text-foundation-accent-blue">space-4</code> (8px) for tight
+                groupings
               </div>
             </div>
           </div>

@@ -284,7 +284,12 @@ export function DiscoverySettingsModal({
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
               <svg
                 className="size-3.5 text-foundation-accent-orange-light dark:text-foundation-accent-orange"
@@ -343,7 +348,11 @@ export function DiscoverySettingsModal({
           <div className="space-y-4">
             <ToggleRow
               icon={
-                <svg className="size-5 text-foundation-accent-blue" fill="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="size-5 text-foundation-accent-blue"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path d="M21 15c0-4.625-3.507-8.441-8-8.941V4h-2v2.059c-4.493.5-8 4.316-8 8.941v2l-2 2v1h22v-1l-2-2v-2zm-9 5c1.103 0 2-.897 2-2h-4c0 1.103.897 2 2 2z" />
                 </svg>
               }
@@ -425,7 +434,11 @@ export function DiscoverySettingsModal({
           <SectionHeader title="Data" description="Control session logging." />
           <ToggleRow
             icon={
-              <svg className="size-5 text-foundation-accent-orange-light dark:text-foundation-accent-orange" fill="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="size-5 text-foundation-accent-orange-light dark:text-foundation-accent-orange"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path d="M12 2a10 10 0 00-7.07 17.07l-1.42 1.42L5 22l1.42-1.42A10 10 0 1012 2z" />
               </svg>
             }

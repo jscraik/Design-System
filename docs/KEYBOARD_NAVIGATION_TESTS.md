@@ -3,12 +3,12 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 This document describes the keyboard navigation and accessibility tests for modal and sidebar components using Playwright and Axe-core.
 
@@ -22,11 +22,11 @@ This document describes the keyboard navigation and accessibility tests for moda
 
 ## Test Files
 
-| Test File                                       | Description                       |
-| ----------------------------------------------- | --------------------------------- |
-| `platforms/web/apps/web/tests/keyboard-navigation.spec.ts`    | Modal keyboard navigation tests   |
-| `platforms/web/apps/web/tests/sidebar-keyboard.spec.ts`       | Sidebar keyboard navigation tests |
-| `packages/ui/src/testing/utils/keyboard-utils.ts` | Reusable test utilities           |
+| Test File                                                  | Description                       |
+| ---------------------------------------------------------- | --------------------------------- |
+| `platforms/web/apps/web/tests/keyboard-navigation.spec.ts` | Modal keyboard navigation tests   |
+| `platforms/web/apps/web/tests/sidebar-keyboard.spec.ts`    | Sidebar keyboard navigation tests |
+| `packages/ui/src/testing/utils/keyboard-utils.ts`          | Reusable test utilities           |
 
 ## Running Tests
 
@@ -404,12 +404,15 @@ These tests run in CI on every PR:
 - [Modal Boundaries](./MODAL_BOUNDARIES.md)
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.
 
 ## Troubleshooting
+
 - TBD: Add the top 3 failure modes and fixes.

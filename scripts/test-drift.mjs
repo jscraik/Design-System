@@ -63,7 +63,9 @@ async function main() {
   }
 
   if (missingUpstream.length > 0) {
-    console.error("Apps SDK UI drift detected: coverage matrix references missing upstream exports:");
+    console.error(
+      "Apps SDK UI drift detected: coverage matrix references missing upstream exports:",
+    );
     missingUpstream.forEach((row) => console.error(`- ${row.name} → ${row.upstream}`));
     process.exit(1);
   }

@@ -1,12 +1,7 @@
 {
   "reportMetadata": {
     "generatedAt": "2026-01-02T00:37:00Z",
-    "scope": [
-      "AStudioComponents",
-      "AStudioShellChatGPT",
-      "AStudioFoundation",
-      "ui-swift"
-    ],
+    "scope": ["AStudioComponents", "AStudioShellChatGPT", "AStudioFoundation", "ui-swift"],
     "totalFilesAnalyzed": 121,
     "totalLOC": 19210,
     "brand": "brAInwav"

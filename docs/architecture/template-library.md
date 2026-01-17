@@ -3,6 +3,7 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Engineers and technical leads
 - Scope: System architecture and component relationships
 - Non-scope: Step-by-step operational procedures
@@ -23,7 +24,6 @@ Last updated: 2026-01-09
   - [SwiftUI](#swiftui)
 - [Related docs](#related-docs)
 - [How to view templates (checklist)](#how-to-view-templates-checklist)
-
 
 This document describes the internal template library used to compose aStudio surfaces across web, widgets, and macOS.
 

@@ -37,8 +37,7 @@ const noWindowOpenaiDirectAccessRule = {
           allowInPatterns: {
             type: "array",
             items: { type: "string" },
-            description:
-              "Array of glob patterns to allow window.openai access in",
+            description: "Array of glob patterns to allow window.openai access in",
           },
         },
         additionalProperties: false,

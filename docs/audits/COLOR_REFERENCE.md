@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -35,7 +36,6 @@ Last updated: 2026-01-04
   - [DO ✅](#do)
   - [DON'T ❌](#dont)
 - [Migration Notes](#migration-notes)
-
 
 This document outlines all colors used in the application for consistency across all components.
 

@@ -128,11 +128,7 @@ function IconFont({ className }: { className?: string }) {
       stroke="currentColor"
       strokeWidth={2}
     >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M7 21h10M12 21V3m3 6H9"
-      />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M7 21h10M12 21V3m3 6H9" />
     </svg>
   );
 }
@@ -147,7 +143,9 @@ function Toast({ message, value, visible }: { message: string; value: string; vi
         "border border-foundation-bg-dark-3",
         "flex items-center gap-3",
         "transition-all duration-300 ease-out",
-        visible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95 pointer-events-none",
+        visible
+          ? "opacity-100 translate-y-0 scale-100"
+          : "opacity-0 translate-y-4 scale-95 pointer-events-none",
       )}
       role="status"
       aria-live="polite"
@@ -156,7 +154,9 @@ function Toast({ message, value, visible }: { message: string; value: string; vi
         <IconCheck className="size-5 text-foundation-accent-success" />
       </div>
       <div className="min-w-0">
-        <p className="text-sm font-semibold text-foundation-text-dark-primary leading-tight">{message}</p>
+        <p className="text-sm font-semibold text-foundation-text-dark-primary leading-tight">
+          {message}
+        </p>
         <p className="text-xs font-mono text-foundation-text-dark-secondary mt-0.5 truncate leading-tight max-w-[200px]">
           {value}
         </p>
@@ -269,25 +269,33 @@ function TypeStyleCard({
         {viewMode === "specs" && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="space-y-1.5">
-              <span className="text-xs text-foundation-text-dark-tertiary font-medium">Font Size</span>
+              <span className="text-xs text-foundation-text-dark-tertiary font-medium">
+                Font Size
+              </span>
               <p className="text-xl font-semibold text-foundation-text-dark-primary tabular-nums">
                 {style.size}
               </p>
             </div>
             <div className="space-y-1.5">
-              <span className="text-xs text-foundation-text-dark-tertiary font-medium">Font Weight</span>
+              <span className="text-xs text-foundation-text-dark-tertiary font-medium">
+                Font Weight
+              </span>
               <p className="text-xl font-semibold text-foundation-text-dark-primary tabular-nums">
                 {style.weight}
               </p>
             </div>
             <div className="space-y-1.5">
-              <span className="text-xs text-foundation-text-dark-tertiary font-medium">Line Height</span>
+              <span className="text-xs text-foundation-text-dark-tertiary font-medium">
+                Line Height
+              </span>
               <p className="text-xl font-semibold text-foundation-text-dark-primary tabular-nums">
                 {style.lineHeight}
               </p>
             </div>
             <div className="space-y-1.5">
-              <span className="text-xs text-foundation-text-dark-tertiary font-medium">Letter Spacing</span>
+              <span className="text-xs text-foundation-text-dark-tertiary font-medium">
+                Letter Spacing
+              </span>
               <p className="text-xl font-semibold text-foundation-text-dark-primary tabular-nums">
                 {style.letterSpacing}
               </p>
@@ -298,7 +306,9 @@ function TypeStyleCard({
           <div className="space-y-4">
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs text-foundation-text-dark-secondary font-semibold">Tailwind CSS</span>
+                <span className="text-xs text-foundation-text-dark-secondary font-semibold">
+                  Tailwind CSS
+                </span>
                 <button
                   type="button"
                   onClick={() => onCopy(tailwindCode)}
@@ -328,7 +338,9 @@ function TypeStyleCard({
             </div>
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xs text-foundation-text-dark-secondary font-semibold">CSS</span>
+                <span className="text-xs text-foundation-text-dark-secondary font-semibold">
+                  CSS
+                </span>
                 <button
                   type="button"
                   onClick={() => onCopy(cssCode)}
@@ -577,7 +589,7 @@ export function TypographyShowcase() {
               </div>
             </div>
           </div>
-          
+
           {/* View Mode Toggle */}
           <div className="flex gap-1.5 p-1.5 rounded-xl bg-foundation-bg-dark-2 border border-foundation-bg-dark-3 shadow-sm">
             <button
@@ -592,7 +604,9 @@ export function TypographyShowcase() {
                   : "text-foundation-text-dark-tertiary hover:text-foundation-text-dark-secondary hover:bg-foundation-bg-dark-3/50",
               )}
             >
-              <IconEye className={cn("size-4", viewMode === "preview" && "text-foundation-accent-blue")} />
+              <IconEye
+                className={cn("size-4", viewMode === "preview" && "text-foundation-accent-blue")}
+              />
               <span>Preview</span>
             </button>
             <button
@@ -607,7 +621,9 @@ export function TypographyShowcase() {
                   : "text-foundation-text-dark-tertiary hover:text-foundation-text-dark-secondary hover:bg-foundation-bg-dark-3/50",
               )}
             >
-              <IconSpecs className={cn("size-4", viewMode === "specs" && "text-foundation-accent-blue")} />
+              <IconSpecs
+                className={cn("size-4", viewMode === "specs" && "text-foundation-accent-blue")}
+              />
               <span>Specs</span>
             </button>
             <button
@@ -622,7 +638,9 @@ export function TypographyShowcase() {
                   : "text-foundation-text-dark-tertiary hover:text-foundation-text-dark-secondary hover:bg-foundation-bg-dark-3/50",
               )}
             >
-              <IconCode className={cn("size-4", viewMode === "code" && "text-foundation-accent-blue")} />
+              <IconCode
+                className={cn("size-4", viewMode === "code" && "text-foundation-accent-blue")}
+              />
               <span>Code</span>
             </button>
           </div>
@@ -644,16 +662,18 @@ export function TypographyShowcase() {
             label="Font Weights"
             value={2}
             icon={
-              <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg
+                className="size-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M7 21h10M12 21V3m3 6H9" />
               </svg>
             }
           />
-          <StatCard
-            label="View Modes"
-            value={3}
-            icon={<IconEye className="size-5" />}
-          />
+          <StatCard label="View Modes" value={3} icon={<IconEye className="size-5" />} />
         </div>
       </div>
 
@@ -728,8 +748,16 @@ export function TypographyShowcase() {
         <div className="flex items-center gap-3">
           <div className="h-px flex-1 bg-foundation-bg-dark-3" />
           <h3 className="text-lg font-semibold text-foundation-text-dark-primary flex items-center gap-2">
-            <svg className="size-5 text-foundation-accent-blue" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+            <svg
+              className="size-5 text-foundation-accent-blue"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fillRule="evenodd"
+                d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
+                clipRule="evenodd"
+              />
             </svg>
             Usage Examples
           </h3>
@@ -745,7 +773,9 @@ export function TypographyShowcase() {
           </div>
           <div className="h-px bg-foundation-bg-dark-3" />
           <div className="flex items-center gap-4">
-            <span className="text-body-small text-foundation-text-dark-tertiary font-medium">Label:</span>
+            <span className="text-body-small text-foundation-text-dark-tertiary font-medium">
+              Label:
+            </span>
             <span className="text-body text-foundation-text-dark-primary">Value text</span>
           </div>
           <div className="h-px bg-foundation-bg-dark-3" />

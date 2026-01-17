@@ -3,12 +3,12 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Maintainers and security reviewers
 - Scope: Security posture, guidance, and required practices
 - Non-scope: Feature usage or product marketing
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 This guide provides comprehensive documentation for security testing in the Swift codebase, including testing patterns, CI/CD integration, and best practices.
 
@@ -39,6 +39,7 @@ The Swift security testing framework provides:
 Located in `InputValidationTests.swift`
 
 **What they test:**
+
 - XSS (Cross-Site Scripting) prevention
 - SQL injection prevention
 - Path traversal prevention
@@ -48,6 +49,7 @@ Located in `InputValidationTests.swift`
 - Length validation
 
 **Example:**
+
 ```swift
 func testTextInputValidation() {
     let maliciousInputs = ["<script>alert('XSS')</script>", "' OR '1'='1"]
@@ -65,6 +67,7 @@ func testTextInputValidation() {
 Located in `AuthenticationTests.swift`
 
 **What they test:**
+
 - Password hashing (salted, not reversible)
 - Password complexity requirements
 - Secure token generation
@@ -74,6 +77,7 @@ Located in `AuthenticationTests.swift`
 - Keychain usage for sensitive data
 
 **Example:**
+
 ```swift
 func testPasswordNotStoredInPlaintext() {
     let password = "SecurePassword123!"
@@ -89,6 +93,7 @@ func testPasswordNotStoredInPlaintext() {
 Located in `AuthorizationTests.swift`
 
 **What they test:**
+
 - Role-based access control (RBAC)
 - Resource ownership checks
 - Privilege escalation prevention
@@ -97,6 +102,7 @@ Located in `AuthorizationTests.swift`
 - CSRF token validation
 
 **Example:**
+
 ```swift
 func testRoleBasedPermissions() {
     let user = createUser(role: .user)
@@ -155,6 +161,7 @@ xcrun llvm-cov export \
 All security tests should:
 
 1. **Inherit from `SecurityTestCase`**
+
    ```swift
    final class MySecurityTests: SecurityTestCase {
        // tests here
@@ -162,6 +169,7 @@ All security tests should:
    ```
 
 2. **Use provided helper methods**
+
    ```swift
    assertStringSanitized(input)
    assertURLSecure(urlString)
@@ -248,6 +256,7 @@ func testErrorsDontLeakSensitiveInfo() {
 ### GitHub Actions Workflow
 
 Security tests run automatically on:
+
 - All pull requests
 - Pushes to main/master
 - Daily scheduled runs (2 AM UTC)
@@ -390,6 +399,7 @@ func testConcurrentAccess() {
 ### 1. Injection Attacks
 
 **SQL Injection:**
+
 ```swift
 // BAD
 let query = "SELECT * FROM users WHERE name = '\(name)'"
@@ -400,6 +410,7 @@ db.execute(query, parameters: [name])
 ```
 
 **Command Injection:**
+
 ```swift
 // BAD
 let output = Process.execute("ls \(path)")
@@ -472,13 +483,15 @@ let hash = SHA256.hash(data: input.data(using: .utf8)!)
 - [Common Crypto Documentation](https://developer.apple.com/documentation/commoncrypto)
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.
 
 ## Troubleshooting
-- TBD: Add the top 3 failure modes and fixes.
 
+- TBD: Add the top 3 failure modes and fixes.

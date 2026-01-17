@@ -28,8 +28,7 @@ const appsSdkFirstRule = {
       },
     ],
     messages: {
-      preferAppsSdk:
-        "Use the Apps SDK UI re-export '{{preferred}}' instead of local '{{name}}'.",
+      preferAppsSdk: "Use the Apps SDK UI re-export '{{preferred}}' instead of local '{{name}}'.",
     },
   },
   create(context) {

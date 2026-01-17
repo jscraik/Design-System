@@ -3,6 +3,7 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Engineers and technical leads
 - Scope: System architecture and component relationships
 - Non-scope: Step-by-step operational procedures
@@ -35,7 +36,6 @@ Last updated: 2026-01-09
 - [📋 Next Steps](#next-steps)
   - [Phase 2: Widget Standardization](#phase-2-widget-standardization)
   - [Phase 3: Enhanced Features](#phase-3-enhanced-features)
-
 
 ## Overview
 

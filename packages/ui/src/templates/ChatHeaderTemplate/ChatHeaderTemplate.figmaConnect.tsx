@@ -21,10 +21,6 @@ figma.connect(ChatHeaderTemplate, {
   },
 
   example: (
-    <ChatHeaderTemplate
-      title="ChatGPT"
-      subtitle="Model: GPT-4"
-      actions={<div>Actions</div>}
-    />
+    <ChatHeaderTemplate title="ChatGPT" subtitle="Model: GPT-4" actions={<div>Actions</div>} />
   ),
 });

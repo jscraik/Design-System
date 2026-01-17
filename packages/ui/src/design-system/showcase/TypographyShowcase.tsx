@@ -126,11 +126,7 @@ function IconFont({ className }: { className?: string }) {
       stroke="currentColor"
       strokeWidth={2}
     >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M4 6h16M4 12h16m-7 6h7"
-      />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
     </svg>
   );
 }
@@ -244,9 +240,7 @@ function TypeStyleCard({
             </span>
             <span className="text-xs text-foundation-text-dark-tertiary">{style.name}</span>
           </div>
-          <p className="text-sm text-foundation-text-dark-secondary mt-1">
-            {style.description}
-          </p>
+          <p className="text-sm text-foundation-text-dark-secondary mt-1">{style.description}</p>
         </div>
         <button
           type="button"
@@ -519,13 +513,27 @@ export function TypographyShowcase() {
 
         {/* Stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <StatCard label="Text Styles" value={typeStyles.length} icon={<IconType className="size-5" />} />
-          <StatCard label="Font Families" value={fontFamilies.length} icon={<IconFont className="size-5" />} />
+          <StatCard
+            label="Text Styles"
+            value={typeStyles.length}
+            icon={<IconType className="size-5" />}
+          />
+          <StatCard
+            label="Font Families"
+            value={fontFamilies.length}
+            icon={<IconFont className="size-5" />}
+          />
           <StatCard
             label="Font Weights"
             value={2}
             icon={
-              <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg
+                className="size-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M7 21h10M12 21V3m3 6H9" />
               </svg>
             }
@@ -534,7 +542,13 @@ export function TypographyShowcase() {
             label="Platform"
             value="Web"
             icon={
-              <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg
+                className="size-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -556,7 +570,12 @@ export function TypographyShowcase() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {fontFamilies.map((f) => (
-            <FontFamilyCard key={f.name} {...f} onCopy={copyToClipboard} copiedValue={copiedValue} />
+            <FontFamilyCard
+              key={f.name}
+              {...f}
+              onCopy={copyToClipboard}
+              copiedValue={copiedValue}
+            />
           ))}
         </div>
       </section>
@@ -614,7 +633,9 @@ export function TypographyShowcase() {
       {/* Usage Examples */}
       <section className="space-y-4">
         <div>
-          <h3 className="text-lg font-semibold text-foundation-text-dark-primary">Usage Examples</h3>
+          <h3 className="text-lg font-semibold text-foundation-text-dark-primary">
+            Usage Examples
+          </h3>
           <p className="text-sm text-foundation-text-dark-secondary mt-1">
             Typography applied in common interface patterns
           </p>
@@ -624,7 +645,8 @@ export function TypographyShowcase() {
           <div>
             <h4 className="text-heading-3 text-foundation-text-dark-primary mb-2">Section Title</h4>
             <p className="text-body text-foundation-text-dark-secondary">
-              This is a typical section with a heading and body text. The heading uses heading-3 style while the body uses regular body text for optimal readability.
+              This is a typical section with a heading and body text. The heading uses heading-3
+              style while the body uses regular body text for optimal readability.
             </p>
           </div>
           <div className="h-px bg-foundation-bg-dark-3" />

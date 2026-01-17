@@ -6,11 +6,18 @@ import { typographyTokens } from "./data";
 /** Typography tab content for DesignSystemDocs. */
 export function TypographyTab() {
   return (
-    <Section title="Typography Scale" description="Complete typography system with SF Pro font family">
+    <Section
+      title="Typography Scale"
+      description="Complete typography system with SF Pro font family"
+    >
       <div className="space-y-4">
         {[
           { label: "Heading 1", token: typographyTokens.heading1, example: "The quick brown fox" },
-          { label: "Heading 2", token: typographyTokens.heading2, example: "The quick brown fox jumps" },
+          {
+            label: "Heading 2",
+            token: typographyTokens.heading2,
+            example: "The quick brown fox jumps",
+          },
           {
             label: "Heading 3",
             token: typographyTokens.heading3,

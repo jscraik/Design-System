@@ -62,7 +62,9 @@ function SliceCard({ place, index }: { place: Place; index: number }) {
             <div className="truncate text-base font-semibold">{place.name}</div>
             <div className="mt-1 text-sm text-black/60">{place.description}</div>
           </div>
-          <div className="rounded-full bg-black/5 px-2 py-1 text-xs text-black/70">{place.price}</div>
+          <div className="rounded-full bg-black/5 px-2 py-1 text-xs text-black/70">
+            {place.price}
+          </div>
         </div>
         <div className="mt-auto flex items-center justify-between text-sm text-black/70">
           <div className="flex items-center gap-1">
@@ -128,7 +130,9 @@ function SearchSpotlightWidget() {
               {toppingLabel ? `Topping focus: ${toppingLabel}` : "Trending near you"}
             </div>
           </div>
-          <div className="ml-auto text-xs uppercase tracking-wide text-black/40">Updated 5m ago</div>
+          <div className="ml-auto text-xs uppercase tracking-wide text-black/40">
+            Updated 5m ago
+          </div>
         </div>
         {toppingLabel && (
           <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#F46C21]/10 px-3 py-1 text-xs font-medium text-[#F46C21]">

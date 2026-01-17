@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Maintainers and security reviewers
 - Scope: Security posture, guidance, and required practices
 - Non-scope: Feature usage or product marketing
@@ -39,16 +40,17 @@ Last updated: 2026-01-04
 - [Best Practices](#best-practices)
 - [Quick Checklist](#quick-checklist)
 
-
 ## Quick Commands
 
 ### Run All Security Checks
+
 ```bash
 cd platforms/apple/swift
 ./scripts/run-security-tests.sh
 ```
 
 ### Run Individual Checks
+
 ```bash
 # SwiftLint only
 swiftlint lint --strict
@@ -71,18 +73,19 @@ All must pass before merge:
 
 ## File Locations
 
-| File | Location |
-|------|----------|
-| Root SwiftLint | `.swiftlint.yml` |
-| CodeQL Config | `.github/codeql-config.yml` |
-| Security Workflow | `.github/workflows/swift-security.yml` |
-| Security Tests | `platforms/apple/swift/SecurityTests/` |
-| Testing Guide | `platforms/apple/swift/SECURITY_TESTING_GUIDE.md` |
-| Setup Guide | `platforms/apple/swift/SECURITY_SETUP_README.md` |
+| File              | Location                                          |
+| ----------------- | ------------------------------------------------- |
+| Root SwiftLint    | `.swiftlint.yml`                                  |
+| CodeQL Config     | `.github/codeql-config.yml`                       |
+| Security Workflow | `.github/workflows/swift-security.yml`            |
+| Security Tests    | `platforms/apple/swift/SecurityTests/`            |
+| Testing Guide     | `platforms/apple/swift/SECURITY_TESTING_GUIDE.md` |
+| Setup Guide       | `platforms/apple/swift/SECURITY_SETUP_README.md`  |
 
 ## Common Security Rules
 
 ### Prohibited Patterns
+
 - ❌ Force unwrapping: `value!`
 - ❌ Force casting: `object as! Type`
 - ❌ Force try: `try! function()`
@@ -92,6 +95,7 @@ All must pass before merge:
 - ❌ Insecure random (use SystemRandomNumberGenerator)
 
 ### Required Patterns
+
 - ✅ Proper error handling with do-catch
 - ✅ Keychain for sensitive data
 - ✅ HTTPS only for network calls
@@ -142,6 +146,7 @@ let edgeCases = generateEdgeCases()
 ## Viewing Results
 
 ### Local
+
 ```bash
 # SwiftLint results
 swiftlint lint --reporter json > swiftlint.json
@@ -151,6 +156,7 @@ xcrun llvm-cov report $(find . -name "*.profdata")
 ```
 
 ### CI/CD
+
 - GitHub Actions: "Swift Security Scanning" workflow
 - Security Tab: CodeQL results
 - PR Comments: SwiftLint auto-comments
@@ -159,18 +165,21 @@ xcrun llvm-cov report $(find . -name "*.profdata")
 ## Security Test Categories
 
 ### 1. Input Validation
+
 - XSS prevention
 - SQL injection prevention
 - Path traversal prevention
 - Email/URL validation
 
 ### 2. Authentication
+
 - Password hashing
 - Token generation
 - Session management
 - Rate limiting
 
 ### 3. Authorization
+
 - Role-based access control
 - Resource ownership
 - Privilege escalation prevention
@@ -178,18 +187,19 @@ xcrun llvm-cov report $(find . -name "*.profdata")
 
 ## Common Vulnerabilities
 
-| Vulnerability | Prevention |
-|---------------|------------|
-| XSS | Sanitize all user input |
-| SQL Injection | Use parameterized queries |
-| Path Traversal | Validate and resolve paths |
+| Vulnerability     | Prevention                         |
+| ----------------- | ---------------------------------- |
+| XSS               | Sanitize all user input            |
+| SQL Injection     | Use parameterized queries          |
+| Path Traversal    | Validate and resolve paths         |
 | Hardcoded Secrets | Use environment variables/Keychain |
-| Weak Crypto | Use SHA256+, bcrypt, Argon2 |
-| Insecure Random | Use SystemRandomNumberGenerator |
+| Weak Crypto       | Use SHA256+, bcrypt, Argon2        |
+| Insecure Random   | Use SystemRandomNumberGenerator    |
 
 ## Troubleshooting
 
 ### SwiftLint fails
+
 ```bash
 # View errors
 swiftlint lint --verbose
@@ -199,6 +209,7 @@ swiftlint lint --fix
 ```
 
 ### Tests fail
+
 ```bash
 # Run with verbose output
 swift test --verbose --filter SecurityTest
@@ -208,6 +219,7 @@ swift test --filter testMySecurityTest
 ```
 
 ### Coverage low
+
 ```bash
 # Generate detailed report
 xcrun llvm-cov report \
@@ -236,6 +248,7 @@ xcrun llvm-cov report \
 ## Quick Checklist
 
 Before committing:
+
 - [ ] Ran `./scripts/run-security-tests.sh`
 - [ ] All SwiftLint checks pass
 - [ ] All security tests pass
@@ -250,9 +263,11 @@ Before committing:
 **Remember**: Security gates block merge on failure. No bypasses.
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.

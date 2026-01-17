@@ -4,7 +4,9 @@ import { DiscoverySettingsModal } from "../DiscoverySettingsModal";
 
 export function DiscoverySettingsModalDemo() {
   const [isOpen, setIsOpen] = useState(true);
-  const [promptEnhancement, setPromptEnhancement] = useState<'rewrite' | 'augment' | 'preserve'>('rewrite');
+  const [promptEnhancement, setPromptEnhancement] = useState<"rewrite" | "augment" | "preserve">(
+    "rewrite",
+  );
   const [targetSize, setTargetSize] = useState(60);
 
   return (
@@ -17,12 +19,20 @@ export function DiscoverySettingsModalDemo() {
           </h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-body-small text-foundation-text-dark-secondary">Target Size</span>
-              <span className="text-body-small font-medium text-foundation-text-dark-primary">{targetSize}k</span>
+              <span className="text-body-small text-foundation-text-dark-secondary">
+                Target Size
+              </span>
+              <span className="text-body-small font-medium text-foundation-text-dark-primary">
+                {targetSize}k
+              </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-body-small text-foundation-text-dark-secondary">Enhancement</span>
-              <span className="text-body-small font-medium text-foundation-accent-green capitalize">{promptEnhancement}</span>
+              <span className="text-body-small text-foundation-text-dark-secondary">
+                Enhancement
+              </span>
+              <span className="text-body-small font-medium text-foundation-accent-green capitalize">
+                {promptEnhancement}
+              </span>
             </div>
           </div>
         </div>
@@ -38,9 +48,7 @@ export function DiscoverySettingsModalDemo() {
 
         {/* Feature List */}
         <div className="bg-foundation-bg-dark-2 rounded-2xl border border-foundation-bg-dark-3 p-6">
-          <h4 className="text-body font-medium text-foundation-text-dark-primary mb-3">
-            Features
-          </h4>
+          <h4 className="text-body font-medium text-foundation-text-dark-primary mb-3">Features</h4>
           <ul className="space-y-2 text-caption text-foundation-text-dark-secondary">
             <li>• Token budget sliders (20k-100k)</li>
             <li>• Auto Plan Budget (collapsible)</li>

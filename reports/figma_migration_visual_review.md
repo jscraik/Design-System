@@ -3,12 +3,12 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 **Created:** 2026-01-02  
 **Purpose:** Now that the templates gallery is driven by the canonical `@astudio/ui` sources (and `_temp/**` is archived), this backlog tracks **visual parity + polish** items to review and iterate after functional consolidation.

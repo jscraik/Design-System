@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -37,7 +38,6 @@ Last updated: 2026-01-04
   - [✅ Enhanced Apps SDK Compliance](#enhanced-apps-sdk-compliance)
   - [Compliance Status at Time of Audit: 100% ✅](#compliance-status-at-time-of-audit-100)
 - [Files Updated for Compliance](#files-updated-for-compliance)
-
 
 This document audits your codebase against OpenAI's official Apps SDK guidelines.
 

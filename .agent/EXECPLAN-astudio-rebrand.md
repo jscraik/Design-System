@@ -13,7 +13,7 @@ Ship the next logical version (0.0.1) across all workspace packages and finish t
 - [x] (2026-01-09 18:20Z) Updated docs and README references for @astudio/widgets and version examples in build pipeline docs.
 - [x] (2026-01-09 21:05Z) Updated workspace package versions to 0.0.1 across packages and platforms, including @astudio/cloudflare-template rename.
 - [x] (2026-01-09 21:05Z) Verified changelogs include 0.0.1 release entries for workspace packages.
-- [x] (2026-01-09 21:20Z) Audited Swift packages, targets, module names, and paths that still used ChatUI* and mapped renames to aStudio equivalents.
+- [x] (2026-01-09 21:20Z) Audited Swift packages, targets, module names, and paths that still used ChatUI\* and mapped renames to aStudio equivalents.
 - [x] (2026-01-09 21:35Z) Renamed Swift package/app directories, Package.swift names/products/targets, module identifiers, and Xcode/macOS app targets to aStudio equivalents.
 - [x] (2026-01-09 21:45Z) Updated Swift docs, DocC instructions, scripts, and references to match new names.
 - [x] (2026-01-09 21:55Z) Ran doc lint and captured failures for follow-up.
@@ -46,34 +46,34 @@ Swift packages live in `platforms/apple/swift/*` and include `AStudioFoundation`
 
 ## Plan of Work
 
-1) Update all workspace `package.json` versions to 0.0.1 without reformatting unrelated fields.
-2) For each workspace package changelog, move Unreleased entries (if any) to `0.0.1` dated 2026-01-09 and leave an empty Unreleased section.
-3) Inventory Swift package/module names and derive a consistent rename map from ChatUI* to aStudio* (directories, package names, target names, product names, module imports, and documentation paths).
-4) Apply Swift rename map across the repo: rename directories, update manifests, update imports, update Xcode project files and Info.plist, update docs and references.
-5) Re-run doc lint and targeted build/test checks; record failures and root causes, especially where external caches or legacy modules block success.
+1. Update all workspace `package.json` versions to 0.0.1 without reformatting unrelated fields.
+2. For each workspace package changelog, move Unreleased entries (if any) to `0.0.1` dated 2026-01-09 and leave an empty Unreleased section.
+3. Inventory Swift package/module names and derive a consistent rename map from ChatUI* to aStudio* (directories, package names, target names, product names, module imports, and documentation paths).
+4. Apply Swift rename map across the repo: rename directories, update manifests, update imports, update Xcode project files and Info.plist, update docs and references.
+5. Re-run doc lint and targeted build/test checks; record failures and root causes, especially where external caches or legacy modules block success.
 
 ## Concrete Steps
 
-1) List workspace package.json files:
+1. List workspace package.json files:
 
-    rg --files -g "package.json" packages platforms/mcp
+   rg --files -g "package.json" packages platforms/mcp
 
-2) Update their version fields to 0.0.1 (scripted find/replace with minimal diff).
+2. Update their version fields to 0.0.1 (scripted find/replace with minimal diff).
 
-3) Update changelogs:
+3. Update changelogs:
 
-    rg --files -g "CHANGELOG.md" packages platforms
+   rg --files -g "CHANGELOG.md" packages platforms
 
-4) Swift rename prep:
+4. Swift rename prep:
 
-    rg -n "ChatUI" platforms/apple docs
+   rg -n "ChatUI" platforms/apple docs
 
-5) Apply renames and update Swift manifests, then re-run targeted checks:
+5. Apply renames and update Swift manifests, then re-run targeted checks:
 
-    pnpm doc:lint
-    pnpm lint
-    pnpm test
-    pnpm build
+   pnpm doc:lint
+   pnpm lint
+   pnpm test
+   pnpm build
 
 ## Validation and Acceptance
 

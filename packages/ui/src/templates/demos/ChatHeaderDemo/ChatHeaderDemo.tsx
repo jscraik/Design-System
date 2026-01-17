@@ -76,12 +76,8 @@ export function ChatHeaderDemo() {
               onViewModeChange={setViewMode2}
             />
             <div className="p-6 text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
-              <p className="text-[13px]">
-                In compose mode, the model selector is hidden
-              </p>
-              <p className="text-[13px]">
-                Click "Chat" button to switch back to chat mode
-              </p>
+              <p className="text-[13px]">In compose mode, the model selector is hidden</p>
+              <p className="text-[13px]">Click "Chat" button to switch back to chat mode</p>
             </div>
           </div>
         </div>
@@ -170,9 +166,7 @@ export function ChatHeaderDemo() {
               }
             />
             <div className="p-6 text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
-              <p className="text-[13px]">
-                Custom share button with primary styling
-              </p>
+              <p className="text-[13px]">Custom share button with primary styling</p>
             </div>
           </div>
         </div>
@@ -218,7 +212,8 @@ export function ChatHeaderDemo() {
                   </div>
                   <div className="flex-1 pt-1 space-y-3">
                     <p className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                      The ChatHeader component is a versatile header for chat interfaces. Here's how to use it:
+                      The ChatHeader component is a versatile header for chat interfaces. Here's how
+                      to use it:
                     </p>
                     <div className="bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 rounded-lg p-4 font-mono text-[12px]">
                       <code className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary">

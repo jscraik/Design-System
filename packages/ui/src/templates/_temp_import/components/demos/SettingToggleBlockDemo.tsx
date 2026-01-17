@@ -18,11 +18,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 
-import {
-  SettingToggleBlock,
-  SettingToggleBadge,
-  SettingToggleGroup,
-} from "../SettingToggleBlock";
+import { SettingToggleBlock, SettingToggleBadge, SettingToggleGroup } from "../SettingToggleBlock";
 
 export function SettingToggleBlockDemo() {
   const [notifications, setNotifications] = useState(true);
@@ -54,7 +50,8 @@ export function SettingToggleBlockDemo() {
             Setting Toggle Block Component
           </h1>
           <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-            A comprehensive toggle switch component with 4 variants, 3 sizes, badges, loading states, error handling, and compound components for grouping.
+            A comprehensive toggle switch component with 4 variants, 3 sizes, badges, loading
+            states, error handling, and compound components for grouping.
           </p>
         </div>
 

@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (beginner to intermediate)
 - Scope: Task-focused instructions for this topic
 - Non-scope: Comprehensive architecture reference
@@ -34,21 +35,20 @@ Last updated: 2026-01-04
 - [Support](#support)
 - [Future Enhancements](#future-enhancements)
 
-
 ## Overview
 
 The `ui-swift` package is now in maintenance mode. All new development should use the `AStudioComponents` package for button components.
 
 ## Why Migrate?
 
-| Feature | AStudioComponents | ui-swift |
-|---------|------------------|----------|
-| **Platform Support** | iOS 15+, macOS 13+, visionOS 1+ | macOS 13+ only |
-| **Token System** | AStudioFoundation (FType, FSpacing, FColor) | Internal DesignTokens |
-| **Testing** | Property-based tests (SwiftCheck) | Traditional unit tests |
-| **Accessibility** | Full WCAG 2.2 AA support | Basic support |
-| **Maintenance** | ✅ Active | ⚠️ Legacy |
-| **Dynamic Type** | Not yet implemented | ✅ Implemented |
+| Feature              | AStudioComponents                           | ui-swift               |
+| -------------------- | ------------------------------------------- | ---------------------- |
+| **Platform Support** | iOS 15+, macOS 13+, visionOS 1+             | macOS 13+ only         |
+| **Token System**     | AStudioFoundation (FType, FSpacing, FColor) | Internal DesignTokens  |
+| **Testing**          | Property-based tests (SwiftCheck)           | Traditional unit tests |
+| **Accessibility**    | Full WCAG 2.2 AA support                    | Basic support          |
+| **Maintenance**      | ✅ Active                                   | ⚠️ Legacy              |
+| **Dynamic Type**     | Not yet implemented                         | ✅ Implemented         |
 
 ## Migration Steps
 
@@ -77,6 +77,7 @@ let iconButton = ChatUIButton(systemName: "star.fill", variant: .secondary)
 ### Step 3: Update Package Dependencies
 
 **Before (Package.swift):**
+
 ```swift
 dependencies: [
     .package(path: "../ui-swift")
@@ -90,6 +91,7 @@ targets: [
 ```
 
 **After (Package.swift):**
+
 ```swift
 dependencies: [
     .package(path: "../AStudioComponents"),
@@ -146,12 +148,12 @@ let spacing = FSpacing.s12
 
 ### ⚠️ Different Implementations
 
-| Feature | AStudioComponents | ui-swift |
-|---------|------------------|----------|
-| Font API | `FType.rowTitle()` | `DesignTokens.Typography.Body.size` |
-| Spacing API | `FSpacing.s8` | `DesignTokens.Spacing.xs` |
-| Color API | `FColor.accentBlue` | `DesignTokens.Colors.Accent.blue` |
-| Theme Support | `@Environment(\.chatUITheme)` | DesignTokens static |
+| Feature       | AStudioComponents             | ui-swift                            |
+| ------------- | ----------------------------- | ----------------------------------- |
+| Font API      | `FType.rowTitle()`            | `DesignTokens.Typography.Body.size` |
+| Spacing API   | `FSpacing.s8`                 | `DesignTokens.Spacing.xs`           |
+| Color API     | `FColor.accentBlue`           | `DesignTokens.Colors.Accent.blue`   |
+| Theme Support | `@Environment(\.chatUITheme)` | DesignTokens static                 |
 
 ### 🚧 Missing Features
 
@@ -210,6 +212,7 @@ ChatUIButton("Submit", isDisabled: !isValid) {
 ## Support
 
 For questions or issues:
+
 1. Check [AStudioComponents documentation](../platforms/apple/swift/AStudioComponents/README.md)
 2. File an issue on GitHub
 3. Contact the aStudio team
@@ -225,12 +228,15 @@ We're working on adding the following features to AStudioComponents:
 Stay tuned for updates.
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
+
 - TBD: Add concrete verification steps and expected results.
 
 ## Troubleshooting
+
 - TBD: Add the top 3 failure modes and fixes.

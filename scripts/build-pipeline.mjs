@@ -418,7 +418,8 @@ class BuildPipeline {
 
     const webPort = envWebPort ?? (await this.findAvailablePort(5174, 25)) ?? 5174;
     const widgetsBase = envWidgetsPort ?? webPort + 1;
-    const widgetsPort = envWidgetsPort ?? (await this.findAvailablePort(widgetsBase, 25)) ?? widgetsBase;
+    const widgetsPort =
+      envWidgetsPort ?? (await this.findAvailablePort(widgetsBase, 25)) ?? widgetsBase;
 
     return { webPort, widgetsPort };
   }

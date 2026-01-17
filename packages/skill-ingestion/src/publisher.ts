@@ -69,19 +69,11 @@ export async function publishSkill(options: PublishOptions): Promise<PublishResu
     bumpVersion(options.latestVersion ?? "0.0.0", options.bump ?? "patch") ?? "1.0.0";
 
   const bunx = resolveBunxPath();
-  const args = [
-    "clawdhub@latest",
-    "publish",
-    skillPath,
-    "--version",
-    targetVersion,
-  ];
+  const args = ["clawdhub@latest", "publish", skillPath, "--version", targetVersion];
   if (options.changelog?.trim()) {
     args.push("--changelog", options.changelog.trim());
   }
-  const cleanedTags = (options.tags ?? [])
-    .map((t) => t.trim())
-    .filter(Boolean);
+  const cleanedTags = (options.tags ?? []).map((t) => t.trim()).filter(Boolean);
   if (cleanedTags.length > 0) {
     args.push("--tags", cleanedTags.join(","));
   }

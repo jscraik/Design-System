@@ -73,8 +73,8 @@ export function DataControlsPanel({ onBack }: SettingsPanelProps) {
               onCheckedChange={setIncludeVideoRecordings}
             />
             <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-[var(--foundation-text-dark-tertiary)] px-3 mt-1">
-              Include your audio or video recordings from Voice Mode to train our models. Transcripts
-              and other data are covered by "Improve the model for everyone".{" "}
+              Include your audio or video recordings from Voice Mode to train our models.
+              Transcripts and other data are covered by "Improve the model for everyone".{" "}
               <button className="text-[var(--foundation-accent-blue)] hover:underline">
                 Learn more
               </button>

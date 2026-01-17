@@ -8,65 +8,65 @@ This document outlines the dependency reconciliation strategy for porting ChatGP
 
 ### Source App Dependencies vs Platform Dependencies
 
-| Package | Source App | Platform (@astudio/ui) | Action Required |
-|---------|------------|----------------------|-----------------|
-| **Radix UI Components** | ✅ Direct imports | ✅ Already included | Use platform wrappers |
-| `@radix-ui/react-accordion` | ^1.2.3 | ^1.1.2 | Use platform version |
-| `@radix-ui/react-alert-dialog` | ^1.1.6 | ^1.1.2 | Use platform version |
-| `@radix-ui/react-aspect-ratio` | ^1.1.2 | ^1.1.0 | Use platform version |
-| `@radix-ui/react-avatar` | ^1.1.3 | ^1.1.1 | Use platform version |
-| `@radix-ui/react-checkbox` | ^1.1.4 | ^1.1.2 | Use platform version |
-| `@radix-ui/react-collapsible` | ^1.1.3 | ^1.1.2 | Use platform version |
-| `@radix-ui/react-context-menu` | ^2.2.6 | ^2.2.2 | Use platform version |
-| `@radix-ui/react-dialog` | ^1.1.6 | ^1.1.2 | Use platform version |
-| `@radix-ui/react-dropdown-menu` | ^2.1.6 | ^2.1.2 | Use platform version |
-| `@radix-ui/react-hover-card` | ^1.1.6 | ^1.1.2 | Use platform version |
-| `@radix-ui/react-label` | ^2.1.2 | ^2.1.0 | Use platform version |
-| `@radix-ui/react-menubar` | ^1.1.6 | ^1.1.2 | Use platform version |
-| `@radix-ui/react-navigation-menu` | ^1.2.5 | ^1.2.1 | Use platform version |
-| `@radix-ui/react-popover` | ^1.1.6 | ^1.1.6 | Use platform version |
-| `@radix-ui/react-progress` | ^1.1.2 | ^1.1.0 | Use platform version |
-| `@radix-ui/react-radio-group` | ^1.2.3 | ^1.2.1 | Use platform version |
-| `@radix-ui/react-scroll-area` | ^1.2.3 | ^1.2.1 | Use platform version |
-| `@radix-ui/react-select` | ^2.1.6 | ^2.1.2 | Use platform version |
-| `@radix-ui/react-separator` | ^1.1.2 | ^1.1.0 | Use platform version |
-| `@radix-ui/react-slider` | ^1.2.3 | ^1.2.1 | Use platform version |
-| `@radix-ui/react-slot` | ^1.1.2 | ^1.1.0 | Use platform version |
-| `@radix-ui/react-switch` | ^1.1.3 | ^1.1.1 | Use platform version |
-| `@radix-ui/react-tabs` | ^1.1.3 | ^1.1.1 | Use platform version |
-| `@radix-ui/react-toggle` | ^1.1.2 | ^1.1.0 | Use platform version |
-| `@radix-ui/react-toggle-group` | ^1.1.2 | ^1.1.0 | Use platform version |
-| `@radix-ui/react-tooltip` | ^1.1.8 | ^1.1.2 | Use platform version |
+| Package                           | Source App        | Platform (@astudio/ui) | Action Required       |
+| --------------------------------- | ----------------- | ---------------------- | --------------------- |
+| **Radix UI Components**           | ✅ Direct imports | ✅ Already included    | Use platform wrappers |
+| `@radix-ui/react-accordion`       | ^1.2.3            | ^1.1.2                 | Use platform version  |
+| `@radix-ui/react-alert-dialog`    | ^1.1.6            | ^1.1.2                 | Use platform version  |
+| `@radix-ui/react-aspect-ratio`    | ^1.1.2            | ^1.1.0                 | Use platform version  |
+| `@radix-ui/react-avatar`          | ^1.1.3            | ^1.1.1                 | Use platform version  |
+| `@radix-ui/react-checkbox`        | ^1.1.4            | ^1.1.2                 | Use platform version  |
+| `@radix-ui/react-collapsible`     | ^1.1.3            | ^1.1.2                 | Use platform version  |
+| `@radix-ui/react-context-menu`    | ^2.2.6            | ^2.2.2                 | Use platform version  |
+| `@radix-ui/react-dialog`          | ^1.1.6            | ^1.1.2                 | Use platform version  |
+| `@radix-ui/react-dropdown-menu`   | ^2.1.6            | ^2.1.2                 | Use platform version  |
+| `@radix-ui/react-hover-card`      | ^1.1.6            | ^1.1.2                 | Use platform version  |
+| `@radix-ui/react-label`           | ^2.1.2            | ^2.1.0                 | Use platform version  |
+| `@radix-ui/react-menubar`         | ^1.1.6            | ^1.1.2                 | Use platform version  |
+| `@radix-ui/react-navigation-menu` | ^1.2.5            | ^1.2.1                 | Use platform version  |
+| `@radix-ui/react-popover`         | ^1.1.6            | ^1.1.6                 | Use platform version  |
+| `@radix-ui/react-progress`        | ^1.1.2            | ^1.1.0                 | Use platform version  |
+| `@radix-ui/react-radio-group`     | ^1.2.3            | ^1.2.1                 | Use platform version  |
+| `@radix-ui/react-scroll-area`     | ^1.2.3            | ^1.2.1                 | Use platform version  |
+| `@radix-ui/react-select`          | ^2.1.6            | ^2.1.2                 | Use platform version  |
+| `@radix-ui/react-separator`       | ^1.1.2            | ^1.1.0                 | Use platform version  |
+| `@radix-ui/react-slider`          | ^1.2.3            | ^1.2.1                 | Use platform version  |
+| `@radix-ui/react-slot`            | ^1.1.2            | ^1.1.0                 | Use platform version  |
+| `@radix-ui/react-switch`          | ^1.1.3            | ^1.1.1                 | Use platform version  |
+| `@radix-ui/react-tabs`            | ^1.1.3            | ^1.1.1                 | Use platform version  |
+| `@radix-ui/react-toggle`          | ^1.1.2            | ^1.1.0                 | Use platform version  |
+| `@radix-ui/react-toggle-group`    | ^1.1.2            | ^1.1.0                 | Use platform version  |
+| `@radix-ui/react-tooltip`         | ^1.1.8            | ^1.1.2                 | Use platform version  |
 
 ### Supporting Libraries
 
-| Package | Source App | Platform (@astudio/ui) | Action Required |
-|---------|------------|----------------------|-----------------|
-| `class-variance-authority` | ^0.7.1 | ^0.7.1 | ✅ Already compatible |
-| `clsx` | * | ^2.1.1 | ✅ Already compatible |
-| `cmdk` | ^1.1.1 | 1.1.1 | ✅ Already compatible |
-| `date-fns` | * | ^4.1.0 | ✅ Already compatible |
-| `embla-carousel-react` | ^8.6.0 | 8.6.0 | ✅ Already compatible |
-| `input-otp` | ^1.4.2 | 1.4.2 | ✅ Already compatible |
-| `lucide-react` | ^0.487.0 | ^0.487.0 | ✅ Already compatible |
-| `motion` | * | ^11.0.0 | ✅ Already compatible |
-| `next-themes` | ^0.4.6 | 0.4.6 | ✅ Already compatible |
-| `re-resizable` | * | ^6.9.11 | ✅ Already compatible |
-| `react-day-picker` | ^8.10.1 | ^9.13.0 | Use platform version (newer) |
-| `react-hook-form` | ^7.55.0 | ^7.54.2 | ✅ Already compatible |
-| `react-resizable-panels` | ^2.1.7 | 2.1.7 | ✅ Already compatible |
-| `recharts` | ^2.15.2 | 2.15.2 | ✅ Already compatible |
-| `sonner` | ^2.0.3 | 2.0.3 | ✅ Already compatible |
-| `tailwind-merge` | * | ^3.2.0 | ✅ Already compatible |
-| `vaul` | ^1.1.2 | ^1.1.0 | Use platform version |
+| Package                    | Source App | Platform (@astudio/ui) | Action Required              |
+| -------------------------- | ---------- | ---------------------- | ---------------------------- |
+| `class-variance-authority` | ^0.7.1     | ^0.7.1                 | ✅ Already compatible        |
+| `clsx`                     | \*         | ^2.1.1                 | ✅ Already compatible        |
+| `cmdk`                     | ^1.1.1     | 1.1.1                  | ✅ Already compatible        |
+| `date-fns`                 | \*         | ^4.1.0                 | ✅ Already compatible        |
+| `embla-carousel-react`     | ^8.6.0     | 8.6.0                  | ✅ Already compatible        |
+| `input-otp`                | ^1.4.2     | 1.4.2                  | ✅ Already compatible        |
+| `lucide-react`             | ^0.487.0   | ^0.487.0               | ✅ Already compatible        |
+| `motion`                   | \*         | ^11.0.0                | ✅ Already compatible        |
+| `next-themes`              | ^0.4.6     | 0.4.6                  | ✅ Already compatible        |
+| `re-resizable`             | \*         | ^6.9.11                | ✅ Already compatible        |
+| `react-day-picker`         | ^8.10.1    | ^9.13.0                | Use platform version (newer) |
+| `react-hook-form`          | ^7.55.0    | ^7.54.2                | ✅ Already compatible        |
+| `react-resizable-panels`   | ^2.1.7     | 2.1.7                  | ✅ Already compatible        |
+| `recharts`                 | ^2.15.2    | 2.15.2                 | ✅ Already compatible        |
+| `sonner`                   | ^2.0.3     | 2.0.3                  | ✅ Already compatible        |
+| `tailwind-merge`           | \*         | ^3.2.0                 | ✅ Already compatible        |
+| `vaul`                     | ^1.1.2     | ^1.1.0                 | Use platform version         |
 
 ### New Dependencies Needed
 
 The following dependencies are needed in the web app but not currently present:
 
-| Package | Version | Purpose | Justification |
-|---------|---------|---------|---------------|
-| None | - | - | All required dependencies already available via @astudio/ui |
+| Package | Version | Purpose | Justification                                               |
+| ------- | ------- | ------- | ----------------------------------------------------------- |
+| None    | -       | -       | All required dependencies already available via @astudio/ui |
 
 ## Design Token Analysis
 
@@ -81,13 +81,13 @@ The following dependencies are needed in the web app but not currently present:
 
 ### Token Differences
 
-| Category | Source App | Platform | Resolution |
-|----------|------------|----------|------------|
-| Colors | Basic set | Extended with border, additional accents | Use platform tokens (superset) |
-| Typography | Web/iOS/Android variants | Web/iOS/Android + additional styles | Use platform tokens (more comprehensive) |
-| Radius | Not present | Full radius scale | Use platform tokens |
-| Shadows | Not present | Card, pip, pill, close shadows | Use platform tokens |
-| Sizes | Not present | Control heights, hit targets | Use platform tokens |
+| Category   | Source App               | Platform                                 | Resolution                               |
+| ---------- | ------------------------ | ---------------------------------------- | ---------------------------------------- |
+| Colors     | Basic set                | Extended with border, additional accents | Use platform tokens (superset)           |
+| Typography | Web/iOS/Android variants | Web/iOS/Android + additional styles      | Use platform tokens (more comprehensive) |
+| Radius     | Not present              | Full radius scale                        | Use platform tokens                      |
+| Shadows    | Not present              | Card, pip, pill, close shadows           | Use platform tokens                      |
+| Sizes      | Not present              | Control heights, hit targets             | Use platform tokens                      |
 
 ## Implementation Strategy
 
@@ -103,12 +103,12 @@ Templates will be updated to use platform components:
 
 ```typescript
 // Source app (BEFORE)
-import { Button } from "@radix-ui/react-button"
-import { Dialog } from "@radix-ui/react-dialog"
+import { Button } from "@radix-ui/react-button";
+import { Dialog } from "@radix-ui/react-dialog";
 
 // Platform (AFTER)
-import { Button } from "@astudio/ui/base"
-import { Dialog } from "@astudio/ui/feedback"
+import { Button } from "@astudio/ui/base";
+import { Dialog } from "@astudio/ui/feedback";
 ```
 
 ### Phase 3: Token Integration Strategy
@@ -117,10 +117,10 @@ Templates will use platform tokens:
 
 ```typescript
 // Source app (BEFORE)
-import { colors, space } from "../design-tokens"
+import { colors, space } from "../design-tokens";
 
 // Platform (AFTER)
-import { tokens } from "@astudio/tokens"
+import { tokens } from "@astudio/tokens";
 // Or use CSS custom properties generated by the token system
 ```
 

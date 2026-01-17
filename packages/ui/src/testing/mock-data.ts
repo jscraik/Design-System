@@ -175,10 +175,7 @@ export function createAssistantMessage(content: string): MockMessage {
 /**
  * Helper to create a mock thread
  */
-export function createThread(
-  title: string,
-  messages: MockMessage[] = []
-): MockThread {
+export function createThread(title: string, messages: MockMessage[] = []): MockThread {
   return {
     id: `thread-${Date.now()}`,
     title,

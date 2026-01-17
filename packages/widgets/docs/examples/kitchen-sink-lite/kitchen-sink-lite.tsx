@@ -11,7 +11,13 @@
  * Styling uses Apps SDK UI components/tokens with minimal custom CSS for code sizing.
  */
 import React, { useEffect, useMemo, useState } from "react";
-import { AppsSDKBadge, AppsSDKButton, AppsSDKCheckbox, AppsSDKInput, AppsSDKTextarea } from "@astudio/ui";
+import {
+  AppsSDKBadge,
+  AppsSDKButton,
+  AppsSDKCheckbox,
+  AppsSDKInput,
+  AppsSDKTextarea,
+} from "@astudio/ui";
 
 import { CodeBlock } from "../../../src/shared/code-block";
 import { useOpenAiGlobal } from "../../../src/shared/use-openai-global";
@@ -422,7 +428,11 @@ export default function KitchenSinkLite() {
           <div className="flex flex-col gap-3">
             <label className="flex flex-col gap-1 text-sm">
               <span className="text-secondary">Note (saved on host)</span>
-              <AppsSDKTextarea value={noteDraft} onChange={(e) => setNoteDraft(e.target.value)} rows={3} />
+              <AppsSDKTextarea
+                value={noteDraft}
+                onChange={(e) => setNoteDraft(e.target.value)}
+                rows={3}
+              />
             </label>
             <AppsSDKCheckbox
               checked={highlightDraft}
@@ -506,7 +516,12 @@ export default function KitchenSinkLite() {
                 wrapLongLines
               >{`window.openai.callTool("kitchen-sink-refresh", {\n  message: "${refreshText}"\n})`}</CodeBlock>
             </div>
-            <AppsSDKButton color="primary" onClick={handleCallTool} disabled={isCalling} className="w-fit">
+            <AppsSDKButton
+              color="primary"
+              onClick={handleCallTool}
+              disabled={isCalling}
+              className="w-fit"
+            >
               {isCalling ? "Calling..." : "Call kitchen-sink-refresh"}
             </AppsSDKButton>
             {callResult ? (

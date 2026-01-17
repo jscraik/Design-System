@@ -1,4 +1,9 @@
-import { HostProvider, createEmbeddedHost, ensureMockOpenAI, useToolOutput } from "@astudio/runtime";
+import {
+  HostProvider,
+  createEmbeddedHost,
+  ensureMockOpenAI,
+  useToolOutput,
+} from "@astudio/runtime";
 import { AppsSDKBadge, AppsSDKUIProvider } from "@astudio/ui";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";

@@ -288,10 +288,7 @@ export function TemplateFieldGroup({
                   aria-label={isCollapsed ? `Expand ${label}` : `Collapse ${label}`}
                 >
                   <svg
-                    className={cn(
-                      "w-4 h-4 transition-transform",
-                      isCollapsed && "-rotate-90",
-                    )}
+                    className={cn("w-4 h-4 transition-transform", isCollapsed && "-rotate-90")}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"

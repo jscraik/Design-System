@@ -7,10 +7,7 @@ const DEFAULT_BUDGET_BYTES = 4096;
 
 function isStrictMode(options?: BudgetOptions): boolean {
   if (options?.strict !== undefined) return options.strict;
-  return (
-    typeof globalThis.process !== "undefined" &&
-    Boolean(globalThis.process?.env?.CI)
-  );
+  return typeof globalThis.process !== "undefined" && Boolean(globalThis.process?.env?.CI);
 }
 
 export function validateWidgetStateBudget(state: unknown, options?: BudgetOptions) {

@@ -1,22 +1,24 @@
-# _temp vs packages/ui Mismatch Report
+# \_temp vs packages/ui Mismatch Report
 
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
 
-
 ## Summary
+
 - Mismatches (same mapped path, different content): 9
-- Present in _temp but missing in packages/ui (mapped): 139
-- Present in packages/ui but not in _temp (mapped dirs): 755
+- Present in \_temp but missing in packages/ui (mapped): 139
+- Present in packages/ui but not in \_temp (mapped dirs): 755
 - Exact matches: 16
 
 ## Mismatches (content differs)
+
 - `_temp/ChatGPT UI Templates (1)/src/index.css` -> `packages/ui/src/styles/theme.css`
 - `_temp/ChatGPT UI Templates (1)/src/utils/clipboard.ts` -> `packages/ui/src/utils/clipboard.ts`
 - `_temp/ChatGPT UI Templates (1)/src/imports/svg-s5xs1q0c9v.ts` -> `packages/ui/src/icons/imports/svg-s5xs1q0c9v.ts`
@@ -27,7 +29,8 @@ Last updated: 2026-01-04
 - `_temp/ChatGPT UI Templates (1)/src/templates/registry.ts` -> `packages/ui/src/templates/registry.ts`
 - `_temp/ChatGPT UI Templates (1)/src/components/icons/ChatGPTIconCatalog.tsx` -> `packages/ui/src/icons/ChatGPTIconCatalog.tsx`
 
-## Present in _temp but missing in packages/ui (mapped)
+## Present in \_temp but missing in packages/ui (mapped)
+
 - `_temp/ChatGPT UI Templates (1)/src/App.tsx` -> `packages/ui/src/App.tsx`
 - `_temp/ChatGPT UI Templates (1)/src/main.tsx` -> `packages/ui/src/main.tsx`
 - `_temp/ChatGPT UI Templates (1)/src/appsSdkUi.ts` -> `packages/ui/src/appsSdkUi.ts`
@@ -168,7 +171,8 @@ Last updated: 2026-01-04
 - `_temp/ChatGPT UI Templates (1)/src/components/demos/DiscoverySettingsModalDemo.tsx` -> `packages/ui/src/templates/demos/DiscoverySettingsModalDemo.tsx`
 - `_temp/ChatGPT UI Templates (1)/src/components/demos/SettingsModalDemo.tsx` -> `packages/ui/src/templates/demos/SettingsModalDemo.tsx`
 
-## Present in packages/ui but not in _temp (mapped dirs)
+## Present in packages/ui but not in \_temp (mapped dirs)
+
 - `packages/ui/src/integrations/figma/index.ts`
 - `packages/ui/src/integrations/figma/ImageWithFallback/ImageWithFallback.tsx`
 - `packages/ui/src/integrations/figma/ImageWithFallback/index.ts`

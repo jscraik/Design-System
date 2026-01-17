@@ -80,10 +80,7 @@ function Image({
   }
 
   return (
-    <div
-      data-slot="image"
-      className={cn("relative overflow-hidden", className)}
-    >
+    <div data-slot="image" className={cn("relative overflow-hidden", className)}>
       {loading && showLoadingState && (
         <div
           className={cn(

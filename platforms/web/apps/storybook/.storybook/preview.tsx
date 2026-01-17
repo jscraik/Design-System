@@ -175,9 +175,7 @@ const preview: Preview = {
                 colorScheme: theme,
                 minHeight: context.parameters.layout === "fullscreen" ? "100vh" : "auto",
                 padding:
-                  context.parameters.layout === "centered"
-                    ? "var(--foundation-space-16)"
-                    : 0,
+                  context.parameters.layout === "centered" ? "var(--foundation-space-16)" : 0,
               }}
             >
               <Story />

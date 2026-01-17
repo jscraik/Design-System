@@ -9,8 +9,10 @@ export interface Tag {
   label: string;
 }
 
-export interface TagInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> {
+export interface TagInputProps extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  "onChange" | "value"
+> {
   tags: Tag[];
   onTagsChange: (tags: Tag[]) => void;
   onTagAdd?: (tag: Tag) => void;
@@ -36,7 +38,7 @@ const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
       disabled,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [inputValue, setInputValue] = React.useState("");
     const inputRef = React.useRef<HTMLInputElement>(null);
@@ -99,17 +101,13 @@ const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
           variant === "outline" &&
             "border-foundation-text-dark-primary/20 bg-transparent focus-within:border-foundation-accent-blue",
           disabled && "cursor-not-allowed opacity-50",
-          className
+          className,
         )}
         onClick={() => inputRef.current?.focus()}
       >
         {/* Display tags */}
         {tags.map((tag) => (
-          <Badge
-            key={tag.id}
-            variant="secondary"
-            className="gap-1 pr-1 text-sm"
-          >
+          <Badge key={tag.id} variant="secondary" className="gap-1 pr-1 text-sm">
             {tag.label}
             <button
               type="button"
@@ -139,14 +137,14 @@ const TagInput = React.forwardRef<HTMLInputElement, TagInputProps>(
             disabled={disabled}
             className={cn(
               "flex-1 bg-transparent text-sm outline-none placeholder:text-foundation-text-dark-tertiary min-w-[120px]",
-              disabled && "cursor-not-allowed"
+              disabled && "cursor-not-allowed",
             )}
             {...props}
           />
         )}
       </div>
     );
-  }
+  },
 );
 TagInput.displayName = "TagInput";
 

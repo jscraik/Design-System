@@ -92,10 +92,7 @@ export function TemplateFooterBarSample() {
 export function TemplateFormFieldSample() {
   return (
     <div className="mx-auto w-full max-w-xl space-y-4 px-6 py-8">
-      <TemplateFormField
-        label="Project name"
-        description="Visible to everyone in your workspace."
-      >
+      <TemplateFormField label="Project name" description="Visible to everyone in your workspace.">
         <AppsSDKInput defaultValue="AStudio Core" />
       </TemplateFormField>
       <TemplateFormField label="Short summary" hint="140 characters max." optional>
@@ -447,9 +444,9 @@ export function SettingToggleBlockSample() {
  */
 export function DiscoverySettingsModalTemplate() {
   const [targetSize, setTargetSize] = useState(60);
-  const [promptEnhancement, setPromptEnhancement] = useState<
-    "rewrite" | "augment" | "preserve"
-  >("rewrite");
+  const [promptEnhancement, setPromptEnhancement] = useState<"rewrite" | "augment" | "preserve">(
+    "rewrite",
+  );
 
   return (
     <DiscoverySettingsModal
@@ -475,12 +472,7 @@ export function DiscoverySettingsModalTemplate() {
  */
 export function IconPickerModalTemplate() {
   return (
-    <IconPickerModal
-      isOpen
-      onClose={() => {}}
-      onSave={() => {}}
-      projectName="Design systems"
-    />
+    <IconPickerModal isOpen onClose={() => {}} onSave={() => {}} projectName="Design systems" />
   );
 }
 

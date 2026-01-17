@@ -135,46 +135,171 @@ const iconCategories = [
 
 const colorSwatches = [
   // Background Tokens - Dark
-  { label: "bg-dark-1", cssVar: "--foundation-bg-dark-1", hex: "#0d0d0d", group: "Background (Dark)" },
-  { label: "bg-dark-2", cssVar: "--foundation-bg-dark-2", hex: "#171717", group: "Background (Dark)" },
-  { label: "bg-dark-3", cssVar: "--foundation-bg-dark-3", hex: "#202020", group: "Background (Dark)" },
-  { label: "bg-dark-4", cssVar: "--foundation-bg-dark-4", hex: "#2a2a2a", group: "Background (Dark)" },
-  { label: "bg-dark-modal", cssVar: "--foundation-bg-dark-modal", hex: "#1a1a1a", group: "Background (Dark)" },
-  
+  {
+    label: "bg-dark-1",
+    cssVar: "--foundation-bg-dark-1",
+    hex: "#0d0d0d",
+    group: "Background (Dark)",
+  },
+  {
+    label: "bg-dark-2",
+    cssVar: "--foundation-bg-dark-2",
+    hex: "#171717",
+    group: "Background (Dark)",
+  },
+  {
+    label: "bg-dark-3",
+    cssVar: "--foundation-bg-dark-3",
+    hex: "#202020",
+    group: "Background (Dark)",
+  },
+  {
+    label: "bg-dark-4",
+    cssVar: "--foundation-bg-dark-4",
+    hex: "#2a2a2a",
+    group: "Background (Dark)",
+  },
+  {
+    label: "bg-dark-modal",
+    cssVar: "--foundation-bg-dark-modal",
+    hex: "#1a1a1a",
+    group: "Background (Dark)",
+  },
+
   // Background Tokens - Light
-  { label: "bg-light-1", cssVar: "--foundation-bg-light-1", hex: "#ffffff", group: "Background (Light)" },
-  { label: "bg-light-2", cssVar: "--foundation-bg-light-2", hex: "#f9f9f9", group: "Background (Light)" },
-  { label: "bg-light-3", cssVar: "--foundation-bg-light-3", hex: "#ececec", group: "Background (Light)" },
-  { label: "bg-light-4", cssVar: "--foundation-bg-light-4", hex: "#d9d9d9", group: "Background (Light)" },
-  
+  {
+    label: "bg-light-1",
+    cssVar: "--foundation-bg-light-1",
+    hex: "#ffffff",
+    group: "Background (Light)",
+  },
+  {
+    label: "bg-light-2",
+    cssVar: "--foundation-bg-light-2",
+    hex: "#f9f9f9",
+    group: "Background (Light)",
+  },
+  {
+    label: "bg-light-3",
+    cssVar: "--foundation-bg-light-3",
+    hex: "#ececec",
+    group: "Background (Light)",
+  },
+  {
+    label: "bg-light-4",
+    cssVar: "--foundation-bg-light-4",
+    hex: "#d9d9d9",
+    group: "Background (Light)",
+  },
+
   // Text Tokens - Dark
-  { label: "text-dark-primary", cssVar: "--foundation-text-dark-primary", hex: "#ececec", group: "Text (Dark)" },
-  { label: "text-dark-secondary", cssVar: "--foundation-text-dark-secondary", hex: "#acacac", group: "Text (Dark)" },
-  { label: "text-dark-tertiary", cssVar: "--foundation-text-dark-tertiary", hex: "#8e8e8e", group: "Text (Dark)" },
-  
+  {
+    label: "text-dark-primary",
+    cssVar: "--foundation-text-dark-primary",
+    hex: "#ececec",
+    group: "Text (Dark)",
+  },
+  {
+    label: "text-dark-secondary",
+    cssVar: "--foundation-text-dark-secondary",
+    hex: "#acacac",
+    group: "Text (Dark)",
+  },
+  {
+    label: "text-dark-tertiary",
+    cssVar: "--foundation-text-dark-tertiary",
+    hex: "#8e8e8e",
+    group: "Text (Dark)",
+  },
+
   // Text Tokens - Light
-  { label: "text-light-primary", cssVar: "--foundation-text-light-primary", hex: "#0d0d0d", group: "Text (Light)" },
-  { label: "text-light-secondary", cssVar: "--foundation-text-light-secondary", hex: "#676767", group: "Text (Light)" },
-  { label: "text-light-tertiary", cssVar: "--foundation-text-light-tertiary", hex: "#8e8e8e", group: "Text (Light)" },
-  
+  {
+    label: "text-light-primary",
+    cssVar: "--foundation-text-light-primary",
+    hex: "#0d0d0d",
+    group: "Text (Light)",
+  },
+  {
+    label: "text-light-secondary",
+    cssVar: "--foundation-text-light-secondary",
+    hex: "#676767",
+    group: "Text (Light)",
+  },
+  {
+    label: "text-light-tertiary",
+    cssVar: "--foundation-text-light-tertiary",
+    hex: "#8e8e8e",
+    group: "Text (Light)",
+  },
+
   // Icon Tokens - Dark
-  { label: "icon-dark-primary", cssVar: "--foundation-icon-dark-primary", hex: "#ececec", group: "Icons (Dark)" },
-  { label: "icon-dark-secondary", cssVar: "--foundation-icon-dark-secondary", hex: "#acacac", group: "Icons (Dark)" },
-  { label: "icon-dark-tertiary", cssVar: "--foundation-icon-dark-tertiary", hex: "#6e6e6e", group: "Icons (Dark)" },
-  
+  {
+    label: "icon-dark-primary",
+    cssVar: "--foundation-icon-dark-primary",
+    hex: "#ececec",
+    group: "Icons (Dark)",
+  },
+  {
+    label: "icon-dark-secondary",
+    cssVar: "--foundation-icon-dark-secondary",
+    hex: "#acacac",
+    group: "Icons (Dark)",
+  },
+  {
+    label: "icon-dark-tertiary",
+    cssVar: "--foundation-icon-dark-tertiary",
+    hex: "#6e6e6e",
+    group: "Icons (Dark)",
+  },
+
   // Icon Tokens - Light
-  { label: "icon-light-primary", cssVar: "--foundation-icon-light-primary", hex: "#0d0d0d", group: "Icons (Light)" },
-  { label: "icon-light-secondary", cssVar: "--foundation-icon-light-secondary", hex: "#676767", group: "Icons (Light)" },
-  { label: "icon-light-tertiary", cssVar: "--foundation-icon-light-tertiary", hex: "#8e8e8e", group: "Icons (Light)" },
-  
+  {
+    label: "icon-light-primary",
+    cssVar: "--foundation-icon-light-primary",
+    hex: "#0d0d0d",
+    group: "Icons (Light)",
+  },
+  {
+    label: "icon-light-secondary",
+    cssVar: "--foundation-icon-light-secondary",
+    hex: "#676767",
+    group: "Icons (Light)",
+  },
+  {
+    label: "icon-light-tertiary",
+    cssVar: "--foundation-icon-light-tertiary",
+    hex: "#8e8e8e",
+    group: "Icons (Light)",
+  },
+
   // Accent Colors
   { label: "accent-green", cssVar: "--foundation-accent-green", hex: "#10a37f", group: "Accents" },
   { label: "accent-blue", cssVar: "--foundation-accent-blue", hex: "#1B72E8", group: "Accents" },
   { label: "accent-red", cssVar: "--foundation-accent-red", hex: "#ef4444", group: "Accents" },
-  { label: "accent-yellow", cssVar: "--foundation-accent-yellow", hex: "#f59e0b", group: "Accents" },
-  { label: "accent-purple", cssVar: "--foundation-accent-purple", hex: "#8b5cf6", group: "Accents" },
-  { label: "accent-orange", cssVar: "--foundation-accent-orange", hex: "#f97316", group: "Accents" },
-  { label: "accent-success", cssVar: "--foundation-accent-success", hex: "#10a37f", group: "Accents" },
+  {
+    label: "accent-yellow",
+    cssVar: "--foundation-accent-yellow",
+    hex: "#f59e0b",
+    group: "Accents",
+  },
+  {
+    label: "accent-purple",
+    cssVar: "--foundation-accent-purple",
+    hex: "#8b5cf6",
+    group: "Accents",
+  },
+  {
+    label: "accent-orange",
+    cssVar: "--foundation-accent-orange",
+    hex: "#f97316",
+    group: "Accents",
+  },
+  {
+    label: "accent-success",
+    cssVar: "--foundation-accent-success",
+    hex: "#10a37f",
+    group: "Accents",
+  },
   { label: "accent-info", cssVar: "--foundation-accent-info", hex: "#1B72E8", group: "Accents" },
 ];
 
@@ -198,59 +323,61 @@ const spacingScale = [
 
 // Typography tokens
 const typographyTokens = [
-  { 
-    label: "Heading 1", 
+  {
+    label: "Heading 1",
     className: "text-heading-1",
-    size: 32, 
-    weight: 600, 
-    lineHeight: 40, 
+    size: 32,
+    weight: 600,
+    lineHeight: 40,
     tracking: -0.5,
-    example: "The quick brown fox"
+    example: "The quick brown fox",
   },
-  { 
-    label: "Heading 2", 
+  {
+    label: "Heading 2",
     className: "text-heading-2",
-    size: 24, 
-    weight: 600, 
-    lineHeight: 32, 
+    size: 24,
+    weight: 600,
+    lineHeight: 32,
     tracking: -0.3,
-    example: "The quick brown fox jumps"
+    example: "The quick brown fox jumps",
   },
-  { 
-    label: "Heading 3", 
+  {
+    label: "Heading 3",
     className: "text-heading-3",
-    size: 18, 
-    weight: 600, 
-    lineHeight: 24, 
+    size: 18,
+    weight: 600,
+    lineHeight: 24,
     tracking: -0.2,
-    example: "The quick brown fox jumps over"
+    example: "The quick brown fox jumps over",
   },
-  { 
-    label: "Body", 
+  {
+    label: "Body",
     className: "text-body",
-    size: 15, 
-    weight: 400, 
-    lineHeight: 22, 
+    size: 15,
+    weight: 400,
+    lineHeight: 22,
     tracking: 0,
-    example: "The quick brown fox jumps over the lazy dog"
+    example: "The quick brown fox jumps over the lazy dog",
   },
-  { 
-    label: "Body Small", 
+  {
+    label: "Body Small",
     className: "text-body-small",
-    size: 13, 
-    weight: 400, 
-    lineHeight: 18, 
+    size: 13,
+    weight: 400,
+    lineHeight: 18,
     tracking: 0,
-    example: "The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs."
+    example:
+      "The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs.",
   },
-  { 
-    label: "Caption", 
+  {
+    label: "Caption",
     className: "text-caption",
-    size: 11, 
-    weight: 400, 
-    lineHeight: 14, 
+    size: 11,
+    weight: 400,
+    lineHeight: 14,
     tracking: 0.1,
-    example: "The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How vexingly quick daft zebras jump!"
+    example:
+      "The quick brown fox jumps over the lazy dog. Pack my box with five dozen liquor jugs. How vexingly quick daft zebras jump!",
   },
 ] as const;
 
@@ -555,11 +682,7 @@ export function DesignSystemDocs() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="size-10 rounded-xl bg-gradient-to-br from-foundation-accent-blue to-foundation-accent-purple flex items-center justify-center shadow-lg">
-                <svg
-                  className="size-6 text-white"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
+                <svg className="size-6 text-white" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M22.282 9.821a5.985 5.985 0 0 0-.516-4.91 6.046 6.046 0 0 0-6.51-2.9A6.065 6.065 0 0 0 4.981 4.18a5.985 5.985 0 0 0-3.998 2.9 6.046 6.046 0 0 0 .743 7.097 5.98 5.98 0 0 0 .51 4.911 6.051 6.051 0 0 0 6.515 2.9A5.985 5.985 0 0 0 13.26 24a6.056 6.056 0 0 0 5.772-4.206 5.99 5.99 0 0 0 3.997-2.9 6.056 6.056 0 0 0-.747-7.073zM13.26 22.43a4.476 4.476 0 0 1-2.876-1.04l.141-.081 4.779-2.758a.795.795 0 0 0 .392-.681v-6.737l2.02 1.168a.071.071 0 0 1 .038.052v5.583a4.504 4.504 0 0 1-4.494 4.494zM3.6 18.304a4.47 4.47 0 0 1-.535-3.014l.142.085 4.783 2.759a.771.771 0 0 0 .78 0l5.843-3.369v2.332a.08.08 0 0 1-.033.062L9.74 19.95a4.5 4.5 0 0 1-6.14-1.646zM2.34 7.896a4.485 4.485 0 0 1 2.366-1.973V11.6a.766.766 0 0 0 .388.676l5.815 3.355-2.02 1.168a.076.076 0 0 1-.071 0l-4.83-2.786A4.504 4.504 0 0 1 2.34 7.872zm16.597 3.855l-5.833-3.387L15.119 7.2a.076.076 0 0 1 .071 0l4.83 2.791a4.494 4.494 0 0 1-.676 8.105v-5.678a.79.79 0 0 0-.407-.667zm2.01-3.023l-.141-.085-4.774-2.782a.776.776 0 0 0-.785 0L9.409 9.23V6.897a.066.066 0 0 1 .028-.061l4.83-2.787a4.5 4.5 0 0 1 6.68 4.66zm-12.64 4.135l-2.02-1.164a.08.08 0 0 1-.038-.057V6.075a4.5 4.5 0 0 1 7.375-3.453l-.142.08L8.704 5.46a.795.795 0 0 0-.393.681zm1.097-2.365l2.602-1.5 2.607 1.5v2.999l-2.597 1.5-2.607-1.5z" />
                 </svg>
               </div>
@@ -614,7 +737,11 @@ export function DesignSystemDocs() {
                 <div className="max-w-3xl">
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-foundation-accent-blue/10 text-foundation-accent-blue text-xs font-semibold mb-4 border border-foundation-accent-blue/20">
                     <svg className="size-3.5" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+                      <path
+                        fillRule="evenodd"
+                        d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                     Production Ready
                   </div>
@@ -622,7 +749,9 @@ export function DesignSystemDocs() {
                     Complete Design System
                   </h2>
                   <p className="text-base text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mb-6 leading-relaxed">
-                    A comprehensive, production-ready design system featuring the official ChatUI Apps SDK design tokens, 350+ icons, and complete Tailwind CSS integration with full light/dark mode support.
+                    A comprehensive, production-ready design system featuring the official ChatUI
+                    Apps SDK design tokens, 350+ icons, and complete Tailwind CSS integration with
+                    full light/dark mode support.
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {[
@@ -631,7 +760,7 @@ export function DesignSystemDocs() {
                       "Dark Mode",
                       "Accessible",
                       "Type Safe",
-                      "Tree Shakeable"
+                      "Tree Shakeable",
                     ].map((tag) => (
                       <span
                         key={tag}
@@ -658,13 +787,23 @@ export function DesignSystemDocs() {
                   description="Production-ready"
                   icon={<IconImage className="size-6" />}
                 />
-                <StatCard 
-                  label="Color Tokens" 
+                <StatCard
+                  label="Color Tokens"
                   value={colorSwatches.length}
                   description="Light & dark modes"
                   icon={
-                    <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    <svg
+                      className="size-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                      />
                     </svg>
                   }
                 />
@@ -673,18 +812,25 @@ export function DesignSystemDocs() {
                   value={spacingScale.length}
                   description="8px grid system"
                   icon={
-                    <svg className="size-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                    <svg
+                      className="size-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
+                      />
                     </svg>
                   }
                 />
               </div>
 
               {/* Quick Start */}
-              <Section
-                title="Quick Start Guide"
-                description="Get up and running in 3 simple steps"
-              >
+              <Section title="Quick Start Guide" description="Get up and running in 3 simple steps">
                 <div className="grid gap-5">
                   <Card className="hover:shadow-md transition-shadow duration-200">
                     <div className="flex items-start gap-4">
@@ -695,7 +841,10 @@ export function DesignSystemDocs() {
                         <h3 className="text-base font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
                           Import Foundation Styles
                         </h3>
-                        <CodeBlock code={`import '@/styles/globals.css';\n\n// All design tokens are now available`} language="ts" />
+                        <CodeBlock
+                          code={`import '@/styles/globals.css';\n\n// All design tokens are now available`}
+                          language="ts"
+                        />
                       </div>
                     </div>
                   </Card>
@@ -754,55 +903,106 @@ import { SettingDropdownBlock, SettingToggleBlock } from '@/components';
                     {
                       icon: (
                         <svg className="size-5" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+                          <path
+                            fillRule="evenodd"
+                            d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                       ),
                       title: "Official ChatUI Tokens",
-                      description: "Based on the official ChatUI Apps SDK design tokens from index.dtcg.json"
+                      description:
+                        "Based on the official ChatUI Apps SDK design tokens from index.dtcg.json",
                     },
                     {
                       icon: <IconSettings className="size-5" />,
                       title: "350+ Icons",
-                      description: "Comprehensive icon library organized into 9 semantic categories"
+                      description:
+                        "Comprehensive icon library organized into 9 semantic categories",
                     },
                     {
                       icon: (
-                        <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        <svg
+                          className="size-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
+                          />
                         </svg>
                       ),
                       title: "Dark Mode Built-in",
-                      description: "Full light and dark mode support with automatic theme switching"
+                      description:
+                        "Full light and dark mode support with automatic theme switching",
                     },
                     {
                       icon: (
-                        <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                        <svg
+                          className="size-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                          />
                         </svg>
                       ),
                       title: "Component Library",
-                      description: "Production-ready components with Radix UI integration"
+                      description: "Production-ready components with Radix UI integration",
                     },
                     {
                       icon: (
-                        <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        <svg
+                          className="size-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                          />
                         </svg>
                       ),
                       title: "Type Safe",
-                      description: "Full TypeScript support with type definitions for all tokens"
+                      description: "Full TypeScript support with type definitions for all tokens",
                     },
                     {
                       icon: (
-                        <svg className="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        <svg
+                          className="size-5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={2}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M13 10V3L4 14h7v7l9-11h-7z"
+                          />
                         </svg>
                       ),
                       title: "Performance Optimized",
-                      description: "Tree-shakeable, minimal bundle size, and optimized for production"
-                    }
+                      description:
+                        "Tree-shakeable, minimal bundle size, and optimized for production",
+                    },
                   ].map((feature, index) => (
-                    <Card key={index} className="hover:border-foundation-accent-blue/30 transition-all duration-200">
+                    <Card
+                      key={index}
+                      className="hover:border-foundation-accent-blue/30 transition-all duration-200"
+                    >
                       <div className="flex items-start gap-4">
                         <div className="size-10 rounded-lg bg-foundation-accent-blue/10 text-foundation-accent-blue flex items-center justify-center shrink-0">
                           {feature.icon}
@@ -895,7 +1095,10 @@ import { SettingDropdownBlock, SettingToggleBlock } from '@/components';
             >
               <div className="space-y-5">
                 {typographyTokens.map((token) => (
-                  <Card key={token.label} className="hover:shadow-md transition-shadow duration-200">
+                  <Card
+                    key={token.label}
+                    className="hover:shadow-md transition-shadow duration-200"
+                  >
                     <div className="space-y-4">
                       <div className="flex items-start justify-between gap-4">
                         <div
@@ -966,7 +1169,12 @@ import { SettingDropdownBlock, SettingToggleBlock } from '@/components';
                     >
                       <div
                         className="bg-foundation-accent-blue rounded-md mb-3 shadow-sm"
-                        style={{ width: space.value, height: space.value, minWidth: 4, minHeight: 4 }}
+                        style={{
+                          width: space.value,
+                          height: space.value,
+                          minWidth: 4,
+                          minHeight: 4,
+                        }}
                       />
                       <div className="text-sm font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary tabular-nums">
                         {space.value}px
@@ -1042,7 +1250,13 @@ import { SettingDropdownBlock, SettingToggleBlock } from '@/components';
                     className="absolute right-4 top-1/2 -translate-y-1/2 p-1 rounded-md hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3 transition-colors"
                     aria-label="Clear search"
                   >
-                    <svg className="size-4 text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <svg
+                      className="size-4 text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
@@ -1139,7 +1353,7 @@ function MyComponent() {
                       "TemplateFooterBar",
                       "TemplateCard",
                       "TemplateFieldGroup",
-                      "TemplateFormField"
+                      "TemplateFormField",
                     ].map((comp) => (
                       <span
                         key={comp}
@@ -1165,7 +1379,7 @@ function MyComponent() {
                       "SettingRowBlock",
                       "SettingDropdown",
                       "SettingToggle",
-                      "SettingRow"
+                      "SettingRow",
                     ].map((comp) => (
                       <span
                         key={comp}
@@ -1198,7 +1412,7 @@ function MyComponent() {
                       "Tooltip",
                       "HoverCard",
                       "ContextMenu",
-                      "Slider"
+                      "Slider",
                     ].map((comp) => (
                       <span
                         key={comp}
@@ -1333,8 +1547,18 @@ function Button({ variant, size, children }) {
 
                 <Card>
                   <h3 className="text-base font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-4 flex items-center gap-2">
-                    <svg className="size-5 text-foundation-accent-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg
+                      className="size-5 text-foundation-accent-blue"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
                     </svg>
                     Best Practices
                   </h3>
@@ -1345,9 +1569,12 @@ function Button({ variant, size, children }) {
                       "Use semantic color tokens (e.g., text-primary) instead of specific colors",
                       "Follow the 8px spacing grid for consistent layouts",
                       "Use the cn() utility for conditional and complex class combinations",
-                      "Import icons from the centralized icon library for consistency"
+                      "Import icons from the centralized icon library for consistency",
                     ].map((practice, index) => (
-                      <li key={index} className="flex items-start gap-3 text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+                      <li
+                        key={index}
+                        className="flex items-start gap-3 text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary"
+                      >
                         <IconCheckmark className="size-5 text-foundation-accent-success shrink-0 mt-0.5" />
                         <span>{practice}</span>
                       </li>
@@ -1365,7 +1592,7 @@ function Button({ variant, size, children }) {
                       { label: "Radix UI Integration Guide", href: "#" },
                       { label: "Tailwind CSS v4 Documentation", href: "#" },
                       { label: "TypeScript Type Definitions", href: "#" },
-                      { label: "Component API Reference", href: "#" }
+                      { label: "Component API Reference", href: "#" },
                     ].map((link) => (
                       <a
                         key={link.label}

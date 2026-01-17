@@ -160,7 +160,8 @@ const sizeStyles: Record<TemplatePanelSize, { padding: string; radius: string }>
 };
 
 const badgeStyles: Record<BadgeVariant, string> = {
-  default: "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
+  default:
+    "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
   error: "bg-foundation-accent-red/10 text-foundation-accent-red",
   warning: "bg-foundation-accent-orange/10 text-foundation-accent-orange",
   success: "bg-foundation-accent-green/10 text-foundation-accent-green",
@@ -278,7 +279,9 @@ export function TemplatePanel({
 
   // Scroll position control
   useEffect(() => {
-    const scrollElement = scrollAreaRef.current?.querySelector("[data-radix-scroll-area-viewport]") as HTMLDivElement;
+    const scrollElement = scrollAreaRef.current?.querySelector(
+      "[data-radix-scroll-area-viewport]",
+    ) as HTMLDivElement;
     const bodyElement = bodyRef.current;
     const target = scrollElement || bodyElement;
 
@@ -484,7 +487,8 @@ export function TemplatePanel({
             className={cn(
               "shrink-0 border-b",
               dividerClasses,
-              stickyHeader && "sticky top-0 z-10 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
+              stickyHeader &&
+                "sticky top-0 z-10 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
               headerClassName,
             )}
           >
@@ -513,7 +517,8 @@ export function TemplatePanel({
               "shrink-0 border-t",
               dividerClasses,
               transitionClasses,
-              stickyFooter && "sticky bottom-0 z-10 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
+              stickyFooter &&
+                "sticky bottom-0 z-10 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
               footerClassName,
             )}
           >

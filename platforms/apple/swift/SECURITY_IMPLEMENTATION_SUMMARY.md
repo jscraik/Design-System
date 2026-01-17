@@ -3,6 +3,7 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Maintainers and security reviewers
 - Scope: Security posture, guidance, and required practices
 - Non-scope: Feature usage or product marketing
@@ -38,7 +39,6 @@ Last updated: 2026-01-09
 - [Success Criteria](#success-criteria)
 - [Support](#support)
 
-
 ## Overview
 
 A complete CI/CD security scanning setup has been implemented for the Swift codebase with strict enforcement, comprehensive coverage, and automated workflows.
@@ -48,6 +48,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
 ### 1. Configuration Files
 
 #### `.swiftlint.yml` (Root)
+
 - **Location**: `/Users/jamiecraik/dev/aStudio/.swiftlint.yml`
 - **Purpose**: Root SwiftLint configuration with security-focused rules
 - **Features**:
@@ -65,6 +66,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
   - Strict error enforcement
 
 #### `.swiftlint.yml` (Swift Packages)
+
 - **Location**: `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/.swiftlint.yml`
 - **Purpose**: Package-specific SwiftLint configuration
 - **Features**:
@@ -73,6 +75,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
   - Stricter enforcement for production code
 
 #### `.github/codeql-config.yml`
+
 - **Location**: `/Users/jamiecraik/dev/aStudio/.github/codeql-config.yml`
 - **Purpose**: CodeQL security scanning configuration
 - **Features**:
@@ -84,6 +87,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
 ### 2. GitHub Actions Workflow
 
 #### `.github/workflows/ci.yml`
+
 - **Location**: `/Users/jamiecraik/dev/aStudio/.github/workflows/ci.yml`
 - **Purpose**: CI pipeline that runs macOS build steps and Swift setup alongside web linting/compliance.
 - **Note**: There is no dedicated Swift security workflow file in this repo. If security scanning is required, add a separate workflow.
@@ -110,11 +114,13 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
 ### 3. Security Test Suite
 
 #### Location
+
 `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/SecurityTests/`
 
 #### Test Files
 
 **A. `SecurityTestCase.swift`**
+
 - Base class for all security tests
 - Helper assertion methods:
   - `assertStringSanitized()` - XSS and SQL injection checks
@@ -128,6 +134,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
   - `generateEdgeCases()` - Boundary conditions
 
 **B. `InputValidationTests.swift`**
+
 - 9 test methods covering:
   - Text input sanitization
   - Email validation
@@ -141,6 +148,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
   - SQL injection prevention
 
 **C. `AuthenticationTests.swift`**
+
 - 10 test methods covering:
   - Password hashing (salted, non-reversible)
   - Password complexity requirements
@@ -154,6 +162,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
   - Sensitive data storage
 
 **D. `AuthorizationTests.swift`**
+
 - 9 test methods covering:
   - Role-based access control
   - Resource ownership
@@ -169,6 +178,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
 ### 4. Documentation
 
 #### `SECURITY_TESTING_GUIDE.md`
+
 - **Location**: `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/SECURITY_TESTING_GUIDE.md`
 - **Size**: ~25 KB
 - **Sections**: 8
@@ -183,6 +193,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
   - Common vulnerabilities and prevention
 
 #### `SECURITY_SETUP_README.md`
+
 - **Location**: `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/SECURITY_SETUP_README.md`
 - **Size**: ~15 KB
 - **Sections**: 10
@@ -198,6 +209,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
 ### 5. Enforcement Artifacts
 
 #### `enforcement.plan.json`
+
 - **Location**: `/Users/jamiecraik/dev/aStudio/enforcement.plan.json`
 - **Purpose**: Comprehensive enforcement plan
 - **Contents**:
@@ -208,6 +220,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
   - Maintenance schedule
 
 #### `enforcement.results.json`
+
 - **Location**: `/Users/jamiecraik/dev/aStudio/enforcement.results.json`
 - **Purpose**: Implementation verification results
 - **Contents**:
@@ -220,6 +233,7 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
 ### 6. Automation Scripts
 
 #### `run-security-tests.sh`
+
 - **Location**: `/Users/jamiecraik/dev/aStudio/platforms/apple/swift/scripts/run-security-tests.sh`
 - **Purpose**: Local security testing script
 - **Features**:
@@ -234,16 +248,19 @@ A complete CI/CD security scanning setup has been implemented for the Swift code
 ## Security Coverage
 
 ### Static Analysis
+
 - **SwiftLint**: 26 rules (15 standard + 11 custom)
 - **CodeQL**: 9 security check categories
 - **Coverage**: All Swift packages and apps
 
 ### Dependency Scanning
+
 - **Tool**: Swift Package Audit
 - **Frequency**: Daily
 - **Scope**: All Package.resolved files
 
 ### Dynamic Testing
+
 - **Test Files**: 4
 - **Test Methods**: 28
 - **Coverage Threshold**: 80%
@@ -314,18 +331,21 @@ swiftlint lint --strict
 ## Next Steps
 
 ### Immediate
+
 1. Review SwiftLint rules and customize as needed
 2. Review CodeQL configuration
 3. Test workflows in a pull request
 4. Verify all tests pass
 
 ### Short Term
+
 1. Add security tests for specific use cases
 2. Set up GitHub branch protection
 3. Configure repository security policies
 4. Train team on security testing
 
 ### Long Term
+
 1. Monitor scan results regularly
 2. Update dependencies to fix vulnerabilities
 3. Maintain ≥80% coverage threshold
@@ -362,6 +382,7 @@ swiftlint lint --strict
 ## Support
 
 For questions or issues:
+
 1. Check `SECURITY_TESTING_GUIDE.md` for detailed documentation
 2. Review workflow logs in GitHub Actions
 3. Consult tool documentation (SwiftLint, CodeQL)

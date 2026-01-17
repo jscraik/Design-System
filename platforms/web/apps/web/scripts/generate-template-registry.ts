@@ -56,9 +56,7 @@ type TemplateRegistryFile = {
 };
 
 const normalizeTags = (tags: string[]) => {
-  const normalized = tags
-    .map((tag) => tag.trim().toLowerCase())
-    .filter(Boolean);
+  const normalized = tags.map((tag) => tag.trim().toLowerCase()).filter(Boolean);
   return Array.from(new Set(normalized)).sort();
 };
 
@@ -145,9 +143,7 @@ const loadTemplates = (): TemplateMetadata[] => {
       const requiredKeys = ["id", "title", "description", "category", "status", "entry"];
       const missing = requiredKeys.filter((key) => !metadata[key]?.trim());
       if (missing.length > 0) {
-        console.error(
-          `Missing template metadata (${missing.join(", ")}) in ${relativeSource}.`,
-        );
+        console.error(`Missing template metadata (${missing.join(", ")}) in ${relativeSource}.`);
         process.exit(1);
       }
 
@@ -177,9 +173,7 @@ const loadTemplates = (): TemplateMetadata[] => {
 };
 
 const sortTemplates = (templates: TemplateMetadata[]) => {
-  const categoryIndex = new Map(
-    CATEGORY_ORDER.map((category, index) => [category, index]),
-  );
+  const categoryIndex = new Map(CATEGORY_ORDER.map((category, index) => [category, index]));
 
   return [...templates].sort((a, b) => {
     const aIndex = categoryIndex.get(a.category) ?? CATEGORY_ORDER.length;
@@ -318,10 +312,10 @@ const writeTypeScriptModule = (templates: TemplateMetadata[]) => {
     "/* eslint-disable */",
     "// THIS FILE IS AUTO-GENERATED. DO NOT EDIT BY HAND.",
     ...importLines,
-    "import type { ComponentType } from \"react\";",
+    'import type { ComponentType } from "react";',
     "",
     `export type TemplateCategory = ${categoryUnion};`,
-    "export type TemplateStatus = \"alpha\" | \"beta\" | \"stable\";",
+    'export type TemplateStatus = "alpha" | "beta" | "stable";',
     "",
     "export type TemplateRegistryEntry = {",
     "  id: string;",

@@ -28,7 +28,11 @@ function KitchenSinkWidget() {
           <p className="text-sm text-gray-600">Comprehensive Apps SDK API demo widget</p>
 
           <div className="space-y-2">
-            <AppsSDKButton onClick={() => host.callTool?.("demo_tool", { action: "test" })} variant="solid" color="primary">
+            <AppsSDKButton
+              onClick={() => host.callTool?.("demo_tool", { action: "test" })}
+              variant="solid"
+              color="primary"
+            >
               Call Tool
             </AppsSDKButton>
 

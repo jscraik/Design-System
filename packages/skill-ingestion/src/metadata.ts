@@ -39,7 +39,10 @@ export function stripFrontmatter(markdown: string): string {
 
   for (let i = 1; i < lines.length; i += 1) {
     if (lines[i]?.trim() === FRONTMATTER_DELIMITER) {
-      return lines.slice(i + 1).join("\n").trim();
+      return lines
+        .slice(i + 1)
+        .join("\n")
+        .trim();
     }
   }
   return markdown.trim();
@@ -54,13 +57,14 @@ export function formatTitle(input: string): string {
     .join(" ");
 }
 
-function parseFrontmatterLine(
-  line: string,
-): { key: FrontmatterKey; value: string } | null {
+function parseFrontmatterLine(line: string): { key: FrontmatterKey; value: string } | null {
   const [rawKey, ...rest] = line.split(":");
   if (!rawKey || rest.length === 0) return null;
   const key = rawKey.trim() as FrontmatterKey;
-  const value = rest.join(":").trim().replace(/^['"]|['"]$/g, "");
+  const value = rest
+    .join(":")
+    .trim()
+    .replace(/^['"]|['"]$/g, "");
   if (key !== "name" && key !== "description") return null;
   return { key, value };
 }

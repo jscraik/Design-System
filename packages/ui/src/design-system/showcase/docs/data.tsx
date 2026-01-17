@@ -21,7 +21,13 @@ export type DocTab = "overview" | "colors" | "typography" | "spacing" | "icons" 
 // Tab icon components (exported separately for TypeScript compatibility)
 export function OverviewIcon({ className = "size-4" }: { className?: string }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -33,7 +39,13 @@ export function OverviewIcon({ className = "size-4" }: { className?: string }) {
 
 export function ColorsIcon({ className = "size-4" }: { className?: string }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -45,7 +57,13 @@ export function ColorsIcon({ className = "size-4" }: { className?: string }) {
 
 export function TypographyIcon({ className = "size-4" }: { className?: string }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
     </svg>
   );
@@ -53,7 +71,13 @@ export function TypographyIcon({ className = "size-4" }: { className?: string })
 
 export function SpacingIcon({ className = "size-4" }: { className?: string }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -65,7 +89,13 @@ export function SpacingIcon({ className = "size-4" }: { className?: string }) {
 
 export function IconsIcon({ className = "size-4" }: { className?: string }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -77,7 +107,13 @@ export function IconsIcon({ className = "size-4" }: { className?: string }) {
 
 export function UsageIcon({ className = "size-4" }: { className?: string }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -116,9 +152,7 @@ export const iconCategories = [
   },
   {
     title: "Account",
-    items: [
-      { name: "User", Icon: IconUser },
-    ],
+    items: [{ name: "User", Icon: IconUser }],
   },
 ] as const;
 
@@ -127,14 +161,26 @@ export const colorSwatches = [
   { label: "bg-dark-2", cssVar: "--foundation-bg-dark-2", group: "Background (Dark)" },
   { label: "bg-dark-3", cssVar: "--foundation-bg-dark-3", group: "Background (Dark)" },
   { label: "text-dark-primary", cssVar: "--foundation-text-dark-primary", group: "Text (Dark)" },
-  { label: "text-dark-secondary", cssVar: "--foundation-text-dark-secondary", group: "Text (Dark)" },
+  {
+    label: "text-dark-secondary",
+    cssVar: "--foundation-text-dark-secondary",
+    group: "Text (Dark)",
+  },
   { label: "text-dark-tertiary", cssVar: "--foundation-text-dark-tertiary", group: "Text (Dark)" },
   { label: "bg-light-1", cssVar: "--foundation-bg-light-1", group: "Background (Light)" },
   { label: "bg-light-2", cssVar: "--foundation-bg-light-2", group: "Background (Light)" },
   { label: "bg-light-3", cssVar: "--foundation-bg-light-3", group: "Background (Light)" },
   { label: "text-light-primary", cssVar: "--foundation-text-light-primary", group: "Text (Light)" },
-  { label: "text-light-secondary", cssVar: "--foundation-text-light-secondary", group: "Text (Light)" },
-  { label: "text-light-tertiary", cssVar: "--foundation-text-light-tertiary", group: "Text (Light)" },
+  {
+    label: "text-light-secondary",
+    cssVar: "--foundation-text-light-secondary",
+    group: "Text (Light)",
+  },
+  {
+    label: "text-light-tertiary",
+    cssVar: "--foundation-text-light-tertiary",
+    group: "Text (Light)",
+  },
   { label: "accent-green", cssVar: "--foundation-accent-green", group: "Accents" },
   { label: "accent-blue", cssVar: "--foundation-accent-blue", group: "Accents" },
   { label: "accent-red", cssVar: "--foundation-accent-red", group: "Accents" },

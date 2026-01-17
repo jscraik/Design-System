@@ -23,7 +23,8 @@ export function TemplateFieldGroupDemo() {
             Field Group Component
           </h1>
           <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-            A flexible container for grouping related form fields with variants, collapsible sections, grid layouts, and compound components.
+            A flexible container for grouping related form fields with variants, collapsible
+            sections, grid layouts, and compound components.
           </p>
         </div>
 
@@ -114,7 +115,10 @@ export function TemplateFieldGroupDemo() {
                   <TemplateFieldGroupAction icon={<HelpCircle className="w-3.5 h-3.5" />}>
                     Help
                   </TemplateFieldGroupAction>
-                  <TemplateFieldGroupAction variant="primary" icon={<Plus className="w-3.5 h-3.5" />}>
+                  <TemplateFieldGroupAction
+                    variant="primary"
+                    icon={<Plus className="w-3.5 h-3.5" />}
+                  >
                     Add Email
                   </TemplateFieldGroupAction>
                 </>
@@ -265,11 +269,7 @@ export function TemplateFieldGroupDemo() {
             label="API Configuration"
             description="Configure your API settings"
             icon={<Settings className="w-4 h-4" />}
-            actions={
-              <TemplateFieldGroupAction variant="ghost">
-                Reset
-              </TemplateFieldGroupAction>
-            }
+            actions={<TemplateFieldGroupAction variant="ghost">Reset</TemplateFieldGroupAction>}
           >
             <TemplateFormField label="API Key" htmlFor="apiKey">
               <input
@@ -398,7 +398,11 @@ export function TemplateFieldGroupDemo() {
               error="Please review and fix the errors in this section"
               required
             >
-              <TemplateFormField label="Card Number" htmlFor="cardNumber" error="Invalid card number">
+              <TemplateFormField
+                label="Card Number"
+                htmlFor="cardNumber"
+                error="Invalid card number"
+              >
                 <input
                   id="cardNumber"
                   type="text"
@@ -440,11 +444,7 @@ export function TemplateFieldGroupDemo() {
           </div>
           <div className="space-y-4">
             <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-6">
-              <TemplateFieldGroup
-                size="sm"
-                label="Small Group"
-                description="Compact spacing"
-              >
+              <TemplateFieldGroup size="sm" label="Small Group" description="Compact spacing">
                 <input
                   type="text"
                   placeholder="Small input"

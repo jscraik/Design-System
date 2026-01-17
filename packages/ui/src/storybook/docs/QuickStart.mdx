@@ -56,12 +56,7 @@ export function Example() {
 ### Pattern 2: Chat Interface
 
 ```tsx
-import {
-  ChatHeader,
-  ChatSidebar,
-  ChatMessages,
-  ChatInput,
-} from "@astudio/ui";
+import { ChatHeader, ChatSidebar, ChatMessages, ChatInput } from "@astudio/ui";
 
 export function ChatApp() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -69,15 +64,12 @@ export function ChatApp() {
   const [selectedModel, setSelectedModel] = useState<ModelConfig>({
     name: "ChatGPT 5.2 Pro",
     shortName: "5.2 Pro",
-    description: "Our most capable model"
+    description: "Our most capable model",
   });
 
   return (
     <>
-      <ChatSidebar
-        isOpen={isSidebarOpen}
-        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
-      />
+      <ChatSidebar isOpen={isSidebarOpen} onToggle={() => setIsSidebarOpen(!isSidebarOpen)} />
       <ChatHeader
         isSidebarOpen={isSidebarOpen}
         onSidebarToggle={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -88,12 +80,15 @@ export function ChatApp() {
       <ChatInput
         selectedModel={selectedModel}
         onSend={(content) => {
-          setMessages([...messages, {
-            id: Date.now().toString(),
-            role: "user",
-            content,
-            timestamp: new Date()
-          }]);
+          setMessages([
+            ...messages,
+            {
+              id: Date.now().toString(),
+              role: "user",
+              content,
+              timestamp: new Date(),
+            },
+          ]);
         }}
       />
     </>
@@ -112,24 +107,12 @@ export function SettingsPanel() {
 
   return (
     <div className="space-y-4">
-      <SettingRow
-        label="Dark Mode"
-        description="Use dark theme across the app"
-      >
-        <SettingToggle
-          checked={darkMode}
-          onCheckedChange={setDarkMode}
-        />
+      <SettingRow label="Dark Mode" description="Use dark theme across the app">
+        <SettingToggle checked={darkMode} onCheckedChange={setDarkMode} />
       </SettingRow>
 
-      <SettingRow
-        label="Notifications"
-        description="Enable push notifications"
-      >
-        <SettingToggle
-          checked={notifications}
-          onCheckedChange={setNotifications}
-        />
+      <SettingRow label="Notifications" description="Enable push notifications">
+        <SettingToggle checked={notifications} onCheckedChange={setNotifications} />
       </SettingRow>
     </div>
   );
@@ -222,15 +205,9 @@ export function TabbedExample() {
         <TabsTrigger value="tab2">Tab 2</TabsTrigger>
         <TabsTrigger value="tab3">Tab 3</TabsTrigger>
       </TabsList>
-      <TabsContent value="tab1">
-        Content for tab 1
-      </TabsContent>
-      <TabsContent value="tab2">
-        Content for tab 2
-      </TabsContent>
-      <TabsContent value="tab3">
-        Content for tab 3
-      </TabsContent>
+      <TabsContent value="tab1">Content for tab 1</TabsContent>
+      <TabsContent value="tab2">Content for tab 2</TabsContent>
+      <TabsContent value="tab3">Content for tab 3</TabsContent>
     </Tabs>
   );
 }
@@ -277,8 +254,17 @@ export function App() {
 
   return (
     <DashboardTemplate
-      header={<ChatHeader isSidebarOpen={isSidebarOpen} onSidebarToggle={() => setIsSidebarOpen(!isSidebarOpen)} />}
-      sidebar={isSidebarOpen ? <ChatSidebar isOpen={isSidebarOpen} onToggle={() => setIsSidebarOpen(!isSidebarOpen)} /> : null}
+      header={
+        <ChatHeader
+          isSidebarOpen={isSidebarOpen}
+          onSidebarToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+      }
+      sidebar={
+        isSidebarOpen ? (
+          <ChatSidebar isOpen={isSidebarOpen} onToggle={() => setIsSidebarOpen(!isSidebarOpen)} />
+        ) : null
+      }
       body={<ChatMessages />}
       footer={<ChatInput />}
     />
@@ -290,24 +276,24 @@ export function App() {
 
 ### By Task
 
-| Task | Use This Component |
-|------|-------------------|
-| **Display data** | Card, Table, Chart |
-| **Get input** | Input, Textarea, Select, Combobox |
-| **Navigate** | Tabs, Breadcrumb, Sidebar |
-| **Show status** | Badge, Alert, Toast, Progress |
-| **Actions** | Button, Toggle, Checkbox, Radio |
-| **Layouts** | Separator, ScrollArea, Resizable |
-| **Overlays** | Dialog, Modal, Tooltip, Popover |
+| Task             | Use This Component                |
+| ---------------- | --------------------------------- |
+| **Display data** | Card, Table, Chart                |
+| **Get input**    | Input, Textarea, Select, Combobox |
+| **Navigate**     | Tabs, Breadcrumb, Sidebar         |
+| **Show status**  | Badge, Alert, Toast, Progress     |
+| **Actions**      | Button, Toggle, Checkbox, Radio   |
+| **Layouts**      | Separator, ScrollArea, Resizable  |
+| **Overlays**     | Dialog, Modal, Tooltip, Popover   |
 
 ### By Complexity
 
-| Level | Components |
-|-------|------------|
-| **Basic** | Button, Input, Badge, Text |
-| **Composite** | Form, SettingRow, ChatInput |
-| **Layout** | DashboardTemplate, ChatTemplate |
-| **Feature** | ChatShell, SettingsModal |
+| Level         | Components                      |
+| ------------- | ------------------------------- |
+| **Basic**     | Button, Input, Badge, Text      |
+| **Composite** | Form, SettingRow, ChatInput     |
+| **Layout**    | DashboardTemplate, ChatTemplate |
+| **Feature**   | ChatShell, SettingsModal        |
 
 ## Styling
 
@@ -320,7 +306,7 @@ import { FColor, FSpacing, FType } from "@astudio/ui/foundation";
 const styles = {
   color: "var(--foundation-text-primary)",
   padding: "var(--spacing-s16)",
-  fontSize: "var(--type-body-medium)"
+  fontSize: "var(--type-body-medium)",
 };
 ```
 
@@ -349,7 +335,7 @@ import { IconSettings, IconUser, IconChat } from "@astudio/ui";
   <IconSettings className="w-5 h-5" />
   <IconUser className="w-6 h-6" />
   <IconChat className="w-4 h-4" />
-</div>
+</div>;
 ```
 
 ## Next Steps

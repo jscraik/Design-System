@@ -500,7 +500,8 @@ export function TemplatePanel({
             className={cn(
               "shrink-0 border-b",
               dividerClasses,
-              stickyHeader && "sticky top-0 z-10 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
+              stickyHeader &&
+                "sticky top-0 z-10 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
               headerClassName,
             )}
           >
@@ -529,7 +530,8 @@ export function TemplatePanel({
               "shrink-0 border-t",
               dividerClasses,
               transitionClasses,
-              stickyFooter && "sticky bottom-0 z-10 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
+              stickyFooter &&
+                "sticky bottom-0 z-10 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
               footerClassName,
             )}
           >

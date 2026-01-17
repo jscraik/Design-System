@@ -30,7 +30,9 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
   );
   const [selectedModel, setSelectedModel] = useState(resolvedModels[0] ?? fallbackModel);
   const [instructions, setInstructions] = useState("");
-  const [promptEnhancement, setPromptEnhancement] = useState<"rewrite" | "augment" | "preserve">("rewrite");
+  const [promptEnhancement, setPromptEnhancement] = useState<"rewrite" | "augment" | "preserve">(
+    "rewrite",
+  );
   const [isWebSearchActive, setIsWebSearchActive] = useState(false);
   const [systemMessage, setSystemMessage] = useState("");
   const [taskDescription, setTaskDescription] = useState("");

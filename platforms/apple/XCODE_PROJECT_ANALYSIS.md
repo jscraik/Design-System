@@ -1,7 +1,9 @@
 # Xcode Project Analysis Report
+
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -56,7 +58,6 @@ Last updated: 2026-01-04
 - [Conclusion](#conclusion)
   - [Overall Health Score: **7.5/10**](#overall-health-score-7510)
 
-
 **Generated**: 2026-01-02
 **Repository**: astudio
 **Analysis Scope**: All Swift packages and macOS apps
@@ -97,12 +98,14 @@ This repository contains a well-structured modular Swift package architecture fo
 **Status**: ✅ Healthy
 
 **Configuration**:
+
 - Swift Tools Version: 5.9
 - Products: 1 library (AStudioFoundation)
 - Targets: 2 (AStudioFoundation, AStudioFoundationTests)
 - Resources: Asset Catalog (Colors.xcassets)
 
 **Strengths**:
+
 - Clean dependency-free foundation
 - Proper resource bundling with Asset Catalog
 - Comprehensive platform support
@@ -122,12 +125,14 @@ This repository contains a well-structured modular Swift package architecture fo
 **Status**: ✅ Healthy
 
 **Configuration**:
+
 - Swift Tools Version: 5.9
 - Products: 1 library (AStudioThemes)
 - Targets: 2 (AStudioThemes, AStudioThemesTests)
 - Local package reference: `../AStudioFoundation`
 
 **Strengths**:
+
 - Proper dependency chain
 - Theme separation from components
 - ChatGPT-specific styling isolated
@@ -146,6 +151,7 @@ This repository contains a well-structured modular Swift package architecture fo
 **Status**: ✅ Healthy
 
 **Configuration**:
+
 - Swift Tools Version: 5.9
 - Products: 1 library (AStudioComponents)
 - Targets: 2 (AStudioComponents, AStudioComponentsTests)
@@ -153,12 +159,14 @@ This repository contains a well-structured modular Swift package architecture fo
   - SwiftCheck 0.13.1 (property-based testing)
 
 **Resolved Dependencies**:
+
 - swift-custom-dump 1.3.3
 - swift-snapshot-testing 1.18.7
 - swift-syntax 602.0.0
 - xctest-dynamic-overlay 1.8.0
 
 **Strengths**:
+
 - Comprehensive test support
 - Property-based testing integration
 - Snapshot testing setup
@@ -177,12 +185,14 @@ This repository contains a well-structured modular Swift package architecture fo
 **Status**: ✅ Healthy
 
 **Configuration**:
+
 - Swift Tools Version: 5.9
 - Products: 1 library (AStudioShellChatGPT)
 - Targets: 2 (AStudioShellChatGPT, AStudioShellChatGPTTests)
 - Provides: Application shell layouts
 
 **Strengths**:
+
 - Optional application shell (not forcing adoption)
 - Proper dependency composition
 - Visual effects and containers
@@ -201,11 +211,13 @@ This repository contains a well-structured modular Swift package architecture fo
 **Status**: ✅ Healthy
 
 **Configuration**:
+
 - Swift Tools Version: 5.9
 - Products: 1 library (AStudioMCP)
 - Targets: 2 (AStudioMCP, AStudioMCPTests)
 
 **Observations**:
+
 - Missing visionOS support (unlike other packages)
 - Focused on MCP integration
 
@@ -223,12 +235,14 @@ This repository contains a well-structured modular Swift package architecture fo
 **Status**: ✅ Healthy
 
 **Configuration**:
+
 - Swift Tools Version: 5.9
 - Products: 1 library (AStudioSystemIntegration)
 - Targets: 2 (AStudioSystemIntegration, AStudioSystemIntegrationTests)
 - Provides: System-level integration (filesystem, notifications, sharing, spotlight)
 
 **Strengths**:
+
 - System utilities properly isolated
 - No dependencies (foundation-level system integration)
 
@@ -246,6 +260,7 @@ This repository contains a well-structured modular Swift package architecture fo
 **Status**: ✅ Healthy
 
 **Configuration**:
+
 - Swift Tools Version: 5.9
 - Products: 1 library (AStudioTestSupport)
 - Targets: 1 (AStudioTestSupport - no tests)
@@ -253,6 +268,7 @@ This repository contains a well-structured modular Swift package architecture fo
   - swift-snapshot-testing 1.18.7
 
 **Observations**:
+
 - Test support package without its own tests
 - Properly configured for snapshot testing
 
@@ -270,11 +286,13 @@ This repository contains a well-structured modular Swift package architecture fo
 **Status**: ⚠️ Legacy / Reference Only
 
 **Configuration**:
+
 - Swift Tools Version: 5.9
 - Products: 1 library (AStudioSwift)
 - Targets: 2 (AStudioSwift, AStudioSwiftTests)
 
 **Observations**:
+
 - This is the monolithic package that was refactored
 - Preserved for reference
 - Not used in active development
@@ -295,6 +313,7 @@ This repository contains a well-structured modular Swift package architecture fo
 **Status**: ⚠️ Configuration Issues
 
 **Dependencies**:
+
 - AStudioFoundation
 - AStudioComponents
 - AStudioThemes
@@ -303,6 +322,7 @@ This repository contains a well-structured modular Swift package architecture fo
 - AStudioSystemIntegration
 
 **Configuration**:
+
 - Swift Tools Version: 5.9
 - Products: 1 executable (AStudioApp)
 - Targets: 2 (AStudioApp, AStudioAppTests)
@@ -339,12 +359,14 @@ This repository contains a well-structured modular Swift package architecture fo
 **Status**: ⚠️ Platform Inconsistency
 
 **Dependencies**:
+
 - AStudioFoundation
 - AStudioComponents
 - AStudioThemes
 - AStudioShellChatGPT
 
 **Configuration**:
+
 - Swift Tools Version: 5.9
 - Products: 1 executable (ComponentGallery)
 - Targets: 2 (ComponentGallery, ComponentGalleryTests)
@@ -357,6 +379,7 @@ This repository contains a well-structured modular Swift package architecture fo
    - Recommendation: Align to iOS 15.0+ for consistency
 
 **Strengths**:
+
 - Well-structured component gallery
 - Comprehensive component demonstrations
 
@@ -375,6 +398,7 @@ This repository contains a well-structured modular Swift package architecture fo
 
 **Development Team**: W46TZZ5CWC
 **Bundle Identifiers**:
+
 - Main app: `jscraik.AStudioPlayground`
 - Tests: `jscraik.AStudioPlaygroundTests`
 - UI Tests: `jscraik.AStudioPlaygroundUITests`
@@ -382,11 +406,13 @@ This repository contains a well-structured modular Swift package architecture fo
 **Issues Identified**:
 
 1. **CRITICAL: Duplicate Package Dependency**:
+
    ```
    AStudioComponents appears TWICE in the Xcode project:
    - 746E70382F01E6E1003EEE5D /* AStudioComponents */
    - 746E70452F01EC46003EEE5D /* AStudioComponents */
    ```
+
    **Impact**: Causes linker warnings and potential build issues
    **Fix Required**: Remove duplicate package reference
 
@@ -448,6 +474,7 @@ products: [
 
 **Local Dependencies**: All properly configured with relative paths
 **External Dependencies**:
+
 - SwiftCheck 0.13.1
 - swift-custom-dump 1.3.3
 - swift-snapshot-testing 1.18.7
@@ -491,6 +518,7 @@ products: [
 **Development Team**: W46TZZ5CWC
 **Code Signing Style**: Automatic
 **Capabilities**:
+
 - App Sandbox: ✅ Enabled
 - Hardened Runtime: ✅ Enabled
 - App Groups: ✅ Enabled
@@ -501,6 +529,7 @@ products: [
 ### AStudioApp
 
 **Entitlements**: `/Bundle/AStudioApp.entitlements`
+
 - App Sandbox: ✅
 - Network Client: ✅
 - User-Selected Files: ✅
@@ -512,16 +541,16 @@ products: [
 
 ## Platform Support Matrix
 
-| Package | iOS | macOS | visionOS | Notes |
-|---------|-----|-------|----------|-------|
-| AStudioFoundation | 15.0+ | 13.0+ | 1.0+ | ✅ Complete |
-| AStudioThemes | 15.0+ | 13.0+ | 1.0+ | ✅ Complete |
-| AStudioComponents | 15.0+ | 13.0+ | 1.0+ | ✅ Complete |
-| AStudioShellChatGPT | 15.0+ | 13.0+ | 1.0+ | ✅ Complete |
-| AStudioTestSupport | 15.0+ | 13.0+ | 1.0+ | ✅ Complete |
-| AStudioMCP | 15.0+ | 13.0+ | ❌ | ⚠️ No visionOS |
-| AStudioSystemIntegration | 15.0+ | 13.0+ | ❌ | ⚠️ No visionOS |
-| ui-swift | ❌ | 13.0+ | ❌ | Legacy macOS only |
+| Package                  | iOS   | macOS | visionOS | Notes             |
+| ------------------------ | ----- | ----- | -------- | ----------------- |
+| AStudioFoundation        | 15.0+ | 13.0+ | 1.0+     | ✅ Complete       |
+| AStudioThemes            | 15.0+ | 13.0+ | 1.0+     | ✅ Complete       |
+| AStudioComponents        | 15.0+ | 13.0+ | 1.0+     | ✅ Complete       |
+| AStudioShellChatGPT      | 15.0+ | 13.0+ | 1.0+     | ✅ Complete       |
+| AStudioTestSupport       | 15.0+ | 13.0+ | 1.0+     | ✅ Complete       |
+| AStudioMCP               | 15.0+ | 13.0+ | ❌       | ⚠️ No visionOS    |
+| AStudioSystemIntegration | 15.0+ | 13.0+ | ❌       | ⚠️ No visionOS    |
+| ui-swift                 | ❌    | 13.0+ | ❌       | Legacy macOS only |
 
 ---
 
@@ -553,6 +582,7 @@ products: [
 ### Immediate Actions (Required)
 
 1. **Fix AStudioPlayground Package.swift**:
+
    ```swift
    products: [
        .executable(
@@ -722,6 +752,7 @@ The aStudio Swift package architecture is **well-designed** with clear separatio
 ### Overall Health Score: **7.5/10**
 
 **Strengths**:
+
 - ✅ Clean modular architecture
 - ✅ Proper dependency management
 - ✅ Comprehensive platform support
@@ -730,6 +761,7 @@ The aStudio Swift package architecture is **well-designed** with clear separatio
 - ✅ Semantic token system
 
 **Areas for Improvement**:
+
 - 🔧 Fix duplicate package dependency in AStudioPlayground
 - 🔧 Fix missing product declaration in AStudioPlayground
 - 🔧 Update Swift version consistency

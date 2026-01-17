@@ -81,7 +81,10 @@ async function readText(path: string): Promise<string> {
   return readFile(path, "utf8");
 }
 
-async function collectExportPaths(entryFile: string, visited = new Set<string>()): Promise<string[]> {
+async function collectExportPaths(
+  entryFile: string,
+  visited = new Set<string>(),
+): Promise<string[]> {
   const resolved = resolve(entryFile);
   if (visited.has(resolved)) return [];
   visited.add(resolved);
@@ -330,7 +333,9 @@ async function main(): Promise<void> {
     const usedInWidgets = widgetUsage.get(name)?.length;
     const hasMissingMetadata =
       fallback &&
-      (!fallback.why_missing_upstream || !fallback.migration_trigger || !fallback.a11y_contract_ref);
+      (!fallback.why_missing_upstream ||
+        !fallback.migration_trigger ||
+        !fallback.a11y_contract_ref);
 
     rows.push({
       name,

@@ -44,7 +44,7 @@ export function ChatSidebarHistory({
           >
             {item}
           </button>
-      );
+        );
       })}
     </div>
   );

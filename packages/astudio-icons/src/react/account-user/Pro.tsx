@@ -1,5 +1,19 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const Pro = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" preserveAspectRatio="none" viewBox="0 0 24 24" ref={ref} {...props}><g fill="currentColor"><path d="M9 7c.213 0 .392.16.415.371.148 1.3.885 2.095 2.204 2.213a.418.418 0 0 1-.001.833c-1.3.112-2.089.9-2.201 2.2a.418.418 0 0 1-.833.002c-.118-1.32-.913-2.056-2.213-2.203a.418.418 0 0 1 0-.831c1.318-.152 2.062-.896 2.214-2.215A.42.42 0 0 1 9 7" /><path d="M8.673 3A4 4 0 0 0 5.96 4.06L1.85 7.854a3 3 0 0 0-.086 4.326L10.585 21a2 2 0 0 0 2.83 0l8.82-8.821a3 3 0 0 0-.086-4.326L18.04 4.061A4 4 0 0 0 15.327 3zM7.316 5.53A2 2 0 0 1 8.673 5h6.654a2 2 0 0 1 1.357.53l4.108 3.793a1 1 0 0 1 .029 1.442L12 19.585l-8.821-8.82a1 1 0 0 1 .029-1.442z" /></g></svg>);
+const Pro = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    preserveAspectRatio="none"
+    viewBox="0 0 24 24"
+    ref={ref}
+    {...props}
+  >
+    <g fill="currentColor">
+      <path d="M9 7c.213 0 .392.16.415.371.148 1.3.885 2.095 2.204 2.213a.418.418 0 0 1-.001.833c-1.3.112-2.089.9-2.201 2.2a.418.418 0 0 1-.833.002c-.118-1.32-.913-2.056-2.213-2.203a.418.418 0 0 1 0-.831c1.318-.152 2.062-.896 2.214-2.215A.42.42 0 0 1 9 7" />
+      <path d="M8.673 3A4 4 0 0 0 5.96 4.06L1.85 7.854a3 3 0 0 0-.086 4.326L10.585 21a2 2 0 0 0 2.83 0l8.82-8.821a3 3 0 0 0-.086-4.326L18.04 4.061A4 4 0 0 0 15.327 3zM7.316 5.53A2 2 0 0 1 8.673 5h6.654a2 2 0 0 1 1.357.53l4.108 3.793a1 1 0 0 1 .029 1.442L12 19.585l-8.821-8.82a1 1 0 0 1 .029-1.442z" />
+    </g>
+  </svg>
+));
 Pro.displayName = "Pro";
 export default Pro;

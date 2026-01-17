@@ -9,22 +9,25 @@ const alertVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-foundation-bg-light-1 text-foundation-text-light-primary border-foundation-text-light-primary/10",
+        default:
+          "bg-foundation-bg-light-1 text-foundation-text-light-primary border-foundation-text-light-primary/10",
         info: "bg-foundation-accent-blue/10 text-foundation-accent-blue border-foundation-accent-blue/20",
-        success: "bg-foundation-accent-green/10 text-foundation-accent-green border-foundation-accent-green/20",
-        warning: "bg-foundation-accent-orange/10 text-foundation-accent-orange border-foundation-accent-orange/20",
-        error: "bg-foundation-accent-red/10 text-foundation-accent-red border-foundation-accent-red/20",
+        success:
+          "bg-foundation-accent-green/10 text-foundation-accent-green border-foundation-accent-green/20",
+        warning:
+          "bg-foundation-accent-orange/10 text-foundation-accent-orange border-foundation-accent-orange/20",
+        error:
+          "bg-foundation-accent-red/10 text-foundation-accent-red border-foundation-accent-red/20",
       },
     },
     defaultVariants: {
       variant: "default",
     },
-  }
+  },
 );
 
 export interface AlertProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof alertVariants> {
+  extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof alertVariants> {
   onClose?: () => void;
 }
 
@@ -39,16 +42,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
     }[variant || "default"];
 
     return (
-      <div
-        ref={ref}
-        role="alert"
-        className={cn(alertVariants({ variant }), className)}
-        {...props}
-      >
+      <div ref={ref} role="alert" className={cn(alertVariants({ variant }), className)} {...props}>
         <Icon className="size-5" />
-        <div className="flex-1">
-          {children}
-        </div>
+        <div className="flex-1">{children}</div>
         {onClose && (
           <button
             onClick={onClose}
@@ -60,33 +56,24 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         )}
       </div>
     );
-  }
+  },
 );
 Alert.displayName = "Alert";
 
-const AlertTitle = React.forwardRef<
-  HTMLParagraphElement,
-  React.HTMLAttributes<HTMLHeadingElement>
->(({ className, children, ...props }, ref) => (
-  <h5
-    ref={ref}
-    className={cn("mb-1 font-semibold tracking-tight", className)}
-    {...props}
-  >
-    {children}
-  </h5>
-));
+const AlertTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
+  ({ className, children, ...props }, ref) => (
+    <h5 ref={ref} className={cn("mb-1 font-semibold tracking-tight", className)} {...props}>
+      {children}
+    </h5>
+  ),
+);
 AlertTitle.displayName = "AlertTitle";
 
 const AlertDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("text-sm opacity-90", className)}
-    {...props}
-  />
+  <div ref={ref} className={cn("text-sm opacity-90", className)} {...props} />
 ));
 AlertDescription.displayName = "AlertDescription";
 

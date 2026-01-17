@@ -109,7 +109,12 @@ export function AppsSdkFullscreenExampleAlt() {
       {selectedAlbum && <FullscreenViewer album={selectedAlbum} />}
       <div className="flex gap-2">
         {albumsList.slice(0, 3).map((album) => (
-          <Button key={album.id} size="sm" variant="secondary" onClick={() => setSelectedAlbum(album)}>
+          <Button
+            key={album.id}
+            size="sm"
+            variant="secondary"
+            onClick={() => setSelectedAlbum(album)}
+          >
             {album.title}
           </Button>
         ))}

@@ -27,8 +27,7 @@ const indicatorVariants = cva("inline-flex items-center justify-center", {
 });
 
 export interface IndicatorProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof indicatorVariants> {
+  extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof indicatorVariants> {
   label?: string;
 }
 
@@ -42,27 +41,17 @@ const Indicator = React.forwardRef<HTMLDivElement, IndicatorProps>(
         className={cn("flex flex-col items-center gap-2", className)}
         {...props}
       >
-        <Loader2
-          className={cn(
-            indicatorVariants({ variant, size }),
-            "animate-spin"
-          )}
-        />
-        {label && (
-          <span className="text-sm text-foundation-text-dark-tertiary">
-            {label}
-          </span>
-        )}
+        <Loader2 className={cn(indicatorVariants({ variant, size }), "animate-spin")} />
+        {label && <span className="text-sm text-foundation-text-dark-tertiary">{label}</span>}
       </div>
     );
-  }
+  },
 );
 Indicator.displayName = "Indicator";
 
 // Inline variant for use within text
 export interface InlineIndicatorProps
-  extends React.HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof indicatorVariants> {}
+  extends React.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof indicatorVariants> {}
 
 const InlineIndicator = React.forwardRef<HTMLSpanElement, InlineIndicatorProps>(
   ({ className, variant, size = "sm", ...props }, ref) => {
@@ -74,15 +63,10 @@ const InlineIndicator = React.forwardRef<HTMLSpanElement, InlineIndicatorProps>(
         className={cn("inline-flex", className)}
         {...props}
       >
-        <Loader2
-          className={cn(
-            indicatorVariants({ variant, size }),
-            "animate-spin"
-          )}
-        />
+        <Loader2 className={cn(indicatorVariants({ variant, size }), "animate-spin")} />
       </span>
     );
-  }
+  },
 );
 InlineIndicator.displayName = "InlineIndicator";
 

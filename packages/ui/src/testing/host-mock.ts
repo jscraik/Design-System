@@ -88,8 +88,7 @@ export function createMockHost(config: MockHostConfig = {}): Host {
 
     // Thread management
     getThreads: async () => threads,
-    getThread: async (threadId) =>
-      threads.find((t) => t.id === threadId) || null,
+    getThread: async (threadId) => threads.find((t) => t.id === threadId) || null,
     createThread: async () => ({
       id: `thread-${Date.now()}`,
       title: "New Thread",

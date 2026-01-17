@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
@@ -28,7 +29,6 @@ Last updated: 2026-01-04
 - [Related Files](#related-files)
 - [Design Validation](#design-validation)
 - [Future Considerations](#future-considerations)
-
 
 ## Issue
 

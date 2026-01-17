@@ -3,6 +3,7 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Contributors and release stakeholders
 - Scope: Release history and notable changes
 - Non-scope: Usage instructions or implementation details
@@ -17,15 +18,18 @@ Last updated: 2026-01-09
 ## [0.0.1] - 2026-01-09
 
 ### Added
+
 - Tabbed interface to FoundationsShowcase for better navigation between design system sections (Colors, Typography, Spacing, Icons)
 - 16 demo templates for template blocks, settings, chat components, and modals
 - ChatGPTIconCatalog template for browsing all 350+ icons with search and categories
 
 ### Changed
+
 - FoundationsShowcase now uses modular tabbed layout (83 lines) instead of monolithic page (235 lines)
 - Improved UX with conditional rendering - only active tab content is loaded
 
 ### Fixed
+
 - Duplicate icon exports (IconMoon, IconChevronUp) removed from additional-icons.tsx
 - Missing chatGPTIconSizes import added to icons/index.ts
 - All demo template import paths corrected for proper component resolution

@@ -5,7 +5,7 @@
   "compatibility_date": "2025-12-28",
   "compatibility_flags": ["nodejs_compat"],
   "observability": {
-    "enabled": true
+    "enabled": true,
   },
   "assets": {
     "binding": "ASSETS",
@@ -19,39 +19,39 @@
     "bindings": [
       {
         "name": "WIDGET_SERVER",
-        "class_name": "ChatUIWidgetServerDO"
-      }
-    ]
+        "class_name": "ChatUIWidgetServerDO",
+      },
+    ],
   },
   "migrations": [
     {
       "tag": "v1",
-      "new_classes": ["ChatUIWidgetServerDO"]
-    }
+      "new_classes": ["ChatUIWidgetServerDO"],
+    },
   ],
   "env": {
     "development": {
       "vars": {
-        "ENVIRONMENT": "development"
+        "ENVIRONMENT": "development",
       },
       "assets": {
         "binding": "ASSETS",
-        "directory": "./dist/client"
+        "directory": "./dist/client",
       },
       "durable_objects": {
         "bindings": [
           {
             "name": "WIDGET_SERVER",
-            "class_name": "ChatUIWidgetServerDO"
-          }
-        ]
+            "class_name": "ChatUIWidgetServerDO",
+          },
+        ],
       },
       "migrations": [
         {
           "tag": "v1",
-          "new_classes": ["ChatUIWidgetServerDO"]
-        }
-      ]
-    }
+          "new_classes": ["ChatUIWidgetServerDO"],
+        },
+      ],
+    },
   },
 }

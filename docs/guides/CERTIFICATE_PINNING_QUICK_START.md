@@ -3,6 +3,7 @@
 Last updated: 2026-01-04
 
 ## Doc requirements
+
 - Audience: Developers (beginner to intermediate)
 - Scope: Task-focused instructions for this topic
 - Non-scope: Comprehensive architecture reference
@@ -21,7 +22,6 @@ Last updated: 2026-01-04
 - [Testing](#testing)
 - [Troubleshooting](#troubleshooting)
 - [Need More?](#need-more)
-
 
 ## 30-Second Setup
 
@@ -64,6 +64,7 @@ let client = MCPClient(
 ## Common Configurations
 
 ### Production (Recommended)
+
 ```swift
 MCPClient(
     baseURL: productionURL,
@@ -74,6 +75,7 @@ MCPClient(
 ```
 
 ### Staging
+
 ```swift
 MCPClient(
     baseURL: stagingURL,
@@ -96,12 +98,14 @@ openssl x509 -in cert.pem -pubkey -noout | openssl pkey -pubin -outform der | op
 ## Troubleshooting
 
 **Issue**: "Certificate pinning failed"
+
 ```bash
 # Verify you have the right hash
 openssl s_client -connect your-api.com:443 -showcerts 2>/dev/null | openssl x509 -fingerprint -sha256 -noout
 ```
 
 **Issue**: Need to rotate certificates
+
 ```swift
 // Add both old and new during transition
 pinnedHashes: [oldHash, newHash]
@@ -112,10 +116,11 @@ pinnedHashes: [oldHash, newHash]
 See [TLS_CERTIFICATE_PINNING.md](./TLS_CERTIFICATE_PINNING.md) for complete documentation.
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)
 
 ## Verify
-- TBD: Add concrete verification steps and expected results.
 
+- TBD: Add concrete verification steps and expected results.

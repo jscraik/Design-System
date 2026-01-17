@@ -3,12 +3,12 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Developers (beginner to intermediate)
 - Scope: Task-focused instructions for this topic
 - Non-scope: Comprehensive architecture reference
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 Add a new web app page with routing, navigation, and a starter layout.
 
@@ -121,6 +121,7 @@ Place a link or button where users can reach the page:
 - Follow `.kiro/steering/page-development.md` for advanced patterns and layout variations.
 
 ## Risks and assumptions
+
 - Assumptions: TBD (confirm)
 - Failure modes and blast radius: TBD (confirm)
 - Rollback or recovery guidance: TBD (confirm)

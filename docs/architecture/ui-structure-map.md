@@ -3,12 +3,12 @@
 Last updated: 2026-01-09
 
 ## Doc requirements
+
 - Audience: Engineers and technical leads
 - Scope: System architecture and component relationships
 - Non-scope: Step-by-step operational procedures
 - Owner: TBD (confirm)
 - Review cadence: TBD (confirm)
-
 
 This map shows the current layout for the UI library after the per-component foldering pass. Use it to find where to add new components, stories, and tests.
 
@@ -104,6 +104,7 @@ packages/ui/src/
 ```
 
 ## Conventions
+
 - Per-component folders: a component and its stories/tests live together.
 - Component folders and files use `PascalCase` (for example `Button/Button.tsx`); category folders stay `kebab-case` (for example `data-display`).
 - Component folders export from `index.ts`, so imports can stay at the folder root.
@@ -111,6 +112,7 @@ packages/ui/src/
 - Templates follow the same per-component convention, including `*.figmaConnect.tsx` files.
 
 ## Adding new components
+
 1. Create a folder named after the component inside the correct category.
 2. Add `<Component>.tsx` plus optional `.stories.tsx` / `.test.tsx` in the same folder.
 3. Export from the category `index.ts` and any higher-level barrel you want.

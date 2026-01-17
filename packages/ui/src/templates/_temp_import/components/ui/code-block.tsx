@@ -22,7 +22,7 @@ const CodeBlock = React.forwardRef<HTMLPreElement, CodeBlockProps>(
       className,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [copied, setCopied] = React.useState(false);
 
@@ -67,10 +67,7 @@ const CodeBlock = React.forwardRef<HTMLPreElement, CodeBlockProps>(
         {/* Code content */}
         <pre
           ref={ref}
-          className={cn(
-            "overflow-x-auto p-4 text-sm font-mono leading-relaxed",
-            className
-          )}
+          className={cn("overflow-x-auto p-4 text-sm font-mono leading-relaxed", className)}
           {...props}
         >
           <code className="text-foundation-text-dark-primary">
@@ -94,7 +91,7 @@ const CodeBlock = React.forwardRef<HTMLPreElement, CodeBlockProps>(
         </pre>
       </div>
     );
-  }
+  },
 );
 CodeBlock.displayName = "CodeBlock";
 
