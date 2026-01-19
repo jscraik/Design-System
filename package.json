@@ -30,6 +30,7 @@
     "ds:alignment:stamp": "node scripts/stamp-upstream-alignment.mjs",
     "ds:astudio:sync-versions": "pnpm exec tsx scripts/sync-astudio-versions.ts",
     "sync:versions": "node scripts/version-sync.mjs",
+    "sync:versions:check": "node scripts/version-sync.mjs --check",
     "sync:swift-versions": "node scripts/sync-swift-versions.mjs",
     "validate:tokens": "pnpm -C packages/tokens validate && node scripts/validate-token-consistency.mjs",
     "tokens:validate": "pnpm validate:tokens",
@@ -45,6 +46,8 @@
     "storybook:build": "pnpm -C platforms/web/apps/storybook build",
     "storybook:test": "pnpm -C platforms/web/apps/storybook test",
     "test": "pnpm -C packages/ui test",
+    "test:agent-browser": "node scripts/agent-browser/run.mjs",
+    "test:agent-browser:ci": "node scripts/agent-browser/run-ci.mjs",
     "test:e2e:web": "pnpm -C packages/ui build && pnpm exec playwright test -c platforms/web/apps/web/playwright.config.ts",
     "test:a11y:widgets": "pnpm -C packages/ui build && pnpm exec playwright test -c packages/widgets/playwright.a11y.config.ts",
     "test:a11y:widgets:ci": "pnpm exec playwright test -c packages/widgets/playwright.a11y.config.ts",
@@ -100,6 +103,7 @@
     "@playwright/test": "^1.57.0",
     "@vitest/browser-playwright": "^4.0.16",
     "@vitest/coverage-v8": "^4.0.16",
+    "agent-browser": "0.5.0",
     "ajv": "^8.17.1",
     "concurrently": "^9.2.1",
     "eslint": "^9.18.0",
@@ -138,6 +142,9 @@
     ],
     "onlyBuiltDependencies": [
       "workerd"
+    ],
+    "ignoredBuiltDependencies": [
+      "agent-browser"
     ]
   }
 }

@@ -230,12 +230,73 @@ class VersionSynchronizer {
     console.log("=".repeat(50));
     console.log(`Root version: ${this.rootVersion}`);
   }
+
+  /**
+   * REPOMARK:SCOPE: 2 - Add checkVersions method for read-only version verification
+   * Check for version mismatches without writing files
+   * Returns true if mismatches found
+   */
+  checkVersions() {
+    console.log("🔍 Checking version synchronization...");
+    console.log(`Target version: ${this.rootVersion}`);
+    console.log("=".repeat(50));
+
+    let mismatches = [];
+
+    // Check npm packages
+    for (const packagePath of CONFIG.packages.npm) {
+      const packageJsonPath = join(packagePath, "package.json");
+      if (existsSync(packageJsonPath)) {
+        const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf8"));
+        if (packageJson.version !== this.rootVersion) {
+          console.log(`  ❌ ${packagePath}: ${packageJson.version} (expected ${this.rootVersion})`);
+          mismatches.push({ packagePath, current: packageJson.version, expected: this.rootVersion });
+        } else {
+          console.log(`  ✓  ${packagePath}: ${packageJson.version}`);
+        }
+      }
+    }
+
+    // Check Swift packages
+    for (const packagePath of CONFIG.packages.swift) {
+      const packageSwiftPath = join(packagePath, "Package.swift");
+      if (existsSync(packageSwiftPath)) {
+        const content = readFileSync(packageSwiftPath, "utf8");
+        const versionMatch = content.match(/\/\/ Version: (.+)/);
+        const currentVersion = versionMatch ? versionMatch[1] : null;
+
+        if (currentVersion !== this.rootVersion) {
+          console.log(`  ❌ ${packagePath}: ${currentVersion || "no version"} (expected ${this.rootVersion})`);
+          mismatches.push({ packagePath, current: currentVersion || "none", expected: this.rootVersion });
+        } else {
+          console.log(`  ✓  ${packagePath}: ${currentVersion}`);
+        }
+      }
+    }
+
+    console.log("=".repeat(50));
+    if (mismatches.length > 0) {
+      console.log(`❌ Found ${mismatches.length} version mismatch${mismatches.length > 1 ? "es" : ""}`);
+      return true;
+    } else {
+      console.log(`✅ All packages synchronized to v${this.rootVersion}`);
+      return false;
+    }
+  }
 }
 
 // CLI interface
 async function main() {
   const args = process.argv.slice(2);
   const synchronizer = new VersionSynchronizer();
+
+  if (args.includes("--check") || args.includes("-c")) {
+    const hasMismatch = synchronizer.checkVersions();
+    if (hasMismatch) {
+      process.exit(1);
+    }
+    return;
+  }
 
   if (args.includes("--list") || args.includes("-l")) {
     synchronizer.listVersions();
@@ -249,12 +310,14 @@ Version Synchronization Script
 Usage: node scripts/version-sync.mjs [options]
 
 Options:
+  --check, -c    Check for version mismatches without writing (exits non-zero if found)
   --list, -l    List current package versions
   --help, -h    Show this help message
 
 Examples:
   node scripts/version-sync.mjs          # Synchronize all packages
   node scripts/version-sync.mjs --list   # List current versions
+  node scripts/version-sync.mjs --check  # Check for mismatches (read-only)
     `);
     return;
   }

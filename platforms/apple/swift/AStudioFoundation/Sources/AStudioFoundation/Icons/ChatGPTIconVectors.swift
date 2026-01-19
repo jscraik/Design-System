@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Paint styles used by vector icon shapes.
-public enum ChatGPTIconPaint {
+public enum ChatGPTIconPaint: Sendable {
     case current
     case white
     case none
@@ -19,7 +19,7 @@ public enum ChatGPTIconPaint {
 }
 
 /// Stroke attributes for vector icon paths.
-public struct ChatGPTIconStroke {
+public struct ChatGPTIconStroke: Sendable {
     let width: CGFloat
     let paint: ChatGPTIconPaint
     let lineCap: CGLineCap?
@@ -27,14 +27,14 @@ public struct ChatGPTIconStroke {
 }
 
 /// Text alignment anchor for vector icon text shapes.
-public enum ChatGPTIconTextAnchor {
+public enum ChatGPTIconTextAnchor: Sendable {
     case start
     case middle
     case end
 }
 
 /// Vector shapes used to compose icons.
-public enum ChatGPTIconShape {
+public enum ChatGPTIconShape: Sendable {
     case path(d: String, fill: ChatGPTIconPaint, stroke: ChatGPTIconStroke?)
     case rect(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, rx: CGFloat?, ry: CGFloat?, fill: ChatGPTIconPaint, stroke: ChatGPTIconStroke?)
     case circle(cx: CGFloat, cy: CGFloat, r: CGFloat, fill: ChatGPTIconPaint, stroke: ChatGPTIconStroke?)
@@ -42,7 +42,7 @@ public enum ChatGPTIconShape {
 }
 
 /// Vector icon definition with viewBox and shapes.
-public struct ChatGPTIconVector {
+public struct ChatGPTIconVector: Sendable {
     let viewBox: CGSize
     let shapes: [ChatGPTIconShape]
 }

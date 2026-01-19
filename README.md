@@ -69,7 +69,7 @@ A cross-platform UI workbench for building ChatGPT-style interfaces across multi
 ## Prerequisites
 
 - Node.js 18+
-- pnpm 10.27.0 (see `packageManager` in `package.json`)
+- pnpm 10.28.0 (see `packageManager` in `package.json`)
 - **For macOS app development** (optional): macOS 13+ with Xcode 15+
 
 > Note: Web and widget development works on all platforms. macOS/Xcode is only required for Swift package and native macOS app work.
@@ -123,7 +123,10 @@ pnpm mcp:dev                # MCP server in development mode
 pnpm mcp:start              # MCP server in production mode
 
 # Testing
-pnpm test                   # UI unit tests (Vitest)
+pnpm test                   # UI unit tests (Vitest) - Tier 1
+pnpm test:agent-browser     # Built-preview smoke tests - Tier 2
+pnpm test:agent-browser:ci  # CI smoke tests (build + serve + test) - Tier 2
+pnpm storybook:test         # Component tests
 pnpm test:e2e:web           # End-to-end tests (Playwright)
 pnpm test:a11y:widgets      # Accessibility tests for widgets
 pnpm test:visual:web        # Visual regression tests (web)
@@ -303,7 +306,7 @@ See: <https://developers.openai.com/apps-sdk/>
 
 ## Foundation tokens (audit layer)
 
-`@astudio/tokens` encodes the PDF “Figma foundations” as:
+`@astudio/tokens` encodes the PDF "Figma foundations" as:
 
 - `packages/tokens/src/foundations.css` (CSS variables)
 - `packages/tokens/src/*.ts` (TS exports for Storybook foundations pages)

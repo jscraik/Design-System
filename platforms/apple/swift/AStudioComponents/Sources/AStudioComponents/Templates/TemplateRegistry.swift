@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Identifies the high-level template variants available in the template gallery.
-public enum TemplateID: String, CaseIterable, Identifiable {
+public enum TemplateID: String, CaseIterable, Identifiable, Sendable {
     case chatHeader
     case chatSidebar
     case chatMessages
@@ -82,7 +82,7 @@ public struct TemplateDescriptor: Identifiable {
 /// Provides the curated list of templates used by the template browser.
 public enum TemplateRegistry {
     /// All available template descriptors in display order.
-    public static let templates: [TemplateDescriptor] = [
+    @MainActor public static let templates: [TemplateDescriptor] = [
         TemplateDescriptor(
             id: .chatHeader,
             title: TemplateID.chatHeader.title,
@@ -130,6 +130,7 @@ public enum TemplateRegistry {
     /// Returns the descriptor for a matching template identifier.
     /// - Parameter id: The template identifier to look up.
     /// - Returns: The matching descriptor, or `nil` if the ID is not registered.
+    @MainActor
     public static func template(for id: TemplateID) -> TemplateDescriptor? {
         templates.first { $0.id == id }
     }

@@ -57,6 +57,7 @@ describe("Build Pipeline Completeness Property", () => {
           platforms: fc.subarray(TEST_CONFIG.platforms, { minLength: 1 }),
           incremental: fc.boolean(),
           skipTests: fc.boolean(),
+          syncVersions: fc.boolean(),
           version: fc.string({ minLength: 5, maxLength: 10 }).map((s) => `1.${s.length}.0`),
         }),
         async (buildConfig) => {
@@ -76,13 +77,16 @@ describe("Build Pipeline Completeness Property", () => {
               platforms: buildConfig.platforms,
               incremental: buildConfig.incremental,
               skipTests: buildConfig.skipTests,
+              syncVersions: buildConfig.syncVersions,
             });
 
             // Validate build completeness
             validateBuildCompleteness(result, buildConfig);
 
             // Validate version synchronization
-            validateVersionSynchronization(buildConfig.version);
+            if (buildConfig.syncVersions) {
+              validateVersionSynchronization(buildConfig.version);
+            }
 
             // Validate platform artifacts
             validatePlatformArtifacts(buildConfig.platforms);
@@ -438,8 +442,12 @@ function validateBuildCompleteness(result, buildConfig) {
     expect(platformResults.some((r) => r.step === "macos-build")).toBe(true);
   }
 
-  // Version sync should have occurred
-  expect(result.results.some((r) => r.step === "version-sync")).toBe(true);
+  const hasVersionSync = result.results.some((r) => r.step === "version-sync");
+  if (buildConfig.syncVersions) {
+    expect(hasVersionSync).toBe(true);
+  } else {
+    expect(hasVersionSync).toBe(false);
+  }
 
   // Token generation should have occurred
   expect(result.results.some((r) => r.step === "token-generation")).toBe(true);

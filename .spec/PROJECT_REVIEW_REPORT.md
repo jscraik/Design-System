@@ -14,6 +14,17 @@ project: aStudio
 
 ---
 
+## Acceptance Criteria
+
+- [ ] Project review covers executive summary, vision, current state, evidence of usefulness, gap analysis, viability assessment, and realignment plan.
+- [ ] Product gaps are documented: persona clarity, user stories, edge cases, success metrics, and component creation guide.
+- [ ] Engineering gaps are identified: API/schema definitions, security requirements, error handling, and performance targets.
+- [ ] Operational readiness gaps are listed: dashboards/alerts, rollback plan, runbook, and SLOs.
+- [ ] Updated vision statement, scope, and success metrics are defined with measurable targets.
+- [ ] Recommended plan includes top priorities for next 14 days and follow-up deliverables.
+
+---
+
 ## 1) Executive Summary
 
 - **Recommendation:** Continue (focus on validation + operational readiness)

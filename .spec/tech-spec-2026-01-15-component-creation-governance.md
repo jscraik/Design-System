@@ -14,6 +14,18 @@ schema_version: 1
 
 ---
 
+## Acceptance Criteria
+
+- [ ] CI policy is updated with new validation checks and documentation targets.
+- [ ] Parity checklist and component guide are created and referenced from README/docs index.
+- [ ] MCP tool contracts are validated via existing `pnpm test:mcp-contract` command.
+- [ ] Component creation guide covers React + Swift parity, tokens, tests, and release steps.
+- [ ] Parity governance lifecycle states are defined and documented.
+- [ ] MCP tool contract source-of-truth is defined under `platforms/mcp/contracts/` with allowlist auth policy.
+- [ ] Tech spec quality gate checklist is completed with all items checked.
+
+---
+
 ## 0) Summary
 
 - **One-liner:** Implement a unified component creation guide, parity governance, and MCP contract policy with gold-standard quality gates.

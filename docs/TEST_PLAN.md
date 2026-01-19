@@ -4,7 +4,16 @@ Last updated: 2026-01-09
 
 ## Executive Summary
 
-This test plan addresses the critical testing gaps identified in the codebase audit. The current estimated test coverage is <20%, which is insufficient for a production UI library. This plan outlines a comprehensive testing strategy to achieve 80%+ coverage.
+This test plan addresses the critical testing gaps identified in the codebase audit. The estimated test coverage from the original audit was <20%, which is insufficient for a production UI library; this historical figure needs re-measurement with current tooling. This plan outlines a comprehensive testing strategy to achieve 80%+ coverage.
+
+## Current Test Status
+
+**Last updated**: 2026-01-18
+
+For the latest test execution results and current status, see [docs/work/work_outstanding.md](../work/work_outstanding.md). That document tracks:
+- 477 tests passing in `packages/ui`
+- 37/107 Storybook browser test files failing due to Vitest browser + Radix dynamic import limitation (stories render correctly in Storybook UI)
+- 65/107 Storybook browser test files passing (206 tests)
 
 ## Current State
 
@@ -15,6 +24,10 @@ This test plan addresses the critical testing gaps identified in the codebase au
 - **Playwright** is configured for E2E testing
 - **Visual regression tests** exist for web
 - **Accessibility tests** exist for widgets
+
+### Coverage Status
+
+**Note**: The <20% coverage estimate in the Executive Summary is historical and based on the original audit. Current actual coverage needs to be re-measured with up-to-date tooling. See [docs/work/work_outstanding.md](../work/work_outstanding.md) for current test execution metrics.
 
 ### Critical Gaps
 
@@ -228,28 +241,108 @@ Create shared test utilities in `packages/ui/src/testing/`:
 - **Performance**: Test suite runs in <5 minutes
 - **Reliability**: <1% flaky test rate
 
+## Test Tier Overview
+
+### Tier 1: Unit Tests (Vitest)
+Fast, isolated component tests.
+- **Command**: `pnpm test`
+- **Runtime**: <30s
+- **Coverage**: Component logic, hooks, utilities
+
+### Tier 2: Smoke Tests (agent-browser)
+Built-preview smoke tests for critical routes.
+- **Commands**:
+  - Local: `pnpm test:agent-browser` (requires dev server running)
+  - CI: `pnpm test:agent-browser:ci` (builds, serves, tests, cleans up)
+- **Runtime**: ~60s
+- **Coverage**: Route loading, console errors, basic interactivity
+- **Routes tested**:
+  - `/` - ChatShellPage
+  - `/harness` - HarnessPage with modal controls
+  - `/templates` - TemplateBrowserPage
+  - `/templates/template-shell` - Template detail page
+- **Artifacts**:
+  - Screenshots: `test-results/agent-browser/screenshots/`
+  - Snapshots: `test-results/agent-browser/snapshots/`
+- **Purpose**: Fast validation that built artifacts actually work (catches rendering errors, missing assets, JavaScript exceptions)
+
+### Tier 3: Component Tests (Storybook)
+Interactive component documentation and tests.
+- **Command**: `pnpm storybook:test`
+- **Runtime**: ~2min
+- **Coverage**: Component variants, interactions, a11y
+
+### Tier 4: E2E Tests (Playwright)
+Full user workflow automation.
+- **Command**: `pnpm test:e2e:web`
+- **Runtime**: ~5min
+- **Coverage**: Critical user journeys, cross-browser
+
+### Tier 5: Visual Regression (Playwright)
+Screenshot comparison testing.
+- **Command**: `pnpm test:visual:web`
+- **Runtime**: ~3min
+- **Coverage**: Visual consistency across themes
+
+### Tier 6: Accessibility Tests (Playwright + axe-core)
+Automated accessibility audits.
+- **Command**: `pnpm test:a11y:widgets`
+- **Runtime**: ~2min
+- **Coverage**: WCAG 2.2 AA compliance for widgets
+
+### Tier 7: Swift Tests (Swift Test)
+Swift package and macOS app testing.
+- **Command**: `pnpm test:swift`
+- **Runtime**: ~5min
+- **Coverage**: Swift packages, macOS app functionality
+
+### Tier 8: MCP Contract Tests (Node.js native runner)
+MCP tool contract validation.
+- **Command**: `pnpm test:mcp-contract`
+- **Runtime**: ~30s
+- **Coverage**: MCP server tool contracts
+
 ## Commands
 
+### Quick Test Workflow
 ```bash
-# Run all tests
+# Tier 1: Fast unit tests (run locally before commit)
 pnpm test
 
-# Run tests in watch mode
-pnpm test:watch
+# Tier 2: Smoke tests (run after build)
+pnpm build:web && pnpm test:agent-browser
 
-# Run tests with coverage
-pnpm test:coverage
-
-# Run E2E tests
-pnpm test:e2e:web
-
-# Run accessibility tests
-pnpm test:a11y:widgets
-
-# Run visual regression tests
-pnpm test:visual:web
+# Full CI suite (run before PR)
+pnpm test && pnpm test:agent-browser:ci && pnpm storybook:test && pnpm test:e2e:web
 ```
 
+### Individual Test Tiers
+```bash
+# Tier 1: Unit tests
+pnpm test
+
+# Tier 2: Smoke tests
+pnpm test:agent-browser                    # Local (dev server must be running)
+pnpm test:agent-browser:ci                 # CI (builds, serves, tests, cleans up)
+
+# Tier 3: Component tests
+pnpm storybook:test
+
+# Tier 4: E2E tests
+pnpm test:e2e:web
+
+# Tier 5: Visual regression
+pnpm test:visual:web
+
+# Tier 6: Accessibility
+pnpm test:a11y:widgets
+
+# Tier 7: Swift tests
+pnpm test:swift
+
+# Tier 8: MCP contract
+pnpm test:mcp-contract
+```
 ## Documentation
 
 After implementing this test plan, update:

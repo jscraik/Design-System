@@ -79,7 +79,7 @@ scripts/
 
 ### 1. Version Synchronization
 
-Ensures all packages use the same version from root `package.json`:
+Version synchronization is a separate, explicit step (it is not run automatically by the build pipeline):
 
 ```bash
 # Synchronize all packages (npm + Swift)
@@ -89,12 +89,21 @@ pnpm sync:versions
 pnpm sync:swift-versions
 ```
 
+**CI guard:**
+
+```bash
+# Check for version mismatches (read-only, exits non-zero if found)
+pnpm sync:versions:check
+```
+
 **What it does:**
 
 - Reads version from root `package.json`
 - Updates npm package.json files
 - Updates Swift Package.swift version comments
 - Falls back to Package.swift comments if agvtool unavailable
+
+**Note:** The build pipeline only runs version synchronization when invoked with `--sync-versions`.
 
 ### 2. Token Generation
 
@@ -231,6 +240,7 @@ node scripts/build-pipeline.mjs [options]
 
 Options:
   --platforms <list>    Comma-separated list (web,macos)
+  --sync-versions       Synchronize versions before building
   --no-incremental      Disable incremental builds
   --skip-tests          Skip running tests
   --help                Show help message

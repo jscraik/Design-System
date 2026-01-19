@@ -51,6 +51,7 @@ describe("Build Pipeline Completeness Property", () => {
           platforms: fc.subarray(TEST_CONFIG.platforms, { minLength: 1 }),
           incremental: fc.boolean(),
           skipTests: fc.boolean(),
+          syncVersions: fc.boolean(),
           version: fc
             .integer({ min: 1, max: 9 })
             .chain((major) =>
@@ -74,7 +75,9 @@ describe("Build Pipeline Completeness Property", () => {
             const mockResult = {
               success: true,
               results: [
-                { step: "version-sync", success: true, version: buildConfig.version },
+                ...(buildConfig.syncVersions
+                  ? [{ step: "version-sync", success: true, version: buildConfig.version }]
+                  : []),
                 { step: "token-generation", success: true },
                 ...(buildConfig.platforms.includes("web")
                   ? [{ step: "web-build", success: true }]
@@ -89,7 +92,9 @@ describe("Build Pipeline Completeness Property", () => {
             validateBuildCompleteness(mockResult, buildConfig);
 
             // Validate version synchronization
-            validateVersionSynchronization(buildConfig.version);
+            if (buildConfig.syncVersions) {
+              validateVersionSynchronization(buildConfig.version);
+            }
 
             // Validate platform artifacts
             validatePlatformArtifacts(buildConfig.platforms);
@@ -174,6 +179,7 @@ describe("Build Pipeline Completeness Property", () => {
         fc.record({
           platforms: fc.subarray(TEST_CONFIG.platforms, { minLength: 1 }),
           changeType: fc.constantFrom("source", "config", "none"),
+          syncVersions: fc.boolean(),
         }),
         async (config) => {
           const testId = Math.random().toString(36).substring(7);
@@ -187,7 +193,7 @@ describe("Build Pipeline Completeness Property", () => {
             const firstResult = {
               success: true,
               results: [
-                { step: "version-sync", success: true },
+                ...(config.syncVersions ? [{ step: "version-sync", success: true }] : []),
                 { step: "token-generation", success: true },
                 { step: "web-build", success: true },
               ],
@@ -200,7 +206,9 @@ describe("Build Pipeline Completeness Property", () => {
             const secondResult = {
               success: true,
               results: [
-                { step: "version-sync", success: true, skipped: config.changeType === "none" },
+                ...(config.syncVersions
+                  ? [{ step: "version-sync", success: true, skipped: config.changeType === "none" }]
+                  : []),
                 { step: "token-generation", success: true, skipped: config.changeType === "none" },
                 { step: "web-build", success: true, skipped: config.changeType === "none" },
               ],
@@ -420,8 +428,12 @@ function validateBuildCompleteness(result, buildConfig) {
     expect(platformResults.some((r) => r.step === "macos-build")).toBe(true);
   }
 
-  // Version sync should have occurred
-  expect(result.results.some((r) => r.step === "version-sync")).toBe(true);
+  const hasVersionSync = result.results.some((r) => r.step === "version-sync");
+  if (buildConfig.syncVersions) {
+    expect(hasVersionSync).toBe(true);
+  } else {
+    expect(hasVersionSync).toBe(false);
+  }
 
   // Token generation should have occurred
   expect(result.results.some((r) => r.step === "token-generation")).toBe(true);

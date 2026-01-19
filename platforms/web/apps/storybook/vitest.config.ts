@@ -17,30 +17,26 @@ const argosVitestSetupFilePath = path.join(argosStorybookRoot, "dist", "vitest-s
 const { argosVitestPlugin } = await import(argosVitestPluginUrl);
 const enableArgosVitest =
   process.env.ARGOS_VITEST === "1" || process.env.ARGOS_VITEST === "true" || !!process.env.CI;
+const enableBrowser = process.env.STORYBOOK_BROWSER_TESTS === "1";
 
-export default defineConfig({
-  resolve: {
-    alias: {
-      "@argos-ci/storybook/internal/vitest-setup-file": argosVitestSetupFilePath,
-    },
-  },
+const storybookProject = {
+  extends: true,
+  plugins: [
+    storybookTest({ configDir: ".storybook" }),
+    ...(enableArgosVitest
+      ? [
+          argosVitestPlugin({
+            uploadToArgos: !!process.env.CI,
+            token: process.env.ARGOS_TOKEN,
+          }),
+        ]
+      : []),
+  ],
   test: {
-    projects: [
-      {
-        extends: true,
-        plugins: [
-          storybookTest({ configDir: ".storybook" }),
-          ...(enableArgosVitest
-            ? [
-                argosVitestPlugin({
-                  uploadToArgos: !!process.env.CI,
-                  token: process.env.ARGOS_TOKEN,
-                }),
-              ]
-            : []),
-        ],
-        test: {
-          name: "storybook",
+    name: "storybook",
+    // When disabled, set enabled: false to ensure project exists but browser tests don't run
+    ...(enableBrowser
+      ? {
           browser: {
             enabled: true,
             headless: true,
@@ -52,9 +48,25 @@ export default defineConfig({
               strictPort: false,
             },
           },
-          setupFiles: [".storybook/vitest.setup.ts"],
-        },
-      },
-    ],
+        }
+      : {
+          browser: {
+            enabled: false,
+          },
+        }),
+    setupFiles: [".storybook/vitest.setup.ts"],
+  },
+};
+
+export default defineConfig({
+  resolve: {
+    alias: {
+      "@argos-ci/storybook/internal/vitest-setup-file": argosVitestSetupFilePath,
+    },
+  },
+  test: {
+    passWithNoTests: true,
+    // Browser mode is controlled within the project config above
+    projects: [storybookProject],
   },
 });

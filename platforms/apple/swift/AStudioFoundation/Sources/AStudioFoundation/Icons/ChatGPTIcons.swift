@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Identifiers for bundled ChatGPT icons.
-public enum ChatGPTIcon: String, CaseIterable, Identifiable, Hashable {
+public enum ChatGPTIcon: String, CaseIterable, Identifiable, Hashable, Sendable {
     case agent = "agent"
     case alertCircle = "alertCircle"
     case alertCircleFilled = "alertCircleFilled"
@@ -263,7 +263,7 @@ public enum ChatGPTIcon: String, CaseIterable, Identifiable, Hashable {
 }
 
 /// SVG path data for a ChatGPT icon.
-public struct ChatGPTIconData {
+public struct ChatGPTIconData: Sendable {
     /// SVG path strings for the icon.
     public let paths: [String]
     /// Whether the paths use even-odd fill rules.

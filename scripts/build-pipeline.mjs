@@ -60,7 +60,12 @@ class BuildPipeline {
    * Main build entry point
    */
   async build(options = {}) {
-    const { platforms = CONFIG.platforms, incremental = true, skipTests = false } = options;
+    const {
+      platforms = CONFIG.platforms,
+      incremental = true,
+      skipTests = false,
+      syncVersions = false,
+    } = options;
 
     console.log("🚀 Enhanced Monorepo Build Pipeline");
     console.log(`Platforms: ${platforms.join(", ")}`);
@@ -68,8 +73,10 @@ class BuildPipeline {
     console.log("=".repeat(60));
 
     try {
-      // Step 1: Version synchronization
-      await this.synchronizeVersions();
+      // Step 1: Version synchronization (optional)
+      if (syncVersions) {
+        await this.synchronizeVersions();
+      }
 
       // Step 2: Token generation (cross-platform)
       await this.generateTokens(incremental);
@@ -490,28 +497,14 @@ class BuildPipeline {
       return true;
     }
 
-    // Simple heuristic: check if any source file is newer than dist directory
-    const distStat = statSync(outputDir);
+    const newestSourceMtime = this.getNewestFileMtime(sourceGlobs);
+    const newestOutputMtime = this.getNewestFileMtimeInDir(outputDir);
 
-    for (const glob of sourceGlobs) {
-      try {
-        const files = this.expandGlob(glob);
-        for (const file of files) {
-          if (existsSync(file)) {
-            const fileStat = statSync(file);
-            if (fileStat.mtime > distStat.mtime) {
-              return true;
-            }
-          }
-        }
-      } catch (error) {
-        void error;
-        // If we can't check, assume rebuild needed
-        return true;
-      }
+    if (newestOutputMtime === null) {
+      return true;
     }
 
-    return false;
+    return newestSourceMtime > newestOutputMtime;
   }
 
   /**
@@ -529,38 +522,79 @@ class BuildPipeline {
       return true;
     }
 
-    // Check if any source file is newer than build directory
-    const buildStat = statSync(buildDir);
+    const newestSourceMtime = this.getNewestFileMtime(sourceFiles);
+    const newestOutputMtime = this.getNewestFileMtimeInDir(buildDir);
 
-    for (const glob of sourceFiles) {
+    if (newestOutputMtime === null) {
+      return true;
+    }
+
+    return newestSourceMtime > newestOutputMtime;
+  }
+
+  /**
+   * Get newest file mtime from glob patterns
+   */
+  getNewestFileMtime(globs) {
+    let newestMtime = 0;
+
+    for (const glob of globs) {
       try {
         const files = this.expandGlob(glob);
         for (const file of files) {
           if (existsSync(file)) {
             const fileStat = statSync(file);
-            if (fileStat.mtime > buildStat.mtime) {
-              return true;
-            }
+            newestMtime = Math.max(newestMtime, fileStat.mtime.getTime());
           }
         }
       } catch (error) {
         void error;
-        return true;
       }
     }
 
-    return false;
+    return newestMtime;
+  }
+
+  /**
+   * Get newest file mtime in a directory (recursively)
+   */
+  getNewestFileMtimeInDir(dir) {
+    let newestMtime = null;
+
+    try {
+      const files = this.getAllFiles(dir);
+      for (const file of files) {
+        const fileStat = statSync(file);
+        const mtime = fileStat.mtime.getTime();
+        if (newestMtime === null || mtime > newestMtime) {
+          newestMtime = mtime;
+        }
+      }
+    } catch (error) {
+      void error;
+    }
+
+    return newestMtime;
   }
 
   /**
    * Simple glob expansion (basic implementation)
    */
   expandGlob(pattern) {
-    // This is a simplified implementation
-    // In production, you'd use a proper glob library
-    if (pattern.includes("**/*")) {
-      const baseDir = pattern.split("**/*")[0];
-      if (existsSync(baseDir)) {
+    if (pattern.includes("**/")) {
+      const baseDir = pattern.split("**/")[0];
+      const extensionPattern = pattern.split("**/")[1];
+
+      if (extensionPattern === "*") {
+        if (existsSync(baseDir)) {
+          return this.getAllFiles(baseDir);
+        }
+      } else if (extensionPattern.startsWith("*.") && !extensionPattern.includes("*.")) {
+        const extension = extensionPattern.slice(1);
+        if (existsSync(baseDir)) {
+          return this.getAllFiles(baseDir).filter((file) => file.endsWith(extension));
+        }
+      } else if (existsSync(baseDir)) {
         return this.getAllFiles(baseDir);
       }
     }
@@ -736,6 +770,9 @@ async function main() {
       case "--no-incremental":
         options.incremental = false;
         break;
+      case "--sync-versions":
+        options.syncVersions = true;
+        break;
       case "--skip-tests":
         options.skipTests = true;
         break;
@@ -747,6 +784,7 @@ Usage: node scripts/build-pipeline.mjs [options]
 
 Options:
   --platforms <list>    Comma-separated list of platforms (web,macos)
+  --sync-versions       Synchronize versions before building
   --no-incremental      Disable incremental builds
   --skip-tests          Skip running tests
   --help                Show this help message
@@ -755,6 +793,7 @@ Examples:
   node scripts/build-pipeline.mjs
   node scripts/build-pipeline.mjs --platforms web
   node scripts/build-pipeline.mjs --no-incremental --skip-tests
+  node scripts/build-pipeline.mjs --sync-versions
         `);
         process.exit(0);
         break;

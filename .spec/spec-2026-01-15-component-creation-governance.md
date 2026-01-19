@@ -14,6 +14,14 @@ schema_version: 1
 
 ---
 
+## Acceptance Criteria
+
+- [ ] A single component creation guide exists that covers React + Swift parity, tokens, tests, and release steps in one place.
+- [ ] Parity checklist is linked from the component guide and updated for new components.
+- [ ] A required list of UX states (loading, empty, error) is documented for new components with validation steps.
+- [ ] Accessibility checks are documented and required for new components with a manual audit cadence.
+- [ ] Definition of done includes parity, UX states, test evidence, and release verification steps.
+
 ## 0) PRD Summary
 
 - **One-liner:** A single, repeatable component-creation workflow and parity governance process for Jamie to build consistent React + SwiftUI components quickly.

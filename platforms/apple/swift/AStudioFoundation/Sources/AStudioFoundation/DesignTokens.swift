@@ -373,7 +373,7 @@ public enum DesignTokens {
 
     // MARK: - Shadows
 
-    public struct ShadowToken {
+    public struct ShadowToken: Sendable {
         public let color: Color
         public let x: CGFloat
         public let y: CGFloat
