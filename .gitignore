@@ -91,3 +91,8 @@ _temp/
 # OS
 .DS_Store
 Thumbs.db
+
+# AI artifacts - transient only
+/ai/tmp/
+/ai/cache/
+/ai/raw/
