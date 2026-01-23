@@ -1,6 +1,6 @@
 import type { ComponentSchema } from "@astudio/json-render";
 import { JsonRender } from "@astudio/json-render";
-import { Button } from "@astudio/ui";
+import { AppsSDKButton } from "@astudio/ui";
 import { useState } from "react";
 
 import { mountWidget, WidgetBase, WidgetErrorBoundary } from "../../../shared/widget-base";
@@ -183,24 +183,24 @@ function JsonRenderDemo() {
       <WidgetBase title="JSON Render Demo">
         <div className="space-y-4">
           <div className="flex gap-2">
-            <Button
+            <AppsSDKButton
               variant={selectedExample === "dashboard" ? "default" : "outline"}
               onClick={() => setSelectedExample("dashboard")}
             >
               Dashboard
-            </Button>
-            <Button
+            </AppsSDKButton>
+            <AppsSDKButton
               variant={selectedExample === "form" ? "default" : "outline"}
               onClick={() => setSelectedExample("form")}
             >
               Form
-            </Button>
-            <Button
+            </AppsSDKButton>
+            <AppsSDKButton
               variant={selectedExample === "alert" ? "default" : "outline"}
               onClick={() => setSelectedExample("alert")}
             >
               Alerts
-            </Button>
+            </AppsSDKButton>
           </div>
           <JsonRender schema={exampleSchemas[selectedExample]} />
         </div>

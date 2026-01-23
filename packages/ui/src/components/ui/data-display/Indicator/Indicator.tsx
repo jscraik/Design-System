@@ -26,7 +26,8 @@ const indicatorVariants = cva("inline-flex items-center justify-center", {
 });
 
 export interface IndicatorProps
-  extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof indicatorVariants> {
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof indicatorVariants> {
   label?: string;
 }
 
@@ -58,7 +59,8 @@ function Indicator({ className, variant, size, label, ...props }: IndicatorProps
 }
 
 export interface InlineIndicatorProps
-  extends React.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof indicatorVariants> {}
+  extends React.HTMLAttributes<HTMLSpanElement>,
+    VariantProps<typeof indicatorVariants> {}
 
 function InlineIndicator({ className, variant, size = "sm", ...props }: InlineIndicatorProps) {
   return (

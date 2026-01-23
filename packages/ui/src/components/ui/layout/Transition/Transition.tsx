@@ -71,10 +71,11 @@ function Transition({
   );
 }
 
-export interface StaggerProps extends Omit<HTMLMotionProps<"div">, "variants"> {
+export interface StaggerProps extends Omit<HTMLMotionProps<"div">, "variants" | "children"> {
   staggerDelay?: number;
   variant?: "fade" | "slide" | "scale" | "slideUp" | "slideDown";
   duration?: number;
+  children?: React.ReactNode;
 }
 
 function Stagger({

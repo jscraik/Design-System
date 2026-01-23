@@ -48,7 +48,7 @@ function App() {
               <a
                 {...props}
                 href={href}
-                className="text-foundation-accent-blue underline underline-offset-4"
+                className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary underline underline-offset-4 decoration-foundation-accent-blue-light dark:decoration-foundation-accent-blue font-medium"
                 target="_blank"
                 rel="noopener noreferrer"
               >

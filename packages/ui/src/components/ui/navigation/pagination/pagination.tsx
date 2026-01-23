@@ -201,10 +201,8 @@ function Pagination({
   );
 }
 
-interface PaginationButtonProps extends Omit<
-  React.ComponentProps<typeof Button>,
-  "variant" | "size"
-> {
+interface PaginationButtonProps
+  extends Omit<React.ComponentProps<typeof Button>, "variant" | "size"> {
   isActive?: boolean;
 }
 

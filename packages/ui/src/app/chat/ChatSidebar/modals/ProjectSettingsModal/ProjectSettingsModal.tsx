@@ -66,8 +66,7 @@ export function ProjectSettingsModal({
             </span>
           </div>
           <p className="text-body-small text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary font-normal">
-            Project can only access its own memories. Its memories are hidden from outside
-            chats.
+            Project can only access its own memories. Its memories are hidden from outside chats.
           </p>
         </button>
       </div>

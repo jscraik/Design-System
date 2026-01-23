@@ -31,7 +31,8 @@ const textLinkVariants = cva(
 );
 
 export interface TextLinkProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement>, VariantProps<typeof textLinkVariants> {
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
+    VariantProps<typeof textLinkVariants> {
   external?: boolean;
   showExternalIcon?: boolean;
 }

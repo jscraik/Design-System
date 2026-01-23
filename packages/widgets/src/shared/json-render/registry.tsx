@@ -11,8 +11,8 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
-  Badge,
-  Button,
+  AppsSDKBadge,
+  AppsSDKButton,
   Card,
   CardContent,
   CardDescription,
@@ -293,11 +293,11 @@ export const astudioRegistry: ComponentRegistry = {
     };
 
     return (
-      <Badge
+      <AppsSDKBadge
         className={`${getStatusColor(status)} ${sizeClasses[size]} font-medium rounded-full border`}
       >
         {label}
-      </Badge>
+      </AppsSDKBadge>
     );
   },
 
@@ -458,7 +458,7 @@ export const astudioRegistry: ComponentRegistry = {
     };
 
     return (
-      <Button
+      <AppsSDKButton
         variant={variant ?? "secondary"}
         size={size ?? "default"}
         onClick={() => onAction?.({ name: action, params: {} })}
@@ -467,7 +467,7 @@ export const astudioRegistry: ComponentRegistry = {
       >
         {icon && <span className="mr-2">{icon}</span>}
         {label}
-      </Button>
+      </AppsSDKButton>
     );
   },
 
@@ -721,7 +721,7 @@ export const astudioRegistry: ComponentRegistry = {
           <span className="text-sm font-medium text-white">{name}</span>
           <div className="flex items-center gap-2">
             {duration && <span className="text-xs text-white/60">{formatDuration(duration)}</span>}
-            <Badge className={getStatusColor(status)}>{status}</Badge>
+            <AppsSDKBadge className={getStatusColor(status)}>{status}</AppsSDKBadge>
           </div>
         </div>
         <div className="flex gap-4 text-xs text-white/40 font-mono">
@@ -753,7 +753,7 @@ export const astudioRegistry: ComponentRegistry = {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-white text-sm">{workflow}</CardTitle>
-            <Badge className={getStatusColor(statusColors[status])}>{status}</Badge>
+            <AppsSDKBadge className={getStatusColor(statusColors[status])}>{status}</AppsSDKBadge>
           </div>
           <CardDescription className="text-white/60 text-xs font-mono">
             {runId.slice(0, 12)}...

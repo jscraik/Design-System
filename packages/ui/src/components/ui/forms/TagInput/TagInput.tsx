@@ -11,10 +11,8 @@ export interface Tag {
   label: string;
 }
 
-export interface TagInputProps extends Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  "onChange" | "value"
-> {
+export interface TagInputProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> {
   tags: Tag[];
   onTagsChange: (tags: Tag[]) => void;
   onTagAdd?: (tag: Tag) => void;
