@@ -25,6 +25,7 @@ This index links all governing artifacts for the UI design system.
 - Coverage matrix (MD): `docs/design-system/COVERAGE_MATRIX.md`
 - Matrix generator: `scripts/generate-coverage-matrix.ts`
 - Policy enforcement rules: `scripts/policy/run.mjs`
+- QA evidence schema: `docs/operations/QA_EVIDENCE_SCHEMA.md`
 
 ## Export Naming Policy
 

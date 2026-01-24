@@ -113,6 +113,7 @@ pnpm install
 
 - `packages/ui/STORYBOOK_GUIDE.md`
 - `docs/KEYBOARD_NAVIGATION_TESTS.md`
+- `docs/operations/QA_EVIDENCE_SCHEMA.md`
 
 ## Risks and assumptions
 
@@ -122,7 +123,7 @@ pnpm install
 
 ## Verify
 
-- TBD: Add concrete verification steps and expected results.
+- Use `docs/operations/QA_EVIDENCE_SCHEMA.md` for required commands, outcomes, and artifacts.
 
 ## Troubleshooting
 
