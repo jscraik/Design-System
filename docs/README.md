@@ -116,3 +116,4 @@ Key project documentation remains at the repository root:
 - **[VERSION_SYNC.md](./VERSION_SYNC.md)** - Version synchronization across packages
 - **[RFC_TEMPLATE.md](./workflows/RFC_TEMPLATE.md)** - RFC workflow template for design-system changes
 - **[QA_EVIDENCE_SCHEMA.md](./operations/QA_EVIDENCE_SCHEMA.md)** - QA evidence requirements and CI gate artifacts
+- **[GOVERNANCE_SECURITY_PRIVACY.md](./operations/GOVERNANCE_SECURITY_PRIVACY.md)** - Security and privacy rules for governance artifacts
