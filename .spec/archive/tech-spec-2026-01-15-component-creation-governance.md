@@ -348,8 +348,8 @@ N/A — no database changes. The MCP contract spec is a versioned JSON file stor
 
 ### Open questions
 
-- Q1: Where should the component guide live (docs root vs guides)? (Owner: Jamie, Due: 2026-01-22)
-- Q2: What minimal dashboard format best tracks coverage gaps? (Owner: Jamie, Due: 2026-01-29)
+- Q1: Where should the component guide live (docs root vs guides)? **Resolved:** `docs/guides/COMPONENT_CREATION.md`.
+- Q2: What minimal dashboard format best tracks coverage gaps? **Resolved:** coverage matrix table + summary block at top of `docs/design-system/COVERAGE_MATRIX.md`.
 
 ### Future considerations
 

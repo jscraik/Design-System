@@ -289,8 +289,8 @@ stateDiagram-v2
 
 ### Open questions
 
-- Q-1: Where will coverage status be displayed for fastest access? (Owner: Jamie, Due: 2026-01-22)
-- Q-2: What is the preferred location for the consolidated guide? (Owner: Jamie, Due: 2026-01-22)
+- Q-1: Where will coverage status be displayed for fastest access? **Resolved:** `docs/design-system/COVERAGE_MATRIX.md` (linked from guides and docs index).
+- Q-2: What is the preferred location for the consolidated guide? **Resolved:** `docs/guides/COMPONENT_CREATION.md`.
 
 ---
 
