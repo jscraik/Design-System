@@ -21,6 +21,18 @@ Proposed measurable criteria to confirm (targets + dates required):
 - Governance: owners + review cadence set across all core design-system docs.
 Evidence gap: targets and dates not defined in repo or report.
 
+### Success Criteria (Proposed; Needs Confirmation)
+
+| Area | Target | Evidence | Due date |
+| --- | --- | --- | --- |
+| Drift suite | 100% pass on latest apps-sdk-ui version | `pnpm test:drift` logs + alignment stamp | 2026-02-07 |
+| Coverage matrix | Radix fallbacks reduced by 10% from current baseline | `docs/design-system/COVERAGE_MATRIX.md` | 2026-03-01 |
+| A11y | 0 WCAG 2.2 AA violations on widgets + Storybook a11y runs | `pnpm test:a11y:widgets`, `pnpm storybook:test` | 2026-02-15 |
+| Governance | Owner + review cadence set for core DS docs | Docs headers | 2026-02-01 |
+| Evidence retention | Audit artifacts stored for 30 days minimum | `docs/operations/` | 2026-02-15 |
+
+**Confirmation needed:** targets and dates should be validated and adjusted by Jamie.
+
 ## Scope
 
 This review covers design system governance, design tokens, component coverage, QA gates, and documentation pathways that influence UI consistency across web, widgets, and desktop shells. 
