@@ -61,3 +61,8 @@ If a gate is skipped:
 - Record the risk and follow-up action
 - Add a target date for the missing evidence
 
+## QA Gate Reliability Expectations
+
+- **Timeouts:** Each gate should fail with a clear timeout if it exceeds expected runtime.
+- **Retries:** Allowed only for flaky tests with an issue link; max 1 retry in CI.
+- **Degraded mode:** If a non-critical gate is down, document the impact and schedule a follow-up within 7 days.
