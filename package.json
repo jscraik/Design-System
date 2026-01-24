@@ -89,6 +89,7 @@
     "@axe-core/playwright": "^4.10.2",
     "@changesets/cli": "^2.27.1",
     "@modelcontextprotocol/inspector": "^0.18.0",
+    "@openai/apps-sdk-ui": "0.2.1",
     "@playwright/test": "^1.57.0",
     "@vitest/browser-playwright": "^4.0.16",
     "@vitest/coverage-v8": "^4.0.16",

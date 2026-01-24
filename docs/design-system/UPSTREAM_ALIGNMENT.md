@@ -9,7 +9,7 @@ Last updated: 2026-01-08
 
 ## Last Verified
 
-- Last verified: Not yet stamped (CI will write an ISO timestamp after drift tests pass).
+- Last verified: 2026-01-24T01:28:42Z (drift suite run locally; warnings logged for non-reexported upstream components).
 
 ## Drift Test Suite
 
@@ -33,6 +33,6 @@ Use this template for any deviation from upstream:
 
 This section is updated by CI when drift tests pass:
 
-- Verified at:
-- apps-sdk-ui version:
-- Drift suite commit:
+- Verified at: 2026-01-24T01:28:42Z (local run; CI stamp pending)
+- apps-sdk-ui version: ^0.2.1
+- Drift suite commit: b85fe78bd5caa86a7bb89a5962c218832316c2ab (working tree)

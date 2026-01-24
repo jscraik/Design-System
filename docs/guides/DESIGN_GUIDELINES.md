@@ -7,8 +7,8 @@ Last updated: 2026-01-12
 - Audience: Developers (beginner to intermediate)
 - Scope: Task-focused instructions for this topic
 - Non-scope: Comprehensive architecture reference
-- Owner: TBD (confirm)
-- Review cadence: TBD (confirm)
+- Owner: Jamie Scott Craik (@jscraik)
+- Review cadence: Every release or monthly (whichever is sooner)
 
 These guidelines keep the UI consistent across ChatGPT widgets and standalone apps.
 

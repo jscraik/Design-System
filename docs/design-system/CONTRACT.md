@@ -1,6 +1,8 @@
 # UI Design System Contract Index
 
 Last updated: 2026-01-09
+Owner: Jamie Scott Craik (@jscraik)
+Review cadence: Every release or monthly (whichever is sooner)
 
 This index links all governing artifacts for the UI design system.
 

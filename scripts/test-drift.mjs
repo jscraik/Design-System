@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFileSync } from "fs";
+import { existsSync, readFileSync, readdirSync } from "fs";
 import { resolve } from "path";
 
 function parseIntegrationExports() {
@@ -31,12 +31,49 @@ function loadCoverageMatrix() {
   return JSON.parse(raw);
 }
 
+function loadIconExports() {
+  const iconTypesPath = resolve(
+    "node_modules/@openai/apps-sdk-ui/dist/types/components/Icon/index.d.ts",
+  );
+  if (!existsSync(iconTypesPath)) {
+    return [];
+  }
+
+  const raw = readFileSync(iconTypesPath, "utf8");
+  const regex = /export\s+\{\s+default\s+as\s+([A-Za-z0-9_]+)\s+\}/g;
+  const exports = new Set();
+  let match;
+
+  while ((match = regex.exec(raw))) {
+    const name = match[1];
+    if (name) {
+      exports.add(name);
+    }
+  }
+
+  return [...exports];
+}
+
 async function loadUpstreamExports() {
   try {
-    const mod = await import("@openai/apps-sdk-ui/components");
-    return new Set(Object.keys(mod));
+    const typesPath = resolve(
+      "node_modules/@openai/apps-sdk-ui/dist/types/components",
+    );
+    if (!existsSync(typesPath)) {
+      throw new Error(`Missing apps-sdk-ui types path: ${typesPath}`);
+    }
+
+    const entries = readdirSync(typesPath, { withFileTypes: true });
+    const componentNames = entries
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name);
+
+    const upstreamExports = new Set(componentNames);
+    loadIconExports().forEach((name) => upstreamExports.add(name));
+
+    return upstreamExports;
   } catch (error) {
-    console.error("Failed to import @openai/apps-sdk-ui/components:", error);
+    console.error("Failed to enumerate @openai/apps-sdk-ui components:", error);
     process.exit(1);
   }
 }

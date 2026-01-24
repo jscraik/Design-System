@@ -7,8 +7,8 @@ Last updated: 2026-01-09
 - Audience: Developers (intermediate)
 - Scope: Governance rules for the aStudio UI design system
 - Non-scope: Implementation details for individual components or app features
-- Owner: TBD (confirm)
-- Review cadence: TBD (confirm)
+- Owner: Jamie Scott Craik (@jscraik)
+- Review cadence: Every release or monthly (whichever is sooner)
 
 ## Purpose
 
@@ -53,8 +53,8 @@ Radix primitives may be used only when Apps SDK UI lacks the required component.
 
 ## Governance and Ownership
 
-- Owner: TBD (confirm)
-- Review cadence: TBD (confirm)
+- Owner: Jamie Scott Craik (@jscraik)
+- Review cadence: Every release or monthly (whichever is sooner)
 - Contribution model: RFC required for new tokens, components, or breaking changes.
 
 ## RFC Process (Required)
