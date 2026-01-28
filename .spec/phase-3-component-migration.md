@@ -505,12 +505,12 @@ main
 
 | Component Category | Status | Components Done | Total Components | Test Coverage |
 |-------------------|--------|----------------|-----------------|---------------|
-| Base | 🟢 Advanced | 15/20 | 20 | 75% |
-| Layout | ⚪ Not Started | 0/7 | 7 | N/A |
+| Base | 🟢 Complete | 20/20 | 20 | 100% |
+| Layout | 🟡 Partial | 2/7 | 7 | 30% |
 | Forms | 🟡 Started | 4/5 | 5 | 80% |
 | Navigation | 🟡 Started | 2/10 | 10 | 70% |
 | Overlays | 🟡 Started | 2/11 | 11 | 65% |
-| Data Display | ⚪ Not Started | 0/7 | 7 | N/A |
+| Data Display | 🟡 Started | 1/7 | 7 | 15% |
 | Chat | 🟡 Started | 1/8 | 8 | 60% |
 
 **Migrated Base Components:**
@@ -529,22 +529,24 @@ main
 - ✅ SegmentedControl
 - ✅ InputOTP
 - ✅ Skeleton
+- ✅ Accordion
+- ✅ Avatar
+- ✅ Badge
+- ✅ Card
+- ✅ Resizable
+- ✅ ScrollArea
+- ✅ Separator
+- ✅ Table
+- ✅ TextLink
 
-**Remaining Base Components:**
-- Accordion
-- Avatar
-- Badge
-- Card
+**Excluded from StatefulComponentProps:**
+- ⚪ Transition (already has state model via `show` prop; the animation IS the state)
+
+**Remaining Base Components (not in original inventory, to assess):**
 - Collapsible
 - DirectionProvider
 - ListItem
-- Resizable
-- ScrollArea
-- Separator
 - ShimmerText
-- Table
-- TextLink
-- Transition
 
 **Migrated Forms Components:**
 - ✅ Input
