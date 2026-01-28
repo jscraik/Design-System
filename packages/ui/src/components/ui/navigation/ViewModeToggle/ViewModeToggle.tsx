@@ -1,6 +1,8 @@
+import * as React from "react";
 import { IconChat } from "../../../../icons";
 import { Sparkles } from "../../../../integrations/apps-sdk";
 import { cn } from "../../utils";
+import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Supported view modes for the toggle.
@@ -10,7 +12,7 @@ export type ViewMode = "chat" | "compose";
 /**
  * Props for the view mode toggle component.
  */
-export interface ViewModeToggleProps {
+export interface ViewModeToggleProps extends StatefulComponentProps {
   /** Current view mode */
   value?: ViewMode;
   /** Callback when mode changes */
@@ -29,6 +31,8 @@ export interface ViewModeToggleProps {
 /**
  * Renders a toggle between chat and compose modes.
  *
+ * Supports stateful props for loading, error, and disabled states.
+ *
  * @example
  * ```tsx
  * <ViewModeToggle
@@ -45,25 +49,60 @@ export function ViewModeToggle({
   onChange,
   className,
   disabled = false,
+  loading = false,
+  error,
+  required,
+  onStateChange,
   labels = { chat: "Chat", compose: "Compose" },
 }: ViewModeToggleProps) {
+  // Determine effective state (priority: loading > error > disabled > default)
+  const effectiveState: ComponentState = loading
+    ? "loading"
+    : error
+      ? "error"
+      : disabled
+        ? "disabled"
+        : "default";
+
+  // Notify parent of state changes
+  React.useEffect(() => {
+    onStateChange?.(effectiveState);
+  }, [effectiveState, onStateChange]);
+
+  // Effective disabled state (disabled if explicitly disabled OR loading)
+  const isDisabled = disabled || loading;
+
   const handleToggle = () => {
-    if (disabled) return;
+    if (isDisabled) return;
     onChange?.(value === "compose" ? "chat" : "compose");
   };
 
   return (
     <button
       type="button"
+      data-slot="view-mode-toggle"
+      data-state={effectiveState}
+      data-error={error ? "true" : undefined}
+      data-required={required ? "true" : undefined}
       className={cn(
         "flex items-center gap-2 px-4 py-2 border border-border rounded-xl hover:bg-secondary transition-colors",
-        disabled && "opacity-50 cursor-not-allowed",
+        isDisabled && "opacity-50 cursor-not-allowed",
+        error && "border-foundation-accent-red ring-2 ring-foundation-accent-red/50",
+        loading && "animate-pulse",
         className,
       )}
       onClick={handleToggle}
-      disabled={disabled}
+      disabled={isDisabled}
+      aria-disabled={isDisabled || undefined}
+      aria-invalid={error ? "true" : required ? "false" : undefined}
+      aria-required={required || undefined}
+      aria-busy={loading || undefined}
     >
-      {value === "compose" ? (
+      {loading ? (
+        <span className="text-body-small text-foundation-text-dark-tertiary">Loading...</span>
+      ) : error ? (
+        <span className="text-body-small text-foundation-accent-red">{error}</span>
+      ) : value === "compose" ? (
         <>
           <div className="size-4 text-text-secondary">
             <IconChat />

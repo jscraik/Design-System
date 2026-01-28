@@ -3,8 +3,6 @@
 // migration_trigger: Replace with Apps SDK UI component when available with matching props and behavior.
 // a11y_contract_ref: docs/KEYBOARD_NAVIGATION_TESTS.md
 
-"use client";
-
 import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
@@ -29,6 +27,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../../../overlays/Tooltip";
+import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -45,6 +44,8 @@ type SidebarContextProps = {
   setOpenMobile: (open: boolean) => void;
   isMobile: boolean;
   toggleSidebar: () => void;
+  effectiveState?: ComponentState;
+  isDisabled?: boolean;
 };
 
 const SidebarContext = React.createContext<SidebarContextProps | null>(null);
@@ -67,6 +68,8 @@ function useSidebar() {
 /**
  * Provides sidebar state and layout context.
  *
+ * Supports stateful props for loading, error, and disabled states.
+ *
  * @param props - Sidebar provider props.
  * @returns A sidebar provider element.
  */
@@ -77,14 +80,36 @@ function SidebarProvider({
   className,
   style,
   children,
+  loading = false,
+  error,
+  disabled = false,
+  required,
+  onStateChange,
   ...props
 }: React.ComponentProps<"div"> & {
   defaultOpen?: boolean;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
-}) {
+} & StatefulComponentProps) {
   const isMobile = useIsMobile();
   const [openMobile, setOpenMobile] = React.useState(false);
+
+  // Determine effective state (priority: loading > error > disabled > default)
+  const effectiveState: ComponentState = loading
+    ? "loading"
+    : error
+      ? "error"
+      : disabled
+        ? "disabled"
+        : "default";
+
+  // Notify parent of state changes
+  React.useEffect(() => {
+    onStateChange?.(effectiveState);
+  }, [effectiveState, onStateChange]);
+
+  // Effective disabled state (disabled if explicitly disabled OR loading)
+  const isDisabled = disabled || loading;
 
   // This is the internal state of the sidebar.
   // We use openProp and setOpenProp for control from outside the component.
@@ -136,8 +161,20 @@ function SidebarProvider({
       openMobile,
       setOpenMobile,
       toggleSidebar,
+      effectiveState,
+      isDisabled,
     }),
-    [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar],
+    [
+      state,
+      open,
+      setOpen,
+      isMobile,
+      openMobile,
+      setOpenMobile,
+      toggleSidebar,
+      effectiveState,
+      isDisabled,
+    ],
   );
 
   return (
@@ -145,6 +182,9 @@ function SidebarProvider({
       <TooltipProvider delayDuration={0}>
         <div
           data-slot="sidebar-wrapper"
+          data-state={effectiveState}
+          data-error={error ? "true" : undefined}
+          data-required={required ? "true" : undefined}
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH,
@@ -154,8 +194,15 @@ function SidebarProvider({
           }
           className={cn(
             "group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full",
+            isDisabled && "opacity-50 pointer-events-none",
+            error && "ring-2 ring-foundation-accent-red/50",
+            loading && "animate-pulse",
             className,
           )}
+          aria-disabled={isDisabled || undefined}
+          aria-invalid={error ? "true" : required ? "false" : undefined}
+          aria-required={required || undefined}
+          aria-busy={loading || undefined}
           {...props}
         >
           {children}

@@ -1,8 +1,10 @@
+import * as React from "react";
 import { useRef, useState } from "react";
 
 import { IconCheckmark, IconChevronDownMd, IconSettings } from "../../../../icons";
 import { useFocusTrap } from "../../../../hooks/useFocusTrap";
 import { cn } from "../../utils";
+import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Describes a selectable mode entry.
@@ -27,7 +29,7 @@ export interface ModeConfig {
 /**
  * Props for the mode selector component.
  */
-export interface ModeSelectorProps {
+export interface ModeSelectorProps extends StatefulComponentProps {
   /** Currently selected mode */
   value?: ModeConfig;
   /** Callback when mode changes */
@@ -46,6 +48,8 @@ export interface ModeSelectorProps {
 
 /**
  * Renders a selector for choosing operational modes.
+ *
+ * Supports stateful props for loading, error, and disabled states.
  *
  * @example
  * ```tsx
@@ -71,10 +75,32 @@ export function ModeSelector({
   className,
   variant = "default",
   label,
+  loading = false,
+  error,
+  disabled = false,
+  required,
+  onStateChange,
 }: ModeSelectorProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [previewMode, setPreviewMode] = useState<ModeConfig | null>(value ?? modes[0]);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
+
+  // Determine effective state (priority: loading > error > disabled > default)
+  const effectiveState: ComponentState = loading
+    ? "loading"
+    : error
+      ? "error"
+      : disabled
+        ? "disabled"
+        : "default";
+
+  // Notify parent of state changes
+  React.useEffect(() => {
+    onStateChange?.(effectiveState);
+  }, [effectiveState, onStateChange]);
+
+  // Effective disabled state (disabled if explicitly disabled OR loading)
+  const isDisabled = disabled || loading;
 
   const handleClose = () => {
     setIsOpen(false);
@@ -114,7 +140,17 @@ export function ModeSelector({
 
   return (
     <>
-      <div className={cn("relative", className)}>
+      <div
+        data-slot="mode-selector"
+        data-state={effectiveState}
+        data-error={error ? "true" : undefined}
+        data-required={required ? "true" : undefined}
+        className={cn("relative", className)}
+        aria-disabled={isDisabled || undefined}
+        aria-invalid={error ? "true" : required ? "false" : undefined}
+        aria-required={required || undefined}
+        aria-busy={loading || undefined}
+      >
         {label && (
           <span className="text-caption text-foundation-text-dark-tertiary mr-2">{label}</span>
         )}
@@ -122,12 +158,17 @@ export function ModeSelector({
           ref={triggerRef}
           onClick={handleOpen}
           type="button"
+          disabled={isDisabled}
           className={cn(
             "text-caption text-foundation-text-dark-primary flex items-center gap-2 hover:bg-foundation-bg-dark-3 transition-colors",
+            isDisabled && "opacity-50 cursor-not-allowed",
+            error &&
+              "border border-foundation-accent-red ring-2 ring-foundation-accent-red/50 rounded-lg",
+            loading && "animate-pulse",
             triggerClasses[variant],
           )}
         >
-          {value?.name ?? modes[0]?.name}
+          {loading ? "Loading..." : error ? error : (value?.name ?? modes[0]?.name)}
           <IconChevronDownMd className="size-3 text-foundation-text-dark-tertiary" />
         </button>
       </div>

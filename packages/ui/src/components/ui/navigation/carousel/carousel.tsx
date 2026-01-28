@@ -1,11 +1,10 @@
-"use client";
-
 import * as React from "react";
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react";
 
 import { IconArrowLeftSm, IconArrowRightSm } from "../../../../icons";
 import { cn } from "../../utils";
 import { Button } from "../../base/Button";
+import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -17,7 +16,7 @@ type CarouselProps = {
   plugins?: CarouselPlugin;
   orientation?: "horizontal" | "vertical";
   setApi?: (api: CarouselApi) => void;
-};
+} & StatefulComponentProps;
 
 type CarouselContextProps = {
   carouselRef: ReturnType<typeof useEmblaCarousel>[0];
@@ -43,6 +42,8 @@ function useCarousel() {
 /**
  * Renders a carousel container backed by Embla.
  *
+ * Supports stateful props for loading, error, and disabled states.
+ *
  * Accessibility contract:
  * - Exposes `aria-roledescription="carousel"` on the root.
  *
@@ -56,6 +57,11 @@ function Carousel({
   plugins,
   className,
   children,
+  loading = false,
+  error,
+  disabled = false,
+  required,
+  onStateChange,
   ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
   const [carouselRef, api] = useEmblaCarousel(
@@ -67,6 +73,23 @@ function Carousel({
   );
   const [canScrollPrev, setCanScrollPrev] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
+
+  // Determine effective state (priority: loading > error > disabled > default)
+  const effectiveState: ComponentState = loading
+    ? "loading"
+    : error
+      ? "error"
+      : disabled
+        ? "disabled"
+        : "default";
+
+  // Notify parent of state changes
+  React.useEffect(() => {
+    onStateChange?.(effectiveState);
+  }, [effectiveState, onStateChange]);
+
+  // Effective disabled state (disabled if explicitly disabled OR loading)
+  const isDisabled = disabled || loading;
 
   const onSelect = React.useCallback((api: CarouselApi) => {
     if (!api) return;
@@ -126,12 +149,35 @@ function Carousel({
     >
       <div
         onKeyDownCapture={handleKeyDown}
-        className={cn("relative", className)}
+        className={cn(
+          "relative",
+          isDisabled && "opacity-50 pointer-events-none",
+          error && "ring-2 ring-foundation-accent-red/50 rounded-md",
+          loading && "animate-pulse",
+          className,
+        )}
         role="region"
         aria-roledescription="carousel"
         data-slot="carousel"
+        data-state={effectiveState}
+        data-error={error ? "true" : undefined}
+        data-required={required ? "true" : undefined}
+        aria-disabled={isDisabled || undefined}
+        aria-invalid={error ? "true" : required ? "false" : undefined}
+        aria-required={required || undefined}
+        aria-busy={loading || undefined}
         {...props}
       >
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-foundation-bg-light-1/50 z-10">
+            <div className="text-foundation-text-dark-tertiary">Loading...</div>
+          </div>
+        )}
+        {error && (
+          <div className="absolute inset-0 flex items-center justify-center bg-foundation-bg-light-1/50 z-10">
+            <div className="text-foundation-accent-red">{error}</div>
+          </div>
+        )}
         {children}
       </div>
     </CarouselContext.Provider>
