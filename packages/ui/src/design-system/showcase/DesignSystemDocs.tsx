@@ -1,48 +1,48 @@
 import { useCallback, useState, type ReactNode } from "react";
 
-import { copyToClipboard as copyToClipboardUtil } from "../../utils/clipboard";
 import { colorTokens } from "@design-studio/tokens";
+import { cn } from "../../components/ui/utils";
 import {
   IconArrowUpSm,
+  IconBarChart,
+  IconBook,
+  IconCalendar,
+  IconCamera,
+  IconChat,
   IconCheckmark,
+  IconChevronDownMd,
+  IconClock,
+  IconCompass,
   IconCompose,
   IconCopy,
   IconEdit,
+  IconEmail,
+  IconFlag,
+  IconFlask,
+  IconFolder,
+  IconGlobe,
+  IconHeadphones,
+  IconImage,
+  IconLightBulb,
+  IconMapPin,
+  IconMic,
+  IconNotebook,
+  IconPhone,
+  IconPin,
   IconPlusLg,
   IconSearch,
   IconSettings,
   IconShare,
+  IconStar,
+  IconStuffTools,
+  IconTerminal,
   IconThumbUp,
   IconTrash,
   IconUser,
-  IconChevronDownMd,
-  IconChat,
-  IconCompass,
-  IconClock,
-  IconEmail,
-  IconPhone,
-  IconCamera,
-  IconMic,
   IconVideo,
-  IconHeadphones,
-  IconBarChart,
-  IconFlask,
-  IconLightBulb,
-  IconStar,
-  IconFlag,
-  IconPin,
-  IconBook,
-  IconTerminal,
-  IconNotebook,
-  IconGlobe,
-  IconMapPin,
-  IconCalendar,
   IconWriting,
-  IconStuffTools,
-  IconFolder,
-  IconImage,
 } from "../../icons/ChatGPTIcons";
-import { cn } from "../../components/ui/utils";
+import { copyToClipboard as copyToClipboardUtil } from "../../utils/clipboard";
 
 // Tab type for navigation
 type DocTab = "overview" | "colors" | "typography" | "spacing" | "icons" | "components" | "usage";
@@ -139,31 +139,19 @@ const colorSwatches = [
   {
     label: "bg-dark-1",
     cssVar: "--foundation-bg-dark-1",
-    hex: "#0d0d0d",
+    hex: colorTokens.background.dark.primary,
     group: "Background (Dark)",
   },
   {
     label: "bg-dark-2",
     cssVar: "--foundation-bg-dark-2",
-    hex: "#171717",
+    hex: colorTokens.background.dark.secondary,
     group: "Background (Dark)",
   },
   {
     label: "bg-dark-3",
     cssVar: "--foundation-bg-dark-3",
-    hex: "#202020",
-    group: "Background (Dark)",
-  },
-  {
-    label: "bg-dark-4",
-    cssVar: "--foundation-bg-dark-4",
-    hex: "#2a2a2a",
-    group: "Background (Dark)",
-  },
-  {
-    label: "bg-dark-modal",
-    cssVar: "--foundation-bg-dark-modal",
-    hex: "#1a1a1a",
+    hex: colorTokens.background.dark.tertiary,
     group: "Background (Dark)",
   },
 
@@ -171,25 +159,19 @@ const colorSwatches = [
   {
     label: "bg-light-1",
     cssVar: "--foundation-bg-light-1",
-    hex: "#ffffff",
+    hex: colorTokens.background.light.primary,
     group: "Background (Light)",
   },
   {
     label: "bg-light-2",
     cssVar: "--foundation-bg-light-2",
-    hex: "#f9f9f9",
+    hex: colorTokens.background.light.secondary,
     group: "Background (Light)",
   },
   {
     label: "bg-light-3",
     cssVar: "--foundation-bg-light-3",
-    hex: "#ececec",
-    group: "Background (Light)",
-  },
-  {
-    label: "bg-light-4",
-    cssVar: "--foundation-bg-light-4",
-    hex: "#d9d9d9",
+    hex: colorTokens.background.light.tertiary,
     group: "Background (Light)",
   },
 
@@ -197,19 +179,19 @@ const colorSwatches = [
   {
     label: "text-dark-primary",
     cssVar: "--foundation-text-dark-primary",
-    hex: "#ececec",
+    hex: colorTokens.text.dark.primary,
     group: "Text (Dark)",
   },
   {
     label: "text-dark-secondary",
     cssVar: "--foundation-text-dark-secondary",
-    hex: "#acacac",
+    hex: colorTokens.text.dark.secondary,
     group: "Text (Dark)",
   },
   {
     label: "text-dark-tertiary",
     cssVar: "--foundation-text-dark-tertiary",
-    hex: "#8e8e8e",
+    hex: colorTokens.text.dark.tertiary,
     group: "Text (Dark)",
   },
 
@@ -217,19 +199,19 @@ const colorSwatches = [
   {
     label: "text-light-primary",
     cssVar: "--foundation-text-light-primary",
-    hex: "#0d0d0d",
+    hex: colorTokens.text.light.primary,
     group: "Text (Light)",
   },
   {
     label: "text-light-secondary",
     cssVar: "--foundation-text-light-secondary",
-    hex: "#676767",
+    hex: colorTokens.text.light.secondary,
     group: "Text (Light)",
   },
   {
     label: "text-light-tertiary",
     cssVar: "--foundation-text-light-tertiary",
-    hex: "#8e8e8e",
+    hex: colorTokens.text.light.tertiary,
     group: "Text (Light)",
   },
 
@@ -237,19 +219,19 @@ const colorSwatches = [
   {
     label: "icon-dark-primary",
     cssVar: "--foundation-icon-dark-primary",
-    hex: "#ececec",
+    hex: colorTokens.icon.dark.primary,
     group: "Icons (Dark)",
   },
   {
     label: "icon-dark-secondary",
     cssVar: "--foundation-icon-dark-secondary",
-    hex: "#acacac",
+    hex: colorTokens.icon.dark.secondary,
     group: "Icons (Dark)",
   },
   {
     label: "icon-dark-tertiary",
     cssVar: "--foundation-icon-dark-tertiary",
-    hex: "#6e6e6e",
+    hex: colorTokens.icon.dark.tertiary,
     group: "Icons (Dark)",
   },
 
@@ -257,52 +239,72 @@ const colorSwatches = [
   {
     label: "icon-light-primary",
     cssVar: "--foundation-icon-light-primary",
-    hex: "#0d0d0d",
+    hex: colorTokens.icon.light.primary,
     group: "Icons (Light)",
   },
   {
     label: "icon-light-secondary",
     cssVar: "--foundation-icon-light-secondary",
-    hex: "#676767",
+    hex: colorTokens.icon.light.secondary,
     group: "Icons (Light)",
   },
   {
     label: "icon-light-tertiary",
     cssVar: "--foundation-icon-light-tertiary",
-    hex: "#8e8e8e",
+    hex: colorTokens.icon.light.tertiary,
     group: "Icons (Light)",
   },
 
   // Accent Colors
-  { label: "accent-green", cssVar: "--foundation-accent-green", hex: "#10a37f", group: "Accents" },
-  { label: "accent-blue", cssVar: "--foundation-accent-blue", hex: "#1B72E8", group: "Accents" },
-  { label: "accent-red", cssVar: "--foundation-accent-red", hex: "#ef4444", group: "Accents" },
+  {
+    label: "accent-green",
+    cssVar: "--foundation-accent-green",
+    hex: colorTokens.accent.dark.green,
+    group: "Accents",
+  },
+  {
+    label: "accent-blue",
+    cssVar: "--foundation-accent-blue",
+    hex: colorTokens.accent.dark.blue,
+    group: "Accents",
+  },
+  {
+    label: "accent-red",
+    cssVar: "--foundation-accent-red",
+    hex: colorTokens.accent.dark.red,
+    group: "Accents",
+  },
   {
     label: "accent-yellow",
     cssVar: "--foundation-accent-yellow",
-    hex: "#f59e0b",
+    hex: colorTokens.accent.dark.yellow,
     group: "Accents",
   },
   {
     label: "accent-purple",
     cssVar: "--foundation-accent-purple",
-    hex: "#8b5cf6",
+    hex: colorTokens.accent.dark.purple,
     group: "Accents",
   },
   {
     label: "accent-orange",
     cssVar: "--foundation-accent-orange",
-    hex: "#f97316",
+    hex: colorTokens.accent.dark.orange,
     group: "Accents",
   },
   {
     label: "accent-success",
     cssVar: "--foundation-accent-success",
-    hex: "#10a37f",
+    hex: colorTokens.icon.light.statusSuccess,
     group: "Accents",
   },
-  { label: "accent-info", cssVar: "--foundation-accent-info", hex: "#1B72E8", group: "Accents" },
-];
+  {
+    label: "accent-info",
+    cssVar: "--foundation-accent-info",
+    hex: colorTokens.accent.light.blue,
+    group: "Accents",
+  },
+] as const;
 
 // Spacing scale (8px grid system)
 const spacingScale = [

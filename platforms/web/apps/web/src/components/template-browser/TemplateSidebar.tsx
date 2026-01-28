@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { AppsSDKButton } from "@design-studio/ui";
 import { IconChevronDownMd, IconChevronRightMd } from "@design-studio/ui/icons";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 
 import type { TemplateRegistryEntry } from "@/generated/template-registry";
 
@@ -49,7 +49,7 @@ export function TemplateSidebar({ categories, selectedId, onSelect }: TemplateSi
   );
 
   return (
-    <aside className="flex h-full w-full flex-col gap-4 border-b border-foundation-bg-light-3 bg-foundation-bg-light-2 px-4 py-5 dark:border-foundation-bg-dark-3 dark:bg-foundation-bg-dark-2 lg:border-b-0 lg:border-r">
+    <aside className="flex h-full w-full flex-col gap-2 border-b border-foundation-bg-light-3 bg-foundation-bg-light-2 p-4 dark:border-foundation-bg-dark-3 dark:bg-foundation-bg-dark-2 lg:border-b-0 lg:border-r">
       <div>
         <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
           Template Library
@@ -96,7 +96,7 @@ export function TemplateSidebar({ categories, selectedId, onSelect }: TemplateSi
                         type="button"
                         onClick={() => onSelect(template)}
                         aria-current={isSelected ? "true" : undefined}
-                        className={`w-full rounded-xl border px-3 py-2 text-left text-sm transition-colors ${
+                        className={`w-full rounded-xl border px-3 py-1.5 text-left text-sm transition-colors ${
                           isSelected
                             ? "border-foundation-accent-blue bg-foundation-bg-light-1 text-foundation-text-light-primary dark:bg-foundation-bg-dark-1 dark:text-foundation-text-dark-primary"
                             : "border-transparent text-foundation-text-light-secondary hover:border-foundation-bg-light-3 hover:bg-foundation-bg-light-1 dark:text-foundation-text-dark-secondary dark:hover:border-foundation-bg-dark-3 dark:hover:bg-foundation-bg-dark-1"
