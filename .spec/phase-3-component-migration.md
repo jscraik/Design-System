@@ -510,7 +510,7 @@ main
 | Forms | 🟢 Complete | 5/5 | 5 | 100% |
 | Navigation | 🟢 Complete | 10/10 | 10 | 100% |
 | Overlays | 🟢 Complete | 10/11 | 11 | 100% |
-| Data Display | 🟡 Started | 1/7 | 7 | 15% |
+| Data Display | 🟢 Complete | 8/8 | 8 | 100% |
 | Chat | 🟡 Started | 1/8 | 8 | 60% |
 
 **Migrated Base Components:**
@@ -591,6 +591,16 @@ main
 - ✅ Sheet (partial - previously migrated)
 - ✅ Toast (complete - previously migrated)
 - ✅ Tooltip (Radix fallback)
+
+**Migrated Data Display Components:**
+- ✅ Card (already had StatefulComponentProps)
+- ✅ Chart (Recharts-based, ChartContainer with StatefulComponentProps)
+- ✅ CodeBlock (with loading/error states, disabled copy button)
+- ✅ EmptyMessage (with loading/error display, icon state handling)
+- ✅ Image (extended with external state props, preserves internal state)
+- ✅ Indicator (with external state control for loading indicator)
+- ✅ Markdown (with loading/error message display)
+- ✅ Progress (Radix fallback, with loading/error visual feedback)
 
 **Migrated Chat Components:**
 - ✅ ChatInput (with hybrid pattern: ChatInput.ComposerArea, ChatInput.ActionBar, ChatInput.LeftActions, ChatInput.RightActions, ChatInput.SendButton)
