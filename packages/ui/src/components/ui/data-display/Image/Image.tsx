@@ -5,7 +5,9 @@ import { cn } from "../../utils";
 import { ShimmerInline } from "../../base/ShimmerText";
 import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
-export interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement>, StatefulComponentProps {
+// Omit 'loading' from ImgHTMLAttributes to avoid collision with StatefulComponentProps.loading
+// The native HTML 'loading' attribute accepts "eager" | "lazy", while ours is a boolean state flag
+export interface ImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "loading">, StatefulComponentProps {
   fallback?: React.ReactNode;
   aspectRatio?: "square" | "video" | "auto";
   objectFit?: "cover" | "contain" | "fill" | "none";

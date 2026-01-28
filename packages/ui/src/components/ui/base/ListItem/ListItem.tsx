@@ -1,3 +1,4 @@
+import * as React from "react";
 import type { ReactElement, ReactNode } from "react";
 import { cloneElement, isValidElement } from "react";
 
