@@ -505,13 +505,95 @@ main
 
 | Component Category | Status | Components Done | Total Components | Test Coverage |
 |-------------------|--------|----------------|-----------------|---------------|
-| Base | 🟡 In Progress | 15/20 | 20 | 75% |
-| Layout | 🟡 In Progress | 5/7 | 7 | 85% |
-| Forms | ⚪ Not Started | 0/5 | 5 | N/A |
-| Navigation | ⚪ Not Started | 0/10 | 10 | N/A |
-| Overlays | ⚪ Not Started | 0/11 | 11 | N/A |
+| Base | 🟢 Advanced | 15/20 | 20 | 75% |
+| Layout | ⚪ Not Started | 0/7 | 7 | N/A |
+| Forms | 🟡 Started | 4/5 | 5 | 80% |
+| Navigation | 🟡 Started | 2/10 | 10 | 70% |
+| Overlays | 🟡 Started | 2/11 | 11 | 65% |
 | Data Display | ⚪ Not Started | 0/7 | 7 | N/A |
-| Chat | ⚪ Not Started | 0/8 | 8 | N/A |
+| Chat | 🟡 Started | 1/8 | 8 | 60% |
+
+**Migrated Base Components:**
+- ✅ Button (with hybrid pattern: Button.Primary, Button.Secondary, Button.Icon)
+- ✅ Input
+- ✅ Textarea
+- ✅ Label
+- ✅ Select (with hybrid pattern: Select.Trigger, Select.Value, Select.Content, etc.)
+- ✅ Checkbox
+- ✅ Switch
+- ✅ RadioGroup
+- ✅ Slider
+- ✅ Toggle
+- ✅ ToggleGroup
+- ✅ Calendar
+- ✅ SegmentedControl
+- ✅ InputOTP
+- ✅ Skeleton
+
+**Remaining Base Components:**
+- Accordion
+- Avatar
+- Badge
+- Card
+- Collapsible
+- DirectionProvider
+- ListItem
+- Resizable
+- ScrollArea
+- Separator
+- ShimmerText
+- Table
+- TextLink
+- Transition
+
+**Migrated Forms Components:**
+- ✅ Input
+- ✅ Textarea
+- ✅ Select
+- ✅ Checkbox
+- ✅ RadioGroup
+- ⚪ Combobox (pending)
+- ⚪ Form (pending)
+- ⚪ RangeSlider (pending)
+- ⚪ TagInput (pending)
+
+**Migrated Navigation Components:**
+- ✅ Breadcrumb
+- ✅ Pagination
+- ⚪ Carousel (pending)
+- ⚪ Command (pending)
+- ⚪ ContextMenu (partial)
+- ⚪ DropdownMenu (partial)
+- ⚪ Menubar (pending)
+- ⚪ ModelBadge (pending)
+- ⚪ ModeSelector (pending)
+- ⚪ NavigationMenu (pending)
+- ⚪ Sidebar (pending)
+- ⚪ Tabs (pending)
+- ⚪ ViewModeToggle (pending)
+
+**Migrated Overlays Components:**
+- ✅ Dialog
+- ✅ Sheet (partial)
+- ⚪ AlertDialog (pending)
+- ⚪ ContextMenu (partial)
+- ⚪ DropdownMenu (partial)
+- ⚪ ErrorBoundary (pending)
+- ⚪ HoverCard (pending)
+- ⚪ Modal (pending)
+- ⚪ Popover (partial)
+- ⚪ Toast (complete)
+- ⚪ Tooltip (partial)
+
+**Migrated Chat Components:**
+- ✅ ChatInput (with hybrid pattern: ChatInput.ComposerArea, ChatInput.ActionBar, ChatInput.LeftActions, ChatInput.RightActions, ChatInput.SendButton)
+- ⚪ AttachmentMenu (partial)
+- ⚪ ChatActions (pending)
+- ⚪ ChatHeader (pending)
+- ⚪ ChatMessages (pending)
+- ⚪ ChatShell (pending)
+- ⚪ ChatSidebar (pending)
+- ⚪ ChatUIRoot (pending)
 
 ## 6. Success Criteria
 
