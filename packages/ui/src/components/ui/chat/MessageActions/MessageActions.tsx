@@ -1,3 +1,5 @@
+import * as React from "react";
+
 import {
   IconCopy,
   IconDotsHorizontal,
@@ -8,11 +10,12 @@ import {
 } from "../../../../icons";
 import { IconButton } from "../../base/IconButton";
 import { cn } from "../../utils";
+import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Props for the message actions toolbar.
  */
-export interface MessageActionsProps {
+export interface MessageActionsProps extends StatefulComponentProps {
   /** Message ID for action callbacks */
   messageId?: string;
   /** Callback when copy is clicked */
@@ -38,6 +41,11 @@ export interface MessageActionsProps {
 /**
  * MessageActions - Action buttons for chat messages
  *
+ * Supports stateful props for loading, error, and disabled states.
+ * When loading, disables all action buttons with pulse animation.
+ * When error, shows error ring styling.
+ * When disabled, reduces opacity and prevents interactions.
+ *
  * @example
  * ```tsx
  * <MessageActions
@@ -46,6 +54,8 @@ export interface MessageActionsProps {
  *   onThumbsUp={(id) => rateMessage(id, "up")}
  *   showOnHover
  * />
+ * <MessageActions loading />
+ * <MessageActions disabled />
  * ```
  */
 export function MessageActions({
@@ -59,45 +69,95 @@ export function MessageActions({
   actions = ["copy", "thumbsUp", "thumbsDown", "share", "regenerate", "more"],
   showOnHover = true,
   className,
+  disabled = false,
+  loading = false,
+  error,
+  required,
+  onStateChange,
 }: MessageActionsProps) {
+  // Determine effective state (priority: loading > error > disabled > default)
+  const effectiveState: ComponentState = loading
+    ? "loading"
+    : error
+      ? "error"
+      : disabled
+        ? "disabled"
+        : "default";
+
+  // Notify parent of state changes
+  React.useEffect(() => {
+    onStateChange?.(effectiveState);
+  }, [effectiveState, onStateChange]);
+
+  // Effective disabled state (disabled if explicitly disabled OR loading)
+  const isDisabled = disabled || loading;
+
   const actionMap = {
     copy: {
       icon: <IconCopy className="size-4" />,
       title: "Copy",
-      onClick: () => onCopy?.(messageId),
+      onClick: () => {
+        if (isDisabled) return;
+        onCopy?.(messageId);
+      },
     },
     thumbsUp: {
       icon: <IconThumbUp className="size-4" />,
       title: "Good response",
-      onClick: () => onThumbsUp?.(messageId),
+      onClick: () => {
+        if (isDisabled) return;
+        onThumbsUp?.(messageId);
+      },
     },
     thumbsDown: {
       icon: <IconThumbDown className="size-4" />,
       title: "Bad response",
-      onClick: () => onThumbsDown?.(messageId),
+      onClick: () => {
+        if (isDisabled) return;
+        onThumbsDown?.(messageId);
+      },
     },
     share: {
       icon: <IconShare className="size-4" />,
       title: "Share",
-      onClick: () => onShare?.(messageId),
+      onClick: () => {
+        if (isDisabled) return;
+        onShare?.(messageId);
+      },
     },
     regenerate: {
       icon: <IconRegenerate className="size-4" />,
       title: "Regenerate",
-      onClick: () => onRegenerate?.(messageId),
+      onClick: () => {
+        if (isDisabled) return;
+        onRegenerate?.(messageId);
+      },
     },
     more: {
       icon: <IconDotsHorizontal className="size-4" />,
       title: "More",
-      onClick: () => onMore?.(messageId),
+      onClick: () => {
+        if (isDisabled) return;
+        onMore?.(messageId);
+      },
     },
   };
 
   return (
     <div
+      data-state={effectiveState}
+      data-error={error ? "true" : undefined}
+      data-required={required ? "true" : undefined}
+      aria-disabled={isDisabled || undefined}
+      aria-invalid={error ? "true" : required ? "false" : undefined}
+      aria-required={required || undefined}
+      aria-busy={loading || undefined}
       className={cn(
         "flex items-center gap-1",
         showOnHover && "opacity-0 group-hover:opacity-100 transition-opacity",
+        isDisabled && "opacity-50",
+        error && "ring-2 ring-foundation-accent-red/50 rounded-lg",
+        loading && "animate-pulse",
         className,
       )}
     >
@@ -110,6 +170,7 @@ export function MessageActions({
             title={config.title}
             onClick={config.onClick}
             size="md"
+            disabled={isDisabled}
           />
         );
       })}

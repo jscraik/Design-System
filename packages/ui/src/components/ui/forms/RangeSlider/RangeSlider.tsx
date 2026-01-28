@@ -1,11 +1,12 @@
-import { useId } from "react";
+import * as React from "react";
 
 import { cn } from "../../utils";
+import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Props for the range slider component.
  */
-export interface RangeSliderProps {
+export interface RangeSliderProps extends StatefulComponentProps {
   /** Current value */
   value: number;
   /** Callback when value changes */
@@ -26,14 +27,17 @@ export interface RangeSliderProps {
   showValue?: boolean;
   /** Gradient background for track */
   gradient?: string;
-  /** Disabled state */
-  disabled?: boolean;
   /** Additional CSS classes */
   className?: string;
 }
 
 /**
  * Renders a customizable range input.
+ *
+ * Supports stateful props for loading, error, and disabled states.
+ * When loading, disables the slider with pulse animation.
+ * When error, shows error ring styling.
+ * When disabled, reduces opacity and prevents interaction.
  *
  * @example
  * ```tsx
@@ -45,9 +49,11 @@ export interface RangeSliderProps {
  *   max={100}
  *   suffix="k"
  * />
+ * <RangeSlider loading />
+ * <RangeSlider error="Invalid value" />
  * ```
  *
- * @param props - Range slider props.
+ * @param props - Range slider props and stateful options.
  * @returns A range slider element.
  */
 export function RangeSlider({
@@ -62,15 +68,45 @@ export function RangeSlider({
   showValue = true,
   gradient,
   disabled = false,
+  loading = false,
+  error,
+  required,
+  onStateChange,
   className,
 }: RangeSliderProps) {
-  const inputId = useId();
+  const inputId = React.useId();
   const percentage = ((value - min) / (max - min)) * 100;
+
+  // Determine effective state (priority: loading > error > disabled > default)
+  const effectiveState: ComponentState = loading
+    ? "loading"
+    : error
+      ? "error"
+      : disabled
+        ? "disabled"
+        : "default";
+
+  // Notify parent of state changes
+  React.useEffect(() => {
+    onStateChange?.(effectiveState);
+  }, [effectiveState, onStateChange]);
+
+  // Effective disabled state (disabled if explicitly disabled OR loading)
+  const isDisabled = disabled || loading;
 
   const defaultGradient = `linear-gradient(to right, var(--foundation-range-fill) 0%, var(--foundation-range-fill) ${percentage}%, var(--foundation-range-track) ${percentage}%, var(--foundation-range-track) 100%)`;
 
   return (
-    <div className={cn("space-y-2", className)}>
+    <div
+      className={cn("space-y-2", className)}
+      data-state={effectiveState}
+      data-error={error ? "true" : undefined}
+      data-required={required ? "true" : undefined}
+      aria-disabled={isDisabled || undefined}
+      aria-invalid={error ? "true" : required ? "false" : undefined}
+      aria-required={required || undefined}
+      aria-busy={loading || undefined}
+    >
       {(label || showValue) && (
         <div className="flex items-center justify-between">
           {label && (
@@ -94,13 +130,15 @@ export function RangeSlider({
         step={step}
         value={value}
         onChange={(e) => onChange?.(Number(e.target.value))}
-        disabled={disabled}
+        disabled={isDisabled}
         aria-label={ariaLabel ?? label ?? "Range slider"}
         className={cn(
           "w-full h-1.5 rounded-lg appearance-none cursor-pointer [--foundation-range-track:var(--foundation-bg-light-3)] [--foundation-range-thumb:var(--foundation-bg-light-1)] [--foundation-range-fill:var(--foundation-accent-green)] dark:[--foundation-range-track:var(--foundation-bg-dark-3)] dark:[--foundation-range-thumb:var(--foundation-bg-dark-1)]",
           "[&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[var(--foundation-range-thumb)] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-sm",
           "[&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[var(--foundation-range-thumb)] [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer",
-          disabled && "opacity-50 cursor-not-allowed",
+          isDisabled && "opacity-50 cursor-not-allowed",
+          error && "ring-2 ring-foundation-accent-red/50",
+          loading && "animate-pulse",
         )}
         style={{ background: gradient || defaultGradient }}
       />

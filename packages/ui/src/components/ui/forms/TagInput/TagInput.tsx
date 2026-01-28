@@ -1,10 +1,9 @@
-"use client";
-
 import * as React from "react";
 
 import { IconX } from "../../../../icons";
 import { Badge } from "../../base/Badge";
 import { cn } from "../../utils";
+import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 export interface Tag {
   id: string;
@@ -12,7 +11,8 @@ export interface Tag {
 }
 
 export interface TagInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> {
+  extends StatefulComponentProps,
+    Omit<React.InputHTMLAttributes<HTMLInputElement>, "onChange" | "value"> {
   tags: Tag[];
   onTagsChange: (tags: Tag[]) => void;
   onTagAdd?: (tag: Tag) => void;
@@ -33,12 +33,33 @@ function TagInput({
   allowDuplicates = false,
   variant = "default",
   className,
-  disabled,
+  disabled = false,
+  loading = false,
+  error,
+  required,
+  onStateChange,
   ...props
 }: TagInputProps) {
   const [inputValue, setInputValue] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
   const idCounter = React.useRef(0);
+
+  // Determine effective state (priority: loading > error > disabled > default)
+  const effectiveState: ComponentState = loading
+    ? "loading"
+    : error
+      ? "error"
+      : disabled
+        ? "disabled"
+        : "default";
+
+  // Notify parent of state changes
+  React.useEffect(() => {
+    onStateChange?.(effectiveState);
+  }, [effectiveState, onStateChange]);
+
+  // Effective disabled state (disabled if explicitly disabled OR loading)
+  const isDisabled = disabled || loading;
 
   const createTagId = React.useCallback(() => {
     idCounter.current += 1;
@@ -47,6 +68,8 @@ function TagInput({
 
   const addTag = React.useCallback(
     (label: string) => {
+      if (isDisabled) return;
+
       const trimmedLabel = label.trim();
       if (!trimmedLabel) return;
 
@@ -67,19 +90,23 @@ function TagInput({
       onTagAdd?.(newTag);
       setInputValue("");
     },
-    [allowDuplicates, createTagId, maxTags, onTagAdd, onTagsChange, tags],
+    [allowDuplicates, createTagId, isDisabled, maxTags, onTagAdd, onTagsChange, tags],
   );
 
   const removeTag = React.useCallback(
     (tagToRemove: Tag) => {
+      if (isDisabled) return;
+
       const newTags = tags.filter((tag) => tag.id !== tagToRemove.id);
       onTagsChange(newTags);
       onTagRemove?.(tagToRemove);
     },
-    [onTagRemove, onTagsChange, tags],
+    [isDisabled, onTagRemove, onTagsChange, tags],
   );
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (isDisabled) return;
+
     if (event.key === "Enter") {
       event.preventDefault();
       addTag(inputValue);
@@ -97,11 +124,20 @@ function TagInput({
   return (
     <div
       data-slot="tag-input"
+      data-state={effectiveState}
+      data-error={error ? "true" : undefined}
+      data-required={required ? "true" : undefined}
+      aria-disabled={isDisabled || undefined}
+      aria-invalid={error ? "true" : required ? "false" : undefined}
+      aria-required={required || undefined}
+      aria-busy={loading || undefined}
       className={cn(
         "flex min-h-10 w-full flex-wrap gap-2 rounded-md border px-3 py-2 transition-colors",
         variant === "default" && "border-border bg-muted/30 focus-within:border-border/70",
         variant === "outline" && "border-border/60 bg-transparent focus-within:border-ring",
-        disabled && "cursor-not-allowed opacity-50",
+        isDisabled && "cursor-not-allowed opacity-50",
+        error && "ring-2 ring-foundation-accent-red/50",
+        loading && "animate-pulse",
         className,
       )}
       onClick={() => inputRef.current?.focus()}
@@ -113,10 +149,11 @@ function TagInput({
             type="button"
             onClick={(event) => {
               event.stopPropagation();
+              if (isDisabled) return;
               removeTag(tag);
             }}
-            disabled={disabled}
-            className="rounded-sm opacity-70 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring"
+            disabled={isDisabled}
+            className="rounded-sm opacity-70 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label={`Remove ${tag.label}`}
           >
             <IconX className="size-3" />
@@ -133,10 +170,10 @@ function TagInput({
           onKeyDown={handleKeyDown}
           onBlur={handleBlur}
           placeholder={tags.length === 0 ? placeholder : ""}
-          disabled={disabled}
+          disabled={isDisabled}
           className={cn(
             "flex-1 min-w-[120px] bg-transparent text-sm outline-none placeholder:text-muted-foreground",
-            disabled && "cursor-not-allowed",
+            isDisabled && "cursor-not-allowed",
           )}
           {...props}
         />
