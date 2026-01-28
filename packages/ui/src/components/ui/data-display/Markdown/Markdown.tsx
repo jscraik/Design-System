@@ -3,8 +3,9 @@ import * as React from "react";
 import { CodeBlock } from "../CodeBlock";
 import { TextLink } from "../../base/TextLink";
 import { cn } from "../../utils";
+import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
-export interface MarkdownProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface MarkdownProps extends React.HTMLAttributes<HTMLDivElement>, StatefulComponentProps {
   content: string;
   components?: Record<string, React.ComponentType<React.ComponentPropsWithoutRef<"span">>>;
 }
@@ -178,20 +179,74 @@ const parseInline = (text: string): React.ReactNode => {
   return parts.length > 0 ? parts : text;
 };
 
-function Markdown({ content, className, components: _components, ...props }: MarkdownProps) {
-  const elements = React.useMemo(() => parseMarkdown(content), [content]);
+/**
+ * Renders markdown content with support for headings, lists, code blocks, and more.
+ *
+ * Supports stateful props for loading, error, and disabled states.
+ * When loading, shows loading state. When error, shows error message.
+ *
+ * @param props - Markdown props and stateful options.
+ * @returns The markdown content element.
+ *
+ * @example
+ * ```tsx
+ * <Markdown content="# Hello\n\nThis is **bold** text." />
+ * <Markdown content="..." loading />
+ * <Markdown content="..." error="Failed to parse" />
+ * ```
+ */
+function Markdown({
+  content,
+  className,
+  components: _components,
+  loading = false,
+  error,
+  disabled = false,
+  required,
+  onStateChange,
+  ...props
+}: MarkdownProps) {
+  // Determine effective state (priority: loading > error > disabled > default)
+  const effectiveState: ComponentState = loading
+    ? "loading"
+    : error
+      ? "error"
+      : disabled
+        ? "disabled"
+        : "default";
+
+  // Notify parent of state changes
+  React.useEffect(() => {
+    onStateChange?.(effectiveState);
+  }, [effectiveState, onStateChange]);
+
+  // Effective disabled state (disabled if explicitly disabled OR loading)
+  const isDisabled = disabled || loading;
+
+  const elements = React.useMemo(() => (loading || error ? [] : parseMarkdown(content)), [content, loading, error]);
 
   return (
     <div
       data-slot="markdown"
+      data-state={effectiveState}
+      data-error={error ? "true" : undefined}
+      data-required={required ? "true" : undefined}
+      aria-disabled={isDisabled || undefined}
+      aria-invalid={error ? "true" : required ? "false" : undefined}
+      aria-required={required || undefined}
+      aria-busy={loading || undefined}
       className={cn(
         "max-w-none text-foreground",
         "[&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
+        isDisabled && "opacity-50 pointer-events-none",
+        loading && "animate-pulse",
         className,
       )}
       {...props}
     >
-      {elements}
+      {loading && <p className="text-muted-foreground">Loading markdown...</p>}
+      {error && <p className="text-foundation-accent-red">{error}</p>}
+      {!loading && !error && elements}
     </div>
   );
 }
