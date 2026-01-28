@@ -35,14 +35,15 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "@astudio/runtime": resolve(__dirname, "../runtime/src"),
-      "@astudio/tokens": resolve(__dirname, "../tokens/src"),
+      // Updated to use DesignStudio package names
+      "@design-studio/runtime": resolve(__dirname, "../runtime/src"),
+      "@design-studio/tokens": resolve(__dirname, "../tokens/src"),
     },
   },
   build: {
     lib: {
       entry: entries,
-      name: "ChatUI",
+      name: "DesignStudioUI",
       formats: ["es"],
       fileName: (_format, entryName) => `${entryName}.js`,
     },
@@ -52,6 +53,45 @@ export default defineConfig({
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
+        },
+        // Enable build-time code splitting for category imports
+        manualChunks: (id) => {
+          // Group UI components by category for optimal tree-shaking
+          if (id.includes("/src/components/ui/base/")) {
+            return "base";
+          }
+          if (id.includes("/src/components/ui/chat/")) {
+            return "chat";
+          }
+          if (id.includes("/src/components/ui/navigation/")) {
+            return "navigation";
+          }
+          if (id.includes("/src/components/ui/overlays/")) {
+            return "overlays";
+          }
+          if (id.includes("/src/components/ui/forms/")) {
+            return "forms";
+          }
+          if (id.includes("/src/components/ui/layout/")) {
+            return "layout";
+          }
+          if (id.includes("/src/components/ui/data-display/")) {
+            return "data-display";
+          }
+          if (id.includes("/src/components/ui/feedback/")) {
+            return "feedback";
+          }
+          if (id.includes("/src/icons/")) {
+            return "icons";
+          }
+          if (id.includes("/src/app/")) {
+            return "app";
+          }
+          if (id.includes("/src/templates/")) {
+            return "templates";
+          }
+          // Default chunk for utilities and other exports
+          return undefined;
         },
       },
     },

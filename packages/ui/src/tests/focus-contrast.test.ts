@@ -1,7 +1,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { colorTokens } from "@astudio/tokens";
+import { colorTokens } from "@design-studio/tokens";
 
 const ROOT_DIR = resolve(process.cwd(), "..", "..");
 const COMPONENTS_DIR = join(ROOT_DIR, "packages/ui/src/components");

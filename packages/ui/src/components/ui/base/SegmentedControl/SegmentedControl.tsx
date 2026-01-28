@@ -20,8 +20,7 @@ export interface SegmentOption<T extends string = string> {
 /**
  * Props for the segmented control component.
  */
-export interface SegmentedControlProps<T extends string = string>
-  extends StatefulComponentProps {
+export interface SegmentedControlProps<T extends string = string> extends StatefulComponentProps {
   /** Currently selected value */
   value?: T;
   /** Callback when selection changes */

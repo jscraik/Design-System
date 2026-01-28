@@ -21,41 +21,87 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (id.includes("@design-studio/ui")) {
-            if (id.includes("/dist/")) {
-              if (id.includes("/chat.")) return "astudio-chat";
-              if (
-                id.includes("/settings.") ||
-                id.includes("/account-") ||
-                id.includes("/SettingRow-") ||
-                id.includes("/DiscoverySettingsModal")
-              ) {
-                return "astudio-settings";
-              }
-              if (id.includes("/forms.") || id.includes("/form-") || id.includes("/range-slider")) {
-                return "astudio-forms";
-              }
-              if (id.includes("/layout.") || id.includes("/tabs-")) {
-                return "astudio-navigation";
-              }
-              if (id.includes("/progress-") || id.includes("/chart-")) {
-                return "astudio-data";
-              }
-              if (id.includes("/button-") || id.includes("/icon-button") || id.includes("/card-")) {
-                return "astudio-base";
-              }
-              if (id.includes("/utils-")) return "astudio-utils";
-              if (id.includes("/templates.")) return "astudio-templates";
-              if (id.includes("/showcase.")) return "astudio-showcase";
-              if (id.includes("/dev.")) return "astudio-dev";
-              return "astudio-core";
+        // Category-based manual chunks for optimal tree-shaking
+        // This enables imports like: import { Button, Input } from "@design-studio/ui"
+        // while only bundling the categories actually used
+        manualChunks: (id) => {
+          // DesignStudio UI package - split by category
+          if (id.includes("@design-studio/ui") || id.includes("/packages/ui/")) {
+            // Source files during development
+            if (id.includes("/src/components/ui/base/")) {
+              return "design-studio-base";
             }
-            return "astudio-core";
+            if (id.includes("/src/components/ui/chat/")) {
+              return "design-studio-chat";
+            }
+            if (id.includes("/src/components/ui/navigation/")) {
+              return "design-studio-navigation";
+            }
+            if (id.includes("/src/components/ui/overlays/")) {
+              return "design-studio-overlays";
+            }
+            if (id.includes("/src/components/ui/forms/")) {
+              return "design-studio-forms";
+            }
+            if (id.includes("/src/components/ui/layout/")) {
+              return "design-studio-layout";
+            }
+            if (id.includes("/src/components/ui/data-display/")) {
+              return "design-studio-data";
+            }
+            if (id.includes("/src/components/ui/feedback/")) {
+              return "design-studio-feedback";
+            }
+            if (id.includes("/src/icons/")) {
+              return "design-studio-icons";
+            }
+
+            // Built dist files
+            if (id.includes("/dist/")) {
+              // Category entry points
+              if (id.includes("/base.js")) {
+                return "design-studio-base";
+              }
+              if (id.includes("/chat.js")) {
+                return "design-studio-chat";
+              }
+              if (id.includes("/navigation.js")) {
+                return "design-studio-navigation";
+              }
+              if (id.includes("/overlays.js")) {
+                return "design-studio-overlays";
+              }
+              if (id.includes("/forms.js")) {
+                return "design-studio-forms";
+              }
+              if (id.includes("/layout.js")) {
+                return "design-studio-layout";
+              }
+              if (id.includes("/data-display.js")) {
+                return "design-studio-data";
+              }
+              if (id.includes("/feedback.js")) {
+                return "design-studio-feedback";
+              }
+              if (id.includes("/icons.js")) {
+                return "design-studio-icons";
+              }
+              // Main index and other exports
+              return "design-studio-core";
+            }
           }
-          if (id.includes("@astudio/tokens") || id.includes("/packages/tokens/")) {
-            return "astudio-tokens";
+
+          // DesignStudio tokens
+          if (id.includes("@design-studio/tokens")) {
+            return "design-studio-tokens";
           }
+
+          // DesignStudio runtime
+          if (id.includes("@design-studio/runtime")) {
+            return "design-studio-runtime";
+          }
+
+          // node_modules
           if (id.includes("node_modules")) {
             if (id.includes("react-dom") || id.includes("react")) {
               return "react";
@@ -69,39 +115,9 @@ export default defineConfig({
             if (id.includes("@openai")) {
               return "openai";
             }
-            if (id.includes("lodash")) {
-              return "lodash";
-            }
             return "vendor";
           }
-          if (id.includes("/packages/ui/dist/")) {
-            if (id.includes("/chat.")) return "astudio-chat";
-            if (
-              id.includes("/settings.") ||
-              id.includes("/account-") ||
-              id.includes("/SettingRow-") ||
-              id.includes("/DiscoverySettingsModal")
-            ) {
-              return "astudio-settings";
-            }
-            if (id.includes("/forms.") || id.includes("/form-") || id.includes("/range-slider")) {
-              return "astudio-forms";
-            }
-            if (id.includes("/layout.") || id.includes("/tabs-")) {
-              return "astudio-navigation";
-            }
-            if (id.includes("/progress-") || id.includes("/chart-")) {
-              return "astudio-data";
-            }
-            if (id.includes("/button-") || id.includes("/icon-button") || id.includes("/card-")) {
-              return "astudio-base";
-            }
-            if (id.includes("/utils-")) return "astudio-utils";
-            if (id.includes("/templates.")) return "astudio-templates";
-            if (id.includes("/showcase.")) return "astudio-showcase";
-            if (id.includes("/dev.")) return "astudio-dev";
-            return "astudio-core";
-          }
+
           return undefined;
         },
       },
