@@ -10,6 +10,11 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../../utils";
 import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
+// Forward ref types for compound sub-components
+type ForwardRefButton = React.ForwardRefExoticComponent<
+  React.ComponentPropsWithoutRef<"button"> & React.RefAttributes<HTMLButtonElement>
+>;
+
 /**
  * Loading spinner component for button loading state
  */
@@ -64,9 +69,160 @@ const buttonVariants = cva(
 );
 
 /**
+ * Context for compound button mode.
+ * Only active when variant="compound".
+ */
+interface CompoundButtonContextValue {
+  isCompound: boolean;
+}
+
+const CompoundButtonContext = React.createContext<CompoundButtonContextValue>({
+  isCompound: false,
+});
+CompoundButtonContext.displayName = "CompoundButtonContext";
+
+/**
+ * Button sub-component for primary action in compound mode.
+ *
+ * Used within Button variant="compound" wrapper.
+ *
+ * @example
+ * ```tsx
+ * <Button variant="compound">
+ *   <Button.Primary>Save</Button.Primary>
+ *   <Button.Secondary>Cancel</Button.Secondary>
+ * </Button>
+ * ```
+ */
+const Primary = React.forwardRef<HTMLButtonElement, React.ComponentProps<"button">>(
+  ({ className, children, ...props }, ref) => {
+    const { isCompound } = React.useContext(CompoundButtonContext);
+
+    if (!isCompound) {
+      console.warn(
+        "Button.Primary can only be used within Button variant='compound'. " +
+          "Using it standalone will not apply compound styling.",
+      );
+    }
+
+    return (
+      <button
+        ref={ref}
+        data-slot="button-primary"
+        className={cn(buttonVariants({ variant: "default", size: "default" }), "flex-1", className)}
+        {...props}
+      >
+        {children}
+      </button>
+    );
+  },
+);
+Primary.displayName = "Button.Primary";
+
+/**
+ * Button sub-component for secondary action in compound mode.
+ *
+ * Used within Button variant="compound" wrapper.
+ *
+ * @example
+ * ```tsx
+ * <Button variant="compound">
+ *   <Button.Primary>Save</Button.Primary>
+ *   <Button.Secondary>Cancel</Button.Secondary>
+ * </Button>
+ * ```
+ */
+const Secondary = React.forwardRef<HTMLButtonElement, React.ComponentProps<"button">>(
+  ({ className, children, ...props }, ref) => {
+    const { isCompound } = React.useContext(CompoundButtonContext);
+
+    if (!isCompound) {
+      console.warn(
+        "Button.Secondary can only be used within Button variant='compound'. " +
+          "Using it standalone will not apply compound styling.",
+      );
+    }
+
+    return (
+      <button
+        ref={ref}
+        data-slot="button-secondary"
+        className={cn(buttonVariants({ variant: "outline", size: "default" }), "flex-1", className)}
+        {...props}
+      >
+        {children}
+      </button>
+    );
+  },
+);
+Secondary.displayName = "Button.Secondary";
+
+/**
+ * Button sub-component for icon-only buttons in compound mode.
+ *
+ * Used within Button variant="compound" wrapper.
+ *
+ * @example
+ * ```tsx
+ * <Button variant="compound">
+ *   <Button.Primary>Save</Button.Primary>
+ *   <Button.Icon icon={<SaveIcon />} />
+ * </Button>
+ * ```
+ */
+const Icon = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentProps<"button"> & { icon?: React.ReactNode }
+>(({ className, children, icon, ...props }, ref) => {
+  const { isCompound } = React.useContext(CompoundButtonContext);
+
+  if (!isCompound) {
+    console.warn(
+      "Button.Icon can only be used within Button variant='compound'. " +
+        "Using it standalone will not apply compound styling.",
+    );
+  }
+
+  return (
+    <button
+      ref={ref}
+      data-slot="button-icon"
+      className={cn(
+        buttonVariants({ variant: "ghost", size: "icon" }),
+        "flex-1 flex items-center justify-center",
+        className,
+      )}
+      {...props}
+    >
+      {icon}
+      {children}
+    </button>
+  );
+});
+Icon.displayName = "Button.Icon";
+
+/**
  * Renders a styled button with size and visual variants.
  *
+ * **Hybrid Pattern:**
+ * - **Props API (default)**: Simple usage with variant/size props
+ * - **Compound API (opt-in)**: Advanced composition with sub-components
+ *
  * Supports stateful props for loading, error, disabled, and required states.
+ *
+ * **Props API (default):**
+ * ```tsx
+ * <Button variant="secondary" size="sm">Cancel</Button>
+ * <Button loading>Loading...</Button>
+ * ```
+ *
+ * **Compound API (opt-in):**
+ * ```tsx
+ * <Button variant="compound">
+ *   <Button.Primary>Save</Button.Primary>
+ *   <Button.Secondary>Cancel</Button.Secondary>
+ * </Button>
+ * ```
  *
  * Accessibility contract:
  * - Uses native `button` semantics by default.
@@ -75,21 +231,14 @@ const buttonVariants = cva(
  * - Error state applies error styling.
  *
  * @param props - Button props including variant, size, and stateful options.
- * @param props.variant - Visual style for the button.
- * @param props.size - Size variant for the button.
+ * @param props.variant - Visual style for the button OR "compound" for advanced composition.
+ * @param props.size - Size variant for the button (not used in compound mode).
  * @param props.asChild - Renders the child element via Radix Slot (default: `false`).
  * @param props.loading - Shows loading spinner and disables button (default: `false`).
  * @param props.error - Error message, applies error styling when set.
  * @param props.disabled - Disabled state (also set automatically when loading).
  * @param props.onStateChange - Callback when component state changes.
- * @returns A styled button element.
- *
- * @example
- * ```tsx
- * <Button variant="secondary" size="sm">Cancel</Button>
- * <Button loading>Loading...</Button>
- * <Button error="Failed to submit">Retry</Button>
- * ```
+ * @returns A styled button element or compound button wrapper.
  */
 function Button({
   className,
@@ -106,8 +255,9 @@ function Button({
   VariantProps<typeof buttonVariants> &
   StatefulComponentProps & {
     asChild?: boolean;
+    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | "compound";
   }) {
-  const Comp = asChild ? Slot : "button";
+  const isCompound = variant === "compound";
 
   // Determine effective state
   const effectiveState: ComponentState = loading
@@ -125,6 +275,32 @@ function Button({
 
   // Button is effectively disabled when loading or explicitly disabled
   const isDisabled = disabled || loading;
+
+  // Compound mode: render wrapper with context
+  if (isCompound) {
+    return (
+      <CompoundButtonContext.Provider value={{ isCompound: true }}>
+        <div
+          data-slot="button-compound"
+          data-state={effectiveState}
+          data-error={error ? "true" : undefined}
+          className={cn(
+            "inline-flex items-center gap-2",
+            // Error state styling for compound container
+            error && "ring-2 ring-foundation-accent-red/50",
+            // Loading state styling for compound container
+            loading && "opacity-70 cursor-wait",
+            className,
+          )}
+        >
+          {children}
+        </div>
+      </CompoundButtonContext.Provider>
+    );
+  }
+
+  // Props-based mode: render single button (existing behavior)
+  const Comp = asChild ? Slot : "button";
 
   // When using asChild with Slot, we can only have one child
   // The loading spinner can't be rendered in asChild mode
@@ -160,4 +336,8 @@ function Button({
   );
 }
 
-export { Button, buttonVariants };
+Button.Primary = Primary;
+Button.Secondary = Secondary;
+Button.Icon = Icon;
+
+export { Button, ButtonSpinner, buttonVariants };
