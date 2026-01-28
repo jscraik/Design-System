@@ -70,7 +70,11 @@ export async function doctor(opts: CliArgs): Promise<number> {
   const durationMs = Date.now() - started;
   const hasError = checks.some((check) => check.status === "error");
   const hasWarn = checks.some((check) => check.status === "warn");
-  const overallStatus: "success" | "warn" | "error" = hasError ? "error" : hasWarn ? "warn" : "success";
+  const overallStatus: "success" | "warn" | "error" = hasError
+    ? "error"
+    : hasWarn
+      ? "warn"
+      : "success";
 
   if (opts.json) {
     outputJson(

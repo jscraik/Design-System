@@ -8,8 +8,8 @@
  *   npx tsx scripts/migration/migrate-imports.ts [--apply] [--dry-run] [--verbose]
  */
 
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
-import { join, relative, extname } from 'path';
+import { readFileSync, writeFileSync, readdirSync, statSync } from "fs";
+import { join, relative, extname } from "path";
 
 interface Options {
   apply: boolean;
@@ -20,29 +20,29 @@ interface Options {
 
 // Migration mapping
 const MIGRATIONS = {
-  '@astudio/ui': '@design-studio/ui',
-  '@astudio/runtime': '@design-studio/runtime',
-  '@astudio/tokens': '@design-studio/tokens',
-  '@astudio/icons': '@design-studio/ui/icons',
+  "@astudio/ui": "@design-studio/ui",
+  "@astudio/runtime": "@design-studio/runtime",
+  "@astudio/tokens": "@design-studio/tokens",
+  "@astudio/icons": "@design-studio/ui/icons",
 } as const;
 
 // Files to ignore
 const IGNORE_PATTERNS = [
-  'node_modules',
-  'dist',
-  'build',
-  '.git',
-  'packages/design-studio-*',
-  'scripts/migration',
-  '.spec',
-  'coverage',
+  "node_modules",
+  "dist",
+  "build",
+  ".git",
+  "packages/design-studio-*",
+  "scripts/migration",
+  ".spec",
+  "coverage",
 ];
 
 function shouldIgnoreFile(filePath: string): boolean {
-  return IGNORE_PATTERNS.some(pattern => filePath.includes(pattern));
+  return IGNORE_PATTERNS.some((pattern) => filePath.includes(pattern));
 }
 
-function getAllFiles(dir: string, extensions: string[] = ['.ts', '.tsx', '.js', '.jsx']): string[] {
+function getAllFiles(dir: string, extensions: string[] = [".ts", ".tsx", ".js", ".jsx"]): string[] {
   const files: string[] = [];
 
   try {
@@ -69,18 +69,23 @@ function getAllFiles(dir: string, extensions: string[] = ['.ts', '.tsx', '.js', 
   return files;
 }
 
-function migrateImports(content: string, filePath: string): { changed: boolean; content: string; changes: string[] } {
+function migrateImports(
+  content: string,
+  filePath: string,
+): { changed: boolean; content: string; changes: string[] } {
   let newContent = content;
   const changes: string[] = [];
   let changed = false;
 
   for (const [from, to] of Object.entries(MIGRATIONS)) {
-    const regex = new RegExp(`from ['"](${from})`, 'g');
+    const regex = new RegExp(`from ['"](${from})`, "g");
     const matches = content.match(regex);
 
     if (matches) {
       newContent = newContent.replace(regex, `from '${to}'`);
-      changes.push(`  ${from} → ${to} (${matches.length} occurrence${matches.length > 1 ? 's' : ''})`);
+      changes.push(
+        `  ${from} → ${to} (${matches.length} occurrence${matches.length > 1 ? "s" : ""})`,
+      );
       changed = true;
     }
   }
@@ -91,9 +96,9 @@ function migrateImports(content: string, filePath: string): { changed: boolean; 
 function main() {
   const args = process.argv.slice(2);
   const options: Options = {
-    apply: args.includes('--apply'),
-    dryRun: args.includes('--dry-run') || !args.includes('--apply'),
-    verbose: args.includes('--verbose'),
+    apply: args.includes("--apply"),
+    dryRun: args.includes("--dry-run") || !args.includes("--apply"),
+    verbose: args.includes("--verbose"),
   };
 
   const basePath = process.cwd();
@@ -105,7 +110,7 @@ function main() {
   const changedFiles: string[] = [];
 
   for (const file of files) {
-    const content = readFileSync(file, 'utf-8');
+    const content = readFileSync(file, "utf-8");
     const result = migrateImports(content, file);
 
     if (result.changed) {
@@ -116,16 +121,16 @@ function main() {
       console.log(`✓ ${relativePath}`);
 
       if (options.verbose && result.changes.length > 0) {
-        result.changes.forEach(change => console.log(change));
+        result.changes.forEach((change) => console.log(change));
       }
 
       if (options.apply) {
-        writeFileSync(file, result.content, 'utf-8');
+        writeFileSync(file, result.content, "utf-8");
       }
     }
   }
 
-  console.log(`\n${options.dryRun ? 'Dry run results:' : 'Migration complete:'}`);
+  console.log(`\n${options.dryRun ? "Dry run results:" : "Migration complete:"}`);
   console.log(`  Files checked: ${files.length}`);
   console.log(`  Files to change: ${totalChanged}`);
 

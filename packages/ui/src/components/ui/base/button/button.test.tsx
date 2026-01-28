@@ -205,9 +205,7 @@ describe("Button", () => {
 
       it("applies error focus ring", () => {
         render(<Button error="Failed">Retry</Button>);
-        expect(screen.getByRole("button")).toHaveClass(
-          "focus-visible:ring-foundation-accent-red",
-        );
+        expect(screen.getByRole("button")).toHaveClass("focus-visible:ring-foundation-accent-red");
       });
     });
 

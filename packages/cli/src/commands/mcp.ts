@@ -3,10 +3,7 @@ import type { Argv } from "yargs";
 import { handleRun } from "../utils/exec.js";
 import { handleMcpRpc, resolveMcpConfigWithOverrides } from "../utils/mcp.js";
 import { readParamsInput } from "../utils/json.js";
-import {
-  MCP_METHOD_TOOLS_LIST,
-  MCP_CONFIG_OPTIONS,
-} from "../constants.js";
+import { MCP_METHOD_TOOLS_LIST, MCP_CONFIG_OPTIONS } from "../constants.js";
 import { CliError, ERROR_CODES, EXIT_CODES } from "../error.js";
 
 export async function mcpDevCommand(argv: CliArgs): Promise<number> {
@@ -57,7 +54,13 @@ export async function mcpToolsCommand(args: {
   }
 
   const parsedArgs = await readParamsInput(toolArgs);
-  return handleMcpRpc(argv, config, "tools/call", { name, arguments: parsedArgs ?? {} }, "tools/call");
+  return handleMcpRpc(
+    argv,
+    config,
+    "tools/call",
+    { name, arguments: parsedArgs ?? {} },
+    "tools/call",
+  );
 }
 
 export async function mcpResourcesCommand(args: {

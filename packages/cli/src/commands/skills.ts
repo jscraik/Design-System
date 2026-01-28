@@ -1,7 +1,13 @@
 import type { Argv } from "yargs";
 import type { CliArgs } from "../types.js";
 import type { SkillPlatform } from "@astudio/skill-ingestion";
-import { RemoteSkillClient, installSkillFromZip, platformRootPath, platformStorageKey, publishSkill } from "@astudio/skill-ingestion";
+import {
+  RemoteSkillClient,
+  installSkillFromZip,
+  platformRootPath,
+  platformStorageKey,
+  publishSkill,
+} from "@astudio/skill-ingestion";
 import { emitSkillResults, emitSkillInstall, emitPublishResult } from "../utils/output.js";
 import { CliError, ERROR_CODES, EXIT_CODES } from "../error.js";
 import path from "node:path";
@@ -67,7 +73,10 @@ export async function skillsPublishCommand(args: {
 }): Promise<void> {
   const { skillPath, slug, latestVersion, bump, changelog, tags, dryRun, argv } = args;
   const resolvedSlug = slug ?? path.basename(skillPath);
-  const parsedTags = tags?.split(",").map((t) => t.trim()).filter(Boolean);
+  const parsedTags = tags
+    ?.split(",")
+    .map((t) => t.trim())
+    .filter(Boolean);
   const result = await publishSkill({
     skillPath,
     slug: resolvedSlug,
@@ -167,7 +176,7 @@ export function skillsCommand(yargs: Argv): Argv {
           skillPath: path.resolve(argv.path as string),
           slug: argv.slug as string | undefined,
           latestVersion: argv["latest-version"] as string | undefined,
-          bump: argv.bump as "major" | "minor" | "patch" ?? "patch",
+          bump: (argv.bump as "major" | "minor" | "patch") ?? "patch",
           changelog: argv.changelog as string | undefined,
           tags: argv.tags as string | undefined,
           dryRun: argv["dry-run"] as boolean | undefined,

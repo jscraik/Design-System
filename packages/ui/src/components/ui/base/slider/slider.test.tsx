@@ -61,13 +61,19 @@ describe("Slider", () => {
 
       it("applies error border to track", () => {
         render(<Slider error="Value too high" defaultValue={[50]} />);
-        const track = screen.getByRole("slider").closest("[data-slot='slider']")?.querySelector("[data-slot='slider-track']");
+        const track = screen
+          .getByRole("slider")
+          .closest("[data-slot='slider']")
+          ?.querySelector("[data-slot='slider-track']");
         expect(track).toHaveClass("border-destructive/50");
       });
 
       it("applies error background to range", () => {
         render(<Slider error="Value too high" defaultValue={[50]} />);
-        const range = screen.getByRole("slider").closest("[data-slot='slider']")?.querySelector("[data-slot='slider-range']");
+        const range = screen
+          .getByRole("slider")
+          .closest("[data-slot='slider']")
+          ?.querySelector("[data-slot='slider-range']");
         expect(range).toHaveClass("bg-destructive");
       });
 
@@ -167,7 +173,9 @@ describe("Slider", () => {
 
     it("does not trigger onChange when disabled", async () => {
       const onValueChange = vi.fn();
-      const { user } = render(<Slider disabled defaultValue={[50]} onValueChange={onValueChange} />);
+      const { user } = render(
+        <Slider disabled defaultValue={[50]} onValueChange={onValueChange} />,
+      );
 
       const slider = screen.getByRole("slider");
       await user.click(slider);
@@ -201,7 +209,9 @@ describe("Slider", () => {
 
     it("does not trigger onChange when disabled", async () => {
       const onValueChange = vi.fn();
-      const { user } = render(<Slider disabled defaultValue={[50]} onValueChange={onValueChange} />);
+      const { user } = render(
+        <Slider disabled defaultValue={[50]} onValueChange={onValueChange} />,
+      );
 
       const slider = screen.getByRole("slider");
       await user.click(slider);

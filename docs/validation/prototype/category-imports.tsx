@@ -5,14 +5,14 @@
  * import { Button, Input, Tabs } from "@design-studio/ui";
  */
 
-import React from 'react';
-import { Button, Input, Tabs, ChatInput } from './components';
+import React from "react";
+import { Button, Input, Tabs, ChatInput } from "./components";
 
 export default function CategoryImportsApp() {
   return (
     <div>
       <h1>Category Imports Test</h1>
-      <Button onClick={() => console.log('clicked')}>Click Me</Button>
+      <Button onClick={() => console.log("clicked")}>Click Me</Button>
       <Input placeholder="Type here..." />
       <Tabs>
         <div>Tab 1</div>

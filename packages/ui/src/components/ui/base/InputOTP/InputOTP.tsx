@@ -4,33 +4,145 @@ import * as React from "react";
 import { OTPInput, OTPInputContext } from "input-otp";
 
 import { cn } from "../../utils";
+import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
- * Renders an OTP input using the `input-otp` package.
+ * Error message display for InputOTP.
+ */
+function InputOTPError({ message, id }: { message: string; id?: string }) {
+  return (
+    <span id={id} className="text-destructive text-body-small mt-1 flex items-center gap-1">
+      <svg className="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+        <path
+          fillRule="evenodd"
+          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+          clipRule="evenodd"
+        />
+      </svg>
+      {message}
+    </span>
+  );
+}
+
+/**
+ * InputOTP container wrapper that includes the OTP input and optional error message.
+ */
+function InputOTPWrapper({
+  children,
+  error,
+  required,
+  errorId,
+}: {
+  children: React.ReactNode;
+  error?: string;
+  required?: boolean;
+  errorId?: string;
+}) {
+  return (
+    <div className="flex flex-col">
+      {children}
+      {error && <InputOTPError message={error} id={errorId} />}
+      {required && !error && (
+        <span className="text-destructive text-body-small mt-1" aria-hidden="true">
+          * Required
+        </span>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Renders an OTP input using the `input-otp` package with stateful props support.
  *
- * @param props - OTP input props plus optional container class name.
- * @returns An OTP input element.
+ * Supports error, loading, disabled, and required states.
+ *
+ * Accessibility contract:
+ * - Provide a visible label or `aria-label`/`aria-labelledby`.
+ * - Error state is announced via aria-invalid and aria-describedby.
+ * - Required field shows visual indicator.
+ *
+ * @param props - OTP input props plus stateful options.
+ * @param props.error - Error message, applies error styling and shows error text.
+ * @param props.loading - Shows loading state (opacity reduced, cursor wait).
+ * @param props.disabled - Disabled state (pointer events none, opacity reduced).
+ * @param props.required - Required field indicator (default: `false`).
+ * @param props.onStateChange - Callback when component state changes.
+ * @returns An OTP input element with optional error message.
  *
  * @example
  * ```tsx
  * <InputOTP maxLength={6} />
+ * <InputOTP error="Invalid code" />
+ * <InputOTP loading />
+ * <InputOTP required />
  * ```
  */
 function InputOTP({
   className,
   containerClassName,
+  error,
+  loading = false,
+  disabled = false,
+  required = false,
+  onStateChange,
+  id,
   ...props
-}: React.ComponentProps<typeof OTPInput> & {
-  containerClassName?: string;
-}) {
-  return (
+}: React.ComponentProps<typeof OTPInput> &
+  StatefulComponentProps & {
+    containerClassName?: string;
+  }) {
+  // Generate a unique ID for the error message using React's useId
+  const generatedInputId = React.useId();
+  const inputId = id || generatedInputId;
+  const errorId = `${inputId}-error`;
+
+  // Determine effective state
+  const effectiveState: ComponentState = loading
+    ? "loading"
+    : error
+      ? "error"
+      : disabled
+        ? "disabled"
+        : "default";
+
+  // Notify parent of state changes
+  React.useEffect(() => {
+    onStateChange?.(effectiveState);
+  }, [effectiveState, onStateChange]);
+
+  const isDisabled = disabled || loading;
+
+  const inputElement = (
     <OTPInput
+      id={inputId}
       data-slot="input-otp"
-      containerClassName={cn("flex items-center gap-2 has-disabled:opacity-50", containerClassName)}
-      className={cn("disabled:cursor-not-allowed", className)}
+      data-state={effectiveState}
+      data-error={error ? "true" : undefined}
+      data-required={required ? "true" : undefined}
+      disabled={isDisabled}
+      aria-invalid={error ? "true" : undefined}
+      aria-describedby={error ? errorId : undefined}
+      aria-required={required ? "true" : undefined}
+      containerClassName={cn(
+        "flex items-center gap-2 has-disabled:opacity-50",
+        loading && "opacity-70",
+        containerClassName,
+      )}
+      className={cn("disabled:cursor-not-allowed", error && "border-destructive", className)}
       {...props}
     />
   );
+
+  // If error or required, wrap with container for error message/indicator
+  if (error || required) {
+    return (
+      <InputOTPWrapper error={error} required={required} errorId={errorId}>
+        {inputElement}
+      </InputOTPWrapper>
+    );
+  }
+
+  return inputElement;
 }
 
 /**
@@ -104,4 +216,4 @@ function InputOTPSeparator({ ...props }: React.ComponentProps<"div">) {
   );
 }
 
-export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator };
+export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator, InputOTPWrapper, InputOTPError };

@@ -79,9 +79,11 @@
      FOCUS RING
      ======================================================================= */
 
-  --ds-focus-ring: 0 0 0 1px var(--ds-color-border, var(--foundation-border-light)),
+  --ds-focus-ring:
+    0 0 0 1px var(--ds-color-border, var(--foundation-border-light)),
     0 0 0 4px var(--ds-color-focus, var(--foundation-text-light-primary));
-  --ds-focus-ring-inset: 0 0 0 1px var(--ds-color-border, var(--foundation-border-light)),
+  --ds-focus-ring-inset:
+    0 0 0 1px var(--ds-color-border, var(--foundation-border-light)),
     inset 0 0 0 2px var(--ds-color-focus, var(--foundation-text-light-primary));
   --ds-focus-radius: 2px;
   --ds-focus-width: 2px;

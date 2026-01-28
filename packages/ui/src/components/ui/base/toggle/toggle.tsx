@@ -132,12 +132,15 @@ export function Toggle({
   const { track, thumb, translate } = sizes[size];
 
   // Handle keyboard activation (Space/Enter)
-  const handleKeyDown = React.useCallback((e: React.KeyboardEvent) => {
-    if (!isDisabled && (e.key === " " || e.key === "Enter")) {
-      e.preventDefault();
-      onChange?.(!checked);
-    }
-  }, [isDisabled, checked, onChange]);
+  const handleKeyDown = React.useCallback(
+    (e: React.KeyboardEvent) => {
+      if (!isDisabled && (e.key === " " || e.key === "Enter")) {
+        e.preventDefault();
+        onChange?.(!checked);
+      }
+    },
+    [isDisabled, checked, onChange],
+  );
 
   return (
     <button
@@ -236,11 +239,7 @@ export function ToggleRow({
   return (
     <div className={cn("flex items-center justify-between", className)}>
       <div className="flex items-center gap-3">
-        {icon && (
-          <div className="text-muted-foreground">
-            {icon}
-          </div>
-        )}
+        {icon && <div className="text-muted-foreground">{icon}</div>}
         <div>
           <div id={labelId} className="text-body-small text-foreground">
             {label}

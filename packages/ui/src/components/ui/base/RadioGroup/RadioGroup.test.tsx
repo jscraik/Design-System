@@ -96,7 +96,11 @@ describe("RadioGroup", () => {
       it("calls onStateChange with error state", () => {
         const onStateChange = vi.fn();
         render(
-          <RadioGroup error="Error message" onStateChange={onStateChange} aria-label="Error radio group">
+          <RadioGroup
+            error="Error message"
+            onStateChange={onStateChange}
+            aria-label="Error radio group"
+          >
             <RadioGroupItem value="option1" />
           </RadioGroup>,
         );
@@ -157,7 +161,12 @@ describe("RadioGroup", () => {
       it("prioritizes loading over disabled state", () => {
         const onStateChange = vi.fn();
         render(
-          <RadioGroup loading disabled onStateChange={onStateChange} aria-label="Loading disabled radio group">
+          <RadioGroup
+            loading
+            disabled
+            onStateChange={onStateChange}
+            aria-label="Loading disabled radio group"
+          >
             <RadioGroupItem value="option1" />
           </RadioGroup>,
         );
@@ -167,7 +176,12 @@ describe("RadioGroup", () => {
       it("prioritizes error over other states", () => {
         const onStateChange = vi.fn();
         render(
-          <RadioGroup error="Error" loading onStateChange={onStateChange} aria-label="Error loading radio group">
+          <RadioGroup
+            error="Error"
+            loading
+            onStateChange={onStateChange}
+            aria-label="Error loading radio group"
+          >
             <RadioGroupItem value="option1" />
           </RadioGroup>,
         );

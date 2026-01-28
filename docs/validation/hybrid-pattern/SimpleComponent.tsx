@@ -7,11 +7,11 @@
  * Use case: 80% of components - simple configuration, standard use cases
  */
 
-import React from 'react';
+import React from "react";
 
 export interface SimpleComponentProps {
-  variant?: 'primary' | 'secondary' | 'danger';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: "primary" | "secondary" | "danger";
+  size?: "sm" | "md" | "lg";
   disabled?: boolean;
   loading?: boolean;
   children: React.ReactNode;
@@ -27,14 +27,14 @@ export interface SimpleComponentProps {
  * - No custom layout needs
  */
 export const SimpleComponent = ({
-  variant = 'primary',
-  size = 'md',
+  variant = "primary",
+  size = "md",
   disabled = false,
   loading = false,
   children,
   onClick,
 }: SimpleComponentProps) => {
-  const baseClasses = 'simple-component';
+  const baseClasses = "simple-component";
   const variantClasses = `${baseClasses}--${variant}`;
   const sizeClasses = `${baseClasses}--${size}`;
 
@@ -44,7 +44,7 @@ export const SimpleComponent = ({
       disabled={disabled || loading}
       onClick={onClick}
     >
-      {loading ? 'Loading...' : children}
+      {loading ? "Loading..." : children}
     </button>
   );
 };

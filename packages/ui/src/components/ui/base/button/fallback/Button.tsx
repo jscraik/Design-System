@@ -22,14 +22,7 @@ function ButtonSpinner() {
       viewBox="0 0 24 24"
       aria-hidden="true"
     >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      />
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
       <path
         className="opacity-75"
         fill="currentColor"
@@ -135,7 +128,9 @@ function Button({
 
   // When using asChild with Slot, we can only have one child
   // The loading spinner can't be rendered in asChild mode
-  const buttonChildren = asChild ? children : (
+  const buttonChildren = asChild ? (
+    children
+  ) : (
     <>
       {loading && <ButtonSpinner />}
       {children}
@@ -151,7 +146,8 @@ function Button({
       className={cn(
         buttonVariants({ variant, size, className }),
         // Error state styling
-        error && "border-foundation-accent-red text-foundation-accent-red hover:bg-foundation-accent-red/10",
+        error &&
+          "border-foundation-accent-red text-foundation-accent-red hover:bg-foundation-accent-red/10",
         // Loading state styling
         loading && "opacity-70 cursor-wait",
         // Focus ring for error state

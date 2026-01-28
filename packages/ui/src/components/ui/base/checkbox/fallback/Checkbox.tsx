@@ -24,14 +24,7 @@ function CheckboxSpinner() {
       viewBox="0 0 24 24"
       aria-hidden="true"
     >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      />
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
       <path
         className="opacity-75"
         fill="currentColor"
@@ -76,8 +69,7 @@ function Checkbox({
   onStateChange,
   checked,
   ...props
-}: React.ComponentProps<typeof CheckboxPrimitive.Root> &
-  StatefulComponentProps) {
+}: React.ComponentProps<typeof CheckboxPrimitive.Root> & StatefulComponentProps) {
   // Determine effective state (loading > error > disabled > indeterminate/checked > default)
   const effectiveState: ComponentState = loading
     ? "loading"
@@ -98,11 +90,7 @@ function Checkbox({
   const isDisabled = disabled || loading;
 
   // Render appropriate indicator based on state
-  const indicator = loading ? (
-    <CheckboxSpinner />
-  ) : (
-    <IconCheckmark className="size-3.5" />
-  );
+  const indicator = loading ? <CheckboxSpinner /> : <IconCheckmark className="size-3.5" />;
 
   return (
     <CheckboxPrimitive.Root

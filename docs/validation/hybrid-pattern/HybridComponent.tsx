@@ -9,7 +9,7 @@
  * Compound API: 20% of use cases (complex, custom layouts)
  */
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from "react";
 
 // ============================================================================
 // TYPES
@@ -17,7 +17,7 @@ import React, { createContext, useContext, useState } from 'react';
 
 export interface HybridComponentProps {
   // Variant selection
-  variant?: 'default' | 'compound';
+  variant?: "default" | "compound";
 
   // Props-based API (default mode)
   title?: string;
@@ -45,7 +45,9 @@ const HybridContext = createContext<HybridContextValue | null>(null);
 const useHybridContext = () => {
   const context = useContext(HybridContext);
   if (!context) {
-    throw new Error('HybridComponent sub-components must be used within HybridComponent in compound mode');
+    throw new Error(
+      "HybridComponent sub-components must be used within HybridComponent in compound mode",
+    );
   }
   return context;
 };
@@ -72,10 +74,10 @@ const useHybridContext = () => {
  *   </HybridComponent>
  */
 export const HybridComponent = ({
-  variant = 'default',
-  title = '',
-  description = '',
-  actionLabel = '',
+  variant = "default",
+  title = "",
+  description = "",
+  actionLabel = "",
   onAction = () => {},
   showIcon = false,
   children,
@@ -83,7 +85,7 @@ export const HybridComponent = ({
   const [internalState] = useState({ clicked: false });
 
   // Default mode: Use internal state and props
-  if (variant === 'default') {
+  if (variant === "default") {
     return (
       <div className="hybrid-component">
         {showIcon && <span className="icon">✨</span>}
@@ -155,9 +157,9 @@ HybridComponent.Action = ({ children }: { children: React.ReactNode }) => {
 // ============================================================================
 
 // This ensures TypeScript recognizes the sub-components
-HybridComponent.Title.displayName = 'HybridComponent.Title';
-HybridComponent.Description.displayName = 'HybridComponent.Description';
-HybridComponent.Action.displayName = 'HybridComponent.Action';
+HybridComponent.Title.displayName = "HybridComponent.Title";
+HybridComponent.Description.displayName = "HybridComponent.Description";
+HybridComponent.Action.displayName = "HybridComponent.Action";
 
 // Code size: ~3KB (3x SimpleComponent)
 // DX score: 4/5 (slightly more complex but still clear)

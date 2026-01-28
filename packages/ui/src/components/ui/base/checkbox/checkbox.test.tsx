@@ -121,7 +121,13 @@ describe("Checkbox", () => {
 
       it("calls onStateChange with error state", () => {
         const onStateChange = vi.fn();
-        render(<Checkbox error="Error message" onStateChange={onStateChange} aria-label="Error checkbox" />);
+        render(
+          <Checkbox
+            error="Error message"
+            onStateChange={onStateChange}
+            aria-label="Error checkbox"
+          />,
+        );
         expect(onStateChange).toHaveBeenCalledWith("error");
       });
     });
@@ -159,7 +165,12 @@ describe("Checkbox", () => {
       it("prioritizes loading over disabled state", () => {
         const onStateChange = vi.fn();
         render(
-          <Checkbox loading disabled onStateChange={onStateChange} aria-label="Loading disabled checkbox" />,
+          <Checkbox
+            loading
+            disabled
+            onStateChange={onStateChange}
+            aria-label="Loading disabled checkbox"
+          />,
         );
         expect(onStateChange).toHaveBeenCalledWith("loading");
       });
@@ -167,7 +178,12 @@ describe("Checkbox", () => {
       it("prioritizes error over other states", () => {
         const onStateChange = vi.fn();
         render(
-          <Checkbox error="Error" loading onStateChange={onStateChange} aria-label="Error loading checkbox" />,
+          <Checkbox
+            error="Error"
+            loading
+            onStateChange={onStateChange}
+            aria-label="Error loading checkbox"
+          />,
         );
         expect(onStateChange).toHaveBeenCalledWith("loading");
       });

@@ -133,11 +133,7 @@ export function ThemeProvider({
     effectiveTheme,
   };
 
-  return (
-    <ThemeContext.Provider value={contextValue}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={contextValue}>{children}</ThemeContext.Provider>;
 }
 
 /**

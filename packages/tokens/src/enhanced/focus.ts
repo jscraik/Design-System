@@ -70,11 +70,7 @@ export const focusStyles = {
 /**
  * Helper to build focus ring CSS string
  */
-export function focusRing(options?: {
-  inset?: boolean;
-  color?: string;
-  radius?: number;
-}): string {
+export function focusRing(options?: { inset?: boolean; color?: string; radius?: number }): string {
   const inset = options?.inset ? "inset " : "";
   const color = options?.color || "var(--ds-color-focus)";
   const offset = focus.ring.offset;

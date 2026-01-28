@@ -23,9 +23,7 @@ export function testCommand(args: {
     "e2e-web": ["test:e2e:web"],
     "a11y-widgets": ["test:a11y:widgets"],
     "visual-web": update ? ["test:visual:update"] : ["test:visual:web"],
-    "visual-storybook": update
-      ? ["test:visual:storybook:update"]
-      : ["test:visual:storybook"],
+    "visual-storybook": update ? ["test:visual:storybook:update"] : ["test:visual:storybook"],
     swift: ["test:swift"],
     "mcp-contract": ["test:mcp-contract"],
     all: ["test:cross-platform"],

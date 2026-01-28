@@ -236,9 +236,7 @@ export const microInteractionCSSVars = {
 /**
  * Helper to build hover transition string
  */
-export function hoverTransition(
-  properties: string | string[] = "transform",
-): string {
+export function hoverTransition(properties: string | string[] = "transform"): string {
   const props = Array.isArray(properties) ? properties.join(", ") : properties;
   return `${props} ${microInteractions.hover.duration}ms ${microInteractions.hover.easing}`;
 }
@@ -246,9 +244,7 @@ export function hoverTransition(
 /**
  * Helper to build press transition string
  */
-export function pressTransition(
-  properties: string | string[] = "transform",
-): string {
+export function pressTransition(properties: string | string[] = "transform"): string {
   const props = Array.isArray(properties) ? properties.join(", ") : properties;
   return `${props} ${microInteractions.press.duration}ms ${microInteractions.press.easing}`;
 }

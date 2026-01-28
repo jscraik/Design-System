@@ -156,4 +156,100 @@ describe("Textarea", () => {
       expect(screen.getByRole("textbox")).toHaveClass("min-h-16");
     });
   });
+
+  describe("error state", () => {
+    it("shows error message when error prop is provided", () => {
+      render(<Textarea error="This field is required" />);
+      expect(screen.getByText("This field is required")).toBeInTheDocument();
+    });
+
+    it("sets aria-invalid when error is present", () => {
+      render(<Textarea error="Invalid input" />);
+      expect(screen.getByRole("textbox")).toHaveAttribute("aria-invalid", "true");
+    });
+
+    it("applies error styling classes", () => {
+      render(<Textarea error="Invalid input" />);
+      const textarea = screen.getByRole("textbox");
+      expect(textarea).toHaveAttribute("data-error", "true");
+      expect(textarea).toHaveAttribute("data-state", "error");
+    });
+
+    it("links error message via aria-describedby", () => {
+      render(<Textarea id="test-textarea" error="Error message" />);
+      expect(screen.getByRole("textbox")).toHaveAttribute("aria-describedby");
+    });
+  });
+
+  describe("loading state", () => {
+    it("applies loading styling", () => {
+      render(<Textarea loading />);
+      const textarea = screen.getByRole("textbox");
+      expect(textarea).toHaveAttribute("data-state", "loading");
+      expect(textarea).toHaveClass("opacity-70", "cursor-wait");
+    });
+
+    it("disables textarea when loading", () => {
+      render(<Textarea loading />);
+      expect(screen.getByRole("textbox")).toBeDisabled();
+    });
+  });
+
+  describe("required state", () => {
+    it("shows required indicator asterisk", () => {
+      render(<Textarea required />);
+      const asterisk = screen.getByText("*");
+      expect(asterisk).toBeInTheDocument();
+      expect(asterisk).toHaveClass("text-destructive");
+    });
+
+    it("sets aria-required attribute", () => {
+      render(<Textarea required />);
+      expect(screen.getByRole("textbox")).toHaveAttribute("aria-required", "true");
+    });
+
+    it("does not show asterisk when disabled", () => {
+      render(<Textarea required disabled />);
+      expect(screen.queryByText("*")).not.toBeInTheDocument();
+    });
+
+    it("does not show asterisk when loading", () => {
+      render(<Textarea required loading />);
+      expect(screen.queryByText("*")).not.toBeInTheDocument();
+    });
+  });
+
+  describe("onStateChange callback", () => {
+    it("calls onStateChange with initial state", () => {
+      const onStateChange = vi.fn();
+      render(<Textarea onStateChange={onStateChange} />);
+      expect(onStateChange).toHaveBeenCalledWith("default");
+    });
+
+    it("calls onStateChange when error changes", () => {
+      const onStateChange = vi.fn();
+      const { rerender } = render(<Textarea onStateChange={onStateChange} />);
+      rerender(<Textarea error="Error" onStateChange={onStateChange} />);
+      expect(onStateChange).toHaveBeenLastCalledWith("error");
+    });
+
+    it("calls onStateChange when loading changes", () => {
+      const onStateChange = vi.fn();
+      const { rerender } = render(<Textarea onStateChange={onStateChange} />);
+      rerender(<Textarea loading onStateChange={onStateChange} />);
+      expect(onStateChange).toHaveBeenLastCalledWith("loading");
+    });
+
+    it("prioritizes loading over error state", () => {
+      const onStateChange = vi.fn();
+      render(<Textarea error="Error" loading onStateChange={onStateChange} />);
+      expect(onStateChange).toHaveBeenLastCalledWith("loading");
+    });
+
+    it("prioritizes error over disabled state", () => {
+      const onStateChange = vi.fn();
+      render(<Textarea error="Error" disabled onStateChange={onStateChange} />);
+      expect(onStateChange).toHaveBeenLastCalledWith("error");
+    });
+  });
 });

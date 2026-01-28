@@ -46,8 +46,7 @@ function Slider({
   required = false,
   onStateChange,
   ...props
-}: React.ComponentProps<typeof SliderPrimitive.Root> &
-  StatefulComponentProps) {
+}: React.ComponentProps<typeof SliderPrimitive.Root> & StatefulComponentProps) {
   const { "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, ...rootProps } = props;
 
   // Determine effective state
@@ -105,9 +104,7 @@ function Slider({
           className={cn(
             "absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full",
             // Range background - using Apps SDK UI tokens
-            error
-              ? "bg-destructive"
-              : "bg-primary",
+            error ? "bg-destructive" : "bg-primary",
           )}
         />
       </SliderPrimitive.Track>

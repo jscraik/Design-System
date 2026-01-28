@@ -58,8 +58,7 @@ function Select({
   required = false,
   onStateChange,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Root> &
-  StatefulComponentProps) {
+}: React.ComponentProps<typeof SelectPrimitive.Root> & StatefulComponentProps) {
   // Determine effective state
   const effectiveState: ComponentState = loading
     ? "loading"

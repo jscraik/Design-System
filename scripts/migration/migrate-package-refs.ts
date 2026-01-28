@@ -8,8 +8,8 @@
  *   npx tsx scripts/migration/migrate-package-refs.ts [--apply] [--dry-run]
  */
 
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
-import { join, relative } from 'path';
+import { readFileSync, writeFileSync, readdirSync, statSync } from "fs";
+import { join, relative } from "path";
 
 interface PackageJson {
   name?: string;
@@ -26,10 +26,10 @@ interface Options {
 
 // Migration mapping for package.json
 const PACKAGE_MIGRATIONS = {
-  '@astudio/ui': '@design-studio/ui',
-  '@astudio/runtime': '@design-studio/runtime',
-  '@astudio/tokens': '@design-studio/tokens',
-  '@astudio/icons': '@design-studio/ui', // Icons merged into ui
+  "@astudio/ui": "@design-studio/ui",
+  "@astudio/runtime": "@design-studio/runtime",
+  "@astudio/tokens": "@design-studio/tokens",
+  "@astudio/icons": "@design-studio/ui", // Icons merged into ui
 } as const;
 
 function getAllPackageJsonFiles(dir: string): string[] {
@@ -43,10 +43,10 @@ function getAllPackageJsonFiles(dir: string): string[] {
       const stat = statSync(fullPath);
 
       if (stat.isDirectory()) {
-        if (entry !== 'node_modules' && entry !== '.git' && !entry.startsWith('design-studio-')) {
+        if (entry !== "node_modules" && entry !== ".git" && !entry.startsWith("design-studio-")) {
           files.push(...getAllPackageJsonFiles(fullPath));
         }
-      } else if (entry === 'package.json') {
+      } else if (entry === "package.json") {
         files.push(fullPath);
       }
     }
@@ -57,7 +57,10 @@ function getAllPackageJsonFiles(dir: string): string[] {
   return files;
 }
 
-function migratePackageJson(content: string, filePath: string): {
+function migratePackageJson(
+  content: string,
+  filePath: string,
+): {
   changed: boolean;
   content: string;
   changes: string[];
@@ -80,13 +83,13 @@ function migratePackageJson(content: string, filePath: string): {
     }
   };
 
-  migrateDeps(pkg.dependencies, 'dependencies');
-  migrateDeps(pkg.devDependencies, 'devDependencies');
-  migrateDeps(pkg.peerDependencies, 'peerDependencies');
+  migrateDeps(pkg.dependencies, "dependencies");
+  migrateDeps(pkg.devDependencies, "devDependencies");
+  migrateDeps(pkg.peerDependencies, "peerDependencies");
 
   return {
     changed,
-    content: JSON.stringify(pkg, null, 2) + '\n',
+    content: JSON.stringify(pkg, null, 2) + "\n",
     changes,
   };
 }
@@ -94,9 +97,9 @@ function migratePackageJson(content: string, filePath: string): {
 function main() {
   const args = process.argv.slice(2);
   const options: Options = {
-    apply: args.includes('--apply'),
-    dryRun: args.includes('--dry-run') || !args.includes('--apply'),
-    verbose: args.includes('--verbose'),
+    apply: args.includes("--apply"),
+    dryRun: args.includes("--dry-run") || !args.includes("--apply"),
+    verbose: args.includes("--verbose"),
   };
 
   const basePath = process.cwd();
@@ -107,7 +110,7 @@ function main() {
   let totalChanged = 0;
 
   for (const file of files) {
-    const content = readFileSync(file, 'utf-8');
+    const content = readFileSync(file, "utf-8");
     const result = migratePackageJson(content, file);
 
     if (result.changed) {
@@ -117,16 +120,16 @@ function main() {
       console.log(`✓ ${relativePath}`);
 
       if (options.verbose && result.changes.length > 0) {
-        result.changes.forEach(change => console.log(change));
+        result.changes.forEach((change) => console.log(change));
       }
 
       if (options.apply) {
-        writeFileSync(file, result.content, 'utf-8');
+        writeFileSync(file, result.content, "utf-8");
       }
     }
   }
 
-  console.log(`\n${options.dryRun ? 'Dry run results:' : 'Migration complete:'}`);
+  console.log(`\n${options.dryRun ? "Dry run results:" : "Migration complete:"}`);
   console.log(`  Files checked: ${files.length}`);
   console.log(`  Files to change: ${totalChanged}`);
 

@@ -9,17 +9,17 @@
  * For prototype, we use multiple import statements from the same file.
  */
 
-import React from 'react';
-import { Button } from './components';
-import { Input } from './components';
-import { Tabs } from './components';
-import { ChatInput } from './components';
+import React from "react";
+import { Button } from "./components";
+import { Input } from "./components";
+import { Tabs } from "./components";
+import { ChatInput } from "./components";
 
 export default function PerComponentImportsApp() {
   return (
     <div>
       <h1>Per-Component Imports Test</h1>
-      <Button onClick={() => console.log('clicked')}>Click Me</Button>
+      <Button onClick={() => console.log("clicked")}>Click Me</Button>
       <Input placeholder="Type here..." />
       <Tabs>
         <div>Tab 1</div>

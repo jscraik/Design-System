@@ -8,20 +8,20 @@
  * Compound API only: 100% of use cases
  */
 
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext } from "react";
 
 // ============================================================================
 // TYPES
 // ============================================================================
 
 interface ComplexContextValue {
-  layout: 'horizontal' | 'vertical';
-  spacing: 'sm' | 'md' | 'lg';
+  layout: "horizontal" | "vertical";
+  spacing: "sm" | "md" | "lg";
 }
 
 interface ComplexComponentProps {
-  layout?: 'horizontal' | 'vertical';
-  spacing?: 'sm' | 'md' | 'lg';
+  layout?: "horizontal" | "vertical";
+  spacing?: "sm" | "md" | "lg";
   children: React.ReactNode;
 }
 
@@ -34,7 +34,7 @@ const ComplexContext = createContext<ComplexContextValue | null>(null);
 const useComplexContext = () => {
   const context = useContext(ComplexContext);
   if (!context) {
-    throw new Error('ComplexComponent sub-components must be used within ComplexComponent');
+    throw new Error("ComplexComponent sub-components must be used within ComplexComponent");
   }
   return context;
 };
@@ -67,8 +67,8 @@ const useComplexContext = () => {
  *   </ComplexComponent>
  */
 export const ComplexComponent = ({
-  layout = 'horizontal',
-  spacing = 'md',
+  layout = "horizontal",
+  spacing = "md",
   children,
 }: ComplexComponentProps) => {
   return (
@@ -90,15 +90,11 @@ export const ComplexComponent = ({
 
 interface HeaderProps {
   children: React.ReactNode;
-  align?: 'left' | 'center' | 'right';
+  align?: "left" | "center" | "right";
 }
 
-ComplexComponent.Header = ({ children, align = 'left' }: HeaderProps) => {
-  return (
-    <header className={`complex-header align-${align}`}>
-      {children}
-    </header>
-  );
+ComplexComponent.Header = ({ children, align = "left" }: HeaderProps) => {
+  return <header className={`complex-header align-${align}`}>{children}</header>;
 };
 
 // ============================================================================
@@ -107,10 +103,10 @@ ComplexComponent.Header = ({ children, align = 'left' }: HeaderProps) => {
 
 interface TitleProps {
   children: React.ReactNode;
-  variant?: 'h1' | 'h2' | 'h3';
+  variant?: "h1" | "h2" | "h3";
 }
 
-ComplexComponent.Title = ({ children, variant = 'h2' }: TitleProps) => {
+ComplexComponent.Title = ({ children, variant = "h2" }: TitleProps) => {
   const Tag = variant;
   return <Tag className="complex-title">{children}</Tag>;
 };
@@ -133,11 +129,7 @@ interface BodyProps {
 }
 
 ComplexComponent.Body = ({ children, scrollable = false }: BodyProps) => {
-  return (
-    <div className={`complex-body ${scrollable ? 'scrollable' : ''}`}>
-      {children}
-    </div>
-  );
+  return <div className={`complex-body ${scrollable ? "scrollable" : ""}`}>{children}</div>;
 };
 
 // ============================================================================
@@ -146,13 +138,13 @@ ComplexComponent.Body = ({ children, scrollable = false }: BodyProps) => {
 
 interface FooterProps {
   children: React.ReactNode;
-  position?: 'left' | 'center' | 'right';
+  position?: "left" | "center" | "right";
   sticky?: boolean;
 }
 
-ComplexComponent.Footer = ({ children, position = 'right', sticky = false }: FooterProps) => {
+ComplexComponent.Footer = ({ children, position = "right", sticky = false }: FooterProps) => {
   return (
-    <footer className={`complex-footer position-${position} ${sticky ? 'sticky' : ''}`}>
+    <footer className={`complex-footer position-${position} ${sticky ? "sticky" : ""}`}>
       {children}
     </footer>
   );
@@ -169,10 +161,15 @@ interface ActionProps {
   onClick?: () => void;
 }
 
-ComplexComponent.Action = ({ children, primary = false, disabled = false, onClick }: ActionProps) => {
+ComplexComponent.Action = ({
+  children,
+  primary = false,
+  disabled = false,
+  onClick,
+}: ActionProps) => {
   return (
     <button
-      className={`complex-action ${primary ? 'primary' : ''} ${disabled ? 'disabled' : ''}`}
+      className={`complex-action ${primary ? "primary" : ""} ${disabled ? "disabled" : ""}`}
       disabled={disabled}
       onClick={onClick}
     >
@@ -185,12 +182,12 @@ ComplexComponent.Action = ({ children, primary = false, disabled = false, onClic
 // TYPE ASSERTIONS
 // ============================================================================
 
-ComplexComponent.Header.displayName = 'ComplexComponent.Header';
-ComplexComponent.Title.displayName = 'ComplexComponent.Title';
-ComplexComponent.Subtitle.displayName = 'ComplexComponent.Subtitle';
-ComplexComponent.Body.displayName = 'ComplexComponent.Body';
-ComplexComponent.Footer.displayName = 'ComplexComponent.Footer';
-ComplexComponent.Action.displayName = 'ComplexComponent.Action';
+ComplexComponent.Header.displayName = "ComplexComponent.Header";
+ComplexComponent.Title.displayName = "ComplexComponent.Title";
+ComplexComponent.Subtitle.displayName = "ComplexComponent.Subtitle";
+ComplexComponent.Body.displayName = "ComplexComponent.Body";
+ComplexComponent.Footer.displayName = "ComplexComponent.Footer";
+ComplexComponent.Action.displayName = "ComplexComponent.Action";
 
 // Code size: ~5KB (5x SimpleComponent)
 // DX score: 3/5 (more complex, requires learning compound pattern)

@@ -116,7 +116,9 @@ describe("Switch", () => {
 
       it("calls onStateChange with error state", () => {
         const onStateChange = vi.fn();
-        render(<Switch error="Error message" onStateChange={onStateChange} aria-label="Error switch" />);
+        render(
+          <Switch error="Error message" onStateChange={onStateChange} aria-label="Error switch" />,
+        );
         expect(onStateChange).toHaveBeenCalledWith("error");
       });
     });
@@ -160,7 +162,12 @@ describe("Switch", () => {
       it("prioritizes loading over disabled state", () => {
         const onStateChange = vi.fn();
         render(
-          <Switch loading disabled onStateChange={onStateChange} aria-label="Loading disabled switch" />,
+          <Switch
+            loading
+            disabled
+            onStateChange={onStateChange}
+            aria-label="Loading disabled switch"
+          />,
         );
         expect(onStateChange).toHaveBeenCalledWith("loading");
       });
@@ -168,7 +175,12 @@ describe("Switch", () => {
       it("prioritizes error over other states", () => {
         const onStateChange = vi.fn();
         render(
-          <Switch error="Error" loading onStateChange={onStateChange} aria-label="Error loading switch" />,
+          <Switch
+            error="Error"
+            loading
+            onStateChange={onStateChange}
+            aria-label="Error loading switch"
+          />,
         );
         expect(onStateChange).toHaveBeenCalledWith("loading");
       });

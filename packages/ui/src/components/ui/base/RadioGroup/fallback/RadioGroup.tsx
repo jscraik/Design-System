@@ -44,8 +44,7 @@ function RadioGroup({
   required = false,
   onStateChange,
   ...props
-}: React.ComponentProps<typeof RadioGroupPrimitive.Root> &
-  StatefulComponentProps) {
+}: React.ComponentProps<typeof RadioGroupPrimitive.Root> & StatefulComponentProps) {
   // Determine effective state
   const effectiveState: ComponentState = loading
     ? "loading"

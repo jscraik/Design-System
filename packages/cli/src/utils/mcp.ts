@@ -8,10 +8,7 @@ import {
   MCP_ENDPOINT_KEY,
   MCP_PROTOCOL_VERSION_KEY,
 } from "../constants.js";
-import {
-  resolveMcpSettings,
-  resolveConfig,
-} from "./config.js";
+import { resolveMcpSettings, resolveConfig } from "./config.js";
 import { logDebug, logError, logInfo } from "./logger.js";
 import { outputJson, outputPlainRecord, createEnvelope } from "./output.js";
 import { toJsonError, CliError, ERROR_CODES, EXIT_CODES, requireNetwork } from "../error.js";
@@ -214,7 +211,9 @@ export async function handleMcpRpc(
 }
 
 // Export the function that's not in other modules
-export async function resolveMcpConfigWithOverrides(argv: Record<string, unknown>): Promise<ChatUIConfig> {
+export async function resolveMcpConfigWithOverrides(
+  argv: Record<string, unknown>,
+): Promise<ChatUIConfig> {
   const config = await resolveConfig(argv as GlobalOptions);
   const serverUrl =
     (argv as { serverUrl?: string }).serverUrl ??

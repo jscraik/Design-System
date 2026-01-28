@@ -1,10 +1,7 @@
 import type { CliArgs } from "../types.js";
 import { handleRun } from "../utils/exec.js";
 
-export function devCommand(args: {
-  target?: string;
-  argv: CliArgs;
-}): Promise<number> {
+export function devCommand(args: { target?: string; argv: CliArgs }): Promise<number> {
   const { target, argv } = args;
   const resolvedTarget = target ?? "all";
   const map: Record<string, string[]> = {

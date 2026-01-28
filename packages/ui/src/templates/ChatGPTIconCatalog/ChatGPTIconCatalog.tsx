@@ -316,7 +316,8 @@ export function ChatGPTIconCatalog() {
           <div className="space-y-2 text-sm font-mono text-foundation-text-dark-secondary">
             <p>
               <span className="text-foundation-accent-green">import</span> {`{ IconCheckmark }`}{" "}
-              <span className="text-foundation-accent-green">from</span> {'"@design-studio/ui/icons"'};
+              <span className="text-foundation-accent-green">from</span>{" "}
+              {'"@design-studio/ui/icons"'};
             </p>
             <p className="mt-4 text-foundation-text-dark-tertiary">{`// Use in your components`}</p>
             <p>{'<IconCheckmark className="size-6" />'}</p>

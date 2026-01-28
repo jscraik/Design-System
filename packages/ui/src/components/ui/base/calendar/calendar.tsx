@@ -6,26 +6,129 @@ import { DayPicker } from "react-day-picker";
 import { IconChevronLeftMd, IconChevronRightMd } from "../../../../icons";
 import { cn } from "../../utils";
 import { buttonVariants } from "../Button";
+import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
- * Renders a calendar component using `react-day-picker`.
+ * Error message display for calendar.
+ */
+function CalendarError({ message, id }: { message: string; id?: string }) {
+  return (
+    <span id={id} className="text-destructive text-body-small mt-1 flex items-center gap-1">
+      <svg className="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+        <path
+          fillRule="evenodd"
+          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+          clipRule="evenodd"
+        />
+      </svg>
+      {message}
+    </span>
+  );
+}
+
+/**
+ * Calendar container wrapper that includes the calendar and optional error message.
+ */
+function CalendarWrapper({
+  children,
+  error,
+  required,
+  errorId,
+}: {
+  children: React.ReactNode;
+  error?: string;
+  required?: boolean;
+  errorId?: string;
+}) {
+  return (
+    <div className="flex flex-col">
+      {children}
+      {error && <CalendarError message={error} id={errorId} />}
+      {required && !error && (
+        <span className="text-destructive text-body-small mt-1" aria-hidden="true">
+          * Required
+        </span>
+      )}
+    </div>
+  );
+}
+
+/**
+ * Renders a calendar component using `react-day-picker` with stateful props support.
+ *
+ * Supports error, loading, disabled, and required states.
  *
  * Defaults to showing outside days unless `showOutsideDays` is overridden.
  * Pass `mode="single" | "multiple" | "range"` to control selection behavior.
  *
- * @param props - DayPicker props.
- * @returns A calendar element.
+ * Accessibility contract:
+ * - Provide a visible label or `aria-label`/`aria-labelledby`.
+ * - Error state is announced via aria-invalid and aria-describedby.
+ * - Required field shows visual indicator.
+ *
+ * @param props - DayPicker props plus stateful options.
+ * @param props.error - Error message, applies error styling and shows error text.
+ * @param props.loading - Shows loading state (opacity reduced, pointer events none).
+ * @param props.disabled - Disabled state (pointer events none, opacity reduced).
+ * @param props.required - Required field indicator (default: `false`).
+ * @param props.onStateChange - Callback when component state changes.
+ * @returns A calendar element with optional error message.
+ *
+ * @example
+ * ```tsx
+ * <Calendar mode="single" selected={date} onSelect={setDate} />
+ * <Calendar mode="single" error="Date is unavailable" />
+ * <Calendar loading />
+ * <Calendar required />
+ * ```
  */
 function Calendar({
   className,
   classNames,
   showOutsideDays = true,
+  error,
+  loading = false,
+  disabled = false,
+  required = false,
+  onStateChange,
+  id,
   ...props
-}: React.ComponentProps<typeof DayPicker>) {
-  return (
+}: React.ComponentProps<typeof DayPicker> & StatefulComponentProps) {
+  // Generate a unique ID for the error message using React's useId
+  const generatedCalendarId = React.useId();
+  const calendarId = id || generatedCalendarId;
+  const errorId = `${calendarId}-error`;
+
+  // Determine effective state
+  const effectiveState: ComponentState = loading
+    ? "loading"
+    : error
+      ? "error"
+      : disabled
+        ? "disabled"
+        : "default";
+
+  // Notify parent of state changes
+  React.useEffect(() => {
+    onStateChange?.(effectiveState);
+  }, [effectiveState, onStateChange]);
+
+  const isDisabled = disabled || loading;
+
+  const calendarElement = (
     <DayPicker
+      id={calendarId}
       showOutsideDays={showOutsideDays}
-      className={cn("p-3", className)}
+      disabled={isDisabled}
+      aria-invalid={error ? "true" : undefined}
+      aria-describedby={error ? errorId : undefined}
+      aria-required={required ? "true" : undefined}
+      className={cn(
+        "p-3",
+        loading && "opacity-70 cursor-wait pointer-events-none",
+        error && "ring-2 ring-destructive/50",
+        className,
+      )}
       classNames={{
         months: "flex flex-col sm:flex-row gap-2",
         month: "flex flex-col gap-4",
@@ -76,6 +179,33 @@ function Calendar({
       {...props}
     />
   );
+
+  // If error or required, wrap with container for error message/indicator
+  if (error || required) {
+    return (
+      <CalendarWrapper error={error} required={required} errorId={errorId}>
+        <div
+          data-slot="calendar"
+          data-state={effectiveState}
+          data-error={error ? "true" : undefined}
+          data-required={required ? "true" : undefined}
+        >
+          {calendarElement}
+        </div>
+      </CalendarWrapper>
+    );
+  }
+
+  return (
+    <div
+      data-slot="calendar"
+      data-state={effectiveState}
+      data-error={error ? "true" : undefined}
+      data-required={required ? "true" : undefined}
+    >
+      {calendarElement}
+    </div>
+  );
 }
 
-export { Calendar };
+export { Calendar, CalendarWrapper, CalendarError };

@@ -4,10 +4,10 @@
  * This file demonstrates real-world usage of each pattern
  */
 
-import React from 'react';
-import { SimpleComponent } from './SimpleComponent';
-import { HybridComponent } from './HybridComponent';
-import { ComplexComponent } from './ComplexComponent';
+import React from "react";
+import { SimpleComponent } from "./SimpleComponent";
+import { HybridComponent } from "./HybridComponent";
+import { ComplexComponent } from "./ComplexComponent";
 
 // ============================================================================
 // SIMPLE COMPONENT EXAMPLES
@@ -26,7 +26,7 @@ export const SimpleExample1 = () => {
  */
 export const SimpleExample2 = () => {
   return (
-    <SimpleComponent variant="danger" size="lg" onClick={() => alert('Clicked!')}>
+    <SimpleComponent variant="danger" size="lg" onClick={() => alert("Clicked!")}>
       Delete Item
     </SimpleComponent>
   );
@@ -53,7 +53,7 @@ export const HybridExample1 = () => {
       title="Welcome to DesignStudio"
       description="A pragmatic approach to design systems"
       actionLabel="Get Started"
-      onAction={() => console.log('Started!')}
+      onAction={() => console.log("Started!")}
       showIcon
     />
   );
@@ -82,7 +82,7 @@ export const HybridExample3 = () => {
   return (
     <HybridComponent variant="compound">
       <HybridComponent.Title>
-        <span style={{ color: 'blue' }}>Custom Title</span>
+        <span style={{ color: "blue" }}>Custom Title</span>
       </HybridComponent.Title>
       <HybridComponent.Description>
         <ul>
@@ -114,7 +114,7 @@ export const ComplexExample1 = () => {
       </ComplexComponent.Body>
       <ComplexComponent.Footer>
         <ComplexComponent.Action>Cancel</ComplexComponent.Action>
-        <ComplexComponent.Action primary onClick={() => console.log('Saved!')}>
+        <ComplexComponent.Action primary onClick={() => console.log("Saved!")}>
           Save Changes
         </ComplexComponent.Action>
       </ComplexComponent.Footer>
@@ -138,7 +138,7 @@ export const ComplexExample2 = () => {
       <ComplexComponent.Footer sticky position="left">
         <ComplexComponent.Action>Back</ComplexComponent.Action>
         <ComplexComponent.Action>Next</ComplexComponent.Action>
-        <ComplexComponent.Action primary onClick={() => console.log('Finished!')}>
+        <ComplexComponent.Action primary onClick={() => console.log("Finished!")}>
           Finish
         </ComplexComponent.Action>
       </ComplexComponent.Footer>
@@ -159,13 +159,13 @@ export const ComplexExample3 = () => {
         </ComplexComponent.Subtitle>
       </ComplexComponent.Header>
       <ComplexComponent.Body>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
           <div>Column 1</div>
           <div>Column 2</div>
         </div>
       </ComplexComponent.Body>
       <ComplexComponent.Footer position="center" sticky>
-        <ComplexComponent.Action primary onClick={() => console.log('Custom action!')}>
+        <ComplexComponent.Action primary onClick={() => console.log("Custom action!")}>
           Custom Action
         </ComplexComponent.Action>
       </ComplexComponent.Footer>
@@ -187,7 +187,7 @@ export const RealWorldScenario = () => {
   return (
     <div>
       {/* Simple: Action button */}
-      <SimpleComponent variant="primary" size="sm" onClick={() => console.log('Edit')}>
+      <SimpleComponent variant="primary" size="sm" onClick={() => console.log("Edit")}>
         Edit
       </SimpleComponent>
 
@@ -196,7 +196,7 @@ export const RealWorldScenario = () => {
         title="User Profile"
         description="Manage your account settings"
         actionLabel="Edit Profile"
-        onAction={() => console.log('Editing profile')}
+        onAction={() => console.log("Editing profile")}
       />
 
       {/* Complex: Full modal layout */}
@@ -214,7 +214,7 @@ export const RealWorldScenario = () => {
         </ComplexComponent.Body>
         <ComplexComponent.Footer position="right">
           <ComplexComponent.Action>Cancel</ComplexComponent.Action>
-          <ComplexComponent.Action primary onClick={() => console.log('Saved!')}>
+          <ComplexComponent.Action primary onClick={() => console.log("Saved!")}>
             Save Changes
           </ComplexComponent.Action>
         </ComplexComponent.Footer>

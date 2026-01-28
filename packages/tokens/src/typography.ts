@@ -3,74 +3,74 @@
  * Typography tokens for web usage. Sizes, line heights, and tracking are numeric values.
  */
 export const typographyTokens = {
-  "fontFamily": "SF Pro",
-  "heading1": {
-    "size": 36,
-    "lineHeight": 42,
-    "weight": 600,
-    "tracking": -0.1
+  fontFamily: "SF Pro",
+  heading1: {
+    size: 36,
+    lineHeight: 42,
+    weight: 600,
+    tracking: -0.1,
   },
-  "heading2": {
-    "size": 24,
-    "lineHeight": 28,
-    "weight": 600,
-    "tracking": -0.25
+  heading2: {
+    size: 24,
+    lineHeight: 28,
+    weight: 600,
+    tracking: -0.25,
   },
-  "heading3": {
-    "size": 18,
-    "lineHeight": 26,
-    "weight": 600,
-    "tracking": -0.45
+  heading3: {
+    size: 18,
+    lineHeight: 26,
+    weight: 600,
+    tracking: -0.45,
   },
-  "body": {
-    "size": 16,
-    "lineHeight": 24,
-    "weight": 400,
-    "emphasisWeight": 600,
-    "tracking": -0.4
+  body: {
+    size: 16,
+    lineHeight: 24,
+    weight: 400,
+    emphasisWeight: 600,
+    tracking: -0.4,
   },
-  "bodySmall": {
-    "size": 14,
-    "lineHeight": 20,
-    "weight": 400,
-    "emphasisWeight": 600,
-    "tracking": -0.3
+  bodySmall: {
+    size: 14,
+    lineHeight: 20,
+    weight: 400,
+    emphasisWeight: 600,
+    tracking: -0.3,
   },
-  "caption": {
-    "size": 12,
-    "lineHeight": 18,
-    "weight": 400,
-    "emphasisWeight": 600,
-    "tracking": -0.1
+  caption: {
+    size: 12,
+    lineHeight: 18,
+    weight: 400,
+    emphasisWeight: 600,
+    tracking: -0.1,
   },
-  "cardTitle": {
-    "size": 18,
-    "lineHeight": 26,
-    "weight": 500,
-    "tracking": -0.43
+  cardTitle: {
+    size: 18,
+    lineHeight: 26,
+    weight: 500,
+    tracking: -0.43,
   },
-  "listTitle": {
-    "size": 16,
-    "lineHeight": 24,
-    "weight": 400,
-    "tracking": -0.4
+  listTitle: {
+    size: 16,
+    lineHeight: 24,
+    weight: 400,
+    tracking: -0.4,
   },
-  "listSubtitle": {
-    "size": 14,
-    "lineHeight": 20,
-    "weight": 400,
-    "tracking": -0.18
+  listSubtitle: {
+    size: 14,
+    lineHeight: 20,
+    weight: 400,
+    tracking: -0.18,
   },
-  "buttonLabel": {
-    "size": 16,
-    "lineHeight": 24,
-    "weight": 500,
-    "tracking": -0.24
+  buttonLabel: {
+    size: 16,
+    lineHeight: 24,
+    weight: 500,
+    tracking: -0.24,
   },
-  "buttonLabelSmall": {
-    "size": 14,
-    "lineHeight": 20,
-    "weight": 600,
-    "tracking": -0.3
-  }
+  buttonLabelSmall: {
+    size: 14,
+    lineHeight: 20,
+    weight: 600,
+    tracking: -0.3,
+  },
 } as const;

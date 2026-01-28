@@ -10,22 +10,9 @@ import {
   ERROR_CODES,
   MCP_CONFIG_OPTIONS,
 } from "./constants.js";
-import {
-  normalizeFailure,
-  toJsonError,
-  CliError,
-} from "./error.js";
-import {
-  outputJson,
-  outputPlainRecord,
-  createEnvelope,
-} from "./utils/output.js";
-import {
-  devCommand,
-  buildCommand,
-  testCommand,
-  mcpCommand,
-} from "./commands/index.js";
+import { normalizeFailure, toJsonError, CliError } from "./error.js";
+import { outputJson, outputPlainRecord, createEnvelope } from "./utils/output.js";
+import { devCommand, buildCommand, testCommand, mcpCommand } from "./commands/index.js";
 import { tokensCommand } from "./commands/tokens.js";
 import { versionsCommand } from "./commands/versions.js";
 import { skillsCommand } from "./commands/skills.js";
@@ -44,7 +31,12 @@ const COMPONENTS_WRITE_WARNING = "--write is required to generate components";
 const TOKEN_WRITE_HINT = "Re-run with --write to confirm file writes.";
 
 // Re-export error class constants for use in other modules
-export { ERROR_CODES, EXIT_CODES, TOKEN_GENERATE_WARNING, COMPONENTS_WRITE_WARNING } from "./constants.js";
+export {
+  ERROR_CODES,
+  EXIT_CODES,
+  TOKEN_GENERATE_WARNING,
+  COMPONENTS_WRITE_WARNING,
+} from "./constants.js";
 
 function addGlobalOptions(argv: Argv): Argv {
   return argv
