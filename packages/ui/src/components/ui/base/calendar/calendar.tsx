@@ -9,7 +9,7 @@ import type { StatefulComponentProps, ComponentState } from "@design-studio/toke
 /**
  * Props for the Calendar component.
  */
-export interface CalendarProps extends StatefulComponentProps {
+export interface CalendarProps extends Omit<StatefulComponentProps, "disabled"> {
   className?: string;
   classNames?: Record<string, string>;
   showOutsideDays?: boolean;
@@ -106,18 +106,7 @@ function Calendar({
   onStateChange,
   id,
   ...props
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-}: StatefulComponentProps & {
-  className?: string;
-  classNames?: Record<string, string>;
-  showOutsideDays?: boolean;
-  disabled?: boolean | ((date: Date) => boolean);
-  required?: boolean;
-  id?: string;
-  // Use any for remaining props to work around react-day-picker v9 complex types
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any;
-}) {
+}: CalendarProps) {
   // Generate a unique ID for the error message using React's useId
   const generatedCalendarId = React.useId();
   const calendarId = id || generatedCalendarId;
@@ -138,7 +127,8 @@ function Calendar({
   }, [effectiveState, onStateChange]);
 
   // Convert boolean disabled to Matcher for DayPicker
-  const disabledMatcher = typeof disabledProp === "boolean" && disabledProp ? () => true : disabledProp;
+  const disabledMatcher =
+    typeof disabledProp === "boolean" && disabledProp ? () => true : disabledProp;
 
   const calendarElement = (
     <DayPicker

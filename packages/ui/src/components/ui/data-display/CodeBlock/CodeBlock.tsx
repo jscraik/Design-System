@@ -5,7 +5,9 @@ import { copyToClipboard } from "../../../../utils/clipboard";
 import { cn } from "../../utils";
 import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
-export interface CodeBlockProps extends React.HTMLAttributes<HTMLPreElement>, StatefulComponentProps {
+export interface CodeBlockProps
+  extends React.HTMLAttributes<HTMLPreElement>,
+    StatefulComponentProps {
   code: string;
   language?: string;
   showLineNumbers?: boolean;
@@ -124,16 +126,10 @@ function CodeBlock({
       </div>
 
       {loading && (
-        <div className="p-4 text-sm text-center text-muted-foreground">
-          Loading code...
-        </div>
+        <div className="p-4 text-sm text-center text-muted-foreground">Loading code...</div>
       )}
 
-      {error && (
-        <div className="p-4 text-sm text-center text-foundation-accent-red">
-          {error}
-        </div>
-      )}
+      {error && <div className="p-4 text-sm text-center text-foundation-accent-red">{error}</div>}
 
       {!loading && !error && (
         <pre className="overflow-x-auto p-4 text-sm font-mono leading-relaxed" {...props}>

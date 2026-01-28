@@ -7,7 +7,9 @@ import type { StatefulComponentProps, ComponentState } from "@design-studio/toke
 
 // Omit 'loading' from ImgHTMLAttributes to avoid collision with StatefulComponentProps.loading
 // The native HTML 'loading' attribute accepts "eager" | "lazy", while ours is a boolean state flag
-export interface ImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "loading">, StatefulComponentProps {
+export interface ImageProps
+  extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, "loading">,
+    StatefulComponentProps {
   fallback?: React.ReactNode;
   aspectRatio?: "square" | "video" | "auto";
   objectFit?: "cover" | "contain" | "fill" | "none";
@@ -143,7 +145,11 @@ function Image({
       aria-invalid={hasError ? "true" : required ? "false" : undefined}
       aria-required={required || undefined}
       aria-busy={isLoading || undefined}
-      className={cn("relative overflow-hidden", isDisabled && "opacity-50 pointer-events-none", className)}
+      className={cn(
+        "relative overflow-hidden",
+        isDisabled && "opacity-50 pointer-events-none",
+        className,
+      )}
     >
       {isLoading && showLoadingState && (
         <div

@@ -25,12 +25,26 @@
       },
       "Select": {
         "variant_prop": "Added variant=\"compound\" prop",
-        "sub_components": ["Select.Trigger", "Select.Value", "Select.Content", "Select.Item", "Select.Label", "Select.Group", "Select.Separator"],
+        "sub_components": [
+          "Select.Trigger",
+          "Select.Value",
+          "Select.Content",
+          "Select.Item",
+          "Select.Label",
+          "Select.Group",
+          "Select.Separator"
+        ],
         "context": "SelectContext updated with isCompound flag"
       },
       "ChatInput": {
         "variant_prop": "Added variant=\"compound\" prop",
-        "sub_components": ["ChatInput.ComposerArea", "ChatInput.ActionBar", "ChatInput.LeftActions", "ChatInput.RightActions", "ChatInput.SendButton"],
+        "sub_components": [
+          "ChatInput.ComposerArea",
+          "ChatInput.ActionBar",
+          "ChatInput.LeftActions",
+          "ChatInput.RightActions",
+          "ChatInput.SendButton"
+        ],
         "context": "ChatInputContext with full state management"
       }
     },

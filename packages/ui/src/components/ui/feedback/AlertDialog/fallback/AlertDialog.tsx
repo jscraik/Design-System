@@ -13,7 +13,9 @@ import type { StatefulComponentProps, ComponentState } from "@design-studio/toke
 /**
  * Props for the alert dialog root component.
  */
-export interface AlertDialogRootProps extends StatefulComponentProps, React.ComponentProps<typeof AlertDialogPrimitive.Root> {}
+export interface AlertDialogRootProps
+  extends StatefulComponentProps,
+    React.ComponentProps<typeof AlertDialogPrimitive.Root> {}
 
 function AlertDialog({
   loading = false,
@@ -69,7 +71,9 @@ function AlertDialogOverlay({
 /**
  * Props for the alert dialog content component.
  */
-export interface AlertDialogContentProps extends StatefulComponentProps, React.ComponentProps<typeof AlertDialogPrimitive.Content> {}
+export interface AlertDialogContentProps
+  extends StatefulComponentProps,
+    React.ComponentProps<typeof AlertDialogPrimitive.Content> {}
 
 function AlertDialogContent({
   className,

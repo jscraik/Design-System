@@ -112,7 +112,9 @@ function Indicator({
         />
       </span>
       {(label || error) && (
-        <span className={cn("text-sm", error ? "text-foundation-accent-red" : "text-muted-foreground")}>
+        <span
+          className={cn("text-sm", error ? "text-foundation-accent-red" : "text-muted-foreground")}
+        >
           {error || label}
         </span>
       )}
@@ -173,11 +175,7 @@ function InlineIndicator({
       aria-invalid={error ? "true" : required ? "false" : undefined}
       aria-required={required || undefined}
       aria-busy={loading || undefined}
-      className={cn(
-        "inline-flex",
-        isDisabled && "opacity-50 pointer-events-none",
-        className,
-      )}
+      className={cn("inline-flex", isDisabled && "opacity-50 pointer-events-none", className)}
       {...props}
     >
       <span

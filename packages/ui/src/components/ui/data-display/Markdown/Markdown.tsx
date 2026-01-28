@@ -5,7 +5,9 @@ import { TextLink } from "../../base/TextLink";
 import { cn } from "../../utils";
 import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
-export interface MarkdownProps extends React.HTMLAttributes<HTMLDivElement>, StatefulComponentProps {
+export interface MarkdownProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    StatefulComponentProps {
   content: string;
   components?: Record<string, React.ComponentType<React.ComponentPropsWithoutRef<"span">>>;
 }
@@ -223,7 +225,10 @@ function Markdown({
   // Effective disabled state (disabled if explicitly disabled OR loading)
   const isDisabled = disabled || loading;
 
-  const elements = React.useMemo(() => (loading || error ? [] : parseMarkdown(content)), [content, loading, error]);
+  const elements = React.useMemo(
+    () => (loading || error ? [] : parseMarkdown(content)),
+    [content, loading, error],
+  );
 
   return (
     <div

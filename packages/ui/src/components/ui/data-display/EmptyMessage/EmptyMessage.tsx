@@ -4,7 +4,9 @@ import { IconArchive, IconQuestion, IconSearch, IconWarning } from "../../../../
 import { cn } from "../../utils";
 import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
-export interface EmptyMessageProps extends React.HTMLAttributes<HTMLDivElement>, StatefulComponentProps {
+export interface EmptyMessageProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    StatefulComponentProps {
   icon?: React.ReactNode | React.ElementType;
   title: string;
   description?: string;
