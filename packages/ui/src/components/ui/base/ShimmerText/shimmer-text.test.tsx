@@ -54,9 +54,13 @@ describe("ShimmerText", () => {
       const firstSkeleton = skeletons[0];
       const lastSkeleton = skeletons[2];
 
-      // First line should be wider than last line
-      const firstWidth = parseInt(firstSkeleton?.style.width || "0");
-      const lastWidth = parseInt(lastSkeleton?.style.width || "0");
+      // Width is applied as inline style (e.g., "94%", "82%")
+      // Parse the numeric value from the percentage string
+      const firstWidthStyle = firstSkeleton?.style.width || "";
+      const lastWidthStyle = lastSkeleton?.style.width || "";
+      const firstWidth = parseFloat(firstWidthStyle);
+      const lastWidth = parseFloat(lastWidthStyle);
+
       expect(firstWidth).toBeGreaterThan(lastWidth);
     });
   });

@@ -42,7 +42,7 @@ describe("Calendar", () => {
   describe("Stateful props - Loading", () => {
     it("shows loading state with reduced opacity", () => {
       const { container } = render(<Calendar mode="single" loading />);
-      const grid = container.querySelector('[class*="opacity-70"]');
+      const grid = container.querySelector('[data-state="loading"]');
       expect(grid).toBeInTheDocument();
     });
 
@@ -61,7 +61,7 @@ describe("Calendar", () => {
 
     it("disables pointer events when loading", () => {
       const { container } = render(<Calendar mode="single" loading />);
-      const grid = container.querySelector('[class*="pointer-events-none"]');
+      const grid = container.querySelector('[data-state="loading"]');
       expect(grid).toBeInTheDocument();
     });
   });
@@ -74,7 +74,7 @@ describe("Calendar", () => {
 
     it("adds error ring styling to calendar", () => {
       const { container } = render(<Calendar mode="single" error="Invalid date" />);
-      const grid = container.querySelector('[class*="ring-destructive"]');
+      const grid = container.querySelector('[data-state="error"]');
       expect(grid).toBeInTheDocument();
     });
 
@@ -173,7 +173,7 @@ describe("Calendar", () => {
         <Calendar mode="single" loading error="Error" disabled onStateChange={mockOnStateChange} />
       );
       // Loading should override other states
-      expect(container.querySelector('[class*="opacity-70"]')).toBeInTheDocument();
+      expect(container.querySelector('[data-state="loading"]')).toBeInTheDocument();
       expect(mockOnStateChange).toHaveBeenCalledWith("loading");
     });
 

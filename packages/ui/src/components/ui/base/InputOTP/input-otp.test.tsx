@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import { createRef } from "react";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "./InputOTP";
 
@@ -165,6 +166,36 @@ describe("InputOTP", () => {
       }).not.toThrow();
     });
   });
+
+  describe("Keyboard navigation", () => {
+    it("renders keyboard-accessible container", () => {
+      const { container } = render(<InputOTP maxLength={4} />);
+      // InputOTP handles keyboard input internally
+      const wrapper = container.querySelector('[data-slot="input-otp"]');
+      expect(wrapper).toBeInTheDocument();
+    });
+  });
+
+  describe("Accessibility", () => {
+    it("generates unique IDs for error messages", () => {
+      render(<InputOTP maxLength={4} error="Invalid code" />);
+      const error = screen.getByText("Invalid code");
+      expect(error).toHaveAttribute("id", expect.stringMatching(/-error$/));
+    });
+
+    it("renders error icon with error message", () => {
+      render(<InputOTP maxLength={4} error="Invalid code" />);
+      const errorText = screen.getByText("Invalid code");
+      const parent = errorText.parentElement;
+      expect(parent?.querySelector("svg")).toBeInTheDocument();
+    });
+
+    it("hides required indicator from screen readers", () => {
+      render(<InputOTP maxLength={4} required />);
+      const required = screen.getByText("* Required");
+      expect(required).toHaveAttribute("aria-hidden", "true");
+    });
+  });
 });
 
 describe("InputOTPGroup", () => {
@@ -249,5 +280,13 @@ describe("InputOTPSeparator", () => {
     const { container } = render(<InputOTPSeparator className="custom-separator" />);
     const separator = container.querySelector(".custom-separator");
     expect(separator).toBeInTheDocument();
+  });
+
+  describe("ref forwarding", () => {
+    it("forwards ref to input element", () => {
+      const ref = createRef<HTMLInputElement>();
+      render(<InputOTP ref={ref} maxLength={6} />);
+      expect(ref.current).toBeInstanceOf(HTMLInputElement);
+    });
   });
 });

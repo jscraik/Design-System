@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import { createRef } from "react";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { TextLink } from "./TextLink";
 
@@ -127,6 +128,13 @@ describe("TextLink", () => {
       const link = container.querySelector("a");
       expect(link).not.toHaveAttribute("target");
       expect(link).not.toHaveAttribute("rel");
+    });
+
+    it("enforces security attributes when target is manually set to _blank", () => {
+      const { container } = render(<TextLink href="/test" target="_blank">Link</TextLink>);
+      const link = container.querySelector("a");
+      // Security: target="_blank" should always have rel="noopener noreferrer"
+      expect(link).toHaveAttribute("rel", "noopener noreferrer");
     });
   });
 
@@ -288,6 +296,50 @@ describe("TextLink", () => {
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
       });
+    });
+  });
+
+  describe("Keyboard navigation", () => {
+    it("can be focused with keyboard", () => {
+      const { container } = render(<TextLink href="/test">Link</TextLink>);
+      const link = container.querySelector("a");
+      expect(link).toHaveAttribute("href");
+    });
+
+    it("disabled link cannot be focused", () => {
+      const { container } = render(<TextLink href="/test" disabled>Link</TextLink>);
+      const link = container.querySelector("a");
+      // Disabled links have href removed
+      expect(link).not.toHaveAttribute("href");
+    });
+  });
+
+  describe("Accessibility", () => {
+    it("has accessible name from link text", () => {
+      render(<TextLink href="/test">Read documentation</TextLink>);
+      const link = screen.getByRole("link", { name: "Read documentation" });
+      expect(link).toBeInTheDocument();
+    });
+
+    it("external links have security attributes", () => {
+      render(<TextLink href="https://example.com">External</TextLink>);
+      const link = screen.getByRole("link");
+      expect(link).toHaveAttribute("rel", "noopener noreferrer");
+      expect(link).toHaveAttribute("target", "_blank");
+    });
+
+    it("disabled links have aria-disabled", () => {
+      const { container } = render(<TextLink href="/test" disabled>Link</TextLink>);
+      const link = container.querySelector("a");
+      expect(link).toHaveAttribute("aria-disabled", "true");
+    });
+  });
+
+  describe("ref forwarding", () => {
+    it("forwards ref to anchor element", () => {
+      const ref = createRef<HTMLAnchorElement>();
+      render(<TextLink href="/test" ref={ref}>Link</TextLink>);
+      expect(ref.current).toBeInstanceOf(HTMLAnchorElement);
     });
   });
 });

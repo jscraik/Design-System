@@ -52,6 +52,8 @@ function TextLink({
   onStateChange,
   children,
   href,
+  target: userTarget,
+  rel: userRel,
   ...props
 }: TextLinkProps) {
   const isExternal = external || (href ? href.startsWith("http") : false);
@@ -69,6 +71,14 @@ function TextLink({
   React.useEffect(() => {
     onStateChange?.(effectiveState);
   }, [effectiveState, onStateChange]);
+
+  // Security: Determine target (external links always use _blank)
+  const effectiveTarget = isExternal ? "_blank" : userTarget;
+
+  // Security: When target="_blank", ALWAYS enforce rel="noopener noreferrer"
+  // This prevents tabnabbing attacks even if user manually passes target="_blank"
+  const needsSecureRel = effectiveTarget === "_blank" && !disabled;
+  const effectiveRel = needsSecureRel ? "noopener noreferrer" : userRel;
 
   return (
     <a
@@ -88,11 +98,8 @@ function TextLink({
       aria-disabled={disabled || undefined}
       aria-invalid={error ? "true" : required ? "false" : undefined}
       aria-required={required || undefined}
-      {...(isExternal &&
-        !disabled && {
-          target: "_blank",
-          rel: "noopener noreferrer",
-        })}
+      target={effectiveTarget}
+      rel={effectiveRel}
       {...props}
     >
       {children}

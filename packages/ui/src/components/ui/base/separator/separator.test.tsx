@@ -1,4 +1,5 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import { createRef } from "react";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { Separator } from "./fallback/Separator";
 
@@ -40,7 +41,9 @@ describe("Separator", () => {
 
     it("calls onStateChange with 'loading'", async () => {
       render(<Separator loading onStateChange={mockOnStateChange} />);
-      await expect(mockOnStateChange).toHaveBeenCalledWith("loading");
+      await waitFor(() => {
+        expect(mockOnStateChange).toHaveBeenCalledWith("loading");
+      });
     });
   });
 
@@ -81,12 +84,16 @@ describe("Separator", () => {
       render(
         <Separator loading error="Error" disabled onStateChange={mockOnStateChange} />
       );
-      await expect(mockOnStateChange).toHaveBeenCalledWith("loading");
+      await waitFor(() => {
+        expect(mockOnStateChange).toHaveBeenCalledWith("loading");
+      });
     });
 
     it("prioritizes error over disabled when not loading", async () => {
       render(<Separator error="Error" disabled onStateChange={mockOnStateChange} />);
-      await expect(mockOnStateChange).toHaveBeenCalledWith("error");
+      await waitFor(() => {
+        expect(mockOnStateChange).toHaveBeenCalledWith("error");
+      });
     });
   });
 
@@ -95,6 +102,14 @@ describe("Separator", () => {
       const { container } = render(<Separator className="custom-separator" />);
       const separator = container.querySelector('[data-slot="separator-root"]');
       expect(separator).toHaveClass("custom-separator");
+    });
+  });
+
+  describe("ref forwarding", () => {
+    it("forwards ref to separator element", () => {
+      const ref = createRef<HTMLDivElement>();
+      render(<Separator ref={ref} />);
+      expect(ref.current).toBeInstanceOf(HTMLDivElement);
     });
   });
 });

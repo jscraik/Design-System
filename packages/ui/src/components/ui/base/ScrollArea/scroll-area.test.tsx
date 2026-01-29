@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import { createRef } from "react";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { ScrollArea, ScrollBar } from "./fallback/ScrollArea";
 
@@ -157,5 +158,13 @@ describe("ScrollBar", () => {
     const scrollArea = container.querySelector('[data-slot="scroll-area"]');
     expect(scrollArea).toBeInTheDocument();
     expect(scrollArea?.children.length).toBeGreaterThan(0); // Has children (viewport, scrollbar, corner)
+  });
+});
+
+describe("ref forwarding", () => {
+  it("forwards ref to scroll area element", () => {
+    const ref = createRef<HTMLDivElement>();
+    render(<ScrollArea ref={ref}>Content</ScrollArea>);
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
   });
 });

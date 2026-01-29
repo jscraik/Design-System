@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "../../../../testing/utils";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { ListItem, ListItemCheck } from "./ListItem";
 
@@ -72,11 +72,11 @@ describe("ListItem", () => {
       });
     });
 
-    it("disables interaction when loading", () => {
-      render(<ListItem label="Settings" onClick={mockOnClick} loading />);
+    it("disables interaction when loading", async () => {
+      const { user } = render(<ListItem label="Settings" onClick={mockOnClick} loading />);
       const button = screen.getByRole("button");
       expect(button).toHaveAttribute("disabled");
-      fireEvent.click(button);
+      await user.click(button);
       expect(mockOnClick).not.toHaveBeenCalled();
     });
   });
@@ -91,7 +91,7 @@ describe("ListItem", () => {
 
     it("applies error border styling", () => {
       const { container } = render(<ListItem label="Settings" error="Error" />);
-      const item = container.querySelector(".border");
+      const item = container.querySelector('[data-state="error"]');
       expect(item).toBeInTheDocument();
     });
   });
@@ -103,11 +103,11 @@ describe("ListItem", () => {
       expect(item).toBeInTheDocument();
     });
 
-    it("disables button interaction", () => {
-      render(<ListItem label="Settings" onClick={mockOnClick} disabled />);
+    it("disables button interaction", async () => {
+      const { user } = render(<ListItem label="Settings" onClick={mockOnClick} disabled />);
       const button = screen.getByRole("button");
       expect(button).toBeDisabled();
-      fireEvent.click(button);
+      await user.click(button);
       expect(mockOnClick).not.toHaveBeenCalled();
     });
   });
@@ -136,20 +136,51 @@ describe("ListItem", () => {
   });
 
   describe("Click interaction", () => {
-    it("calls onClick when clicked", () => {
-      render(<ListItem label="Settings" onClick={mockOnClick} />);
+    it("calls onClick when clicked", async () => {
+      const { user } = render(<ListItem label="Settings" onClick={mockOnClick} />);
       const button = screen.getByRole("button");
-      fireEvent.click(button);
+      await user.click(button);
       expect(mockOnClick).toHaveBeenCalledTimes(1);
     });
   });
 
+  describe("Keyboard navigation", () => {
+    it("activates with Enter key", async () => {
+      const mockClick = vi.fn();
+      const { user } = render(<ListItem label="Settings" onClick={mockClick} />);
+      const button = screen.getByRole("button");
+      button.focus();
+      await user.keyboard("{Enter}");
+      expect(mockClick).toHaveBeenCalledTimes(1);
+    });
+
+    it("activates with Space key", async () => {
+      const mockClick = vi.fn();
+      const { user } = render(<ListItem label="Settings" onClick={mockClick} />);
+      const button = screen.getByRole("button");
+      button.focus();
+      await user.keyboard(" ");
+      expect(mockClick).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe("Accessibility", () => {
-    it("uses aria-label when provided", () => {
-      render(<ListItem label="Settings" ariaLabel="Open settings" />);
-      // ListItem without onClick renders as div, so no button role
-      const label = screen.getByText("Settings");
-      expect(label).toBeInTheDocument();
+    it("has accessible name from label text", () => {
+      render(<ListItem label="Settings" onClick={() => {}} />);
+      const button = screen.getByRole("button", { name: "Settings" });
+      expect(button).toBeInTheDocument();
+    });
+
+    it("has accessible name from aria-label when provided", () => {
+      render(<ListItem label="Settings" ariaLabel="Open settings" onClick={() => {}} />);
+      const button = screen.getByRole("button", { name: "Open settings" });
+      expect(button).toBeInTheDocument();
+    });
+
+    it("includes description in accessible name when present", () => {
+      render(<ListItem label="Settings" description="Manage preferences" onClick={() => {}} />);
+      const button = screen.getByRole("button", { name: /Settings/ });
+      expect(button).toBeInTheDocument();
     });
 
     it("sets aria-busy when loading", () => {
@@ -194,9 +225,9 @@ describe("ListItemCheck", () => {
 
     it("does not show checkmark when not checked", () => {
       render(<ListItemCheck label="Option" checked={false} />);
-      const checkmarks = document.querySelectorAll("svg");
-      // The chevron might be present, so we just verify no error is thrown
-      expect(checkmarks.length).toBeGreaterThanOrEqual(0);
+      // The checkmark SVG with path d="M5 13l4 4L19 7" should not be present
+      const checkmarkPath = document.querySelector('svg path[d="M5 13l4 4L19 7"]');
+      expect(checkmarkPath).not.toBeInTheDocument();
     });
 
     it("shows checkmark when checked", () => {
@@ -207,11 +238,11 @@ describe("ListItemCheck", () => {
   });
 
   describe("Click interaction", () => {
-    it("calls onClick when clicked", () => {
+    it("calls onClick when clicked", async () => {
       const mockClick = vi.fn();
-      render(<ListItemCheck label="Option" onClick={mockClick} />);
+      const { user } = render(<ListItemCheck label="Option" onClick={mockClick} />);
       const button = screen.getByRole("button");
-      fireEvent.click(button);
+      await user.click(button);
       expect(mockClick).toHaveBeenCalledTimes(1);
     });
   });
