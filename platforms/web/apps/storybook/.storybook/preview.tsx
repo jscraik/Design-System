@@ -120,7 +120,7 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ["Overview", "Documentation", "Components"],
+        order: ["Overview", "Design System", "Documentation", "Templates", "Components"],
         method: "alphabetical",
       },
     },
@@ -169,7 +169,7 @@ const preview: Preview = {
               data-theme={theme}
               style={{
                 backgroundColor: resolvedBackground || "var(--foundation-bg-dark-1)",
-                color: isDark
+                color: !isLight
                   ? "var(--foundation-text-dark-primary)"
                   : "var(--foundation-text-light-primary)",
                 colorScheme: theme,

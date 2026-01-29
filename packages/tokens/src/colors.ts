@@ -10,9 +10,9 @@ export const colorTokens = {
       "tertiary": "#F3F3F3"
     },
     "dark": {
-      "primary": "#212121",
-      "secondary": "#303030",
-      "tertiary": "#414141"
+      "primary": "#1A1A1A",
+      "secondary": "#2A2A2A",
+      "tertiary": "#3A3A3A"
     }
   },
   "text": {
@@ -24,8 +24,8 @@ export const colorTokens = {
     },
     "dark": {
       "primary": "#FFFFFF",
-      "secondary": "#CDCDCD",
-      "tertiary": "#AFAFAF",
+      "secondary": "#E0E0E0",
+      "tertiary": "#B8B8B8",
       "inverted": "#0D0D0D"
     }
   },
@@ -42,8 +42,8 @@ export const colorTokens = {
     },
     "dark": {
       "primary": "#FFFFFF",
-      "secondary": "#CDCDCD",
-      "tertiary": "#AFAFAF",
+      "secondary": "#E0E0E0",
+      "tertiary": "#B8B8B8",
       "inverted": "#0D0D0D",
       "accent": "#339CFF",
       "statusError": "#FF8583",

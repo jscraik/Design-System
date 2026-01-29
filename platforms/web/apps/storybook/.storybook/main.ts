@@ -144,7 +144,12 @@ const config = {
     },
   ],
 
-  addons: ["@storybook/addon-docs", "@storybook/addon-a11y", "@storybook/addon-vitest"],
+  addons: [
+    "@storybook/addon-docs",
+    "@storybook/addon-a11y",
+    "@storybook/addon-vitest",
+    "@storybook/addon-themes",
+  ],
 
   framework: {
     name: "@storybook/react-vite",
@@ -186,7 +191,10 @@ const config = {
       alias: {
         ...(viteConfig.resolve?.alias ?? {}),
         "@design-studio/ui": path.join(repoRoot, "packages/ui/src"),
+        "@astudio/ui": path.join(repoRoot, "packages/ui/src"),
+        "@astudio/ui/icons": path.join(repoRoot, "packages/ui/src/icons"),
         "@astudio/runtime": path.join(repoRoot, "packages/runtime/src"),
+        "@astudio/tokens": path.join(repoRoot, "packages/tokens/src"),
       },
     };
 
