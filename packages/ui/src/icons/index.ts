@@ -87,11 +87,13 @@ export {
 export { IconRegenerate as IconRefresh } from "./chatgpt/ChatGPTIconsFixed";
 
 // ----------------------------------------------------------------------------
-// APPS SDK UI ICONS
+// APPS SDK UI ICONS (local implementations to avoid circular dependencies)
 // ----------------------------------------------------------------------------
 
-export { Download, Sparkles } from "../integrations/apps-sdk";
-export { Download as IconDownload, Sparkles as IconSparkles } from "../integrations/apps-sdk";
+// Local implementations to avoid circular dependency with @openai/apps-sdk-ui
+// These replicate the visual appearance without importing from that package
+export { IconSparkles } from "./AppsSDKIconLocal";
+export { IconDownload } from "./legacy/chatgpt/public";
 
 // ----------------------------------------------------------------------------
 // NAMED EXPORTS (Icon* prefix for consistency)

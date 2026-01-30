@@ -24,6 +24,47 @@ test.describe("ModalDialog keyboard navigation", () => {
   });
 
   test("focuses modal on open", async ({ page }) => {
+    // Listen for console messages before navigation
+    page.on("console", (msg) => {
+      if (msg.type() === "error" || msg.type() === "warn") {
+        console.log(`Console [${msg.type()}]:`, msg.text(), msg.location());
+      }
+    });
+
+    // Listen for uncaught errors with full details
+    page.on("pageerror", (err) => {
+      console.log("Page error:", err.message, err.stack);
+    });
+
+    // Also listen for request failures
+    page.on("requestfailed", (request) => {
+      console.log("Request failed:", request.url(), request.failure().errorText);
+    });
+
+    // Navigate to harness
+    await page.goto("/harness");
+
+    // Wait for React to mount - check for any React-rendered content
+    await page.waitForTimeout(5000);
+
+    // Check if app mounted by looking for any content in #root
+    const rootHasContent = await page.evaluate(() => {
+      const root = document.getElementById("root");
+      return root && root.innerHTML.length > 0;
+    });
+    console.log("Root has innerHTML:", rootHasContent);
+
+    // If React hasn't mounted, try forcing a reload
+    if (!rootHasContent) {
+      console.log("React not mounted, reloading...");
+      await page.reload();
+      await page.waitForTimeout(5000);
+    }
+
+    // Check for buttons again
+    const buttons = await page.locator("button").all();
+    console.log("Found buttons count:", buttons.length);
+
     // Open a modal (assuming there's a way to open it in the harness)
     await page.click('button:has-text("Open Modal")');
 

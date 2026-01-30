@@ -47,3 +47,6 @@ export function expectAccessibleName(element: HTMLElement, name: string) {
 export function expectRole(element: HTMLElement, role: string) {
   expect(element).toHaveAttribute("role", role);
 }
+
+// Re-export test patterns for parametrized testing
+export * from "./utils/testPatterns";

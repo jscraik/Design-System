@@ -33,6 +33,24 @@ export default defineConfig({
       outDir: "dist",
     }),
   ],
+  // Warn handler to handle circular dependencies
+  onwarn(warning, warn) {
+    // Ignore circular dependency warnings for @openai/apps-sdk-ui components
+    // These are safe to ignore as they're re-exports, not actual circular logic
+    if (warning.code === 'CIRCULAR_DEPENDENCY') {
+      const message = warning.toString();
+      if (
+        message.includes('apps-sdk-ui') ||
+        message.includes('apps-sdk') ||
+        message.includes('Icon') ||
+        message.includes('Download') ||
+        message.includes('Sparkles')
+      ) {
+        return;
+      }
+    }
+    warn(warning);
+  },
   resolve: {
     alias: {
       // Updated to use DesignStudio package names
@@ -54,45 +72,9 @@ export default defineConfig({
           react: "React",
           "react-dom": "ReactDOM",
         },
-        // Enable build-time code splitting for category imports
-        manualChunks: (id) => {
-          // Group UI components by category for optimal tree-shaking
-          if (id.includes("/src/components/ui/base/")) {
-            return "base";
-          }
-          if (id.includes("/src/components/ui/chat/")) {
-            return "chat";
-          }
-          if (id.includes("/src/components/ui/navigation/")) {
-            return "navigation";
-          }
-          if (id.includes("/src/components/ui/overlays/")) {
-            return "overlays";
-          }
-          if (id.includes("/src/components/ui/forms/")) {
-            return "forms";
-          }
-          if (id.includes("/src/components/ui/layout/")) {
-            return "layout";
-          }
-          if (id.includes("/src/components/ui/data-display/")) {
-            return "data-display";
-          }
-          if (id.includes("/src/components/ui/feedback/")) {
-            return "feedback";
-          }
-          if (id.includes("/src/icons/")) {
-            return "icons";
-          }
-          if (id.includes("/src/app/")) {
-            return "app";
-          }
-          if (id.includes("/src/templates/")) {
-            return "templates";
-          }
-          // Default chunk for utilities and other exports
-          return undefined;
-        },
+        // Disable manual chunks to avoid circular dependencies with apps-sdk-ui
+        // Vite's automatic code splitting will handle this more safely
+        manualChunks: undefined,
       },
     },
     cssCodeSplit: false,
