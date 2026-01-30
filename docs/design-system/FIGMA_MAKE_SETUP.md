@@ -1,6 +1,6 @@
 # Figma Make Registry Setup
 
-This guide describes how to configure the Figma org private npm registry for the `@astudio/*` packages used by Figma Make.
+This guide describes how to configure the Figma org private npm registry for the `@design-studio/*` packages used by Figma Make.
 
 ## Registry configuration
 

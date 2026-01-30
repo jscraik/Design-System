@@ -16,25 +16,25 @@ This report documents the baseline metrics for the AStudio codebase before migra
 
 | Package | Version | Size | Status |
 |---------|---------|------|--------|
-| `@astudio/ui` | 0.0.1 | 2.5MB | Core library - KEEP (rename) |
-| `@astudio/icons` | 0.0.1 | 3.7MB | Icons - MERGE into ui |
-| `@astudio/runtime` | 0.0.1 | 68KB | Host adapter - KEEP (rename) |
-| `@astudio/tokens` | 0.0.1 | 160KB | Design tokens - KEEP (rename) |
-| `@astudio/cli` | - | - | Tooling - MOVE to tools/ |
-| `@astudio/cloudflare-template` | - | - | Template - MOVE to tools/ |
-| `@astudio/make-template` | - | - | Template - MOVE to tools/ |
-| `@astudio/skill-ingestion` | - | - | Tooling - MOVE to tools/ |
-| `@astudio/json-render` | - | - | Component - MERGE into ui |
-| `@astudio/effects` | - | - | Component - MERGE into ui |
-| `@astudio/widgets` | - | - | Bundles - MOVE to platforms/web/apps/widgets |
+| `@design-studio/ui` | 0.0.1 | 2.5MB | Core library - KEEP (rename) |
+| `@design-studio/icons` | 0.0.1 | 3.7MB | Icons - MERGE into ui |
+| `@design-studio/runtime` | 0.0.1 | 68KB | Host adapter - KEEP (rename) |
+| `@design-studio/tokens` | 0.0.1 | 160KB | Design tokens - KEEP (rename) |
+| `@design-studio/cli` | - | - | Tooling - MOVE to tools/ |
+| `@design-studio/cloudflare-template` | - | - | Template - MOVE to tools/ |
+| `@design-studio/make-template` | - | - | Template - MOVE to tools/ |
+| `@design-studio/skill-ingestion` | - | - | Tooling - MOVE to tools/ |
+| `@design-studio/json-render` | - | - | Component - MERGE into ui |
+| `@design-studio/effects` | - | - | Component - MERGE into ui |
+| `@design-studio/widgets` | - | - | Bundles - MOVE to platforms/web/apps/widgets |
 
 ### Target Packages (DesignStudio)
 
 | Package | Source | Target Size |
 |---------|--------|-------------|
-| `@design-studio/runtime` | `@astudio/runtime` | ~50KB |
-| `@design-studio/tokens` | `@astudio/tokens` | ~100KB |
-| `@design-studio/ui` | `@astudio/ui` + `@astudio/icons` + others | ~500KB |
+| `@design-studio/runtime` | `@design-studio/runtime` | ~50KB |
+| `@design-studio/tokens` | `@design-studio/tokens` | ~100KB |
+| `@design-studio/ui` | `@design-studio/ui` + `@design-studio/icons` + others | ~500KB |
 
 ---
 
@@ -71,7 +71,7 @@ This report documents the baseline metrics for the AStudio codebase before migra
 
 ## Dependency Analysis
 
-### @astudio/ui Dependencies
+### @design-studio/ui Dependencies
 
 **Production:**
 - `@openai/apps-sdk-ui`: ^0.2.1 (OpenAI's design system)
@@ -98,7 +98,7 @@ This report documents the baseline metrics for the AStudio codebase before migra
 
 ## Export Structure Analysis
 
-### Current Exports (@astudio/ui)
+### Current Exports (@design-studio/ui)
 
 ```typescript
 // Main entry
@@ -138,17 +138,17 @@ export * from "./dist/index.js"
 
 ```typescript
 // 1. Main package import (bundles everything)
-import { AppsSDKUIProvider } from "@astudio/ui";
+import { AppsSDKUIProvider } from "@design-studio/ui";
 
 // 2. Category imports (better)
-import { Button, Input } from "@astudio/ui/base";
-import { Toast } from "@astudio/ui/feedback";
+import { Button, Input } from "@design-studio/ui/base";
+import { Toast } from "@design-studio/ui/feedback";
 
 // 3. Icons subpath
-import { IconSearch, IconX } from "@astudio/ui/icons";
+import { IconSearch, IconX } from "@design-studio/ui/icons";
 
 // 4. Templates
-import { ChatTemplate } from "@astudio/ui/templates";
+import { ChatTemplate } from "@design-studio/ui/templates";
 ```
 
 **Analysis:**

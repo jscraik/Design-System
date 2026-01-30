@@ -101,7 +101,7 @@ type.web.{heading1|heading2|heading3|body|bodySmall|caption}.{size|lineHeight|we
 If you update the DTCG JSON file, regenerate the TypeScript and CSS files:
 
 ```bash
-pnpm --filter @astudio/tokens generate
+pnpm --filter @design-studio/tokens generate
 ```
 
 This will:

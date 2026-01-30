@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { spaceTokens, spacingScale } from "@astudio/tokens/spacing";
+import { spaceTokens, spacingScale } from "@design-studio/tokens/spacing";
 
 /**
  * Spacing System - Design Foundation
@@ -604,7 +604,7 @@ export const TokenReference: Story = {
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">Import Spacing Tokens</div>
         <pre className="text-sm bg-background p-3 rounded overflow-x-auto">
-{`import { spaceTokens } from "@astudio/tokens/spacing";
+{`import { spaceTokens } from "@design-studio/tokens/spacing";
 
 // Usage in components
 const padding = spaceTokens.s16; // 16px

@@ -79,7 +79,7 @@ All validation tasks completed successfully. Key findings:
 ### 1. Bundle Analysis ✅
 - **Completed:** Current bundle sizes measured and baseline established
 - **Findings:**
-  - Current @astudio/ui: ~2.5MB (components only)
+  - Current @design-studio/ui: ~2.5MB (components only)
   - Tree-shaking opportunities identified with category imports
   - Target reduction: 80% achievable with manual chunks
 
@@ -135,7 +135,7 @@ packages/
 **Purpose**: Host abstraction layer
 
 **Changes from AStudio**:
-- Rename: `@astudio/runtime` → `@design-studio/runtime`
+- Rename: `@design-studio/runtime` → `@design-studio/runtime`
 - Minimal API cleanup (remove unused exports)
 
 **Contains**:
@@ -149,7 +149,7 @@ packages/
 **Purpose**: Design tokens with type-safe runtime API
 
 **Changes from AStudio**:
-- Rename: `@astudio/tokens` → `@design-studio/tokens`
+- Rename: `@design-studio/tokens` → `@design-studio/tokens`
 - Add type-safe token API (DTCG JSON → TypeScript)
 - Add ThemeProvider and useTheme hook
 - Keep existing CSS variables
@@ -166,7 +166,7 @@ packages/
 **Purpose**: React component library with icons
 
 **Changes from AStudio**:
-- Rename: `@astudio/ui` + `@astudio-icons` → `@design-studio/ui`
+- Rename: `@design-studio/ui` + `@astudio-icons` → `@design-studio/ui`
 - Merge icons into components package
 - Implement hybrid component pattern
 - Set up category imports

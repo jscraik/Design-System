@@ -1,4 +1,4 @@
-# @astudio/runtime
+# @design-studio/runtime
 
 Last updated: 2026-01-09
 
@@ -30,15 +30,15 @@ Host adapters and helpers for ChatGPT Apps SDK widgets.
 ## Install
 
 ```bash
-pnpm add @astudio/runtime
+pnpm add @design-studio/runtime
 # or
-npm install @astudio/runtime
+npm install @design-studio/runtime
 ```
 
 ## Usage
 
 ```ts
-import { HostProvider, createEmbeddedHost } from "@astudio/runtime";
+import { HostProvider, createEmbeddedHost } from "@design-studio/runtime";
 
 const host = createEmbeddedHost();
 

@@ -1,4 +1,4 @@
-# @astudio/ui
+# @design-studio/ui
 
 Last updated: 2026-01-09
 
@@ -58,4 +58,4 @@ Last updated: 2026-01-09
 ### Patch Changes
 
 - Updated dependencies
-  - @astudio/tokens@0.1.0
+  - @design-studio/tokens@0.1.0

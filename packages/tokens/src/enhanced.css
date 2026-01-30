@@ -5,8 +5,8 @@
  * Import this AFTER foundations.css to add enhanced token support.
  *
  * Usage:
- *   @import "@astudio/tokens/foundations.css";
- *   @import "@astudio/tokens/enhanced.css";
+ *   @import "@design-studio/tokens/foundations.css";
+ *   @import "@design-studio/tokens/enhanced.css";
  */
 
 :root {

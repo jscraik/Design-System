@@ -6,8 +6,8 @@ This design system provides tokens, components, and icons for building ChatGPT-n
 
 ```tsx
 import { Stack, Text } from "@design-studio/ui";
-import { Icon } from "@astudio/icons";
-import "@astudio/tokens/tokens.css";
+import { Icon } from "@design-studio/icons";
+import "@design-studio/tokens/tokens.css";
 
 export function Example() {
   return (
@@ -22,7 +22,7 @@ export function Example() {
 ## Principles
 
 1. Apps SDK UI first: prefer `@design-studio/ui` components over custom primitives.
-2. Semantic tokens only: use `@astudio/tokens` values or CSS variables, never hardcoded colors.
+2. Semantic tokens only: use `@design-studio/tokens` values or CSS variables, never hardcoded colors.
 3. Accessibility: components are built for WCAG 2.2 AA; preserve labels and keyboard support.
 4. Theme support: light/dark and high-contrast modes are supported by tokens.
 

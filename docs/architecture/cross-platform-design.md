@@ -15,7 +15,7 @@ Last updated: 2026-01-09
 All UI styling (React + widgets) is driven from one canonical DTCG token bundle:
 
 - Canonical: `packages/tokens/src/tokens/index.dtcg.json`
-- Generated web: `packages/ui/src/styles/ui.css`, `packages/ui/src/styles/theme.css` (imports `@astudio/tokens/tokens.css`)
+- Generated web: `packages/ui/src/styles/ui.css`, `packages/ui/src/styles/theme.css` (imports `@design-studio/tokens/tokens.css`)
 - Token reference (authoritative mapping): `docs/theming/token-reference.md`
 
 ### Drift prevention

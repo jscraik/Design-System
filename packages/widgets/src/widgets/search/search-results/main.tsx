@@ -3,7 +3,7 @@ import {
   createEmbeddedHost,
   ensureMockOpenAI,
   useToolOutput,
-} from "@astudio/runtime";
+} from "@design-studio/runtime";
 import { AppsSDKBadge, AppsSDKUIProvider } from "@design-studio/ui";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";

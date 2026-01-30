@@ -9,10 +9,10 @@
     "types": ["@storybook/react-vite"],
     "baseUrl": ".",
     "paths": {
-      "@astudio/ui": ["../../../../packages/ui/src"],
-      "@astudio/ui/*": ["../../../../packages/ui/src/*"],
-      "@astudio/runtime": ["../../../../packages/runtime/src"],
-      "@astudio/runtime/*": ["../../../../packages/runtime/src/*"]
+      "@design-studio/ui": ["../../../../packages/ui/src"],
+      "@design-studio/ui/*": ["../../../../packages/ui/src/*"],
+      "@design-studio/runtime": ["../../../../packages/runtime/src"],
+      "@design-studio/runtime/*": ["../../../../packages/runtime/src/*"]
     }
   },
   "include": ["../**/*.ts", "../**/*.tsx", ".storybook/**/*", "../../../../packages/ui/src/**/*"],

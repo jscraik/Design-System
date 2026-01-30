@@ -74,7 +74,7 @@ Edit `packages/ui/src/components/[category]/my-component/MyComponent.tsx`
 
 ```tsx
 import { useState } from "react";
-import { Check, X } from "@astudio/ui/icons";
+import { Check, X } from "@design-studio/ui/icons";
 
 export interface MyComponentProps {
   variant?: "primary" | "secondary";
@@ -247,7 +247,7 @@ pnpm changeset
 ```
 
 Follow the prompts:
-- Select the package(s) that changed (usually `@astudio/ui`)
+- Select the package(s) that changed (usually `@design-studio/ui`)
 - Choose the semver bump type:
   - `patch` - Bug fixes, small improvements
   - `minor` - New features, backward-compatible changes
@@ -310,7 +310,7 @@ const [isOpen, setIsOpen] = useState(false);
 For external control, use the `useControllableState` pattern:
 
 ```tsx
-import { useControllableState } from "@astudio/ui/base";
+import { useControllableState } from "@design-studio/ui/base";
 
 interface Props {
   open?: boolean;
@@ -333,7 +333,7 @@ export function MyComponent({ open, onOpenChange, defaultOpen }: Props) {
 Always use the icons adapter:
 
 ```tsx
-import { Check, X } from "@astudio/ui/icons";
+import { Check, X } from "@design-studio/ui/icons";
 ```
 
 This ensures:
@@ -382,7 +382,7 @@ For custom styles that require CSS variables:
 
 - Run `pnpm build:lib` to ensure packages are built
 - Check that `package.json` exports include your component
-- Verify imports use the correct subpath: `@astudio/ui/[category]`
+- Verify imports use the correct subpath: `@design-studio/ui/[category]`
 
 ### Accessibility violations
 

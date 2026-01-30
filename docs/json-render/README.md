@@ -67,7 +67,7 @@ The React component that interprets JSON schemas and renders them as React compo
 ### Basic Usage
 
 ```tsx
-import { JsonRender } from "@astudio/json-render";
+import { JsonRender } from "@design-studio/json-render";
 
 const schema = {
   component: "Card",
@@ -92,7 +92,7 @@ function App() {
 ### With Custom Registry
 
 ```tsx
-import { JsonRender, createRegistry } from "@astudio/json-render";
+import { JsonRender, createRegistry } from "@design-studio/json-render";
 import { MyCustomComponent } from "./components";
 
 const registry = createRegistry();
@@ -202,7 +202,7 @@ AI can build interactive components:
 ```tsx
 // packages/widgets/src/widgets/ai-dashboard/main.tsx
 import { mountWidget, WidgetBase, WidgetErrorBoundary } from "../../../shared/widget-base";
-import { JsonRender } from "@astudio/json-render";
+import { JsonRender } from "@design-studio/json-render";
 import { useWidgetProps } from "../../../shared/use-widget-props";
 import "../../../styles.css";
 
@@ -275,7 +275,7 @@ function validateSchema(schema: unknown) {
 ### Custom Registry with Domain Components
 
 ```tsx
-import { createRegistry, defaultRegistry } from "@astudio/json-render";
+import { createRegistry, defaultRegistry } from "@design-studio/json-render";
 import { MetricCard, ChartWidget, DataTable } from "./domain-components";
 
 const customRegistry = createRegistry();
@@ -373,7 +373,7 @@ function SafeJsonRender({ schema }: { schema: ComponentSchema }) {
 
 To add new components to the default registry:
 
-1. Import component from `@astudio/ui`
+1. Import component from `@design-studio/ui`
 2. Register in `packages/json-render/src/default-registry.ts`
 3. Document in `docs/json-render/REGISTRY.md`
 4. Add examples in `docs/json-render/EXAMPLES.md`

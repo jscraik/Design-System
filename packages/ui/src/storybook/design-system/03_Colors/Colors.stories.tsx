@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
-import { colorTokens } from "@astudio/tokens/colors";
+import { colorTokens } from "@design-studio/tokens/colors";
 
 /**
  * Colors - Visual-first documentation for the color palette.

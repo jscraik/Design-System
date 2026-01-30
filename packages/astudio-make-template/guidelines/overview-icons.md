@@ -1,6 +1,6 @@
 # Icon Overview
 
-Use `@astudio/icons` for iconography. Icons are organized by category and exposed through the `Icon` component and category exports.
+Use `@design-studio/icons` for iconography. Icons are organized by category and exposed through the `Icon` component and category exports.
 
 ## Categories
 
@@ -15,7 +15,7 @@ Use `@astudio/icons` for iconography. Icons are organized by category and expose
 ## Usage
 
 ```tsx
-import { Icon } from "@astudio/icons";
+import { Icon } from "@design-studio/icons";
 
 export function Example() {
   return <Icon name="arrow-right" size={20} />;

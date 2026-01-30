@@ -1,5 +1,5 @@
 /**
- * @astudio/effects - Advanced UI Effects Components
+ * @design-studio/effects - Advanced UI Effects Components
  *
  * Public API exports for all effect components, hooks, and utilities.
  */
@@ -78,6 +78,6 @@ export { cn } from "./utils/cn";
 // ============================================================================
 
 // Import styles directly in your app:
-// import "@astudio/effects/styles/animations.css";
-// import "@astudio/effects/styles/filters.css";
-// import "@astudio/effects/styles/base.css";
+// import "@design-studio/effects/styles/animations.css";
+// import "@design-studio/effects/styles/filters.css";
+// import "@design-studio/effects/styles/base.css";

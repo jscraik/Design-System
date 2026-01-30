@@ -1,5 +1,5 @@
 /**
- * @astudio/tokens - Enhanced Motion
+ * @design-studio/tokens - Enhanced Motion
  *
  * Motion system inspired by Geist design system.
  * Provides consistent animation timing and duration across components.

@@ -1,5 +1,5 @@
 {
-  "name": "@astudio/widgets",
+  "name": "@design-studio/widgets",
   "private": true,
   "version": "0.0.1",
   "type": "module",
@@ -8,7 +8,7 @@
     "dev": "vite dev"
   },
   "dependencies": {
-    "@astudio/json-render": "workspace:*",
+    "@design-studio/json-render": "workspace:*",
     "@design-studio/runtime": "workspace:*",
     "@design-studio/tokens": "workspace:*",
     "@design-studio/ui": "workspace:*",

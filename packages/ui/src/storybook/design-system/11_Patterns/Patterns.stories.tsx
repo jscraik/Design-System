@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { radiusTokens } from "@astudio/tokens/radius";
-import { shadowTokens } from "@astudio/tokens/shadows";
+import { radiusTokens } from "@design-studio/tokens/radius";
+import { shadowTokens } from "@design-studio/tokens/shadows";
 
 /**
  * Component Patterns - Design Foundation

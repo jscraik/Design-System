@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { spacingTokens } from "@astudio/tokens/spacing";
-import { radiusTokens } from "@astudio/tokens/radius";
+import { spacingTokens } from "@design-studio/tokens/spacing";
+import { radiusTokens } from "@design-studio/tokens/radius";
 
 /**
  * # Interactive Playgrounds

@@ -1,4 +1,4 @@
-# @astudio/runtime
+# @design-studio/runtime
 
 Last updated: 2026-01-09
 

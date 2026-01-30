@@ -59,8 +59,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@astudio/runtime": resolve(__dirname, "../runtime/src"),
-      "@astudio/tokens": resolve(__dirname, "../tokens/src"),
+      "@design-studio/runtime": resolve(__dirname, "../runtime/src"),
+      "@design-studio/tokens": resolve(__dirname, "../tokens/src"),
     },
   },
 });

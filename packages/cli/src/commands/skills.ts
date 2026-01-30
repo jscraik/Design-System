@@ -1,13 +1,13 @@
 import type { Argv } from "yargs";
 import type { CliArgs } from "../types.js";
-import type { SkillPlatform } from "@astudio/skill-ingestion";
+import type { SkillPlatform } from "@design-studio/skill-ingestion";
 import {
   RemoteSkillClient,
   installSkillFromZip,
   platformRootPath,
   platformStorageKey,
   publishSkill,
-} from "@astudio/skill-ingestion";
+} from "@design-studio/skill-ingestion";
 import { emitSkillResults, emitSkillInstall, emitPublishResult } from "../utils/output.js";
 import { CliError, ERROR_CODES, EXIT_CODES } from "../error.js";
 import path from "node:path";

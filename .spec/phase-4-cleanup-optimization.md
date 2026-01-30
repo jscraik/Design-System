@@ -1222,7 +1222,7 @@ rg "@astudio" packages/*/tsconfig*.json -l
 
 **Foundation Complete (2026-01-30):**
 - [x] All 15 design system foundation stories created and organized with numeric prefixes (01-15)
-- [x] Import paths standardized to use `@astudio/tokens/*` package exports
+- [x] Import paths standardized to use `@design-studio/tokens/*` package exports
 - [x] Visual scale pages for all foundations (Colors, Typography, Spacing, Radius, Sizes, Elevation)
 - [x] Motion system documentation with timing/easing principles
 - [x] Component patterns documentation
@@ -1708,7 +1708,7 @@ export const UsageGuidelines: Story = {
 
 **Epic 6 Foundation Acceptance Criteria:**
 - [x] All 15 design system foundation stories created with numeric prefixes (01-15)
-- [x] Import paths standardized to `@astudio/tokens/*` package exports
+- [x] Import paths standardized to `@design-studio/tokens/*` package exports
 - [x] Typography scale page with visual examples (Story 6.2)
 - [x] Colors page with visual palette (Story 6.2a)
 - [x] Spacing page with visual rhythm demo (Story 6.2b)
@@ -1866,7 +1866,7 @@ Phase 4 is complete when:
 
 **Design System (Epic 6 Foundation):**
 - [x] All 15 foundation stories created with numeric prefixes (01-15)
-- [x] Import paths standardized to `@astudio/tokens/*` package exports
+- [x] Import paths standardized to `@design-studio/tokens/*` package exports
 - [x] Typography scale page with visual examples (Story 6.2)
 - [x] Colors page with visual palette (Story 6.2a)
 - [x] Spacing page with visual rhythm demo (Story 6.2b)

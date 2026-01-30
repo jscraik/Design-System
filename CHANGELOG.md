@@ -31,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
-- UI package now exposes dev/demo exports via `@astudio/ui/dev`.
+- UI package now exposes dev/demo exports via `@design-studio/ui/dev`.
 - Runtime host interface extended to cover display mode and external actions.
 - MCP server accepts configurable widget build paths and clearer build errors.
 

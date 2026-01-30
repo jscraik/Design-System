@@ -1,5 +1,5 @@
 /**
- * @astudio/tokens - Enhanced Focus
+ * @design-studio/tokens - Enhanced Focus
  *
  * Focus ring system inspired by Geist design system.
  * Provides consistent, accessible focus indicators across components.

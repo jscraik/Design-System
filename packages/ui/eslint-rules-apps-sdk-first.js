@@ -75,7 +75,7 @@ const appsSdkFirstRule = {
 
         const source = node.source.value;
         if (typeof source !== "string") return;
-        if (!source.startsWith("@astudio/ui")) return;
+        if (!source.startsWith("@design-studio/ui")) return;
 
         for (const specifier of node.specifiers) {
           if (specifier.type !== "ImportSpecifier") continue;

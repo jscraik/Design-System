@@ -11,16 +11,16 @@
 
 AStudio currently has **13 packages** in the `packages/` directory:
 
-- `@astudio/runtime` - Host abstraction
-- `@astudio/tokens` - Design tokens
-- `@astudio/ui` - UI components
-- `@astudio/icons` - Icon library
-- `@astudio/effects` - Animation effects
-- `@astudio/json-render` - JSON rendering
-- `@astudio/cli` - CLI tools
-- `@astudio/cloudflare-template` - Cloudflare template
-- `@astudio/skill-ingestion` - Skill ingestion
-- `@astudio/widgets` - Widget bundles
+- `@design-studio/runtime` - Host abstraction
+- `@design-studio/tokens` - Design tokens
+- `@design-studio/ui` - UI components
+- `@design-studio/icons` - Icon library
+- `@design-studio/effects` - Animation effects
+- `@design-studio/json-render` - JSON rendering
+- `@design-studio/cli` - CLI tools
+- `@design-studio/cloudflare-template` - Cloudflare template
+- `@design-studio/skill-ingestion` - Skill ingestion
+- `@design-studio/widgets` - Widget bundles
 - ... (4 more)
 
 ### Problems

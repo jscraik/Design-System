@@ -162,21 +162,21 @@ pnpm release              # Publish packages
 ### Production code (prefer subpath exports for tree-shaking):
 
 ```ts
-import { Button } from "@astudio/ui/base";
-import { ModelSelector } from "@astudio/ui/navigation";
-import { ChatSidebar } from "@astudio/ui/chat";
+import { Button } from "@design-studio/ui/base";
+import { ModelSelector } from "@design-studio/ui/navigation";
+import { ChatSidebar } from "@design-studio/ui/chat";
 ```
 
 ### Dev/demo exports:
 
 ```ts
-import { AStudioApp, DesignSystemPage } from "@astudio/ui/dev";
+import { AStudioApp, DesignSystemPage } from "@design-studio/ui/dev";
 ```
 
 ### Experimental APIs (subject to breaking changes):
 
 ```ts
-import { ChatFullWidthTemplate } from "@astudio/ui/experimental";
+import { ChatFullWidthTemplate } from "@design-studio/ui/experimental";
 ```
 
 ## Styling System
@@ -186,7 +186,7 @@ import { ChatFullWidthTemplate } from "@astudio/ui/experimental";
 ```css
 @import "tailwindcss";
 @import "@openai/apps-sdk-ui/css";
-@import "@astudio/tokens/foundations.css";
+@import "@design-studio/tokens/foundations.css";
 
 /* Tailwind v4 scanning */
 @source "../node_modules/@openai/apps-sdk-ui";
@@ -195,7 +195,7 @@ import { ChatFullWidthTemplate } from "@astudio/ui/experimental";
 
 ### Design Tokens
 
-- `@astudio/tokens` encodes Figma foundations as CSS variables
+- `@design-studio/tokens` encodes Figma foundations as CSS variables
 - Source: `packages/tokens/src/foundations.css`
 - These are **audit/extension only** - use Apps SDK UI classes in UI
 - TS exports available for Storybook documentation pages
@@ -205,7 +205,7 @@ import { ChatFullWidthTemplate } from "@astudio/ui/experimental";
 The runtime keeps components host-agnostic:
 
 ```ts
-import { HostProvider, createStandaloneHost } from "@astudio/runtime";
+import { HostProvider, createStandaloneHost } from "@design-studio/runtime";
 
 const host = createStandaloneHost("http://localhost:8787");
 ```
@@ -238,17 +238,17 @@ See `docs/guides/PAGES_QUICK_START.md` for adding pages.
 | Chat UI components | ChatUIRoot, ChatHeader, ChatSidebar, ChatMessages, ChatInput |
 | UI primitives      | Button, Dialog, Tabs, Tooltip                                |
 | Icons              | Icons adapter, ChatGPTIcons                                  |
-| Pages              | DesignSystemPage (via `@astudio/ui/dev`)                     |
+| Pages              | DesignSystemPage (via `@design-studio/ui/dev`)                     |
 | Templates          | ChatFullWidthTemplate, DashboardTemplate (experimental)      |
 | Utilities          | useControllableState                                         |
 
 ### API Stability
 
-- **Stable**: Root exports, `@astudio/ui/app`, `@astudio/ui/chat`, `@astudio/ui/modals`, `@astudio/ui/settings`,
-  `@astudio/ui/base`, `@astudio/ui/data-display`, `@astudio/ui/feedback`, `@astudio/ui/navigation`,
-  `@astudio/ui/overlays`, `@astudio/ui/icons`
-- **Experimental**: `@astudio/ui/experimental`, `@astudio/ui/templates`
-- **Dev-only**: `@astudio/ui/dev` (for Storybook/docs only)
+- **Stable**: Root exports, `@design-studio/ui/app`, `@design-studio/ui/chat`, `@design-studio/ui/modals`, `@design-studio/ui/settings`,
+  `@design-studio/ui/base`, `@design-studio/ui/data-display`, `@design-studio/ui/feedback`, `@design-studio/ui/navigation`,
+  `@design-studio/ui/overlays`, `@design-studio/ui/icons`
+- **Experimental**: `@design-studio/ui/experimental`, `@design-studio/ui/templates`
+- **Dev-only**: `@design-studio/ui/dev` (for Storybook/docs only)
 ---
 
 # AI Assistance Governance (Model A)

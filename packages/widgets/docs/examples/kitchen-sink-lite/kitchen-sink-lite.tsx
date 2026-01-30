@@ -17,7 +17,7 @@ import {
   AppsSDKCheckbox,
   AppsSDKInput,
   AppsSDKTextarea,
-} from "@astudio/ui";
+} from "@design-studio/ui";
 
 import { CodeBlock } from "../../../src/shared/code-block";
 import { useOpenAiGlobal } from "../../../src/shared/use-openai-global";

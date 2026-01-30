@@ -205,7 +205,7 @@ Options:
 
 ```json
 {
-  "name": "@astudio/ui",
+  "name": "@design-studio/ui",
   "version": "0.0.1", // Synchronized by build pipeline
   "scripts": {
     "build": "tsc && vite build"

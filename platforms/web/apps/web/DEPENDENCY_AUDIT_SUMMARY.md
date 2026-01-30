@@ -59,7 +59,7 @@ Templates will use platform tokens:
 import { colors, space } from "../design-tokens";
 
 // AFTER (Platform)
-import { tokens } from "@astudio/tokens";
+import { tokens } from "@design-studio/tokens";
 ```
 
 ### Phase 3: Registry Generation

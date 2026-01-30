@@ -121,7 +121,7 @@ const buttonVariants = cva(
 
 ### Token Dependencies
 
-All sizes use `var(--foundation-size-control-height)` which resolves to `44px` from `@astudio/tokens`.
+All sizes use `var(--foundation-size-control-height)` which resolves to `44px` from `@design-studio/tokens`.
 
 ### Size Analysis
 
@@ -155,7 +155,7 @@ All sizes use `var(--foundation-size-control-height)` which resolves to `44px` f
 
 | Package | Purpose | Usage |
 |---------|---------|-------|
-| `@astudio/tokens` | Design tokens | `--foundation-*` CSS variables |
+| `@design-studio/tokens` | Design tokens | `--foundation-*` CSS variables |
 | `@openai/apps-sdk-ui` | UI primitives | Token classes (bg-foreground, text-text-inverted, etc.) |
 
 ### Dev Dependencies
@@ -234,7 +234,7 @@ aria-invalid:ring-offset-background
 
 The component relies on:
 - **Tailwind v4** (modern, CSS-first approach)
-- **Custom CSS properties** from `@astudio/tokens`
+- **Custom CSS properties** from `@design-studio/tokens`
 - **Apps SDK UI classes** from `@openai/apps-sdk-ui`
 - **`@source` directives** for Tailwind v4 scanning
 

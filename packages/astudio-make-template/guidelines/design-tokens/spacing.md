@@ -1,6 +1,6 @@
 # Spacing
 
-Use spacing tokens from `@astudio/tokens` or CSS variables.
+Use spacing tokens from `@design-studio/tokens` or CSS variables.
 
 Examples:
 

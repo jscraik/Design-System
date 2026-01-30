@@ -1,4 +1,4 @@
-# @astudio/effects
+# @design-studio/effects
 
 React component library featuring advanced UI effects inspired by @jh3yy's 103 UI techniques.
 
@@ -31,17 +31,17 @@ This package provides accessible, performant, and visually stunning UI effect co
 ## Installation
 
 ```bash
-pnpm add @astudio/effects
+pnpm add @design-studio/effects
 ```
 
 ## Usage
 
 ```tsx
-import { LiquidToggle, MagneticButton } from "@astudio/effects";
+import { LiquidToggle, MagneticButton } from "@design-studio/effects";
 // Import styles (optional - import only what you need)
-import "@astudio/effects/styles/animations.css";
-import "@astudio/effects/styles/filters.css";
-import "@astudio/effects/styles/base.css";
+import "@design-studio/effects/styles/animations.css";
+import "@design-studio/effects/styles/filters.css";
+import "@design-studio/effects/styles/base.css";
 
 function App() {
   return (

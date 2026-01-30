@@ -1,4 +1,4 @@
-# @astudio/tokens
+# @design-studio/tokens
 
 Last updated: 2026-01-09
 
@@ -46,7 +46,7 @@ Note: For production UI code, prefer Apps SDK UI components and tokens. Use thes
 ## Install
 
 ```bash
-pnpm add @astudio/tokens
+pnpm add @design-studio/tokens
 ```
 
 ## Quick start
@@ -54,15 +54,15 @@ pnpm add @astudio/tokens
 ### CSS
 
 ```css
-@import "@astudio/tokens/foundations.css";
-@import "@astudio/tokens/tokens.css";
+@import "@design-studio/tokens/foundations.css";
+@import "@design-studio/tokens/tokens.css";
 ```
 
 ### Tailwind preset
 
 ```ts
 // tailwind.config.ts
-import preset from "@astudio/tokens/tailwind.preset";
+import preset from "@design-studio/tokens/tailwind.preset";
 
 export default {
   presets: [preset],

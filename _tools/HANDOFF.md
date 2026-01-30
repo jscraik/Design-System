@@ -227,7 +227,7 @@ Avoid:
 
 ## Widget runtime bridge (window.openai) quick reference
 
-Use the host bridge for UI state and actions. Recommended hooks exist in `@astudio/runtime`:
+Use the host bridge for UI state and actions. Recommended hooks exist in `@design-studio/runtime`:
 
 - `useToolInput()`, `useToolOutput()`, `useToolResponseMetadata()`
 - `useTheme()`, `useDisplayMode()`, `useMaxHeight()`, `useLocale()`, `useUserAgent()`

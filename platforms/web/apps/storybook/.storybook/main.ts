@@ -191,10 +191,10 @@ const config = {
       alias: {
         ...(viteConfig.resolve?.alias ?? {}),
         "@design-studio/ui": path.join(repoRoot, "packages/ui/src"),
-        "@astudio/ui": path.join(repoRoot, "packages/ui/src"),
-        "@astudio/ui/icons": path.join(repoRoot, "packages/ui/src/icons"),
-        "@astudio/runtime": path.join(repoRoot, "packages/runtime/src"),
-        "@astudio/tokens": path.join(repoRoot, "packages/tokens/src"),
+        "@design-studio/ui": path.join(repoRoot, "packages/ui/src"),
+        "@design-studio/ui/icons": path.join(repoRoot, "packages/ui/src/icons"),
+        "@design-studio/runtime": path.join(repoRoot, "packages/runtime/src"),
+        "@design-studio/tokens": path.join(repoRoot, "packages/tokens/src"),
       },
     };
 

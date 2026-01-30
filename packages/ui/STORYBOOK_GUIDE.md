@@ -197,7 +197,7 @@ Components automatically work with the aStudio theme system.
 Use the provided mock data utilities:
 
 ```tsx
-import { mockData } from "@astudio/ui";
+import { mockData } from "@design-studio/ui";
 
 export const WithMockData: Story = {
   args: {

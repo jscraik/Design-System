@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { radiusTokens } from "@astudio/tokens/radius";
+import { radiusTokens } from "@design-studio/tokens/radius";
 
 /**
  * Border Radius System - Design Foundation
@@ -560,7 +560,7 @@ export const TokenReference: Story = {
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">Import Radius Tokens</div>
         <pre className="text-sm bg-background p-3 rounded overflow-x-auto">
-{`import { radiusTokens } from "@astudio/tokens/radius";
+{`import { radiusTokens } from "@design-studio/tokens/radius";
 
 // Usage in components
 const borderRadius = radiusTokens.r12; // 12px

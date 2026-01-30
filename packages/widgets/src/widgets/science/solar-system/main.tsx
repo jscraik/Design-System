@@ -1,5 +1,5 @@
 import { createRoot } from "react-dom/client";
-import { HostProvider, createEmbeddedHost, ensureMockOpenAI } from "@astudio/runtime";
+import { HostProvider, createEmbeddedHost, ensureMockOpenAI } from "@design-studio/runtime";
 import { AppsSDKUIProvider } from "@design-studio/ui";
 
 import "../../../styles/widget.css";

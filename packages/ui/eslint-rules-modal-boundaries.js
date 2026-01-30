@@ -11,7 +11,7 @@
  *    {
  *      "plugins": ["./eslint-rules-modal-boundaries"],
  *      "rules": {
- *        "@astudio/modal-boundaries": "error"
+ *        "@design-studio/modal-boundaries": "error"
  *      }
  *    }
  */
@@ -60,7 +60,7 @@ const PATHS = {
 };
 
 /**
- * Rule: @astudio/modal-boundaries
+ * Rule: @design-studio/modal-boundaries
  *
  * Enforces:
  * 1. Infrastructure CANNOT import from modals, settings, or panels
@@ -227,6 +227,6 @@ const modalBoundariesRule = {
 
 export default {
   rules: {
-    "@astudio/modal-boundaries": modalBoundariesRule,
+    "@design-studio/modal-boundaries": modalBoundariesRule,
   },
 };

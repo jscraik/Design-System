@@ -37,8 +37,8 @@ These guidelines keep the UI consistent across ChatGPT widgets and standalone ap
 
 ## Core principles
 
-- **Use Apps SDK UI first.** Prefer `@openai/apps-sdk-ui` components and `@astudio/ui` wrappers.
-- **Avoid raw tokens in production UI.** `@astudio/tokens` is for audits and extensions only.
+- **Use Apps SDK UI first.** Prefer `@openai/apps-sdk-ui` components and `@design-studio/ui` wrappers.
+- **Avoid raw tokens in production UI.** `@design-studio/tokens` is for audits and extensions only.
 - **Match the system defaults.** Stick to component defaults before adding custom styling.
 - **Accessibility is non-negotiable.** Every interactive control must be usable by keyboard and assistive tech.
 
@@ -47,13 +47,13 @@ These guidelines keep the UI consistent across ChatGPT widgets and standalone ap
 ### Use the UI library exports
 
 ```tsx
-import { Button, Card, IconButton } from "@astudio/ui";
+import { Button, Card, IconButton } from "@design-studio/ui";
 ```
 
 If you need tree-shaking, use subpath exports:
 
 ```tsx
-import { Button, SectionHeader } from "@astudio/ui/base";
+import { Button, SectionHeader } from "@design-studio/ui/base";
 ```
 
 ### Avoid direct imports from underlying libraries
@@ -71,7 +71,7 @@ import { Button, SectionHeader } from "@astudio/ui/base";
 
 - Use component defaults and semantic classes from Apps SDK UI.
 - Do not hardcode hex colors or raw CSS variables in new UI code.
-- If you need a token, add it to `@astudio/ui` or the Apps SDK UI layer, not directly in the page.
+- If you need a token, add it to `@design-studio/ui` or the Apps SDK UI layer, not directly in the page.
 
 ## Theme switching
 
@@ -161,7 +161,7 @@ WHY THIS SCALE?
 - Industry standard for accessibility
 
 IMPLEMENTATION:
-Use Tailwind utilities or CSS variables from @astudio/tokens:
+Use Tailwind utilities or CSS variables from @design-studio/tokens:
 
 :root {
   --space-unit: 4px;
@@ -226,7 +226,7 @@ If everything is emphasized, nothing is.
 
 ## Pattern 3: Component Anatomy
 
-**Context:** Building components that are flexible but consistent using @astudio/ui primitives.
+**Context:** Building components that are flexible but consistent using @design-studio/ui primitives.
 
 **The Pattern:**
 
@@ -252,7 +252,7 @@ Every component has these layers:
    - Loading
    - Error
 
-BUTTON ANATOMY (using @astudio/ui):
+BUTTON ANATOMY (using @design-studio/ui):
 ┌─────────────────────────────────┐
 │ ┌─ Content ──────────────────┐ │
 │ │  [Icon]  Button Text       │ │
@@ -306,7 +306,7 @@ Body: 16px / 26px line-height (400 weight)
 Caption: Smaller variants as needed
 
 PRACTICAL IMPLEMENTATION:
-Use @astudio/ui text components or token classes:
+Use @design-studio/ui text components or token classes:
 
 .text-heading1 {
   font-size: var(--type-web-heading1-size);
@@ -325,7 +325,7 @@ USAGE RULES:
 - Never skip heading levels (H1 → H3)
 - Only one H1 per page
 - Use weight, not just size, for hierarchy
-- Prefer semantic text components from @astudio/ui
+- Prefer semantic text components from @design-studio/ui
 ```
 
 ## Pattern 5: Color System Architecture
@@ -337,7 +337,7 @@ USAGE RULES:
 ```
 THREE COLOR LAYERS (aStudio approach):
 
-1. FOUNDATION TOKENS (@astudio/tokens)
+1. FOUNDATION TOKENS (@design-studio/tokens)
    Raw colors with light/dark variants
    Background, text, icon scales
 
@@ -418,7 +418,7 @@ FLUID DESIGN RULES:
 3. Let content breathe with s16/s24 padding
 4. Test at awkward widths (600px, 900px)
 
-CONTAINER (using @astudio/ui patterns):
+CONTAINER (using @design-studio/ui patterns):
 .container {
   width: 100%;
   max-width: 1280px;
@@ -437,7 +437,7 @@ CONTAINER (using @astudio/ui patterns):
 
 ## Pattern 7: Progressive Disclosure
 
-**Context:** Managing complexity by revealing information as needed using @astudio/ui components.
+**Context:** Managing complexity by revealing information as needed using @design-studio/ui components.
 
 **The Pattern:**
 
@@ -459,7 +459,7 @@ Level 3: Advanced (buried intentionally)
   - Technical settings
   - Destructive actions
 
-IMPLEMENTATION PATTERNS (using @astudio/ui):
+IMPLEMENTATION PATTERNS (using @design-studio/ui):
 
 1. COLLAPSIBLE SECTION
    Use CollapsibleSection component
@@ -555,7 +555,7 @@ ANTI-PATTERNS:
 
 ## Pattern 9: Form Design Excellence
 
-**Context:** Creating forms that are easy to complete correctly using @astudio/ui form components.
+**Context:** Creating forms that are easy to complete correctly using @design-studio/ui form components.
 
 **The Pattern:**
 
@@ -611,7 +611,7 @@ SUBMIT:
 - Clear primary action
 - Disabled until valid (with explanation)
 - Loading state on submit
-- Use Button from @astudio/ui
+- Use Button from @design-studio/ui
 ```
 
 ## Pattern 10: Empty State Design
@@ -721,7 +721,7 @@ Icon + Label (best)
 Tooltip (acceptable for space constraints)
 Only icons for truly universal actions
 
-IMPLEMENTATION (using @astudio/ui):
+IMPLEMENTATION (using @design-studio/ui):
 <Button>
 <Icon name="bell" />
 <span>Notifications</span>
@@ -908,7 +908,7 @@ GOOD VALIDATION TIMING:
 - On submit (final check)
 - Real-time ONLY for success confirmation
 
-GOOD PATTERNS (using @astudio/ui):
+GOOD PATTERNS (using @design-studio/ui):
 // Show requirements upfront, not as errors
 <PasswordField>
 <Requirement met={hasUppercase}>

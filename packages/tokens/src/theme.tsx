@@ -1,5 +1,5 @@
 /**
- * @astudio/tokens - Theme Provider
+ * @design-studio/tokens - Theme Provider
  *
  * Runtime theme switching with React context.
  * Supports light/dark themes with system preference detection.

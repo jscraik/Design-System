@@ -39,7 +39,7 @@ This guide documents the 2026 restructure that improved discoverability and norm
 - MCP server moved to `platforms/mcp/`.
 - Widget SDK tooling moved under `packages/widgets/src/sdk/`.
 - Widget examples moved to `packages/widgets/docs/examples/`.
-- Templates gallery registry moved under `packages/ui/src/dev/templates-gallery.tsx` (consumed via `@astudio/ui/dev`).
+- Templates gallery registry moved under `packages/ui/src/dev/templates-gallery.tsx` (consumed via `@design-studio/ui/dev`).
 - `packages/runtime`, `packages/tokens`, and `packages/widgets` now follow `src/ /tests/ /docs/` conventions.
 
 ## Path map (old → new)
@@ -51,7 +51,7 @@ This guide documents the 2026 restructure that improved discoverability and norm
 - `apps/ChatGPT-UI_templates/*` → `platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx`
 - `apps/mcp/*` → `platforms/mcp/*`
 - `apps/` is now an alias/index; treat `platforms/` as canonical for all tooling.
-- `platforms/web/apps/templates-gallery/src/shared/lib/template-registry.tsx` → `packages/ui/src/dev/templates-gallery.tsx` (consumed via `@astudio/ui/dev`)
+- `platforms/web/apps/templates-gallery/src/shared/lib/template-registry.tsx` → `packages/ui/src/dev/templates-gallery.tsx` (consumed via `@design-studio/ui/dev`)
 - `platforms/web/apps/web/src/features/widgets/WidgetHarness.tsx` → `platforms/web/apps/web/src/pages/HarnessPage.tsx`
 
 ### Tokens
@@ -81,23 +81,23 @@ This guide documents the 2026 restructure that improved discoverability and norm
 - `packages/ui/src/storybook/App.tsx` → `packages/ui/src/storybook/App/App.tsx`
 - `packages/ui/src/storybook/pages/*.tsx` → `packages/ui/src/storybook/pages/<PageName>/<PageName>.tsx`
 - `packages/ui/src/storybook/design-system/DesignTokens.ts` → `packages/ui/src/storybook/design-system/DesignTokens/DesignTokens.ts`
-- `@astudio/ui/forms` → `@astudio/ui/base`
-- `@astudio/ui/layout` → `@astudio/ui/data-display`, `@astudio/ui/feedback`, `@astudio/ui/navigation`, `@astudio/ui/overlays`
+- `@design-studio/ui/forms` → `@design-studio/ui/base`
+- `@design-studio/ui/layout` → `@design-studio/ui/data-display`, `@design-studio/ui/feedback`, `@design-studio/ui/navigation`, `@design-studio/ui/overlays`
 
 ### UI import surface (new)
 
 Use the published subpaths for UI primitives and app surfaces:
 
-- `@astudio/ui/app`
-- `@astudio/ui/base`
-- `@astudio/ui/chat`
-- `@astudio/ui/data-display`
-- `@astudio/ui/feedback`
-- `@astudio/ui/icons`
-- `@astudio/ui/modals`
-- `@astudio/ui/navigation`
-- `@astudio/ui/overlays`
-- `@astudio/ui/settings`
+- `@design-studio/ui/app`
+- `@design-studio/ui/base`
+- `@design-studio/ui/chat`
+- `@design-studio/ui/data-display`
+- `@design-studio/ui/feedback`
+- `@design-studio/ui/icons`
+- `@design-studio/ui/modals`
+- `@design-studio/ui/navigation`
+- `@design-studio/ui/overlays`
+- `@design-studio/ui/settings`
 
 ### Widgets
 

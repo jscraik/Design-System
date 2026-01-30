@@ -42,7 +42,7 @@ drwxr-xr-x  10 jamiecraik  staff   320 Jan 26 12:04 ..
 
 **Required Fix:**
 - Create placeholder `index.ts` files in each package
-- Or migrate actual source code from `@astudio/*` packages first
+- Or migrate actual source code from `@design-studio/*` packages first
 
 **Decision Point:** Should we create placeholder files or migrate actual code in Phase 1?
 
@@ -82,15 +82,15 @@ entry: {
 
 ```typescript
 const MIGRATIONS = {
-  '@astudio/ui': '@design-studio/ui',
-  '@astudio/runtime': '@design-studio/runtime',
-  '@astudio/tokens': '@design-studio/tokens',
-  '@astudio/icons': '@design-studio/ui/icons',
-  '@astudio/icons': '@design-studio/ui/icons', // ❌ DUPLICATE!
+  '@design-studio/ui': '@design-studio/ui',
+  '@design-studio/runtime': '@design-studio/runtime',
+  '@design-studio/tokens': '@design-studio/tokens',
+  '@design-studio/icons': '@design-studio/ui/icons',
+  '@design-studio/icons': '@design-studio/ui/icons', // ❌ DUPLICATE!
 } as const;
 ```
 
-**Impact:** The second `@astudio/icons` overwrites the first. If the original `@astudio-icons` package exists, it won't be migrated.
+**Impact:** The second `@design-studio/icons` overwrites the first. If the original `@astudio-icons` package exists, it won't be migrated.
 
 **Evidence:** Lines 26-27 are identical.
 
@@ -416,7 +416,7 @@ indent_size = 2
 
 **Status:** Not started in Batch 1.
 
-**Impact:** No migration guide for users of `@astudio/*` packages.
+**Impact:** No migration guide for users of `@design-studio/*` packages.
 
 ---
 
@@ -442,7 +442,7 @@ indent_size = 2
 
 **Options:**
 A. Create placeholder `index.ts` files (empty exports)
-B. Migrate actual source code from `@astudio/*` now
+B. Migrate actual source code from `@design-studio/*` now
 C. Deleave until Phase 2 (but then Phase 1 is incomplete)
 
 **Recommendation:** Create placeholders with TODO comments.
