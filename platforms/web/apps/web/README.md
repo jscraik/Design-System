@@ -29,7 +29,7 @@ Last updated: 2026-01-09
 
 - **Widget Gallery**: Visual browser for all ChatGPT widgets in an iframe gallery
 - **Widget Build**: Builds single-file `widget.html` used by the MCP server
-- **Standalone Host**: Reference implementation for `@astudio/runtime`
+- **Standalone Host**: Reference implementation for `@design-studio/runtime`
 
 ## Quick Start
 

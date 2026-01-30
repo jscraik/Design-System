@@ -3,10 +3,10 @@ import {
   createEmbeddedHost,
   ensureMockOpenAI,
   useToolOutput,
-} from "@astudio/runtime";
-import { AppsSDKUIProvider } from "@astudio/ui";
-import type { DashboardChat, DashboardStat } from "@astudio/ui/dev";
-import { DashboardPage } from "@astudio/ui/dev";
+} from "@design-studio/runtime";
+import { AppsSDKUIProvider } from "@design-studio/ui";
+import type { DashboardChat, DashboardStat } from "@design-studio/ui/dev";
+import { DashboardPage } from "@design-studio/ui/dev";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "../../../src/styles.css";

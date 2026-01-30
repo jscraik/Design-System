@@ -1,5 +1,5 @@
 {
-  "name": "@astudio/cloudflare-template",
+  "name": "@design-studio/cloudflare-template",
   "version": "0.0.1",
   "description": "Cloudflare Workers deployment template for ChatUI widgets",
   "type": "module",
@@ -15,7 +15,7 @@
     "check": "pnpm run typecheck && pnpm run build && wrangler deploy --dry-run"
   },
   "dependencies": {
-    "@astudio/widgets": "workspace:*",
+    "@design-studio/widgets": "workspace:*",
     "@modelcontextprotocol/sdk": "^1.20.0",
     "agents": "^0.2.13",
     "zod": "^3.25.76"

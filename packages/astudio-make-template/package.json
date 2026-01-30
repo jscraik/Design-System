@@ -1,5 +1,5 @@
 {
-  "name": "@astudio/make-template",
+  "name": "@design-studio/make-template",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -11,7 +11,7 @@
   "dependencies": {
     "@design-studio/tokens": "workspace:*",
     "@design-studio/ui": "workspace:*",
-    "@astudio/icons": "workspace:*",
+    "@design-studio/icons": "workspace:*",
     "react": ">=18",
     "react-dom": ">=18"
   }

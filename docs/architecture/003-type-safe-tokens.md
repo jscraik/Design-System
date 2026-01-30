@@ -12,7 +12,7 @@
 AStudio currently uses **string-based token access**:
 
 ```typescript
-import { getToken } from "@astudio/tokens";
+import { getToken } from "@design-studio/tokens";
 
 const bgColor = getToken("color.background.dark.primary");
 ```

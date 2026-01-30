@@ -31,7 +31,7 @@ import { z } from "zod";
 
 export const astudioCatalog = createCatalog({
   components: {
-    // Maps to @astudio/ui Card compound component
+    // Maps to @design-studio/ui Card compound component
     Card: {
       props: z.object({
         title: z.string().optional(),
@@ -39,7 +39,7 @@ export const astudioCatalog = createCatalog({
       }),
       hasChildren: true,
     },
-    // Maps to @astudio/ui Button with actual variant names
+    // Maps to @design-studio/ui Button with actual variant names
     Button: {
       props: z.object({
         label: z.string(),
@@ -78,15 +78,15 @@ export const astudioCatalog = createCatalog({
 
 ### 2. Create Component Registry
 
-Map catalog names to your actual React components from `@astudio/ui`:
+Map catalog names to your actual React components from `@design-studio/ui`:
 
 ```tsx
 // packages/widgets/src/shared/json-render/registry.tsx
 import type { ComponentRegistry } from "@json-render/react";
-import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent } from "@astudio/ui";
+import { Button, Card, CardHeader, CardTitle, CardDescription, CardContent } from "@design-studio/ui";
 
 export const astudioRegistry: ComponentRegistry = {
-  // Card uses compound component pattern from @astudio/ui
+  // Card uses compound component pattern from @design-studio/ui
   Card: ({ element, children }) => {
     const { title, description } = element.props as {
       title?: string;
@@ -106,7 +106,7 @@ export const astudioRegistry: ComponentRegistry = {
     );
   },
 
-  // Button uses actual @astudio/ui Button variants
+  // Button uses actual @design-studio/ui Button variants
   Button: ({ element, onAction }) => {
     const { label, variant, size, action } = element.props as {
       label: string;
@@ -309,7 +309,7 @@ mountWidget(<AIDashboardContainer />);
 2. **AI generates JSON**: Constrained to your catalog
 3. **json-render validates**: Ensures JSON matches schemas
 4. **Renderer maps to components**: Uses your registry
-5. **Your components render**: Using @astudio/ui
+5. **Your components render**: Using @design-studio/ui
 
 ## Example AI-Generated JSON
 
@@ -355,12 +355,12 @@ mountWidget(<AIDashboardContainer />);
 
 ## Adding More Components
 
-To add a new component from `@astudio/ui`:
+To add a new component from `@design-studio/ui`:
 
 1. **Add to catalog** (`packages/widgets/src/shared/json-render/catalog.ts`):
 
 ```tsx
-// Add Chart component using @astudio/ui Chart
+// Add Chart component using @design-studio/ui Chart
 Chart: {
   props: z.object({
     type: z.enum(["line", "bar", "area", "pie"]),
@@ -376,7 +376,7 @@ Chart: {
 1. **Add to registry** (`packages/widgets/src/shared/json-render/registry.tsx`):
 
 ```tsx
-import { Chart } from "@astudio/ui";
+import { Chart } from "@design-studio/ui";
 
 // In registry:
 Chart: ({ element }) => {

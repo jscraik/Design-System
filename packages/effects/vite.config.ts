@@ -18,7 +18,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "@astudio/tokens": resolve(__dirname, "../tokens/src"),
+      "@design-studio/tokens": resolve(__dirname, "../tokens/src"),
     },
   },
   build: {

@@ -12,7 +12,7 @@
 
 - Comprehensive analysis of source app vs platform dependencies
 - Component mapping strategy (Radix UI → @design-studio/ui)
-- Token integration strategy (source tokens → @astudio/tokens)
+- Token integration strategy (source tokens → @design-studio/tokens)
 - Implementation phases and approach
 
 ### 2. Dependency Audit Summary
@@ -74,7 +74,7 @@ import { Button } from "@design-studio/ui/base";
 import { colors } from "../design-tokens";
 
 // AFTER (Platform)
-import { tokens } from "@astudio/tokens";
+import { tokens } from "@design-studio/tokens";
 ```
 
 ### Phase 3: Registry Generation

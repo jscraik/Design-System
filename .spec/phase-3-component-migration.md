@@ -492,7 +492,7 @@ main
    - Gradual rollout strategy
 
 2. **Package-level Rollback**: Complete package rollback
-   - Keep `@astudio/ui` alongside `@design-studio/ui` temporarily
+   - Keep `@design-studio/ui` alongside `@design-studio/ui` temporarily
    - Alias imports in build config
    - Deprecation warnings for old package
 

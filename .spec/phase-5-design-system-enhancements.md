@@ -21,7 +21,7 @@ This specification defines the remaining enhancements to transform the Storybook
 - ✅ Visual scale pages for all foundations (Colors, Typography, Spacing, Radius, Sizes, Elevation, Motion)
 - ✅ Component patterns documentation
 - ✅ Iconography system with visual catalog
-- ✅ Import paths standardized to `@astudio/tokens/*`
+- ✅ Import paths standardized to `@design-studio/tokens/*`
 
 **Target State (Phase 5):**
 - 🎯 Theme toolbar toggle for light/dark mode switching

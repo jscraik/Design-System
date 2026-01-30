@@ -12,7 +12,7 @@
  * Deprecated Patterns:
  * - _temp directories - Archived Figma exports (reference only)
  * - _temp_import - Temporary import structure
- * - @astudio/ui/dev - Dev-only exports, not for production
+ * - @design-studio/ui/dev - Dev-only exports, not for production
  */
 
 const noDeprecatedImportsRule = {
@@ -59,8 +59,8 @@ const noDeprecatedImportsRule = {
     ];
     const deprecatedPaths = options.deprecatedPaths || [];
     const customMessages = options.customMessages || {
-      "@astudio/ui/dev":
-        "Dev-only export. Use @astudio/ui/* or @astudio/ui/experimental outside local harnesses.",
+      "@design-studio/ui/dev":
+        "Dev-only export. Use @design-studio/ui/* or @design-studio/ui/experimental outside local harnesses.",
     };
 
     // Convert glob pattern to regex

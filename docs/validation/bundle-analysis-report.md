@@ -14,17 +14,17 @@ This report analyzes the current state of the AStudio codebase to establish base
 
 | Package | Size | Purpose |
 |---------|------|---------|
-| `@astudio/ui` | 2.5MB | Main component library |
-| `@astudio/icons` | 3.7MB | Icon components |
-| `@astudio/runtime` | 68KB | Host abstraction |
-| `@astudio/tokens` | 160KB | Design tokens |
-| `@astudio/make-template` | - | Template CLI |
-| `@astudio/cloudflare-template` | - | Cloudflare Workers template |
-| `@astudio/skill-ingestion` | - | Skill processing |
-| `@astudio/json-render` | - | JSON rendering |
-| `@astudio/cli` | - | CLI tools |
-| `@astudio/widgets` | - | Widget bundles |
-| `@astudio/effects` | - | Animation effects |
+| `@design-studio/ui` | 2.5MB | Main component library |
+| `@design-studio/icons` | 3.7MB | Icon components |
+| `@design-studio/runtime` | 68KB | Host abstraction |
+| `@design-studio/tokens` | 160KB | Design tokens |
+| `@design-studio/make-template` | - | Template CLI |
+| `@design-studio/cloudflare-template` | - | Cloudflare Workers template |
+| `@design-studio/skill-ingestion` | - | Skill processing |
+| `@design-studio/json-render` | - | JSON rendering |
+| `@design-studio/cli` | - | CLI tools |
+| `@design-studio/widgets` | - | Widget bundles |
+| `@design-studio/effects` | - | Animation effects |
 
 **Total UI footprint:** ~6.2MB (ui + icons)
 
@@ -82,7 +82,7 @@ This report analyzes the current state of the AStudio codebase to establish base
 - Dev-only content like `FoundationsShowcase` (156KB) and `dev.js` (76KB) in production bundle
 
 ### 2. Icon Package Size
-- `@astudio/icons` is 3.7MB - **larger than the entire UI package**
+- `@design-studio/icons` is 3.7MB - **larger than the entire UI package**
 - This should definitely be merged into the main UI package
 
 ### 3. Third-Party Dependencies
@@ -104,17 +104,17 @@ This report analyzes the current state of the AStudio codebase to establish base
 
 ```typescript
 // Main package import
-import { AppsSDKUIProvider } from "@astudio/ui";
+import { AppsSDKUIProvider } from "@design-studio/ui";
 
 // Category imports (existing)
-import { Button, Input } from "@astudio/ui/base";
-import { Toast } from "@astudio/ui/feedback";
+import { Button, Input } from "@design-studio/ui/base";
+import { Toast } from "@design-studio/ui/feedback";
 
 // Icons subpath
-import { IconSearch } from "@astudio/ui/icons";
+import { IconSearch } from "@design-studio/ui/icons";
 
 // Templates
-import { ChatTemplate } from "@astudio/ui/templates";
+import { ChatTemplate } from "@design-studio/ui/templates";
 ```
 
 ### Analysis

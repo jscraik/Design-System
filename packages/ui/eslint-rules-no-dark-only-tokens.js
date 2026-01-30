@@ -10,7 +10,7 @@
  * Usage:
  *   {
  *     "plugins": { "./eslint-rules-no-dark-only-tokens" },
- *     "rules": { "@astudio/no-dark-only-tokens": "error" }
+ *     "rules": { "@design-studio/no-dark-only-tokens": "error" }
  *   }
  */
 

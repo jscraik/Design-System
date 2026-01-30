@@ -68,7 +68,7 @@ Sources:
 ## 3) Current State (Reality Check)
 
 - **What exists today:**
-  - Library-first monorepo with `@astudio/ui`, `@astudio/runtime`, `@astudio/tokens`, widget bundles, and MCP server.
+  - Library-first monorepo with `@design-studio/ui`, `@design-studio/runtime`, `@design-studio/tokens`, widget bundles, and MCP server.
   - Web Widget Gallery + Storybook; widget build pipeline; token sync and build pipeline.
   - Security hardening report and extensive test suite documentation.
 - **Who is actually using it (if anyone):** Jamie (solo) for design system and component creation; no external usage metrics in reviewed docs.

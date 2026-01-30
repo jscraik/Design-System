@@ -1,11 +1,11 @@
 /**
- * @astudio/tokens - Enhanced Z-Index
+ * @design-studio/tokens - Enhanced Z-Index
  *
  * Semantic z-index layers inspired by Geist design system.
  * Prevents z-index conflicts and provides clear stacking context.
  *
  * Usage:
- *   import { zIndex } from "@astudio/tokens";
+ *   import { zIndex } from "@design-studio/tokens";
  *   <div style={{ zIndex: zIndex.modal }}>
  *
  * Layers (lowest to highest):

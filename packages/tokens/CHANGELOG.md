@@ -1,4 +1,4 @@
-# @astudio/tokens
+# @design-studio/tokens
 
 Last updated: 2026-01-09
 

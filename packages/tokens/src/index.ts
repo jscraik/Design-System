@@ -1,5 +1,5 @@
 /**
- * @astudio/tokens
+ * @design-studio/tokens
  *
  * Design tokens with CSS variables and runtime theming API.
  * Enhanced with Geist-inspired patterns (spacing, z-index, motion, focus).
@@ -30,7 +30,7 @@
  *
  * ```tsx
  * // Import tokens
- * import { spacing, zIndex, motion, ThemeProvider, useTheme } from "@astudio/tokens";
+ * import { spacing, zIndex, motion, ThemeProvider, useTheme } from "@design-studio/tokens";
  *
  * // Use in components
  * function App() {

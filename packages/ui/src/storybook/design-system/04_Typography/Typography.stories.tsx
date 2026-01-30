@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
 
-import { typographyTokens } from "@astudio/tokens/typography";
+import { typographyTokens } from "@design-studio/tokens/typography";
 
 /**
  * Typography Scale - Visual-first documentation for type decisions.

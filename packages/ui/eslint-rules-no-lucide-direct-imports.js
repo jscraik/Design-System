@@ -2,20 +2,20 @@
  * ESLint Rule: No Direct lucide-react Imports
  *
  * Enforces that all icon imports use the canonical icon system
- * (@astudio/ui/icons) instead of directly importing from lucide-react.
+ * (@design-studio/ui/icons) instead of directly importing from lucide-react.
  * This ensures consistent icon styling and maintains the single source
  * of truth for icons across the codebase.
  *
  * Rationale:
  * - The ChatUI codebase has a comprehensive icon system with 350+ ChatGPT icons
  * - Direct lucide-react imports bypass this system and create inconsistency
- * - All icons should be imported from @astudio/ui/icons for:
+ * - All icons should be imported from @design-studio/ui/icons for:
  *   - Consistent styling with ChatGPT design system
  *   - Proper tree-shaking through centralized exports
  *   - Future-proofing for icon replacements
  *   - Clear icon namespace with Icon* prefix
  *
- * Allowed: import { IconCheckmark, IconSettings } from "@astudio/ui/icons"
+ * Allowed: import { IconCheckmark, IconSettings } from "@design-studio/ui/icons"
  * Disallowed: import { Check, Settings } from "lucide-react"
  */
 
@@ -23,7 +23,7 @@ const noLucideDirectImportsRule = {
   meta: {
     type: "suggestion",
     docs: {
-      description: "Disallow direct imports from lucide-react. Use @astudio/ui/icons instead.",
+      description: "Disallow direct imports from lucide-react. Use @design-studio/ui/icons instead.",
       category: "Best Practices",
       recommended: "warn",
       url: "https://github.com/astudio/astudio/blob/main/packages/ui/src/icons/ICON_SYSTEM.md",
@@ -44,7 +44,7 @@ const noLucideDirectImportsRule = {
     ],
     messages: {
       directImport:
-        "Direct import from 'lucide-react' is not allowed. Import from '@astudio/ui/icons' instead. " +
+        "Direct import from 'lucide-react' is not allowed. Import from '@design-studio/ui/icons' instead. " +
         "See packages/ui/src/icons/ICON_SYSTEM.md for available icons.",
     },
   },

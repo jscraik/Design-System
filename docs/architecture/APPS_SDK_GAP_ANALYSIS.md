@@ -48,7 +48,7 @@ We have strong foundations with most Apps SDK requirements implemented. Recent i
 ### ✅ What We're Doing Well
 
 - MCP server architecture and structured tool responses
-- Full `window.openai` API coverage in `@astudio/runtime`
+- Full `window.openai` API coverage in `@design-studio/runtime`
 - Tool annotations + metadata (`readOnlyHint`, `openai/outputTemplate`, etc.)
 - Apps SDK UI integration with consistent UI primitives
 - Token/state patterns (`widgetState`, `setWidgetState`, `widgetSessionId`)

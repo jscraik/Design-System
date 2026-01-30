@@ -31,7 +31,7 @@ In this migration, the DO owns one `ChatUIWidgetServer` instance and forwards re
 - [x] (2026-01-09T01:35Z) Fix: Added explicit `env.development` DO config in `packages/cloudflare-template/wrangler.jsonc` and updated scripts to run `wrangler dev/types --env development` to surface `WIDGET_SERVER` bindings in local dev/types output.
 - [x] (2026-01-09T01:40Z) Validation: `cf-typegen --env development` now surfaces `WIDGET_SERVER` and `durableNamespaces` in the generated types after the env/config change.
 - [x] (2026-01-09T01:50Z) Dev verification: `ulimit -n 8192` + `pnpm dev` showed `WIDGET_SERVER` binding; `GET /mcp` and `POST /mcp` (`tools/list`) returned 200 with tool `_meta`; `/src/widgets/demo/kitchen-sink-lite/` returned 200 after redirect.
-- [x] (2026-01-09T01:55Z) Docs: Updated `packages/cloudflare-template/README.md` Troubleshooting to add EMFILE watch error guidance (raise `ulimit -n 8192`) and corrected the widgets reference to `@astudio/widgets` plus manifest path `src/worker/widget-manifest.generated.ts`.
+- [x] (2026-01-09T01:55Z) Docs: Updated `packages/cloudflare-template/README.md` Troubleshooting to add EMFILE watch error guidance (raise `ulimit -n 8192`) and corrected the widgets reference to `@design-studio/widgets` plus manifest path `src/worker/widget-manifest.generated.ts`.
 - [x] (2026-01-09T02:00Z) Docs: Added a macOS-specific EMFILE workaround note (`launchctl limit maxfiles`) to `packages/cloudflare-template/README.md` Troubleshooting.
 - [ ] (TBD) Run validation commands; record results and any issues.
 

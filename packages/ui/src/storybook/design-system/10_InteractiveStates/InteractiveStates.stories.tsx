@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { radiusTokens } from "@astudio/tokens/radius";
+import { radiusTokens } from "@design-studio/tokens/radius";
 
 /**
  * # Interactive States Gallery

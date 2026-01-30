@@ -1,4 +1,4 @@
-# @astudio/cloudflare-template
+# @design-studio/cloudflare-template
 
 Last updated: 2026-01-09
 
@@ -17,4 +17,4 @@ Last updated: 2026-01-09
 
 ### Patch Changes
 
-- @astudio/widgets@0.0.1
+- @design-studio/widgets@0.0.1

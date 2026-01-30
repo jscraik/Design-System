@@ -1,4 +1,4 @@
-# @astudio/ui
+# @design-studio/ui
 
 Last updated: 2026-01-09
 
@@ -33,16 +33,16 @@ A comprehensive React UI component library built for ChatGPT Apps SDK and standa
 ## Install
 
 ```bash
-pnpm add @astudio/ui
+pnpm add @design-studio/ui
 # or
-npm install @astudio/ui
+npm install @design-studio/ui
 ```
 
 ## 🚀 Quick Start
 
 ```tsx
-import { ChatUIRoot, Button, ModelSelector } from "@astudio/ui";
-import "@astudio/ui/styles.css";
+import { ChatUIRoot, Button, ModelSelector } from "@design-studio/ui";
+import "@design-studio/ui/styles.css";
 
 function App() {
   return (
@@ -65,7 +65,7 @@ function App() {
 Demo pages and sandbox utilities live under a separate entry to keep the production API minimal:
 
 ```tsx
-import { AStudioApp, DesignSystemPage } from "@astudio/ui/dev";
+import { AStudioApp, DesignSystemPage } from "@design-studio/ui/dev";
 ```
 
 ## 📦 What's Included
@@ -154,7 +154,7 @@ Components accept `className` props and use `tailwind-merge` for style compositi
 ### Component Composition
 
 ```tsx
-import { ChatUIRoot, ChatHeader, ChatSidebar, ChatMessages, ChatInput } from "@astudio/ui";
+import { ChatUIRoot, ChatHeader, ChatSidebar, ChatMessages, ChatInput } from "@design-studio/ui";
 
 function ChatApp() {
   return (
@@ -180,7 +180,7 @@ Cause: CSS not imported.
 Fix:
 
 ```ts
-import "@astudio/ui/styles.css";
+import "@design-studio/ui/styles.css";
 ```
 
 ### Symptom: Icons render incorrectly
@@ -207,7 +207,7 @@ pnpm -C platforms/web/apps/storybook test
 ### Custom Hooks
 
 ```tsx
-import { useControllableState } from "@astudio/ui";
+import { useControllableState } from "@design-studio/ui";
 
 function CustomComponent() {
   const [value, setValue] = useControllableState({
@@ -223,7 +223,7 @@ function CustomComponent() {
 For ChatGPT widgets, use the standalone components:
 
 ```tsx
-import { ModelBadge, ContextTag, Button } from "@astudio/ui";
+import { ModelBadge, ContextTag, Button } from "@design-studio/ui";
 
 function ChatWidget() {
   return (

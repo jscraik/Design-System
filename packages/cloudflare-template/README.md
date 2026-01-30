@@ -150,7 +150,7 @@ this.server.registerTool(
 
 ### ✅ **Auto-Discovery**
 
-- Automatically discovers all widgets from `@astudio/widgets`
+- Automatically discovers all widgets from `@design-studio/widgets`
 - Generates content-hashed URIs for cache busting
 - No manual widget registration required
 
@@ -209,7 +209,7 @@ After deployment, add your MCP server to ChatGPT:
 
 **Widgets not loading**
 
-- Check that `@astudio/widgets` is built: `pnpm -C packages/widgets build`
+- Check that `@design-studio/widgets` is built: `pnpm -C packages/widgets build`
 - Verify widget manifest is generated in `src/worker/widget-manifest.generated.ts`
 
 **MCP server not responding**

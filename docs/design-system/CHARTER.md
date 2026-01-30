@@ -18,7 +18,7 @@ This charter defines the governance and non-negotiable rules for the aStudio UI 
 
 In scope:
 
-- Web UI built with React/Vite/Tailwind and `@astudio/ui`.
+- Web UI built with React/Vite/Tailwind and `@design-studio/ui`.
 - Tauri desktop shells that host the web UI.
 - Embedded ChatGPT Apps SDK widgets under `packages/widgets`.
 - Design tokens, component APIs, interaction patterns, and QA gates.

@@ -11,7 +11,7 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
-      "@astudio/skill-ingestion": ["packages/skill-ingestion/dist/index.d.ts"]
+      "@design-studio/skill-ingestion": ["packages/skill-ingestion/dist/index.d.ts"]
     }
   }
 }

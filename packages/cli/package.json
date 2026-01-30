@@ -1,10 +1,10 @@
 {
-  "name": "@astudio/cli",
+  "name": "@design-studio/cli",
   "version": "0.0.1",
   "private": true,
   "type": "module",
   "bin": {
-    "astudio": "dist/index.js"
+    "design-studio": "dist/index.js"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -14,7 +14,7 @@
     "test": "node --test tests/cli.test.mjs"
   },
   "dependencies": {
-    "@astudio/skill-ingestion": "workspace:*",
+    "@design-studio/skill-ingestion": "workspace:*",
     "yargs": "^17.7.2"
   },
   "devDependencies": {

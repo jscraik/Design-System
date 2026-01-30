@@ -8,7 +8,7 @@ This directory contains automated migration scripts for transitioning from AStud
 
 **Script:** `migrate-imports.ts`
 
-Migrates all import statements from `@astudio/*` to `@design-studio/*`.
+Migrates all import statements from `@design-studio/*` to `@design-studio/*`.
 
 ```bash
 npx tsx scripts/migration/migrate-imports.ts
@@ -16,10 +16,10 @@ npx tsx scripts/migration/migrate-imports.ts
 
 **What it does:**
 - Finds all TypeScript/TSX files
-- Replaces `@astudio/ui` → `@design-studio/ui`
-- Replaces `@astudio/runtime` → `@design-studio/runtime`
-- Replaces `@astudio/tokens` → `@design-studio/tokens`
-- Replaces `@astudio/icons` → `@design-studio/ui/icons`
+- Replaces `@design-studio/ui` → `@design-studio/ui`
+- Replaces `@design-studio/runtime` → `@design-studio/runtime`
+- Replaces `@design-studio/tokens` → `@design-studio/tokens`
+- Replaces `@design-studio/icons` → `@design-studio/ui/icons`
 
 ### 2. Component Migration
 

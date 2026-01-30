@@ -19,7 +19,7 @@ This document provides a quick, task-oriented map of the repository so contribut
   - `platforms/web/apps/web/src/app/`: app shell + router
   - `platforms/web/apps/web/src/pages/`: route-level pages (About/Profile/Settings/Harness)
   - `platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx`: templates gallery route (`/templates`)
-  - `packages/ui/src/dev/templates-gallery.tsx`: canonical templates-gallery registry (consumed via `@astudio/ui/dev`)
+  - `packages/ui/src/dev/templates-gallery.tsx`: canonical templates-gallery registry (consumed via `@design-studio/ui/dev`)
 - `platforms/web/apps/storybook/.storybook/`: Storybook configuration + preview styles
   - `platforms/mcp/`: MCP server (tool contracts + integration harness)
   - `platforms/desktop/apps/desktop/`: desktop shell scaffold (Tauri placeholder)

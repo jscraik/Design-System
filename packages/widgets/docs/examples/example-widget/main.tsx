@@ -3,8 +3,8 @@ import {
   ensureMockOpenAI,
   HostProvider,
   useToolOutput,
-} from "@astudio/runtime";
-import { AppsSDKButton, AppsSDKUIProvider, Card } from "@astudio/ui";
+} from "@design-studio/runtime";
+import { AppsSDKButton, AppsSDKUIProvider, Card } from "@design-studio/ui";
 import { useState } from "react";
 
 import type { ExampleToolOutput } from "../../../src/shared/tool-output-types";

@@ -1,5 +1,5 @@
-import { HostProvider, createEmbeddedHost, ensureMockOpenAI } from "@astudio/runtime";
-import { AppsSDKButton, AppsSDKUIProvider } from "@astudio/ui";
+import { HostProvider, createEmbeddedHost, ensureMockOpenAI } from "@design-studio/runtime";
+import { AppsSDKButton, AppsSDKUIProvider } from "@design-studio/ui";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 

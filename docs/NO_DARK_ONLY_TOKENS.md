@@ -208,7 +208,7 @@ If you need to allow specific patterns (not recommended):
 
 ```js
 {
-  "@astudio/no-dark-only-tokens/no-dark-only-tokens": [
+  "@design-studio/no-dark-only-tokens/no-dark-only-tokens": [
     "error",
     {
       allowedPatterns: ["dark:bg-gradient-", "dark:backdrop-"],

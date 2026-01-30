@@ -1,6 +1,6 @@
 # Colors
 
-Use semantic token roles from `@astudio/tokens` or CSS variables from `@astudio/tokens/tokens.css`.
+Use semantic token roles from `@design-studio/tokens` or CSS variables from `@design-studio/tokens/tokens.css`.
 
 Examples:
 

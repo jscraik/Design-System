@@ -1,5 +1,5 @@
 /**
- * @astudio/tokens - Enhanced Spacing
+ * @design-studio/tokens - Enhanced Spacing
  *
  * 10-step spacing scale inspired by Geist design system.
  * Provides fine-grained control over spacing values.

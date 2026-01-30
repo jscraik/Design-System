@@ -1,5 +1,5 @@
-import type { ComponentSchema } from "@astudio/json-render";
-import { JsonRender } from "@astudio/json-render";
+import type { ComponentSchema } from "@design-studio/json-render";
+import { JsonRender } from "@design-studio/json-render";
 import { AppsSDKButton } from "@design-studio/ui";
 import { useState } from "react";
 

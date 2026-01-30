@@ -1,4 +1,4 @@
-# @astudio/widgets
+# @design-studio/widgets
 
 Last updated: 2026-01-09
 
@@ -19,6 +19,6 @@ Last updated: 2026-01-09
 
 - Updated dependencies [b716ca9]
 - Updated dependencies
-  - @astudio/ui@0.1.0
-  - @astudio/tokens@0.1.0
-  - @astudio/runtime@0.0.1
+  - @design-studio/ui@0.1.0
+  - @design-studio/tokens@0.1.0
+  - @design-studio/runtime@0.0.1

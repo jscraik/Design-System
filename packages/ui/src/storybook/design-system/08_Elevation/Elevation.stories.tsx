@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { shadowTokens } from "@astudio/tokens/shadows";
+import { shadowTokens } from "@design-studio/tokens/shadows";
 
 /**
  * Elevation System - Design Foundation
@@ -753,7 +753,7 @@ export const TokenReference: Story = {
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">Import Shadow Tokens</div>
         <pre className="text-sm bg-background p-3 rounded overflow-x-auto">
-{`import { shadowTokens } from "@astudio/tokens/shadows";
+{`import { shadowTokens } from "@design-studio/tokens/shadows";
 
 // Usage in inline styles or CSS-in-JS
 const cardStyle = {

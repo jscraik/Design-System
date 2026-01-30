@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { sizeTokens } from "@astudio/tokens/sizes";
+import { sizeTokens } from "@design-studio/tokens/sizes";
 
 /**
  * Component Sizes System - Design Foundation
@@ -559,7 +559,7 @@ export const TokenReference: Story = {
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">Import Size Tokens</div>
         <pre className="text-sm bg-background p-3 rounded overflow-x-auto">
-{`import { sizeTokens } from "@astudio/tokens/sizes";
+{`import { sizeTokens } from "@design-studio/tokens/sizes";
 
 // Usage in components
 const inputStyle = {

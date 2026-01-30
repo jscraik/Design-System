@@ -188,7 +188,7 @@ const [state, setState] = useWidgetState<MyStateType>();
 
 ### Build Phase
 
-1. **Widget Discovery**: Scans `@astudio/widgets` for all widgets
+1. **Widget Discovery**: Scans `@design-studio/widgets` for all widgets
 2. **Asset Copying**: Copies HTML, CSS, JS files to `dist/client`
 3. **Manifest Generation**: Creates manifest with content hashes
 4. **Worker Build**: Compiles TypeScript worker code

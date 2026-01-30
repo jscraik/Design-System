@@ -21,14 +21,14 @@ This repository is a **library-first monorepo** for building consistent UI acros
 A cross-platform UI workbench for building ChatGPT-style interfaces across multiple platforms:
 
 - **ChatGPT Widgets** - Embedded widgets via OpenAI Apps SDK
-- **React Applications** - Standalone web applications using `@astudio/ui`
+- **React Applications** - Standalone web applications using `@design-studio/ui`
 - **MCP Integration** - Model Context Protocol server for ChatGPT tool integration
 
 ## Primary Products
 
-- `@astudio/ui` - Reusable UI components (chat layout, header, sidebar, primitives)
-- `@astudio/runtime` - Host adapters + mocks (`window.openai` wrapper, HostProvider)
-- `@astudio/tokens` - Design tokens (CSS variables, Tailwind preset)
+- `@design-studio/ui` - Reusable UI components (chat layout, header, sidebar, primitives)
+- `@design-studio/runtime` - Host adapters + mocks (`window.openai` wrapper, HostProvider)
+- `@design-studio/tokens` - Design tokens (CSS variables, Tailwind preset)
 - `packages/widgets` - Standalone widget bundles for ChatGPT
 - `packages/cloudflare-template` - Cloudflare Workers deployment template for MCP
 
@@ -72,10 +72,10 @@ Note: `apps/` is a navigation index only; canonical app paths remain under `plat
 
 ## Compatibility matrix
 
-- **React**: 19.x (required by `@astudio/ui` peerDependencies)
+- **React**: 19.x (required by `@design-studio/ui` peerDependencies)
 - **TypeScript**: 5.9+ (workspace devDependency)
 - **Node.js**: 18+ (runtime baseline)
-- **Apps SDK UI**: ^0.2.1 (from `@astudio/ui` dependencies)
+- **Apps SDK UI**: ^0.2.1 (from `@design-studio/ui` dependencies)
 
 ## 🚀 Quick Start
 
@@ -281,7 +281,7 @@ This repo uses **Apps SDK UI** as the visual system. Import the CSS in both stan
 ```css
 @import "tailwindcss";
 @import "@openai/apps-sdk-ui/css";
-@import "@astudio/tokens/foundations.css";
+@import "@design-studio/tokens/foundations.css";
 
 /* Tailwind v4 scanning */
 @source "../node_modules/@openai/apps-sdk-ui";
@@ -292,7 +292,7 @@ See: <https://developers.openai.com/apps-sdk/>
 
 ## Foundation tokens (audit layer)
 
-`@astudio/tokens` encodes the PDF "Figma foundations" as:
+`@design-studio/tokens` encodes the PDF "Figma foundations" as:
 
 - `packages/tokens/src/foundations.css` (CSS variables)
 - `packages/tokens/src/*.ts` (TS exports for Storybook foundations pages)
@@ -306,7 +306,7 @@ These tokens are **audit/extension only**. Use Apps SDK UI classes/components in
 `packages/runtime` exposes a Host interface + provider, so components stay host-agnostic:
 
 ```ts
-import { HostProvider, createStandaloneHost } from "@astudio/runtime";
+import { HostProvider, createStandaloneHost } from "@design-studio/runtime";
 
 const host = createStandaloneHost("http://localhost:8787");
 ```
@@ -320,15 +320,15 @@ Runtime details and widgetSessionId guidance live in `packages/runtime/README.md
 The UI package re-exports chat components and UI primitives from a single entry point.
 
 ```ts
-import { Button, ChatHeader, ChatSidebar } from "@astudio/ui";
+import { Button, ChatHeader, ChatSidebar } from "@design-studio/ui";
 ```
 
 For production code, prefer subpath exports for better tree-shaking:
 
 ```ts
-import { Button } from "@astudio/ui/base";
-import { ModelSelector } from "@astudio/ui/navigation";
-import { ChatSidebar } from "@astudio/ui/chat";
+import { Button } from "@design-studio/ui/base";
+import { ModelSelector } from "@design-studio/ui/navigation";
+import { ChatSidebar } from "@design-studio/ui/chat";
 ```
 
 ### Dev/demo exports
@@ -336,7 +336,7 @@ import { ChatSidebar } from "@astudio/ui/chat";
 Demo pages and sandbox utilities are exposed from a separate entry to keep the production surface clean:
 
 ```ts
-import { AStudioApp, DesignSystemPage } from "@astudio/ui/dev";
+import { AStudioApp, DesignSystemPage } from "@design-studio/ui/dev";
 ```
 
 ### Experimental exports
@@ -344,7 +344,7 @@ import { AStudioApp, DesignSystemPage } from "@astudio/ui/dev";
 Experimental or fast-evolving APIs are exposed separately:
 
 ```ts
-import { ChatFullWidthTemplate } from "@astudio/ui/experimental";
+import { ChatFullWidthTemplate } from "@design-studio/ui/experimental";
 ```
 
 ## Public API surface
@@ -354,18 +354,18 @@ import { ChatFullWidthTemplate } from "@astudio/ui/experimental";
 | Chat UI components | ChatUIRoot, ChatHeader, ChatSidebar, ChatMessages, ChatInput, ComposeView    |
 | UI primitives      | Button, Dialog, Tabs, Tooltip, and more                                      |
 | Icons              | Icons adapter, ChatGPTIcons                                                  |
-| Pages              | DesignSystemPage, TypographyPage, SpacingPage (via `@astudio/ui/dev`)        |
+| Pages              | DesignSystemPage, TypographyPage, SpacingPage (via `@design-studio/ui/dev`)        |
 | Templates          | ChatFullWidthTemplate, ChatTwoPaneTemplate, DashboardTemplate (experimental) |
 | Utilities          | useControllableState                                                         |
 
 ## Public API policy
 
-- **Stable**: `@astudio/ui` root exports and the `@astudio/ui/app`, `@astudio/ui/chat`, `@astudio/ui/modals`,
-  `@astudio/ui/settings`, `@astudio/ui/base`, `@astudio/ui/data-display`, `@astudio/ui/feedback`,
-  `@astudio/ui/forms`, `@astudio/ui/layout`, `@astudio/ui/navigation`, `@astudio/ui/overlays`,
-  `@astudio/ui/icons`, and `@astudio/ui/showcase` subpaths.
-- **Experimental**: `@astudio/ui/experimental` and `@astudio/ui/templates` (subject to breaking changes).
-- **Dev-only**: `@astudio/ui/dev` is for Storybook, docs, and local harnesses (not production).
+- **Stable**: `@design-studio/ui` root exports and the `@design-studio/ui/app`, `@design-studio/ui/chat`, `@design-studio/ui/modals`,
+  `@design-studio/ui/settings`, `@design-studio/ui/base`, `@design-studio/ui/data-display`, `@design-studio/ui/feedback`,
+  `@design-studio/ui/forms`, `@design-studio/ui/layout`, `@design-studio/ui/navigation`, `@design-studio/ui/overlays`,
+  `@design-studio/ui/icons`, and `@design-studio/ui/showcase` subpaths.
+- **Experimental**: `@design-studio/ui/experimental` and `@design-studio/ui/templates` (subject to breaking changes).
+- **Dev-only**: `@design-studio/ui/dev` is for Storybook, docs, and local harnesses (not production).
 
 ## Storybook navigation
 
@@ -406,9 +406,9 @@ If your other projects are in the same monorepo:
 ```json
 {
   "dependencies": {
-    "@astudio/ui": "workspace:*",
-    "@astudio/runtime": "workspace:*",
-    "@astudio/tokens": "workspace:*"
+    "@design-studio/ui": "workspace:*",
+    "@design-studio/runtime": "workspace:*",
+    "@design-studio/tokens": "workspace:*"
   }
 }
 ```
@@ -426,7 +426,7 @@ Then reference in your package.json:
 ```json
 {
   "dependencies": {
-    "@astudio/ui": "file:./packages/astudio/packages/ui"
+    "@design-studio/ui": "file:./packages/astudio/packages/ui"
   }
 }
 ```
@@ -445,7 +445,7 @@ pnpm release
 Then install normally:
 
 ```bash
-pnpm add @astudio/ui @astudio/runtime @astudio/tokens
+pnpm add @design-studio/ui @design-studio/runtime @design-studio/tokens
 ```
 
 ## Creating New Components
@@ -490,7 +490,7 @@ This creates the component file and a Storybook story.
         ├────────────────┘
         │
 ┌───────▼──────────────────┐
-│   @astudio/ui (React)     │
+│   @design-studio/ui (React)     │
 │  Component Library       │
 ├──────────────────────────┤
 │  • Chat Components       │
@@ -500,7 +500,7 @@ This creates the component file and a Storybook story.
 └───────┬──────────────────┘
         │
 ┌───────▼──────────────────┐
-│   @astudio/runtime        │
+│   @design-studio/runtime        │
 │  (Host Abstraction)      │
 ├──────────────────────────┤
 │  • createEmbeddedHost()  │
@@ -509,7 +509,7 @@ This creates the component file and a Storybook story.
 └───────┬──────────────────┘
         │
 ┌───────▼──────────────────┐
-│   @astudio/tokens         │
+│   @design-studio/tokens         │
 │  (Design Tokens)         │
 ├──────────────────────────┤
 │  • CSS Variables         │
@@ -522,7 +522,7 @@ This creates the component file and a Storybook story.
 
 The repository supports **React** implementations across web, widgets, and Tauri shells:
 
-- **React**: Uses `@astudio/ui`, `@astudio/runtime`, and `@astudio/tokens`
+- **React**: Uses `@design-studio/ui`, `@design-studio/runtime`, and `@design-studio/tokens`
 - **Design Parity**: All surfaces share the same design tokens and visual language from Apps SDK UI
 
 ---

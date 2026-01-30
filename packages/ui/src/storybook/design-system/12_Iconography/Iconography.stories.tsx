@@ -45,7 +45,7 @@ import {
   IconSparkles,
   IconDownload,
   IconCloseBold,
-} from "@astudio/ui/icons";
+} from "@design-studio/ui/icons";
 
 /**
  * Iconography System - Design Foundation
@@ -90,9 +90,9 @@ import {
  *
  * ## Import Pattern
  * ```tsx
- * import { IconCheckmark, IconSettings } from "@astudio/ui/icons";
+ * import { IconCheckmark, IconSettings } from "@design-studio/ui/icons";
  * // OR for named exports with Icon* prefix
- * import { IconCheckmark, IconSettings } from "@astudio/ui/icons";
+ * import { IconCheckmark, IconSettings } from "@design-studio/ui/icons";
  * ```
  */
 
@@ -400,7 +400,7 @@ export const IconCatalog: Story = {
         <div className="text-sm font-medium text-accent">💡 Pro Tip</div>
         <p className="text-sm text-muted-foreground mt-1">
           This catalog shows a subset of 350+ available icons. All icons follow the same
-          usage pattern: import from "@astudio/ui/icons" and use the size prop.
+          usage pattern: import from "@design-studio/ui/icons" and use the size prop.
         </p>
       </div>
     </div>
@@ -754,7 +754,7 @@ export const TokenReference: Story = {
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">Import Icons</div>
         <pre className="text-sm bg-background p-3 rounded overflow-x-auto">
-{`import { IconCheckmark, IconSettings } from "@astudio/ui/icons";
+{`import { IconCheckmark, IconSettings } from "@design-studio/ui/icons";
 
 // Usage with size prop
 <IconCheckmark size="md" />

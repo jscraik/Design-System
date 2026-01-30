@@ -33,7 +33,7 @@ Add a new web app page with routing, navigation, and a starter layout.
 Create a new file in `platforms/web/apps/web/src/pages/` named `MyPage.tsx`:
 
 ```tsx
-import { Button, Card, IconButton, SectionHeader } from "@astudio/ui";
+import { Button, Card, IconButton, SectionHeader } from "@design-studio/ui";
 import type { Route } from "../Router";
 
 interface MyPageProps {

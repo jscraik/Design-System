@@ -1,6 +1,6 @@
 # Typography
 
-Use typography tokens from `@astudio/tokens` for font size, weight, line height, and letter spacing.
+Use typography tokens from `@design-studio/tokens` for font size, weight, line height, and letter spacing.
 
 Examples:
 

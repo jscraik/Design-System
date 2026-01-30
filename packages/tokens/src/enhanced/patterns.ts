@@ -1,5 +1,5 @@
 /**
- * @astudio/tokens - Component State Patterns
+ * @design-studio/tokens - Component State Patterns
  *
  * Consistent state interface for all form and interactive components.
  * Inspired by Geist design system's state management approach.

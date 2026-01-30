@@ -10,8 +10,8 @@ Ship the next logical version (0.0.1) across all workspace packages and finish t
 ## Progress
 
 - [x] (2026-01-09 18:20Z) Bumped root version to 0.0.1 and moved root changelog entries into 0.0.1 release.
-- [x] (2026-01-09 18:20Z) Updated docs and README references for @astudio/widgets and version examples in build pipeline docs.
-- [x] (2026-01-09 21:05Z) Updated workspace package versions to 0.0.1 across packages and platforms, including @astudio/cloudflare-template rename.
+- [x] (2026-01-09 18:20Z) Updated docs and README references for @design-studio/widgets and version examples in build pipeline docs.
+- [x] (2026-01-09 21:05Z) Updated workspace package versions to 0.0.1 across packages and platforms, including @design-studio/cloudflare-template rename.
 - [x] (2026-01-09 21:05Z) Verified changelogs include 0.0.1 release entries for workspace packages.
 - [x] (2026-01-09 21:20Z) Audited Swift packages, targets, module names, and paths that still used ChatUI\* and mapped renames to aStudio equivalents.
 - [x] (2026-01-09 21:35Z) Renamed Swift package/app directories, Package.swift names/products/targets, module identifiers, and Xcode/macOS app targets to aStudio equivalents.

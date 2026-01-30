@@ -1,6 +1,6 @@
 # AStudio → DesignStudio Migration Guide
 
-This guide helps you migrate from AStudio (`@astudio/*`) to DesignStudio (`@design-studio/*`).
+This guide helps you migrate from AStudio (`@design-studio/*`) to DesignStudio (`@design-studio/*`).
 
 **Version:** 2.0.0
 **Status:** Breaking Changes
@@ -37,16 +37,16 @@ The following validation reports support this migration:
 ### Old Package Structure (13 packages)
 
 ```
-@astudio/runtime
-@astudio/tokens
-@astudio/ui
-@astudio/icons
-@astudio/effects
-@astudio/json-render
-@astudio/cli
-@astudio/cloudflare-template
-@astudio/skill-ingestion
-@astudio/widgets
+@design-studio/runtime
+@design-studio/tokens
+@design-studio/ui
+@design-studio/icons
+@design-studio/effects
+@design-studio/json-render
+@design-studio/cli
+@design-studio/cloudflare-template
+@design-studio/skill-ingestion
+@design-studio/widgets
 ... (4 more)
 ```
 
@@ -62,14 +62,14 @@ The following validation reports support this migration:
 
 | Old Package | New Package | Notes |
 |------------|-------------|-------|
-| `@astudio/runtime` | `@design-studio/runtime` | Mostly rename |
-| `@astudio/tokens` | `@design-studio/tokens` | + Type-safe API |
-| `@astudio/ui` | `@design-studio/ui` | + Hybrid pattern |
-| `@astudio/icons` | `@design-studio/ui/icons` | Merged into ui |
-| `@astudio/effects` | `@design-studio/ui` | Merged into ui |
-| `@astudio/json-render` | `@design-studio/ui` | Merged into ui |
-| `@astudio/widgets` | `platforms/web/apps/widgets` | Moved to platforms |
-| `@astudio/cli` | `tools/cli` | Moved to tools |
+| `@design-studio/runtime` | `@design-studio/runtime` | Mostly rename |
+| `@design-studio/tokens` | `@design-studio/tokens` | + Type-safe API |
+| `@design-studio/ui` | `@design-studio/ui` | + Hybrid pattern |
+| `@design-studio/icons` | `@design-studio/ui/icons` | Merged into ui |
+| `@design-studio/effects` | `@design-studio/ui` | Merged into ui |
+| `@design-studio/json-render` | `@design-studio/ui` | Merged into ui |
+| `@design-studio/widgets` | `platforms/web/apps/widgets` | Moved to platforms |
+| `@design-studio/cli` | `tools/cli` | Moved to tools |
 
 ---
 
@@ -77,15 +77,15 @@ The following validation reports support this migration:
 
 ### 1. Import Paths
 
-All import paths have changed from `@astudio/*` to `@design-studio/*`.
+All import paths have changed from `@design-studio/*` to `@design-studio/*`.
 
 **Before:**
 ```tsx
-import { Button } from "@astudio/ui/base";
-import { ChatInput } from "@astudio/ui/chat";
-import { tokens } from "@astudio/tokens";
-import { createEmbeddedHost } from "@astudio/runtime";
-import { SendIcon } from "@astudio/icons";
+import { Button } from "@design-studio/ui/base";
+import { ChatInput } from "@design-studio/ui/chat";
+import { tokens } from "@design-studio/tokens";
+import { createEmbeddedHost } from "@design-studio/runtime";
+import { SendIcon } from "@design-studio/icons";
 ```
 
 **After:**
@@ -108,7 +108,7 @@ pnpm migrate:imports
 
 **Before (No Autocomplete):**
 ```tsx
-import { getToken } from "@astudio/tokens";
+import { getToken } from "@design-studio/tokens";
 
 const bgColor = getToken("color.background.dark.primary");
 // No type checking, no autocomplete
@@ -183,7 +183,7 @@ Icons are now imported from `@design-studio/ui/icons`.
 
 **Before:**
 ```tsx
-import { SendIcon } from "@astudio/icons";
+import { SendIcon } from "@design-studio/icons";
 ```
 
 **After:**
@@ -200,7 +200,7 @@ Runtime API is mostly unchanged, just renamed.
 
 **Before:**
 ```tsx
-import { createEmbeddedHost, HostProvider } from "@astudio/runtime";
+import { createEmbeddedHost, HostProvider } from "@design-studio/runtime";
 ```
 
 **After:**
@@ -218,7 +218,7 @@ The following features are **removed** in DesignStudio 2.0:
 |---------|-------------|-------|
 | `getToken("path")` | `tokens.path.to.value` | Use type-safe API |
 | Per-component imports | Category imports | `from "@design-studio/ui"` |
-| `@astudio/*` packages | `@design-studio/*` | Update all imports |
+| `@design-studio/*` packages | `@design-studio/*` | Update all imports |
 | Visual token editor | **Deferred** | Coming in v2.1+ |
 | Figma sync plugin | **Deferred** | Coming in v2.1+ |
 | Storybook theme switcher | **Deferred** | Coming in v2.1+ |
@@ -231,7 +231,7 @@ The following features are **removed** in DesignStudio 2.0:
 
 ```bash
 # Remove old packages
-pnpm remove @astudio/runtime @astudio/tokens @astudio/ui @astudio/icons
+pnpm remove @design-studio/runtime @design-studio/tokens @design-studio/ui @design-studio/icons
 
 # Add new packages
 pnpm add @design-studio/runtime @design-studio/tokens @design-studio/ui
@@ -245,7 +245,7 @@ pnpm migrate:imports
 ```
 
 The script will:
-- Update all `@astudio/*` imports to `@design-studio/*`
+- Update all `@design-studio/*` imports to `@design-studio/*`
 - Convert `getToken()` calls to `tokens.*` paths
 - Update icon imports
 - Remove unused imports
@@ -263,7 +263,7 @@ Check these files manually:
 2. **Component imports:**
    ```bash
    # Find any remaining @astudio imports
-   rg "@astudio/" src/
+   rg "@design-studio/" src/
    ```
 
 3. **Type errors:**
@@ -311,7 +311,7 @@ If you encounter issues:
 2. **Restore old packages:**
    ```bash
    pnpm remove @design-studio/*
-   pnpm add @astudio/runtime @astudio/tokens @astudio/ui @astudio/icons
+   pnpm add @design-studio/runtime @design-studio/tokens @design-studio/ui @design-studio/icons
    ```
 
 3. **Report the issue:**
@@ -349,7 +349,7 @@ const color = tokens.colors.background.dark.primary;
 **Solution:** Update import
 ```tsx
 // ❌ Wrong
-import { Icon } from "@astudio/icons";
+import { Icon } from "@design-studio/icons";
 
 // ✅ Right
 import { Icon } from "@design-studio/ui/icons";
@@ -384,7 +384,7 @@ import { Button } from "@design-studio/ui/base";
 ### 2.0.0 (2026-03 - TBD)
 
 **Breaking Changes:**
-- Renamed all packages from `@astudio/*` to `@design-studio/*`
+- Renamed all packages from `@design-studio/*` to `@design-studio/*`
 - Removed `getToken()` in favor of type-safe `tokens.*` API
 - Merged icons package into `@design-studio/ui`
 - Implemented hybrid component pattern (props default, compound opt-in)
@@ -403,7 +403,7 @@ import { Button } from "@design-studio/ui/base";
 - Storybook theme switcher (deferred to v2.1+)
 
 **Removed:**
-- `@astudio/*` packages (use `@design-studio/*`)
+- `@design-studio/*` packages (use `@design-studio/*`)
 - `getToken()` function (use `tokens.*`)
 - Per-component imports (use category imports)
 - Separate icons package (merged into ui)
