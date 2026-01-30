@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { StickyReveal } from "../src/components/scroll";
+import { StickyReveal, TocMarker, ScrollProgress } from "../src/components/scroll";
 
 const meta: Meta<typeof StickyReveal> = {
   title: "Effects/Scroll/StickyReveal",
@@ -111,6 +111,105 @@ export const Sticky: Story = {
 
       <div className="h-[200vh]">
         <p className="text-center text-2xl">Keep scrolling to see sticky effect...</p>
+      </div>
+    </div>
+  ),
+};
+
+// ============================================================================
+// TOC MARKER STORIES (Based on @jh3yy patterns)
+// ============================================================================
+
+const tocMeta: Meta<typeof TocMarker> = {
+  title: "Effects/Scroll/TocMarker",
+  component: TocMarker,
+  parameters: {
+    layout: "centered",
+  },
+  tags: ["autodocs", "a11y"],
+};
+
+export const TocMarkerDefault: StoryObj = {
+  render: () => (
+    <div className="relative w-64 h-8 bg-muted rounded">
+      <TocMarker position="left" size="4px" color="blue" />
+    </div>
+  ),
+};
+
+export const TocMarkerRight: StoryObj = {
+  render: () => (
+    <div className="relative w-64 h-8 bg-muted rounded">
+      <TocMarker position="right" size="4px" color="green" />
+    </div>
+  ),
+};
+
+export const TocMarkerTop: StoryObj = {
+  render: () => (
+    <div className="relative w-64 h-8 bg-muted rounded">
+      <TocMarker position="top" size="4px" color="purple" />
+    </div>
+  ),
+};
+
+export const TocMarkerBottom: StoryObj = {
+  render: () => (
+    <div className="relative w-64 h-8 bg-muted rounded">
+      <TocMarker position="bottom" size="4px" color="orange" />
+    </div>
+  ),
+};
+
+// ============================================================================
+// SCROLL PROGRESS STORIES (Based on @jh3yy patterns)
+// ============================================================================
+
+const scrollProgressMeta: Meta<typeof ScrollProgress> = {
+  title: "Effects/Scroll/ScrollProgress",
+  component: ScrollProgress,
+  parameters: {
+    layout: "fullscreen",
+  },
+  tags: ["autodocs", "a11y"],
+};
+
+export const ScrollProgressDefault: StoryObj = {
+  render: () => (
+    <div className="h-[300vh] p-8">
+      <ScrollProgress className="fixed top-0 left-0 right-0 z-50" />
+
+      <div className="space-y-8 mt-20">
+        <h1 className="text-4xl font-bold">Scroll Progress Demo</h1>
+        <p className="text-xl">Scroll down to see the progress indicator</p>
+
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div key={i} className="p-4 bg-muted rounded-lg">
+            Section {i + 1}
+          </div>
+        ))}
+      </div>
+    </div>
+  ),
+};
+
+export const ScrollProgressVertical: StoryObj = {
+  render: () => (
+    <div className="h-[300vh] p-8">
+      <ScrollProgress
+        orientation="vertical"
+        className="fixed top-0 right-0 bottom-0 z-50"
+      />
+
+      <div className="space-y-8 mt-20">
+        <h1 className="text-4xl font-bold">Vertical Scroll Progress</h1>
+        <p className="text-xl">Scroll down to see the vertical progress indicator</p>
+
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div key={i} className="p-4 bg-muted rounded-lg">
+            Section {i + 1}
+          </div>
+        ))}
       </div>
     </div>
   ),
