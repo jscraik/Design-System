@@ -32,8 +32,8 @@ export type {
 } from "./components/text";
 
 // Scroll Components
-export { StickyReveal } from "./components/scroll";
-export type { StickyRevealProps } from "./components/scroll";
+export { StickyReveal, TocMarker, ScrollProgress } from "./components/scroll";
+export type { StickyRevealProps, TocMarkerProps, ScrollProgressProps } from "./components/scroll";
 
 // ============================================================================
 // HOOKS
@@ -51,6 +51,10 @@ export type {
   ScrollPosition,
   UseScrollPositionOptions,
 } from "./hooks";
+
+// View Transition Hook & Components
+export { useViewTransition, ViewTransitionWrapper, viewTransitions } from "./components/view-transition";
+export type { ViewTransitionOptions, ViewTransitionWrapperProps, ViewTransitionType } from "./components/view-transition";
 
 // ============================================================================
 // UTILS

@@ -116,7 +116,119 @@
   animation: gradient-shimmer 3s linear infinite;
 }
 
-/* Reduced motion overrides */
+/* ============================================================================
+   SCROLL-DRIVEN ANIMATIONS (Based on @jh3yy patterns)
+   ============================================================================ */
+
+/* Native CSS scroll-driven animation for progress bars */
+@keyframes scroll-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-scroll-progress {
+  animation: scroll-progress linear;
+  animation-timeline: scroll(root);
+}
+
+/* Vertical scroll progress */
+@keyframes scroll-progress-vertical {
+  from {
+    height: 0%;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+.animate-scroll-progress-vertical {
+  animation: scroll-progress-vertical linear;
+  animation-timeline: scroll(root);
+}
+
+/* ============================================================================
+   HOVER ANTI-FLICKER PATTERN (Based on @emilkowalski)
+   ============================================================================ */
+
+/*
+ * Anti-flicker hover pattern: Separate trigger from effect
+ * Listen for hovers on the parent, but animate a child element instead
+ * Reference: https://x.com/emilkowalski/status/1954891053032755560
+ */
+
+.hover-trigger {
+  /* Parent element that receives hover events */
+  position: relative;
+}
+
+.hover-trigger .hover-effect {
+  /* Child element that animates */
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.hover-trigger:hover .hover-effect {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Press state pattern */
+.hover-trigger:active .hover-effect {
+  transform: scale(0.93);
+}
+
+/* ============================================================================
+   FORM VALIDATION STATES (Based on @jh3yy patterns)
+   ============================================================================ */
+
+/*
+ * Use :has() selector to style form based on child input validity
+ * Reference: https://x.com/jh3yy/status/2016903936658030967
+ */
+
+/* Show error state when invalid inputs exist */
+.form-group:has(input:invalid):not(:focus-within) {
+  background: hsl(0 100% 50% / 0.1);
+}
+
+/* Style quantity picker with invalid state */
+.quantity-picker:has(input:invalid):not(:focus-within) {
+  background: hsl(0 100% 50% / 0.14);
+  border-color: hsl(0 100% 50% / 0.5);
+}
+
+/* Collapsible grid rows for accordion */
+.accordion-item > div[inert] {
+  grid-template-rows: 0fr;
+}
+
+.accordion-item > div {
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+/* ============================================================================
+   TRANSITION BEHAVIOR (Based on @jh3yy popover pattern)
+   ============================================================================ */
+
+/*
+ * Allow discrete transitions for popover/dropdown
+ * Reference: https://x.com/jh3yy/status/2016342586135371933
+ */
+
+.transition-discrete {
+  transition-behavior: allow-discrete;
+}
+
+/* ============================================================================
+   REDUCED MOTION OVERRIDES
+   ============================================================================ */
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
