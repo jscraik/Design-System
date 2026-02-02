@@ -21,13 +21,13 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.13.12",
-    "@cloudflare/workers-types": "^4.20260107.1",
+    "@cloudflare/vite-plugin": "^1.22.1",
+    "@cloudflare/workers-types": "^4.20260131.0",
     "@types/node": "^25.0.3",
     "fast-glob": "^3.3.3",
     "typescript": "^5.9.3",
     "vite": "^6.4.1",
-    "wrangler": "^4.56.0"
+    "wrangler": "^4.61.1"
   },
   "cloudflare": {
     "bindings": {
