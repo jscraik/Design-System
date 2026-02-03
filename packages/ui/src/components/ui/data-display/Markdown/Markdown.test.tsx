@@ -116,17 +116,13 @@ describe("Markdown", () => {
     });
 
     it.skip("renders multiple code blocks", () => {
-      render(
-        <Markdown content="```\nfirst block\n```\n\n```\nsecond block\n```" />
-      );
+      render(<Markdown content="```\nfirst block\n```\n\n```\nsecond block\n```" />);
       expect(screen.getByText(/first block/)).toBeInTheDocument();
       expect(screen.getByText(/second block/)).toBeInTheDocument();
     });
 
     it.skip("handles code block with empty lines", () => {
-      render(
-        <Markdown content="```\nline 1\n\nline 3\n```" />
-      );
+      render(<Markdown content="```\nline 1\n\nline 3\n```" />);
       expect(screen.getByText("line 1")).toBeInTheDocument();
       expect(screen.getByText("line 3")).toBeInTheDocument();
     });
@@ -249,7 +245,7 @@ describe("Markdown", () => {
           error="Error"
           disabled
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -258,12 +254,7 @@ describe("Markdown", () => {
 
     it("prioritizes error over disabled when not loading", async () => {
       render(
-        <Markdown
-          content="# Title"
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        />
+        <Markdown content="# Title" error="Error" disabled onStateChange={mockOnStateChange} />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");

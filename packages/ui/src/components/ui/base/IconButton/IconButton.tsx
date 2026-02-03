@@ -75,7 +75,7 @@ export function IconButton({
   size = "md",
   variant = "ghost",
   active = false,
-  activeColor = "var(--foundation-accent-blue)",
+  activeColor = "var(--accent-blue)",
   disabled = false,
   className,
   iconClassName,
@@ -102,11 +102,9 @@ export function IconButton({
   };
 
   const variants = {
-    ghost: "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-    outline:
-      "border border-foundation-bg-dark-3 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2",
-    solid:
-      "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
+    ghost: "hover:bg-muted",
+    outline: "border border-border hover:bg-secondary",
+    solid: "bg-secondary hover:bg-muted",
   };
 
   const iconElement = isValidElement(icon)
@@ -126,9 +124,9 @@ export function IconButton({
       className={cn(
         "rounded-md transition-colors flex items-center justify-center font-foundation min-h-[var(--foundation-size-hit-target)] min-w-[var(--foundation-size-hit-target)]",
         "focus-visible:outline-none focus-visible:ring-2",
-        "focus-visible:ring-foundation-text-light-primary dark:focus-visible:ring-foundation-text-dark-primary",
+        "focus-visible:ring-ring",
         "focus-visible:ring-offset-2",
-        "focus-visible:ring-offset-foundation-bg-light-1 dark:focus-visible:ring-offset-foundation-bg-dark-2",
+        "focus-visible:ring-offset-background",
         "motion-reduce:transition-none",
         sizes[size],
         variants[variant],
@@ -144,7 +142,7 @@ export function IconButton({
     >
       <span
         className={cn(
-          "text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary hover:text-foundation-icon-light-primary dark:hover:text-foundation-icon-dark-primary transition-colors",
+          "text-muted-foreground hover:text-foreground transition-colors",
           "motion-reduce:transition-none",
           "[&>svg]:w-full [&>svg]:h-full",
           iconClassName,

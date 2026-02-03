@@ -72,20 +72,18 @@ export function CollapsibleSection({
         type="button"
         onClick={handleToggle}
         className={cn(
-          "w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-left transition-colors hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3/40",
+          "w-full flex items-center justify-between px-3 py-1.5 rounded-lg text-left transition-colors hover:bg-secondary/60",
           headerClassName,
         )}
       >
         <div className="flex items-center gap-2">
           <IconChevronRightMd
             className={cn(
-              "size-3 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary transition-transform",
+              "size-3 text-muted-foreground transition-transform",
               expanded && "rotate-90",
             )}
           />
-          <span className="text-caption text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
-            {title}
-          </span>
+          <span className="text-caption text-muted-foreground">{title}</span>
         </div>
         {headerRight}
       </button>

@@ -113,7 +113,7 @@ function Checkbox({
         "focus-visible:border-ring focus-visible:ring-ring/50",
         "focus-visible:ring-[3px]",
         // Error state styling
-        error && "border-red-500 focus:border-red-500 focus:ring-red-500",
+        error && "border-status-error focus:border-status-error focus:ring-status-error",
         // Loading state styling
         loading && "opacity-70 cursor-wait",
         // Disabled state

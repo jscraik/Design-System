@@ -26,12 +26,23 @@ import { shadowTokens } from "@design-studio/tokens/shadows";
 const shadowToBoxShadow = (shadow: keyof typeof shadowTokens): string => {
   const layers = shadowTokens[shadow];
   return layers
-    .map((layer) => `${layer.offsetX}px ${layer.offsetY}px ${layer.blur}px ${layer.spread}px ${layer.color}`)
+    .map(
+      (layer) =>
+        `${layer.offsetX}px ${layer.offsetY}px ${layer.blur}px ${layer.spread}px ${layer.color}`,
+    )
     .join(", ");
 };
 
 // Standard Card Pattern
-const StandardCard = ({ title, children, footer }: { title: string; children: React.ReactNode; footer?: React.ReactNode }) => (
+const StandardCard = ({
+  title,
+  children,
+  footer,
+}: {
+  title: string;
+  children: React.ReactNode;
+  footer?: React.ReactNode;
+}) => (
   <div
     className="bg-card border transition-shadow hover:shadow-lg"
     style={{
@@ -39,18 +50,11 @@ const StandardCard = ({ title, children, footer }: { title: string; children: Re
       boxShadow: shadowToBoxShadow("card"),
     }}
   >
-    <div
-      className="flex items-center border-b bg-muted/30"
-      style={{ height: "56px" }}
-    >
+    <div className="flex items-center border-b bg-muted/30" style={{ height: "56px" }}>
       <div className="font-semibold px-4">{title}</div>
     </div>
     <div className="p-4">{children}</div>
-    {footer && (
-      <div className="flex items-center gap-2 border-t p-4">
-        {footer}
-      </div>
-    )}
+    {footer && <div className="flex items-center gap-2 border-t p-4">{footer}</div>}
   </div>
 );
 
@@ -63,10 +67,7 @@ const CompactCard = ({ title, children }: { title: string; children: React.React
       boxShadow: shadowToBoxShadow("card"),
     }}
   >
-    <div
-      className="flex items-center border-b bg-muted/30"
-      style={{ height: "48px" }}
-    >
+    <div className="flex items-center border-b bg-muted/30" style={{ height: "48px" }}>
       <div className="font-medium px-3 text-sm">{title}</div>
     </div>
     <div className="p-3">{children}</div>
@@ -74,7 +75,15 @@ const CompactCard = ({ title, children }: { title: string; children: React.React
 );
 
 // Hero Card Pattern
-const HeroCard = ({ title, description, action }: { title: string; description: string; action: React.ReactNode }) => (
+const HeroCard = ({
+  title,
+  description,
+  action,
+}: {
+  title: string;
+  description: string;
+  action: React.ReactNode;
+}) => (
   <div
     className="bg-card border p-6"
     style={{
@@ -89,19 +98,30 @@ const HeroCard = ({ title, description, action }: { title: string; description: 
 );
 
 // Modal Pattern
-const ModalPattern = ({ title, children, actions }: { title: string; children: React.ReactNode; actions: React.ReactNode }) => {
+const ModalPattern = ({
+  title,
+  children,
+  actions,
+}: {
+  title: string;
+  children: React.ReactNode;
+  actions: React.ReactNode;
+}) => {
   const [open, setOpen] = React.useState(false);
 
   return (
     <div>
-      <button onClick={() => setOpen(true)} className="px-4 py-2 rounded-md bg-accent text-accent-foreground text-sm">
+      <button
+        onClick={() => setOpen(true)}
+        className="px-4 py-2 rounded-md bg-accent text-accent-foreground text-sm"
+      >
         Open Modal
       </button>
 
       {open && (
         <>
           <div
-            className="fixed inset-0 bg-black/50"
+            className="fixed inset-0 bg-overlay/50"
             style={{ zIndex: 40 }}
             onClick={() => setOpen(false)}
           />
@@ -113,10 +133,7 @@ const ModalPattern = ({ title, children, actions }: { title: string; children: R
               boxShadow: shadowToBoxShadow("card"),
             }}
           >
-            <div
-              className="flex items-center justify-between border-b"
-              style={{ height: "56px" }}
-            >
+            <div className="flex items-center justify-between border-b" style={{ height: "56px" }}>
               <div className="font-semibold px-4">{title}</div>
               <button
                 onClick={() => setOpen(false)}
@@ -126,9 +143,7 @@ const ModalPattern = ({ title, children, actions }: { title: string; children: R
               </button>
             </div>
             <div className="p-4">{children}</div>
-            <div className="flex items-center justify-end gap-2 border-t p-4">
-              {actions}
-            </div>
+            <div className="flex items-center justify-end gap-2 border-t p-4">{actions}</div>
           </div>
         </>
       )}
@@ -169,16 +184,10 @@ const ButtonPatterns = () => (
     <div>
       <h4 className="text-sm font-medium mb-2">Secondary Button</h4>
       <div className="flex flex-wrap gap-2">
-        <button
-          className="px-4 py-2 rounded-md bg-muted text-sm"
-          style={{ height: "44px" }}
-        >
+        <button className="px-4 py-2 rounded-md bg-muted text-sm" style={{ height: "44px" }}>
           Default
         </button>
-        <button
-          className="px-4 py-2 rounded-md border text-sm"
-          style={{ height: "44px" }}
-        >
+        <button className="px-4 py-2 rounded-md border text-sm" style={{ height: "44px" }}>
           Outline
         </button>
         <button
@@ -188,9 +197,7 @@ const ButtonPatterns = () => (
           Ghost
         </button>
       </div>
-      <div className="text-xs text-muted-foreground mt-2">
-        Same sizing, different backgrounds
-      </div>
+      <div className="text-xs text-muted-foreground mt-2">Same sizing, different backgrounds</div>
     </div>
   </div>
 );
@@ -233,9 +240,7 @@ const InputPatterns = () => (
           <path d="m21 21-4.35-4.35" />
         </svg>
       </div>
-      <div className="text-xs text-muted-foreground mt-1">
-        Add s8 padding-left for icon
-      </div>
+      <div className="text-xs text-muted-foreground mt-1">Add s8 padding-left for icon</div>
     </div>
   </div>
 );
@@ -260,10 +265,7 @@ const TokenRecipeCard = ({
       <div className="text-xs text-muted-foreground mb-1">Tokens Used:</div>
       <div className="flex flex-wrap gap-1">
         {tokens.map((token) => (
-          <span
-            key={token}
-            className="px-2 py-0.5 rounded bg-muted text-xs font-mono"
-          >
+          <span key={token} className="px-2 py-0.5 rounded bg-muted text-xs font-mono">
             {token}
           </span>
         ))}
@@ -305,15 +307,30 @@ export const CardPatterns: Story = {
         <div>
           <h3 className="text-lg font-semibold mb-3">Standard Card</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <StandardCard title="Card Title" footer={<button className="px-3 py-1.5 rounded-md bg-accent text-accent-foreground text-sm">Action</button>}>
+            <StandardCard
+              title="Card Title"
+              footer={
+                <button className="px-3 py-1.5 rounded-md bg-accent text-accent-foreground text-sm">
+                  Action
+                </button>
+              }
+            >
               <p className="text-sm text-muted-foreground">
                 This is the standard card pattern. Use for most content cards.
               </p>
             </StandardCard>
-            <StandardCard title="With Content" footer={<div className="flex gap-2"><button className="px-3 py-1.5 rounded-md border text-sm">Cancel</button><button className="px-3 py-1.5 rounded-md bg-accent text-accent-foreground text-sm">Confirm</button></div>}>
-              <p className="text-sm text-muted-foreground">
-                Cards can have actions in the footer.
-              </p>
+            <StandardCard
+              title="With Content"
+              footer={
+                <div className="flex gap-2">
+                  <button className="px-3 py-1.5 rounded-md border text-sm">Cancel</button>
+                  <button className="px-3 py-1.5 rounded-md bg-accent text-accent-foreground text-sm">
+                    Confirm
+                  </button>
+                </div>
+              }
+            >
+              <p className="text-sm text-muted-foreground">Cards can have actions in the footer.</p>
             </StandardCard>
           </div>
           <div className="mt-3 p-3 rounded bg-muted">
@@ -349,7 +366,11 @@ export const CardPatterns: Story = {
             <HeroCard
               title="Feature Highlight"
               description="This card emphasizes important content with larger spacing and radius."
-              action={<button className="px-4 py-2 rounded-md bg-accent text-accent-foreground text-sm">Learn More</button>}
+              action={
+                <button className="px-4 py-2 rounded-md bg-accent text-accent-foreground text-sm">
+                  Learn More
+                </button>
+              }
             />
             <HeroCard
               title="Call to Action"
@@ -359,7 +380,8 @@ export const CardPatterns: Story = {
           </div>
           <div className="mt-3 p-3 rounded bg-muted">
             <div className="text-xs font-mono text-sm">
-              <strong>Token Recipe:</strong> r16 radius • card shadow • s24 padding • no header (inline content)
+              <strong>Token Recipe:</strong> r16 radius • card shadow • s24 padding • no header
+              (inline content)
             </div>
           </div>
         </div>
@@ -374,9 +396,7 @@ export const ModalPatternStory: Story = {
     <div className="max-w-4xl space-y-6 p-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">Modal Component Pattern</h2>
-        <p className="text-muted-foreground mb-6">
-          Standard modal pattern combining foundations.
-        </p>
+        <p className="text-muted-foreground mb-6">Standard modal pattern combining foundations.</p>
       </div>
 
       <ModalPattern
@@ -384,7 +404,9 @@ export const ModalPatternStory: Story = {
         actions={
           <>
             <button className="px-3 py-1.5 rounded-md border text-sm">Cancel</button>
-            <button className="px-3 py-1.5 rounded-md bg-accent text-accent-foreground text-sm">Confirm</button>
+            <button className="px-3 py-1.5 rounded-md bg-accent text-accent-foreground text-sm">
+              Confirm
+            </button>
           </>
         }
       >
@@ -395,7 +417,8 @@ export const ModalPatternStory: Story = {
 
       <div className="p-4 rounded-lg bg-muted">
         <div className="text-xs font-mono text-sm">
-          <strong>Token Recipe:</strong> r16 radius • card shadow • overlay bg-black/50 • 56px header
+          <strong>Token Recipe:</strong> r16 radius • card shadow • overlay bg-overlay/50 • 56px
+          header
         </div>
       </div>
     </div>
@@ -482,10 +505,10 @@ export const TokenRecipes: Story = {
         <TokenRecipeCard
           name="Modal"
           description="Modal dialog with overlay"
-          tokens={["r16 radius", "card shadow", "overlay bg-black/50"]}
+          tokens={["r16 radius", "card shadow", "overlay bg-overlay/50"]}
           recipe={
             <div className="p-3 rounded bg-background border text-xs">
-              <code>rounded-r16 shadow-card bg-black/50 overlay</code>
+              <code>rounded-r16 shadow-card bg-overlay/50 overlay</code>
             </div>
           }
         />
@@ -522,9 +545,7 @@ export const UsageGuidelines: Story = {
     <div className="max-w-4xl space-y-6 p-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">Pattern Usage Guidelines</h2>
-        <p className="text-muted-foreground">
-          When to use each component pattern.
-        </p>
+        <p className="text-muted-foreground">When to use each component pattern.</p>
       </div>
 
       <div className="space-y-6">
@@ -540,8 +561,8 @@ export const UsageGuidelines: Story = {
               layouts, mobile-first interfaces where space is limited.
             </div>
             <div>
-              <span className="font-medium">Hero Card (r16):</span> Featured content, landing
-              page sections, promotional materials, empty states.
+              <span className="font-medium">Hero Card (r16):</span> Featured content, landing page
+              sections, promotional materials, empty states.
             </div>
           </div>
         </div>
@@ -550,20 +571,20 @@ export const UsageGuidelines: Story = {
           <h3 className="text-lg font-semibold mb-3">Combining Foundations</h3>
           <div className="space-y-3 text-sm">
             <div>
-              <span className="font-medium">Start with the pattern:</span> Copy the token recipe
-              for your component type.
+              <span className="font-medium">Start with the pattern:</span> Copy the token recipe for
+              your component type.
             </div>
             <div>
               <span className="font-medium">Adjust spacing:</span> Use larger spacing (s24-s32) for
               spacious layouts, smaller (s12-s16) for compact.
             </div>
             <div>
-              <span className="font-medium">Maintain radius ratio:</span> Don't mix r8 and r16
-              in the same layout without clear reason.
+              <span className="font-medium">Maintain radius ratio:</span> Don't mix r8 and r16 in
+              the same layout without clear reason.
             </div>
             <div>
-              <span className="font-medium">Elevation for hierarchy:</span> Same "height" elements get
-              same shadow. Higher elements get stronger elevation.
+              <span className="font-medium">Elevation for hierarchy:</span> Same "height" elements
+              get same shadow. Higher elements get stronger elevation.
             </div>
           </div>
         </div>

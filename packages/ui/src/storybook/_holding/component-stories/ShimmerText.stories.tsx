@@ -26,7 +26,8 @@ const meta: Meta<typeof ShimmerText> = {
     layout: "centered",
     docs: {
       description: {
-        component: "A loading placeholder component with animated shimmer effect for indicating content is loading.",
+        component:
+          "A loading placeholder component with animated shimmer effect for indicating content is loading.",
       },
     },
   },

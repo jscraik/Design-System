@@ -45,7 +45,18 @@ export interface TocMarkerProps extends HTMLAttributes<HTMLElement> {
  * needs `anchor-name: --active` when in `:target-current` state.
  */
 export const TocMarker = forwardRef<HTMLDivElement, TocMarkerProps>(
-  ({ position = "left", animate = true, size = "2px", color = "currentColor", className, style, ...props }, ref) => {
+  (
+    {
+      position = "left",
+      animate = true,
+      size = "2px",
+      color = "currentColor",
+      className,
+      style,
+      ...props
+    },
+    ref,
+  ) => {
     return (
       <div
         ref={ref}
@@ -58,7 +69,7 @@ export const TocMarker = forwardRef<HTMLDivElement, TocMarkerProps>(
           position === "bottom" && "bottom-0 left-0 w-full h-[var(--marker-size,2px)]",
           animate && "duration-300 ease-out",
           !animate && "duration-0",
-          className
+          className,
         )}
         style={{
           "--marker-size": size,
@@ -70,7 +81,7 @@ export const TocMarker = forwardRef<HTMLDivElement, TocMarkerProps>(
         {...props}
       />
     );
-  }
+  },
 );
 
 TocMarker.displayName = "TocMarker";

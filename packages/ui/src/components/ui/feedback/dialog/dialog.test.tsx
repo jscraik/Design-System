@@ -325,7 +325,7 @@ describe("Dialog", () => {
         </Dialog>,
       );
 
-      // Overlay should be present (has bg-foundation-bg-dark-1/50 class)
+      // Overlay should be present (has bg-overlay/50 class)
       const overlay = document.querySelector('[data-slot="dialog-overlay"]');
       expect(overlay).toBeInTheDocument();
     });

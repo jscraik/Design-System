@@ -141,7 +141,7 @@ export class WidgetErrorBoundary extends React.Component {
       return (
         <WidgetBase>
           <div className="text-center py-8">
-            <div className="text-red-400 mb-2 text-2xl">⚠️</div>
+            <div className="text-status-error mb-2 text-2xl">⚠️</div>
             <button onClick={() => window.location.reload()}>
               Refresh Widget
             </button>

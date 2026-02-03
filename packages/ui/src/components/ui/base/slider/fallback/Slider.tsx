@@ -96,7 +96,7 @@ function Slider({
           // Track background - using Apps SDK UI tokens
           "bg-input-background",
           // Error state styling
-          error && "border-destructive/50 border",
+          error && "border-status-error/50 border",
         )}
       >
         <SliderPrimitive.Range
@@ -104,7 +104,7 @@ function Slider({
           className={cn(
             "absolute data-[orientation=horizontal]:h-full data-[orientation=vertical]:w-full",
             // Range background - using Apps SDK UI tokens
-            error ? "bg-destructive" : "bg-primary",
+            error ? "bg-status-error" : "bg-primary",
           )}
         />
       </SliderPrimitive.Track>
@@ -117,7 +117,7 @@ function Slider({
           className={cn(
             "block size-4 shrink-0 rounded-full border shadow-sm transition-[color,box-shadow]",
             // Thumb border - using Apps SDK UI tokens
-            error ? "border-destructive" : "border-primary",
+            error ? "border-status-error" : "border-primary",
             // Thumb background - using Apps SDK UI tokens
             "bg-background",
             // Focus styles - using Apps SDK UI tokens

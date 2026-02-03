@@ -55,7 +55,7 @@ function Tabs({
       className={cn(
         "flex flex-col gap-2 font-foundation",
         disabled && "opacity-50 pointer-events-none",
-        error && "ring-2 ring-foundation-accent-red/50 rounded-md",
+        error && "ring-2 ring-status-error/50 rounded-md",
         className,
       )}
       aria-disabled={isDisabled || undefined}
@@ -78,7 +78,7 @@ function TabsList({ className, ...props }: React.ComponentProps<typeof TabsPrimi
     <TabsPrimitive.List
       data-slot="tabs-list"
       className={cn(
-        "bg-foundation-bg-dark-2 text-foundation-text-dark-secondary inline-flex h-9 w-fit items-center justify-center rounded-xl p-[3px] flex",
+        "bg-secondary text-text-secondary inline-flex h-9 w-fit items-center justify-center rounded-xl p-[3px] flex",
         className,
       )}
       {...props}
@@ -97,7 +97,7 @@ function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPr
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
       className={cn(
-        "data-[state=active]:bg-foundation-bg-light-1 dark:data-[state=active]:bg-foundation-bg-dark-1 data-[state=active]:text-foundation-text-light-primary dark:data-[state=active]:text-foundation-text-dark-primary focus-visible:border-foundation-accent-blue focus-visible:ring-2 focus-visible:ring-foundation-text-light-primary dark:focus-visible:ring-foundation-text-dark-primary text-foundation-text-dark-secondary inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-xl border border-transparent px-2 py-1 text-body-small font-medium whitespace-nowrap transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "data-[state=active]:bg-card data-[state=active]:text-foreground focus-visible:border-interactive focus-visible:ring-2 focus-visible:ring-ring text-text-secondary inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-xl border border-transparent px-2 py-1 text-body-small font-medium whitespace-nowrap transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}

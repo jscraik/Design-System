@@ -162,26 +162,20 @@ export function ModelSelector({
         aria-haspopup="listbox"
         className={cn(
           "flex items-center rounded-lg transition-all duration-150",
-          "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-text-light-primary dark:focus-visible:ring-foundation-text-dark-primary",
-          isOpen && "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
+          "hover:bg-secondary",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+          isOpen && "bg-secondary",
           disabled && "opacity-50 cursor-not-allowed",
           sizeClasses[size],
           className,
         )}
       >
-        {showIcon && <IconSparkle className="size-4 text-foundation-accent-blue" />}
-        {label && (
-          <span className="font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            {label}
-          </span>
-        )}
-        <span className="text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
-          {modelName}
-        </span>
+        {showIcon && <IconSparkle className="size-4 text-interactive" />}
+        {label && <span className="font-semibold text-foreground">{label}</span>}
+        <span className="text-muted-foreground">{modelName}</span>
         <IconChevronDown
           className={cn(
-            "size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary transition-transform duration-200",
+            "size-4 text-muted-foreground transition-transform duration-200",
             isOpen && "rotate-180",
           )}
         />
@@ -203,8 +197,8 @@ export function ModelSelector({
           <div
             className={cn(
               "absolute top-full left-0 mt-2 z-50 w-[320px] rounded-2xl overflow-hidden",
-              "border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
-              "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2",
+              "border border-border",
+              "bg-card",
               "shadow-xl",
               "animate-in fade-in-0 zoom-in-95 duration-200",
             )}
@@ -226,24 +220,22 @@ export function ModelSelector({
               {/* Legacy Models */}
               {legacyModels && legacyModels.length > 0 && (
                 <>
-                  <div className="h-px bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 my-2" />
+                  <div className="h-px bg-border my-2" />
                   <div className="relative">
                     <button
                       type="button"
                       onClick={() => setIsLegacyOpen(!isLegacyOpen)}
                       className={cn(
                         "w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors duration-150",
-                        "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-text-light-primary dark:focus-visible:ring-foundation-text-dark-primary",
+                        "hover:bg-secondary",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring",
                         "text-left",
                       )}
                     >
-                      <span className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                        Legacy models
-                      </span>
+                      <span className="text-sm font-medium text-foreground">Legacy models</span>
                       <IconChevronRight
                         className={cn(
-                          "size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary transition-transform duration-200",
+                          "size-4 text-muted-foreground transition-transform duration-200",
                           isLegacyOpen && "rotate-90",
                         )}
                       />
@@ -254,8 +246,8 @@ export function ModelSelector({
                       <div
                         className={cn(
                           "absolute left-full top-0 ml-2 w-[280px] rounded-2xl overflow-hidden",
-                          "border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
-                          "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2",
+                          "border border-border",
+                          "bg-card",
                           "shadow-xl",
                           "animate-in fade-in-0 slide-in-from-left-2 duration-200",
                         )}
@@ -297,9 +289,9 @@ interface ModelOptionProps {
  */
 function ModelOption({ model, isSelected, onSelect }: ModelOptionProps) {
   const badgeColors = {
-    default: "bg-foundation-accent-blue/10 text-foundation-accent-blue",
-    success: "bg-foundation-accent-green/10 text-foundation-accent-green",
-    warning: "bg-foundation-accent-orange/10 text-foundation-accent-orange",
+    default: "bg-interactive/10 text-interactive",
+    success: "bg-status-success-muted/10 text-status-success",
+    warning: "bg-status-warning/10 text-status-warning",
   };
 
   return (
@@ -310,18 +302,16 @@ function ModelOption({ model, isSelected, onSelect }: ModelOptionProps) {
       aria-selected={isSelected}
       className={cn(
         "w-full flex items-center justify-between px-3 py-3 rounded-xl transition-colors duration-150",
-        "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-text-light-primary dark:focus-visible:ring-foundation-text-dark-primary",
+        "hover:bg-secondary",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring",
         "text-left group",
-        isSelected && "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
+        isSelected && "bg-secondary",
       )}
     >
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           {model.icon}
-          <span className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            {model.name}
-          </span>
+          <span className="text-sm font-medium text-foreground">{model.name}</span>
           {model.badge && (
             <span
               className={cn(
@@ -333,11 +323,9 @@ function ModelOption({ model, isSelected, onSelect }: ModelOptionProps) {
             </span>
           )}
         </div>
-        <p className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-0.5">
-          {model.description}
-        </p>
+        <p className="text-xs text-muted-foreground mt-0.5">{model.description}</p>
       </div>
-      {isSelected && <IconCheck className="size-4 text-foundation-accent-green shrink-0 ml-2" />}
+      {isSelected && <IconCheck className="size-4 text-status-success shrink-0 ml-2" />}
     </button>
   );
 }
@@ -357,16 +345,14 @@ function LegacyModelOption({ model, isSelected, onSelect }: ModelOptionProps) {
       aria-selected={isSelected}
       className={cn(
         "w-full flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors duration-150",
-        "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-text-light-primary dark:focus-visible:ring-foundation-text-dark-primary",
+        "hover:bg-secondary",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring",
         "text-left",
-        isSelected && "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
+        isSelected && "bg-secondary",
       )}
     >
-      <span className="text-sm text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-        {model.name}
-      </span>
-      {isSelected && <IconCheck className="size-4 text-foundation-accent-green shrink-0 ml-2" />}
+      <span className="text-sm text-foreground">{model.name}</span>
+      {isSelected && <IconCheck className="size-4 text-status-success shrink-0 ml-2" />}
     </button>
   );
 }

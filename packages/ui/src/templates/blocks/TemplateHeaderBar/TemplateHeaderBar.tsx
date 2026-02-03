@@ -48,11 +48,10 @@ export interface TemplateHeaderBarProps {
 }
 
 const variantStyles: Record<TemplateHeaderBarVariant, string> = {
-  default: "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
+  default: "bg-secondary",
   transparent: "bg-transparent",
-  elevated: "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2 shadow-sm",
-  bordered:
-    "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2 border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
+  elevated: "bg-secondary shadow-sm",
+  bordered: "bg-secondary border-b border-border",
 };
 
 const sizeStyles: Record<
@@ -115,7 +114,7 @@ export function TemplateHeaderBar({
       <div className={cn("min-w-0 space-y-1.5", centerTitle && "flex-1")}>
         <div
           className={cn(
-            "h-5 rounded bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 animate-pulse",
+            "h-5 rounded bg-muted animate-pulse",
             size === "sm" && "w-24 h-4",
             size === "md" && "w-32 h-5",
             size === "lg" && "w-40 h-6",
@@ -124,7 +123,7 @@ export function TemplateHeaderBar({
         {subtitle && (
           <div
             className={cn(
-              "h-3 rounded bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 animate-pulse",
+              "h-3 rounded bg-muted animate-pulse",
               size === "sm" && "w-16",
               size === "md" && "w-20",
               size === "lg" && "w-24",
@@ -150,11 +149,7 @@ export function TemplateHeaderBar({
             <div className={cn("min-w-0", centerTitle && "flex-1 text-center")}>
               <div className="flex items-center gap-2">
                 <span
-                  className={cn(
-                    "font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary truncate",
-                    titleSize,
-                    titleClassName,
-                  )}
+                  className={cn("font-medium text-foreground truncate", titleSize, titleClassName)}
                 >
                   {title}
                 </span>
@@ -163,7 +158,7 @@ export function TemplateHeaderBar({
               {subtitle && (
                 <span
                   className={cn(
-                    "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary truncate block mt-0.5",
+                    "text-muted-foreground truncate block mt-0.5",
                     subtitleSize,
                     subtitleClassName,
                   )}
@@ -190,10 +185,9 @@ export function TemplateHeaderBar({
     "flex items-center justify-between",
     padding,
     variantStyles[variant],
-    bordered && "border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
+    bordered && "border-b border-border",
     sticky && "sticky top-0 z-10 backdrop-blur-sm",
-    isClickable &&
-      "cursor-pointer hover:bg-foundation-bg-light-3/50 dark:hover:bg-foundation-bg-dark-3/50 transition-colors",
+    isClickable && "cursor-pointer hover:bg-muted/50 transition-colors",
     className,
   );
 
@@ -217,7 +211,7 @@ export function TemplateHeaderBar({
     return (
       <div>
         {headerElement}
-        <div className="h-px bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3" />
+        <div className="h-px bg-muted" />
       </div>
     );
   }
@@ -249,9 +243,9 @@ export function TemplateHeaderBackButton({
       onClick={onClick}
       className={cn(
         "inline-flex items-center justify-center rounded-md p-1.5 -ml-1.5",
-        "text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary",
-        "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
+        "text-text-secondary",
+        "hover:bg-muted",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "transition-colors duration-150",
         className,
       )}
@@ -295,12 +289,11 @@ export function TemplateHeaderIconButton({
       disabled={disabled}
       className={cn(
         "inline-flex items-center justify-center rounded-md p-2",
-        "text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary",
-        "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
+        "text-text-secondary",
+        "hover:bg-muted",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "transition-colors duration-150",
-        active &&
-          "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-icon-light-primary dark:text-foundation-icon-dark-primary",
+        active && "bg-muted text-foreground",
         disabled && "opacity-50 cursor-not-allowed",
         className,
       )}
@@ -337,11 +330,9 @@ export function TemplateHeaderActionButton({
   disabled = false,
 }: TemplateHeaderActionButtonProps) {
   const variantClasses = {
-    default:
-      "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:bg-foundation-bg-light-4 dark:hover:bg-foundation-bg-dark-4",
-    primary: "bg-foundation-accent-blue text-white hover:bg-foundation-accent-blue/90",
-    ghost:
-      "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
+    default: "bg-muted text-text-secondary hover:bg-muted/80",
+    primary: "bg-accent-blue text-text-body-on-color hover:bg-accent-blue/90",
+    ghost: "text-text-secondary hover:bg-muted",
   };
 
   const sizeClasses = {
@@ -356,7 +347,7 @@ export function TemplateHeaderActionButton({
       disabled={disabled}
       className={cn(
         "inline-flex items-center justify-center rounded-md font-medium",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "transition-colors duration-150",
         variantClasses[variant],
         sizeClasses[size],
@@ -393,10 +384,10 @@ export function TemplateHeaderCloseButton({
       onClick={onClick}
       className={cn(
         "inline-flex items-center justify-center rounded-md p-1.5",
-        "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-        "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-        "hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
+        "text-text-secondary",
+        "hover:bg-muted",
+        "hover:text-foreground",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "transition-colors duration-150",
         className,
       )}
@@ -424,12 +415,11 @@ export interface TemplateHeaderBadgeProps {
 }
 
 const badgeVariantStyles: Record<TemplateHeaderBadgeVariant, string> = {
-  default:
-    "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-  primary: "bg-foundation-accent-blue text-white",
-  success: "bg-foundation-accent-success text-white",
-  warning: "bg-foundation-accent-orange text-white",
-  error: "bg-foundation-accent-red text-white",
+  default: "bg-muted text-text-secondary",
+  primary: "bg-accent-blue text-text-body-on-color",
+  success: "bg-accent-green text-text-body-on-color",
+  warning: "bg-accent-orange text-text-body-on-color",
+  error: "bg-status-error text-text-body-on-color",
 };
 
 /**
@@ -497,7 +487,7 @@ export function TemplateHeaderBreadcrumbs({
 }: TemplateHeaderBreadcrumbsProps) {
   const defaultSeparator = (
     <svg
-      className="size-3 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
+      className="size-3 text-muted-foreground"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -521,9 +511,9 @@ export function TemplateHeaderBreadcrumbs({
                   type="button"
                   onClick={item.onClick}
                   className={cn(
-                    "text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
-                    "hover:text-foundation-text-light-secondary dark:hover:text-foundation-text-dark-secondary",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue focus-visible:rounded",
+                    "text-xs text-muted-foreground",
+                    "hover:text-text-secondary",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:rounded",
                     "transition-colors duration-150",
                   )}
                 >
@@ -533,9 +523,7 @@ export function TemplateHeaderBreadcrumbs({
                 <span
                   className={cn(
                     "text-xs",
-                    isLast
-                      ? "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary font-medium"
-                      : "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
+                    isLast ? "text-text-secondary font-medium" : "text-muted-foreground",
                   )}
                   aria-current={isLast ? "page" : undefined}
                 >

@@ -7,7 +7,7 @@ import {
   MessageActions,
   ModelBadge,
   Progress,
-} from "../../../components/ui";
+} from "../../../../components/ui";
 
 export interface DashboardPageProps {
   /** Navigation callback */

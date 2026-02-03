@@ -88,7 +88,7 @@ function CodeBlock({
       className={cn(
         "group relative w-full overflow-hidden rounded-lg border border-border bg-muted",
         isDisabled && "opacity-50 pointer-events-none",
-        error && "ring-2 ring-foundation-accent-red/50",
+        error && "ring-2 ring-status-error/50",
         loading && "animate-pulse",
         className,
       )}
@@ -112,7 +112,7 @@ function CodeBlock({
           >
             {copied ? (
               <>
-                <IconCheckmark className="size-3 text-foundation-accent-green" />
+                <IconCheckmark className="size-3 text-status-success" />
                 Copied!
               </>
             ) : (
@@ -129,7 +129,7 @@ function CodeBlock({
         <div className="p-4 text-sm text-center text-muted-foreground">Loading code...</div>
       )}
 
-      {error && <div className="p-4 text-sm text-center text-foundation-accent-red">{error}</div>}
+      {error && <div className="p-4 text-sm text-center text-status-error">{error}</div>}
 
       {!loading && !error && (
         <pre className="overflow-x-auto p-4 text-sm font-mono leading-relaxed" {...props}>

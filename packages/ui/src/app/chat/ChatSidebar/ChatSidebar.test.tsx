@@ -20,9 +20,7 @@ describe("ChatSidebar", () => {
 
   describe("Basic rendering", () => {
     it("does not render when isOpen is false", () => {
-      const { container } = render(
-        <ChatSidebar isOpen={false} onToggle={mockOnToggle} />
-      );
+      const { container } = render(<ChatSidebar isOpen={false} onToggle={mockOnToggle} />);
       expect(container.firstChild).toBe(null);
     });
 
@@ -62,7 +60,7 @@ describe("ChatSidebar", () => {
           onToggle={mockOnToggle}
           loading
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -70,9 +68,7 @@ describe("ChatSidebar", () => {
     });
 
     it("shows loading overlay when loading", () => {
-      render(
-        <ChatSidebar isOpen={true} onToggle={mockOnToggle} loading />
-      );
+      render(<ChatSidebar isOpen={true} onToggle={mockOnToggle} loading />);
       expect(screen.getByText("Loading...")).toBeInTheDocument();
     });
   });
@@ -85,7 +81,7 @@ describe("ChatSidebar", () => {
           onToggle={mockOnToggle}
           error="Failed to load"
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -93,9 +89,7 @@ describe("ChatSidebar", () => {
     });
 
     it("shows error message when error", () => {
-      render(
-        <ChatSidebar isOpen={true} onToggle={mockOnToggle} error="Connection failed" />
-      );
+      render(<ChatSidebar isOpen={true} onToggle={mockOnToggle} error="Connection failed" />);
       expect(screen.getByText("Connection failed")).toBeInTheDocument();
     });
   });
@@ -108,7 +102,7 @@ describe("ChatSidebar", () => {
           onToggle={mockOnToggle}
           disabled
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
@@ -116,9 +110,7 @@ describe("ChatSidebar", () => {
     });
 
     it("applies disabled styles when disabled", () => {
-      render(
-        <ChatSidebar isOpen={true} onToggle={mockOnToggle} disabled />
-      );
+      render(<ChatSidebar isOpen={true} onToggle={mockOnToggle} disabled />);
       const sidebar = screen.getByTestId("chat-sidebar");
       expect(sidebar).toHaveClass("opacity-50");
     });
@@ -132,7 +124,7 @@ describe("ChatSidebar", () => {
           onToggle={mockOnToggle}
           required
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
@@ -150,7 +142,7 @@ describe("ChatSidebar", () => {
           error="Error"
           disabled
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -165,7 +157,7 @@ describe("ChatSidebar", () => {
           error="Error"
           disabled
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -210,11 +202,7 @@ describe("ChatSidebar", () => {
   describe("Search functionality", () => {
     it("filters chat history based on search query", () => {
       render(
-        <ChatSidebar
-          isOpen={true}
-          onToggle={mockOnToggle}
-          chatHistory={defaultChatHistory}
-        />
+        <ChatSidebar isOpen={true} onToggle={mockOnToggle} chatHistory={defaultChatHistory} />,
       );
       const searchInput = screen.getByPlaceholderText("Search chats");
 
@@ -269,9 +257,7 @@ describe("ChatSidebar", () => {
     });
 
     it("has aria-invalid when error", () => {
-      render(
-        <ChatSidebar isOpen={true} onToggle={mockOnToggle} error="Failed" />
-      );
+      render(<ChatSidebar isOpen={true} onToggle={mockOnToggle} error="Failed" />);
       const sidebar = screen.getByTestId("chat-sidebar");
       expect(sidebar).toHaveAttribute("aria-invalid", "true");
     });
@@ -316,13 +302,7 @@ describe("ChatSidebar", () => {
 
   describe("Custom projects", () => {
     it("renders custom projects when provided", () => {
-      render(
-        <ChatSidebar
-          isOpen={true}
-          onToggle={mockOnToggle}
-          projects={defaultProjects}
-        />
-      );
+      render(<ChatSidebar isOpen={true} onToggle={mockOnToggle} projects={defaultProjects} />);
       expect(screen.getByText("Project 1")).toBeInTheDocument();
       expect(screen.getByText("Project 2")).toBeInTheDocument();
     });
@@ -331,11 +311,7 @@ describe("ChatSidebar", () => {
   describe("Custom chat history", () => {
     it("renders custom chat history when provided", () => {
       render(
-        <ChatSidebar
-          isOpen={true}
-          onToggle={mockOnToggle}
-          chatHistory={defaultChatHistory}
-        />
+        <ChatSidebar isOpen={true} onToggle={mockOnToggle} chatHistory={defaultChatHistory} />,
       );
       expect(screen.getByText("Chat 1")).toBeInTheDocument();
       expect(screen.getByText("Chat 2")).toBeInTheDocument();

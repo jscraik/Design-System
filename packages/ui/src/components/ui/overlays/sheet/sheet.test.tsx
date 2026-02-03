@@ -18,7 +18,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Sheet Title</Sheet.SheetTitle>
             Sheet Content
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       const trigger = container.querySelector('[data-slot="sheet-trigger"]');
       expect(trigger).toBeInTheDocument();
@@ -32,7 +32,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             Sheet Content
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Sheet Content")).toBeInTheDocument();
     });
@@ -45,7 +45,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             Hidden Content
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.queryByText("Hidden Content")).not.toBeInTheDocument();
     });
@@ -58,7 +58,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             Content
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Toggle Sheet")).toBeInTheDocument();
     });
@@ -73,7 +73,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             Content
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.queryByText("Content")).not.toBeInTheDocument();
 
@@ -84,7 +84,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             Content
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
     });
@@ -97,7 +97,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             Content
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
 
@@ -108,7 +108,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             Content
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.queryByText("Content")).not.toBeInTheDocument();
     });
@@ -123,7 +123,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             Right Sheet
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Right Sheet")).toBeInTheDocument();
     });
@@ -136,7 +136,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             Left Sheet
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Left Sheet")).toBeInTheDocument();
     });
@@ -149,7 +149,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             Top Sheet
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Top Sheet")).toBeInTheDocument();
     });
@@ -162,7 +162,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             Bottom Sheet
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Bottom Sheet")).toBeInTheDocument();
     });
@@ -179,7 +179,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             Content
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       const trigger = screen.getByRole("button");
       expect(trigger).toBeInTheDocument();
@@ -194,7 +194,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             Content
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       const closeText = screen.getByText("Close");
       expect(closeText).toBeInTheDocument();
@@ -213,7 +213,7 @@ describe("Sheet", () => {
               Header Content
             </Sheet.SheetHeader>
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Header Content")).toBeInTheDocument();
     });
@@ -228,7 +228,7 @@ describe("Sheet", () => {
               Header Text
             </Sheet.SheetHeader>
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Header Text")).toBeInTheDocument();
     });
@@ -243,7 +243,7 @@ describe("Sheet", () => {
               Content
             </Sheet.SheetHeader>
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
     });
@@ -258,7 +258,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             <Sheet.SheetFooter>Footer Text</Sheet.SheetFooter>
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Footer Text")).toBeInTheDocument();
     });
@@ -271,7 +271,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             <Sheet.SheetFooter className="custom-footer">Content</Sheet.SheetFooter>
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
     });
@@ -287,7 +287,7 @@ describe("Sheet", () => {
               <Sheet.SheetTitle>My Title</Sheet.SheetTitle>
             </Sheet.SheetHeader>
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("My Title")).toBeInTheDocument();
     });
@@ -304,7 +304,7 @@ describe("Sheet", () => {
               <Sheet.SheetDescription>My Description</Sheet.SheetDescription>
             </Sheet.SheetHeader>
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("My Description")).toBeInTheDocument();
     });
@@ -319,7 +319,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             <Sheet.SheetClose>Custom Close</Sheet.SheetClose>
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Custom Close")).toBeInTheDocument();
     });
@@ -334,7 +334,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             Content
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
     });
@@ -357,7 +357,7 @@ describe("Sheet", () => {
               <button type="button">Confirm</button>
             </Sheet.SheetFooter>
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Form Title")).toBeInTheDocument();
       expect(screen.getByText("Fill out this form")).toBeInTheDocument();
@@ -377,7 +377,7 @@ describe("Sheet", () => {
             <Sheet.SheetTitle>Title</Sheet.SheetTitle>
             <div data-testid="sheet-portal-content">Portal Content</div>
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       const content = screen.getByTestId("sheet-portal-content");
       expect(content).toBeInTheDocument();
@@ -400,7 +400,7 @@ describe("Sheet", () => {
               <button type="button">Save</button>
             </Sheet.SheetFooter>
           </Sheet.SheetContent>
-        </Sheet.Sheet>
+        </Sheet.Sheet>,
       );
       expect(screen.getByText("Complete Sheet")).toBeInTheDocument();
       expect(screen.getByText("With all components")).toBeInTheDocument();

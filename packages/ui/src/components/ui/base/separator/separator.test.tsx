@@ -58,7 +58,7 @@ describe("Separator", () => {
     it("applies error background color", () => {
       const { container } = render(<Separator error="Error" />);
       const separator = container.querySelector('[data-slot="separator-root"]');
-      expect(separator).toHaveClass("bg-foundation-accent-red");
+      expect(separator).toHaveClass("bg-status-error");
     });
   });
 
@@ -81,9 +81,7 @@ describe("Separator", () => {
 
   describe("State priority", () => {
     it("prioritizes loading over error and disabled", async () => {
-      render(
-        <Separator loading error="Error" disabled onStateChange={mockOnStateChange} />
-      );
+      render(<Separator loading error="Error" disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });

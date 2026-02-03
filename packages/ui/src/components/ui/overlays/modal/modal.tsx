@@ -122,9 +122,9 @@ export function ModalDialog({
         <button
           type="button"
           className={cn(
-            "absolute inset-0 bg-foundation-bg-dark-1/60",
+            "absolute inset-0 bg-overlay/60",
             isDisabled && "opacity-50 pointer-events-none",
-            error && "bg-foundation-accent-red/30",
+            error && "bg-status-error/30",
             overlayClassName,
           )}
           aria-hidden="true"
@@ -142,25 +142,25 @@ export function ModalDialog({
         aria-describedby={descriptionId}
         className={cn(
           "relative z-10 outline-none",
-          "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2",
-          "border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
+          "bg-card",
+          "border border-border",
           "rounded-xl shadow-2xl",
           "max-h-[90vh] overflow-y-auto",
           isDisabled && "opacity-50 pointer-events-none",
-          error && "ring-2 ring-foundation-accent-red/50",
+          error && "ring-2 ring-status-error/50",
           loading && "animate-pulse",
           className,
         )}
         style={{ maxWidth }}
       >
         {loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-foundation-bg-light-1/80 dark:bg-foundation-bg-dark-2/80 z-20 rounded-xl">
-            <div className="text-foundation-text-dark-tertiary">Loading...</div>
+          <div className="absolute inset-0 flex items-center justify-center bg-card/80 z-20 rounded-xl">
+            <div className="text-muted-foreground">Loading...</div>
           </div>
         )}
         {error && !loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-foundation-bg-light-1/80 dark:bg-foundation-bg-dark-2/80 z-20 rounded-xl">
-            <div className="text-foundation-accent-red">{error}</div>
+          <div className="absolute inset-0 flex items-center justify-center bg-card/80 z-20 rounded-xl">
+            <div className="text-status-error">{error}</div>
           </div>
         )}
         {title && !titleId ? (
@@ -223,22 +223,15 @@ export function ModalHeader({
     <div
       className={cn(
         "flex items-center justify-between px-6 py-4",
-        "border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
+        "border-b border-border",
         className,
       )}
     >
       <div className="flex-1">
-        <h2
-          id={generatedTitleId}
-          className="text-body-small font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary"
-        >
+        <h2 id={generatedTitleId} className="text-body-small font-semibold text-foreground">
           {title}
         </h2>
-        {subtitle && (
-          <p className="text-caption text-foundation-text-light-primary dark:text-foundation-text-dark-secondary mt-0.5">
-            {subtitle}
-          </p>
-        )}
+        {subtitle && <p className="text-caption text-text-secondary mt-0.5">{subtitle}</p>}
       </div>
       {actions && <div className="flex items-center gap-2">{actions}</div>}
       {showClose && onClose && (
@@ -247,10 +240,10 @@ export function ModalHeader({
           onClick={onClose}
           aria-label="Close dialog"
           title="Close dialog"
-          className="p-1 hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 rounded-lg transition-colors"
+          className="p-1 hover:bg-muted rounded-lg transition-colors"
         >
           <svg
-            className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
+            className="size-4 text-muted-foreground"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -313,7 +306,7 @@ export function ModalFooter({ children, className }: ModalFooterProps) {
     <div
       className={cn(
         "flex items-center justify-end gap-3 px-6 py-4",
-        "border-t border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
+        "border-t border-border",
         className,
       )}
     >

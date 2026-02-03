@@ -120,7 +120,7 @@ function DatePicker({
         onClick={() => setOpen(!open)}
         className={cn(
           "w-full justify-start text-left font-normal",
-          !value && "text-foundation-text-dark-tertiary",
+          !value && "text-muted-foreground",
         )}
         aria-haspopup="dialog"
         aria-expanded={open}
@@ -147,7 +147,7 @@ function DatePicker({
           aria-modal="true"
           aria-label="Choose date"
           data-slot="date-picker-content"
-          className="absolute z-50 mt-1 rounded-md border border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2 p-3 shadow-lg"
+          className="absolute z-50 mt-1 rounded-md border border-border bg-popover p-3 shadow-lg"
         >
           <Calendar
             mode="single"
@@ -157,7 +157,7 @@ function DatePicker({
             initialFocus
           />
           {value && (
-            <div className="mt-2 flex justify-end border-t border-foundation-bg-dark-3 pt-2">
+            <div className="mt-2 flex justify-end border-t border-border pt-2">
               <Button
                 variant="ghost"
                 size="sm"
@@ -283,7 +283,7 @@ function DateRangePicker({
         onClick={() => setOpen(!open)}
         className={cn(
           "w-full justify-start text-left font-normal",
-          !startDate && "text-foundation-text-dark-tertiary",
+          !startDate && "text-muted-foreground",
         )}
         aria-haspopup="dialog"
         aria-expanded={open}
@@ -310,9 +310,9 @@ function DateRangePicker({
           aria-modal="true"
           aria-label="Choose date range"
           data-slot="date-range-picker-content"
-          className="absolute z-50 mt-1 rounded-md border border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2 p-3 shadow-lg"
+          className="absolute z-50 mt-1 rounded-md border border-border bg-popover p-3 shadow-lg"
         >
-          <div className="mb-2 text-sm text-foundation-text-dark-tertiary">
+          <div className="mb-2 text-sm text-muted-foreground">
             {selecting === "start" ? "Select start date" : "Select end date"}
           </div>
           <Calendar
@@ -322,7 +322,7 @@ function DateRangePicker({
             initialFocus
           />
           {(startDate || endDate) && (
-            <div className="mt-2 flex justify-end border-t border-foundation-bg-dark-3 pt-2">
+            <div className="mt-2 flex justify-end border-t border-border pt-2">
               <Button
                 variant="ghost"
                 size="sm"

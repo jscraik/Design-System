@@ -61,7 +61,7 @@ describe("IconButton", () => {
   describe("variants", () => {
     it("renders ghost variant", () => {
       render(<IconButton {...baseProps} variant="ghost" />);
-      expect(screen.getByRole("button")).toHaveClass("hover:bg-foundation-bg-light-3");
+      expect(screen.getByRole("button")).toHaveClass("hover:bg-muted");
     });
 
     it("renders outline variant", () => {
@@ -71,7 +71,7 @@ describe("IconButton", () => {
 
     it("renders solid variant", () => {
       render(<IconButton {...baseProps} variant="solid" />);
-      expect(screen.getByRole("button")).toHaveClass("bg-foundation-bg-light-2");
+      expect(screen.getByRole("button")).toHaveClass("bg-secondary");
     });
   });
 

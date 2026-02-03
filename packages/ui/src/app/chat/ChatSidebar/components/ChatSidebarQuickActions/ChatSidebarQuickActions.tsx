@@ -40,12 +40,12 @@ export function ChatSidebarQuickActions({
         onClick={() => onNewChatClick("chatgpt")}
         className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors group ${
           selectedAction === "chatgpt"
-            ? "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2"
-            : "hover:bg-foundation-bg-light-2/80 dark:hover:bg-foundation-bg-dark-2/80"
+            ? "bg-secondary dark:bg-secondary"
+            : "hover:bg-secondary/80 dark:hover:bg-secondary/80"
         }`}
       >
-        <IconChat className="size-5 flex-shrink-0 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-        <span className="text-body-small font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+        <IconChat className="size-5 flex-shrink-0 text-text-secondary dark:text-text-secondary" />
+        <span className="text-body-small font-normal text-text-secondary dark:text-text-secondary">
           ChatGPT
         </span>
       </button>
@@ -53,10 +53,10 @@ export function ChatSidebarQuickActions({
       {/* New Project */}
       <button
         onClick={onNewProjectClick}
-        className="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors group hover:bg-foundation-bg-light-2/80 dark:hover:bg-foundation-bg-dark-2/80"
+        className="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors group hover:bg-secondary/80 dark:hover:bg-secondary/80"
       >
-        <IconFolder className="size-5 flex-shrink-0 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-        <span className="text-body-small font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+        <IconFolder className="size-5 flex-shrink-0 text-text-secondary dark:text-text-secondary" />
+        <span className="text-body-small font-normal text-text-secondary dark:text-text-secondary">
           New project
         </span>
       </button>
@@ -68,8 +68,8 @@ export function ChatSidebarQuickActions({
           onClick={() => onProjectSelect(project)}
           className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-left ${
             selectedAction === project.id
-              ? "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2"
-              : "hover:bg-foundation-bg-light-2/80 dark:hover:bg-foundation-bg-dark-2/80"
+              ? "bg-secondary dark:bg-secondary"
+              : "hover:bg-secondary/80 dark:hover:bg-secondary/80"
           }`}
         >
           <div
@@ -81,7 +81,7 @@ export function ChatSidebarQuickActions({
           >
             {project.icon}
           </div>
-          <span className="text-body-small font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+          <span className="text-body-small font-normal text-text-secondary dark:text-text-secondary">
             {project.label}
           </span>
         </button>
@@ -91,10 +91,10 @@ export function ChatSidebarQuickActions({
       {projectsData.length > 3 && (
         <button
           onClick={onToggleExpanded}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-left hover:bg-foundation-bg-light-2/80 dark:hover:bg-foundation-bg-dark-2/80"
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-left hover:bg-secondary/80 dark:hover:bg-secondary/80"
         >
-          <IconDotsHorizontal className="size-5 flex-shrink-0 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-          <span className="text-body-small font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+          <IconDotsHorizontal className="size-5 flex-shrink-0 text-text-secondary dark:text-text-secondary" />
+          <span className="text-body-small font-normal text-text-secondary dark:text-text-secondary">
             {projectsExpanded ? "See less" : "See more"}
           </span>
         </button>

@@ -63,16 +63,14 @@ function TemplateShellSample() {
       animated
       showDividers
       sidebar={
-        <div className="h-full bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-4">
-          <div className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-3">
-            Sidebar
-          </div>
+        <div className="h-full bg-secondary p-4">
+          <div className="text-sm font-medium text-foreground mb-3">Sidebar</div>
           <nav className="space-y-1">
             {["Chats", "Profile", "Settings"].map((item) => (
               <button
                 key={item}
                 type="button"
-                className="w-full text-left px-3 py-2 rounded-lg text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 transition-colors"
+                className="w-full text-left px-3 py-2 rounded-lg text-sm text-text-secondary hover:bg-muted transition-colors"
               >
                 {item}
               </button>
@@ -82,12 +80,10 @@ function TemplateShellSample() {
       }
       header={
         <div className="px-4 py-3 flex items-center justify-between">
-          <span className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            Header Section
-          </span>
+          <span className="text-sm font-medium text-foreground">Header Section</span>
           <button
             type="button"
-            className="text-xs px-2 py-1 rounded bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:bg-foundation-bg-light-4 dark:hover:bg-foundation-bg-dark-4 transition-colors"
+            className="text-xs px-2 py-1 rounded bg-muted text-text-secondary hover:bg-muted/80 transition-colors"
           >
             Action
           </button>
@@ -95,19 +91,14 @@ function TemplateShellSample() {
       }
       body={
         <div className="p-4">
-          <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2">
-            Main Content Area
-          </h2>
-          <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mb-4">
+          <h2 className="text-lg font-semibold text-foreground mb-2">Main Content Area</h2>
+          <p className="text-sm text-text-secondary mb-4">
             This is the main body section that takes up remaining vertical space. It scrolls
             independently when content overflows.
           </p>
           <div className="space-y-3">
             {Array.from({ length: 10 }, (_, i) => (
-              <div
-                key={i}
-                className="p-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary"
-              >
+              <div key={i} className="p-3 rounded-lg bg-secondary text-sm text-text-secondary">
                 Content block {i + 1}
               </div>
             ))}
@@ -116,23 +107,19 @@ function TemplateShellSample() {
       }
       footer={
         <div className="px-4 py-3 flex items-center justify-between">
-          <span className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
-            Footer info
-          </span>
+          <span className="text-xs text-muted-foreground">Footer info</span>
           <button
             type="button"
-            className="text-xs px-3 py-1.5 rounded-lg bg-foundation-accent-blue text-accent-foreground hover:bg-foundation-accent-blue/90 transition-colors"
+            className="text-xs px-3 py-1.5 rounded-lg bg-accent-blue text-accent-foreground hover:bg-accent-blue/90 transition-colors"
           >
             Save
           </button>
         </div>
       }
       detail={
-        <div className="h-full bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-4">
-          <div className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2">
-            Detail Panel
-          </div>
-          <p className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+        <div className="h-full bg-secondary p-4">
+          <div className="text-sm font-medium text-foreground mb-2">Detail Panel</div>
+          <p className="text-xs text-muted-foreground">
             Optional right panel for additional information or actions.
           </p>
         </div>
@@ -160,7 +147,7 @@ function TemplatePanelSample() {
               <button
                 type="button"
                 onClick={() => setIsLoading((prev) => !prev)}
-                className="text-xs px-2 py-1 rounded bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:bg-foundation-bg-light-4 dark:hover:bg-foundation-bg-dark-4 transition-colors"
+                className="text-xs px-2 py-1 rounded bg-muted text-text-secondary hover:bg-muted/80 transition-colors"
               >
                 {isLoading ? "Stop Loading" : "Simulate Load"}
               </button>
@@ -169,22 +156,18 @@ function TemplatePanelSample() {
         }
         footer={
           <TemplatePanelFooter
-            leading={
-              <span className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
-                Last updated: just now
-              </span>
-            }
+            leading={<span className="text-xs text-muted-foreground">Last updated: just now</span>}
             trailing={
               <div className="flex gap-2">
                 <button
                   type="button"
-                  className="text-xs px-3 py-1.5 rounded-md text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 transition-colors"
+                  className="text-xs px-3 py-1.5 rounded-md text-text-secondary hover:bg-muted transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
-                  className="text-xs px-3 py-1.5 rounded-md bg-foundation-accent-blue text-accent-foreground hover:bg-foundation-accent-blue/90 transition-colors"
+                  className="text-xs px-3 py-1.5 rounded-md bg-accent-blue text-accent-foreground hover:bg-accent-blue/90 transition-colors"
                 >
                   Save
                 </button>
@@ -194,7 +177,7 @@ function TemplatePanelSample() {
         }
         loading={isLoading}
       >
-        <div className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+        <div className="text-sm text-text-secondary">
           This panel demonstrates collapsible behavior with loading states. The body content
           smoothly animates when collapsed.
         </div>
@@ -202,14 +185,14 @@ function TemplatePanelSample() {
 
       {/* Elevated variant */}
       <TemplatePanel variant="elevated" size="sm">
-        <div className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+        <div className="text-sm text-text-secondary">
           Elevated panel with stronger shadow for emphasis.
         </div>
       </TemplatePanel>
 
       {/* Outlined variant */}
       <TemplatePanel variant="outlined" size="lg">
-        <div className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+        <div className="text-sm text-text-secondary">
           Outlined panel with transparent background.
         </div>
       </TemplatePanel>
@@ -222,17 +205,13 @@ function TemplateHeaderBarSample() {
     <div className="space-y-4">
       {/* Basic header */}
       <div>
-        <p className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mb-2">
-          Basic Header
-        </p>
+        <p className="text-xs text-muted-foreground mb-2">Basic Header</p>
         <TemplateHeaderBar title="Dashboard" variant="bordered" />
       </div>
 
       {/* With back button */}
       <div>
-        <p className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mb-2">
-          With Back Button
-        </p>
+        <p className="text-xs text-muted-foreground mb-2">With Back Button</p>
         <TemplateHeaderBar
           title="Settings"
           subtitle="Manage your preferences"
@@ -243,9 +222,7 @@ function TemplateHeaderBarSample() {
 
       {/* With trailing actions */}
       <div>
-        <p className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mb-2">
-          With Actions
-        </p>
+        <p className="text-xs text-muted-foreground mb-2">With Actions</p>
         <TemplateHeaderBar
           title="Projects"
           variant="elevated"
@@ -299,9 +276,7 @@ function TemplateHeaderBarSample() {
 
       {/* With primary action */}
       <div>
-        <p className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mb-2">
-          With Primary Action
-        </p>
+        <p className="text-xs text-muted-foreground mb-2">With Primary Action</p>
         <TemplateHeaderBar
           title="My Tasks"
           size="lg"
@@ -330,7 +305,7 @@ function TemplateFormFieldSample() {
   return (
     <TemplateFormField label="Label">
       <input
-        className="w-full rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 px-3 py-2 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 text-sm"
+        className="w-full rounded-lg border border-border px-3 py-2 bg-secondary text-sm"
         placeholder="Input"
         aria-label="Template form field input"
       />
@@ -345,10 +320,7 @@ function TemplateFieldGroupSample() {
     <TemplateFieldGroup
       label="Field Group"
       actions={
-        <button
-          type="button"
-          className="text-xs px-2 py-1 rounded bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3"
-        >
+        <button type="button" className="text-xs px-2 py-1 rounded bg-muted">
           Help
         </button>
       }
@@ -356,7 +328,7 @@ function TemplateFieldGroupSample() {
       <textarea
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        className="w-full rounded-lg border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 px-3 py-2 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 text-sm"
+        className="w-full rounded-lg border border-border px-3 py-2 bg-secondary text-sm"
         placeholder="Text area"
         aria-label="Template field group input"
       />
@@ -421,9 +393,7 @@ function SettingRowBlockSample() {
     <SettingRowBlock
       label="Setting Row"
       description="Secondary description text."
-      right={
-        <IconChevronDownMd className="size-3.5 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-      }
+      right={<IconChevronDownMd className="size-3.5 text-text-secondary" />}
     />
   );
 }
@@ -437,7 +407,7 @@ function SettingToggleBlockSample() {
       onCheckedChange={setChecked}
       label="Toggle Setting"
       description="Enable or disable this setting."
-      icon={<IconCheckmark className="size-4 text-foundation-accent-green" />}
+      icon={<IconCheckmark className="size-4 text-accent-green" />}
     />
   );
 }

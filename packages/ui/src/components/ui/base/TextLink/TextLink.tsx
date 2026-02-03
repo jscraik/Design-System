@@ -10,13 +10,13 @@ const textLinkVariants = cva(
   {
     variants: {
       variant: {
-        default: "text-accent hover:text-accent/80 underline-offset-4 hover:underline",
+        default: "text-interactive hover:text-interactive-hover underline-offset-4 hover:underline",
         subtle: "text-muted-foreground hover:text-foreground underline-offset-4 hover:underline",
         inline:
-          "text-foreground underline underline-offset-4 decoration-muted-foreground hover:decoration-accent",
+          "text-foreground underline underline-offset-4 decoration-muted-foreground hover:decoration-interactive",
         nav: "text-muted-foreground hover:text-foreground no-underline",
         destructive:
-          "text-destructive hover:text-destructive/80 underline-offset-4 hover:underline",
+          "text-status-error hover:text-status-error-muted underline-offset-4 hover:underline",
       },
       size: {
         sm: "text-sm",
@@ -92,7 +92,7 @@ function TextLink({
         // Disabled state styling
         disabled && "pointer-events-none opacity-50 no-underline",
         // Error state styling
-        error && "text-foundation-accent-red hover:text-foundation-accent-red/80",
+        error && "text-status-error hover:text-status-error-muted",
         className,
       )}
       aria-disabled={disabled || undefined}

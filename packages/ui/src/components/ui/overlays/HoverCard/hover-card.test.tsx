@@ -15,7 +15,7 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard open={true}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Card content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       const trigger = container.querySelector('[data-slot="hover-card-trigger"]');
       expect(trigger).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard open={true}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Hover Card Content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       expect(screen.getByText("Hover Card Content")).toBeInTheDocument();
     });
@@ -36,7 +36,7 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard open={false}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Hidden Content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       expect(screen.queryByText("Hidden Content")).not.toBeInTheDocument();
     });
@@ -46,7 +46,7 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard>
           <HoverCard.HoverCardTrigger>Show Card</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       expect(screen.getByText("Show Card")).toBeInTheDocument();
     });
@@ -58,7 +58,7 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard open={false}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       expect(screen.queryByText("Content")).not.toBeInTheDocument();
 
@@ -66,7 +66,7 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard open={true}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
     });
@@ -76,7 +76,7 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard open={true}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
 
@@ -84,7 +84,7 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard open={false}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       expect(screen.queryByText("Content")).not.toBeInTheDocument();
     });
@@ -94,7 +94,7 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard openDelay={500} open={true}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Delayed content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       expect(screen.getByText("Delayed content")).toBeInTheDocument();
     });
@@ -104,7 +104,7 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard closeDelay={300} open={true}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Delayed close</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       expect(screen.getByText("Delayed close")).toBeInTheDocument();
     });
@@ -116,13 +116,12 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard loading onStateChange={mockOnStateChange}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });
     });
-
   });
 
   describe("Stateful props - Error", () => {
@@ -131,13 +130,12 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard error="Error message" onStateChange={mockOnStateChange}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
       });
     });
-
   });
 
   describe("Stateful props - Disabled", () => {
@@ -146,13 +144,12 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard disabled onStateChange={mockOnStateChange}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
       });
     });
-
   });
 
   describe("Stateful props - Required", () => {
@@ -161,27 +158,21 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard required onStateChange={mockOnStateChange}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
       });
     });
-
   });
 
   describe("State priority", () => {
     it("prioritizes loading over error and disabled", async () => {
       render(
-        <HoverCard.HoverCard
-          loading
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        >
+        <HoverCard.HoverCard loading error="Error" disabled onStateChange={mockOnStateChange}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -190,14 +181,10 @@ describe("HoverCard", () => {
 
     it("prioritizes error over disabled when not loading", async () => {
       render(
-        <HoverCard.HoverCard
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        >
+        <HoverCard.HoverCard error="Error" disabled onStateChange={mockOnStateChange}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -213,7 +200,7 @@ describe("HoverCard", () => {
             <button>Profile Card</button>
           </HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Profile details</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       const trigger = screen.getByRole("button");
       expect(trigger).toBeInTheDocument();
@@ -227,7 +214,7 @@ describe("HoverCard", () => {
             <button className="custom-trigger">Hover me</button>
           </HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       const trigger = container.querySelector(".custom-trigger");
       expect(trigger).toBeInTheDocument();
@@ -243,7 +230,7 @@ describe("HoverCard", () => {
               <p>Custom description</p>
             </div>
           </HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       expect(screen.getByText("Custom Title")).toBeInTheDocument();
       expect(screen.getByText("Custom description")).toBeInTheDocument();
@@ -256,7 +243,7 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard open={true}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent>Centered content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       expect(screen.getByText("Centered content")).toBeInTheDocument();
     });
@@ -266,7 +253,7 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard open={true}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent align="start">Aligned content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       expect(screen.getByText("Aligned content")).toBeInTheDocument();
     });
@@ -276,7 +263,7 @@ describe("HoverCard", () => {
         <HoverCard.HoverCard open={true}>
           <HoverCard.HoverCardTrigger>Hover me</HoverCard.HoverCardTrigger>
           <HoverCard.HoverCardContent sideOffset={10}>Offset content</HoverCard.HoverCardContent>
-        </HoverCard.HoverCard>
+        </HoverCard.HoverCard>,
       );
       expect(screen.getByText("Offset content")).toBeInTheDocument();
     });

@@ -18,7 +18,7 @@ describe("AttachmentMenu", () => {
         <AttachmentMenu
           onAttachmentAction={mockOnAttachmentAction}
           onMoreAction={mockOnMoreAction}
-        />
+        />,
       );
       const trigger = screen.getByTitle("Add attachment");
       expect(trigger).toBeInTheDocument();
@@ -29,7 +29,7 @@ describe("AttachmentMenu", () => {
         <AttachmentMenu
           onAttachmentAction={mockOnAttachmentAction}
           onMoreAction={mockOnMoreAction}
-        />
+        />,
       );
       const trigger = screen.getByRole("button");
       expect(trigger).toBeInTheDocument();
@@ -44,7 +44,7 @@ describe("AttachmentMenu", () => {
           onOpenChange={vi.fn()}
           onAttachmentAction={mockOnAttachmentAction}
           onMoreAction={mockOnMoreAction}
-        />
+        />,
       );
       expect(screen.getByText("Add photos & files")).toBeInTheDocument();
       expect(screen.getByText("Deep research")).toBeInTheDocument();
@@ -61,7 +61,7 @@ describe("AttachmentMenu", () => {
           onOpenChange={vi.fn()}
           onAttachmentAction={mockOnAttachmentAction}
           onMoreAction={mockOnMoreAction}
-        />
+        />,
       );
       expect(screen.queryByText("Add photos & files")).not.toBeInTheDocument();
     });
@@ -74,7 +74,7 @@ describe("AttachmentMenu", () => {
           loading
           onStateChange={mockOnStateChange}
           onAttachmentAction={mockOnAttachmentAction}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -82,12 +82,7 @@ describe("AttachmentMenu", () => {
     });
 
     it("applies loading styles to trigger", () => {
-      render(
-        <AttachmentMenu
-          loading
-          onAttachmentAction={mockOnAttachmentAction}
-        />
-      );
+      render(<AttachmentMenu loading onAttachmentAction={mockOnAttachmentAction} />);
       const trigger = screen.getByTitle("Add attachment");
       expect(trigger).toHaveClass("animate-pulse");
     });
@@ -100,7 +95,7 @@ describe("AttachmentMenu", () => {
           error="Failed to load"
           onStateChange={mockOnStateChange}
           onAttachmentAction={mockOnAttachmentAction}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -108,12 +103,7 @@ describe("AttachmentMenu", () => {
     });
 
     it("applies error styles to trigger", () => {
-      render(
-        <AttachmentMenu
-          error="Failed to load"
-          onAttachmentAction={mockOnAttachmentAction}
-        />
-      );
+      render(<AttachmentMenu error="Failed to load" onAttachmentAction={mockOnAttachmentAction} />);
       const trigger = screen.getByTitle("Add attachment");
       expect(trigger).toHaveClass("ring-2");
     });
@@ -126,7 +116,7 @@ describe("AttachmentMenu", () => {
           disabled
           onStateChange={mockOnStateChange}
           onAttachmentAction={mockOnAttachmentAction}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
@@ -134,12 +124,7 @@ describe("AttachmentMenu", () => {
     });
 
     it("applies disabled styles to trigger", () => {
-      render(
-        <AttachmentMenu
-          disabled
-          onAttachmentAction={mockOnAttachmentAction}
-        />
-      );
+      render(<AttachmentMenu disabled onAttachmentAction={mockOnAttachmentAction} />);
       const trigger = screen.getByTitle("Add attachment");
       expect(trigger).toHaveClass("opacity-50");
     });
@@ -152,7 +137,7 @@ describe("AttachmentMenu", () => {
           required
           onStateChange={mockOnStateChange}
           onAttachmentAction={mockOnAttachmentAction}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
@@ -169,7 +154,7 @@ describe("AttachmentMenu", () => {
           disabled
           onStateChange={mockOnStateChange}
           onAttachmentAction={mockOnAttachmentAction}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -183,7 +168,7 @@ describe("AttachmentMenu", () => {
           disabled
           onStateChange={mockOnStateChange}
           onAttachmentAction={mockOnAttachmentAction}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -199,7 +184,7 @@ describe("AttachmentMenu", () => {
           open={true}
           onOpenChange={onOpenChange}
           onAttachmentAction={mockOnAttachmentAction}
-        />
+        />,
       );
 
       const button = screen.getByText("Add photos & files");
@@ -217,7 +202,7 @@ describe("AttachmentMenu", () => {
           onOpenChange={onOpenChange}
           onAttachmentAction={mockOnAttachmentAction}
           disabled
-        />
+        />,
       );
 
       const button = screen.getByText("Add photos & files");
@@ -236,7 +221,7 @@ describe("AttachmentMenu", () => {
           isWebSearchActive={true}
           onWebSearchToggle={mockOnWebSearchToggle}
           onMoreAction={mockOnMoreAction}
-        />
+        />,
       );
       // Component renders; web search state is passed through but may not be visible in closed menu
       expect(screen.getByTitle("Add attachment")).toBeInTheDocument();
@@ -250,7 +235,7 @@ describe("AttachmentMenu", () => {
           isWebSearchActive={false}
           onWebSearchToggle={mockOnWebSearchToggle}
           onMoreAction={mockOnMoreAction}
-        />
+        />,
       );
       expect(screen.getByTitle("Add attachment")).toBeInTheDocument();
     });
@@ -264,7 +249,7 @@ describe("AttachmentMenu", () => {
           onOpenChange={vi.fn()}
           onAttachmentAction={mockOnAttachmentAction}
           onMoreAction={mockOnMoreAction}
-        />
+        />,
       );
       expect(screen.getByText("More")).toBeInTheDocument();
     });
@@ -277,7 +262,7 @@ describe("AttachmentMenu", () => {
           onOpenChange={onOpenChange}
           onAttachmentAction={mockOnAttachmentAction}
           onMoreAction={mockOnMoreAction}
-        />
+        />,
       );
 
       // Note: Testing submenu interactions requires clicking "More" first
@@ -292,52 +277,32 @@ describe("AttachmentMenu", () => {
         <AttachmentMenu
           onAttachmentAction={mockOnAttachmentAction}
           onMoreAction={mockOnMoreAction}
-        />
+        />,
       );
       const trigger = screen.getByRole("button");
       expect(trigger).toHaveAccessibleName("Add attachment");
     });
 
     it("trigger has aria-disabled when disabled", () => {
-      render(
-        <AttachmentMenu
-          disabled
-          onAttachmentAction={mockOnAttachmentAction}
-        />
-      );
+      render(<AttachmentMenu disabled onAttachmentAction={mockOnAttachmentAction} />);
       const trigger = screen.getByRole("button");
       expect(trigger).toHaveAttribute("aria-disabled", "true");
     });
 
     it("trigger has aria-busy when loading", () => {
-      render(
-        <AttachmentMenu
-          loading
-          onAttachmentAction={mockOnAttachmentAction}
-        />
-      );
+      render(<AttachmentMenu loading onAttachmentAction={mockOnAttachmentAction} />);
       const trigger = screen.getByRole("button");
       expect(trigger).toHaveAttribute("aria-busy", "true");
     });
 
     it("trigger has aria-invalid when error", () => {
-      render(
-        <AttachmentMenu
-          error="Failed"
-          onAttachmentAction={mockOnAttachmentAction}
-        />
-      );
+      render(<AttachmentMenu error="Failed" onAttachmentAction={mockOnAttachmentAction} />);
       const trigger = screen.getByRole("button");
       expect(trigger).toHaveAttribute("aria-invalid", "true");
     });
 
     it("trigger has aria-required when required", () => {
-      render(
-        <AttachmentMenu
-          required
-          onAttachmentAction={mockOnAttachmentAction}
-        />
-      );
+      render(<AttachmentMenu required onAttachmentAction={mockOnAttachmentAction} />);
       const trigger = screen.getByRole("button");
       expect(trigger).toHaveAttribute("aria-required", "true");
     });

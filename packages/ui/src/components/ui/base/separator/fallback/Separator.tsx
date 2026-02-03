@@ -56,7 +56,7 @@ function Separator({
         // Disabled state styling
         disabled && "opacity-50",
         // Error state styling
-        error && "bg-foundation-accent-red",
+        error && "bg-status-error",
         className,
       )}
       {...props}

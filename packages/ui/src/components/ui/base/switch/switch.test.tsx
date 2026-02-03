@@ -99,13 +99,13 @@ describe("Switch", () => {
         const switchEl = screen.getByRole("switch");
         expect(switchEl).toHaveAttribute("data-state", "error");
         expect(switchEl).toHaveAttribute("data-error", "true");
-        expect(switchEl).toHaveClass("border-red-500");
+        expect(switchEl).toHaveClass("border-status-error");
       });
 
       it("applies error focus styles", () => {
         render(<Switch error="Connection failed" aria-label="Error switch" />);
-        expect(screen.getByRole("switch")).toHaveClass("focus:border-red-500");
-        expect(screen.getByRole("switch")).toHaveClass("focus:ring-red-500");
+        expect(screen.getByRole("switch")).toHaveClass("focus:border-status-error");
+        expect(screen.getByRole("switch")).toHaveClass("focus:ring-status-error");
       });
 
       it("applies error state to thumb when checked", () => {
@@ -314,7 +314,7 @@ describe("Switch", () => {
 
     it("has error state styles for error prop", () => {
       render(<Switch error="Connection error" aria-label="Error switch" />);
-      expect(screen.getByRole("switch")).toHaveClass("border-red-500");
+      expect(screen.getByRole("switch")).toHaveClass("border-status-error");
     });
   });
 

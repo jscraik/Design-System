@@ -208,39 +208,39 @@ export function ChatSidebar({
         aria-required={required || undefined}
         aria-busy={loading || undefined}
         className={cn(
-          "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary flex flex-col h-full border-r border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 transition-all duration-300 shrink-0 w-[260px] relative",
+          "bg-background dark:bg-background text-foreground dark:text-foreground flex flex-col h-full border-r border-muted dark:border-muted transition-all duration-300 shrink-0 w-[260px] relative",
           isCollapsed && "w-[64px]",
           isDisabled && "opacity-50 pointer-events-none",
-          error && "ring-2 ring-foundation-accent-red/50",
+          error && "ring-2 ring-status-error/50",
           loading && "animate-pulse",
         )}
       >
         {loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-foundation-bg-light-1/80 dark:bg-foundation-bg-dark-1/80 z-10">
-            <div className="text-foundation-text-dark-tertiary">Loading...</div>
+          <div className="absolute inset-0 flex items-center justify-center bg-background/80 dark:bg-background/80 z-10">
+            <div className="text-muted-foreground">Loading...</div>
           </div>
         )}
         {error && !loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-foundation-bg-light-1/80 dark:bg-foundation-bg-dark-1/80 z-10">
-            <div className="text-foundation-accent-red">{error}</div>
+          <div className="absolute inset-0 flex items-center justify-center bg-background/80 dark:bg-background/80 z-10">
+            <div className="text-status-error">{error}</div>
           </div>
         )}
         <div
           className={`flex items-center px-6 py-6 ${isCollapsed ? "justify-center" : "justify-between"}`}
         >
           {!isCollapsed && (
-            <div className="size-8 rounded-full bg-foundation-accent-purple-light dark:bg-foundation-accent-purple text-foundation-text-dark-primary flex items-center justify-center flex-shrink-0">
+            <div className="size-8 rounded-full bg-accent-purple dark:bg-accent-purple text-foreground flex items-center justify-center flex-shrink-0">
               <IconCloseBold className="size-5" />
             </div>
           )}
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="size-8 flex items-center justify-center rounded-lg hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 transition-colors"
+            className="size-8 flex items-center justify-center rounded-lg hover:bg-secondary dark:hover:bg-secondary transition-colors"
             title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
             aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
             data-testid="chat-sidebar-toggle"
           >
-            <IconSidebar className="size-6 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
+            <IconSidebar className="size-6 text-text-secondary dark:text-text-secondary" />
           </button>
         </div>
 
@@ -257,7 +257,7 @@ export function ChatSidebar({
             />
           ) : (
             <div className="relative">
-              <IconSearch className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
+              <IconSearch className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-text-secondary dark:text-text-secondary" />
               <Input
                 value={searchQuery}
                 onChange={(event) => setSearchQuery(event.target.value)}
@@ -320,7 +320,7 @@ export function ChatSidebar({
             selected={selectedAction === "images"}
             right={
               !isCollapsed && (
-                <span className="text-[10px] font-semibold leading-[14px] tracking-[0.5px] px-1.5 py-0.5 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 rounded text-foundation-text-light-primary dark:text-foundation-text-dark-primary uppercase">
+                <span className="text-[10px] font-semibold leading-[14px] tracking-[0.5px] px-1.5 py-0.5 bg-secondary dark:bg-secondary rounded text-foreground dark:text-foreground uppercase">
                   NEW
                 </span>
               )
@@ -367,12 +367,12 @@ export function ChatSidebar({
             <Collapsible open={gptsExpanded} onOpenChange={setGptsExpanded}>
               <div className="px-2 pb-1 pt-2">
                 <CollapsibleTrigger asChild>
-                  <button className="w-full flex items-center gap-2 px-3 py-2 rounded-lg transition-colors hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2">
-                    <span className="text-[13px] font-normal leading-[18px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary flex-1 text-left">
+                  <button className="w-full flex items-center gap-2 px-3 py-2 rounded-lg transition-colors hover:bg-secondary dark:hover:bg-secondary">
+                    <span className="text-[13px] font-normal leading-[18px] tracking-[-0.3px] text-foreground dark:text-foreground flex-1 text-left">
                       GPTs
                     </span>
                     <IconChevronRightMd
-                      className={`size-4 text-foundation-icon-light-primary dark:text-foundation-icon-dark-primary transition-transform ${gptsExpanded ? "rotate-90" : ""}`}
+                      className={`size-4 text-foreground dark:text-foreground transition-transform ${gptsExpanded ? "rotate-90" : ""}`}
                     />
                   </button>
                 </CollapsibleTrigger>
@@ -385,8 +385,8 @@ export function ChatSidebar({
                       onClick={() => setSelectedAction(label)}
                       className={`w-full text-left px-3 py-2 text-body-small rounded-lg transition-colors ${
                         selectedAction === label
-                          ? "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 text-foundation-text-light-primary dark:text-foundation-text-dark-primary"
-                          : "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:bg-foundation-bg-light-2/80 dark:hover:bg-foundation-bg-dark-2/80 hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary"
+                          ? "bg-secondary dark:bg-secondary text-foreground dark:text-foreground"
+                          : "text-text-secondary dark:text-text-secondary hover:bg-secondary/80 dark:hover:bg-secondary/80 hover:text-foreground dark:hover:text-foreground"
                       }`}
                     >
                       {label}
@@ -401,12 +401,12 @@ export function ChatSidebar({
             <Collapsible open={groupChatsExpanded} onOpenChange={setGroupChatsExpanded}>
               <div className="px-2 pb-1 pt-2">
                 <CollapsibleTrigger asChild>
-                  <button className="w-full flex items-center gap-2 px-3 py-2 rounded-lg transition-colors hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2">
-                    <span className="text-[13px] font-normal leading-[18px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary flex-1 text-left">
+                  <button className="w-full flex items-center gap-2 px-3 py-2 rounded-lg transition-colors hover:bg-secondary dark:hover:bg-secondary">
+                    <span className="text-[13px] font-normal leading-[18px] tracking-[-0.3px] text-foreground dark:text-foreground flex-1 text-left">
                       Group chats
                     </span>
                     <IconChevronRightMd
-                      className={`size-4 text-foundation-icon-light-primary dark:text-foundation-icon-dark-primary transition-transform ${groupChatsExpanded ? "rotate-90" : ""}`}
+                      className={`size-4 text-foreground dark:text-foreground transition-transform ${groupChatsExpanded ? "rotate-90" : ""}`}
                     />
                   </button>
                 </CollapsibleTrigger>
@@ -416,16 +416,16 @@ export function ChatSidebar({
                   <div className="px-2 pb-1">
                     <ListItem
                       icon={
-                        <div className="size-6 rounded-full bg-foundation-accent-red-light dark:bg-foundation-accent-red flex items-center justify-center flex-shrink-0">
-                          <IconChat className="size-5 text-white" />
+                        <div className="size-6 rounded-full bg-status-error dark:bg-status-error flex items-center justify-center flex-shrink-0">
+                          <IconChat className="size-5 text-text-body-on-color" />
                         </div>
                       }
                       label="Summarize chat exchange"
                     />
                     <ListItem
                       icon={
-                        <div className="size-6 rounded-full bg-foundation-accent-blue-light dark:bg-foundation-accent-blue flex items-center justify-center flex-shrink-0">
-                          <IconChat className="size-5 text-white" />
+                        <div className="size-6 rounded-full bg-accent-blue dark:bg-accent-blue flex items-center justify-center flex-shrink-0">
+                          <IconChat className="size-5 text-text-body-on-color" />
                         </div>
                       }
                       label="Draft follow-up"
@@ -440,12 +440,12 @@ export function ChatSidebar({
             <Collapsible open={yourChatsExpanded} onOpenChange={setYourChatsExpanded}>
               <div className="px-2 pb-1 pt-2">
                 <CollapsibleTrigger asChild>
-                  <button className="w-full flex items-center gap-2 px-3 py-2 rounded-lg transition-colors hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2">
-                    <span className="text-[13px] font-normal leading-[18px] tracking-[-0.3px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary flex-1 text-left">
+                  <button className="w-full flex items-center gap-2 px-3 py-2 rounded-lg transition-colors hover:bg-secondary dark:hover:bg-secondary">
+                    <span className="text-[13px] font-normal leading-[18px] tracking-[-0.3px] text-foreground dark:text-foreground flex-1 text-left">
                       Your chats
                     </span>
                     <IconChevronRightMd
-                      className={`size-4 text-foundation-icon-light-primary dark:text-foundation-icon-dark-primary transition-transform ${yourChatsExpanded ? "rotate-90" : ""}`}
+                      className={`size-4 text-foreground dark:text-foreground transition-transform ${yourChatsExpanded ? "rotate-90" : ""}`}
                     />
                   </button>
                 </CollapsibleTrigger>
@@ -464,7 +464,7 @@ export function ChatSidebar({
           )}
         </div>
 
-        <div className="p-2 border-t border-foundation-bg-light-3 dark:border-foundation-bg-dark-3">
+        <div className="p-2 border-t border-muted dark:border-muted">
           <DropdownMenu open={showUserMenu} onOpenChange={setShowUserMenu}>
             <DropdownMenuTrigger asChild>
               <button
@@ -472,7 +472,7 @@ export function ChatSidebar({
                 disabled={isCollapsed}
                 className={cn(
                   "w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
-                  "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2",
+                  "hover:bg-secondary dark:hover:bg-secondary",
                   "disabled:opacity-60 disabled:hover:bg-transparent",
                   railItemClassName,
                 )}
@@ -480,15 +480,15 @@ export function ChatSidebar({
                 aria-label="User menu"
                 data-testid="chat-sidebar-user-menu"
               >
-                <div className="size-7 rounded-full bg-foundation-accent-purple-light dark:bg-foundation-accent-purple text-foundation-text-dark-primary flex items-center justify-center flex-shrink-0">
+                <div className="size-7 rounded-full bg-accent-purple dark:bg-accent-purple text-foreground flex items-center justify-center flex-shrink-0">
                   <IconCloseBold className="size-5" />
                 </div>
                 {!isCollapsed && (
                   <div className="flex flex-col items-start flex-1 min-w-0">
-                    <span className="text-body-small truncate font-normal text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+                    <span className="text-body-small truncate font-normal text-foreground dark:text-foreground">
                       Jamie Scott Craik
                     </span>
-                    <span className="text-caption font-normal text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+                    <span className="text-caption font-normal text-foreground dark:text-foreground">
                       Personal account
                     </span>
                   </div>
@@ -500,19 +500,19 @@ export function ChatSidebar({
                 align="start"
                 side="top"
                 sideOffset={8}
-                className="min-w-[220px] bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl shadow-2xl py-1"
+                className="min-w-[220px] bg-background dark:bg-secondary border border-muted dark:border-muted rounded-xl shadow-2xl py-1"
               >
-                <DropdownMenuLabel className="px-3 py-2.5 border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3">
+                <DropdownMenuLabel className="px-3 py-2.5 border-b border-muted dark:border-muted">
                   <div className="flex items-center gap-2 text-body-small">
                     <div className="size-2 rounded-full bg-[var(--accent-green)]" />
-                    <span className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary font-normal">
+                    <span className="text-foreground dark:text-foreground font-normal">
                       PRO/Veteran/Lik
                     </span>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuItem className="px-3 py-2.5 flex items-center gap-2">
                   <svg
-                    className="size-4 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary"
+                    className="size-4 text-text-secondary dark:text-text-secondary"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -521,7 +521,7 @@ export function ChatSidebar({
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                     <circle cx="12" cy="7" r="4" />
                   </svg>
-                  <span className="text-body-small text-foundation-text-light-primary dark:text-foundation-text-dark-primary font-normal">
+                  <span className="text-body-small text-foreground dark:text-foreground font-normal">
                     Personal account
                   </span>
                 </DropdownMenuItem>
@@ -532,14 +532,14 @@ export function ChatSidebar({
                   }}
                   className="px-3 py-2.5 flex items-center gap-2"
                 >
-                  <IconSettings className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-                  <span className="text-body-small text-foundation-text-light-primary dark:text-foundation-text-dark-primary font-normal">
+                  <IconSettings className="size-4 text-text-secondary dark:text-text-secondary" />
+                  <span className="text-body-small text-foreground dark:text-foreground font-normal">
                     Settings
                   </span>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator className="my-1 bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3" />
+                <DropdownMenuSeparator className="my-1 bg-muted dark:bg-muted" />
                 <DropdownMenuItem className="px-3 py-2.5">
-                  <span className="text-body-small text-foundation-text-light-primary dark:text-foundation-text-dark-primary font-normal">
+                  <span className="text-body-small text-foreground dark:text-foreground font-normal">
                     Log Out
                   </span>
                 </DropdownMenuItem>

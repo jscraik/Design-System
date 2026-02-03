@@ -22,26 +22,26 @@ type PlaceCardProps = {
 export default function PlaceCard({ place }: PlaceCardProps) {
   if (!place) return null;
   return (
-    <div className="min-w-[220px] select-none max-w-[220px] w-[65vw] sm:w-[220px] self-stretch flex flex-col text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+    <div className="min-w-[220px] select-none max-w-[220px] w-[65vw] sm:w-[220px] self-stretch flex flex-col text-foreground dark:text-foreground">
       <div className="w-full">
         <AppsSDKImage
           src={place.thumbnail}
           alt={place.name}
-          className="w-full aspect-square rounded-2xl object-cover ring-1 ring-foundation-accent-blue/40 dark:ring-foundation-accent-blue/60 shadow-[0px_2px_6px_rgba(0,0,0,0.2)]"
+          className="w-full aspect-square rounded-2xl object-cover ring-1 ring-accent-blue/40 dark:ring-accent-blue/60 shadow-[0px_2px_6px_rgba(0,0,0,0.2)]"
         />
       </div>
       <div className="mt-3 flex flex-col flex-1">
-        <div className="text-base font-medium truncate line-clamp-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+        <div className="text-base font-medium truncate line-clamp-1 text-foreground dark:text-foreground">
           {place.name}
         </div>
-        <div className="text-xs mt-1 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary flex items-center gap-1">
+        <div className="text-xs mt-1 text-text-secondary dark:text-text-secondary flex items-center gap-1">
           <Star className="h-3 w-3" aria-hidden="true" />
           {place.rating?.toFixed ? place.rating.toFixed(1) : place.rating}
           {place.price ? <span>- {place.price}</span> : null}
           <span>- San Francisco</span>
         </div>
         {place.description ? (
-          <div className="text-sm mt-2 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary flex-auto">
+          <div className="text-sm mt-2 text-text-secondary dark:text-text-secondary flex-auto">
             {place.description}
           </div>
         ) : null}

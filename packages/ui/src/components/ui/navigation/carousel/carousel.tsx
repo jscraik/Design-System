@@ -152,7 +152,7 @@ function Carousel({
         className={cn(
           "relative",
           isDisabled && "opacity-50 pointer-events-none",
-          error && "ring-2 ring-foundation-accent-red/50 rounded-md",
+          error && "ring-2 ring-status-error/50 rounded-md",
           loading && "animate-pulse",
           className,
         )}
@@ -169,13 +169,13 @@ function Carousel({
         {...props}
       >
         {loading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-foundation-bg-light-1/50 z-10">
-            <div className="text-foundation-text-dark-tertiary">Loading...</div>
+          <div className="absolute inset-0 flex items-center justify-center bg-overlay/50 z-10">
+            <div className="text-muted-foreground">Loading...</div>
           </div>
         )}
         {error && (
-          <div className="absolute inset-0 flex items-center justify-center bg-foundation-bg-light-1/50 z-10">
-            <div className="text-foundation-accent-red">{error}</div>
+          <div className="absolute inset-0 flex items-center justify-center bg-overlay/50 z-10">
+            <div className="text-status-error">{error}</div>
           </div>
         )}
         {children}

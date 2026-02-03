@@ -17,10 +17,10 @@ export interface ModelBadgeProps extends StatefulComponentProps {
 }
 
 const variantStyles = {
-  blue: "text-foundation-accent-blue bg-foundation-accent-blue/20",
-  green: "text-foundation-accent-green bg-foundation-accent-green/20",
-  orange: "text-foundation-accent-orange bg-foundation-accent-orange/20",
-  default: "text-foundation-text-dark-secondary bg-foundation-bg-dark-3",
+  blue: "text-interactive bg-interactive/20",
+  green: "text-status-success bg-status-success-muted/20",
+  orange: "text-status-warning bg-status-warning/20",
+  default: "text-text-secondary bg-muted",
 };
 
 /**
@@ -80,7 +80,7 @@ export function ModelBadge({
         variantStyles[variant],
         sizes[size],
         isDisabled && "opacity-50 pointer-events-none",
-        error && "border border-foundation-accent-red",
+        error && "border border-status-error",
         loading && "animate-pulse",
         className,
       )}

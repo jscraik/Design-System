@@ -8,10 +8,7 @@ import type { StatefulComponentProps, ComponentState } from "@design-studio/toke
  */
 function InputError({ message, id }: { message: string; id?: string }) {
   return (
-    <span
-      id={id}
-      className="text-foundation-accent-red text-body-small mt-1 flex items-center gap-1"
-    >
+    <span id={id} className="text-status-error text-body-small mt-1 flex items-center gap-1">
       <svg className="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
         <path
           fillRule="evenodd"
@@ -118,11 +115,11 @@ function Input({
       aria-required={required ? "true" : undefined}
       tabIndex={isDisabled ? -1 : undefined}
       className={cn(
-        "font-foundation text-body placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary selection:bg-foundation-accent-blue selection:text-foundation-text-light-primary border-foundation-bg-dark-3 flex min-h-[var(--foundation-size-control-height)] w-full min-w-0 rounded-md border px-3 py-1 bg-foundation-bg-dark-1 text-foundation-text-dark-primary transition-colors outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-body-small file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+        "font-foundation text-body placeholder:text-text-placeholder selection:bg-interactive selection:text-text-body-on-color border-border flex min-h-[var(--foundation-size-control-height)] w-full min-w-0 rounded-md border px-3 py-1 bg-background text-foreground transition-colors outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-body-small file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
         // Focus styles
-        "focus-visible:border-foundation-accent-blue focus-visible:ring-2 focus-visible:ring-foundation-text-light-primary dark:focus-visible:ring-foundation-text-dark-primary",
+        "focus-visible:border-interactive focus-visible:ring-2 focus-visible:ring-ring",
         // Error state
-        error && "border-foundation-accent-red focus-visible:ring-foundation-accent-red",
+        error && "border-status-error focus-visible:ring-status-error",
         // Loading state
         loading && "opacity-70 cursor-wait",
         // Required indicator
@@ -141,7 +138,7 @@ function Input({
           {inputElement}
           {required && !disabled && (
             <span
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-foundation-accent-red"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-status-error"
               aria-hidden="true"
             >
               *

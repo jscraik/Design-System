@@ -135,21 +135,14 @@ export function TemplateShell({
 
   const transitionClasses = animated ? "transition-all duration-200 ease-in-out" : "";
 
-  const dividerClasses = showDividers
-    ? "border-foundation-bg-light-3 dark:border-foundation-bg-dark-3"
-    : "border-transparent";
+  const dividerClasses = showDividers ? "border-border" : "border-transparent";
 
   const sidebarWidthValue = typeof sidebarWidth === "number" ? `${sidebarWidth}px` : sidebarWidth;
   const detailWidthValue = typeof detailWidth === "number" ? `${detailWidth}px` : detailWidth;
 
   return (
     <TemplateShellContext.Provider value={contextValue}>
-      <div
-        className={cn(
-          "flex h-full w-full min-h-0 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1",
-          className,
-        )}
-      >
+      <div className={cn("flex h-full w-full min-h-0 bg-background", className)}>
         {/* Sidebar */}
         {sidebar ? (
           <aside
@@ -245,9 +238,9 @@ export function TemplateShellToggleButton({
       onClick={toggle}
       className={cn(
         "inline-flex items-center justify-center rounded-md p-2",
-        "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-        "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
+        "text-text-secondary",
+        "hover:bg-muted",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "transition-colors duration-150",
         className,
       )}

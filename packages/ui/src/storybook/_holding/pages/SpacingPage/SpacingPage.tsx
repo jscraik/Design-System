@@ -1,4 +1,4 @@
-import { SpacingShowcase } from "../../../design-system/showcase/SpacingShowcase";
+import { SpacingShowcase } from "../../../../design-system/showcase/SpacingShowcase";
 
 export function SpacingPage() {
   return <SpacingShowcase />;

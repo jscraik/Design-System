@@ -196,10 +196,7 @@ export const ScrollProgressDefault: StoryObj = {
 export const ScrollProgressVertical: StoryObj = {
   render: () => (
     <div className="h-[300vh] p-8">
-      <ScrollProgress
-        orientation="vertical"
-        className="fixed top-0 right-0 bottom-0 z-50"
-      />
+      <ScrollProgress orientation="vertical" className="fixed top-0 right-0 bottom-0 z-50" />
 
       <div className="space-y-8 mt-20">
         <h1 className="text-4xl font-bold">Vertical Scroll Progress</h1>

@@ -7,7 +7,7 @@ import { ChatMessagesBlock } from "../blocks/ChatMessagesBlock";
  */
 export function ChatMessagesTemplate() {
   return (
-    <div className="min-h-[520px] bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1">
+    <div className="min-h-[520px] bg-background">
       <ChatMessagesBlock messages={sampleMessages} />
     </div>
   );

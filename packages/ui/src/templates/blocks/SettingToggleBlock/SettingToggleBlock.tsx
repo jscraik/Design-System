@@ -51,8 +51,7 @@ const variantStyles: Record<SettingToggleBlockVariant, { container: string; cont
     content: "px-3 py-2.5",
   },
   card: {
-    container:
-      "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl shadow-sm",
+    container: "bg-secondary border border-border rounded-xl shadow-sm",
     content: "px-4 py-3.5",
   },
   compact: {
@@ -150,7 +149,7 @@ export function SettingToggleBlock({
     <div
       className={cn(
         container,
-        divider && "border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
+        divider && "border-b border-border",
         disabled && "opacity-50 cursor-not-allowed",
         className,
       )}
@@ -161,7 +160,7 @@ export function SettingToggleBlock({
           content,
           !disabled &&
             !loading &&
-            "cursor-pointer hover:bg-foundation-bg-light-2/50 dark:hover:bg-foundation-bg-dark-2/50 rounded-lg transition-colors",
+            "cursor-pointer hover:bg-secondary/50 rounded-lg transition-colors",
         )}
         onClick={handleToggle}
         onKeyDown={handleKeyDown}
@@ -169,30 +168,18 @@ export function SettingToggleBlock({
       >
         {/* Left side: Icon + Label + Description */}
         <div className="flex items-center gap-3 flex-1 min-w-0">
-          {icon && (
-            <span
-              className={cn(
-                "shrink-0 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary",
-                iconSize,
-              )}
-            >
-              {icon}
-            </span>
-          )}
+          {icon && <span className={cn("shrink-0 text-text-secondary", iconSize)}>{icon}</span>}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <label
                 htmlFor={toggleId}
-                className={cn(
-                  "font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary cursor-pointer select-none",
-                  labelSize,
-                )}
+                className={cn("font-medium text-foreground cursor-pointer select-none", labelSize)}
               >
                 {label}
               </label>
               {badge}
               {shortcut && (
-                <kbd className="hidden sm:inline-flex px-1.5 py-0.5 rounded bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 font-mono text-[10px] text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary border border-foundation-bg-light-4 dark:border-foundation-bg-dark-4">
+                <kbd className="hidden sm:inline-flex px-1.5 py-0.5 rounded bg-muted font-mono text-[10px] text-muted-foreground border border-border">
                   {shortcut}
                 </kbd>
               )}
@@ -200,10 +187,7 @@ export function SettingToggleBlock({
             {description && (
               <p
                 id={descriptionId}
-                className={cn(
-                  "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1 leading-relaxed",
-                  descriptionSize,
-                )}
+                className={cn("text-text-secondary mt-1 leading-relaxed", descriptionSize)}
               >
                 {description}
               </p>
@@ -223,11 +207,9 @@ export function SettingToggleBlock({
             }}
             disabled={disabled || loading}
             className={cn(
-              "relative inline-flex items-center rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-foundation-bg-light-1 dark:focus-visible:ring-offset-foundation-bg-dark-1",
+              "relative inline-flex items-center rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
               toggleSize,
-              checked
-                ? "bg-foundation-accent-green"
-                : "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3",
+              checked ? "bg-accent-green" : "bg-muted",
               disabled && "cursor-not-allowed",
               loading && "cursor-wait",
             )}
@@ -239,7 +221,7 @@ export function SettingToggleBlock({
             {loading ? (
               <span className={cn("absolute inset-0 flex items-center justify-center")}>
                 <svg
-                  className="w-3 h-3 animate-spin text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
+                  className="w-3 h-3 animate-spin text-muted-foreground"
                   fill="none"
                   viewBox="0 0 24 24"
                 >
@@ -261,7 +243,7 @@ export function SettingToggleBlock({
             ) : (
               <span
                 className={cn(
-                  "transform rounded-full bg-white shadow-sm transition-transform",
+                  "transform rounded-full bg-background dark:bg-foreground shadow-sm transition-transform",
                   knobSize,
                   checked ? knobTranslate : "translate-x-0.5",
                 )}
@@ -275,7 +257,7 @@ export function SettingToggleBlock({
       {hint && !error && (
         <p
           className={cn(
-            "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-2 leading-relaxed",
+            "text-muted-foreground mt-2 leading-relaxed",
             content,
             "pt-0",
             descriptionSize,
@@ -290,7 +272,7 @@ export function SettingToggleBlock({
         <div
           id={errorId}
           className={cn(
-            "flex items-center gap-1.5 text-foundation-accent-red mt-2",
+            "flex items-center gap-1.5 text-status-error mt-2",
             content,
             "pt-0",
             descriptionSize,
@@ -336,12 +318,11 @@ export function SettingToggleBadge({
   className,
 }: SettingToggleBadgeProps) {
   const variantClasses = {
-    default:
-      "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-    new: "bg-foundation-accent-blue/10 text-foundation-accent-blue",
-    beta: "bg-foundation-accent-orange/10 text-foundation-accent-orange",
-    pro: "bg-gradient-to-r from-foundation-accent-purple/10 to-foundation-accent-blue/10 text-foundation-accent-purple",
-    deprecated: "bg-foundation-accent-red/10 text-foundation-accent-red",
+    default: "bg-muted text-text-secondary",
+    new: "bg-accent-blue/10 text-accent-blue",
+    beta: "bg-accent-orange/10 text-accent-orange",
+    pro: "bg-gradient-to-r from-accent-purple/10 to-accent-blue/10 text-accent-purple",
+    deprecated: "bg-status-error-muted/10 text-status-error",
   };
 
   return (
@@ -381,21 +362,11 @@ export function SettingToggleGroup({
     <div className={cn("space-y-1", className)}>
       {(label || description) && (
         <div className="px-3 py-2">
-          {label && (
-            <h3 className="text-sm font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              {label}
-            </h3>
-          )}
-          {description && (
-            <p className="text-xs text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
-              {description}
-            </p>
-          )}
+          {label && <h3 className="text-sm font-semibold text-foreground">{label}</h3>}
+          {description && <p className="text-xs text-text-secondary mt-1">{description}</p>}
         </div>
       )}
-      <div className="divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
-        {children}
-      </div>
+      <div className="divide-y divide-border">{children}</div>
     </div>
   );
 }

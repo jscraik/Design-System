@@ -63,6 +63,6 @@ describe("MagneticButton", () => {
 
     rerender(<MagneticButton variant="ghost">Ghost</MagneticButton>);
     button = screen.getByRole("button");
-    expect(button).toHaveClass("bg-transparent");
+    expect(button).toHaveClass("hover:bg-foundation-bg-light-2");
   });
 });

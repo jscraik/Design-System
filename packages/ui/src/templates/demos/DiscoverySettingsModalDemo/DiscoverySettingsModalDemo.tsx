@@ -10,27 +10,19 @@ export function DiscoverySettingsModalDemo() {
   const [targetSize, setTargetSize] = useState(60);
 
   return (
-    <div className="min-h-screen bg-foundation-bg-dark-1 p-8 flex items-center justify-center">
+    <div className="min-h-screen bg-background p-8 flex items-center justify-center">
       <div className="max-w-md w-full space-y-6">
         {/* Current Settings Display */}
-        <div className="bg-foundation-bg-dark-2 rounded-2xl border border-foundation-bg-dark-3 p-8">
-          <h3 className="text-heading-3 text-foundation-text-dark-primary mb-4">
-            Current Settings
-          </h3>
+        <div className="bg-secondary rounded-2xl border border-border p-8">
+          <h3 className="text-heading-3 text-foreground mb-4">Current Settings</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-body-small text-foundation-text-dark-secondary">
-                Target Size
-              </span>
-              <span className="text-body-small font-medium text-foundation-text-dark-primary">
-                {targetSize}k
-              </span>
+              <span className="text-body-small text-text-secondary">Target Size</span>
+              <span className="text-body-small font-medium text-foreground">{targetSize}k</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-body-small text-foundation-text-dark-secondary">
-                Enhancement
-              </span>
-              <span className="text-body-small font-medium text-foundation-accent-green capitalize">
+              <span className="text-body-small text-text-secondary">Enhancement</span>
+              <span className="text-body-small font-medium text-accent-green capitalize">
                 {promptEnhancement}
               </span>
             </div>
@@ -41,15 +33,15 @@ export function DiscoverySettingsModalDemo() {
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="w-full px-4 py-3 bg-foundation-accent-green text-accent-foreground hover:bg-foundation-accent-green/90 rounded-xl transition-colors font-medium text-body"
+          className="w-full px-4 py-3 bg-accent-green text-accent-foreground hover:bg-accent-green/90 rounded-xl transition-colors font-medium text-body"
         >
           Open Discovery Settings
         </button>
 
         {/* Feature List */}
-        <div className="bg-foundation-bg-dark-2 rounded-2xl border border-foundation-bg-dark-3 p-6">
-          <h4 className="text-body font-medium text-foundation-text-dark-primary mb-3">Features</h4>
-          <ul className="space-y-2 text-caption text-foundation-text-dark-secondary">
+        <div className="bg-secondary rounded-2xl border border-border p-6">
+          <h4 className="text-body font-medium text-foreground mb-3">Features</h4>
+          <ul className="space-y-2 text-caption text-text-secondary">
             <li>• Token budget sliders (20k-100k)</li>
             <li>• Auto Plan Budget (collapsible)</li>
             <li>• Prompt enhancement modes</li>
@@ -63,11 +55,9 @@ export function DiscoverySettingsModalDemo() {
         </div>
 
         {/* Use Cases */}
-        <div className="bg-foundation-bg-dark-2 rounded-2xl border border-foundation-bg-dark-3 p-6">
-          <h4 className="text-body font-medium text-foundation-text-dark-primary mb-3">
-            Use Cases
-          </h4>
-          <ul className="space-y-2 text-caption text-foundation-text-dark-secondary">
+        <div className="bg-secondary rounded-2xl border border-border p-6">
+          <h4 className="text-body font-medium text-foreground mb-3">Use Cases</h4>
+          <ul className="space-y-2 text-caption text-text-secondary">
             <li>• AI agent configuration</li>
             <li>• Discovery tool settings</li>
             <li>• Context builder parameters</li>

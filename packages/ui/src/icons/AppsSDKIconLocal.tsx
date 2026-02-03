@@ -14,12 +14,7 @@ import type { IconProps } from "./index";
  */
 export function IconSparkles({ className = "size-6" }: IconProps) {
   return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M12 2L14.39 8.26L21 9.27L16.5 14.14L17.82 21L12 17.27L6.18 21L7.5 14.14L3 9.27L9.61 8.26L12 2Z"
         stroke="currentColor"

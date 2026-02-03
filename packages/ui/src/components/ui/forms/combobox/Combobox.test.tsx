@@ -162,11 +162,7 @@ describe("Combobox", () => {
 
     it("allows custom value when allowCustomValue is true", async () => {
       render(
-        <Combobox
-          options={sampleOptions}
-          allowCustomValue
-          onValueChange={mockOnValueChange}
-        />
+        <Combobox options={sampleOptions} allowCustomValue onValueChange={mockOnValueChange} />,
       );
 
       screen.getByRole("combobox").click();
@@ -247,13 +243,7 @@ describe("Combobox", () => {
 
   describe("Stateful props - Loading", () => {
     it("calls onStateChange with 'loading'", async () => {
-      render(
-        <Combobox
-          options={sampleOptions}
-          loading
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<Combobox options={sampleOptions} loading onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });
@@ -274,7 +264,7 @@ describe("Combobox", () => {
           options={sampleOptions}
           error="Invalid selection"
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -293,13 +283,7 @@ describe("Combobox", () => {
 
   describe("Stateful props - Disabled", () => {
     it("calls onStateChange with 'disabled'", async () => {
-      render(
-        <Combobox
-          options={sampleOptions}
-          disabled
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<Combobox options={sampleOptions} disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
       });
@@ -323,13 +307,7 @@ describe("Combobox", () => {
 
   describe("Stateful props - Required", () => {
     it("calls onStateChange with 'default' when required", async () => {
-      render(
-        <Combobox
-          options={sampleOptions}
-          required
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<Combobox options={sampleOptions} required onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
       });
@@ -345,7 +323,7 @@ describe("Combobox", () => {
           error="Error"
           disabled
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -359,7 +337,7 @@ describe("Combobox", () => {
           error="Error"
           disabled
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");

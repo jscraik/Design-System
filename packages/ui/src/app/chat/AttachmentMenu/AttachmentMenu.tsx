@@ -148,11 +148,11 @@ const MenuItem = React.forwardRef<
     disabled={disabled}
     className={cn(
       "w-full flex items-center gap-3 px-3 py-2.5 text-left transition-colors rounded-lg",
-      "text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-      "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
+      "text-foreground dark:text-foreground",
+      "hover:bg-muted dark:hover:bg-muted",
       "text-[15px] font-normal leading-[22px] tracking-[-0.3px]",
       "group disabled:opacity-50 disabled:cursor-not-allowed",
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-foundation-bg-light-2 dark:focus-visible:ring-offset-foundation-bg-dark-2",
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue dark:focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-secondary dark:focus-visible:ring-offset-secondary",
       className,
     )}
     {...props}
@@ -248,11 +248,11 @@ export function AttachmentMenu({
           disabled={isDisabled}
           className={cn(
             "p-2 rounded-lg transition-colors group",
-            "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-foundation-bg-light-1 dark:focus-visible:ring-offset-foundation-bg-dark-1",
-            "data-[state=open]:bg-foundation-accent-blue-light/20 dark:data-[state=open]:bg-foundation-accent-blue/20",
+            "hover:bg-muted dark:hover:bg-muted",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue dark:focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:focus-visible:ring-offset-background",
+            "data-[state=open]:bg-accent-blue/20 dark:data-[state=open]:bg-accent-blue/20",
             isDisabled && "opacity-50 cursor-not-allowed",
-            error && "ring-2 ring-foundation-accent-red/50",
+            error && "ring-2 ring-status-error/50",
             loading && "animate-pulse",
           )}
           title="Add attachment"
@@ -261,9 +261,9 @@ export function AttachmentMenu({
             className={cn(
               iconMd,
               "transition-colors",
-              "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-              "group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary",
-              "group-data-[state=open]:text-foundation-accent-blue-light dark:group-data-[state=open]:text-foundation-accent-blue",
+              "text-text-secondary dark:text-text-secondary",
+              "group-hover:text-foreground dark:group-hover:text-foreground",
+              "group-data-[state=open]:text-accent-blue dark:group-data-[state=open]:text-accent-blue",
             )}
           />
         </button>
@@ -274,47 +274,47 @@ export function AttachmentMenu({
         align="start"
         sideOffset={10}
         className={cn(
-          "z-[60] w-[240px] rounded-xl border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
-          "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 shadow-2xl outline-none p-2",
+          "z-[60] w-[240px] rounded-xl border border-muted dark:border-muted",
+          "bg-secondary dark:bg-secondary shadow-2xl outline-none p-2",
           "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
           "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
         )}
       >
         {/* Primary Actions */}
         <MenuItem onClick={() => handleAction("add-photos-files")}>
-          <IconPaperclip className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+          <IconPaperclip className="size-5 text-text-secondary dark:text-text-secondary group-hover:text-foreground dark:group-hover:text-foreground transition-colors" />
           <span>Add photos & files</span>
         </MenuItem>
 
         <MenuItem onClick={() => handleAction("deep-research")}>
-          <TelescopeIcon className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+          <TelescopeIcon className="size-5 text-text-secondary dark:text-text-secondary group-hover:text-foreground dark:group-hover:text-foreground transition-colors" />
           <span>Deep research</span>
         </MenuItem>
 
         <MenuItem onClick={() => handleAction("shopping-research")}>
-          <ShoppingIcon className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+          <ShoppingIcon className="size-5 text-text-secondary dark:text-text-secondary group-hover:text-foreground dark:group-hover:text-foreground transition-colors" />
           <span>Shopping research</span>
         </MenuItem>
 
         <MenuItem onClick={() => handleAction("agent-mode")}>
-          <AgentIcon className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+          <AgentIcon className="size-5 text-text-secondary dark:text-text-secondary group-hover:text-foreground dark:group-hover:text-foreground transition-colors" />
           <span>Agent mode</span>
         </MenuItem>
 
         <MenuItem onClick={() => handleAction("create-image")}>
-          <IconImage className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+          <IconImage className="size-5 text-text-secondary dark:text-text-secondary group-hover:text-foreground dark:group-hover:text-foreground transition-colors" />
           <span>Create image</span>
         </MenuItem>
 
         {/* More submenu with nested popover */}
         <Popover modal={false}>
           <PopoverTrigger asChild>
-            <MenuItem className="justify-between data-[state=open]:bg-foundation-bg-light-3 dark:data-[state=open]:bg-foundation-bg-dark-3">
+            <MenuItem className="justify-between data-[state=open]:bg-muted dark:data-[state=open]:bg-muted">
               <div className="flex items-center gap-3">
-                <IconDotsVertical className="size-5 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+                <IconDotsVertical className="size-5 text-text-secondary dark:text-text-secondary group-hover:text-foreground dark:group-hover:text-foreground transition-colors" />
                 <span>More</span>
               </div>
-              <ChevronRightIcon className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-secondary dark:group-hover:text-foundation-text-dark-secondary transition-colors" />
+              <ChevronRightIcon className="size-4 text-muted-foreground dark:text-muted-foreground group-hover:text-text-secondary dark:group-hover:text-text-secondary transition-colors" />
             </MenuItem>
           </PopoverTrigger>
 
@@ -323,21 +323,21 @@ export function AttachmentMenu({
             align="start"
             sideOffset={8}
             className={cn(
-              "z-[70] w-[240px] rounded-xl border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
-              "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 shadow-2xl outline-none p-2",
+              "z-[70] w-[240px] rounded-xl border border-muted dark:border-muted",
+              "bg-secondary dark:bg-secondary shadow-2xl outline-none p-2",
               "max-h-[400px] overflow-y-auto",
               "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
               "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
             )}
           >
             {/* Add sources header */}
-            <div className="px-3 py-2 text-[13px] text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary font-normal leading-[18px] tracking-[-0.3px]">
+            <div className="px-3 py-2 text-[13px] text-muted-foreground dark:text-muted-foreground font-normal leading-[18px] tracking-[-0.3px]">
               Add sources
             </div>
 
             <MenuItem onClick={() => handleMoreAction("study-learn")}>
               <svg
-                className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary"
+                className="size-5 text-muted-foreground dark:text-muted-foreground group-hover:text-foreground dark:group-hover:text-foreground"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
@@ -356,8 +356,7 @@ export function AttachmentMenu({
               onClick={handleWebSearch}
               className={cn(
                 "justify-between",
-                isWebSearchActive &&
-                  "text-foundation-accent-blue-light dark:text-foundation-accent-blue",
+                isWebSearchActive && "text-accent-blue dark:text-accent-blue",
               )}
             >
               <div className="flex items-center gap-3">
@@ -365,21 +364,21 @@ export function AttachmentMenu({
                   className={cn(
                     "size-5 transition-colors",
                     isWebSearchActive
-                      ? "text-foundation-accent-blue-light dark:text-foundation-accent-blue"
-                      : "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary",
+                      ? "text-accent-blue dark:text-accent-blue"
+                      : "text-muted-foreground dark:text-muted-foreground group-hover:text-foreground dark:group-hover:text-foreground",
                   )}
                 />
                 <span>Web search</span>
               </div>
               {isWebSearchActive && (
-                <CheckIcon className="size-5 text-foundation-accent-blue-light dark:text-foundation-accent-blue" />
+                <CheckIcon className="size-5 text-accent-blue dark:text-accent-blue" />
               )}
             </MenuItem>
 
             {/* Additional integrations would go here */}
             <MenuItem onClick={() => handleMoreAction("browser-memory")}>
               <svg
-                className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary"
+                className="size-5 text-muted-foreground dark:text-muted-foreground group-hover:text-foreground dark:group-hover:text-foreground"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
@@ -401,7 +400,7 @@ export function AttachmentMenu({
 
             <MenuItem onClick={() => handleMoreAction("quizzes")}>
               <svg
-                className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors"
+                className="size-5 text-muted-foreground dark:text-muted-foreground group-hover:text-foreground dark:group-hover:text-foreground transition-colors"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
@@ -428,7 +427,7 @@ export function AttachmentMenu({
 
             <MenuItem onClick={() => handleMoreAction("year-with-chatgpt")}>
               <svg
-                className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors"
+                className="size-5 text-muted-foreground dark:text-muted-foreground group-hover:text-foreground dark:group-hover:text-foreground transition-colors"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
@@ -474,10 +473,10 @@ export function AttachmentMenu({
             </MenuItem>
 
             {/* Divider */}
-            <div className="my-2 border-t border-foundation-bg-light-3 dark:border-foundation-bg-dark-3" />
+            <div className="my-2 border-t border-muted dark:border-muted" />
 
             <MenuItem onClick={() => handleMoreAction("explore-apps")}>
-              <IconSearch className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+              <IconSearch className="size-5 text-muted-foreground dark:text-muted-foreground group-hover:text-foreground dark:group-hover:text-foreground transition-colors" />
               <span>Explore apps</span>
             </MenuItem>
           </PopoverContent>

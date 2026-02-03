@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { colorTokens } from "../src/colors.js";
 import { sizeTokens } from "../src/sizes.js";
-import { spacingScale } from "../src/spacing.js";
+import { spaceTokens, spacingScale } from "../src/spacing.js";
 import { typographyTokens } from "../src/typography.js";
 
 describe("Token Validation", () => {
@@ -101,6 +101,26 @@ describe("Token Validation", () => {
       const accentLightKeys = Object.keys(colorTokens.accent.light).sort();
       const accentDarkKeys = Object.keys(colorTokens.accent.dark).sort();
       expect(accentLightKeys).toEqual(accentDarkKeys);
+    });
+
+    it("should include canonical accent hue keys", () => {
+      const expectedAccentKeys = [
+        "blue",
+        "foreground",
+        "gray",
+        "green",
+        "orange",
+        "pink",
+        "purple",
+        "red",
+        "yellow",
+      ];
+
+      const accentLightKeys = Object.keys(colorTokens.accent.light).sort();
+      const accentDarkKeys = Object.keys(colorTokens.accent.dark).sort();
+
+      expect(accentLightKeys).toEqual(expectedAccentKeys.sort());
+      expect(accentDarkKeys).toEqual(expectedAccentKeys.sort());
     });
 
     it("should meet focus ring contrast against primary backgrounds", () => {
@@ -204,6 +224,115 @@ describe("Token Validation", () => {
         const token = value as { lineHeight?: number; size?: number };
         expect(token.lineHeight).toBeGreaterThanOrEqual(token.size);
       });
+    });
+
+    it("should include the responsive type scale keys", () => {
+      const requiredKeys = [
+        "hero",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "paragraphLg",
+        "paragraphMd",
+        "paragraphSm",
+        "heading1",
+        "heading2",
+        "heading3",
+        "body",
+        "bodySmall",
+        "caption",
+      ];
+
+      requiredKeys.forEach((key) => {
+        expect(typographyTokens).toHaveProperty(key);
+      });
+    });
+
+    it("should include paragraph spacing for responsive type tokens", () => {
+      const responsiveKeys = [
+        "hero",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "paragraphLg",
+        "paragraphMd",
+        "paragraphSm",
+        "caption",
+      ];
+
+      responsiveKeys.forEach((key) => {
+        const token = typographyTokens[key as keyof typeof typographyTokens] as {
+          paragraphSpacing?: number;
+        };
+
+        expect(typeof token.paragraphSpacing).toBe("number");
+        expect(token.paragraphSpacing).toBeGreaterThan(0);
+        expect(spacingScale).toContain(token.paragraphSpacing);
+      });
+    });
+
+    it("should enforce base paragraph size of 16px", () => {
+      expect(typographyTokens.paragraphMd.size).toBe(16);
+      expect(typographyTokens.body.size).toBe(16);
+    });
+
+    it("should keep the heading scale in descending order", () => {
+      const { hero, h1, h2, h3, h4, h5, h6 } = typographyTokens;
+
+      expect(hero.size).toBeGreaterThan(h1.size);
+      expect(h1.size).toBeGreaterThan(h2.size);
+      expect(h2.size).toBeGreaterThan(h3.size);
+      expect(h3.size).toBeGreaterThan(h4.size);
+      expect(h4.size).toBeGreaterThan(h5.size);
+      expect(h5.size).toBeGreaterThan(h6.size);
+    });
+
+    it("should keep the paragraph scale in descending order", () => {
+      const { paragraphLg, paragraphMd, paragraphSm, caption } = typographyTokens;
+
+      expect(paragraphLg.size).toBeGreaterThan(paragraphMd.size);
+      expect(paragraphMd.size).toBeGreaterThan(paragraphSm.size);
+      expect(paragraphSm.size).toBeGreaterThan(caption.size);
+    });
+
+    it("should keep responsive line heights within readable ratios", () => {
+      const responsiveTokens = [
+        typographyTokens.hero,
+        typographyTokens.h1,
+        typographyTokens.h2,
+        typographyTokens.h3,
+        typographyTokens.h4,
+        typographyTokens.h5,
+        typographyTokens.h6,
+        typographyTokens.paragraphLg,
+        typographyTokens.paragraphMd,
+        typographyTokens.paragraphSm,
+        typographyTokens.caption,
+        typographyTokens.heading1,
+        typographyTokens.heading2,
+        typographyTokens.heading3,
+        typographyTokens.body,
+        typographyTokens.bodySmall,
+      ];
+
+      responsiveTokens.forEach(({ size, lineHeight }) => {
+        const ratio = lineHeight / size;
+        expect(ratio).toBeGreaterThanOrEqual(1.1);
+        expect(ratio).toBeLessThanOrEqual(1.6);
+      });
+    });
+
+    it("should align base paragraph sizing with spacing tokens", () => {
+      expect(spaceTokens.s16).toBe(typographyTokens.paragraphMd.size);
+      expect(spaceTokens.s24).toBe(typographyTokens.paragraphMd.lineHeight);
+      expect(spacingScale).toContain(typographyTokens.paragraphMd.size);
+      expect(spacingScale).toContain(typographyTokens.paragraphMd.lineHeight);
     });
   });
 });

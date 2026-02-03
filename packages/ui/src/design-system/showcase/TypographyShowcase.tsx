@@ -358,54 +358,104 @@ export function TypographyShowcase() {
 
   const typeStyles: TypeStyle[] = [
     {
-      name: "heading-1",
-      displayName: "Heading 1",
-      size: `${typographyTokens.heading1.size}px`,
-      weight: `${typographyTokens.heading1.weight}`,
-      lineHeight: `${typographyTokens.heading1.lineHeight}px`,
-      letterSpacing: `${typographyTokens.heading1.tracking}px`,
-      className: "text-heading-1",
-      description: "Page titles, hero sections",
+      name: "hero",
+      displayName: "Hero",
+      size: `${typographyTokens.hero.size}px`,
+      weight: `${typographyTokens.hero.weight}`,
+      lineHeight: `${typographyTokens.hero.lineHeight}px`,
+      letterSpacing: `${typographyTokens.hero.tracking}px`,
+      className: "text-hero",
+      description: "Hero headlines, landing intros",
     },
     {
-      name: "heading-2",
-      displayName: "Heading 2",
-      size: `${typographyTokens.heading2.size}px`,
-      weight: `${typographyTokens.heading2.weight}`,
-      lineHeight: `${typographyTokens.heading2.lineHeight}px`,
-      letterSpacing: `${typographyTokens.heading2.tracking}px`,
-      className: "text-heading-2",
+      name: "h1",
+      displayName: "H1",
+      size: `${typographyTokens.h1.size}px`,
+      weight: `${typographyTokens.h1.weight}`,
+      lineHeight: `${typographyTokens.h1.lineHeight}px`,
+      letterSpacing: `${typographyTokens.h1.tracking}px`,
+      className: "text-h1",
+      description: "Primary page titles",
+    },
+    {
+      name: "h2",
+      displayName: "H2",
+      size: `${typographyTokens.h2.size}px`,
+      weight: `${typographyTokens.h2.weight}`,
+      lineHeight: `${typographyTokens.h2.lineHeight}px`,
+      letterSpacing: `${typographyTokens.h2.tracking}px`,
+      className: "text-h2",
       description: "Section headers",
     },
     {
-      name: "heading-3",
-      displayName: "Heading 3",
-      size: `${typographyTokens.heading3.size}px`,
-      weight: `${typographyTokens.heading3.weight}`,
-      lineHeight: `${typographyTokens.heading3.lineHeight}px`,
-      letterSpacing: `${typographyTokens.heading3.tracking}px`,
-      className: "text-heading-3",
-      description: "Subsection headers, card titles",
+      name: "h3",
+      displayName: "H3",
+      size: `${typographyTokens.h3.size}px`,
+      weight: `${typographyTokens.h3.weight}`,
+      lineHeight: `${typographyTokens.h3.lineHeight}px`,
+      letterSpacing: `${typographyTokens.h3.tracking}px`,
+      className: "text-h3",
+      description: "Subsection headers",
     },
     {
-      name: "body",
-      displayName: "Body",
-      size: `${typographyTokens.body.size}px`,
-      weight: `${typographyTokens.body.weight}`,
-      lineHeight: `${typographyTokens.body.lineHeight}px`,
-      letterSpacing: `${typographyTokens.body.tracking}px`,
-      className: "text-body",
-      description: "Primary content, paragraphs",
+      name: "h4",
+      displayName: "H4",
+      size: `${typographyTokens.h4.size}px`,
+      weight: `${typographyTokens.h4.weight}`,
+      lineHeight: `${typographyTokens.h4.lineHeight}px`,
+      letterSpacing: `${typographyTokens.h4.tracking}px`,
+      className: "text-h4",
+      description: "Minor headings, labels",
     },
     {
-      name: "body-small",
-      displayName: "Body Small",
-      size: `${typographyTokens.bodySmall.size}px`,
-      weight: `${typographyTokens.bodySmall.weight}`,
-      lineHeight: `${typographyTokens.bodySmall.lineHeight}px`,
-      letterSpacing: `${typographyTokens.bodySmall.tracking}px`,
-      className: "text-body-small",
-      description: "Secondary content, descriptions",
+      name: "h5",
+      displayName: "H5",
+      size: `${typographyTokens.h5.size}px`,
+      weight: `${typographyTokens.h5.weight}`,
+      lineHeight: `${typographyTokens.h5.lineHeight}px`,
+      letterSpacing: `${typographyTokens.h5.tracking}px`,
+      className: "text-h5",
+      description: "Eyebrows, metadata headings",
+    },
+    {
+      name: "h6",
+      displayName: "H6",
+      size: `${typographyTokens.h6.size}px`,
+      weight: `${typographyTokens.h6.weight}`,
+      lineHeight: `${typographyTokens.h6.lineHeight}px`,
+      letterSpacing: `${typographyTokens.h6.tracking}px`,
+      className: "text-h6",
+      description: "Micro headings, overlines",
+    },
+    {
+      name: "paragraph-lg",
+      displayName: "Paragraph Lg",
+      size: `${typographyTokens.paragraphLg.size}px`,
+      weight: `${typographyTokens.paragraphLg.weight}`,
+      lineHeight: `${typographyTokens.paragraphLg.lineHeight}px`,
+      letterSpacing: `${typographyTokens.paragraphLg.tracking}px`,
+      className: "text-paragraph-lg",
+      description: "Intro body copy, longform emphasis",
+    },
+    {
+      name: "paragraph-md",
+      displayName: "Paragraph Md",
+      size: `${typographyTokens.paragraphMd.size}px`,
+      weight: `${typographyTokens.paragraphMd.weight}`,
+      lineHeight: `${typographyTokens.paragraphMd.lineHeight}px`,
+      letterSpacing: `${typographyTokens.paragraphMd.tracking}px`,
+      className: "text-paragraph-md",
+      description: "Default body copy",
+    },
+    {
+      name: "paragraph-sm",
+      displayName: "Paragraph Sm",
+      size: `${typographyTokens.paragraphSm.size}px`,
+      weight: `${typographyTokens.paragraphSm.weight}`,
+      lineHeight: `${typographyTokens.paragraphSm.lineHeight}px`,
+      letterSpacing: `${typographyTokens.paragraphSm.tracking}px`,
+      className: "text-paragraph-sm",
+      description: "Secondary body copy",
     },
     {
       name: "caption",
@@ -416,6 +466,56 @@ export function TypographyShowcase() {
       letterSpacing: `${typographyTokens.caption.tracking}px`,
       className: "text-caption",
       description: "Labels, metadata, timestamps",
+    },
+    {
+      name: "heading-1",
+      displayName: "Heading 1 (Legacy)",
+      size: `${typographyTokens.heading1.size}px`,
+      weight: `${typographyTokens.heading1.weight}`,
+      lineHeight: `${typographyTokens.heading1.lineHeight}px`,
+      letterSpacing: `${typographyTokens.heading1.tracking}px`,
+      className: "text-heading-1",
+      description: "Legacy heading token (use H1)",
+    },
+    {
+      name: "heading-2",
+      displayName: "Heading 2 (Legacy)",
+      size: `${typographyTokens.heading2.size}px`,
+      weight: `${typographyTokens.heading2.weight}`,
+      lineHeight: `${typographyTokens.heading2.lineHeight}px`,
+      letterSpacing: `${typographyTokens.heading2.tracking}px`,
+      className: "text-heading-2",
+      description: "Legacy heading token (use H2)",
+    },
+    {
+      name: "heading-3",
+      displayName: "Heading 3 (Legacy)",
+      size: `${typographyTokens.heading3.size}px`,
+      weight: `${typographyTokens.heading3.weight}`,
+      lineHeight: `${typographyTokens.heading3.lineHeight}px`,
+      letterSpacing: `${typographyTokens.heading3.tracking}px`,
+      className: "text-heading-3",
+      description: "Legacy heading token (use H3)",
+    },
+    {
+      name: "body",
+      displayName: "Body (Legacy)",
+      size: `${typographyTokens.body.size}px`,
+      weight: `${typographyTokens.body.weight}`,
+      lineHeight: `${typographyTokens.body.lineHeight}px`,
+      letterSpacing: `${typographyTokens.body.tracking}px`,
+      className: "text-body",
+      description: "Legacy body token (use Paragraph Md)",
+    },
+    {
+      name: "body-small",
+      displayName: "Body Small (Legacy)",
+      size: `${typographyTokens.bodySmall.size}px`,
+      weight: `${typographyTokens.bodySmall.weight}`,
+      lineHeight: `${typographyTokens.bodySmall.lineHeight}px`,
+      letterSpacing: `${typographyTokens.bodySmall.tracking}px`,
+      className: "text-body-small",
+      description: "Legacy body token (use Paragraph Sm)",
     },
   ];
 
@@ -442,7 +542,7 @@ export function TypographyShowcase() {
           <div className="space-y-2">
             <div className="flex items-center gap-3">
               <div className="size-10 rounded-xl bg-gradient-to-br from-foundation-accent-blue to-foundation-accent-purple flex items-center justify-center shadow-lg">
-                <IconType className="size-6 text-white" />
+                <IconType className="size-6 text-text-body-on-color" />
               </div>
               <div>
                 <h2 className="text-2xl font-semibold text-foundation-text-dark-primary">
@@ -596,7 +696,20 @@ export function TypographyShowcase() {
           </h4>
           <div className="space-y-4">
             {typeStyles
-              .filter((s) => s.name.startsWith("heading"))
+              .filter((s) =>
+                [
+                  "hero",
+                  "h1",
+                  "h2",
+                  "h3",
+                  "h4",
+                  "h5",
+                  "h6",
+                  "heading-1",
+                  "heading-2",
+                  "heading-3",
+                ].includes(s.name),
+              )
               .map((style) => (
                 <TypeStyleCard
                   key={style.name}
@@ -616,7 +729,12 @@ export function TypographyShowcase() {
           </h4>
           <div className="space-y-4">
             {typeStyles
-              .filter((s) => s.name.startsWith("body") || s.name === "caption")
+              .filter(
+                (s) =>
+                  s.name.startsWith("paragraph") ||
+                  s.name.startsWith("body") ||
+                  s.name === "caption",
+              )
               .map((style) => (
                 <TypeStyleCard
                   key={style.name}
@@ -643,23 +761,23 @@ export function TypographyShowcase() {
 
         <div className="rounded-2xl border border-foundation-bg-dark-3 bg-foundation-bg-dark-2 p-6 space-y-6">
           <div>
-            <h4 className="text-heading-3 text-foundation-text-dark-primary mb-2">Section Title</h4>
-            <p className="text-body text-foundation-text-dark-secondary">
-              This is a typical section with a heading and body text. The heading uses heading-3
-              style while the body uses regular body text for optimal readability.
+            <h4 className="text-h3 text-foundation-text-dark-primary mb-2">Section Title</h4>
+            <p className="text-paragraph-md text-foundation-text-dark-secondary">
+              This is a typical section with a heading and body text. The heading uses H3 while the
+              body uses paragraph-md for optimal readability.
             </p>
           </div>
           <div className="h-px bg-foundation-bg-dark-3" />
           <div className="flex items-center gap-3">
-            <span className="text-body-small text-foundation-text-dark-tertiary">Label:</span>
-            <span className="text-body text-foundation-text-dark-primary">Value text</span>
+            <span className="text-paragraph-sm text-foundation-text-dark-tertiary">Label:</span>
+            <span className="text-paragraph-md text-foundation-text-dark-primary">Value text</span>
           </div>
           <div className="h-px bg-foundation-bg-dark-3" />
           <div>
             <p className="text-caption text-foundation-text-dark-tertiary mb-1">
               Caption or metadata
             </p>
-            <p className="text-body-small text-foundation-text-dark-primary">
+            <p className="text-paragraph-sm text-foundation-text-dark-primary">
               Supporting information with smaller text
             </p>
           </div>

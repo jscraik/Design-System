@@ -183,7 +183,7 @@ function IconCard({
           isCopied ? "opacity-100 scale-100" : "opacity-0 scale-50",
         )}
       >
-        <IconCheck className="size-3 text-white" />
+        <IconCheck className="size-3 text-text-body-on-color" />
       </div>
     </button>
   );
@@ -429,7 +429,7 @@ export function IconographyShowcase() {
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <div className="size-10 rounded-xl bg-gradient-to-br from-foundation-accent-blue to-foundation-accent-purple flex items-center justify-center shadow-lg">
-              <IconSparkles className="size-6 text-white" />
+              <IconSparkles className="size-6 text-text-body-on-color" />
             </div>
             <div>
               <h2 className="text-2xl font-semibold text-foundation-text-dark-primary">

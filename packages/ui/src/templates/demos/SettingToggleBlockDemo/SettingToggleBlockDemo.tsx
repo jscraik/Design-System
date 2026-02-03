@@ -46,14 +46,12 @@ export function SettingToggleBlockDemo() {
   };
 
   return (
-    <div className="h-full bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 overflow-auto">
+    <div className="h-full bg-background overflow-auto">
       <div className="max-w-5xl mx-auto p-8 space-y-8">
         {/* Intro Section */}
-        <div className="space-y-3 pb-6 border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3">
-          <h1 className="text-2xl font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            Setting Toggle Block Component
-          </h1>
-          <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+        <div className="space-y-3 pb-6 border-b border-border">
+          <h1 className="text-2xl font-semibold text-foreground">Setting Toggle Block Component</h1>
+          <p className="text-text-secondary">
             A comprehensive toggle switch component with 4 variants, 3 sizes, badges, loading
             states, error handling, and compound components for grouping.
           </p>
@@ -62,14 +60,12 @@ export function SettingToggleBlockDemo() {
         {/* Basic Toggles */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Basic Toggle Settings
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            <h2 className="text-lg font-medium text-foreground mb-1">Basic Toggle Settings</h2>
+            <p className="text-sm text-text-secondary">
               Simple toggle switches with icons and labels
             </p>
           </div>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-xl bg-secondary overflow-hidden">
             <SettingToggleBlock
               icon={<IconNotification className="w-5 h-5" />}
               label="Enable notifications"
@@ -96,14 +92,12 @@ export function SettingToggleBlockDemo() {
         {/* With Descriptions */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              With Descriptions
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            <h2 className="text-lg font-medium text-foreground mb-1">With Descriptions</h2>
+            <p className="text-sm text-text-secondary">
               Toggles with helpful descriptions explaining their purpose
             </p>
           </div>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-xl bg-secondary overflow-hidden">
             <SettingToggleBlock
               icon={<IconUserLock className="w-5 h-5" />}
               label="Two-factor authentication"
@@ -133,14 +127,12 @@ export function SettingToggleBlockDemo() {
         {/* With Badges */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              With Badges
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            <h2 className="text-lg font-medium text-foreground mb-1">With Badges</h2>
+            <p className="text-sm text-text-secondary">
               Toggles with status badges (new, beta, pro, deprecated)
             </p>
           </div>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-xl bg-secondary overflow-hidden">
             <SettingToggleBlock
               icon={<IconSparkles className="w-5 h-5" />}
               label="AI-powered suggestions"
@@ -174,12 +166,8 @@ export function SettingToggleBlockDemo() {
         {/* Card Variant */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Card Variant
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-              Toggles with elevated card styling
-            </p>
+            <h2 className="text-lg font-medium text-foreground mb-1">Card Variant</h2>
+            <p className="text-sm text-text-secondary">Toggles with elevated card styling</p>
           </div>
           <div className="space-y-3">
             <SettingToggleBlock
@@ -204,14 +192,10 @@ export function SettingToggleBlockDemo() {
         {/* With Actions */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              With Actions
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-              Toggles with additional action buttons
-            </p>
+            <h2 className="text-lg font-medium text-foreground mb-1">With Actions</h2>
+            <p className="text-sm text-text-secondary">Toggles with additional action buttons</p>
           </div>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-xl bg-secondary overflow-hidden">
             <SettingToggleBlock
               icon={<IconCamera className="w-5 h-5" />}
               label="Camera access"
@@ -219,7 +203,7 @@ export function SettingToggleBlockDemo() {
               checked={cameraEnabled}
               onCheckedChange={setCameraEnabled}
               action={
-                <button className="p-1.5 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary transition-colors">
+                <button className="p-1.5 rounded-lg hover:bg-muted text-text-secondary transition-colors">
                   <IconQuestion className="w-4 h-4" />
                 </button>
               }
@@ -232,7 +216,7 @@ export function SettingToggleBlockDemo() {
               checked={micEnabled}
               onCheckedChange={setMicEnabled}
               action={
-                <button className="text-xs font-medium text-foundation-accent-blue hover:text-foundation-accent-blue/80 transition-colors">
+                <button className="text-xs font-medium text-accent-blue hover:text-accent-blue/80 transition-colors">
                   Configure
                 </button>
               }
@@ -243,14 +227,12 @@ export function SettingToggleBlockDemo() {
         {/* With Keyboard Shortcuts */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              With Keyboard Shortcuts
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            <h2 className="text-lg font-medium text-foreground mb-1">With Keyboard Shortcuts</h2>
+            <p className="text-sm text-text-secondary">
               Display keyboard shortcuts for quick access
             </p>
           </div>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-xl bg-secondary overflow-hidden">
             <SettingToggleBlock
               icon={<IconNotification className="w-5 h-5" />}
               label="Notifications"
@@ -274,14 +256,12 @@ export function SettingToggleBlockDemo() {
         {/* Loading State */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Loading State
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            <h2 className="text-lg font-medium text-foreground mb-1">Loading State</h2>
+            <p className="text-sm text-text-secondary">
               Show loading spinner during async operations
             </p>
           </div>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-xl bg-secondary overflow-hidden">
             <SettingToggleBlock
               icon={<IconSettings className="w-5 h-5" />}
               label="Sync settings"
@@ -297,14 +277,10 @@ export function SettingToggleBlockDemo() {
         {/* Error State */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Error State
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-              Display validation errors
-            </p>
+            <h2 className="text-lg font-medium text-foreground mb-1">Error State</h2>
+            <p className="text-sm text-text-secondary">Display validation errors</p>
           </div>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-xl bg-secondary overflow-hidden">
             <SettingToggleBlock
               icon={<IconUserLock className="w-5 h-5" />}
               label="Security verification"
@@ -319,14 +295,12 @@ export function SettingToggleBlockDemo() {
         {/* Disabled State */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Disabled State
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            <h2 className="text-lg font-medium text-foreground mb-1">Disabled State</h2>
+            <p className="text-sm text-text-secondary">
               Toggles can be disabled when not available
             </p>
           </div>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-xl bg-secondary overflow-hidden">
             <SettingToggleBlock
               icon={<IconLock className="w-5 h-5" />}
               label="Premium feature"
@@ -352,14 +326,10 @@ export function SettingToggleBlockDemo() {
         {/* Different Sizes */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Different Sizes
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-              Small, medium, and large size variants
-            </p>
+            <h2 className="text-lg font-medium text-foreground mb-1">Different Sizes</h2>
+            <p className="text-sm text-text-secondary">Small, medium, and large size variants</p>
           </div>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-xl bg-secondary overflow-hidden">
             <SettingToggleBlock
               size="sm"
               icon={<IconNotification className="w-4 h-4" />}
@@ -392,14 +362,12 @@ export function SettingToggleBlockDemo() {
         {/* Toggle Groups */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Toggle Groups
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            <h2 className="text-lg font-medium text-foreground mb-1">Toggle Groups</h2>
+            <p className="text-sm text-text-secondary">
               Organize related toggles with SettingToggleGroup
             </p>
           </div>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-xl bg-secondary overflow-hidden">
             <SettingToggleGroup
               label="Privacy Settings"
               description="Control who can see your information"
@@ -425,14 +393,10 @@ export function SettingToggleBlockDemo() {
         {/* Compact Variant */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Compact Variant
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-              Dense layout for space-constrained areas
-            </p>
+            <h2 className="text-lg font-medium text-foreground mb-1">Compact Variant</h2>
+            <p className="text-sm text-text-secondary">Dense layout for space-constrained areas</p>
           </div>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-xl bg-secondary overflow-hidden">
             <SettingToggleBlock
               variant="compact"
               icon={<IconNotification className="w-4 h-4" />}
@@ -462,14 +426,12 @@ export function SettingToggleBlockDemo() {
         {/* Inline Variant */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Inline Variant
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            <h2 className="text-lg font-medium text-foreground mb-1">Inline Variant</h2>
+            <p className="text-sm text-text-secondary">
               Inline style for embedding in other components
             </p>
           </div>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-xl bg-secondary overflow-hidden">
             <SettingToggleBlock
               variant="inline"
               label="Remember my preferences"
@@ -489,14 +451,12 @@ export function SettingToggleBlockDemo() {
         {/* Real World Example */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Real-World Example
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            <h2 className="text-lg font-medium text-foreground mb-1">Real-World Example</h2>
+            <p className="text-sm text-text-secondary">
               Complete settings panel with multiple toggle groups
             </p>
           </div>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-xl bg-secondary overflow-hidden">
             <SettingToggleGroup
               label="Notifications"
               description="Choose how you want to be notified"
@@ -509,7 +469,7 @@ export function SettingToggleBlockDemo() {
                 checked={notifications}
                 onCheckedChange={setNotifications}
                 action={
-                  <button className="text-xs font-medium text-foundation-accent-blue hover:text-foundation-accent-blue/80 flex items-center gap-1 transition-colors">
+                  <button className="text-xs font-medium text-accent-blue hover:text-accent-blue/80 flex items-center gap-1 transition-colors">
                     Settings
                     <IconArrowTopRightSm className="w-3 h-3" />
                   </button>

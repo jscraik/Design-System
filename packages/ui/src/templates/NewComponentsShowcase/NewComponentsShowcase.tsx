@@ -84,34 +84,28 @@ export function NewComponentsShowcase() {
   const [showCollapse, setShowCollapse] = useState(false);
 
   return (
-    <div className="h-full overflow-auto bg-foundation-bg-dark-1">
+    <div data-theme="dark" className="h-full overflow-auto bg-background">
       <div className="max-w-6xl mx-auto p-8 space-y-12">
         {/* Header */}
         <div className="text-center space-y-3">
-          <h1 className="text-3xl font-bold text-foundation-text-dark-primary">
-            New Components Showcase
-          </h1>
-          <p className="text-foundation-text-dark-secondary">
-            10 new ChatGPT-styled components across 3 phases
-          </p>
+          <h1 className="text-3xl font-bold text-foreground">New Components Showcase</h1>
+          <p className="text-text-secondary">10 new ChatGPT-styled components across 3 phases</p>
         </div>
 
         {/* Phase 1: Core UI Components */}
         <section className="space-y-6">
           <div>
-            <h2 className="text-2xl font-semibold text-foundation-text-dark-primary mb-2">
+            <h2 className="text-2xl font-semibold text-foreground mb-2">
               Phase 1: Core UI Components
             </h2>
-            <p className="text-foundation-text-dark-tertiary">
+            <p className="text-muted-foreground">
               Essential components for notifications, code, empty states, and loading
             </p>
           </div>
 
           {/* Alert */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-foundation-text-dark-primary">
-              Alert Component
-            </h3>
+            <h3 className="text-lg font-medium text-foreground">Alert Component</h3>
             <div className="grid gap-3">
               <Alert>
                 <AlertTitle>Information</AlertTitle>
@@ -136,23 +130,17 @@ export function NewComponentsShowcase() {
 
           {/* CodeBlock */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-foundation-text-dark-primary">
-              CodeBlock Component
-            </h3>
+            <h3 className="text-lg font-medium text-foreground">CodeBlock Component</h3>
             <CodeBlock code={codeExample} language="tsx" />
           </div>
 
           {/* EmptyMessage (mapped to Card + Button) */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-foundation-text-dark-primary">
-              EmptyMessage Component
-            </h3>
-            <Card className="border border-foundation-text-dark-primary/10 bg-foundation-bg-dark-2">
+            <h3 className="text-lg font-medium text-foreground">EmptyMessage Component</h3>
+            <Card className="border border-border/50 bg-secondary">
               <CardContent className="py-10 text-center space-y-3">
-                <div className="text-lg font-semibold text-foundation-text-dark-primary">
-                  No results found
-                </div>
-                <div className="text-sm text-foundation-text-dark-tertiary">
+                <div className="text-lg font-semibold text-foreground">No results found</div>
+                <div className="text-sm text-muted-foreground">
                   Try adjusting your search query or filters
                 </div>
                 <Button variant="outline" size="sm">
@@ -164,17 +152,15 @@ export function NewComponentsShowcase() {
 
           {/* Indicator (mapped to Progress + Badge) */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-foundation-text-dark-primary">
-              Indicator Component
-            </h3>
-            <div className="flex flex-col gap-4 p-6 border border-foundation-text-dark-primary/10 rounded-lg">
+            <h3 className="text-lg font-medium text-foreground">Indicator Component</h3>
+            <div className="flex flex-col gap-4 p-6 border border-border/50 rounded-lg">
               <div className="flex items-center gap-6">
                 <Badge variant="secondary">Idle</Badge>
                 <Badge variant="default">Processing</Badge>
                 <Badge variant="outline">Queued</Badge>
               </div>
               <div className="space-y-2">
-                <div className="text-sm text-foundation-text-dark-secondary">Loading…</div>
+                <div className="text-sm text-text-secondary">Loading…</div>
                 <Progress value={42} />
               </div>
             </div>
@@ -182,11 +168,9 @@ export function NewComponentsShowcase() {
 
           {/* ShimmerText (mapped to Skeleton) */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-foundation-text-dark-primary">
-              ShimmerText Component
-            </h3>
-            <div className="space-y-4 p-6 bg-foundation-bg-dark-1 border border-foundation-text-dark-primary/10 rounded-lg">
-              <div className="text-sm text-foundation-text-dark-tertiary mb-2">
+            <h3 className="text-lg font-medium text-foreground">ShimmerText Component</h3>
+            <div className="space-y-4 p-6 bg-background border border-border/50 rounded-lg">
+              <div className="text-sm text-muted-foreground mb-2">
                 Loading skeleton with animated shimmer effect
               </div>
               <div className="space-y-2">
@@ -194,8 +178,8 @@ export function NewComponentsShowcase() {
                 <Skeleton className="h-4 w-3/5" />
                 <Skeleton className="h-4 w-2/3" />
               </div>
-              <div className="h-px bg-foundation-text-dark-primary/10 my-4" />
-              <div className="text-sm text-foundation-text-dark-tertiary mb-2">
+              <div className="h-px bg-border/50 my-4" />
+              <div className="text-sm text-muted-foreground mb-2">
                 Inline shimmer for single elements
               </div>
               <Skeleton className="h-6 w-2/3" />
@@ -204,9 +188,7 @@ export function NewComponentsShowcase() {
 
           {/* SegmentedControl */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-foundation-text-dark-primary">
-              SegmentedControl Component
-            </h3>
+            <h3 className="text-lg font-medium text-foreground">SegmentedControl Component</h3>
             <SegmentedControl
               options={[
                 { value: "grid", label: "Grid" },
@@ -222,19 +204,15 @@ export function NewComponentsShowcase() {
         {/* Phase 2: Enhanced Inputs */}
         <section className="space-y-6">
           <div>
-            <h2 className="text-2xl font-semibold text-foundation-text-dark-primary mb-2">
+            <h2 className="text-2xl font-semibold text-foreground mb-2">
               Phase 2: Enhanced Input Components
             </h2>
-            <p className="text-foundation-text-dark-tertiary">
-              Advanced inputs with rich functionality
-            </p>
+            <p className="text-muted-foreground">Advanced inputs with rich functionality</p>
           </div>
 
           {/* TagInput (mapped to Input + Badge list) */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-foundation-text-dark-primary">
-              TagInput Component
-            </h3>
+            <h3 className="text-lg font-medium text-foreground">TagInput Component</h3>
             <div className="space-y-3">
               <div className="flex flex-wrap gap-2">
                 {tags.map((tag) => (
@@ -260,17 +238,13 @@ export function NewComponentsShowcase() {
 
           {/* DatePicker */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-foundation-text-dark-primary">
-              DatePicker Component
-            </h3>
+            <h3 className="text-lg font-medium text-foreground">DatePicker Component</h3>
             <DatePicker value={date} onValueChange={setDate} />
           </div>
 
           {/* DateRangePicker */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-foundation-text-dark-primary">
-              DateRangePicker Component
-            </h3>
+            <h3 className="text-lg font-medium text-foreground">DateRangePicker Component</h3>
             <DateRangePicker
               startDate={rangeStart}
               endDate={rangeEnd}
@@ -283,9 +257,7 @@ export function NewComponentsShowcase() {
 
           {/* SelectControl (mapped to Select + ToggleGroup) */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-foundation-text-dark-primary">
-              SelectControl Component
-            </h3>
+            <h3 className="text-lg font-medium text-foreground">SelectControl Component</h3>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm mb-2">Single Select</label>
@@ -329,17 +301,15 @@ export function NewComponentsShowcase() {
         {/* Phase 3: Polish & Advanced */}
         <section className="space-y-6">
           <div>
-            <h2 className="text-2xl font-semibold text-foundation-text-dark-primary mb-2">
+            <h2 className="text-2xl font-semibold text-foreground mb-2">
               Phase 3: Polish & Advanced Components
             </h2>
-            <p className="text-foundation-text-dark-tertiary">Advanced UI patterns and utilities</p>
+            <p className="text-muted-foreground">Advanced UI patterns and utilities</p>
           </div>
 
           {/* Menu (mapped to DropdownMenu) */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-foundation-text-dark-primary">
-              Menu Component
-            </h3>
+            <h3 className="text-lg font-medium text-foreground">Menu Component</h3>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline">Actions Menu</Button>
@@ -349,17 +319,15 @@ export function NewComponentsShowcase() {
                 <DropdownMenuItem>Copy</DropdownMenuItem>
                 <DropdownMenuItem>Share</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+                <DropdownMenuItem className="text-status-error">Delete</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
 
           {/* TextLink (mapped to Button variant) */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-foundation-text-dark-primary">
-              TextLink Component
-            </h3>
-            <div className="space-y-2 p-6 border border-foundation-text-dark-primary/10 rounded-lg">
+            <h3 className="text-lg font-medium text-foreground">TextLink Component</h3>
+            <div className="space-y-2 p-6 border border-border/50 rounded-lg">
               <div>
                 <Button variant="link" asChild>
                   <a href="https://example.com" target="_blank" rel="noreferrer">
@@ -374,7 +342,7 @@ export function NewComponentsShowcase() {
                 <Button variant="link">Navigation link</Button>
               </div>
               <div>
-                <Button variant="link" className="text-destructive">
+                <Button variant="link" className="text-status-error">
                   Destructive link
                 </Button>
               </div>
@@ -383,33 +351,27 @@ export function NewComponentsShowcase() {
 
           {/* Image (mapped to Avatar + AspectRatio) */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-foundation-text-dark-primary">
-              Image Component
-            </h3>
+            <h3 className="text-lg font-medium text-foreground">Image Component</h3>
             <div className="grid md:grid-cols-3 gap-4">
               <div>
-                <p className="text-sm text-foundation-text-dark-tertiary mb-2">
-                  Avatar with fallback
-                </p>
+                <p className="text-sm text-muted-foreground mb-2">Avatar with fallback</p>
                 <Avatar className="size-16">
                   <AvatarImage src="https://i.pravatar.cc/150?img=1" alt="John Doe" />
                   <AvatarFallback>JD</AvatarFallback>
                 </Avatar>
               </div>
               <div>
-                <p className="text-sm text-foundation-text-dark-tertiary mb-2">Error state</p>
+                <p className="text-sm text-muted-foreground mb-2">Error state</p>
                 <Card className="overflow-hidden">
                   <AspectRatio ratio={16 / 9}>
-                    <div className="flex h-full w-full items-center justify-center bg-foundation-bg-dark-2">
-                      <span className="text-sm text-foundation-text-dark-tertiary">
-                        Image failed
-                      </span>
+                    <div className="flex h-full w-full items-center justify-center bg-secondary">
+                      <span className="text-sm text-muted-foreground">Image failed</span>
                     </div>
                   </AspectRatio>
                 </Card>
               </div>
               <div>
-                <p className="text-sm text-foundation-text-dark-tertiary mb-2">Loading state</p>
+                <p className="text-sm text-muted-foreground mb-2">Loading state</p>
                 <Card className="overflow-hidden">
                   <AspectRatio ratio={16 / 9}>
                     <Skeleton className="h-full w-full" />
@@ -421,11 +383,9 @@ export function NewComponentsShowcase() {
 
           {/* Markdown (mapped to text + CodeBlock) */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-foundation-text-dark-primary">
-              Markdown Component
-            </h3>
-            <div className="p-6 border border-foundation-text-dark-primary/10 rounded-lg space-y-4">
-              <p className="text-foundation-text-dark-secondary">
+            <h3 className="text-lg font-medium text-foreground">Markdown Component</h3>
+            <div className="p-6 border border-border/50 rounded-lg space-y-4">
+              <p className="text-text-secondary">
                 This example renders markdown content using existing primitives.
               </p>
               <CodeBlock code={markdownExample} language="md" />
@@ -434,10 +394,8 @@ export function NewComponentsShowcase() {
 
           {/* Transition (mapped to Collapsible) */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-foundation-text-dark-primary">
-              Transition Components
-            </h3>
-            <div className="space-y-4 p-6 border border-foundation-text-dark-primary/10 rounded-lg">
+            <h3 className="text-lg font-medium text-foreground">Transition Components</h3>
+            <div className="space-y-4 p-6 border border-border/50 rounded-lg">
               <div className="flex gap-2">
                 <Button onClick={() => setShowTransition(!showTransition)} size="sm">
                   Toggle Transition
@@ -450,13 +408,11 @@ export function NewComponentsShowcase() {
               <div
                 className={
                   showTransition
-                    ? "p-4 bg-foundation-bg-dark-2 rounded-lg transition-all duration-300 opacity-100 translate-y-0"
-                    : "p-4 bg-foundation-bg-dark-2 rounded-lg transition-all duration-300 opacity-0 -translate-y-2 pointer-events-none"
+                    ? "p-4 bg-secondary rounded-lg transition-all duration-300 opacity-100 translate-y-0"
+                    : "p-4 bg-secondary rounded-lg transition-all duration-300 opacity-0 -translate-y-2 pointer-events-none"
                 }
               >
-                <p className="text-foundation-text-dark-primary">
-                  This content fades in when shown
-                </p>
+                <p className="text-foreground">This content fades in when shown</p>
               </div>
 
               <Collapsible open={showCollapse}>
@@ -464,10 +420,8 @@ export function NewComponentsShowcase() {
                   <div />
                 </CollapsibleTrigger>
                 <CollapsibleContent className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
-                  <div className="p-4 bg-foundation-bg-dark-2 rounded-lg">
-                    <p className="text-foundation-text-dark-primary">
-                      This content expands and collapses smoothly
-                    </p>
+                  <div className="p-4 bg-secondary rounded-lg">
+                    <p className="text-foreground">This content expands and collapses smoothly</p>
                   </div>
                 </CollapsibleContent>
               </Collapsible>
@@ -476,7 +430,7 @@ export function NewComponentsShowcase() {
                 {"First,Second,Third".split(",").map((item, index) => (
                   <div
                     key={item}
-                    className="p-3 bg-foundation-bg-dark-2 rounded-lg transition-all duration-300 opacity-100 translate-y-0"
+                    className="p-3 bg-secondary rounded-lg transition-all duration-300 opacity-100 translate-y-0"
                     style={{ transitionDelay: `${index * 80}ms` }}
                   >
                     {item} item with stagger animation
@@ -488,14 +442,14 @@ export function NewComponentsShowcase() {
         </section>
 
         {/* Summary */}
-        <section className="text-center p-8 bg-foundation-bg-dark-2 rounded-lg">
-          <h2 className="text-2xl font-semibold text-foundation-text-dark-primary mb-3">
+        <section className="text-center p-8 bg-secondary rounded-lg">
+          <h2 className="text-2xl font-semibold text-foreground mb-3">
             🎉 All 16 Components Ready!
           </h2>
-          <p className="text-foundation-text-dark-secondary mb-4">
+          <p className="text-text-secondary mb-4">
             100% Apps SDK UI coverage achieved with production-ready components
           </p>
-          <div className="flex justify-center gap-4 text-sm text-foundation-text-dark-tertiary">
+          <div className="flex justify-center gap-4 text-sm text-muted-foreground">
             <div>✅ 16 new components</div>
             <div>✅ Dark mode support</div>
             <div>✅ Fully accessible</div>

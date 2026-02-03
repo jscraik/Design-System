@@ -350,15 +350,13 @@ export function ChatUIRoot({
     if (mode === "dashboard") {
       return (
         <div className="flex-1 flex flex-col">
-          <div className="p-4 text-foundation-text-dark-secondary">
-            Dashboard template placeholder
-          </div>
+          <div className="p-4 text-text-secondary">Dashboard template placeholder</div>
         </div>
       );
     }
 
     return (
-      <div className="flex-1 flex flex-col bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1">
+      <div className="flex-1 flex flex-col bg-background dark:bg-background">
         <ChatHeader
           isSidebarOpen={sidebarOpenForHeader}
           onSidebarToggle={toggleSidebar}
@@ -398,7 +396,7 @@ export function ChatUIRoot({
 
   return (
     <div
-      className="min-h-screen w-full flex bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 overflow-hidden"
+      className="min-h-screen w-full flex bg-background dark:bg-background overflow-hidden"
       data-testid="chat-ui-root"
       data-state={effectiveState}
       data-error={error ? "true" : undefined}
@@ -410,14 +408,14 @@ export function ChatUIRoot({
     >
       {/* Loading overlay */}
       {loading && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center bg-foundation-bg-light-1/80 dark:bg-foundation-bg-dark-1/80">
-          <div className="text-foundation-text-dark-tertiary">Loading chat...</div>
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-background/80 dark:bg-background/80">
+          <div className="text-muted-foreground">Loading chat...</div>
         </div>
       )}
       {/* Error overlay */}
       {error && !loading && (
-        <div className="absolute inset-0 z-50 flex items-center justify-center bg-foundation-bg-light-1/80 dark:bg-foundation-bg-dark-1/80">
-          <div className="text-foundation-accent-red">{error}</div>
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-background/80 dark:bg-background/80">
+          <div className="text-status-error">{error}</div>
         </div>
       )}
       {/* Inline desktop sidebar (twoPane desktop only; Option B = fully hidden when closed) */}
@@ -433,7 +431,7 @@ export function ChatUIRoot({
           <button
             type="button"
             aria-label="Close sidebar"
-            className="absolute inset-0 bg-foundation-bg-dark-1/50 backdrop-blur-sm"
+            className="absolute inset-0 bg-background/50 backdrop-blur-sm"
             onClick={closeOverlay}
           />
 

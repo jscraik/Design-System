@@ -112,6 +112,79 @@ type DtcgRoot = {
   type: {
     fontFamily: DtcgToken;
     web: {
+      hero: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        paragraphSpacing: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      h1: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        paragraphSpacing: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      h2: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        paragraphSpacing: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      h3: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        paragraphSpacing: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      h4: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        paragraphSpacing: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      h5: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        paragraphSpacing: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      h6: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        paragraphSpacing: DtcgToken;
+        weight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      paragraphLg: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        paragraphSpacing: DtcgToken;
+        weight: DtcgToken;
+        emphasisWeight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      paragraphMd: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        paragraphSpacing: DtcgToken;
+        weight: DtcgToken;
+        emphasisWeight: DtcgToken;
+        tracking: DtcgToken;
+      };
+      paragraphSm: {
+        size: DtcgToken;
+        lineHeight: DtcgToken;
+        paragraphSpacing: DtcgToken;
+        weight: DtcgToken;
+        emphasisWeight: DtcgToken;
+        tracking: DtcgToken;
+      };
       heading1: {
         size: DtcgToken;
         lineHeight: DtcgToken;
@@ -147,6 +220,7 @@ type DtcgRoot = {
       caption: {
         size: DtcgToken;
         lineHeight: DtcgToken;
+        paragraphSpacing: DtcgToken;
         weight: DtcgToken;
         tracking: DtcgToken;
       };
@@ -366,6 +440,97 @@ function buildTypography(dtcg: DtcgRoot) {
   const web = t.web;
   return {
     fontFamily: getValue(t.fontFamily, "type.fontFamily"),
+    hero: {
+      size: getValue(web.hero.size, "type.web.hero.size"),
+      lineHeight: getValue(web.hero.lineHeight, "type.web.hero.lineHeight"),
+      paragraphSpacing: getValue(web.hero.paragraphSpacing, "type.web.hero.paragraphSpacing"),
+      weight: getValue(web.hero.weight, "type.web.hero.weight"),
+      tracking: getValue(web.hero.tracking, "type.web.hero.tracking"),
+    },
+    h1: {
+      size: getValue(web.h1.size, "type.web.h1.size"),
+      lineHeight: getValue(web.h1.lineHeight, "type.web.h1.lineHeight"),
+      paragraphSpacing: getValue(web.h1.paragraphSpacing, "type.web.h1.paragraphSpacing"),
+      weight: getValue(web.h1.weight, "type.web.h1.weight"),
+      tracking: getValue(web.h1.tracking, "type.web.h1.tracking"),
+    },
+    h2: {
+      size: getValue(web.h2.size, "type.web.h2.size"),
+      lineHeight: getValue(web.h2.lineHeight, "type.web.h2.lineHeight"),
+      paragraphSpacing: getValue(web.h2.paragraphSpacing, "type.web.h2.paragraphSpacing"),
+      weight: getValue(web.h2.weight, "type.web.h2.weight"),
+      tracking: getValue(web.h2.tracking, "type.web.h2.tracking"),
+    },
+    h3: {
+      size: getValue(web.h3.size, "type.web.h3.size"),
+      lineHeight: getValue(web.h3.lineHeight, "type.web.h3.lineHeight"),
+      paragraphSpacing: getValue(web.h3.paragraphSpacing, "type.web.h3.paragraphSpacing"),
+      weight: getValue(web.h3.weight, "type.web.h3.weight"),
+      tracking: getValue(web.h3.tracking, "type.web.h3.tracking"),
+    },
+    h4: {
+      size: getValue(web.h4.size, "type.web.h4.size"),
+      lineHeight: getValue(web.h4.lineHeight, "type.web.h4.lineHeight"),
+      paragraphSpacing: getValue(web.h4.paragraphSpacing, "type.web.h4.paragraphSpacing"),
+      weight: getValue(web.h4.weight, "type.web.h4.weight"),
+      tracking: getValue(web.h4.tracking, "type.web.h4.tracking"),
+    },
+    h5: {
+      size: getValue(web.h5.size, "type.web.h5.size"),
+      lineHeight: getValue(web.h5.lineHeight, "type.web.h5.lineHeight"),
+      paragraphSpacing: getValue(web.h5.paragraphSpacing, "type.web.h5.paragraphSpacing"),
+      weight: getValue(web.h5.weight, "type.web.h5.weight"),
+      tracking: getValue(web.h5.tracking, "type.web.h5.tracking"),
+    },
+    h6: {
+      size: getValue(web.h6.size, "type.web.h6.size"),
+      lineHeight: getValue(web.h6.lineHeight, "type.web.h6.lineHeight"),
+      paragraphSpacing: getValue(web.h6.paragraphSpacing, "type.web.h6.paragraphSpacing"),
+      weight: getValue(web.h6.weight, "type.web.h6.weight"),
+      tracking: getValue(web.h6.tracking, "type.web.h6.tracking"),
+    },
+    paragraphLg: {
+      size: getValue(web.paragraphLg.size, "type.web.paragraphLg.size"),
+      lineHeight: getValue(web.paragraphLg.lineHeight, "type.web.paragraphLg.lineHeight"),
+      paragraphSpacing: getValue(
+        web.paragraphLg.paragraphSpacing,
+        "type.web.paragraphLg.paragraphSpacing",
+      ),
+      weight: getValue(web.paragraphLg.weight, "type.web.paragraphLg.weight"),
+      emphasisWeight: getValue(
+        web.paragraphLg.emphasisWeight,
+        "type.web.paragraphLg.emphasisWeight",
+      ),
+      tracking: getValue(web.paragraphLg.tracking, "type.web.paragraphLg.tracking"),
+    },
+    paragraphMd: {
+      size: getValue(web.paragraphMd.size, "type.web.paragraphMd.size"),
+      lineHeight: getValue(web.paragraphMd.lineHeight, "type.web.paragraphMd.lineHeight"),
+      paragraphSpacing: getValue(
+        web.paragraphMd.paragraphSpacing,
+        "type.web.paragraphMd.paragraphSpacing",
+      ),
+      weight: getValue(web.paragraphMd.weight, "type.web.paragraphMd.weight"),
+      emphasisWeight: getValue(
+        web.paragraphMd.emphasisWeight,
+        "type.web.paragraphMd.emphasisWeight",
+      ),
+      tracking: getValue(web.paragraphMd.tracking, "type.web.paragraphMd.tracking"),
+    },
+    paragraphSm: {
+      size: getValue(web.paragraphSm.size, "type.web.paragraphSm.size"),
+      lineHeight: getValue(web.paragraphSm.lineHeight, "type.web.paragraphSm.lineHeight"),
+      paragraphSpacing: getValue(
+        web.paragraphSm.paragraphSpacing,
+        "type.web.paragraphSm.paragraphSpacing",
+      ),
+      weight: getValue(web.paragraphSm.weight, "type.web.paragraphSm.weight"),
+      emphasisWeight: getValue(
+        web.paragraphSm.emphasisWeight,
+        "type.web.paragraphSm.emphasisWeight",
+      ),
+      tracking: getValue(web.paragraphSm.tracking, "type.web.paragraphSm.tracking"),
+    },
     heading1: {
       size: getValue(web.heading1.size, "type.web.heading1.size"),
       lineHeight: getValue(web.heading1.lineHeight, "type.web.heading1.lineHeight"),
@@ -401,6 +566,7 @@ function buildTypography(dtcg: DtcgRoot) {
     caption: {
       size: getValue(web.caption.size, "type.web.caption.size"),
       lineHeight: getValue(web.caption.lineHeight, "type.web.caption.lineHeight"),
+      paragraphSpacing: getValue(web.caption.paragraphSpacing, "type.web.caption.paragraphSpacing"),
       weight: getValue(web.caption.weight, "type.web.caption.weight"),
       emphasisWeight: getValue(web.caption.emphasisWeight, "type.web.caption.emphasisWeight"),
       tracking: getValue(web.caption.tracking, "type.web.caption.tracking"),

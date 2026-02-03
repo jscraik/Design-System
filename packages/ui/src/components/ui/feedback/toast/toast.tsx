@@ -9,15 +9,11 @@ const toastVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2 text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-        success:
-          "border-foundation-accent-green/50 bg-foundation-accent-green/10 text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-        error:
-          "border-foundation-accent-red/50 bg-foundation-accent-red/10 text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-        warning:
-          "border-foundation-accent-orange/50 bg-foundation-accent-orange/10 text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-        info: "border-foundation-accent-blue/50 bg-foundation-accent-blue/10 text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
+        default: "border-border bg-card text-foreground",
+        success: "border-status-success/50 bg-status-success-muted/10 text-foreground",
+        error: "border-status-error/50 bg-status-error-muted/10 text-foreground",
+        warning: "border-status-warning/50 bg-status-warning/10 text-foreground",
+        info: "border-interactive/50 bg-interactive/10 text-foreground",
       },
     },
     defaultVariants: {
@@ -129,7 +125,7 @@ function Toast({
       className={cn(
         toastVariants({ variant }),
         isDisabled && "opacity-60 pointer-events-none",
-        error && "ring-2 ring-foundation-accent-red/50",
+        error && "ring-2 ring-status-error/50",
         loading && "animate-pulse",
         className,
       )}
@@ -157,7 +153,7 @@ function Toast({
             type="button"
             onClick={onClose}
             disabled={isDisabled}
-            className="absolute right-1 top-1 rounded-md p-1 opacity-0 transition-opacity hover:opacity-100 group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-1 focus:ring-foundation-accent-blue disabled:opacity-50 disabled:cursor-not-allowed"
+            className="absolute right-1 top-1 rounded-md p-1 opacity-0 transition-opacity hover:opacity-100 group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-1 focus:ring-interactive disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Close"
           >
             <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

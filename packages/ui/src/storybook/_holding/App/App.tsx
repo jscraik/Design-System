@@ -1,20 +1,28 @@
 import { useState } from "react";
 
-import { ChatHeader } from "../../app/chat/ChatHeader";
-import { ChatInput } from "../../app/chat/ChatInput";
-import { ChatMessages } from "../../app/chat/ChatMessages";
-import { ChatSidebar } from "../../app/chat/ChatSidebar";
-import { ComposeView } from "../../app/chat/ComposeView";
+import { ChatHeader } from "../../../app/chat/ChatHeader";
+import { ChatInput } from "../../../app/chat/ChatInput";
+import { ChatMessages } from "../../../app/chat/ChatMessages";
+import { ChatSidebar } from "../../../app/chat/ChatSidebar";
+import { ComposeView } from "../../../app/chat/ComposeView";
 import { DesignSystemPage } from "../pages/DesignSystemPage";
 import { SpacingPage } from "../pages/SpacingPage";
 import { TypographyPage } from "../pages/TypographyPage";
+
+type ModelConfig = {
+  name: string;
+  shortName: string;
+  description: string;
+  isLegacy?: boolean;
+  badge?: string;
+};
 
 export default function App() {
   const [currentView, setCurrentView] = useState<
     "chat" | "typography" | "spacing" | "design-system"
   >("chat");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [selectedModel, setSelectedModel] = useState({
+  const [selectedModel, setSelectedModel] = useState<ModelConfig>({
     name: "ChatGPT 5.2 Pro",
     shortName: "5.2 Pro",
     description: "Our most capable model",
@@ -131,7 +139,7 @@ export default function App() {
           isSidebarOpen={isSidebarOpen}
           onSidebarToggle={toggleSidebar}
           selectedModel={selectedModel}
-          onModelChange={(model) => {
+          onModelChange={(model: string | ModelConfig) => {
             if (typeof model === "string") {
               // Handle string model selection - convert to ModelConfig
               setSelectedModel({ name: model, shortName: model, description: "" });

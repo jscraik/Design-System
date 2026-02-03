@@ -11,6 +11,7 @@ This index links all governing artifacts for the UI design system.
 - Charter: `docs/design-system/CHARTER.md`
 - Upstream alignment: `docs/design-system/UPSTREAM_ALIGNMENT.md`
 - RFC template: `docs/workflows/RFC_TEMPLATE.md`
+- Transcripts index (training/reference): `docs/transcripts/README.md`
 
 ## Tokens
 
@@ -18,6 +19,36 @@ This index links all governing artifacts for the UI design system.
 - Schema version: `packages/tokens/SCHEMA_VERSION`
 - Schema definition: `packages/tokens/schema/dtcg.schema.json`
 - Alias map: `packages/tokens/src/alias-map.ts`
+
+### Token Tiering (Brand → Alias → Mapped)
+
+- **Brand (raw values):** `packages/tokens/src/tokens/index.dtcg.json` → `packages/tokens/src/foundations.css`
+- **Alias (semantic intent):** `packages/tokens/src/alias-map.ts`
+- **Mapped (usage slots):** `packages/ui/src/styles/theme.css` (`@theme inline` variables)
+
+**Policy:** Raw hex values must appear only in the Brand tier. Alias values must reference Brand paths. Mapped tokens must be the only values used by UI components and templates.
+
+### Responsive Collection (Typography + Spacing)
+
+- **Purpose:** Defines responsive typography and spacing scales across breakpoints (hero, h1–h6, paragraph lg/md/sm/caption, line-height, paragraph spacing).  
+- **Sources:** `type`, `space`, and `size` groups in `packages/tokens/src/tokens/index.dtcg.json` and generated outputs in `packages/tokens/src/foundations.css` and `packages/ui/src/styles/theme.css`.  
+- **Accessibility constraint:** base paragraph size (`paragraph.md`) MUST resolve to 16px equivalent.  
+
+**Policy:** UI components must consume responsive tokens; no raw px values for responsive typography/spacing.  
+
+### Collection Rules (enforced)
+
+Full rule sets live in dedicated files:
+
+- **Brand collection:** `docs/design-system/collections/brand-collection-rules.md`
+- **Alias collection:** `docs/design-system/collections/alias-collection-rules.md`
+- **Mapped collection:** `docs/design-system/collections/mapped-collection-rules.md`
+- **Responsive collection:** `docs/design-system/collections/responsive-collection-rules.md`
+
+**Mode Cleanup Rules**
+- Consolidate light/dark or desktop/mobile into single collections with modes.
+
+Evidence: docs/transcripts/rYzstFEY0t8.cleaned.md
 
 ## Coverage and Enforcement
 
@@ -46,6 +77,13 @@ This index links all governing artifacts for the UI design system.
 - Widget a11y: `pnpm test:a11y:widgets:ci`
 - UI verification (includes focus/touch property tests): `pnpm test`
 - Bundle size budgets: `pnpm bundle:monitor:strict`
+
+### Token Tiering Checklist (manual gate)
+- Brand tier contains all raw values (DTCG + foundations output).  
+- Alias tier maps only to Brand paths (no raw hex).  
+- Mapped tier is the only source used by UI components/templates.  
+- Responsive collection covers heading + paragraph scales with line-height + spacing, and paragraph.md resolves to 16px.
+- Collections follow transcript rules (brand/alias/mapped/responsive + modes consolidation).
 
 ## Required Updates When Changing UI
 

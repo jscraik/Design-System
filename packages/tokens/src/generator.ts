@@ -354,6 +354,7 @@ ${this.generateCSSTypography()}
         lineHeight: number;
         weight: number;
         emphasisWeight?: number;
+        paragraphSpacing?: number;
         tracking: number;
       };
 
@@ -363,6 +364,9 @@ ${this.generateCSSTypography()}
         .toLowerCase();
       lines.push(`  --foundation-${cssKey}-size: ${token.size}px;`);
       lines.push(`  --foundation-${cssKey}-line: ${token.lineHeight}px;`);
+      if (token.paragraphSpacing !== undefined) {
+        lines.push(`  --foundation-${cssKey}-paragraph-spacing: ${token.paragraphSpacing}px;`);
+      }
       lines.push(`  --foundation-${cssKey}-weight: ${token.weight};`);
       lines.push(`  --foundation-${cssKey}-weight-regular: ${token.weight};`);
 

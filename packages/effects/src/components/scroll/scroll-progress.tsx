@@ -36,14 +36,8 @@ export interface ScrollProgressProps extends HTMLAttributes<HTMLDivElement> {
  */
 export const ScrollProgress = forwardRef<HTMLDivElement, ScrollProgressProps>(
   (
-    {
-      orientation = "horizontal",
-      native = true,
-      target = "document",
-      className,
-      ...props
-    },
-    ref
+    { orientation = "horizontal", native = true, target = "document", className, ...props },
+    ref,
   ) => {
     const [progress, setProgress] = useState(0);
 
@@ -56,8 +50,8 @@ export const ScrollProgress = forwardRef<HTMLDivElement, ScrollProgressProps>(
           target === "document"
             ? document.documentElement
             : target === "parent"
-            ? ref?.current?.parentElement
-            : document.querySelector(target);
+              ? ref?.current?.parentElement
+              : document.querySelector(target);
 
         if (!scrollTarget) return;
 
@@ -67,8 +61,7 @@ export const ScrollProgress = forwardRef<HTMLDivElement, ScrollProgressProps>(
         setProgress(percentage);
       };
 
-      const scrollTarget =
-        target === "document" ? window : ref?.current?.parentElement;
+      const scrollTarget = target === "document" ? window : ref?.current?.parentElement;
       scrollTarget?.addEventListener("scroll", handleScroll);
       handleScroll();
 
@@ -84,15 +77,12 @@ export const ScrollProgress = forwardRef<HTMLDivElement, ScrollProgressProps>(
           "ds-scroll-progress",
           "relative overflow-hidden rounded-full bg-muted",
           orientation === "horizontal" ? "h-1 w-full" : "h-full w-1",
-          className
+          className,
         )}
         {...props}
       >
         <div
-          className={cn(
-            "h-full bg-foreground",
-            native && "animate-scroll-progress"
-          )}
+          className={cn("h-full bg-foreground", native && "animate-scroll-progress")}
           style={
             native
               ? {
@@ -109,7 +99,7 @@ export const ScrollProgress = forwardRef<HTMLDivElement, ScrollProgressProps>(
         />
       </div>
     );
-  }
+  },
 );
 
 ScrollProgress.displayName = "ScrollProgress";

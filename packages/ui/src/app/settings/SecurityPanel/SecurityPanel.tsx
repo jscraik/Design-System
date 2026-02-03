@@ -9,26 +9,26 @@ export function SecurityPanel({ onBack }: SettingsPanelProps) {
 
   return (
     <>
-      <div className="px-6 py-4 border-b border-foundation-text-dark-primary/10 flex items-center gap-3">
+      <div className="px-6 py-4 border-b border-foreground/10 flex items-center gap-3">
         <div className="flex gap-2">
           <button
             type="button"
             onClick={onBack}
-            className="size-3 rounded-full bg-foundation-accent-red hover:bg-foundation-accent-red/80 transition-colors"
+            className="size-3 rounded-full bg-status-error hover:bg-status-error/80 transition-colors"
             aria-label="Close"
           />
-          <div className="size-3 rounded-full bg-foundation-accent-orange" />
-          <div className="size-3 rounded-full bg-foundation-accent-green" />
+          <div className="size-3 rounded-full bg-accent-orange" />
+          <div className="size-3 rounded-full bg-accent-green" />
         </div>
         <button
           type="button"
           onClick={onBack}
-          className="p-1 hover:bg-foundation-bg-dark-3 rounded transition-colors"
+          className="p-1 hover:bg-muted rounded transition-colors"
           aria-label="Back to settings"
         >
-          <IconChevronLeftMd className="size-4 text-foundation-icon-dark-primary" />
+          <IconChevronLeftMd className="size-4 text-foreground" />
         </button>
-        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foundation-text-dark-primary">
+        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foreground">
           Security
         </h2>
       </div>
@@ -41,9 +41,9 @@ export function SecurityPanel({ onBack }: SettingsPanelProps) {
             checked={mfaEnabled}
             onCheckedChange={setMfaEnabled}
           />
-          <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary px-3 mt-1">
+          <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-muted-foreground px-3 mt-1">
             You'll only be able to log in using Google while this is on.{" "}
-            <button type="button" className="text-foundation-accent-blue hover:underline">
+            <button type="button" className="text-accent-blue hover:underline">
               Learn more
             </button>
           </p>

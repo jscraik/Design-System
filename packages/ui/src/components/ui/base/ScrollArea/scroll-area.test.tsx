@@ -43,7 +43,11 @@ describe("ScrollArea", () => {
     });
 
     it("calls onStateChange with 'loading'", async () => {
-      render(<ScrollArea loading onStateChange={mockOnStateChange}>Content</ScrollArea>);
+      render(
+        <ScrollArea loading onStateChange={mockOnStateChange}>
+          Content
+        </ScrollArea>,
+      );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });
@@ -68,6 +72,7 @@ describe("ScrollArea", () => {
       const { container } = render(<ScrollArea error="Error">Content</ScrollArea>);
       const scrollArea = container.querySelector('[data-state="error"]');
       expect(scrollArea).toHaveClass("ring-2");
+      expect(scrollArea).toHaveClass("ring-status-error/50");
     });
 
     it("sets aria-invalid when error", () => {
@@ -123,7 +128,7 @@ describe("ScrollArea", () => {
       render(
         <ScrollArea loading error="Error" disabled onStateChange={mockOnStateChange}>
           Content
-        </ScrollArea>
+        </ScrollArea>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -134,7 +139,7 @@ describe("ScrollArea", () => {
       render(
         <ScrollArea error="Error" disabled onStateChange={mockOnStateChange}>
           Content
-        </ScrollArea>
+        </ScrollArea>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");

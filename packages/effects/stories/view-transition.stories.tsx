@@ -7,11 +7,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 
-import {
-  useViewTransition,
-  ViewTransitionWrapper,
-  viewTransitions,
-} from "../src/components/view-transition";
+import type { ViewTransitionType } from "../src/components/view-transition";
+import { useViewTransition, ViewTransitionWrapper } from "../src/components/view-transition";
 
 const meta: Meta = {
   title: "Effects/View Transition",
@@ -76,9 +73,7 @@ export const WrapperDemo: Story = {
           </button>
         </nav>
 
-        <ViewTransitionWrapper name={`page-${page}`}>
-          {pages[page]}
-        </ViewTransitionWrapper>
+        <ViewTransitionWrapper name={`page-${page}`}>{pages[page]}</ViewTransitionWrapper>
       </div>
     );
   },
@@ -170,7 +165,9 @@ export const TransitionTypes: Story = {
         <ViewTransitionWrapper name={`transition-${activeType}`}>
           <div className="p-8 bg-card rounded-xl border">
             <h2 className="text-2xl font-semibold mb-4">
-              {activeType === "none" ? "No Transition" : `${activeType.charAt(0).toUpperCase() + activeType.slice(1)} Transition`}
+              {activeType === "none"
+                ? "No Transition"
+                : `${activeType.charAt(0).toUpperCase() + activeType.slice(1)} Transition`}
             </h2>
             <p className="text-muted-foreground">
               Click the buttons above to see different transition effects.
@@ -195,14 +192,18 @@ export const BrowserSupport: Story = {
         <div
           className={`p-6 rounded-lg border ${
             supported
-              ? "bg-green-50 border-green-200 dark:bg-green-900/20 dark:border-green-800"
-              : "bg-yellow-50 border-yellow-200 dark:bg-yellow-900/20 dark:border-yellow-800"
+              ? "bg-status-success-muted/10 border-status-success/20 dark:bg-status-success-muted/20 dark:border-status-success/30"
+              : "bg-status-warning-muted/10 border-status-warning/20 dark:bg-status-warning-muted/20 dark:border-status-warning/30"
           }`}
         >
-          <h2 className="text-xl font-semibold mb-2">
-            View Transitions API Support
-          </h2>
-          <p className={supported ? "text-green-700 dark:text-green-300" : "text-yellow-700 dark:text-yellow-300"}>
+          <h2 className="text-xl font-semibold mb-2">View Transitions API Support</h2>
+          <p
+            className={
+              supported
+                ? "text-status-success dark:text-status-success"
+                : "text-status-warning dark:text-status-warning"
+            }
+          >
             {supported
               ? "✓ Supported! Your browser supports the View Transitions API."
               : "⚠ Not Supported. View Transitions API is not available in your browser."}
@@ -219,6 +220,6 @@ export const BrowserSupport: Story = {
           </ul>
         </div>
       </div>
-    ),
+    );
   },
 };

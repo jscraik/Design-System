@@ -461,6 +461,238 @@
       "type": "fontFamily"
     },
     "web": {
+      "hero": {
+        "size": {
+          "value": 40,
+          "type": "dimension"
+        },
+        "lineHeight": {
+          "value": 48,
+          "type": "dimension"
+        },
+        "paragraphSpacing": {
+          "value": 32,
+          "type": "dimension"
+        },
+        "weight": {
+          "value": 600,
+          "type": "fontWeight"
+        },
+        "tracking": {
+          "value": -0.1,
+          "type": "letterSpacing"
+        }
+      },
+      "h1": {
+        "size": {
+          "value": 36,
+          "type": "dimension"
+        },
+        "lineHeight": {
+          "value": 42,
+          "type": "dimension"
+        },
+        "paragraphSpacing": {
+          "value": 24,
+          "type": "dimension"
+        },
+        "weight": {
+          "value": 600,
+          "type": "fontWeight"
+        },
+        "tracking": {
+          "value": -0.1,
+          "type": "letterSpacing"
+        }
+      },
+      "h2": {
+        "size": {
+          "value": 24,
+          "type": "dimension"
+        },
+        "lineHeight": {
+          "value": 28,
+          "type": "dimension"
+        },
+        "paragraphSpacing": {
+          "value": 24,
+          "type": "dimension"
+        },
+        "weight": {
+          "value": 600,
+          "type": "fontWeight"
+        },
+        "tracking": {
+          "value": -0.25,
+          "type": "letterSpacing"
+        }
+      },
+      "h3": {
+        "size": {
+          "value": 18,
+          "type": "dimension"
+        },
+        "lineHeight": {
+          "value": 26,
+          "type": "dimension"
+        },
+        "paragraphSpacing": {
+          "value": 16,
+          "type": "dimension"
+        },
+        "weight": {
+          "value": 600,
+          "type": "fontWeight"
+        },
+        "tracking": {
+          "value": -0.45,
+          "type": "letterSpacing"
+        }
+      },
+      "h4": {
+        "size": {
+          "value": 16,
+          "type": "dimension"
+        },
+        "lineHeight": {
+          "value": 24,
+          "type": "dimension"
+        },
+        "paragraphSpacing": {
+          "value": 16,
+          "type": "dimension"
+        },
+        "weight": {
+          "value": 600,
+          "type": "fontWeight"
+        },
+        "tracking": {
+          "value": -0.4,
+          "type": "letterSpacing"
+        }
+      },
+      "h5": {
+        "size": {
+          "value": 14,
+          "type": "dimension"
+        },
+        "lineHeight": {
+          "value": 20,
+          "type": "dimension"
+        },
+        "paragraphSpacing": {
+          "value": 12,
+          "type": "dimension"
+        },
+        "weight": {
+          "value": 600,
+          "type": "fontWeight"
+        },
+        "tracking": {
+          "value": -0.3,
+          "type": "letterSpacing"
+        }
+      },
+      "h6": {
+        "size": {
+          "value": 12,
+          "type": "dimension"
+        },
+        "lineHeight": {
+          "value": 18,
+          "type": "dimension"
+        },
+        "paragraphSpacing": {
+          "value": 12,
+          "type": "dimension"
+        },
+        "weight": {
+          "value": 600,
+          "type": "fontWeight"
+        },
+        "tracking": {
+          "value": -0.1,
+          "type": "letterSpacing"
+        }
+      },
+      "paragraphLg": {
+        "size": {
+          "value": 18,
+          "type": "dimension"
+        },
+        "lineHeight": {
+          "value": 26,
+          "type": "dimension"
+        },
+        "paragraphSpacing": {
+          "value": 16,
+          "type": "dimension"
+        },
+        "weight": {
+          "value": 400,
+          "type": "fontWeight"
+        },
+        "emphasisWeight": {
+          "value": 600,
+          "type": "fontWeight"
+        },
+        "tracking": {
+          "value": -0.4,
+          "type": "letterSpacing"
+        }
+      },
+      "paragraphMd": {
+        "size": {
+          "value": 16,
+          "type": "dimension"
+        },
+        "lineHeight": {
+          "value": 24,
+          "type": "dimension"
+        },
+        "paragraphSpacing": {
+          "value": 12,
+          "type": "dimension"
+        },
+        "weight": {
+          "value": 400,
+          "type": "fontWeight"
+        },
+        "emphasisWeight": {
+          "value": 600,
+          "type": "fontWeight"
+        },
+        "tracking": {
+          "value": -0.4,
+          "type": "letterSpacing"
+        }
+      },
+      "paragraphSm": {
+        "size": {
+          "value": 14,
+          "type": "dimension"
+        },
+        "lineHeight": {
+          "value": 20,
+          "type": "dimension"
+        },
+        "paragraphSpacing": {
+          "value": 8,
+          "type": "dimension"
+        },
+        "weight": {
+          "value": 400,
+          "type": "fontWeight"
+        },
+        "emphasisWeight": {
+          "value": 600,
+          "type": "fontWeight"
+        },
+        "tracking": {
+          "value": -0.3,
+          "type": "letterSpacing"
+        }
+      },
       "heading1": {
         "size": {
           "value": 36,
@@ -566,6 +798,10 @@
         },
         "lineHeight": {
           "value": 18,
+          "type": "dimension"
+        },
+        "paragraphSpacing": {
+          "value": 8,
           "type": "dimension"
         },
         "weight": {

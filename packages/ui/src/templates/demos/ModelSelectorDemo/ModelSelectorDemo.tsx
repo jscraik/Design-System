@@ -96,23 +96,21 @@ export function ModelSelectorDemo() {
   ];
 
   return (
-    <div className="h-full bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 overflow-auto">
+    <div className="h-full bg-background overflow-auto">
       <div className="max-w-4xl mx-auto p-8 space-y-8">
         <div className="space-y-2">
-          <h2 className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            Basic Model Selector
-          </h2>
-          <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+          <h2 className="text-foreground">Basic Model Selector</h2>
+          <p className="text-text-secondary">
             Default model selector with available and legacy models
           </p>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-6">
+          <div className="border border-border rounded-lg bg-secondary p-6">
             <ModelSelector
               value={model1}
               onChange={(model) => setModel1(typeof model === "string" ? model : model.name)}
               models={defaultModels}
               legacyModels={defaultLegacyModels}
             />
-            <div className="mt-4 text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+            <div className="mt-4 text-center text-muted-foreground">
               <p className="text-[13px]">
                 Selected: <span className="font-medium">{model1}</span>
               </p>
@@ -121,13 +119,9 @@ export function ModelSelectorDemo() {
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            Custom Label
-          </h2>
-          <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-            Model selector with custom label text
-          </p>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-6">
+          <h2 className="text-foreground">Custom Label</h2>
+          <p className="text-text-secondary">Model selector with custom label text</p>
+          <div className="border border-border rounded-lg bg-secondary p-6">
             <ModelSelector
               label="AI Model"
               value={model2}
@@ -135,7 +129,7 @@ export function ModelSelectorDemo() {
               models={defaultModels}
               legacyModels={defaultLegacyModels}
             />
-            <div className="mt-4 text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+            <div className="mt-4 text-center text-muted-foreground">
               <p className="text-[13px]">
                 Selected: <span className="font-medium">{model2}</span>
               </p>
@@ -144,13 +138,11 @@ export function ModelSelectorDemo() {
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            Custom Models
-          </h2>
-          <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+          <h2 className="text-foreground">Custom Models</h2>
+          <p className="text-text-secondary">
             Model selector with custom available and legacy models
           </p>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-6">
+          <div className="border border-border rounded-lg bg-secondary p-6">
             <ModelSelector
               label="GPT"
               value={model3}
@@ -158,7 +150,7 @@ export function ModelSelectorDemo() {
               models={customAvailableModels}
               legacyModels={customLegacyModels}
             />
-            <div className="mt-4 text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+            <div className="mt-4 text-center text-muted-foreground">
               <p className="text-[13px]">
                 Selected: <span className="font-medium">{model3}</span>
               </p>
@@ -167,33 +159,25 @@ export function ModelSelectorDemo() {
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            Legacy Model Selected
-          </h2>
-          <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-            Model selector with a legacy model pre-selected
-          </p>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-6">
+          <h2 className="text-foreground">Legacy Model Selected</h2>
+          <p className="text-text-secondary">Model selector with a legacy model pre-selected</p>
+          <div className="border border-border rounded-lg bg-secondary p-6">
             <ModelSelector
               value={model4}
               onChange={(model) => setModel4(typeof model === "string" ? model : model.name)}
               models={defaultModels}
               legacyModels={defaultLegacyModels}
             />
-            <div className="mt-4 text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+            <div className="mt-4 text-center text-muted-foreground">
               <p className="text-[13px]">Click to see legacy models in the nested menu</p>
             </div>
           </div>
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            Code Generation Models
-          </h2>
-          <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-            Specialized model selector for code generation
-          </p>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-6">
+          <h2 className="text-foreground">Code Generation Models</h2>
+          <p className="text-text-secondary">Specialized model selector for code generation</p>
+          <div className="border border-border rounded-lg bg-secondary p-6">
             <ModelSelector
               label="Codex"
               value={model5}
@@ -201,7 +185,7 @@ export function ModelSelectorDemo() {
               models={codeModels}
               legacyModels={codeLegacyModels}
             />
-            <div className="mt-4 text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+            <div className="mt-4 text-center text-muted-foreground">
               <p className="text-[13px]">
                 Selected: <span className="font-medium">{model5}</span>
               </p>
@@ -210,13 +194,11 @@ export function ModelSelectorDemo() {
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            Image Generation Models
-          </h2>
-          <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+          <h2 className="text-foreground">Image Generation Models</h2>
+          <p className="text-text-secondary">
             Model selector for image generation without legacy models
           </p>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-6">
+          <div className="border border-border rounded-lg bg-secondary p-6">
             <ModelSelector
               label="DALL·E"
               value={model6}
@@ -224,20 +206,18 @@ export function ModelSelectorDemo() {
               models={imageModels}
               legacyModels={[]}
             />
-            <div className="mt-4 text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+            <div className="mt-4 text-center text-muted-foreground">
               <p className="text-[13px]">No legacy models menu (empty array)</p>
             </div>
           </div>
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            Third-Party Models
-          </h2>
-          <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+          <h2 className="text-foreground">Third-Party Models</h2>
+          <p className="text-text-secondary">
             Using the selector with non-OpenAI models (Anthropic Claude)
           </p>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-6">
+          <div className="border border-border rounded-lg bg-secondary p-6">
             <ModelSelector
               label="Claude"
               value={model7}
@@ -245,7 +225,7 @@ export function ModelSelectorDemo() {
               models={anthropicModels}
               legacyModels={[]}
             />
-            <div className="mt-4 text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+            <div className="mt-4 text-center text-muted-foreground">
               <p className="text-[13px]">
                 Selected: <span className="font-medium">{model7}</span>
               </p>
@@ -254,13 +234,9 @@ export function ModelSelectorDemo() {
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            Language-Specific Models
-          </h2>
-          <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-            Model selector for multilingual support
-          </p>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-6">
+          <h2 className="text-foreground">Language-Specific Models</h2>
+          <p className="text-text-secondary">Model selector for multilingual support</p>
+          <div className="border border-border rounded-lg bg-secondary p-6">
             <ModelSelector
               label="Language Model"
               value={model8}
@@ -268,7 +244,7 @@ export function ModelSelectorDemo() {
               models={languageModels}
               legacyModels={[]}
             />
-            <div className="mt-4 text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+            <div className="mt-4 text-center text-muted-foreground">
               <p className="text-[13px]">
                 Selected: <span className="font-medium">{model8}</span>
               </p>
@@ -277,17 +253,11 @@ export function ModelSelectorDemo() {
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            Multiple Selectors
-          </h2>
-          <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-            Using multiple model selectors in a form
-          </p>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-6 space-y-6">
+          <h2 className="text-foreground">Multiple Selectors</h2>
+          <p className="text-text-secondary">Using multiple model selectors in a form</p>
+          <div className="border border-border rounded-lg bg-secondary p-6 space-y-6">
             <div>
-              <h3 className="text-[15px] font-medium mb-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                Primary Model
-              </h3>
+              <h3 className="text-[15px] font-medium mb-3 text-foreground">Primary Model</h3>
               <ModelSelector
                 label="Chat Model"
                 value={model1}
@@ -297,9 +267,7 @@ export function ModelSelectorDemo() {
               />
             </div>
             <div>
-              <h3 className="text-[15px] font-medium mb-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                Code Model
-              </h3>
+              <h3 className="text-[15px] font-medium mb-3 text-foreground">Code Model</h3>
               <ModelSelector
                 label="Code Model"
                 value={model5}
@@ -309,9 +277,7 @@ export function ModelSelectorDemo() {
               />
             </div>
             <div>
-              <h3 className="text-[15px] font-medium mb-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                Image Model
-              </h3>
+              <h3 className="text-[15px] font-medium mb-3 text-foreground">Image Model</h3>
               <ModelSelector
                 label="Image Model"
                 value={model6}
@@ -324,18 +290,12 @@ export function ModelSelectorDemo() {
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            In Context Example
-          </h2>
-          <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-            Model selector in a realistic interface context
-          </p>
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg overflow-hidden bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2">
-            <div className="border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 p-4 flex items-center justify-between bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1">
+          <h2 className="text-foreground">In Context Example</h2>
+          <p className="text-text-secondary">Model selector in a realistic interface context</p>
+          <div className="border border-border rounded-lg overflow-hidden bg-secondary">
+            <div className="border-b border-border p-4 flex items-center justify-between bg-background">
               <div className="flex items-center gap-4">
-                <h3 className="text-[15px] font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                  New Conversation
-                </h3>
+                <h3 className="text-[15px] font-medium text-foreground">New Conversation</h3>
                 <ModelSelector
                   value={model1}
                   onChange={(model) => setModel1(typeof model === "string" ? model : model.name)}
@@ -348,7 +308,7 @@ export function ModelSelectorDemo() {
               </button>
             </div>
             <div className="p-8 min-h-[300px] flex items-center justify-center">
-              <div className="text-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+              <div className="text-center text-muted-foreground">
                 <p className="text-[14px]">Select a model and start chatting</p>
               </div>
             </div>

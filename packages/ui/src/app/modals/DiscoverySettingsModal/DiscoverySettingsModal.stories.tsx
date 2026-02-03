@@ -11,7 +11,7 @@ const meta: Meta<typeof DiscoverySettingsModal> = {
     layout: "fullscreen",
   },
   render: (args) => (
-    <div className="h-screen bg-foundation-bg-dark-1">
+    <div className="h-screen bg-background">
       <DiscoverySettingsModal {...args} />
     </div>
   ),

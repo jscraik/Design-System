@@ -113,6 +113,19 @@ describe("Avatar", () => {
     });
   });
 
+  describe("Stateful props - Error", () => {
+    it("applies error ring styling", () => {
+      render(
+        <Avatar error="Error">
+          <AvatarFallback>JD</AvatarFallback>
+        </Avatar>,
+      );
+      const avatar = screen.getByText("JD").closest("[data-slot='avatar']");
+      expect(avatar).toHaveClass("ring-2");
+      expect(avatar).toHaveClass("ring-status-error");
+    });
+  });
+
   describe("accessibility", () => {
     it("image has alt text", () => {
       render(

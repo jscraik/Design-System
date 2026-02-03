@@ -23,9 +23,7 @@ describe("MessageActions", () => {
     });
 
     it("renders with custom actions", () => {
-      const { container } = render(
-        <MessageActions actions={["copy", "thumbsUp"]} />
-      );
+      const { container } = render(<MessageActions actions={["copy", "thumbsUp"]} />);
       const actions = container.querySelectorAll("button");
       expect(actions).toHaveLength(2);
     });
@@ -59,7 +57,7 @@ describe("MessageActions", () => {
   describe("Action callbacks", () => {
     it("calls onCopy when copy button is clicked", async () => {
       const { user } = render(
-        <MessageActions actions={["copy"]} onCopy={mockOnCopy} messageId="msg-1" />
+        <MessageActions actions={["copy"]} onCopy={mockOnCopy} messageId="msg-1" />,
       );
       const copyButton = screen.getByTitle("Copy");
       await user.click(copyButton);
@@ -68,7 +66,7 @@ describe("MessageActions", () => {
 
     it("calls onThumbsUp when thumbs up button is clicked", async () => {
       const { user } = render(
-        <MessageActions actions={["thumbsUp"]} onThumbsUp={mockOnThumbsUp} messageId="msg-2" />
+        <MessageActions actions={["thumbsUp"]} onThumbsUp={mockOnThumbsUp} messageId="msg-2" />,
       );
       const thumbsUpButton = screen.getByTitle("Good response");
       await user.click(thumbsUpButton);
@@ -77,7 +75,11 @@ describe("MessageActions", () => {
 
     it("calls onThumbsDown when thumbs down button is clicked", async () => {
       const { user } = render(
-        <MessageActions actions={["thumbsDown"]} onThumbsDown={mockOnThumbsDown} messageId="msg-3" />
+        <MessageActions
+          actions={["thumbsDown"]}
+          onThumbsDown={mockOnThumbsDown}
+          messageId="msg-3"
+        />,
       );
       const thumbsDownButton = screen.getByTitle("Bad response");
       await user.click(thumbsDownButton);
@@ -86,7 +88,7 @@ describe("MessageActions", () => {
 
     it("calls onShare when share button is clicked", async () => {
       const { user } = render(
-        <MessageActions actions={["share"]} onShare={mockOnShare} messageId="msg-4" />
+        <MessageActions actions={["share"]} onShare={mockOnShare} messageId="msg-4" />,
       );
       const shareButton = screen.getByTitle("Share");
       await user.click(shareButton);
@@ -95,7 +97,11 @@ describe("MessageActions", () => {
 
     it("calls onRegenerate when regenerate button is clicked", async () => {
       const { user } = render(
-        <MessageActions actions={["regenerate"]} onRegenerate={mockOnRegenerate} messageId="msg-5" />
+        <MessageActions
+          actions={["regenerate"]}
+          onRegenerate={mockOnRegenerate}
+          messageId="msg-5"
+        />,
       );
       const regenerateButton = screen.getByTitle("Regenerate");
       await user.click(regenerateButton);
@@ -104,7 +110,7 @@ describe("MessageActions", () => {
 
     it("calls onMore when more button is clicked", async () => {
       const { user } = render(
-        <MessageActions actions={["more"]} onMore={mockOnMore} messageId="msg-6" />
+        <MessageActions actions={["more"]} onMore={mockOnMore} messageId="msg-6" />,
       );
       const moreButton = screen.getByTitle("More");
       await user.click(moreButton);
@@ -113,11 +119,7 @@ describe("MessageActions", () => {
 
     it("passes messageId to callbacks when provided", async () => {
       const { user } = render(
-        <MessageActions
-          actions={["copy"]}
-          onCopy={mockOnCopy}
-          messageId="test-message-id"
-        />
+        <MessageActions actions={["copy"]} onCopy={mockOnCopy} messageId="test-message-id" />,
       );
       const copyButton = screen.getByTitle("Copy");
       await user.click(copyButton);
@@ -125,9 +127,7 @@ describe("MessageActions", () => {
     });
 
     it("calls callback without messageId when not provided", async () => {
-      const { user } = render(
-        <MessageActions actions={["copy"]} onCopy={mockOnCopy} />
-      );
+      const { user } = render(<MessageActions actions={["copy"]} onCopy={mockOnCopy} />);
       const copyButton = screen.getByTitle("Copy");
       await user.click(copyButton);
       expect(mockOnCopy).toHaveBeenCalledWith(undefined);
@@ -149,9 +149,7 @@ describe("MessageActions", () => {
     });
 
     it("disables all interactions when loading", async () => {
-      const { user } = render(
-        <MessageActions actions={["copy"]} onCopy={mockOnCopy} loading />
-      );
+      const { user } = render(<MessageActions actions={["copy"]} onCopy={mockOnCopy} loading />);
       const copyButton = screen.getByTitle("Copy");
       await user.click(copyButton);
       expect(mockOnCopy).not.toHaveBeenCalled();
@@ -174,7 +172,7 @@ describe("MessageActions", () => {
 
     it("applies error ring styling", () => {
       const { container } = render(<MessageActions error="Error" />);
-      const wrapper = container.querySelector(".ring-foundation-accent-red\\/50");
+      const wrapper = container.querySelector(".ring-status-error\\/50");
       expect(wrapper).toBeInTheDocument();
     });
 
@@ -186,7 +184,7 @@ describe("MessageActions", () => {
 
     it("shows error styling but callbacks still work", async () => {
       const { user } = render(
-        <MessageActions actions={["copy"]} onCopy={mockOnCopy} error="Error" />
+        <MessageActions actions={["copy"]} onCopy={mockOnCopy} error="Error" />,
       );
       const copyButton = screen.getByTitle("Copy");
       await user.click(copyButton);
@@ -210,9 +208,7 @@ describe("MessageActions", () => {
     });
 
     it("disables all interactions when disabled", async () => {
-      const { user } = render(
-        <MessageActions actions={["copy"]} onCopy={mockOnCopy} disabled />
-      );
+      const { user } = render(<MessageActions actions={["copy"]} onCopy={mockOnCopy} disabled />);
       const copyButton = screen.getByTitle("Copy");
       await user.click(copyButton);
       expect(mockOnCopy).not.toHaveBeenCalled();
@@ -247,27 +243,14 @@ describe("MessageActions", () => {
 
   describe("State priority", () => {
     it("prioritizes loading over error and disabled", async () => {
-      render(
-        <MessageActions
-          loading
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<MessageActions loading error="Error" disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });
     });
 
     it("prioritizes error over disabled when not loading", async () => {
-      render(
-        <MessageActions
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<MessageActions error="Error" disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
       });

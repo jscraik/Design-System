@@ -32,9 +32,7 @@ describe("Calendar", () => {
     });
 
     it("renders with custom className", () => {
-      const { container } = render(
-        <Calendar mode="single" className="custom-class" />
-      );
+      const { container } = render(<Calendar mode="single" className="custom-class" />);
       expect(container.querySelector(".custom-class")).toBeInTheDocument();
     });
   });
@@ -48,7 +46,7 @@ describe("Calendar", () => {
 
     it("calls onStateChange with 'loading' when loading prop changes", async () => {
       const { rerender } = render(
-        <Calendar mode="single" loading={false} onStateChange={mockOnStateChange} />
+        <Calendar mode="single" loading={false} onStateChange={mockOnStateChange} />,
       );
 
       rerender(<Calendar mode="single" loading onStateChange={mockOnStateChange} />);
@@ -92,13 +90,9 @@ describe("Calendar", () => {
     });
 
     it("calls onStateChange with 'error' when error prop changes", () => {
-      const { rerender } = render(
-        <Calendar mode="single" onStateChange={mockOnStateChange} />
-      );
+      const { rerender } = render(<Calendar mode="single" onStateChange={mockOnStateChange} />);
 
-      rerender(
-        <Calendar mode="single" error="Error" onStateChange={mockOnStateChange} />
-      );
+      rerender(<Calendar mode="single" error="Error" onStateChange={mockOnStateChange} />);
       expect(mockOnStateChange).toHaveBeenCalledWith("error");
     });
 
@@ -130,13 +124,9 @@ describe("Calendar", () => {
     });
 
     it("calls onStateChange with 'disabled' when disabled prop changes", () => {
-      const { rerender } = render(
-        <Calendar mode="single" onStateChange={mockOnStateChange} />
-      );
+      const { rerender } = render(<Calendar mode="single" onStateChange={mockOnStateChange} />);
 
-      rerender(
-        <Calendar mode="single" disabled onStateChange={mockOnStateChange} />
-      );
+      rerender(<Calendar mode="single" disabled onStateChange={mockOnStateChange} />);
       expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
     });
   });
@@ -170,7 +160,7 @@ describe("Calendar", () => {
   describe("State priority", () => {
     it("prioritizes loading over error and disabled", () => {
       const { container } = render(
-        <Calendar mode="single" loading error="Error" disabled onStateChange={mockOnStateChange} />
+        <Calendar mode="single" loading error="Error" disabled onStateChange={mockOnStateChange} />,
       );
       // Loading should override other states
       expect(container.querySelector('[data-state="loading"]')).toBeInTheDocument();
@@ -178,16 +168,12 @@ describe("Calendar", () => {
     });
 
     it("prioritizes error over disabled when not loading", () => {
-      render(
-        <Calendar mode="single" error="Error" disabled onStateChange={mockOnStateChange} />
-      );
+      render(<Calendar mode="single" error="Error" disabled onStateChange={mockOnStateChange} />);
       expect(mockOnStateChange).toHaveBeenCalledWith("error");
     });
 
     it("uses disabled state when no loading or error", () => {
-      render(
-        <Calendar mode="single" disabled onStateChange={mockOnStateChange} />
-      );
+      render(<Calendar mode="single" disabled onStateChange={mockOnStateChange} />);
       expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
     });
 

@@ -86,7 +86,7 @@ export const WithDescription: Story = {
 export const WithIcon: Story = {
   args: {
     checked: true,
-    icon: <IconMessaging className="size-4 text-[var(--foundation-icon-dark-secondary)]" />,
+    icon: <IconMessaging className="size-4 text-[var(--text-secondary)]" />,
     label: "Push Notifications",
     description: "Get notified about important events",
   },
@@ -99,7 +99,7 @@ export const Interactive: Story = {
       <SettingToggle
         checked={checked}
         onCheckedChange={setChecked}
-        icon={<IconUserLock className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+        icon={<IconUserLock className="size-4 text-[var(--text-secondary)]" />}
         label="Two-factor authentication"
         description="Add an extra layer of security to your account"
       />
@@ -121,7 +121,7 @@ export const AllStates: Story = {
       <SettingToggle
         checked={true}
         onCheckedChange={fn()}
-        icon={<IconMessaging className="size-4 text-[var(--foundation-icon-dark-secondary)]" />}
+        icon={<IconMessaging className="size-4 text-[var(--text-secondary)]" />}
         label="With Icon"
         description="Icon on the left side"
       />

@@ -35,7 +35,8 @@ const meta: Meta<typeof TextLink> = {
     layout: "centered",
     docs: {
       description: {
-        component: "An accessible text link component with variant styling, external link handling, and state support.",
+        component:
+          "An accessible text link component with variant styling, external link handling, and state support.",
       },
     },
   },
@@ -213,9 +214,8 @@ export const KeyboardFocus: Story = {
 export const InParagraph: Story = {
   render: () => (
     <p className="max-w-md text-foreground">
-      This is a paragraph with{" "}
-      <TextLink href="/embedded-link">an embedded link</TextLink> that flows
-      naturally with the text. You can also have{" "}
+      This is a paragraph with <TextLink href="/embedded-link">an embedded link</TextLink> that
+      flows naturally with the text. You can also have{" "}
       <TextLink href="/another-link" variant="subtle">
         another link
       </TextLink>{" "}

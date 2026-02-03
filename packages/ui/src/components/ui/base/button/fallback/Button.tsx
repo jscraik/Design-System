@@ -41,18 +41,19 @@ function ButtonSpinner() {
  * Defines the base class names and variant mappings for the Button component.
  */
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-round font-foundation text-button-label font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-foundation-text-light-primary dark:focus-visible:ring-foundation-text-dark-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:focus-visible:ring-offset-background aria-invalid:ring-2 aria-invalid:ring-foundation-accent-red aria-invalid:ring-offset-2 aria-invalid:ring-offset-background",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-round font-foundation text-button-label font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background aria-invalid:ring-2 aria-invalid:ring-status-error aria-invalid:ring-offset-2 aria-invalid:ring-offset-background",
   {
     variants: {
       variant: {
-        default: "bg-foreground text-text-inverted hover:bg-foreground/90",
+        default:
+          "bg-interactive text-text-inverted hover:bg-interactive-hover active:bg-interactive-active",
         destructive:
-          "bg-foundation-accent-red text-text-inverted hover:bg-foundation-accent-red/90 focus-visible:ring-foundation-text-light-primary dark:focus-visible:ring-foundation-text-dark-primary",
+          "bg-status-error text-text-body-on-color hover:bg-status-error-muted focus-visible:ring-ring",
         outline:
-          "border border-border-strong bg-transparent text-foreground hover:bg-secondary/60 focus-visible:ring-foundation-text-light-primary dark:focus-visible:ring-foundation-text-dark-primary",
+          "border border-border-strong bg-transparent text-foreground hover:bg-secondary/60 focus-visible:ring-ring",
         secondary: "bg-muted text-foreground hover:bg-secondary/70",
         ghost: "bg-transparent text-foreground hover:bg-secondary/60 hover:text-foreground",
-        link: "text-foundation-text-dark-primary underline decoration-foundation-accent-blue underline-offset-4 hover:decoration-foundation-accent-blue/70",
+        link: "text-interactive underline decoration-interactive underline-offset-4 hover:decoration-interactive/70",
       },
       size: {
         default: "h-[var(--foundation-size-control-height)] px-4 py-2 has-[>svg]:px-3",
@@ -289,7 +290,7 @@ function Button({
           className={cn(
             "inline-flex items-center gap-2",
             // Error state styling for compound container
-            error && "ring-2 ring-foundation-accent-red/50",
+            error && "ring-2 ring-status-error/50",
             // Loading state styling for compound container
             loading && "opacity-70 cursor-wait",
             className,
@@ -324,12 +325,11 @@ function Button({
       className={cn(
         buttonVariants({ variant, size, className }),
         // Error state styling
-        error &&
-          "border-foundation-accent-red text-foundation-accent-red hover:bg-foundation-accent-red/10",
+        error && "border-status-error text-status-error hover:bg-status-error-muted/10",
         // Loading state styling
         loading && "opacity-70 cursor-wait",
         // Focus ring for error state
-        error && "focus-visible:ring-foundation-accent-red",
+        error && "focus-visible:ring-status-error",
       )}
       tabIndex={isDisabled ? -1 : undefined}
       {...props}

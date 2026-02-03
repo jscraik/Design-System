@@ -71,14 +71,14 @@ export function ChatVariantsTemplate({ headerLeading, headerActions }: ChatVaria
   };
 
   return (
-    <div className="h-full w-full bg-foundation-bg-dark-1 text-foundation-text-dark-primary">
-      <div className="border-b border-foundation-bg-dark-3 bg-foundation-bg-dark-2">
+    <div data-theme="dark" className="h-full w-full bg-background text-foreground">
+      <div className="border-b border-border bg-secondary">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
             {headerLeading ? <div className="flex items-center gap-2">{headerLeading}</div> : null}
             <div>
               <h2 className="text-lg font-semibold">Chat Variants</h2>
-              <p className="text-xs text-foundation-text-dark-tertiary">
+              <p className="text-xs text-muted-foreground">
                 Slot-based layouts for ChatGPT Apps + native parity
               </p>
             </div>
@@ -92,8 +92,8 @@ export function ChatVariantsTemplate({ headerLeading, headerActions }: ChatVaria
                 onClick={() => setActiveVariant(variant)}
                 className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
                   activeVariant === variant
-                    ? "bg-foundation-accent-blue text-foundation-text-dark-primary"
-                    : "bg-foundation-bg-dark-3 text-foundation-text-dark-secondary"
+                    ? "bg-accent-blue text-foreground"
+                    : "bg-muted text-text-secondary"
                 }`}
               >
                 {variant}
@@ -122,7 +122,7 @@ export function ChatVariantsTemplate({ headerLeading, headerActions }: ChatVaria
             contextPanel={
               <div className="p-4 space-y-3">
                 <h3 className="text-sm font-semibold">Context</h3>
-                <div className="rounded-lg border border-foundation-bg-dark-3 bg-foundation-bg-dark-2 p-3 text-xs text-foundation-text-dark-tertiary">
+                <div className="rounded-lg border border-border bg-secondary p-3 text-xs text-muted-foreground">
                   Pin references, tools, or files here.
                 </div>
               </div>

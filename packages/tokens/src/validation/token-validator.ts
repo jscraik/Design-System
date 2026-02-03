@@ -1,4 +1,6 @@
 import { readFile } from "fs/promises";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { tokenAliasMap, type TokenAliasMap } from "../alias-map.js";
 
@@ -29,9 +31,21 @@ const CONTRAST_PAIRS = [
   { background: "background.tertiary", text: "text.secondary", min: 4.5 },
 ];
 
+function resolveDtcgPath(): string {
+  try {
+    const url = new URL("../tokens/index.dtcg.json", import.meta.url);
+    if (url.protocol === "file:") {
+      return fileURLToPath(url);
+    }
+  } catch {
+    // fall through to cwd-based resolution
+  }
+  return resolve(process.cwd(), "src/tokens/index.dtcg.json");
+}
+
 async function loadDtcgTokens(): Promise<DtcgRoot> {
-  const url = new URL("../tokens/index.dtcg.json", import.meta.url);
-  const raw = await readFile(url, "utf8");
+  const dtcgPath = resolveDtcgPath();
+  const raw = await readFile(dtcgPath, "utf8");
   return JSON.parse(raw) as DtcgRoot;
 }
 
@@ -91,6 +105,15 @@ function validateAliasMap(root: DtcgRoot, aliasMap: TokenAliasMap): ValidationEr
   for (const [category, mapping] of colorCategories) {
     for (const [tokenName, modes] of Object.entries(mapping)) {
       for (const [mode, value] of Object.entries(modes)) {
+        if ("value" in value) {
+          errors.push({
+            code: "TOKEN_ALIAS_RAW_VALUE",
+            message: `Alias '${category}.${tokenName}.${mode}' uses a raw value instead of a token path.`,
+            suggestion:
+              "Replace raw values with a brand token path reference in packages/tokens/src/alias-map.ts.",
+          });
+          continue;
+        }
         if ("path" in value) {
           const token = resolvePath(root, value.path);
           if (!token || token.value === undefined) {

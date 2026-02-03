@@ -22,12 +22,12 @@ export interface WidgetProps {
 export function WidgetBase({ children, className = "", title, style }: WidgetProps) {
   return (
     <div
-      className={`antialiased w-full text-white p-4 border border-white/10 rounded-2xl overflow-hidden bg-[var(--foundation-bg-dark-1)] widget-scrollable ${className}`}
+      className={`antialiased w-full text-foreground p-4 border border-border rounded-2xl overflow-hidden bg-background widget-scrollable ${className}`}
       style={style}
     >
       {title && (
-        <div className="mb-4 pb-3 border-b border-white/10">
-          <h1 className="text-lg font-semibold text-white">{title}</h1>
+        <div className="mb-4 pb-3 border-b border-border">
+          <h1 className="text-lg font-semibold text-foreground">{title}</h1>
         </div>
       )}
       <div className="overflow-auto max-h-[80vh] widget-content">{children}</div>
@@ -137,14 +137,15 @@ export class WidgetErrorBoundary extends React.Component<
         this.props.fallback || (
           <WidgetBase>
             <div className="text-center py-8">
-              <div className="text-red-400 mb-2 text-2xl">⚠️</div>
-              <div className="text-red-400 mb-2 font-medium">Widget Error</div>
-              <div className="text-sm text-gray-400 mb-4">
+              <div className="text-status-error mb-2 text-2xl">⚠️</div>
+              <div className="text-status-error mb-2 font-medium">Widget Error</div>
+              <div className="text-sm text-text-secondary mb-4">
                 Something went wrong. Please try refreshing.
               </div>
               <button
+                type="button"
                 onClick={() => window.location.reload()}
-                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm transition-colors"
+                className="px-4 py-2 bg-status-error text-text-body-on-color rounded-lg text-sm font-medium transition-colors hover:bg-status-error/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-status-error/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 Refresh Widget
               </button>

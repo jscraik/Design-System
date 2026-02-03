@@ -54,7 +54,8 @@ const meta: Meta = {
     layout: "fullscreen",
     docs: {
       description: {
-        component: "Visual-first color palette with semantic meanings and accessibility validation.",
+        component:
+          "Visual-first color palette with semantic meanings and accessibility validation.",
       },
     },
   },
@@ -88,7 +89,7 @@ const ColorSwatch = ({
       <div className="text-sm text-muted-foreground font-mono">{color}</div>
       <div className="text-sm mt-1">{usage}</div>
       {contrastWarning && (
-        <div className="text-sm text-yellow-600 dark:text-yellow-400 mt-1">
+        <div className="text-sm text-status-warning dark:text-status-warning mt-1">
           ⚠️ {contrastWarning}
         </div>
       )}
@@ -125,10 +126,7 @@ const ThemePreview = ({
   children: React.ReactNode;
   theme?: "light" | "dark";
 }) => (
-  <div
-    className={`p-6 rounded-lg border ${theme === "dark" ? "bg-gray-900" : "bg-white"}`}
-    data-theme={theme}
-  >
+  <div className="p-6 rounded-lg border border-border bg-background" data-theme={theme}>
     {children}
   </div>
 );
@@ -381,9 +379,7 @@ export const ColorPalette: Story = {
       {/* Interactive Colors */}
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">Interactive Colors</h2>
-        <p className="text-muted-foreground">
-          Focus ring and interactive state colors.
-        </p>
+        <p className="text-muted-foreground">Focus ring and interactive state colors.</p>
 
         <div className="space-y-3">
           <div className="p-6 rounded-lg border bg-card space-y-4">
@@ -463,10 +459,7 @@ export const ContrastRatios: Story = {
 
         <div className="space-y-3">
           {combinations.map((combo) => (
-            <div
-              key={combo.name}
-              className="flex items-center gap-6 p-4 rounded-lg border bg-card"
-            >
+            <div key={combo.name} className="flex items-center gap-6 p-4 rounded-lg border bg-card">
               <div
                 className="w-24 h-24 rounded-lg flex items-center justify-center flex-shrink-0"
                 style={{
@@ -538,7 +531,10 @@ export const UsageGuidelines: Story = {
                 <li>✓ Default canvas for content</li>
                 <li>✓ Base layer for nested surfaces</li>
               </ul>
-              <div className="mt-4 p-4 rounded border" style={{ backgroundColor: background.light.primary }}>
+              <div
+                className="mt-4 p-4 rounded border"
+                style={{ backgroundColor: background.light.primary }}
+              >
                 <span className="text-foreground">Content area with primary background</span>
               </div>
             </div>
@@ -550,7 +546,10 @@ export const UsageGuidelines: Story = {
                 <li>✓ Nested panels and sections</li>
                 <li>✓ Hover states on interactive elements</li>
               </ul>
-              <div className="mt-4 p-4 rounded border" style={{ backgroundColor: background.light.secondary }}>
+              <div
+                className="mt-4 p-4 rounded border"
+                style={{ backgroundColor: background.light.secondary }}
+              >
                 <div className="p-4 rounded" style={{ backgroundColor: background.light.primary }}>
                   <span className="text-foreground">Nested card on secondary background</span>
                 </div>
@@ -590,7 +589,10 @@ export const UsageGuidelines: Story = {
                 <div className="flex items-center gap-4">
                   <div
                     className="flex-1 p-3 rounded"
-                    style={{ backgroundColor: background.light.primary, color: text.light.secondary }}
+                    style={{
+                      backgroundColor: background.light.primary,
+                      color: text.light.secondary,
+                    }}
                   >
                     Supporting information and metadata
                   </div>
@@ -607,10 +609,7 @@ export const UsageGuidelines: Story = {
           <div className="grid grid-cols-2 gap-4">
             <div className="p-4 rounded-lg border bg-card">
               <div className="flex items-center gap-2 mb-3">
-                <div
-                  className="w-6 h-6 rounded"
-                  style={{ backgroundColor: accent.light.red }}
-                />
+                <div className="w-6 h-6 rounded" style={{ backgroundColor: accent.light.red }} />
                 <h3 className="font-semibold">Red (Error/Destructive)</h3>
               </div>
               <ul className="space-y-1 text-sm">
@@ -619,17 +618,16 @@ export const UsageGuidelines: Story = {
                 <li>• Danger zones</li>
                 <li>• Failed states</li>
               </ul>
-              <div className="mt-3 p-3 rounded bg-destructive/10">
-                <div className="text-destructive font-medium text-sm">Error: Something went wrong</div>
+              <div className="mt-3 p-3 rounded bg-status-error-muted/10">
+                <div className="text-status-error font-medium text-sm">
+                  Error: Something went wrong
+                </div>
               </div>
             </div>
 
             <div className="p-4 rounded-lg border bg-card">
               <div className="flex items-center gap-2 mb-3">
-                <div
-                  className="w-6 h-6 rounded"
-                  style={{ backgroundColor: accent.light.orange }}
-                />
+                <div className="w-6 h-6 rounded" style={{ backgroundColor: accent.light.orange }} />
                 <h3 className="font-semibold">Orange (Warning)</h3>
               </div>
               <ul className="space-y-1 text-sm">
@@ -638,8 +636,8 @@ export const UsageGuidelines: Story = {
                 <li>• Caution needed</li>
                 <li>• Non-critical alerts</li>
               </ul>
-              <div className="mt-3 p-3 rounded bg-orange-500/10">
-                <div className="text-orange-600 dark:text-orange-400 font-medium text-sm">
+              <div className="mt-3 p-3 rounded bg-status-warning-muted/10">
+                <div className="text-status-warning dark:text-status-warning font-medium text-sm">
                   Warning: Action required
                 </div>
               </div>
@@ -647,10 +645,7 @@ export const UsageGuidelines: Story = {
 
             <div className="p-4 rounded-lg border bg-card">
               <div className="flex items-center gap-2 mb-3">
-                <div
-                  className="w-6 h-6 rounded"
-                  style={{ backgroundColor: accent.light.green }}
-                />
+                <div className="w-6 h-6 rounded" style={{ backgroundColor: accent.light.green }} />
                 <h3 className="font-semibold">Green (Success)</h3>
               </div>
               <ul className="space-y-1 text-sm">
@@ -659,8 +654,8 @@ export const UsageGuidelines: Story = {
                 <li>• Completed actions</li>
                 <li>• Safe/allowed states</li>
               </ul>
-              <div className="mt-3 p-3 rounded bg-green-500/10">
-                <div className="text-green-600 dark:text-green-400 font-medium text-sm">
+              <div className="mt-3 p-3 rounded bg-status-success-muted/10">
+                <div className="text-status-success dark:text-status-success font-medium text-sm">
                   Success: Changes saved
                 </div>
               </div>
@@ -668,10 +663,7 @@ export const UsageGuidelines: Story = {
 
             <div className="p-4 rounded-lg border bg-card">
               <div className="flex items-center gap-2 mb-3">
-                <div
-                  className="w-6 h-6 rounded"
-                  style={{ backgroundColor: accent.light.blue }}
-                />
+                <div className="w-6 h-6 rounded" style={{ backgroundColor: accent.light.blue }} />
                 <h3 className="font-semibold">Blue (Info/Action)</h3>
               </div>
               <ul className="space-y-1 text-sm">
@@ -704,13 +696,13 @@ export const DoDont: Story = {
 
         <div className="grid grid-cols-2 gap-6">
           {/* Do */}
-          <div className="space-y-4 p-6 rounded-lg border-l-4 border-green-500 bg-card">
-            <h3 className="text-lg font-semibold text-green-600 dark:text-green-400">
+          <div className="space-y-4 p-6 rounded-lg border-l-4 border-status-success bg-card">
+            <h3 className="text-lg font-semibold text-status-success dark:text-status-success">
               ✓ Do
             </h3>
             <ul className="space-y-3">
               <li className="flex gap-3">
-                <span className="text-green-500 mt-1">✓</span>
+                <span className="text-status-success mt-1">✓</span>
                 <div>
                   <div className="font-medium">Always use semantic colors</div>
                   <div className="text-sm text-muted-foreground">
@@ -719,7 +711,7 @@ export const DoDont: Story = {
                 </div>
               </li>
               <li className="flex gap-3">
-                <span className="text-green-500 mt-1">✓</span>
+                <span className="text-status-success mt-1">✓</span>
                 <div>
                   <div className="font-medium">Test contrast in both themes</div>
                   <div className="text-sm text-muted-foreground">
@@ -728,7 +720,7 @@ export const DoDont: Story = {
                 </div>
               </li>
               <li className="flex gap-3">
-                <span className="text-green-500 mt-1">✓</span>
+                <span className="text-status-success mt-1">✓</span>
                 <div>
                   <div className="font-medium">Use background tokens, not hex</div>
                   <div className="text-sm text-muted-foreground">
@@ -737,7 +729,7 @@ export const DoDont: Story = {
                 </div>
               </li>
               <li className="flex gap-3">
-                <span className="text-green-500 mt-1">✓</span>
+                <span className="text-status-success mt-1">✓</span>
                 <div>
                   <div className="font-medium">Ensure focus indicators are visible</div>
                   <div className="text-sm text-muted-foreground">
@@ -749,13 +741,11 @@ export const DoDont: Story = {
           </div>
 
           {/* Don't */}
-          <div className="space-y-4 p-6 rounded-lg border-l-4 border-red-500 bg-card">
-            <h3 className="text-lg font-semibold text-red-600 dark:text-red-400">
-              ✗ Don't
-            </h3>
+          <div className="space-y-4 p-6 rounded-lg border-l-4 border-status-error bg-card">
+            <h3 className="text-lg font-semibold text-status-error">✗ Don't</h3>
             <ul className="space-y-3">
               <li className="flex gap-3">
-                <span className="text-red-500 mt-1">✗</span>
+                <span className="text-status-error mt-1">✗</span>
                 <div>
                   <div className="font-medium">Don't hardcode color values</div>
                   <div className="text-sm text-muted-foreground">
@@ -764,7 +754,7 @@ export const DoDont: Story = {
                 </div>
               </li>
               <li className="flex gap-3">
-                <span className="text-red-500 mt-1">✗</span>
+                <span className="text-status-error mt-1">✗</span>
                 <div>
                   <div className="font-medium">Don't mix semantic meanings</div>
                   <div className="text-sm text-muted-foreground">
@@ -773,7 +763,7 @@ export const DoDont: Story = {
                 </div>
               </li>
               <li className="flex gap-3">
-                <span className="text-red-500 mt-1">✗</span>
+                <span className="text-status-error mt-1">✗</span>
                 <div>
                   <div className="font-medium">Don't ignore contrast ratios</div>
                   <div className="text-sm text-muted-foreground">
@@ -782,7 +772,7 @@ export const DoDont: Story = {
                 </div>
               </li>
               <li className="flex gap-3">
-                <span className="text-red-500 mt-1">✗</span>
+                <span className="text-status-error mt-1">✗</span>
                 <div>
                   <div className="font-medium">Don't use color alone for meaning</div>
                   <div className="text-sm text-muted-foreground">
@@ -800,16 +790,16 @@ export const DoDont: Story = {
 
           <div className="grid grid-cols-2 gap-6">
             <div className="p-4 rounded-lg border bg-card">
-              <div className="text-sm text-green-600 dark:text-green-400 font-medium mb-2">
+              <div className="text-sm text-status-success dark:text-status-success font-medium mb-2">
                 ✓ Good Semantic Color Use
               </div>
               <div className="space-y-2">
                 <div
-                  className="p-3 rounded bg-destructive/10 border border-destructive/20"
+                  className="p-3 rounded bg-status-error-muted/10 border border-status-error/20"
                   style={{ color: accent.light.red }}
                 >
                   <div className="flex items-center gap-2">
-                    <span className="text-destructive">⚠️</span>
+                    <span className="text-status-error">⚠️</span>
                     <span className="font-medium">Error: Invalid file format</span>
                   </div>
                   <p className="text-xs text-muted-foreground mt-1">
@@ -817,7 +807,7 @@ export const DoDont: Story = {
                   </p>
                 </div>
                 <div
-                  className="p-3 rounded bg-green-500/10 border border-green-500/20"
+                  className="p-3 rounded bg-status-success-muted/10 border border-status-success/20"
                   style={{ color: accent.light.green }}
                 >
                   <div className="flex items-center gap-2">
@@ -832,12 +822,12 @@ export const DoDont: Story = {
             </div>
 
             <div className="p-4 rounded-lg border bg-card">
-              <div className="text-sm text-red-600 dark:text-red-400 font-medium mb-2">
+              <div className="text-sm text-status-error font-medium mb-2">
                 ✗ Poor Semantic Color Use
               </div>
               <div className="space-y-2">
                 <div
-                  className="p-3 rounded bg-blue-500/10 border border-blue-500/20"
+                  className="p-3 rounded bg-accent-blue/10 border border-accent-blue/20"
                   style={{ color: accent.light.blue }}
                 >
                   <div className="flex items-center gap-2">
@@ -849,7 +839,7 @@ export const DoDont: Story = {
                   </p>
                 </div>
                 <div
-                  className="p-3 rounded bg-red-500/10 border border-red-500/20"
+                  className="p-3 rounded bg-status-error-muted/10 border border-status-error/20"
                   style={{ color: accent.light.red }}
                 >
                   <div className="flex items-center gap-2">
@@ -879,7 +869,10 @@ export const TokenReference: Story = {
       { key: "interactive", tokens: colorTokens.interactive },
     ];
 
-    const flattenTokens = (obj: any, prefix = ""): Array<{ key: string; value: string; path: string }> => {
+    const flattenTokens = (
+      obj: any,
+      prefix = "",
+    ): Array<{ key: string; value: string; path: string }> => {
       const results: Array<{ key: string; value: string; path: string }> = [];
 
       for (const [key, value] of Object.entries(obj)) {
@@ -987,22 +980,13 @@ export const ThemeComparison: Story = {
             <div className="mt-4 p-4 rounded bg-muted">
               <h4 className="font-semibold mb-2">Background Layers</h4>
               <div className="space-y-2">
-                <div
-                  className="p-3 border"
-                  style={{ backgroundColor: background.light.primary }}
-                >
+                <div className="p-3 border" style={{ backgroundColor: background.light.primary }}>
                   Primary background
                 </div>
-                <div
-                  className="p-3 border"
-                  style={{ backgroundColor: background.light.secondary }}
-                >
+                <div className="p-3 border" style={{ backgroundColor: background.light.secondary }}>
                   Secondary background
                 </div>
-                <div
-                  className="p-3 border"
-                  style={{ backgroundColor: background.light.tertiary }}
-                >
+                <div className="p-3 border" style={{ backgroundColor: background.light.tertiary }}>
                   Tertiary background
                 </div>
               </div>
@@ -1049,19 +1033,19 @@ export const ThemeComparison: Story = {
               <h4 className="font-semibold mb-2">Background Layers</h4>
               <div className="space-y-2">
                 <div
-                  className="p-3 border border-gray-700"
+                  className="p-3 border border-border"
                   style={{ backgroundColor: background.dark.primary }}
                 >
                   Primary background (dark)
                 </div>
                 <div
-                  className="p-3 border border-gray-700"
+                  className="p-3 border border-border"
                   style={{ backgroundColor: background.dark.secondary }}
                 >
                   Secondary background (dark)
                 </div>
                 <div
-                  className="p-3 border border-gray-700"
+                  className="p-3 border border-border"
                   style={{ backgroundColor: background.dark.tertiary }}
                 >
                   Tertiary background (dark)
@@ -1102,18 +1086,18 @@ const ColorComparison: Story = {
                     className="aspect-square rounded-lg"
                     style={{ backgroundColor: "hsl(var(--color-" + colorKey + ") / 0.1)" }}
                   >
-                    <div className="p-4 text-center text-sm font-mono text-foreground">Light bg</div>
+                    <div className="p-4 text-center text-sm font-mono text-foreground">
+                      Light bg
+                    </div>
                   </div>
                   <div
-                    className="aspect-square rounded-lg text-white"
+                    className="aspect-square rounded-lg text-text-inverted"
                     style={{ backgroundColor: "hsl(var(--color-" + colorKey + "))" }}
                   >
                     <div className="p-4 text-center text-sm font-mono">Full</div>
                   </div>
                 </div>
-                <div className="text-xs text-muted-foreground mt-2">
-                  {usage.replace(")", "")}
-                </div>
+                <div className="text-xs text-muted-foreground mt-2">{usage.replace(")", "")}</div>
               </div>
             );
           })}

@@ -110,13 +110,13 @@ describe("Checkbox", () => {
         const checkbox = screen.getByRole("checkbox");
         expect(checkbox).toHaveAttribute("data-state", "error");
         expect(checkbox).toHaveAttribute("data-error", "true");
-        expect(checkbox).toHaveClass("border-red-500");
+        expect(checkbox).toHaveClass("border-status-error");
       });
 
       it("applies error focus styles", () => {
         render(<Checkbox error="Invalid value" aria-label="Error checkbox" />);
-        expect(screen.getByRole("checkbox")).toHaveClass("focus:border-red-500");
-        expect(screen.getByRole("checkbox")).toHaveClass("focus:ring-red-500");
+        expect(screen.getByRole("checkbox")).toHaveClass("focus:border-status-error");
+        expect(screen.getByRole("checkbox")).toHaveClass("focus:ring-status-error");
       });
 
       it("calls onStateChange with error state", () => {
@@ -301,7 +301,7 @@ describe("Checkbox", () => {
 
     it("has error state styles for error prop", () => {
       render(<Checkbox error="Invalid" aria-label="Invalid checkbox" />);
-      expect(screen.getByRole("checkbox")).toHaveClass("border-red-500");
+      expect(screen.getByRole("checkbox")).toHaveClass("border-status-error");
     });
   });
 

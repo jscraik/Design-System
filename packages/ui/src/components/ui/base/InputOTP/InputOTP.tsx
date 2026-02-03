@@ -9,7 +9,7 @@ import type { StatefulComponentProps, ComponentState } from "@design-studio/toke
  */
 function InputOTPError({ message, id }: { message: string; id?: string }) {
   return (
-    <span id={id} className="text-destructive text-body-small mt-1 flex items-center gap-1">
+    <span id={id} className="text-status-error text-body-small mt-1 flex items-center gap-1">
       <svg className="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
         <path
           fillRule="evenodd"
@@ -41,7 +41,7 @@ function InputOTPWrapper({
       {children}
       {error && <InputOTPError message={error} id={errorId} />}
       {required && !error && (
-        <span className="text-destructive text-body-small mt-1" aria-hidden="true">
+        <span className="text-status-error text-body-small mt-1" aria-hidden="true">
           * Required
         </span>
       )}
@@ -126,7 +126,7 @@ function InputOTP({
         loading && "opacity-70",
         containerClassName,
       )}
-      className={cn("disabled:cursor-not-allowed", error && "border-destructive", className)}
+      className={cn("disabled:cursor-not-allowed", error && "border-status-error", className)}
       {...props}
     />
   );
@@ -185,7 +185,7 @@ function InputOTPSlot({
       data-slot="input-otp-slot"
       data-active={isActive}
       className={cn(
-        "data-[active=true]:border-ring data-[active=true]:ring-ring/50 data-[active=true]:aria-invalid:ring-destructive/20 dark:data-[active=true]:aria-invalid:ring-destructive/40 aria-invalid:border-destructive data-[active=true]:aria-invalid:border-destructive dark:bg-input/30 border-input relative flex h-9 w-9 items-center justify-center border-y border-r text-sm bg-input-background transition-all outline-none first:rounded-l-md first:border-l last:rounded-r-md data-[active=true]:z-10 data-[active=true]:ring-[3px]",
+        "data-[active=true]:border-ring data-[active=true]:ring-ring/50 data-[active=true]:aria-invalid:ring-status-error/20 dark:data-[active=true]:aria-invalid:ring-status-error/40 aria-invalid:border-status-error data-[active=true]:aria-invalid:border-status-error dark:bg-input/30 border-input relative flex h-9 w-9 items-center justify-center border-y border-r text-sm bg-input-background transition-all outline-none first:rounded-l-md first:border-l last:rounded-r-md data-[active=true]:z-10 data-[active=true]:ring-[3px]",
         className,
       )}
       {...props}

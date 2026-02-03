@@ -201,9 +201,7 @@ describe("Input", () => {
 
     it("has visible focus indicator styles", () => {
       render(<Input aria-label="Test input" />);
-      expect(screen.getByRole("textbox")).toHaveClass(
-        "focus-visible:ring-foundation-text-light-primary",
-      );
+      expect(screen.getByRole("textbox")).toHaveClass("focus-visible:ring-ring");
     });
 
     it("has error state styles for aria-invalid", () => {
@@ -217,7 +215,7 @@ describe("Input", () => {
       const input = screen.getByRole("textbox");
       expect(input).toHaveAttribute("aria-invalid", "true");
       expect(input).toHaveAttribute("data-error", "true");
-      expect(input).toHaveClass("border-foundation-accent-red");
+      expect(input).toHaveClass("border-status-error");
     });
 
     it("shows error message when error prop is set", () => {

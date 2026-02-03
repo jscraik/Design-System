@@ -233,9 +233,7 @@ describe("DateRangePicker", () => {
     it("displays formatted range when both dates selected", () => {
       const startDate = new Date(2024, 0, 10);
       const endDate = new Date(2024, 0, 20);
-      render(
-        <DateRangePicker startDate={startDate} endDate={endDate} />
-      );
+      render(<DateRangePicker startDate={startDate} endDate={endDate} />);
       expect(screen.getByRole("button")).toHaveTextContent("January 10, 2024 - January 20, 2024");
     });
 
@@ -277,7 +275,7 @@ describe("DateRangePicker", () => {
           startDate={startDate}
           endDate={endDate}
           onRangeChange={mockOnRangeChange}
-        />
+        />,
       );
 
       screen.getByRole("button").click();

@@ -12,9 +12,5 @@ export function ChatSidebarFooterSlot() {
     return null;
   }
 
-  return (
-    <div className="border-t border-foundation-bg-light-3 dark:border-foundation-bg-dark-3">
-      {sidebarFooter}
-    </div>
-  );
+  return <div className="border-t border-muted dark:border-muted">{sidebarFooter}</div>;
 }

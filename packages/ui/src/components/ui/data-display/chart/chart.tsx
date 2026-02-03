@@ -140,7 +140,7 @@ function ChartContainer({
         className={cn(
           "[&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-polar-grid_line]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line_line]:stroke-border flex aspect-video justify-center text-xs [&_.recharts-dot]:stroke-transparent [&_.recharts-layer]:outline-hidden [&_.recharts-sector]:outline-hidden [&_.recharts-surface]:outline-hidden",
           isDisabled && "opacity-50 pointer-events-none",
-          error && "ring-2 ring-foundation-accent-red/50",
+          error && "ring-2 ring-status-error/50",
           loading && "animate-pulse",
           className,
         )}
@@ -153,7 +153,7 @@ function ChartContainer({
         )}
         {error && (
           <div className="absolute inset-0 flex items-center justify-center bg-background/80 rounded-lg z-10">
-            <div className="text-foundation-accent-red">{error}</div>
+            <div className="text-status-error">{error}</div>
           </div>
         )}
         <ChartStyle id={chartId} config={config} />

@@ -51,24 +51,23 @@ const variantStyles: Record<
 > = {
   default: {
     base: "",
-    hover: "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2",
-    active: "active:bg-foundation-bg-light-3 dark:active:bg-foundation-bg-dark-3",
+    hover: "hover:bg-secondary",
+    active: "active:bg-muted",
   },
   card: {
-    base: "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg",
-    hover:
-      "hover:bg-foundation-bg-light-3/50 dark:hover:bg-foundation-bg-dark-3/50 hover:border-foundation-bg-light-4 dark:hover:border-foundation-bg-dark-4",
-    active: "active:bg-foundation-bg-light-3 dark:active:bg-foundation-bg-dark-3",
+    base: "bg-secondary border border-border rounded-lg",
+    hover: "hover:bg-muted/50 hover:border-border",
+    active: "active:bg-muted",
   },
   compact: {
     base: "",
-    hover: "hover:bg-foundation-bg-light-2/50 dark:hover:bg-foundation-bg-dark-2/50",
-    active: "active:bg-foundation-bg-light-2 dark:active:bg-foundation-bg-dark-2",
+    hover: "hover:bg-secondary/50",
+    active: "active:bg-secondary",
   },
   danger: {
     base: "",
-    hover: "hover:bg-foundation-accent-red/10",
-    active: "active:bg-foundation-accent-red/20",
+    hover: "hover:bg-status-error-muted/10",
+    active: "active:bg-status-error-muted/20",
   },
 };
 
@@ -144,9 +143,7 @@ export function SettingRowBlock({
             className={cn(
               "shrink-0",
               iconSize,
-              variant === "danger"
-                ? "text-foundation-accent-red"
-                : "text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary",
+              variant === "danger" ? "text-status-error" : "text-text-secondary",
               disabled && "opacity-50",
             )}
           >
@@ -159,9 +156,7 @@ export function SettingRowBlock({
               className={cn(
                 "font-medium truncate",
                 labelSize,
-                variant === "danger"
-                  ? "text-foundation-accent-red"
-                  : "text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
+                variant === "danger" ? "text-status-error" : "text-foreground",
                 disabled && "opacity-50",
               )}
             >
@@ -169,7 +164,7 @@ export function SettingRowBlock({
             </span>
             {badge}
             {shortcut && (
-              <kbd className="hidden sm:inline-flex px-1.5 py-0.5 rounded bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 font-mono text-[10px] text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary border border-foundation-bg-light-4 dark:border-foundation-bg-dark-4">
+              <kbd className="hidden sm:inline-flex px-1.5 py-0.5 rounded bg-muted font-mono text-[10px] text-muted-foreground border border-border">
                 {shortcut}
               </kbd>
             )}
@@ -177,7 +172,7 @@ export function SettingRowBlock({
           {description && (
             <p
               className={cn(
-                "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-0.5 line-clamp-2",
+                "text-muted-foreground mt-0.5 line-clamp-2",
                 descriptionSize,
                 disabled && "opacity-50",
               )}
@@ -192,7 +187,7 @@ export function SettingRowBlock({
       <div className={cn("flex items-center shrink-0", gap)}>
         {loading ? (
           <svg
-            className="size-4 animate-spin text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
+            className="size-4 animate-spin text-muted-foreground"
             fill="none"
             viewBox="0 0 24 24"
           >
@@ -212,14 +207,10 @@ export function SettingRowBlock({
           </svg>
         ) : (
           <>
-            {right && (
-              <span className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary text-sm">
-                {right}
-              </span>
-            )}
+            {right && <span className="text-text-secondary text-sm">{right}</span>}
             {external && (
               <svg
-                className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
+                className="size-4 text-muted-foreground"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -234,7 +225,7 @@ export function SettingRowBlock({
             )}
             {shouldShowChevron && (
               <svg
-                className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
+                className="size-4 text-muted-foreground"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -253,9 +244,8 @@ export function SettingRowBlock({
     "flex items-center justify-between rounded-lg transition-colors duration-150",
     padding,
     base,
-    selected && "bg-foundation-accent-blue/10 border-foundation-accent-blue",
-    divider &&
-      "border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-none",
+    selected && "bg-accent-blue/10 border-accent-blue",
+    divider && "border-b border-border rounded-none",
     disabled && "opacity-50 cursor-not-allowed",
     className,
   );
@@ -271,7 +261,7 @@ export function SettingRowBlock({
           "w-full text-left",
           hover,
           active,
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue focus-visible:ring-inset",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
           loading && "cursor-wait",
         )}
         aria-label={ariaLabel ?? label}
@@ -308,9 +298,9 @@ export function SettingRowValue({
   className,
 }: SettingRowValueProps) {
   const variantClasses = {
-    default: "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-    muted: "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
-    accent: "text-foundation-accent-blue",
+    default: "text-text-secondary",
+    muted: "text-muted-foreground",
+    accent: "text-accent-blue",
   };
 
   return <span className={cn("text-sm", variantClasses[variant], className)}>{children}</span>;
@@ -335,14 +325,12 @@ export function SettingRowBadge({
   className,
 }: SettingRowBadgeProps) {
   const variantClasses = {
-    default:
-      "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-    primary: "bg-foundation-accent-blue text-white",
-    success: "bg-foundation-accent-green text-white",
-    warning:
-      "bg-foundation-accent-orange text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-    error: "bg-foundation-accent-red text-white",
-    new: "bg-foundation-accent-blue/10 text-foundation-accent-blue",
+    default: "bg-muted text-text-secondary",
+    primary: "bg-accent-blue text-text-body-on-color",
+    success: "bg-accent-green text-text-body-on-color",
+    warning: "bg-accent-orange text-foreground",
+    error: "bg-status-error text-text-body-on-color",
+    new: "bg-accent-blue/10 text-accent-blue",
   };
 
   return (
@@ -377,21 +365,11 @@ export function SettingRowGroup({ children, label, description, className }: Set
     <div className={cn("space-y-1", className)}>
       {(label || description) && (
         <div className="px-3 py-2">
-          {label && (
-            <h3 className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              {label}
-            </h3>
-          )}
-          {description && (
-            <p className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-0.5">
-              {description}
-            </p>
-          )}
+          {label && <h3 className="text-sm font-medium text-foreground">{label}</h3>}
+          {description && <p className="text-xs text-muted-foreground mt-0.5">{description}</p>}
         </div>
       )}
-      <div className="divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
-        {children}
-      </div>
+      <div className="divide-y divide-border">{children}</div>
     </div>
   );
 }
@@ -403,10 +381,5 @@ export function SettingRowGroup({ children, label, description, className }: Set
  * @returns The divider element.
  */
 export function SettingRowDivider({ className }: { className?: string }) {
-  return (
-    <div
-      className={cn("h-px bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 my-1", className)}
-      role="separator"
-    />
-  );
+  return <div className={cn("h-px bg-muted my-1", className)} role="separator" />;
 }

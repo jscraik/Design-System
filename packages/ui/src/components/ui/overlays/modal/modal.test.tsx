@@ -15,7 +15,7 @@ describe("ModalDialog", () => {
       render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test Modal">
           <div>Modal Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       expect(screen.getByText("Modal Content")).toBeInTheDocument();
     });
@@ -24,7 +24,7 @@ describe("ModalDialog", () => {
       render(
         <ModalDialog isOpen={false} onClose={mockOnClose} title="Test Modal">
           <div>Modal Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       expect(screen.queryByText("Modal Content")).not.toBeInTheDocument();
     });
@@ -33,7 +33,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test Modal">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const modal = container.querySelector('[data-slot="modal"]');
       expect(modal).toBeInTheDocument();
@@ -43,7 +43,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test Modal">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const dialog = container.querySelector('[role="dialog"]');
       expect(dialog).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test Modal">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const overlay = container.querySelector('[aria-hidden="true"]');
       expect(overlay).toBeInTheDocument();
@@ -63,7 +63,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test Modal" showOverlay={false}>
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const overlay = container.querySelector('[aria-hidden="true"]');
       expect(overlay).not.toBeInTheDocument();
@@ -73,7 +73,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test Modal" maxWidth="800px">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const dialog = container.querySelector('[role="dialog"]');
       expect(dialog).toHaveAttribute("style", expect.stringContaining("max-width: 800px"));
@@ -85,14 +85,14 @@ describe("ModalDialog", () => {
       const { rerender } = render(
         <ModalDialog isOpen={false} onClose={mockOnClose} title="Test Modal">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       expect(screen.queryByText("Content")).not.toBeInTheDocument();
 
       rerender(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test Modal">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
     });
@@ -101,14 +101,14 @@ describe("ModalDialog", () => {
       const { rerender } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test Modal">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
 
       rerender(
         <ModalDialog isOpen={false} onClose={mockOnClose} title="Test Modal">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       expect(screen.queryByText("Content")).not.toBeInTheDocument();
     });
@@ -117,9 +117,15 @@ describe("ModalDialog", () => {
   describe("Stateful props - Loading", () => {
     it("calls onStateChange with 'loading'", async () => {
       render(
-        <ModalDialog isOpen={true} onClose={mockOnClose} loading onStateChange={mockOnStateChange} title="Test">
+        <ModalDialog
+          isOpen={true}
+          onClose={mockOnClose}
+          loading
+          onStateChange={mockOnStateChange}
+          title="Test"
+        >
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -130,7 +136,7 @@ describe("ModalDialog", () => {
       render(
         <ModalDialog isOpen={true} onClose={mockOnClose} loading title="Test">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       expect(screen.getByText("Loading...")).toBeInTheDocument();
     });
@@ -139,7 +145,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} loading title="Test">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const modal = container.querySelector('[aria-busy="true"]');
       expect(modal).toBeInTheDocument();
@@ -149,7 +155,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} loading title="Test">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const dialog = container.querySelector('[role="dialog"]');
       expect(dialog).toHaveClass("animate-pulse");
@@ -159,9 +165,15 @@ describe("ModalDialog", () => {
   describe("Stateful props - Error", () => {
     it("calls onStateChange with 'error'", async () => {
       render(
-        <ModalDialog isOpen={true} onClose={mockOnClose} error="Error message" onStateChange={mockOnStateChange} title="Test">
+        <ModalDialog
+          isOpen={true}
+          onClose={mockOnClose}
+          error="Error message"
+          onStateChange={mockOnStateChange}
+          title="Test"
+        >
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -172,7 +184,7 @@ describe("ModalDialog", () => {
       render(
         <ModalDialog isOpen={true} onClose={mockOnClose} error="Something went wrong" title="Test">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       expect(screen.getByText("Something went wrong")).toBeInTheDocument();
     });
@@ -181,7 +193,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} error="Error" title="Test">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const modal = container.querySelector('[aria-invalid="true"]');
       expect(modal).toBeInTheDocument();
@@ -191,7 +203,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} error="Error" title="Test">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const modal = container.querySelector('[data-error="true"]');
       expect(modal).toBeInTheDocument();
@@ -201,7 +213,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} error="Error" title="Test">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const dialog = container.querySelector('[role="dialog"]');
       expect(dialog).toHaveClass("ring-2");
@@ -211,9 +223,15 @@ describe("ModalDialog", () => {
   describe("Stateful props - Disabled", () => {
     it("calls onStateChange with 'disabled'", async () => {
       render(
-        <ModalDialog isOpen={true} onClose={mockOnClose} disabled onStateChange={mockOnStateChange} title="Test">
+        <ModalDialog
+          isOpen={true}
+          onClose={mockOnClose}
+          disabled
+          onStateChange={mockOnStateChange}
+          title="Test"
+        >
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
@@ -224,7 +242,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} disabled title="Test">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const modal = container.querySelector('[aria-disabled="true"]');
       expect(modal).toBeInTheDocument();
@@ -234,7 +252,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} disabled title="Test">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const dialog = container.querySelector('[role="dialog"]');
       expect(dialog).toHaveClass("opacity-50");
@@ -244,9 +262,15 @@ describe("ModalDialog", () => {
   describe("Stateful props - Required", () => {
     it("calls onStateChange with 'default' when required", async () => {
       render(
-        <ModalDialog isOpen={true} onClose={mockOnClose} required onStateChange={mockOnStateChange} title="Test">
+        <ModalDialog
+          isOpen={true}
+          onClose={mockOnClose}
+          required
+          onStateChange={mockOnStateChange}
+          title="Test"
+        >
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
@@ -257,7 +281,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} required title="Test">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const modal = container.querySelector('[data-required="true"]');
       expect(modal).toBeInTheDocument();
@@ -267,7 +291,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} required title="Test">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const modal = container.querySelector('[aria-required="true"]');
       expect(modal).toBeInTheDocument();
@@ -277,7 +301,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} required title="Test">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const modal = container.querySelector('[aria-invalid="false"]');
       expect(modal).toBeInTheDocument();
@@ -297,7 +321,7 @@ describe("ModalDialog", () => {
           title="Test"
         >
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -315,7 +339,7 @@ describe("ModalDialog", () => {
           title="Test"
         >
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -328,7 +352,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const dialog = container.querySelector('[aria-modal="true"]');
       expect(dialog).toBeInTheDocument();
@@ -338,7 +362,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="My Modal Title">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const title = screen.getByText("My Modal Title");
       expect(title).toHaveAttribute("id");
@@ -349,7 +373,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test" titleId="custom-title-id">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const dialog = container.querySelector('[role="dialog"]');
       expect(dialog).toHaveAttribute("aria-labelledby", "custom-title-id");
@@ -359,7 +383,7 @@ describe("ModalDialog", () => {
       render(
         <ModalDialog isOpen={true} onClose={mockOnClose} description="Modal description">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const description = screen.getByText("Modal description");
       expect(description?.id).toMatch(/^modal-description-/);
@@ -369,7 +393,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="My Title">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const dialog = container.querySelector('[role="dialog"]');
       const title = screen.getByText("My Title");
@@ -380,7 +404,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} description="My Description">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const dialog = container.querySelector('[role="dialog"]');
       const description = screen.getByText("My Description");
@@ -393,7 +417,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test" className="custom-dialog">
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const dialog = container.querySelector('[role="dialog"]');
       expect(dialog).toHaveClass("custom-dialog");
@@ -401,9 +425,14 @@ describe("ModalDialog", () => {
 
     it("applies custom overlayClassName", () => {
       const { container } = render(
-        <ModalDialog isOpen={true} onClose={mockOnClose} title="Test" overlayClassName="custom-overlay">
+        <ModalDialog
+          isOpen={true}
+          onClose={mockOnClose}
+          title="Test"
+          overlayClassName="custom-overlay"
+        >
           <div>Content</div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const overlay = container.querySelector('[aria-hidden="true"]');
       expect(overlay).toHaveClass("custom-overlay");
@@ -417,7 +446,7 @@ describe("ModalDialog", () => {
             <p>Detailed content</p>
             <button>Action</button>
           </div>
-        </ModalDialog>
+        </ModalDialog>,
       );
       expect(screen.getByText("Section Title")).toBeInTheDocument();
       expect(screen.getByText("Detailed content")).toBeInTheDocument();
@@ -430,7 +459,7 @@ describe("ModalDialog", () => {
       render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test">
           <ModalHeader title="Header Title" />
-        </ModalDialog>
+        </ModalDialog>,
       );
       expect(screen.getByText("Header Title")).toBeInTheDocument();
     });
@@ -439,7 +468,7 @@ describe("ModalDialog", () => {
       render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test">
           <ModalHeader title="Header Title" subtitle="Subtitle text" />
-        </ModalDialog>
+        </ModalDialog>,
       );
       expect(screen.getByText("Subtitle text")).toBeInTheDocument();
     });
@@ -448,7 +477,7 @@ describe("ModalDialog", () => {
       render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test">
           <ModalHeader title="Test" showClose={true} onClose={mockOnClose} />
-        </ModalDialog>
+        </ModalDialog>,
       );
       const closeButton = screen.getByTitle("Close dialog");
       expect(closeButton).toBeInTheDocument();
@@ -458,7 +487,7 @@ describe("ModalDialog", () => {
       render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test">
           <ModalHeader title="Test" showClose={false} onClose={mockOnClose} />
-        </ModalDialog>
+        </ModalDialog>,
       );
       const closeButton = screen.queryByTitle("Close dialog");
       expect(closeButton).not.toBeInTheDocument();
@@ -467,11 +496,8 @@ describe("ModalDialog", () => {
     it("renders header actions when provided", () => {
       render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test">
-          <ModalHeader
-            title="Test"
-            actions={<button type="button">Action Button</button>}
-          />
-        </ModalDialog>
+          <ModalHeader title="Test" actions={<button type="button">Action Button</button>} />
+        </ModalDialog>,
       );
       expect(screen.getByText("Action Button")).toBeInTheDocument();
     });
@@ -482,7 +508,7 @@ describe("ModalDialog", () => {
       render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test">
           <ModalBody>Body Content</ModalBody>
-        </ModalDialog>
+        </ModalDialog>,
       );
       expect(screen.getByText("Body Content")).toBeInTheDocument();
     });
@@ -491,7 +517,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test">
           <ModalBody className="custom-body">Content</ModalBody>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const body = container.querySelector(".custom-body");
       expect(body).toBeInTheDocument();
@@ -503,7 +529,7 @@ describe("ModalDialog", () => {
       render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test">
           <ModalFooter>Footer Content</ModalFooter>
-        </ModalDialog>
+        </ModalDialog>,
       );
       expect(screen.getByText("Footer Content")).toBeInTheDocument();
     });
@@ -512,7 +538,7 @@ describe("ModalDialog", () => {
       const { container } = render(
         <ModalDialog isOpen={true} onClose={mockOnClose} title="Test">
           <ModalFooter className="custom-footer">Content</ModalFooter>
-        </ModalDialog>
+        </ModalDialog>,
       );
       const footer = container.querySelector(".custom-footer");
       expect(footer).toBeInTheDocument();
@@ -529,7 +555,7 @@ describe("ModalDialog", () => {
             <button type="button">Cancel</button>
             <button type="button">Confirm</button>
           </ModalFooter>
-        </ModalDialog>
+        </ModalDialog>,
       );
       expect(screen.getByText("Modal Title")).toBeInTheDocument();
       expect(screen.getByText("Modal Subtitle")).toBeInTheDocument();

@@ -142,7 +142,7 @@ describe("Select", () => {
           </Select>,
         );
         const trigger = screen.getByRole("combobox");
-        expect(trigger).toHaveClass("border-destructive");
+        expect(trigger).toHaveClass("border-status-error");
       });
 
       it("calls onStateChange with error state", () => {

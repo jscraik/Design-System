@@ -63,7 +63,7 @@ describe("Label", () => {
       render(
         <Label>
           Username
-          <span className="text-accent-red">*</span>
+          <span className="text-status-error">*</span>
         </Label>,
       );
       expect(screen.getByText("*")).toBeInTheDocument();

@@ -7,8 +7,8 @@ Last updated: 2026-01-04
 - Audience: Developers (intermediate)
 - Scope: Overview and essential workflows for this area
 - Non-scope: Deep API reference or internal design rationale
-- Owner: TBD (confirm)
-- Review cadence: TBD (confirm)
+- Owner: Jamie Craik
+- Review cadence: Quarterly
 
 ## Contents
 
@@ -20,6 +20,7 @@ Last updated: 2026-01-04
   - [Process Guides](#process-guides)
 - [Related Documentation](#related-documentation)
 - [Additional Resources](#additional-resources)
+- [Transcripts](#transcripts)
 
 Use these when you want step-by-step workflows, not API reference.
 
@@ -33,7 +34,7 @@ Use these when you want step-by-step workflows, not API reference.
 ### Development Guides
 
 - **[PAGES_QUICK_START.md](./PAGES_QUICK_START.md)** - Quick start guide for creating new pages in the aStudio system
-- **[DESIGN_GUIDELINES.md](./DESIGN_GUIDELINES.md)** - Design system guidelines and best practices
+- **[DESIGN_GUIDELINES.md](./DESIGN_GUIDELINES.md)** - Design system guidelines and best practices (includes UI states checklist)
 - **[SECURITY_BEST_PRACTICES.md](./SECURITY_BEST_PRACTICES.md)** - Security best practices for deployment and widget development
 - **[repo-structure-migration.md](./repo-structure-migration.md)** - Path changes and migration notes for the 2026 restructure
 
@@ -60,6 +61,11 @@ For more detailed development workflows, see:
 - Main [README.md](../../README.md) - Project overview and setup
 - [Storybook](http://localhost:6006) - Component documentation (when running)
 - [Web App](http://localhost:5173) - Reference implementation (when running)
+
+## Transcripts
+
+- **[docs/transcripts/README.md](../transcripts/README.md)** - Cleaned + raw video transcripts
+  - Use these for onboarding and shared vocabulary around token architecture and design‑system setup.
 
 ## Risks and assumptions
 

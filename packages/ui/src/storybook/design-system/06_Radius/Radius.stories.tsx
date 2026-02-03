@@ -66,7 +66,9 @@ const RadiusVisualizer = ({
     </div>
     <div className="flex-1 text-left">
       <div className="font-medium">{name}</div>
-      <div className="text-sm font-mono text-muted-foreground">{value >= 100 ? "9999px" : `${value}px`}</div>
+      <div className="text-sm font-mono text-muted-foreground">
+        {value >= 100 ? "9999px" : `${value}px`}
+      </div>
       <div className="text-xs text-muted-foreground mt-1">{usage}</div>
     </div>
   </button>
@@ -124,13 +126,9 @@ const ComponentExamples = () => (
           <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center text-accent">
             JD
           </div>
-          <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-sm">
-            Pill tag
-          </span>
-          <span className="px-3 py-1 rounded-full bg-muted text-sm">
-            Another pill
-          </span>
-          <span className="px-3 py-1 rounded-full bg-destructive/10 text-destructive text-sm">
+          <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-sm">Pill tag</span>
+          <span className="px-3 py-1 rounded-full bg-muted text-sm">Another pill</span>
+          <span className="px-3 py-1 rounded-full bg-status-error-muted/10 text-status-error text-sm">
             Status
           </span>
         </div>
@@ -217,13 +215,17 @@ const RadiusComparison = () => {
           <div
             className="p-4 bg-accent text-accent-foreground text-center"
             style={{
-              borderRadius: radiusTokens[selectedRadius] >= 100 ? "9999px" : `${radiusTokens[selectedRadius]}px`,
+              borderRadius:
+                radiusTokens[selectedRadius] >= 100
+                  ? "9999px"
+                  : `${radiusTokens[selectedRadius]}px`,
             }}
           >
             Click me
           </div>
           <div className="mt-3 text-xs text-muted-foreground">
-            Using {selectedRadius} ({radiusTokens[selectedRadius] >= 100 ? "9999px" : `${radiusTokens[selectedRadius]}px`})
+            Using {selectedRadius} (
+            {radiusTokens[selectedRadius] >= 100 ? "9999px" : `${radiusTokens[selectedRadius]}px`})
           </div>
         </div>
 
@@ -232,14 +234,18 @@ const RadiusComparison = () => {
           <div
             className="p-4 bg-muted"
             style={{
-              borderRadius: radiusTokens[selectedRadius] >= 100 ? "9999px" : `${radiusTokens[selectedRadius]}px`,
+              borderRadius:
+                radiusTokens[selectedRadius] >= 100
+                  ? "9999px"
+                  : `${radiusTokens[selectedRadius]}px`,
             }}
           >
             <div className="font-medium">Card Title</div>
             <div className="text-sm text-muted-foreground">Card content goes here</div>
           </div>
           <div className="mt-3 text-xs text-muted-foreground">
-            Using {selectedRadius} ({radiusTokens[selectedRadius] >= 100 ? "9999px" : `${radiusTokens[selectedRadius]}px`})
+            Using {selectedRadius} (
+            {radiusTokens[selectedRadius] >= 100 ? "9999px" : `${radiusTokens[selectedRadius]}px`})
           </div>
         </div>
       </div>
@@ -367,7 +373,8 @@ export const UsageGuidelines: Story = {
               <div>
                 <div className="font-medium">Prominent elements and hero sections</div>
                 <p className="text-sm text-muted-foreground">
-                  Use for large cards, modals, featured content. Creates a friendly, approachable feel.
+                  Use for large cards, modals, featured content. Creates a friendly, approachable
+                  feel.
                 </p>
               </div>
             </div>
@@ -404,9 +411,7 @@ export const DoDont: Story = {
     <div className="max-w-4xl space-y-6 p-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">Border Radius Best Practices</h2>
-        <p className="text-muted-foreground">
-          Common patterns to follow and pitfalls to avoid.
-        </p>
+        <p className="text-muted-foreground">Common patterns to follow and pitfalls to avoid.</p>
       </div>
 
       <div className="space-y-6">
@@ -414,7 +419,9 @@ export const DoDont: Story = {
           <div className="flex items-start gap-3">
             <span className="text-2xl">✓</span>
             <div>
-              <div className="font-semibold text-accent">DO: Be consistent within component types</div>
+              <div className="font-semibold text-accent">
+                DO: Be consistent within component types
+              </div>
               <p className="text-sm text-muted-foreground mt-1">
                 All buttons should use the same radius. All cards should use the same radius.
                 Consistency creates polish.
@@ -423,32 +430,30 @@ export const DoDont: Story = {
                 <button className="px-3 py-1.5 rounded-md bg-accent text-accent-foreground text-sm">
                   Button A
                 </button>
-                <button className="px-3 py-1.5 rounded-md bg-muted text-sm">
-                  Button B
-                </button>
-                <button className="px-3 py-1.5 rounded-md border text-sm">
-                  Button C
-                </button>
+                <button className="px-3 py-1.5 rounded-md bg-muted text-sm">Button B</button>
+                <button className="px-3 py-1.5 rounded-md border text-sm">Button C</button>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">DON'T: Mix radii arbitrarily in the same layout</div>
+              <div className="font-semibold text-status-error">
+                DON'T: Mix radii arbitrarily in the same layout
+              </div>
               <p className="text-sm text-muted-foreground mt-1">
-                Avoid using r6, r12, and r24 in the same layout without clear reason.
-                Mixed radii create visual clutter.
+                Avoid using r6, r12, and r24 in the same layout without clear reason. Mixed radii
+                create visual clutter.
               </p>
               <div className="mt-3 flex gap-2">
                 <button className="px-3 py-1.5 rounded-md bg-muted text-sm">r6</button>
                 <button className="px-3 py-1.5 rounded-xl bg-muted text-sm">r12</button>
                 <button className="px-3 py-1.5 rounded-3xl bg-muted text-sm">r24</button>
               </div>
-              <div className="mt-2 text-xs text-destructive">
+              <div className="mt-2 text-xs text-status-error">
                 ↑ Inconsistent radius creates messy appearance
               </div>
             </div>
@@ -468,11 +473,11 @@ export const DoDont: Story = {
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">
+              <div className="font-semibold text-status-error">
                 DON'T: Use large radius on small elements
               </div>
               <p className="text-sm text-muted-foreground mt-1">
@@ -488,31 +493,29 @@ export const DoDont: Story = {
             <div>
               <div className="font-semibold text-accent">DO: Use "round" for pills and avatars</div>
               <p className="text-sm text-muted-foreground mt-1">
-                Fully rounded elements create distinctive shapes. Perfect for pills, tags,
-                avatars, and floating action buttons.
+                Fully rounded elements create distinctive shapes. Perfect for pills, tags, avatars,
+                and floating action buttons.
               </p>
               <div className="mt-3 flex gap-2 items-center">
                 <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center text-accent text-sm">
                   JD
                 </div>
-                <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-sm">
-                  Tag
-                </span>
+                <span className="px-3 py-1 rounded-full bg-accent/10 text-accent text-sm">Tag</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">
+              <div className="font-semibold text-status-error">
                 DON'T: Use "round" on rectangular content
               </div>
               <p className="text-sm text-muted-foreground mt-1">
-                Fully rounded rectangles on very wide content look like pills (which is fine
-                if intentional, but awkward if not).
+                Fully rounded rectangles on very wide content look like pills (which is fine if
+                intentional, but awkward if not).
               </p>
             </div>
           </div>
@@ -544,12 +547,11 @@ export const TokenReference: Story = {
           </thead>
           <tbody>
             {RADIUS_TOKENS.map((token, i) => (
-              <tr
-                key={token.name}
-                className={i % 2 === 0 ? "bg-background" : "bg-muted/20"}
-              >
+              <tr key={token.name} className={i % 2 === 0 ? "bg-background" : "bg-muted/20"}>
                 <td className="p-3 font-mono text-sm">{token.name}</td>
-                <td className="p-3 font-mono text-sm">{token.value >= 100 ? "9999px" : `${token.value}px`}</td>
+                <td className="p-3 font-mono text-sm">
+                  {token.value >= 100 ? "9999px" : `${token.value}px`}
+                </td>
                 <td className="p-3 text-sm text-muted-foreground">{token.usage}</td>
               </tr>
             ))}
@@ -560,7 +562,7 @@ export const TokenReference: Story = {
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">Import Radius Tokens</div>
         <pre className="text-sm bg-background p-3 rounded overflow-x-auto">
-{`import { radiusTokens } from "@design-studio/tokens/radius";
+          {`import { radiusTokens } from "@design-studio/tokens/radius";
 
 // Usage in components
 const borderRadius = radiusTokens.r12; // 12px
@@ -571,13 +573,27 @@ const buttonRadius = radiusTokens.round; // 9999px (fully rounded)`}
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">Tailwind Classes</div>
         <div className="text-sm space-y-1">
-          <div><code>rounded-sm</code> → r6</div>
-          <div><code>rounded</code> → r8 (default)</div>
-          <div><code>rounded-lg</code> → r12</div>
-          <div><code>rounded-xl</code> → r16</div>
-          <div><code>rounded-2xl</code> → r18/r21</div>
-          <div><code>rounded-3xl</code> → r24/r30</div>
-          <div><code>rounded-full</code> → round</div>
+          <div>
+            <code>rounded-sm</code> → r6
+          </div>
+          <div>
+            <code>rounded</code> → r8 (default)
+          </div>
+          <div>
+            <code>rounded-lg</code> → r12
+          </div>
+          <div>
+            <code>rounded-xl</code> → r16
+          </div>
+          <div>
+            <code>rounded-2xl</code> → r18/r21
+          </div>
+          <div>
+            <code>rounded-3xl</code> → r24/r30
+          </div>
+          <div>
+            <code>rounded-full</code> → round
+          </div>
         </div>
       </div>
     </div>

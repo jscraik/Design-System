@@ -164,31 +164,67 @@ export const TypeScale: Story = {
 
         <div className="space-y-3">
           <TokenDisplay
-            name="Heading 1"
-            size={typographyTokens.heading1.size}
-            lineHeight={typographyTokens.heading1.lineHeight}
-            weight={typographyTokens.heading1.weight}
-            tracking={typographyTokens.heading1.tracking}
-            usage="Page titles, hero sections, main headings"
-            sample="Display Heading"
+            name="Hero"
+            size={typographyTokens.hero.size}
+            lineHeight={typographyTokens.hero.lineHeight}
+            weight={typographyTokens.hero.weight}
+            tracking={typographyTokens.hero.tracking}
+            usage="Hero headlines, landing introductions"
+            sample="Hero Headline"
           />
           <TokenDisplay
-            name="Heading 2"
-            size={typographyTokens.heading2.size}
-            lineHeight={typographyTokens.heading2.lineHeight}
-            weight={typographyTokens.heading2.weight}
-            tracking={typographyTokens.heading2.tracking}
+            name="H1"
+            size={typographyTokens.h1.size}
+            lineHeight={typographyTokens.h1.lineHeight}
+            weight={typographyTokens.h1.weight}
+            tracking={typographyTokens.h1.tracking}
+            usage="Primary page titles"
+            sample="Primary Page Title"
+          />
+          <TokenDisplay
+            name="H2"
+            size={typographyTokens.h2.size}
+            lineHeight={typographyTokens.h2.lineHeight}
+            weight={typographyTokens.h2.weight}
+            tracking={typographyTokens.h2.tracking}
             usage="Section titles, page subheadings"
             sample="Section Title Example"
           />
           <TokenDisplay
-            name="Heading 3"
-            size={typographyTokens.heading3.size}
-            lineHeight={typographyTokens.heading3.lineHeight}
-            weight={typographyTokens.heading3.weight}
-            tracking={typographyTokens.heading3.tracking}
+            name="H3"
+            size={typographyTokens.h3.size}
+            lineHeight={typographyTokens.h3.lineHeight}
+            weight={typographyTokens.h3.weight}
+            tracking={typographyTokens.h3.tracking}
             usage="Subsection titles, card headers"
             sample="Subsection Title"
+          />
+          <TokenDisplay
+            name="H4"
+            size={typographyTokens.h4.size}
+            lineHeight={typographyTokens.h4.lineHeight}
+            weight={typographyTokens.h4.weight}
+            tracking={typographyTokens.h4.tracking}
+            usage="Minor headings, section labels"
+            sample="Minor Heading"
+          />
+          <TokenDisplay
+            name="H5"
+            size={typographyTokens.h5.size}
+            lineHeight={typographyTokens.h5.lineHeight}
+            weight={typographyTokens.h5.weight}
+            tracking={typographyTokens.h5.tracking}
+            usage="Eyebrow headings, metadata"
+            sample="Eyebrow Heading"
+          />
+          <TokenDisplay
+            name="H6"
+            size={typographyTokens.h6.size}
+            lineHeight={typographyTokens.h6.lineHeight}
+            weight={typographyTokens.h6.weight}
+            tracking={typographyTokens.h6.tracking}
+            usage="Micro headings, overlines"
+            sample="Micro Heading"
           />
         </div>
       </section>
@@ -202,24 +238,34 @@ export const TypeScale: Story = {
 
         <div className="space-y-3">
           <TokenDisplay
-            name="Body"
-            size={typographyTokens.body.size}
-            lineHeight={typographyTokens.body.lineHeight}
-            weight={typographyTokens.body.weight}
-            tracking={typographyTokens.body.tracking}
-            emphasisWeight={typographyTokens.body.emphasisWeight}
-            usage="Default body text, content paragraphs"
-            sample="Body text example with sufficient line height for readability."
+            name="Paragraph Lg"
+            size={typographyTokens.paragraphLg.size}
+            lineHeight={typographyTokens.paragraphLg.lineHeight}
+            weight={typographyTokens.paragraphLg.weight}
+            tracking={typographyTokens.paragraphLg.tracking}
+            emphasisWeight={typographyTokens.paragraphLg.emphasisWeight}
+            usage="Intro paragraphs, long-form emphasis"
+            sample="Intro paragraph example with extra breathing room."
           />
           <TokenDisplay
-            name="Body Small"
-            size={typographyTokens.bodySmall.size}
-            lineHeight={typographyTokens.bodySmall.lineHeight}
-            weight={typographyTokens.bodySmall.weight}
-            tracking={typographyTokens.bodySmall.tracking}
-            emphasisWeight={typographyTokens.bodySmall.emphasisWeight}
+            name="Paragraph Md"
+            size={typographyTokens.paragraphMd.size}
+            lineHeight={typographyTokens.paragraphMd.lineHeight}
+            weight={typographyTokens.paragraphMd.weight}
+            tracking={typographyTokens.paragraphMd.tracking}
+            emphasisWeight={typographyTokens.paragraphMd.emphasisWeight}
+            usage="Default body text, content paragraphs"
+            sample="Paragraph-md example with default reading size."
+          />
+          <TokenDisplay
+            name="Paragraph Sm"
+            size={typographyTokens.paragraphSm.size}
+            lineHeight={typographyTokens.paragraphSm.lineHeight}
+            weight={typographyTokens.paragraphSm.weight}
+            tracking={typographyTokens.paragraphSm.tracking}
+            emphasisWeight={typographyTokens.paragraphSm.emphasisWeight}
             usage="Secondary body text, compact content"
-            sample="Smaller body text for constrained spaces."
+            sample="Smaller paragraph text for constrained spaces."
           />
           <TokenDisplay
             name="Caption"
@@ -231,15 +277,33 @@ export const TypeScale: Story = {
             usage="Helper text, metadata, timestamps"
             sample="Caption text for labels and hints"
           />
+          <TokenDisplay
+            name="Body (Legacy)"
+            size={typographyTokens.body.size}
+            lineHeight={typographyTokens.body.lineHeight}
+            weight={typographyTokens.body.weight}
+            tracking={typographyTokens.body.tracking}
+            emphasisWeight={typographyTokens.body.emphasisWeight}
+            usage="Legacy body token (use Paragraph Md)"
+            sample="Legacy body text retained for backwards compatibility."
+          />
+          <TokenDisplay
+            name="Body Small (Legacy)"
+            size={typographyTokens.bodySmall.size}
+            lineHeight={typographyTokens.bodySmall.lineHeight}
+            weight={typographyTokens.bodySmall.weight}
+            tracking={typographyTokens.bodySmall.tracking}
+            emphasisWeight={typographyTokens.bodySmall.emphasisWeight}
+            usage="Legacy body token (use Paragraph Sm)"
+            sample="Legacy small body text retained for compatibility."
+          />
         </div>
       </section>
 
       {/* Component-Specific */}
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">Component Text</h2>
-        <p className="text-muted-foreground">
-          Specialized tokens for specific UI components.
-        </p>
+        <p className="text-muted-foreground">Specialized tokens for specific UI components.</p>
 
         <div className="space-y-3">
           <TokenDisplay
@@ -310,10 +374,7 @@ export const FontWeight: Story = {
         <div className="space-y-4">
           {weights.map((weight) => (
             <div key={weight} className="flex items-baseline gap-6 p-4 rounded-lg border bg-card">
-              <div
-                className="flex-shrink-0 w-16 text-2xl"
-                style={{ fontWeight: weight }}
-              >
+              <div className="flex-shrink-0 w-16 text-2xl" style={{ fontWeight: weight }}>
                 Aa
               </div>
               <div className="flex-1">
@@ -330,9 +391,7 @@ export const FontWeight: Story = {
                   {weight === 700 && "Display text, strong emphasis"}
                 </div>
               </div>
-              <div className="text-sm text-muted-foreground">
-                {weight}
-              </div>
+              <div className="text-sm text-muted-foreground">{weight}</div>
             </div>
           ))}
         </div>
@@ -345,11 +404,16 @@ export const LineHeightRhythm: Story = {
   name: "Line Height & Vertical Rhythm",
   render: () => {
     const tokens: Array<{ key: string; token: keyof typeof typographyTokens; label: string }> = [
-      { key: "heading1", token: "heading1", label: "H1" },
-      { key: "heading2", token: "heading2", label: "H2" },
-      { key: "heading3", token: "heading3", label: "H3" },
-      { key: "body", token: "body", label: "Body" },
-      { key: "bodySmall", token: "bodySmall", label: "Body Small" },
+      { key: "hero", token: "hero", label: "Hero" },
+      { key: "h1", token: "h1", label: "H1" },
+      { key: "h2", token: "h2", label: "H2" },
+      { key: "h3", token: "h3", label: "H3" },
+      { key: "h4", token: "h4", label: "H4" },
+      { key: "h5", token: "h5", label: "H5" },
+      { key: "h6", token: "h6", label: "H6" },
+      { key: "paragraphLg", token: "paragraphLg", label: "Paragraph Lg" },
+      { key: "paragraphMd", token: "paragraphMd", label: "Paragraph Md" },
+      { key: "paragraphSm", token: "paragraphSm", label: "Paragraph Sm" },
       { key: "caption", token: "caption", label: "Caption" },
     ];
 
@@ -358,8 +422,8 @@ export const LineHeightRhythm: Story = {
         <div className="space-y-4">
           <h1 className="text-4xl font-bold">Line Height & Vertical Rhythm</h1>
           <p className="text-muted-foreground text-lg">
-            Visual comparison of line heights across the type scale. Proper line height
-            ensures readability and maintains vertical rhythm.
+            Visual comparison of line heights across the type scale. Proper line height ensures
+            readability and maintains vertical rhythm.
           </p>
         </div>
 
@@ -371,9 +435,7 @@ export const LineHeightRhythm: Story = {
 
             return (
               <div key={key} className="flex items-center gap-4">
-                <div className="w-24 text-sm text-muted-foreground font-mono">
-                  {label}
-                </div>
+                <div className="w-24 text-sm text-muted-foreground font-mono">{label}</div>
                 <div className="flex-1">
                   <div
                     className="border-2 border-dashed rounded flex items-center"
@@ -403,7 +465,7 @@ export const LineHeightRhythm: Story = {
 export const UsageExamples: Story = {
   name: "Usage Examples",
   render: () => {
-    const { body, heading2, heading3, bodySmall, caption } = typographyTokens;
+    const { h1, h2, paragraphMd, paragraphSm, caption } = typographyTokens;
 
     return (
       <div className="p-8 space-y-8 max-w-4xl">
@@ -424,9 +486,9 @@ export const UsageExamples: Story = {
           <article className="space-y-4">
             <h1
               style={{
-                fontSize: `${heading1.size}px`,
-                lineHeight: `${heading1.lineHeight}px`,
-                fontWeight: heading1.weight,
+                fontSize: `${h1.size}px`,
+                lineHeight: `${h1.lineHeight}px`,
+                fontWeight: h1.weight,
               }}
             >
               Article Title Goes Here
@@ -442,34 +504,33 @@ export const UsageExamples: Story = {
             </p>
             <p
               style={{
-                fontSize: `${body.size}px`,
-                lineHeight: `${body.lineHeight}px`,
-                fontWeight: body.weight,
+                fontSize: `${paragraphMd.size}px`,
+                lineHeight: `${paragraphMd.lineHeight}px`,
+                fontWeight: paragraphMd.weight,
               }}
             >
-              This is an example of body text using the body token. Notice how the
-              line height provides comfortable reading spacing. The font size is large
-              enough for readability on most screens, and the weight is regular for
-              sustained reading.
+              This is an example of body text using the paragraph-md token. Notice how the line
+              height provides comfortable reading spacing. The font size is large enough for
+              readability on most screens, and the weight is regular for sustained reading.
             </p>
             <h3
               style={{
-                fontSize: `${heading2.size}px`,
-                lineHeight: `${heading2.lineHeight}px`,
-                fontWeight: heading2.weight,
+                fontSize: `${h2.size}px`,
+                lineHeight: `${h2.lineHeight}px`,
+                fontWeight: h2.weight,
               }}
             >
               Section Heading Example
             </h3>
             <p
               style={{
-                fontSize: `${body.size}px`,
-                lineHeight: `${body.lineHeight}px`,
-                fontWeight: body.weight,
+                fontSize: `${paragraphMd.size}px`,
+                lineHeight: `${paragraphMd.lineHeight}px`,
+                fontWeight: paragraphMd.weight,
               }}
             >
-              Continue reading with more body text. The hierarchy between the
-              heading and body text is clear, making the content easy to scan.
+              Continue reading with more body text. The hierarchy between the heading and body text
+              is clear, making the content easy to scan.
             </p>
           </article>
         </section>
@@ -477,9 +538,7 @@ export const UsageExamples: Story = {
         {/* Card Example */}
         <section className="space-y-4 p-6 rounded-lg border bg-card">
           <h2 className="text-xl font-semibold">Card Layout</h2>
-          <p className="text-muted-foreground">
-            Component-specific tokens for cards.
-          </p>
+          <p className="text-muted-foreground">Component-specific tokens for cards.</p>
 
           <div className="p-4 rounded border bg-muted space-y-2">
             <h3
@@ -497,16 +556,16 @@ export const UsageExamples: Story = {
                 lineHeight: `${typographyTokens.listSubtitle.lineHeight}px`,
                 fontWeight: typographyTokens.listSubtitle.weight,
               }}
-              >
+            >
               Card description or metadata using the list subtitle token.
             </p>
             <p
               style={{
-                fontSize: `${bodySmall.size}px`,
-                lineHeight: `${bodySmall.lineHeight}px`,
-                fontWeight: bodySmall.weight,
+                fontSize: `${paragraphSm.size}px`,
+                lineHeight: `${paragraphSm.lineHeight}px`,
+                fontWeight: paragraphSm.weight,
               }}
-              >
+            >
               Additional context or supporting information in a smaller size.
             </p>
           </div>
@@ -524,8 +583,8 @@ export const UsageExamples: Story = {
               <label
                 className="block mb-2"
                 style={{
-                  fontSize: `${bodySmall.size}px`,
-                  fontWeight: bodySmall.weight,
+                  fontSize: `${paragraphSm.size}px`,
+                  fontWeight: paragraphSm.weight,
                 }}
               >
                 Email address
@@ -535,8 +594,8 @@ export const UsageExamples: Story = {
                 placeholder="you@example.com"
                 className="w-full px-3 py-2 rounded border bg-background"
                 style={{
-                  fontSize: `${body.size}px`,
-                  lineHeight: `${body.lineHeight}px`,
+                  fontSize: `${paragraphMd.size}px`,
+                  lineHeight: `${paragraphMd.lineHeight}px`,
                 }}
               />
               <p
@@ -559,9 +618,7 @@ export const UsageExamples: Story = {
 export const TokenReference: Story = {
   name: "Token Reference",
   render: () => {
-    const tokenEntries = Object.entries(typographyTokens).filter(
-      ([key]) => key !== "fontFamily"
-    );
+    const tokenEntries = Object.entries(typographyTokens).filter(([key]) => key !== "fontFamily");
 
     return (
       <div className="p-8 space-y-8 max-w-4xl">
@@ -624,13 +681,13 @@ export const DoDont: Story = {
 
       <div className="grid grid-cols-2 gap-6">
         {/* Do */}
-        <div className="space-y-4 p-6 rounded-lg border-l-4 border-green-500 bg-card">
-          <h3 className="text-lg font-semibold text-green-600 dark:text-green-400">
+        <div className="space-y-4 p-6 rounded-lg border-l-4 border-status-success bg-card">
+          <h3 className="text-lg font-semibold text-status-success dark:text-status-success">
             ✓ Do
           </h3>
           <ul className="space-y-3">
             <li className="flex gap-3">
-              <span className="text-green-500 mt-1">✓</span>
+              <span className="text-status-success mt-1">✓</span>
               <div>
                 <div className="font-medium">Use semantic heading levels</div>
                 <div className="text-sm text-muted-foreground">
@@ -639,7 +696,7 @@ export const DoDont: Story = {
               </div>
             </li>
             <li className="flex gap-3">
-              <span className="text-green-500 mt-1">✓</span>
+              <span className="text-status-success mt-1">✓</span>
               <div>
                 <div className="font-medium">Match line height to font size</div>
                 <div className="text-sm text-muted-foreground">
@@ -648,7 +705,7 @@ export const DoDont: Story = {
               </div>
             </li>
             <li className="flex gap-3">
-              <span className="text-green-500 mt-1">✓</span>
+              <span className="text-status-success mt-1">✓</span>
               <div>
                 <div className="font-medium">Limit type scale variations</div>
                 <div className="text-sm text-muted-foreground">
@@ -657,7 +714,7 @@ export const DoDont: Story = {
               </div>
             </li>
             <li className="flex gap-3">
-              <span className="text-green-500 mt-1">✓</span>
+              <span className="text-status-success mt-1">✓</span>
               <div>
                 <div className="font-medium">Respect user's font preferences</div>
                 <div className="text-sm text-muted-foreground">
@@ -669,13 +726,11 @@ export const DoDont: Story = {
         </div>
 
         {/* Don't */}
-        <div className="space-y-4 p-6 rounded-lg border-l-4 border-red-500 bg-card">
-          <h3 className="text-lg font-semibold text-red-600 dark:text-red-400">
-            ✗ Don't
-          </h3>
+        <div className="space-y-4 p-6 rounded-lg border-l-4 border-status-error bg-card">
+          <h3 className="text-lg font-semibold text-status-error">✗ Don't</h3>
           <ul className="space-y-3">
             <li className="flex gap-3">
-              <span className="text-red-500 mt-1">✗</span>
+              <span className="text-status-error mt-1">✗</span>
               <div>
                 <div className="font-medium">Don't skip heading levels</div>
                 <div className="text-sm text-muted-foreground">
@@ -684,7 +739,7 @@ export const DoDont: Story = {
               </div>
             </li>
             <li className="flex gap-3">
-              <span className="text-red-500 mt-1">✗</span>
+              <span className="text-status-error mt-1">✗</span>
               <div>
                 <div className="font-medium">Don't use font sizes below 12px</div>
                 <div className="text-sm text-muted-foreground">
@@ -693,7 +748,7 @@ export const DoDont: Story = {
               </div>
             </li>
             <li className="flex gap-3">
-              <span className="text-red-500 mt-1">✗</span>
+              <span className="text-status-error mt-1">✗</span>
               <div>
                 <div className="font-medium">Don't set arbitrary line heights</div>
                 <div className="text-sm text-muted-foreground">
@@ -702,7 +757,7 @@ export const DoDont: Story = {
               </div>
             </li>
             <li className="flex gap-3">
-              <span className="text-red-500 mt-1">✗</span>
+              <span className="text-status-error mt-1">✗</span>
               <div>
                 <div className="font-medium">Don't use headings for style</div>
                 <div className="text-sm text-muted-foreground">
@@ -720,23 +775,65 @@ export const DoDont: Story = {
 
         <div className="grid grid-cols-2 gap-6">
           <div className="p-4 rounded-lg border bg-card">
-            <div className="text-sm text-green-600 dark:text-green-400 font-medium mb-2">
+            <div className="text-sm text-status-success dark:text-status-success font-medium mb-2">
               ✓ Good Hierarchy
             </div>
-            <h1 style={{ fontSize: "36px", fontWeight: 600 }}>Main Title</h1>
-            <h2 style={{ fontSize: "24px", fontWeight: 600 }}>Section Title</h2>
-            <p style={{ fontSize: "16px", fontWeight: 400 }}>
+            <h1
+              style={{
+                fontSize: `${typographyTokens.h1.size}px`,
+                lineHeight: `${typographyTokens.h1.lineHeight}px`,
+                fontWeight: typographyTokens.h1.weight,
+              }}
+            >
+              Main Title
+            </h1>
+            <h2
+              style={{
+                fontSize: `${typographyTokens.h2.size}px`,
+                lineHeight: `${typographyTokens.h2.lineHeight}px`,
+                fontWeight: typographyTokens.h2.weight,
+              }}
+            >
+              Section Title
+            </h2>
+            <p
+              style={{
+                fontSize: `${typographyTokens.paragraphMd.size}px`,
+                lineHeight: `${typographyTokens.paragraphMd.lineHeight}px`,
+                fontWeight: typographyTokens.paragraphMd.weight,
+              }}
+            >
               Body text follows semantic structure.
             </p>
           </div>
 
           <div className="p-4 rounded-lg border bg-card">
-            <div className="text-sm text-red-600 dark:text-red-400 font-medium mb-2">
-              ✗ Poor Hierarchy
-            </div>
-            <h1 style={{ fontSize: "36px", fontWeight: 600 }}>Main Title</h1>
-            <h1 style={{ fontSize: "28px", fontWeight: 600 }}>Skipped Level</h1>
-            <p style={{ fontSize: "16px", fontWeight: 400 }}>
+            <div className="text-sm text-status-error font-medium mb-2">✗ Poor Hierarchy</div>
+            <h1
+              style={{
+                fontSize: `${typographyTokens.h1.size}px`,
+                lineHeight: `${typographyTokens.h1.lineHeight}px`,
+                fontWeight: typographyTokens.h1.weight,
+              }}
+            >
+              Main Title
+            </h1>
+            <h1
+              style={{
+                fontSize: `${typographyTokens.h2.size}px`,
+                lineHeight: `${typographyTokens.h2.lineHeight}px`,
+                fontWeight: typographyTokens.h2.weight,
+              }}
+            >
+              Skipped Level
+            </h1>
+            <p
+              style={{
+                fontSize: `${typographyTokens.paragraphMd.size}px`,
+                lineHeight: `${typographyTokens.paragraphMd.lineHeight}px`,
+                fontWeight: typographyTokens.paragraphMd.weight,
+              }}
+            >
               Confusing structure with multiple H1s.
             </p>
           </div>
@@ -749,7 +846,7 @@ export const DoDont: Story = {
 export const ResponsiveScaling: Story = {
   name: "Responsive Scaling",
   render: () => {
-    const { heading1, body, caption } = typographyTokens;
+    const { hero } = typographyTokens;
 
     return (
       <div className="p-8 space-y-8 max-w-4xl">
@@ -764,12 +861,10 @@ export const ResponsiveScaling: Story = {
           {/* Desktop */}
           <section className="p-6 rounded-lg border bg-card">
             <h3 className="font-semibold mb-4">Desktop (Default)</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Viewport width ≥ 768px
-            </p>
+            <p className="text-sm text-muted-foreground mb-4">Viewport width ≥ 768px</p>
             <div
               className="border-2 border-dashed rounded p-4"
-              style={{ fontSize: `${heading1.size}px`, fontWeight: heading1.weight }}
+              style={{ fontSize: `${hero.size}px`, fontWeight: hero.weight }}
             >
               Responsive Typography Example
             </div>
@@ -778,12 +873,10 @@ export const ResponsiveScaling: Story = {
           {/* Tablet */}
           <section className="p-6 rounded-lg border bg-card">
             <h3 className="font-semibold mb-4">Tablet (Scaled to 85%)</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Viewport width 768px - 1024px
-            </p>
+            <p className="text-sm text-muted-foreground mb-4">Viewport width 768px - 1024px</p>
             <div
               className="border-2 border-dashed rounded p-4"
-              style={{ fontSize: `${heading1.size * 0.85}px`, fontWeight: heading1.weight }}
+              style={{ fontSize: `${hero.size * 0.85}px`, fontWeight: hero.weight }}
             >
               Responsive Typography Example
             </div>
@@ -792,12 +885,10 @@ export const ResponsiveScaling: Story = {
           {/* Mobile */}
           <section className="p-6 rounded-lg border bg-card">
             <h3 className="font-semibold mb-4">Mobile (Scaled to 75%)</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Viewport width &lt; 768px
-            </p>
+            <p className="text-sm text-muted-foreground mb-4">Viewport width &lt; 768px</p>
             <div
               className="border-2 border-dashed rounded p-4"
-              style={{ fontSize: `${heading1.size * 0.75}px`, fontWeight: heading1.weight }}
+              style={{ fontSize: `${hero.size * 0.75}px`, fontWeight: hero.weight }}
             >
               Responsive Typography Example
             </div>
@@ -807,9 +898,9 @@ export const ResponsiveScaling: Story = {
         <section className="mt-6 p-6 rounded-lg bg-muted">
           <h4 className="font-semibold mb-2">Implementation Note</h4>
           <p className="text-sm text-muted-foreground">
-            Use CSS `clamp()` or media queries for responsive scaling. The
-            tokens above are base values—adjust proportionally for different
-            viewports while maintaining the line-height ratios.
+            Use CSS `clamp()` or media queries for responsive scaling. The tokens above are base
+            values—adjust proportionally for different viewports while maintaining the line-height
+            ratios. For body text, keep paragraph-md at 16px minimum for accessibility.
           </p>
         </section>
       </div>
@@ -837,19 +928,16 @@ export const AccessibilityTest: Story = {
         <div className="grid grid-cols-3 gap-4">
           {[
             { size: 12, label: "Caption (minimum)", pass: true },
-            { size: 14, label: "Body Small", pass: true },
-            { size: 16, label: "Body (recommended)", pass: true },
+            { size: 14, label: "Paragraph Sm", pass: true },
+            { size: 16, label: "Paragraph Md (recommended)", pass: true },
           ].map(({ size, label, pass }) => (
             <div
               key={size}
               className={`p-4 rounded border text-center ${
-                pass ? "border-green-500" : "border-red-500"
+                pass ? "border-status-success" : "border-status-error"
               }`}
             >
-              <div
-                className="mb-2"
-                style={{ fontSize: `${size}px`, lineHeight: "1.5" }}
-              >
+              <div className="mb-2" style={{ fontSize: `${size}px`, lineHeight: "1.5" }}>
                 Aa
               </div>
               <div className="text-sm">{label}</div>
@@ -874,7 +962,7 @@ export const AccessibilityTest: Story = {
                 <div
                   key={key}
                   className={`flex items-center gap-4 p-3 rounded border ${
-                    isGood ? "border-green-500" : "border-red-500"
+                    isGood ? "border-status-success" : "border-status-error"
                   }`}
                 >
                   <div className="flex-1">{key}</div>
@@ -918,16 +1006,16 @@ export const TypographyPlayground: Story = {
           <h2 className="text-xl font-semibold">Display Scale</h2>
           <div className="space-y-4">
             <div className="border-b pb-4">
-              <div className="text-xs text-muted-foreground mb-1">text-5xl / Display / 48px</div>
-              <div className="text-5xl">Hero headline</div>
+              <div className="text-xs text-muted-foreground mb-1">text-hero / Hero / 40px</div>
+              <div className="text-hero">Hero headline</div>
             </div>
             <div className="border-b pb-4">
-              <div className="text-xs text-muted-foreground mb-1">text-4xl / Display / 36px</div>
-              <div className="text-4xl">Page title</div>
+              <div className="text-xs text-muted-foreground mb-1">text-h1 / H1 / 36px</div>
+              <div className="text-h1">Page title</div>
             </div>
             <div className="border-b pb-4">
-              <div className="text-xs text-muted-foreground mb-1">text-3xl / Display / 30px</div>
-              <div className="text-3xl">Section heading</div>
+              <div className="text-xs text-muted-foreground mb-1">text-h2 / H2 / 24px</div>
+              <div className="text-h2">Section heading</div>
             </div>
           </div>
         </div>
@@ -937,24 +1025,24 @@ export const TypographyPlayground: Story = {
           <h2 className="text-xl font-semibold">Body Scale</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-4 rounded-lg border bg-card">
-              <div className="text-xs text-muted-foreground mb-2">text-base / 16px</div>
-              <div className="text-base">
-                Body text is used for most content. It should be comfortable to read at length.
+              <div className="text-xs text-muted-foreground mb-2">text-paragraph-md / 16px</div>
+              <div className="text-paragraph-md">
+                Paragraph-md is used for most content. It should be comfortable to read at length.
                 Line height of 1.5-1.7 provides optimal readability.
               </div>
             </div>
             <div className="p-4 rounded-lg border bg-card">
-              <div className="text-xs text-muted-foreground mb-2">text-sm / 14px</div>
-              <div className="text-sm">
-                Small text for secondary information, captions, and labels.
-                Use sparingly to maintain hierarchy.
+              <div className="text-xs text-muted-foreground mb-2">text-paragraph-sm / 14px</div>
+              <div className="text-paragraph-sm">
+                Smaller text for secondary information, captions, and labels. Use sparingly to
+                maintain hierarchy.
               </div>
             </div>
             <div className="p-4 rounded-lg border bg-card">
-              <div className="text-xs text-muted-foreground mb-2">text-xs / 12px</div>
-              <div className="text-xs">
-                Extra small text for fine print, disclaimers, and metadata.
-                Ensure 4.5:1 contrast for accessibility.
+              <div className="text-xs text-muted-foreground mb-2">text-caption / 12px</div>
+              <div className="text-caption">
+                Caption text for fine print, disclaimers, and metadata. Ensure 4.5:1 contrast for
+                accessibility.
               </div>
             </div>
           </div>

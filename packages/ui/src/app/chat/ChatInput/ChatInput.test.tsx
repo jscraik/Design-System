@@ -58,7 +58,7 @@ describe("ChatInput", () => {
       const { container } = render(
         <ChatInput variant="compound" selectedModel={mockSelectedModel}>
           <ChatInput.ComposerArea />
-        </ChatInput>
+        </ChatInput>,
       );
       // Should render without error
       const form = container.querySelector("form");
@@ -71,7 +71,7 @@ describe("ChatInput", () => {
           <ChatInput.ActionBar>
             <div data-testid="custom-action">Custom</div>
           </ChatInput.ActionBar>
-        </ChatInput>
+        </ChatInput>,
       );
       expect(screen.getByTestId("custom-action")).toBeInTheDocument();
     });
@@ -152,20 +152,12 @@ describe("ChatInput", () => {
 
   describe("Custom slots", () => {
     it("renders composerLeft content", () => {
-      render(
-        <ChatInput
-          composerLeft={<div data-testid="composer-left">Left</div>}
-        />
-      );
+      render(<ChatInput composerLeft={<div data-testid="composer-left">Left</div>} />);
       expect(screen.getByTestId("composer-left")).toBeInTheDocument();
     });
 
     it("renders composerRight content", () => {
-      render(
-        <ChatInput
-          composerRight={<div data-testid="composer-right">Right</div>}
-        />
-      );
+      render(<ChatInput composerRight={<div data-testid="composer-right">Right</div>} />);
       expect(screen.getByTestId("composer-right")).toBeInTheDocument();
     });
   });
@@ -200,7 +192,7 @@ describe("ChatInput", () => {
               <ChatInput.SendButton />
             </ChatInput.RightActions>
           </ChatInput.ActionBar>
-        </ChatInput>
+        </ChatInput>,
       );
       const sendButton = screen.getByTitle("Send message (Enter)");
       expect(sendButton).toBeInTheDocument();
@@ -215,7 +207,7 @@ describe("ChatInput", () => {
               <ChatInput.SendButton />
             </ChatInput.RightActions>
           </ChatInput.ActionBar>
-        </ChatInput>
+        </ChatInput>,
       );
       const sendButton = screen.getByTitle("Send message (Enter)");
       expect(sendButton).toBeDisabled();
@@ -230,7 +222,7 @@ describe("ChatInput", () => {
           <ChatInput.ActionBar>
             <ChatInput.LeftActions />
           </ChatInput.ActionBar>
-        </ChatInput>
+        </ChatInput>,
       );
       expect(screen.getByTitle("Add attachment")).toBeInTheDocument();
       expect(screen.getByTitle("Web search")).toBeInTheDocument();
@@ -246,7 +238,7 @@ describe("ChatInput", () => {
           <ChatInput.ActionBar>
             <ChatInput.RightActions />
           </ChatInput.ActionBar>
-        </ChatInput>
+        </ChatInput>,
       );
       expect(screen.getByTitle("History")).toBeInTheDocument();
       expect(screen.getByTitle("Voice input")).toBeInTheDocument();
@@ -259,7 +251,7 @@ describe("ChatInput", () => {
       const { container } = render(
         <ChatInput variant="compound" selectedModel={mockSelectedModel}>
           <ChatInput.ComposerArea />
-        </ChatInput>
+        </ChatInput>,
       );
       // Should render without error - the AppsSDK Textarea component
       const form = container.querySelector("form");
@@ -274,7 +266,7 @@ describe("ChatInput", () => {
           <ChatInput.ActionBar>
             <div data-testid="action-content">Actions</div>
           </ChatInput.ActionBar>
-        </ChatInput>
+        </ChatInput>,
       );
       expect(screen.getByTestId("action-content")).toBeInTheDocument();
     });

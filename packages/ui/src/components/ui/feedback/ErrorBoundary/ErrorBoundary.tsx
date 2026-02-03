@@ -65,9 +65,9 @@ export class UIErrorBoundary extends Component<UIErrorBoundaryProps, UIErrorBoun
       return (
         <div className="flex items-center justify-center min-h-[200px] p-6">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-destructive/10 mb-4">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-status-error-muted/10 mb-4">
               <svg
-                className="w-6 h-6 text-destructive"
+                className="w-6 h-6 text-status-error"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -120,9 +120,9 @@ export function DefaultErrorFallback({
   return (
     <div className="flex items-center justify-center min-h-[200px] p-6">
       <div className="text-center max-w-md">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-destructive/10 mb-4">
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-status-error-muted/10 mb-4">
           <svg
-            className="w-6 h-6 text-destructive"
+            className="w-6 h-6 text-status-error"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

@@ -23,13 +23,12 @@ function SectionHeader({
 }) {
   return (
     <>
-      <h3 className="text-body-small font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2">
+      <h3 className="text-body-small font-medium text-foreground dark:text-foreground mb-2">
         {title}
       </h3>
       <p
         className={
-          descriptionClassName ??
-          "text-caption text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mb-3"
+          descriptionClassName ?? "text-caption text-text-secondary dark:text-text-secondary mb-3"
         }
       >
         {description}
@@ -52,10 +51,8 @@ function RangeSlider({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <label className="text-caption text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-          {label}
-        </label>
-        <span className="text-caption font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+        <label className="text-caption text-text-secondary dark:text-text-secondary">{label}</label>
+        <span className="text-caption font-medium text-foreground dark:text-foreground">
           {value}k
         </span>
       </div>
@@ -65,7 +62,7 @@ function RangeSlider({
         max="100"
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="w-full h-1.5 bg-foundation-bg-dark-3 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-white [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer"
+        className="w-full h-1.5 bg-muted rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-background dark:[&::-webkit-slider-thumb]:bg-foreground [&::-webkit-slider-thumb]:cursor-pointer [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-background dark:[&::-moz-range-thumb]:bg-foreground [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer"
         style={{ background }}
         aria-label={label}
       />
@@ -92,8 +89,8 @@ function SegmentedButtons<T extends string>({
           className={cn(
             "px-4 py-2 rounded-lg text-caption transition-colors flex-1 min-w-[80px]",
             value === option.value
-              ? "bg-foundation-accent-green-light text-foundation-text-dark-primary"
-              : "bg-foundation-bg-light-2 text-foundation-text-light-secondary hover:text-foundation-text-light-primary dark:bg-foundation-bg-dark-3 dark:text-foundation-text-dark-secondary dark:hover:text-foundation-text-dark-primary",
+              ? "bg-accent-green text-foreground"
+              : "bg-secondary text-text-secondary hover:text-foreground dark:bg-muted dark:text-text-secondary dark:hover:text-foreground",
           )}
           aria-pressed={value === option.value}
         >
@@ -122,10 +119,10 @@ function ToggleRow({
       <div className="flex items-start gap-3">
         <div className="mt-0.5">{icon}</div>
         <div className="flex-1">
-          <div className="text-caption font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-0.5">
+          <div className="text-caption font-medium text-foreground dark:text-foreground mb-0.5">
             {title}
           </div>
-          <div className="text-caption font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+          <div className="text-caption font-normal text-text-secondary dark:text-text-secondary">
             {description}
           </div>
         </div>
@@ -135,9 +132,7 @@ function ToggleRow({
         onClick={onToggle}
         className={cn(
           "relative inline-flex h-5 w-9 items-center rounded-full transition-colors flex-shrink-0",
-          checked
-            ? "bg-foundation-accent-green"
-            : "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3",
+          checked ? "bg-accent-green" : "bg-muted dark:bg-muted",
         )}
         role="switch"
         aria-checked={checked}
@@ -145,7 +140,7 @@ function ToggleRow({
       >
         <span
           className={cn(
-            "inline-block size-4 transform rounded-full bg-white transition-transform",
+            "inline-block size-4 transform rounded-full bg-background dark:bg-foreground transition-transform",
             checked ? "translate-x-[18px]" : "translate-x-0.5",
           )}
         />
@@ -224,7 +219,7 @@ export function DiscoverySettingsModal({
     <button
       type="button"
       onClick={handleReset}
-      className="px-3 py-1.5 text-caption font-normal text-foundation-accent-green-light dark:text-foundation-accent-green bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2 border border-foundation-bg-dark-3 hover:bg-foundation-bg-dark-3 rounded-lg transition-colors flex items-center gap-1.5"
+      className="px-3 py-1.5 text-caption font-normal text-accent-green dark:text-accent-green bg-background dark:bg-secondary border border-muted hover:bg-muted rounded-lg transition-colors flex items-center gap-1.5"
       aria-label="Reset all settings to defaults"
     >
       <svg className="size-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -246,13 +241,13 @@ export function DiscoverySettingsModal({
       title="Discovery Settings"
       titleId="discovery-settings-title"
       maxWidth="420px"
-      className="bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 border border-foundation-bg-light-3 dark:border-foundation-text-dark-primary/10 rounded-[16px] shadow-2xl"
+      className="bg-background dark:bg-background border border-muted dark:border-foreground/10 rounded-[16px] shadow-2xl"
       showOverlay={false}
     >
-      <div className="px-6 py-4 border-b border-foundation-bg-light-3 dark:border-foundation-text-dark-primary/10 flex items-center justify-between">
+      <div className="px-6 py-4 border-b border-muted dark:border-foreground/10 flex items-center justify-between">
         <h2
           id="discovery-settings-title"
-          className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foundation-text-light-primary dark:text-foundation-text-dark-primary"
+          className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foreground dark:text-foreground"
         >
           Discovery Settings
         </h2>
@@ -264,7 +259,7 @@ export function DiscoverySettingsModal({
           <SectionHeader
             title="Token Budgets"
             description="Sets the target size for your final prompt. Use 60k for ChatGPT (lite Pro context), higher for CLIAPI tools with larger context windows."
-            descriptionClassName="text-caption text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mb-3"
+            descriptionClassName="text-caption text-text-secondary dark:text-text-secondary mb-3"
           />
           <RangeSlider
             label="Target size"
@@ -276,7 +271,7 @@ export function DiscoverySettingsModal({
             <button
               type="button"
               onClick={() => setShowAutoPlanBudget(!showAutoPlanBudget)}
-              className="flex items-center gap-2 text-caption font-normal text-foundation-text-light-secondary hover:text-foundation-text-light-primary dark:text-foundation-text-dark-secondary dark:hover:text-foundation-text-dark-primary transition-colors w-full"
+              className="flex items-center gap-2 text-caption font-normal text-text-secondary hover:text-foreground dark:text-text-secondary dark:hover:text-foreground transition-colors w-full"
             >
               <svg
                 className={`size-3 transition-transform ${showAutoPlanBudget ? "rotate-90" : ""}`}
@@ -292,21 +287,21 @@ export function DiscoverySettingsModal({
                 />
               </svg>
               <svg
-                className="size-3.5 text-foundation-accent-orange-light dark:text-foundation-accent-orange"
+                className="size-3.5 text-accent-orange dark:text-accent-orange"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >
                 <path d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
               <span>Auto Plan Budget</span>
-              <span className="ml-auto text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+              <span className="ml-auto text-text-secondary dark:text-text-secondary">
                 {autoPlanBudget}k
               </span>
             </button>
 
             {showAutoPlanBudget && (
               <div className="mt-3 ml-5 space-y-3">
-                <p className="text-caption text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+                <p className="text-caption text-text-secondary dark:text-text-secondary">
                   Auto Plan runs use CLI/API calls which support larger context windows.
                 </p>
                 <RangeSlider
@@ -334,7 +329,7 @@ export function DiscoverySettingsModal({
             ]}
             onChange={handlePromptEnhancementChange}
           />
-          <p className="text-caption text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+          <p className="text-caption text-text-secondary dark:text-text-secondary">
             {getEnhancementDescription()}
           </p>
         </div>
@@ -343,16 +338,12 @@ export function DiscoverySettingsModal({
           <SectionHeader
             title="Clarifying Questions"
             description="Allow the agent to ask you questions during discovery to better understand your intent."
-            descriptionClassName="text-caption text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mb-3"
+            descriptionClassName="text-caption text-text-secondary dark:text-text-secondary mb-3"
           />
           <div className="space-y-4">
             <ToggleRow
               icon={
-                <svg
-                  className="size-5 text-foundation-accent-blue"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="size-5 text-accent-blue" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M21 15c0-4.625-3.507-8.441-8-8.941V4h-2v2.059c-4.493.5-8 4.316-8 8.941v2l-2 2v1h22v-1l-2-2v-2zm-9 5c1.103 0 2-.897 2-2h-4c0 1.103.897 2 2 2z" />
                 </svg>
               }
@@ -364,7 +355,7 @@ export function DiscoverySettingsModal({
             <ToggleRow
               icon={
                 <svg
-                  className="size-5 text-foundation-accent-green-light dark:text-foundation-accent-green"
+                  className="size-5 text-accent-green dark:text-accent-green"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -400,7 +391,7 @@ export function DiscoverySettingsModal({
           <SectionHeader title="Model Behavior" description="Adjust tone and verbosity." />
           <div className="space-y-4">
             <div>
-              <div className="text-caption font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
+              <div className="text-caption font-medium text-foreground dark:text-foreground mb-1">
                 Reasoning effort
               </div>
               <SegmentedButtons
@@ -414,7 +405,7 @@ export function DiscoverySettingsModal({
               />
             </div>
             <div>
-              <div className="text-caption font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
+              <div className="text-caption font-medium text-foreground dark:text-foreground mb-1">
                 Verbosity
               </div>
               <SegmentedButtons
@@ -435,7 +426,7 @@ export function DiscoverySettingsModal({
           <ToggleRow
             icon={
               <svg
-                className="size-5 text-foundation-accent-orange-light dark:text-foundation-accent-orange"
+                className="size-5 text-accent-orange dark:text-accent-orange"
                 fill="currentColor"
                 viewBox="0 0 24 24"
               >

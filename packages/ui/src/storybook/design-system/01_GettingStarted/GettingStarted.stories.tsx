@@ -23,8 +23,8 @@ const WelcomeStory = () => {
       <div>
         <h1 className="text-4xl font-bold mb-4">Welcome to aStudio Design System</h1>
         <p className="text-xl text-muted-foreground">
-          Your comprehensive guide to building consistent UI across ChatGPT widgets and
-          standalone React applications.
+          Your comprehensive guide to building consistent UI across ChatGPT widgets and standalone
+          React applications.
         </p>
       </div>
 
@@ -72,8 +72,8 @@ const WelcomeStory = () => {
             <div>
               <div className="font-medium mb-1">Use the sidebar</div>
               <div className="text-sm text-muted-foreground">
-                Browse by category: Design System (tokens, patterns), Components (UI elements),
-                or Templates (full page layouts)
+                Browse by category: Design System (tokens, patterns), Components (UI elements), or
+                Templates (full page layouts)
               </div>
             </div>
           </div>
@@ -122,20 +122,20 @@ const WelcomeStory = () => {
         </p>
         <div className="space-y-2 text-sm">
           <div>
-            <code className="px-2 py-1 rounded bg-background">Design System / Colors</code> —
-            See all color tokens and usage examples
+            <code className="px-2 py-1 rounded bg-background">Design System / Colors</code> — See
+            all color tokens and usage examples
           </div>
           <div>
             <code className="px-2 py-1 rounded bg-background">Design System / Typography</code> —
             Explore the type scale and font pairing
           </div>
           <div>
-            <code className="px-2 py-1 rounded bg-background">Design System / Spacing</code> —
-            Learn the spacing scale (s4 through s32)
+            <code className="px-2 py-1 rounded bg-background">Design System / Spacing</code> — Learn
+            the spacing scale (s4 through s32)
           </div>
           <div>
-            <code className="px-2 py-1 rounded bg-background">Interactive States</code> — See
-            hover, focus, and active states
+            <code className="px-2 py-1 rounded bg-background">Interactive States</code> — See hover,
+            focus, and active states
           </div>
         </div>
       </div>
@@ -170,7 +170,10 @@ const UsingTokensStory = () => {
             <li>✓ Consistency: Same value everywhere, same name</li>
             <li>✓ Maintainability: Update once, change everywhere</li>
             <li>✓ Theme support: Tokens adapt to light/dark modes</li>
-            <li>✓ Intent-based: <code className="px-1 py-0.5 rounded bg-background">s16</code> means &quot;medium spacing&quot;, not &quot;16px&quot;</li>
+            <li>
+              ✓ Intent-based: <code className="px-1 py-0.5 rounded bg-background">s16</code> means
+              &quot;medium spacing&quot;, not &quot;16px&quot;
+            </li>
           </ul>
         </div>
       </div>
@@ -192,9 +195,7 @@ const UsingTokensStory = () => {
             <div className="text-sm text-muted-foreground mb-2">
               Consistent spacing scale from s4 (4px) to s32 (32px)
             </div>
-            <code className="block text-xs bg-background p-3 rounded">
-              p-s8 m-s16 gap-s4
-            </code>
+            <code className="block text-xs bg-background p-3 rounded">p-s8 m-s16 gap-s4</code>
           </div>
           <div>
             <div className="font-medium mb-2">🔳 Radius</div>
@@ -210,9 +211,7 @@ const UsingTokensStory = () => {
             <div className="text-sm text-muted-foreground mb-2">
               Duration and easing for animations
             </div>
-            <code className="block text-xs bg-background p-3 rounded">
-              duration-150 ease-out
-            </code>
+            <code className="block text-xs bg-background p-3 rounded">duration-150 ease-out</code>
           </div>
         </div>
       </div>
@@ -223,7 +222,7 @@ const UsingTokensStory = () => {
           <div>
             <div className="text-sm font-medium mb-2">Example 1: Styled Button</div>
             <pre className="text-xs bg-background p-3 rounded overflow-x-auto">
-{`<button className="
+              {`<button className="
   px-s16 py-s8           // spacing tokens
   rounded-lg             // radius token (r8)
   bg-accent              // color token
@@ -238,7 +237,7 @@ const UsingTokensStory = () => {
           <div>
             <div className="text-sm font-medium mb-2">Example 2: Card Component</div>
             <pre className="text-xs bg-background p-3 rounded overflow-x-auto">
-{`<div className="
+              {`<div className="
   border                 // from border token
   bg-card                // semantic background
   rounded-xl             // radius (r12)
@@ -256,8 +255,16 @@ const UsingTokensStory = () => {
       <div className="rounded-lg border bg-accent/10 p-6">
         <h2 className="text-xl font-semibold mb-2">💡 Pro Tips</h2>
         <ul className="text-sm space-y-2">
-          <li>• Use semantic colors like <code className="px-1 py-0.5 rounded bg-background">bg-accent</code> instead of raw hex values</li>
-          <li>• Combine tokens: <code className="px-1 py-0.5 rounded bg-background">px-s16 py-s8</code> for horizontal/vertical spacing</li>
+          <li>
+            • Use semantic colors like{" "}
+            <code className="px-1 py-0.5 rounded bg-background">bg-accent</code> instead of raw hex
+            values
+          </li>
+          <li>
+            • Combine tokens:{" "}
+            <code className="px-1 py-0.5 rounded bg-background">px-s16 py-s8</code> for
+            horizontal/vertical spacing
+          </li>
           <li>• Tailwind IDE extensions provide autocomplete for all tokens</li>
           <li>• Check the Design System section to see all available tokens</li>
         </ul>
@@ -276,9 +283,7 @@ const ComponentPatternsStory = () => {
     <div className="max-w-4xl p-8 space-y-8">
       <div>
         <h1 className="text-3xl font-bold mb-2">Component Patterns</h1>
-        <p className="text-muted-foreground">
-          Common UI patterns with copy-paste ready code.
-        </p>
+        <p className="text-muted-foreground">Common UI patterns with copy-paste ready code.</p>
       </div>
 
       <div className="rounded-lg border bg-card p-6">
@@ -311,9 +316,7 @@ const ComponentPatternsStory = () => {
                 <button className="px-4 py-2 rounded-md bg-accent text-accent-foreground text-sm">
                   Primary
                 </button>
-                <button className="px-4 py-2 rounded-md border text-sm">
-                  Secondary
-                </button>
+                <button className="px-4 py-2 rounded-md border text-sm">Secondary</button>
                 <button className="px-4 py-2 rounded-md bg-muted text-sm opacity-50 cursor-not-allowed">
                   Disabled
                 </button>
@@ -322,7 +325,7 @@ const ComponentPatternsStory = () => {
             <div>
               <div className="text-sm font-medium mb-2">Code</div>
               <pre className="text-xs bg-background p-3 rounded overflow-x-auto">
-{`// Primary button
+                {`// Primary button
 <button className="
   px-s16 py-s8
   rounded-lg
@@ -381,7 +384,7 @@ const ComponentPatternsStory = () => {
             <div>
               <div className="text-sm font-medium mb-2">Code</div>
               <pre className="text-xs bg-background p-3 rounded overflow-x-auto">
-{`const [value, setValue] = useState("");
+                {`const [value, setValue] = useState("");
 
 <input
   type="text"
@@ -417,14 +420,12 @@ const ComponentPatternsStory = () => {
                     </div>
                     <div className="ml-3">
                       <div className="font-semibold">Card Title</div>
-                      <div className="text-xs text-muted-foreground">
-                        Optional subtitle
-                      </div>
+                      <div className="text-xs text-muted-foreground">Optional subtitle</div>
                     </div>
                   </div>
                   <p className="text-sm text-muted-foreground">
-                    Card content goes here. This pattern works for dashboards, lists, and
-                    content displays.
+                    Card content goes here. This pattern works for dashboards, lists, and content
+                    displays.
                   </p>
                 </div>
               </div>
@@ -432,7 +433,7 @@ const ComponentPatternsStory = () => {
             <div>
               <div className="text-sm font-medium mb-2">Code</div>
               <pre className="text-xs bg-background p-3 rounded overflow-x-auto">
-{`<div className="
+                {`<div className="
   border
   bg-card
   rounded-xl
@@ -483,7 +484,7 @@ const ComponentPatternsStory = () => {
                   Open Dialog
                 </button>
                 {isDialogOpen && (
-                  <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
+                  <div className="fixed inset-0 bg-overlay/50 flex items-center justify-center p-4">
                     <div className="bg-card border rounded-xl p-6 w-full max-w-md shadow-card">
                       <div className="flex items-center justify-between mb-4">
                         <h3 className="text-lg font-semibold">Dialog Title</h3>
@@ -519,7 +520,7 @@ const ComponentPatternsStory = () => {
             <div>
               <div className="text-sm font-medium mb-2">Code</div>
               <pre className="text-xs bg-background p-3 rounded overflow-x-auto">
-{`const [isOpen, setIsOpen] = useState(false);
+                {`const [isOpen, setIsOpen] = useState(false);
 
 <button onClick={() => setIsOpen(true)}>
   Open Dialog
@@ -528,7 +529,7 @@ const ComponentPatternsStory = () => {
 {isOpen && (
   <>
     {/* Backdrop */}
-    <div className="fixed inset-0 bg-black/50" />
+    <div className="fixed inset-0 bg-overlay/50" />
 
     {/* Dialog */}
     <div className="
@@ -575,7 +576,8 @@ const meta: Meta = {
     layout: "fullscreen",
     docs: {
       description: {
-        component: "Your orientation to the aStudio design system. Learn how to navigate Storybook, use design tokens, and implement common patterns.",
+        component:
+          "Your orientation to the aStudio design system. Learn how to navigate Storybook, use design tokens, and implement common patterns.",
       },
     },
   },

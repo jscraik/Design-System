@@ -70,14 +70,14 @@ describe("ChatMessages", () => {
     it("renders action buttons for assistant messages", () => {
       render(<ChatMessages messages={[sampleMessages[0]]} />);
       // Assistant messages should have action buttons with titles
-      const buttons = document.querySelectorAll('button[title^="Copy"], button[title^="Good"], button[title^="Bad"], button[title^="Share"], button[title^="Regenerate"], button[title^="More"]');
+      const buttons = document.querySelectorAll(
+        'button[title^="Copy"], button[title^="Good"], button[title^="Bad"], button[title^="Share"], button[title^="Regenerate"], button[title^="More"]',
+      );
       expect(buttons.length).toBeGreaterThan(0);
     });
 
     it("calls onMessageAction when copy clicked", async () => {
-      render(
-        <ChatMessages messages={[sampleMessages[0]]} onMessageAction={mockOnMessageAction} />
-      );
+      render(<ChatMessages messages={[sampleMessages[0]]} onMessageAction={mockOnMessageAction} />);
       const copyButton = document.querySelector('button[title="Copy"]');
       if (copyButton) {
         await copyButton.click();
@@ -88,9 +88,7 @@ describe("ChatMessages", () => {
     });
 
     it("calls onMessageAction when thumbs-up clicked", async () => {
-      render(
-        <ChatMessages messages={[sampleMessages[0]]} onMessageAction={mockOnMessageAction} />
-      );
+      render(<ChatMessages messages={[sampleMessages[0]]} onMessageAction={mockOnMessageAction} />);
       const thumbsUpButton = document.querySelector('button[title="Good response"]');
       if (thumbsUpButton) {
         await thumbsUpButton.click();
@@ -99,9 +97,7 @@ describe("ChatMessages", () => {
     });
 
     it("calls onMessageAction when thumbs-down clicked", async () => {
-      render(
-        <ChatMessages messages={[sampleMessages[0]]} onMessageAction={mockOnMessageAction} />
-      );
+      render(<ChatMessages messages={[sampleMessages[0]]} onMessageAction={mockOnMessageAction} />);
       const thumbsDownButton = document.querySelector('button[title="Bad response"]');
       if (thumbsDownButton) {
         await thumbsDownButton.click();
@@ -110,9 +106,7 @@ describe("ChatMessages", () => {
     });
 
     it("calls onMessageAction when share clicked", async () => {
-      render(
-        <ChatMessages messages={[sampleMessages[0]]} onMessageAction={mockOnMessageAction} />
-      );
+      render(<ChatMessages messages={[sampleMessages[0]]} onMessageAction={mockOnMessageAction} />);
       const shareButton = document.querySelector('button[title="Share"]');
       if (shareButton) {
         await shareButton.click();
@@ -121,9 +115,7 @@ describe("ChatMessages", () => {
     });
 
     it("calls onMessageAction when regenerate clicked", async () => {
-      render(
-        <ChatMessages messages={[sampleMessages[0]]} onMessageAction={mockOnMessageAction} />
-      );
+      render(<ChatMessages messages={[sampleMessages[0]]} onMessageAction={mockOnMessageAction} />);
       const regenerateButton = document.querySelector('button[title="Regenerate"]');
       if (regenerateButton) {
         await regenerateButton.click();
@@ -132,9 +124,7 @@ describe("ChatMessages", () => {
     });
 
     it("calls onMessageAction when more clicked", async () => {
-      render(
-        <ChatMessages messages={[sampleMessages[0]]} onMessageAction={mockOnMessageAction} />
-      );
+      render(<ChatMessages messages={[sampleMessages[0]]} onMessageAction={mockOnMessageAction} />);
       const moreButton = document.querySelector('button[title="More"]');
       if (moreButton) {
         await moreButton.click();
@@ -151,9 +141,7 @@ describe("ChatMessages", () => {
     });
 
     it("calls onMessageAction when edit clicked on user message", async () => {
-      render(
-        <ChatMessages messages={[sampleMessages[1]]} onMessageAction={mockOnMessageAction} />
-      );
+      render(<ChatMessages messages={[sampleMessages[1]]} onMessageAction={mockOnMessageAction} />);
       const editButton = document.querySelector('button[title="Edit"]');
       if (editButton) {
         await editButton.click();
@@ -164,9 +152,7 @@ describe("ChatMessages", () => {
 
   describe("Stateful props - Loading", () => {
     it("calls onStateChange with 'loading'", async () => {
-      render(
-        <ChatMessages loading onStateChange={mockOnStateChange} />
-      );
+      render(<ChatMessages loading onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });
@@ -180,9 +166,7 @@ describe("ChatMessages", () => {
 
   describe("Stateful props - Error", () => {
     it("calls onStateChange with 'error'", async () => {
-      render(
-        <ChatMessages error="Failed to load" onStateChange={mockOnStateChange} />
-      );
+      render(<ChatMessages error="Failed to load" onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
       });
@@ -196,9 +180,7 @@ describe("ChatMessages", () => {
 
   describe("Stateful props - Disabled", () => {
     it("calls onStateChange with 'disabled'", async () => {
-      render(
-        <ChatMessages disabled onStateChange={mockOnStateChange} />
-      );
+      render(<ChatMessages disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
       });
@@ -207,9 +189,7 @@ describe("ChatMessages", () => {
 
   describe("Stateful props - Required", () => {
     it("calls onStateChange with 'default' when required", async () => {
-      render(
-        <ChatMessages required onStateChange={mockOnStateChange} />
-      );
+      render(<ChatMessages required onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
       });
@@ -218,27 +198,14 @@ describe("ChatMessages", () => {
 
   describe("State priority", () => {
     it("prioritizes loading over error and disabled", async () => {
-      render(
-        <ChatMessages
-          loading
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<ChatMessages loading error="Error" disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });
     });
 
     it("prioritizes error over disabled when not loading", async () => {
-      render(
-        <ChatMessages
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<ChatMessages error="Error" disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
       });

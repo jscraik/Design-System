@@ -18,7 +18,7 @@ export function useChatSidebarState(initialProjects: SidebarItem[]) {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [projectsData, setProjectsData] = useState<SidebarItem[]>(initialProjects);
   const [newProjectIcon, setNewProjectIcon] = useState("folder");
-  const [newProjectColor, setNewProjectColor] = useState("text-foundation-text-dark-tertiary");
+  const [newProjectColor, setNewProjectColor] = useState("text-muted-foreground");
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [showNewProjectModal, setShowNewProjectModal] = useState(false);
   const [memoryOption, setMemoryOption] = useState<"default" | "project-only">("default");

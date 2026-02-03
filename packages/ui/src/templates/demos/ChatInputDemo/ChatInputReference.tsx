@@ -321,23 +321,16 @@ export function ChatInputReference({
   const dynamicPlaceholder = isSearchEnabled ? "Search the web" : placeholder || "Ask anything";
 
   return (
-    <div
-      className={cn(
-        "border-t border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
-        "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1",
-        "px-4 py-4",
-        className,
-      )}
-    >
+    <div className={cn("border-t border-border", "bg-background", "px-4 py-4", className)}>
       <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
         <div
           className={cn(
             "rounded-[24px] overflow-hidden transition-all duration-200",
-            "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
-            "border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
-            "shadow-sm hover:shadow-md dark:shadow-black/10",
-            "focus-within:border-foundation-accent-blue-light/50 dark:focus-within:border-foundation-accent-blue/50",
-            "focus-within:shadow-lg focus-within:shadow-foundation-accent-blue-light/5 dark:focus-within:shadow-foundation-accent-blue/5",
+            "bg-secondary",
+            "border border-border",
+            "shadow-sm hover:shadow-md dark:shadow-muted/",
+            "focus-within:border-accent-blue/50 dark:focus-within:border-accent-blue/50",
+            "focus-within:shadow-lg focus-within:shadow-accent-blue/5 dark:focus-within:shadow-accent-blue/5",
           )}
         >
           {/* Input Area */}
@@ -348,8 +341,8 @@ export function ChatInputReference({
                 <div
                   className={cn(
                     "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg",
-                    "bg-foundation-accent-blue-light/10 dark:bg-foundation-accent-blue/10",
-                    "text-foundation-accent-blue-light dark:text-foundation-accent-blue",
+                    "bg-accent-blue/10 dark:bg-accent-blue/10",
+                    "text-accent-blue-light dark:text-accent-blue",
                     "text-[13px] font-medium leading-[18px] tracking-[-0.3px]",
                   )}
                 >
@@ -370,8 +363,8 @@ export function ChatInputReference({
               className={cn(
                 "w-full bg-transparent resize-none focus:outline-none",
                 "text-[16px] font-normal leading-[26px] tracking-[-0.4px]",
-                "text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-                "placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary",
+                "text-foreground",
+                "placeholder:text-muted-foreground dark:placeholder:text-muted-foreground",
                 disabled && "opacity-50 cursor-not-allowed",
               )}
               style={{ minHeight: "26px", maxHeight: "200px" }}
@@ -388,7 +381,7 @@ export function ChatInputReference({
           <div
             className={cn(
               "flex items-center justify-between px-3 py-2",
-              "border-t border-foundation-bg-light-3/50 dark:border-foundation-bg-dark-3/50",
+              "border-t border-border/50 dark:border-border/50",
             )}
           >
             {/* Left Actions */}
@@ -403,14 +396,10 @@ export function ChatInputReference({
                     aria-label="Add attachment"
                     className={cn(
                       "p-2 rounded-lg transition-all duration-200",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue focus-visible:ring-offset-1",
+                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring-light dark:focus-visible:ring-ring focus-visible:ring-offset-1",
                       attachmentMenuOpen
-                        ? "bg-foundation-accent-blue-light/15 dark:bg-foundation-accent-blue/15 text-foundation-accent-blue-light dark:text-foundation-accent-blue"
-                        : cn(
-                            "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
-                            "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-                            "hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
-                          ),
+                        ? "bg-accent-blue-light/15 dark:bg-accent-blue/15 text-accent-blue-light dark:text-accent-blue"
+                        : cn("text-muted-foreground", "hover:bg-muted", "hover:text-foreground"),
                     )}
                   >
                     <IconPlus className="size-5" />
@@ -423,9 +412,9 @@ export function ChatInputReference({
                   sideOffset={8}
                   className={cn(
                     "z-50 w-[260px] rounded-2xl overflow-hidden",
-                    "border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
-                    "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2",
-                    "shadow-xl dark:shadow-black/20",
+                    "border border-border",
+                    "bg-background",
+                    "shadow-xl dark:shadow-muted/",
                     "animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-2 duration-200",
                   )}
                 >
@@ -439,12 +428,12 @@ export function ChatInputReference({
                       className={cn(
                         "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left",
                         "text-[15px] font-normal leading-[22px] tracking-[-0.3px] group",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue",
-                        "text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-                        "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring-light dark:focus-visible:ring-ring",
+                        "text-foreground",
+                        "hover:bg-secondary dark:hover:bg-muted",
                       )}
                     >
-                      <IconPaperclip className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+                      <IconPaperclip className="size-5 text-muted-foreground group-hover:text-foreground dark:group-hover:text-foreground transition-colors" />
                       <span>Add photos & files</span>
                     </button>
                     <button
@@ -456,12 +445,12 @@ export function ChatInputReference({
                       className={cn(
                         "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left",
                         "text-[15px] font-normal leading-[22px] tracking-[-0.3px] group",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue",
-                        "text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-                        "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring-light dark:focus-visible:ring-ring",
+                        "text-foreground",
+                        "hover:bg-secondary dark:hover:bg-muted",
                       )}
                     >
-                      <IconTelescope className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+                      <IconTelescope className="size-5 text-muted-foreground group-hover:text-foreground dark:group-hover:text-foreground transition-colors" />
                       <span>Deep research</span>
                     </button>
                     <button
@@ -473,12 +462,12 @@ export function ChatInputReference({
                       className={cn(
                         "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-left",
                         "text-[15px] font-normal leading-[22px] tracking-[-0.3px] group",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue",
-                        "text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-                        "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring-light dark:focus-visible:ring-ring",
+                        "text-foreground",
+                        "hover:bg-secondary dark:hover:bg-muted",
                       )}
                     >
-                      <IconImage className="size-5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary group-hover:text-foundation-text-light-primary dark:group-hover:text-foundation-text-dark-primary transition-colors" />
+                      <IconImage className="size-5 text-muted-foreground group-hover:text-foreground dark:group-hover:text-foreground transition-colors" />
                       <span>Create image</span>
                     </button>
                   </div>
@@ -492,14 +481,10 @@ export function ChatInputReference({
                 title="Browse web"
                 className={cn(
                   "flex items-center gap-1.5 px-2 py-1.5 rounded-lg transition-all duration-200",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue focus-visible:ring-offset-1",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring-light dark:focus-visible:ring-ring focus-visible:ring-offset-1",
                   isSearchEnabled
-                    ? "bg-foundation-accent-blue-light/15 dark:bg-foundation-accent-blue/15 text-foundation-accent-blue-light dark:text-foundation-accent-blue"
-                    : cn(
-                        "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-                        "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
-                        "hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
-                      ),
+                    ? "bg-accent-blue-light/15 dark:bg-accent-blue/15 text-accent-blue-light dark:text-accent-blue"
+                    : cn("hover:bg-muted", "text-muted-foreground", "hover:text-foreground"),
                 )}
               >
                 <IconGlobe className="size-4" />
@@ -517,14 +502,10 @@ export function ChatInputReference({
                 title="Research"
                 className={cn(
                   "flex items-center gap-1.5 px-2 py-1.5 rounded-lg transition-all duration-200",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue focus-visible:ring-offset-1",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring-light dark:focus-visible:ring-ring focus-visible:ring-offset-1",
                   isResearchEnabled
-                    ? "bg-foundation-accent-blue-light/15 dark:bg-foundation-accent-blue/15 text-foundation-accent-blue-light dark:text-foundation-accent-blue"
-                    : cn(
-                        "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-                        "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
-                        "hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
-                      ),
+                    ? "bg-accent-blue-light/15 dark:bg-accent-blue/15 text-accent-blue-light dark:text-accent-blue"
+                    : cn("hover:bg-muted", "text-muted-foreground", "hover:text-foreground"),
                 )}
               >
                 <IconTelescope className="size-4" />
@@ -539,8 +520,8 @@ export function ChatInputReference({
               <div
                 className={cn(
                   "ml-2 px-2.5 py-1 rounded-lg",
-                  "bg-foundation-accent-blue-light/10 dark:bg-foundation-accent-blue/10",
-                  "text-foundation-accent-blue-light dark:text-foundation-accent-blue",
+                  "bg-accent-blue/10 dark:bg-accent-blue/10",
+                  "text-accent-blue-light dark:text-accent-blue",
                   "text-[12px] font-medium leading-[16px] tracking-[-0.1px]",
                 )}
               >
@@ -559,12 +540,12 @@ export function ChatInputReference({
                   className={cn(
                     "flex items-center gap-1.5 px-3 py-1.5 rounded-full",
                     "text-[13px] font-normal leading-[18px] tracking-[-0.3px]",
-                    "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3",
-                    "hover:bg-foundation-bg-light-3/80 dark:hover:bg-foundation-bg-dark-3/80",
-                    "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-                    "hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
+                    "bg-muted",
+                    "hover:bg-muted/80",
+                    "text-text-secondary",
+                    "hover:text-foreground",
                     "transition-all duration-200",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue focus-visible:ring-offset-1",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring-light dark:focus-visible:ring-ring focus-visible:ring-offset-1",
                   )}
                 >
                   <IconRefresh className="size-4" />
@@ -579,10 +560,10 @@ export function ChatInputReference({
                 type="button"
                 className={cn(
                   "p-2 rounded-lg transition-all duration-200",
-                  "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
-                  "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-                  "hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue focus-visible:ring-offset-1",
+                  "text-muted-foreground",
+                  "hover:bg-muted",
+                  "hover:text-foreground",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring-light dark:focus-visible:ring-ring focus-visible:ring-offset-1",
                 )}
                 title="History"
               >
@@ -595,14 +576,10 @@ export function ChatInputReference({
                 onClick={() => setIsRecording(!isRecording)}
                 className={cn(
                   "p-2 rounded-lg transition-all duration-200",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue focus-visible:ring-offset-1",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring-light dark:focus-visible:ring-ring focus-visible:ring-offset-1",
                   isRecording
-                    ? "bg-foundation-accent-red-light/15 dark:bg-foundation-accent-red/15 text-foundation-accent-red-light dark:text-foundation-accent-red"
-                    : cn(
-                        "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
-                        "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-                        "hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
-                      ),
+                    ? "bg-status-error-muted/15 dark:bg-status-error-muted/15 text-status-error dark:text-status-error"
+                    : cn("text-muted-foreground", "hover:bg-muted", "hover:text-foreground"),
                 )}
                 title="Voice input"
               >
@@ -615,13 +592,13 @@ export function ChatInputReference({
                 title="Advanced features"
                 className={cn(
                   "flex items-center gap-1.5 p-2 rounded-full transition-all duration-200",
-                  "bg-gradient-to-br from-foundation-accent-purple-light via-foundation-accent-purple-light to-foundation-accent-pink-light dark:from-foundation-accent-purple dark:via-foundation-accent-purple dark:to-foundation-accent-pink",
+                  "bg-gradient-to-br from-accent-purple via-accent-purple to-accent-purple dark:from-accent-purple dark:via-accent-purple dark:to-accent-purple",
                   "hover:opacity-90 hover:scale-105 active:scale-95",
-                  "shadow-lg shadow-foundation-accent-purple-light/25 dark:shadow-foundation-accent-purple/25",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue focus-visible:ring-offset-1",
+                  "shadow-lg shadow-accent-purple/25 dark:shadow-accent-purple/25",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring-light dark:focus-visible:ring-ring focus-visible:ring-offset-1",
                 )}
               >
-                <IconHeadphones className="size-4 text-white" />
+                <IconHeadphones className="size-4 text-text-body-on-color" />
               </button>
 
               {/* Send Button */}
@@ -631,11 +608,11 @@ export function ChatInputReference({
                 title="Send message (Enter)"
                 className={cn(
                   "flex items-center gap-1.5 p-2 rounded-full ml-1 transition-all duration-200",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue-light dark:focus-visible:ring-foundation-accent-blue focus-visible:ring-offset-1",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring-light dark:focus-visible:ring-ring focus-visible:ring-offset-1",
                   !message.trim() || disabled
-                    ? "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 opacity-40 cursor-not-allowed"
-                    : "bg-foundation-accent-green-light dark:bg-foundation-accent-green hover:opacity-90 hover:scale-105 active:scale-95",
-                  "text-white shadow-sm",
+                    ? "bg-muted opacity-40 cursor-not-allowed"
+                    : "bg-accent-green-light dark:bg-accent-green hover:opacity-90 hover:scale-105 active:scale-95",
+                  "text-text-body-on-color shadow-sm",
                 )}
               >
                 <IconArrowUp className="size-4" />

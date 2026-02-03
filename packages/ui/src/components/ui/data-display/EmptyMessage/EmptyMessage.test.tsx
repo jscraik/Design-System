@@ -16,22 +16,12 @@ describe("EmptyMessage", () => {
     });
 
     it("renders with description", () => {
-      render(
-        <EmptyMessage
-          title="No results"
-          description="Try adjusting your search filters"
-        />
-      );
+      render(<EmptyMessage title="No results" description="Try adjusting your search filters" />);
       expect(screen.getByText("Try adjusting your search filters")).toBeInTheDocument();
     });
 
     it("renders with action", () => {
-      render(
-        <EmptyMessage
-          title="No results"
-          action={<button>Clear filters</button>}
-        />
-      );
+      render(<EmptyMessage title="No results" action={<button>Clear filters</button>} />);
       expect(screen.getByRole("button", { name: "Clear filters" })).toBeInTheDocument();
     });
 
@@ -101,31 +91,21 @@ describe("EmptyMessage", () => {
     });
 
     it("hides description when loading", () => {
-      render(
-        <EmptyMessage
-          title="No results"
-          description="Try again later"
-          loading
-        />
-      );
+      render(<EmptyMessage title="No results" description="Try again later" loading />);
       expect(screen.queryByText("Try again later")).not.toBeInTheDocument();
     });
 
     it("hides action when loading", () => {
-      render(
-        <EmptyMessage
-          title="No results"
-          action={<button>Retry</button>}
-          loading
-        />
-      );
+      render(<EmptyMessage title="No results" action={<button>Retry</button>} loading />);
       expect(screen.queryByRole("button")).not.toBeInTheDocument();
     });
   });
 
   describe("Stateful props - Error", () => {
     it("calls onStateChange with 'error'", async () => {
-      render(<EmptyMessage title="Failed" error="Network error" onStateChange={mockOnStateChange} />);
+      render(
+        <EmptyMessage title="Failed" error="Network error" onStateChange={mockOnStateChange} />,
+      );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
       });
@@ -143,13 +123,7 @@ describe("EmptyMessage", () => {
     });
 
     it("hides description when error", () => {
-      render(
-        <EmptyMessage
-          title="No results"
-          description="Try again later"
-          error="Failed"
-        />
-      );
+      render(<EmptyMessage title="No results" description="Try again later" error="Failed" />);
       expect(screen.queryByText("Try again later")).not.toBeInTheDocument();
     });
 
@@ -167,13 +141,7 @@ describe("EmptyMessage", () => {
     });
 
     it("hides action when error", () => {
-      render(
-        <EmptyMessage
-          title="No results"
-          action={<button>Retry</button>}
-          error="Failed"
-        />
-      );
+      render(<EmptyMessage title="No results" action={<button>Retry</button>} error="Failed" />);
       expect(screen.queryByRole("button")).not.toBeInTheDocument();
     });
   });
@@ -193,13 +161,7 @@ describe("EmptyMessage", () => {
     });
 
     it("hides action when disabled", () => {
-      render(
-        <EmptyMessage
-          title="No results"
-          action={<button>Action</button>}
-          disabled
-        />
-      );
+      render(<EmptyMessage title="No results" action={<button>Action</button>} disabled />);
       expect(screen.queryByRole("button")).not.toBeInTheDocument();
     });
   });
@@ -222,7 +184,7 @@ describe("EmptyMessage", () => {
           error="Error"
           disabled
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -236,7 +198,7 @@ describe("EmptyMessage", () => {
           error="Error"
           disabled
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -337,7 +299,7 @@ describe("EmptyMessage", () => {
               <button>Action 2</button>
             </>
           }
-        />
+        />,
       );
       expect(screen.getAllByRole("button").length).toBe(2);
     });

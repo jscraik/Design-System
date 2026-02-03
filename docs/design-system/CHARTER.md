@@ -42,6 +42,54 @@ Apps SDK UI (`@openai/apps-sdk-ui`) is the canonical foundation for all ChatGPT-
 1. Alias or extend Apps SDK UI foundations, or
 2. Use Radix primitives strictly as a fallback when Apps SDK UI lacks required coverage, while still adhering to Apps SDK UI tokens, accessibility, and interaction conventions.
 
+## Token Tiering Rule (Brand → Alias → Mapped)
+
+All color tokens MUST follow a three-tier hierarchy to prevent drift and hard-coded usage:
+
+1) **Brand (roots)** — raw palette values (source of truth) live in DTCG and generated foundations.  
+   - Canonical source: `packages/tokens/src/tokens/index.dtcg.json`  
+   - Generated output: `packages/tokens/src/foundations.css`
+
+2) **Alias (trunk)** — semantic intent (Primary/Success/Error) maps brand values by mode.  
+   - Canonical map: `packages/tokens/src/alias-map.ts`
+
+3) **Mapped (canopy)** — concrete usage slots (text/action/icon/border) wired into theme + utilities.  
+   - Canonical mapping: `packages/ui/src/styles/theme.css` (`@theme inline` variables)
+
+**Enforcement:** No raw hex values are allowed outside the Brand tier. UI code must consume mapped semantic tokens only. Any change must preserve the Brand → Alias → Mapped chain.  
+
+## Collection Rules (from transcript guidance)
+
+Full rule sets live in dedicated files:
+
+- **Brand collection:** `docs/design-system/collections/brand-collection-rules.md`
+- **Alias collection:** `docs/design-system/collections/alias-collection-rules.md`
+- **Mapped collection:** `docs/design-system/collections/mapped-collection-rules.md`
+- **Responsive collection:** `docs/design-system/collections/responsive-collection-rules.md`
+
+### Mode Cleanup Rules
+- Consolidate split light/dark or desktop/mobile collections into **single collections with modes**.
+Evidence: docs/transcripts/rYzstFEY0t8.cleaned.md
+
+## Responsive Collection Rule (Typography + Spacing)
+
+Responsive tokens define **type scale, line-height, and paragraph spacing** across breakpoints. This collection is orthogonal to Brand → Alias → Mapped and applies to **type/space/size** tokens.
+
+**Required responsive needs:**
+- Hero and headings (h1–h6)
+- Paragraph sizes (lg/md/sm/caption)
+- Line height per size
+- Paragraph spacing per size
+
+**Accessibility constraint:** base paragraph size (`paragraph.md`) MUST be 16px equivalent.  
+
+**Sources of truth:**
+- DTCG type tokens: `packages/tokens/src/tokens/index.dtcg.json` (`type.*`)
+- Generated outputs: `packages/tokens/src/foundations.css` and `packages/ui/src/styles/theme.css`
+
+**Enforcement:** UI components must use responsive type/space tokens; no raw px values for responsive typography or spacing.  
+
+
 ## Radix Fallback Policy
 
 Radix primitives may be used only when Apps SDK UI lacks the required component. All Radix-based components must:
@@ -56,6 +104,10 @@ Radix primitives may be used only when Apps SDK UI lacks the required component.
 - Owner: Jamie Scott Craik (@jscraik)
 - Review cadence: Every release or monthly (whichever is sooner)
 - Contribution model: RFC required for new tokens, components, or breaking changes.
+
+## Training resources
+
+- Transcript index (token architecture + setup workflows): `docs/transcripts/README.md`
 
 ## RFC Process (Required)
 

@@ -84,7 +84,7 @@ function ToggleGroup({
       className={cn(
         "group/toggle-group flex w-fit items-center rounded-md data-[variant=outline]:shadow-xs",
         // Error state styling
-        error && "border-destructive/50 border",
+        error && "border-status-error/50 border",
         // Loading state styling
         loading && "opacity-70",
         className,

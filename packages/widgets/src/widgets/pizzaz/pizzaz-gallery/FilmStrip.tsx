@@ -18,12 +18,13 @@ export default function FilmStrip({ album, selectedIndex, onSelect }: FilmStripP
         <button
           key={photo.id}
           type="button"
+          aria-current={idx === selectedIndex ? "true" : undefined}
           onClick={() => onSelect?.(idx)}
           className={
-            "block w-full p-[1px] pointer-events-auto rounded-[10px] cursor-pointer border transition-[colors,opacity] " +
+            "block w-full p-[1px] pointer-events-auto rounded-[10px] cursor-pointer border transition-[colors,opacity] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background " +
             (idx === selectedIndex
-              ? "border-foundation-accent-blue"
-              : "border-transparent hover:border-foundation-bg-light-3 dark:hover:border-foundation-bg-dark-3 opacity-70 hover:opacity-100")
+              ? "border-accent-blue"
+              : "border-transparent hover:border-border dark:hover:border-border opacity-70 hover:opacity-100")
           }
         >
           <div className="aspect-[5/3] rounded-lg overflow-hidden w-full">

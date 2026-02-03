@@ -129,6 +129,7 @@ export function HoloCard({
 }: HoloCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
+  const isInteractive = Boolean(onClick);
 
   const [isHovered, setIsHovered] = useState(false);
 
@@ -161,21 +162,33 @@ export function HoloCard({
     mouseY.set(0);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!isInteractive) return;
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onClick?.();
+    }
+  };
+
   // Get color scheme
   const colorScheme = customColors || holoColors[colors];
 
   return (
     <motion.div
       ref={ref}
+      data-slot="holo-card"
       className={cn(
         holoCardVariants({ variant, size }),
-        onClick && "cursor-pointer effects-component-interactive",
+        isInteractive && "cursor-pointer effects-component-interactive",
         className,
       )}
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
+      onKeyDown={isInteractive ? handleKeyDown : undefined}
+      role={isInteractive ? "button" : undefined}
+      tabIndex={isInteractive ? 0 : undefined}
       style={
         {
           rotateX: disableTilt || prefersReducedMotion ? 0 : rotateX,

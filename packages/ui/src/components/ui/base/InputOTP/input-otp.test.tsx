@@ -31,7 +31,9 @@ describe("InputOTP", () => {
     });
 
     it("renders with containerClassName", () => {
-      const { container } = render(<InputOTP maxLength={4} containerClassName="custom-container" />);
+      const { container } = render(
+        <InputOTP maxLength={4} containerClassName="custom-container" />,
+      );
       const containerDiv = container.querySelector(".custom-container");
       expect(containerDiv).toBeInTheDocument();
     });
@@ -71,9 +73,9 @@ describe("InputOTP", () => {
       expect(otp).toHaveAttribute("data-error", "true");
     });
 
-    it("applies destructive border on error", () => {
+    it("applies status error border on error", () => {
       const { container } = render(<InputOTP maxLength={4} error="Error" />);
-      const otp = container.querySelector(".border-destructive");
+      const otp = container.querySelector(".border-status-error");
       expect(otp).toBeInTheDocument();
     });
   });
@@ -117,7 +119,7 @@ describe("InputOTP", () => {
   describe("State priority", () => {
     it("prioritizes loading over error and disabled", async () => {
       render(
-        <InputOTP maxLength={4} loading error="Error" disabled onStateChange={mockOnStateChange} />
+        <InputOTP maxLength={4} loading error="Error" disabled onStateChange={mockOnStateChange} />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -225,7 +227,7 @@ describe("InputOTPSlot", () => {
         <InputOTPSlot index={1} />
         <InputOTPSlot index={2} />
         <InputOTPSlot index={3} />
-      </InputOTP>
+      </InputOTP>,
     );
     const slots = container.querySelectorAll('[data-slot="input-otp-slot"]');
     expect(slots.length).toBe(4);
@@ -238,7 +240,7 @@ describe("InputOTPSlot", () => {
         <InputOTPSlot index={1} />
         <InputOTPSlot index={2} />
         <InputOTPSlot index={3} />
-      </InputOTP>
+      </InputOTP>,
     );
     const slot = container.querySelector(".custom-slot");
     expect(slot).toBeInTheDocument();
@@ -251,7 +253,7 @@ describe("InputOTPSlot", () => {
         <InputOTPSlot index={1} />
         <InputOTPSlot index={2} />
         <InputOTPSlot index={3} />
-      </InputOTP>
+      </InputOTP>,
     );
     const firstSlot = container.querySelector('[data-slot="input-otp-slot"]');
     expect(firstSlot).toBeInTheDocument();

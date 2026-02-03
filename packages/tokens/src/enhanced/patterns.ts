@@ -80,19 +80,19 @@ export interface StatefulComponentProps {
  * Form state styles for common states
  */
 export const formStateStyles = {
-  error: "border-red-500 focus:border-red-500 focus:ring-red-500",
+  error: "border-status-error focus:border-status-error focus:ring-status-error",
   loading: "opacity-70 cursor-wait",
   disabled: "opacity-50 cursor-not-allowed",
-  required: "after:content-['*'] after:ml-1 after:text-red-500",
+  required: "after:content-['*'] after:ml-1 after:text-status-error",
 } as const;
 
 /**
  * Error state styles
  */
 export const errorStyles = {
-  border: "border-red-500",
-  text: "text-red-500",
-  bg: "bg-red-50 dark:bg-red-900/20",
+  border: "border-status-error",
+  text: "text-status-error",
+  bg: "bg-status-error-muted/10 dark:bg-status-error-muted/20",
 } as const;
 
 /**

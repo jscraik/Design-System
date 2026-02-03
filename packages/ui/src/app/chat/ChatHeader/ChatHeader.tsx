@@ -178,11 +178,11 @@ export function ChatHeader({
       aria-required={required || undefined}
       aria-busy={loading || undefined}
       className={cn(
-        "h-14 border-b border-foundation-border-light dark:border-foundation-border-dark",
-        "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2",
+        "h-14 border-b border-border dark:border-border",
+        "bg-background dark:bg-secondary",
         "flex items-center justify-between px-4 shrink-0",
         isDisabled && "opacity-50 pointer-events-none",
-        error && "ring-b-2 ring-foundation-accent-red/50",
+        error && "ring-b-2 ring-status-error/50",
         loading && "animate-pulse",
         className,
       )}
@@ -198,10 +198,10 @@ export function ChatHeader({
             aria-expanded={isSidebarOpen}
             className={cn(
               "p-2 rounded-lg transition-all duration-150",
-              "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-              "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
+              "text-text-secondary dark:text-text-secondary",
+              "hover:bg-secondary dark:hover:bg-muted",
               "active:scale-95",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue/50",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue/50",
             )}
           >
             <IconSidebar className="size-5" />
@@ -214,25 +214,25 @@ export function ChatHeader({
           onClick={() => onViewModeChange?.(viewMode === "compose" ? "chat" : "compose")}
           className={cn(
             "flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-200",
-            "border border-foundation-border-light dark:border-foundation-border-dark",
-            "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
-            "hover:border-foundation-bg-light-3 dark:hover:border-foundation-bg-dark-3",
+            "border border-border dark:border-border",
+            "hover:bg-secondary dark:hover:bg-muted",
+            "hover:border-muted dark:hover:border-muted",
             "active:scale-[0.98]",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue/50",
-            viewMode === "compose" && "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue/50",
+            viewMode === "compose" && "bg-secondary dark:bg-muted",
           )}
         >
           {viewMode === "compose" ? (
             <>
-              <IconChat className="size-4 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary" />
-              <span className="text-sm font-medium text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+              <IconChat className="size-4 text-text-secondary dark:text-text-secondary" />
+              <span className="text-sm font-medium text-text-secondary dark:text-text-secondary">
                 Chat
               </span>
             </>
           ) : (
             <>
-              <IconSparkles className="size-4 text-foundation-accent-blue" />
-              <span className="text-sm font-medium text-foundation-accent-blue">Compose</span>
+              <IconSparkles className="size-4 text-accent-blue" />
+              <span className="text-sm font-medium text-accent-blue">Compose</span>
             </>
           )}
         </button>
@@ -245,22 +245,22 @@ export function ChatHeader({
                 type="button"
                 className={cn(
                   "flex items-center gap-2.5 px-3.5 py-2 rounded-lg transition-all duration-150",
-                  "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
+                  "hover:bg-secondary dark:hover:bg-muted",
                   "active:scale-[0.98]",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue/50",
-                  isModelSelectorOpen && "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue/50",
+                  isModelSelectorOpen && "bg-secondary dark:bg-muted",
                 )}
               >
-                <span className="text-[13px] font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+                <span className="text-[13px] font-semibold text-foreground dark:text-foreground">
                   ChatGPT
                 </span>
-                <div className="w-px h-4 bg-foundation-border-light dark:bg-foundation-border-dark" />
-                <span className="text-[13px] font-medium text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+                <div className="w-px h-4 bg-border dark:bg-border" />
+                <span className="text-[13px] font-medium text-muted-foreground dark:text-muted-foreground">
                   {modelName}
                 </span>
                 <IconChevronDown
                   className={cn(
-                    "size-3.5 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary transition-transform duration-200",
+                    "size-3.5 text-muted-foreground dark:text-muted-foreground transition-transform duration-200",
                     isModelSelectorOpen && "rotate-180",
                   )}
                 />
@@ -273,8 +273,8 @@ export function ChatHeader({
               sideOffset={8}
               className={cn(
                 "z-50 w-[320px] rounded-2xl overflow-hidden",
-                "border border-foundation-border-light dark:border-foundation-border-dark",
-                "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2",
+                "border border-border dark:border-border",
+                "bg-background dark:bg-secondary",
                 "shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.24)]",
                 "animate-in fade-in-0 zoom-in-95 slide-in-from-top-2 duration-200",
               )}
@@ -289,17 +289,16 @@ export function ChatHeader({
                       onClick={() => handleModelSelect(model)}
                       className={cn(
                         "w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-150",
-                        "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
+                        "hover:bg-secondary dark:hover:bg-muted",
                         "active:scale-[0.98]",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue/50",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-blue/50",
                         "text-left group",
-                        isModelSelected(model) &&
-                          "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
+                        isModelSelected(model) && "bg-secondary dark:bg-muted",
                       )}
                     >
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+                          <span className="text-sm font-medium text-foreground dark:text-foreground">
                             {model.name}
                           </span>
                           {model.badge && (
@@ -307,27 +306,27 @@ export function ChatHeader({
                               className={cn(
                                 "text-[10px] font-semibold px-1.5 py-0.5 rounded-md uppercase tracking-wide",
                                 model.badge === "New"
-                                  ? "bg-foundation-accent-green/10 text-foundation-accent-green dark:bg-foundation-accent-green/20"
-                                  : "bg-foundation-accent-blue/10 text-foundation-accent-blue dark:bg-foundation-accent-blue/20",
+                                  ? "bg-accent-green/10 text-accent-green dark:bg-accent-green/20"
+                                  : "bg-accent-blue/10 text-accent-blue dark:bg-accent-blue/20",
                               )}
                             >
                               {model.badge}
                             </span>
                           )}
                         </div>
-                        <p className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-1 leading-tight">
+                        <p className="text-xs text-muted-foreground dark:text-muted-foreground mt-1 leading-tight">
                           {model.description}
                         </p>
                       </div>
                       {isModelSelected(model) && (
-                        <IconCheck className="size-4 text-foundation-accent-green shrink-0 ml-2" />
+                        <IconCheck className="size-4 text-accent-green shrink-0 ml-2" />
                       )}
                     </button>
                   ))}
                 </div>
 
                 {/* Divider */}
-                <div className="h-px bg-foundation-border-light dark:bg-foundation-border-dark my-2" />
+                <div className="h-px bg-border dark:bg-border my-2" />
 
                 {/* Legacy Models Submenu */}
                 <Popover open={isLegacyOpen} onOpenChange={setIsLegacyOpen}>
@@ -336,19 +335,19 @@ export function ChatHeader({
                       type="button"
                       className={cn(
                         "w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-all duration-150",
-                        "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
+                        "hover:bg-secondary dark:hover:bg-muted",
                         "active:scale-[0.98]",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue/50",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-blue/50",
                         "text-left",
-                        isLegacyOpen && "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
+                        isLegacyOpen && "bg-secondary dark:bg-muted",
                       )}
                     >
-                      <span className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+                      <span className="text-sm font-medium text-foreground dark:text-foreground">
                         Legacy models
                       </span>
                       <IconChevronRight
                         className={cn(
-                          "size-4 text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary transition-transform duration-200",
+                          "size-4 text-muted-foreground dark:text-muted-foreground transition-transform duration-200",
                           isLegacyOpen && "rotate-90",
                         )}
                       />
@@ -361,13 +360,13 @@ export function ChatHeader({
                     sideOffset={8}
                     className={cn(
                       "z-50 w-[280px] rounded-2xl overflow-hidden",
-                      "border border-foundation-border-light dark:border-foundation-border-dark",
-                      "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2",
+                      "border border-border dark:border-border",
+                      "bg-background dark:bg-secondary",
                       "shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.24)]",
                       "animate-in fade-in-0 zoom-in-95 slide-in-from-left-2 duration-200",
                     )}
                   >
-                    <div className="p-2 max-h-[320px] overflow-y-auto scrollbar-thin scrollbar-thumb-foundation-bg-light-3 dark:scrollbar-thumb-foundation-bg-dark-3 scrollbar-track-transparent">
+                    <div className="p-2 max-h-[320px] overflow-y-auto scrollbar-thin scrollbar-thumb-muted dark:scrollbar-thumb-muted scrollbar-track-transparent">
                       <div className="space-y-0.5">
                         {legacyModels.map((model) => (
                           <button
@@ -376,19 +375,18 @@ export function ChatHeader({
                             onClick={() => handleModelSelect(model)}
                             className={cn(
                               "w-full flex items-center justify-between px-3 py-2 rounded-lg transition-all duration-150",
-                              "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
+                              "hover:bg-secondary dark:hover:bg-muted",
                               "active:scale-[0.98]",
-                              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-foundation-accent-blue/50",
+                              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-blue/50",
                               "text-left",
-                              isModelSelected(model) &&
-                                "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
+                              isModelSelected(model) && "bg-secondary dark:bg-muted",
                             )}
                           >
-                            <span className="text-sm text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+                            <span className="text-sm text-foreground dark:text-foreground">
                               {model.name}
                             </span>
                             {isModelSelected(model) && (
-                              <IconCheck className="size-4 text-foundation-accent-green shrink-0 ml-2" />
+                              <IconCheck className="size-4 text-accent-green shrink-0 ml-2" />
                             )}
                           </button>
                         ))}
@@ -410,28 +408,28 @@ export function ChatHeader({
           aria-label="Download"
           className={cn(
             "p-2 rounded-lg transition-all duration-150",
-            "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
-            "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
-            "hover:text-foundation-text-light-secondary dark:hover:text-foundation-text-dark-secondary",
+            "text-muted-foreground dark:text-muted-foreground",
+            "hover:bg-secondary dark:hover:bg-muted",
+            "hover:text-text-secondary dark:hover:text-text-secondary",
             "active:scale-95",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue/50",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue/50",
           )}
         >
-          <IconDownload className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
+          <IconDownload className="size-4 text-text-secondary dark:text-text-secondary" />
         </button>
         <button
           type="button"
           aria-label="Share"
           className={cn(
             "p-2 rounded-lg transition-all duration-150",
-            "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
-            "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
-            "hover:text-foundation-text-light-secondary dark:hover:text-foundation-text-dark-secondary",
+            "text-muted-foreground dark:text-muted-foreground",
+            "hover:bg-secondary dark:hover:bg-muted",
+            "hover:text-text-secondary dark:hover:text-text-secondary",
             "active:scale-95",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue/50",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue/50",
           )}
         >
-          <IconShare className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
+          <IconShare className="size-4 text-text-secondary dark:text-text-secondary" />
         </button>
       </div>
     </header>

@@ -39,23 +39,13 @@ describe("TagInput", () => {
     });
 
     it("displays placeholder when no tags", () => {
-      render(
-        <TagInput
-          tags={[]}
-          onTagsChange={mockOnTagsChange}
-          placeholder="Add skills..."
-        />
-      );
+      render(<TagInput tags={[]} onTagsChange={mockOnTagsChange} placeholder="Add skills..." />);
       expect(screen.getByPlaceholderText("Add skills...")).toBeInTheDocument();
     });
 
     it("hides placeholder when tags exist", () => {
       render(
-        <TagInput
-          tags={sampleTags}
-          onTagsChange={mockOnTagsChange}
-          placeholder="Add skills..."
-        />
+        <TagInput tags={sampleTags} onTagsChange={mockOnTagsChange} placeholder="Add skills..." />,
       );
       expect(screen.queryByPlaceholderText("Add skills...")).not.toBeInTheDocument();
     });
@@ -69,9 +59,7 @@ describe("TagInput", () => {
       fireEvent.change(input, { target: { value: "New Tag" } });
       fireEvent.keyDown(input, { key: "Enter" });
 
-      expect(mockOnTagsChange).toHaveBeenCalledWith([
-        { id: expect.any(String), label: "New Tag" },
-      ]);
+      expect(mockOnTagsChange).toHaveBeenCalledWith([{ id: expect.any(String), label: "New Tag" }]);
     });
 
     it("trims whitespace before adding tag", () => {
@@ -97,9 +85,7 @@ describe("TagInput", () => {
     });
 
     it("calls onTagAdd callback when tag added", () => {
-      render(
-        <TagInput tags={[]} onTagsChange={mockOnTagsChange} onTagAdd={mockOnTagAdd} />
-      );
+      render(<TagInput tags={[]} onTagsChange={mockOnTagsChange} onTagAdd={mockOnTagAdd} />);
 
       const input = screen.getByRole("textbox");
       fireEvent.change(input, { target: { value: "Vue" } });
@@ -139,7 +125,11 @@ describe("TagInput", () => {
   describe("Removing tags", () => {
     it("removes tag when X button clicked", () => {
       render(
-        <TagInput tags={sampleTags} onTagsChange={mockOnTagsChange} onTagRemove={mockOnTagRemove} />
+        <TagInput
+          tags={sampleTags}
+          onTagsChange={mockOnTagsChange}
+          onTagRemove={mockOnTagRemove}
+        />,
       );
 
       // Find the X button for the first tag
@@ -154,7 +144,11 @@ describe("TagInput", () => {
 
     it("calls onTagRemove callback when tag removed", () => {
       render(
-        <TagInput tags={sampleTags} onTagsChange={mockOnTagsChange} onTagRemove={mockOnTagRemove} />
+        <TagInput
+          tags={sampleTags}
+          onTagsChange={mockOnTagsChange}
+          onTagRemove={mockOnTagRemove}
+        />,
       );
 
       const removeButtons = screen.getAllByLabelText(/Remove/);
@@ -165,7 +159,11 @@ describe("TagInput", () => {
 
     it("removes last tag when Backspace pressed on empty input", () => {
       render(
-        <TagInput tags={sampleTags} onTagsChange={mockOnTagsChange} onTagRemove={mockOnTagRemove} />
+        <TagInput
+          tags={sampleTags}
+          onTagsChange={mockOnTagsChange}
+          onTagRemove={mockOnTagRemove}
+        />,
       );
 
       const input = screen.getByRole("textbox");
@@ -181,11 +179,7 @@ describe("TagInput", () => {
   describe("Duplicate handling", () => {
     it("prevents duplicate tags by default", () => {
       render(
-        <TagInput
-          tags={sampleTags}
-          onTagsChange={mockOnTagsChange}
-          allowDuplicates={false}
-        />
+        <TagInput tags={sampleTags} onTagsChange={mockOnTagsChange} allowDuplicates={false} />,
       );
 
       const input = screen.getByRole("textbox");
@@ -196,13 +190,7 @@ describe("TagInput", () => {
     });
 
     it("allows duplicate tags when allowDuplicates is true", () => {
-      render(
-        <TagInput
-          tags={sampleTags}
-          onTagsChange={mockOnTagsChange}
-          allowDuplicates={true}
-        />
-      );
+      render(<TagInput tags={sampleTags} onTagsChange={mockOnTagsChange} allowDuplicates={true} />);
 
       const input = screen.getByRole("textbox");
       fireEvent.change(input, { target: { value: "React" } });
@@ -217,13 +205,7 @@ describe("TagInput", () => {
 
   describe("Max tags limit", () => {
     it("respects maxTags limit", () => {
-      render(
-        <TagInput
-          tags={sampleTags}
-          onTagsChange={mockOnTagsChange}
-          maxTags={3}
-        />
-      );
+      render(<TagInput tags={sampleTags} onTagsChange={mockOnTagsChange} maxTags={3} />);
 
       // With 3 tags and maxTags=3, the input is hidden
       // Use queryByRole which returns null when element is not found
@@ -237,13 +219,7 @@ describe("TagInput", () => {
     });
 
     it("hides input when maxTags reached", () => {
-      render(
-        <TagInput
-          tags={sampleTags}
-          onTagsChange={mockOnTagsChange}
-          maxTags={3}
-        />
-      );
+      render(<TagInput tags={sampleTags} onTagsChange={mockOnTagsChange} maxTags={3} />);
 
       // When max tags reached, input should not be rendered
       // sampleTags has 3 items, maxTags is 3, so input is hidden
@@ -259,7 +235,7 @@ describe("TagInput", () => {
           onTagsChange={mockOnTagsChange}
           loading
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -281,7 +257,7 @@ describe("TagInput", () => {
           onTagsChange={mockOnTagsChange}
           error="Invalid tags"
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -303,7 +279,7 @@ describe("TagInput", () => {
           onTagsChange={mockOnTagsChange}
           disabled
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
@@ -327,13 +303,7 @@ describe("TagInput", () => {
     });
 
     it("prevents removing tags when disabled", () => {
-      render(
-        <TagInput
-          tags={sampleTags}
-          onTagsChange={mockOnTagsChange}
-          disabled
-        />
-      );
+      render(<TagInput tags={sampleTags} onTagsChange={mockOnTagsChange} disabled />);
 
       const removeButtons = screen.getAllByLabelText(/Remove/);
       removeButtons[0].click();
@@ -350,7 +320,7 @@ describe("TagInput", () => {
           onTagsChange={mockOnTagsChange}
           required
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
@@ -368,7 +338,7 @@ describe("TagInput", () => {
           error="Error"
           disabled
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -383,7 +353,7 @@ describe("TagInput", () => {
           error="Error"
           disabled
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -429,25 +399,13 @@ describe("TagInput", () => {
 
   describe("Variants", () => {
     it("renders default variant", () => {
-      render(
-        <TagInput
-          tags={[]}
-          onTagsChange={mockOnTagsChange}
-          variant="default"
-        />
-      );
+      render(<TagInput tags={[]} onTagsChange={mockOnTagsChange} variant="default" />);
       const container = screen.getByRole("textbox").closest('[data-slot="tag-input"]');
       expect(container).toBeInTheDocument();
     });
 
     it("renders outline variant", () => {
-      render(
-        <TagInput
-          tags={[]}
-          onTagsChange={mockOnTagsChange}
-          variant="outline"
-        />
-      );
+      render(<TagInput tags={[]} onTagsChange={mockOnTagsChange} variant="outline" />);
       const container = screen.getByRole("textbox").closest('[data-slot="tag-input"]');
       expect(container).toBeInTheDocument();
     });

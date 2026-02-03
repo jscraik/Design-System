@@ -220,7 +220,7 @@ function PaginationButton({ isActive, className, ...props }: PaginationButtonPro
       className={cn(
         "size-9",
         isActive &&
-          "bg-foundation-accent-blue text-foundation-text-light-primary hover:bg-foundation-accent-blue/90 pointer-events-none",
+          "bg-interactive text-text-body-on-color hover:bg-interactive-hover pointer-events-none",
         className,
       )}
       {...props}
@@ -239,10 +239,7 @@ function PaginationEllipsis({ className, ...props }: React.ComponentPropsWithout
     <span
       aria-hidden
       data-slot="pagination-ellipsis"
-      className={cn(
-        "flex size-9 items-center justify-center text-foundation-text-dark-tertiary",
-        className,
-      )}
+      className={cn("flex size-9 items-center justify-center text-muted-foreground", className)}
       {...props}
     >
       <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

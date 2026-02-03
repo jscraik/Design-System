@@ -25,12 +25,12 @@ describe("Alert", () => {
   describe("variants", () => {
     it("renders default variant", () => {
       render(<Alert variant="default">Default alert</Alert>);
-      expect(screen.getByRole("alert")).not.toHaveClass("border-foundation-accent-red/50");
+      expect(screen.getByRole("alert")).not.toHaveClass("border-status-error/50");
     });
 
     it("renders destructive variant with correct styles", () => {
       render(<Alert variant="destructive">Destructive alert</Alert>);
-      expect(screen.getByRole("alert")).toHaveClass("border-foundation-accent-red/50");
+      expect(screen.getByRole("alert")).toHaveClass("border-status-error/50");
     });
   });
 

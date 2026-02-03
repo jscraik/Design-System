@@ -87,7 +87,7 @@ export function setCSSVar(property: string, value: string): void {
  *
  * @example
  * ```ts
- * const button = createVariants("inline-flex", { primary: "bg-blue-500" });
+ * const button = createVariants("inline-flex", { primary: "bg-accent-blue" });
  * ```
  */
 export function createVariants<T extends Record<string, unknown>>(

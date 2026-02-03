@@ -4,17 +4,25 @@
  */
 
 export const DesignTokens = {
-  // Typography Classes
+  // Typography Classes (prefer tokenized utilities)
   typography: {
-    heading1: "text-[36px] font-semibold leading-[40px] tracking-[-0.1px]",
-    heading2: "text-[24px] font-semibold leading-[28px] tracking-[-0.25px]",
-    heading3: "text-[18px] font-semibold leading-[26px] tracking-[-0.45px]",
-    bodyLargeEmphasized: "text-[16px] font-semibold leading-[24px] tracking-[-0.32px]",
-    bodySmallEmphasized: "text-[14px] font-semibold leading-[20px] tracking-[-0.3px]",
-    labelVLargeEmphasized: "text-[12px] font-semibold leading-[18px] tracking-[-0.32px]",
-    bodyLarge: "text-[16px] font-normal leading-[24px] tracking-[-0.32px]",
-    bodySmall: "text-[14px] font-normal leading-[20px] tracking-[-0.3px]",
-    labelLarge: "text-[12px] font-normal leading-[18px] tracking-[-0.32px]",
+    hero: "text-hero font-semibold",
+    h1: "text-h1 font-semibold",
+    h2: "text-h2 font-semibold",
+    h3: "text-h3 font-semibold",
+    h4: "text-h4 font-semibold",
+    h5: "text-h5 font-semibold",
+    h6: "text-h6 font-semibold",
+    paragraphLg: "text-paragraph-lg font-normal",
+    paragraphMd: "text-paragraph-md font-normal",
+    paragraphSm: "text-paragraph-sm font-normal",
+    caption: "text-caption font-normal",
+    // Legacy (avoid for new work)
+    heading1: "text-heading-1 font-semibold",
+    heading2: "text-heading-2 font-semibold",
+    heading3: "text-heading-3 font-semibold",
+    body: "text-body font-normal",
+    bodySmall: "text-body-small font-normal",
   },
 
   // Spacing Tokens (use with gap-, p-, m-, etc.)
@@ -87,9 +95,9 @@ export const DesignTokens = {
  * Quick Reference Guide:
  *
  * TYPOGRAPHY:
- * - Use heading1/2/3 for page titles and section headers
- * - Use bodyLarge/bodySmall for main content
- * - Use labelVLargeEmphasized for UI labels and buttons
+ * - Use hero + h1–h6 for headings
+ * - Use paragraphLg/paragraphMd/paragraphSm for body content
+ * - Legacy heading/body tokens remain for backwards compatibility
  *
  * SPACING:
  * - Use space-64 (128px) for major page sections

@@ -32,7 +32,7 @@ describe("ResizablePanelGroup", () => {
 
     it("renders with custom className", () => {
       const { container } = render(
-        <ResizablePanelGroup direction="horizontal" className="custom-group" />
+        <ResizablePanelGroup direction="horizontal" className="custom-group" />,
       );
       const group = container.querySelector(".custom-group");
       expect(group).toBeInTheDocument();
@@ -48,7 +48,7 @@ describe("ResizablePanelGroup", () => {
 
     it("calls onStateChange with 'loading'", async () => {
       render(
-        <ResizablePanelGroup direction="horizontal" loading onStateChange={mockOnStateChange} />
+        <ResizablePanelGroup direction="horizontal" loading onStateChange={mockOnStateChange} />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -64,26 +64,21 @@ describe("ResizablePanelGroup", () => {
 
   describe("Stateful props - Error", () => {
     it("shows error state", () => {
-      const { container } = render(
-        <ResizablePanelGroup direction="horizontal" error="Error" />
-      );
+      const { container } = render(<ResizablePanelGroup direction="horizontal" error="Error" />);
       const group = container.querySelector('[data-state="error"]');
       expect(group).toBeInTheDocument();
       expect(group).toHaveAttribute("data-error", "true");
     });
 
     it("applies error ring styling", () => {
-      const { container } = render(
-        <ResizablePanelGroup direction="horizontal" error="Error" />
-      );
+      const { container } = render(<ResizablePanelGroup direction="horizontal" error="Error" />);
       const group = container.querySelector('[data-state="error"]');
       expect(group).toHaveClass("ring-2");
+      expect(group).toHaveClass("ring-status-error/50");
     });
 
     it("sets aria-invalid when error", () => {
-      const { container } = render(
-        <ResizablePanelGroup direction="horizontal" error="Error" />
-      );
+      const { container } = render(<ResizablePanelGroup direction="horizontal" error="Error" />);
       const group = container.querySelector('[aria-invalid="true"]');
       expect(group).toBeInTheDocument();
     });
@@ -139,7 +134,7 @@ describe("ResizablePanelGroup", () => {
           error="Error"
           disabled
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -153,7 +148,7 @@ describe("ResizablePanelGroup", () => {
           error="Error"
           disabled
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -167,7 +162,7 @@ describe("ResizablePanel", () => {
     const { container } = render(
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel />
-      </ResizablePanelGroup>
+      </ResizablePanelGroup>,
     );
     const panel = container.querySelector('[data-slot="resizable-panel"]');
     expect(panel).toBeInTheDocument();
@@ -177,7 +172,7 @@ describe("ResizablePanel", () => {
     const { container } = render(
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel defaultSize={50} />
-      </ResizablePanelGroup>
+      </ResizablePanelGroup>,
     );
     // Panel renders within the group
     const panel = container.querySelector('[data-slot="resizable-panel"]');
@@ -192,7 +187,7 @@ describe("ResizableHandle", () => {
         <ResizablePanel />
         <ResizableHandle />
         <ResizablePanel />
-      </ResizablePanelGroup>
+      </ResizablePanelGroup>,
     );
     const handle = container.querySelector('[data-slot="resizable-handle"]');
     expect(handle).toBeInTheDocument();
@@ -204,7 +199,7 @@ describe("ResizableHandle", () => {
         <ResizablePanel />
         <ResizableHandle />
         <ResizablePanel />
-      </ResizablePanelGroup>
+      </ResizablePanelGroup>,
     );
     const handleIcon = container.querySelector('[data-slot="resizable-handle"] > div');
     expect(handleIcon).not.toBeInTheDocument();
@@ -216,7 +211,7 @@ describe("ResizableHandle", () => {
         <ResizablePanel />
         <ResizableHandle withHandle />
         <ResizablePanel />
-      </ResizablePanelGroup>
+      </ResizablePanelGroup>,
     );
     const handleIcon = container.querySelector('[data-slot="resizable-handle"] > div');
     expect(handleIcon).toBeInTheDocument();
@@ -228,7 +223,7 @@ describe("ResizableHandle", () => {
         <ResizablePanel />
         <ResizableHandle className="custom-handle" />
         <ResizablePanel />
-      </ResizablePanelGroup>
+      </ResizablePanelGroup>,
     );
     const handle = container.querySelector(".custom-handle");
     expect(handle).toBeInTheDocument();

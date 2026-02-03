@@ -195,7 +195,7 @@ function SidebarProvider({
           className={cn(
             "group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full",
             isDisabled && "opacity-50 pointer-events-none",
-            error && "ring-2 ring-foundation-accent-red/50",
+            error && "ring-2 ring-status-error/50",
             loading && "animate-pulse",
             className,
           )}

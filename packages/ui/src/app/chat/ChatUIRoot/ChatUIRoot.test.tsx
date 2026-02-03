@@ -78,9 +78,7 @@ describe("ChatUIRoot", () => {
 
   describe("Stateful props - Loading", () => {
     it("calls onStateChange with 'loading'", async () => {
-      render(
-        <ChatUIRoot loading onStateChange={mockOnStateChange} />
-      );
+      render(<ChatUIRoot loading onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });
@@ -94,9 +92,7 @@ describe("ChatUIRoot", () => {
 
   describe("Stateful props - Error", () => {
     it("calls onStateChange with 'error'", async () => {
-      render(
-        <ChatUIRoot error="Failed to load" onStateChange={mockOnStateChange} />
-      );
+      render(<ChatUIRoot error="Failed to load" onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
       });
@@ -110,9 +106,7 @@ describe("ChatUIRoot", () => {
 
   describe("Stateful props - Disabled", () => {
     it("calls onStateChange with 'disabled'", async () => {
-      render(
-        <ChatUIRoot disabled onStateChange={mockOnStateChange} />
-      );
+      render(<ChatUIRoot disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
       });
@@ -121,9 +115,7 @@ describe("ChatUIRoot", () => {
 
   describe("Stateful props - Required", () => {
     it("calls onStateChange with 'default' when required", async () => {
-      render(
-        <ChatUIRoot required onStateChange={mockOnStateChange} />
-      );
+      render(<ChatUIRoot required onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
       });
@@ -132,27 +124,14 @@ describe("ChatUIRoot", () => {
 
   describe("State priority", () => {
     it("prioritizes loading over error and disabled", async () => {
-      render(
-        <ChatUIRoot
-          loading
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<ChatUIRoot loading error="Error" disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });
     });
 
     it("prioritizes error over disabled when not loading", async () => {
-      render(
-        <ChatUIRoot
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<ChatUIRoot error="Error" disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
       });
@@ -193,20 +172,12 @@ describe("ChatUIRoot", () => {
 
   describe("Custom slots", () => {
     it("renders headerRight slot content", () => {
-      render(
-        <ChatUIRoot
-          headerRight={<div data-testid="header-right">Custom</div>}
-        />
-      );
+      render(<ChatUIRoot headerRight={<div data-testid="header-right">Custom</div>} />);
       expect(screen.getByTestId("header-right")).toBeInTheDocument();
     });
 
     it("passes composerLeft slot to ChatView", () => {
-      render(
-        <ChatUIRoot
-          composerLeft={<div data-testid="composer-left">Left</div>}
-        />
-      );
+      render(<ChatUIRoot composerLeft={<div data-testid="composer-left">Left</div>} />);
       // composerLeft is passed through to ChatView component
       // Just verify component renders without error
       const root = screen.getByTestId("chat-ui-root");
@@ -214,11 +185,7 @@ describe("ChatUIRoot", () => {
     });
 
     it("passes composerRight slot to ChatView", () => {
-      render(
-        <ChatUIRoot
-          composerRight={<div data-testid="composer-right">Right</div>}
-        />
-      );
+      render(<ChatUIRoot composerRight={<div data-testid="composer-right">Right</div>} />);
       // composerRight is passed through to ChatView component
       // Just verify component renders without error
       const root = screen.getByTestId("chat-ui-root");
@@ -226,11 +193,7 @@ describe("ChatUIRoot", () => {
     });
 
     it("passes emptyState slot to ChatView", () => {
-      render(
-        <ChatUIRoot
-          emptyState={<div data-testid="empty-state">Empty</div>}
-        />
-      );
+      render(<ChatUIRoot emptyState={<div data-testid="empty-state">Empty</div>} />);
       // emptyState is passed through to ChatView component
       // Just verify component renders without error
       const root = screen.getByTestId("chat-ui-root");
@@ -282,20 +245,13 @@ describe("ChatUIRoot", () => {
 
   describe("Mode change callbacks", () => {
     it("accepts onModeChange prop", () => {
-      render(
-        <ChatUIRoot mode="twoPane" onModeChange={mockOnModeChange} />
-      );
+      render(<ChatUIRoot mode="twoPane" onModeChange={mockOnModeChange} />);
       const root = screen.getByTestId("chat-ui-root");
       expect(root).toBeInTheDocument();
     });
 
     it("accepts onViewModeChange prop", () => {
-      render(
-        <ChatUIRoot
-          viewMode="chat"
-          onViewModeChange={mockOnViewModeChange}
-        />
-      );
+      render(<ChatUIRoot viewMode="chat" onViewModeChange={mockOnViewModeChange} />);
       const root = screen.getByTestId("chat-ui-root");
       expect(root).toBeInTheDocument();
     });
@@ -304,11 +260,7 @@ describe("ChatUIRoot", () => {
   describe("Sidebar callbacks", () => {
     it("accepts onSidebarToggle prop", () => {
       render(
-        <ChatUIRoot
-          mode="twoPane"
-          sidebarOpen={true}
-          onSidebarToggle={mockOnSidebarToggle}
-        />
+        <ChatUIRoot mode="twoPane" sidebarOpen={true} onSidebarToggle={mockOnSidebarToggle} />,
       );
       // Component should render without error
       const root = screen.getByTestId("chat-ui-root");
@@ -325,11 +277,7 @@ describe("ChatUIRoot", () => {
 
     it("accepts onSidebarToggle prop for keyboard interactions", () => {
       render(
-        <ChatUIRoot
-          mode="twoPane"
-          sidebarOpen={true}
-          onSidebarToggle={mockOnSidebarToggle}
-        />
+        <ChatUIRoot mode="twoPane" sidebarOpen={true} onSidebarToggle={mockOnSidebarToggle} />,
       );
       const root = screen.getByTestId("chat-ui-root");
       expect(root).toBeInTheDocument();

@@ -65,7 +65,7 @@ describe("Slider", () => {
           .getByRole("slider")
           .closest("[data-slot='slider']")
           ?.querySelector("[data-slot='slider-track']");
-        expect(track).toHaveClass("border-destructive/50");
+        expect(track).toHaveClass("border-status-error/50");
       });
 
       it("applies error background to range", () => {
@@ -74,13 +74,13 @@ describe("Slider", () => {
           .getByRole("slider")
           .closest("[data-slot='slider']")
           ?.querySelector("[data-slot='slider-range']");
-        expect(range).toHaveClass("bg-destructive");
+        expect(range).toHaveClass("bg-status-error");
       });
 
       it("applies error border to thumb", () => {
         render(<Slider error="Value too high" defaultValue={[50]} />);
         const thumb = screen.getByRole("slider");
-        expect(thumb).toHaveClass("border-destructive");
+        expect(thumb).toHaveClass("border-status-error");
       });
 
       it("calls onStateChange with error state", () => {

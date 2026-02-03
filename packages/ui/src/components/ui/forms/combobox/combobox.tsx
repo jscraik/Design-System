@@ -191,7 +191,7 @@ function Combobox({
       data-required={required ? "true" : undefined}
       className={cn(
         "relative w-full font-foundation",
-        error && "ring-2 ring-foundation-accent-red/50 rounded-md",
+        error && "ring-2 ring-status-error/50 rounded-md",
         className,
       )}
       onKeyDown={handleKeyDown}
@@ -209,7 +209,7 @@ function Combobox({
         disabled={isDisabled}
         loading={loading}
         onClick={() => !isDisabled && setOpen(!open)}
-        className={cn("w-full justify-between", !value && "text-foundation-text-dark-tertiary")}
+        className={cn("w-full justify-between", !value && "text-muted-foreground")}
       >
         {selectedOption?.label || value || placeholder}
         <svg
@@ -228,12 +228,10 @@ function Combobox({
       {open && (
         <div
           data-slot="combobox-content"
-          className="absolute z-50 mt-1 w-full rounded-md border border-foundation-bg-dark-3 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2 shadow-lg"
+          className="absolute z-50 mt-1 w-full rounded-md border border-border bg-popover shadow-lg"
         >
           {loading ? (
-            <div className="p-4 text-center text-sm text-foundation-text-dark-tertiary">
-              Loading...
-            </div>
+            <div className="p-4 text-center text-sm text-muted-foreground">Loading...</div>
           ) : (
             <>
               <div className="p-2">
@@ -247,13 +245,13 @@ function Combobox({
                   }}
                   placeholder={searchPlaceholder}
                   disabled={isDisabled}
-                  className="w-full rounded-md border border-foundation-bg-dark-3 bg-transparent px-3 py-2 text-sm text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-text-placeholder focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-label={searchPlaceholder}
                   aria-disabled={isDisabled || undefined}
                 />
               </div>
 
-              {error && <div className="px-3 pb-2 text-sm text-foundation-accent-red">{error}</div>}
+              {error && <div className="px-3 pb-2 text-sm text-status-error">{error}</div>}
 
               <ul
                 ref={listRef}
@@ -262,9 +260,7 @@ function Combobox({
                 aria-label="Options"
               >
                 {filteredOptions.length === 0 ? (
-                  <li className="px-3 py-2 text-sm text-foundation-text-dark-tertiary">
-                    {emptyMessage}
-                  </li>
+                  <li className="px-3 py-2 text-sm text-muted-foreground">{emptyMessage}</li>
                 ) : (
                   filteredOptions.map((option, index) => (
                     <li
@@ -275,20 +271,17 @@ function Combobox({
                       onClick={() => !option.disabled && !isDisabled && handleSelect(option.value)}
                       className={cn(
                         "relative flex cursor-pointer select-none items-center rounded-sm px-3 py-2 text-sm outline-none transition-colors",
-                        value === option.value &&
-                          "bg-foundation-accent-blue/10 text-foundation-text-dark-primary",
-                        highlightedIndex === index &&
-                          value !== option.value &&
-                          "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
+                        value === option.value && "bg-interactive/10 text-foreground",
+                        highlightedIndex === index && value !== option.value && "bg-muted",
                         (option.disabled || isDisabled) && "pointer-events-none opacity-50",
                         !(option.disabled || isDisabled) &&
                           value !== option.value &&
-                          "text-foundation-text-dark-primary hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
+                          "text-foreground hover:bg-muted",
                       )}
                     >
                       {value === option.value && (
                         <svg
-                          className="mr-2 size-4 text-foundation-accent-blue"
+                          className="mr-2 size-4 text-interactive"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"

@@ -8,7 +8,7 @@ import type { StatefulComponentProps, ComponentState } from "@design-studio/toke
  */
 function TextareaError({ message, id }: { message: string; id?: string }) {
   return (
-    <span id={id} className="text-destructive text-body-small mt-1 flex items-center gap-1">
+    <span id={id} className="text-status-error text-body-small mt-1 flex items-center gap-1">
       <svg className="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
         <path
           fillRule="evenodd"
@@ -113,9 +113,9 @@ function Textarea({
       aria-required={required ? "true" : undefined}
       tabIndex={isDisabled ? -1 : undefined}
       className={cn(
-        "resize-none border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 dark:focus-visible:ring-ring/40 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-input-background px-3 py-2 text-base transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        "resize-none border-input placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 dark:focus-visible:ring-ring/40 aria-invalid:ring-status-error/20 dark:aria-invalid:ring-status-error/40 aria-invalid:border-status-error dark:bg-input/30 flex field-sizing-content min-h-16 w-full rounded-md border bg-input-background px-3 py-2 text-base transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
         // Error state styling
-        error && "border-destructive focus-visible:ring-destructive/50",
+        error && "border-status-error focus-visible:ring-status-error/50",
         // Loading state styling
         loading && "opacity-70 cursor-wait",
         className,
@@ -131,7 +131,7 @@ function Textarea({
         <div className="relative">
           {textareaElement}
           {required && !isDisabled && (
-            <span className="absolute right-3 top-3 text-destructive" aria-hidden="true">
+            <span className="absolute right-3 top-3 text-status-error" aria-hidden="true">
               *
             </span>
           )}

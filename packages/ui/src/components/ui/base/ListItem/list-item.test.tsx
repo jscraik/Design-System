@@ -30,12 +30,7 @@ describe("ListItem", () => {
     });
 
     it("renders with icon", () => {
-      render(
-        <ListItem
-          label="Settings"
-          icon={<svg data-testid="test-icon" />}
-        />
-      );
+      render(<ListItem label="Settings" icon={<svg data-testid="test-icon" />} />);
       expect(screen.getByTestId("test-icon")).toBeInTheDocument();
     });
 
@@ -45,9 +40,7 @@ describe("ListItem", () => {
     });
 
     it("renders with right content", () => {
-      render(
-        <ListItem label="Settings" right={<span data-testid="right-content">Right</span>} />
-      );
+      render(<ListItem label="Settings" right={<span data-testid="right-content">Right</span>} />);
       expect(screen.getByTestId("right-content")).toBeInTheDocument();
     });
 
@@ -93,6 +86,7 @@ describe("ListItem", () => {
       const { container } = render(<ListItem label="Settings" error="Error" />);
       const item = container.querySelector('[data-state="error"]');
       expect(item).toBeInTheDocument();
+      expect(item).toHaveClass("border-status-error/50");
     });
   });
 
@@ -130,7 +124,7 @@ describe("ListItem", () => {
   describe("Selected state", () => {
     it("applies selected styling", () => {
       const { container } = render(<ListItem label="Settings" selected />);
-      const item = container.querySelector(".bg-foundation-bg-light-2");
+      const item = container.querySelector(".bg-secondary");
       expect(item).toBeInTheDocument();
     });
   });
@@ -202,7 +196,8 @@ describe("ListItem", () => {
       const item = container.querySelector('[data-rail-item="true"]');
       expect(item).toBeInTheDocument();
       // The label container should have hidden class
-      const labelDiv = container.querySelector(".hidden") || container.querySelector('[class*="hidden"]');
+      const labelDiv =
+        container.querySelector(".hidden") || container.querySelector('[class*="hidden"]');
       expect(labelDiv).toBeInTheDocument();
     });
   });

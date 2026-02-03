@@ -20,7 +20,7 @@ describe("HoloCard", () => {
         <h3>Card</h3>
       </HoloCard>,
     );
-    const card = screen.getByText("Card").closest("div");
+    const card = screen.getByText("Card").closest('[data-slot="holo-card"]');
     expect(card).not.toHaveClass("cursor-pointer");
   });
 
@@ -32,7 +32,7 @@ describe("HoloCard", () => {
       </HoloCard>,
     );
 
-    const card = screen.getByText("Clickable Card").closest("div");
+    const card = screen.getByText("Clickable Card").closest('[data-slot="holo-card"]');
     expect(card).toHaveClass("cursor-pointer");
 
     await userEvent.click(card!);
@@ -41,21 +41,21 @@ describe("HoloCard", () => {
 
   it("should have correct variant classes", () => {
     const { rerender } = render(<HoloCard variant="glass">Glass</HoloCard>);
-    let card = screen.getByText("Glass").closest("div");
+    let card = screen.getByText("Glass").closest('[data-slot="holo-card"]');
     expect(card).toHaveClass("backdrop-blur-sm");
 
     rerender(<HoloCard variant="default">Default</HoloCard>);
-    card = screen.getByText("Default").closest("div");
+    card = screen.getByText("Default").closest('[data-slot="holo-card"]');
     expect(card).toHaveClass("border");
   });
 
   it("should have correct size classes", () => {
     const { rerender } = render(<HoloCard size="sm">Small</HoloCard>);
-    let card = screen.getByText("Small").closest("div");
+    let card = screen.getByText("Small").closest('[data-slot="holo-card"]');
     expect(card).toHaveClass("p-4");
 
     rerender(<HoloCard size="lg">Large</HoloCard>);
-    card = screen.getByText("Large").closest("div");
+    card = screen.getByText("Large").closest('[data-slot="holo-card"]');
     expect(card).toHaveClass("p-8");
   });
 
@@ -67,7 +67,7 @@ describe("HoloCard", () => {
       </HoloCard>,
     );
 
-    const card = screen.getByText("Keyboard Card").closest("div");
+    const card = screen.getByText("Keyboard Card").closest('[data-slot="holo-card"]');
     card?.focus();
     expect(card).toHaveFocus();
 

@@ -73,7 +73,8 @@ const SpacingCalculator = () => {
             <div className="p-4 rounded-lg bg-muted">
               <div className="text-sm font-medium mb-2">Token Reference</div>
               <code className="text-xs">
-                padding: p-s{spacing}<br />
+                padding: p-s{spacing}
+                <br />
                 gap: gap-s{gap}
               </code>
             </div>
@@ -150,9 +151,7 @@ const RadiusInspector = () => {
 
             <div className="p-4 rounded-lg bg-muted">
               <div className="text-sm font-medium mb-2">Token Reference</div>
-              <code className="text-xs">
-                border-radius: r{radius}px
-              </code>
+              <code className="text-xs">border-radius: r{radius}px</code>
             </div>
           </div>
 
@@ -172,9 +171,7 @@ const RadiusInspector = () => {
               >
                 Rect
               </div>
-              <div
-                className="w-20 h-20 border-2 border-accent rounded-full flex items-center justify-center text-xs"
-              >
+              <div className="w-20 h-20 border-2 border-accent rounded-full flex items-center justify-center text-xs">
                 Circle
               </div>
             </div>
@@ -223,7 +220,8 @@ const meta: Meta = {
     layout: "fullscreen",
     docs: {
       description: {
-        component: "Interactive playgrounds for exploring tokens with live controls. Adjust spacing, radius, and more in real-time.",
+        component:
+          "Interactive playgrounds for exploring tokens with live controls. Adjust spacing, radius, and more in real-time.",
       },
     },
   },

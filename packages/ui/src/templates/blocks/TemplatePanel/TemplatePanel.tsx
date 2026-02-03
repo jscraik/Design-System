@@ -153,11 +153,9 @@ export interface TemplatePanelProps {
 }
 
 const variantStyles: Record<TemplatePanelVariant, string> = {
-  default:
-    "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm",
-  elevated:
-    "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-lg",
-  outlined: "bg-transparent border-2 border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
+  default: "bg-secondary border border-border shadow-sm",
+  elevated: "bg-secondary border border-border shadow-lg",
+  outlined: "bg-transparent border-2 border-border",
   ghost: "bg-transparent border-none shadow-none",
 };
 
@@ -168,12 +166,11 @@ const sizeStyles: Record<TemplatePanelSize, { padding: string; radius: string }>
 };
 
 const badgeStyles: Record<BadgeVariant, string> = {
-  default:
-    "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-  error: "bg-foundation-accent-red/10 text-foundation-accent-red",
-  warning: "bg-foundation-accent-orange/10 text-foundation-accent-orange",
-  success: "bg-foundation-accent-green/10 text-foundation-accent-green",
-  info: "bg-foundation-accent-blue/10 text-foundation-accent-blue",
+  default: "bg-muted text-foreground",
+  error: "bg-status-error-muted/10 text-status-error",
+  warning: "bg-accent-orange/10 text-accent-orange",
+  success: "bg-accent-green/10 text-accent-green",
+  info: "bg-accent-blue/10 text-accent-blue",
 };
 
 /**
@@ -343,9 +340,7 @@ export function TemplatePanel({
 
   const transitionClasses = animated ? "transition-all duration-200 ease-in-out" : "";
 
-  const dividerClasses = showDividers
-    ? "border-foundation-bg-light-3 dark:border-foundation-bg-dark-3"
-    : "border-transparent";
+  const dividerClasses = showDividers ? "border-border" : "border-transparent";
 
   const { padding, radius } = sizeStyles[size];
 
@@ -362,7 +357,7 @@ export function TemplatePanel({
     if (loading) {
       return (
         <div className="flex items-center justify-center py-8">
-          <div className="flex items-center gap-3 text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary">
+          <div className="flex items-center gap-3 text-muted-foreground">
             <svg className="size-5 animate-spin" fill="none" viewBox="0 0 24 24">
               <circle
                 className="opacity-25"
@@ -388,18 +383,14 @@ export function TemplatePanel({
       const errorMessage = typeof error === "string" ? error : "An error occurred";
       return (
         <div className="flex flex-col items-center justify-center py-8 px-4">
-          <IconWarning className="size-12 text-foundation-accent-red mb-3" />
-          <h3 className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-            Error
-          </h3>
-          <p className="text-xs text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary text-center mb-4">
-            {errorMessage}
-          </p>
+          <IconWarning className="size-12 text-status-error mb-3" />
+          <h3 className="text-sm font-medium text-foreground mb-1">Error</h3>
+          <p className="text-xs text-text-secondary text-center mb-4">{errorMessage}</p>
           {onRetry && (
             <button
               type="button"
               onClick={onRetry}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-foundation-accent-blue text-white hover:bg-foundation-accent-blue/90 transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-accent-blue text-text-body-on-color hover:bg-accent-blue/90 transition-colors"
             >
               <IconRefresh className="size-4" />
               Retry
@@ -417,7 +408,7 @@ export function TemplatePanel({
         <div className="flex flex-col items-center justify-center py-12 px-4">
           {emptyIcon || (
             <svg
-              className="size-12 text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary mb-3"
+              className="size-12 text-muted-foreground mb-3"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -430,12 +421,8 @@ export function TemplatePanel({
               />
             </svg>
           )}
-          <h3 className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-            {emptyTitle}
-          </h3>
-          <p className="text-xs text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary text-center">
-            {emptyDescription}
-          </p>
+          <h3 className="text-sm font-medium text-foreground mb-1">{emptyTitle}</h3>
+          <p className="text-xs text-text-secondary text-center">{emptyDescription}</p>
         </div>
       );
     }
@@ -447,7 +434,7 @@ export function TemplatePanel({
     <div
       ref={bodyRef}
       className={cn(
-        "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1",
+        "bg-background",
         padding,
         transitionClasses,
         collapsible && isCollapsed && "h-0 overflow-hidden opacity-0 !p-0",
@@ -487,9 +474,9 @@ export function TemplatePanel({
       >
         {/* Drag Handle */}
         {dragHandle && draggable && (
-          <div className="flex items-center justify-center py-1 cursor-grab active:cursor-grabbing border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3">
+          <div className="flex items-center justify-center py-1 cursor-grab active:cursor-grabbing border-b border-border">
             <div className="flex gap-1">
-              <div className="w-8 h-1 rounded-full bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3" />
+              <div className="w-8 h-1 rounded-full bg-muted" />
             </div>
           </div>
         )}
@@ -500,8 +487,7 @@ export function TemplatePanel({
             className={cn(
               "shrink-0 border-b",
               dividerClasses,
-              stickyHeader &&
-                "sticky top-0 z-10 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
+              stickyHeader && "sticky top-0 z-10 bg-secondary",
               headerClassName,
             )}
           >
@@ -530,8 +516,7 @@ export function TemplatePanel({
               "shrink-0 border-t",
               dividerClasses,
               transitionClasses,
-              stickyFooter &&
-                "sticky bottom-0 z-10 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
+              stickyFooter && "sticky bottom-0 z-10 bg-secondary",
               footerClassName,
             )}
           >
@@ -609,19 +594,12 @@ export function TemplatePanelHeader({
   const close = context?.close;
 
   return (
-    <div
-      className={cn(
-        "flex items-center justify-between px-4 py-3 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
-        className,
-      )}
-    >
+    <div className={cn("flex items-center justify-between px-4 py-3 bg-secondary", className)}>
       <div className="flex items-center gap-3 min-w-0 flex-1">
         {leading}
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <h3 className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary truncate">
-              {title}
-            </h3>
+            <h3 className="text-sm font-medium text-foreground truncate">{title}</h3>
             {badge !== undefined && (
               <span
                 className={cn(
@@ -633,11 +611,7 @@ export function TemplatePanelHeader({
               </span>
             )}
           </div>
-          {subtitle && (
-            <p className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-0.5 truncate">
-              {subtitle}
-            </p>
-          )}
+          {subtitle && <p className="text-xs text-muted-foreground mt-0.5 truncate">{subtitle}</p>}
         </div>
       </div>
       <div className="flex items-center gap-2 shrink-0">
@@ -648,9 +622,9 @@ export function TemplatePanelHeader({
             onClick={toggleCollapse}
             className={cn(
               "inline-flex items-center justify-center rounded-md p-1.5",
-              "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-              "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
+              "text-text-secondary",
+              "hover:bg-muted",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               "transition-colors duration-150",
             )}
             aria-expanded={!isCollapsed}
@@ -676,9 +650,9 @@ export function TemplatePanelHeader({
             onClick={close}
             className={cn(
               "inline-flex items-center justify-center rounded-md p-1.5",
-              "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-              "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
+              "text-text-secondary",
+              "hover:bg-muted",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               "transition-colors duration-150",
             )}
             aria-label="Close panel"
@@ -706,12 +680,7 @@ export interface TemplatePanelFooterProps {
  */
 export function TemplatePanelFooter({ leading, trailing, className }: TemplatePanelFooterProps) {
   return (
-    <div
-      className={cn(
-        "flex items-center justify-between px-4 py-3 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
-        className,
-      )}
-    >
+    <div className={cn("flex items-center justify-between px-4 py-3 bg-secondary", className)}>
       <div className="flex items-center gap-2">{leading}</div>
       <div className="flex items-center gap-2">{trailing}</div>
     </div>

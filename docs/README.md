@@ -20,6 +20,7 @@ Last updated: 2026-01-09
 - [Audit reports](#audit-reports)
 - [Guides](#guides)
 - [Design system governance](#design-system-governance)
+- [Transcripts](#transcripts)
 - [Root documentation](#root-documentation)
 - [Workflow docs](#workflow-docs)
 
@@ -102,6 +103,10 @@ Step-by-step guides for common tasks.
 - **[UPSTREAM_ALIGNMENT.md](./design-system/UPSTREAM_ALIGNMENT.md)** - Apps SDK UI alignment log
 - **[CONTRACT.md](./design-system/CONTRACT.md)** - Index of governing artifacts
 - **[COVERAGE_MATRIX.md](./design-system/COVERAGE_MATRIX.md)** - Generated component coverage map
+
+## Transcripts
+
+- **[docs/transcripts/README.md](./transcripts/README.md)** - Cleaned + raw video transcripts
 
 ## Root documentation
 

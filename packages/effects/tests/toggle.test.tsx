@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useState } from "react";
 
 import { LiquidToggle } from "../src/components/toggle";
 
@@ -65,11 +66,23 @@ describe("LiquidToggle", () => {
 
   it("should be keyboard accessible", async () => {
     const handleChange = vi.fn();
-    render(
-      <LiquidToggle pressed={false} onPressedChange={handleChange} ariaLabel="Test Toggle">
-        Toggle
-      </LiquidToggle>,
-    );
+    function KeyboardHarness() {
+      const [pressed, setPressed] = useState(false);
+      return (
+        <LiquidToggle
+          pressed={pressed}
+          onPressedChange={(next) => {
+            setPressed(next);
+            handleChange(next);
+          }}
+          ariaLabel="Test Toggle"
+        >
+          Toggle
+        </LiquidToggle>
+      );
+    }
+
+    render(<KeyboardHarness />);
 
     const button = screen.getByRole("button");
     button.focus();
@@ -77,8 +90,10 @@ describe("LiquidToggle", () => {
 
     await userEvent.keyboard("{Enter}");
     expect(handleChange).toHaveBeenCalledWith(true);
+    expect(button).toHaveAttribute("aria-pressed", "true");
 
     await userEvent.keyboard(" "); // Space key
     expect(handleChange).toHaveBeenCalledWith(false);
+    expect(button).toHaveAttribute("aria-pressed", "false");
   });
 });

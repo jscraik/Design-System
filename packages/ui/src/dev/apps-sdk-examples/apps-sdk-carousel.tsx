@@ -51,7 +51,7 @@ export function AppsSdkCarouselExample() {
         }
       >
         <div
-          className="h-full w-full border-l border-border-subtle bg-gradient-to-r from-black/10 to-transparent"
+          className="h-full w-full border-l border-border-subtle bg-gradient-to-r from-overlay/10 to-transparent"
           style={{
             WebkitMaskImage:
               "linear-gradient(to bottom, transparent 0%, white 30%, white 70%, transparent 100%)",
@@ -68,7 +68,7 @@ export function AppsSdkCarouselExample() {
         }
       >
         <div
-          className="h-full w-full border-r border-border-subtle bg-gradient-to-l from-black/10 to-transparent"
+          className="h-full w-full border-r border-border-subtle bg-gradient-to-l from-overlay/10 to-transparent"
           style={{
             WebkitMaskImage:
               "linear-gradient(to bottom, transparent 0%, white 30%, white 70%, transparent 100%)",

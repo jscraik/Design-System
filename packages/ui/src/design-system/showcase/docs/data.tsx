@@ -193,12 +193,24 @@ export const spacingScale = [0, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96] as
 // Typography tokens
 export const typographyTokens = {
   fontFamily: "'SF Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-  heading1: { size: 32, weight: 600, lineHeight: 40, tracking: -0.5 },
-  heading2: { size: 24, weight: 600, lineHeight: 32, tracking: -0.3 },
-  heading3: { size: 18, weight: 600, lineHeight: 24, tracking: -0.2 },
-  body: { size: 15, weight: 400, lineHeight: 22, tracking: 0 },
-  bodySmall: { size: 13, weight: 400, lineHeight: 18, tracking: 0 },
-  caption: { size: 11, weight: 400, lineHeight: 14, tracking: 0.1 },
+  hero: { size: 40, weight: 600, lineHeight: 48, tracking: -0.1 },
+  h1: { size: 36, weight: 600, lineHeight: 42, tracking: -0.1 },
+  h2: { size: 24, weight: 600, lineHeight: 28, tracking: -0.25 },
+  h3: { size: 18, weight: 600, lineHeight: 26, tracking: -0.45 },
+  h4: { size: 16, weight: 600, lineHeight: 24, tracking: -0.4 },
+  h5: { size: 14, weight: 600, lineHeight: 20, tracking: -0.3 },
+  h6: { size: 12, weight: 600, lineHeight: 18, tracking: -0.1 },
+  paragraphLg: { size: 18, weight: 400, lineHeight: 26, tracking: -0.4 },
+  paragraphMd: { size: 16, weight: 400, lineHeight: 24, tracking: -0.4 },
+  paragraphSm: { size: 14, weight: 400, lineHeight: 20, tracking: -0.3 },
+  caption: { size: 12, weight: 400, lineHeight: 18, tracking: -0.1 },
+  legacy: {
+    heading1: { size: 32, weight: 600, lineHeight: 40, tracking: -0.5 },
+    heading2: { size: 24, weight: 600, lineHeight: 32, tracking: -0.3 },
+    heading3: { size: 18, weight: 600, lineHeight: 24, tracking: -0.2 },
+    body: { size: 15, weight: 400, lineHeight: 22, tracking: 0 },
+    bodySmall: { size: 13, weight: 400, lineHeight: 18, tracking: 0 },
+  },
 } as const;
 
 export const tabs: { id: DocTab; label: string; icon: ReactNode }[] = [

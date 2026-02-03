@@ -55,11 +55,16 @@ describe("Separator", () => {
         "error",
         {
           attrs: [{ name: "data-error", value: "true" }],
-          classes: ["bg-foundation-accent-red"],
+          classes: ["bg-status-error"],
         },
       ],
       ["disabled", { disabled: true }, "disabled", { classes: ["opacity-50"] }],
-      ["required", { required: true }, "default", { attrs: [{ name: "data-required", value: "true" }] }],
+      [
+        "required",
+        { required: true },
+        "default",
+        { attrs: [{ name: "data-required", value: "true" }] },
+      ],
     ]),
   });
 
@@ -77,9 +82,7 @@ describe("Separator", () => {
     const mockOnStateChange = vi.fn();
 
     it("prioritizes loading over error and disabled", async () => {
-      render(
-        <Separator loading error="Error" disabled onStateChange={mockOnStateChange} />
-      );
+      render(<Separator loading error="Error" disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });

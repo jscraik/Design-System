@@ -67,21 +67,20 @@ export interface SettingDropdownBlockProps {
 
 const variantStyles: Record<SettingDropdownBlockVariant, { container: string; trigger: string }> = {
   default: {
-    container: "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-lg",
-    trigger: "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
+    container: "hover:bg-secondary rounded-lg",
+    trigger: "hover:bg-muted",
   },
   card: {
-    container:
-      "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg",
-    trigger: "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
+    container: "bg-secondary border border-border rounded-lg",
+    trigger: "hover:bg-muted",
   },
   compact: {
     container: "",
-    trigger: "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2",
+    trigger: "hover:bg-secondary",
   },
   inline: {
     container: "",
-    trigger: "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2",
+    trigger: "hover:bg-secondary",
   },
 };
 
@@ -228,12 +227,7 @@ export function SettingDropdownBlock({
   };
 
   return (
-    <div
-      className={cn(
-        divider && "border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
-        className,
-      )}
-    >
+    <div className={cn(divider && "border-b border-border", className)}>
       <div
         className={cn(
           "flex items-center justify-between transition-colors",
@@ -244,25 +238,10 @@ export function SettingDropdownBlock({
       >
         {/* Left side: Icon + Label */}
         <div className="flex items-center gap-3 flex-1 min-w-0">
-          {icon && (
-            <span
-              className={cn(
-                "shrink-0 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary",
-                iconSize,
-              )}
-            >
-              {icon}
-            </span>
-          )}
+          {icon && <span className={cn("shrink-0 text-text-secondary", iconSize)}>{icon}</span>}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <label
-                htmlFor={dropdownId}
-                className={cn(
-                  "font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-                  labelSize,
-                )}
-              >
+              <label htmlFor={dropdownId} className={cn("font-medium text-foreground", labelSize)}>
                 {label}
               </label>
               {badge}
@@ -283,8 +262,8 @@ export function SettingDropdownBlock({
               "flex items-center gap-1.5 rounded-md transition-colors",
               triggerSize,
               triggerVariant,
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
-              error && "ring-1 ring-foundation-accent-red",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+              error && "ring-1 ring-status-error",
             )}
             aria-haspopup="listbox"
             aria-expanded={isOpen}
@@ -292,7 +271,7 @@ export function SettingDropdownBlock({
           >
             {loading ? (
               <svg
-                className="size-4 animate-spin text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
+                className="size-4 animate-spin text-muted-foreground"
                 fill="none"
                 viewBox="0 0 24 24"
               >
@@ -312,12 +291,12 @@ export function SettingDropdownBlock({
               </svg>
             ) : (
               <>
-                <span className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary truncate max-w-[150px]">
+                <span className="text-text-secondary truncate max-w-[150px]">
                   {selectedOption?.label ?? placeholder}
                 </span>
                 <svg
                   className={cn(
-                    "size-3.5 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary transition-transform duration-200",
+                    "size-3.5 text-text-secondary transition-transform duration-200",
                     isOpen && "rotate-180",
                   )}
                   fill="none"
@@ -337,8 +316,8 @@ export function SettingDropdownBlock({
               ref={menuRef}
               className={cn(
                 "absolute z-50 mt-1 py-1 rounded-lg shadow-lg border",
-                "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2",
-                "border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
+                "bg-secondary",
+                "border-border",
                 "animate-in fade-in-0 zoom-in-95 duration-100",
                 align === "end" && "right-0",
                 align === "start" && "left-0",
@@ -360,11 +339,11 @@ export function SettingDropdownBlock({
                     aria-label="Search options"
                     className={cn(
                       "w-full px-3 py-1.5 text-sm rounded-md",
-                      "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
-                      "text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
-                      "placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary",
-                      "border border-foundation-bg-light-3 dark:border-foundation-bg-dark-4",
-                      "focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue",
+                      "bg-muted",
+                      "text-foreground",
+                      "placeholder:text-text-placeholder",
+                      "border border-border",
+                      "focus:outline-none focus:ring-2 focus:ring-ring",
                     )}
                   />
                 </div>
@@ -375,7 +354,7 @@ export function SettingDropdownBlock({
                 {Object.entries(groupedOptions).map(([group, groupOptions]) => (
                   <div key={group || "default"}>
                     {group && (
-                      <div className="px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+                      <div className="px-3 py-1.5 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                         {group}
                       </div>
                     )}
@@ -387,27 +366,22 @@ export function SettingDropdownBlock({
                         disabled={option.disabled}
                         className={cn(
                           "w-full flex items-center justify-between px-3 py-2 text-left transition-colors",
-                          "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-3",
-                          "focus:outline-none focus:bg-foundation-bg-light-2 dark:focus:bg-foundation-bg-dark-3",
+                          "hover:bg-muted",
+                          "focus:outline-none focus:bg-muted",
                           option.disabled && "opacity-50 cursor-not-allowed",
-                          value === option.value &&
-                            "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-3",
+                          value === option.value && "bg-muted",
                         )}
                         role="option"
                         aria-selected={value === option.value}
                       >
                         <div className="flex items-center gap-2 flex-1 min-w-0">
                           {option.icon && (
-                            <span className="shrink-0 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary">
-                              {option.icon}
-                            </span>
+                            <span className="shrink-0 text-text-secondary">{option.icon}</span>
                           )}
                           <div className="flex-1 min-w-0">
-                            <div className="text-sm text-foundation-text-light-primary dark:text-foundation-text-dark-primary truncate">
-                              {option.label}
-                            </div>
+                            <div className="text-sm text-foreground truncate">{option.label}</div>
                             {option.description && (
-                              <div className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-0.5 line-clamp-2">
+                              <div className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
                                 {option.description}
                               </div>
                             )}
@@ -415,7 +389,7 @@ export function SettingDropdownBlock({
                         </div>
                         {value === option.value && (
                           <svg
-                            className="size-4 text-foundation-accent-blue shrink-0 ml-2"
+                            className="size-4 text-accent-blue shrink-0 ml-2"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -429,7 +403,7 @@ export function SettingDropdownBlock({
                   </div>
                 ))}
                 {filteredOptions.length === 0 && (
-                  <div className="px-3 py-4 text-center text-sm text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+                  <div className="px-3 py-4 text-center text-sm text-muted-foreground">
                     No options found
                   </div>
                 )}
@@ -441,14 +415,7 @@ export function SettingDropdownBlock({
 
       {/* Description */}
       {description && !error && (
-        <p
-          className={cn(
-            "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-1",
-            padding,
-            "pt-0",
-            descriptionSize,
-          )}
-        >
+        <p className={cn("text-muted-foreground mt-1", padding, "pt-0", descriptionSize)}>
           {description}
         </p>
       )}
@@ -457,7 +424,7 @@ export function SettingDropdownBlock({
       {error && (
         <div
           className={cn(
-            "flex items-center gap-1.5 text-foundation-accent-red mt-1",
+            "flex items-center gap-1.5 text-status-error mt-1",
             padding,
             "pt-0",
             descriptionSize,
@@ -508,21 +475,11 @@ export function SettingDropdownGroup({
     <div className={cn("space-y-1", className)}>
       {(label || description) && (
         <div className="px-3 py-2">
-          {label && (
-            <h3 className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              {label}
-            </h3>
-          )}
-          {description && (
-            <p className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary mt-0.5">
-              {description}
-            </p>
-          )}
+          {label && <h3 className="text-sm font-medium text-foreground">{label}</h3>}
+          {description && <p className="text-xs text-muted-foreground mt-0.5">{description}</p>}
         </div>
       )}
-      <div className="divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
-        {children}
-      </div>
+      <div className="divide-y divide-border">{children}</div>
     </div>
   );
 }

@@ -23,7 +23,8 @@ const noLucideDirectImportsRule = {
   meta: {
     type: "suggestion",
     docs: {
-      description: "Disallow direct imports from lucide-react. Use @design-studio/ui/icons instead.",
+      description:
+        "Disallow direct imports from lucide-react. Use @design-studio/ui/icons instead.",
       category: "Best Practices",
       recommended: "warn",
       url: "https://github.com/astudio/astudio/blob/main/packages/ui/src/icons/ICON_SYSTEM.md",

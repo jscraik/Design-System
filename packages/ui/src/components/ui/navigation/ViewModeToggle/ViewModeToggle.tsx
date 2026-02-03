@@ -87,7 +87,7 @@ export function ViewModeToggle({
       className={cn(
         "flex items-center gap-2 px-4 py-2 border border-border rounded-xl hover:bg-secondary transition-colors",
         isDisabled && "opacity-50 cursor-not-allowed",
-        error && "border-foundation-accent-red ring-2 ring-foundation-accent-red/50",
+        error && "border-status-error ring-2 ring-status-error/50",
         loading && "animate-pulse",
         className,
       )}
@@ -99,9 +99,9 @@ export function ViewModeToggle({
       aria-busy={loading || undefined}
     >
       {loading ? (
-        <span className="text-body-small text-foundation-text-dark-tertiary">Loading...</span>
+        <span className="text-body-small text-muted-foreground">Loading...</span>
       ) : error ? (
-        <span className="text-body-small text-foundation-accent-red">{error}</span>
+        <span className="text-body-small text-status-error">{error}</span>
       ) : value === "compose" ? (
         <>
           <div className="size-4 text-text-secondary">
@@ -111,8 +111,8 @@ export function ViewModeToggle({
         </>
       ) : (
         <>
-          <Sparkles className="size-4 text-accent-blue" />
-          <span className="text-body-small text-accent-blue">{labels.compose}</span>
+          <Sparkles className="size-4 text-interactive" />
+          <span className="text-body-small text-interactive">{labels.compose}</span>
         </>
       )}
     </button>

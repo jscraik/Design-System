@@ -12,7 +12,7 @@ const meta: Meta<typeof ComposeView> = {
     layout: "fullscreen",
   },
   render: () => (
-    <div className="h-screen bg-foundation-bg-dark-1">
+    <div className="h-screen bg-background">
       <ComposeView models={sampleModels} modes={sampleComposeModes} />
     </div>
   ),
@@ -32,8 +32,8 @@ export const LightTheme: Story = {
 
 export const Framed: Story = {
   render: () => (
-    <div className="h-screen bg-foundation-bg-dark-1 p-6">
-      <div className="h-full rounded-2xl border border-foundation-bg-light-3 dark:border-foundation-text-dark-primary/10 overflow-hidden">
+    <div className="h-screen bg-background p-6">
+      <div className="h-full rounded-2xl border border-muted dark:border-foreground/10 overflow-hidden">
         <ComposeView models={sampleModels} modes={sampleComposeModes} />
       </div>
     </div>

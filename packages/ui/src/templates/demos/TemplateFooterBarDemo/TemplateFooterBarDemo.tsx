@@ -27,14 +27,12 @@ export function TemplateFooterBarDemo() {
   };
 
   return (
-    <div className="h-full bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 overflow-auto">
+    <div className="h-full bg-background overflow-auto">
       <div className="max-w-5xl mx-auto p-8 space-y-8">
         {/* Intro Section */}
-        <div className="space-y-3 pb-6 border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3">
-          <h1 className="text-2xl font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            Footer Bar Component
-          </h1>
-          <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+        <div className="space-y-3 pb-6 border-b border-border">
+          <h1 className="text-2xl font-semibold text-foreground">Footer Bar Component</h1>
+          <p className="text-text-secondary">
             A flexible footer component with variants, status indicators, progress tracking, and
             compound components.
           </p>
@@ -43,15 +41,13 @@ export function TemplateFooterBarDemo() {
         {/* Basic Footer */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Basic Footer Bar
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            <h2 className="text-lg font-medium text-foreground mb-1">Basic Footer Bar</h2>
+            <p className="text-sm text-text-secondary">
               Simple footer with leading and trailing content
             </p>
           </div>
-          <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-            <div className="h-48 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+          <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+            <div className="h-48 bg-secondary flex items-center justify-center text-muted-foreground">
               Content Area
             </div>
             <TemplateFooterBar
@@ -75,15 +71,13 @@ export function TemplateFooterBarDemo() {
         {/* With Compound Components */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              With Compound Components
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            <h2 className="text-lg font-medium text-foreground mb-1">With Compound Components</h2>
+            <p className="text-sm text-text-secondary">
               Using TemplateFooterButton, TemplateFooterLink, and TemplateFooterDivider
             </p>
           </div>
-          <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-            <div className="h-48 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+          <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+            <div className="h-48 bg-secondary flex items-center justify-center text-muted-foreground">
               Form Content
             </div>
             <TemplateFooterBar
@@ -115,17 +109,13 @@ export function TemplateFooterBarDemo() {
         {/* Status States */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Status Indicators
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-              Built-in status types with icons
-            </p>
+            <h2 className="text-lg font-medium text-foreground mb-1">Status Indicators</h2>
+            <p className="text-sm text-text-secondary">Built-in status types with icons</p>
           </div>
           <div className="space-y-4">
             {/* Success Status */}
-            <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-              <div className="h-32 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary text-sm">
+            <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+              <div className="h-32 bg-secondary flex items-center justify-center text-muted-foreground text-sm">
                 Success State
               </div>
               <TemplateFooterBar
@@ -139,8 +129,8 @@ export function TemplateFooterBarDemo() {
             </div>
 
             {/* Error Status */}
-            <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-              <div className="h-32 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary text-sm">
+            <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+              <div className="h-32 bg-secondary flex items-center justify-center text-muted-foreground text-sm">
                 Error State
               </div>
               <TemplateFooterBar
@@ -154,8 +144,8 @@ export function TemplateFooterBarDemo() {
             </div>
 
             {/* Warning Status */}
-            <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-              <div className="h-32 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary text-sm">
+            <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+              <div className="h-32 bg-secondary flex items-center justify-center text-muted-foreground text-sm">
                 Warning State
               </div>
               <TemplateFooterBar
@@ -174,8 +164,8 @@ export function TemplateFooterBarDemo() {
             </div>
 
             {/* Info Status */}
-            <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-              <div className="h-32 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary text-sm">
+            <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+              <div className="h-32 bg-secondary flex items-center justify-center text-muted-foreground text-sm">
                 Info State
               </div>
               <TemplateFooterBar
@@ -189,29 +179,25 @@ export function TemplateFooterBarDemo() {
         {/* Progress Bar */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Progress Indicator
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            <h2 className="text-lg font-medium text-foreground mb-1">Progress Indicator</h2>
+            <p className="text-sm text-text-secondary">
               Built-in progress tracking with percentage
             </p>
           </div>
-          <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-            <div className="h-48 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center">
+          <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+            <div className="h-48 bg-secondary flex items-center justify-center">
               <div className="space-y-4 w-full max-w-xs px-4">
-                <div className="text-center text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary text-sm">
-                  Upload Progress
-                </div>
+                <div className="text-center text-text-secondary text-sm">Upload Progress</div>
                 <div className="flex gap-2">
                   <button
                     onClick={() => setProgress(Math.max(0, progress - 10))}
-                    className="px-3 py-1.5 text-xs bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3"
+                    className="px-3 py-1.5 text-xs bg-background border border-border rounded-lg hover:bg-muted"
                   >
                     -10%
                   </button>
                   <button
                     onClick={() => setProgress(Math.min(100, progress + 10))}
-                    className="px-3 py-1.5 text-xs bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3"
+                    className="px-3 py-1.5 text-xs bg-background border border-border rounded-lg hover:bg-muted"
                   >
                     +10%
                   </button>
@@ -236,18 +222,14 @@ export function TemplateFooterBarDemo() {
         {/* Loading State */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Loading State
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-              Animated loading indicator
-            </p>
+            <h2 className="text-lg font-medium text-foreground mb-1">Loading State</h2>
+            <p className="text-sm text-text-secondary">Animated loading indicator</p>
           </div>
-          <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-            <div className="h-48 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center">
+          <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+            <div className="h-48 bg-secondary flex items-center justify-center">
               <button
                 onClick={() => setLoading(!loading)}
-                className="px-4 py-2 bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 text-sm"
+                className="px-4 py-2 bg-background border border-border rounded-lg hover:bg-muted text-sm"
               >
                 {loading ? "Stop Loading" : "Start Loading"}
               </button>
@@ -266,15 +248,13 @@ export function TemplateFooterBarDemo() {
         {/* Keyboard Shortcut */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Keyboard Shortcut Hint
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            <h2 className="text-lg font-medium text-foreground mb-1">Keyboard Shortcut Hint</h2>
+            <p className="text-sm text-text-secondary">
               Display keyboard shortcuts for quick actions
             </p>
           </div>
-          <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-            <div className="h-48 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+          <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+            <div className="h-48 bg-secondary flex items-center justify-center text-muted-foreground">
               Editor Content
             </div>
             <TemplateFooterBar
@@ -299,17 +279,15 @@ export function TemplateFooterBarDemo() {
         {/* Variants */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Footer Variants
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            <h2 className="text-lg font-medium text-foreground mb-1">Footer Variants</h2>
+            <p className="text-sm text-text-secondary">
               Different visual styles for various use cases
             </p>
           </div>
           <div className="space-y-4">
             {/* Default */}
-            <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-              <div className="h-32 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary text-sm">
+            <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+              <div className="h-32 bg-secondary flex items-center justify-center text-muted-foreground text-sm">
                 Default Variant
               </div>
               <TemplateFooterBar
@@ -320,8 +298,8 @@ export function TemplateFooterBarDemo() {
             </div>
 
             {/* Elevated */}
-            <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-              <div className="h-32 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary text-sm">
+            <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+              <div className="h-32 bg-secondary flex items-center justify-center text-muted-foreground text-sm">
                 Elevated Variant
               </div>
               <TemplateFooterBar
@@ -334,8 +312,8 @@ export function TemplateFooterBarDemo() {
             </div>
 
             {/* Subtle */}
-            <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-              <div className="h-32 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary text-sm">
+            <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+              <div className="h-32 bg-secondary flex items-center justify-center text-muted-foreground text-sm">
                 Subtle Variant
               </div>
               <TemplateFooterBar
@@ -350,17 +328,13 @@ export function TemplateFooterBarDemo() {
         {/* Sizes */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Different Sizes
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-              Small, medium, and large size variants
-            </p>
+            <h2 className="text-lg font-medium text-foreground mb-1">Different Sizes</h2>
+            <p className="text-sm text-text-secondary">Small, medium, and large size variants</p>
           </div>
           <div className="space-y-4">
             {/* Small */}
-            <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-              <div className="h-24 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary text-sm">
+            <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+              <div className="h-24 bg-secondary flex items-center justify-center text-muted-foreground text-sm">
                 Small Size
               </div>
               <TemplateFooterBar
@@ -371,8 +345,8 @@ export function TemplateFooterBarDemo() {
             </div>
 
             {/* Medium */}
-            <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-              <div className="h-24 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary text-sm">
+            <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+              <div className="h-24 bg-secondary flex items-center justify-center text-muted-foreground text-sm">
                 Medium Size (Default)
               </div>
               <TemplateFooterBar
@@ -383,8 +357,8 @@ export function TemplateFooterBarDemo() {
             </div>
 
             {/* Large */}
-            <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-              <div className="h-24 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary text-sm">
+            <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+              <div className="h-24 bg-secondary flex items-center justify-center text-muted-foreground text-sm">
                 Large Size
               </div>
               <TemplateFooterBar
@@ -399,15 +373,11 @@ export function TemplateFooterBarDemo() {
         {/* Complex Example */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-1">
-              Complex Footer
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
-              Multiple elements with center content
-            </p>
+            <h2 className="text-lg font-medium text-foreground mb-1">Complex Footer</h2>
+            <p className="text-sm text-text-secondary">Multiple elements with center content</p>
           </div>
-          <div className="rounded-xl overflow-hidden border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 shadow-sm">
-            <div className="h-48 bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 flex items-center justify-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+          <div className="rounded-xl overflow-hidden border border-border shadow-sm">
+            <div className="h-48 bg-secondary flex items-center justify-center text-muted-foreground">
               Document Editor
             </div>
             <TemplateFooterBar

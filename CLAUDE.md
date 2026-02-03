@@ -7,10 +7,23 @@ Last updated: 2026-01-09
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
-- Owner: TBD (confirm)
-- Review cadence: TBD (confirm)
+- Owner: Jamie Craik
+- Review cadence: Quarterly
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+# Jamie's "Living Map" Rule (put this in every CLAUDE.md + AGENTS.md)
+
+When you work in this repo, you're not just changing code — you're also keeping the **map** up to date.
+
+## The one file that matters: `FORJAMIE.md`
+
+For **every project**, maintain a detailed `FORJAMIE.md` at the repo root that explains the whole project in plain language — like you're explaining it to future-me after I've been away for a while.
+
+**Hard rule:** if a commit changes behavior, structure, data flow, config, or tooling, then `FORJAMIE.md` must be updated **in the same change-set**.  
+If a commit already happened without the doc update, immediately follow with a doc-fix commit.
+
+Think of `FORJAMIE.md` as the "project memory" that never forgets.
 
 ## Project Overview
 

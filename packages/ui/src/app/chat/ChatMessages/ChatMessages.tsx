@@ -113,16 +113,16 @@ export function ChatMessages({
 
   if (loading) {
     return (
-      <div className="flex min-h-0 flex-1 flex-col bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 items-center justify-center">
-        <div className="text-foundation-text-dark-tertiary">Loading messages...</div>
+      <div className="flex min-h-0 flex-1 flex-col bg-background dark:bg-background items-center justify-center">
+        <div className="text-muted-foreground">Loading messages...</div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex min-h-0 flex-1 flex-col bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 items-center justify-center">
-        <div className="text-foundation-accent-red">{error}</div>
+      <div className="flex min-h-0 flex-1 flex-col bg-background dark:bg-background items-center justify-center">
+        <div className="text-status-error">{error}</div>
       </div>
     );
   }
@@ -136,7 +136,7 @@ export function ChatMessages({
         aria-disabled={isDisabled || undefined}
         aria-invalid={error ? "true" : required ? "false" : undefined}
         aria-required={required || undefined}
-        className="flex min-h-0 flex-1 flex-col bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1"
+        className="flex min-h-0 flex-1 flex-col bg-background dark:bg-background"
       >
         {emptyState}
       </div>
@@ -152,7 +152,7 @@ export function ChatMessages({
       aria-invalid={error ? "true" : required ? "false" : undefined}
       aria-required={required || undefined}
       aria-busy={loading || undefined}
-      className="bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1"
+      className="bg-background dark:bg-background"
     >
       <div className="max-w-[62rem] mx-auto px-6 py-8 space-y-6">
         {resolvedMessages.map((message, index) => (
@@ -160,15 +160,15 @@ export function ChatMessages({
             {message.role === "assistant" ? (
               <div className="flex gap-3">
                 <div className="mt-1">
-                  <IconOpenAILogo className="size-6 text-foundation-text-light-primary/80 dark:text-foundation-text-dark-primary/80" />
+                  <IconOpenAILogo className="size-6 text-foreground/80 dark:text-foreground/80" />
                 </div>
                 <div className="flex flex-col gap-6">
-                  <div className="text-body-medium font-normal text-foundation-text-light-primary dark:text-foundation-text-dark-primary whitespace-pre-wrap">
+                  <div className="text-body-medium font-normal text-foreground dark:text-foreground whitespace-pre-wrap">
                     {message.content}
                   </div>
                   <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
-                      className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary hover:text-foundation-icon-light-primary dark:hover:text-foundation-icon-dark-primary"
+                      className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
                       title="Copy"
                       onClick={async () => {
                         try {
@@ -183,35 +183,35 @@ export function ChatMessages({
                       <IconCopy className={iconMd} />
                     </button>
                     <button
-                      className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary hover:text-foundation-icon-light-primary dark:hover:text-foundation-icon-dark-primary"
+                      className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
                       title="Good response"
                       onClick={() => onMessageAction?.("thumbs-up", message)}
                     >
                       <IconThumbUp className={iconMd} />
                     </button>
                     <button
-                      className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary hover:text-foundation-icon-light-primary dark:hover:text-foundation-icon-dark-primary"
+                      className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
                       title="Bad response"
                       onClick={() => onMessageAction?.("thumbs-down", message)}
                     >
                       <IconThumbDown className={iconMd} />
                     </button>
                     <button
-                      className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary hover:text-foundation-icon-light-primary dark:hover:text-foundation-icon-dark-primary"
+                      className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
                       title="Share"
                       onClick={() => onMessageAction?.("share", message)}
                     >
                       <IconShare className={iconMd} />
                     </button>
                     <button
-                      className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary hover:text-foundation-icon-light-primary dark:hover:text-foundation-icon-dark-primary"
+                      className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
                       title="Regenerate"
                       onClick={() => onMessageAction?.("regenerate", message)}
                     >
                       <IconRegenerate className={iconMd} />
                     </button>
                     <button
-                      className="p-1.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-md transition-colors text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary hover:text-foundation-icon-light-primary dark:hover:text-foundation-icon-dark-primary"
+                      className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
                       title="More"
                       onClick={() => onMessageAction?.("more", message)}
                     >
@@ -223,11 +223,11 @@ export function ChatMessages({
             ) : (
               <div className="flex justify-end">
                 <div className="flex items-start gap-2 max-w-[70%]">
-                  <div className="bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 text-foundation-text-light-primary dark:text-foundation-text-dark-primary text-body-medium font-normal rounded-[20px] px-4 py-3 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3">
+                  <div className="bg-secondary dark:bg-secondary text-foreground dark:text-foreground text-body-medium font-normal rounded-[20px] px-4 py-3 border border-muted dark:border-muted">
                     {message.content}
                   </div>
                   <div className="mt-1">
-                    <IconUser className="size-6 text-foundation-text-light-primary/70 dark:text-foundation-text-dark-primary/70" />
+                    <IconUser className="size-6 text-foreground/70 dark:text-foreground/70" />
                   </div>
                   <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
@@ -240,14 +240,14 @@ export function ChatMessages({
                           onMessageAction?.("copy", message);
                         }
                       }}
-                      className="p-1.5 rounded-lg hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary hover:text-foundation-icon-light-primary dark:hover:text-foundation-icon-dark-primary transition-colors"
+                      className="p-1.5 rounded-lg hover:bg-secondary dark:hover:bg-secondary text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground transition-colors"
                       title="Copy"
                     >
                       <IconCopy className={iconMd} />
                     </button>
                     <button
                       onClick={() => onMessageAction?.("edit", message)}
-                      className="p-1.5 rounded-lg hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary transition-colors"
+                      className="p-1.5 rounded-lg hover:bg-secondary dark:hover:bg-secondary text-muted-foreground dark:text-muted-foreground hover:text-foreground dark:hover:text-foreground transition-colors"
                       title="Edit"
                     >
                       <IconEdit className={iconMd} />

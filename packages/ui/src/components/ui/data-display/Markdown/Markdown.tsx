@@ -93,7 +93,7 @@ const parseMarkdown = (content: string): React.ReactNode[] => {
       elements.push(
         <blockquote
           key={index}
-          className="my-4 border-l-4 border-accent pl-4 italic text-muted-foreground"
+          className="my-4 border-l-4 border-interactive pl-4 italic text-muted-foreground"
         >
           {parseInline(line.slice(2))}
         </blockquote>,
@@ -148,7 +148,7 @@ const parseInline = (text: string): React.ReactNode => {
       render: (match: RegExpMatchArray) => (
         <code
           key={`code-${key++}`}
-          className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono text-accent"
+          className="rounded bg-muted px-1.5 py-0.5 text-sm font-mono text-interactive"
         >
           {match[1]}
         </code>
@@ -250,7 +250,7 @@ function Markdown({
       {...props}
     >
       {loading && <p className="text-muted-foreground">Loading markdown...</p>}
-      {error && <p className="text-foundation-accent-red">{error}</p>}
+      {error && <p className="text-status-error">{error}</p>}
       {!loading && !error && elements}
     </div>
   );

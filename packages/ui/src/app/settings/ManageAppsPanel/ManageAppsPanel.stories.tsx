@@ -45,7 +45,7 @@ export const Default: Story = {};
 
 export const InContainer: Story = {
   render: (args) => (
-    <div className="max-w-2xl mx-auto bg-[var(--foundation-bg-dark-1)] rounded-lg overflow-hidden">
+    <div className="max-w-2xl mx-auto bg-[var(--background)] rounded-lg overflow-hidden">
       <ManageAppsPanel {...args} />
     </div>
   ),

@@ -64,12 +64,17 @@ Shows how tokens map to Tailwind utilities.
 
 The typography system is optimized for web usage:
 
-- heading1: 36px / 600 / 40px line / -0.1px tracking
-- heading2: 24px / 600 / 28px line / -0.25px tracking
-- heading3: 18px / 600 / 26px line / -0.45px tracking
-- body: 16px / 400-600 / 26px line / -0.4px tracking
-- bodySmall: 14px / 400-600 / 18px line / -0.3px tracking
-- caption: 12px / 400-600 / 16px line / -0.1px tracking
+- hero: 40px / 600 / 48px line / -0.1px tracking
+- h1: 36px / 600 / 42px line / -0.1px tracking
+- h2: 24px / 600 / 28px line / -0.25px tracking
+- h3: 18px / 600 / 26px line / -0.45px tracking
+- h4: 16px / 600 / 24px line / -0.4px tracking
+- h5: 14px / 600 / 20px line / -0.3px tracking
+- h6: 12px / 600 / 18px line / -0.1px tracking
+- paragraphLg: 18px / 400-600 / 26px line / -0.4px tracking
+- paragraphMd: 16px / 400-600 / 24px line / -0.4px tracking
+- paragraphSm: 14px / 400-600 / 20px line / -0.3px tracking
+- caption: 12px / 400-600 / 18px line / -0.1px tracking
 
 ## Token Structure
 
@@ -93,7 +98,7 @@ space.{s0|s2|s4|s8|s12|s16|s24|s32|s40|s48|s64|s128}
 
 ```
 type.fontFamily
-type.web.{heading1|heading2|heading3|body|bodySmall|caption}.{size|lineHeight|weight|tracking}
+type.web.{hero|h1|h2|h3|h4|h5|h6|paragraphLg|paragraphMd|paragraphSm|caption}.{size|lineHeight|weight|tracking}
 ```
 
 ## Regenerating Tokens

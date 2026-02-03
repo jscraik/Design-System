@@ -38,7 +38,7 @@ describe("TextLink", () => {
       const { container } = render(
         <TextLink href="/test" className="custom-link">
           Link
-        </TextLink>
+        </TextLink>,
       );
       const link = container.querySelector(".custom-link");
       expect(link).toBeInTheDocument();
@@ -49,23 +49,35 @@ describe("TextLink", () => {
     it("renders with default variant", () => {
       const { container } = render(<TextLink href="/test">Link</TextLink>);
       const link = container.querySelector('[data-slot="text-link"]');
-      expect(link).toHaveClass("text-accent");
+      expect(link).toHaveClass("text-interactive");
     });
 
     it("renders with subtle variant", () => {
-      const { container } = render(<TextLink href="/test" variant="subtle">Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" variant="subtle">
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector('[data-slot="text-link"]');
       expect(link).toHaveClass("text-muted-foreground");
     });
 
     it("renders with inline variant", () => {
-      const { container } = render(<TextLink href="/test" variant="inline">Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" variant="inline">
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector('[data-slot="text-link"]');
       expect(link).toHaveClass("underline");
     });
 
     it("renders with nav variant", () => {
-      const { container } = render(<TextLink href="/test" variant="nav">Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" variant="nav">
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector('[data-slot="text-link"]');
       expect(link).toHaveClass("no-underline");
     });
@@ -74,16 +86,20 @@ describe("TextLink", () => {
       const { container } = render(
         <TextLink href="/test" variant="destructive">
           Link
-        </TextLink>
+        </TextLink>,
       );
       const link = container.querySelector('[data-slot="text-link"]');
-      expect(link).toHaveClass("text-destructive");
+      expect(link).toHaveClass("text-status-error");
     });
   });
 
   describe("Sizes", () => {
     it("renders with sm size", () => {
-      const { container } = render(<TextLink href="/test" size="sm">Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" size="sm">
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector('[data-slot="text-link"]');
       expect(link).toHaveClass("text-sm");
     });
@@ -95,7 +111,11 @@ describe("TextLink", () => {
     });
 
     it("renders with lg size", () => {
-      const { container } = render(<TextLink href="/test" size="lg">Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" size="lg">
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector('[data-slot="text-link"]');
       expect(link).toHaveClass("text-lg");
     });
@@ -103,7 +123,11 @@ describe("TextLink", () => {
 
   describe("External link behavior", () => {
     it("adds target and rel for external links when external is true", () => {
-      const { container } = render(<TextLink href="http://example.com" external>Link</TextLink>);
+      const { container } = render(
+        <TextLink href="http://example.com" external>
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector("a");
       expect(link).toHaveAttribute("target", "_blank");
       expect(link).toHaveAttribute("rel", "noopener noreferrer");
@@ -131,7 +155,11 @@ describe("TextLink", () => {
     });
 
     it("enforces security attributes when target is manually set to _blank", () => {
-      const { container } = render(<TextLink href="/test" target="_blank">Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" target="_blank">
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector("a");
       // Security: target="_blank" should always have rel="noopener noreferrer"
       expect(link).toHaveAttribute("rel", "noopener noreferrer");
@@ -143,7 +171,7 @@ describe("TextLink", () => {
       const { container } = render(
         <TextLink href="https://example.com" showExternalIcon>
           Link
-        </TextLink>
+        </TextLink>,
       );
       const icon = container.querySelector("svg");
       expect(icon).toBeInTheDocument();
@@ -153,7 +181,7 @@ describe("TextLink", () => {
       const { container } = render(
         <TextLink href="https://example.com" showExternalIcon={false}>
           Link
-        </TextLink>
+        </TextLink>,
       );
       const icon = container.querySelector("svg");
       expect(icon).not.toBeInTheDocument();
@@ -163,7 +191,7 @@ describe("TextLink", () => {
       const { container } = render(
         <TextLink href="/test" showExternalIcon>
           Link
-        </TextLink>
+        </TextLink>,
       );
       const icon = container.querySelector("svg");
       expect(icon).not.toBeInTheDocument();
@@ -173,7 +201,7 @@ describe("TextLink", () => {
       const { container } = render(
         <TextLink href="https://example.com" showExternalIcon>
           Link
-        </TextLink>
+        </TextLink>,
       );
       // IconArrowTopRightSm wraps svg in a div with the className
       const iconWrapper = container.querySelector("div.size-3\\.5");
@@ -184,13 +212,21 @@ describe("TextLink", () => {
 
   describe("Stateful props - Loading", () => {
     it("shows loading state", () => {
-      const { container } = render(<TextLink href="/test" loading>Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" loading>
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector('[data-state="loading"]');
       expect(link).toBeInTheDocument();
     });
 
     it("calls onStateChange with 'loading'", async () => {
-      render(<TextLink href="/test" loading onStateChange={mockOnStateChange}>Link</TextLink>);
+      render(
+        <TextLink href="/test" loading onStateChange={mockOnStateChange}>
+          Link
+        </TextLink>,
+      );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });
@@ -199,20 +235,32 @@ describe("TextLink", () => {
 
   describe("Stateful props - Error", () => {
     it("shows error state", () => {
-      const { container } = render(<TextLink href="/test" error="Error">Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" error="Error">
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector('[data-state="error"]');
       expect(link).toBeInTheDocument();
       expect(link).toHaveAttribute("data-error", "true");
     });
 
     it("applies error styling", () => {
-      const { container } = render(<TextLink href="/test" error="Error">Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" error="Error">
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector('[data-state="error"]');
-      expect(link).toHaveClass("text-foundation-accent-red");
+      expect(link).toHaveClass("text-status-error");
     });
 
     it("sets aria-invalid when error", () => {
-      const { container } = render(<TextLink href="/test" error="Error">Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" error="Error">
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector('[aria-invalid="true"]');
       expect(link).toBeInTheDocument();
     });
@@ -220,26 +268,42 @@ describe("TextLink", () => {
 
   describe("Stateful props - Disabled", () => {
     it("shows disabled state", () => {
-      const { container } = render(<TextLink href="/test" disabled>Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" disabled>
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector('[data-state="disabled"]');
       expect(link).toBeInTheDocument();
     });
 
     it("removes href when disabled", () => {
-      const { container } = render(<TextLink href="/test" disabled>Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" disabled>
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector("a");
       expect(link).not.toHaveAttribute("href");
     });
 
     it("applies disabled styling", () => {
-      const { container } = render(<TextLink href="/test" disabled>Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" disabled>
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector('[data-state="disabled"]');
       expect(link).toHaveClass("pointer-events-none");
       expect(link).toHaveClass("opacity-50");
     });
 
     it("sets aria-disabled when disabled", () => {
-      const { container } = render(<TextLink href="/test" disabled>Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" disabled>
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector('[aria-disabled="true"]');
       expect(link).toBeInTheDocument();
     });
@@ -248,7 +312,7 @@ describe("TextLink", () => {
       const { container } = render(
         <TextLink href="https://example.com" showExternalIcon disabled>
           Link
-        </TextLink>
+        </TextLink>,
       );
       const icon = container.querySelector("svg");
       expect(icon).not.toBeInTheDocument();
@@ -257,19 +321,31 @@ describe("TextLink", () => {
 
   describe("Stateful props - Required", () => {
     it("sets required data attribute", () => {
-      const { container } = render(<TextLink href="/test" required>Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" required>
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector('[data-required="true"]');
       expect(link).toBeInTheDocument();
     });
 
     it("sets aria-required when required", () => {
-      const { container } = render(<TextLink href="/test" required>Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" required>
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector('[aria-required="true"]');
       expect(link).toBeInTheDocument();
     });
 
     it("sets aria-invalid to false when required but no error", () => {
-      const { container } = render(<TextLink href="/test" required>Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" required>
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector('[aria-invalid="false"]');
       expect(link).toBeInTheDocument();
     });
@@ -280,7 +356,7 @@ describe("TextLink", () => {
       render(
         <TextLink href="/test" loading error="Error" disabled onStateChange={mockOnStateChange}>
           Link
-        </TextLink>
+        </TextLink>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -291,7 +367,7 @@ describe("TextLink", () => {
       render(
         <TextLink href="/test" error="Error" disabled onStateChange={mockOnStateChange}>
           Link
-        </TextLink>
+        </TextLink>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -307,7 +383,11 @@ describe("TextLink", () => {
     });
 
     it("disabled link cannot be focused", () => {
-      const { container } = render(<TextLink href="/test" disabled>Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" disabled>
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector("a");
       // Disabled links have href removed
       expect(link).not.toHaveAttribute("href");
@@ -329,7 +409,11 @@ describe("TextLink", () => {
     });
 
     it("disabled links have aria-disabled", () => {
-      const { container } = render(<TextLink href="/test" disabled>Link</TextLink>);
+      const { container } = render(
+        <TextLink href="/test" disabled>
+          Link
+        </TextLink>,
+      );
       const link = container.querySelector("a");
       expect(link).toHaveAttribute("aria-disabled", "true");
     });
@@ -338,7 +422,11 @@ describe("TextLink", () => {
   describe("ref forwarding", () => {
     it("forwards ref to anchor element", () => {
       const ref = createRef<HTMLAnchorElement>();
-      render(<TextLink href="/test" ref={ref}>Link</TextLink>);
+      render(
+        <TextLink href="/test" ref={ref}>
+          Link
+        </TextLink>,
+      );
       expect(ref.current).toBeInstanceOf(HTMLAnchorElement);
     });
   });

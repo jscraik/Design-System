@@ -23,7 +23,7 @@ describe("AspectRatio", () => {
       const { container } = render(
         <AspectRatio ratio={16 / 9}>
           <div data-testid="content">Content</div>
-        </AspectRatio>
+        </AspectRatio>,
       );
       expect(container.querySelector('[data-testid="content"]')).toBeInTheDocument();
     });
@@ -38,7 +38,7 @@ describe("AspectRatio", () => {
 
     it("passes through other div props", () => {
       const { container } = render(
-        <AspectRatio ratio={16 / 9} data-testid="custom-aspect-ratio" />
+        <AspectRatio ratio={16 / 9} data-testid="custom-aspect-ratio" />,
       );
       expect(container.querySelector('[data-testid="custom-aspect-ratio"]')).toBeInTheDocument();
     });

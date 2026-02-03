@@ -79,21 +79,21 @@ export function ChatShell({
       aria-required={required || undefined}
       aria-busy={loading || undefined}
       className={cn(
-        "size-full flex bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary overflow-hidden relative",
+        "size-full flex bg-background dark:bg-background text-foreground dark:text-foreground overflow-hidden relative",
         isDisabled && "opacity-50 pointer-events-none",
-        error && "ring-2 ring-foundation-accent-red/50",
+        error && "ring-2 ring-status-error/50",
         loading && "animate-pulse",
         className,
       )}
     >
       {loading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-foundation-bg-light-1/80 dark:bg-foundation-bg-dark-1/80 z-10">
-          <div className="text-foundation-text-dark-tertiary">Loading...</div>
+        <div className="absolute inset-0 flex items-center justify-center bg-background/80 dark:bg-background/80 z-10">
+          <div className="text-muted-foreground">Loading...</div>
         </div>
       )}
       {error && !loading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-foundation-bg-light-1/80 dark:bg-foundation-bg-dark-1/80 z-10">
-          <div className="text-foundation-accent-red">{error}</div>
+        <div className="absolute inset-0 flex items-center justify-center bg-background/80 dark:bg-background/80 z-10">
+          <div className="text-status-error">{error}</div>
         </div>
       )}
       {slots.sidebar}

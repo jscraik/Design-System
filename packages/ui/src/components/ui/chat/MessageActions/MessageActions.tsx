@@ -156,7 +156,7 @@ export function MessageActions({
         "flex items-center gap-1",
         showOnHover && "opacity-0 group-hover:opacity-100 transition-opacity",
         isDisabled && "opacity-50",
-        error && "ring-2 ring-foundation-accent-red/50 rounded-lg",
+        error && "ring-2 ring-status-error/50 rounded-lg",
         loading && "animate-pulse",
         className,
       )}

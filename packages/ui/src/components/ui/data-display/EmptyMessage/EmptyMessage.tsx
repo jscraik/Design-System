@@ -110,7 +110,7 @@ function EmptyMessage({
         {description && !loading && !error && (
           <p className="text-sm text-muted-foreground">{description}</p>
         )}
-        {error && <p className="text-sm text-foundation-accent-red">{error}</p>}
+        {error && <p className="text-sm text-status-error">{error}</p>}
       </div>
 
       {action && !loading && !error && !isDisabled && <div className="mt-2">{action}</div>}

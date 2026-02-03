@@ -30,22 +30,22 @@ describe("Badge", () => {
   describe("variants", () => {
     it("renders default variant with correct styles", () => {
       render(<Badge variant="default">Default</Badge>);
-      expect(screen.getByText("Default")).toHaveClass("bg-foundation-accent-blue");
+      expect(screen.getByText("Default")).toHaveClass("bg-interactive");
     });
 
     it("renders secondary variant with correct styles", () => {
       render(<Badge variant="secondary">Secondary</Badge>);
-      expect(screen.getByText("Secondary")).toHaveClass("bg-foundation-bg-light-2");
+      expect(screen.getByText("Secondary")).toHaveClass("bg-secondary");
     });
 
     it("renders destructive variant with correct styles", () => {
       render(<Badge variant="destructive">Destructive</Badge>);
-      expect(screen.getByText("Destructive")).toHaveClass("bg-foundation-accent-red");
+      expect(screen.getByText("Destructive")).toHaveClass("bg-status-error");
     });
 
     it("renders outline variant with correct styles", () => {
       render(<Badge variant="outline">Outline</Badge>);
-      expect(screen.getByText("Outline")).toHaveClass("border-foundation-bg-light-3");
+      expect(screen.getByText("Outline")).toHaveClass("border-border");
     });
   });
 
@@ -67,7 +67,7 @@ describe("Badge", () => {
           <button type="button">Button Badge</button>
         </Badge>,
       );
-      expect(screen.getByRole("button")).toHaveClass("bg-foundation-accent-red");
+      expect(screen.getByRole("button")).toHaveClass("bg-status-error");
     });
   });
 

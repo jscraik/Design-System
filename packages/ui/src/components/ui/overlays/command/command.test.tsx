@@ -18,7 +18,7 @@ describe("Command", () => {
             <Command.CommandItem>Item 1</Command.CommandItem>
             <Command.CommandItem>Item 2</Command.CommandItem>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       const command = container.querySelector('[data-slot="command"]');
       expect(command).toBeInTheDocument();
@@ -31,7 +31,7 @@ describe("Command", () => {
           <Command.CommandList>
             <Command.CommandItem>Result</Command.CommandItem>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       expect(screen.getByPlaceholderText("Type to search...")).toBeInTheDocument();
     });
@@ -45,7 +45,7 @@ describe("Command", () => {
             <Command.CommandItem>Save File</Command.CommandItem>
             <Command.CommandItem>Close</Command.CommandItem>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       expect(screen.getByText("Open File")).toBeInTheDocument();
       expect(screen.getByText("Save File")).toBeInTheDocument();
@@ -61,7 +61,7 @@ describe("Command", () => {
           <Command.CommandList>
             <Command.CommandItem>Item</Command.CommandItem>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -77,7 +77,7 @@ describe("Command", () => {
           <Command.CommandList>
             <Command.CommandItem>Item</Command.CommandItem>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -93,7 +93,7 @@ describe("Command", () => {
           <Command.CommandList>
             <Command.CommandItem>Item</Command.CommandItem>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
@@ -107,7 +107,7 @@ describe("Command", () => {
           <Command.CommandList>
             <Command.CommandItem>Item</Command.CommandItem>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       const command = container.querySelector('[data-slot="command"]');
       expect(command).toHaveClass("opacity-50");
@@ -122,7 +122,7 @@ describe("Command", () => {
           <Command.CommandList>
             <Command.CommandItem>Item</Command.CommandItem>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
@@ -133,17 +133,12 @@ describe("Command", () => {
   describe("State priority", () => {
     it("prioritizes loading over error and disabled", async () => {
       render(
-        <Command.Command
-          loading
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        >
+        <Command.Command loading error="Error" disabled onStateChange={mockOnStateChange}>
           <Command.CommandInput placeholder="Search..." />
           <Command.CommandList>
             <Command.CommandItem>Item</Command.CommandItem>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -152,16 +147,12 @@ describe("Command", () => {
 
     it("prioritizes error over disabled when not loading", async () => {
       render(
-        <Command.Command
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        >
+        <Command.Command error="Error" disabled onStateChange={mockOnStateChange}>
           <Command.CommandInput placeholder="Search..." />
           <Command.CommandList>
             <Command.CommandItem>Item</Command.CommandItem>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -177,7 +168,7 @@ describe("Command", () => {
           <Command.CommandList>
             <Command.CommandItem>Item</Command.CommandItem>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       const inputWrapper = container.querySelector('[data-slot="command-input-wrapper"]');
       expect(inputWrapper).toBeInTheDocument();
@@ -195,7 +186,7 @@ describe("Command", () => {
             <Command.CommandItem>Item 1</Command.CommandItem>
             <Command.CommandItem>Item 2</Command.CommandItem>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       const list = screen.getByText("Item 1").closest('[data-slot="command-list"]');
       expect(list).toBeInTheDocument();
@@ -210,7 +201,7 @@ describe("Command", () => {
           <Command.CommandList>
             <Command.CommandEmpty>No results found</Command.CommandEmpty>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       expect(screen.getByText("No results found")).toBeInTheDocument();
     });
@@ -227,7 +218,7 @@ describe("Command", () => {
               <Command.CommandItem>Suggestion 2</Command.CommandItem>
             </Command.CommandGroup>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       expect(screen.getByText("Suggestions")).toBeInTheDocument();
       expect(screen.getByText("Suggestion 1")).toBeInTheDocument();
@@ -250,7 +241,7 @@ describe("Command", () => {
               <Command.CommandItem>Item 3</Command.CommandItem>
             </Command.CommandGroup>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       expect(screen.getByText("Item 1")).toBeInTheDocument();
       expect(screen.getByText("Item 2")).toBeInTheDocument();
@@ -269,7 +260,7 @@ describe("Command", () => {
               <Command.CommandShortcut>⌘S</Command.CommandShortcut>
             </Command.CommandItem>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       expect(screen.getByText("Save")).toBeInTheDocument();
       expect(screen.getByText("⌘S")).toBeInTheDocument();
@@ -284,7 +275,7 @@ describe("Command", () => {
           <Command.CommandList>
             <Command.CommandItem>Dialog Item</Command.CommandItem>
           </Command.CommandList>
-        </Command.CommandDialog>
+        </Command.CommandDialog>,
       );
       expect(screen.getByText("Dialog Item")).toBeInTheDocument();
       expect(screen.getByText("Command Palette")).toBeInTheDocument();
@@ -292,16 +283,12 @@ describe("Command", () => {
 
     it("renders custom title and description", () => {
       render(
-        <Command.CommandDialog
-          open
-          title="Custom Title"
-          description="Custom description"
-        >
+        <Command.CommandDialog open title="Custom Title" description="Custom description">
           <Command.CommandInput placeholder="Search..." />
           <Command.CommandList>
             <Command.CommandItem>Item</Command.CommandItem>
           </Command.CommandList>
-        </Command.CommandDialog>
+        </Command.CommandDialog>,
       );
       expect(screen.getByText("Custom Title")).toBeInTheDocument();
       expect(screen.getByText("Custom description")).toBeInTheDocument();
@@ -337,7 +324,7 @@ describe("Command", () => {
             </Command.CommandGroup>
             <Command.CommandEmpty>No commands found</Command.CommandEmpty>
           </Command.CommandList>
-        </Command.Command>
+        </Command.Command>,
       );
       expect(screen.getByPlaceholderText("Search commands...")).toBeInTheDocument();
       expect(screen.getByText("File Actions")).toBeInTheDocument();

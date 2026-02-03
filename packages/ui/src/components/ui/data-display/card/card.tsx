@@ -33,11 +33,11 @@ function Card({
       data-error={error ? "true" : undefined}
       data-required={required ? "true" : undefined}
       className={cn(
-        "bg-card text-foreground flex flex-col gap-6 rounded-24 border border-border-strong shadow-foundation-card font-foundation",
+        "bg-card text-foreground flex flex-col gap-6 rounded-24 border border-border-strong shadow-card font-foundation",
         // Disabled state styling
         disabled && "opacity-50 pointer-events-none",
         // Error state styling
-        error && "border-foundation-accent-red ring-2 ring-foundation-accent-red/50",
+        error && "border-status-error ring-2 ring-status-error/50",
         className,
       )}
       aria-disabled={disabled || undefined}

@@ -3,16 +3,16 @@
   "schemaVersion": "dtcg-2024-01",
   "appsSdkUiVersion": "^0.2.1",
   "tokenCount": {
-    "total": 69,
+    "total": 79,
     "colors": 28,
     "spacing": 12,
-    "typography": 12,
+    "typography": 22,
     "radius": 10,
     "shadows": 4,
     "sizes": 3
   },
   "sha256": {
-    "css": "1b271779007bb4c9256388b7c9647ca004879095a8b1e73f3e6b137f33be6445"
+    "css": "2a864b3f8fd4b802b68dd7b7f3c4a795efc39e5bb84d7e026667cbec6e374e4d"
   },
   "generated": "1970-01-01T00:00:00.000Z"
 }

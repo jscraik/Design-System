@@ -53,6 +53,10 @@ platforms/apple/apps/macos/ChatUIPlayground/
 
 # Tooling
 .kiro/
+.claude/
+.agent/
+.changeset/
+.ralph/
 .vale/
 
 # Swift/SwiftPM
@@ -86,6 +90,8 @@ _temp/
 *.tsbuildinfo
 
 # Stray files
+.spec/
+codex/rules/
 
 
 # OS
@@ -96,3 +102,6 @@ Thumbs.db
 /ai/tmp/
 /ai/cache/
 /ai/raw/
+# Internal docs (do not commit)
+FORJAMIE.md
+docs/transcripts/

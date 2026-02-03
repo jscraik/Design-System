@@ -200,7 +200,7 @@ describe("Textarea", () => {
       render(<Textarea required />);
       const asterisk = screen.getByText("*");
       expect(asterisk).toBeInTheDocument();
-      expect(asterisk).toHaveClass("text-destructive");
+      expect(asterisk).toHaveClass("text-status-error");
     });
 
     it("sets aria-required attribute", () => {

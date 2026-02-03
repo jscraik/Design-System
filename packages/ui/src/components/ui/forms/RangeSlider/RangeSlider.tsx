@@ -94,7 +94,7 @@ export function RangeSlider({
   // Effective disabled state (disabled if explicitly disabled OR loading)
   const isDisabled = disabled || loading;
 
-  const defaultGradient = `linear-gradient(to right, var(--foundation-range-fill) 0%, var(--foundation-range-fill) ${percentage}%, var(--foundation-range-track) ${percentage}%, var(--foundation-range-track) 100%)`;
+  const defaultGradient = `linear-gradient(to right, var(--range-fill) 0%, var(--range-fill) ${percentage}%, var(--range-track) ${percentage}%, var(--range-track) 100%)`;
 
   return (
     <div
@@ -110,12 +110,12 @@ export function RangeSlider({
       {(label || showValue) && (
         <div className="flex items-center justify-between">
           {label && (
-            <label htmlFor={inputId} className="text-caption text-foundation-text-dark-secondary">
+            <label htmlFor={inputId} className="text-caption text-text-secondary">
               {label}
             </label>
           )}
           {showValue && (
-            <span className="text-caption font-semibold text-foundation-text-dark-primary">
+            <span className="text-caption font-semibold text-foreground">
               {value}
               {suffix}
             </span>
@@ -133,11 +133,11 @@ export function RangeSlider({
         disabled={isDisabled}
         aria-label={ariaLabel ?? label ?? "Range slider"}
         className={cn(
-          "w-full h-1.5 rounded-lg appearance-none cursor-pointer [--foundation-range-track:var(--foundation-bg-light-3)] [--foundation-range-thumb:var(--foundation-bg-light-1)] [--foundation-range-fill:var(--foundation-accent-green)] dark:[--foundation-range-track:var(--foundation-bg-dark-3)] dark:[--foundation-range-thumb:var(--foundation-bg-dark-1)]",
-          "[&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[var(--foundation-range-thumb)] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-sm",
-          "[&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[var(--foundation-range-thumb)] [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer",
+          "w-full h-1.5 rounded-lg appearance-none cursor-pointer [--range-track:var(--muted)] [--range-thumb:var(--background)] [--range-fill:var(--status-success)]",
+          "[&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[var(--range-thumb)] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-sm",
+          "[&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[var(--range-thumb)] [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer",
           isDisabled && "opacity-50 cursor-not-allowed",
-          error && "ring-2 ring-foundation-accent-red/50",
+          error && "ring-2 ring-status-error/50",
           loading && "animate-pulse",
         )}
         style={{ background: gradient || defaultGradient }}

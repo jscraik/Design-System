@@ -39,7 +39,7 @@ export const Interactive: Story = {
     const [isWebSearchActive, setIsWebSearchActive] = useState(false);
 
     return (
-      <div className="p-8 bg-foundation-bg-dark-1 min-h-[400px]">
+      <div className="p-8 bg-background min-h-[400px]">
         <AttachmentMenu
           {...args}
           open={open}
@@ -65,7 +65,7 @@ export const Default: Story = {
     isWebSearchActive: false,
   },
   render: (args) => (
-    <div className="p-8 bg-foundation-bg-dark-1">
+    <div className="p-8 bg-background">
       <AttachmentMenu {...args} />
     </div>
   ),
@@ -78,7 +78,7 @@ export const OpenPrimary: Story = {
     isWebSearchActive: false,
   },
   render: (args) => (
-    <div className="p-8 bg-foundation-bg-dark-1 min-h-[400px]">
+    <div className="p-8 bg-background min-h-[400px]">
       <AttachmentMenu {...args} />
     </div>
   ),
@@ -91,7 +91,7 @@ export const WebSearchActive: Story = {
     isWebSearchActive: true,
   },
   render: (args) => (
-    <div className="p-8 bg-foundation-bg-dark-1 min-h-[400px]">
+    <div className="p-8 bg-background min-h-[400px]">
       <AttachmentMenu {...args} />
     </div>
   ),

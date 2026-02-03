@@ -21,29 +21,29 @@ export interface ContextTagProps {
 
 const variantStyles = {
   green: {
-    bg: "bg-foundation-accent-green/20",
-    text: "text-foundation-text-dark-primary",
-    hover: "hover:bg-foundation-accent-green/30",
+    bg: "bg-status-success-muted/20",
+    text: "text-foreground",
+    hover: "hover:bg-status-success-muted/30",
   },
   blue: {
-    bg: "bg-foundation-accent-blue/20",
-    text: "text-foundation-text-dark-primary",
-    hover: "hover:bg-foundation-accent-blue/30",
+    bg: "bg-interactive/20",
+    text: "text-foreground",
+    hover: "hover:bg-interactive/30",
   },
   orange: {
-    bg: "bg-foundation-accent-orange/20",
-    text: "text-foundation-text-dark-primary",
-    hover: "hover:bg-foundation-accent-orange/30",
+    bg: "bg-status-warning/20",
+    text: "text-foreground",
+    hover: "hover:bg-status-warning/30",
   },
   red: {
-    bg: "bg-foundation-accent-red/20",
-    text: "text-foundation-text-dark-primary",
-    hover: "hover:bg-foundation-accent-red/30",
+    bg: "bg-status-error-muted/20",
+    text: "text-foreground",
+    hover: "hover:bg-status-error-muted/30",
   },
   default: {
-    bg: "bg-foundation-bg-dark-3",
-    text: "text-foundation-text-dark-primary",
-    hover: "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2",
+    bg: "bg-muted",
+    text: "text-foreground",
+    hover: "hover:bg-secondary",
   },
 };
 

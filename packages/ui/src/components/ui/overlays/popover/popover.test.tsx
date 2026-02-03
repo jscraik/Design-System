@@ -15,7 +15,7 @@ describe("Popover", () => {
         <Popover.Popover open={true}>
           <Popover.PopoverTrigger>Trigger</Popover.PopoverTrigger>
           <Popover.PopoverContent>Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       const trigger = container.querySelector('[data-slot="popover-trigger"]');
       expect(trigger).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe("Popover", () => {
         <Popover.Popover open={true}>
           <Popover.PopoverTrigger>Trigger</Popover.PopoverTrigger>
           <Popover.PopoverContent>Popover Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       expect(screen.getByText("Popover Content")).toBeInTheDocument();
     });
@@ -36,7 +36,7 @@ describe("Popover", () => {
         <Popover.Popover open={false}>
           <Popover.PopoverTrigger>Trigger</Popover.PopoverTrigger>
           <Popover.PopoverContent>Popover Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       expect(screen.queryByText("Popover Content")).not.toBeInTheDocument();
     });
@@ -46,7 +46,7 @@ describe("Popover", () => {
         <Popover.Popover>
           <Popover.PopoverTrigger>Open Menu</Popover.PopoverTrigger>
           <Popover.PopoverContent>Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       expect(screen.getByText("Open Menu")).toBeInTheDocument();
     });
@@ -58,7 +58,7 @@ describe("Popover", () => {
         <Popover.Popover open={false}>
           <Popover.PopoverTrigger>Trigger</Popover.PopoverTrigger>
           <Popover.PopoverContent>Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       expect(screen.queryByText("Content")).not.toBeInTheDocument();
 
@@ -66,7 +66,7 @@ describe("Popover", () => {
         <Popover.Popover open={true}>
           <Popover.PopoverTrigger>Trigger</Popover.PopoverTrigger>
           <Popover.PopoverContent>Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
     });
@@ -76,7 +76,7 @@ describe("Popover", () => {
         <Popover.Popover open={true}>
           <Popover.PopoverTrigger>Trigger</Popover.PopoverTrigger>
           <Popover.PopoverContent>Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
 
@@ -84,7 +84,7 @@ describe("Popover", () => {
         <Popover.Popover open={false}>
           <Popover.PopoverTrigger>Trigger</Popover.PopoverTrigger>
           <Popover.PopoverContent>Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       expect(screen.queryByText("Content")).not.toBeInTheDocument();
     });
@@ -94,7 +94,7 @@ describe("Popover", () => {
         <Popover.Popover>
           <Popover.PopoverTrigger>Toggle</Popover.PopoverTrigger>
           <Popover.PopoverContent>Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       const trigger = screen.getByText("Toggle");
 
@@ -115,13 +115,12 @@ describe("Popover", () => {
         <Popover.Popover loading onStateChange={mockOnStateChange}>
           <Popover.PopoverTrigger>Trigger</Popover.PopoverTrigger>
           <Popover.PopoverContent>Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });
     });
-
   });
 
   describe("Stateful props - Error", () => {
@@ -130,7 +129,7 @@ describe("Popover", () => {
         <Popover.Popover error="Error" onStateChange={mockOnStateChange}>
           <Popover.PopoverTrigger>Trigger</Popover.PopoverTrigger>
           <Popover.PopoverContent>Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -144,7 +143,7 @@ describe("Popover", () => {
         <Popover.Popover disabled onStateChange={mockOnStateChange}>
           <Popover.PopoverTrigger>Trigger</Popover.PopoverTrigger>
           <Popover.PopoverContent>Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
@@ -158,7 +157,7 @@ describe("Popover", () => {
         <Popover.Popover required onStateChange={mockOnStateChange}>
           <Popover.PopoverTrigger>Trigger</Popover.PopoverTrigger>
           <Popover.PopoverContent>Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
@@ -169,15 +168,10 @@ describe("Popover", () => {
   describe("State priority", () => {
     it("prioritizes loading over error and disabled", async () => {
       render(
-        <Popover.Popover
-          loading
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        >
+        <Popover.Popover loading error="Error" disabled onStateChange={mockOnStateChange}>
           <Popover.PopoverTrigger>Trigger</Popover.PopoverTrigger>
           <Popover.PopoverContent>Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -186,14 +180,10 @@ describe("Popover", () => {
 
     it("prioritizes error over disabled when not loading", async () => {
       render(
-        <Popover.Popover
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        >
+        <Popover.Popover error="Error" disabled onStateChange={mockOnStateChange}>
           <Popover.PopoverTrigger>Trigger</Popover.PopoverTrigger>
           <Popover.PopoverContent>Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -207,7 +197,7 @@ describe("Popover", () => {
         <Popover.Popover>
           <Popover.PopoverTrigger>Open Popover</Popover.PopoverTrigger>
           <Popover.PopoverContent>Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       const trigger = screen.getByText("Open Popover");
       expect(trigger).toHaveAttribute("type", "button");
@@ -220,7 +210,7 @@ describe("Popover", () => {
           <Popover.PopoverContent>
             <div data-testid="popover-content-test">Content</div>
           </Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       const content = screen.getByTestId("popover-content-test");
       expect(content).toBeInTheDocument();
@@ -235,7 +225,7 @@ describe("Popover", () => {
           <Popover.PopoverContent>
             <div data-testid="popover-portal-content">Portal Content</div>
           </Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       // Radix renders in a portal, which may be outside the container
       const content = screen.getByText("Portal Content");
@@ -251,7 +241,7 @@ describe("Popover", () => {
             <button className="custom-trigger">Trigger</button>
           </Popover.PopoverTrigger>
           <Popover.PopoverContent>Content</Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       const trigger = container.querySelector(".custom-trigger");
       expect(trigger).toBeInTheDocument();
@@ -267,7 +257,7 @@ describe("Popover", () => {
               <p>Custom description</p>
             </div>
           </Popover.PopoverContent>
-        </Popover.Popover>
+        </Popover.Popover>,
       );
       expect(screen.getByText("Custom Title")).toBeInTheDocument();
       expect(screen.getByText("Custom description")).toBeInTheDocument();

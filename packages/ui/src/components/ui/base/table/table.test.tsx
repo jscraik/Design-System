@@ -71,6 +71,21 @@ describe("Table", () => {
     });
   });
 
+  describe("Stateful props - Error", () => {
+    it("applies error border styling", () => {
+      render(
+        <Table error="Error">
+          <TableBody>
+            <TableRow>
+              <TableCell>Cell</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>,
+      );
+      expect(screen.getByRole("table")).toHaveClass("border-status-error");
+    });
+  });
+
   describe("TableHeader", () => {
     it("renders header section", () => {
       render(

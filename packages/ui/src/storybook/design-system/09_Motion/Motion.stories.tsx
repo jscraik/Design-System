@@ -193,7 +193,9 @@ const HoverLiftDemo = () => (
           }}
         >
           <div className="font-medium mb-1">{variant.name}</div>
-          <div className="text-sm text-muted-foreground">{variant.lift} • {variant.scale}</div>
+          <div className="text-sm text-muted-foreground">
+            {variant.lift} • {variant.scale}
+          </div>
         </div>
       ))}
     </div>
@@ -201,7 +203,7 @@ const HoverLiftDemo = () => (
     <div className="p-4 rounded-lg bg-accent/5 border border-accent/20">
       <div className="text-sm font-medium text-accent">💡 Implementation</div>
       <pre className="text-sm bg-background p-3 rounded mt-2 overflow-x-auto">
-{`transition: transform 150ms ease-out, box-shadow 150ms ease-out;
+        {`transition: transform 150ms ease-out, box-shadow 150ms ease-out;
 
 &:hover {
   transform: translateY(-4px) scale(1.02);
@@ -223,9 +225,7 @@ const ButtonPressDemo = () => {
     <div className="space-y-6 p-6">
       <div>
         <h3 className="text-lg font-semibold mb-2">Button Press (100ms ease-out)</h3>
-        <p className="text-sm text-muted-foreground">
-          Immediate tactile feedback on press.
-        </p>
+        <p className="text-sm text-muted-foreground">Immediate tactile feedback on press.</p>
       </div>
 
       <div className="flex flex-wrap gap-3">
@@ -252,7 +252,7 @@ const ButtonPressDemo = () => {
       <div className="p-4 rounded-lg bg-accent/5 border border-accent/20">
         <div className="text-sm font-medium text-accent">💡 Implementation</div>
         <pre className="text-sm bg-background p-3 rounded mt-2 overflow-x-auto">
-{`transition: transform 100ms ease-out;
+          {`transition: transform 100ms ease-out;
 
 &:active {
   transform: scale(0.97);
@@ -271,9 +271,7 @@ const ModalTransitionDemo = () => {
     <div className="space-y-6 p-6">
       <div>
         <h3 className="text-lg font-semibold mb-2">Modal Open/Close (200ms ease-in-out)</h3>
-        <p className="text-sm text-muted-foreground">
-          Smooth fade + scale for modal appearance.
-        </p>
+        <p className="text-sm text-muted-foreground">Smooth fade + scale for modal appearance.</p>
       </div>
 
       <button
@@ -285,7 +283,7 @@ const ModalTransitionDemo = () => {
 
       {open && (
         <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-overlay/50 flex items-center justify-center p-4"
           style={{
             animation: "fadeIn 200ms ease-in-out",
           }}
@@ -390,7 +388,7 @@ const ReducedMotionDemo = () => {
       <div className="p-4 rounded-lg bg-muted">
         <div className="text-sm font-medium mb-2">Implementation Pattern</div>
         <pre className="text-sm bg-background p-3 rounded overflow-x-auto">
-{`@media (prefers-reduced-motion: reduce) {
+          {`@media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
@@ -409,7 +407,8 @@ const meta = {
     layout: "centered",
     docs: {
       description: {
-        component: "Motion system documentation with timing scale, easing functions, and accessibility guidelines.",
+        component:
+          "Motion system documentation with timing scale, easing functions, and accessibility guidelines.",
       },
     },
   },
@@ -435,7 +434,9 @@ export const TimingScale: Story = {
           <div key={timing.name} className="rounded-lg border bg-card p-4">
             <div className="flex items-start justify-between mb-2">
               <div>
-                <div className="font-semibold capitalize">{timing.name} ({timing.duration}ms)</div>
+                <div className="font-semibold capitalize">
+                  {timing.name} ({timing.duration}ms)
+                </div>
                 <div className="text-sm text-muted-foreground">{timing.usage}</div>
               </div>
               <div className="text-xs font-mono text-muted-foreground bg-muted px-2 py-1 rounded">
@@ -446,10 +447,7 @@ export const TimingScale: Story = {
               <div className="text-xs text-muted-foreground mb-2">Examples:</div>
               <div className="flex flex-wrap gap-2">
                 {timing.examples.map((example) => (
-                  <span
-                    key={example}
-                    className="px-2 py-1 rounded-md bg-muted text-xs"
-                  >
+                  <span key={example} className="px-2 py-1 rounded-md bg-muted text-xs">
                     {example}
                   </span>
                 ))}
@@ -479,9 +477,7 @@ export const EasingFunctions: Story = {
     <div className="max-w-4xl space-y-6 p-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">Easing Functions</h2>
-        <p className="text-muted-foreground mb-6">
-          Visual easing curves and when to use each.
-        </p>
+        <p className="text-muted-foreground mb-6">Visual easing curves and when to use each.</p>
       </div>
 
       <div className="space-y-4">
@@ -551,17 +547,19 @@ export const BestPractices: Story = {
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">DON'T: Animate layout properties</div>
+              <div className="font-semibold text-status-error">
+                DON'T: Animate layout properties
+              </div>
               <p className="text-sm text-muted-foreground mt-1">
-                Avoid animating <code>width</code>, <code>height</code>, <code>top</code>, <code>left</code>.
-                These trigger expensive layout recalculations.
+                Avoid animating <code>width</code>, <code>height</code>, <code>top</code>,{" "}
+                <code>left</code>. These trigger expensive layout recalculations.
               </p>
               <div className="mt-3 p-3 rounded bg-muted">
-                <code className="text-xs text-destructive">
+                <code className="text-xs text-status-error">
                   /* Avoid this: */ width: 200px; left: 50px;
                 </code>
               </div>
@@ -575,23 +573,25 @@ export const BestPractices: Story = {
             <div>
               <div className="font-semibold text-accent">DO: Respect reduced motion preference</div>
               <p className="text-sm text-muted-foreground mt-1">
-                Always check <code>prefers-reduced-motion</code> and disable or simplify
-                animations for users who prefer reduced motion.
+                Always check <code>prefers-reduced-motion</code> and disable or simplify animations
+                for users who prefer reduced motion.
               </p>
               <div className="mt-3 p-3 rounded bg-muted">
                 <code className="text-xs">
-                  @media (prefers-reduced-motion: reduce) { /* disable animations */ }
+                  @media (prefers-reduced-motion: reduce) {/* disable animations */}
                 </code>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">DON'T: Block completion with animation</div>
+              <div className="font-semibold text-status-error">
+                DON'T: Block completion with animation
+              </div>
               <p className="text-sm text-muted-foreground mt-1">
                 Never force users to wait for an animation to finish before they can proceed.
                 Animations should enhance, not obstruct.
@@ -606,21 +606,23 @@ export const BestPractices: Story = {
             <div>
               <div className="font-semibold text-accent">DO: Animate with purpose</div>
               <p className="text-sm text-muted-foreground mt-1">
-                Every animation should communicate something (state change, location,
-                causality). If you can't explain what the animation teaches, remove it.
+                Every animation should communicate something (state change, location, causality). If
+                you can't explain what the animation teaches, remove it.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">DON'T: Animate just because you can</div>
+              <div className="font-semibold text-status-error">
+                DON'T: Animate just because you can
+              </div>
               <p className="text-sm text-muted-foreground mt-1">
-                "Less but better" — avoid gratuitous motion. If the animation doesn't serve
-                a clear purpose, it's just visual noise.
+                "Less but better" — avoid gratuitous motion. If the animation doesn't serve a clear
+                purpose, it's just visual noise.
               </p>
             </div>
           </div>
@@ -632,23 +634,23 @@ export const BestPractices: Story = {
             <div>
               <div className="font-semibold text-accent">DO: Match timing to interaction</div>
               <p className="text-sm text-muted-foreground mt-1">
-                Fast interactions (button press) need fast feedback (100ms). Slower
-                transitions (modal) can take longer (200ms).
+                Fast interactions (button press) need fast feedback (100ms). Slower transitions
+                (modal) can take longer (200ms).
               </p>
             </div>
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">
+              <div className="font-semibold text-status-error">
                 DON'T: Use long durations for frequent interactions
               </div>
               <p className="text-sm text-muted-foreground mt-1">
-                Hover states, dropdowns, and tabs should use 100-200ms. 500ms+ feels sluggish
-                for common interactions.
+                Hover states, dropdowns, and tabs should use 100-200ms. 500ms+ feels sluggish for
+                common interactions.
               </p>
             </div>
           </div>
@@ -664,9 +666,7 @@ export const TokenReference: Story = {
     <div className="max-w-4xl space-y-6 p-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">Quick Reference</h2>
-        <p className="text-muted-foreground">
-          Motion timing and easing values for implementation.
-        </p>
+        <p className="text-muted-foreground">Motion timing and easing values for implementation.</p>
       </div>
 
       <div className="rounded-lg border bg-card">
@@ -693,21 +693,37 @@ export const TokenReference: Story = {
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">Tailwind Transition Classes</div>
         <div className="text-sm space-y-1">
-          <div><code>duration-100</code> → Micro-interactions</div>
-          <div><code>duration-150</code> → Quick transitions</div>
-          <div><code>duration-200</code> → Standard transitions</div>
-          <div><code>duration-300</code> → Layout changes</div>
-          <div><code>duration-500</code> → Celebrations</div>
-          <div><code>ease-out</code> → Entry, hover lift</div>
-          <div><code>ease-in</code> → Exit, dismiss</div>
-          <div><code>ease-in-out</code> → Movement, layout</div>
+          <div>
+            <code>duration-100</code> → Micro-interactions
+          </div>
+          <div>
+            <code>duration-150</code> → Quick transitions
+          </div>
+          <div>
+            <code>duration-200</code> → Standard transitions
+          </div>
+          <div>
+            <code>duration-300</code> → Layout changes
+          </div>
+          <div>
+            <code>duration-500</code> → Celebrations
+          </div>
+          <div>
+            <code>ease-out</code> → Entry, hover lift
+          </div>
+          <div>
+            <code>ease-in</code> → Exit, dismiss
+          </div>
+          <div>
+            <code>ease-in-out</code> → Movement, layout
+          </div>
         </div>
       </div>
 
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">CSS Custom Properties (Optional)</div>
         <pre className="text-sm bg-background p-3 rounded overflow-x-auto">
-{`:root {
+          {`:root {
   --motion-duration-micro: 100ms;
   --motion-duration-fast: 150ms;
   --motion-duration-standard: 200ms;
@@ -744,7 +760,9 @@ export const TimingComparison: Story = {
           { duration: 500, name: "Celebration", usage: "Success moment" },
         ].map((timing) => (
           <div key={timing.name} className="space-y-3">
-            <div className="text-sm font-medium">{timing.name} ({timing.duration}ms)</div>
+            <div className="text-sm font-medium">
+              {timing.name} ({timing.duration}ms)
+            </div>
             <div
               className="p-4 rounded-lg border bg-accent/5 hover:bg-accent/10 transition-transform hover:scale-105 cursor-pointer"
               style={{ transitionDuration: `${timing.duration}ms` }}
@@ -887,12 +905,21 @@ export const InteractiveMotionDemo: Story = {
                 onMouseDown={() => setIsPressed(true)}
                 onMouseUp={() => setIsPressed(false)}
               >
-                <div className="font-medium">{isPressed ? "Pressed!" : isHovered ? "Hover me" : "Press and hold"}</div>
+                <div className="font-medium">
+                  {isPressed ? "Pressed!" : isHovered ? "Hover me" : "Press and hold"}
+                </div>
               </div>
               <div className="mt-4 p-4 rounded-lg bg-muted text-sm space-y-2">
-                <div><span className="font-mono">transform:</span> {isPressed ? "scale(0.95)" : isHovered ? "scale(1.02)" : "scale(1)"}</div>
-                <div><span className="font-mono">timing:</span> 150ms ease-out</div>
-                <div><span className="font-mono">feedback:</span> Immediate scale change</div>
+                <div>
+                  <span className="font-mono">transform:</span>{" "}
+                  {isPressed ? "scale(0.95)" : isHovered ? "scale(1.02)" : "scale(1)"}
+                </div>
+                <div>
+                  <span className="font-mono">timing:</span> 150ms ease-out
+                </div>
+                <div>
+                  <span className="font-mono">feedback:</span> Immediate scale change
+                </div>
               </div>
             </div>
           </div>

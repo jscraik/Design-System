@@ -51,14 +51,12 @@ export function SettingRowBlockDemo() {
   };
 
   return (
-    <div className="h-full bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 overflow-auto">
+    <div className="h-full bg-background overflow-auto">
       <div className="max-w-4xl mx-auto p-8 space-y-8">
         {/* Introduction */}
         <div className="space-y-2">
-          <h1 className="text-2xl font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            Setting Row Block
-          </h1>
-          <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+          <h1 className="text-2xl font-semibold text-foreground">Setting Row Block</h1>
+          <p className="text-text-secondary">
             Comprehensive settings row component with 4 variants, 3 sizes, badges, loading states,
             keyboard shortcuts, and full accessibility support.
           </p>
@@ -67,10 +65,8 @@ export function SettingRowBlockDemo() {
         {/* 1. Variants */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              1. Variants
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
+            <h2 className="text-lg font-semibold text-foreground">1. Variants</h2>
+            <p className="text-sm text-text-secondary mt-1">
               Four visual variants: default, card, compact, and danger
             </p>
           </div>
@@ -78,10 +74,8 @@ export function SettingRowBlockDemo() {
           <div className="space-y-4">
             {/* Default Variant */}
             <div className="space-y-2">
-              <h3 className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                Default
-              </h3>
-              <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+              <h3 className="text-sm font-medium text-foreground">Default</h3>
+              <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
                 <SettingRowBlock
                   variant="default"
                   icon={<IconUser />}
@@ -101,9 +95,7 @@ export function SettingRowBlockDemo() {
 
             {/* Card Variant */}
             <div className="space-y-2">
-              <h3 className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                Card
-              </h3>
+              <h3 className="text-sm font-medium text-foreground">Card</h3>
               <div className="space-y-2">
                 <SettingRowBlock
                   variant="card"
@@ -124,10 +116,8 @@ export function SettingRowBlockDemo() {
 
             {/* Compact Variant */}
             <div className="space-y-2">
-              <h3 className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                Compact
-              </h3>
-              <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+              <h3 className="text-sm font-medium text-foreground">Compact</h3>
+              <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
                 <SettingRowBlock
                   variant="compact"
                   icon={<IconSparkles />}
@@ -147,10 +137,8 @@ export function SettingRowBlockDemo() {
 
             {/* Danger Variant */}
             <div className="space-y-2">
-              <h3 className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                Danger
-              </h3>
-              <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+              <h3 className="text-sm font-medium text-foreground">Danger</h3>
+              <div className="border border-border rounded-lg bg-secondary overflow-hidden">
                 <SettingRowBlock
                   variant="danger"
                   icon={<IconError />}
@@ -166,15 +154,13 @@ export function SettingRowBlockDemo() {
         {/* 2. Sizes */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              2. Sizes
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
+            <h2 className="text-lg font-semibold text-foreground">2. Sizes</h2>
+            <p className="text-sm text-text-secondary mt-1">
               Three size presets: small, medium, and large
             </p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
             <SettingRowBlock
               size="sm"
               icon={<IconSettings />}
@@ -202,15 +188,11 @@ export function SettingRowBlockDemo() {
         {/* 3. Badges */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              3. Badges
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
-              Status badges in multiple variants
-            </p>
+            <h2 className="text-lg font-semibold text-foreground">3. Badges</h2>
+            <p className="text-sm text-text-secondary mt-1">Status badges in multiple variants</p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
             <SettingRowBlock
               icon={<IconSparkles />}
               label="AI Features"
@@ -245,15 +227,13 @@ export function SettingRowBlockDemo() {
         {/* 4. States */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              4. States
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
+            <h2 className="text-lg font-semibold text-foreground">4. States</h2>
+            <p className="text-sm text-text-secondary mt-1">
               Loading, disabled, and selected states
             </p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
             <SettingRowBlock
               icon={<IconDownload />}
               label="Download Data"
@@ -281,15 +261,13 @@ export function SettingRowBlockDemo() {
         {/* 5. Keyboard Shortcuts */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              5. Keyboard Shortcuts
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
+            <h2 className="text-lg font-semibold text-foreground">5. Keyboard Shortcuts</h2>
+            <p className="text-sm text-text-secondary mt-1">
               Display keyboard shortcuts for power users
             </p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
             <SettingRowBlock
               icon={<IconSettings />}
               label="Quick Settings"
@@ -310,15 +288,11 @@ export function SettingRowBlockDemo() {
         {/* 6. External Links */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              6. External Links
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
-              Indicate links that open externally
-            </p>
+            <h2 className="text-lg font-semibold text-foreground">6. External Links</h2>
+            <p className="text-sm text-text-secondary mt-1">Indicate links that open externally</p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
             <SettingRowBlock
               icon={<IconNotebook />}
               label="Terms of Service"
@@ -346,15 +320,13 @@ export function SettingRowBlockDemo() {
         {/* 7. Custom Right Content */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              7. Custom Right Content
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
+            <h2 className="text-lg font-semibold text-foreground">7. Custom Right Content</h2>
+            <p className="text-sm text-text-secondary mt-1">
               Display values, indicators, or custom components
             </p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
             <SettingRowBlock
               icon={<IconCreditCard />}
               label="Subscription Plan"
@@ -377,7 +349,7 @@ export function SettingRowBlockDemo() {
               right={
                 <div className="flex items-center gap-2">
                   <SettingRowBadge variant="primary">3 active</SettingRowBadge>
-                  <IconChevronRightMd className="size-4 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary" />
+                  <IconChevronRightMd className="size-4 text-muted-foreground" />
                 </div>
               }
             />
@@ -387,15 +359,13 @@ export function SettingRowBlockDemo() {
         {/* 8. Display-Only Rows */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              8. Display-Only Rows
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
+            <h2 className="text-lg font-semibold text-foreground">8. Display-Only Rows</h2>
+            <p className="text-sm text-text-secondary mt-1">
               Rows without onClick are non-interactive
             </p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
             <SettingRowBlock
               icon={<IconUser />}
               label="Account ID"
@@ -426,15 +396,11 @@ export function SettingRowBlockDemo() {
         {/* 9. Without Icons */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              9. Without Icons
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
-              Rows work perfectly without icons
-            </p>
+            <h2 className="text-lg font-semibold text-foreground">9. Without Icons</h2>
+            <p className="text-sm text-text-secondary mt-1">Rows work perfectly without icons</p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
             <SettingRowBlock label="General" onClick={() => handleClick("general")} />
             <SettingRowBlock
               label="Advanced Settings"
@@ -448,15 +414,13 @@ export function SettingRowBlockDemo() {
         {/* 10. Compound Components - SettingRowGroup */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              10. Row Groups
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
+            <h2 className="text-lg font-semibold text-foreground">10. Row Groups</h2>
+            <p className="text-sm text-text-secondary mt-1">
               Organize rows with labels and dividers
             </p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden">
             <SettingRowGroup
               label="Account Settings"
               description="Manage your account information and preferences"
@@ -503,15 +467,13 @@ export function SettingRowBlockDemo() {
         {/* 11. Mixed Content */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              11. Mixed Content
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
+            <h2 className="text-lg font-semibold text-foreground">11. Mixed Content</h2>
+            <p className="text-sm text-text-secondary mt-1">
               Combining different features and styles
             </p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
             <SettingRowBlock
               size="lg"
               variant="card"
@@ -544,16 +506,12 @@ export function SettingRowBlockDemo() {
         {/* 12. Real-World Examples */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              12. Real-World Examples
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
-              Complete settings panel examples
-            </p>
+            <h2 className="text-lg font-semibold text-foreground">12. Real-World Examples</h2>
+            <p className="text-sm text-text-secondary mt-1">Complete settings panel examples</p>
           </div>
 
           {/* Privacy & Security */}
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden">
             <SettingRowGroup label="Privacy & Security">
               <SettingRowBlock
                 icon={<IconUserLock />}
@@ -579,7 +537,7 @@ export function SettingRowBlockDemo() {
           </div>
 
           {/* Billing & Subscription */}
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden">
             <SettingRowGroup label="Billing & Subscription">
               <SettingRowBlock
                 icon={<IconCreditCard />}
@@ -608,16 +566,14 @@ export function SettingRowBlockDemo() {
         {/* 13. Accessibility */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              13. Accessibility
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
+            <h2 className="text-lg font-semibold text-foreground">13. Accessibility</h2>
+            <p className="text-sm text-text-secondary mt-1">
               Full ARIA support and keyboard navigation
             </p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-4 space-y-2">
-            <ul className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary space-y-1">
+          <div className="border border-border rounded-lg bg-secondary p-4 space-y-2">
+            <ul className="text-sm text-text-secondary space-y-1">
               <li>✓ Proper ARIA labels and attributes</li>
               <li>✓ Keyboard navigation support (Tab, Enter, Space)</li>
               <li>✓ Focus visible states</li>
@@ -631,32 +587,26 @@ export function SettingRowBlockDemo() {
         {/* 14. Design Tokens */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              14. Design Token Compliance
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
+            <h2 className="text-lg font-semibold text-foreground">14. Design Token Compliance</h2>
+            <p className="text-sm text-text-secondary mt-1">
               100% ChatGPT design system compliance
             </p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-4 space-y-3">
+          <div className="border border-border rounded-lg bg-secondary p-4 space-y-3">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <h4 className="text-xs font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2">
-                  Colors
-                </h4>
-                <ul className="text-xs text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary space-y-1">
-                  <li>• foundation-bg-* (backgrounds)</li>
-                  <li>• foundation-text-* (text colors)</li>
-                  <li>• foundation-accent-* (accents)</li>
-                  <li>• foundation-icon-* (icons)</li>
+                <h4 className="text-xs font-medium text-foreground mb-2">Colors</h4>
+                <ul className="text-xs text-text-secondary space-y-1">
+                  <li>• semantic background tokens</li>
+                  <li>• semantic text tokens</li>
+                  <li>• semantic accent tokens</li>
+                  <li>• semantic icon tokens</li>
                 </ul>
               </div>
               <div>
-                <h4 className="text-xs font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2">
-                  Spacing
-                </h4>
-                <ul className="text-xs text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary space-y-1">
+                <h4 className="text-xs font-medium text-foreground mb-2">Spacing</h4>
+                <ul className="text-xs text-text-secondary space-y-1">
                   <li>• Consistent padding</li>
                   <li>• Proper gap values</li>
                   <li>• Responsive spacing</li>
@@ -664,10 +614,8 @@ export function SettingRowBlockDemo() {
                 </ul>
               </div>
               <div>
-                <h4 className="text-xs font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2">
-                  Typography
-                </h4>
-                <ul className="text-xs text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary space-y-1">
+                <h4 className="text-xs font-medium text-foreground mb-2">Typography</h4>
+                <ul className="text-xs text-text-secondary space-y-1">
                   <li>• System font stack</li>
                   <li>• Proper text sizes</li>
                   <li>• Optimized line heights</li>
@@ -675,10 +623,8 @@ export function SettingRowBlockDemo() {
                 </ul>
               </div>
               <div>
-                <h4 className="text-xs font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2">
-                  Interactions
-                </h4>
-                <ul className="text-xs text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary space-y-1">
+                <h4 className="text-xs font-medium text-foreground mb-2">Interactions</h4>
+                <ul className="text-xs text-text-secondary space-y-1">
                   <li>• Smooth transitions</li>
                   <li>• Hover/active states</li>
                   <li>• Focus indicators</li>

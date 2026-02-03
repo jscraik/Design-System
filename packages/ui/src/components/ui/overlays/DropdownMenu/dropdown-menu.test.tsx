@@ -17,7 +17,7 @@ describe("DropdownMenu", () => {
           <DropdownMenu.DropdownMenuContent>
             <DropdownMenu.DropdownMenuItem>Copy</DropdownMenu.DropdownMenuItem>
           </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.DropdownMenu>
+        </DropdownMenu.DropdownMenu>,
       );
       const trigger = container.querySelector('[data-slot="dropdown-menu-trigger"]');
       expect(trigger).toBeInTheDocument();
@@ -30,7 +30,7 @@ describe("DropdownMenu", () => {
           <DropdownMenu.DropdownMenuContent>
             <DropdownMenu.DropdownMenuItem>Item</DropdownMenu.DropdownMenuItem>
           </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.DropdownMenu>
+        </DropdownMenu.DropdownMenu>,
       );
       expect(screen.getByText("Toggle Menu")).toBeInTheDocument();
     });
@@ -44,7 +44,7 @@ describe("DropdownMenu", () => {
           <DropdownMenu.DropdownMenuContent>
             <DropdownMenu.DropdownMenuItem>Item</DropdownMenu.DropdownMenuItem>
           </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.DropdownMenu>
+        </DropdownMenu.DropdownMenu>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -60,7 +60,7 @@ describe("DropdownMenu", () => {
           <DropdownMenu.DropdownMenuContent>
             <DropdownMenu.DropdownMenuItem>Item</DropdownMenu.DropdownMenuItem>
           </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.DropdownMenu>
+        </DropdownMenu.DropdownMenu>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -76,7 +76,7 @@ describe("DropdownMenu", () => {
           <DropdownMenu.DropdownMenuContent>
             <DropdownMenu.DropdownMenuItem>Item</DropdownMenu.DropdownMenuItem>
           </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.DropdownMenu>
+        </DropdownMenu.DropdownMenu>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
@@ -92,7 +92,7 @@ describe("DropdownMenu", () => {
           <DropdownMenu.DropdownMenuContent>
             <DropdownMenu.DropdownMenuItem>Item</DropdownMenu.DropdownMenuItem>
           </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.DropdownMenu>
+        </DropdownMenu.DropdownMenu>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
@@ -103,17 +103,12 @@ describe("DropdownMenu", () => {
   describe("State priority", () => {
     it("prioritizes loading over error and disabled", async () => {
       render(
-        <DropdownMenu.DropdownMenu
-          loading
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        >
+        <DropdownMenu.DropdownMenu loading error="Error" disabled onStateChange={mockOnStateChange}>
           <DropdownMenu.DropdownMenuTrigger>Click</DropdownMenu.DropdownMenuTrigger>
           <DropdownMenu.DropdownMenuContent>
             <DropdownMenu.DropdownMenuItem>Item</DropdownMenu.DropdownMenuItem>
           </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.DropdownMenu>
+        </DropdownMenu.DropdownMenu>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -122,16 +117,12 @@ describe("DropdownMenu", () => {
 
     it("prioritizes error over disabled when not loading", async () => {
       render(
-        <DropdownMenu.DropdownMenu
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        >
+        <DropdownMenu.DropdownMenu error="Error" disabled onStateChange={mockOnStateChange}>
           <DropdownMenu.DropdownMenuTrigger>Click</DropdownMenu.DropdownMenuTrigger>
           <DropdownMenu.DropdownMenuContent>
             <DropdownMenu.DropdownMenuItem>Item</DropdownMenu.DropdownMenuItem>
           </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.DropdownMenu>
+        </DropdownMenu.DropdownMenu>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -145,9 +136,11 @@ describe("DropdownMenu", () => {
         <DropdownMenu.DropdownMenu>
           <DropdownMenu.DropdownMenuTrigger>Click</DropdownMenu.DropdownMenuTrigger>
           <DropdownMenu.DropdownMenuContent>
-            <DropdownMenu.DropdownMenuItem variant="destructive">Delete</DropdownMenu.DropdownMenuItem>
+            <DropdownMenu.DropdownMenuItem variant="destructive">
+              Delete
+            </DropdownMenu.DropdownMenuItem>
           </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.DropdownMenu>
+        </DropdownMenu.DropdownMenu>,
       );
       expect(screen.getByText("Click")).toBeInTheDocument();
     });
@@ -161,7 +154,7 @@ describe("DropdownMenu", () => {
           <DropdownMenu.DropdownMenuContent>
             <DropdownMenu.DropdownMenuCheckboxItem>Check me</DropdownMenu.DropdownMenuCheckboxItem>
           </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.DropdownMenu>
+        </DropdownMenu.DropdownMenu>,
       );
       expect(screen.getByText("Click")).toBeInTheDocument();
     });
@@ -174,11 +167,15 @@ describe("DropdownMenu", () => {
           <DropdownMenu.DropdownMenuTrigger>Click</DropdownMenu.DropdownMenuTrigger>
           <DropdownMenu.DropdownMenuContent>
             <DropdownMenu.DropdownMenuRadioGroup>
-              <DropdownMenu.DropdownMenuRadioItem value="1">Option 1</DropdownMenu.DropdownMenuRadioItem>
-              <DropdownMenu.DropdownMenuRadioItem value="2">Option 2</DropdownMenu.DropdownMenuRadioItem>
+              <DropdownMenu.DropdownMenuRadioItem value="1">
+                Option 1
+              </DropdownMenu.DropdownMenuRadioItem>
+              <DropdownMenu.DropdownMenuRadioItem value="2">
+                Option 2
+              </DropdownMenu.DropdownMenuRadioItem>
             </DropdownMenu.DropdownMenuRadioGroup>
           </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.DropdownMenu>
+        </DropdownMenu.DropdownMenu>,
       );
       expect(screen.getByText("Click")).toBeInTheDocument();
     });
@@ -193,7 +190,7 @@ describe("DropdownMenu", () => {
             <DropdownMenu.DropdownMenuLabel>Section Label</DropdownMenu.DropdownMenuLabel>
             <DropdownMenu.DropdownMenuItem>Item</DropdownMenu.DropdownMenuItem>
           </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.DropdownMenu>
+        </DropdownMenu.DropdownMenu>,
       );
       expect(screen.getByText("Click")).toBeInTheDocument();
     });
@@ -210,7 +207,7 @@ describe("DropdownMenu", () => {
               <DropdownMenu.DropdownMenuShortcut>⌘S</DropdownMenu.DropdownMenuShortcut>
             </DropdownMenu.DropdownMenuItem>
           </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.DropdownMenu>
+        </DropdownMenu.DropdownMenu>,
       );
       expect(screen.getByText("Click")).toBeInTheDocument();
     });
@@ -227,7 +224,7 @@ describe("DropdownMenu", () => {
               <DropdownMenu.DropdownMenuItem>Group Item 2</DropdownMenu.DropdownMenuItem>
             </DropdownMenu.DropdownMenuGroup>
           </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.DropdownMenu>
+        </DropdownMenu.DropdownMenu>,
       );
       expect(screen.getByText("Click")).toBeInTheDocument();
     });
@@ -243,17 +240,25 @@ describe("DropdownMenu", () => {
             <DropdownMenu.DropdownMenuItem>Copy</DropdownMenu.DropdownMenuItem>
             <DropdownMenu.DropdownMenuSeparator />
             <DropdownMenu.DropdownMenuGroup>
-              <DropdownMenu.DropdownMenuCheckboxItem>Check me</DropdownMenu.DropdownMenuCheckboxItem>
+              <DropdownMenu.DropdownMenuCheckboxItem>
+                Check me
+              </DropdownMenu.DropdownMenuCheckboxItem>
             </DropdownMenu.DropdownMenuGroup>
             <DropdownMenu.DropdownMenuSeparator />
             <DropdownMenu.DropdownMenuRadioGroup>
-              <DropdownMenu.DropdownMenuRadioItem value="1">Option 1</DropdownMenu.DropdownMenuRadioItem>
-              <DropdownMenu.DropdownMenuRadioItem value="2">Option 2</DropdownMenu.DropdownMenuRadioItem>
+              <DropdownMenu.DropdownMenuRadioItem value="1">
+                Option 1
+              </DropdownMenu.DropdownMenuRadioItem>
+              <DropdownMenu.DropdownMenuRadioItem value="2">
+                Option 2
+              </DropdownMenu.DropdownMenuRadioItem>
             </DropdownMenu.DropdownMenuRadioGroup>
             <DropdownMenu.DropdownMenuSeparator />
-            <DropdownMenu.DropdownMenuItem variant="destructive">Delete</DropdownMenu.DropdownMenuItem>
+            <DropdownMenu.DropdownMenuItem variant="destructive">
+              Delete
+            </DropdownMenu.DropdownMenuItem>
           </DropdownMenu.DropdownMenuContent>
-        </DropdownMenu.DropdownMenu>
+        </DropdownMenu.DropdownMenu>,
       );
       expect(screen.getByText("Click")).toBeInTheDocument();
     });

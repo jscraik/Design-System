@@ -72,14 +72,14 @@ function formatDuration(ms: number): string {
  */
 function getStatusColor(status: string): string {
   const colors: Record<string, string> = {
-    success: "bg-green-500/20 text-green-400 border-green-500/30",
-    healthy: "bg-green-500/20 text-green-400 border-green-500/30",
-    warning: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-    degraded: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
-    error: "bg-red-500/20 text-red-400 border-red-500/30",
-    unhealthy: "bg-red-500/20 text-red-400 border-red-500/30",
-    info: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-    neutral: "bg-white/10 text-white/60 border-white/20",
+    success: "bg-status-success-muted/20 text-status-success border-status-success/30",
+    healthy: "bg-status-success-muted/20 text-status-success border-status-success/30",
+    warning: "bg-status-warning-muted/20 text-status-warning border-status-warning/30",
+    degraded: "bg-status-warning-muted/20 text-status-warning border-status-warning/30",
+    error: "bg-status-error-muted/20 text-status-error border-status-error/30",
+    unhealthy: "bg-status-error-muted/20 text-status-error border-status-error/30",
+    info: "bg-accent-blue/20 text-accent-blue border-accent-blue/30",
+    neutral: "bg-muted text-muted-foreground border-border",
   };
   return colors[status] || colors.neutral;
 }
@@ -108,8 +108,8 @@ export const astudioRegistry: ComponentRegistry = {
     };
 
     const variantClasses = {
-      default: "bg-white/5 border-white/10",
-      outline: "bg-transparent border-white/20",
+      default: "bg-muted border-border",
+      outline: "bg-transparent border-border",
       ghost: "bg-transparent border-transparent",
     };
 
@@ -117,9 +117,9 @@ export const astudioRegistry: ComponentRegistry = {
       <Card className={variantClasses[variant]}>
         {(title || description) && (
           <CardHeader>
-            {title && <CardTitle className="text-white">{title}</CardTitle>}
+            {title && <CardTitle className="text-foreground">{title}</CardTitle>}
             {description && (
-              <CardDescription className="text-white/60">{description}</CardDescription>
+              <CardDescription className="text-muted-foreground">{description}</CardDescription>
             )}
           </CardHeader>
         )}
@@ -207,9 +207,9 @@ export const astudioRegistry: ComponentRegistry = {
 
     return (
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="bg-white/5">
+        <TabsList className="bg-muted">
           {tabs.map((tab) => (
-            <TabsTrigger key={tab.id} value={tab.id} className="text-white/80">
+            <TabsTrigger key={tab.id} value={tab.id} className="text-muted-foreground">
               {tab.label}
             </TabsTrigger>
           ))}
@@ -228,15 +228,15 @@ export const astudioRegistry: ComponentRegistry = {
     const [isOpen, setIsOpen] = useState(defaultOpen);
 
     return (
-      <div className="border border-white/10 rounded-lg">
+      <div className="border border-border rounded-lg">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-full px-4 py-3 flex items-center justify-between text-white hover:bg-white/5"
+          className="w-full px-4 py-3 flex items-center justify-between text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           <span className="font-medium">{title}</span>
-          <span className="text-white/60">{isOpen ? "−" : "+"}</span>
+          <span className="text-muted-foreground">{isOpen ? "−" : "+"}</span>
         </button>
-        {isOpen && <div className="px-4 py-3 border-t border-white/10">{children}</div>}
+        {isOpen && <div className="px-4 py-3 border-t border-border">{children}</div>}
       </div>
     );
   },
@@ -256,20 +256,22 @@ export const astudioRegistry: ComponentRegistry = {
     };
 
     const trendColors = {
-      up: "text-green-400",
-      down: "text-red-400",
-      neutral: "text-white/60",
+      up: "text-status-success",
+      down: "text-status-error",
+      neutral: "text-muted-foreground",
     };
 
     return (
-      <div className="rounded-lg border border-white/10 bg-white/5 p-3">
-        <div className="flex items-center gap-2 text-xs text-white/60 mb-1">
+      <div className="rounded-lg border border-border bg-muted p-3">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
           {icon && <span>{icon}</span>}
           <span>{label}</span>
         </div>
-        <div className="text-base font-semibold text-white">{formatValue(value, format)}</div>
+        <div className="text-base font-semibold text-foreground">{formatValue(value, format)}</div>
         {change && (
-          <div className={`text-xs ${trend ? trendColors[trend] : "text-white/70"}`}>{change}</div>
+          <div className={`text-xs ${trend ? trendColors[trend] : "text-muted-foreground"}`}>
+            {change}
+          </div>
         )}
       </div>
     );
@@ -315,16 +317,16 @@ export const astudioRegistry: ComponentRegistry = {
     };
 
     const variantColors = {
-      default: "bg-blue-500",
-      success: "bg-green-500",
-      warning: "bg-yellow-500",
-      error: "bg-red-500",
+      default: "bg-interactive",
+      success: "bg-status-success",
+      warning: "bg-status-warning",
+      error: "bg-status-error",
     };
 
     return (
       <div className="space-y-1">
         {(label || showValue) && (
-          <div className="flex items-center justify-between text-xs text-white/60">
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
             {label && <span>{label}</span>}
             {showValue && <span>{value}%</span>}
           </div>
@@ -346,12 +348,12 @@ export const astudioRegistry: ComponentRegistry = {
     };
 
     return (
-      <div className="rounded-lg border border-white/10 overflow-hidden">
+      <div className="rounded-lg border border-border overflow-hidden">
         <Table>
           <TableHeader>
-            <TableRow className="border-white/10 hover:bg-white/5">
+            <TableRow className="border-border hover:bg-muted">
               {columns.map((col) => (
-                <TableHead key={col.key} className="text-white/80">
+                <TableHead key={col.key} className="text-muted-foreground">
                   {col.label}
                 </TableHead>
               ))}
@@ -361,10 +363,10 @@ export const astudioRegistry: ComponentRegistry = {
             {rows.map((row, idx) => (
               <TableRow
                 key={idx}
-                className={`border-white/10 ${striped && idx % 2 === 1 ? "bg-white/5" : ""}`}
+                className={`border-border ${striped && idx % 2 === 1 ? "bg-muted" : ""}`}
               >
                 {columns.map((col) => (
-                  <TableCell key={col.key} className="text-white/90">
+                  <TableCell key={col.key} className="text-foreground">
                     {String(row[col.key] ?? "")}
                   </TableCell>
                 ))}
@@ -393,13 +395,13 @@ export const astudioRegistry: ComponentRegistry = {
         {items.map((item) => (
           <div
             key={item.id}
-            className={`flex items-start gap-2 px-3 ${variantClasses[variant]} rounded hover:bg-white/5`}
+            className={`flex items-start gap-2 px-3 ${variantClasses[variant]} rounded hover:bg-muted`}
           >
-            {item.icon && <span className="text-white/60">{item.icon}</span>}
+            {item.icon && <span className="text-muted-foreground">{item.icon}</span>}
             <div className="flex-1">
-              <div className="text-sm text-white">{item.label}</div>
+              <div className="text-sm text-foreground">{item.label}</div>
               {item.description && variant === "detailed" && (
-                <div className="text-xs text-white/60">{item.description}</div>
+                <div className="text-xs text-muted-foreground">{item.description}</div>
               )}
             </div>
           </div>
@@ -422,16 +424,16 @@ export const astudioRegistry: ComponentRegistry = {
     if (variant === "vertical") {
       return (
         <div className="space-y-1">
-          <div className="text-xs text-white/60">{label}</div>
-          <div className="text-sm text-white font-medium">{value}</div>
+          <div className="text-xs text-muted-foreground">{label}</div>
+          <div className="text-sm text-foreground font-medium">{value}</div>
         </div>
       );
     }
 
     return (
       <div className="flex items-center justify-between py-2">
-        <span className="text-sm text-white/60">{label}</span>
-        <span className="text-sm text-white font-medium">{value}</span>
+        <span className="text-sm text-muted-foreground">{label}</span>
+        <span className="text-sm text-foreground font-medium">{value}</span>
       </div>
     );
   },
@@ -463,7 +465,7 @@ export const astudioRegistry: ComponentRegistry = {
         size={size ?? "default"}
         onClick={() => onAction?.({ name: action, params: {} })}
         disabled={disabled}
-        className="text-white"
+        className="text-foreground"
       >
         {icon && <span className="mr-2">{icon}</span>}
         {label}
@@ -499,7 +501,7 @@ export const astudioRegistry: ComponentRegistry = {
         href={href}
         target={external ? "_blank" : undefined}
         rel={external ? "noopener noreferrer" : undefined}
-        className="text-blue-400 hover:text-blue-300 underline"
+        className="text-interactive hover:text-interactive/80 underline"
       >
         {label}
         {external && <span className="ml-1">↗</span>}
@@ -523,12 +525,12 @@ export const astudioRegistry: ComponentRegistry = {
     };
 
     const variantClasses = {
-      heading: "text-lg font-semibold text-white",
-      subheading: "text-base font-medium text-white/90",
-      body: "text-sm text-white/80",
-      caption: "text-xs text-white/60",
-      code: "text-sm font-mono bg-black/30 px-1 py-0.5 rounded text-white/90",
-      muted: "text-sm text-white/50",
+      heading: "text-lg font-semibold text-foreground",
+      subheading: "text-base font-medium text-foreground/90",
+      body: "text-sm text-foreground/80",
+      caption: "text-xs text-muted-foreground",
+      code: "text-sm font-mono bg-muted px-1 py-0.5 rounded text-foreground/90",
+      muted: "text-sm text-muted-foreground",
     };
 
     const alignClasses = {
@@ -565,7 +567,10 @@ export const astudioRegistry: ComponentRegistry = {
             <AlertDescription>{message}</AlertDescription>
           </div>
           {dismissible && (
-            <button onClick={() => setVisible(false)} className="text-white/60 hover:text-white">
+            <button
+              onClick={() => setVisible(false)}
+              className="text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            >
               ×
             </button>
           )}
@@ -588,12 +593,12 @@ export const astudioRegistry: ComponentRegistry = {
     const lines = code.split("\n");
 
     return (
-      <pre className="rounded-lg bg-black/30 p-3 overflow-x-auto">
-        <code className="text-xs text-white/80 font-mono">
+      <pre className="rounded-lg bg-muted p-3 overflow-x-auto">
+        <code className="text-xs text-foreground/80 font-mono">
           {showLineNumbers
             ? lines.map((line, i) => (
                 <div key={i}>
-                  <span className="text-white/40 mr-4">{i + 1}</span>
+                  <span className="text-muted-foreground mr-4">{i + 1}</span>
                   {line}
                 </div>
               ))
@@ -638,9 +643,9 @@ export const astudioRegistry: ComponentRegistry = {
     if (label) {
       return (
         <div className="flex items-center gap-3 my-4">
-          <Separator className="flex-1 bg-white/10" />
-          <span className="text-xs text-white/60">{label}</span>
-          <Separator className="flex-1 bg-white/10" />
+          <Separator className="flex-1 bg-border" />
+          <span className="text-xs text-muted-foreground">{label}</span>
+          <Separator className="flex-1 bg-border" />
         </div>
       );
     }
@@ -648,7 +653,7 @@ export const astudioRegistry: ComponentRegistry = {
     return (
       <Separator
         orientation={orientation}
-        className={`bg-white/10 ${orientation === "vertical" ? "h-full w-px" : "my-2"}`}
+        className={`bg-border ${orientation === "vertical" ? "h-full w-px" : "my-2"}`}
       />
     );
   },
@@ -682,19 +687,21 @@ export const astudioRegistry: ComponentRegistry = {
     };
 
     const levelColors = {
-      debug: "text-white/60",
-      info: "text-blue-400",
-      warn: "text-yellow-400",
-      error: "text-red-400",
+      debug: "text-muted-foreground",
+      info: "text-accent-blue",
+      warn: "text-status-warning",
+      error: "text-status-error",
     };
 
     return (
-      <div className="flex items-start gap-3 py-2 px-3 hover:bg-white/5 rounded font-mono text-xs">
+      <div className="flex items-start gap-3 py-2 px-3 hover:bg-muted rounded font-mono text-xs">
         <span className={`${levelColors[level]} font-semibold uppercase w-12`}>{level}</span>
-        <span className="text-white/40">{new Date(timestamp).toLocaleTimeString()}</span>
-        <span className="text-white/80 flex-1">{message}</span>
+        <span className="text-muted-foreground">{new Date(timestamp).toLocaleTimeString()}</span>
+        <span className="text-foreground/80 flex-1">{message}</span>
         {metadata && (
-          <span className="text-white/40 text-xs">{JSON.stringify(metadata).slice(0, 50)}</span>
+          <span className="text-muted-foreground text-xs">
+            {JSON.stringify(metadata).slice(0, 50)}
+          </span>
         )}
       </div>
     );
@@ -716,15 +723,17 @@ export const astudioRegistry: ComponentRegistry = {
     };
 
     return (
-      <div className="border border-white/10 rounded-lg p-3 space-y-2">
+      <div className="border border-border rounded-lg p-3 space-y-2">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-white">{name}</span>
+          <span className="text-sm font-medium text-foreground">{name}</span>
           <div className="flex items-center gap-2">
-            {duration && <span className="text-xs text-white/60">{formatDuration(duration)}</span>}
+            {duration && (
+              <span className="text-xs text-muted-foreground">{formatDuration(duration)}</span>
+            )}
             <AppsSDKBadge className={getStatusColor(status)}>{status}</AppsSDKBadge>
           </div>
         </div>
-        <div className="flex gap-4 text-xs text-white/40 font-mono">
+        <div className="flex gap-4 text-xs text-muted-foreground font-mono">
           <span>trace: {traceId.slice(0, 8)}...</span>
           <span>span: {spanId.slice(0, 8)}...</span>
         </div>
@@ -749,19 +758,19 @@ export const astudioRegistry: ComponentRegistry = {
     };
 
     return (
-      <Card className="bg-white/5 border-white/10">
+      <Card className="bg-muted border-border">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-white text-sm">{workflow}</CardTitle>
+            <CardTitle className="text-foreground text-sm">{workflow}</CardTitle>
             <AppsSDKBadge className={getStatusColor(statusColors[status])}>{status}</AppsSDKBadge>
           </div>
-          <CardDescription className="text-white/60 text-xs font-mono">
+          <CardDescription className="text-muted-foreground text-xs font-mono">
             {runId.slice(0, 12)}...
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-2">
           {progress !== undefined && <Progress value={progress} className="h-2" />}
-          <div className="text-xs text-white/60">
+          <div className="text-xs text-muted-foreground">
             Started: {new Date(startTime).toLocaleString()}
           </div>
         </CardContent>
@@ -778,24 +787,26 @@ export const astudioRegistry: ComponentRegistry = {
     };
 
     return (
-      <div className="flex items-center justify-between py-2 px-3 rounded hover:bg-white/5">
+      <div className="flex items-center justify-between py-2 px-3 rounded hover:bg-muted">
         <div className="flex items-center gap-3">
           <div
             className={`w-2 h-2 rounded-full ${
               status === "healthy"
-                ? "bg-green-500"
+                ? "bg-status-success"
                 : status === "degraded"
-                  ? "bg-yellow-500"
-                  : "bg-red-500"
+                  ? "bg-status-warning"
+                  : "bg-status-error"
             }`}
           />
           <div>
-            <div className="text-sm text-white font-medium">{component}</div>
-            {message && <div className="text-xs text-white/60">{message}</div>}
+            <div className="text-sm text-foreground font-medium">{component}</div>
+            {message && <div className="text-xs text-muted-foreground">{message}</div>}
           </div>
         </div>
         {lastCheck && (
-          <div className="text-xs text-white/40">{new Date(lastCheck).toLocaleTimeString()}</div>
+          <div className="text-xs text-muted-foreground">
+            {new Date(lastCheck).toLocaleTimeString()}
+          </div>
         )}
       </div>
     );

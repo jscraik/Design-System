@@ -58,7 +58,7 @@ function BreadcrumbList({ className, ...props }: React.ComponentPropsWithoutRef<
     <ol
       data-slot="breadcrumb-list"
       className={cn(
-        "flex flex-wrap items-center gap-1.5 break-words text-sm text-foundation-text-dark-tertiary sm:gap-2.5 font-foundation",
+        "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5 font-foundation",
         className,
       )}
       {...props}
@@ -99,7 +99,7 @@ function BreadcrumbLink({
     <Comp
       data-slot="breadcrumb-link"
       className={cn(
-        "transition-colors hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-text-light-primary dark:focus-visible:ring-foundation-text-dark-primary focus-visible:ring-offset-2 rounded-sm",
+        "transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm",
         className,
       )}
       {...props}
@@ -120,7 +120,7 @@ function BreadcrumbPage({ className, ...props }: React.ComponentPropsWithoutRef<
       aria-disabled="true"
       aria-current="page"
       data-slot="breadcrumb-page"
-      className={cn("font-normal text-foundation-text-dark-primary", className)}
+      className={cn("font-normal text-foreground", className)}
       {...props}
     />
   );

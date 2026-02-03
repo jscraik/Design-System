@@ -59,16 +59,18 @@ describe("StickyReveal", () => {
     const mockUnobserve = vi.fn();
     const mockDisconnect = vi.fn();
 
-    global.IntersectionObserver = vi.fn().mockImplementation((callback) => {
-      return {
-        observe: mockObserve,
-        unobserve: mockUnobserve,
-        disconnect: mockDisconnect,
-        // Simulate immediate intersection
-        trigger: (entries: IntersectionObserverEntry[]) =>
-          callback(entries, {} as IntersectionObserver),
+    class MockIntersectionObserver {
+      constructor(private callback: IntersectionObserverCallback) {}
+      observe = mockObserve;
+      unobserve = mockUnobserve;
+      disconnect = mockDisconnect;
+      trigger = (entries: IntersectionObserverEntry[]) => {
+        this.callback(entries, this as unknown as IntersectionObserver);
       };
-    }) as any;
+    }
+
+    // @ts-expect-error test override
+    global.IntersectionObserver = MockIntersectionObserver;
 
     render(
       <StickyReveal triggerAt={0.5}>
@@ -78,7 +80,6 @@ describe("StickyReveal", () => {
 
     expect(mockObserve).toHaveBeenCalled();
 
-    // Cleanup
     mockDisconnect.mockClear();
   });
 

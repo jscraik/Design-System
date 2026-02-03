@@ -28,7 +28,7 @@ const meta: Meta<typeof ChatHeader> = {
     layout: "fullscreen",
   },
   render: (args) => (
-    <div className="h-[80px] bg-foundation-bg-dark-1">
+    <div className="h-[80px] bg-background">
       <ChatHeader {...args} />
     </div>
   ),
@@ -46,24 +46,24 @@ export const WithCustomHeaderRight: Story = {
       <>
         <button
           type="button"
-          className="p-1.5 hover:bg-foundation-bg-dark-3 rounded-md transition-colors"
+          className="p-1.5 hover:bg-muted rounded-md transition-colors"
           aria-label="New chat"
         >
-          <IconPlusLg className="size-4 text-foundation-text-dark-tertiary" />
+          <IconPlusLg className="size-4 text-muted-foreground" />
         </button>
         <button
           type="button"
-          className="p-1.5 hover:bg-foundation-bg-dark-3 rounded-md transition-colors"
+          className="p-1.5 hover:bg-muted rounded-md transition-colors"
           aria-label="Star"
         >
-          <IconStar className="size-4 text-foundation-text-dark-tertiary" />
+          <IconStar className="size-4 text-muted-foreground" />
         </button>
         <button
           type="button"
-          className="p-1.5 hover:bg-foundation-bg-dark-3 rounded-md transition-colors"
+          className="p-1.5 hover:bg-muted rounded-md transition-colors"
           aria-label="Settings"
         >
-          <IconSettings className="size-4 text-foundation-text-dark-tertiary" />
+          <IconSettings className="size-4 text-muted-foreground" />
         </button>
       </>
     ),
@@ -75,7 +75,7 @@ export const WithSingleAction: Story = {
     headerRight: (
       <button
         type="button"
-        className="px-3 py-1.5 bg-foundation-accent-green-light dark:bg-foundation-accent-green hover:bg-foundation-accent-green-light/90 dark:hover:bg-foundation-accent-green/90 text-foundation-text-dark-primary dark:text-foundation-text-light-primary rounded-lg transition-colors text-sm font-medium"
+        className="px-3 py-1.5 bg-accent-green dark:bg-accent-green hover:bg-accent-green/90 dark:hover:bg-accent-green/90 text-foreground dark:text-foreground rounded-lg transition-colors text-sm font-medium"
       >
         Share Chat
       </button>

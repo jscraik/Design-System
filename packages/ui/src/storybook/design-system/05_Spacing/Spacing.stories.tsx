@@ -50,7 +50,15 @@ const SPACING_TOKENS = [
   { name: "s0", value: 0, usage: "No spacing (reset)" },
 ];
 
-const SpacingVisualizer = ({ value, label, usage }: { value: number; label: string; usage: string }) => (
+const SpacingVisualizer = ({
+  value,
+  label,
+  usage,
+}: {
+  value: number;
+  label: string;
+  usage: string;
+}) => (
   <div className="flex items-center gap-4 p-4 rounded-lg border bg-card">
     <div className="flex items-center gap-2">
       <div
@@ -61,11 +69,7 @@ const SpacingVisualizer = ({ value, label, usage }: { value: number; label: stri
           minWidth: value === 0 ? "4px" : undefined,
         }}
       />
-      {value > 64 && (
-        <span className="text-xs text-muted-foreground">
-          {value}px
-        </span>
-      )}
+      {value > 64 && <span className="text-xs text-muted-foreground">{value}px</span>}
     </div>
     <div className="flex-1">
       <div className="font-semibold">{label}</div>
@@ -115,7 +119,10 @@ const SpacingRhythmDemo = () => {
 
           <div
             className="h-px bg-border"
-            style={{ marginTop: `${spaceTokens[selectedSpacing]}px`, marginBottom: `${spaceTokens[selectedSpacing]}px` }}
+            style={{
+              marginTop: `${spaceTokens[selectedSpacing]}px`,
+              marginBottom: `${spaceTokens[selectedSpacing]}px`,
+            }}
           />
 
           <div className="flex items-center gap-2">
@@ -224,7 +231,8 @@ export const SpacingScale: Story = {
       <div>
         <h2 className="text-2xl font-bold mb-2">Spacing Scale</h2>
         <p className="text-muted-foreground mb-6">
-          Visual spacing scale with usage guidelines. Click any spacing value to copy its token name.
+          Visual spacing scale with usage guidelines. Click any spacing value to copy its token
+          name.
         </p>
       </div>
 
@@ -406,9 +414,7 @@ export const DoDont: Story = {
     <div className="max-w-4xl space-y-6 p-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">Spacing Best Practices</h2>
-        <p className="text-muted-foreground">
-          Common patterns to follow and pitfalls to avoid.
-        </p>
+        <p className="text-muted-foreground">Common patterns to follow and pitfalls to avoid.</p>
       </div>
 
       <div className="space-y-6">
@@ -418,23 +424,23 @@ export const DoDont: Story = {
             <div>
               <div className="font-semibold text-accent">DO: Use scale values consistently</div>
               <p className="text-sm text-muted-foreground mt-1">
-                Always prefer spacing tokens (s16, s24) over arbitrary numbers. This creates visual rhythm
-                and makes systematic changes easier.
+                Always prefer spacing tokens (s16, s24) over arbitrary numbers. This creates visual
+                rhythm and makes systematic changes easier.
               </p>
               <div className="mt-3 p-3 rounded bg-background border">
-                <code className="text-sm">
-                  className="p-s16 mb-s24" → Consistent, adjustable
-                </code>
+                <code className="text-sm">className="p-s16 mb-s24" → Consistent, adjustable</code>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">DON'T: Use arbitrary pixel values</div>
+              <div className="font-semibold text-status-error">
+                DON'T: Use arbitrary pixel values
+              </div>
               <p className="text-sm text-muted-foreground mt-1">
                 Avoid random numbers like 13px, 27px, 51px. They break rhythm and make spacing
                 unpredictable.
@@ -477,18 +483,20 @@ export const DoDont: Story = {
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">DON'T: Rely on spacing alone for separation</div>
+              <div className="font-semibold text-status-error">
+                DON'T: Rely on spacing alone for separation
+              </div>
               <p className="text-sm text-muted-foreground mt-1">
                 Use borders or dividers in addition to spacing for clear content separation. Spacing
                 alone can be ambiguous.
               </p>
               <div className="mt-3 grid grid-cols-2 gap-4">
                 <div className="p-4 rounded bg-background border">
-                  <div className="text-xs text-destructive mb-2">Spacing only (ambiguous)</div>
+                  <div className="text-xs text-status-error mb-2">Spacing only (ambiguous)</div>
                   <div className="space-y-6">
                     <div className="h-2 w-full rounded bg-muted" />
                     <div className="h-2 w-3/4 rounded bg-muted" />
@@ -525,18 +533,18 @@ export const DoDont: Story = {
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">DON'T: Mix scales randomly</div>
+              <div className="font-semibold text-status-error">DON'T: Mix scales randomly</div>
               <p className="text-sm text-muted-foreground mt-1">
                 Avoid jumping between vastly different spacing values (s4 → s32 → s8). Use adjacent
                 scale values for smoother transitions.
               </p>
               <div className="mt-3 grid grid-cols-2 gap-4">
                 <div className="p-4 rounded bg-background border">
-                  <div className="text-xs text-destructive mb-2">Chaotic (s4 → s32 → s8)</div>
+                  <div className="text-xs text-status-error mb-2">Chaotic (s4 → s32 → s8)</div>
                   <div className="flex items-end gap-1">
                     <div className="w-2 h-1 rounded bg-muted" />
                     <div className="w-2 h-8 rounded bg-muted" />
@@ -604,7 +612,7 @@ export const TokenReference: Story = {
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">Import Spacing Tokens</div>
         <pre className="text-sm bg-background p-3 rounded overflow-x-auto">
-{`import { spaceTokens } from "@design-studio/tokens/spacing";
+          {`import { spaceTokens } from "@design-studio/tokens/spacing";
 
 // Usage in components
 const padding = spaceTokens.s16; // 16px
@@ -622,7 +630,8 @@ export const ResponsiveBreakpoints: Story = {
       <div>
         <h2 className="text-2xl font-bold mb-2">Responsive Spacing Guidelines</h2>
         <p className="text-muted-foreground mb-6">
-          How spacing scales across viewport sizes. Use Storybook viewport toggle to see differences.
+          How spacing scales across viewport sizes. Use Storybook viewport toggle to see
+          differences.
         </p>
       </div>
 
@@ -649,7 +658,9 @@ export const ResponsiveBreakpoints: Story = {
               </div>
             </div>
             <div className="rounded-lg border bg-muted p-4">
-              <div className="text-xs text-muted-foreground mb-2">Large Desktop (1024px+) → Spacious</div>
+              <div className="text-xs text-muted-foreground mb-2">
+                Large Desktop (1024px+) → Spacious
+              </div>
               <div className="rounded bg-card border p-5" style={{ padding: "20px" }}>
                 <div className="text-sm font-medium mb-1">Card Title</div>
                 <p className="text-xs text-muted-foreground">
@@ -664,7 +675,9 @@ export const ResponsiveBreakpoints: Story = {
           <h3 className="text-sm font-medium mb-3">Responsive Section Spacing</h3>
           <div className="space-y-4">
             <div>
-              <div className="text-xs text-muted-foreground mb-2">Mobile Sections (s16-s24 gap)</div>
+              <div className="text-xs text-muted-foreground mb-2">
+                Mobile Sections (s16-s24 gap)
+              </div>
               <div className="flex flex-col gap-3">
                 <div className="rounded bg-muted p-3">
                   <div className="text-xs text-muted-foreground">Section 1</div>
@@ -678,7 +691,9 @@ export const ResponsiveBreakpoints: Story = {
               </div>
             </div>
             <div>
-              <div className="text-xs text-muted-foreground mb-2">Desktop Sections (s24-s32 gap)</div>
+              <div className="text-xs text-muted-foreground mb-2">
+                Desktop Sections (s24-s32 gap)
+              </div>
               <div className="flex flex-col gap-4">
                 <div className="rounded bg-muted p-3">
                   <div className="text-xs text-muted-foreground">Section 1</div>
@@ -699,39 +714,21 @@ export const ResponsiveBreakpoints: Story = {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <div className="text-sm font-medium">Mobile (&lt; 768px)</div>
-              <div className="text-xs text-muted-foreground">
-                • s12-s16 for compact layouts
-              </div>
-              <div className="text-xs text-muted-foreground">
-                • s16-s20 for standard spacing
-              </div>
-              <div className="text-xs text-muted-foreground">
-                • Prioritize content density
-              </div>
+              <div className="text-xs text-muted-foreground">• s12-s16 for compact layouts</div>
+              <div className="text-xs text-muted-foreground">• s16-s20 for standard spacing</div>
+              <div className="text-xs text-muted-foreground">• Prioritize content density</div>
             </div>
             <div className="space-y-2">
               <div className="text-sm font-medium">Tablet (768px - 1024px)</div>
-              <div className="text-xs text-muted-foreground">
-                • s16-s20 for balanced spacing
-              </div>
-              <div className="text-xs text-muted-foreground">
-                • s20-s24 for section gaps
-              </div>
-              <div className="text-xs text-muted-foreground">
-                • Maintain visual rhythm
-              </div>
+              <div className="text-xs text-muted-foreground">• s16-s20 for balanced spacing</div>
+              <div className="text-xs text-muted-foreground">• s20-s24 for section gaps</div>
+              <div className="text-xs text-muted-foreground">• Maintain visual rhythm</div>
             </div>
             <div className="space-y-2">
               <div className="text-sm font-medium">Desktop (&ge; 1024px)</div>
-              <div className="text-xs text-muted-foreground">
-                • s20-s24 for comfortable spacing
-              </div>
-              <div className="text-xs text-muted-foreground">
-                • s24-s32 for section gaps
-              </div>
-              <div className="text-xs text-muted-foreground">
-                • Premium, spacious feel
-              </div>
+              <div className="text-xs text-muted-foreground">• s20-s24 for comfortable spacing</div>
+              <div className="text-xs text-muted-foreground">• s24-s32 for section gaps</div>
+              <div className="text-xs text-muted-foreground">• Premium, spacious feel</div>
             </div>
           </div>
         </div>
@@ -739,8 +736,9 @@ export const ResponsiveBreakpoints: Story = {
         <div className="p-4 rounded-lg bg-accent/5 border border-accent/20">
           <div className="text-sm font-medium text-accent">💡 Responsive Strategy</div>
           <p className="text-sm text-muted-foreground mt-1">
-            Use container queries or Tailwind responsive modifiers: <code>px-s16 md:px-s20 lg:px-s24</code>.
-            Mobile-first design, then enhance for larger screens.
+            Use container queries or Tailwind responsive modifiers:{" "}
+            <code>px-s16 md:px-s20 lg:px-s24</code>. Mobile-first design, then enhance for larger
+            screens.
           </p>
         </div>
       </div>

@@ -44,6 +44,7 @@ interface Place {
 }
 
 const places: Place[] = markersData.places as Place[];
+const markerColor = "var(--accent-orange)";
 
 // Inspector component - shows place details
 function Inspector({ place, onClose }: { place: Place; onClose: () => void }) {
@@ -58,13 +59,13 @@ function Inspector({ place, onClose }: { place: Place; onClose: () => void }) {
     >
       <button
         aria-label="Close details"
-        className="inline-flex absolute z-10 top-4 left-4 shadow-xl rounded-full p-2 bg-white ring ring-black/10 hover:bg-gray-50"
+        className="inline-flex absolute z-10 top-4 left-4 shadow-xl rounded-full p-2 bg-background text-foreground ring ring-border/40 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         onClick={onClose}
         type="button"
       >
         <X className="h-[18px] w-[18px]" aria-hidden="true" />
       </button>
-      <div className="relative h-full overflow-y-auto rounded-none xl:rounded-3xl bg-white text-black xl:shadow-xl xl:ring ring-black/10">
+      <div className="relative h-full overflow-y-auto rounded-none xl:rounded-3xl bg-background text-foreground xl:shadow-xl xl:ring ring-border/40">
         <div className="relative mt-2 xl:mt-0 px-2 xl:px-0">
           <img
             src={place.thumbnail}
@@ -75,25 +76,25 @@ function Inspector({ place, onClose }: { place: Place; onClose: () => void }) {
         <div className="h-[calc(100%-11rem)] sm:h-[calc(100%-14rem)]">
           <div className="p-4 sm:p-5">
             <div className="text-2xl font-medium truncate">{place.name}</div>
-            <div className="text-sm mt-1 opacity-70 flex items-center gap-1">
+            <div className="text-sm mt-1 text-text-secondary flex items-center gap-1">
               <Star className="h-3.5 w-3.5" aria-hidden="true" />
               {place.rating.toFixed(1)}
               {place.price ? <span>· {place.price}</span> : null}
               <span>· {place.city}</span>
             </div>
             <div className="mt-3 flex flex-row items-center gap-3 font-medium">
-              <button className="px-4 py-2 bg-[#F46C21] text-white rounded-lg text-sm hover:bg-[#e05f1a]">
+              <button className="px-4 py-2 bg-accent-orange text-text-body-on-color rounded-lg text-sm hover:bg-accent-orange/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background">
                 Add to favorites
               </button>
-              <button className="px-4 py-2 border border-[#F46C21]/50 text-[#F46C21] rounded-lg text-sm hover:bg-[#F46C21]/5">
+              <button className="px-4 py-2 border border-accent-orange/40 text-accent-orange rounded-lg text-sm hover:bg-accent-orange/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-orange/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background">
                 Contact
               </button>
             </div>
-            <div className="text-sm mt-5">{place.description}</div>
+            <div className="text-sm mt-5 text-text-secondary">{place.description}</div>
           </div>
           <div className="px-4 sm:px-5 pb-4">
             <div className="text-lg font-medium mb-2">Reviews</div>
-            <ul className="space-y-3 divide-y divide-black/5">
+            <ul className="space-y-3 divide-y divide-border">
               {[
                 { user: "Leo M.", text: "Fantastic crust and balanced toppings!" },
                 { user: "Priya S.", text: "Cozy vibe and friendly staff." },
@@ -101,11 +102,11 @@ function Inspector({ place, onClose }: { place: Place; onClose: () => void }) {
               ].map((review, idx) => (
                 <li key={idx} className="py-3">
                   <div className="flex items-start gap-3">
-                    <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-medium">
+                    <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-xs font-medium">
                       {review.user[0]}
                     </div>
                     <div className="min-w-0 gap-1 flex flex-col">
-                      <div className="text-xs font-medium text-black/70">{review.user}</div>
+                      <div className="text-xs font-medium text-text-secondary">{review.user}</div>
                       <div className="text-sm">{review.text}</div>
                     </div>
                   </div>
@@ -131,10 +132,10 @@ function PlaceListItem({
 }) {
   return (
     <div
-      className={`rounded-2xl px-3 select-none hover:bg-black/5 cursor-pointer ${isSelected ? "bg-black/5" : ""}`}
+      className={`rounded-2xl px-3 select-none hover:bg-muted cursor-pointer ${isSelected ? "bg-muted" : ""}`}
     >
       <div
-        className={`border-b ${isSelected ? "border-black/0" : "border-black/5"} hover:border-black/0`}
+        className={`border-b ${isSelected ? "border-transparent" : "border-border"} hover:border-transparent`}
       >
         <button
           type="button"
@@ -148,8 +149,8 @@ function PlaceListItem({
           />
           <div className="min-w-0 text-left">
             <div className="font-medium truncate">{place.name}</div>
-            <div className="text-xs text-black/50 truncate">{place.description}</div>
-            <div className="text-xs mt-1 text-black/50 flex items-center gap-1">
+            <div className="text-xs text-muted-foreground truncate">{place.description}</div>
+            <div className="text-xs mt-1 text-muted-foreground flex items-center gap-1">
               <Star className="h-3 w-3" aria-hidden="true" />
               {place.rating.toFixed(1)}
               {place.price ? <span>· {place.price}</span> : null}
@@ -203,10 +204,17 @@ function Sidebar({
       <div
         className={`${forceMobile ? "hidden" : ""} absolute inset-y-0 bottom-4 left-0 z-20 w-[340px] max-w-[75%] pointer-events-auto`}
       >
-        <div ref={scrollRef} className="relative px-2 h-full overflow-y-auto bg-white text-black">
-          <div className="flex justify-between flex-row items-center px-3 sticky bg-white top-0 py-4 text-md font-medium">
+        <div
+          ref={scrollRef}
+          className="relative px-2 h-full overflow-y-auto bg-background text-foreground"
+        >
+          <div className="flex justify-between flex-row items-center px-3 sticky bg-background top-0 py-4 text-md font-medium">
             {placesList.length} results
-            <button aria-label="Filter" className="p-2 hover:bg-black/5 rounded-lg" type="button">
+            <button
+              aria-label="Filter"
+              className="p-2 hover:bg-muted rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              type="button"
+            >
               <Settings className="h-5 w-5" aria-hidden="true" />
             </button>
           </div>
@@ -231,7 +239,7 @@ function Sidebar({
               transition={{ duration: 0.2 }}
             >
               <div
-                className="w-full h-full bg-gradient-to-t from-black/15 to-black/0"
+                className="w-full h-full bg-gradient-to-t from-foreground/15 to-transparent"
                 aria-hidden
               />
             </motion.div>
@@ -243,13 +251,13 @@ function Sidebar({
       <div
         className={`${forceMobile ? "" : "hidden"} absolute inset-x-0 bottom-0 z-20 pointer-events-auto`}
       >
-        <div className="pt-2 text-black">
+        <div className="pt-2 text-foreground">
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="px-3 py-3 flex gap-3">
               {placesList.map((place) => (
                 <div
                   key={place.id}
-                  className="ring ring-black/10 max-w-[330px] w-full shadow-xl rounded-2xl bg-white"
+                  className="ring ring-border/40 max-w-[330px] w-full shadow-xl rounded-2xl bg-background"
                 >
                   <PlaceListItem
                     place={place}
@@ -273,11 +281,11 @@ function PizzazMapWidget() {
   // Show inline error UI if token is missing
   if (!token) {
     return (
-      <div className="flex items-center justify-center w-full h-full bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+      <div className="flex items-center justify-center w-full h-full bg-secondary dark:bg-secondary text-foreground dark:text-foreground">
         <div className="text-center p-6">
           <div className="text-4xl mb-4">🗺️</div>
           <h3 className="text-body font-semibold mb-2">Map Unavailable</h3>
-          <p className="text-body-small text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+          <p className="text-body-small text-text-secondary dark:text-text-secondary">
             VITE_MAPBOX_TOKEN environment variable is required to use the map widget.
           </p>
         </div>
@@ -346,7 +354,7 @@ function PizzazMapWidget() {
       markerObjs.current = [];
 
       placesList.forEach((place) => {
-        const marker = new mapboxgl.Marker({ color: "#F46C21" })
+        const marker = new mapboxgl.Marker({ color: markerColor })
           .setLngLat(place.coords)
           .addTo(mapObj.current!);
 
@@ -449,14 +457,14 @@ function PizzazMapWidget() {
       className={`relative antialiased w-full min-h-[480px] overflow-hidden ${
         displayMode === "fullscreen"
           ? "rounded-none border-0"
-          : "border border-black/10 dark:border-white/10 rounded-2xl sm:rounded-3xl"
+          : "border border-border rounded-2xl sm:rounded-3xl"
       }`}
     >
       {/* Fullscreen button */}
       {displayMode !== "fullscreen" && (
         <button
           aria-label="Enter fullscreen"
-          className="absolute top-4 right-4 z-30 shadow-lg pointer-events-auto bg-white text-black p-2 rounded-lg hover:bg-gray-50"
+          className="absolute top-4 right-4 z-30 shadow-lg pointer-events-auto bg-background text-foreground p-2 rounded-lg hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           onClick={requestFullscreen}
           type="button"
         >
@@ -487,7 +495,7 @@ function PizzazMapWidget() {
       <div
         className={`absolute inset-0 overflow-hidden ${
           displayMode === "fullscreen"
-            ? "left-[340px] right-2 top-2 bottom-4 border border-black/10 rounded-3xl"
+            ? "left-[340px] right-2 top-2 bottom-4 border border-border rounded-3xl"
             : ""
         }`}
       >
@@ -505,7 +513,7 @@ function PizzazMapWidget() {
             {["Open now", "Top rated", "Vegetarian friendly"].map((label) => (
               <button
                 key={label}
-                className="px-4 py-2 bg-white/90 text-black text-sm rounded-full shadow-lg hover:bg-white"
+                className="px-4 py-2 bg-background/90 text-foreground text-sm rounded-full shadow-lg hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 type="button"
               >
                 {label}

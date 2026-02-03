@@ -72,7 +72,7 @@ export const sampleGroupChats: SidebarItem[] = [
     label: "Summarize chat exchange",
     icon: (
       <div className="size-6 rounded-full bg-foundation-accent-red-light dark:bg-foundation-accent-red flex items-center justify-center flex-shrink-0">
-        <IconChat className="size-5 text-white" />
+        <IconChat className="size-5 text-text-body-on-color" />
       </div>
     ),
   },

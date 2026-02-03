@@ -37,14 +37,14 @@ export default defineConfig({
   onwarn(warning, warn) {
     // Ignore circular dependency warnings for @openai/apps-sdk-ui components
     // These are safe to ignore as they're re-exports, not actual circular logic
-    if (warning.code === 'CIRCULAR_DEPENDENCY') {
+    if (warning.code === "CIRCULAR_DEPENDENCY") {
       const message = warning.toString();
       if (
-        message.includes('apps-sdk-ui') ||
-        message.includes('apps-sdk') ||
-        message.includes('Icon') ||
-        message.includes('Download') ||
-        message.includes('Sparkles')
+        message.includes("apps-sdk-ui") ||
+        message.includes("apps-sdk") ||
+        message.includes("Icon") ||
+        message.includes("Download") ||
+        message.includes("Sparkles")
       ) {
         return;
       }

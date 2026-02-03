@@ -55,7 +55,7 @@ function ScrollArea({
         // Disabled state styling
         disabled && "opacity-50 pointer-events-none",
         // Error state styling
-        error && "ring-2 ring-foundation-accent-red/50",
+        error && "ring-2 ring-status-error/50",
         className,
       )}
       aria-disabled={disabled || undefined}

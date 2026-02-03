@@ -237,14 +237,12 @@ export function SettingDropdownBlockDemo() {
   ];
 
   return (
-    <div className="h-full bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 overflow-auto">
+    <div className="h-full bg-background overflow-auto">
       <div className="max-w-4xl mx-auto p-8 space-y-8">
         {/* Introduction */}
         <div className="space-y-2">
-          <h1 className="text-2xl font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-            Setting Dropdown Block
-          </h1>
-          <p className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+          <h1 className="text-2xl font-semibold text-foreground">Setting Dropdown Block</h1>
+          <p className="text-text-secondary">
             Comprehensive dropdown component with 4 variants, 3 sizes, searchable options, grouped
             options, icons, badges, loading states, and full accessibility support.
           </p>
@@ -253,10 +251,8 @@ export function SettingDropdownBlockDemo() {
         {/* 1. Variants */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              1. Variants
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
+            <h2 className="text-lg font-semibold text-foreground">1. Variants</h2>
+            <p className="text-sm text-text-secondary mt-1">
               Four visual variants: default, card, compact, and inline
             </p>
           </div>
@@ -264,10 +260,8 @@ export function SettingDropdownBlockDemo() {
           <div className="space-y-4">
             {/* Default Variant */}
             <div className="space-y-2">
-              <h3 className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                Default
-              </h3>
-              <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+              <h3 className="text-sm font-medium text-foreground">Default</h3>
+              <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
                 <SettingDropdownBlock
                   variant="default"
                   icon={<IconSparkles />}
@@ -290,9 +284,7 @@ export function SettingDropdownBlockDemo() {
 
             {/* Card Variant */}
             <div className="space-y-2">
-              <h3 className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                Card
-              </h3>
+              <h3 className="text-sm font-medium text-foreground">Card</h3>
               <div className="space-y-2">
                 <SettingDropdownBlock
                   variant="card"
@@ -316,10 +308,8 @@ export function SettingDropdownBlockDemo() {
 
             {/* Compact Variant */}
             <div className="space-y-2">
-              <h3 className="text-sm font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-                Compact
-              </h3>
-              <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+              <h3 className="text-sm font-medium text-foreground">Compact</h3>
+              <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
                 <SettingDropdownBlock
                   variant="compact"
                   size="sm"
@@ -344,15 +334,13 @@ export function SettingDropdownBlockDemo() {
         {/* 2. Sizes */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              2. Sizes
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
+            <h2 className="text-lg font-semibold text-foreground">2. Sizes</h2>
+            <p className="text-sm text-text-secondary mt-1">
               Three size presets: small, medium, and large
             </p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
             <SettingDropdownBlock
               size="sm"
               icon={<IconGlobe />}
@@ -383,15 +371,11 @@ export function SettingDropdownBlockDemo() {
         {/* 3. Searchable Dropdown */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              3. Searchable Dropdown
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
-              Filter options with search input
-            </p>
+            <h2 className="text-lg font-semibold text-foreground">3. Searchable Dropdown</h2>
+            <p className="text-sm text-text-secondary mt-1">Filter options with search input</p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden">
             <SettingDropdownBlock
               icon={<IconGlobe />}
               label="Language (Searchable)"
@@ -407,15 +391,11 @@ export function SettingDropdownBlockDemo() {
         {/* 4. Grouped Options */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              4. Grouped Options
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
-              Organize options into categories
-            </p>
+            <h2 className="text-lg font-semibold text-foreground">4. Grouped Options</h2>
+            <p className="text-sm text-text-secondary mt-1">Organize options into categories</p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden">
             <SettingDropdownBlock
               icon={<IconGlobe />}
               label="Language (Grouped)"
@@ -431,15 +411,11 @@ export function SettingDropdownBlockDemo() {
         {/* 5. With Icons */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              5. Options with Icons
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
-              Visual indicators for each option
-            </p>
+            <h2 className="text-lg font-semibold text-foreground">5. Options with Icons</h2>
+            <p className="text-sm text-text-secondary mt-1">Visual indicators for each option</p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
             <SettingDropdownBlock
               icon={<IconSparkles />}
               label="Theme (With Icons)"
@@ -467,15 +443,11 @@ export function SettingDropdownBlockDemo() {
         {/* 6. States */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              6. States
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
-              Loading, disabled, and error states
-            </p>
+            <h2 className="text-lg font-semibold text-foreground">6. States</h2>
+            <p className="text-sm text-text-secondary mt-1">Loading, disabled, and error states</p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
             <SettingDropdownBlock
               icon={<IconSparkles />}
               label="Loading State"
@@ -506,15 +478,11 @@ export function SettingDropdownBlockDemo() {
         {/* 7. With Badges */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              7. With Badges
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
-              Status indicators and labels
-            </p>
+            <h2 className="text-lg font-semibold text-foreground">7. With Badges</h2>
+            <p className="text-sm text-text-secondary mt-1">Status indicators and labels</p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden divide-y divide-foundation-bg-light-3 dark:divide-foundation-bg-dark-3">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden divide-y divide-border">
             <SettingDropdownBlock
               icon={<IconSparkles />}
               label="AI Model"
@@ -545,15 +513,11 @@ export function SettingDropdownBlockDemo() {
         {/* 8. Disabled Options */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              8. Disabled Options
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
-              Some options can be disabled
-            </p>
+            <h2 className="text-lg font-semibold text-foreground">8. Disabled Options</h2>
+            <p className="text-sm text-text-secondary mt-1">Some options can be disabled</p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden">
             <SettingDropdownBlock
               icon={<IconWifi />}
               label="Network Mode"
@@ -568,15 +532,11 @@ export function SettingDropdownBlockDemo() {
         {/* 9. Dropdown Groups */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              9. Dropdown Groups
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
-              Organize related dropdowns together
-            </p>
+            <h2 className="text-lg font-semibold text-foreground">9. Dropdown Groups</h2>
+            <p className="text-sm text-text-secondary mt-1">Organize related dropdowns together</p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden">
             <SettingDropdownGroup
               label="Display Settings"
               description="Customize your visual experience"
@@ -602,16 +562,12 @@ export function SettingDropdownBlockDemo() {
         {/* 10. Real-World Examples */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              10. Real-World Examples
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
-              Complete settings panels
-            </p>
+            <h2 className="text-lg font-semibold text-foreground">10. Real-World Examples</h2>
+            <p className="text-sm text-text-secondary mt-1">Complete settings panels</p>
           </div>
 
           {/* Display Preferences */}
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden">
             <SettingDropdownGroup label="Display Preferences">
               <SettingDropdownBlock
                 icon={<IconSparkles />}
@@ -633,7 +589,7 @@ export function SettingDropdownBlockDemo() {
           </div>
 
           {/* Localization */}
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden">
             <SettingDropdownGroup label="Localization">
               <SettingDropdownBlock
                 icon={<IconGlobe />}
@@ -668,7 +624,7 @@ export function SettingDropdownBlockDemo() {
           </div>
 
           {/* System Settings */}
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 overflow-hidden">
+          <div className="border border-border rounded-lg bg-secondary overflow-hidden">
             <SettingDropdownGroup label="System & Performance">
               <SettingDropdownBlock
                 icon={<IconCode />}
@@ -706,16 +662,14 @@ export function SettingDropdownBlockDemo() {
         {/* 11. Accessibility */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              11. Accessibility
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
+            <h2 className="text-lg font-semibold text-foreground">11. Accessibility</h2>
+            <p className="text-sm text-text-secondary mt-1">
               Full ARIA support and keyboard navigation
             </p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-4 space-y-2">
-            <ul className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary space-y-1">
+          <div className="border border-border rounded-lg bg-secondary p-4 space-y-2">
+            <ul className="text-sm text-text-secondary space-y-1">
               <li>✓ Proper ARIA labels and roles (listbox, option)</li>
               <li>✓ Keyboard navigation (Tab, Enter, Escape)</li>
               <li>✓ Focus visible states</li>
@@ -730,32 +684,26 @@ export function SettingDropdownBlockDemo() {
         {/* 12. Design Token Compliance */}
         <div className="space-y-3">
           <div>
-            <h2 className="text-lg font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
-              12. Design Token Compliance
-            </h2>
-            <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1">
+            <h2 className="text-lg font-semibold text-foreground">12. Design Token Compliance</h2>
+            <p className="text-sm text-text-secondary mt-1">
               100% ChatGPT design system compliance
             </p>
           </div>
 
-          <div className="border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-4 space-y-3">
+          <div className="border border-border rounded-lg bg-secondary p-4 space-y-3">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <h4 className="text-xs font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2">
-                  Colors
-                </h4>
-                <ul className="text-xs text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary space-y-1">
-                  <li>• foundation-bg-* (backgrounds)</li>
-                  <li>• foundation-text-* (text colors)</li>
-                  <li>• foundation-accent-* (accents)</li>
-                  <li>• foundation-icon-* (icons)</li>
+                <h4 className="text-xs font-medium text-foreground mb-2">Colors</h4>
+                <ul className="text-xs text-text-secondary space-y-1">
+                  <li>• semantic background tokens</li>
+                  <li>• semantic text tokens</li>
+                  <li>• semantic accent tokens</li>
+                  <li>• semantic icon tokens</li>
                 </ul>
               </div>
               <div>
-                <h4 className="text-xs font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2">
-                  Interactions
-                </h4>
-                <ul className="text-xs text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary space-y-1">
+                <h4 className="text-xs font-medium text-foreground mb-2">Interactions</h4>
+                <ul className="text-xs text-text-secondary space-y-1">
                   <li>• Smooth transitions (200ms)</li>
                   <li>• Hover/focus states</li>
                   <li>• Click outside handling</li>
@@ -763,10 +711,8 @@ export function SettingDropdownBlockDemo() {
                 </ul>
               </div>
               <div>
-                <h4 className="text-xs font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2">
-                  Features
-                </h4>
-                <ul className="text-xs text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary space-y-1">
+                <h4 className="text-xs font-medium text-foreground mb-2">Features</h4>
+                <ul className="text-xs text-text-secondary space-y-1">
                   <li>• Searchable options</li>
                   <li>• Grouped options</li>
                   <li>• Icons & badges</li>
@@ -774,10 +720,8 @@ export function SettingDropdownBlockDemo() {
                 </ul>
               </div>
               <div>
-                <h4 className="text-xs font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2">
-                  Typography
-                </h4>
-                <ul className="text-xs text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary space-y-1">
+                <h4 className="text-xs font-medium text-foreground mb-2">Typography</h4>
+                <ul className="text-xs text-text-secondary space-y-1">
                   <li>• System font stack</li>
                   <li>• Size variants (sm/md/lg)</li>
                   <li>• Proper truncation</li>

@@ -33,16 +33,14 @@ describe("ChatShell", () => {
     });
 
     it("renders with custom className", () => {
-      const { container } = render(
-        <ChatShell slots={mockSlots} className="custom-class" />
-      );
+      const { container } = render(<ChatShell slots={mockSlots} className="custom-class" />);
       const shell = container.querySelector('[data-testid="chat-shell"]');
       expect(shell).toHaveClass("custom-class");
     });
 
     it("renders with custom contentClassName", () => {
       const { container } = render(
-        <ChatShell slots={mockSlots} contentClassName="custom-content" />
+        <ChatShell slots={mockSlots} contentClassName="custom-content" />,
       );
       const content = container.querySelector(".custom-content");
       expect(content).toBeInTheDocument();
@@ -65,9 +63,7 @@ describe("ChatShell", () => {
 
   describe("Stateful props - Loading", () => {
     it("calls onStateChange with 'loading'", async () => {
-      render(
-        <ChatShell slots={mockSlots} loading onStateChange={mockOnStateChange} />
-      );
+      render(<ChatShell slots={mockSlots} loading onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });
@@ -88,11 +84,7 @@ describe("ChatShell", () => {
   describe("Stateful props - Error", () => {
     it("calls onStateChange with 'error'", async () => {
       render(
-        <ChatShell
-          slots={mockSlots}
-          error="Failed to load"
-          onStateChange={mockOnStateChange}
-        />
+        <ChatShell slots={mockSlots} error="Failed to load" onStateChange={mockOnStateChange} />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -105,9 +97,7 @@ describe("ChatShell", () => {
     });
 
     it("applies error styles to shell", () => {
-      const { container } = render(
-        <ChatShell slots={mockSlots} error="Error" />
-      );
+      const { container } = render(<ChatShell slots={mockSlots} error="Error" />);
       const shell = container.querySelector('[data-testid="chat-shell"]');
       expect(shell).toHaveClass("ring-2");
     });
@@ -115,13 +105,7 @@ describe("ChatShell", () => {
 
   describe("Stateful props - Disabled", () => {
     it("calls onStateChange with 'disabled'", async () => {
-      render(
-        <ChatShell
-          slots={mockSlots}
-          disabled
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<ChatShell slots={mockSlots} disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
       });
@@ -136,13 +120,7 @@ describe("ChatShell", () => {
 
   describe("Stateful props - Required", () => {
     it("calls onStateChange with 'default' when required", async () => {
-      render(
-        <ChatShell
-          slots={mockSlots}
-          required
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<ChatShell slots={mockSlots} required onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
       });
@@ -158,7 +136,7 @@ describe("ChatShell", () => {
           error="Error"
           disabled
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -167,12 +145,7 @@ describe("ChatShell", () => {
 
     it("prioritizes error over disabled when not loading", async () => {
       render(
-        <ChatShell
-          slots={mockSlots}
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        />
+        <ChatShell slots={mockSlots} error="Error" disabled onStateChange={mockOnStateChange} />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -194,9 +167,7 @@ describe("ChatShell", () => {
     });
 
     it("has aria-invalid when error", () => {
-      const { container } = render(
-        <ChatShell slots={mockSlots} error="Failed" />
-      );
+      const { container } = render(<ChatShell slots={mockSlots} error="Failed" />);
       const shell = container.querySelector('[data-testid="chat-shell"]');
       expect(shell).toHaveAttribute("aria-invalid", "true");
     });
@@ -226,9 +197,7 @@ describe("ChatShell", () => {
 
   describe("Loading and error overlay behavior", () => {
     it("does not show error when loading", () => {
-      render(
-        <ChatShell slots={mockSlots} loading error="Error message" />
-      );
+      render(<ChatShell slots={mockSlots} loading error="Error message" />);
       expect(screen.getByText("Loading...")).toBeInTheDocument();
       expect(screen.queryByText("Error message")).not.toBeInTheDocument();
     });

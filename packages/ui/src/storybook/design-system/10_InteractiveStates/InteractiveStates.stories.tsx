@@ -18,7 +18,13 @@ import { radiusTokens } from "@design-studio/tokens/radius";
  */
 
 // State Gallery Card - shows multiple states at once
-const StateGalleryCard = ({ title, states }: { title: string; states: Array<{ name: string; state: string; element: React.ReactNode }> }) => (
+const StateGalleryCard = ({
+  title,
+  states,
+}: {
+  title: string;
+  states: Array<{ name: string; state: string; element: React.ReactNode }>;
+}) => (
   <div className="space-y-4">
     <h3 className="text-lg font-semibold">{title}</h3>
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -64,7 +70,10 @@ const ButtonStates = () => {
       {/* Active/Pressed */}
       <button
         className="px-4 py-2 rounded-md bg-accent text-accent-foreground text-sm font-medium active:scale-95 transition-transform"
-        style={{ borderRadius: `${radiusTokens.r8}px`, transform: pressed ? "scale(0.95)" : undefined }}
+        style={{
+          borderRadius: `${radiusTokens.r8}px`,
+          transform: pressed ? "scale(0.95)" : undefined,
+        }}
         onMouseDown={() => setPressed(true)}
         onMouseUp={() => setPressed(false)}
         onMouseLeave={() => setPressed(false)}
@@ -134,7 +143,11 @@ const InputStates = () => {
           type="text"
           placeholder="Error state"
           className="w-full px-3 rounded-md border bg-background text-sm"
-          style={{ height: "44px", borderRadius: `${radiusTokens.r10}px`, borderColor: "var(--color-error)" }}
+          style={{
+            height: "44px",
+            borderRadius: `${radiusTokens.r10}px`,
+            borderColor: "var(--color-error)",
+          }}
         />
         <div className="absolute right-3 top-1/2 -translate-y-1/2 text-sm">⚠️</div>
       </div>
@@ -157,7 +170,8 @@ const meta: Meta = {
     layout: "fullscreen",
     docs: {
       description: {
-        component: "Interactive component states shown side-by-side for comparison. Learn hover, focus, active, disabled, loading, and error states.",
+        component:
+          "Interactive component states shown side-by-side for comparison. Learn hover, focus, active, disabled, loading, and error states.",
       },
     },
   },
@@ -180,22 +194,23 @@ export const ButtonStateGallery: Story = {
 
       <StateGalleryCard
         title="Primary Button"
-        states={[
-          { name: "default", state: "Default", element: <ButtonStates /> },
-        ]}
+        states={[{ name: "default", state: "Default", element: <ButtonStates /> }]}
       />
 
       <div className="rounded-lg border bg-card p-6">
         <h3 className="font-semibold mb-4">Interaction Guidelines</h3>
         <div className="space-y-2 text-sm">
           <div>
-            <span className="font-medium">Hover:</span> 150ms ease-out, slight opacity change (80% → 100%)
+            <span className="font-medium">Hover:</span> 150ms ease-out, slight opacity change (80% →
+            100%)
           </div>
           <div>
-            <span className="font-medium">Active/Press:</span> Immediate scale(0.95) for tactile feedback
+            <span className="font-medium">Active/Press:</span> Immediate scale(0.95) for tactile
+            feedback
           </div>
           <div>
-            <span className="font-medium">Focus:</span> 2px ring with offset, visible on keyboard navigation
+            <span className="font-medium">Focus:</span> 2px ring with offset, visible on keyboard
+            navigation
           </div>
           <div>
             <span className="font-medium">Disabled:</span> 50% opacity, no pointer events
@@ -219,9 +234,7 @@ export const InputStateGallery: Story = {
 
       <StateGalleryCard
         title="Text Input"
-        states={[
-          { name: "default", state: "Default", element: <InputStates /> },
-        ]}
+        states={[{ name: "default", state: "Default", element: <InputStates /> }]}
       />
 
       <div className="rounded-lg border bg-card p-6">
@@ -287,12 +300,13 @@ export const MotionComparison: Story = {
       <div className="rounded-lg border bg-accent/5 p-6">
         <h3 className="font-semibold mb-4">Reduced Motion Support</h3>
         <p className="text-sm text-muted-foreground mb-4">
-          Test this by enabling "prefers-reduced-motion" in your OS accessibility settings.
-          All animations automatically respect this preference and skip to final state.
+          Test this by enabling "prefers-reduced-motion" in your OS accessibility settings. All
+          animations automatically respect this preference and skip to final state.
         </p>
         <div className="flex gap-2">
           <div className="px-3 py-1 rounded bg-background border text-xs font-mono">
-            @media (prefers-reduced-motion: reduce) {"{"} * {"{"} transition: none !important; {"}"} {"}"}
+            @media (prefers-reduced-motion: reduce) {"{"} * {"{"} transition: none !important; {"}"}{" "}
+            {"}"}
           </div>
         </div>
       </div>

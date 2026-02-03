@@ -26,7 +26,7 @@ export default function FullscreenViewer({ album }: FullscreenViewerProps) {
 
   return (
     <div
-      className="relative w-full h-full bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1"
+      className="relative w-full h-full bg-background dark:bg-background"
       style={{
         maxHeight,
         height: maxHeight,
@@ -44,7 +44,7 @@ export default function FullscreenViewer({ album }: FullscreenViewerProps) {
               <img
                 src={photo.url}
                 alt={photo.title || album.title}
-                className="absolute inset-0 m-auto rounded-3xl shadow-sm border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 max-w-full max-h-full object-contain"
+                className="absolute inset-0 m-auto rounded-3xl shadow-sm border border-border dark:border-border max-w-full max-h-full object-contain"
               />
             ) : null}
           </div>

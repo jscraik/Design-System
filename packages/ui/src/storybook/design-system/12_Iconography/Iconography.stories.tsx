@@ -112,23 +112,39 @@ const SAMPLE_ICONS = {
     { name: "IconCopy", component: IconCopy, description: "Copy to clipboard" },
     { name: "IconShare", component: IconShare, description: "Share, distribute" },
     { name: "IconDelete", component: IconX, description: "Remove, delete, clear" },
-    { name: "IconRegenerate", component: IconRegenerate, description: "Regenerate, refresh, retry" },
+    {
+      name: "IconRegenerate",
+      component: IconRegenerate,
+      description: "Regenerate, refresh, retry",
+    },
     { name: "IconPlus", component: IconPlusLg, description: "Add, create, new" },
     { name: "IconSearch", component: IconSearch, description: "Search, find, lookup" },
-    { name: "IconSettings", component: IconSettings, description: "Settings, preferences, configure" },
+    {
+      name: "IconSettings",
+      component: IconSettings,
+      description: "Settings, preferences, configure",
+    },
   ],
   navigation: [
     { name: "IconChevronDown", component: IconChevronDownMd, description: "Expand, reveal more" },
     { name: "IconChevronUp", component: IconChevronUpMd, description: "Collapse, show less" },
     { name: "IconChevronLeft", component: IconChevronLeftMd, description: "Back, previous, left" },
-    { name: "IconChevronRight", component: IconChevronRightMd, description: "Forward, next, right" },
+    {
+      name: "IconChevronRight",
+      component: IconChevronRightMd,
+      description: "Forward, next, right",
+    },
     { name: "IconArrowUp", component: IconArrowUpSm, description: "Up, increase, ascend" },
     { name: "IconMenu", component: IconDotsVertical, description: "More options, menu" },
     { name: "IconMore", component: IconDotsHorizontal, description: "More horizontal, overflow" },
   ],
   feedback: [
     { name: "IconThumbUp", component: IconThumbUp, description: "Like, approve, positive" },
-    { name: "IconThumbDown", component: IconThumbDown, description: "Dislike, disapprove, negative" },
+    {
+      name: "IconThumbDown",
+      component: IconThumbDown,
+      description: "Dislike, disapprove, negative",
+    },
     { name: "IconStar", component: IconStar, description: "Favorite, save, important" },
     { name: "IconSparkles", component: IconSparkles, description: "AI, magic, smart features" },
   ],
@@ -177,9 +193,7 @@ const SizeDemo = () => (
   <div className="space-y-6 p-6">
     <div>
       <h3 className="text-lg font-semibold mb-2">Interactive Size Preview</h3>
-      <p className="text-sm text-muted-foreground">
-        See how icons appear at different sizes.
-      </p>
+      <p className="text-sm text-muted-foreground">See how icons appear at different sizes.</p>
     </div>
 
     <div className="rounded-lg border bg-card p-6">
@@ -188,13 +202,14 @@ const SizeDemo = () => (
           const sizeValue = sizeOption.value as number;
           return (
             <div key={sizeOption.name} className="flex items-center gap-4">
-              <div className="w-20 text-sm font-mono text-muted-foreground">
-                {sizeOption.name}
-              </div>
+              <div className="w-20 text-sm font-mono text-muted-foreground">{sizeOption.name}</div>
               <div className="flex items-center gap-3">
                 <div
                   className="rounded bg-accent/10 flex items-center justify-center"
-                  style={{ width: `${Math.max(sizeValue, 32)}px`, height: `${Math.max(sizeValue, 32)}px` }}
+                  style={{
+                    width: `${Math.max(sizeValue, 32)}px`,
+                    height: `${Math.max(sizeValue, 32)}px`,
+                  }}
                 >
                   <IconCheckmark
                     style={{
@@ -203,13 +218,9 @@ const SizeDemo = () => (
                     }}
                   />
                 </div>
-                <div className="text-sm text-muted-foreground">
-                  {sizeValue}px
-                </div>
+                <div className="text-sm text-muted-foreground">{sizeValue}px</div>
               </div>
-              <div className="text-xs text-muted-foreground">
-                {sizeOption.usage}
-              </div>
+              <div className="text-xs text-muted-foreground">{sizeOption.usage}</div>
             </div>
           );
         })}
@@ -252,28 +263,16 @@ const UsageExamples = () => (
       <div className="rounded-lg border bg-card p-4">
         <div className="text-sm font-medium mb-3">Icon Buttons</div>
         <div className="flex flex-wrap gap-2">
-          <button
-            className="p-2 rounded-md hover:bg-muted/80"
-            aria-label="Edit"
-          >
+          <button className="p-2 rounded-md hover:bg-muted/80" aria-label="Edit">
             <IconEdit size="md" />
           </button>
-          <button
-            className="p-2 rounded-md hover:bg-muted/80"
-            aria-label="Copy"
-          >
+          <button className="p-2 rounded-md hover:bg-muted/80" aria-label="Copy">
             <IconCopy size="md" />
           </button>
-          <button
-            className="p-2 rounded-md hover:bg-muted/80"
-            aria-label="Delete"
-          >
+          <button className="p-2 rounded-md hover:bg-muted/80" aria-label="Delete">
             <IconX size="md" />
           </button>
-          <button
-            className="p-2 rounded-md hover:bg-muted/80"
-            aria-label="More options"
-          >
+          <button className="p-2 rounded-md hover:bg-muted/80" aria-label="More options">
             <IconDotsVertical size="md" />
           </button>
         </div>
@@ -399,8 +398,8 @@ export const IconCatalog: Story = {
       <div className="p-4 rounded-lg bg-accent/5 border border-accent/20">
         <div className="text-sm font-medium text-accent">💡 Pro Tip</div>
         <p className="text-sm text-muted-foreground mt-1">
-          This catalog shows a subset of 350+ available icons. All icons follow the same
-          usage pattern: import from "@design-studio/ui/icons" and use the size prop.
+          This catalog shows a subset of 350+ available icons. All icons follow the same usage
+          pattern: import from "@design-studio/ui/icons" and use the size prop.
         </p>
       </div>
     </div>
@@ -423,9 +422,7 @@ export const UsageGuidelines: Story = {
     <div className="max-w-4xl space-y-6 p-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">Icon Usage Guidelines</h2>
-        <p className="text-muted-foreground">
-          Best practices for using icons effectively.
-        </p>
+        <p className="text-muted-foreground">Best practices for using icons effectively.</p>
       </div>
 
       <div className="space-y-6">
@@ -443,7 +440,7 @@ export const UsageGuidelines: Story = {
               </ul>
             </div>
             <div>
-              <div className="font-medium text-destructive mb-1">✗ Avoid icons for:</div>
+              <div className="font-medium text-status-error mb-1">✗ Avoid icons for:</div>
               <ul className="text-sm text-muted-foreground space-y-1 ml-4">
                 <li>• Abstract concepts (use text instead)</li>
                 <li>• Novel actions (no established icon pattern)</li>
@@ -534,7 +531,7 @@ export const UsageGuidelines: Story = {
               <span className="text-sm">Muted</span>
             </div>
             <div className="flex items-center gap-2">
-              <IconCheckmark size="md" className="text-destructive" />
+              <IconCheckmark size="md" className="text-status-error" />
               <span className="text-sm">Destructive</span>
             </div>
           </div>
@@ -550,9 +547,7 @@ export const DoDont: Story = {
     <div className="max-w-4xl space-y-6 p-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">Icon Best Practices</h2>
-        <p className="text-muted-foreground">
-          Common patterns to follow and pitfalls to avoid.
-        </p>
+        <p className="text-muted-foreground">Common patterns to follow and pitfalls to avoid.</p>
       </div>
 
       <div className="space-y-6">
@@ -575,11 +570,11 @@ export const DoDont: Story = {
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">
+              <div className="font-semibold text-status-error">
                 DON'T: Use icon-only buttons without aria-label
               </div>
               <p className="text-sm text-muted-foreground mt-1">
@@ -616,16 +611,14 @@ export const DoDont: Story = {
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">
-                DON'T: Mix icon styles randomly
-              </div>
+              <div className="font-semibold text-status-error">DON'T: Mix icon styles randomly</div>
               <p className="text-sm text-muted-foreground mt-1">
-                All icons use the same stroke width and visual style. Don't mix with icon
-                libraries from different sources.
+                All icons use the same stroke width and visual style. Don't mix with icon libraries
+                from different sources.
               </p>
             </div>
           </div>
@@ -650,11 +643,11 @@ export const DoDont: Story = {
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">
+              <div className="font-semibold text-status-error">
                 DON'T: Use decorative icons without aria-hidden
               </div>
               <p className="text-sm text-muted-foreground mt-1">
@@ -694,11 +687,11 @@ export const DoDont: Story = {
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">
+              <div className="font-semibold text-status-error">
                 DON'T: Create novel icons for abstract concepts
               </div>
               <p className="text-sm text-muted-foreground mt-1">
@@ -734,10 +727,7 @@ export const TokenReference: Story = {
           </thead>
           <tbody>
             {SIZE_OPTIONS.map((size, i) => (
-              <tr
-                key={size.name}
-                className={i % 2 === 0 ? "bg-background" : "bg-muted/20"}
-              >
+              <tr key={size.name} className={i % 2 === 0 ? "bg-background" : "bg-muted/20"}>
                 <td className="p-3 font-mono text-sm">{size.name}</td>
                 <td className="p-3 font-mono text-sm">
                   {typeof size.value === "object"
@@ -754,7 +744,7 @@ export const TokenReference: Story = {
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">Import Icons</div>
         <pre className="text-sm bg-background p-3 rounded overflow-x-auto">
-{`import { IconCheckmark, IconSettings } from "@design-studio/ui/icons";
+          {`import { IconCheckmark, IconSettings } from "@design-studio/ui/icons";
 
 // Usage with size prop
 <IconCheckmark size="md" />
@@ -767,10 +757,18 @@ export const TokenReference: Story = {
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">Icon Categories</div>
         <div className="space-y-2 text-sm">
-          <div><strong>ChatGPT Icons</strong>: 350+ core interface icons</div>
-          <div><strong>Brand Icons</strong>: Third-party service logos</div>
-          <div><strong>Utility Icons</strong>: Platform/system indicators</div>
-          <div><strong>Apps SDK UI Icons</strong>: OpenAI-specific patterns</div>
+          <div>
+            <strong>ChatGPT Icons</strong>: 350+ core interface icons
+          </div>
+          <div>
+            <strong>Brand Icons</strong>: Third-party service logos
+          </div>
+          <div>
+            <strong>Utility Icons</strong>: Platform/system indicators
+          </div>
+          <div>
+            <strong>Apps SDK UI Icons</strong>: OpenAI-specific patterns
+          </div>
         </div>
       </div>
     </div>

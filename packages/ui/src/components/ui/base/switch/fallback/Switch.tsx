@@ -105,9 +105,9 @@ function Switch({
         // Checked background - using Apps SDK UI accent color
         "data-[state=checked]:bg-primary",
         // Focus styles - using Apps SDK UI tokens
-        "focus-visible:ring-2 focus-visible:ring-foundation-text-light-primary dark:focus-visible:ring-foundation-text-dark-primary",
+        "focus-visible:ring-2 focus-visible:ring-ring",
         // Error state styling
-        error && "border-red-500 focus:border-red-500 focus:ring-red-500",
+        error && "border-status-error focus:border-status-error focus:ring-status-error",
         // Loading state styling
         loading && "opacity-70 cursor-wait",
         // Disabled state
@@ -127,7 +127,7 @@ function Switch({
           // Thumb translation
           "data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0",
           // Error state for thumb
-          error && "data-[state=checked]:bg-red-500",
+          error && "data-[state=checked]:bg-status-error",
         )}
       >
         {/* Show loading spinner in thumb when loading */}

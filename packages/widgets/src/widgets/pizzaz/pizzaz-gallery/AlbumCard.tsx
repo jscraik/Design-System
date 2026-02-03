@@ -19,7 +19,7 @@ function AlbumCard({ album, onSelect }: AlbumCardProps) {
       variant="ghost"
       color="secondary"
       pill={false}
-      className="group relative flex-shrink-0 w-[272px] bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 text-left p-0 h-auto min-h-0 rounded-none shadow-none gap-0 before:hidden text-foundation-text-light-primary dark:text-foundation-text-dark-primary"
+      className="group relative flex-shrink-0 w-[272px] bg-secondary dark:bg-secondary text-left p-0 h-auto min-h-0 rounded-none shadow-none gap-0 before:hidden text-foreground dark:text-foreground"
       onClick={() => onSelect?.(album)}
     >
       <div className="flex w-full flex-col gap-2">
@@ -35,16 +35,16 @@ function AlbumCard({ album, onSelect }: AlbumCardProps) {
             color="secondary"
             size="sm"
             pill
-            className="absolute left-3 top-3 bg-foundation-bg-light-1/90 dark:bg-foundation-bg-dark-1/90 text-foundation-text-light-primary dark:text-foundation-text-dark-primary backdrop-blur-sm"
+            className="absolute left-3 top-3 bg-background/90 dark:bg-background/90 text-foreground dark:text-foreground backdrop-blur-sm"
           >
             Featured
           </AppsSDKBadge>
         </div>
         <div className="px-1.5">
-          <div className="text-base font-medium truncate text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+          <div className="text-base font-medium truncate text-foreground dark:text-foreground">
             {album.title}
           </div>
-          <div className="mt-0.5 text-sm font-normal text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+          <div className="mt-0.5 text-sm font-normal text-text-secondary dark:text-text-secondary">
             {album.photos.length} photos
           </div>
         </div>

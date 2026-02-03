@@ -133,9 +133,9 @@ export function ModeSelector({
   // Focus trap handles Escape and focus restoration.
 
   const triggerClasses = {
-    default: "bg-foundation-bg-dark-2 border border-foundation-bg-dark-3 rounded-lg px-3 py-1.5",
+    default: "bg-secondary border border-border rounded-lg px-3 py-1.5",
     compact: "px-2 py-1 rounded-md",
-    pill: "bg-foundation-bg-dark-2 border border-foundation-bg-dark-3 rounded-full px-4 py-1.5",
+    pill: "bg-secondary border border-border rounded-full px-4 py-1.5",
   };
 
   return (
@@ -151,32 +151,29 @@ export function ModeSelector({
         aria-required={required || undefined}
         aria-busy={loading || undefined}
       >
-        {label && (
-          <span className="text-caption text-foundation-text-dark-tertiary mr-2">{label}</span>
-        )}
+        {label && <span className="text-caption text-muted-foreground mr-2">{label}</span>}
         <button
           ref={triggerRef}
           onClick={handleOpen}
           type="button"
           disabled={isDisabled}
           className={cn(
-            "text-caption text-foundation-text-dark-primary flex items-center gap-2 hover:bg-foundation-bg-dark-3 transition-colors",
+            "text-caption text-foreground flex items-center gap-2 hover:bg-muted transition-colors",
             isDisabled && "opacity-50 cursor-not-allowed",
-            error &&
-              "border border-foundation-accent-red ring-2 ring-foundation-accent-red/50 rounded-lg",
+            error && "border border-status-error ring-2 ring-status-error/50 rounded-lg",
             loading && "animate-pulse",
             triggerClasses[variant],
           )}
         >
           {loading ? "Loading..." : error ? error : (value?.name ?? modes[0]?.name)}
-          <IconChevronDownMd className="size-3 text-foundation-text-dark-tertiary" />
+          <IconChevronDownMd className="size-3 text-muted-foreground" />
         </button>
       </div>
 
       {isOpen && (
         <>
           <div
-            className="fixed inset-0 bg-foundation-bg-dark-1/50 z-40"
+            className="fixed inset-0 bg-overlay/50 z-40"
             onClick={handleClose}
             role="presentation"
             aria-hidden="true"
@@ -188,7 +185,7 @@ export function ModeSelector({
             aria-modal="true"
             aria-label="Mode selector"
             className={cn(
-              "fixed z-50 bg-foundation-bg-dark-1 border border-foundation-bg-dark-3 rounded-[16px] shadow-2xl overflow-hidden",
+              "fixed z-50 bg-card border border-border rounded-[16px] shadow-2xl overflow-hidden",
               showPreview
                 ? "top-16 right-4 w-[960px]"
                 : "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px]",
@@ -199,17 +196,17 @@ export function ModeSelector({
               {showPreview && previewMode && (
                 <div className="flex-1 p-8 overflow-y-auto">
                   <div className="flex items-start gap-3 mb-6">
-                    <div className="p-2 bg-foundation-bg-dark-3 rounded-lg">
+                    <div className="p-2 bg-muted rounded-lg">
                       {previewMode.icon ?? (
-                        <IconSettings className="size-5 text-foundation-text-dark-tertiary" />
+                        <IconSettings className="size-5 text-muted-foreground" />
                       )}
                     </div>
                     <div>
-                      <h2 className="text-heading-3 font-semibold text-foundation-text-dark-primary">
+                      <h2 className="text-heading-3 font-semibold text-foreground">
                         {previewMode.name}
                       </h2>
                       {previewMode.subtitle && (
-                        <p className="text-body-small text-foundation-text-dark-tertiary">
+                        <p className="text-body-small text-muted-foreground">
                           {previewMode.subtitle}
                         </p>
                       )}
@@ -218,18 +215,17 @@ export function ModeSelector({
 
                   {previewMode.config && (
                     <div className="mb-8">
-                      <h3 className="text-body-small font-semibold text-foundation-text-dark-tertiary mb-4">
+                      <h3 className="text-body-small font-semibold text-muted-foreground mb-4">
                         Configuration
                       </h3>
                       <div className="grid grid-cols-2 gap-3">
                         {Object.entries(previewMode.config).map(([key, val]) => (
                           <div
                             key={key}
-                            className="px-4 py-3 bg-foundation-bg-dark-2 border border-foundation-bg-dark-3 rounded-lg"
+                            className="px-4 py-3 bg-secondary border border-border rounded-lg"
                           >
-                            <div className="text-caption text-foundation-text-dark-tertiary">
-                              {key} ·{" "}
-                              <span className="text-foundation-text-dark-primary">{val}</span>
+                            <div className="text-caption text-muted-foreground">
+                              {key} · <span className="text-foreground">{val}</span>
                             </div>
                           </div>
                         ))}
@@ -239,16 +235,16 @@ export function ModeSelector({
 
                   {previewMode.whenToUse && previewMode.whenToUse.length > 0 && (
                     <div className="mb-8">
-                      <h3 className="text-body-small font-semibold text-foundation-text-dark-tertiary mb-3">
+                      <h3 className="text-body-small font-semibold text-muted-foreground mb-3">
                         When to use
                       </h3>
                       <ul className="space-y-2">
                         {previewMode.whenToUse?.map((item) => (
                           <li
                             key={item}
-                            className="text-body-small text-foundation-text-dark-secondary flex items-start gap-2"
+                            className="text-body-small text-text-secondary flex items-start gap-2"
                           >
-                            <span className="text-foundation-text-dark-tertiary">•</span>
+                            <span className="text-muted-foreground">•</span>
                             <span>{item}</span>
                           </li>
                         ))}
@@ -258,12 +254,10 @@ export function ModeSelector({
 
                   {previewMode.about && (
                     <div>
-                      <h3 className="text-body-small font-semibold text-foundation-text-dark-tertiary mb-3">
+                      <h3 className="text-body-small font-semibold text-muted-foreground mb-3">
                         About this mode
                       </h3>
-                      <p className="text-body-small text-foundation-text-dark-secondary">
-                        {previewMode.about}
-                      </p>
+                      <p className="text-body-small text-text-secondary">{previewMode.about}</p>
                     </div>
                   )}
                 </div>
@@ -272,11 +266,11 @@ export function ModeSelector({
               {/* Mode List */}
               <div
                 className={cn(
-                  "bg-foundation-bg-dark-1 p-6",
-                  showPreview ? "w-[360px] border-l border-foundation-bg-dark-3" : "w-full",
+                  "bg-card p-6",
+                  showPreview ? "w-[360px] border-l border-border" : "w-full",
                 )}
               >
-                <h3 className="text-body-small font-semibold text-foundation-text-dark-tertiary mb-4">
+                <h3 className="text-body-small font-semibold text-muted-foreground mb-4">
                   Available Modes
                 </h3>
                 <div className="space-y-2">
@@ -289,13 +283,13 @@ export function ModeSelector({
                       className={cn(
                         "w-full px-4 py-3 rounded-lg text-left transition-all flex items-center justify-between",
                         value?.id === mode.id
-                          ? "bg-foundation-accent-green/10 border border-foundation-accent-green/30 text-foundation-text-dark-primary"
-                          : "bg-foundation-bg-dark-2 border border-transparent text-foundation-text-dark-secondary hover:bg-foundation-bg-dark-3",
+                          ? "bg-status-success-muted/10 border border-status-success/30 text-foreground"
+                          : "bg-secondary border border-transparent text-text-secondary hover:bg-muted",
                       )}
                     >
                       <span className="text-body-small">{mode.name}</span>
                       {value?.id === mode.id && (
-                        <IconCheckmark className="size-4 text-foundation-text-dark-primary" />
+                        <IconCheckmark className="size-4 text-foreground" />
                       )}
                     </button>
                   ))}

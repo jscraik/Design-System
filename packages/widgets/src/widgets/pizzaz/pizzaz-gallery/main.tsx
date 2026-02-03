@@ -2,7 +2,12 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { HostProvider, createEmbeddedHost, ensureMockOpenAI, useHost } from "@design-studio/runtime";
+import {
+  HostProvider,
+  createEmbeddedHost,
+  ensureMockOpenAI,
+  useHost,
+} from "@design-studio/runtime";
 import { AppsSDKButton, AppsSDKUIProvider } from "@design-studio/ui";
 
 import "../../../styles/widget.css";
@@ -55,15 +60,19 @@ function AlbumsCarousel({ onSelect }: AlbumsCarouselProps) {
     if (!emblaApi) return;
     switch (event.key) {
       case "ArrowLeft":
+        event.preventDefault();
         emblaApi.scrollPrev();
         break;
       case "ArrowRight":
+        event.preventDefault();
         emblaApi.scrollNext();
         break;
       case "Home":
+        event.preventDefault();
         emblaApi.scrollTo(0);
         break;
       case "End":
+        event.preventDefault();
         emblaApi.scrollTo(Math.max(albums.length - 1, 0));
         break;
       default:
@@ -72,9 +81,9 @@ function AlbumsCarousel({ onSelect }: AlbumsCarouselProps) {
   };
 
   return (
-    <div className="antialiased relative w-full text-foundation-text-light-primary dark:text-foundation-text-dark-primary py-5 select-none bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1">
+    <div className="antialiased relative w-full text-foreground dark:text-foreground py-5 select-none bg-background dark:bg-background">
       <div
-        className="overflow-hidden max-sm:mx-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue/50"
+        className="overflow-hidden max-sm:mx-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue/50"
         ref={emblaRef}
         role="region"
         aria-roledescription="carousel"
@@ -96,7 +105,7 @@ function AlbumsCarousel({ onSelect }: AlbumsCarouselProps) {
         }
       >
         <div
-          className="h-full w-full border-l border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-gradient-to-r from-[var(--foundation-bg-light-1)] dark:from-[var(--foundation-bg-dark-1)] to-transparent opacity-70"
+          className="h-full w-full border-l border-border dark:border-border bg-gradient-to-r from-[var(--background)] dark:from-[var(--background)] to-transparent opacity-70"
           style={{
             WebkitMaskImage:
               "linear-gradient(to bottom, transparent 0%, white 30%, white 70%, transparent 100%)",
@@ -113,7 +122,7 @@ function AlbumsCarousel({ onSelect }: AlbumsCarouselProps) {
         }
       >
         <div
-          className="h-full w-full border-r border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-gradient-to-l from-[var(--foundation-bg-light-1)] dark:from-[var(--foundation-bg-dark-1)] to-transparent opacity-70"
+          className="h-full w-full border-r border-border dark:border-border bg-gradient-to-l from-[var(--background)] dark:from-[var(--background)] to-transparent opacity-70"
           style={{
             WebkitMaskImage:
               "linear-gradient(to bottom, transparent 0%, white 30%, white 70%, transparent 100%)",
@@ -122,34 +131,38 @@ function AlbumsCarousel({ onSelect }: AlbumsCarouselProps) {
           }}
         />
       </div>
-      {canPrev && (
-        <AppsSDKButton
-          aria-label="Previous"
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-10 shadow-lg"
-          color="secondary"
-          size="sm"
-          variant="soft"
-          uniform
-          onClick={() => emblaApi && emblaApi.scrollPrev()}
-          type="button"
-        >
-          <ArrowLeft strokeWidth={1.5} className="h-4.5 w-4.5" aria-hidden="true" />
-        </AppsSDKButton>
-      )}
-      {canNext && (
-        <AppsSDKButton
-          aria-label="Next"
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-10 shadow-lg"
-          color="secondary"
-          size="sm"
-          variant="soft"
-          uniform
-          onClick={() => emblaApi && emblaApi.scrollNext()}
-          type="button"
-        >
-          <ArrowRight strokeWidth={1.5} className="h-4.5 w-4.5" aria-hidden="true" />
-        </AppsSDKButton>
-      )}
+      <AppsSDKButton
+        aria-label="Previous"
+        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 shadow-lg"
+        color="secondary"
+        size="sm"
+        variant="soft"
+        uniform
+        type="button"
+        disabled={!canPrev}
+        onClick={() => {
+          if (!canPrev) return;
+          emblaApi?.scrollPrev();
+        }}
+      >
+        <ArrowLeft strokeWidth={1.5} className="h-4.5 w-4.5" aria-hidden="true" />
+      </AppsSDKButton>
+      <AppsSDKButton
+        aria-label="Next"
+        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 shadow-lg"
+        color="secondary"
+        size="sm"
+        variant="soft"
+        uniform
+        type="button"
+        disabled={!canNext}
+        onClick={() => {
+          if (!canNext) return;
+          emblaApi?.scrollNext();
+        }}
+      >
+        <ArrowRight strokeWidth={1.5} className="h-4.5 w-4.5" aria-hidden="true" />
+      </AppsSDKButton>
     </div>
   );
 }

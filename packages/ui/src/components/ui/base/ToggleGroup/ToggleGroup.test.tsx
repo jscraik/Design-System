@@ -99,7 +99,7 @@ describe("ToggleGroup", () => {
           </ToggleGroup>,
         );
         const group = screen.getByRole("group");
-        expect(group).toHaveClass("border-destructive/50");
+        expect(group).toHaveClass("border-status-error/50");
       });
 
       it("calls onStateChange with error state", () => {

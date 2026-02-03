@@ -53,8 +53,16 @@ export type {
 } from "./hooks";
 
 // View Transition Hook & Components
-export { useViewTransition, ViewTransitionWrapper, viewTransitions } from "./components/view-transition";
-export type { ViewTransitionOptions, ViewTransitionWrapperProps, ViewTransitionType } from "./components/view-transition";
+export {
+  useViewTransition,
+  ViewTransitionWrapper,
+  viewTransitions,
+} from "./components/view-transition";
+export type {
+  ViewTransitionOptions,
+  ViewTransitionWrapperProps,
+  ViewTransitionType,
+} from "./components/view-transition";
 
 // ============================================================================
 // UTILS

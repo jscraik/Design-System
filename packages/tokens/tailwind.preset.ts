@@ -75,9 +75,100 @@ const preset: Config = {
         "4": "4px",
         "2": "2px",
         "0": "0px",
+        "paragraph-hero": "var(--foundation-hero-paragraph-spacing)",
+        "paragraph-h1": "var(--foundation-h-1-paragraph-spacing)",
+        "paragraph-h2": "var(--foundation-h-2-paragraph-spacing)",
+        "paragraph-h3": "var(--foundation-h-3-paragraph-spacing)",
+        "paragraph-h4": "var(--foundation-h-4-paragraph-spacing)",
+        "paragraph-h5": "var(--foundation-h-5-paragraph-spacing)",
+        "paragraph-h6": "var(--foundation-h-6-paragraph-spacing)",
+        "paragraph-lg": "var(--foundation-paragraph-lg-paragraph-spacing)",
+        "paragraph-md": "var(--foundation-paragraph-md-paragraph-spacing)",
+        "paragraph-sm": "var(--foundation-paragraph-sm-paragraph-spacing)",
+        "paragraph-caption": "var(--foundation-caption-paragraph-spacing)",
       },
       fontSize: {
         // Foundation typography scale
+        hero: [
+          "var(--foundation-hero-size)",
+          {
+            lineHeight: "var(--foundation-hero-line)",
+            letterSpacing: "var(--foundation-hero-tracking)",
+            fontWeight: "var(--foundation-hero-weight)",
+          },
+        ],
+        h1: [
+          "var(--foundation-h-1-size)",
+          {
+            lineHeight: "var(--foundation-h-1-line)",
+            letterSpacing: "var(--foundation-h-1-tracking)",
+            fontWeight: "var(--foundation-h-1-weight)",
+          },
+        ],
+        h2: [
+          "var(--foundation-h-2-size)",
+          {
+            lineHeight: "var(--foundation-h-2-line)",
+            letterSpacing: "var(--foundation-h-2-tracking)",
+            fontWeight: "var(--foundation-h-2-weight)",
+          },
+        ],
+        h3: [
+          "var(--foundation-h-3-size)",
+          {
+            lineHeight: "var(--foundation-h-3-line)",
+            letterSpacing: "var(--foundation-h-3-tracking)",
+            fontWeight: "var(--foundation-h-3-weight)",
+          },
+        ],
+        h4: [
+          "var(--foundation-h-4-size)",
+          {
+            lineHeight: "var(--foundation-h-4-line)",
+            letterSpacing: "var(--foundation-h-4-tracking)",
+            fontWeight: "var(--foundation-h-4-weight)",
+          },
+        ],
+        h5: [
+          "var(--foundation-h-5-size)",
+          {
+            lineHeight: "var(--foundation-h-5-line)",
+            letterSpacing: "var(--foundation-h-5-tracking)",
+            fontWeight: "var(--foundation-h-5-weight)",
+          },
+        ],
+        h6: [
+          "var(--foundation-h-6-size)",
+          {
+            lineHeight: "var(--foundation-h-6-line)",
+            letterSpacing: "var(--foundation-h-6-tracking)",
+            fontWeight: "var(--foundation-h-6-weight)",
+          },
+        ],
+        "paragraph-lg": [
+          "var(--foundation-paragraph-lg-size)",
+          {
+            lineHeight: "var(--foundation-paragraph-lg-line)",
+            letterSpacing: "var(--foundation-paragraph-lg-tracking)",
+            fontWeight: "var(--foundation-paragraph-lg-weight-regular)",
+          },
+        ],
+        "paragraph-md": [
+          "var(--foundation-paragraph-md-size)",
+          {
+            lineHeight: "var(--foundation-paragraph-md-line)",
+            letterSpacing: "var(--foundation-paragraph-md-tracking)",
+            fontWeight: "var(--foundation-paragraph-md-weight-regular)",
+          },
+        ],
+        "paragraph-sm": [
+          "var(--foundation-paragraph-sm-size)",
+          {
+            lineHeight: "var(--foundation-paragraph-sm-line)",
+            letterSpacing: "var(--foundation-paragraph-sm-tracking)",
+            fontWeight: "var(--foundation-paragraph-sm-weight-regular)",
+          },
+        ],
         "heading-1": [
           "var(--foundation-heading-1-size)",
           {
@@ -196,6 +287,16 @@ const preset: Config = {
       },
       letterSpacing: {
         // Foundation tracking values
+        hero: "var(--foundation-hero-tracking)",
+        h1: "var(--foundation-h-1-tracking)",
+        h2: "var(--foundation-h-2-tracking)",
+        h3: "var(--foundation-h-3-tracking)",
+        h4: "var(--foundation-h-4-tracking)",
+        h5: "var(--foundation-h-5-tracking)",
+        h6: "var(--foundation-h-6-tracking)",
+        "paragraph-lg": "var(--foundation-paragraph-lg-tracking)",
+        "paragraph-md": "var(--foundation-paragraph-md-tracking)",
+        "paragraph-sm": "var(--foundation-paragraph-sm-tracking)",
         "heading-1": "var(--foundation-heading-1-tracking)",
         "heading-2": "var(--foundation-heading-2-tracking)",
         "heading-3": "var(--foundation-heading-3-tracking)",
@@ -210,6 +311,16 @@ const preset: Config = {
       },
       lineHeight: {
         // Foundation line-height values
+        hero: "var(--foundation-hero-line)",
+        h1: "var(--foundation-h-1-line)",
+        h2: "var(--foundation-h-2-line)",
+        h3: "var(--foundation-h-3-line)",
+        h4: "var(--foundation-h-4-line)",
+        h5: "var(--foundation-h-5-line)",
+        h6: "var(--foundation-h-6-line)",
+        "paragraph-lg": "var(--foundation-paragraph-lg-line)",
+        "paragraph-md": "var(--foundation-paragraph-md-line)",
+        "paragraph-sm": "var(--foundation-paragraph-sm-line)",
         "heading-1": "var(--foundation-heading-1-line)",
         "heading-2": "var(--foundation-heading-2-line)",
         "heading-3": "var(--foundation-heading-3-line)",

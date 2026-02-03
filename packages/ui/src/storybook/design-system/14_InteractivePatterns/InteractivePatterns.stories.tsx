@@ -20,7 +20,10 @@ import { shadowTokens } from "@design-studio/tokens/shadows";
 const shadowToBoxShadow = (shadow: keyof typeof shadowTokens): string => {
   const layers = shadowTokens[shadow];
   return layers
-    .map((layer) => `${layer.offsetX}px ${layer.offsetY}px ${layer.blur}px ${layer.spread}px ${layer.color}`)
+    .map(
+      (layer) =>
+        `${layer.offsetX}px ${layer.offsetY}px ${layer.blur}px ${layer.spread}px ${layer.color}`,
+    )
     .join(", ");
 };
 
@@ -101,10 +104,7 @@ const CardCustomizer = () => {
                 boxShadow: shadow === "card" ? shadowToBoxShadow("card") : "none",
               }}
             >
-              <div
-                className="flex items-center border-b bg-muted/30"
-                style={{ height: "56px" }}
-              >
+              <div className="flex items-center border-b bg-muted/30" style={{ height: "56px" }}>
                 <div className="font-semibold px-4">Card Title</div>
               </div>
               <div className="p-4">
@@ -196,7 +196,9 @@ const PatternBuilder = () => {
             </div>
 
             <div>
-              <label className="text-sm font-medium mb-1">Header Height ({pattern.headerHeight}px)</label>
+              <label className="text-sm font-medium mb-1">
+                Header Height ({pattern.headerHeight}px)
+              </label>
               <input
                 type="range"
                 min={40}
@@ -213,10 +215,14 @@ const PatternBuilder = () => {
                 type="checkbox"
                 id="shadow"
                 checked={pattern.shadow === "card"}
-                onChange={(e) => setPattern({ ...pattern, shadow: e.target.checked ? "card" : "none" })}
+                onChange={(e) =>
+                  setPattern({ ...pattern, shadow: e.target.checked ? "card" : "none" })
+                }
                 className="w-4 h-4"
               />
-              <label htmlFor="shadow" className="text-sm">Add shadow</label>
+              <label htmlFor="shadow" className="text-sm">
+                Add shadow
+              </label>
             </div>
 
             <div className="flex items-center gap-2">
@@ -227,7 +233,9 @@ const PatternBuilder = () => {
                 onChange={(e) => setPattern({ ...pattern, borderColor: e.target.checked })}
                 className="w-4 h-4"
               />
-              <label htmlFor="border" className="text-sm">Add border</label>
+              <label htmlFor="border" className="text-sm">
+                Add border
+              </label>
             </div>
           </div>
 
@@ -264,7 +272,7 @@ const PatternBuilder = () => {
             <div className="mt-4 p-4 rounded-lg bg-muted">
               <div className="text-sm font-medium mb-2">Pattern Code</div>
               <pre className="text-xs bg-background p-3 rounded overflow-x-auto">
-{`const ${pattern.name.toLowerCase().replace(/\s+/g, "-")} = ({ title, children }) => (
+                {`const ${pattern.name.toLowerCase().replace(/\s+/g, "-")} = ({ title, children }) => (
   <div
     className="border bg-card"
     style={{
@@ -296,7 +304,8 @@ const meta: Meta = {
     layout: "fullscreen",
     docs: {
       description: {
-        component: "Interactive pattern builder with live customization. Adjust tokens and see your pattern update instantly.",
+        component:
+          "Interactive pattern builder with live customization. Adjust tokens and see your pattern update instantly.",
       },
     },
   },

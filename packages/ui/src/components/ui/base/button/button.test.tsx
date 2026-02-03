@@ -25,8 +25,8 @@ describe("Button", () => {
 
   describe("variants", () => {
     it.each([
-      ["default", "bg-foreground"],
-      ["destructive", "bg-foundation-accent-red"],
+      ["default", "bg-interactive"],
+      ["destructive", "bg-status-error"],
       ["outline", "border"],
       ["secondary", "bg-muted"],
       ["ghost", "bg-transparent"],
@@ -143,9 +143,7 @@ describe("Button", () => {
 
     it("has visible focus indicator styles", () => {
       render(<Button>Click me</Button>);
-      expect(screen.getByRole("button")).toHaveClass(
-        "focus-visible:ring-foundation-text-light-primary",
-      );
+      expect(screen.getByRole("button")).toHaveClass("focus-visible:ring-ring");
     });
   });
 
@@ -200,12 +198,12 @@ describe("Button", () => {
         const button = screen.getByRole("button");
         expect(button).toHaveAttribute("data-error", "true");
         expect(button).toHaveAttribute("data-state", "error");
-        expect(button).toHaveClass("border-foundation-accent-red");
+        expect(button).toHaveClass("border-status-error");
       });
 
       it("applies error focus ring", () => {
         render(<Button error="Failed">Retry</Button>);
-        expect(screen.getByRole("button")).toHaveClass("focus-visible:ring-foundation-accent-red");
+        expect(screen.getByRole("button")).toHaveClass("focus-visible:ring-status-error");
       });
     });
 

@@ -400,7 +400,7 @@ export function ChatVariantContextRail({
 }: ChatVariantContextRailProps) {
   const resolvedSlots: Partial<ChatShellSlots> = {
     contextPanel: contextPanel ? (
-      <div className="hidden lg:block w-[320px] border-l border-foundation-bg-dark-3 bg-foundation-bg-dark-1">
+      <div className="hidden lg:block w-[320px] border-l border-muted bg-background">
         {contextPanel}
       </div>
     ) : null,

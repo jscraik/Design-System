@@ -62,7 +62,7 @@ function Progress({
       className={cn(
         "bg-primary/20 relative h-2 w-full overflow-hidden rounded-full",
         isDisabled && "opacity-50 pointer-events-none",
-        error && "ring-2 ring-foundation-accent-red/50 rounded-full",
+        error && "ring-2 ring-status-error/50 rounded-full",
         loading && "animate-pulse",
         className,
       )}

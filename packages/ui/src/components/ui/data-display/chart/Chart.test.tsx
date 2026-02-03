@@ -32,7 +32,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toBeInTheDocument();
@@ -44,7 +44,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         // Recharts ResponsiveContainer should render
         const responsiveContainer = document.querySelector(".recharts-responsive-container");
@@ -57,7 +57,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toHaveAttribute("data-chart");
@@ -69,7 +69,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toHaveAttribute("data-chart", "chart-custom-chart");
@@ -81,7 +81,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toHaveClass("custom-class");
@@ -95,7 +95,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         await waitFor(() => {
           expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -108,7 +108,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         expect(screen.getByText("Loading chart...")).toBeInTheDocument();
       });
@@ -119,7 +119,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toHaveClass("animate-pulse");
@@ -129,11 +129,15 @@ describe("Chart", () => {
     describe("Stateful props - Error", () => {
       it("calls onStateChange with 'error'", async () => {
         render(
-          <ChartContainer config={mockConfig} error="Failed to load" onStateChange={mockOnStateChange}>
+          <ChartContainer
+            config={mockConfig}
+            error="Failed to load"
+            onStateChange={mockOnStateChange}
+          >
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         await waitFor(() => {
           expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -146,7 +150,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         expect(screen.getByText("Failed to load chart")).toBeInTheDocument();
       });
@@ -157,7 +161,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toHaveClass("ring-2");
@@ -171,7 +175,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         await waitFor(() => {
           expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
@@ -184,7 +188,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toHaveClass("opacity-50");
@@ -196,7 +200,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toHaveClass("pointer-events-none");
@@ -210,7 +214,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         await waitFor(() => {
           expect(mockOnStateChange).toHaveBeenCalledWith("default");
@@ -231,7 +235,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         await waitFor(() => {
           expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -249,7 +253,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         await waitFor(() => {
           expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -264,7 +268,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toHaveAttribute("aria-disabled", "true");
@@ -276,7 +280,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toHaveAttribute("aria-invalid", "true");
@@ -288,7 +292,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toHaveAttribute("aria-busy", "true");
@@ -300,7 +304,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toHaveAttribute("aria-required", "true");
@@ -312,7 +316,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toHaveAttribute("data-state", "loading");
@@ -324,7 +328,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toHaveAttribute("data-error", "true");
@@ -336,7 +340,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toHaveAttribute("data-required", "true");
@@ -357,7 +361,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         // Should inject style tag with CSS variables
         const styleTag = document.querySelector("style");
@@ -377,7 +381,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         // Should inject style tag with CSS variables
         const styleTag = document.querySelector("style");
@@ -396,7 +400,7 @@ describe("Chart", () => {
             <LineChart data={mockData}>
               <Line dataKey="value" />
             </LineChart>
-          </ChartContainer>
+          </ChartContainer>,
         );
         const container = document.querySelector('[data-slot="chart"]');
         expect(container).toBeInTheDocument();
@@ -412,7 +416,7 @@ describe("Chart", () => {
             <Line dataKey="value" />
             <ChartTooltip />
           </LineChart>
-        </ChartContainer>
+        </ChartContainer>,
       );
       // Verify ChartContainer is rendered with the chart
       const container = document.querySelector('[data-slot="chart"]');
@@ -431,7 +435,7 @@ describe("Chart", () => {
             <Line dataKey="value" />
             <ChartTooltip content={<CustomContent />} />
           </LineChart>
-        </ChartContainer>
+        </ChartContainer>,
       );
       // Verify container is rendered
       const container = document.querySelector('[data-slot="chart"]');
@@ -454,7 +458,7 @@ describe("Chart", () => {
       render(
         <ChartContainer config={mockConfig}>
           <ChartTooltipContent active={true} payload={mockPayload} />
-        </ChartContainer>
+        </ChartContainer>,
       );
 
       expect(screen.getByText("100")).toBeInTheDocument();
@@ -472,7 +476,7 @@ describe("Chart", () => {
       render(
         <ChartContainer config={mockConfig}>
           <ChartTooltipContent active={false} payload={mockPayload} />
-        </ChartContainer>
+        </ChartContainer>,
       );
 
       expect(screen.queryByText("100")).not.toBeInTheDocument();
@@ -490,7 +494,7 @@ describe("Chart", () => {
       render(
         <ChartContainer config={mockConfig}>
           <ChartTooltipContent active={true} payload={mockPayload} hideLabel />
-        </ChartContainer>
+        </ChartContainer>,
       );
       // Should render without label
       expect(screen.getByText("100")).toBeInTheDocument();
@@ -508,7 +512,7 @@ describe("Chart", () => {
       render(
         <ChartContainer config={mockConfig}>
           <ChartTooltipContent active={true} payload={mockPayload} hideIndicator />
-        </ChartContainer>
+        </ChartContainer>,
       );
       // Should render without indicator dot
       expect(screen.getByText("100")).toBeInTheDocument();
@@ -527,12 +531,8 @@ describe("Chart", () => {
 
       render(
         <ChartContainer config={mockConfig}>
-          <ChartTooltipContent
-            active={true}
-            payload={mockPayload}
-            formatter={formatter}
-          />
-        </ChartContainer>
+          <ChartTooltipContent active={true} payload={mockPayload} formatter={formatter} />
+        </ChartContainer>,
       );
 
       expect(screen.getByText("$100")).toBeInTheDocument();
@@ -547,7 +547,7 @@ describe("Chart", () => {
             <Line dataKey="value" />
             <ChartLegend />
           </LineChart>
-        </ChartContainer>
+        </ChartContainer>,
       );
       // Verify ChartContainer is rendered with the chart
       const container = document.querySelector('[data-slot="chart"]');
@@ -568,7 +568,7 @@ describe("Chart", () => {
       render(
         <ChartContainer config={mockConfig}>
           <ChartLegendContent payload={mockPayload} />
-        </ChartContainer>
+        </ChartContainer>,
       );
 
       expect(screen.getByText("Value")).toBeInTheDocument();
@@ -578,7 +578,7 @@ describe("Chart", () => {
       render(
         <ChartContainer config={mockConfig}>
           <ChartLegendContent payload={[]} />
-        </ChartContainer>
+        </ChartContainer>,
       );
 
       const container = document.querySelector('[data-slot="chart"]');
@@ -598,7 +598,7 @@ describe("Chart", () => {
       render(
         <ChartContainer config={mockConfig}>
           <ChartLegendContent payload={mockPayload} hideIcon />
-        </ChartContainer>
+        </ChartContainer>,
       );
 
       expect(screen.getByText("Value")).toBeInTheDocument();
@@ -623,7 +623,7 @@ describe("Chart", () => {
       render(
         <ChartContainer config={configWithIcon}>
           <ChartLegendContent payload={mockPayload} />
-        </ChartContainer>
+        </ChartContainer>,
       );
 
       expect(screen.getByTestId("custom-icon")).toBeInTheDocument();
@@ -642,7 +642,7 @@ describe("Chart", () => {
             <ChartTooltip />
             <ChartLegend />
           </BarChart>
-        </ChartContainer>
+        </ChartContainer>,
       );
 
       const container = document.querySelector('[data-slot="chart"]');
@@ -663,7 +663,7 @@ describe("Chart", () => {
             <Bar dataKey="value1" fill="#ff0000" />
             <Bar dataKey="value2" fill="#00ff00" />
           </BarChart>
-        </ChartContainer>
+        </ChartContainer>,
       );
 
       const container = document.querySelector('[data-slot="chart"]');
@@ -676,7 +676,7 @@ describe("Chart", () => {
           <LineChart data={[]}>
             <Line dataKey="value" />
           </LineChart>
-        </ChartContainer>
+        </ChartContainer>,
       );
 
       const container = document.querySelector('[data-slot="chart"]');
@@ -699,7 +699,7 @@ describe("Chart", () => {
       render(
         <ChartContainer config={mockConfig}>
           <ChartTooltipContent active={true} payload={mockPayload} />
-        </ChartContainer>
+        </ChartContainer>,
       );
 
       // The value "100" should be displayed by ChartTooltipContent
@@ -714,7 +714,7 @@ describe("Chart", () => {
           <LineChart data={mockData}>
             <Line dataKey="value" />
           </LineChart>
-        </ChartContainer>
+        </ChartContainer>,
       );
 
       const container = document.querySelector('[data-slot="chart"]');
@@ -733,7 +733,7 @@ describe("Chart", () => {
           <LineChart data={mockData}>
             <Line dataKey="value" />
           </LineChart>
-        </ChartContainer>
+        </ChartContainer>,
       );
 
       const container = document.querySelector('[data-slot="chart"]');
@@ -744,7 +744,7 @@ describe("Chart", () => {
       render(
         <ChartContainer config={mockConfig}>
           <ChartTooltipContent active={false} payload={null} />
-        </ChartContainer>
+        </ChartContainer>,
       );
 
       // Should not throw
@@ -763,7 +763,7 @@ describe("Chart", () => {
       render(
         <ChartContainer config={mockConfig}>
           <ChartTooltipContent active={true} payload={mockPayload} />
-        </ChartContainer>
+        </ChartContainer>,
       );
 
       expect(screen.getByText("100")).toBeInTheDocument();

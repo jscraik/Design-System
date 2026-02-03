@@ -89,9 +89,7 @@ const SizeVisualizer = ({
       <div className="font-medium">{name}</div>
       <div className="text-sm font-mono text-muted-foreground">{value}px</div>
       <div className="text-xs text-muted-foreground mt-1">{usage}</div>
-      {wcag && (
-        <div className="text-xs text-accent mt-1">♿ {wcag}</div>
-      )}
+      {wcag && <div className="text-xs text-accent mt-1">♿ {wcag}</div>}
     </div>
   </button>
 );
@@ -115,16 +113,10 @@ const ControlHeightDemo = () => (
           >
             Default Button
           </button>
-          <button
-            className="px-4 py-2 rounded-md border text-sm"
-            style={{ height: "44px" }}
-          >
+          <button className="px-4 py-2 rounded-md border text-sm" style={{ height: "44px" }}>
             Outline Button
           </button>
-          <button
-            className="px-4 py-2 rounded-md bg-muted text-sm"
-            style={{ height: "44px" }}
-          >
+          <button className="px-4 py-2 rounded-md bg-muted text-sm" style={{ height: "44px" }}>
             Ghost Button
           </button>
         </div>
@@ -168,7 +160,14 @@ const ControlHeightDemo = () => (
             aria-label="Edit"
             style={{ width: "44px", height: "44px" }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
               <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
             </svg>
@@ -178,7 +177,14 @@ const ControlHeightDemo = () => (
             aria-label="Copy"
             style={{ width: "44px", height: "44px" }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
               <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
             </svg>
@@ -188,7 +194,14 @@ const ControlHeightDemo = () => (
             aria-label="Delete"
             style={{ width: "44px", height: "44px" }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <path d="M3 6h18" />
               <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
               <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
@@ -214,10 +227,7 @@ const CardHeaderDemo = () => (
 
     <div className="space-y-4">
       <div className="rounded-lg border bg-card overflow-hidden">
-        <div
-          className="px-4 flex items-center border-b bg-muted/30"
-          style={{ height: "56px" }}
-        >
+        <div className="px-4 flex items-center border-b bg-muted/30" style={{ height: "56px" }}>
           <div className="font-semibold">Card Title</div>
         </div>
         <div className="p-4">
@@ -296,11 +306,15 @@ const HitTargetDemo = () => {
 
         <div className="flex items-center gap-4">
           <div className="relative">
-            <button
-              className="p-2 rounded-md bg-muted"
-              aria-label="Edit"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <button className="p-2 rounded-md bg-muted" aria-label="Edit">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
               </svg>
@@ -314,11 +328,15 @@ const HitTargetDemo = () => {
           </div>
 
           <div className="relative">
-            <button
-              className="p-1 rounded-md bg-muted"
-              aria-label="Close"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <button className="p-1 rounded-md bg-muted" aria-label="Close">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
             </button>
@@ -344,16 +362,10 @@ const HitTargetDemo = () => {
             >
               Button A
             </button>
-            <button
-              className="px-3 py-2 rounded-md bg-muted text-sm"
-              style={{ height: "44px" }}
-            >
+            <button className="px-3 py-2 rounded-md bg-muted text-sm" style={{ height: "44px" }}>
               Button B
             </button>
-            <button
-              className="px-3 py-2 rounded-md border text-sm"
-              style={{ height: "44px" }}
-            >
+            <button className="px-3 py-2 rounded-md border text-sm" style={{ height: "44px" }}>
               Button C
             </button>
           </div>
@@ -384,12 +396,12 @@ const AccessibilityGuide = () => (
             10-14mm wide. 44px (≈1/3 inch) accommodates most users.
           </div>
           <div>
-            <span className="font-medium">Motor accuracy:</span> Larger targets reduce
-            mis-taps and improve input accuracy.
+            <span className="font-medium">Motor accuracy:</span> Larger targets reduce mis-taps and
+            improve input accuracy.
           </div>
           <div>
-            <span className="font-medium">Situational factors:</span> Users may be on the move,
-            in vehicles, or have motor impairments.
+            <span className="font-medium">Situational factors:</span> Users may be on the move, in
+            vehicles, or have motor impairments.
           </div>
         </div>
       </div>
@@ -398,16 +410,15 @@ const AccessibilityGuide = () => (
         <h4 className="font-medium mb-2">Platform Guidelines</h4>
         <div className="space-y-2 text-sm">
           <div>
-            <span className="font-medium">Apple Human Interface Guidelines:</span> 44x44pt
-            minimum tappable area
+            <span className="font-medium">Apple Human Interface Guidelines:</span> 44x44pt minimum
+            tappable area
           </div>
           <div>
             <span className="font-medium">Material Design:</span> 48x48dp recommended, 48x48dp
             minimum
           </div>
           <div>
-            <span className="font-medium">WCAG 2.1 AAA:</span> 44x44 CSS pixel minimum
-            touch target
+            <span className="font-medium">WCAG 2.1 AAA:</span> 44x44 CSS pixel minimum touch target
           </div>
           <div>
             <span className="font-medium">Android:</span> 48x48dp standard touch target
@@ -419,16 +430,18 @@ const AccessibilityGuide = () => (
         <h4 className="font-medium mb-2">Common Mistakes</h4>
         <div className="space-y-2 text-sm">
           <div>
-            <span className="font-medium text-destructive">✗ Icon-only buttons without padding:</span>{" "}
+            <span className="font-medium text-status-error">
+              ✗ Icon-only buttons without padding:
+            </span>{" "}
             16px icon ≠ 16px touch target. Add padding!
           </div>
           <div>
-            <span className="font-medium text-destructive">✗ Text links as buttons:</span>{" "}
+            <span className="font-medium text-status-error">✗ Text links as buttons:</span>{" "}
             Underlined text alone is too small. Use button styling.
           </div>
           <div>
-            <span className="font-medium text-destructive">✗ Crammed buttons:</span>{" "}
-            Multiple small buttons next to each other increase error rate.
+            <span className="font-medium text-status-error">✗ Crammed buttons:</span> Multiple small
+            buttons next to each other increase error rate.
           </div>
           <div>
             <span className="font-medium text-accent">✓ Padding counts toward touch target:</span>{" "}
@@ -444,8 +457,8 @@ const AccessibilityGuide = () => (
             <span className="font-medium">Mobile:</span> 44px minimum (required for touch)
           </div>
           <div>
-            <span className="font-medium">Desktop:</span> Can be smaller (32px common), but 44px
-            is still recommended for consistency
+            <span className="font-medium">Desktop:</span> Can be smaller (32px common), but 44px is
+            still recommended for consistency
           </div>
           <div>
             <span className="font-medium">Best practice:</span> Use 44px everywhere—consistent
@@ -463,7 +476,8 @@ const meta = {
     layout: "centered",
     docs: {
       description: {
-        component: "Component size system documentation with visual examples and accessibility guidelines.",
+        component:
+          "Component size system documentation with visual examples and accessibility guidelines.",
       },
     },
   },
@@ -493,8 +507,8 @@ export const SizeTokens: Story = {
       <div className="p-4 rounded-lg bg-accent/5 border border-accent/20">
         <div className="text-sm font-medium text-accent">💡 Key Insight</div>
         <p className="text-sm text-muted-foreground mt-1">
-          Both <code>controlHeight</code> and <code>hitTarget</code> are 44px. This is the WCAG
-          2.1 AAA minimum touch target size—a non-negotiable accessibility requirement for mobile
+          Both <code>controlHeight</code> and <code>hitTarget</code> are 44px. This is the WCAG 2.1
+          AAA minimum touch target size—a non-negotiable accessibility requirement for mobile
           interfaces.
         </p>
       </div>
@@ -528,9 +542,7 @@ export const TokenReference: Story = {
     <div className="max-w-4xl space-y-6 p-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">Quick Reference</h2>
-        <p className="text-muted-foreground">
-          Size tokens and usage guidelines.
-        </p>
+        <p className="text-muted-foreground">Size tokens and usage guidelines.</p>
       </div>
 
       <div className="rounded-lg border bg-card">
@@ -559,7 +571,7 @@ export const TokenReference: Story = {
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">Import Size Tokens</div>
         <pre className="text-sm bg-background p-3 rounded overflow-x-auto">
-{`import { sizeTokens } from "@design-studio/tokens/sizes";
+          {`import { sizeTokens } from "@design-studio/tokens/sizes";
 
 // Usage in components
 const inputStyle = {
@@ -575,9 +587,15 @@ const cardHeaderStyle = {
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">CSS-in-JS with Tailwind</div>
         <div className="text-sm space-y-1">
-          <div><code>h-[44px]</code> → Control height, hit target</div>
-          <div><code>h-[56px]</code> → Card header height</div>
-          <div><code>min-h-[44px]</code> → Minimum touch target</div>
+          <div>
+            <code>h-[44px]</code> → Control height, hit target
+          </div>
+          <div>
+            <code>h-[56px]</code> → Card header height
+          </div>
+          <div>
+            <code>min-h-[44px]</code> → Minimum touch target
+          </div>
         </div>
       </div>
 

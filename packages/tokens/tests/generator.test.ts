@@ -377,7 +377,7 @@ describe("Token Generation Properties", () => {
     const manifest = await generator.generateManifest(cssOutput);
 
     expect(cssOutput).toContain("--foundation-bg-light-1: #FFFFFF;");
-    expect(cssOutput).toContain("--foundation-bg-dark-1: #212121;");
+    expect(cssOutput).toContain("--foundation-bg-dark-1: #1A1A1A;");
     expect(cssOutput).toContain('"SF Pro"');
 
     // Verify spacing scale

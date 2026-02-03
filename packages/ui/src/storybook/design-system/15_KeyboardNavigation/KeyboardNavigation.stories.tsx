@@ -79,10 +79,22 @@ const FocusShowcase = () => {
           <div className="mt-6 p-4 rounded-lg bg-muted text-sm">
             <div className="font-medium mb-2">Keyboard Controls</div>
             <div className="space-y-1">
-              <div><kbd className="px-2 py-1 rounded bg-background border">Tab</kbd> - Move focus forward</div>
-              <div><kbd className="px-2 py-1 rounded bg-background border">Shift+Tab</kbd> - Move focus backward</div>
-              <div><kbd className="px-2 py-1 rounded bg-background border">↑/↓</kbd> - Arrow keys (custom)</div>
-              <div><kbd className="px-2 py-1 rounded bg-background border">Enter</kbd> / <kbd className="px-2 py-1 rounded bg-background border">Space</kbd> - Activate</div>
+              <div>
+                <kbd className="px-2 py-1 rounded bg-background border">Tab</kbd> - Move focus
+                forward
+              </div>
+              <div>
+                <kbd className="px-2 py-1 rounded bg-background border">Shift+Tab</kbd> - Move focus
+                backward
+              </div>
+              <div>
+                <kbd className="px-2 py-1 rounded bg-background border">↑/↓</kbd> - Arrow keys
+                (custom)
+              </div>
+              <div>
+                <kbd className="px-2 py-1 rounded bg-background border">Enter</kbd> /{" "}
+                <kbd className="px-2 py-1 rounded bg-background border">Space</kbd> - Activate
+              </div>
             </div>
           </div>
         </div>
@@ -94,21 +106,24 @@ const FocusShowcase = () => {
             <div className="p-4 rounded-lg border bg-background">
               <div className="text-sm font-medium mb-2">✅ Pass</div>
               <div className="text-xs text-muted-foreground">
-                2px ring with offset<br />
+                2px ring with offset
+                <br />
                 Contrasts with all backgrounds
               </div>
             </div>
             <div className="p-4 rounded-lg border bg-background">
               <div className="text-sm font-medium mb-2">✅ Pass</div>
               <div className="text-xs text-muted-foreground">
-                Visible on both dark<br />
+                Visible on both dark
+                <br />
                 and light themes
               </div>
             </div>
             <div className="p-4 rounded-lg border bg-background">
               <div className="text-sm font-medium mb-2">✅ Pass</div>
               <div className="text-xs text-muted-foreground">
-                Doesn't obscure content<br />
+                Doesn't obscure content
+                <br />
                 or interfere with interaction
               </div>
             </div>
@@ -160,7 +175,7 @@ const FocusTrapDemo = () => {
   React.useEffect(() => {
     if (isOpen && modalRef.current) {
       const focusableElements = modalRef.current.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
       );
       const firstElement = focusableElements[0] as HTMLElement;
       if (firstElement) {
@@ -186,7 +201,7 @@ const FocusTrapDemo = () => {
       {isOpen && (
         <>
           <div
-            className="fixed inset-0 bg-black/50"
+            className="fixed inset-0 bg-overlay/50"
             style={{ zIndex: 40 }}
             onClick={() => setIsOpen(false)}
           />
@@ -205,7 +220,8 @@ const FocusTrapDemo = () => {
               </button>
             </div>
             <p className="text-sm text-muted-foreground mb-6">
-              Focus is trapped in this modal. Tab cycles through elements. Press Escape or click outside to close.
+              Focus is trapped in this modal. Tab cycles through elements. Press Escape or click
+              outside to close.
             </p>
             <div className="space-y-3">
               <button className="w-full px-4 py-2 rounded-md border text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
@@ -233,7 +249,8 @@ const meta: Meta = {
     layout: "fullscreen",
     docs: {
       description: {
-        component: "Keyboard navigation patterns and focus state demonstrations. Learn how to build accessible components.",
+        component:
+          "Keyboard navigation patterns and focus state demonstrations. Learn how to build accessible components.",
       },
     },
   },
@@ -270,19 +287,27 @@ export const AccessibilityChecklist: Story = {
           <div className="space-y-3">
             <div className="flex items-start gap-3">
               <input type="checkbox" id="k1" className="mt-1" />
-              <label htmlFor="k1" className="text-sm">All interactive elements are focusable</label>
+              <label htmlFor="k1" className="text-sm">
+                All interactive elements are focusable
+              </label>
             </div>
             <div className="flex items-start gap-3">
               <input type="checkbox" id="k2" className="mt-1" />
-              <label htmlFor="k2" className="text-sm">Tab order follows logical reading order</label>
+              <label htmlFor="k2" className="text-sm">
+                Tab order follows logical reading order
+              </label>
             </div>
             <div className="flex items-start gap-3">
               <input type="checkbox" id="k3" className="mt-1" />
-              <label htmlFor="k3" className="text-sm">Focus indicators are visible (2px ring)</label>
+              <label htmlFor="k3" className="text-sm">
+                Focus indicators are visible (2px ring)
+              </label>
             </div>
             <div className="flex items-start gap-3">
               <input type="checkbox" id="k4" className="mt-1" />
-              <label htmlFor="k4" className="text-sm">Skip links provided for long content</label>
+              <label htmlFor="k4" className="text-sm">
+                Skip links provided for long content
+              </label>
             </div>
           </div>
         </div>
@@ -292,15 +317,21 @@ export const AccessibilityChecklist: Story = {
           <div className="space-y-3">
             <div className="flex items-start gap-3">
               <input type="checkbox" id="k5" className="mt-1" />
-              <label htmlFor="k5" className="text-sm">Modals trap focus (Escape closes)</label>
+              <label htmlFor="k5" className="text-sm">
+                Modals trap focus (Escape closes)
+              </label>
             </div>
             <div className="flex items-start gap-3">
               <input type="checkbox" id="k6" className="mt-1" />
-              <label htmlFor="k6" className="text-sm">Dropdowns trap focus (Escape closes)</label>
+              <label htmlFor="k6" className="text-sm">
+                Dropdowns trap focus (Escape closes)
+              </label>
             </div>
             <div className="flex items-start gap-3">
               <input type="checkbox" id="k7" className="mt-1" />
-              <label htmlFor="k7" className="text-sm">Focus returns to trigger after close</label>
+              <label htmlFor="k7" className="text-sm">
+                Focus returns to trigger after close
+              </label>
             </div>
           </div>
         </div>
@@ -308,10 +339,22 @@ export const AccessibilityChecklist: Story = {
         <div className="rounded-lg border bg-card p-6">
           <h2 className="text-xl font-semibold mb-4">Keyboard Shortcuts</h2>
           <div className="space-y-3 text-sm">
-            <div><kbd className="px-2 py-1 rounded bg-background border">Enter</kbd> / <kbd className="px-2 py-1 rounded bg-background border">Space</kbd> - Activate focused element</div>
-            <div><kbd className="px-2 py-1 rounded bg-background border">Escape</kbd> - Close/dismiss</div>
-            <div><kbd className="px-2 py-1 rounded bg-background border">Tab</kbd> - Move to next element</div>
-            <div><kbd className="px-2 py-1 rounded bg-background border">Shift+Tab</kbd> - Move to previous element</div>
+            <div>
+              <kbd className="px-2 py-1 rounded bg-background border">Enter</kbd> /{" "}
+              <kbd className="px-2 py-1 rounded bg-background border">Space</kbd> - Activate focused
+              element
+            </div>
+            <div>
+              <kbd className="px-2 py-1 rounded bg-background border">Escape</kbd> - Close/dismiss
+            </div>
+            <div>
+              <kbd className="px-2 py-1 rounded bg-background border">Tab</kbd> - Move to next
+              element
+            </div>
+            <div>
+              <kbd className="px-2 py-1 rounded bg-background border">Shift+Tab</kbd> - Move to
+              previous element
+            </div>
           </div>
         </div>
       </div>

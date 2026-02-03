@@ -2,7 +2,7 @@ import { SettingsModal } from "../../../app/modals/SettingsModal";
 
 export function SettingsModalDemo() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1">
+    <div className="flex items-center justify-center min-h-screen bg-background">
       <SettingsModal isOpen={true} onClose={() => {}} />
     </div>
   );

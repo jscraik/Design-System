@@ -173,8 +173,8 @@ function SelectTrigger({
         // Focus styles - using Apps SDK UI tokens
         "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
         // Error state styling - using Apps SDK UI tokens
-        error && "border-destructive focus:border-destructive focus:ring-destructive/50",
-        effectiveState === "error" && "ring-destructive/20 dark:ring-destructive/40",
+        error && "border-status-error focus:border-status-error focus:ring-status-error/50",
+        effectiveState === "error" && "ring-status-error/20 dark:ring-status-error/40",
         // Hover - using Apps SDK UI tokens
         "hover:bg-input/50 dark:hover:bg-input/50",
         // Dark mode background - using Apps SDK UI tokens
@@ -281,7 +281,7 @@ function SelectItem({
       className={cn(
         "relative flex w-full cursor-default items-center gap-2 rounded-sm py-1.5 pr-8 pl-2 text-sm outline-hidden select-none",
         // Focus background - using Apps SDK UI tokens
-        "focus:bg-accent focus:text-accent-foreground",
+        "focus:bg-interactive focus:text-text-body-on-color",
         // Icon color - using Apps SDK UI tokens
         "[&_svg:not([class*='text-'])]:text-muted-foreground",
         // Disabled state

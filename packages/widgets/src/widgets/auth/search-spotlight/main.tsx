@@ -49,10 +49,10 @@ const defaultPlaces: Place[] = [
 
 function SliceCard({ place, index }: { place: Place; index: number }) {
   return (
-    <article className="min-w-[240px] sm:min-w-[270px] max-w-[270px] flex flex-col overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm">
+    <article className="min-w-[240px] sm:min-w-[270px] max-w-[270px] flex flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-sm">
       <div className="relative h-36 w-full overflow-hidden">
         <img src={place.thumbnail} alt={place.name} className="h-full w-full object-cover" />
-        <div className="absolute left-3 top-3 inline-flex items-center rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-black shadow-sm">
+        <div className="absolute left-3 top-3 inline-flex items-center rounded-full bg-background/90 px-2.5 py-1 text-xs font-semibold text-foreground shadow-sm">
           #{index + 1}
         </div>
       </div>
@@ -60,15 +60,15 @@ function SliceCard({ place, index }: { place: Place; index: number }) {
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="truncate text-base font-semibold">{place.name}</div>
-            <div className="mt-1 text-sm text-black/60">{place.description}</div>
+            <div className="mt-1 text-sm text-text-secondary">{place.description}</div>
           </div>
-          <div className="rounded-full bg-black/5 px-2 py-1 text-xs text-black/70">
+          <div className="rounded-full bg-muted px-2 py-1 text-xs text-muted-foreground">
             {place.price}
           </div>
         </div>
-        <div className="mt-auto flex items-center justify-between text-sm text-black/70">
+        <div className="mt-auto flex items-center justify-between text-sm text-muted-foreground">
           <div className="flex items-center gap-1">
-            <Star strokeWidth={1.5} className="h-4 w-4 text-black" />
+            <Star strokeWidth={1.5} className="h-4 w-4 text-foreground" />
             <span>{place.rating?.toFixed ? place.rating.toFixed(1) : place.rating}</span>
           </div>
           <div className="flex items-center gap-1">
@@ -118,24 +118,24 @@ function SearchSpotlightWidget() {
   }, [emblaApi, updateButtons]);
 
   return (
-    <div className="antialiased relative w-full text-black rounded-2xl border border-black/10 bg-white overflow-hidden">
+    <div className="antialiased relative w-full text-foreground rounded-2xl border border-border bg-background overflow-hidden">
       <div className="px-5 pt-5 pb-4">
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#F46C21]/15 text-[#F46C21]">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-accent-orange/15 text-accent-orange">
             <Flame strokeWidth={1.5} className="h-5 w-5" />
           </div>
           <div className="min-w-0">
             <div className="text-base font-semibold">Spotlights</div>
-            <div className="text-sm text-black/60">
+            <div className="text-sm text-text-secondary">
               {toppingLabel ? `Topping focus: ${toppingLabel}` : "Trending near you"}
             </div>
           </div>
-          <div className="ml-auto text-xs uppercase tracking-wide text-black/40">
+          <div className="ml-auto text-xs uppercase tracking-wide text-muted-foreground">
             Updated 5m ago
           </div>
         </div>
         {toppingLabel && (
-          <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-[#F46C21]/10 px-3 py-1 text-xs font-medium text-[#F46C21]">
+          <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-accent-orange/10 px-3 py-1 text-xs font-medium text-accent-orange">
             We saved your {toppingLabel} preference
           </div>
         )}
@@ -157,7 +157,7 @@ function SearchSpotlightWidget() {
             canPrev ? "opacity-100" : "opacity-0"
           }`}
         >
-          <div className="h-full w-full bg-gradient-to-r from-white via-white/70 to-transparent" />
+          <div className="h-full w-full bg-gradient-to-r from-background via-background/70 to-transparent" />
         </div>
         <div
           aria-hidden
@@ -165,14 +165,14 @@ function SearchSpotlightWidget() {
             canNext ? "opacity-100" : "opacity-0"
           }`}
         >
-          <div className="h-full w-full bg-gradient-to-l from-white via-white/70 to-transparent" />
+          <div className="h-full w-full bg-gradient-to-l from-background via-background/70 to-transparent" />
         </div>
 
         {/* Navigation buttons */}
         {canPrev && (
           <button
             aria-label="Previous"
-            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center h-8 w-8 rounded-full bg-white text-black shadow-lg ring ring-black/5 hover:bg-white"
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center h-8 w-8 rounded-full bg-background text-foreground shadow-lg ring ring-border/40 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             onClick={() => emblaApi?.scrollPrev()}
             type="button"
           >
@@ -182,7 +182,7 @@ function SearchSpotlightWidget() {
         {canNext && (
           <button
             aria-label="Next"
-            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center h-8 w-8 rounded-full bg-white text-black shadow-lg ring ring-black/5 hover:bg-white"
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 inline-flex items-center justify-center h-8 w-8 rounded-full bg-background text-foreground shadow-lg ring ring-border/40 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             onClick={() => emblaApi?.scrollNext()}
             type="button"
           >

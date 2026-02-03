@@ -15,7 +15,7 @@ describe("Tooltip", () => {
         <Tooltip.Tooltip>
           <Tooltip.TooltipTrigger>Hover me</Tooltip.TooltipTrigger>
           <Tooltip.TooltipContent>Tooltip content</Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       const trigger = container.querySelector('[data-slot="tooltip-trigger"]');
       expect(trigger).toBeInTheDocument();
@@ -28,7 +28,7 @@ describe("Tooltip", () => {
           <Tooltip.TooltipContent>
             <div data-testid="tooltip-content-element">Tooltip content</div>
           </Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       // Content is rendered via portal, verify by test ID
       const content = screen.queryByTestId("tooltip-content-element");
@@ -40,7 +40,7 @@ describe("Tooltip", () => {
         <Tooltip.Tooltip>
           <Tooltip.TooltipTrigger>Info icon</Tooltip.TooltipTrigger>
           <Tooltip.TooltipContent>Helpful info</Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       expect(screen.getByText("Info icon")).toBeInTheDocument();
     });
@@ -50,7 +50,7 @@ describe("Tooltip", () => {
         <Tooltip.Tooltip defaultOpen>
           <Tooltip.TooltipTrigger>Hover me</Tooltip.TooltipTrigger>
           <Tooltip.TooltipContent>This is the tooltip content</Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       expect(screen.getAllByText("This is the tooltip content").length).toBeGreaterThan(0);
     });
@@ -60,7 +60,7 @@ describe("Tooltip", () => {
         <Tooltip.Tooltip defaultOpen={false}>
           <Tooltip.TooltipTrigger>Hover me</Tooltip.TooltipTrigger>
           <Tooltip.TooltipContent>Hidden content</Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       expect(screen.queryByText("Hidden content")).not.toBeInTheDocument();
     });
@@ -74,7 +74,7 @@ describe("Tooltip", () => {
             <button className="custom-trigger">Hover me</button>
           </Tooltip.TooltipTrigger>
           <Tooltip.TooltipContent>Content</Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       const trigger = container.querySelector(".custom-trigger");
       expect(trigger).toBeInTheDocument();
@@ -87,7 +87,7 @@ describe("Tooltip", () => {
             <button type="button">Custom Button</button>
           </Tooltip.TooltipTrigger>
           <Tooltip.TooltipContent>Tooltip text</Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       expect(screen.getByText("Custom Button")).toBeInTheDocument();
     });
@@ -97,7 +97,7 @@ describe("Tooltip", () => {
         <Tooltip.Tooltip>
           <Tooltip.TooltipTrigger>Hover me</Tooltip.TooltipTrigger>
           <Tooltip.TooltipContent>Content</Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       const trigger = container.querySelector('[data-slot="tooltip-trigger"]');
       expect(trigger).toBeInTheDocument();
@@ -110,13 +110,12 @@ describe("Tooltip", () => {
         <Tooltip.Tooltip loading onStateChange={mockOnStateChange}>
           <Tooltip.TooltipTrigger>Hover me</Tooltip.TooltipTrigger>
           <Tooltip.TooltipContent>Content</Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });
     });
-
   });
 
   describe("Stateful props - Error", () => {
@@ -125,7 +124,7 @@ describe("Tooltip", () => {
         <Tooltip.Tooltip error="Error" onStateChange={mockOnStateChange}>
           <Tooltip.TooltipTrigger>Hover me</Tooltip.TooltipTrigger>
           <Tooltip.TooltipContent>Content</Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -139,7 +138,7 @@ describe("Tooltip", () => {
         <Tooltip.Tooltip disabled onStateChange={mockOnStateChange}>
           <Tooltip.TooltipTrigger>Hover me</Tooltip.TooltipTrigger>
           <Tooltip.TooltipContent>Content</Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
@@ -153,7 +152,7 @@ describe("Tooltip", () => {
         <Tooltip.Tooltip required onStateChange={mockOnStateChange}>
           <Tooltip.TooltipTrigger>Hover me</Tooltip.TooltipTrigger>
           <Tooltip.TooltipContent>Content</Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
@@ -164,15 +163,10 @@ describe("Tooltip", () => {
   describe("State priority", () => {
     it("prioritizes loading over error and disabled", async () => {
       render(
-        <Tooltip.Tooltip
-          loading
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        >
+        <Tooltip.Tooltip loading error="Error" disabled onStateChange={mockOnStateChange}>
           <Tooltip.TooltipTrigger>Hover me</Tooltip.TooltipTrigger>
           <Tooltip.TooltipContent>Content</Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -181,14 +175,10 @@ describe("Tooltip", () => {
 
     it("prioritizes error over disabled when not loading", async () => {
       render(
-        <Tooltip.Tooltip
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        >
+        <Tooltip.Tooltip error="Error" disabled onStateChange={mockOnStateChange}>
           <Tooltip.TooltipTrigger>Hover me</Tooltip.TooltipTrigger>
           <Tooltip.TooltipContent>Content</Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -204,7 +194,7 @@ describe("Tooltip", () => {
             <button>Info button</button>
           </Tooltip.TooltipTrigger>
           <Tooltip.TooltipContent>Helpful text</Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       const trigger = screen.getByRole("button");
       expect(trigger).toBeInTheDocument();
@@ -225,7 +215,7 @@ describe("Tooltip", () => {
               <p>Detailed description</p>
             </div>
           </Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       expect(screen.getByText("Info")).toBeInTheDocument();
     });
@@ -237,11 +227,10 @@ describe("Tooltip", () => {
             <button type="submit">Submit</button>
           </Tooltip.TooltipTrigger>
           <Tooltip.TooltipContent>Tooltip help</Tooltip.TooltipContent>
-        </Tooltip.Tooltip>
+        </Tooltip.Tooltip>,
       );
       const trigger = screen.getByRole("button");
       expect(trigger).toHaveAttribute("type", "submit");
     });
   });
 });
-

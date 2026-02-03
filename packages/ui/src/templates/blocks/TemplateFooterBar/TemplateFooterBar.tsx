@@ -49,10 +49,10 @@ export interface TemplateFooterBarProps {
 }
 
 const variantStyles: Record<TemplateFooterBarVariant, string> = {
-  default: "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1",
-  elevated: "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 shadow-sm",
+  default: "bg-background",
+  elevated: "bg-secondary shadow-sm",
   transparent: "bg-transparent",
-  subtle: "bg-foundation-bg-light-1/50 dark:bg-foundation-bg-dark-1/50 backdrop-blur-sm",
+  subtle: "bg-background/50 backdrop-blur-sm",
 };
 
 const sizeStyles: Record<TemplateFooterBarSize, { padding: string; gap: string }> = {
@@ -64,28 +64,28 @@ const sizeStyles: Record<TemplateFooterBarSize, { padding: string; gap: string }
 const statusStyles: Record<TemplateFooterBarStatus, { bg: string; text: string; icon: string }> = {
   default: {
     bg: "",
-    text: "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-    icon: "text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary",
+    text: "text-text-secondary",
+    icon: "text-text-secondary",
   },
   success: {
     bg: "",
-    text: "text-foundation-accent-green",
-    icon: "text-foundation-accent-green",
+    text: "text-accent-green",
+    icon: "text-accent-green",
   },
   warning: {
     bg: "",
-    text: "text-foundation-accent-orange",
-    icon: "text-foundation-accent-orange",
+    text: "text-accent-orange",
+    icon: "text-accent-orange",
   },
   error: {
     bg: "",
-    text: "text-foundation-accent-red",
-    icon: "text-foundation-accent-red",
+    text: "text-status-error",
+    icon: "text-status-error",
   },
   info: {
     bg: "",
-    text: "text-foundation-accent-blue",
-    icon: "text-foundation-accent-blue",
+    text: "text-accent-blue",
+    icon: "text-accent-blue",
   },
 };
 
@@ -162,18 +162,16 @@ export function TemplateFooterBar({
   const progressElement = progress && (
     <div className="flex items-center gap-2 min-w-[120px]">
       {progress.label && (
-        <span className="text-xs text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary whitespace-nowrap">
-          {progress.label}
-        </span>
+        <span className="text-xs text-text-secondary whitespace-nowrap">{progress.label}</span>
       )}
-      <div className="flex-1 h-1.5 bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 rounded-full overflow-hidden">
+      <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
         <div
-          className="h-full bg-foundation-accent-blue rounded-full transition-all duration-300 ease-out"
+          className="h-full bg-accent-blue rounded-full transition-all duration-300 ease-out"
           style={{ width: `${Math.min(100, Math.max(0, progress.value))}%` }}
         />
       </div>
       {progress.showPercentage && (
-        <span className="text-xs tabular-nums text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary min-w-[2.5rem] text-right">
+        <span className="text-xs tabular-nums text-muted-foreground min-w-[2.5rem] text-right">
           {Math.round(progress.value)}%
         </span>
       )}
@@ -182,11 +180,7 @@ export function TemplateFooterBar({
 
   const loadingElement = loading && (
     <div className="flex items-center gap-2">
-      <svg
-        className="w-4 h-4 animate-spin text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
+      <svg className="w-4 h-4 animate-spin text-muted-foreground" fill="none" viewBox="0 0 24 24">
         <circle
           className="opacity-25"
           cx="12"
@@ -201,15 +195,13 @@ export function TemplateFooterBar({
           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
         />
       </svg>
-      <span className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
-        Loading...
-      </span>
+      <span className="text-xs text-muted-foreground">Loading...</span>
     </div>
   );
 
   const shortcutElement = shortcut && (
-    <div className="flex items-center gap-1.5 text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
-      <kbd className="px-1.5 py-0.5 rounded bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 font-mono text-[11px] border border-foundation-bg-light-4 dark:border-foundation-bg-dark-4">
+    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+      <kbd className="px-1.5 py-0.5 rounded bg-muted font-mono text-[11px] border border-border">
         {shortcut.key}
       </kbd>
       <span>{shortcut.label}</span>
@@ -225,7 +217,7 @@ export function TemplateFooterBar({
         "flex items-center justify-between",
         padding,
         variantStyles[variant],
-        bordered && "border-t border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
+        bordered && "border-t border-border",
         sticky && "sticky bottom-0 z-10",
         className,
       )}
@@ -276,14 +268,13 @@ export function TemplateFooterButton({
   className,
 }: TemplateFooterButtonProps) {
   const variantClasses = {
-    default:
-      "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 text-foundation-text-light-primary dark:text-foundation-text-dark-primary hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
+    default: "bg-background text-foreground hover:bg-muted border border-border",
     primary:
       "bg-button-primary-bg-light dark:bg-button-primary-bg-dark text-button-primary-text-light dark:text-button-primary-text-dark hover:bg-button-primary-bg-light-hover dark:hover:bg-button-primary-bg-dark-hover border border-transparent shadow-sm",
     ghost:
-      "bg-transparent text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3 hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary border border-transparent",
+      "bg-transparent text-text-secondary hover:bg-muted hover:text-foreground border border-transparent",
     danger:
-      "bg-foundation-accent-red text-white hover:bg-foundation-accent-red/90 border border-transparent shadow-sm",
+      "bg-status-error text-text-body-on-color hover:bg-status-error/90 border border-transparent shadow-sm",
   };
 
   const sizeClasses = {
@@ -298,7 +289,7 @@ export function TemplateFooterButton({
       disabled={disabled || loading}
       className={cn(
         "inline-flex items-center justify-center gap-2 font-medium",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue focus-visible:ring-offset-1",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
         "transition-colors",
         variantClasses[variant],
         sizeClasses[size],
@@ -356,8 +347,8 @@ export function TemplateFooterLink({
 }: TemplateFooterLinkProps) {
   const baseClasses = cn(
     "inline-flex items-center gap-1.5 text-xs font-medium",
-    "text-foundation-accent-blue hover:text-foundation-accent-blue/80",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue focus-visible:rounded-sm",
+    "text-accent-blue hover:text-accent-blue/80",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:rounded-sm",
     "transition-colors",
     disabled && "opacity-40 pointer-events-none cursor-not-allowed",
     className,
@@ -406,11 +397,11 @@ export function TemplateFooterText({
   className,
 }: TemplateFooterTextProps) {
   const variantClasses = {
-    default: "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-    muted: "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
-    success: "text-foundation-accent-green",
-    warning: "text-foundation-accent-orange",
-    error: "text-foundation-accent-red",
+    default: "text-text-secondary",
+    muted: "text-muted-foreground",
+    success: "text-accent-green",
+    warning: "text-accent-orange",
+    error: "text-status-error",
   };
 
   return (
@@ -437,7 +428,7 @@ export interface TemplateFooterDividerProps {
 export function TemplateFooterDivider({ className }: TemplateFooterDividerProps) {
   return (
     <div
-      className={cn("w-px h-4 bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3", className)}
+      className={cn("w-px h-4 bg-muted", className)}
       role="separator"
       aria-orientation="vertical"
     />

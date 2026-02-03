@@ -26,7 +26,7 @@ export function ChatSidebarHistory({
 
   return (
     <div className="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
-      <div className="px-3 pb-2 text-[11px] text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary font-medium tracking-wide uppercase">
+      <div className="px-3 pb-2 text-[11px] text-text-secondary dark:text-text-secondary font-medium tracking-wide uppercase">
         Recent
       </div>
       {filteredHistory.map((item, index) => {
@@ -38,8 +38,8 @@ export function ChatSidebarHistory({
             onClick={() => onSelect?.(chatId)}
             className={`w-full text-left px-3 py-2 text-body-small rounded-lg transition-colors line-clamp-1 font-normal ${
               isSelected
-                ? "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 text-foundation-text-light-primary dark:text-foundation-text-dark-primary"
-                : "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:bg-foundation-bg-light-2/80 dark:hover:bg-foundation-bg-dark-2/80 hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary"
+                ? "bg-secondary dark:bg-secondary text-foreground dark:text-foreground"
+                : "text-text-secondary dark:text-text-secondary hover:bg-secondary/80 dark:hover:bg-secondary/80 hover:text-foreground dark:hover:text-foreground"
             }`}
           >
             {item}

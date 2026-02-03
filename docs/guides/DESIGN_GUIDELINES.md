@@ -21,6 +21,7 @@ These guidelines keep the UI consistent across ChatGPT widgets and standalone ap
 - [Theme switching](#theme-switching)
 - [Icons and imagery](#icons-and-imagery)
 - [Accessibility checklist](#accessibility-checklist)
+- [UI states checklist](#ui-states-checklist)
 - [Review standard](#review-standard)
 - [Verify](#verify)
 - [Related docs](#related-docs)
@@ -97,6 +98,17 @@ Use the existing test workflows:
 
 - `pnpm test:a11y:widgets`
 - `docs/KEYBOARD_NAVIGATION_TESTS.md`
+
+## UI states checklist
+
+Quick sanity pass for interactive surfaces:
+
+- **Hover:** visible change, no layout shift.
+- **Active/pressed:** clear feedback, no contrast loss.
+- **Focus (keyboard):** visible ring that is not overridden by hover/active.
+- **Disabled:** reduced contrast but legible; hover/focus styles do not apply.
+- **Success/error:** semantic color + icon where needed; text remains readable.
+- **Loading/empty:** clear feedback; no dead-end UI.
 
 ## Review standard
 
@@ -298,32 +310,33 @@ STATES DEFINITION:
 **The Pattern:**
 
 ```
-TYPE SCALE (aStudio tokens):
-Heading1: 36px / 40px line-height (600 weight)
-Heading2: 24px / 28px line-height (600 weight)
-Heading3: 18px / 26px line-height (600 weight)
-Body: 16px / 26px line-height (400 weight)
-Caption: Smaller variants as needed
+TYPE SCALE (aStudio responsive tokens):
+Hero: 40px / 48px line-height (600 weight)
+H1: 36px / 42px line-height (600 weight)
+H2: 24px / 28px line-height (600 weight)
+H3: 18px / 26px line-height (600 weight)
+H4: 16px / 24px line-height (600 weight)
+H5: 14px / 20px line-height (600 weight)
+H6: 12px / 18px line-height (600 weight)
+ParagraphLg: 18px / 26px line-height (400–600 weight)
+ParagraphMd: 16px / 24px line-height (400–600 weight)
+ParagraphSm: 14px / 20px line-height (400–600 weight)
+Caption: 12px / 18px line-height (400–600 weight)
 
 PRACTICAL IMPLEMENTATION:
-Use @design-studio/ui text components or token classes:
+Use @design-studio/ui text components or Tailwind token classes (preferred):
 
-.text-heading1 {
-  font-size: var(--type-web-heading1-size);
-  line-height: var(--type-web-heading1-lineHeight);
-  font-weight: var(--type-web-heading1-weight);
-  letter-spacing: var(--type-web-heading1-tracking);
-}
+.text-hero { /* maps to --foundation-hero-* vars */ }
+.text-h1 { /* maps to --foundation-h-1-* vars */ }
+.text-paragraph-md { /* maps to --foundation-paragraph-md-* vars */ }
 
-.text-body {
-  font-size: var(--type-web-body-size);
-  line-height: var(--type-web-body-lineHeight);
-  font-weight: var(--type-web-body-weight);
-}
+Legacy tokens remain for backwards compatibility:
+.text-heading-1 / .text-heading-2 / .text-heading-3 / .text-body / .text-body-small
 
 USAGE RULES:
-- Never skip heading levels (H1 → H3)
+- Never skip heading levels (H1 → H2 → H3)
 - Only one H1 per page
+- Keep paragraph-md at 16px minimum for accessibility
 - Use weight, not just size, for hierarchy
 - Prefer semantic text components from @design-studio/ui
 ```

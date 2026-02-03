@@ -99,7 +99,7 @@ export function Toggle({
   required = false,
   onStateChange,
   className,
-  activeColor = "var(--foundation-accent-green)",
+  activeColor = "var(--accent-green)",
   ariaLabel,
   ariaLabelledby,
   ariaDescribedby,
@@ -160,8 +160,8 @@ export function Toggle({
         // Unchecked background - using Apps SDK UI tokens
         !checked && "bg-input-background",
         // Error state styling
-        error && "border-2 border-destructive",
-        effectiveState === "error" && "ring-2 ring-destructive/20",
+        error && "border-2 border-status-error",
+        effectiveState === "error" && "ring-2 ring-status-error/20",
         // Loading state styling
         effectiveState === "loading" && "opacity-70 cursor-wait",
         // Disabled state
@@ -177,7 +177,7 @@ export function Toggle({
           // Thumb background - using Apps SDK UI tokens
           "bg-background",
           // Error thumb styling
-          error && checked && "bg-destructive",
+          error && checked && "bg-status-error",
           checked && translate,
         )}
       />

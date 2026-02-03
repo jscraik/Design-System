@@ -23,24 +23,16 @@ export function SettingRow({
   className = "",
 }: SettingRowProps) {
   const baseClasses = "flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors";
-  const hoverClasses = onClick
-    ? "hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 cursor-pointer"
-    : "";
+  const hoverClasses = onClick ? "hover:bg-secondary dark:hover:bg-secondary cursor-pointer" : "";
 
   const content = (
     <>
       <div className="flex items-center gap-3 flex-1">
-        {icon && (
-          <span className="text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary">
-            {icon}
-          </span>
-        )}
+        {icon && <span className="text-text-secondary dark:text-text-secondary">{icon}</span>}
         <div className="flex-1">
-          <span className="text-body-small font-normal   text-foundation-text-dark-primary">
-            {label}
-          </span>
+          <span className="text-body-small font-normal   text-foreground">{label}</span>
           {description && (
-            <p className="text-caption   text-foundation-text-dark-tertiary mt-1">{description}</p>
+            <p className="text-caption   text-muted-foreground mt-1">{description}</p>
           )}
         </div>
       </div>

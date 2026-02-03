@@ -72,7 +72,7 @@ const shadowToBoxShadow = (shadow: keyof typeof shadowTokens | "none"): string =
   return layers
     .map(
       (layer) =>
-        `${layer.offsetX}px ${layer.offsetY}px ${layer.blur}px ${layer.spread}px ${layer.color}`
+        `${layer.offsetX}px ${layer.offsetY}px ${layer.blur}px ${layer.spread}px ${layer.color}`,
     )
     .join(", ");
 };
@@ -160,9 +160,7 @@ const ComponentExamples = () => (
   <div className="space-y-6 p-6">
     <div>
       <h3 className="text-lg font-semibold mb-2">Component Examples</h3>
-      <p className="text-sm text-muted-foreground">
-        See how elevation applies to real components.
-      </p>
+      <p className="text-sm text-muted-foreground">See how elevation applies to real components.</p>
     </div>
 
     <div className="space-y-4">
@@ -191,10 +189,7 @@ const ComponentExamples = () => (
               Same elevation creates visual grouping.
             </div>
           </div>
-          <div
-            className="p-4 bg-muted border"
-            style={{ boxShadow: "none" }}
-          >
+          <div className="p-4 bg-muted border" style={{ boxShadow: "none" }}>
             <div className="font-medium mb-2">Nested Element</div>
             <div className="text-sm text-muted-foreground">
               No shadow - nested content stays flat.
@@ -239,7 +234,7 @@ const ComponentExamples = () => (
       <div className="rounded-lg border bg-card p-4">
         <div className="text-sm font-medium mb-3">Modal with Elevation</div>
         <div className="relative">
-          <div className="absolute inset-0 bg-black/10 rounded-lg" />
+          <div className="absolute inset-0 bg-overlay/10 rounded-lg" />
           <div
             className="relative p-6 bg-card rounded-lg"
             style={{
@@ -352,16 +347,16 @@ const ShadowTechnical = () => (
         <div className="text-sm font-medium mb-3">Design Principles</div>
         <div className="space-y-2 text-sm">
           <div>
-            <span className="font-medium">Downward-only shadows:</span> No x-offset (consistent
-            with overhead light source)
+            <span className="font-medium">Downward-only shadows:</span> No x-offset (consistent with
+            overhead light source)
           </div>
           <div>
-            <span className="font-medium">Negative spread:</span> Tightens shadow, prevents
-            fuzzy edges
+            <span className="font-medium">Negative spread:</span> Tightens shadow, prevents fuzzy
+            edges
           </div>
           <div>
-            <span className="font-medium">10% opacity:</span> Subtle, works on both light and
-            dark backgrounds
+            <span className="font-medium">10% opacity:</span> Subtle, works on both light and dark
+            backgrounds
           </div>
           <div>
             <span className="font-medium">Two layers:</span> Creates depth perception through
@@ -374,19 +369,19 @@ const ShadowTechnical = () => (
         <div className="text-sm font-medium mb-3">Animation Best Practices</div>
         <div className="space-y-2 text-sm">
           <div>
-            <span className="font-medium text-accent">✓ DO:</span> Animate box-shadow with
-            ease-out (150-200ms)
+            <span className="font-medium text-accent">✓ DO:</span> Animate box-shadow with ease-out
+            (150-200ms)
           </div>
           <div>
-            <span className="font-medium text-destructive">✗ DON'T:</span> Animate spread
-            radius (causes layout shift)
+            <span className="font-medium text-status-error">✗ DON'T:</span> Animate spread radius
+            (causes layout shift)
           </div>
           <div>
-            <span className="font-medium text-accent">✓ DO:</span> Combine with translateY for
-            lift effect
+            <span className="font-medium text-accent">✓ DO:</span> Combine with translateY for lift
+            effect
           </div>
           <div>
-            <span className="font-medium text-destructive">✗ DON'T:</span> Use long durations
+            <span className="font-medium text-status-error">✗ DON'T:</span> Use long durations
             (feels sluggish, not responsive)
           </div>
         </div>
@@ -406,7 +401,8 @@ const meta = {
     layout: "centered",
     docs: {
       description: {
-        component: "Elevation (shadow) system documentation with visual examples and usage guidelines.",
+        component:
+          "Elevation (shadow) system documentation with visual examples and usage guidelines.",
       },
     },
   },
@@ -422,9 +418,7 @@ export const ElevationLevels: Story = {
     <div className="max-w-4xl space-y-6 p-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">Elevation Scale</h2>
-        <p className="text-muted-foreground mb-6">
-          Visual elevation levels with usage guidelines.
-        </p>
+        <p className="text-muted-foreground mb-6">Visual elevation levels with usage guidelines.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -434,7 +428,9 @@ export const ElevationLevels: Story = {
               className="p-6 bg-card border"
               style={{
                 boxShadow:
-                  level.shadow === "none" ? "none" : shadowToBoxShadow(level.shadow as keyof typeof shadowTokens),
+                  level.shadow === "none"
+                    ? "none"
+                    : shadowToBoxShadow(level.shadow as keyof typeof shadowTokens),
               }}
             >
               <div className="font-semibold text-lg mb-1 capitalize">{level.name}</div>
@@ -448,8 +444,8 @@ export const ElevationLevels: Story = {
       <div className="p-4 rounded-lg bg-accent/5 border border-accent/20">
         <div className="text-sm font-medium text-accent">💡 Pro Tip</div>
         <p className="text-sm text-muted-foreground mt-1">
-          All shadows use the same two-layer pattern with 10% opacity. This creates consistent
-          depth across the interface while working on both light and dark backgrounds.
+          All shadows use the same two-layer pattern with 10% opacity. This creates consistent depth
+          across the interface while working on both light and dark backgrounds.
         </p>
       </div>
     </div>
@@ -477,9 +473,7 @@ export const UsageGuidelines: Story = {
     <div className="max-w-4xl space-y-6 p-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">Elevation Usage Guidelines</h2>
-        <p className="text-muted-foreground">
-          Best practices for using elevation effectively.
-        </p>
+        <p className="text-muted-foreground">Best practices for using elevation effectively.</p>
       </div>
 
       <div className="space-y-6">
@@ -497,7 +491,7 @@ export const UsageGuidelines: Story = {
               </ul>
             </div>
             <div>
-              <span className="font-medium text-destructive">✗ Avoid elevation for:</span>
+              <span className="font-medium text-status-error">✗ Avoid elevation for:</span>
               <ul className="text-muted-foreground ml-4 mt-1 space-y-1">
                 <li>• Nested elements inside elevated containers</li>
                 <li>• Elements that are already separated by borders</li>
@@ -516,12 +510,12 @@ export const UsageGuidelines: Story = {
               "height" should have the same shadow. Don't mix elevations arbitrarily.
             </div>
             <div>
-              <span className="font-medium">Subtlety over drama:</span> Shadows should be
-              subtle, not dramatic. 10% opacity creates soft, natural depth.
+              <span className="font-medium">Subtlety over drama:</span> Shadows should be subtle,
+              not dramatic. 10% opacity creates soft, natural depth.
             </div>
             <div>
-              <span className="font-medium">Combine with other cues:</span> Use borders,
-              background colors, and spacing alongside shadows for clear hierarchy.
+              <span className="font-medium">Combine with other cues:</span> Use borders, background
+              colors, and spacing alongside shadows for clear hierarchy.
             </div>
             <div>
               <span className="font-medium">Interactive feedback:</span> Increase shadow on
@@ -535,16 +529,16 @@ export const UsageGuidelines: Story = {
           <div className="space-y-3 text-sm">
             <div>
               <span className="font-medium">10% opacity works for both modes:</span> The shadow
-              color uses rgba(0 0 0 / 10%), which appears as a dark shadow on light backgrounds
-              and a lighter shadow on dark backgrounds.
+              color uses rgba(0 0 0 / 10%), which appears as a dark shadow on light backgrounds and
+              a lighter shadow on dark backgrounds.
             </div>
             <div>
               <span className="font-medium">May need adjustment:</span> For very dark surfaces,
               consider using lighter shadow colors or reducing opacity.
             </div>
             <div>
-              <span className="font-medium">Test on real backgrounds:</span> Always test shadows
-              on actual background colors, not just white/black.
+              <span className="font-medium">Test on real backgrounds:</span> Always test shadows on
+              actual background colors, not just white/black.
             </div>
           </div>
         </div>
@@ -559,9 +553,7 @@ export const DoDont: Story = {
     <div className="max-w-4xl space-y-6 p-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">Elevation Best Practices</h2>
-        <p className="text-muted-foreground">
-          Common patterns to follow and pitfalls to avoid.
-        </p>
+        <p className="text-muted-foreground">Common patterns to follow and pitfalls to avoid.</p>
       </div>
 
       <div className="space-y-6">
@@ -569,9 +561,7 @@ export const DoDont: Story = {
           <div className="flex items-start gap-3">
             <span className="text-2xl">✓</span>
             <div>
-              <div className="font-semibold text-accent">
-                DO: Use elevation to show hierarchy
-              </div>
+              <div className="font-semibold text-accent">DO: Use elevation to show hierarchy</div>
               <p className="text-sm text-muted-foreground mt-1">
                 Elevated elements appear "above" other content. Use shadows to show modals,
                 dropdowns, and tooltips are floating.
@@ -583,10 +573,7 @@ export const DoDont: Story = {
                 >
                   Card A
                 </div>
-                <div
-                  className="p-3 bg-muted border"
-                  style={{ boxShadow: "none" }}
-                >
+                <div className="p-3 bg-muted border" style={{ boxShadow: "none" }}>
                   Background
                 </div>
               </div>
@@ -594,14 +581,14 @@ export const DoDont: Story = {
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">DON'T: Over-everything</div>
+              <div className="font-semibold text-status-error">DON'T: Over-everything</div>
               <p className="text-sm text-muted-foreground mt-1">
-                Don't add shadows to everything. Too much elevation creates visual noise and
-                reduces impact.
+                Don't add shadows to everything. Too much elevation creates visual noise and reduces
+                impact.
               </p>
               <div className="mt-3 grid grid-cols-3 gap-2">
                 <div className="p-2 bg-muted border text-xs">No shadow</div>
@@ -613,7 +600,7 @@ export const DoDont: Story = {
                 </div>
                 <div className="p-2 bg-muted border text-xs">No shadow</div>
               </div>
-              <div className="mt-2 text-xs text-destructive">
+              <div className="mt-2 text-xs text-status-error">
                 ↑ Selective elevation is more effective
               </div>
             </div>
@@ -626,8 +613,8 @@ export const DoDont: Story = {
             <div>
               <div className="font-semibold text-accent">DO: Animate shadow on hover/focus</div>
               <p className="text-sm text-muted-foreground mt-1">
-                Interactive elements should "lift" when hovered. Combine shadow change with
-                slight translateY for realistic effect.
+                Interactive elements should "lift" when hovered. Combine shadow change with slight
+                translateY for realistic effect.
               </p>
               <div className="mt-3 p-3 rounded bg-muted">
                 <code className="text-xs">
@@ -642,13 +629,11 @@ export const DoDont: Story = {
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">
-                DON'T: Use colored shadows
-              </div>
+              <div className="font-semibold text-status-error">DON'T: Use colored shadows</div>
               <p className="text-sm text-muted-foreground mt-1">
                 Shadows should be neutral black. Colored shadows look dated and create visual
                 clutter.
@@ -692,11 +677,11 @@ export const DoDont: Story = {
           </div>
         </div>
 
-        <div className="rounded-lg border-l-4 border-destructive bg-destructive/5 p-6">
+        <div className="rounded-lg border-l-4 border-status-error bg-status-error/5 p-6">
           <div className="flex items-start gap-3">
             <span className="text-2xl">✗</span>
             <div>
-              <div className="font-semibold text-destructive">
+              <div className="font-semibold text-status-error">
                 DON'T: Rely on shadow alone for separation
               </div>
               <p className="text-sm text-muted-foreground mt-1">
@@ -717,9 +702,7 @@ export const TokenReference: Story = {
     <div className="max-w-4xl space-y-6 p-6">
       <div>
         <h2 className="text-2xl font-bold mb-2">Quick Reference</h2>
-        <p className="text-muted-foreground">
-          Elevation tokens and CSS box-shadow values.
-        </p>
+        <p className="text-muted-foreground">Elevation tokens and CSS box-shadow values.</p>
       </div>
 
       <div className="rounded-lg border bg-card">
@@ -753,7 +736,7 @@ export const TokenReference: Story = {
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">Import Shadow Tokens</div>
         <pre className="text-sm bg-background p-3 rounded overflow-x-auto">
-{`import { shadowTokens } from "@design-studio/tokens/shadows";
+          {`import { shadowTokens } from "@design-studio/tokens/shadows";
 
 // Usage in inline styles or CSS-in-JS
 const cardStyle = {
@@ -772,8 +755,12 @@ const boxShadow = shadowToBoxShadow("card");`}
       <div className="p-4 rounded-lg bg-muted border">
         <div className="text-sm font-medium mb-2">Shadow Structure</div>
         <div className="text-sm space-y-1">
-          <div><strong>Layer 1:</strong> 0px 10px 15px -3px rgba(0 0 0 / 10%)</div>
-          <div><strong>Layer 2:</strong> 0px 4px 6px -4px rgba(0 0 0 / 10%)</div>
+          <div>
+            <strong>Layer 1:</strong> 0px 10px 15px -3px rgba(0 0 0 / 10%)
+          </div>
+          <div>
+            <strong>Layer 2:</strong> 0px 4px 6px -4px rgba(0 0 0 / 10%)
+          </div>
           <div className="text-xs text-muted-foreground mt-2">
             All shadows use this two-layer pattern for consistent depth.
           </div>

@@ -209,26 +209,21 @@ export function ChatGPTIconCatalog() {
       : categories[selectedCategory as keyof typeof categories] || [];
 
   return (
-    <div className="min-h-screen bg-foundation-bg-dark-1">
+    <div data-theme="dark" className="min-h-screen bg-background">
       <div className="mx-auto max-w-7xl px-6 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-semibold mb-2 text-foundation-text-dark-primary">
-            ChatGPT Icon Catalog
-          </h1>
-          <p className="text-foundation-text-dark-secondary">
+          <h1 className="text-3xl font-semibold mb-2 text-foreground">ChatGPT Icon Catalog</h1>
+          <p className="text-text-secondary">
             Browse and test all {iconEntries.length} icons from the ChatGPT-style icon library
           </p>
         </div>
 
         {/* Controls */}
-        <div className="mb-8 rounded-xl border border-foundation-bg-dark-3 p-6 space-y-4 bg-foundation-bg-dark-2">
+        <div className="mb-8 rounded-xl border border-border p-6 space-y-4 bg-secondary">
           {/* Search */}
           <div>
-            <label
-              htmlFor="icon-search"
-              className="block text-sm font-medium mb-2 text-foundation-text-dark-primary"
-            >
+            <label htmlFor="icon-search" className="block text-sm font-medium mb-2 text-foreground">
               Search Icons
             </label>
             <input
@@ -238,15 +233,13 @@ export function ChatGPTIconCatalog() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Type to search icons..."
-              className="w-full px-4 py-3 rounded-lg border border-foundation-bg-dark-3 bg-foundation-bg-dark-1 text-foundation-text-dark-primary focus:outline-none focus:ring-2 focus:ring-foundation-accent-blue"
+              className="w-full px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             />
           </div>
 
           {/* Category Filter */}
           <div>
-            <label className="block text-sm font-medium mb-2 text-foundation-text-dark-primary">
-              Category
-            </label>
+            <label className="block text-sm font-medium mb-2 text-foreground">Category</label>
             <div className="flex flex-wrap gap-2">
               {Object.keys(categories).map((category) => (
                 <button
@@ -254,8 +247,8 @@ export function ChatGPTIconCatalog() {
                   onClick={() => setSelectedCategory(category)}
                   className={
                     selectedCategory === category
-                      ? "px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-foundation-accent-green text-white"
-                      : "px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-foundation-bg-dark-1 text-foundation-text-dark-secondary hover:text-foundation-text-dark-primary"
+                      ? "px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-accent-green text-text-body-on-color"
+                      : "px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-background text-text-secondary hover:text-foreground"
                   }
                 >
                   {category.charAt(0).toUpperCase() + category.slice(1)} (
@@ -266,7 +259,7 @@ export function ChatGPTIconCatalog() {
           </div>
 
           {/* Stats */}
-          <div className="flex gap-4 text-sm text-foundation-text-dark-secondary">
+          <div className="flex gap-4 text-sm text-text-secondary">
             <span>Total Icons: {iconEntries.length}</span>
             <span>•</span>
             <span>Showing: {displayedIcons.length}</span>
@@ -280,17 +273,17 @@ export function ChatGPTIconCatalog() {
             return (
               <div
                 key={name}
-                className="group rounded-xl p-4 border border-foundation-bg-dark-3 bg-foundation-bg-dark-2 hover:shadow-lg transition-all cursor-pointer"
+                className="group rounded-xl p-4 border border-border bg-secondary hover:shadow-lg transition-all cursor-pointer"
                 onClick={() => {
                   copyToClipboard(`<${name} />`);
                 }}
                 title={`Click to copy: ${name}`}
               >
                 <div className="flex flex-col items-center gap-3">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-foundation-bg-dark-1">
-                    <Icon className="size-6 text-foundation-icon-dark-primary" />
+                  <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-background">
+                    <Icon className="size-6 text-foreground" />
                   </div>
-                  <span className="text-xs text-center break-all font-mono text-foundation-text-dark-secondary">
+                  <span className="text-xs text-center break-all font-mono text-text-secondary">
                     {name.replace("Icon", "")}
                   </span>
                 </div>
@@ -301,25 +294,20 @@ export function ChatGPTIconCatalog() {
 
         {/* No Results */}
         {displayedIcons.length === 0 && (
-          <div className="text-center py-12 rounded-xl border border-foundation-bg-dark-3 bg-foundation-bg-dark-2">
-            <p className="text-lg text-foundation-text-dark-secondary">
-              No icons found matching "{searchQuery}"
-            </p>
+          <div className="text-center py-12 rounded-xl border border-border bg-secondary">
+            <p className="text-lg text-text-secondary">No icons found matching "{searchQuery}"</p>
           </div>
         )}
 
         {/* Footer Info */}
-        <div className="mt-12 p-6 rounded-xl border border-foundation-bg-dark-3 bg-foundation-bg-dark-2">
-          <h3 className="text-lg font-semibold mb-3 text-foundation-text-dark-primary">
-            Quick Usage
-          </h3>
-          <div className="space-y-2 text-sm font-mono text-foundation-text-dark-secondary">
+        <div className="mt-12 p-6 rounded-xl border border-border bg-secondary">
+          <h3 className="text-lg font-semibold mb-3 text-foreground">Quick Usage</h3>
+          <div className="space-y-2 text-sm font-mono text-text-secondary">
             <p>
-              <span className="text-foundation-accent-green">import</span> {`{ IconCheckmark }`}{" "}
-              <span className="text-foundation-accent-green">from</span>{" "}
-              {'"@design-studio/ui/icons"'};
+              <span className="text-accent-green">import</span> {`{ IconCheckmark }`}{" "}
+              <span className="text-accent-green">from</span> {'"@design-studio/ui/icons"'};
             </p>
-            <p className="mt-4 text-foundation-text-dark-tertiary">{`// Use in your components`}</p>
+            <p className="mt-4 text-muted-foreground">{`// Use in your components`}</p>
             <p>{'<IconCheckmark className="size-6" />'}</p>
           </div>
         </div>

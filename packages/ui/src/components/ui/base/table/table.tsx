@@ -55,7 +55,7 @@ function Table({
           // Disabled state styling
           disabled && "opacity-50 pointer-events-none",
           // Error state styling
-          error && "border-foundation-accent-red",
+          error && "border-status-error",
           className,
         )}
         {...props}

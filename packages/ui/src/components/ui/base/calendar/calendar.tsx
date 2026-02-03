@@ -26,7 +26,7 @@ export interface CalendarProps extends Omit<StatefulComponentProps, "disabled"> 
  */
 function CalendarError({ message, id }: { message: string; id?: string }) {
   return (
-    <span id={id} className="text-destructive text-body-small mt-1 flex items-center gap-1">
+    <span id={id} className="text-status-error text-body-small mt-1 flex items-center gap-1">
       <svg className="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
         <path
           fillRule="evenodd"
@@ -58,7 +58,7 @@ function CalendarWrapper({
       {children}
       {error && <CalendarError message={error} id={errorId} />}
       {required && !error && (
-        <span className="text-destructive text-body-small mt-1" aria-hidden="true">
+        <span className="text-status-error text-body-small mt-1" aria-hidden="true">
           * Required
         </span>
       )}
@@ -141,7 +141,7 @@ function Calendar({
       className={cn(
         "p-3",
         loading && "opacity-70 cursor-wait pointer-events-none",
-        error && "ring-2 ring-destructive/50",
+        error && "ring-2 ring-status-error/50",
         className,
       )}
       classNames={{

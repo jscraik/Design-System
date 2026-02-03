@@ -136,7 +136,7 @@ function TagInput({
         variant === "default" && "border-border bg-muted/30 focus-within:border-border/70",
         variant === "outline" && "border-border/60 bg-transparent focus-within:border-ring",
         isDisabled && "cursor-not-allowed opacity-50",
-        error && "ring-2 ring-foundation-accent-red/50",
+        error && "ring-2 ring-status-error/50",
         loading && "animate-pulse",
         className,
       )}

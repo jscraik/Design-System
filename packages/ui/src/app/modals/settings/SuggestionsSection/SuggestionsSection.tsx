@@ -17,32 +17,24 @@ export function SuggestionsSection({
 }: SuggestionsSectionProps) {
   return (
     <div className="mb-5">
-      <h3 className="text-body-small font-semibold text-foundation-text-dark-primary mb-2">
-        Suggestions
-      </h3>
+      <h3 className="text-body-small font-semibold text-foreground mb-2">Suggestions</h3>
       <div className="space-y-0.5">
         <SettingToggle
-          icon={
-            <IconCheckCircle className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-          }
+          icon={<IconCheckCircle className="size-4 text-text-secondary dark:text-text-secondary" />}
           label="Autocomplete"
           checked={autocomplete}
           onCheckedChange={() => onToggle("autocomplete")}
         />
 
         <SettingToggle
-          icon={
-            <IconBarChart className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-          }
+          icon={<IconBarChart className="size-4 text-text-secondary dark:text-text-secondary" />}
           label="Trending searches"
           checked={trendingSearches}
           onCheckedChange={() => onToggle("trendingSearches")}
         />
 
         <SettingToggle
-          icon={
-            <IconLightBulb className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-          }
+          icon={<IconLightBulb className="size-4 text-text-secondary dark:text-text-secondary" />}
           label="Follow-up suggestions"
           checked={followUpSuggestions}
           onCheckedChange={() => onToggle("followUpSuggestions")}

@@ -82,19 +82,19 @@ const sizeStyles: Record<
 const statusStyles: Record<TemplateFormFieldStatus, { border: string; text: string }> = {
   default: {
     border: "",
-    text: "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
+    text: "text-muted-foreground",
   },
   error: {
-    border: "ring-1 ring-foundation-accent-red",
-    text: "text-foundation-accent-red",
+    border: "ring-1 ring-status-error",
+    text: "text-status-error",
   },
   success: {
-    border: "ring-1 ring-foundation-accent-green",
-    text: "text-foundation-accent-green",
+    border: "ring-1 ring-accent-green",
+    text: "text-accent-green",
   },
   warning: {
-    border: "ring-1 ring-foundation-accent-orange",
-    text: "text-foundation-accent-orange",
+    border: "ring-1 ring-accent-orange",
+    text: "text-accent-orange",
   },
 };
 
@@ -146,15 +146,11 @@ export function TemplateFormField({
 
   const labelElement = (
     <div className={cn("flex items-center gap-1.5", isHorizontal && "min-w-[120px] shrink-0")}>
-      {labelIcon && (
-        <span className="text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary">
-          {labelIcon}
-        </span>
-      )}
+      {labelIcon && <span className="text-text-secondary">{labelIcon}</span>}
       <label
         htmlFor={fieldId}
         className={cn(
-          "font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
+          "font-medium text-foreground",
           labelSize,
           disabled && "opacity-50 cursor-not-allowed",
           hideLabel && "sr-only",
@@ -163,25 +159,21 @@ export function TemplateFormField({
       >
         {label}
         {required && (
-          <span className="text-foundation-accent-red ml-0.5" aria-label="required">
+          <span className="text-status-error ml-0.5" aria-label="required">
             *
           </span>
         )}
       </label>
-      {optional && !required && (
-        <span className="text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary text-xs">
-          (Optional)
-        </span>
-      )}
+      {optional && !required && <span className="text-muted-foreground text-xs">(Optional)</span>}
       {tooltip && (
         <button
           type="button"
           className={cn(
             "inline-flex items-center justify-center rounded-full w-4 h-4",
-            "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
-            "hover:text-foundation-text-light-secondary dark:hover:text-foundation-text-dark-secondary",
-            "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
+            "text-muted-foreground",
+            "hover:text-text-secondary",
+            "hover:bg-muted",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
             "transition-colors",
           )}
           aria-label="More information"
@@ -212,7 +204,7 @@ export function TemplateFormField({
     <p
       id={descriptionId}
       className={cn(
-        "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
+        "text-text-secondary",
         descriptionSize,
         disabled && "opacity-50",
         descriptionClassName,
@@ -262,13 +254,7 @@ export function TemplateFormField({
           </p>
         )}
         {hint && !error && !success && (
-          <p
-            id={hintId}
-            className={cn(
-              "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
-              hintSize,
-            )}
-          >
+          <p id={hintId} className={cn("text-muted-foreground", hintSize)}>
             {hint}
           </p>
         )}
@@ -278,11 +264,9 @@ export function TemplateFormField({
           className={cn(
             hintSize,
             "tabular-nums shrink-0 font-medium",
-            isOverLimit && "text-foundation-accent-red",
-            isNearLimit && !isOverLimit && "text-foundation-accent-orange",
-            !isOverLimit &&
-              !isNearLimit &&
-              "text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary",
+            isOverLimit && "text-status-error",
+            isNearLimit && !isOverLimit && "text-accent-orange",
+            !isOverLimit && !isNearLimit && "text-muted-foreground",
           )}
           aria-live="polite"
         >
@@ -352,8 +336,8 @@ export function TemplateFormFieldAction({
 }: TemplateFormFieldActionProps) {
   const baseClasses = cn(
     "text-xs font-medium",
-    "text-foundation-accent-blue hover:text-foundation-accent-blue/80",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue focus-visible:rounded-sm",
+    "text-accent-blue hover:text-accent-blue/80",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:rounded-sm",
     "transition-colors",
     disabled && "opacity-50 pointer-events-none cursor-not-allowed",
     className,
@@ -403,10 +387,10 @@ export function TemplateFormFieldIconButton({
       disabled={disabled}
       className={cn(
         "inline-flex items-center justify-center rounded-lg w-7 h-7",
-        "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-        "hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
-        "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
+        "text-text-secondary",
+        "hover:text-foreground",
+        "hover:bg-muted",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "transition-colors",
         disabled && "opacity-40 cursor-not-allowed pointer-events-none",
         className,
@@ -453,14 +437,14 @@ export function TemplateFormFieldInline({
       <label
         htmlFor={fieldId}
         className={cn(
-          "text-[13px] leading-5 font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary shrink-0",
+          "text-[13px] leading-5 font-medium text-foreground shrink-0",
           disabled && "opacity-50 cursor-not-allowed",
         )}
         style={{ width: widthValue }}
       >
         {label}
         {required && (
-          <span className="text-foundation-accent-red ml-0.5" aria-label="required">
+          <span className="text-status-error ml-0.5" aria-label="required">
             *
           </span>
         )}

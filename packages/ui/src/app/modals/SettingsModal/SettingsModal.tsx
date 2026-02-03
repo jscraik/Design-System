@@ -168,20 +168,20 @@ export function SettingsModal({ isOpen, onClose, account, appInfo }: SettingsMod
   const mainContent = (
     <>
       {/* Header with traffic light buttons */}
-      <div className="px-6 py-4 border-b border-foundation-text-dark-primary/10 flex items-center gap-3">
+      <div className="px-6 py-4 border-b border-foreground/10 flex items-center gap-3">
         <div className="flex gap-2">
           <button
             type="button"
             onClick={onClose}
-            className="size-3 rounded-full bg-foundation-accent-red hover:bg-foundation-accent-red/80 transition-colors"
+            className="size-3 rounded-full bg-status-error hover:bg-status-error/80 transition-colors"
             aria-label="Close"
           />
-          <div className="size-3 rounded-full bg-foundation-accent-orange" />
-          <div className="size-3 rounded-full bg-foundation-accent-green" />
+          <div className="size-3 rounded-full bg-accent-orange" />
+          <div className="size-3 rounded-full bg-accent-green" />
         </div>
         <h2
           id="settings-modal-title"
-          className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foundation-text-dark-primary"
+          className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foreground"
         >
           Settings
         </h2>
@@ -237,7 +237,7 @@ export function SettingsModal({ isOpen, onClose, account, appInfo }: SettingsMod
       title="Settings"
       titleId="settings-modal-title"
       maxWidth="560px"
-      className="bg-foundation-bg-dark-1 border border-foundation-text-dark-primary/10 rounded-[16px] shadow-2xl max-h-[85vh] overflow-hidden"
+      className="bg-background border border-foreground/10 rounded-[16px] shadow-2xl max-h-[85vh] overflow-hidden"
       showOverlay={false}
     >
       {currentView !== "main" ? renderPanel() : mainContent}

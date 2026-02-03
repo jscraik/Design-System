@@ -31,6 +31,16 @@
   --text-secondary: var(--foundation-text-light-secondary) !important; /* secondary */
   --text-tertiary: var(--foundation-text-light-tertiary) !important; /* tertiary */
   --text-inverted: var(--foundation-text-dark-primary) !important; /* inverted */
+  --text-hero: var(--foreground) !important;
+  --text-heading: var(--foreground) !important;
+  --text-body: var(--text-secondary) !important;
+  --text-placeholder: var(--text-tertiary) !important;
+  --text-caption: var(--text-tertiary) !important;
+  --text-hero-on-color: var(--accent-foreground) !important;
+  --text-heading-on-color: var(--accent-foreground) !important;
+  --text-body-on-color: var(--accent-foreground) !important;
+  --text-placeholder-on-color: var(--accent-foreground) !important;
+  --text-caption-on-color: var(--accent-foreground) !important;
 
   /* Accents */
   --accent-blue: var(--foundation-accent-blue-light) !important;
@@ -42,8 +52,22 @@
   /* Accent foreground (text on accent backgrounds) */
   --accent-foreground: var(--foundation-text-dark-primary) !important;
 
+  /* State slots (interactive + status) */
+  --interactive: var(--accent-blue) !important;
+  --interactive-hover: var(--accent-blue) !important;
+  --interactive-active: var(--accent-blue) !important;
+  --interactive-disabled: var(--text-tertiary) !important;
+  --status-success: var(--accent-green) !important;
+  --status-success-muted: var(--accent-green) !important;
+  --status-error: var(--accent-red) !important;
+  --status-error-muted: var(--accent-red) !important;
+  --status-warning: var(--accent-orange) !important;
+
   /* Ring (focus outline) */
   --ring: var(--foundation-focus-ring) !important;
+
+  /* Overlay (modals, sheets, dialogs) */
+  --overlay: color-mix(in srgb, var(--foundation-bg-dark-1) 60%, transparent) !important;
 }
 
 /* Dark mode - explicit values */
@@ -63,6 +87,16 @@
   --text-secondary: var(--foundation-text-dark-secondary) !important; /* secondary */
   --text-tertiary: var(--foundation-text-dark-tertiary) !important; /* tertiary */
   --text-inverted: var(--foundation-text-light-primary) !important; /* inverted */
+  --text-hero: var(--foreground) !important;
+  --text-heading: var(--foreground) !important;
+  --text-body: var(--text-secondary) !important;
+  --text-placeholder: var(--text-tertiary) !important;
+  --text-caption: var(--text-tertiary) !important;
+  --text-hero-on-color: var(--accent-foreground) !important;
+  --text-heading-on-color: var(--accent-foreground) !important;
+  --text-body-on-color: var(--accent-foreground) !important;
+  --text-placeholder-on-color: var(--accent-foreground) !important;
+  --text-caption-on-color: var(--accent-foreground) !important;
 
   /* Accents */
   --accent-blue: var(--foundation-accent-blue) !important;
@@ -74,8 +108,22 @@
   /* Accent foreground (text on accent backgrounds) */
   --accent-foreground: var(--foundation-text-dark-primary) !important;
 
+  /* State slots (interactive + status) */
+  --interactive: var(--accent-blue) !important;
+  --interactive-hover: var(--accent-blue) !important;
+  --interactive-active: var(--accent-blue) !important;
+  --interactive-disabled: var(--text-tertiary) !important;
+  --status-success: var(--accent-green) !important;
+  --status-success-muted: var(--accent-green) !important;
+  --status-error: var(--accent-red) !important;
+  --status-error-muted: var(--accent-red) !important;
+  --status-warning: var(--accent-orange) !important;
+
   /* Ring (focus outline) */
   --ring: var(--foundation-focus-ring) !important;
+
+  /* Overlay (modals, sheets, dialogs) */
+  --overlay: color-mix(in srgb, var(--foundation-bg-dark-1) 60%, transparent) !important;
 }
 
 @theme inline {
@@ -91,6 +139,16 @@
   --color-text-secondary: var(--text-secondary);
   --color-muted-foreground: var(--text-tertiary);
   --color-text-inverted: var(--text-inverted);
+  --color-text-hero: var(--text-hero);
+  --color-text-heading: var(--text-heading);
+  --color-text-body: var(--text-body);
+  --color-text-placeholder: var(--text-placeholder);
+  --color-text-caption: var(--text-caption);
+  --color-text-hero-on-color: var(--text-hero-on-color);
+  --color-text-heading-on-color: var(--text-heading-on-color);
+  --color-text-body-on-color: var(--text-body-on-color);
+  --color-text-placeholder-on-color: var(--text-placeholder-on-color);
+  --color-text-caption-on-color: var(--text-caption-on-color);
 
   /* Border */
   --color-border: var(--border);
@@ -108,8 +166,22 @@
   /* Accent foreground */
   --color-accent-foreground: var(--accent-foreground);
 
+  /* State slots */
+  --color-interactive: var(--interactive);
+  --color-interactive-hover: var(--interactive-hover);
+  --color-interactive-active: var(--interactive-active);
+  --color-interactive-disabled: var(--interactive-disabled);
+  --color-status-success: var(--status-success);
+  --color-status-success-muted: var(--status-success-muted);
+  --color-status-error: var(--status-error);
+  --color-status-error-muted: var(--status-error-muted);
+  --color-status-warning: var(--status-warning);
+
   /* Ring */
   --color-ring: var(--ring);
+
+  /* Overlay */
+  --color-overlay: var(--overlay);
 
   /* Radius */
   --radius-sm: calc(var(--radius) - 4px);

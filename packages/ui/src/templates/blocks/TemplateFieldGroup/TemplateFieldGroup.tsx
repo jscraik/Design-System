@@ -83,20 +83,19 @@ const variantStyles: Record<
     content: "",
   },
   card: {
-    container:
-      "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-xl overflow-hidden shadow-sm",
-    header: "bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1 px-5 py-4",
+    container: "bg-secondary border border-border rounded-xl overflow-hidden shadow-sm",
+    header: "bg-background px-5 py-4",
     content: "px-5 py-4",
   },
   bordered: {
-    container: "border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg",
-    header: "px-4 py-3 border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
+    container: "border border-border rounded-lg",
+    header: "px-4 py-3 border-b border-border",
     content: "px-4 py-4",
   },
   ghost: {
     container: "",
     header: "pb-3",
-    content: "pl-4 border-l-2 border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
+    content: "pl-4 border-l-2 border-border",
   },
 };
 
@@ -221,27 +220,16 @@ export function TemplateFieldGroup({
       >
         {/* Header */}
         <legend className="sr-only">{ariaLabel ?? label}</legend>
-        <div
-          className={cn(
-            headerStyle,
-            divider &&
-              !isCollapsed &&
-              "border-b border-foundation-bg-light-3 dark:border-foundation-bg-dark-3",
-          )}
-        >
+        <div className={cn(headerStyle, divider && !isCollapsed && "border-b border-border")}>
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2.5 min-w-0 flex-1">
-              {icon && (
-                <span className="shrink-0 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary">
-                  {icon}
-                </span>
-              )}
+              {icon && <span className="shrink-0 text-text-secondary">{icon}</span>}
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
                   <span
                     id={`${groupId}-label`}
                     className={cn(
-                      "text-foundation-text-light-primary dark:text-foundation-text-dark-primary",
+                      "text-foreground",
                       labelSize,
                       disabled && "opacity-50 cursor-not-allowed",
                       labelClassName,
@@ -250,7 +238,7 @@ export function TemplateFieldGroup({
                     {label}
                   </span>
                   {required && (
-                    <span className="text-foundation-accent-red text-xs" aria-label="required">
+                    <span className="text-status-error text-xs" aria-label="required">
                       *
                     </span>
                   )}
@@ -259,7 +247,7 @@ export function TemplateFieldGroup({
                 {description && (
                   <p
                     className={cn(
-                      "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary mt-1",
+                      "text-text-secondary mt-1",
                       descriptionSize,
                       disabled && "opacity-50",
                     )}
@@ -277,10 +265,10 @@ export function TemplateFieldGroup({
                   onClick={toggleCollapse}
                   className={cn(
                     "inline-flex items-center justify-center rounded-lg w-7 h-7",
-                    "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-                    "hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
-                    "hover:bg-foundation-bg-light-3 dark:hover:bg-foundation-bg-dark-3",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
+                    "text-text-secondary",
+                    "hover:text-foreground",
+                    "hover:bg-muted",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                     "transition-colors",
                   )}
                   aria-expanded={!isCollapsed}
@@ -306,7 +294,7 @@ export function TemplateFieldGroup({
         {error && (
           <div
             id={`${groupId}-error`}
-            className="flex items-center gap-1.5 px-4 py-2.5 text-xs text-foundation-accent-red bg-foundation-accent-red/10"
+            className="flex items-center gap-1.5 px-4 py-2.5 text-xs text-status-error bg-status-error-muted/10"
             role="alert"
           >
             <svg
@@ -358,11 +346,9 @@ export function TemplateFieldGroupAction({
   className,
 }: TemplateFieldGroupActionProps) {
   const variantClasses = {
-    default:
-      "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:bg-foundation-bg-light-4 dark:hover:bg-foundation-bg-dark-4",
-    primary: "text-foundation-accent-blue hover:text-foundation-accent-blue/80",
-    ghost:
-      "text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
+    default: "bg-muted text-text-secondary hover:bg-muted/80",
+    primary: "text-accent-blue hover:text-accent-blue/80",
+    ghost: "text-text-secondary hover:text-foreground",
   };
 
   return (
@@ -372,7 +358,7 @@ export function TemplateFieldGroupAction({
       disabled={disabled}
       className={cn(
         "inline-flex items-center gap-1.5 text-xs font-medium rounded-lg px-2 py-1",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foundation-accent-blue",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "transition-colors",
         variantClasses[variant],
         disabled && "opacity-40 cursor-not-allowed pointer-events-none",
@@ -404,12 +390,11 @@ export function TemplateFieldGroupBadge({
   className,
 }: TemplateFieldGroupBadgeProps) {
   const variantClasses = {
-    default:
-      "bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary",
-    primary: "bg-foundation-accent-blue/10 text-foundation-accent-blue",
-    success: "bg-foundation-accent-green/10 text-foundation-accent-green",
-    warning: "bg-foundation-accent-orange/10 text-foundation-accent-orange",
-    error: "bg-foundation-accent-red/10 text-foundation-accent-red",
+    default: "bg-muted text-text-secondary",
+    primary: "bg-accent-blue/10 text-accent-blue",
+    success: "bg-accent-green/10 text-accent-green",
+    warning: "bg-accent-orange/10 text-accent-orange",
+    error: "bg-status-error-muted/10 text-status-error",
   };
 
   return (
@@ -441,21 +426,16 @@ export function TemplateFieldGroupDivider({ label, className }: TemplateFieldGro
   if (label) {
     return (
       <div className={cn("flex items-center gap-3 py-3", className)}>
-        <div className="flex-1 h-px bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3" />
-        <span className="text-[11px] font-medium uppercase tracking-wider text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+        <div className="flex-1 h-px bg-muted" />
+        <span className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
           {label}
         </span>
-        <div className="flex-1 h-px bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3" />
+        <div className="flex-1 h-px bg-muted" />
       </div>
     );
   }
 
-  return (
-    <div
-      className={cn("h-px bg-foundation-bg-light-3 dark:bg-foundation-bg-dark-3 my-3", className)}
-      role="separator"
-    />
-  );
+  return <div className={cn("h-px bg-muted my-3", className)} role="separator" />;
 }
 
 // Compound component for field group row (horizontal layout)

@@ -52,7 +52,7 @@ function Avatar({
         // Disabled state styling
         disabled && "opacity-50 pointer-events-none",
         // Error state styling
-        error && "ring-2 ring-foundation-accent-red",
+        error && "ring-2 ring-status-error",
         className,
       )}
       aria-disabled={disabled || undefined}

@@ -182,7 +182,7 @@ function SafeDashboardBody() {
     <WidgetErrorBoundary>
       <div className="space-y-4 text-sm text-white/90">
         {error && (
-          <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-3 text-red-400">
+          <div className="rounded-lg border border-status-error/20 bg-status-error-muted/10 p-3 text-status-error">
             Error: {error}
           </div>
         )}

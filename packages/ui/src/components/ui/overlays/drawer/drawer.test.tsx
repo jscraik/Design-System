@@ -19,7 +19,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Drawer Title</Drawer.DrawerTitle>
             Drawer Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       const trigger = container.querySelector('[data-slot="drawer-trigger"]');
       expect(trigger).toBeInTheDocument();
@@ -33,7 +33,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Drawer Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Drawer Content")).toBeInTheDocument();
     });
@@ -46,7 +46,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Hidden Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.queryByText("Hidden Content")).not.toBeInTheDocument();
     });
@@ -59,7 +59,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Toggle Drawer")).toBeInTheDocument();
     });
@@ -74,7 +74,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.queryByText("Content")).not.toBeInTheDocument();
 
@@ -85,7 +85,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
     });
@@ -98,7 +98,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
 
@@ -109,7 +109,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.queryByText("Content")).not.toBeInTheDocument();
     });
@@ -118,73 +118,89 @@ describe("Drawer", () => {
   describe("Stateful props - Loading", () => {
     it("calls onStateChange with 'loading'", async () => {
       render(
-        <Drawer.Drawer open={true} onOpenChange={mockOnOpenChange} loading onStateChange={mockOnStateChange}>
+        <Drawer.Drawer
+          open={true}
+          onOpenChange={mockOnOpenChange}
+          loading
+          onStateChange={mockOnStateChange}
+        >
           <Drawer.DrawerTrigger>Open</Drawer.DrawerTrigger>
           <Drawer.DrawerContent>
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });
     });
-
   });
 
   describe("Stateful props - Error", () => {
     it("calls onStateChange with 'error'", async () => {
       render(
-        <Drawer.Drawer open={true} onOpenChange={mockOnOpenChange} error="Error message" onStateChange={mockOnStateChange}>
+        <Drawer.Drawer
+          open={true}
+          onOpenChange={mockOnOpenChange}
+          error="Error message"
+          onStateChange={mockOnStateChange}
+        >
           <Drawer.DrawerTrigger>Open</Drawer.DrawerTrigger>
           <Drawer.DrawerContent>
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
       });
     });
-
   });
 
   describe("Stateful props - Disabled", () => {
     it("calls onStateChange with 'disabled'", async () => {
       render(
-        <Drawer.Drawer open={true} onOpenChange={mockOnOpenChange} disabled onStateChange={mockOnStateChange}>
+        <Drawer.Drawer
+          open={true}
+          onOpenChange={mockOnOpenChange}
+          disabled
+          onStateChange={mockOnStateChange}
+        >
           <Drawer.DrawerTrigger>Open</Drawer.DrawerTrigger>
           <Drawer.DrawerContent>
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
       });
     });
-
   });
 
   describe("Stateful props - Required", () => {
     it("calls onStateChange with 'default' when required", async () => {
       render(
-        <Drawer.Drawer open={true} onOpenChange={mockOnOpenChange} required onStateChange={mockOnStateChange}>
+        <Drawer.Drawer
+          open={true}
+          onOpenChange={mockOnOpenChange}
+          required
+          onStateChange={mockOnStateChange}
+        >
           <Drawer.DrawerTrigger>Open</Drawer.DrawerTrigger>
           <Drawer.DrawerContent>
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
       });
     });
-
   });
 
   describe("State priority", () => {
@@ -203,7 +219,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -224,7 +240,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -243,7 +259,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       const trigger = screen.getByRole("button");
       expect(trigger).toBeInTheDocument();
@@ -262,7 +278,7 @@ describe("Drawer", () => {
               Header Text
             </Drawer.DrawerHeader>
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Header Text")).toBeInTheDocument();
     });
@@ -277,7 +293,7 @@ describe("Drawer", () => {
               Content
             </Drawer.DrawerHeader>
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
     });
@@ -292,7 +308,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             <Drawer.DrawerFooter>Footer Text</Drawer.DrawerFooter>
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Footer Text")).toBeInTheDocument();
     });
@@ -305,7 +321,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             <Drawer.DrawerFooter className="custom-footer">Content</Drawer.DrawerFooter>
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
     });
@@ -321,7 +337,7 @@ describe("Drawer", () => {
               <Drawer.DrawerTitle>My Title</Drawer.DrawerTitle>
             </Drawer.DrawerHeader>
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("My Title")).toBeInTheDocument();
     });
@@ -338,7 +354,7 @@ describe("Drawer", () => {
               <Drawer.DrawerDescription>My Description</Drawer.DrawerDescription>
             </Drawer.DrawerHeader>
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("My Description")).toBeInTheDocument();
     });
@@ -353,7 +369,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             <Drawer.DrawerClose>Custom Close</Drawer.DrawerClose>
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Custom Close")).toBeInTheDocument();
     });
@@ -368,7 +384,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Content
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Content")).toBeInTheDocument();
     });
@@ -391,7 +407,7 @@ describe("Drawer", () => {
               <button type="button">Confirm</button>
             </Drawer.DrawerFooter>
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Form Title")).toBeInTheDocument();
       expect(screen.getByText("Fill out this form")).toBeInTheDocument();
@@ -411,7 +427,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             <div data-testid="drawer-portal-content">Portal Content</div>
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       const content = screen.getByTestId("drawer-portal-content");
       expect(content).toBeInTheDocument();
@@ -434,7 +450,7 @@ describe("Drawer", () => {
               <button type="button">Save</button>
             </Drawer.DrawerFooter>
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Complete Drawer")).toBeInTheDocument();
       expect(screen.getByText("With all components")).toBeInTheDocument();
@@ -453,7 +469,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Top Drawer
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Top Drawer")).toBeInTheDocument();
     });
@@ -466,7 +482,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Bottom Drawer
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Bottom Drawer")).toBeInTheDocument();
     });
@@ -479,7 +495,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Left Drawer
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Left Drawer")).toBeInTheDocument();
     });
@@ -492,7 +508,7 @@ describe("Drawer", () => {
             <Drawer.DrawerTitle>Title</Drawer.DrawerTitle>
             Right Drawer
           </Drawer.DrawerContent>
-        </Drawer.Drawer>
+        </Drawer.Drawer>,
       );
       expect(screen.getByText("Right Drawer")).toBeInTheDocument();
     });

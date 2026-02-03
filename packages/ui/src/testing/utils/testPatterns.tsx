@@ -101,14 +101,23 @@ export function testStates<T = unknown>(config: TestStatesConfig<T>): void {
     });
 
     // Parametrized state tests using describe.each
-    describe.each(states.map(s => ({
-      name: s.name,
-      props: s.props,
-      expectedState: s.expectedState,
-      expectedAttrs: s.expectedAttrs || [],
-      expectedClasses: s.expectedClasses || [],
-      testsCallback: s.testsCallback || false,
-    })))('$name state', ({ name, props, expectedState, expectedAttrs, expectedClasses, testsCallback }) => {
+    describe.each(
+      states.map((s) => ({
+        name: s.name,
+        props: s.props,
+        expectedState: s.expectedState,
+        expectedAttrs: s.expectedAttrs || [],
+        expectedClasses: s.expectedClasses || [],
+        testsCallback: s.testsCallback || false,
+      })),
+    )("$name state", ({
+      name,
+      props,
+      expectedState,
+      expectedAttrs,
+      expectedClasses,
+      testsCallback,
+    }) => {
       it(`applies ${expectedState} state styling`, () => {
         const { container } = renderFn(props as T);
         const element = container.querySelector(selector);
@@ -233,7 +242,7 @@ export interface TestSubPartsConfig {
  */
 export function testSubParts(parts: TestSubPartsConfig[]): void {
   describe("Sub-parts", () => {
-    describe.each(parts)('$name', ({ render, selector, dataSlot, hasClassName = true }) => {
+    describe.each(parts)("$name", ({ render, selector, dataSlot, hasClassName = true }) => {
       it(`renders with data-slot="${dataSlot}"`, () => {
         const { container } = render();
         const element = container.querySelector(`[data-slot="${dataSlot}"]`);
@@ -257,16 +266,25 @@ export function testSubParts(parts: TestSubPartsConfig[]): void {
  * ```tsx
  * const states = createStateTestCases([
  *   ["loading", { loading: true }, "loading"],
-*   ["error", { error: "Error" }, "error", { attrs: [{ name: "data-error", value: "true" }] }],
-*   ["disabled", { disabled: true }, "disabled", { classes: ["opacity-50"] }],
-* ]);
-* ```
-*/
+ *   ["error", { error: "Error" }, "error", { attrs: [{ name: "data-error", value: "true" }] }],
+ *   ["disabled", { disabled: true }, "disabled", { classes: ["opacity-50"] }],
+ * ]);
+ * ```
+ */
 export function createStateTestCases(
   cases: Array<
-    [string, Record<string, unknown>, string] |
-    [string, Record<string, unknown>, string, { attrs?: Array<{ name: string; value: string }>; classes?: string[]; testsCallback?: boolean }]
-  >
+    | [string, Record<string, unknown>, string]
+    | [
+        string,
+        Record<string, unknown>,
+        string,
+        {
+          attrs?: Array<{ name: string; value: string }>;
+          classes?: string[];
+          testsCallback?: boolean;
+        },
+      ]
+  >,
 ): StateTestCase[] {
   return cases.map((testCase) => {
     const [name, props, expectedState, options = {}] = testCase;

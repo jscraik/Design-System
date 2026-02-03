@@ -54,19 +54,15 @@ export function AppSection({
 
   return (
     <div className="mb-5">
-      <h3 className="text-body-small font-semibold text-foundation-text-dark-primary mb-2">App</h3>
+      <h3 className="text-body-small font-semibold text-foreground mb-2">App</h3>
       <div className="space-y-0.5">
         <SettingRow
-          icon={
-            <IconGlobe className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-          }
+          icon={<IconGlobe className="size-4 text-text-secondary dark:text-text-secondary" />}
           label="App language"
           right={
             <div className="flex items-center gap-2">
-              <span className="text-body-small font-normal text-foundation-text-dark-secondary">
-                {appLanguage}
-              </span>
-              <IconChevronRightMd className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
+              <span className="text-body-small font-normal text-text-secondary">{appLanguage}</span>
+              <IconChevronRightMd className="size-4 text-text-secondary dark:text-text-secondary" />
             </div>
           }
         />
@@ -75,20 +71,20 @@ export function AppSection({
           <DropdownMenuTrigger asChild>
             <button
               type="button"
-              className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-lg transition-colors"
+              className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-secondary dark:hover:bg-secondary rounded-lg transition-colors"
             >
               <div className="flex items-center gap-3">
-                <IconPlayground className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-                <span className="text-body-small font-normal text-foundation-text-dark-primary">
+                <IconPlayground className="size-4 text-text-secondary dark:text-text-secondary" />
+                <span className="text-body-small font-normal text-foreground">
                   Show in Menu Bar
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-body-small font-normal text-foundation-text-dark-secondary">
+                <span className="text-body-small font-normal text-text-secondary">
                   {showInMenuBar}
                 </span>
-                <div className="size-5 rounded-full bg-foundation-bg-dark-3 flex items-center justify-center">
-                  <IconChevronDownMd className="size-3 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
+                <div className="size-5 rounded-full bg-muted flex items-center justify-center">
+                  <IconChevronDownMd className="size-3 text-text-secondary dark:text-text-secondary" />
                 </div>
               </div>
             </button>
@@ -111,24 +107,22 @@ export function AppSection({
           <DropdownMenuTrigger asChild>
             <button
               type="button"
-              className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-light-2 dark:hover:bg-foundation-bg-dark-2 rounded-lg transition-colors"
+              className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-secondary dark:hover:bg-secondary rounded-lg transition-colors"
             >
               <div className="flex items-center gap-3">
-                <IconSun className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-                <span className="text-body-small font-normal text-foundation-text-dark-primary">
-                  Accent color
-                </span>
+                <IconSun className="size-4 text-text-secondary dark:text-text-secondary" />
+                <span className="text-body-small font-normal text-foreground">Accent color</span>
               </div>
               <div className="flex items-center gap-2">
                 <div
                   className="size-3 rounded-full"
                   style={{ backgroundColor: selectedColorHex }}
                 />
-                <span className="text-body-small font-normal text-foundation-text-dark-secondary">
+                <span className="text-body-small font-normal text-text-secondary">
                   {accentColor}
                 </span>
-                <div className="size-5 rounded-full bg-foundation-bg-dark-3 flex items-center justify-center">
-                  <IconChevronDownMd className="size-3 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
+                <div className="size-5 rounded-full bg-muted flex items-center justify-center">
+                  <IconChevronDownMd className="size-3 text-text-secondary dark:text-text-secondary" />
                 </div>
               </div>
             </button>
@@ -151,40 +145,32 @@ export function AppSection({
         </DropdownMenu>
 
         <SettingToggle
-          icon={
-            <IconComment className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-          }
+          icon={<IconComment className="size-4 text-text-secondary dark:text-text-secondary" />}
           label="Show additional models"
           checked={showAdditionalModels}
           onCheckedChange={() => onToggle("showAdditionalModels")}
         />
 
         <SettingToggle
-          icon={
-            <IconCheckmark className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-          }
+          icon={<IconCheckmark className="size-4 text-text-secondary dark:text-text-secondary" />}
           label="Correct spelling automatically"
           checked={correctSpelling}
           onCheckedChange={() => onToggle("correctSpelling")}
         />
 
         <SettingToggle
-          icon={
-            <IconLink className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-          }
+          icon={<IconLink className="size-4 text-text-secondary dark:text-text-secondary" />}
           label="Open ChatGPT links in desktop app"
           checked={openLinksInApp}
           onCheckedChange={() => onToggle("openLinksInApp")}
         />
 
         <SettingRow
-          icon={
-            <IconRegenerate className="size-4 text-foundation-icon-light-secondary dark:text-foundation-icon-dark-secondary" />
-          }
+          icon={<IconRegenerate className="size-4 text-text-secondary dark:text-text-secondary" />}
           label="Check for updates..."
           onClick={() => onNavigate("checkForUpdates")}
           right={
-            <IconChevronRightMd className="size-4 text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary" />
+            <IconChevronRightMd className="size-4 text-muted-foreground dark:text-muted-foreground" />
           }
         />
       </div>

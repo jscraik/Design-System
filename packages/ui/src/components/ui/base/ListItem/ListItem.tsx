@@ -130,11 +130,10 @@ export function ListItem({
       className={cn(
         "group w-full flex items-center justify-between rounded-10 transition-colors text-left",
         sizes[size],
-        onClick &&
-          "hover:bg-foundation-bg-light-2/80 dark:hover:bg-foundation-bg-dark-2/80 cursor-pointer",
-        selected && "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2",
+        onClick && "hover:bg-secondary/80 cursor-pointer",
+        selected && "bg-secondary",
         isDisabled && "opacity-50 cursor-not-allowed",
-        error && "border border-foundation-accent-red/50",
+        error && "border border-status-error/50",
         loading && "animate-pulse",
         dataRailItem && "justify-center px-2",
         className,
@@ -144,7 +143,7 @@ export function ListItem({
         {icon && (
           <div
             className={cn(
-              "flex-shrink-0 text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary [&>svg]:shrink-0",
+              "flex-shrink-0 text-muted-foreground [&>svg]:shrink-0",
               iconWrapperSizeClass,
             )}
           >
@@ -152,22 +151,16 @@ export function ListItem({
           </div>
         )}
         <div className={cn("flex-1 min-w-0", dataRailItem && "hidden")}>
-          <div className="text-list-title text-foundation-text-light-primary dark:text-foundation-text-dark-primary truncate">
-            {label}
-          </div>
+          <div className="text-list-title text-foreground truncate">{label}</div>
           {description && (
-            <div className="text-list-subtitle text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary truncate">
-              {description}
-            </div>
+            <div className="text-list-subtitle text-text-secondary truncate">{description}</div>
           )}
         </div>
       </div>
 
       <div className={cn("flex items-center gap-2 flex-shrink-0 ml-2", dataRailItem && "hidden")}>
         {right}
-        {showChevron && (
-          <IconChevronRightMd className="size-4 text-foundation-icon-light-tertiary dark:text-foundation-icon-dark-tertiary" />
-        )}
+        {showChevron && <IconChevronRightMd className="size-4 text-muted-foreground" />}
       </div>
     </Component>
   );
@@ -194,7 +187,7 @@ export function ListItemCheck({ checked = false, ...props }: ListItemCheckProps)
       right={
         checked && (
           <svg
-            className="size-4 text-foundation-text-light-primary dark:text-foundation-text-dark-primary"
+            className="size-4 text-foreground"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

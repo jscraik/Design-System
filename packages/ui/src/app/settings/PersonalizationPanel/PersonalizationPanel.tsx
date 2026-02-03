@@ -48,25 +48,25 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
 
   return (
     <>
-      <div className="px-6 py-4 border-b border-foundation-text-light-primary/10 dark:border-foundation-text-dark-primary/10 flex items-center gap-3">
+      <div className="px-6 py-4 border-b border-foreground/10 dark:border-foreground/10 flex items-center gap-3">
         <div className="flex gap-2">
           <button
             type="button"
             onClick={onBack}
-            className="size-3 rounded-full bg-foundation-accent-red hover:bg-foundation-accent-red/80 transition-colors"
+            className="size-3 rounded-full bg-status-error hover:bg-status-error/80 transition-colors"
             aria-label="Close"
           />
-          <div className="size-3 rounded-full bg-foundation-accent-orange" />
-          <div className="size-3 rounded-full bg-foundation-accent-green" />
+          <div className="size-3 rounded-full bg-accent-orange" />
+          <div className="size-3 rounded-full bg-accent-green" />
         </div>
         <button
           type="button"
           onClick={onBack}
-          className="p-1 hover:bg-foundation-bg-dark-3 rounded transition-colors"
+          className="p-1 hover:bg-muted rounded transition-colors"
         >
-          <IconChevronLeftMd className="size-4 text-foundation-icon-light-primary dark:text-foundation-icon-dark-primary" />
+          <IconChevronLeftMd className="size-4 text-foreground dark:text-foreground" />
         </button>
-        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foundation-text-dark-primary">
+        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foreground">
           Personalization
         </h2>
       </div>
@@ -85,7 +85,7 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
 
         {/* Characteristics */}
         <div className="mb-5">
-          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3">
+          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foreground mb-2 px-3">
             Characteristics
           </h3>
 
@@ -119,7 +119,7 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
             />
           </div>
 
-          <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-foundation-text-dark-tertiary px-3 mt-3">
+          <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-muted-foreground px-3 mt-3">
             Choose some additional customizations on top of your base style and tone.
           </p>
         </div>
@@ -128,14 +128,14 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
         <div className="mb-5">
           <label
             htmlFor="personalization-instructions"
-            className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3"
+            className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foreground mb-2 px-3"
           >
             Custom instructions
           </label>
           <textarea
             id="personalization-instructions"
             aria-label="Custom instructions"
-            className="w-full px-3 py-2 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary bg-foundation-bg-dark-2 border border-foundation-text-dark-primary/10 rounded-lg resize-none focus:outline-none focus:ring-1 focus:ring-foundation-text-dark-primary/20 transition-all"
+            className="w-full px-3 py-2 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground bg-secondary border border-foreground/10 rounded-lg resize-none focus:outline-none focus:ring-1 focus:ring-foreground/20 transition-all"
             rows={2}
             defaultValue="Be habitual and conversational"
             placeholder="Enter custom instructions..."
@@ -146,7 +146,7 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
         <div className="mb-5">
           <label
             htmlFor="personalization-nickname"
-            className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3"
+            className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foreground mb-2 px-3"
           >
             Your nickname
           </label>
@@ -154,7 +154,7 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
             id="personalization-nickname"
             type="text"
             aria-label="Your nickname"
-            className="w-full px-3 py-2 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary bg-foundation-bg-dark-2 border border-foundation-text-dark-primary/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-foundation-text-dark-primary/20 transition-all"
+            className="w-full px-3 py-2 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground bg-secondary border border-foreground/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-foreground/20 transition-all"
             defaultValue="Jamie"
             placeholder="Enter your nickname..."
           />
@@ -164,7 +164,7 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
         <div className="mb-5">
           <label
             htmlFor="personalization-occupation"
-            className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3"
+            className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foreground mb-2 px-3"
           >
             Your occupation
           </label>
@@ -172,7 +172,7 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
             id="personalization-occupation"
             type="text"
             aria-label="Your occupation"
-            className="w-full px-3 py-2 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary bg-foundation-bg-dark-2 border border-foundation-text-dark-primary/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-foundation-text-dark-primary/20 transition-all"
+            className="w-full px-3 py-2 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground bg-secondary border border-foreground/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-foreground/20 transition-all"
             defaultValue="AI System Architect & Dev"
             placeholder="Enter your occupation..."
           />
@@ -182,7 +182,7 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
         <div className="mb-5">
           <label
             htmlFor="personalization-about"
-            className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary mb-2 px-3"
+            className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foreground mb-2 px-3"
           >
             More about you
           </label>
@@ -190,7 +190,7 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
             id="personalization-about"
             type="text"
             aria-label="More about you"
-            className="w-full px-3 py-2 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary bg-foundation-bg-dark-2 border border-foundation-text-dark-primary/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-foundation-text-dark-primary/20 transition-all"
+            className="w-full px-3 py-2 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground bg-secondary border border-foreground/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-foreground/20 transition-all"
             defaultValue="Ai, Dev"
             placeholder="Tell us more about yourself..."
           />
@@ -199,10 +199,10 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
         {/* Memory */}
         <div className="mb-5">
           <SettingRow
-            icon={<IconBook className="size-4 text-foundation-icon-dark-secondary" />}
+            icon={<IconBook className="size-4 text-text-secondary" />}
             label="Memory"
             onClick={() => {}}
-            right={<IconChevronRightMd className="size-4 text-foundation-icon-dark-tertiary" />}
+            right={<IconChevronRightMd className="size-4 text-muted-foreground" />}
           />
         </div>
 
@@ -211,13 +211,13 @@ export function PersonalizationPanel({ onBack }: SettingsPanelProps) {
           <button
             type="button"
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-foundation-bg-dark-2 rounded-lg transition-colors mb-2"
+            className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-secondary rounded-lg transition-colors mb-2"
           >
-            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foundation-text-dark-primary">
+            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground">
               Advanced
             </span>
             <IconChevronDownMd
-              className={`size-4 text-foundation-icon-dark-tertiary transition-transform ${showAdvanced ? "" : "-rotate-90"}`}
+              className={`size-4 text-muted-foreground transition-transform ${showAdvanced ? "" : "-rotate-90"}`}
             />
           </button>
 

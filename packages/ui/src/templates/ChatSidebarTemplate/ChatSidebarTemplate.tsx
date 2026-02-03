@@ -20,7 +20,7 @@ export function ChatSidebarTemplate() {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className="min-h-[640px] bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-1">
+    <div className="min-h-[640px] bg-background">
       <ChatSidebarBlock
         isOpen={isOpen}
         onToggle={() => setIsOpen((prev) => !prev)}

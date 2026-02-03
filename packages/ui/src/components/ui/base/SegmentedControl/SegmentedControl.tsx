@@ -52,7 +52,7 @@ export interface SegmentedControlProps<T extends string = string> extends Statef
  */
 function SegmentedControlError({ message, id }: { message: string; id?: string }) {
   return (
-    <span id={id} className="text-destructive text-body-small mt-1 flex items-center gap-1">
+    <span id={id} className="text-status-error text-body-small mt-1 flex items-center gap-1">
       <svg className="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
         <path
           fillRule="evenodd"
@@ -147,10 +147,10 @@ export function SegmentedControl<T extends string = string>({
       aria-describedby={error ? errorId : undefined}
       aria-required={required ? "true" : undefined}
       className={cn(
-        "inline-flex items-center gap-0 bg-foundation-bg-dark-2 rounded-lg p-1",
+        "inline-flex items-center gap-0 bg-secondary rounded-lg p-1",
         fullWidth && "w-full",
         loading && "opacity-70 cursor-wait",
-        error && "ring-2 ring-destructive/50",
+        error && "ring-2 ring-status-error/50",
         className,
       )}
     >
@@ -169,15 +169,12 @@ export function SegmentedControl<T extends string = string>({
               "rounded-md transition-all flex items-center gap-1.5",
               sizes[size],
               fullWidth && "flex-1 justify-center",
-              isSelected
-                ? "text-foundation-text-dark-primary"
-                : "text-foundation-text-dark-secondary hover:text-foundation-text-light-primary dark:hover:text-foundation-text-dark-primary",
+              isSelected ? "text-foreground" : "text-text-secondary hover:text-foreground",
               isOptionDisabled && "opacity-50 cursor-not-allowed",
             )}
             style={{
               backgroundColor: isSelected
-                ? activeColor ||
-                  "color-mix(in srgb, var(--foundation-accent-green) 30%, transparent)"
+                ? activeColor || "color-mix(in srgb, var(--accent-green) 30%, transparent)"
                 : "transparent",
             }}
           >
@@ -196,7 +193,7 @@ export function SegmentedControl<T extends string = string>({
         {controlElement}
         {error && <SegmentedControlError message={error} id={errorId} />}
         {required && !error && (
-          <span className="text-destructive text-body-small mt-1" aria-hidden="true">
+          <span className="text-status-error text-body-small mt-1" aria-hidden="true">
             * Required
           </span>
         )}

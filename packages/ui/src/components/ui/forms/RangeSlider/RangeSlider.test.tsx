@@ -139,13 +139,7 @@ describe("RangeSlider", () => {
 
   describe("Stateful props - Loading", () => {
     it("calls onStateChange with 'loading'", async () => {
-      render(
-        <RangeSlider
-          value={50}
-          loading
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<RangeSlider value={50} loading onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });
@@ -161,13 +155,7 @@ describe("RangeSlider", () => {
 
   describe("Stateful props - Error", () => {
     it("calls onStateChange with 'error'", async () => {
-      render(
-        <RangeSlider
-          value={50}
-          error="Value too high"
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<RangeSlider value={50} error="Value too high" onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
       });
@@ -182,13 +170,7 @@ describe("RangeSlider", () => {
 
   describe("Stateful props - Disabled", () => {
     it("calls onStateChange with 'disabled'", async () => {
-      render(
-        <RangeSlider
-          value={50}
-          disabled
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<RangeSlider value={50} disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
       });
@@ -220,13 +202,7 @@ describe("RangeSlider", () => {
 
   describe("Stateful props - Required", () => {
     it("calls onStateChange with 'default' when required", async () => {
-      render(
-        <RangeSlider
-          value={50}
-          required
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<RangeSlider value={50} required onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
       });
@@ -236,13 +212,7 @@ describe("RangeSlider", () => {
   describe("State priority", () => {
     it("prioritizes loading over error and disabled", async () => {
       render(
-        <RangeSlider
-          value={50}
-          loading
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        />
+        <RangeSlider value={50} loading error="Error" disabled onStateChange={mockOnStateChange} />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -250,14 +220,7 @@ describe("RangeSlider", () => {
     });
 
     it("prioritizes error over disabled when not loading", async () => {
-      render(
-        <RangeSlider
-          value={50}
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<RangeSlider value={50} error="Error" disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
       });
@@ -292,37 +255,37 @@ describe("RangeSlider", () => {
 
     it("has aria-invalid when error", () => {
       render(<RangeSlider value={50} error="Invalid" />);
-      const wrapper = screen.getByRole("slider").closest('[data-state]');
+      const wrapper = screen.getByRole("slider").closest("[data-state]");
       expect(wrapper).toHaveAttribute("aria-invalid", "true");
     });
 
     it("has aria-required when required", () => {
       render(<RangeSlider value={50} required />);
-      const wrapper = screen.getByRole("slider").closest('[data-state]');
+      const wrapper = screen.getByRole("slider").closest("[data-state]");
       expect(wrapper).toHaveAttribute("aria-required", "true");
     });
 
     it("has aria-busy when loading", () => {
       render(<RangeSlider value={50} loading />);
-      const wrapper = screen.getByRole("slider").closest('[data-state]');
+      const wrapper = screen.getByRole("slider").closest("[data-state]");
       expect(wrapper).toHaveAttribute("aria-busy", "true");
     });
 
     it("has data-state attribute reflecting current state", () => {
       render(<RangeSlider value={50} />);
-      const wrapper = screen.getByRole("slider").closest('[data-state]');
+      const wrapper = screen.getByRole("slider").closest("[data-state]");
       expect(wrapper).toHaveAttribute("data-state", "default");
     });
 
     it("has data-error attribute when error", () => {
       render(<RangeSlider value={50} error="Invalid" />);
-      const wrapper = screen.getByRole("slider").closest('[data-state]');
+      const wrapper = screen.getByRole("slider").closest("[data-state]");
       expect(wrapper).toHaveAttribute("data-error", "true");
     });
 
     it("has data-required attribute when required", () => {
       render(<RangeSlider value={50} required />);
-      const wrapper = screen.getByRole("slider").closest('[data-state]');
+      const wrapper = screen.getByRole("slider").closest("[data-state]");
       expect(wrapper).toHaveAttribute("data-required", "true");
     });
   });

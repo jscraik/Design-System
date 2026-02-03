@@ -163,10 +163,10 @@ export const WithError: Story = {
         placeholder="Email"
         aria-invalid="true"
         aria-describedby="email-error-message"
-        className="border-destructive focus-visible:ring-destructive"
+        className="border-status-error focus-visible:ring-status-error"
         {...args}
       />
-      <p id="email-error-message" className="text-sm text-destructive">
+      <p id="email-error-message" className="text-sm text-status-error">
         Please enter a valid email address.
       </p>
     </div>

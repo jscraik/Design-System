@@ -33,28 +33,26 @@ export const HoverAntiFlicker: Story = {
   render: () => (
     <div className="p-8 space-y-8">
       <div className="text-sm text-muted-foreground">
-        <p>Move your mouse over the cards below. Notice how the hover effect is smooth
-        without any flickering.</p>
+        <p>
+          Move your mouse over the cards below. Notice how the hover effect is smooth without any
+          flickering.
+        </p>
       </div>
 
       <div className="flex gap-8">
         {/* Flicker-prone example (what NOT to do) */}
         <div className="text-center">
-          <p className="text-xs text-red-500 mb-2">❌ Flicker-prone (animating parent)</p>
+          <p className="text-xs text-status-error mb-2">❌ Flicker-prone (animating parent)</p>
           <div className="relative w-48 h-32 bg-red-50 dark:bg-red-900/20 rounded-lg cursor-pointer hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
-            <p className="absolute inset-0 flex items-center justify-center text-sm">
-              Hover Me
-            </p>
+            <p className="absolute inset-0 flex items-center justify-center text-sm">Hover Me</p>
           </div>
         </div>
 
         {/* Anti-flicker example (what TO do) */}
         <div className="text-center">
-          <p className="text-xs text-green-500 mb-2">✓ Anti-flicker (animating child)</p>
+          <p className="text-xs text-status-success mb-2">✓ Anti-flicker (animating child)</p>
           <div className="hover-trigger relative w-48 h-32 bg-green-50 dark:bg-green-900/20 rounded-lg cursor-pointer">
-            <p className="absolute inset-0 flex items-center justify-center text-sm">
-              Hover Me
-            </p>
+            <p className="absolute inset-0 flex items-center justify-center text-sm">Hover Me</p>
             <div className="hover-effect absolute inset-0 bg-green-100 dark:bg-green-900/30 rounded-lg" />
           </div>
         </div>
@@ -64,7 +62,7 @@ export const HoverAntiFlicker: Story = {
 };
 
 // ============================================================================
- BUTTON PRESS STATES (Based on @emilkowalski patterns)
+// BUTTON PRESS STATES (Based on @emilkowalski patterns)
 // ============================================================================
 
 export const ButtonPressStates: Story = {
@@ -114,7 +112,9 @@ export const FormValidationHas: Story = {
     return (
       <div className="p-8 space-y-6 max-w-md">
         <div className="text-sm text-muted-foreground">
-          <p>The form below uses <code>:has()</code> to show error state when invalid.</p>
+          <p>
+            The form below uses <code>:has()</code> to show error state when invalid.
+          </p>
         </div>
 
         <form className="space-y-4">
@@ -175,8 +175,10 @@ export const Transform3D: Story = {
       <div className="grid grid-cols-3 gap-8">
         {/* Scale(0) reveal */}
         <div className="hover-trigger group relative h-48 cursor-pointer">
-          <div className="hover-effect absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl transition-all"
-               style={{ transform: "scale(0)", transformOrigin: "bottom" }} />
+          <div
+            className="hover-effect absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl transition-all"
+            style={{ transform: "scale(0)", transformOrigin: "bottom" }}
+          />
           <div className="relative h-full bg-card rounded-xl border p-6 flex items-center justify-center">
             <span className="text-sm">Scale Reveal</span>
           </div>
@@ -189,8 +191,10 @@ export const Transform3D: Story = {
 
         {/* RotateX flip */}
         <div className="hover-trigger group relative h-48 cursor-pointer perspective-1000">
-          <div className="hover-effect absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl transition-all duration-500"
-               style={{ transformStyle: "preserve-3d", transform: "rotateX(90deg)" }} />
+          <div
+            className="hover-effect absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl transition-all duration-500"
+            style={{ transformStyle: "preserve-3d", transform: "rotateX(90deg)" }}
+          />
           <div className="relative h-full bg-card rounded-xl border p-6 flex items-center justify-center">
             <span className="text-sm">3D Flip</span>
           </div>
@@ -203,8 +207,10 @@ export const Transform3D: Story = {
 
         {/* Scale(0.93) press */}
         <div className="hover-trigger group relative h-48 cursor-pointer">
-          <div className="hover-effect absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl transition-all opacity-0 group-hover:opacity-100"
-               style={{ transform: "scale(0.93)" }} />
+          <div
+            className="hover-effect absolute inset-0 bg-gradient-to-br from-status-success to-status-success rounded-xl transition-all opacity-0 group-hover:opacity-100"
+            style={{ transform: "scale(0.93)" }}
+          />
           <div className="relative h-full bg-card rounded-xl border p-6 flex items-center justify-center">
             <span className="text-sm">Press Effect</span>
           </div>
@@ -263,9 +269,7 @@ export const AccordionGridTransition: Story = {
               }}
             >
               <div className="overflow-hidden">
-                <div className="px-4 pb-4 text-muted-foreground">
-                  {item.content}
-                </div>
+                <div className="px-4 pb-4 text-muted-foreground">{item.content}</div>
               </div>
             </div>
           </div>
@@ -301,7 +305,7 @@ export const PatternReference: Story = {
             Separate trigger from effect to prevent hover flickering
           </p>
           <code className="text-xs bg-background px-2 py-1 rounded">
-            .parent:hover .child { /* animate child */ }
+            .parent:hover .child {/* animate child */}
           </code>
         </div>
 
@@ -310,9 +314,7 @@ export const PatternReference: Story = {
           <p className="text-sm text-muted-foreground mb-2">
             Subtle scale(0.93) for tactile press feedback
           </p>
-          <code className="text-xs bg-background px-2 py-1 rounded">
-            transform: scale(0.93);
-          </code>
+          <code className="text-xs bg-background px-2 py-1 rounded">transform: scale(0.93);</code>
         </div>
 
         <div className="p-4 bg-muted rounded-lg">
@@ -321,13 +323,19 @@ export const PatternReference: Story = {
             Style parent based on child input validity
           </p>
           <code className="text-xs bg-background px-2 py-1 rounded">
-            .form-group:has(input:invalid):not(:focus-within) { /* error state */ }
+            .form-group:has(input:invalid):not(:focus-within) {/* error state */}
           </code>
         </div>
       </div>
 
       <div className="mt-6 text-sm text-muted-foreground">
-        <p>See <code className="bg-background px-1 rounded">/Users/jamiecraik/dev/aStudio/docs/xkit-patterns-extracted.md</code> for full documentation.</p>
+        <p>
+          See{" "}
+          <code className="bg-background px-1 rounded">
+            /Users/jamiecraik/dev/aStudio/docs/xkit-patterns-extracted.md
+          </code>{" "}
+          for full documentation.
+        </p>
       </div>
     </div>
   ),

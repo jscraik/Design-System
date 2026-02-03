@@ -8,10 +8,10 @@ const indicatorVariants = cva("inline-flex items-center justify-center", {
   variants: {
     variant: {
       default: "text-foreground",
-      primary: "text-accent",
-      success: "text-foundation-accent-green",
-      warning: "text-foundation-accent-orange",
-      error: "text-foundation-accent-red",
+      primary: "text-interactive",
+      success: "text-status-success",
+      warning: "text-status-warning",
+      error: "text-status-error",
     },
     size: {
       sm: "size-4",
@@ -112,9 +112,7 @@ function Indicator({
         />
       </span>
       {(label || error) && (
-        <span
-          className={cn("text-sm", error ? "text-foundation-accent-red" : "text-muted-foreground")}
-        >
+        <span className={cn("text-sm", error ? "text-status-error" : "text-muted-foreground")}>
           {error || label}
         </span>
       )}

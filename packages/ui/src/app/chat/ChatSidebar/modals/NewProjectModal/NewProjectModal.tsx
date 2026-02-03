@@ -54,11 +54,11 @@ export function NewProjectModal({
       title="New project"
       description="Projects give ChatGPT shared context across chats and files, all in one place."
       maxWidth="420px"
-      className="bg-foundation-bg-light-1 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 text-foundation-text-light-primary dark:text-foundation-text-dark-primary rounded-2xl shadow-2xl"
-      overlayClassName="bg-foundation-bg-dark-1/70 backdrop-blur-sm"
+      className="bg-background dark:bg-secondary border border-muted dark:border-muted text-foreground dark:text-foreground rounded-2xl shadow-2xl"
+      overlayClassName="bg-background/70 backdrop-blur-sm"
     >
       <div className="px-6 pt-6 pb-5">
-        <p className="text-body-small text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary font-normal text-center">
+        <p className="text-body-small text-muted-foreground dark:text-muted-foreground font-normal text-center">
           Projects give ChatGPT shared context
           <br />
           across chats and files, all in one place.
@@ -79,7 +79,7 @@ export function NewProjectModal({
             placeholder="Project Name"
             value={projectName}
             onChange={(e) => onProjectNameChange(e.target.value)}
-            className="w-full bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 rounded-lg pl-10 pr-3 py-3 text-body-small text-foundation-text-light-primary dark:text-foundation-text-dark-primary placeholder:text-foundation-text-light-tertiary dark:placeholder:text-foundation-text-dark-tertiary focus:outline-none focus:ring-1 focus:ring-foundation-border-light/50 dark:focus:ring-foundation-border-dark-default/50 transition-all font-normal"
+            className="w-full bg-secondary dark:bg-secondary border border-muted dark:border-muted rounded-lg pl-10 pr-3 py-3 text-body-small text-foreground dark:text-foreground placeholder:text-muted-foreground dark:placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring/50 dark:focus:ring-ring/50 transition-all font-normal"
             aria-label="Project name"
           />
         </div>
@@ -97,7 +97,7 @@ export function NewProjectModal({
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-body-small border transition-all whitespace-nowrap flex-shrink-0 font-normal ${
                     isSelected
                       ? categoryColors[category]
-                      : "bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 hover:bg-foundation-bg-light-2/80 dark:hover:bg-foundation-bg-dark-2/80"
+                      : "bg-secondary dark:bg-secondary text-muted-foreground dark:text-muted-foreground border-muted dark:border-muted hover:bg-secondary/80 dark:hover:bg-secondary/80"
                   }`}
                 >
                   <span className={categoryIconColors[category]}>{categoryIcons[category]}</span>
@@ -110,13 +110,13 @@ export function NewProjectModal({
         <button
           onClick={onCreateProject}
           disabled={!projectName.trim()}
-          className="w-full bg-foundation-accent-green-light dark:bg-foundation-accent-green hover:bg-foundation-accent-green-light/80 dark:hover:bg-foundation-accent-green/80 disabled:bg-foundation-bg-light-2 dark:disabled:bg-foundation-bg-dark-2 disabled:text-foundation-text-light-tertiary dark:disabled:text-foundation-text-dark-tertiary disabled:cursor-not-allowed text-foundation-text-dark-primary py-3 rounded-lg transition-all text-body-small font-normal"
+          className="w-full bg-accent-green dark:bg-accent-green hover:bg-accent-green/80 dark:hover:bg-accent-green/80 disabled:bg-secondary dark:disabled:bg-secondary disabled:text-muted-foreground dark:disabled:text-muted-foreground disabled:cursor-not-allowed text-foreground py-3 rounded-lg transition-all text-body-small font-normal"
         >
           Create project
         </button>
         <button
           onClick={onMoreOptions}
-          className="w-full bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 hover:bg-foundation-bg-light-2/80 dark:hover:bg-foundation-bg-dark-2/80 text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary py-3 rounded-lg mt-2 transition-colors text-body-small font-normal"
+          className="w-full bg-secondary dark:bg-secondary hover:bg-secondary/80 dark:hover:bg-secondary/80 text-muted-foreground dark:text-muted-foreground py-3 rounded-lg mt-2 transition-colors text-body-small font-normal"
         >
           More options
         </button>

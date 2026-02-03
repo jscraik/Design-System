@@ -150,7 +150,7 @@ describe("Indicator", () => {
     it("applies error text color", () => {
       render(<Indicator error="Failed" />);
       const errorText = screen.getByText("Failed");
-      expect(errorText).toHaveClass("text-foundation-accent-red");
+      expect(errorText).toHaveClass("text-status-error");
     });
   });
 
@@ -188,27 +188,14 @@ describe("Indicator", () => {
 
   describe("State priority", () => {
     it("prioritizes loading over error and disabled", async () => {
-      render(
-        <Indicator
-          loading
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<Indicator loading error="Error" disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
       });
     });
 
     it("prioritizes error over disabled when not loading", async () => {
-      render(
-        <Indicator
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        />
-      );
+      render(<Indicator error="Error" disabled onStateChange={mockOnStateChange} />);
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
       });

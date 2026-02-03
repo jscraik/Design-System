@@ -12,16 +12,73 @@ export function TypographyTab() {
     >
       <div className="space-y-4">
         {[
-          { label: "Heading 1", token: typographyTokens.heading1, example: "The quick brown fox" },
+          { label: "Hero", token: typographyTokens.hero, example: "The quick brown fox" },
+          { label: "H1", token: typographyTokens.h1, example: "The quick brown fox jumps" },
+          { label: "H2", token: typographyTokens.h2, example: "The quick brown fox jumps over" },
           {
-            label: "Heading 2",
-            token: typographyTokens.heading2,
-            example: "The quick brown fox jumps",
+            label: "H3",
+            token: typographyTokens.h3,
+            example: "The quick brown fox jumps over the",
           },
           {
-            label: "Heading 3",
-            token: typographyTokens.heading3,
-            example: "The quick brown fox jumps over",
+            label: "H4",
+            token: typographyTokens.h4,
+            example: "The quick brown fox jumps over the lazy",
+          },
+          {
+            label: "H5",
+            token: typographyTokens.h5,
+            example: "The quick brown fox jumps over the lazy dog",
+          },
+          {
+            label: "H6",
+            token: typographyTokens.h6,
+            example: "The quick brown fox jumps over the lazy dog.",
+          },
+          {
+            label: "Paragraph Lg",
+            token: typographyTokens.paragraphLg,
+            example: "The quick brown fox jumps over the lazy dog.",
+          },
+          {
+            label: "Paragraph Md",
+            token: typographyTokens.paragraphMd,
+            example: "The quick brown fox jumps over the lazy dog.",
+          },
+          {
+            label: "Paragraph Sm",
+            token: typographyTokens.paragraphSm,
+            example: "The quick brown fox jumps over the lazy dog.",
+          },
+          {
+            label: "Caption",
+            token: typographyTokens.caption,
+            example: "The quick brown fox",
+          },
+          {
+            label: "Heading 1 (Legacy)",
+            token: typographyTokens.legacy.heading1,
+            example: "Legacy heading token",
+          },
+          {
+            label: "Heading 2 (Legacy)",
+            token: typographyTokens.legacy.heading2,
+            example: "Legacy heading token",
+          },
+          {
+            label: "Heading 3 (Legacy)",
+            token: typographyTokens.legacy.heading3,
+            example: "Legacy heading token",
+          },
+          {
+            label: "Body (Legacy)",
+            token: typographyTokens.legacy.body,
+            example: "Legacy body token",
+          },
+          {
+            label: "Body Small (Legacy)",
+            token: typographyTokens.legacy.bodySmall,
+            example: "Legacy body token",
           },
         ].map(({ label, token, example }) => (
           <Card key={label}>
@@ -57,11 +114,11 @@ export function TypographyTab() {
             Usage Example
           </h3>
           <CodeBlock
-            code={`<h1 className="text-heading-1">Heading 1</h1>
-<h2 className="text-heading-2">Heading 2</h2>
-<h3 className="text-heading-3">Heading 3</h3>
-<p className="text-body">Body text</p>
-<p className="text-body-small">Small body text</p>
+            code={`<h1 className="text-hero">Hero headline</h1>
+<h2 className="text-h1">Page title</h2>
+<h3 className="text-h2">Section title</h3>
+<p className="text-paragraph-md">Body text</p>
+<p className="text-paragraph-sm">Small body text</p>
 <span className="text-caption">Caption text</span>`}
             language="tsx"
           />

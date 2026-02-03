@@ -37,7 +37,9 @@ import { useIsMobile } from "./UseMobile";
 // Demo component to showcase the hook
 function IsMobileDemo() {
   const isMobile = useIsMobile();
-  const [viewportWidth, setViewportWidth] = React.useState(typeof window !== "undefined" ? window.innerWidth : 0);
+  const [viewportWidth, setViewportWidth] = React.useState(
+    typeof window !== "undefined" ? window.innerWidth : 0,
+  );
 
   React.useEffect(() => {
     const handleResize = () => setViewportWidth(window.innerWidth);
@@ -59,13 +61,17 @@ function IsMobileDemo() {
         </div>
         <div className="rounded-lg border bg-muted p-4">
           <div className="text-sm text-muted-foreground">Is Mobile</div>
-          <div className={`text-2xl font-bold ${isMobile ? "text-accent" : "text-muted-foreground"}`}>
+          <div
+            className={`text-2xl font-bold ${isMobile ? "text-accent" : "text-muted-foreground"}`}
+          >
             {isMobile ? "Yes" : "No"}
           </div>
         </div>
       </div>
 
-      <div className={`rounded-lg border p-4 ${isMobile ? "bg-accent/10 border-accent" : "bg-muted"}`}>
+      <div
+        className={`rounded-lg border p-4 ${isMobile ? "bg-accent/10 border-accent" : "bg-muted"}`}
+      >
         <div className="text-sm font-medium">
           {isMobile ? "📱 Mobile Viewport Detected" : "🖥️ Desktop Viewport Detected"}
         </div>
@@ -130,7 +136,8 @@ const meta = {
     layout: "centered",
     docs: {
       description: {
-        component: "A React hook that detects mobile viewport based on a 768px breakpoint. Returns true when viewport width < 768px.",
+        component:
+          "A React hook that detects mobile viewport based on a 768px breakpoint. Returns true when viewport width < 768px.",
       },
     },
   },
@@ -182,21 +189,23 @@ export const AccessibilityNotes: Story = {
         <div className="rounded-lg border border-accent/20 bg-accent/5 p-4">
           <div className="font-medium text-accent">✓ DO</div>
           <p className="mt-1 text-muted-foreground">
-            Use to inform UI patterns that work better on mobile (e.g., bottom sheets instead of modals, larger touch targets).
+            Use to inform UI patterns that work better on mobile (e.g., bottom sheets instead of
+            modals, larger touch targets).
           </p>
         </div>
 
-        <div className="rounded-lg border border-destructive/20 bg-destructive/5 p-4">
-          <div className="font-medium text-destructive">✗ DON'T</div>
+        <div className="rounded-lg border border-status-error/20 bg-status-error/5 p-4">
+          <div className="font-medium text-status-error">✗ DON'T</div>
           <p className="mt-1 text-muted-foreground">
-            Hide content from screen readers based on viewport. Use responsive ARIA attributes instead.
+            Hide content from screen readers based on viewport. Use responsive ARIA attributes
+            instead.
           </p>
         </div>
 
         <div className="rounded-lg border p-4">
           <div className="font-medium">Example: Touch-Friendly Targets</div>
           <pre className="mt-2 overflow-x-auto text-xs">
-{`const isMobile = useIsMobile();
+            {`const isMobile = useIsMobile();
 const buttonSize = isMobile ? "p-4 min-h-[44px]" : "p-2";
 return <button className={buttonSize}>Action</button>;`}
           </pre>

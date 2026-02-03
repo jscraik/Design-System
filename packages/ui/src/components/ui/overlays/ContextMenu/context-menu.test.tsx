@@ -17,7 +17,7 @@ describe("ContextMenu", () => {
           <ContextMenu.ContextMenuContent>
             <ContextMenu.ContextMenuItem>Copy</ContextMenu.ContextMenuItem>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       const trigger = container.querySelector('[data-slot="context-menu-trigger"]');
       expect(trigger).toBeInTheDocument();
@@ -30,7 +30,7 @@ describe("ContextMenu", () => {
           <ContextMenu.ContextMenuContent>
             <ContextMenu.ContextMenuItem>Item</ContextMenu.ContextMenuItem>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       expect(screen.getByText("Toggle Menu")).toBeInTheDocument();
     });
@@ -44,7 +44,7 @@ describe("ContextMenu", () => {
           <ContextMenu.ContextMenuContent>
             <ContextMenu.ContextMenuItem>Item</ContextMenu.ContextMenuItem>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -60,7 +60,7 @@ describe("ContextMenu", () => {
           <ContextMenu.ContextMenuContent>
             <ContextMenu.ContextMenuItem>Item</ContextMenu.ContextMenuItem>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -76,7 +76,7 @@ describe("ContextMenu", () => {
           <ContextMenu.ContextMenuContent>
             <ContextMenu.ContextMenuItem>Item</ContextMenu.ContextMenuItem>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("disabled");
@@ -92,7 +92,7 @@ describe("ContextMenu", () => {
           <ContextMenu.ContextMenuContent>
             <ContextMenu.ContextMenuItem>Item</ContextMenu.ContextMenuItem>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("default");
@@ -103,17 +103,12 @@ describe("ContextMenu", () => {
   describe("State priority", () => {
     it("prioritizes loading over error and disabled", async () => {
       render(
-        <ContextMenu.ContextMenu
-          loading
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        >
+        <ContextMenu.ContextMenu loading error="Error" disabled onStateChange={mockOnStateChange}>
           <ContextMenu.ContextMenuTrigger>Right click</ContextMenu.ContextMenuTrigger>
           <ContextMenu.ContextMenuContent>
             <ContextMenu.ContextMenuItem>Item</ContextMenu.ContextMenuItem>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -122,16 +117,12 @@ describe("ContextMenu", () => {
 
     it("prioritizes error over disabled when not loading", async () => {
       render(
-        <ContextMenu.ContextMenu
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        >
+        <ContextMenu.ContextMenu error="Error" disabled onStateChange={mockOnStateChange}>
           <ContextMenu.ContextMenuTrigger>Right click</ContextMenu.ContextMenuTrigger>
           <ContextMenu.ContextMenuContent>
             <ContextMenu.ContextMenuItem>Item</ContextMenu.ContextMenuItem>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
@@ -147,7 +138,7 @@ describe("ContextMenu", () => {
           <ContextMenu.ContextMenuContent>
             <ContextMenu.ContextMenuItem>Default Item</ContextMenu.ContextMenuItem>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       // Component renders without error; content requires menu to be open to be visible
       expect(screen.getByText("Right click")).toBeInTheDocument();
@@ -160,7 +151,7 @@ describe("ContextMenu", () => {
           <ContextMenu.ContextMenuContent>
             <ContextMenu.ContextMenuItem variant="destructive">Delete</ContextMenu.ContextMenuItem>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       expect(screen.getByText("Right click")).toBeInTheDocument();
     });
@@ -174,7 +165,7 @@ describe("ContextMenu", () => {
           <ContextMenu.ContextMenuContent>
             <ContextMenu.ContextMenuCheckboxItem>Check me</ContextMenu.ContextMenuCheckboxItem>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       expect(screen.getByText("Right click")).toBeInTheDocument();
     });
@@ -187,11 +178,15 @@ describe("ContextMenu", () => {
           <ContextMenu.ContextMenuTrigger>Right click</ContextMenu.ContextMenuTrigger>
           <ContextMenu.ContextMenuContent>
             <ContextMenu.ContextMenuRadioGroup>
-              <ContextMenu.ContextMenuRadioItem value="1">Option 1</ContextMenu.ContextMenuRadioItem>
-              <ContextMenu.ContextMenuRadioItem value="2">Option 2</ContextMenu.ContextMenuRadioItem>
+              <ContextMenu.ContextMenuRadioItem value="1">
+                Option 1
+              </ContextMenu.ContextMenuRadioItem>
+              <ContextMenu.ContextMenuRadioItem value="2">
+                Option 2
+              </ContextMenu.ContextMenuRadioItem>
             </ContextMenu.ContextMenuRadioGroup>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       expect(screen.getByText("Right click")).toBeInTheDocument();
     });
@@ -206,7 +201,7 @@ describe("ContextMenu", () => {
             <ContextMenu.ContextMenuLabel>Section Label</ContextMenu.ContextMenuLabel>
             <ContextMenu.ContextMenuItem>Item</ContextMenu.ContextMenuItem>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       expect(screen.getByText("Right click")).toBeInTheDocument();
     });
@@ -223,7 +218,7 @@ describe("ContextMenu", () => {
               <ContextMenu.ContextMenuShortcut>⌘S</ContextMenu.ContextMenuShortcut>
             </ContextMenu.ContextMenuItem>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       expect(screen.getByText("Right click")).toBeInTheDocument();
     });
@@ -240,7 +235,7 @@ describe("ContextMenu", () => {
               <ContextMenu.ContextMenuItem>Group Item 2</ContextMenu.ContextMenuItem>
             </ContextMenu.ContextMenuGroup>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       expect(screen.getByText("Right click")).toBeInTheDocument();
     });
@@ -260,13 +255,17 @@ describe("ContextMenu", () => {
             </ContextMenu.ContextMenuGroup>
             <ContextMenu.ContextMenuSeparator />
             <ContextMenu.ContextMenuRadioGroup>
-              <ContextMenu.ContextMenuRadioItem value="1">Option 1</ContextMenu.ContextMenuRadioItem>
-              <ContextMenu.ContextMenuRadioItem value="2">Option 2</ContextMenu.ContextMenuRadioItem>
+              <ContextMenu.ContextMenuRadioItem value="1">
+                Option 1
+              </ContextMenu.ContextMenuRadioItem>
+              <ContextMenu.ContextMenuRadioItem value="2">
+                Option 2
+              </ContextMenu.ContextMenuRadioItem>
             </ContextMenu.ContextMenuRadioGroup>
             <ContextMenu.ContextMenuSeparator />
             <ContextMenu.ContextMenuItem variant="destructive">Delete</ContextMenu.ContextMenuItem>
           </ContextMenu.ContextMenuContent>
-        </ContextMenu.ContextMenu>
+        </ContextMenu.ContextMenu>,
       );
       expect(screen.getByText("Right click")).toBeInTheDocument();
     });

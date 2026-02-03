@@ -83,7 +83,7 @@ describe("CodeBlock", () => {
 
       // Mock clipboard API using vi.stub
       const writeText = vi.fn().mockResolvedValue(undefined);
-      vi.stubGlobal('navigator', {
+      vi.stubGlobal("navigator", {
         clipboard: {
           writeText,
         } as unknown as Clipboard,
@@ -191,7 +191,7 @@ describe("CodeBlock", () => {
           error="Error"
           disabled
           onStateChange={mockOnStateChange}
-        />
+        />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("loading");
@@ -200,12 +200,7 @@ describe("CodeBlock", () => {
 
     it("prioritizes error over disabled when not loading", async () => {
       render(
-        <CodeBlock
-          code={mockCode}
-          error="Error"
-          disabled
-          onStateChange={mockOnStateChange}
-        />
+        <CodeBlock code={mockCode} error="Error" disabled onStateChange={mockOnStateChange} />,
       );
       await waitFor(() => {
         expect(mockOnStateChange).toHaveBeenCalledWith("error");
