@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://astudio.local/schema/dtcg.schema.json",
-  "title": "aStudio DTCG Token Schema (2024-01)",
+  "title": "aStudio DTCG Token Schema (DTCG 2025.10 Compliant)",
   "type": "object",
   "required": ["$schema", "meta", "color", "space", "radius", "size", "shadow", "type"],
   "properties": {
@@ -32,21 +32,21 @@
     "space": {
       "type": "object",
       "patternProperties": {
-        "^[0-9]+$": { "$ref": "#/$defs/tokenNumber" }
+        "^[a-zA-Z0-9]+$": { "$ref": "#/$defs/tokenDimension" }
       },
       "additionalProperties": false
     },
     "radius": {
       "type": "object",
       "patternProperties": {
-        "^[a-zA-Z0-9]+$": { "$ref": "#/$defs/tokenNumber" }
+        "^[a-zA-Z0-9]+$": { "$ref": "#/$defs/tokenDimension" }
       },
       "additionalProperties": false
     },
     "size": {
       "type": "object",
       "patternProperties": {
-        "^[a-zA-Z0-9]+$": { "$ref": "#/$defs/tokenNumber" }
+        "^[a-zA-Z0-9]+$": { "$ref": "#/$defs/tokenDimension" }
       },
       "additionalProperties": false
     },
@@ -61,40 +61,98 @@
       "type": "object",
       "required": ["fontFamily"],
       "properties": {
-        "fontFamily": { "$ref": "#/$defs/tokenString" }
+        "fontFamily": { "$ref": "#/$defs/tokenFontFamily" }
       },
       "additionalProperties": {
-        "$ref": "#/$defs/tokenTypography"
+        "$ref": "#/$defs/tokenTypographyGroup"
       }
     }
   },
   "$defs": {
     "tokenString": {
       "type": "object",
-      "required": ["value"],
+      "required": ["$value"],
       "properties": {
-        "value": { "type": "string" },
-        "type": { "type": "string" }
+        "$value": { "type": "string" },
+        "$type": { "type": "string" },
+        "$description": { "type": "string" }
       },
       "additionalProperties": true
     },
     "tokenNumber": {
       "type": "object",
-      "required": ["value"],
+      "required": ["$value"],
       "properties": {
-        "value": { "type": "number" },
-        "type": { "type": "string" }
+        "$value": { "type": "number" },
+        "$type": { "type": "string" },
+        "$description": { "type": "string" }
       },
       "additionalProperties": true
     },
     "tokenColor": {
       "type": "object",
-      "required": ["value"],
+      "required": ["$value"],
       "properties": {
-        "value": { "type": "string", "pattern": "^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$" },
-        "type": { "type": "string" }
+        "$value": { 
+          "type": "string", 
+          "pattern": "^#([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$|^rgba?\\([^)]+\\)$" 
+        },
+        "$type": { "type": "string" },
+        "$description": { "type": "string" }
       },
       "additionalProperties": true
+    },
+    "tokenDimension": {
+      "type": "object",
+      "required": ["$value", "$type"],
+      "properties": {
+        "$value": {
+          "type": "object",
+          "required": ["value", "unit"],
+          "properties": {
+            "value": { "type": "number" },
+            "unit": { "enum": ["px", "rem", "em", "%"] }
+          }
+        },
+        "$type": { "const": "dimension" },
+        "$description": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "tokenFontFamily": {
+      "type": "object",
+      "required": ["$value", "$type"],
+      "properties": {
+        "$value": { "type": "string" },
+        "$type": { "const": "fontFamily" },
+        "$description": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "tokenFontWeight": {
+      "type": "object",
+      "required": ["$value", "$type"],
+      "properties": {
+        "$value": { 
+          "oneOf": [
+            { "type": "number", "minimum": 1, "maximum": 1000 },
+            { "enum": ["thin", "hairline", "extra-light", "ultra-light", "light", "normal", "regular", "book", "medium", "semi-bold", "demi-bold", "bold", "extra-bold", "ultra-bold", "black", "heavy", "extra-black", "ultra-black"] }
+          ]
+        },
+        "$type": { "const": "fontWeight" },
+        "$description": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "tokenLetterSpacing": {
+      "type": "object",
+      "required": ["$value", "$type"],
+      "properties": {
+        "$value": { "type": "number" },
+        "$type": { "const": "letterSpacing" },
+        "$description": { "type": "string" }
+      },
+      "additionalProperties": false
     },
     "colorModeSet": {
       "type": "object",
@@ -182,46 +240,39 @@
     },
     "tokenShadow": {
       "type": "object",
-      "required": ["value"],
+      "required": ["$value", "$type"],
       "properties": {
-        "value": {
+        "$value": {
           "type": "array",
           "items": {
             "type": "object",
             "required": ["color", "offsetX", "offsetY", "blur", "spread"],
             "properties": {
-              "color": { "type": "string" },
-              "offsetX": { "type": "number" },
-              "offsetY": { "type": "number" },
-              "blur": { "type": "number" },
-              "spread": { "type": "number" }
+              "color": { "$ref": "#/$defs/tokenColor" },
+              "offsetX": { "$ref": "#/$defs/tokenDimension" },
+              "offsetY": { "$ref": "#/$defs/tokenDimension" },
+              "blur": { "$ref": "#/$defs/tokenDimension" },
+              "spread": { "$ref": "#/$defs/tokenDimension" }
             },
             "additionalProperties": false
           }
         },
-        "type": { "type": "string" }
+        "$type": { "const": "shadow" },
+        "$description": { "type": "string" }
       },
-      "additionalProperties": true
+      "additionalProperties": false
     },
-    "tokenTypography": {
+    "tokenTypographyGroup": {
       "type": "object",
-      "required": ["value"],
       "properties": {
-        "value": {
-          "type": "object",
-          "required": ["size", "lineHeight", "weight", "tracking"],
-          "properties": {
-            "size": { "type": "number" },
-            "lineHeight": { "type": "number" },
-            "weight": { "type": "number" },
-            "tracking": { "type": "number" },
-            "emphasisWeight": { "type": "number" }
-          },
-          "additionalProperties": false
-        },
-        "type": { "type": "string" }
+        "size": { "$ref": "#/$defs/tokenDimension" },
+        "lineHeight": { "$ref": "#/$defs/tokenDimension" },
+        "paragraphSpacing": { "$ref": "#/$defs/tokenDimension" },
+        "weight": { "$ref": "#/$defs/tokenFontWeight" },
+        "emphasisWeight": { "$ref": "#/$defs/tokenFontWeight" },
+        "tracking": { "$ref": "#/$defs/tokenLetterSpacing" }
       },
-      "additionalProperties": true
+      "additionalProperties": false
     }
   }
 }

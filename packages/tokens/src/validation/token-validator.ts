@@ -14,15 +14,18 @@ type ValidationResult = {
   errors: ValidationError[];
 };
 
-type DtcgToken = { value: string | number | unknown };
+// DTCG-compliant token types
+type DtcgDimensionValue = { value: number; unit: "px" | "rem" | "em" | "%" };
+type DtcgColorToken = { $value: string; $type: "color" };
+type DtcgDimensionToken = { $value: DtcgDimensionValue; $type: "dimension" };
 
 type DtcgRoot = {
-  color: Record<string, Record<string, Record<string, DtcgToken>>>;
-  space: Record<string, DtcgToken>;
-  radius: Record<string, DtcgToken>;
-  size: Record<string, DtcgToken>;
-  shadow: Record<string, DtcgToken>;
-  type: Record<string, DtcgToken>;
+  color: Record<string, Record<string, Record<string, DtcgColorToken>>>;
+  space: Record<string, DtcgDimensionToken>;
+  radius: Record<string, DtcgDimensionToken>;
+  size: Record<string, DtcgDimensionToken>;
+  shadow: Record<string, { $value: unknown[]; $type: "shadow" }>;
+  type: Record<string, DtcgDimensionToken | Record<string, unknown>>;
 };
 
 const CONTRAST_PAIRS = [
@@ -49,7 +52,7 @@ async function loadDtcgTokens(): Promise<DtcgRoot> {
   return JSON.parse(raw) as DtcgRoot;
 }
 
-function resolvePath(root: DtcgRoot, path: string): DtcgToken | null {
+function resolvePath(root: DtcgRoot, path: string): { $value?: string | number | DtcgDimensionValue } | null {
   const parts = path.split(".");
   let current: unknown = root;
   for (const part of parts) {
@@ -58,18 +61,18 @@ function resolvePath(root: DtcgRoot, path: string): DtcgToken | null {
     }
     current = (current as Record<string, unknown>)[part];
   }
-  return (current as DtcgToken) ?? null;
+  return (current as { $value?: string | number | DtcgDimensionValue }) ?? null;
 }
 
 function isTokenGroup(value: unknown): boolean {
   if (!value || typeof value !== "object") return false;
   return Object.values(value).some((entry) => {
     if (!entry || typeof entry !== "object") return false;
-    return "value" in (entry as Record<string, unknown>);
+    return "$value" in (entry as Record<string, unknown>);
   });
 }
 
-function collectModeKeys(value: Record<string, DtcgToken>): string[] {
+function collectModeKeys(value: Record<string, { $value?: unknown }>): string[] {
   return Object.keys(value).sort();
 }
 
@@ -116,7 +119,7 @@ function validateAliasMap(root: DtcgRoot, aliasMap: TokenAliasMap): ValidationEr
         }
         if ("path" in value) {
           const token = resolvePath(root, value.path);
-          if (!token || token.value === undefined) {
+          if (!token || token.$value === undefined) {
             errors.push({
               code: "TOKEN_ALIAS_MISSING",
               message: `Alias '${category}.${tokenName}.${mode}' references missing path '${value.path}'.`,
@@ -142,7 +145,7 @@ function validateAliasMap(root: DtcgRoot, aliasMap: TokenAliasMap): ValidationEr
     for (const [tokenName, value] of Object.entries(mapping)) {
       if ("path" in value && value.path) {
         const token = resolvePath(root, value.path);
-        if (!token || token.value === undefined) {
+        if (!token || token.$value === undefined) {
           if (category === "type" && isTokenGroup(token)) {
             continue;
           }
@@ -224,8 +227,8 @@ function resolveAliasColor(
   }
   if ("path" in alias) {
     const token = resolvePath(root, alias.path);
-    if (token && typeof token.value === "string") {
-      return token.value;
+    if (token && typeof token.$value === "string") {
+      return token.$value;
     }
   }
   return null;

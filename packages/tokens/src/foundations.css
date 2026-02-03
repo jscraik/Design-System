@@ -7,70 +7,70 @@
 
 :root {
   /* Dark backgrounds */
-  --foundation-bg-dark-1: #1a1a1a;
-  --foundation-bg-dark-2: #2a2a2a;
-  --foundation-bg-dark-3: #3a3a3a;
+  --foundation-bg-dark-1: #1A1A1A;
+  --foundation-bg-dark-2: #2A2A2A;
+  --foundation-bg-dark-3: #3A3A3A;
 
   /* Dark text */
-  --foundation-text-dark-primary: #ffffff;
-  --foundation-text-dark-secondary: #e0e0e0;
-  --foundation-text-dark-tertiary: #b8b8b8;
+  --foundation-text-dark-primary: #FFFFFF;
+  --foundation-text-dark-secondary: #E0E0E0;
+  --foundation-text-dark-tertiary: #B8B8B8;
 
   /* Dark accents */
-  --foundation-accent-gray: #afafaf;
-  --foundation-accent-red: #ff8583;
-  --foundation-accent-orange: #ff9e6c;
-  --foundation-accent-yellow: #ffdb66;
-  --foundation-accent-green: #40c977;
-  --foundation-accent-blue: #66b5ff;
-  --foundation-accent-purple: #be95fa;
-  --foundation-accent-pink: #ff66ad;
+  --foundation-accent-gray: #AFAFAF;
+  --foundation-accent-red: #FF8583;
+  --foundation-accent-orange: #FF9E6C;
+  --foundation-accent-yellow: #FFDB66;
+  --foundation-accent-green: #40C977;
+  --foundation-accent-blue: #66B5FF;
+  --foundation-accent-purple: #BE95FA;
+  --foundation-accent-pink: #FF66AD;
 
   /* Light backgrounds */
-  --foundation-bg-light-1: #ffffff;
-  --foundation-bg-light-2: #ededed;
-  --foundation-bg-light-3: #f3f3f3;
+  --foundation-bg-light-1: #FFFFFF;
+  --foundation-bg-light-2: #EDEDED;
+  --foundation-bg-light-3: #F3F3F3;
 
   /* Light text */
-  --foundation-text-light-primary: #0d0d0d;
-  --foundation-text-light-secondary: #5d5d5d;
-  --foundation-text-light-tertiary: #8f8f8f;
+  --foundation-text-light-primary: #0D0D0D;
+  --foundation-text-light-secondary: #5D5D5D;
+  --foundation-text-light-tertiary: #8F8F8F;
 
   /* Light icon */
-  --foundation-icon-light-primary: #0d0d0d;
-  --foundation-icon-light-secondary: #5d5d5d;
-  --foundation-icon-light-tertiary: #8f8f8f;
-  --foundation-icon-light-inverted: #ffffff;
-  --foundation-icon-light-accent: #0285ff;
-  --foundation-icon-light-status-error: #e02e2a;
-  --foundation-icon-light-status-warning: #e25507;
+  --foundation-icon-light-primary: #0D0D0D;
+  --foundation-icon-light-secondary: #5D5D5D;
+  --foundation-icon-light-tertiary: #8F8F8F;
+  --foundation-icon-light-inverted: #FFFFFF;
+  --foundation-icon-light-accent: #0285FF;
+  --foundation-icon-light-status-error: #E02E2A;
+  --foundation-icon-light-status-warning: #E25507;
   --foundation-icon-light-status-success: #008635;
 
   /* Dark icon */
-  --foundation-icon-dark-primary: #ffffff;
-  --foundation-icon-dark-secondary: #e0e0e0;
-  --foundation-icon-dark-tertiary: #b8b8b8;
-  --foundation-icon-dark-inverted: #0d0d0d;
-  --foundation-icon-dark-accent: #339cff;
-  --foundation-icon-dark-status-error: #ff8583;
-  --foundation-icon-dark-status-warning: #ff9e6c;
-  --foundation-icon-dark-status-success: #40c977;
+  --foundation-icon-dark-primary: #FFFFFF;
+  --foundation-icon-dark-secondary: #E0E0E0;
+  --foundation-icon-dark-tertiary: #B8B8B8;
+  --foundation-icon-dark-inverted: #0D0D0D;
+  --foundation-icon-dark-accent: #339CFF;
+  --foundation-icon-dark-status-error: #FF8583;
+  --foundation-icon-dark-status-warning: #FF9E6C;
+  --foundation-icon-dark-status-success: #40C977;
 
   /* Borders */
-  --foundation-border-light: #0d0d0d0d;
-  --foundation-border-heavy: #0d0d0d26;
-  --foundation-border-dark-default: #ffffff26;
-  --foundation-border-dark-light: #ffffff0d;
+  --foundation-border-light: #0D0D0D0D;
+  --foundation-border-heavy: #0D0D0D26;
+  --foundation-border-dark-default: #FFFFFF26;
+  --foundation-border-dark-light: #FFFFFF0D;
 
   /* Light accents */
-  --foundation-accent-gray-light: #8f8f8f;
-  --foundation-accent-red-light: #e02e2a;
-  --foundation-accent-orange-light: #e25507;
-  --foundation-accent-yellow-light: #ba8e00;
+  --foundation-accent-gray-light: #8F8F8F;
+  --foundation-accent-red-light: #E02E2A;
+  --foundation-accent-orange-light: #E25507;
+  --foundation-accent-yellow-light: #BA8E00;
   --foundation-accent-green-light: #008635;
-  --foundation-accent-blue-light: #0285ff;
-  --foundation-accent-purple-light: #924ff7;
-  --foundation-accent-pink-light: #e04c91;
+  --foundation-accent-blue-light: #0285FF;
+  --foundation-accent-purple-light: #924FF7;
+  --foundation-accent-pink-light: #E04C91;
 
   /* Spacing scale */
   --foundation-space-128: 128px;
@@ -83,7 +83,7 @@
   --foundation-space-12: 12px;
   --foundation-space-8: 8px;
   --foundation-space-4: 4px;
-  --foundation-space-4: 4px;
+  --foundation-space-2: 2px;
   --foundation-space-0: 0px;
 
   /* Typography */
@@ -232,16 +232,17 @@
   --foundation-button-label-small-weight-regular: 600;
   --foundation-button-label-small-tracking: -0.3px;
 
+
   /* Radius scale */
   --foundation-radius-6: 6px;
   --foundation-radius-8: 8px;
   --foundation-radius-10: 10px;
   --foundation-radius-12: 12px;
   --foundation-radius-16: 16px;
-  --foundation-radius-18: 20px;
-  --foundation-radius-21: 20px;
+  --foundation-radius-18: 18px;
+  --foundation-radius-21: 21px;
   --foundation-radius-24: 24px;
-  --foundation-radius-30: 24px;
+  --foundation-radius-30: 30px;
   --foundation-radius-round: 9999px;
 
   /* Size scale */
@@ -250,20 +251,17 @@
   --foundation-size-hit-target: 44px;
 
   /* Shadows */
-  --foundation-shadow-card:
-    0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
+  --foundation-shadow-card: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
   --foundation-shadow-pip: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
-  --foundation-shadow-pill:
-    0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
-  --foundation-shadow-close:
-    0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
+  --foundation-shadow-pill: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
+  --foundation-shadow-close: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
 
   /* Accessibility */
   --foundation-focus-ring: #0285ff;
   --foundation-focus-ring-width: 2px;
   --foundation-animation-duration: 0.25s;
   --foundation-animation-duration-reduced: 0.1s;
-
+  
   /* High contrast variants */
   --foundation-high-contrast-text: #ffffff;
   --foundation-high-contrast-bg: #000000;
@@ -286,7 +284,7 @@
   :root {
     --foundation-animation-duration: var(--foundation-animation-duration-reduced);
   }
-
+  
   * {
     animation-duration: var(--foundation-animation-duration-reduced) !important;
     transition-duration: var(--foundation-animation-duration-reduced) !important;

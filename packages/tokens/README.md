@@ -32,7 +32,7 @@ Note: For production UI code, prefer Apps SDK UI components and tokens. Use thes
 
 ## What this package contains
 
-- `src/tokens/index.dtcg.json` - Canonical DTCG token source of truth
+- `src/tokens/index.dtcg.json` - Canonical DTCG 2025.10 compliant token source of truth
 - `src/foundations.css` - Foundation tokens (audit/extension only)
 - `src/tokens.css` - App-level tokens
 - `tailwind.preset.ts` - Tailwind preset for consuming apps
