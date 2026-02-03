@@ -14,8 +14,8 @@
     "@design-studio/runtime": "workspace:*",
     "@design-studio/tokens": "workspace:*",
     "@design-studio/ui": "workspace:*",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@argos-ci/storybook": "^5.2.9",

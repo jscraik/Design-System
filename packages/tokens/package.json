@@ -51,17 +51,17 @@
     "access": "public"
   },
   "peerDependencies": {
-    "react": "^19.0.0"
+    "react": "^19.2.4"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
     "@testing-library/react": "^16.3.2",
     "@testing-library/jest-dom": "^6.6.6",
     "@types/node": "^20.0.0",
-    "@types/react": "^19.2.7",
+    "@types/react": "^19.2.10",
     "fast-check": "^3.15.1",
     "happy-dom": "^20.0.0",
-    "react": "^19.0.0",
+    "react": "^19.2.4",
     "tsx": "^4.7.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.16",
