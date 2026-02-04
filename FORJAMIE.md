@@ -65,4 +65,4 @@ From repo root (pnpm workspace):
 
 ## Recent changes
 
-- Deferred `@design-studio/desktop` intentionally; scripts now fail fast with guidance and the local README clarifies next steps. (commit: see git log; hash is self-referential in this file)
+- Deferred `@design-studio/desktop` intentionally; scripts now fail fast with guidance and the local README clarifies next steps.
