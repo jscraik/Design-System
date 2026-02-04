@@ -2,7 +2,13 @@
 
 This is the canonical location for the desktop shell.
 
-Status: scaffold-only (no Rust/Tauri config yet).
+## Status
 
-Next step when ready:
-- scaffold with a Tauri template (adds `src-tauri/` and runtime deps)
+Deferred. The desktop shell is intentionally **not** scaffolded yet, and workspace scripts
+return a non-zero exit to prevent treating this as a runnable target.
+
+## Next steps (when ready to resume)
+
+1. Scaffold a Tauri + Vite app (adds `src-tauri/`, `src/`, and runtime deps).
+2. Update the workspace build/dev scripts to point at the new entrypoints.
+3. Replace the placeholder scripts in `package.json` with real `tauri` commands.
