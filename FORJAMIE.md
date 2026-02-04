@@ -1,6 +1,6 @@
 # FORJAMIE.md
 
-**Last updated:** 2026-02-15
+**Last updated:** 2026-02-04
 **Audience:** Developers (intermediate)
 **Owner:** TBD (confirm)
 **Review cadence:** TBD (confirm)
@@ -53,7 +53,9 @@ flowchart LR
   - `mcp/` — MCP server integration
 - `docs/` — architecture, guides, test plans, and policies
   - `docs/architecture/` — ADRs and architecture map
+  - `docs/design-system/ADOPTION_CHECKLIST.md` — step-by-step integration checklist for web, widgets, and Tauri
   - `docs/testing/` — testing guidelines (smart testing rules)
+  - `docs/design-system/COVERAGE_MATRIX_SURFACES.json` — surface usage source of truth (web/tauri/widgets)
 - `scripts/` — build, compliance, and version sync tooling
 
 ## How to Run
@@ -79,7 +81,7 @@ pnpm test:mcp-contract    # MCP contract tests
 ## Lessons Learned
 
 - Docs drift is easy: keep ADR references pointing at maintained docs and update them in the same change-set.
-- Coverage reports can over-count when barrels are treated as components; validate that generators filter non-component exports.
+- High-contrast support needs explicit coverage in Brand, Alias, and Mapped layers to avoid silent fallbacks.
 
 ## Weaknesses & Improvements
 
@@ -89,9 +91,15 @@ pnpm test:mcp-contract    # MCP contract tests
 
 ## Recent Changes
 
+- **2026-02-15:** Expanded the token-reference doc with concrete verification steps, pipeline assumptions, and top troubleshooting fixes so token updates are easier to validate and recover. Impact: fewer token drift surprises and clearer remediation guidance.
+- **2026-02-04:** Added high-contrast color tokens in the Brand layer, wired alias mapping/validation, and updated theme mappings/docs to use explicit HC overrides. Impact: high-contrast modes no longer fall back to dark tokens and are validated for coverage.
+- **2026-02-14:** Refined light-mode token usage in compose and template block components so text, icons, and borders use semantic tokens with stronger contrast. Impact: clearer light-mode readability while keeping dark-mode consistency.
 - **2026-02-16:** Clarified design guidelines to require token-only Tailwind utilities (with examples) and linked to the token API mapping doc. Impact: more consistent theming and fewer ad-hoc utility tokens.
 - **2026-02-14:** Added a maintained testing guidelines doc and updated the smart-testing ADR reference so contributors have a single source for how to run tests, what types exist, and when to add them. Impact: clearer testing expectations and fewer broken doc links.
 - **2026-02-14:** Documented accessibility contracts for local primitive components and updated the coverage matrix generator to link to them. Impact: local primitives now have explicit a11y expectations referenced in coverage reporting.
+- **2026-02-15:** Added a design system adoption checklist and linked it from the README and cross-platform architecture docs. Impact: faster, more consistent onboarding for new surfaces.
+- **2026-02-18:** Added a surface usage source of truth for the coverage matrix and expanded the generated outputs to track web, tauri, and widget adoption. Impact: clearer surface-level coverage reporting. (commit: e1dbc75e86496aa9def807fbf1b79f99f9ba8712)
+- **2026-02-20:** Routed `text-muted-foreground` through the mapped muted token so light/dark variants follow the brand → alias → mapped chain without hex overrides. Impact: consistent muted text color resolution and easier token audits.
 - **2026-02-15:** Reframed the design audit report to mark the prior issues and fix list as historical/resolved, keeping the audit status, issue list, and remediation notes aligned for compliance reference. Impact: readers can trust the report status at a glance.
 - **2026-02-14:** Added a design system adoption guide that clarifies when to use Apps SDK UI vs `@design-studio/ui` vs tokens-only, and linked it from core design docs. Impact: clearer onboarding for consumers and better discovery of the design system setup.
 - **2026-02-14:** Adjusted the coverage matrix generator to ignore barrel-only exports (like `forms`/`utils`) and regenerated the matrix so it reflects real UI components. Impact: cleaner coverage reporting for the design system.

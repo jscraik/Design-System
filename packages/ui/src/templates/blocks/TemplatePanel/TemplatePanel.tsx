@@ -385,7 +385,7 @@ export function TemplatePanel({
         <div className="flex flex-col items-center justify-center py-8 px-4">
           <IconWarning className="size-12 text-status-error mb-3" />
           <h3 className="text-sm font-medium text-foreground mb-1">Error</h3>
-          <p className="text-xs text-text-secondary text-center mb-4">{errorMessage}</p>
+          <p className="text-xs text-muted-foreground text-center mb-4">{errorMessage}</p>
           {onRetry && (
             <button
               type="button"
@@ -422,7 +422,7 @@ export function TemplatePanel({
             </svg>
           )}
           <h3 className="text-sm font-medium text-foreground mb-1">{emptyTitle}</h3>
-          <p className="text-xs text-text-secondary text-center">{emptyDescription}</p>
+          <p className="text-xs text-muted-foreground text-center">{emptyDescription}</p>
         </div>
       );
     }
@@ -622,7 +622,7 @@ export function TemplatePanelHeader({
             onClick={toggleCollapse}
             className={cn(
               "inline-flex items-center justify-center rounded-md p-1.5",
-              "text-text-secondary",
+              "text-muted-foreground",
               "hover:bg-muted",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               "transition-colors duration-150",
@@ -650,7 +650,7 @@ export function TemplatePanelHeader({
             onClick={close}
             className={cn(
               "inline-flex items-center justify-center rounded-md p-1.5",
-              "text-text-secondary",
+              "text-muted-foreground",
               "hover:bg-muted",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
               "transition-colors duration-150",

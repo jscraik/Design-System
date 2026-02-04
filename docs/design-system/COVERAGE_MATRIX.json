@@ -7,7 +7,75 @@
     "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
     "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
     "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Accordion",
+    "source": "upstream",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": null,
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Alert",
+    "source": "upstream",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": null,
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Badge",
+    "source": "upstream",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": null,
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Button",
+    "source": "upstream",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": null,
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Card",
+    "source": "upstream",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": null,
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "AppsSDKBadge",
@@ -17,7 +85,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "active"
+    "status": "widget_used",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": true
   },
   {
     "name": "AppsSDKButton",
@@ -27,7 +98,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "active"
+    "status": "widget_used",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": true
   },
   {
     "name": "AppsSDKCheckbox",
@@ -37,7 +111,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "active"
+    "status": "widget_used",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": true
   },
   {
     "name": "AppsSDKCodeBlock",
@@ -47,7 +124,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "AppsSDKDownloadIcon",
@@ -57,7 +137,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "AppsSDKImage",
@@ -67,7 +150,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "active"
+    "status": "widget_used",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": true
   },
   {
     "name": "AppsSDKInput",
@@ -77,7 +163,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "active"
+    "status": "widget_used",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": true
   },
   {
     "name": "AppsSDKPopover",
@@ -87,7 +176,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "AppsSDKSparklesIcon",
@@ -97,7 +189,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "AppsSDKTextarea",
@@ -107,7 +202,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "active"
+    "status": "widget_used",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": true
   },
   {
     "name": "AppsSDKUIProvider",
@@ -117,7 +215,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "active"
+    "status": "widget_used",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": true
   },
   {
     "name": "AspectRatio",
@@ -127,7 +228,10 @@
     "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
     "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
     "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "CodeBlock",
@@ -157,7 +261,10 @@
     "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
     "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
     "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "ContextTag",
@@ -187,7 +294,10 @@
     "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
     "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
     "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "DropdownMenu",
@@ -197,7 +307,10 @@
     "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
     "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
     "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "EmptyMessage",
@@ -347,7 +460,10 @@
     "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
     "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
     "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "RadioGroup",
@@ -357,7 +473,10 @@
     "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
     "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
     "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "RangeSlider",
@@ -377,7 +496,10 @@
     "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
     "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
     "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "SectionHeader",
@@ -437,7 +559,10 @@
     "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
     "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
     "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "UseMobile",
