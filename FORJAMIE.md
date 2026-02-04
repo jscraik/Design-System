@@ -1,48 +1,51 @@
 # FORJAMIE.md
 
 ## TL;DR
-This repo is a pnpm workspace monorepo for AStudio, containing shared UI, runtime, tokens, widgets, and tooling packages plus platform-specific apps and MCP integrations. This update improves the ChatGPT icon catalog so clipboard copy failures (permissions, non-HTTPS, or unsupported APIs) show a user-facing fallback instead of throwing unhandled rejections.
+- aStudio is a pnpm workspace monorepo for the ChatUI design system, including UI components, icons, tokens, templates, and tooling.
+- The UI package (`packages/ui`) is where ChatGPT-style components, icon catalogs, and Storybook docs live.
+- Design tokens in `packages/tokens` are the source of truth for colors, spacing, typography, radius, and other foundations.
 
-## Architecture & Diagrams
-High-level flow (UI usage):
+## Architecture & Flow
+- **Tokens ➜ UI**: `packages/tokens` generates CSS variables and a Tailwind preset. UI surfaces consume those tokens via Tailwind utilities (e.g., `bg-foundation-*`, `text-foundation-*`) or token values from the package exports.
+- **Icons ➜ Catalog**: `packages/ui/src/icons` contains the ChatGPT icon sets and the catalog UI for browsing/searching icons.
+- **Templates & Storybook**: `packages/ui/src/templates` and `packages/ui/src/storybook` demonstrate component usage and token references.
 
-```mermaid
-flowchart TD
-  Apps[Apps & surfaces] --> UI[packages/ui]
-  UI --> Icons[packages/ui/src/icons]
-  UI --> Components[packages/ui/src/components]
-  Icons --> Catalog[ChatGPTIconCatalog]
+### High-level diagram (textual)
+```
+packages/tokens
+  ├─ foundations.css (CSS variables)
+  ├─ tailwind.preset.ts (tokenized utilities)
+  └─ token exports (JS/TS)
+        ↓
+packages/ui
+  ├─ components/ (UI primitives & composites)
+  ├─ icons/ (ChatGPT icon library + catalog)
+  └─ templates/storybook (docs + demos)
 ```
 
-Notes:
-- Apps/surfaces import shared UI components and icon bundles from `packages/ui`.
-- The icon catalog is a dev-facing surface for browsing and copying icon names.
-
-## Codebase Map
-- `apps/`: product surfaces and demos.
-- `packages/ui/`: shared UI components, icons, and styling tokens.
-- `packages/runtime/`: runtime utilities and shared logic.
-- `packages/tokens/`: design tokens.
-- `packages/widgets/`: widget bundles.
-- `platforms/mcp/`: MCP server and tool contracts for ChatGPT integration.
-- `docs/`: architecture, guides, audits, build pipeline docs.
-- `scripts/`: build pipeline and compliance tooling.
+## Codebase Map (key locations)
+- `packages/tokens/` — token generation, CSS variable outputs, and TS exports.
+- `packages/ui/src/icons/` — icon sets, icon catalog, and icon system docs.
+- `packages/ui/src/components/` — reusable UI components.
+- `packages/ui/src/templates/` — demo templates (including icon catalog templates).
+- `docs/` — architecture, guides, and system documentation.
 
 ## How to Run / Test
 - Install: `pnpm install`
-- Dev (all): `pnpm dev`
-- Dev (web only): `pnpm dev:web`
-- Lint: `pnpm lint`
-- Format: `pnpm format`
-- Tests (unit): `pnpm test`
-- E2E (web): `pnpm test:e2e:web`
+- Dev (web): `pnpm dev` or `pnpm dev:web`
+- Storybook: `pnpm dev:storybook`
+- Tests: `pnpm test`
+- Lint/format: `pnpm lint`, `pnpm format`, `pnpm format:check`
 
 ## Lessons Learned
-- Clipboard APIs can fail due to permissions, insecure contexts, or missing browser support; always provide user-facing fallbacks to avoid uncaught rejections.
+- Tokenized utilities and exported token values keep UI styling consistent and allow easy theming.
+- For internal catalogs (icons, tokens), explicitly document required token CSS/preset assumptions so Storybook setups are predictable.
 
 ## Weaknesses & Improvements
-- The icon catalog is currently a placeholder; it should be replaced with the full design-token-integrated version when ready.
-- Consider a shared toast/notification utility for consistent copy-to-clipboard feedback across the app.
+- **Weakness**: Documentation about internal tooling can drift from implementation over time.
+  - **Improvement**: Add a lightweight checklist for catalog/tooling updates in `packages/ui/src/icons/ICON_SYSTEM.md`.
+- **Weakness**: Some surfaces still use non-tokenized utility classes.
+  - **Improvement**: Audit and migrate remaining hard-coded spacing/typography classes to token usage.
 
 ## Recent Changes
-- 2026-02-04 — Added safe clipboard copy handling with a user-facing fallback in the ChatGPT icon catalog to prevent uncaught rejections. (Commit: f0cdce9)
+- 2026-02-14: Replaced the placeholder ChatGPT icon catalog with a full, token-driven catalog UI and documented Storybook/internal usage requirements. (commit: d965b42)

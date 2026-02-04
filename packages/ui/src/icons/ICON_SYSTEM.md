@@ -63,6 +63,18 @@ Features:
 - 🎨 Live preview
 - 🌙 Dark mode ChatGPT styling
 
+### Catalog usage (Storybook & internal tooling)
+
+`ChatGPTIconCatalog` is intended for Storybook and internal browsing tools. It has no props, but it
+relies on the shared design-system token sources:
+
+- **Tokens CSS**: ensure `@design-studio/tokens/foundations.css` (or `tokens.css`) is loaded so the
+  `--foundation-*` CSS variables resolve correctly.
+- **Tailwind preset**: the component assumes the `@design-studio/tokens/tailwind.preset` is applied
+  so tokenized utilities like `bg-foundation-*` and `text-foundation-*` are available.
+- **Theme**: it renders with `data-theme="dark"` to preview dark-mode defaults; override via a
+  parent wrapper if you need light-mode catalog shots.
+
 ## 📏 Size System
 
 ```typescript
