@@ -20,6 +20,7 @@ Note: For production UI code, prefer Apps SDK UI components and tokens. Use thes
 - [Install](#install)
 - [Quick start](#quick-start)
 - [Generate tokens](#generate-tokens)
+- [Export to Figma](#export-to-figma)
 - [Validate tokens](#validate-tokens)
 - [Docs](#docs)
 - [Verify](#verify)
@@ -32,7 +33,7 @@ Note: For production UI code, prefer Apps SDK UI components and tokens. Use thes
 
 ## What this package contains
 
-- `src/tokens/index.dtcg.json` - Canonical DTCG token source of truth
+- `src/tokens/index.dtcg.json` - Canonical DTCG 2025.10 compliant token source of truth
 - `src/foundations.css` - Foundation tokens (audit/extension only)
 - `src/tokens.css` - App-level tokens
 - `tailwind.preset.ts` - Tailwind preset for consuming apps
@@ -42,6 +43,42 @@ Note: For production UI code, prefer Apps SDK UI components and tokens. Use thes
 
 - `packages/tokens/docs/FIGMA_EXPORT_GUIDE.md` - Figma export workflow and handoff
 - `packages/tokens/docs/outputs/manifest.json` - Generated validation manifest (token build output)
+
+## Export to Figma
+
+Generate Figma-compatible DTCG format:
+
+```bash
+pnpm -C packages/tokens export:figma
+```
+
+This creates four files in `packages/tokens/dist/`:
+
+| File | Purpose |
+|------|---------|
+| `figma-tokens.json` | Flat format (easiest import) |
+| `figma-tokens-combined.json` | Organized by collection (recommended) |
+| `figma-tokens-light.json` | Color tokens (light mode only) |
+| `figma-tokens-dark.json` | Color tokens (dark mode only) |
+
+### Import into Figma
+
+1. Open Figma → **Local variables** → **Import**
+2. Select `figma-tokens-combined.json`
+3. Figma creates collections: `colors`, `spacing`, `radius`, `size`, `shadow`, `typography`
+4. For color tokens, manually create **Light** and **Dark** modes
+5. Copy dark values from `__dark` tokens into the Dark mode column
+
+### Supported Token Types in Figma
+
+| Our Token | Figma Variable | Notes |
+|-----------|----------------|-------|
+| `color` | Color | Import as color variables |
+| `dimension` | Number | Converted to px values |
+| `fontFamily` | String | Font names as strings |
+| `fontWeight` | Number | Numeric weights |
+| `shadow` | String | CSS shadow format |
+| `letterSpacing` | Number | Tracking values |
 
 ## Install
 
