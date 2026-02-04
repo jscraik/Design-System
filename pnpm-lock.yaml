@@ -700,8 +700,8 @@ importers:
         specifier: ^4.3.5
         version: 4.3.5
       zod-to-json-schema:
-        specifier: ^3.25.0
-        version: 3.25.0(zod@4.3.5)
+        specifier: ^3.25.1
+        version: 3.25.1(zod@4.3.5)
     devDependencies:
       '@modelcontextprotocol/inspector':
         specifier: ^0.19.0
@@ -7920,11 +7920,6 @@ packages:
   zip-stream@6.0.1:
     resolution: {integrity: sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA==}
     engines: {node: '>= 14'}
-
-  zod-to-json-schema@3.25.0:
-    resolution: {integrity: sha512-HvWtU2UG41LALjajJrML6uQejQhNJx+JBO9IflpSja4R03iNWfKXrj6W2h7ljuLyc1nKS+9yDyL/9tD1U/yBnQ==}
-    peerDependencies:
-      zod: ^3.25 || ^4
 
   zod-to-json-schema@3.25.1:
     resolution: {integrity: sha512-pM/SU9d3YAggzi6MtR4h7ruuQlqKtad8e9S0fmxcMi+ueAK5Korys/aWcV9LIIHTVbj01NdzxcnXSN+O74ZIVA==}
@@ -17758,10 +17753,6 @@ snapshots:
       archiver-utils: 5.0.2
       compress-commons: 6.0.2
       readable-stream: 4.7.0
-
-  zod-to-json-schema@3.25.0(zod@4.3.5):
-    dependencies:
-      zod: 4.3.5
 
   zod-to-json-schema@3.25.1(zod@3.25.76):
     dependencies:
