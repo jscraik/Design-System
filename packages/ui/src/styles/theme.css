@@ -401,17 +401,7 @@
   }
 }
 
-/* Override Apps SDK UI text-muted-foreground to use our tertiary text color */
+/* Override Apps SDK UI text-muted-foreground to use the mapped muted token */
 .text-muted-foreground {
-  color: var(--text-tertiary) !important;
-}
-
-/* Light mode */
-:where([data-theme="light"]) .text-muted-foreground {
-  color: #8f8f8f !important;
-}
-
-/* Dark mode */
-:where([data-theme="dark"]) .text-muted-foreground {
-  color: #afafaf !important;
+  color: var(--color-muted-foreground) !important;
 }

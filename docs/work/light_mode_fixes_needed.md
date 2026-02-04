@@ -1,6 +1,6 @@
 # Light Mode Fixes Needed - Comparison with Figma
 
-Last updated: 2026-01-04
+Last updated: 2026-02-14
 
 ## Doc requirements
 
@@ -131,13 +131,13 @@ These values seem appropriate based on Figma.
 1. ✅ Fix ChatInput icons (DONE)
 2. ✅ Fix sidebar visibility (DONE)
 3. ✅ Fix sidebar toggle (DONE)
-4. 🔴 Fix ComposeView text contrast
-5. 🔴 Fix ComposeView placeholder text
-6. 🔴 Fix ComposeView borders
+4. ✅ Fix ComposeView text contrast
+5. ✅ Fix ComposeView placeholder text
+6. ✅ Fix ComposeView borders
 
 ### Medium Priority
 
-1. Verify all template components have proper light mode support
+1. ✅ Verify all template components have proper light mode support
 2. Check modal/popover backgrounds in light mode
 3. Verify button states in light mode
 
@@ -149,12 +149,11 @@ These values seem appropriate based on Figma.
 
 ## Next Steps
 
-1. Fix remaining SVG icons in ComposeView to support both themes
-2. Ensure all text has proper contrast in both modes
-3. Verify borders are visible in both themes
-4. Test all interactive states (hover, focus, active) in both modes
-5. Compare dark mode against Figma pixel-perfect
-6. Ensure light mode has equivalent visual hierarchy
+1. Fix remaining SVG icons in ComposeView to support both themes (if any legacy icons are still tied to dark tokens).
+2. Validate modal/popover backgrounds in light mode for contrast and layering.
+3. Verify button hover/focus/active states in light mode across template blocks.
+4. Compare dark mode against Figma pixel-perfect.
+5. Ensure light mode has equivalent visual hierarchy.
 
 ## Key Principle
 

@@ -64,8 +64,8 @@ const sizeStyles: Record<TemplateFooterBarSize, { padding: string; gap: string }
 const statusStyles: Record<TemplateFooterBarStatus, { bg: string; text: string; icon: string }> = {
   default: {
     bg: "",
-    text: "text-text-secondary",
-    icon: "text-text-secondary",
+    text: "text-muted-foreground",
+    icon: "text-muted-foreground",
   },
   success: {
     bg: "",
@@ -162,7 +162,7 @@ export function TemplateFooterBar({
   const progressElement = progress && (
     <div className="flex items-center gap-2 min-w-[120px]">
       {progress.label && (
-        <span className="text-xs text-text-secondary whitespace-nowrap">{progress.label}</span>
+        <span className="text-xs text-muted-foreground whitespace-nowrap">{progress.label}</span>
       )}
       <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
         <div
@@ -272,7 +272,7 @@ export function TemplateFooterButton({
     primary:
       "bg-button-primary-bg-light dark:bg-button-primary-bg-dark text-button-primary-text-light dark:text-button-primary-text-dark hover:bg-button-primary-bg-light-hover dark:hover:bg-button-primary-bg-dark-hover border border-transparent shadow-sm",
     ghost:
-      "bg-transparent text-text-secondary hover:bg-muted hover:text-foreground border border-transparent",
+      "bg-transparent text-muted-foreground hover:bg-muted hover:text-foreground border border-transparent",
     danger:
       "bg-status-error text-text-body-on-color hover:bg-status-error/90 border border-transparent shadow-sm",
   };
@@ -397,7 +397,7 @@ export function TemplateFooterText({
   className,
 }: TemplateFooterTextProps) {
   const variantClasses = {
-    default: "text-text-secondary",
+    default: "text-muted-foreground",
     muted: "text-muted-foreground",
     success: "text-accent-green",
     warning: "text-accent-orange",
@@ -428,7 +428,7 @@ export interface TemplateFooterDividerProps {
 export function TemplateFooterDivider({ className }: TemplateFooterDividerProps) {
   return (
     <div
-      className={cn("w-px h-4 bg-muted", className)}
+      className={cn("w-px h-4 bg-border", className)}
       role="separator"
       aria-orientation="vertical"
     />
