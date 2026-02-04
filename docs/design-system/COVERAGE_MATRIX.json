@@ -1,25 +1,5 @@
 [
   {
-    "name": "Accordion",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "Alert",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active"
-  },
-  {
     "name": "AlertDialog",
     "source": "radix_fallback",
     "upstream": null,
@@ -37,7 +17,7 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "widget_used"
+    "status": "active"
   },
   {
     "name": "AppsSDKButton",
@@ -47,7 +27,7 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "widget_used"
+    "status": "active"
   },
   {
     "name": "AppsSDKCheckbox",
@@ -57,7 +37,7 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "widget_used"
+    "status": "active"
   },
   {
     "name": "AppsSDKCodeBlock",
@@ -87,7 +67,7 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "widget_used"
+    "status": "active"
   },
   {
     "name": "AppsSDKInput",
@@ -97,7 +77,7 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "widget_used"
+    "status": "active"
   },
   {
     "name": "AppsSDKPopover",
@@ -127,7 +107,7 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "widget_used"
+    "status": "active"
   },
   {
     "name": "AppsSDKUIProvider",
@@ -137,7 +117,7 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "widget_used"
+    "status": "active"
   },
   {
     "name": "AspectRatio",
@@ -150,127 +130,17 @@
     "status": "active"
   },
   {
-    "name": "Avatar",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "Badge",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "Breadcrumb",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "Button",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "Calendar",
+    "name": "CodeBlock",
     "source": "local_primitive",
     "upstream": null,
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": null,
-    "status": "active"
-  },
-  {
-    "name": "Card",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "widget_used"
-  },
-  {
-    "name": "Carousel",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active"
-  },
-  {
-    "name": "Chart",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active"
-  },
-  {
-    "name": "Checkbox",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "Collapsible",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
     "status": "active"
   },
   {
     "name": "CollapsibleSection",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active"
-  },
-  {
-    "name": "Combobox",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active"
-  },
-  {
-    "name": "Command",
     "source": "local_primitive",
     "upstream": null,
     "fallback": null,
@@ -310,16 +180,6 @@
     "status": "active"
   },
   {
-    "name": "Dialog",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
     "name": "DirectionProvider",
     "source": "radix_fallback",
     "upstream": null,
@@ -327,16 +187,6 @@
     "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
     "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
     "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "Drawer",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
     "status": "active"
   },
   {
@@ -350,7 +200,7 @@
     "status": "active"
   },
   {
-    "name": "ErrorBoundary",
+    "name": "EmptyMessage",
     "source": "local_primitive",
     "upstream": null,
     "fallback": null,
@@ -360,17 +210,7 @@
     "status": "active"
   },
   {
-    "name": "Form",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "forms",
+    "name": "ErrorBoundary",
     "source": "local_primitive",
     "upstream": null,
     "fallback": null,
@@ -400,7 +240,17 @@
     "status": "active"
   },
   {
-    "name": "Input",
+    "name": "Image",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": null,
+    "status": "active"
+  },
+  {
+    "name": "Indicator",
     "source": "local_primitive",
     "upstream": null,
     "fallback": null,
@@ -420,16 +270,6 @@
     "status": "active"
   },
   {
-    "name": "Label",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
     "name": "ListItem",
     "source": "local_primitive",
     "upstream": null,
@@ -440,17 +280,7 @@
     "status": "active"
   },
   {
-    "name": "Menubar",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "MessageActions",
+    "name": "Markdown",
     "source": "local_primitive",
     "upstream": null,
     "fallback": null,
@@ -460,7 +290,17 @@
     "status": "active"
   },
   {
-    "name": "Modal",
+    "name": "Menu",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": null,
+    "status": "active"
+  },
+  {
+    "name": "MessageActions",
     "source": "local_primitive",
     "upstream": null,
     "fallback": null,
@@ -510,36 +350,6 @@
     "status": "active"
   },
   {
-    "name": "Pagination",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active"
-  },
-  {
-    "name": "Popover",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "Progress",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
     "name": "RadioGroup",
     "source": "radix_fallback",
     "upstream": null,
@@ -551,16 +361,6 @@
   },
   {
     "name": "RangeSlider",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active"
-  },
-  {
-    "name": "Resizable",
     "source": "local_primitive",
     "upstream": null,
     "fallback": null,
@@ -600,47 +400,7 @@
     "status": "active"
   },
   {
-    "name": "Select",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "Separator",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "Sheet",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "Sidebar",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "Skeleton",
+    "name": "ShimmerText",
     "source": "local_primitive",
     "upstream": null,
     "fallback": null,
@@ -650,17 +410,7 @@
     "status": "active"
   },
   {
-    "name": "Slider",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "Sonner",
+    "name": "TagInput",
     "source": "local_primitive",
     "upstream": null,
     "fallback": null,
@@ -670,57 +420,7 @@
     "status": "active"
   },
   {
-    "name": "Switch",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "Table",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active"
-  },
-  {
-    "name": "Tabs",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "Textarea",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active"
-  },
-  {
-    "name": "Toast",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active"
-  },
-  {
-    "name": "Toggle",
+    "name": "TextLink",
     "source": "local_primitive",
     "upstream": null,
     "fallback": null,
@@ -740,27 +440,7 @@
     "status": "active"
   },
   {
-    "name": "Tooltip",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
     "name": "UseMobile",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active"
-  },
-  {
-    "name": "utils",
     "source": "local_primitive",
     "upstream": null,
     "fallback": null,

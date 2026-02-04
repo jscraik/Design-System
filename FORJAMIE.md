@@ -79,12 +79,20 @@ pnpm test:mcp-contract    # MCP contract tests
 ## Lessons Learned
 
 - Docs drift is easy: keep ADR references pointing at maintained docs and update them in the same change-set.
+- Coverage reports can over-count when barrels are treated as components; validate that generators filter non-component exports.
 
 ## Weaknesses & Improvements
 
 - **Coverage visibility:** Coverage goals exist, but measurement should be kept current. Consider adding a CI artifact or dashboard link in `docs/TEST_PLAN.md`.
 - **Testing guidance location:** Ensure `docs/testing/` stays aligned with ADRs and contributor docs (like `CONTRIBUTING.md`).
+- **Design-system matrix hygiene:** Consider adding a unit test around barrel filtering to avoid regressions.
 
 ## Recent Changes
 
 - **2026-02-15:** Expanded the token-reference doc with concrete verification steps, pipeline assumptions, and top troubleshooting fixes so token updates are easier to validate and recover. Impact: fewer token drift surprises and clearer remediation guidance.
+- **2026-02-16:** Clarified design guidelines to require token-only Tailwind utilities (with examples) and linked to the token API mapping doc. Impact: more consistent theming and fewer ad-hoc utility tokens.
+- **2026-02-14:** Added a maintained testing guidelines doc and updated the smart-testing ADR reference so contributors have a single source for how to run tests, what types exist, and when to add them. Impact: clearer testing expectations and fewer broken doc links.
+- **2026-02-15:** Reframed the design audit report to mark the prior issues and fix list as historical/resolved, keeping the audit status, issue list, and remediation notes aligned for compliance reference. Impact: readers can trust the report status at a glance.
+- **2026-02-14:** Added a design system adoption guide that clarifies when to use Apps SDK UI vs `@design-studio/ui` vs tokens-only, and linked it from core design docs. Impact: clearer onboarding for consumers and better discovery of the design system setup.
+- **2026-02-14:** Adjusted the coverage matrix generator to ignore barrel-only exports (like `forms`/`utils`) and regenerated the matrix so it reflects real UI components. Impact: cleaner coverage reporting for the design system.
+- **2026-02-14:** Enforced non-color alias path validation with an explicit computed-value allowlist, updated alias rules documentation, and added tests so raw values are rejected unless allowlisted. Impact: stronger guardrails around token alias integrity.
