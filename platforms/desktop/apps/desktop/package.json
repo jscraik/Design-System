@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node -e \"console.error('@design-studio/desktop is deferred. See platforms/desktop/apps/desktop/README.md for status and next steps.'); process.exit(1);\"",
-    "build": "node -e \"console.error('@design-studio/desktop is deferred. See platforms/desktop/apps/desktop/README.md for status and next steps.'); process.exit(1);\""
+    "dev": "node -e \"console.error('@design-studio/desktop is deferred. See README.md (or platforms/desktop/apps/desktop/README.md from the repo root) for status and next steps.'); process.exit(1);\"",
+    "build": "node -e \"console.error('@design-studio/desktop is deferred. See README.md (or platforms/desktop/apps/desktop/README.md from the repo root) for status and next steps.'); process.exit(1);\""
   }
 }
