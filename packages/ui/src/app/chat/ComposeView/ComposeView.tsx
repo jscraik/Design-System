@@ -76,7 +76,7 @@ export function ComposeView({ models, modes }: ComposeViewProps) {
               selectedModel={selectedModel}
             />
 
-            <div className="border-b border-muted dark:border-muted"></div>
+            <div className="border-b border-border"></div>
 
             <PromptBuilderSection
               systemMessage={systemMessage}
