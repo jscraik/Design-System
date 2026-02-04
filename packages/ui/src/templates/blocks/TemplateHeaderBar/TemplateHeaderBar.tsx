@@ -211,7 +211,7 @@ export function TemplateHeaderBar({
     return (
       <div>
         {headerElement}
-        <div className="h-px bg-muted" />
+        <div className="h-px bg-border" />
       </div>
     );
   }
@@ -243,7 +243,7 @@ export function TemplateHeaderBackButton({
       onClick={onClick}
       className={cn(
         "inline-flex items-center justify-center rounded-md p-1.5 -ml-1.5",
-        "text-text-secondary",
+        "text-muted-foreground",
         "hover:bg-muted",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "transition-colors duration-150",
@@ -289,7 +289,7 @@ export function TemplateHeaderIconButton({
       disabled={disabled}
       className={cn(
         "inline-flex items-center justify-center rounded-md p-2",
-        "text-text-secondary",
+        "text-muted-foreground",
         "hover:bg-muted",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         "transition-colors duration-150",
@@ -330,9 +330,9 @@ export function TemplateHeaderActionButton({
   disabled = false,
 }: TemplateHeaderActionButtonProps) {
   const variantClasses = {
-    default: "bg-muted text-text-secondary hover:bg-muted/80",
+    default: "bg-muted text-muted-foreground hover:bg-muted/80",
     primary: "bg-accent-blue text-text-body-on-color hover:bg-accent-blue/90",
-    ghost: "text-text-secondary hover:bg-muted",
+    ghost: "text-muted-foreground hover:bg-muted",
   };
 
   const sizeClasses = {
@@ -384,7 +384,7 @@ export function TemplateHeaderCloseButton({
       onClick={onClick}
       className={cn(
         "inline-flex items-center justify-center rounded-md p-1.5",
-        "text-text-secondary",
+        "text-muted-foreground",
         "hover:bg-muted",
         "hover:text-foreground",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
@@ -415,7 +415,7 @@ export interface TemplateHeaderBadgeProps {
 }
 
 const badgeVariantStyles: Record<TemplateHeaderBadgeVariant, string> = {
-  default: "bg-muted text-text-secondary",
+  default: "bg-muted text-muted-foreground",
   primary: "bg-accent-blue text-text-body-on-color",
   success: "bg-accent-green text-text-body-on-color",
   warning: "bg-accent-orange text-text-body-on-color",
@@ -512,7 +512,7 @@ export function TemplateHeaderBreadcrumbs({
                   onClick={item.onClick}
                   className={cn(
                     "text-xs text-muted-foreground",
-                    "hover:text-text-secondary",
+                    "hover:text-foreground",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:rounded",
                     "transition-colors duration-150",
                   )}
@@ -523,7 +523,7 @@ export function TemplateHeaderBreadcrumbs({
                 <span
                   className={cn(
                     "text-xs",
-                    isLast ? "text-text-secondary font-medium" : "text-muted-foreground",
+                    isLast ? "text-foreground font-medium" : "text-muted-foreground",
                   )}
                   aria-current={isLast ? "page" : undefined}
                 >

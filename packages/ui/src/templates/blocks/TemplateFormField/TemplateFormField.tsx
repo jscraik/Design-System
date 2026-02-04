@@ -146,7 +146,7 @@ export function TemplateFormField({
 
   const labelElement = (
     <div className={cn("flex items-center gap-1.5", isHorizontal && "min-w-[120px] shrink-0")}>
-      {labelIcon && <span className="text-text-secondary">{labelIcon}</span>}
+      {labelIcon && <span className="text-muted-foreground">{labelIcon}</span>}
       <label
         htmlFor={fieldId}
         className={cn(
@@ -171,7 +171,7 @@ export function TemplateFormField({
           className={cn(
             "inline-flex items-center justify-center rounded-full w-4 h-4",
             "text-muted-foreground",
-            "hover:text-text-secondary",
+            "hover:text-foreground",
             "hover:bg-muted",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
             "transition-colors",
@@ -204,7 +204,7 @@ export function TemplateFormField({
     <p
       id={descriptionId}
       className={cn(
-        "text-text-secondary",
+        "text-muted-foreground",
         descriptionSize,
         disabled && "opacity-50",
         descriptionClassName,
@@ -387,7 +387,7 @@ export function TemplateFormFieldIconButton({
       disabled={disabled}
       className={cn(
         "inline-flex items-center justify-center rounded-lg w-7 h-7",
-        "text-text-secondary",
+        "text-muted-foreground",
         "hover:text-foreground",
         "hover:bg-muted",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
