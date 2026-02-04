@@ -1,51 +1,90 @@
 # FORJAMIE.md
 
+**Last updated:** 2026-02-14
+**Audience:** Developers (intermediate)
+**Owner:** TBD (confirm)
+**Review cadence:** TBD (confirm)
+
 ## TL;DR
-- aStudio is a pnpm workspace monorepo for the ChatUI design system, including UI components, icons, tokens, templates, and tooling.
-- The UI package (`packages/ui`) is where ChatGPT-style components, icon catalogs, and Storybook docs live.
-- Design tokens in `packages/tokens` are the source of truth for colors, spacing, typography, radius, and other foundations.
 
-## Architecture & Flow
-- **Tokens ➜ UI**: `packages/tokens` generates CSS variables and a Tailwind preset. UI surfaces consume those tokens via Tailwind utilities (e.g., `bg-foundation-*`, `text-foundation-*`) or token values from the package exports.
-- **Icons ➜ Catalog**: `packages/ui/src/icons` contains the ChatGPT icon sets and the catalog UI for browsing/searching icons.
-- **Templates & Storybook**: `packages/ui/src/templates` and `packages/ui/src/storybook` demonstrate component usage and token references.
+aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes added a dedicated testing guidelines doc and wired the ADR references to the maintained path.
 
-### High-level diagram (textual)
+## Architecture & Data Flow (High Level)
+
+```mermaid
+flowchart LR
+  subgraph Packages
+    UI[@design-studio/ui]
+    Runtime[@design-studio/runtime]
+    Tokens[@design-studio/tokens]
+    Widgets[packages/widgets]
+  end
+
+  subgraph Platforms
+    Web[platforms/web/apps/web]
+    Storybook[platforms/web/apps/storybook]
+    MCP[platforms/mcp]
+  end
+
+  Tokens --> UI
+  Runtime --> UI
+  UI --> Web
+  UI --> Storybook
+  Widgets --> Web
+  Web --> MCP
 ```
-packages/tokens
-  ├─ foundations.css (CSS variables)
-  ├─ tailwind.preset.ts (tokenized utilities)
-  └─ token exports (JS/TS)
-        ↓
-packages/ui
-  ├─ components/ (UI primitives & composites)
-  ├─ icons/ (ChatGPT icon library + catalog)
-  └─ templates/storybook (docs + demos)
+
+- **Tokens** provide design primitives consumed by UI components.
+- **Runtime** offers host adapters (embedded vs standalone) used by UI and platform apps.
+- **UI** feeds the web gallery and Storybook for development/validation.
+- **Web** builds widget bundles consumed by the MCP server.
+
+## Codebase Map
+
+- `packages/` — reusable libraries
+  - `ui/` — core React component library
+  - `runtime/` — host adapters and providers
+  - `tokens/` — design tokens + Tailwind preset
+  - `widgets/` — standalone widget bundles
+  - `cloudflare-template/` — MCP deployment template
+- `platforms/` — app surfaces
+  - `web/apps/web` — Widget Gallery (primary dev surface)
+  - `web/apps/storybook` — component documentation/testing
+  - `mcp/` — MCP server integration
+- `docs/` — architecture, guides, test plans, and policies
+  - `docs/architecture/` — ADRs and architecture map
+  - `docs/testing/` — testing guidelines (smart testing rules)
+- `scripts/` — build, compliance, and version sync tooling
+
+## How to Run
+
+```bash
+pnpm install
+pnpm dev           # Widget Gallery (localhost:5173)
+pnpm dev:storybook # Storybook (localhost:6006)
 ```
 
-## Codebase Map (key locations)
-- `packages/tokens/` — token generation, CSS variable outputs, and TS exports.
-- `packages/ui/src/icons/` — icon sets, icon catalog, and icon system docs.
-- `packages/ui/src/components/` — reusable UI components.
-- `packages/ui/src/templates/` — demo templates (including icon catalog templates).
-- `docs/` — architecture, guides, and system documentation.
+## How to Test
 
-## How to Run / Test
-- Install: `pnpm install`
-- Dev (web): `pnpm dev` or `pnpm dev:web`
-- Storybook: `pnpm dev:storybook`
-- Tests: `pnpm test`
-- Lint/format: `pnpm lint`, `pnpm format`, `pnpm format:check`
+```bash
+pnpm test                 # Unit tests (Vitest)
+pnpm test --coverage      # Coverage report
+pnpm storybook:test       # Component tests
+pnpm test:e2e:web         # E2E tests (Playwright)
+pnpm test:visual:web      # Visual regression
+pnpm test:a11y:widgets    # Accessibility tests
+pnpm test:mcp-contract    # MCP contract tests
+```
 
 ## Lessons Learned
-- Tokenized utilities and exported token values keep UI styling consistent and allow easy theming.
-- For internal catalogs (icons, tokens), explicitly document required token CSS/preset assumptions so Storybook setups are predictable.
+
+- Docs drift is easy: keep ADR references pointing at maintained docs and update them in the same change-set.
 
 ## Weaknesses & Improvements
-- **Weakness**: Documentation about internal tooling can drift from implementation over time.
-  - **Improvement**: Add a lightweight checklist for catalog/tooling updates in `packages/ui/src/icons/ICON_SYSTEM.md`.
-- **Weakness**: Some surfaces still use non-tokenized utility classes.
-  - **Improvement**: Audit and migrate remaining hard-coded spacing/typography classes to token usage.
+
+- **Coverage visibility:** Coverage goals exist, but measurement should be kept current. Consider adding a CI artifact or dashboard link in `docs/TEST_PLAN.md`.
+- **Testing guidance location:** Ensure `docs/testing/` stays aligned with ADRs and contributor docs (like `CONTRIBUTING.md`).
 
 ## Recent Changes
-- 2026-02-14: Replaced the placeholder ChatGPT icon catalog with a full, token-driven catalog UI and documented Storybook/internal usage requirements. (commit: d965b42)
+
+- **2026-02-14:** Added a maintained testing guidelines doc and updated the smart-testing ADR reference so contributors have a single source for how to run tests, what types exist, and when to add them. Impact: clearer testing expectations and fewer broken doc links.
