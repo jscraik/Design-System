@@ -7,7 +7,7 @@
 
 ## TL;DR
 
-aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes added a dedicated testing guidelines doc and wired the ADR references to the maintained path.
+aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes tightened non-color alias validation (space/radius/size/shadow/type) with an explicit computed-value allowlist and documented the new constraints.
 
 ## Architecture & Data Flow (High Level)
 
@@ -79,12 +79,15 @@ pnpm test:mcp-contract    # MCP contract tests
 ## Lessons Learned
 
 - Docs drift is easy: keep ADR references pointing at maintained docs and update them in the same change-set.
+- Token alias integrity benefits from explicit allowlists; avoid silent raw values by documenting exceptions.
 
 ## Weaknesses & Improvements
 
 - **Coverage visibility:** Coverage goals exist, but measurement should be kept current. Consider adding a CI artifact or dashboard link in `docs/TEST_PLAN.md`.
 - **Testing guidance location:** Ensure `docs/testing/` stays aligned with ADRs and contributor docs (like `CONTRIBUTING.md`).
+- **Alias evolution:** If new computed alias values are required, update the validator allowlist and docs together to prevent drift.
 
 ## Recent Changes
 
 - **2026-02-14:** Added a maintained testing guidelines doc and updated the smart-testing ADR reference so contributors have a single source for how to run tests, what types exist, and when to add them. Impact: clearer testing expectations and fewer broken doc links.
+- **2026-02-14:** Enforced non-color alias path validation with an explicit computed-value allowlist, updated alias rules documentation, and added tests so raw values are rejected unless allowlisted. Impact: stronger guardrails around token alias integrity.
