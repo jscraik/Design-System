@@ -1,13 +1,13 @@
 # FORJAMIE.md
 
-**Last updated:** 2026-02-14
+**Last updated:** 2026-02-18
 **Audience:** Developers (intermediate)
 **Owner:** TBD (confirm)
 **Review cadence:** TBD (confirm)
 
 ## TL;DR
 
-aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes added a dedicated testing guidelines doc and wired the ADR references to the maintained path.
+aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes added surface usage tracking for the coverage matrix (web/tauri/widgets) with a dedicated source-of-truth file.
 
 ## Architecture & Data Flow (High Level)
 
@@ -54,6 +54,7 @@ flowchart LR
 - `docs/` — architecture, guides, test plans, and policies
   - `docs/architecture/` — ADRs and architecture map
   - `docs/testing/` — testing guidelines (smart testing rules)
+  - `docs/design-system/COVERAGE_MATRIX_SURFACES.json` — surface usage source of truth (web/tauri/widgets)
 - `scripts/` — build, compliance, and version sync tooling
 
 ## How to Run
@@ -84,7 +85,9 @@ pnpm test:mcp-contract    # MCP contract tests
 
 - **Coverage visibility:** Coverage goals exist, but measurement should be kept current. Consider adding a CI artifact or dashboard link in `docs/TEST_PLAN.md`.
 - **Testing guidance location:** Ensure `docs/testing/` stays aligned with ADRs and contributor docs (like `CONTRIBUTING.md`).
+- **Surface usage upkeep:** Keep `docs/design-system/COVERAGE_MATRIX_SURFACES.json` aligned with component adoption across web, tauri, and widgets.
 
 ## Recent Changes
 
 - **2026-02-14:** Added a maintained testing guidelines doc and updated the smart-testing ADR reference so contributors have a single source for how to run tests, what types exist, and when to add them. Impact: clearer testing expectations and fewer broken doc links.
+- **2026-02-18:** Added a surface usage source of truth for the coverage matrix and expanded the generated outputs to track web, tauri, and widget adoption. Impact: clearer surface-level coverage reporting. (commit: e1dbc75e86496aa9def807fbf1b79f99f9ba8712)
