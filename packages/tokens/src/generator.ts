@@ -141,6 +141,46 @@ export class TokenGenerator {
   --foundation-accent-purple-light: ${this.tokens.colors.accent.light.purple};
   --foundation-accent-pink-light: ${this.tokens.colors.accent.light.pink};
 
+  /* High contrast backgrounds */
+  --foundation-bg-high-contrast-1: ${this.tokens.colors.background.highContrast.primary};
+  --foundation-bg-high-contrast-2: ${this.tokens.colors.background.highContrast.secondary};
+  --foundation-bg-high-contrast-3: ${this.tokens.colors.background.highContrast.tertiary};
+
+  /* High contrast text */
+  --foundation-text-high-contrast-primary: ${this.tokens.colors.text.highContrast.primary};
+  --foundation-text-high-contrast-secondary: ${this.tokens.colors.text.highContrast.secondary};
+  --foundation-text-high-contrast-tertiary: ${this.tokens.colors.text.highContrast.tertiary};
+  --foundation-text-high-contrast-inverted: ${this.tokens.colors.text.highContrast.inverted};
+
+  /* High contrast icon */
+  --foundation-icon-high-contrast-primary: ${this.tokens.colors.icon.highContrast.primary};
+  --foundation-icon-high-contrast-secondary: ${this.tokens.colors.icon.highContrast.secondary};
+  --foundation-icon-high-contrast-tertiary: ${this.tokens.colors.icon.highContrast.tertiary};
+  --foundation-icon-high-contrast-inverted: ${this.tokens.colors.icon.highContrast.inverted};
+  --foundation-icon-high-contrast-accent: ${this.tokens.colors.icon.highContrast.accent};
+  --foundation-icon-high-contrast-status-error: ${this.tokens.colors.icon.highContrast.statusError};
+  --foundation-icon-high-contrast-status-warning: ${this.tokens.colors.icon.highContrast.statusWarning};
+  --foundation-icon-high-contrast-status-success: ${this.tokens.colors.icon.highContrast.statusSuccess};
+
+  /* High contrast borders */
+  --foundation-border-high-contrast-light: ${this.tokens.colors.border.highContrast.light};
+  --foundation-border-high-contrast-default: ${this.tokens.colors.border.highContrast.default};
+  --foundation-border-high-contrast-heavy: ${this.tokens.colors.border.highContrast.heavy};
+
+  /* High contrast accents */
+  --foundation-accent-gray-high-contrast: ${this.tokens.colors.accent.highContrast.gray};
+  --foundation-accent-red-high-contrast: ${this.tokens.colors.accent.highContrast.red};
+  --foundation-accent-orange-high-contrast: ${this.tokens.colors.accent.highContrast.orange};
+  --foundation-accent-yellow-high-contrast: ${this.tokens.colors.accent.highContrast.yellow};
+  --foundation-accent-green-high-contrast: ${this.tokens.colors.accent.highContrast.green};
+  --foundation-accent-blue-high-contrast: ${this.tokens.colors.accent.highContrast.blue};
+  --foundation-accent-purple-high-contrast: ${this.tokens.colors.accent.highContrast.purple};
+  --foundation-accent-pink-high-contrast: ${this.tokens.colors.accent.highContrast.pink};
+  --foundation-accent-foreground-high-contrast: ${this.tokens.colors.accent.highContrast.foreground};
+
+  /* High contrast interactive */
+  --foundation-interactive-high-contrast-ring: ${this.tokens.colors.interactive.highContrast.ring};
+
   /* Spacing scale */
 ${this.generateCSSSpacing()}
 
@@ -179,9 +219,9 @@ ${this.generateCSSTypography()}
   --foundation-animation-duration-reduced: 0.1s;
   
   /* High contrast variants */
-  --foundation-high-contrast-text: #ffffff;
-  --foundation-high-contrast-bg: #000000;
-  --foundation-high-contrast-border: #ffffff;
+  --foundation-high-contrast-text: var(--foundation-text-high-contrast-primary);
+  --foundation-high-contrast-bg: var(--foundation-bg-high-contrast-1);
+  --foundation-high-contrast-border: var(--foundation-border-high-contrast-heavy);
 }
 
 /* High contrast mode support */
@@ -191,6 +231,7 @@ ${this.generateCSSTypography()}
     --foundation-text-light-primary: var(--foundation-high-contrast-bg);
     --foundation-bg-dark-1: var(--foundation-high-contrast-bg);
     --foundation-bg-light-1: var(--foundation-high-contrast-text);
+    --foundation-focus-ring: var(--foundation-interactive-high-contrast-ring);
     --foundation-focus-ring-width: 3px;
   }
 }
