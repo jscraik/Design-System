@@ -41,6 +41,7 @@ Note: For production UI code, prefer Apps SDK UI components and tokens. Use thes
 
 ## Docs
 
+- `docs/guides/DESIGN_SYSTEM_ADOPTION.md` - Choosing Apps SDK UI vs UI vs tokens-only
 - `packages/tokens/docs/FIGMA_EXPORT_GUIDE.md` - Figma export workflow and handoff
 - `packages/tokens/docs/outputs/manifest.json` - Generated validation manifest (token build output)
 

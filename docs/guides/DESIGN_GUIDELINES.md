@@ -126,6 +126,7 @@ Before merging, verify:
 ## Related docs
 
 - Component usage: `packages/ui/README.md`
+- Design system adoption: `docs/guides/DESIGN_SYSTEM_ADOPTION.md`
 - Page patterns: `docs/guides/PAGES_QUICK_START.md`
 - Accessibility tests: `docs/KEYBOARD_NAVIGATION_TESTS.md`
 - Token API mapping: `docs/theming/TOKEN_API_MAPPING.md`
