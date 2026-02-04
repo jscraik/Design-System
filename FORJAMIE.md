@@ -7,7 +7,7 @@
 
 ## TL;DR
 
-aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes clarified token-reference verification, risks, and troubleshooting steps for the theming pipeline.
+aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes added explicit accessibility contracts for local primitives and wired the coverage matrix to reference them.
 
 ## Architecture & Data Flow (High Level)
 
@@ -87,7 +87,7 @@ pnpm test:mcp-contract    # MCP contract tests
 
 - **Coverage visibility:** Coverage goals exist, but measurement should be kept current. Consider adding a CI artifact or dashboard link in `docs/TEST_PLAN.md`.
 - **Testing guidance location:** Ensure `docs/testing/` stays aligned with ADRs and contributor docs (like `CONTRIBUTING.md`).
-- **Surface usage upkeep:** Keep `docs/design-system/COVERAGE_MATRIX_SURFACES.json` aligned with component adoption across web, tauri, and widgets.
+- **A11y contract maintenance:** Keep `docs/design-system/A11Y_CONTRACTS.md` updated whenever a local primitive changes keyboard or ARIA behavior.
 
 ## Recent Changes
 
@@ -96,6 +96,7 @@ pnpm test:mcp-contract    # MCP contract tests
 - **2026-02-14:** Refined light-mode token usage in compose and template block components so text, icons, and borders use semantic tokens with stronger contrast. Impact: clearer light-mode readability while keeping dark-mode consistency.
 - **2026-02-16:** Clarified design guidelines to require token-only Tailwind utilities (with examples) and linked to the token API mapping doc. Impact: more consistent theming and fewer ad-hoc utility tokens.
 - **2026-02-14:** Added a maintained testing guidelines doc and updated the smart-testing ADR reference so contributors have a single source for how to run tests, what types exist, and when to add them. Impact: clearer testing expectations and fewer broken doc links.
+- **2026-02-14:** Documented accessibility contracts for local primitive components and updated the coverage matrix generator to link to them. Impact: local primitives now have explicit a11y expectations referenced in coverage reporting.
 - **2026-02-15:** Added a design system adoption checklist and linked it from the README and cross-platform architecture docs. Impact: faster, more consistent onboarding for new surfaces.
 - **2026-02-18:** Added a surface usage source of truth for the coverage matrix and expanded the generated outputs to track web, tauri, and widget adoption. Impact: clearer surface-level coverage reporting. (commit: e1dbc75e86496aa9def807fbf1b79f99f9ba8712)
 - **2026-02-20:** Routed `text-muted-foreground` through the mapped muted token so light/dark variants follow the brand → alias → mapped chain without hex overrides. Impact: consistent muted text color resolution and easier token audits.

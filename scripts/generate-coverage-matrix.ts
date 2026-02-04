@@ -274,34 +274,8 @@ function formatCell(value: string | null): string {
   return value && value.trim().length > 0 ? value : "-";
 }
 
-function formatBool(value: boolean): string {
-  return value ? "yes" : "no";
-}
-
-async function readSurfaceUsage(): Promise<SurfaceUsageMap> {
-  try {
-    const raw = await readText(SURFACE_USAGE_JSON);
-    const parsed = JSON.parse(raw) as SurfaceUsageMap;
-    return parsed ?? {};
-  } catch (error) {
-    console.error(
-      `Failed to read or parse surface usage JSON from ${SURFACE_USAGE_JSON}:`,
-      error,
-    );
-    if (process.argv.includes("--check")) {
-      throw error;
-    }
-    return {};
-  }
-}
-
-function resolveSurfaceUsage(name: string, usage: SurfaceUsageMap): Required<SurfaceUsage> {
-  const entry = usage[name] ?? {};
-  return {
-    web_used: entry.web_used ?? false,
-    tauri_used: entry.tauri_used ?? false,
-    widget_used: entry.widget_used ?? false,
-  };
+function slugifyAnchor(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, "");
 }
 
 function buildMarkdown(rows: MatrixRow[]): string {
@@ -374,6 +348,9 @@ async function main(): Promise<void> {
       (!fallback.why_missing_upstream ||
         !fallback.migration_trigger ||
         !fallback.a11y_contract_ref);
+    const a11yContractRef =
+      fallback?.a11y_contract_ref ??
+      (fallback ? null : `docs/design-system/A11Y_CONTRACTS.md#${slugifyAnchor(name)}`);
 
     rows.push({
       name,
@@ -382,9 +359,8 @@ async function main(): Promise<void> {
       fallback: fallback ? "radix" : null,
       why_missing_upstream: fallback?.why_missing_upstream ?? null,
       migration_trigger: fallback?.migration_trigger ?? null,
-      a11y_contract_ref: fallback?.a11y_contract_ref ?? null,
-      status: hasMissingMetadata ? "missing_metadata" : usage.widget_used ? "widget_used" : "active",
-      ...usage,
+      a11y_contract_ref: a11yContractRef,
+      status: hasMissingMetadata ? "missing_metadata" : usedInWidgets ? "widget_used" : "active",
     });
   }
 

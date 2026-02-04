@@ -240,11 +240,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#codeblock",
+    "status": "active"
   },
   {
     "name": "CollapsibleSection",
@@ -253,11 +250,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#collapsiblesection",
+    "status": "active"
   },
   {
     "name": "ContextMenu",
@@ -279,11 +273,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#contexttag",
+    "status": "active"
   },
   {
     "name": "DatePicker",
@@ -292,11 +283,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#datepicker",
+    "status": "active"
   },
   {
     "name": "DirectionProvider",
@@ -331,11 +319,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#emptymessage",
+    "status": "active"
   },
   {
     "name": "ErrorBoundary",
@@ -344,11 +329,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#errorboundary",
+    "status": "active"
   },
   {
     "name": "IconButton",
@@ -357,37 +339,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
-  },
-  {
-    "name": "HoverCard",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
-  },
-  {
-    "name": "IconButton",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#forms",
+    "status": "active"
   },
   {
     "name": "Image",
@@ -396,11 +349,18 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#iconbutton",
+    "status": "active"
+  },
+  {
+    "name": "Image",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#image",
+    "status": "active"
   },
   {
     "name": "Indicator",
@@ -409,11 +369,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#indicator",
+    "status": "active"
   },
   {
     "name": "InputOTP",
@@ -422,11 +379,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#inputotp",
+    "status": "active"
   },
   {
     "name": "ListItem",
@@ -435,11 +389,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#listitem",
+    "status": "active"
   },
   {
     "name": "Markdown",
@@ -448,11 +399,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#markdown",
+    "status": "active"
   },
   {
     "name": "Menu",
@@ -461,11 +409,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#menu",
+    "status": "active"
   },
   {
     "name": "MessageActions",
@@ -474,11 +419,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#messageactions",
+    "status": "active"
   },
   {
     "name": "ModelBadge",
@@ -487,11 +429,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#modelbadge",
+    "status": "active"
   },
   {
     "name": "ModelSelector",
@@ -500,11 +439,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#modelselector",
+    "status": "active"
   },
   {
     "name": "ModeSelector",
@@ -513,11 +449,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#modeselector",
+    "status": "active"
   },
   {
     "name": "NavigationMenu",
@@ -552,11 +485,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#rangeslider",
+    "status": "active"
   },
   {
     "name": "ScrollArea",
@@ -578,11 +508,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#sectionheader",
+    "status": "active"
   },
   {
     "name": "SegmentedControl",
@@ -591,11 +518,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#segmentedcontrol",
+    "status": "active"
   },
   {
     "name": "ShimmerText",
@@ -604,11 +528,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#shimmertext",
+    "status": "active"
   },
   {
     "name": "TagInput",
@@ -617,11 +538,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#taginput",
+    "status": "active"
   },
   {
     "name": "TextLink",
@@ -630,11 +548,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#textlink",
+    "status": "active"
   },
   {
     "name": "ToggleGroup",
@@ -656,11 +571,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#usemobile",
+    "status": "active"
   },
   {
     "name": "utils",
@@ -669,11 +581,8 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#utils",
+    "status": "active"
   },
   {
     "name": "ViewModeToggle",
@@ -682,10 +591,7 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#viewmodetoggle",
+    "status": "active"
   }
 ]
