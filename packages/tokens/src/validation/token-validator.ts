@@ -28,10 +28,7 @@ type DtcgRoot = {
   type: Record<string, DtcgDimensionToken | Record<string, unknown>>;
 };
 
-const NON_COLOR_ALIAS_CATEGORIES = ["space", "radius", "size", "shadow", "type"] as const;
-
-type NonColorAliasCategory = (typeof NON_COLOR_ALIAS_CATEGORIES)[number];
-
+type NonColorAliasCategory = "space" | "radius" | "size" | "shadow" | "type";
 const NON_COLOR_ALIAS_VALUE_ALLOWLIST: Record<
   NonColorAliasCategory,
   ReadonlySet<string | number>
