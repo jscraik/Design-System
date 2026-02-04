@@ -1,6 +1,6 @@
 # FORJAMIE.md
 
-**Last updated:** 2026-02-18
+**Last updated:** 2026-02-04
 **Audience:** Developers (intermediate)
 **Owner:** TBD (confirm)
 **Review cadence:** TBD (confirm)
@@ -81,7 +81,7 @@ pnpm test:mcp-contract    # MCP contract tests
 ## Lessons Learned
 
 - Docs drift is easy: keep ADR references pointing at maintained docs and update them in the same change-set.
-- Token overrides can silently bypass the design system; prefer mapped tokens so brand → alias → mapped stays intact.
+- High-contrast support needs explicit coverage in Brand, Alias, and Mapped layers to avoid silent fallbacks.
 
 ## Weaknesses & Improvements
 
@@ -92,6 +92,7 @@ pnpm test:mcp-contract    # MCP contract tests
 ## Recent Changes
 
 - **2026-02-15:** Expanded the token-reference doc with concrete verification steps, pipeline assumptions, and top troubleshooting fixes so token updates are easier to validate and recover. Impact: fewer token drift surprises and clearer remediation guidance.
+- **2026-02-04:** Added high-contrast color tokens in the Brand layer, wired alias mapping/validation, and updated theme mappings/docs to use explicit HC overrides. Impact: high-contrast modes no longer fall back to dark tokens and are validated for coverage.
 - **2026-02-14:** Refined light-mode token usage in compose and template block components so text, icons, and borders use semantic tokens with stronger contrast. Impact: clearer light-mode readability while keeping dark-mode consistency.
 - **2026-02-16:** Clarified design guidelines to require token-only Tailwind utilities (with examples) and linked to the token API mapping doc. Impact: more consistent theming and fewer ad-hoc utility tokens.
 - **2026-02-14:** Added a maintained testing guidelines doc and updated the smart-testing ADR reference so contributors have a single source for how to run tests, what types exist, and when to add them. Impact: clearer testing expectations and fewer broken doc links.

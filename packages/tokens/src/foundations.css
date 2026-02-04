@@ -72,6 +72,46 @@
   --foundation-accent-purple-light: #924FF7;
   --foundation-accent-pink-light: #E04C91;
 
+  /* High contrast backgrounds */
+  --foundation-bg-high-contrast-1: #000000;
+  --foundation-bg-high-contrast-2: #1A1A1A;
+  --foundation-bg-high-contrast-3: #2B2B2B;
+
+  /* High contrast text */
+  --foundation-text-high-contrast-primary: #FFFFFF;
+  --foundation-text-high-contrast-secondary: #E6E6E6;
+  --foundation-text-high-contrast-tertiary: #CFCFCF;
+  --foundation-text-high-contrast-inverted: #000000;
+
+  /* High contrast icon */
+  --foundation-icon-high-contrast-primary: #FFFFFF;
+  --foundation-icon-high-contrast-secondary: #E6E6E6;
+  --foundation-icon-high-contrast-tertiary: #CFCFCF;
+  --foundation-icon-high-contrast-inverted: #000000;
+  --foundation-icon-high-contrast-accent: #4DA3FF;
+  --foundation-icon-high-contrast-status-error: #FF4D4D;
+  --foundation-icon-high-contrast-status-warning: #FF8A3D;
+  --foundation-icon-high-contrast-status-success: #4DFF88;
+
+  /* High contrast borders */
+  --foundation-border-high-contrast-light: #FFFFFF33;
+  --foundation-border-high-contrast-default: #FFFFFF66;
+  --foundation-border-high-contrast-heavy: #FFFFFF;
+
+  /* High contrast accents */
+  --foundation-accent-gray-high-contrast: #D9D9D9;
+  --foundation-accent-red-high-contrast: #FF4D4D;
+  --foundation-accent-orange-high-contrast: #FF8A3D;
+  --foundation-accent-yellow-high-contrast: #FFD84D;
+  --foundation-accent-green-high-contrast: #4DFF88;
+  --foundation-accent-blue-high-contrast: #4DA3FF;
+  --foundation-accent-purple-high-contrast: #B884FF;
+  --foundation-accent-pink-high-contrast: #FF66CC;
+  --foundation-accent-foreground-high-contrast: #000000;
+
+  /* High contrast interactive */
+  --foundation-interactive-high-contrast-ring: #FFFFFF;
+
   /* Spacing scale */
   --foundation-space-128: 128px;
   --foundation-space-64: 64px;
@@ -263,9 +303,9 @@
   --foundation-animation-duration-reduced: 0.1s;
   
   /* High contrast variants */
-  --foundation-high-contrast-text: #ffffff;
-  --foundation-high-contrast-bg: #000000;
-  --foundation-high-contrast-border: #ffffff;
+  --foundation-high-contrast-text: var(--foundation-text-high-contrast-primary);
+  --foundation-high-contrast-bg: var(--foundation-bg-high-contrast-1);
+  --foundation-high-contrast-border: var(--foundation-border-high-contrast-heavy);
 }
 
 /* High contrast mode support */
@@ -275,6 +315,7 @@
     --foundation-text-light-primary: var(--foundation-high-contrast-bg);
     --foundation-bg-dark-1: var(--foundation-high-contrast-bg);
     --foundation-bg-light-1: var(--foundation-high-contrast-text);
+    --foundation-focus-ring: var(--foundation-interactive-high-contrast-ring);
     --foundation-focus-ring-width: 3px;
   }
 }

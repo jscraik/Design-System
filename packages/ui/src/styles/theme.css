@@ -126,6 +126,70 @@
   --overlay: color-mix(in srgb, var(--foundation-bg-dark-1) 60%, transparent) !important;
 }
 
+/* High contrast mode - explicit values */
+@media (prefers-contrast: high) {
+  :root,
+  :where([data-theme="light"]),
+  :where([data-theme="dark"]) {
+    /* Backgrounds */
+    --background: var(--foundation-bg-high-contrast-1) !important;
+    --secondary: var(--foundation-bg-high-contrast-2) !important;
+    --muted: var(--foundation-bg-high-contrast-3) !important;
+    --card: var(--foundation-bg-high-contrast-1) !important;
+    --popover: var(--foundation-bg-high-contrast-2) !important;
+    --border: var(--foundation-border-high-contrast-default) !important;
+    --border-subtle: var(--foundation-border-high-contrast-light) !important;
+    --border-strong: var(--foundation-border-high-contrast-heavy) !important;
+
+    /* Text + Icons */
+    --foreground: var(--foundation-text-high-contrast-primary) !important;
+    --text-secondary: var(--foundation-text-high-contrast-secondary) !important;
+    --text-tertiary: var(--foundation-text-high-contrast-tertiary) !important;
+    --text-inverted: var(--foundation-text-high-contrast-inverted) !important;
+    --text-hero: var(--foreground) !important;
+    --text-heading: var(--foreground) !important;
+    --text-body: var(--text-secondary) !important;
+    --text-placeholder: var(--text-tertiary) !important;
+    --text-caption: var(--text-tertiary) !important;
+    --text-hero-on-color: var(--accent-foreground) !important;
+    --text-heading-on-color: var(--accent-foreground) !important;
+    --text-body-on-color: var(--accent-foreground) !important;
+    --text-placeholder-on-color: var(--accent-foreground) !important;
+    --text-caption-on-color: var(--accent-foreground) !important;
+
+    /* Accents */
+    --accent-blue: var(--foundation-accent-blue-high-contrast) !important;
+    --accent-red: var(--foundation-accent-red-high-contrast) !important;
+    --accent-orange: var(--foundation-accent-orange-high-contrast) !important;
+    --accent-green: var(--foundation-accent-green-high-contrast) !important;
+    --accent-purple: var(--foundation-accent-purple-high-contrast) !important;
+
+    /* Accent foreground (text on accent backgrounds) */
+    --accent-foreground: var(--foundation-accent-foreground-high-contrast) !important;
+
+    /* State slots (interactive + status) */
+    --interactive: var(--accent-blue) !important;
+    --interactive-hover: var(--accent-blue) !important;
+    --interactive-active: var(--accent-blue) !important;
+    --interactive-disabled: var(--text-tertiary) !important;
+    --status-success: var(--accent-green) !important;
+    --status-success-muted: var(--accent-green) !important;
+    --status-error: var(--accent-red) !important;
+    --status-error-muted: var(--accent-red) !important;
+    --status-warning: var(--accent-orange) !important;
+
+    /* Ring (focus outline) */
+    --ring: var(--foundation-interactive-high-contrast-ring) !important;
+
+    /* Overlay (modals, sheets, dialogs) */
+    --overlay: color-mix(
+      in srgb,
+      var(--foundation-bg-high-contrast-1) 60%,
+      transparent
+    ) !important;
+  }
+}
+
 @theme inline {
   /* Background colors */
   --color-background: var(--background);
