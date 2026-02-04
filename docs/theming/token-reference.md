@@ -92,7 +92,7 @@ This document is generated from `packages/tokens/src/tokens/index.dtcg.json`. Do
   - `packages/ui/src/styles/theme.css` (mapped + web-ready theme vars)
   - **Expected:** CSS vars exist for every token row in this doc, with light/dark + density modes present where defined.
 - **Optional sanity check:** `rg "--color-|--space-|--motion-" packages/ui/src/styles/theme.css`
-  - **Expected:** token variables resolve to mapped names (no raw literals or missing vars for changed tokens).
+  - **Expected:** themed variables for these categories (for example `--color-text-primary`, `--motion-duration-short`, or spacing equivalents) are present and mapped, using the `--color-`, `--space-`, and `--motion-` prefixes as a coarse prefix check rather than an exact token-name validator.
 
 ## Troubleshooting
 
