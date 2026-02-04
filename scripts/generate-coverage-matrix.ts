@@ -259,7 +259,14 @@ async function readSurfaceUsage(): Promise<SurfaceUsageMap> {
     const raw = await readText(SURFACE_USAGE_JSON);
     const parsed = JSON.parse(raw) as SurfaceUsageMap;
     return parsed ?? {};
-  } catch {
+  } catch (error) {
+    console.error(
+      `Failed to read or parse surface usage JSON from ${SURFACE_USAGE_JSON}:`,
+      error,
+    );
+    if (process.argv.includes("--check")) {
+      throw error;
+    }
     return {};
   }
 }
