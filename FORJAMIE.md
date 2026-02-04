@@ -1,13 +1,13 @@
 # FORJAMIE.md
 
-**Last updated:** 2026-02-16
+**Last updated:** 2026-02-15
 **Audience:** Developers (intermediate)
 **Owner:** TBD (confirm)
 **Review cadence:** TBD (confirm)
 
 ## TL;DR
 
-aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes clarified the design guidelines to require token-only Tailwind utilities, with a pointer to the token API mapping.
+aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes clarified the design audit report status so resolved findings are labeled as historical.
 
 ## Architecture & Data Flow (High Level)
 
@@ -91,6 +91,7 @@ pnpm test:mcp-contract    # MCP contract tests
 
 - **2026-02-16:** Clarified design guidelines to require token-only Tailwind utilities (with examples) and linked to the token API mapping doc. Impact: more consistent theming and fewer ad-hoc utility tokens.
 - **2026-02-14:** Added a maintained testing guidelines doc and updated the smart-testing ADR reference so contributors have a single source for how to run tests, what types exist, and when to add them. Impact: clearer testing expectations and fewer broken doc links.
+- **2026-02-15:** Reframed the design audit report to mark the prior issues and fix list as historical/resolved, keeping the audit status, issue list, and remediation notes aligned for compliance reference. Impact: readers can trust the report status at a glance.
 - **2026-02-14:** Added a design system adoption guide that clarifies when to use Apps SDK UI vs `@design-studio/ui` vs tokens-only, and linked it from core design docs. Impact: clearer onboarding for consumers and better discovery of the design system setup.
 - **2026-02-14:** Adjusted the coverage matrix generator to ignore barrel-only exports (like `forms`/`utils`) and regenerated the matrix so it reflects real UI components. Impact: cleaner coverage reporting for the design system.
 - **2026-02-14:** Enforced non-color alias path validation with an explicit computed-value allowlist, updated alias rules documentation, and added tests so raw values are rejected unless allowlisted. Impact: stronger guardrails around token alias integrity.
