@@ -14,8 +14,8 @@
   "dependencies": {
     "@design-studio/runtime": "workspace:*",
     "@design-studio/ui": "workspace:*",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
     "tw-animate-css": "1.3.8"
   },
   "devDependencies": {
