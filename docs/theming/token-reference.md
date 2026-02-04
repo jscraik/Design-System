@@ -79,7 +79,7 @@ This document is generated from `packages/tokens/src/tokens/index.dtcg.json`. Do
   - Mode parity mistakes (light/dark/compact) can produce inaccessible contrast or inconsistent spacing between themes.
 - **Recovery guidance:**
   - Re-run token validation + generation to rehydrate outputs, then diff the generated CSS files before/after to confirm parity.
-  - Roll back to the last known-good token generation commit if validation fails and you cannot resolve parity within the same change-set.
+  - Roll back to the last known-good token generation commit if validation fails and you cannot resolve parity within the same changeset.
 
 ## Verify
 
