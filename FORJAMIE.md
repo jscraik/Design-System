@@ -7,7 +7,7 @@
 
 ## TL;DR
 
-aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes added surface usage tracking for the coverage matrix (web/tauri/widgets) with a dedicated source-of-truth file.
+aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes added a design system adoption checklist and linked it from the architecture and README docs.
 
 ## Architecture & Data Flow (High Level)
 
@@ -53,6 +53,7 @@ flowchart LR
   - `mcp/` — MCP server integration
 - `docs/` — architecture, guides, test plans, and policies
   - `docs/architecture/` — ADRs and architecture map
+  - `docs/design-system/ADOPTION_CHECKLIST.md` — step-by-step integration checklist for web, widgets, and Tauri
   - `docs/testing/` — testing guidelines (smart testing rules)
   - `docs/design-system/COVERAGE_MATRIX_SURFACES.json` — surface usage source of truth (web/tauri/widgets)
 - `scripts/` — build, compliance, and version sync tooling
@@ -92,6 +93,7 @@ pnpm test:mcp-contract    # MCP contract tests
 
 - **2026-02-16:** Clarified design guidelines to require token-only Tailwind utilities (with examples) and linked to the token API mapping doc. Impact: more consistent theming and fewer ad-hoc utility tokens.
 - **2026-02-14:** Added a maintained testing guidelines doc and updated the smart-testing ADR reference so contributors have a single source for how to run tests, what types exist, and when to add them. Impact: clearer testing expectations and fewer broken doc links.
+- **2026-02-15:** Added a design system adoption checklist and linked it from the README and cross-platform architecture docs. Impact: faster, more consistent onboarding for new surfaces.
 - **2026-02-18:** Added a surface usage source of truth for the coverage matrix and expanded the generated outputs to track web, tauri, and widget adoption. Impact: clearer surface-level coverage reporting. (commit: e1dbc75e86496aa9def807fbf1b79f99f9ba8712)
 - **2026-02-20:** Routed `text-muted-foreground` through the mapped muted token so light/dark variants follow the brand → alias → mapped chain without hex overrides. Impact: consistent muted text color resolution and easier token audits.
 - **2026-02-15:** Reframed the design audit report to mark the prior issues and fix list as historical/resolved, keeping the audit status, issue list, and remediation notes aligned for compliance reference. Impact: readers can trust the report status at a glance.
