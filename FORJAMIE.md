@@ -80,6 +80,7 @@ pnpm test:mcp-contract    # MCP contract tests
 ## Lessons Learned
 
 - Docs drift is easy: keep ADR references pointing at maintained docs and update them in the same change-set.
+- Coverage reports can over-count when barrels are treated as components; validate that generators filter non-component exports.
 
 ## Weaknesses & Improvements
 
@@ -89,5 +90,6 @@ pnpm test:mcp-contract    # MCP contract tests
 
 ## Recent Changes
 
+- **2026-02-16:** Clarified design guidelines to require token-only Tailwind utilities (with examples) and linked to the token API mapping doc. Impact: more consistent theming and fewer ad-hoc utility tokens.
 - **2026-02-14:** Added a maintained testing guidelines doc and updated the smart-testing ADR reference so contributors have a single source for how to run tests, what types exist, and when to add them. Impact: clearer testing expectations and fewer broken doc links.
 - **2026-02-18:** Added a surface usage source of truth for the coverage matrix and expanded the generated outputs to track web, tauri, and widget adoption. Impact: clearer surface-level coverage reporting. (commit: e1dbc75e86496aa9def807fbf1b79f99f9ba8712)
