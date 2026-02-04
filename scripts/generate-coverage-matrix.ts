@@ -269,6 +269,10 @@ function formatCell(value: string | null): string {
   return value && value.trim().length > 0 ? value : "-";
 }
 
+function slugifyAnchor(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
 function buildMarkdown(rows: MatrixRow[]): string {
   const appsSdkVersion = readAppsSdkVersion();
   const lines = [
@@ -336,6 +340,9 @@ async function main(): Promise<void> {
       (!fallback.why_missing_upstream ||
         !fallback.migration_trigger ||
         !fallback.a11y_contract_ref);
+    const a11yContractRef =
+      fallback?.a11y_contract_ref ??
+      (fallback ? null : `docs/design-system/A11Y_CONTRACTS.md#${slugifyAnchor(name)}`);
 
     rows.push({
       name,
@@ -344,7 +351,7 @@ async function main(): Promise<void> {
       fallback: fallback ? "radix" : null,
       why_missing_upstream: fallback?.why_missing_upstream ?? null,
       migration_trigger: fallback?.migration_trigger ?? null,
-      a11y_contract_ref: fallback?.a11y_contract_ref ?? null,
+      a11y_contract_ref: a11yContractRef,
       status: hasMissingMetadata ? "missing_metadata" : usedInWidgets ? "widget_used" : "active",
     });
   }

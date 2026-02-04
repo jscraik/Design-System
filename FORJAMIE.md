@@ -7,7 +7,7 @@
 
 ## TL;DR
 
-aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes added a dedicated testing guidelines doc and wired the ADR references to the maintained path.
+aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes added explicit accessibility contracts for local primitives and wired the coverage matrix to reference them.
 
 ## Architecture & Data Flow (High Level)
 
@@ -84,7 +84,9 @@ pnpm test:mcp-contract    # MCP contract tests
 
 - **Coverage visibility:** Coverage goals exist, but measurement should be kept current. Consider adding a CI artifact or dashboard link in `docs/TEST_PLAN.md`.
 - **Testing guidance location:** Ensure `docs/testing/` stays aligned with ADRs and contributor docs (like `CONTRIBUTING.md`).
+- **A11y contract maintenance:** Keep `docs/design-system/A11Y_CONTRACTS.md` updated whenever a local primitive changes keyboard or ARIA behavior.
 
 ## Recent Changes
 
 - **2026-02-14:** Added a maintained testing guidelines doc and updated the smart-testing ADR reference so contributors have a single source for how to run tests, what types exist, and when to add them. Impact: clearer testing expectations and fewer broken doc links.
+- **2026-02-14:** Documented accessibility contracts for local primitive components and updated the coverage matrix generator to link to them. Impact: local primitives now have explicit a11y expectations referenced in coverage reporting.
