@@ -28,6 +28,18 @@ type DtcgRoot = {
   type: Record<string, DtcgDimensionToken | Record<string, unknown>>;
 };
 
+type NonColorAliasCategory = "space" | "radius" | "size" | "shadow" | "type";
+const NON_COLOR_ALIAS_VALUE_ALLOWLIST: Record<
+  NonColorAliasCategory,
+  ReadonlySet<string | number>
+> = {
+  space: new Set(),
+  radius: new Set(),
+  size: new Set(),
+  shadow: new Set(),
+  type: new Set(),
+};
+
 const CONTRAST_PAIRS = [
   { background: "background.primary", text: "text.primary", min: 4.5 },
   { background: "background.secondary", text: "text.primary", min: 4.5 },
@@ -132,7 +144,7 @@ function validateAliasMap(root: DtcgRoot, aliasMap: TokenAliasMap): ValidationEr
   }
 
   const nonModeCategories: Array<
-    [string, Record<string, { path?: string; value?: string | number }>]
+    [NonColorAliasCategory, Record<string, { path?: string; value?: string | number }>]
   > = [
     ["space", aliasMap.space],
     ["radius", aliasMap.radius],
@@ -143,10 +155,30 @@ function validateAliasMap(root: DtcgRoot, aliasMap: TokenAliasMap): ValidationEr
 
   for (const [category, mapping] of nonModeCategories) {
     for (const [tokenName, value] of Object.entries(mapping)) {
+      if ("value" in value && value.value !== undefined) {
+        const allowlist = NON_COLOR_ALIAS_VALUE_ALLOWLIST[category];
+        if (!allowlist.has(value.value)) {
+          errors.push({
+            code: "TOKEN_ALIAS_COMPUTED_VALUE_NOT_ALLOWED",
+            message: `Alias '${category}.${tokenName}' uses computed value '${value.value}' outside the allowlist.`,
+            suggestion: `Prefer a brand path reference (${category}.*) or add the value to the allowlist in token-validator.ts.`,
+          });
+        }
+        continue;
+      }
       if ("path" in value && value.path) {
+        const expectedPrefix = `${category}.`;
+        if (!value.path.startsWith(expectedPrefix)) {
+          errors.push({
+            code: "TOKEN_ALIAS_NON_COLOR_BRAND_PATH",
+            message: `Alias '${category}.${tokenName}' must reference a Brand path starting with '${expectedPrefix}'.`,
+            suggestion: `Update the alias to reference a Brand token (for example: ${expectedPrefix}${tokenName}).`,
+          });
+          continue;
+        }
         const token = resolvePath(root, value.path);
         if (!token || token.$value === undefined) {
-          if (category === "type" && isTokenGroup(token)) {
+          if (category === "type" && token && isTokenGroup(token)) {
             continue;
           }
           errors.push({
@@ -288,4 +320,15 @@ export async function validateTokens(): Promise<ValidationResult> {
   return { errors };
 }
 
-export type { ValidationError };
+type NonColorAliasValueAllowlist = Readonly<{
+  [K in keyof typeof NON_COLOR_ALIAS_VALUE_ALLOWLIST]: ReadonlySet<string>;
+}>;
+
+export type { ValidationError, NonColorAliasValueAllowlist };
+
+/**
+ * Read-only view of the non-color alias value allowlist.
+ * The underlying configuration should only be modified within this module.
+ */
+export const NON_COLOR_ALIAS_VALUE_ALLOWLIST_READONLY =
+  NON_COLOR_ALIAS_VALUE_ALLOWLIST as NonColorAliasValueAllowlist;
