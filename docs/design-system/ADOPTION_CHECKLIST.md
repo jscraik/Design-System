@@ -73,7 +73,7 @@ Reference: [Token reference](../theming/token-reference.md).
 ### 4) Verify before shipping
 
 - [ ] **Token validation:** `pnpm validate:tokens`.
-- [ ] **Coverage check:** confirm new states exist in the [coverage matrix](./COVERAGE_MATRIX.md).
+- [ ] **Coverage check:** run `pnpm ds:matrix:check` and confirm new states exist in the [coverage matrix](./COVERAGE_MATRIX.md).
 - [ ] **Drift suite (upstream changes):** run `pnpm test:drift` when `@openai/apps-sdk-ui` changes.
 
 Supporting docs:
