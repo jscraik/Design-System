@@ -64,7 +64,7 @@ Example (workspace dependency):
 
 ### 3) Use tokens correctly
 
-- [ ] Use **semantic tokens only** (e.g., `--text-primary`, `--surface-default`).
+- [ ] Use **semantic tokens only** (e.g., `--foreground`, `--background`, `--text-secondary`).
 - [ ] Do **not** introduce raw literals (`#fff`, `12px`, `rgba(...)`) in UI code.
 - [ ] If you need a new value, add a semantic token rather than inlining a literal.
 
