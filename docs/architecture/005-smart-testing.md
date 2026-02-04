@@ -239,7 +239,7 @@ open coverage/index.html
 ## References
 
 - Vitest config: `packages/design-studio-*/vitest.config.ts`
-- Testing guide: `docs/testing/guidelines.md` (TODO)
+- Testing guide: `docs/testing/guidelines.md`
 
 ---
 
