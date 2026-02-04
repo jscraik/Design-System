@@ -69,14 +69,39 @@ This document is generated from `packages/tokens/src/tokens/index.dtcg.json`. Do
 
 ## Risks and assumptions
 
-- Assumptions: TBD (confirm)
-- Failure modes and blast radius: TBD (confirm)
-- Rollback or recovery guidance: TBD (confirm)
+- **Assumptions (Brand → Alias → Mapped):**
+  - Brand primitives are the single source of truth; aliases must only reference brand tokens and never raw literals.
+  - Mapped tokens cover all brand/alias values required by web outputs (light/dark + density), with no mode gaps.
+  - Responsive tokens (e.g., space/size) are derived from the mapped layer and stay consistent across breakpoints.
+- **Risks (pipeline + responsive tokens):**
+  - A missing alias or mapped entry can silently remove a CSS var, causing runtime fallbacks to literals or invalid styles.
+  - Responsive token sets can drift if breakpoint-specific values are updated in one layer but not propagated, leading to mixed scales across layouts.
+  - Mode parity mistakes (light/dark/compact) can produce inaccessible contrast or inconsistent spacing between themes.
+- **Recovery guidance:**
+  - Re-run token validation + generation to rehydrate outputs, then diff the generated CSS files before/after to confirm parity.
+  - Roll back to the last known-good token generation commit if validation fails and you cannot resolve parity within the same changeset.
 
 ## Verify
 
-- TBD: Add concrete verification steps and expected results.
+- **Validate token sources:** `pnpm validate:tokens`
+  - **Expected:** exits 0 with no validation errors; reports no missing modes or alias-map mismatches.
+- **Regenerate web outputs:** `pnpm generate:tokens`
+  - **Expected:** exits 0 and updates token outputs without uncommitted drift beyond the intended change.
+- **Check generated outputs:** open and confirm changes in:
+  - `packages/tokens/src/foundations.css` (brand + base layer outputs)
+  - `packages/ui/src/styles/theme.css` (mapped + web-ready theme vars)
+  - **Expected:** CSS vars exist for every token row in this doc, with light/dark + density modes present where defined.
+- **Optional sanity check:** `rg "--color-|--space-|--motion-" packages/ui/src/styles/theme.css`
+  - **Expected:** themed variables for these categories (for example `--color-text-primary`, `--motion-duration-short`, or spacing equivalents) are present and mapped, using the `--color-`, `--space-`, and `--motion-` prefixes as a coarse prefix check rather than an exact token-name validator.
 
 ## Troubleshooting
 
-- TBD: Add the top 3 failure modes and fixes.
+- **1) Missing mode parity (light/dark/compact)**
+  - **Symptom:** validation errors or missing CSS vars for a mode in `theme.css`.
+  - **Fix:** add the missing mode values in the mapped token definitions, then re-run `pnpm validate:tokens` and `pnpm generate:tokens`.
+- **2) Alias-map mismatch**
+  - **Symptom:** `validate:tokens` reports alias references that do not exist in brand tokens.
+  - **Fix:** correct the alias target to an existing brand token (or add the missing brand primitive), then regenerate outputs.
+- **3) Outdated generated outputs**
+  - **Symptom:** doc rows or CSS vars appear correct in source JSON, but `foundations.css`/`theme.css` are stale.
+  - **Fix:** run `pnpm generate:tokens`, ensure no git-ignored outputs are blocking updates, then commit regenerated files alongside the doc changes.

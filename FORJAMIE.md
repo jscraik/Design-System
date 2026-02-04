@@ -7,8 +7,7 @@
 
 ## TL;DR
 
-aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes introduced dedicated high-contrast brand tokens, alias coverage, and mapped theme overrides for accessibility.
-aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes refined light-mode token usage in compose and template blocks to improve contrast for text, icons, and borders.
+aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes clarified token-reference verification, risks, and troubleshooting steps for the theming pipeline.
 
 ## Architecture & Data Flow (High Level)
 
@@ -92,6 +91,7 @@ pnpm test:mcp-contract    # MCP contract tests
 
 ## Recent Changes
 
+- **2026-02-15:** Expanded the token-reference doc with concrete verification steps, pipeline assumptions, and top troubleshooting fixes so token updates are easier to validate and recover. Impact: fewer token drift surprises and clearer remediation guidance.
 - **2026-02-04:** Added high-contrast color tokens in the Brand layer, wired alias mapping/validation, and updated theme mappings/docs to use explicit HC overrides. Impact: high-contrast modes no longer fall back to dark tokens and are validated for coverage.
 - **2026-02-14:** Refined light-mode token usage in compose and template block components so text, icons, and borders use semantic tokens with stronger contrast. Impact: clearer light-mode readability while keeping dark-mode consistency.
 - **2026-02-16:** Clarified design guidelines to require token-only Tailwind utilities (with examples) and linked to the token API mapping doc. Impact: more consistent theming and fewer ad-hoc utility tokens.
