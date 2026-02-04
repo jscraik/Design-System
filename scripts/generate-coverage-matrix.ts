@@ -129,10 +129,10 @@ async function collectComponentNames(): Promise<Set<string>> {
     if (last === "index.ts" || last === "index.tsx") {
       const parent = parts[parts.length - 2];
       if (parent) {
-        if (await isBarrelIndex(filePath)) {
+        if (NON_COMPONENT_EXPORTS.has(parent)) {
           continue;
         }
-        if (NON_COMPONENT_EXPORTS.has(parent)) {
+        if (await isBarrelIndex(filePath)) {
           continue;
         }
         names.add(parent);
