@@ -47,11 +47,11 @@ Example (workspace dependency):
 
 - [ ] Ensure Tailwind v4 scans the UI package (if applicable):
 
-```css
-@source "../node_modules/@openai/apps-sdk-ui";
-@source "../node_modules/@design-studio/ui";
-```
+  **Monorepo (workspace:\* dependencies)**
 
+  ```css
+  @source "../../packages/apps-sdk-ui/src";
+  @source "../../packages/ui/src";
 **Widgets (standalone bundles)**
 
 - [ ] Include the same CSS imports in the widget entry stylesheet.
