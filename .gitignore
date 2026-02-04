@@ -104,3 +104,5 @@ Thumbs.db
 /ai/raw/
 # Internal docs (do not commit)
 docs/transcripts/
+
+# Project memory doc (FORJAMIE.md) is tracked in git.
