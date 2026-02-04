@@ -7,7 +7,7 @@
 
 ## TL;DR
 
-aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes tightened non-color alias validation (space/radius/size/shadow/type) with an explicit computed-value allowlist and documented the new constraints.
+aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes added a design system adoption guide and linked it from the design guidelines and tokens docs to keep onboarding consistent.
 
 ## Architecture & Data Flow (High Level)
 
@@ -90,5 +90,6 @@ pnpm test:mcp-contract    # MCP contract tests
 ## Recent Changes
 
 - **2026-02-14:** Added a maintained testing guidelines doc and updated the smart-testing ADR reference so contributors have a single source for how to run tests, what types exist, and when to add them. Impact: clearer testing expectations and fewer broken doc links.
+- **2026-02-14:** Added a design system adoption guide that clarifies when to use Apps SDK UI vs `@design-studio/ui` vs tokens-only, and linked it from core design docs. Impact: clearer onboarding for consumers and better discovery of the design system setup.
 - **2026-02-14:** Adjusted the coverage matrix generator to ignore barrel-only exports (like `forms`/`utils`) and regenerated the matrix so it reflects real UI components. Impact: cleaner coverage reporting for the design system.
 - **2026-02-14:** Enforced non-color alias path validation with an explicit computed-value allowlist, updated alias rules documentation, and added tests so raw values are rejected unless allowlisted. Impact: stronger guardrails around token alias integrity.
