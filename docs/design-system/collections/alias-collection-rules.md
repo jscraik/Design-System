@@ -20,11 +20,11 @@ All token usage must resolve through **Brand → Alias → Mapped**:
 ## Alias Integrity
 
 - Color aliases **must reference Brand paths** (no raw hex values).
-- Non-color aliases **should** reference Brand paths where possible.
+- Non-color aliases **must reference Brand paths** (`space.*`, `radius.*`, `size.*`, `shadow.*`, `type.*`)
+  unless the value is explicitly allowlisted as a computed exception.
 - Raw timing values are allowed for motion tokens (`motion.standard|fast|slow|reduced`).
-- Validator enforces raw-value prohibition for **color aliases only**; non-color categories
-  (space, radius, shadow, size, type) currently mix Brand paths with computed values
-  without strict validation.
+- Validator enforces raw-value prohibition for **color aliases** and allowlisted computed values for
+  **non-color aliases** (space, radius, shadow, size, type).
 
 ## Color Aliases (modeled categories)
 
@@ -63,6 +63,17 @@ Alias includes these additional groups (paths resolve into DTCG source):
 - `type` → `type.fontFamily` + `type.web.{token}`
 - `motion` → raw timing values (seconds)
 
+### Computed Value Allowlist (Non‑Color)
+
+Non-color aliases may only use raw/computed values if they appear in the allowlist enforced by
+`token-validator.ts`. Current allowlist:
+
+- `space`: _none_ (must reference `space.*`)
+- `radius`: _none_ (must reference `radius.*`)
+- `size`: _none_ (must reference `size.*`)
+- `shadow`: _none_ (must reference `shadow.*`)
+- `type`: _none_ (must reference `type.*`)
+
 ## Modes
 
 - Alias defines **light**, **dark**, and **highContrast** in all color categories.
@@ -79,8 +90,8 @@ The alias layer **consumes Brand tokens exported from Figma** and provides stabl
 ## Other Instructions
 
 - If new non-color categories are introduced in DTCG, they **must** be added to the alias map.
-- Automated validation of non-color raw-value constraints is not currently implemented;
-  update `token-validator.ts` if strict validation is desired for new categories.
+- Update the allowlist in `token-validator.ts` if a new computed alias value is required for
+  non-color categories.
 
 ## Enforcement
 
