@@ -25,6 +25,7 @@ const UI_INDEX = join(ROOT, "packages/ui/src/index.ts");
 const COMPONENTS_INDEX = join(ROOT, "packages/ui/src/components/ui/index.ts");
 const WIDGETS_DIR = join(ROOT, "packages/widgets");
 const FALLBACK_ROOT = join(ROOT, "packages/ui/src/components");
+const NON_COMPONENT_EXPORTS = new Set(["forms", "utils"]);
 
 const OUTPUT_JSON = join(ROOT, "docs/design-system/COVERAGE_MATRIX.json");
 const OUTPUT_MD = join(ROOT, "docs/design-system/COVERAGE_MATRIX.md");
@@ -128,17 +129,40 @@ async function collectComponentNames(): Promise<Set<string>> {
     if (last === "index.ts" || last === "index.tsx") {
       const parent = parts[parts.length - 2];
       if (parent) {
+        if (NON_COMPONENT_EXPORTS.has(parent)) {
+          continue;
+        }
+        if (await isBarrelIndex(filePath)) {
+          continue;
+        }
         names.add(parent);
       }
     } else {
       const base = last.replace(/\.tsx?$/, "");
       if (base) {
+        if (NON_COMPONENT_EXPORTS.has(base)) {
+          continue;
+        }
         names.add(base);
       }
     }
   }
 
   return names;
+}
+
+async function isBarrelIndex(indexPath: string): Promise<boolean> {
+  const directory = dirname(indexPath);
+  const entries = await readdir(directory, { withFileTypes: true });
+
+  for (const entry of entries) {
+    if (!entry.isFile()) continue;
+    if (!entry.name.endsWith(".ts") && !entry.name.endsWith(".tsx")) continue;
+    if (entry.name === "index.ts" || entry.name === "index.tsx") continue;
+    return false;
+  }
+
+  return true;
 }
 
 async function collectAppsSdkExports(): Promise<NamedExport[]> {

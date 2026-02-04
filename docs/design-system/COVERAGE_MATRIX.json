@@ -220,7 +220,7 @@
     "status": "active"
   },
   {
-    "name": "forms",
+    "name": "IconButton",
     "source": "local_primitive",
     "upstream": null,
     "fallback": null,
@@ -230,17 +230,7 @@
     "status": "active"
   },
   {
-    "name": "HoverCard",
-    "source": "radix_fallback",
-    "upstream": null,
-    "fallback": "radix",
-    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
-    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
-    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
-    "status": "active"
-  },
-  {
-    "name": "IconButton",
+    "name": "Image",
     "source": "local_primitive",
     "upstream": null,
     "fallback": null,
