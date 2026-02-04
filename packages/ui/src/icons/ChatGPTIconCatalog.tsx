@@ -63,6 +63,23 @@ export function ChatGPTIconCatalog() {
   const filteredIcons = iconEntries.filter(([name]) =>
     name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+
+  const handleCopy = async (name: string) => {
+    if (!navigator?.clipboard?.writeText) {
+      setStatusMessage(`Clipboard unavailable. Select and copy: ${name}`);
+      window.prompt("Clipboard unavailable. Copy the icon name manually:", name);
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(name);
+      setStatusMessage(`Copied ${name} to clipboard.`);
+    } catch (error) {
+      setStatusMessage(`Couldn't copy ${name}. Select and copy it manually.`);
+      window.prompt("Clipboard failed. Copy the icon name manually:", name);
+    }
+  };
 
   const categories = {
     all: filteredIcons,
