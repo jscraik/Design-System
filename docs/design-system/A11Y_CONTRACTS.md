@@ -100,7 +100,7 @@ Each local primitive component has an explicit accessibility contract below. Use
 ## DatePicker
 
 - **Keyboard & focus**: Trigger opens with Enter/Space; calendar uses the same contract as Calendar.
-- **ARIA & semantics**: Trigger has `aria-haspopup="dialog"` or `grid"` depending on implementation.
+- **ARIA & semantics**: Trigger has `aria-haspopup="dialog"` or `"grid"` depending on implementation.
 - **States & announcements**: Selected date reflected via `aria-selected`.
 - **Notes**: Focus moves into calendar on open and returns to trigger on close.
 
