@@ -66,7 +66,6 @@ Alias includes these additional groups (paths resolve into DTCG source):
 ## Modes
 
 - Alias defines **light**, **dark**, and **highContrast** in all color categories.
-- `highContrast` currently **defaults to dark tokens** until explicit HC tokens exist.
 - Every color alias key **must** exist across light/dark/highContrast to preserve parity.
 
 ## Figma Variables

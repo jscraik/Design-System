@@ -106,7 +106,7 @@ Mapped collection includes:
 
 - `theme.css` defines explicit values for **light** and **dark** modes using `[data-theme]`.
 - Every mapped usage slot **must** be set in both themes to preserve parity.
-- `highContrast` follows Alias until dedicated mapped overrides are introduced.
+- `highContrast` uses explicit mapped overrides in `theme.css` via `@media (prefers-contrast: high)`.
 
 ## Accessibility
 

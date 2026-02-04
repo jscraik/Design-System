@@ -83,17 +83,30 @@ function validateModeCompleteness(root: DtcgRoot): ValidationError[] {
   for (const category of categories) {
     const light = root.color?.[category]?.light ?? {};
     const dark = root.color?.[category]?.dark ?? {};
+    const highContrast = root.color?.[category]?.highContrast ?? {};
     const lightKeys = collectModeKeys(light);
     const darkKeys = collectModeKeys(dark);
+    const highContrastKeys = collectModeKeys(highContrast);
 
     const missingInDark = lightKeys.filter((key) => !darkKeys.includes(key));
     const missingInLight = darkKeys.filter((key) => !lightKeys.includes(key));
+    const missingInHighContrastFromLight = lightKeys.filter((key) => !highContrastKeys.includes(key));
+    const missingInHighContrastFromDark = darkKeys.filter((key) => !highContrastKeys.includes(key));
+    const missingInLightFromHighContrast = highContrastKeys.filter((key) => !lightKeys.includes(key));
+    const missingInDarkFromHighContrast = highContrastKeys.filter((key) => !darkKeys.includes(key));
 
-    if (missingInDark.length > 0 || missingInLight.length > 0) {
+    if (
+      missingInDark.length > 0 ||
+      missingInLight.length > 0 ||
+      missingInHighContrastFromLight.length > 0 ||
+      missingInHighContrastFromDark.length > 0 ||
+      missingInLightFromHighContrast.length > 0 ||
+      missingInDarkFromHighContrast.length > 0
+    ) {
       errors.push({
         code: "TOKEN_MODE_MISSING",
         message: `Color mode mismatch in '${category}'.`,
-        suggestion: `Ensure light and dark mode tokens have matching keys. Missing dark: ${missingInDark.join(", ") || "none"}. Missing light: ${missingInLight.join(", ") || "none"}.`,
+        suggestion: `Ensure light, dark, and highContrast mode tokens have matching keys. Missing dark: ${missingInDark.join(", ") || "none"}. Missing light: ${missingInLight.join(", ") || "none"}. Missing highContrast (from light): ${missingInHighContrastFromLight.join(", ") || "none"}. Missing highContrast (from dark): ${missingInHighContrastFromDark.join(", ") || "none"}. Missing light (from highContrast): ${missingInLightFromHighContrast.join(", ") || "none"}. Missing dark (from highContrast): ${missingInDarkFromHighContrast.join(", ") || "none"}.`,
       });
     }
   }
@@ -236,7 +249,7 @@ function resolveAliasColor(
 
 function validateContrast(root: DtcgRoot, aliasMap: TokenAliasMap): ValidationError[] {
   const errors: ValidationError[] = [];
-  const modes: Array<keyof ModeAliases> = ["light", "dark"];
+  const modes: Array<keyof ModeAliases> = ["light", "dark", "highContrast"];
 
   for (const pair of CONTRAST_PAIRS) {
     const [backgroundCategory, backgroundToken] = pair.background.split(".");
