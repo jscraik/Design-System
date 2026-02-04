@@ -207,6 +207,12 @@ Use this table to jump to the canonical doc surface. For more detail, see
 | Runtime host            | `packages/runtime/README.md`                             |
 | Widgets                 | `packages/widgets/README.md`                             |
 
+### Design system
+
+- [Adoption checklist](./docs/design-system/ADOPTION_CHECKLIST.md)
+- [Design system charter](./docs/design-system/CHARTER.md)
+- [Coverage matrix](./docs/design-system/COVERAGE_MATRIX.md)
+
 ## Troubleshooting
 
 ### Symptom: `pnpm: command not found`

@@ -23,3 +23,5 @@ All UI styling (React + widgets) is driven from one canonical DTCG token bundle:
 - No hard-coded styling literals in components (except documented escape hatches).
 - Generated artifacts are committed and CI-regenerated and diff-checked.
 - Any new component state requires token coverage (default/pressed/focus/disabled; hover where applicable).
+
+See the [design system adoption checklist](../design-system/ADOPTION_CHECKLIST.md) for step-by-step integration requirements across web, widgets, and Tauri.
