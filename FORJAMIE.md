@@ -1,68 +1,48 @@
 # FORJAMIE.md
 
 ## TL;DR
+This repo is a pnpm workspace monorepo for AStudio, containing shared UI, runtime, tokens, widgets, and tooling packages plus platform-specific apps and MCP integrations. This update improves the ChatGPT icon catalog so clipboard copy failures (permissions, non-HTTPS, or unsupported APIs) show a user-facing fallback instead of throwing unhandled rejections.
 
-AStudio is a pnpm workspace monorepo for the Design Studio ecosystem. It ships web apps (main web app + Storybook), reusable UI/runtime libraries, MCP tooling, and build/test automation. Desktop is **intentionally deferred** today, with placeholders that fail fast to avoid being treated as runnable until a Tauri + Vite scaffold is added.
+## Architecture & Diagrams
+High-level flow (UI usage):
 
-## Architecture (high-level)
+```mermaid
+flowchart TD
+  Apps[Apps & surfaces] --> UI[packages/ui]
+  UI --> Icons[packages/ui/src/icons]
+  UI --> Components[packages/ui/src/components]
+  Icons --> Catalog[ChatGPTIconCatalog]
+```
 
-- **Platforms**
-  - `platforms/web/`: browser experiences (main web app + Storybook).
-  - `platforms/mcp/`: MCP server + tool contracts for ChatGPT integration.
-  - `platforms/desktop/`: reserved for a future desktop shell (Tauri).
-- **Packages**
-  - `packages/ui`: core React UI components and styles.
-  - `packages/runtime`: runtime utilities and host adapters.
-  - `packages/tokens`: design tokens build + validation.
-  - `packages/widgets`: embeddable widgets.
-  - `packages/cli`: developer tooling.
-  - `packages/astudio-icons`, `packages/json-render`, etc.
-- **Tooling**
-  - `scripts/`: build pipeline, compliance checks, version sync, and automation.
-  - `docs/`: architecture and build pipeline docs.
+Notes:
+- Apps/surfaces import shared UI components and icon bundles from `packages/ui`.
+- The icon catalog is a dev-facing surface for browsing and copying icon names.
 
-**Data/flow (conceptual):**
-1. Design tokens and UI packages build first (`packages/tokens`, `packages/ui`).
-2. Web apps consume built packages for runtime + UI.
-3. MCP tools expose integration surfaces for external agents.
+## Codebase Map
+- `apps/`: product surfaces and demos.
+- `packages/ui/`: shared UI components, icons, and styling tokens.
+- `packages/runtime/`: runtime utilities and shared logic.
+- `packages/tokens/`: design tokens.
+- `packages/widgets/`: widget bundles.
+- `platforms/mcp/`: MCP server and tool contracts for ChatGPT integration.
+- `docs/`: architecture, guides, audits, build pipeline docs.
+- `scripts/`: build pipeline and compliance tooling.
 
-## Codebase map
+## How to Run / Test
+- Install: `pnpm install`
+- Dev (all): `pnpm dev`
+- Dev (web only): `pnpm dev:web`
+- Lint: `pnpm lint`
+- Format: `pnpm format`
+- Tests (unit): `pnpm test`
+- E2E (web): `pnpm test:e2e:web`
 
-- Root
-  - `platforms/`
-    - `web/` (primary app + Storybook)
-    - `mcp/` (tooling + server)
-    - `desktop/` (future desktop shell; currently deferred)
-  - `packages/` (shared libraries)
-  - `scripts/` (build/test/automation)
-  - `docs/` (architecture + build pipeline docs)
-  - `tools/`, `bin/`, `_tools/` (support tooling)
+## Lessons Learned
+- Clipboard APIs can fail due to permissions, insecure contexts, or missing browser support; always provide user-facing fallbacks to avoid uncaught rejections.
 
-## How to run / test
+## Weaknesses & Improvements
+- The icon catalog is currently a placeholder; it should be replaced with the full design-token-integrated version when ready.
+- Consider a shared toast/notification utility for consistent copy-to-clipboard feedback across the app.
 
-From repo root (pnpm workspace):
-
-- Install deps: `pnpm install`
-- Dev web app: `pnpm dev` or `pnpm dev:web`
-- Dev Storybook: `pnpm dev:storybook`
-- Build pipeline: `pnpm build` (see `scripts/build-pipeline.mjs`)
-- Lint/format: `pnpm lint`, `pnpm format`, `pnpm format:check`
-- Tests:
-  - UI unit tests: `pnpm test`
-  - Web e2e: `pnpm test:e2e:web`
-  - Widgets a11y: `pnpm test:a11y:widgets`
-  - Visual regression: `pnpm test:visual:web` / `pnpm test:visual:storybook`
-
-**Desktop:** The desktop package is intentionally deferred. Its scripts exit non-zero with a message until the Tauri + Vite scaffold is created.
-
-## Lessons learned
-
-- Keep placeholder app packages explicitly non-runnable to avoid accidental CI failures or confusion.
-
-## Weaknesses & improvements
-
-- Desktop support is not yet scaffolded. When ready, add Tauri + Vite scaffolding and wire root scripts for `dev:desktop`/`build:desktop`.
-
-## Recent changes
-
-- Deferred `@design-studio/desktop` intentionally; scripts now fail fast with guidance and the local README clarifies next steps.
+## Recent Changes
+- 2026-02-04 — Added safe clipboard copy handling with a user-facing fallback in the ChatGPT icon catalog to prevent uncaught rejections. (Commit: f0cdce9)
