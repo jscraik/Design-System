@@ -1,13 +1,13 @@
 # FORJAMIE.md
 
-**Last updated:** 2026-02-14
+**Last updated:** 2026-02-15
 **Audience:** Developers (intermediate)
 **Owner:** TBD (confirm)
 **Review cadence:** TBD (confirm)
 
 ## TL;DR
 
-aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes added a dedicated testing guidelines doc and wired the ADR references to the maintained path.
+aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes added a design system adoption checklist and linked it from the architecture and README docs.
 
 ## Architecture & Data Flow (High Level)
 
@@ -53,6 +53,7 @@ flowchart LR
   - `mcp/` — MCP server integration
 - `docs/` — architecture, guides, test plans, and policies
   - `docs/architecture/` — ADRs and architecture map
+  - `docs/design-system/ADOPTION_CHECKLIST.md` — step-by-step integration checklist for web, widgets, and Tauri
   - `docs/testing/` — testing guidelines (smart testing rules)
 - `scripts/` — build, compliance, and version sync tooling
 
@@ -88,3 +89,4 @@ pnpm test:mcp-contract    # MCP contract tests
 ## Recent Changes
 
 - **2026-02-14:** Added a maintained testing guidelines doc and updated the smart-testing ADR reference so contributors have a single source for how to run tests, what types exist, and when to add them. Impact: clearer testing expectations and fewer broken doc links.
+- **2026-02-15:** Added a design system adoption checklist and linked it from the README and cross-platform architecture docs. Impact: faster, more consistent onboarding for new surfaces.
