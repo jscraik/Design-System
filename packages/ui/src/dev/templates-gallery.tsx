@@ -1,13 +1,13 @@
 import type { ComponentType } from "react";
 
 import { blockRegistry } from "../templates/blocks/registry";
-import { DashboardTemplate } from "../templates/DashboardTemplate";
 import { ChatFullWidthTemplate } from "../templates/ChatFullWidthTemplate";
 import { ChatTwoPaneTemplate } from "../templates/ChatTwoPaneTemplate";
+import { DashboardTemplate } from "../templates/DashboardTemplate";
 import { NewComponentsShowcase } from "../templates/NewComponentsShowcase";
 import {
-  categories as templateCategories,
   getTemplatesByCategory,
+  categories as templateCategories,
   templateRegistry as templatesRegistry,
 } from "../templates/registry";
 

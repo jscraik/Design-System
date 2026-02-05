@@ -1,7 +1,7 @@
 import {
   AppsSdkCarouselExample,
-  AppsSdkInlineExample,
   AppsSdkFullscreenExample,
+  AppsSdkInlineExample,
   AppsSdkInspectorExample,
   AppsSdkPipExample,
 } from "./index";

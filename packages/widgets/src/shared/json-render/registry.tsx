@@ -42,7 +42,7 @@ import { useState } from "react";
  */
 function formatValue(value: string | number, format?: string): string {
   const num = typeof value === "string" ? parseFloat(value) : value;
-  if (isNaN(num)) return String(value);
+  if (Number.isNaN(num)) return String(value);
 
   switch (format) {
     case "currency":
@@ -51,7 +51,6 @@ function formatValue(value: string | number, format?: string): string {
       return `${num}%`;
     case "duration":
       return formatDuration(num);
-    case "number":
     default:
       return num.toLocaleString();
   }

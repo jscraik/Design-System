@@ -1,11 +1,10 @@
-import * as React from "react";
 import useEmblaCarousel from "embla-carousel-react";
+import * as React from "react";
 
 import { Button } from "../../components/ui";
 import { IconArrowLeftSm, IconArrowRightSm } from "../../icons";
-
+import { type Place, PlaceCard } from "./components/PlaceCard";
 import { markers } from "./data/markers";
-import { PlaceCard, type Place } from "./components/PlaceCard";
 
 export function AppsSdkCarouselExample() {
   const places = markers.places.map((place) => ({ ...place })) as Place[];
@@ -83,7 +82,7 @@ export function AppsSdkCarouselExample() {
           className="absolute left-2 top-1/2 -translate-y-1/2 z-10 shadow-foundation-close"
           size="sm"
           variant="secondary"
-          onClick={() => emblaApi && emblaApi.scrollPrev()}
+          onClick={() => emblaApi?.scrollPrev()}
           type="button"
         >
           <IconArrowLeftSm className="h-4.5 w-4.5" aria-hidden="true" />
@@ -95,7 +94,7 @@ export function AppsSdkCarouselExample() {
           className="absolute right-2 top-1/2 -translate-y-1/2 z-10 shadow-foundation-close"
           size="sm"
           variant="secondary"
-          onClick={() => emblaApi && emblaApi.scrollNext()}
+          onClick={() => emblaApi?.scrollNext()}
           type="button"
         >
           <IconArrowRightSm className="h-4.5 w-4.5" aria-hidden="true" />

@@ -1,7 +1,7 @@
 /**
  * Testing utilities for components
  */
-import * as React from "react";
+import type * as React from "react";
 
 /**
  * Test wrapper that provides necessary context
@@ -66,7 +66,7 @@ export const a11y = {
 
     return (
       interactiveElements.includes(tagName) ||
-      (tabIndex !== null && parseInt(tabIndex) >= 0) ||
+      (tabIndex !== null && parseInt(tabIndex, 10) >= 0) ||
       role === "button" ||
       role === "link"
     );

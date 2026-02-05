@@ -1,4 +1,3 @@
-import { IconCheckmark, IconChevronDownMd } from "../../../icons/ChatGPTIcons";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,6 +5,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "../../../components/ui/overlays/DropdownMenu";
+import { IconCheckmark, IconChevronDownMd } from "../../../icons/ChatGPTIcons";
 
 export interface DropdownOption {
   value: string;

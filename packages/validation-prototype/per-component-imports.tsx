@@ -9,11 +9,7 @@
  * For prototype, we use multiple import statements from the same file.
  */
 
-import React from "react";
-import { Button } from "./components";
-import { Input } from "./components";
-import { Tabs } from "./components";
-import { ChatInput } from "./components";
+import { Button, ChatInput, Input, Tabs } from "./components";
 
 export default function PerComponentImportsApp() {
   return (

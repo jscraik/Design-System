@@ -68,7 +68,7 @@ const noWindowOpenaiDirectAccessRule = {
       // Handle ? (matches one character)
       regex = regex.replace(/\?/g, ".");
 
-      return new RegExp("^" + regex + "$");
+      return new RegExp(`^${regex}$`);
     };
 
     // Simple glob matching

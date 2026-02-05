@@ -5,8 +5,8 @@
  * Provides consistent rendering, user interaction simulation, and assertions.
  */
 
-import { ReactElement } from "react";
-import { render, RenderOptions } from "@testing-library/react";
+import { type RenderOptions, render } from "@testing-library/react";
+import type { ReactElement } from "react";
 import { vi } from "vitest";
 
 /**

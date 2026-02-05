@@ -1,4 +1,4 @@
-import { readFile } from "fs/promises";
+import { readFile } from "node:fs/promises";
 
 import { validateTokens } from "../src/validation/token-validator.js";
 

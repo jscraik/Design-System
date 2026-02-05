@@ -9,7 +9,8 @@
  * Compound API: 20% of use cases (complex, custom layouts)
  */
 
-import React, { createContext, useContext, useState } from "react";
+import type React from "react";
+import { createContext, useContext, useState } from "react";
 
 // ============================================================================
 // TYPES

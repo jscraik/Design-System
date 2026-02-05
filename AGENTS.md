@@ -89,3 +89,23 @@ Recent history follows Conventional Commits: `feat:`, `fix:`, `docs:`, `chore:`,
 ## Security & Configuration
 
 Use local `.env` only; never commit secrets. Review `SECURITY.md` for policies. For tokens and cross‑platform parity, follow `docs/architecture/` and `docs/BUILD_PIPELINE.md`.
+
+---
+
+## Code Quality
+
+### JSON Validation
+
+Always verify JSON syntax with `jq` or similar before declaring JSON fixes complete. Run: `cat <file> | jq .` to validate.
+
+---
+
+## Development Environment
+
+### Mise Tool Trust
+
+When fixing mise trust errors, run `mise trust` explicitly and verify with `mise list` or `mise doctor` before considering the task complete.
+
+### Tool Installation Verification
+
+After installing development tools, always verify installation with `--version` or equivalent and confirm the tool is in PATH.

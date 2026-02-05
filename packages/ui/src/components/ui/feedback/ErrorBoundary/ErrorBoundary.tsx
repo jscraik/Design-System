@@ -53,7 +53,8 @@ export class UIErrorBoundary extends Component<UIErrorBoundaryProps, UIErrorBoun
       const { error } = this.state;
 
       if (typeof fallback === "function") {
-        return fallback(error!, {
+        if (!error) throw new Error("Error is null in error boundary");
+        return fallback(error, {
           componentStack: "",
         } as ErrorInfo);
       }
@@ -71,7 +72,9 @@ export class UIErrorBoundary extends Component<UIErrorBoundaryProps, UIErrorBoun
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                aria-label="Error icon"
               >
+                <title>Error</title>
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"

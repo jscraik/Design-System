@@ -1,13 +1,12 @@
 import { useState } from "react";
-
+import { Toggle } from "../../../../components/ui/base/Toggle";
+import { ModeSelector } from "../../../../components/ui/navigation/ModeSelector";
 import { IconChevronDownMd } from "../../../../icons";
 import { TemplateFieldGroup } from "../../../../templates/blocks/TemplateFieldGroup";
 import { TemplateFormField } from "../../../../templates/blocks/TemplateFormField";
-import { TemplatePanel } from "../../../../templates/blocks/TemplatePanel";
 import { TemplateHeaderBar } from "../../../../templates/blocks/TemplateHeaderBar";
-import { ModeSelector } from "../../../../components/ui/navigation/ModeSelector";
-import { Toggle } from "../../../../components/ui/base/Toggle";
-import { type ComposeModeConfig } from "../shared/types";
+import { TemplatePanel } from "../../../../templates/blocks/TemplatePanel";
+import type { ComposeModeConfig } from "../shared/types";
 
 /**
  * Props for the prompt builder section.

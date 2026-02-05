@@ -77,13 +77,13 @@ const noDeprecatedImportsRule = {
       // Handle ? (matches one character)
       regex = regex.replace(/\?/g, ".");
 
-      return new RegExp("^" + regex + "$");
+      return new RegExp(`^${regex}$`);
     };
 
     const checkSource = (node, source) => {
       // Check deprecated paths
       for (const deprecatedPath of deprecatedPaths) {
-        if (source === deprecatedPath || source.startsWith(deprecatedPath + "/")) {
+        if (source === deprecatedPath || source.startsWith(`${deprecatedPath}/`)) {
           context.report({
             node,
             messageId: "deprecatedImport",

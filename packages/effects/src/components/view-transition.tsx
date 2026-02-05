@@ -55,7 +55,7 @@ export function useViewTransition() {
   const transitionRef = useRef<ViewTransition | null>(null);
 
   const startTransition = useCallback(async (options: ViewTransitionOptions) => {
-    const { name, update, duration = 300, easing = "ease" } = options;
+    const { update, duration = 300, easing = "ease" } = options;
 
     // Check if View Transitions API is supported
     if (!("startViewTransition" in document)) {

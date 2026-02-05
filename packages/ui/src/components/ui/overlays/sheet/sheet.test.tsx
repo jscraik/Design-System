@@ -1,5 +1,5 @@
-import { render, screen, waitFor } from "../../../../testing/utils";
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { render, screen } from "../../../../testing/utils";
 import * as Sheet from "./fallback/Sheet";
 
 describe("Sheet", () => {

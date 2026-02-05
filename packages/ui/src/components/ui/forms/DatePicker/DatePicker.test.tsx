@@ -1,5 +1,5 @@
-import { render, screen, waitFor, fireEvent } from "../../../../testing/utils";
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen, waitFor } from "../../../../testing/utils";
 import { DatePicker, DateRangePicker } from "./DatePicker";
 
 describe("DatePicker", () => {
@@ -59,7 +59,7 @@ describe("DatePicker", () => {
       });
 
       // Select a date (the Calendar component handles this)
-      const date = new Date();
+      const _date = new Date();
       mockOnValueChange.mock.calls[0]?.[0]; // Get the first call's date argument
 
       // Calendar should close after selection

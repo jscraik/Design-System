@@ -116,7 +116,7 @@ export async function setupDateTimeMock(page: Page): Promise<void> {
     const ORIGINAL_FORMAT = Intl.DateTimeFormat;
 
     // @ts-expect-error - Mock Intl for consistent dates
-    Intl.DateTimeFormat = function (...args: Parameters<typeof ORIGINAL_FORMAT>) {
+    Intl.DateTimeFormat = (...args: Parameters<typeof ORIGINAL_FORMAT>) => {
       const formatter = new ORIGINAL_FORMAT(...args);
       const originalFormat = formatter.format;
 

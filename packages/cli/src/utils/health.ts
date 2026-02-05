@@ -1,10 +1,10 @@
-import type { GlobalOptions, CliArgs } from "../types.js";
-import { resolveConfig, findRepoRoot } from "./config.js";
-import { resolveCwd, resolvePnpmCommand } from "./env.js";
-import { jsonRpcRequest } from "./mcp.js";
 import { MCP_CHECK_METHOD } from "../constants.js";
+import type { CliArgs } from "../types.js";
+import { findRepoRoot, resolveConfig } from "./config.js";
+import { resolveCwd, resolvePnpmCommand } from "./env.js";
 import { runCommandCapture } from "./exec.js";
-import { outputJson, outputPlain, createEnvelope } from "./output.js";
+import { jsonRpcRequest } from "./mcp.js";
+import { createEnvelope, outputJson, outputPlain } from "./output.js";
 
 export async function checkPnpm(
   execAllowed: boolean,

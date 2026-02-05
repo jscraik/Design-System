@@ -13,8 +13,8 @@ import { expect, test } from "@playwright/test";
 
 // Import test utilities
 import {
-  pressKey,
   getFocusedElement,
+  pressKey,
   runAxeScan,
 } from "../../../../../packages/ui/src/testing/utils/keyboard-utils";
 

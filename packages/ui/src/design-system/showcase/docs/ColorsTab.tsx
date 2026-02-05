@@ -1,7 +1,7 @@
 import { Card } from "./Card";
 import { ColorSwatch } from "./ColorSwatch";
-import { Section } from "./Section";
 import { colorSwatches } from "./data";
+import { Section } from "./Section";
 
 /** Colors tab content for DesignSystemDocs. */
 export function ColorsTab() {

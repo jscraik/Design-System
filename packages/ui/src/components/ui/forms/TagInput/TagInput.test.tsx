@@ -1,6 +1,6 @@
-import { render, screen, waitFor, fireEvent } from "../../../../testing/utils";
-import { describe, expect, it, vi, beforeEach } from "vitest";
-import { TagInput, type Tag } from "./TagInput";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen, waitFor } from "../../../../testing/utils";
+import { type Tag, TagInput } from "./TagInput";
 
 describe("TagInput", () => {
   const mockOnTagsChange = vi.fn();

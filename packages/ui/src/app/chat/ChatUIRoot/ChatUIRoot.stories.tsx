@@ -1,7 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-
-import { IconLightBulb, IconPlusLg, IconSettings, IconShare, IconStar } from "../../../icons";
-import { IconPro } from "../../../icons/ChatGPTIcons";
 import {
   sampleCategories,
   sampleCategoryColors,
@@ -16,8 +13,11 @@ import {
   sampleProjects,
   sampleUser,
 } from "../../../fixtures/sample-data";
+import { IconLightBulb, IconPlusLg, IconSettings, IconShare, IconStar } from "../../../icons";
+import { IconPro } from "../../../icons/ChatGPTIcons";
 
 import { ChatUIRoot } from "./ChatUIRoot";
+
 const meta: Meta<typeof ChatUIRoot> = {
   title: "Components/Chat/Chat UI Root",
   component: ChatUIRoot,

@@ -1,11 +1,10 @@
 import * as React from "react";
 
 import { Button } from "../../components/ui";
-
-import { albums as albumsData } from "./data/albums";
 import type { Album } from "./components/AlbumCard";
 import { AlbumCard } from "./components/AlbumCard";
 import { FilmStrip } from "./components/FilmStrip";
+import { albums as albumsData } from "./data/albums";
 import { useMaxHeight } from "./use-max-height";
 
 const normalizeAlbums = (items: typeof albumsData.albums): Album[] =>
@@ -20,7 +19,7 @@ function FullscreenViewer({ album }: { album: Album }) {
 
   React.useEffect(() => {
     setIndex(0);
-  }, [album?.id]);
+  }, []);
 
   const photo = album?.photos?.[index];
 

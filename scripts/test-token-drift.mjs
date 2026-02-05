@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { existsSync, readFileSync } from "fs";
-import { resolve } from "path";
+import { existsSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 const upstreamPackagePath = resolve("node_modules/@openai/apps-sdk-ui/package.json");
 const upstreamStylesDir = resolve("node_modules/@openai/apps-sdk-ui/dist/es/styles");

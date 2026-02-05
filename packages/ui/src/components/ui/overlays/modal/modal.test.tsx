@@ -1,6 +1,6 @@
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, waitFor } from "../../../../testing/utils";
-import { describe, expect, it, vi, beforeEach } from "vitest";
-import { ModalDialog, ModalHeader, ModalBody, ModalFooter } from "./Modal";
+import { ModalBody, ModalDialog, ModalFooter, ModalHeader } from "./Modal";
 
 describe("ModalDialog", () => {
   const mockOnClose = vi.fn();

@@ -14,8 +14,8 @@ import {
 } from "../../../icons";
 import {
   TemplatePanel,
-  TemplatePanelHeader,
   TemplatePanelFooter,
+  TemplatePanelHeader,
   useTemplatePanel,
 } from "../../blocks/TemplatePanel";
 

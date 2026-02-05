@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import {
-  IconChevronRightMd,
   IconLock,
   IconNotification,
   IconPlusLg,

@@ -9,9 +9,9 @@
  * Main component now focuses on composition and rendering.
  */
 
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
 import { useRef } from "react";
-
 import {
   Collapsible,
   CollapsibleContent,
@@ -28,19 +28,18 @@ import {
   DropdownMenuTrigger,
 } from "../../../components/ui/overlays";
 import { cn } from "../../../components/ui/utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 import {
+  IconArchive,
   IconChat,
   IconChevronRightMd,
   IconCloseBold,
-  IconSearch,
-  IconSettings,
-  IconSidebar,
-  IconArchive,
   IconCode,
   IconGrid3x3,
   IconImage,
   IconRadio,
+  IconSearch,
+  IconSettings,
+  IconSidebar,
   IconSparkles,
 } from "../../../icons";
 import { IconPickerModal } from "../../modals/IconPickerModal";
@@ -50,18 +49,18 @@ import type { ChatSidebarUser, SidebarItem, SidebarItemConfig } from "../shared/
 import { ChatSidebarFooterSlot } from "./components/ChatSidebarFooterSlot";
 import { ChatSidebarHistory } from "./components/ChatSidebarHistory";
 import { ChatSidebarQuickActions } from "./components/ChatSidebarQuickActions";
-import { NewProjectModal } from "./modals/NewProjectModal";
-import { ProjectSettingsModal } from "./modals/ProjectSettingsModal";
 import {
-  categoryColors as defaultCategoryColors,
-  categoryIcons as defaultCategoryIcons,
-  categoryIconColors as defaultCategoryIconColors,
   categories as defaultCategories,
+  categoryColors as defaultCategoryColors,
+  categoryIconColors as defaultCategoryIconColors,
+  categoryIcons as defaultCategoryIcons,
   chatHistory as defaultChatHistory,
-  getProjectIcon,
   projects as defaultProjects,
+  getProjectIcon,
 } from "./data/projectData";
 import { useChatSidebarState } from "./hooks/useChatSidebarState";
+import { NewProjectModal } from "./modals/NewProjectModal";
+import { ProjectSettingsModal } from "./modals/ProjectSettingsModal";
 
 /**
  * Props for the chat sidebar component.

@@ -9,7 +9,7 @@
  * Reference: https://x.com/jh3yy/status/2002945849509494936
  */
 
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, type HTMLAttributes } from "react";
 import { cn } from "../../utils/cn";
 
 export interface TocMarkerProps extends HTMLAttributes<HTMLElement> {

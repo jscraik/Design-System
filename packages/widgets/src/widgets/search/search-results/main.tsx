@@ -1,7 +1,7 @@
 import {
-  HostProvider,
   createEmbeddedHost,
   ensureMockOpenAI,
+  HostProvider,
   useToolOutput,
 } from "@design-studio/runtime";
 import { AppsSDKBadge, AppsSDKUIProvider } from "@design-studio/ui";

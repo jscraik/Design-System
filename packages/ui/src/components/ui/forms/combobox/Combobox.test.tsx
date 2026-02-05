@@ -1,5 +1,5 @@
-import { render, screen, waitFor, fireEvent } from "../../../../testing/utils";
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen, waitFor } from "../../../../testing/utils";
 import { Combobox } from "./Combobox";
 
 describe("Combobox", () => {
@@ -198,7 +198,7 @@ describe("Combobox", () => {
         expect(screen.getByRole("listbox")).toBeInTheDocument();
       });
 
-      const listbox = screen.getByRole("listbox");
+      const _listbox = screen.getByRole("listbox");
       const searchInput = screen.getByRole("textbox");
 
       // ArrowDown should highlight next option

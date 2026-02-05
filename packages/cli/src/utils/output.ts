@@ -1,5 +1,5 @@
-import type { JsonValue, JsonEnvelope, JsonError, GlobalOptions, CliArgs } from "../types.js";
 import { COMMAND_SCHEMA, TOOL_NAME } from "../constants.js";
+import type { CliArgs, JsonEnvelope, JsonError, JsonValue } from "../types.js";
 import { getToolVersion } from "./env.js";
 
 function nowIso(): string {

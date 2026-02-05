@@ -1,15 +1,14 @@
-import { useRef, useImperativeHandle, useState, useEffect } from "react";
-import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import * as THREE from "three";
-import { AnimatePresence, motion } from "framer-motion";
-import { EffectComposer, Bloom, DepthOfField } from "@react-three/postprocessing";
 import { useHost } from "@design-studio/runtime";
-import { useNavigate, useParams, Routes, Route, BrowserRouter } from "react-router-dom";
-
-import { useWidgetProps } from "../../../shared/use-widget-props";
-import { useMaxHeight } from "../../../shared/use-max-height";
+import { OrbitControls } from "@react-three/drei";
+import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
+import { Bloom, DepthOfField, EffectComposer } from "@react-three/postprocessing";
+import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useImperativeHandle, useRef, useState } from "react";
+import { BrowserRouter, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import * as THREE from "three";
 import { useDisplayMode } from "../../../shared/use-display-mode";
+import { useMaxHeight } from "../../../shared/use-max-height";
+import { useWidgetProps } from "../../../shared/use-widget-props";
 
 /**
  * Render the expand icon used in the viewer chrome.
@@ -35,7 +34,7 @@ const ExpandIcon = () => {
 function StreamWord({ children, index, delay }) {
   const [isComplete, setIsComplete] = useState(false);
   return isComplete ? (
-    <>{children}</>
+    children
   ) : (
     <motion.span
       initial={{ opacity: 0, color: "var(--color-text-info)" }}
@@ -214,7 +213,7 @@ function SolarSystem() {
     planets.find((planet) => planet.name === planet_name);
 
   const [focusTarget, setFocusTarget] = useState(new THREE.Vector3(0, 0, 0));
-  const [isReady, setIsReady] = useState(false);
+  const [_isReady, setIsReady] = useState(false);
   const host = useHost();
 
   useEffect(() => {
@@ -240,7 +239,7 @@ function SolarSystem() {
         setFocusTarget(new THREE.Vector3(0, 0, 0));
       }
     });
-  }, [currentPlanet, isReady]);
+  }, [currentPlanet]);
 
   const orbitControlsRef = useRef();
   const initialCameraPosition = useRef(new THREE.Vector3(0, 0, 10));

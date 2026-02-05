@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { ShimmerText, ShimmerInline } from "./ShimmerText";
+import { ShimmerInline, ShimmerText } from "./ShimmerText";
 
 describe("ShimmerText", () => {
   describe("Basic rendering", () => {

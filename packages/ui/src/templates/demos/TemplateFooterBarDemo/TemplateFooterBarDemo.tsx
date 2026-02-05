@@ -11,9 +11,9 @@ import {
 import {
   TemplateFooterBar,
   TemplateFooterButton,
+  TemplateFooterDivider,
   TemplateFooterLink,
   TemplateFooterText,
-  TemplateFooterDivider,
 } from "../../blocks/TemplateFooterBar";
 
 export function TemplateFooterBarDemo() {

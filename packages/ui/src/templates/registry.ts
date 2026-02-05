@@ -1,14 +1,5 @@
 import type { ComponentType } from "react";
 import * as React from "react";
-
-import {
-  ColorShowcase as TempColorShowcase,
-  DesignSystemDocs as TempDesignSystemDocs,
-  FoundationsShowcase as TempFoundationsShowcase,
-  IconographyShowcase as TempIconographyShowcase,
-  SpacingShowcase as TempSpacingShowcase,
-  TypographyShowcase as TempTypographyShowcase,
-} from "../design-system/showcase";
 import { ChatHeader as TempChatHeader } from "../app/chat/ChatHeader";
 import { ChatInput as TempChatInput } from "../app/chat/ChatInput";
 import { AppsPanel as TempAppsPanel } from "../app/settings/AppsPanel";
@@ -18,31 +9,38 @@ import { ManageAppsPanel as TempManageAppsPanel } from "../app/settings/ManageAp
 import { NotificationsPanel as TempNotificationsPanel } from "../app/settings/NotificationsPanel";
 import { PersonalizationPanel as TempPersonalizationPanel } from "../app/settings/PersonalizationPanel";
 import { SecurityPanel as TempSecurityPanel } from "../app/settings/SecurityPanel";
-
-import { ChatGPTIconCatalog as TempChatGPTIconCatalog } from "./ChatGPTIconCatalog";
+import {
+  ColorShowcase as TempColorShowcase,
+  DesignSystemDocs as TempDesignSystemDocs,
+  FoundationsShowcase as TempFoundationsShowcase,
+  IconographyShowcase as TempIconographyShowcase,
+  SpacingShowcase as TempSpacingShowcase,
+  TypographyShowcase as TempTypographyShowcase,
+} from "../design-system/showcase";
 import { AudioSettingsPanelTemplate } from "./AudioSettingsPanelTemplate";
+import { ChatGPTIconCatalog as TempChatGPTIconCatalog } from "./ChatGPTIconCatalog";
 import { ChatMessagesTemplate } from "./ChatMessagesTemplate";
 import { ChatSidebarTemplate } from "./ChatSidebarTemplate";
 import { ChatTemplate } from "./ChatTemplate";
 import { ChatVariantsTemplate } from "./ChatVariantsTemplate";
 import { CheckForUpdatesPanelTemplate } from "./CheckForUpdatesPanelTemplate";
 import { ComposeTemplate } from "./ComposeTemplate";
-import { TemplateShellDemo as TempTemplateShellDemo } from "./demos/TemplateShellDemo";
-import { TemplatePanelDemo as TempTemplatePanelDemo } from "./demos/TemplatePanelDemo";
-import { TemplateHeaderBarDemo as TempTemplateHeaderBarDemo } from "./demos/TemplateHeaderBarDemo";
-import { TemplateFormFieldDemo as TempTemplateFormFieldDemo } from "./demos/TemplateFormFieldDemo";
-import { TemplateFooterBarDemo as TempTemplateFooterBarDemo } from "./demos/TemplateFooterBarDemo";
-import { TemplateFieldGroupDemo as TempTemplateFieldGroupDemo } from "./demos/TemplateFieldGroupDemo";
-import { SettingToggleBlockDemo as TempSettingToggleBlockDemo } from "./demos/SettingToggleBlockDemo";
-import { SettingRowBlockDemo as TempSettingRowBlockDemo } from "./demos/SettingRowBlockDemo";
-import { SettingDropdownBlockDemo as TempSettingDropdownBlockDemo } from "./demos/SettingDropdownBlockDemo";
-import { ChatHeaderDemo as TempChatHeaderDemo } from "./demos/ChatHeaderDemo";
-import { ModelSelectorDemo as TempModelSelectorDemo } from "./demos/ModelSelectorDemo";
-import { ChatInputDemo as TempChatInputDemo } from "./demos/ChatInputDemo";
 import { AttachmentMenuDemo as TempAttachmentMenuDemo } from "./demos/AttachmentMenuDemo";
-import { IconPickerModalDemo as TempIconPickerModalDemo } from "./demos/IconPickerModalDemo";
+import { ChatHeaderDemo as TempChatHeaderDemo } from "./demos/ChatHeaderDemo";
+import { ChatInputDemo as TempChatInputDemo } from "./demos/ChatInputDemo";
 import { DiscoverySettingsModalDemo as TempDiscoverySettingsModalDemo } from "./demos/DiscoverySettingsModalDemo";
+import { IconPickerModalDemo as TempIconPickerModalDemo } from "./demos/IconPickerModalDemo";
+import { ModelSelectorDemo as TempModelSelectorDemo } from "./demos/ModelSelectorDemo";
+import { SettingDropdownBlockDemo as TempSettingDropdownBlockDemo } from "./demos/SettingDropdownBlockDemo";
+import { SettingRowBlockDemo as TempSettingRowBlockDemo } from "./demos/SettingRowBlockDemo";
 import { SettingsModalDemo as TempSettingsModalDemo } from "./demos/SettingsModalDemo";
+import { SettingToggleBlockDemo as TempSettingToggleBlockDemo } from "./demos/SettingToggleBlockDemo";
+import { TemplateFieldGroupDemo as TempTemplateFieldGroupDemo } from "./demos/TemplateFieldGroupDemo";
+import { TemplateFooterBarDemo as TempTemplateFooterBarDemo } from "./demos/TemplateFooterBarDemo";
+import { TemplateFormFieldDemo as TempTemplateFormFieldDemo } from "./demos/TemplateFormFieldDemo";
+import { TemplateHeaderBarDemo as TempTemplateHeaderBarDemo } from "./demos/TemplateHeaderBarDemo";
+import { TemplatePanelDemo as TempTemplatePanelDemo } from "./demos/TemplatePanelDemo";
+import { TemplateShellDemo as TempTemplateShellDemo } from "./demos/TemplateShellDemo";
 
 const TempChatInputPreview: ComponentType = () =>
   React.createElement(TempChatInput, {

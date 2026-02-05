@@ -425,7 +425,7 @@ describe("Token Generation Properties", () => {
 
 // Test helper class that extends TokenGenerator to accept custom tokens
 class TestTokenGenerator extends TokenGenerator {
-  constructor(private customTokens: Record<string, unknown>) {
+  constructor(customTokens: Record<string, unknown>) {
     super();
     // Override the tokens property
     (this as { tokens: Record<string, unknown> }).tokens = customTokens;

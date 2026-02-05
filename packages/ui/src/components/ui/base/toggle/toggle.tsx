@@ -1,9 +1,8 @@
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import { cva } from "class-variance-authority";
 import * as React from "react";
 import { useId } from "react";
-
 import { cn } from "../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Toggle style variants used by Toggle and ToggleGroup.

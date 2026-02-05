@@ -22,9 +22,9 @@ import {
 import { useCallback, useMemo } from "react";
 
 import { useDisplayMode, useSendMessage } from "../../../shared/openai-hooks";
+import type { CartItem, ShopView, ShopWidgetState } from "../../../shared/tool-output-types";
 import { useOpenAiGlobal } from "../../../shared/use-openai-global";
 import { useWidgetState } from "../../../shared/use-widget-state";
-import type { CartItem, ShopView, ShopWidgetState } from "../../../shared/tool-output-types";
 
 // Sample items
 const SAMPLE_ITEMS: CartItem[] = [

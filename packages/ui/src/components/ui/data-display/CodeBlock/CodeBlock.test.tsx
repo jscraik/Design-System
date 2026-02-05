@@ -1,5 +1,5 @@
-import { render, screen, waitFor, fireEvent } from "../../../../testing/utils";
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen, waitFor } from "../../../../testing/utils";
 import { CodeBlock } from "./CodeBlock";
 
 describe("CodeBlock", () => {
@@ -264,7 +264,7 @@ describe("CodeBlock", () => {
     });
 
     it("renders code with special characters", () => {
-      const specialCode = 'console.log("<>&\'\"");';
+      const specialCode = 'console.log("<>&\'"");';
       render(<CodeBlock code={specialCode} />);
       // The special characters should be rendered, but may be HTML-encoded
       // Just verify the code is displayed

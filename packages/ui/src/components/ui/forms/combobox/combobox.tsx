@@ -1,8 +1,7 @@
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
-
 import { Button } from "../../base/Button";
 import { cn } from "../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Represents a combobox option.
@@ -253,19 +252,13 @@ function Combobox({
 
               {error && <div className="px-3 pb-2 text-sm text-status-error">{error}</div>}
 
-              <ul
-                ref={listRef}
-                role="listbox"
-                className="max-h-60 overflow-auto p-1"
-                aria-label="Options"
-              >
+              <ul ref={listRef} className="max-h-60 overflow-auto p-1" aria-label="Options">
                 {filteredOptions.length === 0 ? (
                   <li className="px-3 py-2 text-sm text-muted-foreground">{emptyMessage}</li>
                 ) : (
                   filteredOptions.map((option, index) => (
                     <li
                       key={option.value}
-                      role="option"
                       aria-selected={value === option.value}
                       aria-disabled={option.disabled || isDisabled}
                       onClick={() => !option.disabled && !isDisabled && handleSelect(option.value)}

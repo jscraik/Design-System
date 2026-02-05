@@ -1,8 +1,8 @@
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import { createHash } from "node:crypto";
-import { DownloadedSkill, RemoteSkill, RemoteSkillOwner } from "./types.js";
+import type { DownloadedSkill, RemoteSkill, RemoteSkillOwner } from "./types.js";
 
 export type RemoteSkillClientOptions = {
   baseURL?: string;

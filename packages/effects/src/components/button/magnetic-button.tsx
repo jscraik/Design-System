@@ -1,9 +1,8 @@
 import { cva } from "class-variance-authority";
-import { useRef, useState } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
-
-import { cn } from "../../utils";
+import { useRef, useState } from "react";
 import { useReducedMotion } from "../../hooks";
+import { cn } from "../../utils";
 
 /**
  * Magnetic button variants

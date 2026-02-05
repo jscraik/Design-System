@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "@storybook/test";
 import { useState } from "react";
 
-import { SettingDropdown, type DropdownOption } from "./SettingDropdown";
+import { type DropdownOption, SettingDropdown } from "./SettingDropdown";
 
 /**
  * SettingDropdown is a reusable Radix-based dropdown component for settings.

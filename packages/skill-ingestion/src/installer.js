@@ -3,6 +3,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { computeSkillHash } from "./hash.js";
+
 const DEFAULT_SOURCE = "clawdhub";
 export async function installSkillFromZip(zipPath, destinations, options) {
   if (destinations.length === 0) {

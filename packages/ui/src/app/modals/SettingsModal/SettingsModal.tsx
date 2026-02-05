@@ -21,6 +21,7 @@ import {
   SuggestionsSection,
   WorkWithAppsSection,
 } from "../settings";
+
 interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;

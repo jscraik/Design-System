@@ -1,6 +1,6 @@
 import { AppsSDKButton } from "@design-studio/ui";
 import { IconChevronDownMd, IconChevronRightMd } from "@design-studio/ui/icons";
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
+import { type ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 
 import type { TemplateRegistryEntry } from "@/generated/template-registry";
 

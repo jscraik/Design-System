@@ -5,12 +5,11 @@
 
 "use client";
 
-import * as React from "react";
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-
+import * as React from "react";
 import { IconCheckmark } from "../../../../../icons";
 import { cn } from "../../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Loading spinner component for checkbox loading state

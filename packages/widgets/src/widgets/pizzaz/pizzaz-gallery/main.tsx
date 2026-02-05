@@ -1,24 +1,23 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import useEmblaCarousel from "embla-carousel-react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import {
-  HostProvider,
   createEmbeddedHost,
   ensureMockOpenAI,
+  HostProvider,
   useHost,
 } from "@design-studio/runtime";
 import { AppsSDKButton, AppsSDKUIProvider } from "@design-studio/ui";
+import useEmblaCarousel from "embla-carousel-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import React from "react";
+import { createRoot } from "react-dom/client";
 
 import "../../../styles/widget.css";
 
+import type { Album } from "../../../shared/data-types";
 import { useMaxHeight } from "../../../shared/use-max-height";
 import { useOpenAiGlobal } from "../../../shared/use-openai-global";
-import type { Album } from "../../../shared/data-types";
-
+import AlbumCard from "./AlbumCard";
 import albumsData from "./albums.json";
 import FullscreenViewer from "./FullscreenViewer";
-import AlbumCard from "./AlbumCard";
 
 type AlbumsCarouselProps = {
   onSelect: (album: Album) => void;
@@ -88,7 +87,6 @@ function AlbumsCarousel({ onSelect }: AlbumsCarouselProps) {
         role="region"
         aria-roledescription="carousel"
         aria-label="Featured pizza albums"
-        tabIndex={0}
         onKeyDown={handleKeyDown}
       >
         <div className="flex gap-5 items-stretch">

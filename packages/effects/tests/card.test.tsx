@@ -1,6 +1,6 @@
-import { describe, expect, it, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
 
 import { HoloCard } from "../src/components/card";
 
@@ -34,8 +34,9 @@ describe("HoloCard", () => {
 
     const card = screen.getByText("Clickable Card").closest('[data-slot="holo-card"]');
     expect(card).toHaveClass("cursor-pointer");
+    if (!card) throw new Error("Card element not found");
 
-    await userEvent.click(card!);
+    await userEvent.click(card);
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 

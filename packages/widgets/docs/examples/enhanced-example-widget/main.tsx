@@ -1,8 +1,6 @@
 import { createEmbeddedHost, ensureMockOpenAI, HostProvider } from "@design-studio/runtime";
 import { AppsSDKButton, AppsSDKUIProvider, Card } from "@design-studio/ui";
 import { useState } from "react";
-
-import type { ExampleToolOutput } from "../../../src/shared/tool-output-types";
 import {
   useCallTool,
   useDeviceCapabilities,
@@ -12,6 +10,7 @@ import {
   useToolOutput,
   useWidgetState,
 } from "../../../src/shared/openai-hooks";
+import type { ExampleToolOutput } from "../../../src/shared/tool-output-types";
 import { createWidget, mountWidget, WidgetErrorBoundary } from "../../../src/shared/widget-base";
 import "../../../src/styles.css";
 

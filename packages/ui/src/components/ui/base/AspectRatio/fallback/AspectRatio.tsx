@@ -5,8 +5,8 @@
 
 "use client";
 
-import * as React from "react";
 import * as AspectRatioPrimitive from "@radix-ui/react-aspect-ratio";
+import type * as React from "react";
 
 /**
  * Renders an aspect ratio container (Radix Aspect Ratio).

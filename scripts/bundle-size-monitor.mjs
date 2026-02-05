@@ -7,9 +7,9 @@
  * Integrates with CI/CD to fail builds that exceed thresholds.
  */
 
-import { existsSync, readdirSync, statSync } from "fs";
-import { join } from "path";
-import { fileURLToPath } from "url";
+import { existsSync, readdirSync, statSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const rootDir = join(__dirname, "..");
@@ -106,7 +106,7 @@ class BundleSizeMonitor {
       if (size !== null) {
         totalSize += size;
         fileDetails.push({
-          file: file.replace(rootDir + "/", ""),
+          file: file.replace(`${rootDir}/`, ""),
           size: size.toFixed(2),
           gzipped: (size * GZIP_RATIO).toFixed(2),
         });

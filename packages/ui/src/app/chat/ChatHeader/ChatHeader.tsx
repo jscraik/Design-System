@@ -1,8 +1,7 @@
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
-
 import { Popover, PopoverContent, PopoverTrigger } from "../../../components/ui/overlays/Popover";
 import { cn } from "../../../components/ui/utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 import {
   IconChat,
   IconCheck,

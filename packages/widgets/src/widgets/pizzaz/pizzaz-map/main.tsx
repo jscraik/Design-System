@@ -7,25 +7,22 @@
  * Dependencies: mapbox-gl, embla-carousel-react, framer-motion
  */
 // React hooks
-import { useRef, useState, useMemo, useCallback, useEffect } from "react";
 
 // Framer Motion
 import { AnimatePresence, motion } from "framer-motion";
-
 // Icons (Settings/Maximize replace Settings2/Maximize2 which don't exist in lucide-react v0.562.0)
-import { Settings, Maximize, Star, X } from "lucide-react";
-
+import { Maximize, Settings, Star, X } from "lucide-react";
 // Mapbox
 import mapboxgl from "mapbox-gl";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 // Embla carousel
 import useEmblaCarousel from "embla-carousel-react";
-
+import { useMaxHeight } from "../../../shared/use-max-height";
 // Shared utilities
 import { useOpenAiGlobal } from "../../../shared/use-openai-global";
-import { useMaxHeight } from "../../../shared/use-max-height";
-import { WidgetErrorBoundary, mountWidget } from "../../../shared/widget-base";
+import { mountWidget, WidgetErrorBoundary } from "../../../shared/widget-base";
 
 import "../../../styles.css";
 import markersData from "./markers.json";
@@ -196,7 +193,7 @@ function Sidebar({
       el.removeEventListener("scroll", updateBottomFadeVisibility);
       window.removeEventListener("resize", updateBottomFadeVisibility);
     };
-  }, [placesList, updateBottomFadeVisibility]);
+  }, [updateBottomFadeVisibility]);
 
   return (
     <>
@@ -402,8 +399,8 @@ function PizzazMapWidget() {
   useEffect(() => {
     if (!mapObj.current) return;
     const handler = () => {
-      const c = mapObj.current!.getCenter();
-      setViewState({ center: [c.lng, c.lat], zoom: mapObj.current!.getZoom() });
+      const c = mapObj.current?.getCenter();
+      setViewState({ center: [c.lng, c.lat], zoom: mapObj.current?.getZoom() });
     };
     mapObj.current.on("moveend", handler);
     return () => {
@@ -415,12 +412,12 @@ function PizzazMapWidget() {
   useEffect(() => {
     if (!mapObj.current || !selectedPlace) return;
     panTo(selectedPlace.coords, true);
-  }, [selectedId, selectedPlace, panTo]);
+  }, [selectedPlace, panTo]);
 
   // Resize on display mode change
   useEffect(() => {
     mapObj.current?.resize();
-  }, [maxHeight, displayMode]);
+  }, []);
 
   // Sync state with OpenAI widget
   useEffect(() => {

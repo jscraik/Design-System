@@ -10,7 +10,7 @@
  *
  * Styling uses Apps SDK UI components/tokens with minimal custom CSS for code sizing.
  */
-import React, { useEffect, useMemo, useState } from "react";
+
 import {
   AppsSDKBadge,
   AppsSDKButton,
@@ -18,11 +18,13 @@ import {
   AppsSDKInput,
   AppsSDKTextarea,
 } from "@design-studio/ui";
+import type React from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { CodeBlock } from "../../../src/shared/code-block";
+import type { DisplayMode, Theme } from "../../../src/shared/types";
 import { useOpenAiGlobal } from "../../../src/shared/use-openai-global";
 import { useWidgetState } from "../../../src/shared/use-widget-state";
-import type { DisplayMode, Theme } from "../../../src/shared/types";
 
 type DemoContent = {
   message: string;

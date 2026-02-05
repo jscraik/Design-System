@@ -1,5 +1,5 @@
-import { useOpenAiGlobal as useRuntimeOpenAiGlobal } from "@design-studio/runtime";
 import type { OpenAiGlobals } from "@design-studio/runtime";
+import { useOpenAiGlobal as useRuntimeOpenAiGlobal } from "@design-studio/runtime";
 
 export function useOpenAiGlobal<K extends keyof OpenAiGlobals>(
   key: K,

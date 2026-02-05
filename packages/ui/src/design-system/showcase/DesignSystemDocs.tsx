@@ -1,6 +1,5 @@
-import { useCallback, useState, type ReactNode } from "react";
-
 import { colorTokens } from "@design-studio/tokens";
+import { type ReactNode, useCallback, useState } from "react";
 import { cn } from "../../components/ui/utils";
 import {
   IconArrowUpSm,

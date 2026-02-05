@@ -9,7 +9,6 @@
  * For prototype, we use multiple import statements from the same file.
  */
 
-import React from "react";
 import { Button } from "./components";
 import { Input } from "./components";
 import { Tabs } from "./components";

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { HoloCard, holoColors } from "../src/components/card";
+import { HoloCard } from "../src/components/card";
 
 const meta: Meta<typeof HoloCard> = {
   title: "Effects/Card/HoloCard",

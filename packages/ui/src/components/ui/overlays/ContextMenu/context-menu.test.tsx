@@ -1,5 +1,5 @@
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, waitFor } from "../../../../testing/utils";
-import { describe, expect, it, vi, beforeEach } from "vitest";
 import * as ContextMenu from "./fallback/ContextMenu";
 
 describe("ContextMenu", () => {

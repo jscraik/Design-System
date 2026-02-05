@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { ChatHeaderTemplate } from "../ChatHeaderTemplate";
-import { ChatSidebarTemplate } from "../ChatSidebarTemplate";
-import { ChatMessagesTemplate } from "../ChatMessagesTemplate";
 import { ChatInputTemplate } from "../ChatInputTemplate";
+import { ChatMessagesTemplate } from "../ChatMessagesTemplate";
+import { ChatSidebarTemplate } from "../ChatSidebarTemplate";
 
 const meta: Meta = {
   title: "Components/Templates/Chat/Chat Blocks",

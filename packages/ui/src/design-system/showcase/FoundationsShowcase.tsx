@@ -1,9 +1,9 @@
-import { useState, type ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 
 import { ColorShowcase } from "./ColorShowcase";
-import { TypographyShowcase } from "./TypographyShowcase";
-import { SpacingShowcase } from "./SpacingShowcase";
 import { IconographyShowcase } from "./IconographyShowcase";
+import { SpacingShowcase } from "./SpacingShowcase";
+import { TypographyShowcase } from "./TypographyShowcase";
 
 type Tab = "colors" | "typography" | "spacing" | "icons";
 

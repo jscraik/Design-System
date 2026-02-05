@@ -1,9 +1,8 @@
-import * as React from "react";
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 
 import type { ReactNode } from "react";
-
+import * as React from "react";
 import { cn } from "../../../components/ui/utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Slot content regions for the chat shell layout.

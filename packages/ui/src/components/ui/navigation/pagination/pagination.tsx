@@ -87,11 +87,10 @@ function Pagination({
     }
 
     return range(1, totalPages);
-  }, [totalPages, siblingCount, currentPage]);
+  }, [totalPages, siblingCount, currentPage, range]);
 
   return (
     <nav
-      role="navigation"
       aria-label="Pagination"
       data-slot="pagination"
       className={cn("mx-auto flex w-full justify-center font-foundation", className)}

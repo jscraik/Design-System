@@ -1,9 +1,8 @@
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
-import { useId, type ReactNode } from "react";
-
+import { type ReactNode, useId } from "react";
 import { useFocusTrap } from "../../../../hooks/useFocusTrap";
 import { cn } from "../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Props for the modal dialog component.

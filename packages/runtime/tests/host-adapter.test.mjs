@@ -1,5 +1,5 @@
-import { afterEach, describe, it } from "node:test";
 import assert from "node:assert/strict";
+import { afterEach, describe, it } from "node:test";
 
 import { createHostAdapter, createMockHost, createStandaloneHost } from "../dist/index.js";
 

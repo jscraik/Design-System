@@ -3,14 +3,14 @@ import { useEffect, useMemo, useState } from "react";
 import { DiscoverySettingsModal } from "../../modals/DiscoverySettingsModal";
 import {
   ComposeInstructionsPanel,
-  ProEditConfigModal,
-  PromptBuilderSection,
-  fallbackModel,
-  fallbackMode,
-  getTaskSectionConfig,
   type ComposeModeConfig,
   type ComposeViewProps,
+  fallbackMode,
+  fallbackModel,
+  getTaskSectionConfig,
+  ProEditConfigModal,
   type ProEditMode,
+  PromptBuilderSection,
 } from "../compose";
 
 /**

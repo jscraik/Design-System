@@ -1,6 +1,6 @@
 import {
-  IconChevronRightMd,
   IconChevronDownMd,
+  IconChevronRightMd,
   IconGlobe,
   IconMic,
   IconSoundOn,

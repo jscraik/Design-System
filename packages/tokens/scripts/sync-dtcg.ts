@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 
 const dtcgPath = new URL("../src/tokens/index.dtcg.json", import.meta.url);
 const colorsPath = new URL("../src/colors.ts", import.meta.url);
@@ -189,7 +189,10 @@ function getLetterSpacingValue(token: DtcgLetterSpacingToken | undefined, path: 
   return token.$value;
 }
 
-function getShadowValue(token: DtcgShadowToken, path: string): Array<{
+function getShadowValue(
+  token: DtcgShadowToken,
+  path: string,
+): Array<{
   color: string;
   offsetX: number;
   offsetY: number;
@@ -386,7 +389,10 @@ function buildTypography(dtcg: DtcgRoot) {
     hero: {
       size: getDimensionValue(web.hero.size, "type.web.hero.size"),
       lineHeight: getDimensionValue(web.hero.lineHeight, "type.web.hero.lineHeight"),
-      paragraphSpacing: getDimensionValue(web.hero.paragraphSpacing, "type.web.hero.paragraphSpacing"),
+      paragraphSpacing: getDimensionValue(
+        web.hero.paragraphSpacing,
+        "type.web.hero.paragraphSpacing",
+      ),
       weight: getFontWeightValue(web.hero.weight, "type.web.hero.weight"),
       tracking: getLetterSpacingValue(web.hero.tracking, "type.web.hero.tracking"),
     },
@@ -512,9 +518,15 @@ function buildTypography(dtcg: DtcgRoot) {
     caption: {
       size: getDimensionValue(web.caption.size, "type.web.caption.size"),
       lineHeight: getDimensionValue(web.caption.lineHeight, "type.web.caption.lineHeight"),
-      paragraphSpacing: getDimensionValue(web.caption.paragraphSpacing, "type.web.caption.paragraphSpacing"),
+      paragraphSpacing: getDimensionValue(
+        web.caption.paragraphSpacing,
+        "type.web.caption.paragraphSpacing",
+      ),
       weight: getFontWeightValue(web.caption.weight, "type.web.caption.weight"),
-      emphasisWeight: getFontWeightValue(web.caption.emphasisWeight, "type.web.caption.emphasisWeight"),
+      emphasisWeight: getFontWeightValue(
+        web.caption.emphasisWeight,
+        "type.web.caption.emphasisWeight",
+      ),
       tracking: getLetterSpacingValue(web.caption.tracking, "type.web.caption.tracking"),
     },
     cardTitle: {
@@ -531,7 +543,10 @@ function buildTypography(dtcg: DtcgRoot) {
     },
     listSubtitle: {
       size: getDimensionValue(web.listSubtitle.size, "type.web.listSubtitle.size"),
-      lineHeight: getDimensionValue(web.listSubtitle.lineHeight, "type.web.listSubtitle.lineHeight"),
+      lineHeight: getDimensionValue(
+        web.listSubtitle.lineHeight,
+        "type.web.listSubtitle.lineHeight",
+      ),
       weight: getFontWeightValue(web.listSubtitle.weight, "type.web.listSubtitle.weight"),
       tracking: getLetterSpacingValue(web.listSubtitle.tracking, "type.web.listSubtitle.tracking"),
     },
@@ -543,9 +558,15 @@ function buildTypography(dtcg: DtcgRoot) {
     },
     buttonLabelSmall: {
       size: getDimensionValue(web.buttonLabelSmall.size, "type.web.buttonLabelSmall.size"),
-      lineHeight: getDimensionValue(web.buttonLabelSmall.lineHeight, "type.web.buttonLabelSmall.lineHeight"),
+      lineHeight: getDimensionValue(
+        web.buttonLabelSmall.lineHeight,
+        "type.web.buttonLabelSmall.lineHeight",
+      ),
       weight: getFontWeightValue(web.buttonLabelSmall.weight, "type.web.buttonLabelSmall.weight"),
-      tracking: getLetterSpacingValue(web.buttonLabelSmall.tracking, "type.web.buttonLabelSmall.tracking"),
+      tracking: getLetterSpacingValue(
+        web.buttonLabelSmall.tracking,
+        "type.web.buttonLabelSmall.tracking",
+      ),
     },
   } as const;
 }

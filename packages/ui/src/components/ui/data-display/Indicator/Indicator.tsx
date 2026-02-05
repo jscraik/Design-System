@@ -1,8 +1,7 @@
-import * as React from "react";
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import { cva, type VariantProps } from "class-variance-authority";
-
+import * as React from "react";
 import { cn } from "../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 const indicatorVariants = cva("inline-flex items-center justify-center", {
   variants: {

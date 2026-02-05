@@ -6,20 +6,20 @@
 // ORIGINAL TEMPLATES
 // ============================================================================
 
-export * from "./ChatTwoPaneTemplate";
-export * from "./ChatFullWidthTemplate";
-export * from "./DashboardTemplate";
-export * from "./ComposeTemplate";
-export * from "./ChatTemplate";
-export * from "./ChatHeaderTemplate";
-export * from "./ChatSidebarTemplate";
-export * from "./ChatMessagesTemplate";
-export * from "./ChatInputTemplate";
-export * from "./ChatVariantsTemplate";
 export * from "./AppsPanelTemplate";
 export * from "./ArchivedChatsPanelTemplate";
 export * from "./AudioSettingsPanelTemplate";
+export * from "./ChatFullWidthTemplate";
+export * from "./ChatHeaderTemplate";
+export * from "./ChatInputTemplate";
+export * from "./ChatMessagesTemplate";
+export * from "./ChatSidebarTemplate";
+export * from "./ChatTemplate";
+export * from "./ChatTwoPaneTemplate";
+export * from "./ChatVariantsTemplate";
 export * from "./CheckForUpdatesPanelTemplate";
+export * from "./ComposeTemplate";
+export * from "./DashboardTemplate";
 export * from "./DataControlsPanelTemplate";
 export * from "./ManageAppsPanelTemplate";
 export * from "./NotificationsPanelTemplate";

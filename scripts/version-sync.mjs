@@ -6,8 +6,8 @@
  * Synchronizes versions across npm packages.
  */
 
-import { existsSync, readFileSync, writeFileSync } from "fs";
-import { join } from "path";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
 // Configuration
 const CONFIG = {
@@ -89,7 +89,7 @@ class VersionSynchronizer {
     }
 
     packageJson.version = this.rootVersion;
-    writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + "\n");
+    writeFileSync(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`);
 
     console.log(`  ✅ Updated ${packagePath} to v${this.rootVersion}`);
     return true;

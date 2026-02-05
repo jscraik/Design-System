@@ -5,11 +5,10 @@
 
 "use client";
 
-import * as React from "react";
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as SliderPrimitive from "@radix-ui/react-slider";
-
+import * as React from "react";
 import { cn } from "../../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Renders a slider component (Radix Slider) with Apps SDK UI tokens.

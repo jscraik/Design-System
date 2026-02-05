@@ -8,7 +8,8 @@
  * Compound API only: 100% of use cases
  */
 
-import React, { createContext, useContext } from "react";
+import type React from "react";
+import { createContext, useContext } from "react";
 
 // ============================================================================
 // TYPES
@@ -31,7 +32,7 @@ interface ComplexComponentProps {
 
 const ComplexContext = createContext<ComplexContextValue | null>(null);
 
-const useComplexContext = () => {
+const _useComplexContext = () => {
   const context = useContext(ComplexContext);
   if (!context) {
     throw new Error("ComplexComponent sub-components must be used within ComplexComponent");

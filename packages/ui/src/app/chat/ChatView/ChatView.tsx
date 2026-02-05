@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
 import { IconArrowDownMd } from "../../../icons";
-import { ChatMessages } from "../ChatMessages";
-import type { ChatMessage, ChatMessageAction } from "../ChatMessages";
 import { ChatInput } from "../ChatInput";
+import type { ChatMessage, ChatMessageAction } from "../ChatMessages";
+import { ChatMessages } from "../ChatMessages";
 import type { ModelConfig } from "../ChatUIRoot";
 
 /**
@@ -65,7 +65,7 @@ export function ChatView({
     return () => {
       container.removeEventListener("scroll", checkScrollPosition);
     };
-  }, []);
+  }, [checkScrollPosition]);
 
   return (
     <div className="flex-1 flex flex-col relative h-full overflow-hidden">

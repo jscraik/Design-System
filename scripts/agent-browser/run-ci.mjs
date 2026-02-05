@@ -35,7 +35,7 @@ async function waitForServer(url, timeout = 30000) {
         console.log(`Server ready at ${url}`);
         return;
       }
-    } catch (error) {
+    } catch (_error) {
       // Server not ready yet.
     }
 

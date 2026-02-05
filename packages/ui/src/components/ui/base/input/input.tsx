@@ -1,7 +1,6 @@
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
-
 import { cn } from "../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Error message display for input
@@ -27,12 +26,10 @@ function InputError({ message, id }: { message: string; id?: string }) {
 function InputWrapper({
   children,
   error,
-  required,
   errorId,
 }: {
   children: React.ReactNode;
   error?: string;
-  required?: boolean;
   errorId?: string;
 }) {
   return (
@@ -133,7 +130,7 @@ function Input({
   // If error or required, wrap with container for error message/indicator
   if (error || required) {
     return (
-      <InputWrapper error={error} required={required} errorId={errorId}>
+      <InputWrapper error={error} errorId={errorId}>
         <div className="relative">
           {inputElement}
           {required && !disabled && (

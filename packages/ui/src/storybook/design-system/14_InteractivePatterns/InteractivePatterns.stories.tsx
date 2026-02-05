@@ -1,8 +1,6 @@
-import * as React from "react";
-import type { Meta, StoryObj } from "@storybook/react";
-import { radiusTokens } from "@design-studio/tokens/radius";
-import { spacingTokens } from "@design-studio/tokens/spacing";
 import { shadowTokens } from "@design-studio/tokens/shadows";
+import type { Meta, StoryObj } from "@storybook/react";
+import * as React from "react";
 
 /**
  * # Interactive Pattern Builder

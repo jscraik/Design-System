@@ -7,11 +7,11 @@
  * incremental builds, and automated testing.
  */
 
-import { spawn } from "child_process";
-import { existsSync, readFileSync, statSync, writeFileSync } from "fs";
-import { mkdir } from "fs/promises";
-import { createServer } from "net";
-import { dirname, join } from "path";
+import { spawn } from "node:child_process";
+import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { mkdir } from "node:fs/promises";
+import { createServer } from "node:net";
+import { dirname, join } from "node:path";
 
 // Configuration
 const CONFIG = {
@@ -100,7 +100,7 @@ class BuildPipeline {
         const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf8"));
         if (packageJson.version !== version) {
           packageJson.version = version;
-          writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + "\n");
+          writeFileSync(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`);
           console.log(`  ✅ Updated ${packagePath} to v${version}`);
         }
       }
@@ -440,7 +440,7 @@ class BuildPipeline {
   getAllFiles(dir) {
     const files = [];
     try {
-      const items = require("fs").readdirSync(dir);
+      const items = require("node:fs").readdirSync(dir);
       for (const item of items) {
         const fullPath = join(dir, item);
         const stat = statSync(fullPath);
@@ -559,7 +559,7 @@ class BuildPipeline {
     const failed = this.results.filter((r) => r.success === false).length;
     const skipped = this.results.filter((r) => r.skipped === true).length;
 
-    console.log("\n" + "=".repeat(60));
+    console.log(`\n${"=".repeat(60)}`);
     console.log("📊 Build Summary");
     console.log("=".repeat(60));
     console.log(`Duration: ${(duration / 1000).toFixed(2)}s`);

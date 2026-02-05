@@ -119,9 +119,7 @@ export function TemplateFormFieldDemo() {
                 htmlFor="apikey"
                 description="Your API key for authentication"
                 actions={
-                  <>
-                    <TemplateFormFieldAction onClick={() => {}}>Regenerate</TemplateFormFieldAction>
-                  </>
+                  <TemplateFormFieldAction onClick={() => {}}>Regenerate</TemplateFormFieldAction>
                 }
               >
                 <div className="flex gap-2">

@@ -1,6 +1,6 @@
-import { render, screen, waitFor } from "@testing-library/react";
-import { describe, expect, it, vi, beforeEach } from "vitest";
-import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "./Resizable";
+import { render, waitFor } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "./Resizable";
 
 describe("ResizablePanelGroup", () => {
   const mockOnStateChange = vi.fn();

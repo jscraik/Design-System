@@ -1,9 +1,8 @@
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
 import { Group, Panel, Separator } from "react-resizable-panels";
-
 import { IconDotsVertical } from "../../../../icons";
 import { cn } from "../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Renders a resizable panel group.

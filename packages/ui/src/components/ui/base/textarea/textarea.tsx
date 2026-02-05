@@ -1,7 +1,6 @@
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
-
 import { cn } from "../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Error message display for textarea
@@ -27,12 +26,10 @@ function TextareaError({ message, id }: { message: string; id?: string }) {
 function TextareaWrapper({
   children,
   error,
-  required,
   errorId,
 }: {
   children: React.ReactNode;
   error?: string;
-  required?: boolean;
   errorId?: string;
 }) {
   return (
@@ -127,7 +124,7 @@ function Textarea({
   // If error or required, wrap with container for error message/indicator
   if (error || required) {
     return (
-      <TextareaWrapper error={error} required={required} errorId={errorId}>
+      <TextareaWrapper error={error} errorId={errorId}>
         <div className="relative">
           {textareaElement}
           {required && !isDisabled && (

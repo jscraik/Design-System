@@ -1,7 +1,7 @@
 import { Card } from "./Card";
 import { CodeBlock } from "./CodeBlock";
-import { Section } from "./Section";
 import { typographyTokens } from "./data";
+import { Section } from "./Section";
 
 /** Typography tab content for DesignSystemDocs. */
 export function TypographyTab() {

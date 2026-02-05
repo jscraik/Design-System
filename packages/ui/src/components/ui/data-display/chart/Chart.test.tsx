@@ -1,13 +1,13 @@
+import { Bar, BarChart, CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, waitFor } from "../../../../testing/utils";
-import { describe, expect, it, vi, beforeEach } from "vitest";
 import {
   ChartContainer,
-  ChartTooltip,
   ChartLegend,
-  ChartTooltipContent,
   ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
 } from "./Chart";
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid } from "recharts";
 
 describe("Chart", () => {
   const mockOnStateChange = vi.fn();

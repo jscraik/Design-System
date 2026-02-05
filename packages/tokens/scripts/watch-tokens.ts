@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import { spawn } from "child_process";
-import { watch } from "fs";
-import { join } from "path";
+import { spawn } from "node:child_process";
+import { watch } from "node:fs";
+import { join } from "node:path";
 
 interface WatchConfig {
   debounceMs: number;
@@ -134,6 +134,7 @@ function main(): void {
   const verbose = args.includes("--verbose") || args.includes("-v");
   const debounceMs = parseInt(
     args.find((arg) => arg.startsWith("--debounce="))?.split("=")[1] || "300",
+    10,
   );
 
   const watcher = new TokenWatcher({ verbose, debounceMs });

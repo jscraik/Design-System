@@ -5,7 +5,7 @@
  * Reference: https://x.com/jh3yy/status/2016903936658030967
  */
 
-import { forwardRef, HTMLAttributes, useEffect, useState } from "react";
+import { forwardRef, type HTMLAttributes, useEffect, useState } from "react";
 import { cn } from "../../utils/cn";
 
 export interface ScrollProgressProps extends HTMLAttributes<HTMLDivElement> {

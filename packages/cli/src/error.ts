@@ -1,12 +1,11 @@
-import type { JsonError, JsonValue } from "./types.js";
-import type { ErrorCode } from "./types.js";
 import {
+  COMPONENTS_WRITE_WARNING,
+  DEFAULT_HINT_USAGE,
   ERROR_CODES,
   EXIT_CODES,
-  DEFAULT_HINT_USAGE,
   TOKEN_GENERATE_WARNING,
-  COMPONENTS_WRITE_WARNING,
 } from "./constants.js";
+import type { ErrorCode, JsonError, JsonValue } from "./types.js";
 
 export class CliError extends Error {
   code: ErrorCode;

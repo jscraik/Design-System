@@ -1,6 +1,6 @@
-import { Popover, PopoverContent, PopoverTrigger } from "../../../components/ui/overlays/Popover";
 import type { FormEvent, ReactNode } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Popover, PopoverContent, PopoverTrigger } from "../../../components/ui/overlays/Popover";
 
 import { cn } from "../../../components/ui/utils";
 
@@ -289,7 +289,7 @@ export function ChatInputReference({
       textarea.style.height = "auto";
       textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`;
     }
-  }, [message]);
+  }, []);
 
   const handleSubmit = useCallback(
     (e: FormEvent) => {

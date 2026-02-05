@@ -14,10 +14,10 @@ import { ShoppingCart as CartIcon, Minus, Package, Plus, Trash2 } from "lucide-r
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useSendMessage } from "../../../shared/openai-hooks";
+import type { CartItem, CartWidgetState } from "../../../shared/tool-output-types";
 import type { DisplayMode } from "../../../shared/types";
 import { useOpenAiGlobal } from "../../../shared/use-openai-global";
 import { useWidgetState } from "../../../shared/use-widget-state";
-import type { CartItem, CartWidgetState } from "../../../shared/tool-output-types";
 
 const isDev = Boolean(import.meta.env?.DEV);
 
@@ -75,7 +75,7 @@ export function ShoppingCart() {
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Extract widgetSessionId from metadata (key pattern for cross-turn state)
-  const widgetSessionId = toolResponseMetadata?.["widgetSessionId"] as string | undefined;
+  const widgetSessionId = toolResponseMetadata?.widgetSessionId as string | undefined;
 
   // Process incoming tool output and merge with existing state
   useEffect(() => {

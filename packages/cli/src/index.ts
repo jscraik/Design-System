@@ -1,41 +1,34 @@
 #!/usr/bin/env node
-import { hideBin } from "yargs/helpers";
 import yargs, { type Argv } from "yargs";
-import type { CliArgs } from "./types.js";
-import {
-  TOOL_NAME,
-  TOOL_VERSION,
-  COMMAND_SCHEMA,
-  EXIT_CODES,
-  ERROR_CODES,
-  MCP_CONFIG_OPTIONS,
-} from "./constants.js";
-import { normalizeFailure, toJsonError, CliError } from "./error.js";
-import { outputJson, outputPlainRecord, createEnvelope } from "./utils/output.js";
-import { devCommand, buildCommand, testCommand, mcpCommand } from "./commands/index.js";
+import { hideBin } from "yargs/helpers";
+import { componentsCommand } from "./commands/components.js";
+import { doctorCommand } from "./commands/doctor.js";
+import { formatCommand } from "./commands/format.js";
+import { buildCommand, devCommand, mcpCommand, testCommand } from "./commands/index.js";
+import { lintCommand } from "./commands/lint.js";
+import { skillsCommand } from "./commands/skills.js";
 import { tokensCommand } from "./commands/tokens.js";
 import { versionsCommand } from "./commands/versions.js";
-import { skillsCommand } from "./commands/skills.js";
-import { componentsCommand } from "./commands/components.js";
-import { lintCommand } from "./commands/lint.js";
-import { formatCommand } from "./commands/format.js";
-import { doctorCommand } from "./commands/doctor.js";
+import { COMMAND_SCHEMA, ERROR_CODES, EXIT_CODES, TOOL_NAME, TOOL_VERSION } from "./constants.js";
+import { CliError, normalizeFailure, toJsonError } from "./error.js";
+import type { CliArgs } from "./types.js";
+import { createEnvelope, outputJson, outputPlainRecord } from "./utils/output.js";
 
 // Import helper constants
-const MCP_SERVER_URL_KEY = "server-url";
-const MCP_ENDPOINT_KEY = "endpoint";
-const MCP_PROTOCOL_VERSION_KEY = "protocol-version";
-const TOKEN_GENERATE_WARNING = "--write is required to generate tokens";
-const VERSIONS_WRITE_WARNING = "--write is required to sync versions";
-const COMPONENTS_WRITE_WARNING = "--write is required to generate components";
-const TOKEN_WRITE_HINT = "Re-run with --write to confirm file writes.";
+const _MCP_SERVER_URL_KEY = "server-url";
+const _MCP_ENDPOINT_KEY = "endpoint";
+const _MCP_PROTOCOL_VERSION_KEY = "protocol-version";
+const _TOKEN_GENERATE_WARNING = "--write is required to generate tokens";
+const _VERSIONS_WRITE_WARNING = "--write is required to sync versions";
+const _COMPONENTS_WRITE_WARNING = "--write is required to generate components";
+const _TOKEN_WRITE_HINT = "Re-run with --write to confirm file writes.";
 
 // Re-export error class constants for use in other modules
 export {
+  COMPONENTS_WRITE_WARNING,
   ERROR_CODES,
   EXIT_CODES,
   TOKEN_GENERATE_WARNING,
-  COMPONENTS_WRITE_WARNING,
 } from "./constants.js";
 
 function addGlobalOptions(argv: Argv): Argv {

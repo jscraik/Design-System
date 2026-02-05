@@ -1,5 +1,5 @@
-import { readdirSync } from "fs";
-import { join } from "path";
+import { readdirSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const SRC_ROOT = new URL("..", import.meta.url).pathname;

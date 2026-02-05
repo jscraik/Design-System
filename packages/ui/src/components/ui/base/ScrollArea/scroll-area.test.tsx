@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { createRef } from "react";
-import { describe, expect, it, vi, beforeEach } from "vitest";
-import { ScrollArea, ScrollBar } from "./fallback/ScrollArea";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { ScrollArea } from "./fallback/ScrollArea";
 
 describe("ScrollArea", () => {
   const mockOnStateChange = vi.fn();

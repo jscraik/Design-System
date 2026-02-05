@@ -1,6 +1,6 @@
+import { CliError, ERROR_CODES, EXIT_CODES } from "../error.js";
 import type { CliArgs } from "../types.js";
 import { handleRun } from "../utils/exec.js";
-import { CliError, ERROR_CODES, EXIT_CODES } from "../error.js";
 
 export function formatCommand(args: {
   check?: boolean;

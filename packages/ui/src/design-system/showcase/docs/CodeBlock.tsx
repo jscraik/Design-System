@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
-
-import { IconCheckmark, IconCopy } from "../../../icons/ChatGPTIcons";
 import { cn } from "../../../components/ui/utils";
+import { IconCheckmark, IconCopy } from "../../../icons/ChatGPTIcons";
 
 interface CodeBlockProps {
   code: string;

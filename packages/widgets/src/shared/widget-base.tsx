@@ -1,6 +1,6 @@
-import React, { ReactNode, StrictMode } from "react";
+import { createHostAdapter, ensureMockOpenAI, HostProvider } from "@design-studio/runtime";
+import React, { type ReactNode, StrictMode } from "react";
 import { createRoot, type Root } from "react-dom/client";
-import { HostProvider, createHostAdapter, ensureMockOpenAI } from "@design-studio/runtime";
 
 /**
  * Props for the base widget wrapper.

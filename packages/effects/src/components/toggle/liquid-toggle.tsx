@@ -1,9 +1,8 @@
-import { cva } from "class-variance-authority";
-import { useRef, useState } from "react";
 import * as TogglePrimitive from "@radix-ui/react-toggle";
-
-import { cn } from "../../utils";
+import { cva } from "class-variance-authority";
+import { useState } from "react";
 import { useReducedMotion } from "../../hooks";
+import { cn } from "../../utils";
 
 /**
  * Liquid toggle variants
@@ -136,6 +135,7 @@ export function LiquidToggle({
         className={cn(
           liquidToggleVariants({ variant, size, liquid }),
           shouldApplyLiquid && "liquid-effect",
+          className,
         )}
         style={
           shouldApplyLiquid && liquid === "full"

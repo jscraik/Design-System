@@ -1,9 +1,9 @@
 import { spawn } from "node:child_process";
-import type { GlobalOptions, RunResult, JsonValue, JsonError } from "../types.js";
+import { CliError, ERROR_CODES, EXIT_CODES, requireExec, toJsonError } from "../error.js";
+import type { GlobalOptions, JsonError, JsonValue, RunResult } from "../types.js";
 import { baseEnv, resolveCwd, resolvePnpmCommand } from "./env.js";
 import { logInfo } from "./logger.js";
-import { outputJson, outputPlainRecord, createEnvelope } from "./output.js";
-import { toJsonError, CliError, ERROR_CODES, EXIT_CODES, requireExec } from "../error.js";
+import { createEnvelope, outputJson, outputPlainRecord } from "./output.js";
 
 export async function runPnpm(
   opts: GlobalOptions,

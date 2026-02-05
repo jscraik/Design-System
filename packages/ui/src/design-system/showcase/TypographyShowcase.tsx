@@ -1,5 +1,5 @@
-import { useCallback, useState, type ReactNode } from "react";
 import { typographyTokens } from "@design-studio/tokens";
+import { useCallback, useState } from "react";
 
 import { cn } from "../../components/ui/utils";
 

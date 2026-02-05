@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { StickyReveal, TocMarker, ScrollProgress } from "../src/components/scroll";
+import { ScrollProgress, StickyReveal, TocMarker } from "../src/components/scroll";
 
 const meta: Meta<typeof StickyReveal> = {
   title: "Effects/Scroll/StickyReveal",
@@ -120,7 +120,7 @@ export const Sticky: Story = {
 // TOC MARKER STORIES (Based on @jh3yy patterns)
 // ============================================================================
 
-const tocMeta: Meta<typeof TocMarker> = {
+const _tocMeta: Meta<typeof TocMarker> = {
   title: "Effects/Scroll/TocMarker",
   component: TocMarker,
   parameters: {
@@ -165,7 +165,7 @@ export const TocMarkerBottom: StoryObj = {
 // SCROLL PROGRESS STORIES (Based on @jh3yy patterns)
 // ============================================================================
 
-const scrollProgressMeta: Meta<typeof ScrollProgress> = {
+const _scrollProgressMeta: Meta<typeof ScrollProgress> = {
   title: "Effects/Scroll/ScrollProgress",
   component: ScrollProgress,
   parameters: {

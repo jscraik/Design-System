@@ -1,8 +1,8 @@
-import { TemplatePanel } from "../../../../templates/blocks/TemplatePanel";
-import { TemplateHeaderBar } from "../../../../templates/blocks/TemplateHeaderBar";
-import { TemplateFooterBar } from "../../../../templates/blocks/TemplateFooterBar";
+import type { ModelConfig } from "../../../../components/ui/navigation/ModelSelector";
 import { IconOperator } from "../../../../icons";
-import { type ModelConfig } from "../../../../components/ui/navigation/ModelSelector";
+import { TemplateFooterBar } from "../../../../templates/blocks/TemplateFooterBar";
+import { TemplateHeaderBar } from "../../../../templates/blocks/TemplateHeaderBar";
+import { TemplatePanel } from "../../../../templates/blocks/TemplatePanel";
 
 /**
  * Props for the compose instructions panel.

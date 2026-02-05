@@ -1,9 +1,8 @@
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
-
 import { IconX } from "../../../../icons";
 import { Badge } from "../../base/Badge";
 import { cn } from "../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 export interface Tag {
   id: string;

@@ -26,5 +26,4 @@ export declare function buildSkillSummary(
   platform?: SkillPlatform,
   customPath?: string,
 ): SkillSummary;
-export {};
 //# sourceMappingURL=scan.d.ts.map

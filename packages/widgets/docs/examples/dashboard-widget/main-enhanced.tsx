@@ -1,7 +1,7 @@
 import {
-  HostProvider,
   createEmbeddedHost,
   ensureMockOpenAI,
+  HostProvider,
   useToolOutput,
 } from "@design-studio/runtime";
 import { AppsSDKUIProvider } from "@design-studio/ui";
@@ -10,7 +10,7 @@ import { DashboardPage } from "@design-studio/ui/dev";
 import { StrictMode } from "react";
 
 import type { DashboardToolOutput } from "../../../src/shared/tool-output-types";
-import { WidgetErrorBoundary, mountWidget } from "../../../src/shared/widget-base";
+import { mountWidget, WidgetErrorBoundary } from "../../../src/shared/widget-base";
 import "../../../src/styles.css";
 
 if (import.meta.env.DEV) {

@@ -3,7 +3,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { computeSkillHash } from "./hash.js";
-import { OriginMetadata, InstallDestination } from "./types.js";
+import type { InstallDestination, OriginMetadata } from "./types.js";
 
 export type InstallOptions = {
   slug: string;

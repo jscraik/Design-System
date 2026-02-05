@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { ChatHeader } from "../../../app/chat/ChatHeader";
 import {
   IconBook,
   IconDotsHorizontal,
@@ -8,7 +8,6 @@ import {
   IconLock,
   IconStar,
 } from "../../../icons";
-import { ChatHeader } from "../../../app/chat/ChatHeader";
 
 export function ChatHeaderDemo() {
   // Example 1: Basic chat mode

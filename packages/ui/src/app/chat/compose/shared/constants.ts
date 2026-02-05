@@ -1,6 +1,6 @@
-import { type ModelConfig } from "../../../../components/ui/navigation/ModelSelector";
+import type { ModelConfig } from "../../../../components/ui/navigation/ModelSelector";
 
-import { type ComposeModeConfig, type PromptEnhancement } from "./types";
+import type { ComposeModeConfig, PromptEnhancement } from "./types";
 
 /** Fallback model when no models are provided. */
 export const fallbackModel: ModelConfig = {

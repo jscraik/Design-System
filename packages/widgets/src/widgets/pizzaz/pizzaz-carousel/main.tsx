@@ -1,8 +1,8 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
+import { AppsSDKButton } from "@design-studio/ui";
 import useEmblaCarousel from "embla-carousel-react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { AppsSDKButton } from "@design-studio/ui";
+import React from "react";
+import { createRoot } from "react-dom/client";
 
 import "../../../styles/widget.css";
 
@@ -75,7 +75,6 @@ function App() {
         role="region"
         aria-roledescription="carousel"
         aria-label="Featured pizza places"
-        tabIndex={0}
         onKeyDown={handleKeyDown}
       >
         <div className="flex gap-4 max-sm:mx-5 items-stretch">

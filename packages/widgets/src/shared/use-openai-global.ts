@@ -1,5 +1,5 @@
-import { useOpenAiGlobal as useOpenAiGlobalRuntime } from "@design-studio/runtime";
 import type { OpenAiGlobals } from "@design-studio/runtime";
+import { useOpenAiGlobal as useOpenAiGlobalRuntime } from "@design-studio/runtime";
 
 /**
  * Reads a value from the OpenAI global runtime context.

@@ -1,6 +1,6 @@
 import "../../../styles/widget.css";
-import { mountWidget } from "../../../shared/widget-base";
 import { useWidgetProps } from "../../../shared/use-widget-props";
+import { mountWidget } from "../../../shared/widget-base";
 
 import { DashboardWidget, type DashboardWidgetProps } from "./dashboard-widget";
 

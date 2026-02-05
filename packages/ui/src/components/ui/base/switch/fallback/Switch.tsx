@@ -5,11 +5,10 @@
 
 "use client";
 
-import * as React from "react";
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as SwitchPrimitive from "@radix-ui/react-switch";
-
+import * as React from "react";
 import { cn } from "../../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Loading spinner component for switch loading state

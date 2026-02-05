@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 
 export const AppsSDKUIProvider = ({ children }: { children: React.ReactNode }) => <>{children}</>;
 export const Button = () => null;

@@ -1,8 +1,8 @@
 export {
   createEmbeddedHost,
-  createStandaloneHost,
-  createMockHost,
   createHostAdapter,
-  type HostAdapterOptions,
+  createMockHost,
+  createStandaloneHost,
   type Host,
+  type HostAdapterOptions,
 } from "./index.js";

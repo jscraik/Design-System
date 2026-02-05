@@ -1,6 +1,6 @@
 import fs from "node:fs";
-import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import type { GlobalOptions } from "../types.js";
 
 export function parseBooleanEnv(value?: string): boolean | undefined {
@@ -56,6 +56,6 @@ export function resolvePnpmCommand(): string {
   return process.env.ASTUDIO_PNPM?.trim() || "pnpm";
 }
 
-function nowIso(): string {
+function _nowIso(): string {
   return new Date().toISOString();
 }

@@ -1,17 +1,16 @@
 import {
   createContext,
   type ReactNode,
+  type UIEvent,
   useCallback,
   useContext,
   useEffect,
   useRef,
   useState,
-  type UIEvent,
 } from "react";
-
-import { IconWarning, IconRefresh, IconX } from "../../../icons";
 import { ScrollArea } from "../../../components/ui/base/ScrollArea";
 import { cn } from "../../../components/ui/utils";
+import { IconRefresh, IconWarning, IconX } from "../../../icons";
 
 // Context for panel state management
 interface TemplatePanelContextValue {

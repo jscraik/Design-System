@@ -8,50 +8,38 @@
 // COMPONENTS
 // ============================================================================
 
-// Toggle Components
-export { LiquidToggle } from "./components/toggle";
-export type { LiquidToggleProps } from "./components/toggle";
-
+export type { MagneticButtonProps } from "./components/button";
 // Button Components
 export { MagneticButton } from "./components/button";
-export type { MagneticButtonProps } from "./components/button";
-
+export type { HoloCardProps } from "./components/card";
 // Card Components
 export { HoloCard, holoColors } from "./components/card";
-export type { HoloCardProps } from "./components/card";
-
+export type { ScrollProgressProps, StickyRevealProps, TocMarkerProps } from "./components/scroll";
+// Scroll Components
+export { ScrollProgress, StickyReveal, TocMarker } from "./components/scroll";
+export type {
+  GlowTextProps,
+  GradientTextProps,
+} from "./components/text";
 // Text Components
 export {
   GlowText,
   GradientText,
   gradientPresets,
 } from "./components/text";
-export type {
-  GlowTextProps,
-  GradientTextProps,
-} from "./components/text";
-
-// Scroll Components
-export { StickyReveal, TocMarker, ScrollProgress } from "./components/scroll";
-export type { StickyRevealProps, TocMarkerProps, ScrollProgressProps } from "./components/scroll";
+export type { LiquidToggleProps } from "./components/toggle";
+// Toggle Components
+export { LiquidToggle } from "./components/toggle";
 
 // ============================================================================
 // HOOKS
 // ============================================================================
 
-export {
-  useMousePosition,
-  useScrollPosition,
-  useReducedMotion,
-} from "./hooks";
 export type {
-  MousePosition,
-  UseMousePositionOptions,
-  UseMousePositionReturn,
-  ScrollPosition,
-  UseScrollPositionOptions,
-} from "./hooks";
-
+  ViewTransitionOptions,
+  ViewTransitionType,
+  ViewTransitionWrapperProps,
+} from "./components/view-transition";
 // View Transition Hook & Components
 export {
   useViewTransition,
@@ -59,31 +47,37 @@ export {
   viewTransitions,
 } from "./components/view-transition";
 export type {
-  ViewTransitionOptions,
-  ViewTransitionWrapperProps,
-  ViewTransitionType,
-} from "./components/view-transition";
+  MousePosition,
+  ScrollPosition,
+  UseMousePositionOptions,
+  UseMousePositionReturn,
+  UseScrollPositionOptions,
+} from "./hooks";
+export {
+  useMousePosition,
+  useReducedMotion,
+  useScrollPosition,
+} from "./hooks";
 
 // ============================================================================
 // UTILS
 // ============================================================================
 
-export {
-  generateLiquidFilter,
-  generateHoloFilter,
-  generateFilterId,
-} from "./utils/svg-filters";
-
-export {
-  easings,
-  durations,
-  getReducedMotionDuration,
-  buildTransition,
-  buildScrollAnimation,
-} from "./utils/animation";
 export type { TimelineConfig } from "./utils/animation";
 
+export {
+  buildScrollAnimation,
+  buildTransition,
+  durations,
+  easings,
+  getReducedMotionDuration,
+} from "./utils/animation";
 export { cn } from "./utils/cn";
+export {
+  generateFilterId,
+  generateHoloFilter,
+  generateLiquidFilter,
+} from "./utils/svg-filters";
 
 // ============================================================================
 // STYLES

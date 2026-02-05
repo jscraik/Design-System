@@ -1,8 +1,7 @@
-import * as React from "react";
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import { OTPInput, OTPInputContext } from "input-otp";
-
+import * as React from "react";
 import { cn } from "../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Error message display for InputOTP.

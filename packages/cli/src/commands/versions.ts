@@ -1,7 +1,7 @@
+import { TOKEN_WRITE_HINT, VERSIONS_WRITE_WARNING } from "../constants.js";
+import { CliError, ERROR_CODES, EXIT_CODES } from "../error.js";
 import type { CliArgs } from "../types.js";
 import { handleRun } from "../utils/exec.js";
-import { CliError, ERROR_CODES, EXIT_CODES } from "../error.js";
-import { VERSIONS_WRITE_WARNING, TOKEN_WRITE_HINT } from "../constants.js";
 
 export async function versionsCommand(args: {
   command: "sync" | "sync-swift";

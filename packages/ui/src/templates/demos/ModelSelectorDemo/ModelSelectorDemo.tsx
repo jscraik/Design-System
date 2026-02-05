@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { ModelSelector, type ModelConfig } from "../../../components/ui/navigation/ModelSelector";
+import { type ModelConfig, ModelSelector } from "../../../components/ui/navigation/ModelSelector";
 
 export function ModelSelectorDemo() {
   // Example 1: Basic model selector

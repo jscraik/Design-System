@@ -5,8 +5,7 @@
  * import { Button, Input, Tabs } from "@design-studio/ui";
  */
 
-import React from "react";
-import { Button, Input, Tabs, ChatInput } from "./components";
+import { Button, ChatInput, Input, Tabs } from "./components";
 
 export default function CategoryImportsApp() {
   return (

@@ -1,12 +1,12 @@
-import type { SetStateAction } from "react";
-import { useCallback } from "react";
 import {
+  type OpenAiDisplayMode,
+  type OpenAiTheme,
+  type OpenAiGlobals as RuntimeOpenAiGlobals,
   useHost,
   useOpenAiGlobal as useRuntimeOpenAiGlobal,
-  type OpenAiDisplayMode,
-  type OpenAiGlobals as RuntimeOpenAiGlobals,
-  type OpenAiTheme,
 } from "@design-studio/runtime";
+import type { SetStateAction } from "react";
+import { useCallback } from "react";
 
 import { validateWidgetStateBudget } from "./widget-state-budget";
 

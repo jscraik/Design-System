@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { createRef } from "react";
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { TextLink } from "./TextLink";
 
 describe("TextLink", () => {

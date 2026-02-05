@@ -10,13 +10,13 @@ import {
   IconHeadphones,
   IconImage,
   IconMoon,
+  IconNotebook,
   IconNotification,
   IconPhone,
   IconSparkles,
   IconSun,
   IconUserLock,
   IconWifi,
-  IconNotebook,
 } from "../../../icons";
 import {
   SettingDropdownBlock,

@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { computeSkillHash } from "./hash.js";
 import { formatTitle, parseMetadata, stripFrontmatter } from "./metadata.js";
-export function scanSkills(basePath, storageKey, platform) {
+export function scanSkills(basePath, storageKey, _platform) {
   if (!fs.existsSync(basePath)) return [];
   const entries = fs.readdirSync(basePath, { withFileTypes: true });
   const skills = [];

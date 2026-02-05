@@ -9,8 +9,8 @@
  * Update: pnpm test:visual:storybook --update-screenshots
  */
 
-import { test, expect } from "@playwright/test";
 import type { Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 /**
  * Helper to set theme and wait for transition

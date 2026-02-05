@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import type { Server } from "http";
+import type { Server } from "node:http";
 
 import { TokenWatcher } from "./watch-tokens.js";
 
@@ -90,14 +90,14 @@ class DevToolsOrchestrator {
     });
 
     setTimeout(() => {
-      this.tokenWatcher!.start();
+      this.tokenWatcher?.start();
     }, 100);
   }
 
   private async startStatusServer(): Promise<void> {
     console.log("📊 Starting status server...");
 
-    const { createServer } = await import("http");
+    const { createServer } = await import("node:http");
     const server = createServer((req, res) => {
       if (req.url === "/status") {
         res.writeHead(200, { "Content-Type": "application/json" });

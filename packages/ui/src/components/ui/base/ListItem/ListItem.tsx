@@ -1,10 +1,9 @@
-import * as React from "react";
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import type { ReactElement, ReactNode } from "react";
+import * as React from "react";
 import { cloneElement, isValidElement } from "react";
-
 import { IconChevronRightMd } from "../../../../icons";
 import { cn } from "../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Props for the list item component.

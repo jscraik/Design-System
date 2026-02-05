@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "@storybook/test";
-
-import { IconPlusLg, IconSettings, IconStar } from "../../../icons";
 import { sampleLegacyModels, sampleModels } from "../../../fixtures/sample-data";
+import { IconPlusLg, IconSettings, IconStar } from "../../../icons";
 
 import { ChatHeader } from "./ChatHeader";
 

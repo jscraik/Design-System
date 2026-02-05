@@ -10,8 +10,8 @@
  */
 
 import { render, waitFor } from "@testing-library/react";
-import { describe, expect, it, vi, beforeEach } from "vitest";
-import { testStates, testCommonProps, createStateTestCases } from "../../../../testing/utils";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { createStateTestCases, testCommonProps, testStates } from "../../../../testing/utils";
 import { Separator } from "./fallback/Separator";
 
 describe("Separator", () => {

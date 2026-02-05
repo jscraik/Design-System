@@ -1,16 +1,16 @@
-import type { Argv } from "yargs";
-import type { CliArgs } from "../types.js";
+import path from "node:path";
 import type { SkillPlatform } from "@design-studio/skill-ingestion";
 import {
-  RemoteSkillClient,
   installSkillFromZip,
   platformRootPath,
   platformStorageKey,
   publishSkill,
+  RemoteSkillClient,
 } from "@design-studio/skill-ingestion";
-import { emitSkillResults, emitSkillInstall, emitPublishResult } from "../utils/output.js";
+import type { Argv } from "yargs";
 import { CliError, ERROR_CODES, EXIT_CODES } from "../error.js";
-import path from "node:path";
+import type { CliArgs } from "../types.js";
+import { emitPublishResult, emitSkillInstall, emitSkillResults } from "../utils/output.js";
 
 export async function skillsSearchCommand(args: {
   query: string;

@@ -1,5 +1,5 @@
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, waitFor } from "../../../../testing/utils";
-import { describe, expect, it, vi, beforeEach } from "vitest";
 import * as Tooltip from "./fallback/Tooltip";
 
 describe("Tooltip", () => {
@@ -31,7 +31,7 @@ describe("Tooltip", () => {
         </Tooltip.Tooltip>,
       );
       // Content is rendered via portal, verify by test ID
-      const content = screen.queryByTestId("tooltip-content-element");
+      const _content = screen.queryByTestId("tooltip-content-element");
       // Note: Tooltip only shows on hover/interaction, so it might not be visible without user action
     });
 

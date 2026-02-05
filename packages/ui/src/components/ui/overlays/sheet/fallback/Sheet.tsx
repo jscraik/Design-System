@@ -5,8 +5,8 @@
 
 "use client";
 
-import * as React from "react";
 import * as SheetPrimitive from "@radix-ui/react-dialog";
+import type * as React from "react";
 
 import { IconX } from "../../../../../icons";
 import { cn } from "../../../utils";

@@ -14,13 +14,13 @@ import {
   IconQuestion,
   IconSettings,
   IconSparkles,
+  IconTelescope,
   IconUserLock,
   IconWifi,
-  IconTelescope,
 } from "../../../icons";
 import {
-  SettingToggleBlock,
   SettingToggleBadge,
+  SettingToggleBlock,
   SettingToggleGroup,
 } from "../../blocks/SettingToggleBlock";
 

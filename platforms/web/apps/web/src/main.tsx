@@ -1,9 +1,9 @@
 import "./styles/main.css";
 
+import { createStandaloneHost, ensureMockOpenAI, HostProvider } from "@design-studio/runtime";
+import { AppsSDKUIProvider } from "@design-studio/ui";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { HostProvider, createStandaloneHost, ensureMockOpenAI } from "@design-studio/runtime";
-import { AppsSDKUIProvider } from "@design-studio/ui";
 
 import { App } from "./app/App";
 import { initThemePreference } from "./app/theme";

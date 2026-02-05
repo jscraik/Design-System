@@ -1,7 +1,8 @@
-import * as React from "react";
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import type { ReactNode } from "react";
-
+import * as React from "react";
 import {
+  getSizeClass,
   IconCopy,
   IconDotsHorizontal,
   IconEdit,
@@ -12,8 +13,6 @@ import {
   IconThumbUp,
   IconUser,
 } from "../../../icons";
-import { getSizeClass } from "../../../icons";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Represents a chat message in the conversation stream.

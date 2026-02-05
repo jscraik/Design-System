@@ -1,7 +1,7 @@
-import { ComposeView } from "../../app/chat/ComposeView";
-import { sampleComposeModes, sampleModels } from "../../fixtures/sample-data";
 import type { ComposeModeConfig } from "../../app/chat/ComposeView";
+import { ComposeView } from "../../app/chat/ComposeView";
 import type { ModelConfig } from "../../components/ui/navigation/ModelSelector";
+import { sampleComposeModes, sampleModels } from "../../fixtures/sample-data";
 
 /**
  * Props for the compose template wrapper.

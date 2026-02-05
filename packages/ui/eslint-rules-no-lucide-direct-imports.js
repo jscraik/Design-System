@@ -67,7 +67,7 @@ const noLucideDirectImportsRule = {
       // Handle ? (matches one character)
       regex = regex.replace(/\?/g, ".");
 
-      return new RegExp("^" + regex + "$");
+      return new RegExp(`^${regex}$`);
     };
 
     const isAllowed = (filePath) => {

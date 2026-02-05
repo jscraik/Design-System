@@ -3,14 +3,14 @@ import { useEffect, useMemo, useState } from "react";
 
 import type { ModelConfig } from "../../../components/ui/navigation/ModelSelector";
 import { useControllableState } from "../../../hooks/useControllableState";
-import { ChatUISlotsProvider, type ChatUISlots } from "../shared/slots";
-import { ChatShell, type ChatShellSlots } from "../ChatShell";
 import { ChatHeader } from "../ChatHeader";
 import { ChatInput, type ChatInputAttachmentAction, type ChatInputToolAction } from "../ChatInput";
-import { ChatMessages, type ChatMessage, type ChatMessageAction } from "../ChatMessages";
+import { type ChatMessage, type ChatMessageAction, ChatMessages } from "../ChatMessages";
+import { ChatShell, type ChatShellSlots } from "../ChatShell";
 import { ChatSidebar } from "../ChatSidebar";
+import { type ComposeModeConfig, ComposeView } from "../ComposeView";
+import { type ChatUISlots, ChatUISlotsProvider } from "../shared/slots";
 import type { ChatSidebarUser, SidebarItem } from "../shared/types";
-import { ComposeView, type ComposeModeConfig } from "../ComposeView";
 
 const FALLBACK_MODEL: ModelConfig = {
   name: "Default",

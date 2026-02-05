@@ -8,7 +8,7 @@
  * - For tokens with modes, we export all mode values and let Figma organize them
  */
 
-import { readFile, writeFile } from "fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 
 const dtcgPath = new URL("../src/tokens/index.dtcg.json", import.meta.url);
 const figmaOutputPath = new URL("../dist/figma-tokens.json", import.meta.url);
@@ -49,14 +49,17 @@ type DtcgRoot = {
   shadow: Record<string, DtcgShadowToken>;
   type: {
     fontFamily: DtcgFontFamilyToken;
-    web: Record<string, {
-      size?: DtcgDimensionToken;
-      lineHeight?: DtcgDimensionToken;
-      paragraphSpacing?: DtcgDimensionToken;
-      weight?: DtcgFontWeightToken;
-      emphasisWeight?: DtcgFontWeightToken;
-      tracking?: DtcgLetterSpacingToken;
-    }>;
+    web: Record<
+      string,
+      {
+        size?: DtcgDimensionToken;
+        lineHeight?: DtcgDimensionToken;
+        paragraphSpacing?: DtcgDimensionToken;
+        weight?: DtcgFontWeightToken;
+        emphasisWeight?: DtcgFontWeightToken;
+        tracking?: DtcgLetterSpacingToken;
+      }
+    >;
   };
 };
 
@@ -85,7 +88,7 @@ type FigmaOutput = {
  */
 function flattenColorTokens(
   colorData: Record<string, DtcgModeSet<DtcgColorToken>>,
-  collectionName: string
+  collectionName: string,
 ): FigmaCollection {
   const collection: FigmaCollection = {
     $collection: collectionName,
@@ -141,9 +144,7 @@ function convertDimensionToken(token: DtcgDimensionToken): FigmaToken {
 /**
  * Flatten spacing tokens
  */
-function flattenSpacingTokens(
-  spaceData: Record<string, DtcgDimensionToken>
-): FigmaCollection {
+function flattenSpacingTokens(spaceData: Record<string, DtcgDimensionToken>): FigmaCollection {
   const collection: FigmaCollection = {
     $collection: "spacing",
     $description: "Spacing scale tokens (px)",
@@ -159,9 +160,7 @@ function flattenSpacingTokens(
 /**
  * Flatten radius tokens
  */
-function flattenRadiusTokens(
-  radiusData: Record<string, DtcgDimensionToken>
-): FigmaCollection {
+function flattenRadiusTokens(radiusData: Record<string, DtcgDimensionToken>): FigmaCollection {
   const collection: FigmaCollection = {
     $collection: "radius",
     $description: "Corner radius tokens (px)",
@@ -177,9 +176,7 @@ function flattenRadiusTokens(
 /**
  * Flatten size tokens
  */
-function flattenSizeTokens(
-  sizeData: Record<string, DtcgDimensionToken>
-): FigmaCollection {
+function flattenSizeTokens(sizeData: Record<string, DtcgDimensionToken>): FigmaCollection {
   const collection: FigmaCollection = {
     $collection: "size",
     $description: "Size tokens for component dimensions (px)",
@@ -196,9 +193,7 @@ function flattenSizeTokens(
  * Flatten shadow tokens - convert to string format for Figma
  * Figma doesn't have a native shadow variable type, so we store as string
  */
-function flattenShadowTokens(
-  shadowData: Record<string, DtcgShadowToken>
-): FigmaCollection {
+function flattenShadowTokens(shadowData: Record<string, DtcgShadowToken>): FigmaCollection {
   const collection: FigmaCollection = {
     $collection: "shadow",
     $description: "Shadow tokens (CSS format)",
@@ -223,16 +218,14 @@ function flattenShadowTokens(
 /**
  * Flatten typography tokens
  */
-function flattenTypographyTokens(
-  typeData: DtcgRoot["type"]
-): FigmaCollection {
+function flattenTypographyTokens(typeData: DtcgRoot["type"]): FigmaCollection {
   const collection: FigmaCollection = {
     $collection: "typography",
     $description: "Typography tokens",
   };
 
   // Font family
-  collection["fontFamily"] = {
+  collection.fontFamily = {
     $type: "string",
     $value: typeData.fontFamily.$value,
   };
@@ -247,7 +240,7 @@ function flattenTypographyTokens(
     }
     if (styleData.paragraphSpacing) {
       collection[`${styleName}/paragraphSpacing`] = convertDimensionToken(
-        styleData.paragraphSpacing
+        styleData.paragraphSpacing,
       );
     }
     if (styleData.weight) {
@@ -271,9 +264,10 @@ function flattenTypographyTokens(
  * Generate alternative format: Separate collections for each mode
  * This creates Light and Dark collection files that can be imported separately
  */
-function generateModeCollections(
-  colorData: Record<string, DtcgModeSet<DtcgColorToken>>
-): { light: FigmaCollection; dark: FigmaCollection } {
+function generateModeCollections(colorData: Record<string, DtcgModeSet<DtcgColorToken>>): {
+  light: FigmaCollection;
+  dark: FigmaCollection;
+} {
   const light: FigmaCollection = {
     $collection: "colors-light",
     $description: "Color tokens - Light mode",

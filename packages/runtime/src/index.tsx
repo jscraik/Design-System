@@ -251,7 +251,7 @@ export function createEmbeddedHost(): Host {
     get notifyIntrinsicHeight() {
       const openai = getOpenAi();
       if (!openai?.notifyIntrinsicHeight) return undefined;
-      return (args: { height: number }) => openai.notifyIntrinsicHeight!(args);
+      return (args: { height: number }) => openai.notifyIntrinsicHeight?.(args);
     },
   };
 }

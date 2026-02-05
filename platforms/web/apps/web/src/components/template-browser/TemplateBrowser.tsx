@@ -1,4 +1,3 @@
-import { useEffect, useMemo, useState } from "react";
 import {
   IconCheckCircle,
   IconFolder,
@@ -9,12 +8,13 @@ import {
   IconSidebar,
   IconStar,
 } from "@design-studio/ui/icons";
+import { useEffect, useMemo, useState } from "react";
 
 import {
-  templateCategoryLabels,
-  templateRegistry,
   type TemplateCategory,
   type TemplateRegistryEntry,
+  templateCategoryLabels,
+  templateRegistry,
 } from "@/generated/template-registry";
 
 import { TemplatePreview } from "./TemplatePreview";

@@ -1,7 +1,6 @@
 import React from "react";
-
-import { useMaxHeight } from "../../../shared/use-max-height";
 import type { Album } from "../../../shared/data-types";
+import { useMaxHeight } from "../../../shared/use-max-height";
 
 import FilmStrip from "./FilmStrip";
 
@@ -20,7 +19,7 @@ export default function FullscreenViewer({ album }: FullscreenViewerProps) {
 
   React.useEffect(() => {
     setIndex(0);
-  }, [album?.id]);
+  }, []);
 
   const photo = album?.photos?.[index];
 

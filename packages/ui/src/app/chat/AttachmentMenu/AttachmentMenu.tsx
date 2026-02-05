@@ -1,26 +1,25 @@
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
-
+import { Popover, PopoverContent, PopoverTrigger } from "../../../components/ui/overlays/Popover";
+import { cn } from "../../../components/ui/utils";
 import {
+  CanvaIcon,
+  DropboxIcon,
+  FigmaIcon,
+  GitHubIcon,
+  getSizeClass,
   IconDotsVertical,
   IconImage,
   IconPaperclip,
   IconPlusComposer,
   IconPublic,
   IconSearch,
-  CanvaIcon,
-  DropboxIcon,
-  FigmaIcon,
-  GitHubIcon,
   LinearIcon,
   NotionIcon,
   SharePointIcon,
   SlackIcon,
   TeamsIcon,
 } from "../../../icons";
-import { getSizeClass } from "../../../icons";
-import { Popover, PopoverContent, PopoverTrigger } from "../../../components/ui/overlays/Popover";
-import { cn } from "../../../components/ui/utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Primary attachment menu actions.

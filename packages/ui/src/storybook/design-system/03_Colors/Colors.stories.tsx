@@ -1,7 +1,6 @@
+import { colorTokens } from "@design-studio/tokens/colors";
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
-
-import { colorTokens } from "@design-studio/tokens/colors";
 
 /**
  * Colors - Visual-first documentation for the color palette.
@@ -959,7 +958,7 @@ export const ThemeComparison: Story = {
                   style={{
                     color: accent.light.red,
                     borderColor: accent.light.red,
-                    backgroundColor: accent.light.red + "10",
+                    backgroundColor: `${accent.light.red}10`,
                   }}
                 >
                   Error message in red
@@ -969,7 +968,7 @@ export const ThemeComparison: Story = {
                   style={{
                     color: accent.light.green,
                     borderColor: accent.light.green,
-                    backgroundColor: accent.light.green + "10",
+                    backgroundColor: `${accent.light.green}10`,
                   }}
                 >
                   Success message in green
@@ -1011,7 +1010,7 @@ export const ThemeComparison: Story = {
                   style={{
                     color: accent.dark.red,
                     borderColor: accent.dark.red,
-                    backgroundColor: accent.dark.red + "10",
+                    backgroundColor: `${accent.dark.red}10`,
                   }}
                 >
                   Error message in red (dark mode)
@@ -1021,7 +1020,7 @@ export const ThemeComparison: Story = {
                   style={{
                     color: accent.dark.green,
                     borderColor: accent.dark.green,
-                    backgroundColor: accent.dark.green + "10",
+                    backgroundColor: `${accent.dark.green}10`,
                   }}
                 >
                   Success message in green (dark mode)
@@ -1060,7 +1059,7 @@ export const ThemeComparison: Story = {
 };
 
 // Color Comparison Playground - see colors side by side
-const ColorComparison: Story = {
+const _ColorComparison: Story = {
   name: "Color Comparison",
   render: () => (
     <div className="max-w-6xl p-8 space-y-8">
@@ -1084,7 +1083,7 @@ const ColorComparison: Story = {
                 <div className="grid grid-cols-2 gap-2">
                   <div
                     className="aspect-square rounded-lg"
-                    style={{ backgroundColor: "hsl(var(--color-" + colorKey + ") / 0.1)" }}
+                    style={{ backgroundColor: `hsl(var(--color-${colorKey}) / 0.1)` }}
                   >
                     <div className="p-4 text-center text-sm font-mono text-foreground">
                       Light bg
@@ -1092,7 +1091,7 @@ const ColorComparison: Story = {
                   </div>
                   <div
                     className="aspect-square rounded-lg text-text-inverted"
-                    style={{ backgroundColor: "hsl(var(--color-" + colorKey + "))" }}
+                    style={{ backgroundColor: `hsl(var(--color-${colorKey}))` }}
                   >
                     <div className="p-4 text-center text-sm font-mono">Full</div>
                   </div>

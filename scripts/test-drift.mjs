@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { existsSync, readFileSync, readdirSync } from "fs";
-import { resolve } from "path";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 function parseIntegrationExports() {
   const filePath = resolve("packages/ui/src/integrations/apps-sdk/index.ts");

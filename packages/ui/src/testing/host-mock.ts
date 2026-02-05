@@ -96,7 +96,7 @@ export function createMockHost(config: MockHostConfig = {}): Host {
       createdAt: Date.now(),
       updatedAt: Date.now(),
     }),
-    deleteThread: async (threadId) => {
+    deleteThread: async (_threadId) => {
       // Mock deletion
       return true;
     },
@@ -110,7 +110,7 @@ export function createMockHost(config: MockHostConfig = {}): Host {
       const thread = threads.find((t) => t.id === threadId);
       return thread?.messages || messages;
     },
-    sendMessage: async (threadId, content) => {
+    sendMessage: async (_threadId, content) => {
       const newMessage: MockMessage = {
         id: `msg-${Date.now()}`,
         role: "user",

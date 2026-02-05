@@ -1,10 +1,9 @@
-import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "fs";
-import { dirname, join, relative } from "path";
-import { fileURLToPath, pathToFileURL } from "url";
-
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { transform } from "@svgr/core";
 import * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { transform } from "@svgr/core";
 import svgrConfig from "../svgr.config";
 
 // Legacy icon modules rely on the classic React runtime in generated output.
@@ -161,11 +160,11 @@ const normalizeSvg = (markup: string) => {
   svg = svg.replace(/\sclass="[^"]*"/g, "");
 
   const divStyleMatch = markup.match(/<div[^>]*style="([^"]*)"[^>]*>/);
-  if (divStyleMatch && divStyleMatch[1]) {
+  if (divStyleMatch?.[1]) {
     const styleValue = divStyleMatch[1].trim();
     if (styleValue.length > 0) {
       if (svg.includes('style="')) {
-        svg = svg.replace(/style="([^"]*)"/, (full, existing) => {
+        svg = svg.replace(/style="([^"]*)"/, (_full, existing) => {
           const merged = `${existing};${styleValue}`;
           return `style="${merged}"`;
         });

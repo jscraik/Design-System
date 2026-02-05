@@ -1,6 +1,5 @@
-import { useState, type ComponentType } from "react";
-
-import { spaceTokens, typographyTokens, radiusTokens } from "@design-studio/tokens";
+import { radiusTokens, spaceTokens, typographyTokens } from "@design-studio/tokens";
+import { type ComponentType, useState } from "react";
 
 import { copyToClipboard } from "../utils/clipboard";
 import * as Icons from "./chatgpt/ChatGPTIconsFixed";
@@ -63,9 +62,9 @@ export function ChatGPTIconCatalog() {
   const filteredIcons = iconEntries.filter(([name]) =>
     name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
-  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [_statusMessage, setStatusMessage] = useState<string | null>(null);
 
-  const handleCopy = async (name: string) => {
+  const _handleCopy = async (name: string) => {
     if (!navigator?.clipboard?.writeText) {
       setStatusMessage(`Clipboard unavailable. Select and copy: ${name}`);
       window.prompt("Clipboard unavailable. Copy the icon name manually:", name);
@@ -75,7 +74,7 @@ export function ChatGPTIconCatalog() {
     try {
       await navigator.clipboard.writeText(name);
       setStatusMessage(`Copied ${name} to clipboard.`);
-    } catch (error) {
+    } catch (_error) {
       setStatusMessage(`Couldn't copy ${name}. Select and copy it manually.`);
       window.prompt("Clipboard failed. Copy the icon name manually:", name);
     }
@@ -278,10 +277,7 @@ export function ChatGPTIconCatalog() {
       data-theme="dark"
       className="min-h-screen bg-foundation-bg-dark-1 text-foundation-text-dark-primary"
     >
-      <div
-        className="mx-auto max-w-7xl"
-        style={{ padding: `${spacing.pageY} ${spacing.pageX}` }}
-      >
+      <div className="mx-auto max-w-7xl" style={{ padding: `${spacing.pageY} ${spacing.pageX}` }}>
         {/* Header */}
         <div style={{ marginBottom: spacing.sectionGap }}>
           <h1 style={headingStyle(typographyTokens.h1)}>ChatGPT Icon Catalog</h1>
@@ -450,7 +446,10 @@ export function ChatGPTIconCatalog() {
               <span className="text-foundation-accent-green">from</span>{" "}
               {'"@design-studio/ui/icons"'};
             </p>
-            <p className="text-foundation-text-dark-tertiary" style={{ marginTop: spacing.cardGap }}>
+            <p
+              className="text-foundation-text-dark-tertiary"
+              style={{ marginTop: spacing.cardGap }}
+            >
               {`// Use in your components`}
             </p>
             <p>{'<IconCheckmark className="size-6" />'}</p>

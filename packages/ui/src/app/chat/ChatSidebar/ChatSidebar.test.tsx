@@ -1,10 +1,10 @@
-import { render, screen, waitFor, fireEvent } from "../../../../testing/utils";
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen, waitFor } from "../../../../testing/utils";
 import { ChatSidebar } from "./ChatSidebar";
 
 describe("ChatSidebar", () => {
   const mockOnToggle = vi.fn();
-  const mockOnProjectSelect = vi.fn();
+  const _mockOnProjectSelect = vi.fn();
   const mockOnStateChange = vi.fn();
 
   const defaultProjects = [

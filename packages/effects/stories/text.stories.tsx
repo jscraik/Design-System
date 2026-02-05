@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { GlowText, GradientText, gradientPresets } from "../src/components/text";
+import { GlowText, GradientText } from "../src/components/text";
 
 const glowMeta: Meta<typeof GlowText> = {
   title: "Effects/Text/GlowText",
@@ -62,7 +62,7 @@ export const CustomColors: GlowStory = {
 
 // Gradient Text Stories
 
-const gradientMeta: Meta<typeof GradientText> = {
+const _gradientMeta: Meta<typeof GradientText> = {
   title: "Effects/Text/GradientText",
   component: GradientText,
   parameters: {

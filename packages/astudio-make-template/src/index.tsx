@@ -1,6 +1,6 @@
 import "@design-studio/tokens/tokens.css";
-import { Stack, Text } from "@design-studio/ui";
 import { Icon } from "@design-studio/icons";
+import { Stack, Text } from "@design-studio/ui";
 
 export function MakeTemplateExample() {
   return (

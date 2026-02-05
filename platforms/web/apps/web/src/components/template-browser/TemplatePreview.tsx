@@ -1,10 +1,8 @@
 import { AppsSDKBadge, AppsSDKButton } from "@design-studio/ui";
 import { IconCopy, IconMoon, IconSun } from "@design-studio/ui/icons";
-
-import { TemplateHost } from "./TemplateHost";
-
 import { useThemePreference } from "@/app/useThemePreference";
 import type { TemplateRegistryEntry } from "@/generated/template-registry";
+import { TemplateHost } from "./TemplateHost";
 
 type TemplatePreviewProps = {
   template?: TemplateRegistryEntry;

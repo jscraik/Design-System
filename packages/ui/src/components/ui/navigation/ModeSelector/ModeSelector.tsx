@@ -1,10 +1,9 @@
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
 import { useRef, useState } from "react";
-
-import { IconCheckmark, IconChevronDownMd, IconSettings } from "../../../../icons";
 import { useFocusTrap } from "../../../../hooks/useFocusTrap";
+import { IconCheckmark, IconChevronDownMd, IconSettings } from "../../../../icons";
 import { cn } from "../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Describes a selectable mode entry.

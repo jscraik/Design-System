@@ -1,4 +1,4 @@
-import { IconChat, IconFolder, IconDotsHorizontal } from "../../../../../icons";
+import { IconChat, IconDotsHorizontal, IconFolder } from "../../../../../icons";
 import type { SidebarItem } from "../../../shared/types";
 
 /**

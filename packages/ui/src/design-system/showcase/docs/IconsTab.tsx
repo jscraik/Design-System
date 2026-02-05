@@ -1,11 +1,10 @@
 import { useState } from "react";
-
-import { IconSearch } from "../../../icons/ChatGPTIcons";
 import { cn } from "../../../components/ui/utils";
+import { IconSearch } from "../../../icons/ChatGPTIcons";
 
 import { Card } from "./Card";
-import { Section } from "./Section";
 import { iconCategories } from "./data";
+import { Section } from "./Section";
 
 /** Icons tab content for DesignSystemDocs. */
 export function IconsTab() {

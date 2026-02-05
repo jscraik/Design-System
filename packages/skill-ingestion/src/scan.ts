@@ -2,14 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { computeSkillHash } from "./hash.js";
 import { formatTitle, parseMetadata, stripFrontmatter } from "./metadata.js";
-import {
-  InstallDestination,
-  SkillMetadata,
-  SkillPlatform,
-  SkillReference,
-  SkillStats,
-  SkillSummary,
-} from "./types.js";
+import type { SkillPlatform, SkillReference, SkillStats, SkillSummary } from "./types.js";
 
 type ScanResult = {
   id: string;
@@ -25,7 +18,7 @@ type ScanResult = {
 export function scanSkills(
   basePath: string,
   storageKey: string,
-  platform?: SkillPlatform,
+  _platform?: SkillPlatform,
 ): ScanResult[] {
   if (!fs.existsSync(basePath)) return [];
 

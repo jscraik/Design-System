@@ -1,6 +1,6 @@
-import { IconCheckmark, IconChevronDownMd } from "../../../../icons";
 import { ModalDialog } from "../../../../components/ui/overlays/Modal/Modal";
-import { type ProEditMode } from "../shared/types";
+import { IconCheckmark, IconChevronDownMd } from "../../../../icons";
+import type { ProEditMode } from "../shared/types";
 
 /**
  * Props for the Pro Edit configuration modal.

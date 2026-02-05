@@ -7,8 +7,8 @@
  * Can be run in CI to fail builds that exceed size limits.
  */
 
-import { existsSync, readdirSync, statSync } from "fs";
-import { join } from "path";
+import { existsSync, readdirSync, statSync } from "node:fs";
+import { join } from "node:path";
 
 // Configuration
 const CONFIG = {
@@ -42,7 +42,7 @@ function formatSize(bytes) {
 }
 
 function matchPattern(filename, pattern) {
-  const regex = new RegExp("^" + pattern.replace(/\*/g, ".*").replace(/\./g, "\\.") + "$");
+  const regex = new RegExp(`^${pattern.replace(/\*/g, ".*").replace(/\./g, "\\.")}$`);
   return regex.test(filename);
 }
 
@@ -161,7 +161,7 @@ function printReport(results) {
   }
 
   // Summary
-  console.log("\n" + "=".repeat(80));
+  console.log(`\n${"=".repeat(80)}`);
   const totalSize = results.reduce((sum, r) => sum + r.size, 0);
   console.log(`\nTotal: ${formatSize(totalSize)}`);
   console.log(`Files analyzed: ${results.length}`);

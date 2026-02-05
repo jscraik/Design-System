@@ -1,6 +1,6 @@
-import { readFileSync, readdirSync } from "fs";
-import { createRequire } from "module";
-import { resolve } from "path";
+import { readdirSync, readFileSync } from "node:fs";
+import { createRequire } from "node:module";
+import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 type CoverageRow = {

@@ -1,9 +1,8 @@
 import { cva } from "class-variance-authority";
-import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useTransform } from "motion/react";
-
+import { useRef, useState } from "react";
+import { useReducedMotion } from "../../hooks";
 import { cn } from "../../utils";
-import { useReducedMotion, useMousePosition } from "../../hooks";
 
 /**
  * Holographic card variants
@@ -120,7 +119,7 @@ export function HoloCard({
   size = "default",
   colors = "neon",
   customColors,
-  tiltIntensity = 0.15,
+  _tiltIntensity = 0.15,
   hoverScale = 1.02,
   disableTilt = false,
   disableShimmer = false,

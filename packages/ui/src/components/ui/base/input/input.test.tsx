@@ -78,7 +78,8 @@ describe("Input", () => {
       const ref = createRef<HTMLInputElement>();
       render(<Input ref={ref} aria-label="Test input" />);
       ref.current?.focus();
-      expectFocused(ref.current!);
+      if (!ref.current) throw new Error("Ref not set");
+      expectFocused(ref.current);
     });
   });
 
@@ -141,7 +142,7 @@ describe("Input", () => {
       const { user } = render(
         <>
           <Input aria-label="Test input" onBlur={onBlur} />
-          <button>Other</button>
+          <button type="button">Other</button>
         </>,
       );
       await user.click(screen.getByRole("textbox"));

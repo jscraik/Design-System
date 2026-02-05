@@ -8,8 +8,8 @@
  *   npx tsx scripts/migration/migrate-imports.ts [--apply] [--dry-run] [--verbose]
  */
 
-import { readFileSync, writeFileSync, readdirSync, statSync } from "fs";
-import { join, relative, extname } from "path";
+import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { extname, join, relative } from "node:path";
 
 interface Options {
   apply: boolean;
@@ -62,7 +62,7 @@ function getAllFiles(dir: string, extensions: string[] = [".ts", ".tsx", ".js", 
         }
       }
     }
-  } catch (error) {
+  } catch (_error) {
     // Directory doesn't exist or isn't accessible
   }
 
@@ -71,7 +71,7 @@ function getAllFiles(dir: string, extensions: string[] = [".ts", ".tsx", ".js", 
 
 function migrateImports(
   content: string,
-  filePath: string,
+  _filePath: string,
 ): { changed: boolean; content: string; changes: string[] } {
   let newContent = content;
   const changes: string[] = [];

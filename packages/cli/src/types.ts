@@ -1,5 +1,3 @@
-import type { ErrorCode } from "./constants.js";
-
 // Re-export ErrorCode from constants
 export type { ErrorCode } from "./constants.js";
 

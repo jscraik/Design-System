@@ -17,113 +17,113 @@
 :root,
 :where([data-theme="light"]) {
   /* Backgrounds */
-  --background: var(--foundation-bg-light-1) !important; /* primary */
-  --secondary: var(--foundation-bg-light-2) !important;
-  --muted: var(--foundation-bg-light-3) !important; /* tertiary */
-  --card: var(--foundation-bg-light-1) !important;
-  --popover: var(--foundation-bg-light-1) !important;
-  --border: var(--foundation-border-light) !important;
-  --border-subtle: var(--foundation-border-light) !important;
-  --border-strong: var(--foundation-border-heavy) !important;
+  --background: var(--foundation-bg-light-1); /* primary */
+  --secondary: var(--foundation-bg-light-2);
+  --muted: var(--foundation-bg-light-3); /* tertiary */
+  --card: var(--foundation-bg-light-1);
+  --popover: var(--foundation-bg-light-1);
+  --border: var(--foundation-border-light);
+  --border-subtle: var(--foundation-border-light);
+  --border-strong: var(--foundation-border-heavy);
 
   /* Text + Icons */
-  --foreground: var(--foundation-text-light-primary) !important; /* primary */
-  --text-secondary: var(--foundation-text-light-secondary) !important; /* secondary */
-  --text-tertiary: var(--foundation-text-light-tertiary) !important; /* tertiary */
-  --text-inverted: var(--foundation-text-dark-primary) !important; /* inverted */
-  --text-hero: var(--foreground) !important;
-  --text-heading: var(--foreground) !important;
-  --text-body: var(--text-secondary) !important;
-  --text-placeholder: var(--text-tertiary) !important;
-  --text-caption: var(--text-tertiary) !important;
-  --text-hero-on-color: var(--accent-foreground) !important;
-  --text-heading-on-color: var(--accent-foreground) !important;
-  --text-body-on-color: var(--accent-foreground) !important;
-  --text-placeholder-on-color: var(--accent-foreground) !important;
-  --text-caption-on-color: var(--accent-foreground) !important;
+  --foreground: var(--foundation-text-light-primary); /* primary */
+  --text-secondary: var(--foundation-text-light-secondary); /* secondary */
+  --text-tertiary: var(--foundation-text-light-tertiary); /* tertiary */
+  --text-inverted: var(--foundation-text-dark-primary); /* inverted */
+  --text-hero: var(--foreground);
+  --text-heading: var(--foreground);
+  --text-body: var(--text-secondary);
+  --text-placeholder: var(--text-tertiary);
+  --text-caption: var(--text-tertiary);
+  --text-hero-on-color: var(--accent-foreground);
+  --text-heading-on-color: var(--accent-foreground);
+  --text-body-on-color: var(--accent-foreground);
+  --text-placeholder-on-color: var(--accent-foreground);
+  --text-caption-on-color: var(--accent-foreground);
 
   /* Accents */
-  --accent-blue: var(--foundation-accent-blue-light) !important;
-  --accent-red: var(--foundation-accent-red-light) !important;
-  --accent-orange: var(--foundation-accent-orange-light) !important;
-  --accent-green: var(--foundation-accent-green-light) !important;
-  --accent-purple: var(--foundation-accent-purple-light) !important;
+  --accent-blue: var(--foundation-accent-blue-light);
+  --accent-red: var(--foundation-accent-red-light);
+  --accent-orange: var(--foundation-accent-orange-light);
+  --accent-green: var(--foundation-accent-green-light);
+  --accent-purple: var(--foundation-accent-purple-light);
 
   /* Accent foreground (text on accent backgrounds) */
-  --accent-foreground: var(--foundation-text-dark-primary) !important;
+  --accent-foreground: var(--foundation-text-dark-primary);
 
   /* State slots (interactive + status) */
-  --interactive: var(--accent-blue) !important;
-  --interactive-hover: var(--accent-blue) !important;
-  --interactive-active: var(--accent-blue) !important;
-  --interactive-disabled: var(--text-tertiary) !important;
-  --status-success: var(--accent-green) !important;
-  --status-success-muted: var(--accent-green) !important;
-  --status-error: var(--accent-red) !important;
-  --status-error-muted: var(--accent-red) !important;
-  --status-warning: var(--accent-orange) !important;
+  --interactive: var(--accent-blue);
+  --interactive-hover: var(--accent-blue);
+  --interactive-active: var(--accent-blue);
+  --interactive-disabled: var(--text-tertiary);
+  --status-success: var(--accent-green);
+  --status-success-muted: var(--accent-green);
+  --status-error: var(--accent-red);
+  --status-error-muted: var(--accent-red);
+  --status-warning: var(--accent-orange);
 
   /* Ring (focus outline) */
-  --ring: var(--foundation-focus-ring) !important;
+  --ring: var(--foundation-focus-ring);
 
   /* Overlay (modals, sheets, dialogs) */
-  --overlay: color-mix(in srgb, var(--foundation-bg-dark-1) 60%, transparent) !important;
+  --overlay: color-mix(in srgb, var(--foundation-bg-dark-1) 60%, transparent);
 }
 
 /* Dark mode - explicit values */
 :where([data-theme="dark"]) {
   /* Backgrounds */
-  --background: var(--foundation-bg-dark-1) !important; /* primary */
-  --secondary: var(--foundation-bg-dark-2) !important;
-  --muted: var(--foundation-bg-dark-3) !important; /* tertiary */
-  --card: var(--foundation-bg-dark-1) !important;
-  --popover: var(--foundation-bg-dark-2) !important;
-  --border: var(--foundation-border-dark-light) !important;
-  --border-subtle: var(--foundation-border-dark-light) !important;
-  --border-strong: var(--foundation-border-dark-default) !important;
+  --background: var(--foundation-bg-dark-1); /* primary */
+  --secondary: var(--foundation-bg-dark-2);
+  --muted: var(--foundation-bg-dark-3); /* tertiary */
+  --card: var(--foundation-bg-dark-1);
+  --popover: var(--foundation-bg-dark-2);
+  --border: var(--foundation-border-dark-light);
+  --border-subtle: var(--foundation-border-dark-light);
+  --border-strong: var(--foundation-border-dark-default);
 
   /* Text + Icons */
-  --foreground: var(--foundation-text-dark-primary) !important; /* primary */
-  --text-secondary: var(--foundation-text-dark-secondary) !important; /* secondary */
-  --text-tertiary: var(--foundation-text-dark-tertiary) !important; /* tertiary */
-  --text-inverted: var(--foundation-text-light-primary) !important; /* inverted */
-  --text-hero: var(--foreground) !important;
-  --text-heading: var(--foreground) !important;
-  --text-body: var(--text-secondary) !important;
-  --text-placeholder: var(--text-tertiary) !important;
-  --text-caption: var(--text-tertiary) !important;
-  --text-hero-on-color: var(--accent-foreground) !important;
-  --text-heading-on-color: var(--accent-foreground) !important;
-  --text-body-on-color: var(--accent-foreground) !important;
-  --text-placeholder-on-color: var(--accent-foreground) !important;
-  --text-caption-on-color: var(--accent-foreground) !important;
+  --foreground: var(--foundation-text-dark-primary); /* primary */
+  --text-secondary: var(--foundation-text-dark-secondary); /* secondary */
+  --text-tertiary: var(--foundation-text-dark-tertiary); /* tertiary */
+  --text-inverted: var(--foundation-text-light-primary); /* inverted */
+  --text-hero: var(--foreground);
+  --text-heading: var(--foreground);
+  --text-body: var(--text-secondary);
+  --text-placeholder: var(--text-tertiary);
+  --text-caption: var(--text-tertiary);
+  --text-hero-on-color: var(--accent-foreground);
+  --text-heading-on-color: var(--accent-foreground);
+  --text-body-on-color: var(--accent-foreground);
+  --text-placeholder-on-color: var(--accent-foreground);
+  --text-caption-on-color: var(--accent-foreground);
 
   /* Accents */
-  --accent-blue: var(--foundation-accent-blue) !important;
-  --accent-red: var(--foundation-accent-red) !important;
-  --accent-orange: var(--foundation-accent-orange) !important;
-  --accent-green: var(--foundation-accent-green) !important;
-  --accent-purple: var(--foundation-accent-purple) !important;
+  --accent-blue: var(--foundation-accent-blue);
+  --accent-red: var(--foundation-accent-red);
+  --accent-orange: var(--foundation-accent-orange);
+  --accent-green: var(--foundation-accent-green);
+  --accent-purple: var(--foundation-accent-purple);
 
   /* Accent foreground (text on accent backgrounds) */
-  --accent-foreground: var(--foundation-text-dark-primary) !important;
+  --accent-foreground: var(--foundation-text-dark-primary);
 
   /* State slots (interactive + status) */
-  --interactive: var(--accent-blue) !important;
-  --interactive-hover: var(--accent-blue) !important;
-  --interactive-active: var(--accent-blue) !important;
-  --interactive-disabled: var(--text-tertiary) !important;
-  --status-success: var(--accent-green) !important;
-  --status-success-muted: var(--accent-green) !important;
-  --status-error: var(--accent-red) !important;
-  --status-error-muted: var(--accent-red) !important;
-  --status-warning: var(--accent-orange) !important;
+  --interactive: var(--accent-blue);
+  --interactive-hover: var(--accent-blue);
+  --interactive-active: var(--accent-blue);
+  --interactive-disabled: var(--text-tertiary);
+  --status-success: var(--accent-green);
+  --status-success-muted: var(--accent-green);
+  --status-error: var(--accent-red);
+  --status-error-muted: var(--accent-red);
+  --status-warning: var(--accent-orange);
 
   /* Ring (focus outline) */
-  --ring: var(--foundation-focus-ring) !important;
+  --ring: var(--foundation-focus-ring);
 
   /* Overlay (modals, sheets, dialogs) */
-  --overlay: color-mix(in srgb, var(--foundation-bg-dark-1) 60%, transparent) !important;
+  --overlay: color-mix(in srgb, var(--foundation-bg-dark-1) 60%, transparent);
 }
 
 /* High contrast mode - explicit values */
@@ -132,61 +132,57 @@
   :where([data-theme="light"]),
   :where([data-theme="dark"]) {
     /* Backgrounds */
-    --background: var(--foundation-bg-high-contrast-1) !important;
-    --secondary: var(--foundation-bg-high-contrast-2) !important;
-    --muted: var(--foundation-bg-high-contrast-3) !important;
-    --card: var(--foundation-bg-high-contrast-1) !important;
-    --popover: var(--foundation-bg-high-contrast-2) !important;
-    --border: var(--foundation-border-high-contrast-default) !important;
-    --border-subtle: var(--foundation-border-high-contrast-light) !important;
-    --border-strong: var(--foundation-border-high-contrast-heavy) !important;
+    --background: var(--foundation-bg-high-contrast-1);
+    --secondary: var(--foundation-bg-high-contrast-2);
+    --muted: var(--foundation-bg-high-contrast-3);
+    --card: var(--foundation-bg-high-contrast-1);
+    --popover: var(--foundation-bg-high-contrast-2);
+    --border: var(--foundation-border-high-contrast-default);
+    --border-subtle: var(--foundation-border-high-contrast-light);
+    --border-strong: var(--foundation-border-high-contrast-heavy);
 
     /* Text + Icons */
-    --foreground: var(--foundation-text-high-contrast-primary) !important;
-    --text-secondary: var(--foundation-text-high-contrast-secondary) !important;
-    --text-tertiary: var(--foundation-text-high-contrast-tertiary) !important;
-    --text-inverted: var(--foundation-text-high-contrast-inverted) !important;
-    --text-hero: var(--foreground) !important;
-    --text-heading: var(--foreground) !important;
-    --text-body: var(--text-secondary) !important;
-    --text-placeholder: var(--text-tertiary) !important;
-    --text-caption: var(--text-tertiary) !important;
-    --text-hero-on-color: var(--accent-foreground) !important;
-    --text-heading-on-color: var(--accent-foreground) !important;
-    --text-body-on-color: var(--accent-foreground) !important;
-    --text-placeholder-on-color: var(--accent-foreground) !important;
-    --text-caption-on-color: var(--accent-foreground) !important;
+    --foreground: var(--foundation-text-high-contrast-primary);
+    --text-secondary: var(--foundation-text-high-contrast-secondary);
+    --text-tertiary: var(--foundation-text-high-contrast-tertiary);
+    --text-inverted: var(--foundation-text-high-contrast-inverted);
+    --text-hero: var(--foreground);
+    --text-heading: var(--foreground);
+    --text-body: var(--text-secondary);
+    --text-placeholder: var(--text-tertiary);
+    --text-caption: var(--text-tertiary);
+    --text-hero-on-color: var(--accent-foreground);
+    --text-heading-on-color: var(--accent-foreground);
+    --text-body-on-color: var(--accent-foreground);
+    --text-placeholder-on-color: var(--accent-foreground);
+    --text-caption-on-color: var(--accent-foreground);
 
     /* Accents */
-    --accent-blue: var(--foundation-accent-blue-high-contrast) !important;
-    --accent-red: var(--foundation-accent-red-high-contrast) !important;
-    --accent-orange: var(--foundation-accent-orange-high-contrast) !important;
-    --accent-green: var(--foundation-accent-green-high-contrast) !important;
-    --accent-purple: var(--foundation-accent-purple-high-contrast) !important;
+    --accent-blue: var(--foundation-accent-blue-high-contrast);
+    --accent-red: var(--foundation-accent-red-high-contrast);
+    --accent-orange: var(--foundation-accent-orange-high-contrast);
+    --accent-green: var(--foundation-accent-green-high-contrast);
+    --accent-purple: var(--foundation-accent-purple-high-contrast);
 
     /* Accent foreground (text on accent backgrounds) */
-    --accent-foreground: var(--foundation-accent-foreground-high-contrast) !important;
+    --accent-foreground: var(--foundation-accent-foreground-high-contrast);
 
     /* State slots (interactive + status) */
-    --interactive: var(--accent-blue) !important;
-    --interactive-hover: var(--accent-blue) !important;
-    --interactive-active: var(--accent-blue) !important;
-    --interactive-disabled: var(--text-tertiary) !important;
-    --status-success: var(--accent-green) !important;
-    --status-success-muted: var(--accent-green) !important;
-    --status-error: var(--accent-red) !important;
-    --status-error-muted: var(--accent-red) !important;
-    --status-warning: var(--accent-orange) !important;
+    --interactive: var(--accent-blue);
+    --interactive-hover: var(--accent-blue);
+    --interactive-active: var(--accent-blue);
+    --interactive-disabled: var(--text-tertiary);
+    --status-success: var(--accent-green);
+    --status-success-muted: var(--accent-green);
+    --status-error: var(--accent-red);
+    --status-error-muted: var(--accent-red);
+    --status-warning: var(--accent-orange);
 
     /* Ring (focus outline) */
-    --ring: var(--foundation-interactive-high-contrast-ring) !important;
+    --ring: var(--foundation-interactive-high-contrast-ring);
 
     /* Overlay (modals, sheets, dialogs) */
-    --overlay: color-mix(
-      in srgb,
-      var(--foundation-bg-high-contrast-1) 60%,
-      transparent
-    ) !important;
+    --overlay: color-mix(in srgb, var(--foundation-bg-high-contrast-1) 60%, transparent);
   }
 }
 
@@ -394,14 +390,14 @@
   *,
   *::before,
   *::after {
-    animation-duration: var(--foundation-animation-duration-reduced) !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: var(--foundation-animation-duration-reduced) !important;
-    scroll-behavior: auto !important;
+    animation-duration: var(--foundation-animation-duration-reduced);
+    animation-iteration-count: 1;
+    transition-duration: var(--foundation-animation-duration-reduced);
+    scroll-behavior: auto;
   }
 }
 
 /* Override Apps SDK UI text-muted-foreground to use the mapped muted token */
 .text-muted-foreground {
-  color: var(--color-muted-foreground) !important;
+  color: var(--color-muted-foreground);
 }

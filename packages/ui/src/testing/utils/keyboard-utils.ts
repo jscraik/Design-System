@@ -7,9 +7,9 @@
  * @module keyboard-utils
  */
 
-import type { Page, Locator } from "@playwright/test";
-import { expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import type { Locator, Page } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 // Re-export deterministic test mocks for convenience
 export * from "./test-mocks";

@@ -5,8 +5,8 @@
  * Validates: Requirements 4.1, 4.2, 4.3, 4.4, 4.5
  */
 
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
-import { join } from "path";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
 import fc from "fast-check";
 import { afterAll, beforeAll, describe, expect, test } from "vitest";
@@ -295,8 +295,8 @@ function createMockNpmPackage(packagesDir, packageName, version) {
     version: version,
     type: "module",
     scripts: {
-      build: 'echo "Building ' + packageName + '"',
-      test: 'echo "Testing ' + packageName + '"',
+      build: `echo "Building ${packageName}"`,
+      test: `echo "Testing ${packageName}"`,
     },
   };
 
@@ -391,7 +391,7 @@ function validateVersionSynchronization(expectedVersion) {
   // Check all npm packages
   const packagesDir = "packages";
   if (existsSync(packagesDir)) {
-    const packages = require("fs").readdirSync(packagesDir);
+    const packages = require("node:fs").readdirSync(packagesDir);
     for (const packageName of packages) {
       const packageJsonPath = join(packagesDir, packageName, "package.json");
       if (existsSync(packageJsonPath)) {
@@ -408,7 +408,7 @@ function validateVersionSynchronization(expectedVersion) {
 function validatePlatformArtifacts(platforms) {
   for (const platform of platforms) {
     switch (platform) {
-      case "web":
+      case "web": {
         // Check that npm packages have the expected structure
         const webPackages = ["test-ui", "test-runtime", "tokens"];
         for (const pkg of webPackages) {
@@ -433,6 +433,7 @@ function validatePlatformArtifacts(platforms) {
           }
         }
         break;
+      }
     }
   }
 }
@@ -442,15 +443,16 @@ function validatePlatformArtifacts(platforms) {
  */
 function makeTestChanges(changeType) {
   switch (changeType) {
-    case "source":
+    case "source": {
       // Modify a source file
       const srcFile = join("packages", "test-ui", "src", "index.ts");
       if (existsSync(srcFile)) {
         writeFileSync(srcFile, `export const testUi = "modified-${Date.now()}";`);
       }
       break;
+    }
 
-    case "config":
+    case "config": {
       // Modify a config file
       const configFile = join("packages", "test-ui", "package.json");
       if (existsSync(configFile)) {
@@ -459,6 +461,7 @@ function makeTestChanges(changeType) {
         writeFileSync(configFile, JSON.stringify(config, null, 2));
       }
       break;
+    }
 
     case "none":
       // No changes

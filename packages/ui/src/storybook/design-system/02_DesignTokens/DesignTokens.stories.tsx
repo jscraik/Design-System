@@ -1,8 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-
 import { colorTokens } from "@design-studio/tokens/colors";
-import { spaceTokens } from "@design-studio/tokens/spacing";
 import { radiusTokens } from "@design-studio/tokens/radius";
+import { spaceTokens } from "@design-studio/tokens/spacing";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 // Transform tokens to match expected structure
 const colors = {

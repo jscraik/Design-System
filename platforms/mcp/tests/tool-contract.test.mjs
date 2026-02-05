@@ -1,9 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-
-import toolContracts from "../tool-contracts.json" with { type: "json" };
-import { createChatUiServer } from "../server.js";
 import { createEnhancedChatUiServer } from "../enhanced-server.js";
+import { createChatUiServer } from "../server.js";
+import toolContracts from "../tool-contracts.json" with { type: "json" };
 
 function getRegisteredTools(createServer) {
   const server = createServer();

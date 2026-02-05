@@ -1,10 +1,10 @@
 export { AppsSDKUIProvider } from "@openai/apps-sdk-ui/components/AppsSDKUIProvider";
 export { Badge } from "@openai/apps-sdk-ui/components/Badge";
 export { Button } from "@openai/apps-sdk-ui/components/Button";
-export { CodeBlock } from "@openai/apps-sdk-ui/components/CodeBlock";
 export { Checkbox } from "@openai/apps-sdk-ui/components/Checkbox";
+export { CodeBlock } from "@openai/apps-sdk-ui/components/CodeBlock";
+export { Download, Sparkles } from "@openai/apps-sdk-ui/components/Icon";
 export { Image } from "@openai/apps-sdk-ui/components/Image";
 export { Input } from "@openai/apps-sdk-ui/components/Input";
 export { Popover } from "@openai/apps-sdk-ui/components/Popover";
 export { Textarea } from "@openai/apps-sdk-ui/components/Textarea";
-export { Download, Sparkles } from "@openai/apps-sdk-ui/components/Icon";

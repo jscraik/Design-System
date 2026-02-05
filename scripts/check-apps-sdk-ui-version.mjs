@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { execSync } from "child_process";
-import { readFileSync } from "fs";
+import { execSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 
 function readJsonFromGit(ref, path) {
   const raw = execSync(`git show ${ref}:${path}`, { encoding: "utf8" });

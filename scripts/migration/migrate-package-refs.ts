@@ -8,8 +8,8 @@
  *   npx tsx scripts/migration/migrate-package-refs.ts [--apply] [--dry-run]
  */
 
-import { readFileSync, writeFileSync, readdirSync, statSync } from "fs";
-import { join, relative } from "path";
+import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { join, relative } from "node:path";
 
 interface PackageJson {
   name?: string;
@@ -50,7 +50,7 @@ function getAllPackageJsonFiles(dir: string): string[] {
         files.push(fullPath);
       }
     }
-  } catch (error) {
+  } catch (_error) {
     // Directory doesn't exist or isn't accessible
   }
 
@@ -59,7 +59,7 @@ function getAllPackageJsonFiles(dir: string): string[] {
 
 function migratePackageJson(
   content: string,
-  filePath: string,
+  _filePath: string,
 ): {
   changed: boolean;
   content: string;
@@ -89,7 +89,7 @@ function migratePackageJson(
 
   return {
     changed,
-    content: JSON.stringify(pkg, null, 2) + "\n",
+    content: `${JSON.stringify(pkg, null, 2)}\n`,
     changes,
   };
 }

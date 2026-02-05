@@ -7,7 +7,7 @@
  * Use case: 80% of components - simple configuration, standard use cases
  */
 
-import React from "react";
+import type React from "react";
 
 export interface SimpleComponentProps {
   variant?: "primary" | "secondary" | "danger";

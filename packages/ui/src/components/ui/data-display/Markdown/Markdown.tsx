@@ -1,9 +1,8 @@
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
-
-import { CodeBlock } from "../CodeBlock";
 import { TextLink } from "../../base/TextLink";
 import { cn } from "../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
+import { CodeBlock } from "../CodeBlock";
 
 export interface MarkdownProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -71,7 +70,7 @@ const parseMarkdown = (content: string): React.ReactNode[] => {
       return;
     }
 
-    if (line.match(/^[\*\-] /)) {
+    if (line.match(/^[*-] /)) {
       elements.push(
         <li key={index} className="ml-4 text-foreground">
           {parseInline(line.slice(2))}

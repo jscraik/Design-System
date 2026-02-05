@@ -1,4 +1,4 @@
-import { type DisplayMode } from "./types";
+import type { DisplayMode } from "./types";
 import { useOpenAiGlobal } from "./use-openai-global";
 
 /**

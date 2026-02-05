@@ -1,6 +1,6 @@
-import { render, RenderOptions } from "@testing-library/react";
+import { type RenderOptions, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ReactElement, ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 
 /**
  * Custom render function that wraps components with necessary providers

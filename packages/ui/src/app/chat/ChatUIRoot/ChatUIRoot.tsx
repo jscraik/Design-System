@@ -1,13 +1,12 @@
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import type { ReactNode } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-
-import { ChatSidebar } from "../ChatSidebar";
+import { useControllableState } from "../../../hooks/useControllableState";
 import { ChatHeader } from "../ChatHeader";
+import { ChatSidebar } from "../ChatSidebar";
 import { ChatView } from "../ChatView";
 import { ComposeView } from "../ComposeView";
-import { useControllableState } from "../../../hooks/useControllableState";
-import { ChatUISlotsProvider, type ChatUISlots } from "../shared/slots";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
+import { type ChatUISlots, ChatUISlotsProvider } from "../shared/slots";
 
 /**
  * Layout modes for the chat UI.

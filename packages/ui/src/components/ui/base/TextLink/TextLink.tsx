@@ -1,9 +1,8 @@
-import * as React from "react";
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import { cva, type VariantProps } from "class-variance-authority";
-
+import * as React from "react";
 import { IconArrowTopRightSm } from "../../../../icons";
 import { cn } from "../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 const textLinkVariants = cva(
   "inline-flex items-center gap-1 transition-colors focus:outline-none focus:ring-2 focus:ring-ring rounded-sm",

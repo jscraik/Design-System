@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { readFileSync, writeFileSync } from "fs";
-import { resolve } from "path";
+import { readFileSync, writeFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 const alignmentPath = resolve("docs/design-system/UPSTREAM_ALIGNMENT.md");
 const packagePath = resolve("packages/ui/package.json");

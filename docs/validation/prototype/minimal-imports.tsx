@@ -4,7 +4,6 @@
  * This simulates the absolute minimum - only what's needed.
  */
 
-import React from "react";
 import { Button } from "./components";
 
 export default function MinimalImportsApp() {

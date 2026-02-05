@@ -6,12 +6,12 @@
  * @see https://github.com/vercel-labs/json-render
  * @see docs/json-render/README.md for complete documentation
  */
-export { astudioCatalog, type AStudioCatalog } from "./catalog";
+export { type AStudioCatalog, astudioCatalog } from "./catalog";
 export { astudioRegistry } from "./registry";
 export {
   countElementsByType,
-  createMetricTree,
   createMetricsGrid,
+  createMetricTree,
   formatTree,
   getAllElementIds,
   getTreeDepth,

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-
+import { ModalDialog } from "../../../components/ui/overlays/Modal";
+import { cn } from "../../../components/ui/utils";
 import {
   IconBarChart,
   IconBook,
@@ -30,8 +31,6 @@ import {
   IconVideo,
   IconWriting,
 } from "../../../icons";
-import { ModalDialog } from "../../../components/ui/overlays/Modal";
-import { cn } from "../../../components/ui/utils";
 
 interface IconPickerModalProps {
   isOpen: boolean;

@@ -1,8 +1,8 @@
-import { readFile } from "fs/promises";
+import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { tokenAliasMap, type TokenAliasMap } from "../alias-map.js";
+import { type TokenAliasMap, tokenAliasMap } from "../alias-map.js";
 
 type ValidationError = {
   code: string;
@@ -64,7 +64,10 @@ async function loadDtcgTokens(): Promise<DtcgRoot> {
   return JSON.parse(raw) as DtcgRoot;
 }
 
-function resolvePath(root: DtcgRoot, path: string): { $value?: string | number | DtcgDimensionValue } | null {
+function resolvePath(
+  root: DtcgRoot,
+  path: string,
+): { $value?: string | number | DtcgDimensionValue } | null {
   const parts = path.split(".");
   let current: unknown = root;
   for (const part of parts) {
@@ -102,9 +105,13 @@ function validateModeCompleteness(root: DtcgRoot): ValidationError[] {
 
     const missingInDark = lightKeys.filter((key) => !darkKeys.includes(key));
     const missingInLight = darkKeys.filter((key) => !lightKeys.includes(key));
-    const missingInHighContrastFromLight = lightKeys.filter((key) => !highContrastKeys.includes(key));
+    const missingInHighContrastFromLight = lightKeys.filter(
+      (key) => !highContrastKeys.includes(key),
+    );
     const missingInHighContrastFromDark = darkKeys.filter((key) => !highContrastKeys.includes(key));
-    const missingInLightFromHighContrast = highContrastKeys.filter((key) => !lightKeys.includes(key));
+    const missingInLightFromHighContrast = highContrastKeys.filter(
+      (key) => !lightKeys.includes(key),
+    );
     const missingInDarkFromHighContrast = highContrastKeys.filter((key) => !darkKeys.includes(key));
 
     if (
@@ -240,7 +247,7 @@ function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
 function relativeLuminance({ r, g, b }: { r: number; g: number; b: number }): number {
   const [rs, gs, bs] = [r, g, b].map((value) => {
     const normalized = value / 255;
-    return normalized <= 0.03928 ? normalized / 12.92 : Math.pow((normalized + 0.055) / 1.055, 2.4);
+    return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
   });
   return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
 }

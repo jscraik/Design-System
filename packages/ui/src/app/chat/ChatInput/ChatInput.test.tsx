@@ -1,11 +1,11 @@
-import { render, screen, waitFor, fireEvent } from "../../../../testing/utils";
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen } from "../../../../testing/utils";
 import { ChatInput } from "./ChatInput";
 
 describe("ChatInput", () => {
-  const mockOnSendMessage = vi.fn();
-  const mockOnAttachmentAction = vi.fn();
-  const mockOnMoreAction = vi.fn();
+  const _mockOnSendMessage = vi.fn();
+  const _mockOnAttachmentAction = vi.fn();
+  const _mockOnMoreAction = vi.fn();
   const mockOnSearchToggle = vi.fn();
   const mockOnResearchToggle = vi.fn();
   const mockOnAutoClear = vi.fn();

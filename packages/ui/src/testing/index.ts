@@ -9,11 +9,9 @@
  * ```
  */
 
-// Test helpers
-export * from "./test-helpers";
-
 // Mock host
 export * from "./host-mock";
-
 // Mock data
 export * from "./mock-data";
+// Test helpers
+export * from "./test-helpers";

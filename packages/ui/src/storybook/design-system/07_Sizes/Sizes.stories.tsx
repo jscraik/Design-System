@@ -1,6 +1,5 @@
-import * as React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { sizeTokens } from "@design-studio/tokens/sizes";
+import * as React from "react";
 
 /**
  * Component Sizes System - Design Foundation

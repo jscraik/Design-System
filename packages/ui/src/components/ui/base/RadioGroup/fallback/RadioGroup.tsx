@@ -5,12 +5,11 @@
 
 "use client";
 
-import * as React from "react";
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
-
+import * as React from "react";
 import { IconCheckCircle } from "../../../../../icons";
 import { cn } from "../../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Renders a radio group container (Radix Radio Group).

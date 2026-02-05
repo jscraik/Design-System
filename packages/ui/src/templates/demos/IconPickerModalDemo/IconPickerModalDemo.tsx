@@ -2,13 +2,13 @@ import { useState } from "react";
 
 import { IconPickerModal } from "../../../app/modals/IconPickerModal";
 import {
-  IconFolder,
   IconChat,
-  IconStar,
   IconFlask,
+  IconFolder,
   IconImage,
-  IconSettings,
   IconLightBulb,
+  IconSettings,
+  IconStar,
   IconTerminal,
 } from "../../../icons/ChatGPTIcons";
 

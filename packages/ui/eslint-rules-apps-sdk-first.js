@@ -4,8 +4,8 @@
  * Disallow importing local equivalents when upstream Apps SDK UI components exist.
  */
 
-import { readFileSync } from "fs";
-import { resolve } from "path";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 const appsSdkFirstRule = {
   meta: {
@@ -40,7 +40,7 @@ const appsSdkFirstRule = {
       regex = regex.replace(/\*\*/g, ".*");
       regex = regex.replace(/(?<!\.)\*/g, "[^/]*");
       regex = regex.replace(/\?/g, ".");
-      return new RegExp("^" + regex + "$");
+      return new RegExp(`^${regex}$`);
     };
 
     const isAllowed = (filePath) => {

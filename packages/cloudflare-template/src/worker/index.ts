@@ -902,7 +902,7 @@ export default {
         version: "1.0.0",
         endpoints: {
           mcp: "/mcp",
-          widgets: Object.keys(widgetManifest).length + " widgets available",
+          widgets: `${Object.keys(widgetManifest).length} widgets available`,
         },
       }),
       {

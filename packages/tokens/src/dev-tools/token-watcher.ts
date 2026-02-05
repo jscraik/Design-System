@@ -1,6 +1,6 @@
-import { spawn } from "child_process";
-import { join } from "path";
-import { pathToFileURL } from "url";
+import { spawn } from "node:child_process";
+import { join } from "node:path";
+import { pathToFileURL } from "node:url";
 
 import chokidar from "chokidar";
 
@@ -35,8 +35,6 @@ export class TokenWatcher {
   private watcher: chokidar.FSWatcher | null = null;
   private isGenerating = false;
   private pendingRegeneration = false;
-
-  constructor() {}
 
   private async loadTokens(): Promise<LoadedTokens> {
     const cacheBuster = `?v=${Date.now()}`;

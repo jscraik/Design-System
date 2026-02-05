@@ -7,10 +7,10 @@
  * Validates: Requirements 1.1, 1.5, 2.3
  */
 
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import Ajv from "ajv";
 import fc from "fast-check";
-import { readFileSync } from "fs";
-import { join } from "path";
 
 // Load the schema
 const schemaPath = join(process.cwd(), "scripts/schema/template-registry.schema.json");

@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState, type SetStateAction } from "react";
 import { useHost, useOpenAiGlobal as useOpenAiGlobalRuntime } from "@design-studio/runtime";
+import { type SetStateAction, useCallback, useEffect, useState } from "react";
 
 import type { UnknownObject } from "./types";
 import { validateWidgetStateBudget } from "./widget-state-budget";

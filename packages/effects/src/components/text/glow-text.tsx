@@ -1,7 +1,6 @@
 import { cva } from "class-variance-authority";
-
-import { cn } from "../../utils";
 import { useReducedMotion } from "../../hooks";
+import { cn } from "../../utils";
 
 /**
  * Glow text variants

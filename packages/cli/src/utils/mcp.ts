@@ -1,18 +1,15 @@
-import type { JsonValue, GlobalOptions, CliArgs, ChatUIConfig } from "../types.js";
 import {
   MCP_DRY_RUN_LABEL,
-  MCP_URL_LABEL,
-  MCP_CHECK_METHOD,
-  MCP_METHOD_TOOLS_LIST,
-  MCP_SERVER_URL_KEY,
-  MCP_ENDPOINT_KEY,
   MCP_PROTOCOL_VERSION_KEY,
+  MCP_SERVER_URL_KEY,
+  MCP_URL_LABEL,
 } from "../constants.js";
-import { resolveMcpSettings, resolveConfig } from "./config.js";
+import { CliError, ERROR_CODES, EXIT_CODES, requireNetwork, toJsonError } from "../error.js";
+import type { ChatUIConfig, CliArgs, GlobalOptions, JsonValue } from "../types.js";
+import { resolveConfig, resolveMcpSettings } from "./config.js";
+import { parseJsonString } from "./json.js";
 import { logDebug, logError, logInfo } from "./logger.js";
-import { outputJson, outputPlainRecord, createEnvelope } from "./output.js";
-import { toJsonError, CliError, ERROR_CODES, EXIT_CODES, requireNetwork } from "../error.js";
-import { parseJsonString, readParamsInput } from "./json.js";
+import { createEnvelope, outputJson, outputPlainRecord } from "./output.js";
 
 export async function jsonRpcRequest(
   opts: GlobalOptions,
@@ -179,7 +176,7 @@ export async function handleMcpRpc(
         result: { [MCP_DRY_RUN_LABEL]: true, [MCP_URL_LABEL]: url },
       });
     } else {
-      process.stdout.write(`dry_run=1 method=${method} url=${url}` + "\n");
+      process.stdout.write(`dry_run=1 method=${method} url=${url}\n`);
     }
     return EXIT_CODES.success;
   }

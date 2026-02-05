@@ -7,7 +7,7 @@
  * - Ignores external links (http/https/mailto/tel)
  */
 
-import { readdir, stat, readFile } from "node:fs/promises";
+import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
 
 const ROOT = process.cwd();

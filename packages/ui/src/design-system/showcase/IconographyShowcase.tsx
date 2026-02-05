@@ -1,7 +1,6 @@
-import { useCallback, useMemo, useState, type ReactNode, type ComponentType } from "react";
-
-import * as Icons from "../../icons/ChatGPTIcons";
+import { type ComponentType, type ReactNode, useCallback, useMemo, useState } from "react";
 import { cn } from "../../components/ui/utils";
+import * as Icons from "../../icons/ChatGPTIcons";
 
 function IconSearch({ className }: { className?: string }) {
   return (

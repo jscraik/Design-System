@@ -9,8 +9,8 @@
  * Update: pnpm test:visual:update
  */
 
-import { test, expect } from "@playwright/test";
 import type { Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 // Import deterministic test utilities
 import {

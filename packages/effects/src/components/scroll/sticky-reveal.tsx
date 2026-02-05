@@ -1,8 +1,7 @@
 import { cva } from "class-variance-authority";
 import { useEffect, useRef, useState } from "react";
-
-import { cn } from "../../utils";
 import { useReducedMotion, useScrollPosition } from "../../hooks";
+import { cn } from "../../utils";
 
 /**
  * Sticky reveal variants
@@ -75,7 +74,7 @@ export function StickyReveal({
 }: StickyRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
-  const { scrollProgress } = useScrollPosition({ throttle: 50 });
+  useScrollPosition({ throttle: 50 });
 
   const [isRevealed, setIsRevealed] = useState(false);
 

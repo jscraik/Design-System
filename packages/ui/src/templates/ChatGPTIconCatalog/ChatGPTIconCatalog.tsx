@@ -1,4 +1,4 @@
-import { useState, type ComponentType } from "react";
+import { type ComponentType, useState } from "react";
 
 import * as Icons from "../../icons/ChatGPTIcons";
 import { copyToClipboard } from "../../utils/clipboard";

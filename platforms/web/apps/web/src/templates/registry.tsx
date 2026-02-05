@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { AppsSDKBadge, AppsSDKButton, AppsSDKInput } from "@design-studio/ui";
 import { IconCheckmark, IconSettings } from "@design-studio/ui/icons";
 import { DiscoverySettingsModal, IconPickerModal, SettingsModal } from "@design-studio/ui/modals";
@@ -13,6 +12,7 @@ import {
   TemplatePanel,
   TemplateShell,
 } from "@design-studio/ui/templates";
+import { useState } from "react";
 
 const badgeBaseClassName =
   "bg-foundation-bg-light-3 text-foundation-text-light-secondary dark:bg-foundation-bg-dark-3 dark:text-foundation-text-dark-secondary";
@@ -227,15 +227,6 @@ export function TemplateShellSample() {
   );
 }
 
-export { ComponentsShowcaseTemplate } from "./components/ComponentsShowcaseTemplate";
-
-export { ColorShowcase } from "./design-system/ColorShowcaseTemplate";
-export { DesignSystemDocs } from "./design-system/DesignSystemDocsTemplate";
-export { FoundationsShowcase } from "./design-system/FoundationsShowcaseTemplate";
-export { IconographyShowcase } from "./design-system/IconographyShowcaseTemplate";
-export { SpacingShowcase } from "./design-system/SpacingShowcaseTemplate";
-export { TypographyShowcase } from "./design-system/TypographyShowcaseTemplate";
-
 /**
  * @template
  * id: chat
@@ -246,8 +237,6 @@ export { TypographyShowcase } from "./design-system/TypographyShowcaseTemplate";
  * status: stable
  * entry: ChatTemplate
  */
-export { ChatTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: chat-full-width
@@ -258,8 +247,6 @@ export { ChatTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: ChatFullWidthTemplate
  */
-export { ChatFullWidthTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: chat-header
@@ -270,8 +257,6 @@ export { ChatFullWidthTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: ChatHeaderTemplate
  */
-export { ChatHeaderTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: chat-input
@@ -282,8 +267,6 @@ export { ChatHeaderTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: ChatInputTemplate
  */
-export { ChatInputTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: chat-messages
@@ -294,8 +277,6 @@ export { ChatInputTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: ChatMessagesTemplate
  */
-export { ChatMessagesTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: chat-sidebar
@@ -306,8 +287,6 @@ export { ChatMessagesTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: ChatSidebarTemplate
  */
-export { ChatSidebarTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: chat-two-pane
@@ -318,8 +297,6 @@ export { ChatSidebarTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: ChatTwoPaneTemplate
  */
-export { ChatTwoPaneTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: chat-variants
@@ -330,8 +307,6 @@ export { ChatTwoPaneTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: ChatVariantsTemplate
  */
-export { ChatVariantsTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: compose
@@ -342,8 +317,6 @@ export { ChatVariantsTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: ComposeTemplate
  */
-export { ComposeTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: dashboard
@@ -354,7 +327,25 @@ export { ComposeTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: DashboardTemplate
  */
-export { DashboardTemplate } from "@design-studio/ui/templates";
+export {
+  ChatFullWidthTemplate,
+  ChatHeaderTemplate,
+  ChatInputTemplate,
+  ChatMessagesTemplate,
+  ChatSidebarTemplate,
+  ChatTemplate,
+  ChatTwoPaneTemplate,
+  ChatVariantsTemplate,
+  ComposeTemplate,
+  DashboardTemplate,
+} from "@design-studio/ui/templates";
+export { ComponentsShowcaseTemplate } from "./components/ComponentsShowcaseTemplate";
+export { ColorShowcase } from "./design-system/ColorShowcaseTemplate";
+export { DesignSystemDocs } from "./design-system/DesignSystemDocsTemplate";
+export { FoundationsShowcase } from "./design-system/FoundationsShowcaseTemplate";
+export { IconographyShowcase } from "./design-system/IconographyShowcaseTemplate";
+export { SpacingShowcase } from "./design-system/SpacingShowcaseTemplate";
+export { TypographyShowcase } from "./design-system/TypographyShowcaseTemplate";
 
 /**
  * @template
@@ -507,8 +498,6 @@ export function SettingsModalTemplate() {
  * status: stable
  * entry: AppsPanelTemplate
  */
-export { AppsPanelTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: archived-chats-panel
@@ -519,8 +508,6 @@ export { AppsPanelTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: ArchivedChatsPanelTemplate
  */
-export { ArchivedChatsPanelTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: audio-settings-panel
@@ -531,8 +518,6 @@ export { ArchivedChatsPanelTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: AudioSettingsPanelTemplate
  */
-export { AudioSettingsPanelTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: check-for-updates-panel
@@ -543,8 +528,6 @@ export { AudioSettingsPanelTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: CheckForUpdatesPanelTemplate
  */
-export { CheckForUpdatesPanelTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: data-controls-panel
@@ -555,8 +538,6 @@ export { CheckForUpdatesPanelTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: DataControlsPanelTemplate
  */
-export { DataControlsPanelTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: manage-apps-panel
@@ -567,8 +548,6 @@ export { DataControlsPanelTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: ManageAppsPanelTemplate
  */
-export { ManageAppsPanelTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: notifications-panel
@@ -579,8 +558,6 @@ export { ManageAppsPanelTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: NotificationsPanelTemplate
  */
-export { NotificationsPanelTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: personalization-panel
@@ -591,8 +568,6 @@ export { NotificationsPanelTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: PersonalizationPanelTemplate
  */
-export { PersonalizationPanelTemplate } from "@design-studio/ui/templates";
-
 /**
  * @template
  * id: security-panel
@@ -603,4 +578,14 @@ export { PersonalizationPanelTemplate } from "@design-studio/ui/templates";
  * status: stable
  * entry: SecurityPanelTemplate
  */
-export { SecurityPanelTemplate } from "@design-studio/ui/templates";
+export {
+  AppsPanelTemplate,
+  ArchivedChatsPanelTemplate,
+  AudioSettingsPanelTemplate,
+  CheckForUpdatesPanelTemplate,
+  DataControlsPanelTemplate,
+  ManageAppsPanelTemplate,
+  NotificationsPanelTemplate,
+  PersonalizationPanelTemplate,
+  SecurityPanelTemplate,
+} from "@design-studio/ui/templates";

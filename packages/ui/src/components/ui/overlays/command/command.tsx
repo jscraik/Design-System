@@ -1,9 +1,7 @@
-import * as React from "react";
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import { Command as CommandPrimitive } from "cmdk";
-
+import * as React from "react";
 import { IconSearch } from "../../../../icons";
-import { cn } from "../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 import {
   Dialog,
   DialogContent,
@@ -11,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../../feedback/Dialog";
+import { cn } from "../../utils";
 
 /**
  * Renders the command palette container (cmdk).

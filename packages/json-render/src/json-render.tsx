@@ -1,4 +1,4 @@
-import { type ReactElement, type ReactNode, Fragment } from "react";
+import { Fragment, type ReactElement, type ReactNode } from "react";
 
 import { defaultRegistry } from "./default-registry";
 import type { ComponentSchema, JsonRenderProps } from "./types";

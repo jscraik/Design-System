@@ -1,6 +1,7 @@
 import {
   IconArchive,
   IconCategory,
+  IconChevronRightMd,
   IconCreditCard,
   IconEmail,
   IconPhone,
@@ -8,7 +9,6 @@ import {
   IconStatus,
   IconSuitcase,
   IconUserLock,
-  IconChevronRightMd,
 } from "../../../../icons/ChatGPTIcons";
 import { SettingRow } from "../../../settings";
 

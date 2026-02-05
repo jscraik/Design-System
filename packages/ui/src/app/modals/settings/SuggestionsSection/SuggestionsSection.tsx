@@ -1,4 +1,4 @@
-import { IconCheckCircle, IconBarChart, IconLightBulb } from "../../../../icons/ChatGPTIcons";
+import { IconBarChart, IconCheckCircle, IconLightBulb } from "../../../../icons/ChatGPTIcons";
 import { SettingToggle } from "../../../settings";
 
 interface SuggestionsSectionProps {

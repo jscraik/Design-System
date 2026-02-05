@@ -1,12 +1,12 @@
 import {
-  IconSearch,
-  IconChat,
-  IconChevronRightMd,
-  IconFolder,
-  IconWriting,
   IconBarChart,
   IconBook,
+  IconChat,
+  IconChevronRightMd,
   IconCompose,
+  IconFolder,
+  IconSearch,
+  IconWriting,
 } from "../../../icons";
 
 import type { IconType } from "./constants";

@@ -1,7 +1,10 @@
 import { describe, expect, test } from "vitest";
 
 import { tokenAliasMap } from "../src/alias-map.js";
-import { NON_COLOR_ALIAS_VALUE_ALLOWLIST, validateTokens } from "../src/validation/token-validator.js";
+import {
+  NON_COLOR_ALIAS_VALUE_ALLOWLIST,
+  validateTokens,
+} from "../src/validation/token-validator.js";
 
 /**
  * Property 2-4: Alias map validity, mode completeness, and contrast thresholds.

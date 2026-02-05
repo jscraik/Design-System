@@ -139,11 +139,11 @@ declare global {
  * Re-export shared widget data types.
  */
 export type {
-  Photo,
   Album,
   CartItem,
-  ShopView,
   CartWidgetState,
+  Photo,
+  ShopView,
   ShopWidgetState,
 } from "./data-types";
 
@@ -153,8 +153,8 @@ export type {
 export type {
   BaseToolOutput,
   CartToolOutput,
-  ShopToolOutput,
   DashboardToolOutput,
   ExampleToolOutput,
   SearchToolOutput,
+  ShopToolOutput,
 } from "./tool-output-types";

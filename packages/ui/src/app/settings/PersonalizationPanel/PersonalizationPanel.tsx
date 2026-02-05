@@ -6,9 +6,9 @@ import {
   IconChevronLeftMd,
   IconChevronRightMd,
 } from "../../../icons/ChatGPTIcons";
-import { SettingDropdown, type DropdownOption } from "../SettingDropdown";
-import { SettingToggle } from "../SettingToggle";
+import { type DropdownOption, SettingDropdown } from "../SettingDropdown";
 import { SettingRow } from "../SettingRow";
+import { SettingToggle } from "../SettingToggle";
 import type { SettingsPanelProps } from "../shared/types";
 
 export function PersonalizationPanel({ onBack }: SettingsPanelProps) {

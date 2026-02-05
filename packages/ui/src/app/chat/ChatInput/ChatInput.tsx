@@ -1,8 +1,9 @@
-import * as React from "react";
 import type { FormEvent, ReactNode } from "react";
+import * as React from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-
+import { cn } from "../../../components/ui/utils";
 import {
+  getSizeClass,
   IconArrowUpSm,
   IconClock,
   IconGlobe,
@@ -11,11 +12,8 @@ import {
   IconRefresh,
   IconTelescope,
 } from "../../../icons";
-import { getSizeClass } from "../../../icons";
-import { cn } from "../../../components/ui/utils";
 import { Textarea as AppsSDKTextarea } from "../../../integrations/apps-sdk";
-import { AttachmentMenu, type AttachmentAction, type MoreAction } from "../AttachmentMenu";
-import type { ComponentState } from "@design-studio/tokens";
+import { type AttachmentAction, AttachmentMenu, type MoreAction } from "../AttachmentMenu";
 
 // ============================================================================
 // TYPES
@@ -338,8 +336,7 @@ function LeftActions({ className, children }: { className?: string; children?: R
  * The Send button is handled by the parent form, not here (use type="submit" button in children if needed).
  */
 function RightActions({ className, children }: { className?: string; children?: ReactNode }) {
-  const { composerRight, onAutoClear, iconMd, disabled, isRecording, setIsRecording } =
-    useChatInputContext();
+  const { composerRight, onAutoClear, iconMd, isRecording, setIsRecording } = useChatInputContext();
 
   return (
     <div className={cn("flex items-center gap-1", className)}>
@@ -541,7 +538,7 @@ export function ChatInput({
       textarea.style.height = "auto";
       textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`;
     }
-  }, [message]);
+  }, []);
 
   const handleSubmit = useCallback(
     (e: FormEvent) => {
@@ -599,7 +596,6 @@ export function ChatInput({
       isSearchEnabled,
       isResearchEnabled,
       attachmentMenuOpen,
-      textareaRef,
       defaultModel,
       placeholder,
       disabled,

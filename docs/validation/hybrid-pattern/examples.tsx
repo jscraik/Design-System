@@ -4,7 +4,6 @@
  * This file demonstrates real-world usage of each pattern
  */
 
-import React from "react";
 import { SimpleComponent } from "./SimpleComponent";
 import { HybridComponent } from "./HybridComponent";
 import { ComplexComponent } from "./ComplexComponent";

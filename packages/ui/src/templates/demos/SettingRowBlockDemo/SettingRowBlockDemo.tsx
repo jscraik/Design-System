@@ -1,13 +1,12 @@
 import { useState } from "react";
 
 import {
-  IconCamera,
-  IconCategory,
   IconChevronRightMd,
   IconCreditCard,
   IconDownload,
   IconEmail,
   IconError,
+  IconFolder,
   IconGlobe,
   IconGrid3x3,
   IconHeadphones,
@@ -16,24 +15,23 @@ import {
   IconLock,
   IconNotebook,
   IconNotification,
+  IconPhone,
   IconQuestion,
   IconRefresh,
+  IconSettings,
   IconShare,
   IconSparkles,
   IconStar,
   IconTelescope,
   IconUser,
   IconUserLock,
-  IconPhone,
-  IconFolder,
-  IconSettings,
 } from "../../../icons";
 import {
-  SettingRowBlock,
-  SettingRowValue,
   SettingRowBadge,
-  SettingRowGroup,
+  SettingRowBlock,
   SettingRowDivider,
+  SettingRowGroup,
+  SettingRowValue,
 } from "../../blocks/SettingRowBlock";
 
 export function SettingRowBlockDemo() {

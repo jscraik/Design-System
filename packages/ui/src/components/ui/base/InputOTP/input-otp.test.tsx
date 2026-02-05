@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { createRef } from "react";
-import { describe, expect, it, vi, beforeEach } from "vitest";
-import { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator } from "./InputOTP";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "./InputOTP";
 
 describe("InputOTP", () => {
   const mockOnStateChange = vi.fn();

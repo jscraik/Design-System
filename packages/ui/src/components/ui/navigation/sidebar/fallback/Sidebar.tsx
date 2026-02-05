@@ -3,16 +3,16 @@
 // migration_trigger: Replace with Apps SDK UI component when available with matching props and behavior.
 // a11y_contract_ref: docs/KEYBOARD_NAVIGATION_TESTS.md
 
-import * as React from "react";
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import { Slot } from "@radix-ui/react-slot";
-import { VariantProps, cva } from "class-variance-authority";
-
+import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react";
 import { IconSidebar } from "../../../../../icons";
-import { useIsMobile } from "../../../base/UseMobile";
-import { cn } from "../../../utils";
 import { Button } from "../../../base/Button";
 import { Input } from "../../../base/Input";
 import { Separator } from "../../../base/Separator";
+import { Skeleton } from "../../../base/Skeleton";
+import { useIsMobile } from "../../../base/UseMobile";
 import {
   Sheet,
   SheetContent,
@@ -20,14 +20,13 @@ import {
   SheetHeader,
   SheetTitle,
 } from "../../../overlays/Sheet";
-import { Skeleton } from "../../../base/Skeleton";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "../../../overlays/Tooltip";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
+import { cn } from "../../../utils";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
@@ -133,7 +132,7 @@ function SidebarProvider({
   // Helper to toggle the sidebar.
   const toggleSidebar = React.useCallback(() => {
     return isMobile ? setOpenMobile((open) => !open) : setOpen((open) => !open);
-  }, [isMobile, setOpen, setOpenMobile]);
+  }, [isMobile, setOpen]);
 
   // Adds a keyboard shortcut to toggle the sidebar.
   React.useEffect(() => {
@@ -164,17 +163,7 @@ function SidebarProvider({
       effectiveState,
       isDisabled,
     }),
-    [
-      state,
-      open,
-      setOpen,
-      isMobile,
-      openMobile,
-      setOpenMobile,
-      toggleSidebar,
-      effectiveState,
-      isDisabled,
-    ],
+    [state, open, setOpen, isMobile, openMobile, toggleSidebar, effectiveState, isDisabled],
   );
 
   return (

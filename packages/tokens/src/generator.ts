@@ -1,13 +1,13 @@
-import { createHash } from "crypto";
-import { mkdir, readFile, writeFile } from "fs/promises";
-import { dirname, join } from "path";
+import { createHash } from "node:crypto";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { dirname, join } from "node:path";
 
 import { colorTokens } from "./colors.js";
-import { spacingScale } from "./spacing.js";
-import { typographyTokens } from "./typography.js";
 import { radiusTokens } from "./radius.js";
 import { shadowTokens } from "./shadows.js";
 import { sizeTokens } from "./sizes.js";
+import { spacingScale } from "./spacing.js";
+import { typographyTokens } from "./typography.js";
 
 /**
  * Design token payload used for generating platform outputs.

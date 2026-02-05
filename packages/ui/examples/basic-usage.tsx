@@ -7,8 +7,8 @@ import * as React from "react";
 
 import {
   Button,
-  ChatVariantSplitSidebar,
   ChatUIRoot,
+  ChatVariantSplitSidebar,
   ContextTag,
   IconButton,
   MessageActions,

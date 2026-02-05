@@ -1,4 +1,4 @@
-import { HostProvider, createEmbeddedHost, ensureMockOpenAI } from "@design-studio/runtime";
+import { createEmbeddedHost, ensureMockOpenAI, HostProvider } from "@design-studio/runtime";
 import { AppsSDKUIProvider } from "@design-studio/ui";
 import { ChatTemplate } from "@design-studio/ui/templates";
 import { StrictMode } from "react";

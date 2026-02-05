@@ -1,9 +1,8 @@
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
-
 import { IconImage } from "../../../../icons";
-import { cn } from "../../utils";
 import { ShimmerInline } from "../../base/ShimmerText";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
+import { cn } from "../../utils";
 
 // Omit 'loading' from ImgHTMLAttributes to avoid collision with StatefulComponentProps.loading
 // The native HTML 'loading' attribute accepts "eager" | "lazy", while ours is a boolean state flag

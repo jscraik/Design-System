@@ -1,8 +1,8 @@
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
 import { IconChat } from "../../../../icons";
 import { Sparkles } from "../../../../integrations/apps-sdk";
 import { cn } from "../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Supported view modes for the toggle.

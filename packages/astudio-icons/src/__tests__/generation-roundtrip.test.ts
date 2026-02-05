@@ -1,5 +1,5 @@
-import { readFileSync, readdirSync } from "fs";
-import { join } from "path";
+import { readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import { transform } from "@svgr/core";
 import { describe, expect, it } from "vitest";
 import svgrConfig from "../../svgr.config";

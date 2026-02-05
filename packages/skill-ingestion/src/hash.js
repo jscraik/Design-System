@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
+
 const SKIP_SEGMENTS = new Set([".git", ".clawdhub", ".DS_Store"]);
 export function computeSkillHash(rootPath) {
   const hasher = createHash("sha256");

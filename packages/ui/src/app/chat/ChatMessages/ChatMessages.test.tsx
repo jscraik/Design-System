@@ -1,5 +1,5 @@
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, waitFor } from "../../../../testing/utils";
-import { describe, expect, it, vi, beforeEach } from "vitest";
 import { ChatMessages } from "./ChatMessages";
 
 describe("ChatMessages", () => {
@@ -235,7 +235,7 @@ describe("ChatMessages", () => {
     });
 
     it("has data-state attribute reflecting current state", () => {
-      const { container } = render(<ChatMessages loading />);
+      render(<ChatMessages loading />);
       // Check component renders in loading state
       expect(screen.getByText("Loading messages...")).toBeInTheDocument();
     });

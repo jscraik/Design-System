@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 
 import fastGlob from "fast-glob";
+
 const glob = fastGlob;
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
-import { dirname, resolve } from "path";
-import { fileURLToPath } from "url";
+
+import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const templateRoot = resolve(__dirname, "..");
@@ -44,7 +46,7 @@ async function buildWidgets() {
   console.log(`📦 Copying ${widgetFiles.length} widget files...`);
 
   for (const widgetFile of widgetFiles) {
-    const relativePath = widgetFile.replace(widgetsDistPath + "/", "");
+    const relativePath = widgetFile.replace(`${widgetsDistPath}/`, "");
     const destPath = resolve(clientDistPath, relativePath);
 
     // Ensure destination directory exists
@@ -64,7 +66,7 @@ async function buildWidgets() {
   console.log(`📦 Copying ${assetFiles.length} asset files...`);
 
   for (const assetFile of assetFiles) {
-    const relativePath = assetFile.replace(widgetsDistPath + "/", "");
+    const relativePath = assetFile.replace(`${widgetsDistPath}/`, "");
     const destPath = resolve(clientDistPath, relativePath);
 
     // Ensure destination directory exists

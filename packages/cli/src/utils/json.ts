@@ -1,6 +1,6 @@
 import fsp from "node:fs/promises";
-import type { JsonValue } from "../types.js";
 import { CliError, ERROR_CODES, EXIT_CODES } from "../error.js";
+import type { JsonValue } from "../types.js";
 
 export async function readParamsInput(input?: string): Promise<JsonValue | undefined> {
   if (!input) return undefined;

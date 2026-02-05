@@ -3,12 +3,11 @@
 // migration_trigger: Replace with Apps SDK UI component when available with matching props and behavior.
 // a11y_contract_ref: docs/KEYBOARD_NAVIGATION_TESTS.md
 
-import * as React from "react";
+import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
-
+import * as React from "react";
 import { cn } from "../../../utils";
-import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
 /**
  * Defines base class names and variant mappings for badges.

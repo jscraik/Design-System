@@ -1,6 +1,6 @@
-import * as React from "react";
+import { spaceTokens } from "@design-studio/tokens/spacing";
 import type { Meta, StoryObj } from "@storybook/react";
-import { spaceTokens, spacingScale } from "@design-studio/tokens/spacing";
+import * as React from "react";
 
 /**
  * Spacing System - Design Foundation

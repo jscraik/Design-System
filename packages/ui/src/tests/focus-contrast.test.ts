@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { colorTokens } from "@design-studio/tokens";
@@ -81,7 +81,7 @@ function applyAlpha(color: Rgba, background: Rgba): Rgba {
 
 function channelToLinear(channel: number): number {
   const normalized = channel / 255;
-  return normalized <= 0.03928 ? normalized / 12.92 : Math.pow((normalized + 0.055) / 1.055, 2.4);
+  return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
 }
 
 function relativeLuminance(color: Rgba): number {

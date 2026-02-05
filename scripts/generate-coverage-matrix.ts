@@ -1,6 +1,6 @@
-import { readFileSync } from "fs";
-import { readFile, readdir, stat, writeFile } from "fs/promises";
-import { join, resolve, relative, dirname } from "path";
+import { readFileSync } from "node:fs";
+import { readdir, readFile, stat, writeFile } from "node:fs/promises";
+import { dirname, join, relative, resolve } from "node:path";
 
 type MatrixSource = "upstream_reexport" | "upstream_wrapper" | "radix_fallback" | "local_primitive";
 
@@ -39,7 +39,7 @@ const NON_COMPONENT_EXPORTS = new Set(["forms", "utils"]);
 
 const OUTPUT_JSON = join(ROOT, "docs/design-system/COVERAGE_MATRIX.json");
 const OUTPUT_MD = join(ROOT, "docs/design-system/COVERAGE_MATRIX.md");
-const SURFACE_USAGE_JSON = join(ROOT, "docs/design-system/COVERAGE_MATRIX_SURFACES.json");
+const _SURFACE_USAGE_JSON = join(ROOT, "docs/design-system/COVERAGE_MATRIX_SURFACES.json");
 const UI_PACKAGE_JSON = join(ROOT, "packages/ui/package.json");
 
 const args = new Set(process.argv.slice(2));
@@ -232,7 +232,7 @@ function parseFallbackMetadata(content: string): FallbackMetadata {
   for (const key of Object.keys(fields) as Array<keyof FallbackMetadata>) {
     const regex = new RegExp(`${key}\\s*:\\s*(.+)`);
     const match = content.match(regex);
-    if (match && match[1]) {
+    if (match?.[1]) {
       fields[key] = match[1].trim();
     }
   }
@@ -342,7 +342,7 @@ async function main(): Promise<void> {
     }
 
     const fallback = fallbackComponents.get(name) ?? null;
-    const usage = resolveSurfaceUsage(name, surfaceUsage);
+    const _usage = resolveSurfaceUsage(name, surfaceUsage);
     const hasMissingMetadata =
       fallback &&
       (!fallback.why_missing_upstream ||
