@@ -41,8 +41,15 @@ function formatSize(bytes) {
   return `${(kb / 1024).toFixed(2)} MB`;
 }
 
+function escapeRegExp(str) {
+  // Escape characters that have special meaning in regular expressions.
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 function matchPattern(filename, pattern) {
-  const regex = new RegExp(`^${pattern.replace(/\*/g, ".*").replace(/\./g, "\\.")}$`);
+  // Treat pattern as a glob where "*" matches any sequence of characters.
+  const escapedPattern = escapeRegExp(pattern).replace(/\\\*/g, ".*");
+  const regex = new RegExp(`^${escapedPattern}$`);
   return regex.test(filename);
 }
 
