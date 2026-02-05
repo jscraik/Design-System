@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -8,20 +8,23 @@
   "files": {
     "ignoreUnknown": false,
     "includes": [
-      "**/*",
-      "!!**/node_modules",
-      "!!**/dist",
-      "!!**/platforms/web/apps/storybook/storybook-static",
-      "!!**/*.mdx",
-      "!!**/scripts/new-component.mjs",
-      "!!**/.*",
-      "!!**/_temp",
-      "!!**/_temp_import",
-      "!!**/docs/examples",
-      "!!**/src/**/generated",
-      "!!**/pnpm-lock.yaml",
-      "!!**/scripts/policy",
-      "!!**/.ralph"
+      "**",
+      "!**/node_modules",
+      "!**/dist",
+      "!platforms/web/apps/storybook/storybook-static",
+      "!**/*.mdx",
+      "!scripts/new-component.mjs",
+      "!.*",
+      "!_temp",
+      "!_temp_import",
+      "!docs/examples",
+      "!docs/validation",
+      "!**/generated",
+      "!worker-configuration.d.ts",
+      "!packages/astudio-icons/src/react/**/*.tsx",
+      "!pnpm-lock.yaml",
+      "!scripts/policy",
+      "!.ralph"
     ]
   },
   "formatter": {
@@ -30,16 +33,8 @@
     "indentWidth": 2,
     "lineWidth": 100
   },
-  "css": {
-    "parser": {
-      "tailwindDirectives": true
-    }
-  },
   "linter": {
-    "enabled": false
-  },
-  "assist": {
-    "enabled": false
+    "enabled": true
   },
   "overrides": []
 }
