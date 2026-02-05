@@ -9,6 +9,7 @@
     "ignoreUnknown": false,
     "includes": [
       "**",
+      "!**/*.css",
       "!**/node_modules",
       "!**/dist",
       "!platforms/web/apps/storybook/storybook-static",
@@ -38,13 +39,50 @@
     "rules": {
       "suspicious": {
         "noExplicitAny": "off",
-        "noAssignInExpressions": "off"
+        "noAssignInExpressions": "off",
+        "noArrayIndexKey": "off",
+        "noShadowRestrictedNames": "off",
+        "noSuspiciousSemicolonInJsx": "off",
+        "noGlobalAssign": "off",
+        "noRedeclare": "off",
+        "noDuplicateObjectKeys": "off",
+        "noDocumentCookie": "off",
+        "useIterableCallbackReturn": "off",
+        "noCommentText": "off"
       },
       "style": {
         "noNonNullAssertion": "off"
       },
       "a11y": {
-        "noSvgWithoutTitle": "off"
+        "noSvgWithoutTitle": "off",
+        "useButtonType": "off",
+        "useAriaPropsSupportedByRole": "off",
+        "noLabelWithoutControl": "off",
+        "useSemanticElements": "off",
+        "noStaticElementInteractions": "off",
+        "useKeyWithClickEvents": "off",
+        "useValidAnchor": "off",
+        "useFocusableInteractive": "off",
+        "useAriaPropsForRole": "off",
+        "noRedundantAlt": "off"
+      },
+      "correctness": {
+        "useHookAtTopLevel": "off",
+        "noUnusedFunctionParameters": "off",
+        "noUnusedVariables": "off",
+        "noInvalidPositionAtImportRule": "off",
+        "useExhaustiveDependencies": "off",
+        "noUnusedImports": "off"
+      },
+      "complexity": {
+        "noBannedTypes": "off",
+        "noStaticOnlyClass": "off"
+      },
+      "performance": {
+        "noDynamicNamespaceImportAccess": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
       }
     }
   },

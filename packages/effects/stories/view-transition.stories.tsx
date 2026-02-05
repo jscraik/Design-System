@@ -54,12 +54,14 @@ export const WrapperDemo: Story = {
       <div className="min-h-screen bg-background">
         <nav className="flex gap-4 p-4 border-b">
           <button
+            type="button"
             onClick={() => setPage("home")}
             className="px-4 py-2 rounded bg-muted hover:bg-muted/80"
           >
             Home
           </button>
           <button
+            type="button"
             onClick={() => setPage("about")}
             className="px-4 py-2 rounded bg-muted hover:bg-muted/80"
           >
