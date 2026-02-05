@@ -10,11 +10,6 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../../utils";
 import type { StatefulComponentProps, ComponentState } from "@design-studio/tokens";
 
-// Forward ref types for compound sub-components
-type ForwardRefButton = React.ForwardRefExoticComponent<
-  React.ComponentPropsWithoutRef<"button"> & React.RefAttributes<HTMLButtonElement>
->;
-
 /**
  * Loading spinner component for button loading state
  */
@@ -71,7 +66,7 @@ const buttonVariants = cva(
 
 /**
  * Context for compound button mode.
- * Only active when variant="compound".
+ * Only active when compound={true}.
  */
 interface CompoundButtonContextValue {
   isCompound: boolean;
@@ -85,11 +80,11 @@ CompoundButtonContext.displayName = "CompoundButtonContext";
 /**
  * Button sub-component for primary action in compound mode.
  *
- * Used within Button variant="compound" wrapper.
+ * Used within Button compound={true} wrapper.
  *
  * @example
  * ```tsx
- * <Button variant="compound">
+ * <Button compound>
  *   <Button.Primary>Save</Button.Primary>
  *   <Button.Secondary>Cancel</Button.Secondary>
  * </Button>
@@ -101,7 +96,7 @@ const Primary = React.forwardRef<HTMLButtonElement, React.ComponentProps<"button
 
     if (!isCompound) {
       console.warn(
-        "Button.Primary can only be used within Button variant='compound'. " +
+        "Button.Primary can only be used within Button compound={true}. " +
           "Using it standalone will not apply compound styling.",
       );
     }
@@ -123,11 +118,11 @@ Primary.displayName = "Button.Primary";
 /**
  * Button sub-component for secondary action in compound mode.
  *
- * Used within Button variant="compound" wrapper.
+ * Used within Button compound={true} wrapper.
  *
  * @example
  * ```tsx
- * <Button variant="compound">
+ * <Button compound>
  *   <Button.Primary>Save</Button.Primary>
  *   <Button.Secondary>Cancel</Button.Secondary>
  * </Button>
@@ -139,7 +134,7 @@ const Secondary = React.forwardRef<HTMLButtonElement, React.ComponentProps<"butt
 
     if (!isCompound) {
       console.warn(
-        "Button.Secondary can only be used within Button variant='compound'. " +
+        "Button.Secondary can only be used within Button compound={true}. " +
           "Using it standalone will not apply compound styling.",
       );
     }
@@ -161,25 +156,25 @@ Secondary.displayName = "Button.Secondary";
 /**
  * Button sub-component for icon-only buttons in compound mode.
  *
- * Used within Button variant="compound" wrapper.
+ * Used within Button compound={true} wrapper.
  *
  * @example
  * ```tsx
- * <Button variant="compound">
+ * <Button compound>
  *   <Button.Primary>Save</Button.Primary>
- *   <Button.Icon icon={<SaveIcon />} />
+ *   <Button.Icon icon={<SaveIcon />} aria-label="Save changes" />
  * </Button>
  * ```
  */
 const Icon = React.forwardRef<
   HTMLButtonElement,
-  React.ComponentProps<"button"> & { icon?: React.ReactNode }
+  React.ComponentProps<"button"> & { icon: React.ReactNode; "aria-label": string }
 >(({ className, children, icon, ...props }, ref) => {
   const { isCompound } = React.useContext(CompoundButtonContext);
 
   if (!isCompound) {
     console.warn(
-      "Button.Icon can only be used within Button variant='compound'. " +
+      "Button.Icon can only be used within Button compound={true}. " +
         "Using it standalone will not apply compound styling.",
     );
   }
@@ -219,7 +214,7 @@ Icon.displayName = "Button.Icon";
  *
  * **Compound API (opt-in):**
  * ```tsx
- * <Button variant="compound">
+ * <Button compound>
  *   <Button.Primary>Save</Button.Primary>
  *   <Button.Secondary>Cancel</Button.Secondary>
  * </Button>
@@ -232,8 +227,9 @@ Icon.displayName = "Button.Icon";
  * - Error state applies error styling.
  *
  * @param props - Button props including variant, size, and stateful options.
- * @param props.variant - Visual style for the button OR "compound" for advanced composition.
- * @param props.size - Size variant for the button (not used in compound mode).
+ * @param props.variant - Visual style for the button.
+ * @param props.size - Size variant for the button.
+ * @param props.compound - Enables compound mode for advanced composition with sub-components.
  * @param props.asChild - Renders the child element via Radix Slot (default: `false`).
  * @param props.loading - Shows loading spinner and disables button (default: `false`).
  * @param props.error - Error message, applies error styling when set.
@@ -245,6 +241,7 @@ function Button({
   className,
   variant,
   size,
+  compound = false,
   asChild = false,
   loading = false,
   error,
@@ -253,12 +250,12 @@ function Button({
   children,
   ...props
 }: React.ComponentProps<"button"> &
-  Omit<VariantProps<typeof buttonVariants>, "variant"> &
+  VariantProps<typeof buttonVariants> &
   StatefulComponentProps & {
     asChild?: boolean;
-    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | "compound";
+    compound?: boolean;
   }) {
-  const isCompound = variant === "compound";
+  const isCompound = compound;
 
   // Determine effective state
   const effectiveState: ComponentState = loading

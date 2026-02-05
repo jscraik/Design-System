@@ -130,9 +130,28 @@
   }
 }
 
-.animate-scroll-progress {
-  animation: scroll-progress linear;
-  animation-timeline: scroll(root);
+/* Scroll-driven animations with @supports fallback */
+@supports (animation-timeline: scroll()) {
+  .animate-scroll-progress {
+    animation: scroll-progress linear;
+    animation-timeline: scroll(root);
+  }
+
+  .animate-scroll-progress-vertical {
+    animation: scroll-progress-vertical linear;
+    animation-timeline: scroll(root);
+  }
+}
+
+/* Fallback: Show static progress for browsers without scroll-driven animation support */
+@supports not (animation-timeline: scroll()) {
+  .animate-scroll-progress {
+    width: 100%;
+  }
+
+  .animate-scroll-progress-vertical {
+    height: 100%;
+  }
 }
 
 /* Vertical scroll progress */
@@ -143,11 +162,6 @@
   to {
     height: 100%;
   }
-}
-
-.animate-scroll-progress-vertical {
-  animation: scroll-progress-vertical linear;
-  animation-timeline: scroll(root);
 }
 
 /* ============================================================================
@@ -235,8 +249,8 @@
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
   }
 }
