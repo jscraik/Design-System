@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 /**
  * agent-browser Storybook CI runner
  *
@@ -14,11 +15,10 @@
  *   AGENT_BROWSER_STORYBOOK_PORT=6006
  */
 
-import http from "node:http";
-import { readFile, stat } from "node:fs/promises";
-import { extname, join, normalize } from "node:path";
 import { spawn } from "node:child_process";
-import { dirname } from "node:path";
+import { readFile, stat } from "node:fs/promises";
+import http from "node:http";
+import { dirname, extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -172,11 +172,9 @@ async function main() {
     await waitForIndexJson();
 
     console.log("\\nRunning agent-browser Storybook smoke ...");
-    await runCmd(
-      "node",
-      ["scripts/agent-browser/storybook-run.mjs"],
-      { env: { ...process.env, AGENT_BROWSER_STORYBOOK_BASE_URL: BASE_URL } },
-    );
+    await runCmd("node", ["scripts/agent-browser/storybook-run.mjs"], {
+      env: { ...process.env, AGENT_BROWSER_STORYBOOK_BASE_URL: BASE_URL },
+    });
 
     console.log("\\nCI Storybook smoke tests passed");
   } finally {

@@ -115,10 +115,7 @@ export function AppSection({
                 <span className="text-body-small font-normal text-foreground">Accent color</span>
               </div>
               <div className="flex items-center gap-2">
-                <div
-                  className="size-3 rounded-full"
-                  style={{ backgroundColor: selectedColor }}
-                />
+                <div className="size-3 rounded-full" style={{ backgroundColor: selectedColor }} />
                 <span className="text-body-small font-normal text-text-secondary">
                   {accentColor}
                 </span>

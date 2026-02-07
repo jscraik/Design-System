@@ -51,7 +51,9 @@ const cliPath = existsSync(join(rootDir, "node_modules", ".bin", "agent-browser"
   : "agent-browser";
 
 function safeBasename(input) {
-  return String(input).replace(/[^a-z0-9_-]/gi, "_").slice(0, 160);
+  return String(input)
+    .replace(/[^a-z0-9_-]/gi, "_")
+    .slice(0, 160);
 }
 
 function runAgentBrowser(args) {
@@ -77,7 +79,9 @@ function runAgentBrowser(args) {
         resolve({ stdout, stderr });
       } else {
         reject(
-          new Error(`agent-browser exited with code ${code}\\nstdout: ${stdout}\\nstderr: ${stderr}`),
+          new Error(
+            `agent-browser exited with code ${code}\\nstdout: ${stdout}\\nstderr: ${stderr}`,
+          ),
         );
       }
     });
@@ -161,7 +165,9 @@ function compileOptionalRegex(pattern) {
   try {
     return new RegExp(pattern, "i");
   } catch (err) {
-    throw new Error(`Invalid regex in AGENT_BROWSER_STORYBOOK_STORY_GREP: ${String(err?.message || err)}`);
+    throw new Error(
+      `Invalid regex in AGENT_BROWSER_STORYBOOK_STORY_GREP: ${String(err?.message || err)}`,
+    );
   }
 }
 

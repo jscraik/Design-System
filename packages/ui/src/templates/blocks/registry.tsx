@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { ChatInput } from "../../app/chat/ChatInput";
 import {
   sampleCategories,
   sampleCategoryColors,
@@ -13,9 +13,7 @@ import {
   sampleUser,
 } from "../../fixtures/sample-data";
 import { IconCheckmark, IconChevronDownMd } from "../../icons";
-
 import { ChatHeaderBlock } from "./ChatHeaderBlock";
-import { ChatInput } from "../../app/chat/ChatInput";
 import { ChatMessagesBlock } from "./ChatMessagesBlock";
 import { ChatSidebarBlock } from "./ChatSidebarBlock";
 import { SettingDropdownBlock } from "./SettingDropdownBlock";

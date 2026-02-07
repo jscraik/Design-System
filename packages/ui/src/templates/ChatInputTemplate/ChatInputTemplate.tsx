@@ -1,5 +1,5 @@
-import { sampleModels } from "../../fixtures/sample-data";
 import { ChatInput } from "../../app/chat/ChatInput";
+import { sampleModels } from "../../fixtures/sample-data";
 
 /**
  * Render the chat input template with sample data.
