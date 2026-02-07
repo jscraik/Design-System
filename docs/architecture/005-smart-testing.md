@@ -216,10 +216,10 @@ pnpm test --coverage
 open coverage/index.html
 ```
 
-### CI Enforce
+### CI Enforce (example; not currently enforced in CI)
 
 ```yaml
-# .github/workflows/design-studio-ci.yml
+# .github/workflows/ci.yml (example only; not currently enforced)
 - name: Test
   run: pnpm test --coverage
 
@@ -238,9 +238,10 @@ open coverage/index.html
 
 ## References
 
-- Vitest config: `packages/design-studio-*/vitest.config.ts`
+- Vitest config: `packages/ui/vitest.config.ts`
 - Testing guide: `docs/testing/guidelines.md`
+- CI workflow: `.github/workflows/ci.yml`
 
 ---
 
-**Last Updated:** 2026-01-26
+**Last Updated:** 2026-02-06

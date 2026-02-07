@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "schemaVersion": "dtcg-2024-01",
+  "schemaVersion": "dtcg-2025.10",
   "appsSdkUiVersion": "^0.2.1",
   "tokenCount": {
     "total": 79,
@@ -12,7 +12,7 @@
     "sizes": 3
   },
   "sha256": {
-    "css": "277445d4ab9c9eabb3eb5189bde863d8e313dd07096d5435a23a79744f87b9c6"
+    "css": "bdf2d0ca718a548a3052e2ea2cdb1a3854d1f3836aa94f73e99e94ef2bcd468f"
   },
   "generated": "1970-01-01T00:00:00.000Z"
 }

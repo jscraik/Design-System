@@ -37,20 +37,19 @@ Simplify to **3 packages**:
 
 ```
 packages/
-├── design-studio-runtime/    # @design-studio/runtime (~50KB)
-├── design-studio-tokens/     # @design-studio/tokens (~100KB)
-└── design-studio-ui/          # @design-studio/ui (~500KB, includes icons)
+├── runtime/                 # @design-studio/runtime (~50KB)
+├── tokens/                  # @design-studio/tokens (~100KB)
+└── ui/                      # @design-studio/ui (~500KB, includes icons)
 ```
 
 Move non-library packages to appropriate locations:
 
 ```
-tools/                          # Tooling packages
-├── cli/
-├── templates/
-└── skill-ingestion/
-
-platforms/web/apps/widgets/    # Widget bundles
+tools/                       # Tooling packages
+├── ...
+platforms/                   # App surfaces
+├── ...
+packages/widgets/            # Widget bundles
 ```
 
 ### Package Responsibilities
@@ -148,8 +147,8 @@ platforms/web/apps/widgets/    # Widget bundles
 ## References
 
 - Original proposal: `.spec/architecture-2026-01-26-design-studio.md`
-- Package structure: `packages/design-studio-*/package.json`
+- Package structure: `packages/runtime/package.json`, `packages/tokens/package.json`, `packages/ui/package.json`
 
 ---
 
-**Last Updated:** 2026-01-26
+**Last Updated:** 2026-02-06

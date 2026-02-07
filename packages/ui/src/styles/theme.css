@@ -11,26 +11,31 @@
   --radius-pip: var(--foundation-radius-18);
   --radius-pill: var(--foundation-radius-round);
   --radius-floating: var(--foundation-radius-21);
-}
 
-/* Light mode - explicit values */
-:root,
-:where([data-theme="light"]) {
+  /*
+    Mapped (runtime) theme slots.
+
+    These should ONLY reference semantic alias variables (`--ds-*`) so the
+    per-theme values live in `@design-studio/tokens/aliases.css`.
+  */
+
   /* Backgrounds */
-  --background: var(--foundation-bg-light-1); /* primary */
-  --secondary: var(--foundation-bg-light-2);
-  --muted: var(--foundation-bg-light-3); /* tertiary */
-  --card: var(--foundation-bg-light-1);
-  --popover: var(--foundation-bg-light-1);
-  --border: var(--foundation-border-light);
-  --border-subtle: var(--foundation-border-light);
-  --border-strong: var(--foundation-border-heavy);
+  --background: var(--ds-bg-primary);
+  --secondary: var(--ds-bg-secondary);
+  --muted: var(--ds-bg-muted);
+  --card: var(--ds-bg-card);
+  --popover: var(--ds-bg-popover);
+
+  /* Borders */
+  --border: var(--ds-border);
+  --border-subtle: var(--ds-border-subtle);
+  --border-strong: var(--ds-border-strong);
 
   /* Text + Icons */
-  --foreground: var(--foundation-text-light-primary); /* primary */
-  --text-secondary: var(--foundation-text-light-secondary); /* secondary */
-  --text-tertiary: var(--foundation-text-light-tertiary); /* tertiary */
-  --text-inverted: var(--foundation-text-dark-primary); /* inverted */
+  --foreground: var(--ds-fg);
+  --text-secondary: var(--ds-fg-secondary);
+  --text-tertiary: var(--ds-fg-muted);
+  --text-inverted: var(--ds-fg-inverted);
   --text-hero: var(--foreground);
   --text-heading: var(--foreground);
   --text-body: var(--text-secondary);
@@ -43,14 +48,14 @@
   --text-caption-on-color: var(--accent-foreground);
 
   /* Accents */
-  --accent-blue: var(--foundation-accent-blue-light);
-  --accent-red: var(--foundation-accent-red-light);
-  --accent-orange: var(--foundation-accent-orange-light);
-  --accent-green: var(--foundation-accent-green-light);
-  --accent-purple: var(--foundation-accent-purple-light);
+  --accent-blue: var(--ds-accent-blue);
+  --accent-red: var(--ds-accent-red);
+  --accent-orange: var(--ds-accent-orange);
+  --accent-green: var(--ds-accent-green);
+  --accent-purple: var(--ds-accent-purple);
 
   /* Accent foreground (text on accent backgrounds) */
-  --accent-foreground: var(--foundation-text-dark-primary);
+  --accent-foreground: var(--ds-accent-foreground);
 
   /* State slots (interactive + status) */
   --interactive: var(--accent-blue);
@@ -64,126 +69,10 @@
   --status-warning: var(--accent-orange);
 
   /* Ring (focus outline) */
-  --ring: var(--foundation-focus-ring);
+  --ring: var(--ds-ring);
 
   /* Overlay (modals, sheets, dialogs) */
   --overlay: color-mix(in srgb, var(--foundation-bg-dark-1) 60%, transparent);
-}
-
-/* Dark mode - explicit values */
-:where([data-theme="dark"]) {
-  /* Backgrounds */
-  --background: var(--foundation-bg-dark-1); /* primary */
-  --secondary: var(--foundation-bg-dark-2);
-  --muted: var(--foundation-bg-dark-3); /* tertiary */
-  --card: var(--foundation-bg-dark-1);
-  --popover: var(--foundation-bg-dark-2);
-  --border: var(--foundation-border-dark-light);
-  --border-subtle: var(--foundation-border-dark-light);
-  --border-strong: var(--foundation-border-dark-default);
-
-  /* Text + Icons */
-  --foreground: var(--foundation-text-dark-primary); /* primary */
-  --text-secondary: var(--foundation-text-dark-secondary); /* secondary */
-  --text-tertiary: var(--foundation-text-dark-tertiary); /* tertiary */
-  --text-inverted: var(--foundation-text-light-primary); /* inverted */
-  --text-hero: var(--foreground);
-  --text-heading: var(--foreground);
-  --text-body: var(--text-secondary);
-  --text-placeholder: var(--text-tertiary);
-  --text-caption: var(--text-tertiary);
-  --text-hero-on-color: var(--accent-foreground);
-  --text-heading-on-color: var(--accent-foreground);
-  --text-body-on-color: var(--accent-foreground);
-  --text-placeholder-on-color: var(--accent-foreground);
-  --text-caption-on-color: var(--accent-foreground);
-
-  /* Accents */
-  --accent-blue: var(--foundation-accent-blue);
-  --accent-red: var(--foundation-accent-red);
-  --accent-orange: var(--foundation-accent-orange);
-  --accent-green: var(--foundation-accent-green);
-  --accent-purple: var(--foundation-accent-purple);
-
-  /* Accent foreground (text on accent backgrounds) */
-  --accent-foreground: var(--foundation-text-dark-primary);
-
-  /* State slots (interactive + status) */
-  --interactive: var(--accent-blue);
-  --interactive-hover: var(--accent-blue);
-  --interactive-active: var(--accent-blue);
-  --interactive-disabled: var(--text-tertiary);
-  --status-success: var(--accent-green);
-  --status-success-muted: var(--accent-green);
-  --status-error: var(--accent-red);
-  --status-error-muted: var(--accent-red);
-  --status-warning: var(--accent-orange);
-
-  /* Ring (focus outline) */
-  --ring: var(--foundation-focus-ring);
-
-  /* Overlay (modals, sheets, dialogs) */
-  --overlay: color-mix(in srgb, var(--foundation-bg-dark-1) 60%, transparent);
-}
-
-/* High contrast mode - explicit values */
-@media (prefers-contrast: high) {
-  :root,
-  :where([data-theme="light"]),
-  :where([data-theme="dark"]) {
-    /* Backgrounds */
-    --background: var(--foundation-bg-high-contrast-1);
-    --secondary: var(--foundation-bg-high-contrast-2);
-    --muted: var(--foundation-bg-high-contrast-3);
-    --card: var(--foundation-bg-high-contrast-1);
-    --popover: var(--foundation-bg-high-contrast-2);
-    --border: var(--foundation-border-high-contrast-default);
-    --border-subtle: var(--foundation-border-high-contrast-light);
-    --border-strong: var(--foundation-border-high-contrast-heavy);
-
-    /* Text + Icons */
-    --foreground: var(--foundation-text-high-contrast-primary);
-    --text-secondary: var(--foundation-text-high-contrast-secondary);
-    --text-tertiary: var(--foundation-text-high-contrast-tertiary);
-    --text-inverted: var(--foundation-text-high-contrast-inverted);
-    --text-hero: var(--foreground);
-    --text-heading: var(--foreground);
-    --text-body: var(--text-secondary);
-    --text-placeholder: var(--text-tertiary);
-    --text-caption: var(--text-tertiary);
-    --text-hero-on-color: var(--accent-foreground);
-    --text-heading-on-color: var(--accent-foreground);
-    --text-body-on-color: var(--accent-foreground);
-    --text-placeholder-on-color: var(--accent-foreground);
-    --text-caption-on-color: var(--accent-foreground);
-
-    /* Accents */
-    --accent-blue: var(--foundation-accent-blue-high-contrast);
-    --accent-red: var(--foundation-accent-red-high-contrast);
-    --accent-orange: var(--foundation-accent-orange-high-contrast);
-    --accent-green: var(--foundation-accent-green-high-contrast);
-    --accent-purple: var(--foundation-accent-purple-high-contrast);
-
-    /* Accent foreground (text on accent backgrounds) */
-    --accent-foreground: var(--foundation-accent-foreground-high-contrast);
-
-    /* State slots (interactive + status) */
-    --interactive: var(--accent-blue);
-    --interactive-hover: var(--accent-blue);
-    --interactive-active: var(--accent-blue);
-    --interactive-disabled: var(--text-tertiary);
-    --status-success: var(--accent-green);
-    --status-success-muted: var(--accent-green);
-    --status-error: var(--accent-red);
-    --status-error-muted: var(--accent-red);
-    --status-warning: var(--accent-orange);
-
-    /* Ring (focus outline) */
-    --ring: var(--foundation-interactive-high-contrast-ring);
-
-    /* Overlay (modals, sheets, dialogs) */
-    --overlay: color-mix(in srgb, var(--foundation-bg-high-contrast-1) 60%, transparent);
-  }
 }
 
 @theme inline {

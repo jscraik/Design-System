@@ -73,13 +73,13 @@ import { Button, SectionHeader } from "@design-studio/ui/base";
 - Use component defaults and semantic classes from Apps SDK UI.
 - Do not hardcode hex colors or raw CSS variables in new UI code.
 - If you need a token, add it to `@design-studio/ui` or the Apps SDK UI layer, not directly in the page.
-- **Token-only utilities:** use token-backed utilities only (for example, `bg-bg`, `text-fg`, `border-border`, `rounded-md`, `shadow-sm`). Do **not** use raw hex values (like `#fff` or `text-[#111]`) or custom utilities such as `text-[15px]`. For the allowed mapping rules and rationale, see `docs/theming/TOKEN_API_MAPPING.md`.
+- **Token-only utilities:** use token-backed utilities only (for example, `bg-background`, `text-foreground`, `border-border`, `rounded-md`, `shadow-sm`). Do **not** use raw hex values (like `#fff` or `text-[#111]`) or custom utilities such as `text-[15px]`. For the allowed mapping rules and rationale, see `docs/theming/TOKEN_API_MAPPING.md`.
 
 ## Theme switching
 
 - Theme switching is driven by `[data-theme]` attributes (for example, `[data-theme="dark"]`).
 - Token values should resolve through CSS variables; do not hardcode per-theme values in components.
-- Prefer `bg-bg`, `text-fg`, `border-border`, etc. so theme changes flow through tokens automatically.
+- Prefer `bg-background`, `text-foreground`, `border-border`, etc. so theme changes flow through tokens automatically.
 
 ## Icons and imagery
 

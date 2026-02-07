@@ -1,7 +1,7 @@
 # Phase 1 Adversarial Review
 **Date:** 2026-01-26
 **Reviewer:** Claude (Adversarial Mode)
-**Status:** 🔴 CRITICAL ISSUES FOUND
+**Status:** 🔴 CRITICAL ISSUES FOUND (HISTORICAL — applies only to paused `packages/design-studio-*` migration plan)
 
 ---
 

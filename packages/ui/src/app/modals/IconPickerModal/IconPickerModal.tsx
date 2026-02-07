@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ModalDialog } from "../../../components/ui/overlays/Modal";
 import { cn } from "../../../components/ui/utils";
 import {
@@ -289,11 +289,14 @@ export function IconPickerModal({
 }: IconPickerModalProps) {
   const [selectedColorId, setSelectedColorId] = useState(currentColorId);
   const [selectedIcon, setSelectedIcon] = useState(currentIconId ?? "folder");
+  const wasOpenRef = useRef(false);
 
   useEffect(() => {
-    if (!isOpen) return;
-    setSelectedColorId(currentColorId);
-    setSelectedIcon(currentIconId ?? "folder");
+    if (isOpen && !wasOpenRef.current) {
+      setSelectedColorId(currentColorId);
+      setSelectedIcon(currentIconId ?? "folder");
+    }
+    wasOpenRef.current = isOpen;
   }, [isOpen, currentColorId, currentIconId]);
 
   const handleSave = () => {

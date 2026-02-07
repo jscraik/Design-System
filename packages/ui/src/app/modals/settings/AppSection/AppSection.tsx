@@ -31,11 +31,11 @@ interface AppSectionProps {
 }
 
 const accentColors = [
-  { name: "Blue", color: "#3b82f6" },
-  { name: "Green", color: "#10b981" },
-  { name: "Orange", color: "#f97316" },
-  { name: "Red", color: "#ef4444" },
-  { name: "Purple", color: "#8b5cf6" },
+  { name: "Blue", color: "var(--accent-blue)" },
+  { name: "Green", color: "var(--accent-green)" },
+  { name: "Orange", color: "var(--accent-orange)" },
+  { name: "Red", color: "var(--accent-red)" },
+  { name: "Purple", color: "var(--accent-purple)" },
 ];
 
 /** AppSection renders app-related settings. */
@@ -50,7 +50,8 @@ export function AppSection({
   onToggle,
   onChange,
 }: AppSectionProps) {
-  const selectedColorHex = accentColors.find((c) => c.name === accentColor)?.color || "#3b82f6";
+  const selectedColor =
+    accentColors.find((c) => c.name === accentColor)?.color ?? "var(--accent-blue)";
 
   return (
     <div className="mb-5">
@@ -116,7 +117,7 @@ export function AppSection({
               <div className="flex items-center gap-2">
                 <div
                   className="size-3 rounded-full"
-                  style={{ backgroundColor: selectedColorHex }}
+                  style={{ backgroundColor: selectedColor }}
                 />
                 <span className="text-body-small font-normal text-text-secondary">
                   {accentColor}

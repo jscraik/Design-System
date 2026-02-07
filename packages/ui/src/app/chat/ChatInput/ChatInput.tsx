@@ -531,14 +531,13 @@ export function ChatInput({
     description: "Latest model",
   };
 
-  // Auto-resize textarea
+  // Auto-resize textarea as content changes
   useEffect(() => {
     const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.style.height = "auto";
-      textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`;
-    }
-  }, []);
+    if (!textarea) return;
+    textarea.style.height = "auto";
+    textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`;
+  }, [message]);
 
   const handleSubmit = useCallback(
     (e: FormEvent) => {

@@ -1,6 +1,6 @@
 # aStudio Test Plan
 
-Last updated: 2026-01-09
+Last updated: 2026-02-06
 
 ## Executive Summary
 
@@ -243,11 +243,14 @@ Create shared test utilities in `packages/ui/src/testing/`:
 
 ## Test Tier Overview
 
+> **Port binding note (as-of 2026-02-06):** Any tier that starts a dev server, preview server, or browser runner requires an environment that can bind local ports. In restricted sandbox environments where port binding fails (for example: `EPERM`), run those tiers in CI or on a host machine.
+
 ### Tier 1: Unit Tests (Vitest)
 Fast, isolated component tests.
 - **Command**: `pnpm test`
 - **Runtime**: <30s
 - **Coverage**: Component logic, hooks, utilities
+- **Port binding:** ✅ Not required
 
 ### Tier 2: Smoke Tests (agent-browser)
 Built-preview smoke tests for critical routes.
@@ -265,24 +268,28 @@ Built-preview smoke tests for critical routes.
   - Screenshots: `test-results/agent-browser/screenshots/`
   - Snapshots: `test-results/agent-browser/snapshots/`
 - **Purpose**: Fast validation that built artifacts actually work (catches rendering errors, missing assets, JavaScript exceptions)
+- **Port binding:** ❌ Required (preview/dev server)
 
 ### Tier 3: Component Tests (Storybook)
 Interactive component documentation and tests.
 - **Command**: `pnpm storybook:test`
 - **Runtime**: ~2min
 - **Coverage**: Component variants, interactions, a11y
+- **Port binding:** ⚠️ Depends (non-browser tests: ✅; browser-mode / Storybook server: ❌)
 
 ### Tier 4: E2E Tests (Playwright)
 Full user workflow automation.
 - **Command**: `pnpm test:e2e:web`
 - **Runtime**: ~5min
 - **Coverage**: Critical user journeys, cross-browser
+- **Port binding:** ❌ Required (dev/preview server)
 
 ### Tier 5: Visual Regression (Playwright)
 Screenshot comparison testing.
 - **Command**: `pnpm test:visual:web`
 - **Runtime**: ~3min
 - **Coverage**: Visual consistency across themes
+- **Port binding:** ❌ Required (dev/preview server)
 
 ### Tier 6: Accessibility Tests (Playwright + axe-core)
 Automated accessibility audits.
@@ -290,12 +297,14 @@ Automated accessibility audits.
 - **Runtime**: ~2min
 - **Coverage**: WCAG 2.2 AA compliance for widgets
 - **Manual audit artifact**: `docs/operations/a11y-audit-template.md`
+- **Port binding:** ❌ Typically required (dev/preview server)
 
 ### Tier 7: MCP Contract Tests (Node.js native runner)
 MCP tool contract validation.
 - **Command**: `pnpm test:mcp-contract`
 - **Runtime**: ~30s
 - **Coverage**: MCP server tool contracts
+- **Port binding:** ✅ Not required
 
 ## Commands
 
@@ -346,5 +355,5 @@ After implementing this test plan, update:
 ---
 
 **Owner**: Jamie Scott Craik (@jscraik)
-**Review cadence**: Weekly during implementation, monthly after completion
+**Review cadence**: Monthly or each release (whichever is sooner)
 **Status**: 📋 Planning Phase - Ready for implementation

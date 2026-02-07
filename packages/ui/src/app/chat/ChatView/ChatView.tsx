@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { IconArrowDownMd } from "../../../icons";
 import { ChatInput } from "../ChatInput";
@@ -35,7 +35,7 @@ export function ChatView({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showScrollButton, setShowScrollButton] = useState(false);
 
-  const checkScrollPosition = () => {
+  const checkScrollPosition = useCallback(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
@@ -43,7 +43,7 @@ export function ChatView({
       container.scrollHeight - container.scrollTop - container.clientHeight < 100;
 
     setShowScrollButton(!isNearBottom);
-  };
+  }, []);
 
   const scrollToBottom = () => {
     const container = scrollContainerRef.current;

@@ -347,11 +347,11 @@ function SolarSystem() {
     absolute inset-0
     flex flex-col justify-end items-center text-center
     pb-4 px-8 sm:p-8
-    bg-gradient-to-t from-[var(--color-surface)] to-transparent
-    md:bg-gradient-to-r md:from-[var(--color-surface)] md:to-transparent
+    bg-gradient-to-t from-background to-transparent
+    md:bg-gradient-to-r md:from-background md:to-transparent
     md:items-start md:text-left md:justify-start
     md:w-72
-    rounded-xl text-primary pointer-events-none z-10
+    rounded-xl text-foreground pointer-events-none z-10
   "
           >
             <div className="text-4xl font-medium">

@@ -384,7 +384,7 @@ export function TemplatePanel({
         <div className="flex flex-col items-center justify-center py-8 px-4">
           <IconWarning className="size-12 text-status-error mb-3" />
           <h3 className="text-sm font-medium text-foreground mb-1">Error</h3>
-          <p className="text-xs text-muted-foreground text-center mb-4">{errorMessage}</p>
+          <p className="text-xs text-text-secondary text-center mb-4">{errorMessage}</p>
           {onRetry && (
             <button
               type="button"
@@ -421,7 +421,7 @@ export function TemplatePanel({
             </svg>
           )}
           <h3 className="text-sm font-medium text-foreground mb-1">{emptyTitle}</h3>
-          <p className="text-xs text-muted-foreground text-center">{emptyDescription}</p>
+          <p className="text-xs text-text-secondary text-center">{emptyDescription}</p>
         </div>
       );
     }
@@ -610,7 +610,7 @@ export function TemplatePanelHeader({
               </span>
             )}
           </div>
-          {subtitle && <p className="text-xs text-muted-foreground mt-0.5 truncate">{subtitle}</p>}
+          {subtitle && <p className="text-xs text-text-secondary mt-0.5 truncate">{subtitle}</p>}
         </div>
       </div>
       <div className="flex items-center gap-2 shrink-0">

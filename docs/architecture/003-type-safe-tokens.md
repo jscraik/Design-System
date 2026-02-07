@@ -231,8 +231,8 @@ The following are **deferred to post-launch**:
 
 - DTCG Specification: https://tr.designtokens.org/
 - Migration guide: `docs/MIGRATION.md`
-- Generator script: `packages/design-studio-tokens/scripts/generate-tokens.ts`
+- Generator script: `packages/tokens/scripts/generate-tokens.ts`
 
 ---
 
-**Last Updated:** 2026-01-26
+**Last Updated:** 2026-02-06

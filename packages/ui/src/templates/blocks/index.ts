@@ -1,5 +1,5 @@
 export * from "./ChatHeaderBlock";
-export * from "./ChatInputBlock";
+
 export * from "./ChatMessagesBlock";
 export * from "./ChatSidebarBlock";
 export * from "./registry";

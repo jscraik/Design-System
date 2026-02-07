@@ -15,7 +15,7 @@ import {
 import { IconCheckmark, IconChevronDownMd } from "../../icons";
 
 import { ChatHeaderBlock } from "./ChatHeaderBlock";
-import { ChatInputBlock } from "./ChatInputBlock";
+import { ChatInput } from "../../app/chat/ChatInput";
 import { ChatMessagesBlock } from "./ChatMessagesBlock";
 import { ChatSidebarBlock } from "./ChatSidebarBlock";
 import { SettingDropdownBlock } from "./SettingDropdownBlock";
@@ -384,8 +384,8 @@ function ChatMessagesBlockSample() {
   return <ChatMessagesBlock messages={sampleMessages} />;
 }
 
-function ChatInputBlockSample() {
-  return <ChatInputBlock selectedModel={sampleModels[0]} />;
+function ChatInputSample() {
+  return <ChatInput selectedModel={sampleModels[0]} />;
 }
 
 function SettingRowBlockSample() {
@@ -488,7 +488,7 @@ export const blockRegistry: BlockDefinition[] = [
     id: "chat-input",
     title: "Chat Input Block",
     description: "Composer with send action.",
-    Component: ChatInputBlockSample,
+    Component: ChatInputSample,
   },
   {
     id: "setting-row",

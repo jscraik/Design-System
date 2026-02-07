@@ -114,9 +114,9 @@ For detailed export instructions, see [Figma Export Guide](../../../packages/tok
 
 ## Known Gaps
 
-1. **space.s2 mismatch**: `space.s2=4` is defined in DTCG but `--foundation-space-2` is missing from `foundations.css`; `--foundation-space-4` is duplicated. Generator should be updated.
+1. **Audit this section regularly**: gaps tend to go stale as token generation evolves. If you fix a gap, update this list in the same change-set.
 
-2. **No alias CSS output layer**: The Brand → Alias → Mapped flow is conceptual; CSS implementation currently maps directly to foundation variables (`theme.css` references `--foundation-*` directly). A future alias CSS layer would provide semantic alias variables (e.g., `--color-bg-primary`) that resolve to foundation values.
+2. **Alias CSS output layer is now implemented**: semantic alias variables live in `packages/tokens/src/aliases.css` and are consumed by `packages/ui/src/styles/theme.css`. Theme switching remains via `[data-theme]` attributes + `prefers-contrast: high`.
 
 ## Related Documentation
 

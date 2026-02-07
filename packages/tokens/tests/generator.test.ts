@@ -43,6 +43,17 @@ describe("Token Generation Properties", () => {
                   .hexaString({ minLength: 6, maxLength: 6 })
                   .map((h) => `#${h.toUpperCase()}`),
               }),
+              highContrast: fc.record({
+                primary: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                secondary: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                tertiary: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+              }),
             }),
             text: fc.record({
               light: fc.record({
@@ -73,6 +84,20 @@ describe("Token Generation Properties", () => {
                   .hexaString({ minLength: 6, maxLength: 6 })
                   .map((h) => `#${h.toUpperCase()}`),
               }),
+              highContrast: fc.record({
+                primary: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                secondary: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                tertiary: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                inverted: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+              }),
             }),
             icon: fc.record({
               light: fc.record({
@@ -88,6 +113,18 @@ describe("Token Generation Properties", () => {
                 inverted: fc
                   .hexaString({ minLength: 6, maxLength: 6 })
                   .map((h) => `#${h.toUpperCase()}`),
+                accent: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                statusError: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                statusWarning: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                statusSuccess: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
               }),
               dark: fc.record({
                 primary: fc
@@ -100,6 +137,44 @@ describe("Token Generation Properties", () => {
                   .hexaString({ minLength: 6, maxLength: 6 })
                   .map((h) => `#${h.toUpperCase()}`),
                 inverted: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                accent: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                statusError: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                statusWarning: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                statusSuccess: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+              }),
+              highContrast: fc.record({
+                primary: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                secondary: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                tertiary: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                inverted: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                accent: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                statusError: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                statusWarning: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                statusSuccess: fc
                   .hexaString({ minLength: 6, maxLength: 6 })
                   .map((h) => `#${h.toUpperCase()}`),
               }),
@@ -117,6 +192,17 @@ describe("Token Generation Properties", () => {
                   .map((h) => `#${h.toUpperCase()}`),
               }),
               dark: fc.record({
+                light: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                default: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                heavy: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+              }),
+              highContrast: fc.record({
                 light: fc
                   .hexaString({ minLength: 6, maxLength: 6 })
                   .map((h) => `#${h.toUpperCase()}`),
@@ -187,6 +273,35 @@ describe("Token Generation Properties", () => {
                   .hexaString({ minLength: 6, maxLength: 6 })
                   .map((h) => `#${h.toUpperCase()}`),
               }),
+              highContrast: fc.record({
+                gray: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                blue: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                red: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                orange: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                yellow: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                green: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                purple: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                pink: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+                foreground: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+              }),
             }),
             interactive: fc.record({
               light: fc.record({
@@ -195,6 +310,11 @@ describe("Token Generation Properties", () => {
                   .map((h) => `#${h.toUpperCase()}`),
               }),
               dark: fc.record({
+                ring: fc
+                  .hexaString({ minLength: 6, maxLength: 6 })
+                  .map((h) => `#${h.toUpperCase()}`),
+              }),
+              highContrast: fc.record({
                 ring: fc
                   .hexaString({ minLength: 6, maxLength: 6 })
                   .map((h) => `#${h.toUpperCase()}`),
@@ -347,8 +467,7 @@ describe("Token Generation Properties", () => {
 
           // Test 4: Accessibility features should be present
           expect(cssOutput).toContain("--foundation-focus-ring");
-          expect(cssOutput).toContain("@media (prefers-contrast: high)");
-          expect(cssOutput).toContain("@media (prefers-reduced-motion: reduce)");
+          // Foundations CSS is variables-only; behavioral selectors live in @design-studio/ui.
 
           // Test 5: Output should be deterministic (same input = same output)
           const cssOutput2 = await generator.generateCSS();
@@ -374,11 +493,15 @@ describe("Token Generation Properties", () => {
     const generator = new TokenGenerator();
 
     const cssOutput = await generator.generateCSS();
+    const aliasesOutput = await generator.generateAliasesCSS();
     const manifest = await generator.generateManifest(cssOutput);
 
     expect(cssOutput).toContain("--foundation-bg-light-1: #FFFFFF;");
     expect(cssOutput).toContain("--foundation-bg-dark-1: #1A1A1A;");
     expect(cssOutput).toContain('"SF Pro"');
+    expect(aliasesOutput).toContain("--ds-bg-primary");
+    expect(aliasesOutput).toContain('[data-theme="dark"]');
+    expect(aliasesOutput).toContain("@media (prefers-contrast: high)");
 
     // Verify spacing scale
     spacingScale.forEach((value) => {

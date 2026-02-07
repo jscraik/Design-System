@@ -103,7 +103,7 @@ function AlbumsCarousel({ onSelect }: AlbumsCarouselProps) {
         }
       >
         <div
-          className="h-full w-full border-l border-border dark:border-border bg-gradient-to-r from-[var(--background)] dark:from-[var(--background)] to-transparent opacity-70"
+          className="h-full w-full border-l border-border bg-gradient-to-r from-background to-transparent opacity-70"
           style={{
             WebkitMaskImage:
               "linear-gradient(to bottom, transparent 0%, white 30%, white 70%, transparent 100%)",
@@ -120,7 +120,7 @@ function AlbumsCarousel({ onSelect }: AlbumsCarouselProps) {
         }
       >
         <div
-          className="h-full w-full border-r border-border dark:border-border bg-gradient-to-l from-[var(--background)] dark:from-[var(--background)] to-transparent opacity-70"
+          className="h-full w-full border-r border-border bg-gradient-to-l from-background to-transparent opacity-70"
           style={{
             WebkitMaskImage:
               "linear-gradient(to bottom, transparent 0%, white 30%, white 70%, transparent 100%)",
