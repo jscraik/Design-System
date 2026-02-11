@@ -1,0 +1,116 @@
+{
+  "$collection": "colors-dark",
+  "$description": "Color tokens - Dark mode",
+  "background/primary": {
+    "$type": "color",
+    "$value": "#1A1A1A"
+  },
+  "background/secondary": {
+    "$type": "color",
+    "$value": "#2A2A2A"
+  },
+  "background/tertiary": {
+    "$type": "color",
+    "$value": "#3A3A3A"
+  },
+  "text/primary": {
+    "$type": "color",
+    "$value": "#FFFFFF"
+  },
+  "text/secondary": {
+    "$type": "color",
+    "$value": "#E0E0E0"
+  },
+  "text/tertiary": {
+    "$type": "color",
+    "$value": "#B8B8B8"
+  },
+  "text/inverted": {
+    "$type": "color",
+    "$value": "#0D0D0D"
+  },
+  "icon/primary": {
+    "$type": "color",
+    "$value": "#FFFFFF"
+  },
+  "icon/secondary": {
+    "$type": "color",
+    "$value": "#E0E0E0"
+  },
+  "icon/tertiary": {
+    "$type": "color",
+    "$value": "#B8B8B8"
+  },
+  "icon/inverted": {
+    "$type": "color",
+    "$value": "#0D0D0D"
+  },
+  "icon/accent": {
+    "$type": "color",
+    "$value": "#339CFF"
+  },
+  "icon/statusError": {
+    "$type": "color",
+    "$value": "#FF8583"
+  },
+  "icon/statusWarning": {
+    "$type": "color",
+    "$value": "#FF9E6C"
+  },
+  "icon/statusSuccess": {
+    "$type": "color",
+    "$value": "#40C977"
+  },
+  "border/light": {
+    "$type": "color",
+    "$value": "#FFFFFF0D"
+  },
+  "border/default": {
+    "$type": "color",
+    "$value": "#FFFFFF26"
+  },
+  "border/heavy": {
+    "$type": "color",
+    "$value": "#FFFFFF26"
+  },
+  "accent/gray": {
+    "$type": "color",
+    "$value": "#AFAFAF"
+  },
+  "accent/red": {
+    "$type": "color",
+    "$value": "#FF8583"
+  },
+  "accent/orange": {
+    "$type": "color",
+    "$value": "#FF9E6C"
+  },
+  "accent/yellow": {
+    "$type": "color",
+    "$value": "#FFDB66"
+  },
+  "accent/green": {
+    "$type": "color",
+    "$value": "#40C977"
+  },
+  "accent/blue": {
+    "$type": "color",
+    "$value": "#66B5FF"
+  },
+  "accent/purple": {
+    "$type": "color",
+    "$value": "#BE95FA"
+  },
+  "accent/pink": {
+    "$type": "color",
+    "$value": "#FF66AD"
+  },
+  "accent/foreground": {
+    "$type": "color",
+    "$value": "#FFFFFF"
+  },
+  "interactive/ring": {
+    "$type": "color",
+    "$value": "#0285FF"
+  }
+}
