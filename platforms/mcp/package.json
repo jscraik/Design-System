@@ -1,0 +1,27 @@
+{
+  "name": "@design-studio/mcp",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "predev": "pnpm -C ../web/apps/web build:widget && pnpm -C ../../packages/widgets build",
+    "dev": "node enhanced-server.js",
+    "prestart": "pnpm -C ../web/apps/web build:widget && pnpm -C ../../packages/widgets build",
+    "start": "node enhanced-server.js",
+    "inspector": "npx @modelcontextprotocol/inspector node enhanced-server.js",
+    "test": "node --test tests/tool-contract.test.mjs tests/jsonrpc-integration.test.mjs",
+    "test:contract": "node --test tests/tool-contract.test.mjs",
+    "test:jsonrpc": "node --test tests/jsonrpc-integration.test.mjs",
+    "test:cli": "node scripts/test-mcp-cli.mjs",
+    "test:inspector-ui": "node scripts/playwright-inspector-smoke.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "hono": "^4.11.7",
+    "zod": "^4.3.5",
+    "zod-to-json-schema": "^3.25.1"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/inspector": "^0.19.0"
+  }
+}
