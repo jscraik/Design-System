@@ -90,7 +90,7 @@
     "release": "changeset publish"
   },
   "devDependencies": {
-    "@argos-ci/cli": "^3.0.6",
+    "@argos-ci/cli": "^4.1.0",
     "@argos-ci/playwright": "^1.7.0",
     "@axe-core/playwright": "^4.11.1",
     "@changesets/cli": "^2.27.1",
