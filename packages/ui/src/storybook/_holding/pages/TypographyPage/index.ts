@@ -1,1 +1,0 @@
-export { TypographyPage } from "./TypographyPage";

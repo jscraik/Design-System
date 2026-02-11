@@ -503,8 +503,8 @@ importers:
         specifier: 19.0.0
         version: 19.0.0
       react-day-picker:
-        specifier: ^9.13.0
-        version: 9.13.0(react@19.0.0)
+        specifier: ^9.13.1
+        version: 9.13.1(react@19.0.0)
       react-dom:
         specifier: 19.0.0
         version: 19.0.0(react@19.0.0)
@@ -512,8 +512,8 @@ importers:
         specifier: ^7.71.1
         version: 7.71.1(react@19.0.0)
       react-resizable-panels:
-        specifier: 4.5.9
-        version: 4.5.9(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        specifier: 4.6.2
+        version: 4.6.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       recharts:
         specifier: 2.15.2
         version: 2.15.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -6822,8 +6822,8 @@ packages:
       react: 19.0.0
       react-dom: 19.0.0
 
-  react-day-picker@9.13.0:
-    resolution: {integrity: sha512-euzj5Hlq+lOHqI53NiuNhCP8HWgsPf/bBAVijR50hNaY1XwjKjShAnIe8jm8RD2W9IJUvihDIZ+KrmqfFzNhFQ==}
+  react-day-picker@9.13.1:
+    resolution: {integrity: sha512-9nx2lBBJ0VZw5jJekId3DishwnJLiqY1Me1JvCrIyqbWwcflBTVaEkiK+w1bre5oMNWYo722eu+8UAMXWMqktw==}
     engines: {node: '>=18'}
     peerDependencies:
       react: 19.0.0
@@ -6896,8 +6896,8 @@ packages:
       '@types/react':
         optional: true
 
-  react-resizable-panels@4.5.9:
-    resolution: {integrity: sha512-7l0w2TxYq032F2o6PnfxDbDEKzi1lohDw3BKx4OBkh6uu7uh+Gj1C0Ubpv0/fOO2bRvo+IIQMOoFE0l2LgpeAg==}
+  react-resizable-panels@4.6.2:
+    resolution: {integrity: sha512-d6hyD6s7ewNAI+oINrZznR/08GUyAszrowXouUDztePEn/tQ2z/LEI2qRvrizYBe3TpgBi0cCjc10pXTTOc4jw==}
     peerDependencies:
       react: 19.0.0
       react-dom: 19.0.0
@@ -15869,7 +15869,7 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
-  react-day-picker@9.13.0(react@19.0.0):
+  react-day-picker@9.13.1(react@19.0.0):
     dependencies:
       '@date-fns/tz': 1.4.1
       date-fns: 4.1.0
@@ -16011,7 +16011,7 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.2.7
 
-  react-resizable-panels@4.5.9(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  react-resizable-panels@4.6.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
