@@ -1,0 +1,23 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const FigmaIcon = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    style={{
+      flex: "none",
+      lineHeight: 1,
+    }}
+    viewBox="0 0 24 24"
+    ref={ref}
+    {...props}
+  >
+    <title>{"Figma"}</title>
+    <path fill="#24CB71" d="M4 20a4 4 0 0 1 4-4h4v4a4 4 0 0 1-8 0" />
+    <path fill="#FF7237" d="M12 0v8h4a4 4 0 0 0 0-8z" />
+    <path fill="#00B6FF" d="M15.967 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8" />
+    <path fill="#FF3737" d="M4 4a4 4 0 0 0 4 4h4V0H8a4 4 0 0 0-4 4" />
+    <path fill="#874FFF" d="M4 12a4 4 0 0 0 4 4h4V8H8a4 4 0 0 0-4 4" />
+  </svg>
+));
+FigmaIcon.displayName = "FigmaIcon";
+export default FigmaIcon;

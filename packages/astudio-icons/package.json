@@ -1,8 +1,9 @@
 {
-  "name": "@design-studio/icons",
-  "version": "0.0.1",
+  "name": "@design-studio/astudio-icons",
+  "version": "0.0.1-deprecated",
   "type": "module",
   "license": "MIT",
+  "deprecated": true,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -12,6 +13,10 @@
       "types": "./dist/arrows.d.ts",
       "import": "./dist/arrows.js"
     },
+    "./chat-tools": {
+      "types": "./dist/chat-tools.d.ts",
+      "import": "./dist/chat-tools.js"
+    },
     "./interface": {
       "types": "./dist/interface.d.ts",
       "import": "./dist/interface.js"
@@ -19,10 +24,6 @@
     "./settings": {
       "types": "./dist/settings.d.ts",
       "import": "./dist/settings.js"
-    },
-    "./chat-tools": {
-      "types": "./dist/chat-tools.d.ts",
-      "import": "./dist/chat-tools.js"
     },
     "./account-user": {
       "types": "./dist/account-user.d.ts",
@@ -62,8 +63,8 @@
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0",
-    "@types/node": "^25.2.2",
-    "@types/react": "^19.2.13",
+    "@types/node": "^25.2.0",
+    "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "tsx": "^4.7.0",
     "vitest": "^4.0.18"

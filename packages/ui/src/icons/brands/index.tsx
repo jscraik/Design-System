@@ -1,0 +1,10 @@
+export { CanvaIcon } from "./CanvaIcon";
+export { DropboxIcon } from "./DropboxIcon";
+export { FigmaIcon } from "./FigmaIcon";
+export { GitHubIcon } from "./GitHubIcon";
+export { LinearIcon } from "./LinearIcon";
+export { MicrosoftIcon } from "./MicrosoftIcon";
+export { NotionIcon } from "./NotionIcon";
+export { SharePointIcon } from "./SharePointIcon";
+export { SlackIcon } from "./SlackIcon";
+export { TeamsIcon } from "./TeamsIcon";
