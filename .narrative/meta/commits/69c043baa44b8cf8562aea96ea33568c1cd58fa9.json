@@ -1,7 +1,0 @@
-{
-  "sha": "69c043baa44b8cf8562aea96ea33568c1cd58fa9",
-  "subject": "feat(navigation): migrate remaining 5 Navigation components to StatefulComponentProps",
-  "author": "jscraik",
-  "authoredAtISO": "2026-01-28T19:58:55Z",
-  "source": "git"
-}

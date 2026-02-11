@@ -67,6 +67,58 @@ export class TokenGenerator {
    * This maintains compatibility with existing foundations.css
    */
   async generateCSS(): Promise<string> {
+    const backgroundHighContrast =
+      (this.tokens.colors.background as Record<
+        string,
+        { primary: string; secondary: string; tertiary: string }
+      >).highContrast ?? this.tokens.colors.background.dark;
+    const textHighContrast =
+      (this.tokens.colors.text as Record<
+        string,
+        { primary: string; secondary: string; tertiary: string; inverted: string }
+      >).highContrast ?? this.tokens.colors.text.dark;
+    const iconHighContrast =
+      (this.tokens.colors.icon as Record<
+        string,
+        {
+          primary: string;
+          secondary: string;
+          tertiary: string;
+          inverted: string;
+          accent: string;
+          statusError: string;
+          statusWarning: string;
+          statusSuccess: string;
+        }
+      >).highContrast ?? this.tokens.colors.icon.dark;
+    const borderHighContrast =
+      (this.tokens.colors.border as Record<
+        string,
+        { light: string; default: string; heavy: string }
+      >).highContrast ?? {
+        light: this.tokens.colors.border.dark.light,
+        default: this.tokens.colors.border.dark.default,
+        heavy: this.tokens.colors.border.dark.heavy,
+      };
+    const accentHighContrast =
+      (this.tokens.colors.accent as Record<
+        string,
+        {
+          gray: string;
+          red: string;
+          orange: string;
+          yellow: string;
+          green: string;
+          blue: string;
+          purple: string;
+          pink: string;
+          foreground: string;
+        }
+      >).highContrast ?? this.tokens.colors.accent.dark;
+    const interactiveHighContrast =
+      (this.tokens.colors.interactive as Record<string, { ring: string }>).highContrast ??
+      this.tokens.colors.interactive.dark;
+
     const cssContent = `/*
   Apps SDK UI audit tokens (from Figma foundations).
   These are reference values for compliance checks and documentation.
@@ -142,44 +194,44 @@ export class TokenGenerator {
   --foundation-accent-pink-light: ${this.tokens.colors.accent.light.pink};
 
   /* High contrast backgrounds */
-  --foundation-bg-high-contrast-1: ${this.tokens.colors.background.highContrast.primary};
-  --foundation-bg-high-contrast-2: ${this.tokens.colors.background.highContrast.secondary};
-  --foundation-bg-high-contrast-3: ${this.tokens.colors.background.highContrast.tertiary};
+  --foundation-bg-high-contrast-1: ${backgroundHighContrast.primary};
+  --foundation-bg-high-contrast-2: ${backgroundHighContrast.secondary};
+  --foundation-bg-high-contrast-3: ${backgroundHighContrast.tertiary};
 
   /* High contrast text */
-  --foundation-text-high-contrast-primary: ${this.tokens.colors.text.highContrast.primary};
-  --foundation-text-high-contrast-secondary: ${this.tokens.colors.text.highContrast.secondary};
-  --foundation-text-high-contrast-tertiary: ${this.tokens.colors.text.highContrast.tertiary};
-  --foundation-text-high-contrast-inverted: ${this.tokens.colors.text.highContrast.inverted};
+  --foundation-text-high-contrast-primary: ${textHighContrast.primary};
+  --foundation-text-high-contrast-secondary: ${textHighContrast.secondary};
+  --foundation-text-high-contrast-tertiary: ${textHighContrast.tertiary};
+  --foundation-text-high-contrast-inverted: ${textHighContrast.inverted};
 
   /* High contrast icon */
-  --foundation-icon-high-contrast-primary: ${this.tokens.colors.icon.highContrast.primary};
-  --foundation-icon-high-contrast-secondary: ${this.tokens.colors.icon.highContrast.secondary};
-  --foundation-icon-high-contrast-tertiary: ${this.tokens.colors.icon.highContrast.tertiary};
-  --foundation-icon-high-contrast-inverted: ${this.tokens.colors.icon.highContrast.inverted};
-  --foundation-icon-high-contrast-accent: ${this.tokens.colors.icon.highContrast.accent};
-  --foundation-icon-high-contrast-status-error: ${this.tokens.colors.icon.highContrast.statusError};
-  --foundation-icon-high-contrast-status-warning: ${this.tokens.colors.icon.highContrast.statusWarning};
-  --foundation-icon-high-contrast-status-success: ${this.tokens.colors.icon.highContrast.statusSuccess};
+  --foundation-icon-high-contrast-primary: ${iconHighContrast.primary};
+  --foundation-icon-high-contrast-secondary: ${iconHighContrast.secondary};
+  --foundation-icon-high-contrast-tertiary: ${iconHighContrast.tertiary};
+  --foundation-icon-high-contrast-inverted: ${iconHighContrast.inverted};
+  --foundation-icon-high-contrast-accent: ${iconHighContrast.accent};
+  --foundation-icon-high-contrast-status-error: ${iconHighContrast.statusError};
+  --foundation-icon-high-contrast-status-warning: ${iconHighContrast.statusWarning};
+  --foundation-icon-high-contrast-status-success: ${iconHighContrast.statusSuccess};
 
   /* High contrast borders */
-  --foundation-border-high-contrast-light: ${this.tokens.colors.border.highContrast.light};
-  --foundation-border-high-contrast-default: ${this.tokens.colors.border.highContrast.default};
-  --foundation-border-high-contrast-heavy: ${this.tokens.colors.border.highContrast.heavy};
+  --foundation-border-high-contrast-light: ${borderHighContrast.light};
+  --foundation-border-high-contrast-default: ${borderHighContrast.default};
+  --foundation-border-high-contrast-heavy: ${borderHighContrast.heavy};
 
   /* High contrast accents */
-  --foundation-accent-gray-high-contrast: ${this.tokens.colors.accent.highContrast.gray};
-  --foundation-accent-red-high-contrast: ${this.tokens.colors.accent.highContrast.red};
-  --foundation-accent-orange-high-contrast: ${this.tokens.colors.accent.highContrast.orange};
-  --foundation-accent-yellow-high-contrast: ${this.tokens.colors.accent.highContrast.yellow};
-  --foundation-accent-green-high-contrast: ${this.tokens.colors.accent.highContrast.green};
-  --foundation-accent-blue-high-contrast: ${this.tokens.colors.accent.highContrast.blue};
-  --foundation-accent-purple-high-contrast: ${this.tokens.colors.accent.highContrast.purple};
-  --foundation-accent-pink-high-contrast: ${this.tokens.colors.accent.highContrast.pink};
-  --foundation-accent-foreground-high-contrast: ${this.tokens.colors.accent.highContrast.foreground};
+  --foundation-accent-gray-high-contrast: ${accentHighContrast.gray};
+  --foundation-accent-red-high-contrast: ${accentHighContrast.red};
+  --foundation-accent-orange-high-contrast: ${accentHighContrast.orange};
+  --foundation-accent-yellow-high-contrast: ${accentHighContrast.yellow};
+  --foundation-accent-green-high-contrast: ${accentHighContrast.green};
+  --foundation-accent-blue-high-contrast: ${accentHighContrast.blue};
+  --foundation-accent-purple-high-contrast: ${accentHighContrast.purple};
+  --foundation-accent-pink-high-contrast: ${accentHighContrast.pink};
+  --foundation-accent-foreground-high-contrast: ${accentHighContrast.foreground};
 
   /* High contrast interactive */
-  --foundation-interactive-high-contrast-ring: ${this.tokens.colors.interactive.highContrast.ring};
+  --foundation-interactive-high-contrast-ring: ${interactiveHighContrast.ring};
 
   /* Spacing scale */
 ${this.generateCSSSpacing()}
