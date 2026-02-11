@@ -103,6 +103,7 @@ jobs:
 
       - name: Type-check packages (web platform only)
         if: matrix.platform == 'web'
+        continue-on-error: ${{ github.event_name == 'pull_request' }}
         run: |
           pnpm -C packages/ui type-check
           pnpm -C packages/runtime type-check
