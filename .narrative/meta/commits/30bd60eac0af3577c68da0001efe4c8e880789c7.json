@@ -1,7 +1,0 @@
-{
-  "sha": "30bd60eac0af3577c68da0001efe4c8e880789c7",
-  "subject": "feat(forms,chat): migrate TagInput, RangeSlider, MessageActions to StatefulComponentProps",
-  "author": "jscraik",
-  "authoredAtISO": "2026-01-28T20:48:23Z",
-  "source": "git"
-}

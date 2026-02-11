@@ -1,7 +1,0 @@
-{
-  "sha": "5ec11a4e3b3ce809250ed31b1193374f6f1e01f0",
-  "subject": "chore(ci): Bump actions/checkout from 4 to 6 (#20)",
-  "author": "dependabot[bot]",
-  "authoredAtISO": "2026-02-04T15:44:15Z",
-  "source": "git"
-}
