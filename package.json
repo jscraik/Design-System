@@ -142,6 +142,7 @@
       "storybook"
     ],
     "onlyBuiltDependencies": [
+      "@biomejs/biome",
       "sharp",
       "workerd"
     ],
