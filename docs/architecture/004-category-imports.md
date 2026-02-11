@@ -239,9 +239,9 @@ Barrel exports: 1.6x (rejected)
 ## References
 
 - Validation report: `docs/validation/tree-shaking-results.md`
-- Vite config: `packages/design-studio-ui/vite.config.ts`
+- Vite config: `packages/ui/vite.config.ts`
 - Migration guide: `docs/MIGRATION.md`
 
 ---
 
-**Last Updated:** 2026-01-26
+**Last Updated:** 2026-02-06

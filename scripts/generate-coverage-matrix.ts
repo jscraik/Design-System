@@ -260,6 +260,28 @@ async function collectFallbackComponents(): Promise<Map<string, FallbackMetadata
   return fallback;
 }
 
+async function readSurfaceUsage(): Promise<SurfaceUsageMap> {
+  if (!(await fileExists(_SURFACE_USAGE_JSON))) {
+    return {};
+  }
+
+  try {
+    const raw = await readText(_SURFACE_USAGE_JSON);
+    return JSON.parse(raw) as SurfaceUsageMap;
+  } catch {
+    return {};
+  }
+}
+
+function resolveSurfaceUsage(name: string, surfaceUsage: SurfaceUsageMap) {
+  const entry = surfaceUsage[name] ?? {};
+  return {
+    web_used: entry.web_used ?? false,
+    tauri_used: entry.tauri_used ?? false,
+    widget_used: entry.widget_used ?? false,
+  };
+}
+
 function readAppsSdkVersion(): string | null {
   try {
     const raw = readFileSync(UI_PACKAGE_JSON, "utf8");
@@ -272,6 +294,10 @@ function readAppsSdkVersion(): string | null {
 
 function formatCell(value: string | null): string {
   return value && value.trim().length > 0 ? value : "-";
+}
+
+function formatBool(value: boolean): string {
+  return value ? "yes" : "no";
 }
 
 function slugifyAnchor(name: string): string {
@@ -360,7 +386,12 @@ async function main(): Promise<void> {
       why_missing_upstream: fallback?.why_missing_upstream ?? null,
       migration_trigger: fallback?.migration_trigger ?? null,
       a11y_contract_ref: a11yContractRef,
-      status: hasMissingMetadata ? "missing_metadata" : usedInWidgets ? "widget_used" : "active",
+      status: hasMissingMetadata
+        ? "missing_metadata"
+        : _usage.widget_used
+          ? "widget_used"
+          : "active",
+      ..._usage,
     });
   }
 

@@ -6,12 +6,13 @@
 
 ## Purpose
 
-Provide a stable token API that components use via utilities (e.g., `bg-bg`, `text-fg`). The source of truth remains the DTCG token bundle.
+Provide a stable token API that components use via utilities (e.g., `bg-background`, `text-foreground`). The source of truth remains the DTCG token bundle.
 
 ## Source of Truth
 
 - DTCG tokens: `packages/tokens/src/tokens/index.dtcg.json`
 - Generated CSS variables: `packages/tokens/src/tokens.css`, `packages/tokens/src/foundations.css`
+- Semantic alias layer: `packages/tokens/src/aliases.css`
 - Tailwind theme layer: `packages/ui/src/styles/theme.css`
 
 ## Mapping Rules
@@ -25,12 +26,12 @@ Tailwind v4 uses `@theme inline` variables to define utilities:
 - `--font-*` → `font-*`
 - `--text-*` → `text-*`
 
-The `@theme` values should reference runtime CSS variables (e.g., `--ds-bg`) so theme switching stays in `themes.css`/tokens CSS.
+The `@theme` values should reference runtime CSS variables (for example, `--background`, `--foreground`) so theme switching stays in `theme.css` and/or token CSS.
 
 ## Recommended Utilities (Examples)
 
-- `bg-bg` / `text-fg` / `border-border`
-- `bg-accent` / `text-accent-fg`
+- `bg-background` / `text-foreground` / `border-border`
+- `bg-accent` / `text-accent-foreground`
 - `rounded-md` / `shadow-sm`
 
 ## Where Theme Values Live

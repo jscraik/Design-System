@@ -1,6 +1,6 @@
 # FORJAMIE.md
 
-**Last updated:** 2026-02-05
+**Last updated:** 2026-02-06
 **Audience:** Developers (intermediate)
 **Owner:** TBD (confirm)
 **Review cadence:** TBD (confirm)
@@ -56,6 +56,7 @@ flowchart LR
   - `docs/design-system/ADOPTION_CHECKLIST.md` — step-by-step integration checklist for web, widgets, and Tauri
   - `docs/testing/` — testing guidelines (smart testing rules)
   - `docs/design-system/COVERAGE_MATRIX_SURFACES.json` — surface usage source of truth (web/tauri/widgets)
+- `reports/` — long-form generated reports and audit snapshots (no secrets/PII; follow `docs/operations/GOVERNANCE_SECURITY_PRIVACY.md`)
 - `scripts/` — build, compliance, and version sync tooling
 
 ## How to Run
@@ -98,6 +99,19 @@ pnpm test:mcp-contract    # MCP contract tests
 
 ## Recent Changes
 
+- **2026-02-07:** Synced `pnpm-lock.yaml` to match workspace dependency specifiers (notably `fast-check@^4.5.3`) and unblocked `pnpm lint` by aligning `biome.json`’s `$schema` to the installed Biome CLI (2.3.11) + applying Biome safe-fixes (format/import order) to a small set of files. Impact: `pnpm install --frozen-lockfile` and `pnpm lint` are green again. (lockfile commit: 81ffc47)
+- **2026-02-06:** Design system hardening pass: (1) Implemented a real Brand → Alias → Mapped CSS flow by generating `packages/tokens/src/aliases.css` and refactoring `packages/ui/src/styles/theme.css` to consume `--ds-*` alias vars (instead of `--foundation-*` directly). (2) Made `packages/tokens/src/foundations.css` variables-only by moving behavioral helpers (reduced-motion override + utility classes) into `packages/ui/src/styles/a11y.css`. (3) Removed bracket-var gradients in widgets (use `from-background` utilities) and switched the solar-system info panel to semantic theme utilities. (4) Replaced hardcoded hex values in the App accent picker with CSS variable-backed accent tokens. (5) Added baseline semantic contrast tests for text/background + updated token generator property tests to include high-contrast/icon fields. Impact: less doc drift, safer theme refactors, clearer layering boundaries, and stronger automated guardrails for accessibility/theming.
+- **2026-02-06:** Added Storybook smoke validation via agent-browser (`pnpm test:agent-browser:storybook:ci`) as a stable alternative to flaky Vitest browser-mode tests for Radix overlay stories (snapshot + screenshot evidence).
+- **2026-02-06:** Set governance defaults (Owner + review cadence) across key adoption docs to improve doc trust and adoption readiness.
+- **2026-02-06:** `.github/workflows/release.yml` and `.github/workflows/publish-astudio.yml` now use `pnpm@10.28.0` (aligned with `package.json` + CI) to reduce release/publish drift risk.
+- **2026-02-06:** Resolved ADR/workflow drift by updating ADR references to the current package structure (`packages/runtime`, `packages/tokens`, `packages/ui`) and removing stale `design-studio-ci` workflow + `tsconfig.design-studio.base.json`.
+- **2026-02-05:** Added formal design system maturity audit report at `reports/design-system-maturity-audit-2026-02-05.md` (scope/context, methodology/rubric, Basic/Intermediate/Advanced requirement tables with evidence paths, and prioritized recommendations). Purpose: capture an evidence-backed maturity snapshot to guide governance and delivery prioritization.
+- **2026-02-05:** Memoized `ChatMessages` rows and centralized action handlers to reduce re-render cost in long conversations (React/Tauri). Impact: lower render latency when new messages arrive.
+- **2026-02-05:** Added `content-visibility: auto` + `contain: content` to `ChatMessages` list wrapper to reduce off-screen render cost in the Tauri bundle. Impact: improved render latency for long chat histories with no behavior change.
+- **2026-02-05:** Updated Combobox listbox markup to use `div` roles (listbox/option) to satisfy Biome a11y lint rules and kept generator formatting aligned with Biome. Impact: lint passes without suppressions.
+- **2026-02-05:** Repaired `scripts/generate-coverage-matrix.ts` (added surface usage helpers, bool formatting, and fixed widget status) so `pnpm ds:matrix:generate` works again. Regenerated coverage matrix JSON/MD. Impact: policy checks can rely on the generator instead of manual doc sync.
+- **2026-02-05:** Fixed combobox accessibility roles (`listbox`/`option`) and regenerated the coverage matrix doc from JSON to align policy tests. Impact: combobox tests pass role queries; coverage matrix policy check reflects latest component list.
+- **2026-02-05:** Refined UI modal state syncing and chat interactions. IconPickerModal + DiscoverySettingsModal now reset local state only when opening (avoids overwriting in-flight edits). ChatInput auto-resizes on message changes, and ChatView scroll listeners use a stable callback to avoid re-binding each render. Impact: smoother UX with fewer state clobbers and more predictable scroll behavior.
 - **2026-02-05:** Fixed syntax errors in 4 package.json files (missing commas in devDependencies) and enabled Biome linter. Applied auto-fixes to 170 files (import type, node: protocol, unused imports). Added ignore patterns for generated files and prototype docs. Impact: linter now active in CI, codebase hygiene improved, 170 fewer style violations.
 - **2026-02-05:** Fixed 5 critical design system audit issues: (1) Added `@supports` wrapper for CSS scroll-driven animations (Safari/Firefox compatibility), (2) Made `aria-label` required for `Button.Icon`, (3) Made `alt` required in `ImageWithFallback`, (4) Separated `compound` prop from `variant` in Button component, (5) Fixed shadow token rgba() format to use comma-separated values for DTCG compliance. Impact: improved accessibility, cross-browser compatibility, and API clarity.
 - **2026-02-05:** Configured Biome linter for clean state. Updated schema to v2.3.13, disabled rules for acceptable legacy patterns (noExplicitAny, noAssignInExpressions), disabled a11y rules requiring widespread refactoring (useButtonType: 221 errors, noSvgWithoutTitle: 433 errors), ignored CSS files (Tailwind v4 directives not supported). Result: 1113 files checked, 0 errors. Impact: linter now passes CI, technical debt documented for future cleanup.

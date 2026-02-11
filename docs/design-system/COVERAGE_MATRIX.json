@@ -1,6 +1,6 @@
 [
   {
-    "name": "AlertDialog",
+    "name": "Accordion",
     "source": "radix_fallback",
     "upstream": null,
     "fallback": "radix",
@@ -13,65 +13,26 @@
     "widget_used": false
   },
   {
-    "name": "Accordion",
-    "source": "upstream",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
-  },
-  {
     "name": "Alert",
-    "source": "upstream",
+    "source": "local_primitive",
     "upstream": null,
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#alert",
     "status": "active",
     "web_used": false,
     "tauri_used": false,
     "widget_used": false
   },
   {
-    "name": "Badge",
-    "source": "upstream",
+    "name": "AlertDialog",
+    "source": "radix_fallback",
     "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
-  },
-  {
-    "name": "Button",
-    "source": "upstream",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
-  },
-  {
-    "name": "Card",
-    "source": "upstream",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
     "status": "active",
     "web_used": false,
     "tauri_used": false,
@@ -234,6 +195,123 @@
     "widget_used": false
   },
   {
+    "name": "Avatar",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Badge",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Breadcrumb",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Button",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Calendar",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#calendar",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Card",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#card",
+    "status": "widget_used",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": true
+  },
+  {
+    "name": "Carousel",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#carousel",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Chart",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#chart",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Checkbox",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
     "name": "CodeBlock",
     "source": "local_primitive",
     "upstream": null,
@@ -241,7 +319,23 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#codeblock",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Collapsible",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "CollapsibleSection",
@@ -251,7 +345,36 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#collapsiblesection",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Combobox",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#combobox",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Command",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#command",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "ContextMenu",
@@ -274,7 +397,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#contexttag",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "DatePicker",
@@ -284,7 +410,23 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#datepicker",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Dialog",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "DirectionProvider",
@@ -294,6 +436,19 @@
     "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
     "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
     "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Drawer",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#drawer",
     "status": "active",
     "web_used": false,
     "tauri_used": false,
@@ -320,7 +475,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#emptymessage",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "ErrorBoundary",
@@ -330,7 +488,36 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#errorboundary",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Form",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "HoverCard",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "IconButton",
@@ -339,18 +526,11 @@
     "fallback": null,
     "why_missing_upstream": null,
     "migration_trigger": null,
-    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#forms",
-    "status": "active"
-  },
-  {
-    "name": "Image",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#iconbutton",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "Image",
@@ -360,7 +540,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#image",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "Indicator",
@@ -370,7 +553,23 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#indicator",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Input",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#input",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "InputOTP",
@@ -380,7 +579,23 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#inputotp",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Label",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "ListItem",
@@ -390,7 +605,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#listitem",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "Markdown",
@@ -400,7 +618,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#markdown",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "Menu",
@@ -410,7 +631,23 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#menu",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Menubar",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "MessageActions",
@@ -420,7 +657,23 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#messageactions",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Modal",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#modal",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "ModelBadge",
@@ -430,7 +683,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#modelbadge",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "ModelSelector",
@@ -440,7 +696,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#modelselector",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "ModeSelector",
@@ -450,10 +709,52 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#modeselector",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "NavigationMenu",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Pagination",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#pagination",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Popover",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Progress",
     "source": "radix_fallback",
     "upstream": null,
     "fallback": "radix",
@@ -486,7 +787,23 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#rangeslider",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Resizable",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#resizable",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "ScrollArea",
@@ -509,7 +826,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#sectionheader",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "SegmentedControl",
@@ -519,7 +839,49 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#segmentedcontrol",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Select",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Separator",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Sheet",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "ShimmerText",
@@ -529,7 +891,101 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#shimmertext",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Sidebar",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Skeleton",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#skeleton",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Slider",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Sonner",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#sonner",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Switch",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Table",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#table",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Tabs",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "TagInput",
@@ -539,7 +995,23 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#taginput",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Textarea",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#textarea",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "TextLink",
@@ -549,10 +1021,52 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#textlink",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Toast",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#toast",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Toggle",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#toggle",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "ToggleGroup",
+    "source": "radix_fallback",
+    "upstream": null,
+    "fallback": "radix",
+    "why_missing_upstream": "Apps SDK UI lacks this component or required API parity.",
+    "migration_trigger": "Replace with Apps SDK UI component when available with matching props and behavior.",
+    "a11y_contract_ref": "docs/KEYBOARD_NAVIGATION_TESTS.md",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Tooltip",
     "source": "radix_fallback",
     "upstream": null,
     "fallback": "radix",
@@ -572,17 +1086,10 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#usemobile",
-    "status": "active"
-  },
-  {
-    "name": "utils",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#utils",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   },
   {
     "name": "ViewModeToggle",
@@ -592,6 +1099,9 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#viewmodetoggle",
-    "status": "active"
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
   }
 ]

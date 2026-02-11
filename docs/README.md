@@ -1,14 +1,14 @@
 # Documentation index for developers
 
-Last updated: 2026-01-09
+Last updated: 2026-02-06
 
 ## Doc requirements
 
 - Audience: Developers (intermediate)
 - Scope: Overview and essential workflows for this area
 - Non-scope: Deep API reference or internal design rationale
-- Owner: Docs Maintainers (confirm)
-- Review cadence: Quarterly (confirm)
+- Owner: Jamie Scott Craik (@jscraik)
+- Review cadence: Monthly or each release (whichever is sooner)
 
 ## Contents
 

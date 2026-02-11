@@ -79,7 +79,7 @@ function Combobox({
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
-  const listRef = React.useRef<HTMLUListElement>(null);
+  const listRef = React.useRef<HTMLDivElement>(null);
   const [highlightedIndex, setHighlightedIndex] = React.useState(-1);
 
   // Determine effective state (priority: loading > error > disabled > default)
@@ -252,13 +252,21 @@ function Combobox({
 
               {error && <div className="px-3 pb-2 text-sm text-status-error">{error}</div>}
 
-              <ul ref={listRef} className="max-h-60 overflow-auto p-1" aria-label="Options">
+              <div
+                ref={listRef}
+                role="listbox"
+                className="max-h-60 overflow-auto p-1"
+                aria-label="Options"
+              >
                 {filteredOptions.length === 0 ? (
-                  <li className="px-3 py-2 text-sm text-muted-foreground">{emptyMessage}</li>
+                  <div role="presentation" className="px-3 py-2 text-sm text-muted-foreground">
+                    {emptyMessage}
+                  </div>
                 ) : (
                   filteredOptions.map((option, index) => (
-                    <li
+                    <div
                       key={option.value}
+                      role="option"
                       aria-selected={value === option.value}
                       aria-disabled={option.disabled || isDisabled}
                       onClick={() => !option.disabled && !isDisabled && handleSelect(option.value)}
@@ -288,10 +296,10 @@ function Combobox({
                         </svg>
                       )}
                       <span className={cn(value !== option.value && "ml-6")}>{option.label}</span>
-                    </li>
+                    </div>
                   ))
                 )}
-              </ul>
+              </div>
             </>
           )}
         </div>

@@ -223,56 +223,160 @@ ${this.generateCSSTypography()}
   --foundation-high-contrast-bg: var(--foundation-bg-high-contrast-1);
   --foundation-high-contrast-border: var(--foundation-border-high-contrast-heavy);
 }
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  :root {
-    --foundation-text-dark-primary: var(--foundation-high-contrast-text);
-    --foundation-text-light-primary: var(--foundation-high-contrast-bg);
-    --foundation-bg-dark-1: var(--foundation-high-contrast-bg);
-    --foundation-bg-light-1: var(--foundation-high-contrast-text);
-    --foundation-focus-ring: var(--foundation-interactive-high-contrast-ring);
-    --foundation-focus-ring-width: 3px;
-  }
-}
-
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --foundation-animation-duration: var(--foundation-animation-duration-reduced);
-  }
-  
-  * {
-    animation-duration: var(--foundation-animation-duration-reduced) !important;
-    transition-duration: var(--foundation-animation-duration-reduced) !important;
-  }
-}
-
-/* Focus ring utilities */
-.foundation-focus-ring {
-  outline: var(--foundation-focus-ring-width) solid var(--foundation-focus-ring);
-  outline-offset: 2px;
-}
-
-.foundation-focus-ring:focus-visible {
-  outline: var(--foundation-focus-ring-width) solid var(--foundation-focus-ring);
-  outline-offset: 2px;
-}
-
-/* Accessibility utilities */
-.foundation-high-contrast {
-  color: var(--foundation-high-contrast-text);
-  background-color: var(--foundation-high-contrast-bg);
-  border: 1px solid var(--foundation-high-contrast-border);
-}
-
-.foundation-reduced-motion {
-  animation: none !important;
-  transition: none !important;
-}
 `;
 
     return cssContent;
+  }
+
+  /**
+   * Generate semantic alias variables (theme-aware) derived from foundation tokens.
+   *
+   * This is the "Alias" layer in the Brand → Alias → Mapped flow:
+   * - Brand: `--foundation-*` variables (audit/source values)
+   * - Alias: `--ds-*` variables (semantic names that vary by theme + high contrast)
+   * - Mapped: app/UI runtime slots (e.g. `--background`) live in `@design-studio/ui`
+   */
+  async generateAliasesCSS(): Promise<string> {
+    return `/*
+  Design system alias variables.
+
+  Purpose:
+  - Provide stable semantic variables for consumption by the UI theme layer.
+  - Keep theme switching in CSS (via [data-theme] + prefers-contrast).
+  - Avoid referencing --foundation-* directly in app/component code.
+*/
+
+:root,
+:where([data-theme="light"]) {
+  /* Backgrounds */
+  --ds-bg-primary: var(--foundation-bg-light-1);
+  --ds-bg-secondary: var(--foundation-bg-light-2);
+  --ds-bg-muted: var(--foundation-bg-light-3);
+  --ds-bg-card: var(--foundation-bg-light-1);
+  --ds-bg-popover: var(--foundation-bg-light-1);
+
+  /* Text */
+  --ds-fg: var(--foundation-text-light-primary);
+  --ds-fg-secondary: var(--foundation-text-light-secondary);
+  --ds-fg-muted: var(--foundation-text-light-tertiary);
+  --ds-fg-inverted: var(--foundation-text-dark-primary);
+
+  /* Icons */
+  --ds-icon: var(--foundation-icon-light-primary);
+  --ds-icon-secondary: var(--foundation-icon-light-secondary);
+  --ds-icon-muted: var(--foundation-icon-light-tertiary);
+  --ds-icon-inverted: var(--foundation-icon-light-inverted);
+
+  /* Borders */
+  --ds-border: var(--foundation-border-light);
+  --ds-border-subtle: var(--foundation-border-light);
+  --ds-border-strong: var(--foundation-border-heavy);
+
+  /* Accents */
+  --ds-accent-gray: var(--foundation-accent-gray-light);
+  --ds-accent-red: var(--foundation-accent-red-light);
+  --ds-accent-orange: var(--foundation-accent-orange-light);
+  --ds-accent-yellow: var(--foundation-accent-yellow-light);
+  --ds-accent-green: var(--foundation-accent-green-light);
+  --ds-accent-blue: var(--foundation-accent-blue-light);
+  --ds-accent-purple: var(--foundation-accent-purple-light);
+  --ds-accent-pink: var(--foundation-accent-pink-light);
+
+  /* Foreground for text/icons on top of accent backgrounds */
+  --ds-accent-foreground: var(--foundation-text-dark-primary);
+
+  /* Focus ring */
+  --ds-ring: var(--foundation-focus-ring);
+}
+
+:where([data-theme="dark"]) {
+  /* Backgrounds */
+  --ds-bg-primary: var(--foundation-bg-dark-1);
+  --ds-bg-secondary: var(--foundation-bg-dark-2);
+  --ds-bg-muted: var(--foundation-bg-dark-3);
+  --ds-bg-card: var(--foundation-bg-dark-1);
+  --ds-bg-popover: var(--foundation-bg-dark-2);
+
+  /* Text */
+  --ds-fg: var(--foundation-text-dark-primary);
+  --ds-fg-secondary: var(--foundation-text-dark-secondary);
+  --ds-fg-muted: var(--foundation-text-dark-tertiary);
+  --ds-fg-inverted: var(--foundation-text-light-primary);
+
+  /* Icons */
+  --ds-icon: var(--foundation-icon-dark-primary);
+  --ds-icon-secondary: var(--foundation-icon-dark-secondary);
+  --ds-icon-muted: var(--foundation-icon-dark-tertiary);
+  --ds-icon-inverted: var(--foundation-icon-dark-inverted);
+
+  /* Borders */
+  --ds-border: var(--foundation-border-dark-light);
+  --ds-border-subtle: var(--foundation-border-dark-light);
+  --ds-border-strong: var(--foundation-border-dark-default);
+
+  /* Accents */
+  --ds-accent-gray: var(--foundation-accent-gray);
+  --ds-accent-red: var(--foundation-accent-red);
+  --ds-accent-orange: var(--foundation-accent-orange);
+  --ds-accent-yellow: var(--foundation-accent-yellow);
+  --ds-accent-green: var(--foundation-accent-green);
+  --ds-accent-blue: var(--foundation-accent-blue);
+  --ds-accent-purple: var(--foundation-accent-purple);
+  --ds-accent-pink: var(--foundation-accent-pink);
+
+  /* Foreground for text/icons on top of accent backgrounds */
+  --ds-accent-foreground: var(--foundation-text-dark-primary);
+
+  /* Focus ring */
+  --ds-ring: var(--foundation-focus-ring);
+}
+
+@media (prefers-contrast: high) {
+  :root,
+  :where([data-theme="light"]),
+  :where([data-theme="dark"]) {
+    /* Backgrounds */
+    --ds-bg-primary: var(--foundation-bg-high-contrast-1);
+    --ds-bg-secondary: var(--foundation-bg-high-contrast-2);
+    --ds-bg-muted: var(--foundation-bg-high-contrast-3);
+    --ds-bg-card: var(--foundation-bg-high-contrast-1);
+    --ds-bg-popover: var(--foundation-bg-high-contrast-2);
+
+    /* Text */
+    --ds-fg: var(--foundation-text-high-contrast-primary);
+    --ds-fg-secondary: var(--foundation-text-high-contrast-secondary);
+    --ds-fg-muted: var(--foundation-text-high-contrast-tertiary);
+    --ds-fg-inverted: var(--foundation-text-high-contrast-inverted);
+
+    /* Icons */
+    --ds-icon: var(--foundation-icon-high-contrast-primary);
+    --ds-icon-secondary: var(--foundation-icon-high-contrast-secondary);
+    --ds-icon-muted: var(--foundation-icon-high-contrast-tertiary);
+    --ds-icon-inverted: var(--foundation-icon-high-contrast-inverted);
+
+    /* Borders */
+    --ds-border: var(--foundation-border-high-contrast-default);
+    --ds-border-subtle: var(--foundation-border-high-contrast-light);
+    --ds-border-strong: var(--foundation-border-high-contrast-heavy);
+
+    /* Accents */
+    --ds-accent-gray: var(--foundation-accent-gray-high-contrast);
+    --ds-accent-red: var(--foundation-accent-red-high-contrast);
+    --ds-accent-orange: var(--foundation-accent-orange-high-contrast);
+    --ds-accent-yellow: var(--foundation-accent-yellow-high-contrast);
+    --ds-accent-green: var(--foundation-accent-green-high-contrast);
+    --ds-accent-blue: var(--foundation-accent-blue-high-contrast);
+    --ds-accent-purple: var(--foundation-accent-purple-high-contrast);
+    --ds-accent-pink: var(--foundation-accent-pink-high-contrast);
+
+    /* Foreground for text/icons on top of accent backgrounds */
+    --ds-accent-foreground: var(--foundation-accent-foreground-high-contrast);
+
+    /* Focus ring */
+    --ds-ring: var(--foundation-interactive-high-contrast-ring);
+  }
+}
+`;
   }
 
   /**
@@ -354,21 +458,26 @@ ${this.generateCSSTypography()}
   async generate(): Promise<void> {
     // Generate content
     const cssContent = await this.generateCSS();
+    const aliasesContent = await this.generateAliasesCSS();
     const manifest = await this.generateManifest(cssContent);
 
     // Determine output paths relative to packages/tokens
     const cssOutputPath = join(process.cwd(), "src/foundations.css");
+    const aliasesOutputPath = join(process.cwd(), "src/aliases.css");
     const manifestOutputPath = join(process.cwd(), "docs/outputs/manifest.json");
 
     await mkdir(dirname(cssOutputPath), { recursive: true });
+    await mkdir(dirname(aliasesOutputPath), { recursive: true });
     await mkdir(dirname(manifestOutputPath), { recursive: true });
 
     // Write files
     await writeFile(cssOutputPath, cssContent, "utf8");
+    await writeFile(aliasesOutputPath, aliasesContent, "utf8");
     await writeFile(manifestOutputPath, JSON.stringify(manifest, null, 2), "utf8");
 
     console.log("✅ Token generation complete");
     console.log(`   CSS: ${cssOutputPath}`);
+    console.log(`   Aliases: ${aliasesOutputPath}`);
     console.log(`   Manifest: ${manifestOutputPath}`);
     console.log(`   CSS SHA: ${manifest.sha256.css.substring(0, 8)}...`);
   }

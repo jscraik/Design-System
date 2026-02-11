@@ -245,8 +245,8 @@ Use **compound** when:
 ## References
 
 - Validation report: `docs/validation/hybrid-pattern-validation-report.md`
-- Component examples: `packages/design-studio-ui/src/components/`
+- Component examples: `packages/ui/src/`
 
 ---
 
-**Last Updated:** 2026-01-26
+**Last Updated:** 2026-02-06

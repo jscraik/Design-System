@@ -133,6 +133,68 @@ describe("Token Validation", () => {
       expect(lightContrast).toBeGreaterThanOrEqual(3);
       expect(darkContrast).toBeGreaterThanOrEqual(3);
     });
+
+    it("should meet baseline text contrast on primary backgrounds (AA-ish guardrails)", () => {
+      const cases: Array<{
+        name: string;
+        fg: string;
+        bg: string;
+        min: number;
+      }> = [
+        {
+          name: "light: text.primary on background.primary",
+          fg: colorTokens.text.light.primary,
+          bg: colorTokens.background.light.primary,
+          min: 4.5,
+        },
+        {
+          name: "light: text.secondary on background.primary",
+          fg: colorTokens.text.light.secondary,
+          bg: colorTokens.background.light.primary,
+          min: 4.5,
+        },
+        {
+          name: "light: text.tertiary on background.primary",
+          fg: colorTokens.text.light.tertiary,
+          bg: colorTokens.background.light.primary,
+          min: 3,
+        },
+        {
+          name: "dark: text.primary on background.primary",
+          fg: colorTokens.text.dark.primary,
+          bg: colorTokens.background.dark.primary,
+          min: 4.5,
+        },
+        {
+          name: "dark: text.secondary on background.primary",
+          fg: colorTokens.text.dark.secondary,
+          bg: colorTokens.background.dark.primary,
+          min: 4.5,
+        },
+        {
+          name: "dark: text.tertiary on background.primary",
+          fg: colorTokens.text.dark.tertiary,
+          bg: colorTokens.background.dark.primary,
+          min: 3,
+        },
+        {
+          name: "high-contrast: text.primary on background.primary",
+          fg: colorTokens.text.highContrast.primary,
+          bg: colorTokens.background.highContrast.primary,
+          min: 7,
+        },
+      ];
+
+      const failures = cases
+        .map((testCase) => {
+          const ratio = contrastRatio(testCase.fg, testCase.bg);
+          if (ratio >= testCase.min) return null;
+          return `${testCase.name}: ${ratio.toFixed(2)} < ${testCase.min}`;
+        })
+        .filter(Boolean);
+
+      expect(failures).toEqual([]);
+    });
   });
 
   describe("Spacing Tokens", () => {

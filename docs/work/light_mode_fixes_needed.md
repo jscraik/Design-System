@@ -1,14 +1,14 @@
 # Light Mode Fixes Needed - Comparison with Figma
 
-Last updated: 2026-02-14
+Last updated: 2026-02-06
 
 ## Doc requirements
 
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
-- Owner: TBD (confirm)
-- Review cadence: TBD (confirm)
+- Owner: Jamie Scott Craik (@jscraik)
+- Review cadence: Monthly or each release (whichever is sooner)
 
 ## Contents
 

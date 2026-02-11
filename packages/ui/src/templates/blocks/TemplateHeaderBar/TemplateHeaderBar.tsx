@@ -66,7 +66,7 @@ const sizeStyles: Record<
   },
   md: {
     padding: "px-4 py-3",
-    title: "text-[15px] leading-6",
+    title: "text-base leading-6",
     subtitle: "text-xs",
     gap: "gap-2",
   },
@@ -158,7 +158,7 @@ export function TemplateHeaderBar({
               {subtitle && (
                 <span
                   className={cn(
-                    "text-muted-foreground truncate block mt-0.5",
+                    "text-text-secondary truncate block mt-0.5",
                     subtitleSize,
                     subtitleClassName,
                   )}

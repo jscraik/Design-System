@@ -59,6 +59,24 @@ const storybookProject = {
 };
 
 export default defineConfig({
+  optimizeDeps: {
+    include: [
+      "@storybook/addon-docs",
+      "@storybook/addon-a11y",
+      "@storybook/addon-docs/blocks",
+      "@radix-ui/react-visually-hidden",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-popover",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-tooltip",
+      "@radix-ui/react-portal",
+      "@radix-ui/react-presence",
+      "@radix-ui/react-dismissable-layer",
+      "@radix-ui/react-focus-scope",
+      "@radix-ui/react-focus-guards",
+    ],
+  },
+
   resolve: {
     alias: {
       "@argos-ci/storybook/internal/vitest-setup-file": argosVitestSetupFilePath,

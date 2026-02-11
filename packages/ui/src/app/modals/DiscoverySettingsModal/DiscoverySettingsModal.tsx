@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { ModalDialog } from "../../../components/ui/overlays/Modal";
 import { cn } from "../../../components/ui/utils";
@@ -157,12 +157,6 @@ export function DiscoverySettingsModal({
   targetSize: externalTargetSize,
   onTargetSizeChange,
 }: DiscoverySettingsModalProps) {
-  useEffect(() => {
-    if (!isOpen) return;
-    setTargetSize(externalTargetSize);
-    setPromptEnhancement(externalPromptEnhancement);
-  }, [isOpen, externalTargetSize, externalPromptEnhancement]);
-
   const [targetSize, setTargetSize] = useState(externalTargetSize);
   const [showAutoPlanBudget, setShowAutoPlanBudget] = useState(false);
   const [autoPlanBudget, setAutoPlanBudget] = useState(80);
@@ -173,6 +167,15 @@ export function DiscoverySettingsModal({
   const [reasoningEffort, setReasoningEffort] = useState<"low" | "medium" | "high">("medium");
   const [verbosity, setVerbosity] = useState<"low" | "medium" | "high">("medium");
   const [storeLogs, setStoreLogs] = useState(true);
+  const wasOpenRef = useRef(false);
+
+  useEffect(() => {
+    if (isOpen && !wasOpenRef.current) {
+      setTargetSize(externalTargetSize);
+      setPromptEnhancement(externalPromptEnhancement);
+    }
+    wasOpenRef.current = isOpen;
+  }, [isOpen, externalTargetSize, externalPromptEnhancement]);
 
   const handlePromptEnhancementChange = (mode: "rewrite" | "augment" | "preserve") => {
     setPromptEnhancement(mode);

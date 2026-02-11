@@ -1,14 +1,14 @@
 # Block Wrapper Pattern Recommendations
 
-Last updated: 2026-01-04
+Last updated: 2026-02-06
 
 ## Doc requirements
 
 - Audience: Developers (intermediate)
 - Scope: Topic defined by this document
 - Non-scope: Anything not explicitly covered here
-- Owner: TBD (confirm)
-- Review cadence: TBD (confirm)
+- Owner: Jamie Scott Craik (@jscraik)
+- Review cadence: Monthly or each release (whichever is sooner)
 
 ## Contents
 
@@ -55,10 +55,11 @@ Design systems like Chakra UI, Radix, and shadcn/ui use wrappers, but they alway
 
 ### Option A: Delete ChatInputBlock (Recommended)
 
-- Remove `packages/ui/src/templates/blocks/ChatInputBlock.tsx`
+- Remove `packages/ui/src/templates/blocks/ChatInputBlock/ChatInputBlock.tsx` (and its `index.ts`)
 - Update imports to use `ChatInput` directly
 - Reduces indirection and file count
 - Cleaner mental model
+- **Status:** Implemented on 2026-02-06 ✅
 
 ### Option B: Keep for Consistency
 

@@ -61,20 +61,20 @@ const sizeStyles: Record<
 > = {
   sm: {
     label: "text-xs leading-4",
-    description: "text-[11px] leading-4",
-    hint: "text-[11px] leading-4",
+    description: "text-xs leading-4",
+    hint: "text-xs leading-4",
     gap: "space-y-1",
   },
   md: {
-    label: "text-[13px] leading-5",
+    label: "text-sm leading-5",
     description: "text-xs leading-4",
     hint: "text-xs leading-4",
     gap: "space-y-1.5",
   },
   lg: {
     label: "text-sm leading-5",
-    description: "text-[13px] leading-5",
-    hint: "text-[13px] leading-5",
+    description: "text-sm leading-5",
+    hint: "text-sm leading-5",
     gap: "space-y-2",
   },
 };
@@ -82,7 +82,7 @@ const sizeStyles: Record<
 const statusStyles: Record<TemplateFormFieldStatus, { border: string; text: string }> = {
   default: {
     border: "",
-    text: "text-muted-foreground",
+    text: "text-text-secondary",
   },
   error: {
     border: "ring-1 ring-status-error",
@@ -204,7 +204,7 @@ export function TemplateFormField({
     <p
       id={descriptionId}
       className={cn(
-        "text-muted-foreground",
+        "text-text-secondary",
         descriptionSize,
         disabled && "opacity-50",
         descriptionClassName,
@@ -254,7 +254,7 @@ export function TemplateFormField({
           </p>
         )}
         {hint && !error && !success && (
-          <p id={hintId} className={cn("text-muted-foreground", hintSize)}>
+          <p id={hintId} className={cn("text-text-secondary", hintSize)}>
             {hint}
           </p>
         )}
@@ -437,7 +437,7 @@ export function TemplateFormFieldInline({
       <label
         htmlFor={fieldId}
         className={cn(
-          "text-[13px] leading-5 font-medium text-foreground shrink-0",
+          "text-sm leading-5 font-medium text-foreground shrink-0",
           disabled && "opacity-50 cursor-not-allowed",
         )}
         style={{ width: widthValue }}

@@ -42,6 +42,12 @@ interface ChatMessagesProps extends StatefulComponentProps {
   onMessageAction?: (action: ChatMessageAction, message: ChatMessage) => void;
 }
 
+interface MessageRowProps {
+  message: ChatMessage;
+  iconMd: string;
+  onMessageAction?: (action: ChatMessageAction, message: ChatMessage) => void;
+}
+
 const sampleMessages: ChatMessage[] = [
   {
     id: "1",
@@ -56,6 +62,121 @@ const sampleMessages: ChatMessage[] = [
     timestamp: new Date(Date.now() - 1000 * 60 * 28),
   },
 ];
+
+const MessageRow = React.memo(
+  function MessageRow({ message, iconMd, onMessageAction }: MessageRowProps) {
+    const handleCopy = React.useCallback(async () => {
+      try {
+        await navigator.clipboard.writeText(message.content);
+      } catch (error) {
+        console.warn("Failed to copy to clipboard:", error);
+      } finally {
+        onMessageAction?.("copy", message);
+      }
+    }, [message, onMessageAction]);
+
+    const handleAction = React.useCallback(
+      (action: ChatMessageAction) => {
+        onMessageAction?.(action, message);
+      },
+      [message, onMessageAction],
+    );
+
+    return (
+      <div className="group">
+        {message.role === "assistant" ? (
+          <div className="flex gap-3">
+            <div className="mt-1">
+              <IconOpenAILogo className="size-6 text-foreground/80 dark:text-foreground/80" />
+            </div>
+            <div className="flex flex-col gap-6">
+              <div className="text-body-medium font-normal text-foreground dark:text-foreground whitespace-pre-wrap">
+                {message.content}
+              </div>
+              <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button
+                  className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
+                  title="Copy"
+                  onClick={handleCopy}
+                >
+                  <IconCopy className={iconMd} />
+                </button>
+                <button
+                  className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
+                  title="Good response"
+                  onClick={() => handleAction("thumbs-up")}
+                >
+                  <IconThumbUp className={iconMd} />
+                </button>
+                <button
+                  className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
+                  title="Bad response"
+                  onClick={() => handleAction("thumbs-down")}
+                >
+                  <IconThumbDown className={iconMd} />
+                </button>
+                <button
+                  className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
+                  title="Share"
+                  onClick={() => handleAction("share")}
+                >
+                  <IconShare className={iconMd} />
+                </button>
+                <button
+                  className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
+                  title="Regenerate"
+                  onClick={() => handleAction("regenerate")}
+                >
+                  <IconRegenerate className={iconMd} />
+                </button>
+                <button
+                  className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
+                  title="More"
+                  onClick={() => handleAction("more")}
+                >
+                  <IconDotsHorizontal className={iconMd} />
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="flex justify-end">
+            <div className="flex items-start gap-2 max-w-[70%]">
+              <div className="bg-secondary dark:bg-secondary text-foreground dark:text-foreground text-body-medium font-normal rounded-[20px] px-4 py-3 border border-muted dark:border-muted">
+                {message.content}
+              </div>
+              <div className="mt-1">
+                <IconUser className="size-6 text-foreground/70 dark:text-foreground/70" />
+              </div>
+              <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button
+                  onClick={handleCopy}
+                  className="p-1.5 rounded-lg hover:bg-secondary dark:hover:bg-secondary text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground transition-colors"
+                  title="Copy"
+                >
+                  <IconCopy className={iconMd} />
+                </button>
+                <button
+                  onClick={() => handleAction("edit")}
+                  className="p-1.5 rounded-lg hover:bg-secondary dark:hover:bg-secondary text-muted-foreground dark:text-muted-foreground hover:text-foreground dark:hover:text-foreground transition-colors"
+                  title="Edit"
+                >
+                  <IconEdit className={iconMd} />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  },
+  (prev, next) =>
+    prev.message.id === next.message.id &&
+    prev.message.role === next.message.role &&
+    prev.message.content === next.message.content &&
+    prev.iconMd === next.iconMd &&
+    prev.onMessageAction === next.onMessageAction,
+);
 
 /**
  * Renders the chat message list with optional empty state.
@@ -153,109 +274,17 @@ export function ChatMessages({
       aria-busy={loading || undefined}
       className="bg-background dark:bg-background"
     >
-      <div className="max-w-[62rem] mx-auto px-6 py-8 space-y-6">
+      <div
+        className="max-w-[62rem] mx-auto px-6 py-8 space-y-6"
+        style={{ contentVisibility: "auto", contain: "content" }}
+      >
         {resolvedMessages.map((message, index) => (
-          <div key={message.id ?? index} className="group">
-            {message.role === "assistant" ? (
-              <div className="flex gap-3">
-                <div className="mt-1">
-                  <IconOpenAILogo className="size-6 text-foreground/80 dark:text-foreground/80" />
-                </div>
-                <div className="flex flex-col gap-6">
-                  <div className="text-body-medium font-normal text-foreground dark:text-foreground whitespace-pre-wrap">
-                    {message.content}
-                  </div>
-                  <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button
-                      className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
-                      title="Copy"
-                      onClick={async () => {
-                        try {
-                          await navigator.clipboard.writeText(message.content);
-                        } catch (error) {
-                          console.warn("Failed to copy to clipboard:", error);
-                        } finally {
-                          onMessageAction?.("copy", message);
-                        }
-                      }}
-                    >
-                      <IconCopy className={iconMd} />
-                    </button>
-                    <button
-                      className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
-                      title="Good response"
-                      onClick={() => onMessageAction?.("thumbs-up", message)}
-                    >
-                      <IconThumbUp className={iconMd} />
-                    </button>
-                    <button
-                      className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
-                      title="Bad response"
-                      onClick={() => onMessageAction?.("thumbs-down", message)}
-                    >
-                      <IconThumbDown className={iconMd} />
-                    </button>
-                    <button
-                      className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
-                      title="Share"
-                      onClick={() => onMessageAction?.("share", message)}
-                    >
-                      <IconShare className={iconMd} />
-                    </button>
-                    <button
-                      className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
-                      title="Regenerate"
-                      onClick={() => onMessageAction?.("regenerate", message)}
-                    >
-                      <IconRegenerate className={iconMd} />
-                    </button>
-                    <button
-                      className="p-1.5 hover:bg-secondary dark:hover:bg-secondary rounded-md transition-colors text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground"
-                      title="More"
-                      onClick={() => onMessageAction?.("more", message)}
-                    >
-                      <IconDotsHorizontal className={iconMd} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="flex justify-end">
-                <div className="flex items-start gap-2 max-w-[70%]">
-                  <div className="bg-secondary dark:bg-secondary text-foreground dark:text-foreground text-body-medium font-normal rounded-[20px] px-4 py-3 border border-muted dark:border-muted">
-                    {message.content}
-                  </div>
-                  <div className="mt-1">
-                    <IconUser className="size-6 text-foreground/70 dark:text-foreground/70" />
-                  </div>
-                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button
-                      onClick={async () => {
-                        try {
-                          await navigator.clipboard.writeText(message.content);
-                        } catch (error) {
-                          console.warn("Failed to copy to clipboard:", error);
-                        } finally {
-                          onMessageAction?.("copy", message);
-                        }
-                      }}
-                      className="p-1.5 rounded-lg hover:bg-secondary dark:hover:bg-secondary text-text-secondary dark:text-text-secondary hover:text-foreground dark:hover:text-foreground transition-colors"
-                      title="Copy"
-                    >
-                      <IconCopy className={iconMd} />
-                    </button>
-                    <button
-                      onClick={() => onMessageAction?.("edit", message)}
-                      className="p-1.5 rounded-lg hover:bg-secondary dark:hover:bg-secondary text-muted-foreground dark:text-muted-foreground hover:text-foreground dark:hover:text-foreground transition-colors"
-                      title="Edit"
-                    >
-                      <IconEdit className={iconMd} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+          <MessageRow
+            key={message.id ?? index}
+            message={message}
+            iconMd={iconMd}
+            onMessageAction={onMessageAction}
+          />
         ))}
       </div>
     </div>

@@ -10,6 +10,7 @@
       "import": "./dist/index.js"
     },
     "./foundations.css": "./src/foundations.css",
+    "./aliases.css": "./src/aliases.css",
     "./tokens.css": "./src/tokens.css",
     "./icon-picker-theme.css": "./src/icon-picker-theme.css",
     "./enhanced.css": "./src/enhanced.css",

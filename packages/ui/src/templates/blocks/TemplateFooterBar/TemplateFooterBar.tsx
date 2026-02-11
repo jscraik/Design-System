@@ -64,7 +64,7 @@ const sizeStyles: Record<TemplateFooterBarSize, { padding: string; gap: string }
 const statusStyles: Record<TemplateFooterBarStatus, { bg: string; text: string; icon: string }> = {
   default: {
     bg: "",
-    text: "text-muted-foreground",
+    text: "text-text-secondary",
     icon: "text-muted-foreground",
   },
   success: {
@@ -162,7 +162,7 @@ export function TemplateFooterBar({
   const progressElement = progress && (
     <div className="flex items-center gap-2 min-w-[120px]">
       {progress.label && (
-        <span className="text-xs text-muted-foreground whitespace-nowrap">{progress.label}</span>
+        <span className="text-xs text-text-secondary whitespace-nowrap">{progress.label}</span>
       )}
       <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
         <div
@@ -171,7 +171,7 @@ export function TemplateFooterBar({
         />
       </div>
       {progress.showPercentage && (
-        <span className="text-xs tabular-nums text-muted-foreground min-w-[2.5rem] text-right">
+        <span className="text-xs tabular-nums text-text-secondary min-w-[2.5rem] text-right">
           {Math.round(progress.value)}%
         </span>
       )}
@@ -201,7 +201,7 @@ export function TemplateFooterBar({
 
   const shortcutElement = shortcut && (
     <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-      <kbd className="px-1.5 py-0.5 rounded bg-muted font-mono text-[11px] border border-border">
+      <kbd className="px-1.5 py-0.5 rounded bg-muted font-mono text-xs border border-border">
         {shortcut.key}
       </kbd>
       <span>{shortcut.label}</span>
