@@ -1,0 +1,72 @@
+{
+  "name": "@design-studio/tokens",
+  "version": "2.0.0",
+  "type": "module",
+  "license": "Apache-2.0",
+  "description": "DesignStudio Tokens - Type-safe design tokens with CSS variables and runtime theming API",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./foundations.css": "./src/foundations.css",
+    "./aliases.css": "./src/aliases.css",
+    "./tokens.css": "./src/tokens.css",
+    "./icon-picker-theme.css": "./src/icon-picker-theme.css",
+    "./enhanced.css": "./src/enhanced.css",
+    "./tailwind.preset": "./tailwind.preset.ts",
+    "./tokens/index.dtcg.json": "./src/tokens/index.dtcg.json"
+  },
+  "files": [
+    "src",
+    "dist",
+    "tailwind.preset.ts"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": [
+    "./src/foundations.css",
+    "./src/tokens.css",
+    "./src/icon-picker-theme.css",
+    "./src/enhanced.css"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "type-check": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf dist",
+    "generate": "tsx scripts/sync-dtcg.ts && tsx scripts/generate-tokens.ts && tsx scripts/export-figma.ts",
+    "tokens:sync": "tsx scripts/sync-dtcg.ts",
+    "export:figma": "tsx scripts/export-figma.ts",
+    "generate:watch": "tsx watch scripts/generate-tokens.ts",
+    "validate": "tsx scripts/validate-tokens.ts",
+    "dev": "tsx scripts/dev-tools.ts",
+    "dev:verbose": "tsx scripts/dev-tools.ts --verbose",
+    "dev:hot-reload": "tsx scripts/watch-tokens.ts",
+    "dev:hot-reload:verbose": "tsx scripts/watch-tokens.ts --verbose",
+    "tokens:watch": "tsx src/dev-tools/token-watcher.ts",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "lint": "biome check .",
+    "format": "biome format --write ."
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "react": "^19.2.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.0",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/jest-dom": "^6.6.6",
+    "@types/node": "^25.2.2",
+    "@types/react": "^19.2.13",
+    "fast-check": "^3.15.1",
+    "happy-dom": "^20.5.3",
+    "react": "^19.2.4",
+    "tsx": "^4.7.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18",
+    "chokidar": "^5.0.0"
+  }
+}
