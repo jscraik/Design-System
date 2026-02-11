@@ -1,0 +1,5 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import * as React from "react";
+const Go = React.forwardRef((props, ref) => _jsx("svg", { xmlns: "http://www.w3.org/2000/svg", fill: "none", preserveAspectRatio: "none", viewBox: "0 0 24 24", ref: ref, ...props, children: _jsxs("g", { fill: "currentColor", children: [_jsx("path", { d: "M9.5 9c.213 0 .392.16.415.372.148 1.299.885 2.094 2.204 2.212a.419.419 0 0 1-.001.832c-1.3.113-2.089.901-2.202 2.202a.419.419 0 0 1-.833 0c-.117-1.318-.912-2.055-2.211-2.203a.418.418 0 0 1-.001-.83c1.318-.153 2.061-.897 2.213-2.214A.42.42 0 0 1 9.5 9" }), _jsx("path", { d: "M9.526 2.561a3.5 3.5 0 0 1 4.95 0l6.964 6.965a3.5 3.5 0 0 1 0 4.95l-6.965 6.964a3.5 3.5 0 0 1-4.95 0l-6.964-6.965a3.5 3.5 0 0 1 0-4.95zm3.535 1.414a1.5 1.5 0 0 0-2.121 0L3.975 10.94a1.5 1.5 0 0 0 0 2.121l6.965 6.965a1.5 1.5 0 0 0 2.121 0l6.965-6.965a1.5 1.5 0 0 0 0-2.121z" })] }) }));
+Go.displayName = "Go";
+export default Go;
