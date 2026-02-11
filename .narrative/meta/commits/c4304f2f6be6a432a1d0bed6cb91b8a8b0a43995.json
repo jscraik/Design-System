@@ -1,7 +1,0 @@
-{
-  "sha": "c4304f2f6be6a432a1d0bed6cb91b8a8b0a43995",
-  "subject": "feat(navigation): migrate Tabs, NavigationMenu, Menubar to StatefulComponentProps",
-  "author": "jscraik",
-  "authoredAtISO": "2026-01-28T19:50:11Z",
-  "source": "git"
-}
