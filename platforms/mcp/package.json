@@ -16,7 +16,7 @@
     "test:inspector-ui": "node scripts/playwright-inspector-smoke.mjs"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.25.2",
+    "@modelcontextprotocol/sdk": "^1.26.0",
     "hono": "^4.11.7",
     "zod": "^4.3.5",
     "zod-to-json-schema": "^3.25.1"
