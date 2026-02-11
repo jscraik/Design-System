@@ -73,44 +73,44 @@
   --foundation-accent-pink-light: #E04C91;
 
   /* High contrast backgrounds */
-  --foundation-bg-high-contrast-1: #000000;
-  --foundation-bg-high-contrast-2: #1A1A1A;
-  --foundation-bg-high-contrast-3: #2B2B2B;
+  --foundation-bg-high-contrast-1: #1A1A1A;
+  --foundation-bg-high-contrast-2: #2A2A2A;
+  --foundation-bg-high-contrast-3: #3A3A3A;
 
   /* High contrast text */
   --foundation-text-high-contrast-primary: #FFFFFF;
-  --foundation-text-high-contrast-secondary: #E6E6E6;
-  --foundation-text-high-contrast-tertiary: #CFCFCF;
-  --foundation-text-high-contrast-inverted: #000000;
+  --foundation-text-high-contrast-secondary: #E0E0E0;
+  --foundation-text-high-contrast-tertiary: #B8B8B8;
+  --foundation-text-high-contrast-inverted: #0D0D0D;
 
   /* High contrast icon */
   --foundation-icon-high-contrast-primary: #FFFFFF;
-  --foundation-icon-high-contrast-secondary: #E6E6E6;
-  --foundation-icon-high-contrast-tertiary: #CFCFCF;
-  --foundation-icon-high-contrast-inverted: #000000;
-  --foundation-icon-high-contrast-accent: #4DA3FF;
-  --foundation-icon-high-contrast-status-error: #FF4D4D;
-  --foundation-icon-high-contrast-status-warning: #FF8A3D;
-  --foundation-icon-high-contrast-status-success: #4DFF88;
+  --foundation-icon-high-contrast-secondary: #E0E0E0;
+  --foundation-icon-high-contrast-tertiary: #B8B8B8;
+  --foundation-icon-high-contrast-inverted: #0D0D0D;
+  --foundation-icon-high-contrast-accent: #339CFF;
+  --foundation-icon-high-contrast-status-error: #FF8583;
+  --foundation-icon-high-contrast-status-warning: #FF9E6C;
+  --foundation-icon-high-contrast-status-success: #40C977;
 
   /* High contrast borders */
-  --foundation-border-high-contrast-light: #FFFFFF33;
-  --foundation-border-high-contrast-default: #FFFFFF66;
-  --foundation-border-high-contrast-heavy: #FFFFFF;
+  --foundation-border-high-contrast-light: #FFFFFF0D;
+  --foundation-border-high-contrast-default: #FFFFFF26;
+  --foundation-border-high-contrast-heavy: #FFFFFF26;
 
   /* High contrast accents */
-  --foundation-accent-gray-high-contrast: #D9D9D9;
-  --foundation-accent-red-high-contrast: #FF4D4D;
-  --foundation-accent-orange-high-contrast: #FF8A3D;
-  --foundation-accent-yellow-high-contrast: #FFD84D;
-  --foundation-accent-green-high-contrast: #4DFF88;
-  --foundation-accent-blue-high-contrast: #4DA3FF;
-  --foundation-accent-purple-high-contrast: #B884FF;
-  --foundation-accent-pink-high-contrast: #FF66CC;
-  --foundation-accent-foreground-high-contrast: #000000;
+  --foundation-accent-gray-high-contrast: #AFAFAF;
+  --foundation-accent-red-high-contrast: #FF8583;
+  --foundation-accent-orange-high-contrast: #FF9E6C;
+  --foundation-accent-yellow-high-contrast: #FFDB66;
+  --foundation-accent-green-high-contrast: #40C977;
+  --foundation-accent-blue-high-contrast: #66B5FF;
+  --foundation-accent-purple-high-contrast: #BE95FA;
+  --foundation-accent-pink-high-contrast: #FF66AD;
+  --foundation-accent-foreground-high-contrast: #FFFFFF;
 
   /* High contrast interactive */
-  --foundation-interactive-high-contrast-ring: #FFFFFF;
+  --foundation-interactive-high-contrast-ring: #0285FF;
 
   /* Spacing scale */
   --foundation-space-128: 128px;
@@ -291,10 +291,10 @@
   --foundation-size-hit-target: 44px;
 
   /* Shadows */
-  --foundation-shadow-card: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --foundation-shadow-pip: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --foundation-shadow-pill: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --foundation-shadow-close: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --foundation-shadow-card: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
+  --foundation-shadow-pip: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
+  --foundation-shadow-pill: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
+  --foundation-shadow-close: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
 
   /* Accessibility */
   --foundation-focus-ring: #0285ff;
