@@ -17,22 +17,20 @@ export * from "./hooks/useControllableState";
 export * from "./hooks/useFocusTrap";
 // Icons (canonical source - 350+ icons from Figma)
 export * from "./icons";
-// Vendor Components (explicit exports with AppsSDK prefix to avoid conflicts)
-export {
-  AppsSDKUIProvider,
-  Badge as AppsSDKBadge,
-  Button as AppsSDKButton,
-  Checkbox as AppsSDKCheckbox,
-  CodeBlock as AppsSDKCodeBlock,
-  Download as AppsSDKDownloadIcon,
-  Image as AppsSDKImage,
-  Input as AppsSDKInput,
-  Popover as AppsSDKPopover,
-  Sparkles as AppsSDKSparklesIcon,
-  Textarea as AppsSDKTextarea,
-} from "./integrations/apps-sdk";
-// Figma integrations
-export * from "./integrations/figma";
+// NEW: Account category icons (from Figma)
+export * as AccountUserIcons from "./account-user";
+// NEW: Arrow icons
+export * as ArrowIcons from "./arrows";
+// NEW: Chat tool icons
+export * as ChatToolsIcons from "./chat-tools";
+// NEW: Misc/utility icons
+export * as MiscIcons from "./misc";
+// NEW: Platform icons
+export * as PlatformIcons from "./platform";
+// NEW: Settings icons
+export * as SettingsIcons from "./settings";
+// Apps SDK Wrapper Components (stable abstraction layer with version safety)
+export * from "./integrations/apps-sdk-wrapper";
 // Templates (canonical source)
 export * from "./templates";
 export * from "./utils/theme";

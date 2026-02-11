@@ -1,0 +1,19 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const RobotHead = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    preserveAspectRatio="none"
+    viewBox="0 0 24 24"
+    ref={ref}
+    {...props}
+  >
+    <g fill="currentColor">
+      <path d="M10 10a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M17 10a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+      <path d="M12 2a1 1 0 0 1 1 1v1h5.5a3 3 0 0 1 3 3v2.268a2 2 0 0 1 1 1.732v1a2 2 0 0 1-1 1.733V15a5 5 0 0 1-5 5h-9a5 5 0 0 1-5-5v-1.267A2 2 0 0 1 1.5 12v-1a2 2 0 0 1 1-1.732V7a3 3 0 0 1 3-3H11V3a1 1 0 0 1 1-1M5.5 6a1 1 0 0 0-1 1v8a3 3 0 0 0 3 3h9a3 3 0 0 0 3-3V7a1 1 0 0 0-1-1zm3.578 8.114a1 1 0 0 1 1.308-.536c1.14.476 2.089.476 3.228 0a1 1 0 1 1 .772 1.845c-1.633.683-3.139.683-4.772 0a1 1 0 0 1-.536-1.309" />
+    </g>
+  </svg>
+));
+RobotHead.displayName = "RobotHead";
+export default RobotHead;
