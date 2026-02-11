@@ -1,6 +1,5 @@
-import * as TogglePrimitive from "@radix-ui/react-toggle";
 import { cva } from "class-variance-authority";
-import { useState } from "react";
+import { useId } from "react";
 import { useReducedMotion } from "../../hooks";
 import { cn } from "../../utils";
 
@@ -65,8 +64,7 @@ export interface LiquidToggleProps {
 /**
  * Morphing toggle with liquid effect.
  *
- * Built on Radix UI Toggle primitive for accessibility.
- * Uses CSS morphing and SVG filters for the liquid animation.
+ * Uses a semantic button with `aria-pressed` and CSS morphing/SVG filters.
  *
  * Accessibility:
  * - Full keyboard navigation (Tab, Enter, Space)
@@ -98,7 +96,8 @@ export function LiquidToggle({
   children,
   ariaLabel,
 }: LiquidToggleProps) {
-  const [filterId] = useState(() => `liquid-filter-${Math.random().toString(36).substring(2, 9)}`);
+  const rawFilterId = useId();
+  const filterId = `liquid-filter-${rawFilterId.replace(/:/g, "")}`;
   const prefersReducedMotion = useReducedMotion();
 
   // Skip liquid effect if reduced motion preferred
@@ -127,11 +126,13 @@ export function LiquidToggle({
         </svg>
       )}
 
-      <TogglePrimitive.Root
-        pressed={pressed}
-        onPressedChange={onPressedChange}
+      <button
+        type="button"
+        aria-pressed={pressed}
         disabled={disabled}
         aria-label={ariaLabel}
+        data-state={pressed ? "on" : "off"}
+        onClick={() => onPressedChange?.(!pressed)}
         className={cn(
           liquidToggleVariants({ variant, size, liquid }),
           shouldApplyLiquid && "liquid-effect",
@@ -167,7 +168,7 @@ export function LiquidToggle({
             aria-hidden="true"
           />
         )}
-      </TogglePrimitive.Root>
+      </button>
     </>
   );
 }
