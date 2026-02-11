@@ -1,0 +1,5 @@
+import { jsx as _jsx } from "react/jsx-runtime";
+import * as React from "react";
+const GroupFilled = React.forwardRef((props, ref) => _jsx("svg", { xmlns: "http://www.w3.org/2000/svg", fill: "none", preserveAspectRatio: "none", viewBox: "0 0 24 24", ref: ref, ...props, children: _jsx("g", { fill: "currentColor", children: _jsx("path", { d: "M7 19a1 1 0 0 1-1-1c0-1.692.812-2.982 1.983-3.815C9.124 13.373 10.589 13 12 13c1.41 0 2.876.373 4.017 1.185C17.188 15.018 18 16.308 18 18a1 1 0 0 1-1 1zM19.5 18c0-1.944-.829-3.502-2.047-4.586A5.2 5.2 0 0 1 19.5 13c1.058 0 2.157.311 3.013.988.878.694 1.487 1.768 1.487 3.179 0 .46-.336.833-.75.833zM6.547 13.414C5.33 14.498 4.5 16.056 4.5 18H.75c-.414 0-.75-.373-.75-.833 0-1.41.609-2.486 1.487-3.18C2.343 13.312 3.442 13 4.5 13c.691 0 1.4.133 2.047.414M12 5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7M4.5 7a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M19.5 7a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5" }) }) }));
+GroupFilled.displayName = "GroupFilled";
+export default GroupFilled;
