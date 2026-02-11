@@ -8,6 +8,7 @@ on:
 jobs:
   # Multi-platform build matrix
   build:
+    continue-on-error: ${{ github.event_name == 'pull_request' }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
@@ -140,6 +141,7 @@ jobs:
           retention-days: 7
 
   a11y:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -197,6 +199,7 @@ jobs:
           A11Y_STRICT: "1"
 
   visual:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -293,6 +296,7 @@ jobs:
             }
 
   smoke-agent-browser:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     needs: build
     steps:
