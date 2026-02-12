@@ -1,0 +1,1 @@
+import{b as n,u as t}from"./index-CYBJUsK9.js";import"./vendor-react-C7s9o2DG.js";function s(e){return n(e)}function i(){return s("theme")}function c(){const e=s("displayMode"),o=t().requestDisplayMode;return{mode:e,requestMode:o}}function d(){return s("maxHeight")}function h(){return t().sendMessage}export{d as a,h as b,c,i as u};

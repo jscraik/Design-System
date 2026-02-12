@@ -1,0 +1,21 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/npm/@figma/code-connect@1.3.12/schema.json",
+  "build": {
+    "devUrl": "http://localhost:6006"
+  },
+  "src": {
+    "include": [
+      "packages/ui/src/templates/**/*.tsx",
+      "packages/ui/src/components/**/*.tsx"
+    ],
+    "exclude": [
+      "**/*.stories.tsx",
+      "**/*.test.tsx"
+    ]
+  },
+  "figmaDocs": {
+    "baseUrl": "https://www.figma.com",
+    "fileKey": "",
+    "nodeId": ""
+  }
+}

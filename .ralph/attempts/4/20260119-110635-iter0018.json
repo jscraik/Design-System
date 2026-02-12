@@ -1,0 +1,20 @@
+{
+  "attempt_id": "20260119-110635-iter0018",
+  "iteration": 18,
+  "task_id": "4",
+  "task_title": "Polish, docs, and smoke test",
+  "started_at": "2026-01-19T11:06:35.701787+00:00",
+  "ended_at": "2026-01-19T11:06:45.867598+00:00",
+  "runner_ok": false,
+  "gates_ok": null,
+  "judge_ok": null,
+  "review_ok": null,
+  "blocked": true,
+  "exit_signal": null,
+  "return_code": 1,
+  "prompt_hash": "4359aaf944be46e35b73887c3a62ba387301c85cb46cc46a024aee13874987b2",
+  "branch": "main",
+  "log_path": "/Users/jamiecraik/dev/aStudio/.ralph/logs/20260119T110635Z-iter0018-claude.log",
+  "receipts_dir": "/Users/jamiecraik/dev/aStudio/.ralph/receipts/4/20260119-110635-iter0018",
+  "context_dir": "/Users/jamiecraik/dev/aStudio/.ralph/context/4/20260119-110635-iter0018"
+}
