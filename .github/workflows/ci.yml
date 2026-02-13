@@ -120,6 +120,15 @@ jobs:
         if: matrix.platform == 'web'
         run: pnpm test:mcp-contract
 
+      - name: Install Playwright (web platform only)
+        if: matrix.platform == 'web'
+        run: |
+          if [ "${{ runner.os }}" = "Linux" ]; then
+            pnpm exec playwright install --with-deps chromium
+          else
+            pnpm exec playwright install chromium
+          fi
+
       - name: Enhanced build pipeline
         run: node scripts/build-pipeline.mjs --platforms ${{ matrix.platform }}
 
