@@ -1,4 +1,3 @@
-import * as TogglePrimitive from "@radix-ui/react-toggle";
 import { cva } from "class-variance-authority";
 import { useState } from "react";
 import { useReducedMotion } from "../../hooks";
@@ -100,6 +99,7 @@ export function LiquidToggle({
 }: LiquidToggleProps) {
   const [filterId] = useState(() => `liquid-filter-${Math.random().toString(36).substring(2, 9)}`);
   const prefersReducedMotion = useReducedMotion();
+  const nextPressed = !pressed;
 
   // Skip liquid effect if reduced motion preferred
   const shouldApplyLiquid = liquid !== "none" && !prefersReducedMotion;
@@ -127,9 +127,11 @@ export function LiquidToggle({
         </svg>
       )}
 
-      <TogglePrimitive.Root
-        pressed={pressed}
-        onPressedChange={onPressedChange}
+      <button
+        type="button"
+        data-state={pressed ? "on" : "off"}
+        aria-pressed={pressed}
+        onClick={() => onPressedChange?.(nextPressed)}
         disabled={disabled}
         aria-label={ariaLabel}
         className={cn(
@@ -167,7 +169,7 @@ export function LiquidToggle({
             aria-hidden="true"
           />
         )}
-      </TogglePrimitive.Root>
+      </button>
     </>
   );
 }
