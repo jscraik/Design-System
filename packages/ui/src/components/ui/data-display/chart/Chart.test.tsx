@@ -7,7 +7,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "./Chart";
+} from "./chart";
 
 describe("Chart", () => {
   const mockOnStateChange = vi.fn();

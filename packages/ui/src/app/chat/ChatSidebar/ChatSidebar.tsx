@@ -16,8 +16,8 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "../../../components/ui/base/Collapsible";
-import { Input } from "../../../components/ui/base/Input";
+} from "../../../components/ui/base/collapsible";
+import { Input } from "../../../components/ui/base/input";
 import { ListItem } from "../../../components/ui/base/ListItem";
 import {
   DropdownMenu,

@@ -2,7 +2,7 @@ import type { ComponentState, StatefulComponentProps } from "@design-studio/toke
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react";
 import * as React from "react";
 import { IconArrowLeftSm, IconArrowRightSm } from "../../../../icons";
-import { Button } from "../../base/Button";
+import { Button } from "../../base/button";
 import { cn } from "../../utils";
 
 type CarouselApi = UseEmblaCarouselType[1];

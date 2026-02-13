@@ -1,6 +1,6 @@
 import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
-import { Button } from "../../base/Button";
+import { Button } from "../../base/button";
 import { cn } from "../../utils";
 
 /**

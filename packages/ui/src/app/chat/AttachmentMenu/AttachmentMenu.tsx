@@ -1,6 +1,6 @@
 import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "../../../components/ui/overlays/Popover";
+import { Popover, PopoverContent, PopoverTrigger } from "../../../components/ui/overlays/popover";
 import { cn } from "../../../components/ui/utils";
 import {
   CanvaIcon,

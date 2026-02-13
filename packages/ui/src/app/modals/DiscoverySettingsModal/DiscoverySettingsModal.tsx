@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-import { ModalDialog } from "../../../components/ui/overlays/Modal";
+import { ModalDialog } from "../../../components/ui/overlays/modal";
 import { cn } from "../../../components/ui/utils";
 
 interface DiscoverySettingsModalProps {

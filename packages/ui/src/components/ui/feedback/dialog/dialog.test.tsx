@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 
 import { render, screen, waitFor } from "../../../../testing/utils";
-import { Button } from "../../base/Button";
+import { Button } from "../../base/button";
 
 import {
   Dialog,

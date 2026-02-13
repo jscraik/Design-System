@@ -11,7 +11,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./Table";
+} from "./table";
 
 describe("Table", () => {
   describe("rendering", () => {

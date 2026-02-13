@@ -17,7 +17,7 @@ import {
   useFormContext,
   useFormState,
 } from "react-hook-form";
-import { Label } from "../../../base/Label";
+import { Label } from "../../../base/label";
 import { cn } from "../../../utils";
 
 /**
