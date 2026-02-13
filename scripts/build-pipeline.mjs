@@ -17,13 +17,20 @@ import { dirname, join } from "node:path";
 const CONFIG = {
   platforms: ["web"],
   packages: {
-    npm: ["packages/ui", "packages/runtime", "packages/tokens", "packages/widgets"],
+    npm: [
+      "packages/ui",
+      "packages/runtime",
+      "packages/tokens",
+      "packages/json-render",
+      "packages/widgets",
+    ],
   },
   outputs: {
     web: [
       "packages/ui/dist",
       "packages/runtime/dist",
       "packages/tokens/dist",
+      "packages/json-render/dist",
       "packages/widgets/dist",
     ],
   },
