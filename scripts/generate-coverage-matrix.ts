@@ -201,7 +201,9 @@ async function collectAppsSdkExports(): Promise<NamedExport[]> {
 }
 
 async function walkFiles(dir: string): Promise<string[]> {
-  const entries = await readdir(dir, { withFileTypes: true });
+  const entries = (await readdir(dir, { withFileTypes: true })).sort((a, b) =>
+    a.name.localeCompare(b.name),
+  );
   const files: string[] = [];
 
   for (const entry of entries) {
@@ -213,7 +215,7 @@ async function walkFiles(dir: string): Promise<string[]> {
     }
   }
 
-  return files;
+  return files.sort((a, b) => a.localeCompare(b));
 }
 
 type FallbackMetadata = {
