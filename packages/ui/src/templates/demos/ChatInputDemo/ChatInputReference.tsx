@@ -1,6 +1,6 @@
 import type { FormEvent, ReactNode } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "../../../components/ui/overlays/Popover";
+import { Popover, PopoverContent, PopoverTrigger } from "../../../components/ui/overlays/popover";
 
 import { cn } from "../../../components/ui/utils";
 

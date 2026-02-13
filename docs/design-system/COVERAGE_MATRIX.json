@@ -676,6 +676,19 @@
     "widget_used": false
   },
   {
+    "name": "ModeSelector",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#modeselector",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
     "name": "ModelBadge",
     "source": "local_primitive",
     "upstream": null,
@@ -696,19 +709,6 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#modelselector",
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
-  },
-  {
-    "name": "ModeSelector",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#modeselector",
     "status": "active",
     "web_used": false,
     "tauri_used": false,
@@ -1001,19 +1001,6 @@
     "widget_used": false
   },
   {
-    "name": "Textarea",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#textarea",
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
-  },
-  {
     "name": "TextLink",
     "source": "local_primitive",
     "upstream": null,
@@ -1021,6 +1008,19 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#textlink",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
+    "name": "Textarea",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#textarea",
     "status": "active",
     "web_used": false,
     "tauri_used": false,

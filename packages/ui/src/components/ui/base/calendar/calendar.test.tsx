@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { Calendar } from "./Calendar";
+import { Calendar } from "./calendar";
 
 // Mock useId for stable IDs in tests
 vi.mock("react", async () => {

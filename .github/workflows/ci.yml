@@ -56,7 +56,7 @@ jobs:
           swift-version: "5.9"
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --prod=false
 
       - name: Check version synchronization
         run: pnpm sync:versions:check
@@ -120,6 +120,15 @@ jobs:
         if: matrix.platform == 'web'
         run: pnpm test:mcp-contract
 
+      - name: Install Playwright (web platform only)
+        if: matrix.platform == 'web'
+        run: |
+          if [ "${{ runner.os }}" = "Linux" ]; then
+            pnpm exec playwright install --with-deps chromium
+          else
+            pnpm exec playwright install chromium
+          fi
+
       - name: Enhanced build pipeline
         run: node scripts/build-pipeline.mjs --platforms ${{ matrix.platform }}
 
@@ -168,7 +177,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --prod=false
 
       - name: Install Playwright
         run: pnpm exec playwright install --with-deps chromium
@@ -225,7 +234,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --prod=false
 
       - name: Install Playwright
         run: pnpm exec playwright install --with-deps chromium
@@ -321,7 +330,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --prod=false
 
       - name: Build web app
         run: pnpm build:web

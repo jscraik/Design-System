@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, waitFor } from "../../../../testing/utils";
-import * as Drawer from "./Drawer";
+import * as Drawer from "./drawer";
 
 describe("Drawer", () => {
   const mockOnOpenChange = vi.fn();

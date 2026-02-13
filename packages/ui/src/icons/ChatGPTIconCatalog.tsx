@@ -29,24 +29,32 @@ const radius = {
   iconTile: toPx(radiusTokens.r10),
 };
 
-const headingStyle = (token: (typeof typographyTokens)["h1"]) => ({
+type TypographyToken = {
+  size: number;
+  lineHeight: number;
+  weight: number;
+  tracking: number;
+  emphasisWeight?: number;
+};
+
+const headingStyle = (token: TypographyToken) => ({
   fontSize: toPx(token.size),
   lineHeight: toPx(token.lineHeight),
   fontWeight: token.weight,
   letterSpacing: toPx(token.tracking),
 });
 
-const bodyStyle = (token: (typeof typographyTokens)["paragraphMd"]) => ({
+const bodyStyle = (token: TypographyToken) => ({
   fontSize: toPx(token.size),
   lineHeight: toPx(token.lineHeight),
   fontWeight: token.weight,
   letterSpacing: toPx(token.tracking),
 });
 
-const labelStyle = (token: (typeof typographyTokens)["paragraphSm"]) => ({
+const labelStyle = (token: TypographyToken) => ({
   fontSize: toPx(token.size),
   lineHeight: toPx(token.lineHeight),
-  fontWeight: token.emphasisWeight,
+  fontWeight: token.emphasisWeight ?? token.weight,
   letterSpacing: toPx(token.tracking),
 });
 

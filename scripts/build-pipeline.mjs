@@ -17,15 +17,23 @@ import { dirname, join } from "node:path";
 const CONFIG = {
   platforms: ["web"],
   packages: {
-    npm: ["packages/ui", "packages/runtime", "packages/tokens", "packages/widgets"],
+    npm: [
+      "packages/ui",
+      "packages/runtime",
+      "packages/tokens",
+      "packages/json-render",
+      "packages/widgets",
+    ],
   },
   outputs: {
     web: [
       "packages/ui/dist",
       "packages/runtime/dist",
       "packages/tokens/dist",
+      "packages/json-render/dist",
       "packages/widgets/dist",
     ],
+    macos: [],
   },
   cacheDir: ".build-cache",
   manifestFile: ".build-cache/build-manifest.json",
@@ -157,9 +165,23 @@ class BuildPipeline {
       case "web":
         await this.buildWebPlatform(incremental);
         break;
+      case "macos":
+        await this.buildMacOSPlatform(incremental);
+        break;
       default:
         throw new Error(`Unknown platform: ${platform}`);
     }
+  }
+
+  /**
+   * Build macOS platform artifacts.
+   *
+   * This repo currently has no native macOS package targets wired into the
+   * pipeline, so the macOS matrix lane is a no-op placeholder.
+   */
+  async buildMacOSPlatform(_incremental = true) {
+    console.log("  ⏭️  No macOS native build targets configured, skipping");
+    this.results.push({ step: "macos-build", success: true, skipped: true });
   }
 
   /**

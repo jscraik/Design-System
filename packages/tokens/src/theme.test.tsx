@@ -8,6 +8,18 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { ThemeProvider, useEffectiveTheme, useTheme } from "./theme";
 
+const createMatchMedia = (matches: boolean): MediaQueryList =>
+  ({
+    matches,
+    media: "(prefers-color-scheme: dark)",
+    onchange: null,
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  }) as MediaQueryList;
+
 describe("ThemeProvider", () => {
   beforeEach(() => {
     // Clear localStorage before each test
@@ -84,12 +96,7 @@ describe("ThemeProvider", () => {
   describe("system theme detection", () => {
     it("should resolve system theme to light when pref is light", () => {
       // Mock window.matchMedia to return light mode
-      vi.spyOn(window, "matchMedia").mockReturnValue({
-        matches: false,
-        media: "(prefers-color-scheme: dark)",
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-      });
+      vi.spyOn(window, "matchMedia").mockReturnValue(createMatchMedia(false));
 
       render(
         <ThemeProvider defaultTheme="system">
@@ -102,12 +109,7 @@ describe("ThemeProvider", () => {
 
     it("should resolve system theme to dark when pref is dark", () => {
       // Mock window.matchMedia to return dark mode
-      vi.spyOn(window, "matchMedia").mockReturnValue({
-        matches: true,
-        media: "(prefers-color-scheme: dark)",
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-      });
+      vi.spyOn(window, "matchMedia").mockReturnValue(createMatchMedia(true));
 
       render(
         <ThemeProvider defaultTheme="system">
@@ -136,12 +138,7 @@ describe("ThemeProvider", () => {
     });
 
     it("should return 'dark' when system preference is dark", () => {
-      vi.spyOn(window, "matchMedia").mockReturnValue({
-        matches: true,
-        media: "(prefers-color-scheme: dark)",
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-      });
+      vi.spyOn(window, "matchMedia").mockReturnValue(createMatchMedia(true));
 
       function TestComponent() {
         const effectiveTheme = useEffectiveTheme();
