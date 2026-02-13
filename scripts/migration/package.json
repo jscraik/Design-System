@@ -1,0 +1,16 @@
+{
+  "name": "design-studio-migration-scripts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "migrate:dry": "tsx migrate-imports.ts && tsx migrate-package-refs.ts",
+    "migrate:apply": "tsx migrate-imports.ts --apply && tsx migrate-package-refs.ts --apply",
+    "migrate:imports": "tsx migrate-imports.ts",
+    "migrate:packages": "tsx migrate-package-refs.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.7.0",
+    "@types/node": "^25.0.0"
+  }
+}

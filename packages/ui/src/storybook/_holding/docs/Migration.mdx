@@ -1,0 +1,282 @@
+import { Meta, Canvas, Story } from "@storybook/addon-docs/blocks";
+import { Toggle, IconButton, Button } from "../../index";
+import * as MigrationStories from "./Migration.stories";
+
+<Meta of={MigrationStories} />
+
+# Migration Guide
+
+This guide helps you migrate between versions of the aStudio library and understand breaking changes.
+
+## 🚀 Latest Changes (v0.1.0)
+
+### Component Extraction & Refactoring
+
+We've extracted reusable components from larger components for better composition and maintainability.
+
+### Breaking Changes
+
+#### Toggle Component API
+
+The `Toggle` component now uses `onChange` instead of `onCheckedChange` for consistency.
+
+**Before:**
+
+```tsx
+<Toggle checked={value} onCheckedChange={setValue} />
+```
+
+**After:**
+
+```tsx
+<Toggle checked={value} onChange={setValue} />
+```
+
+<Canvas>
+  <Story name="Toggle Migration">
+    {() => {
+      const [checked, setChecked] = React.useState(false);
+      return (
+        <div className="p-4 space-y-4">
+          <div>
+            <h4 className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-2">
+              New API (recommended):
+            </h4>
+            <Toggle checked={checked} onChange={setChecked} />
+          </div>
+          <div className="text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary text-sm">
+            Current state: {checked ? "On" : "Off"}
+          </div>
+        </div>
+      );
+    }}
+  </Story>
+</Canvas>
+
+#### IconButton Active State
+
+The `IconButton` component now uses an `active` prop with `activeColor` instead of conditional variants.
+
+**Before:**
+
+```tsx
+<IconButton
+  icon={<Icon />}
+  variant={isActive ? "solid" : "ghost"}
+  className={isActive ? "bg-accent-blue" : ""}
+/>
+```
+
+**After:**
+
+```tsx
+<IconButton
+  icon={<Icon />}
+  variant="ghost"
+  active={isActive}
+  activeColor="var(--foundation-accent-blue)"
+/>
+```
+
+<Canvas>
+  <Story name="IconButton Migration">
+    {() => {
+      const [isActive, setIsActive] = React.useState(false);
+      return (
+        <div className="p-4 space-y-4">
+          <div className="flex items-center gap-4">
+            <IconButton
+              icon={<span>❤️</span>}
+              variant="ghost"
+              active={isActive}
+              activeColor="var(--foundation-accent-red)"
+              onClick={() => setIsActive(!isActive)}
+              title="Toggle active state"
+            />
+            <span className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+              {isActive ? "Active" : "Inactive"}
+            </span>
+          </div>
+        </div>
+      );
+    }}
+  </Story>
+</Canvas>
+
+### New Component Organization
+
+Components are now organized by category for better tree-shaking and discoverability:
+
+```tsx
+// Form components
+import { Button, Input, Toggle } from "@design-studio/ui/base";
+
+// Layout components
+import { Card } from "@design-studio/ui/data-display";
+import { Dialog } from "@design-studio/ui/feedback";
+import { Tabs, ModelSelector } from "@design-studio/ui/navigation";
+
+// Chat-specific components
+import { ContextTag } from "@design-studio/ui/overlays";
+
+// Or import everything from main entry
+import { Button, ModelSelector, ContextTag } from "@design-studio/ui";
+```
+
+### Export Structure Changes
+
+We've resolved naming conflicts between vendor components and custom UI components:
+
+**Before (potential conflicts):**
+
+```tsx
+import { Button } from "@design-studio/ui"; // Could be vendor or custom
+```
+
+**After (explicit):**
+
+```tsx
+import { Button } from "@design-studio/ui"; // Always our custom Button
+import { Popover } from "@design-studio/ui"; // Explicit vendor export
+```
+
+## 🛠️ Migration Steps
+
+### 1. Update Component Props
+
+Find and replace the old prop names:
+
+```bash
+# Replace Toggle props
+find src -name "*.tsx" -exec sed -i 's/onCheckedChange/onChange/g' {} \;
+
+# Update IconButton usage (manual review recommended)
+grep -r "variant.*solid.*ghost" src/
+```
+
+### 2. Update Imports (Optional)
+
+For better tree-shaking, consider using category imports:
+
+```tsx
+// Before
+import { Button, Input, ModelSelector, ContextTag } from "@design-studio/ui";
+
+// After (optional, for better tree-shaking)
+import { Button, Input } from "@design-studio/ui/base";
+import { ModelSelector } from "@design-studio/ui/navigation";
+import { ContextTag } from "@design-studio/ui/overlays";
+```
+
+### 3. Test Your Components
+
+Use Storybook to verify your components still work correctly:
+
+```bash
+pnpm storybook:dev
+pnpm storybook:test   # Run Storybook interaction tests
+```
+
+## 🆕 New Features
+
+### Enhanced Development Tools
+
+```tsx
+import { logProps, validateProps, measureRender } from "@design-studio/ui";
+
+// Debug component props in development
+const MyComponent = (props) => {
+  logProps("MyComponent", props);
+  validateProps("MyComponent", props, ["required", "prop"]);
+  // ...
+};
+```
+
+### Theme Utilities
+
+```tsx
+import { colors, spacing, getCSSVar, setCSSVar } from "@design-studio/ui";
+
+// Use design tokens programmatically
+const styles = {
+  backgroundColor: colors.bg.dark1,
+  padding: spacing.md,
+};
+
+// Dynamic theme changes
+setCSSVar("--foundation-accent-blue", "#0066cc");
+```
+
+### Testing Utilities
+
+```tsx
+import { TestWrapper, mockData, a11y } from "@design-studio/ui";
+
+// Wrap components for testing
+<TestWrapper>
+  <YourComponent />
+</TestWrapper>;
+
+// Use mock data
+const models = mockData.models;
+const messages = mockData.messages;
+```
+
+## 📋 Compatibility Matrix
+
+| Feature                  | v0.0.x | v0.1.0 | Notes           |
+| ------------------------ | ------ | ------ | --------------- |
+| Toggle `onChange`        | ❌     | ✅     | Breaking change |
+| Toggle `onCheckedChange` | ✅     | ❌     | Removed         |
+| IconButton `active` prop | ❌     | ✅     | New feature     |
+| Category imports         | ❌     | ✅     | Optional        |
+| Theme utilities          | ❌     | ✅     | New feature     |
+| Development tools        | ❌     | ✅     | New feature     |
+
+## 🔍 Validation Checklist
+
+After migration, verify:
+
+- [ ] All Toggle components use `onChange` prop
+- [ ] IconButton components use `active` prop instead of conditional variants
+- [ ] No TypeScript errors in component usage
+- [ ] Storybook builds and displays components correctly
+- [ ] Accessibility tests pass in Storybook A11y addon
+- [ ] Visual appearance matches expectations
+
+## 🆘 Troubleshooting
+
+### Common Issues
+
+**TypeScript errors about missing props:**
+
+- Check that you've updated `onCheckedChange` to `onChange` for Toggle components
+- Verify IconButton props match the new API
+
+**Components not rendering correctly:**
+
+- Ensure you're importing from the correct paths
+- Check that CSS is properly imported: `import "@design-studio/ui/styles.css"`
+
+**Bundle size increased:**
+
+- Consider using category imports for better tree-shaking
+- Use the bundle analysis in Storybook to identify large dependencies
+
+### Getting Help
+
+1. Check the component documentation in Storybook
+2. Review the interactive examples and prop tables
+3. Use the A11y addon to verify accessibility
+4. Check the browser console for any warnings or errors
+
+## 🎯 Future Roadmap
+
+Upcoming features and potential breaking changes:
+
+- Enhanced theming system with CSS-in-JS support
+- Additional form validation components
+- Mobile-optimized component variants
+- Performance optimizations for large lists
+
+We'll provide migration guides for any future breaking changes.

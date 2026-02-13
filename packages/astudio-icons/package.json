@@ -1,9 +1,8 @@
 {
-  "name": "@design-studio/astudio-icons",
-  "version": "0.0.1-deprecated",
+  "name": "@design-studio/icons",
+  "version": "0.0.1",
   "type": "module",
   "license": "MIT",
-  "deprecated": true,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -13,10 +12,6 @@
       "types": "./dist/arrows.d.ts",
       "import": "./dist/arrows.js"
     },
-    "./chat-tools": {
-      "types": "./dist/chat-tools.d.ts",
-      "import": "./dist/chat-tools.js"
-    },
     "./interface": {
       "types": "./dist/interface.d.ts",
       "import": "./dist/interface.js"
@@ -24,6 +19,10 @@
     "./settings": {
       "types": "./dist/settings.d.ts",
       "import": "./dist/settings.js"
+    },
+    "./chat-tools": {
+      "types": "./dist/chat-tools.d.ts",
+      "import": "./dist/chat-tools.js"
     },
     "./account-user": {
       "types": "./dist/account-user.d.ts",

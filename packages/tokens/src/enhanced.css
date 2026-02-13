@@ -1,0 +1,158 @@
+/**
+ * @design-studio/tokens - Enhanced CSS
+ *
+ * Geist-inspired design tokens that extend the Apps SDK UI foundation.
+ * Import this AFTER foundations.css to add enhanced token support.
+ *
+ * Usage:
+ *   @import "@design-studio/tokens/foundations.css";
+ *   @import "@design-studio/tokens/enhanced.css";
+ */
+
+:root {
+  /* =======================================================================
+     SPACING - 10-step scale
+     ======================================================================= */
+
+  --ds-spacing-xs: 0.25rem; /* 4px */
+  --ds-spacing-sm: 0.5rem; /* 8px */
+  --ds-spacing-md: 1rem; /* 16px */
+  --ds-spacing-lg: 1.5rem; /* 24px */
+  --ds-spacing-xl: 2rem; /* 32px */
+  --ds-spacing-2xl: 2.5rem; /* 40px */
+  --ds-spacing-3xl: 3rem; /* 48px */
+  --ds-spacing-4xl: 4rem; /* 64px */
+  --ds-spacing-5xl: 6rem; /* 96px */
+
+  /* =======================================================================
+     Z-INDEX - Semantic layering
+     ======================================================================= */
+
+  --ds-z-behind: -1;
+  --ds-z-base: 0;
+  --ds-z-raised: 1;
+  --ds-z-dropdown: 10;
+  --ds-z-sticky: 20;
+  --ds-z-header: 50;
+  --ds-z-modal-backdrop: 100;
+  --ds-z-modal: 101;
+  --ds-z-popover: 200;
+  --ds-z-tooltip: 1000;
+  --ds-z-maximum: 99999;
+
+  /* =======================================================================
+     MOTION - Easing functions
+     ======================================================================= */
+
+  --ds-easing-swift: cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  --ds-easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ds-easing-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ds-easing-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ds-easing-linear: linear;
+
+  /* =======================================================================
+     MOTION - Durations
+     ======================================================================= */
+
+  --ds-duration-micro: 75ms;
+  --ds-duration-fast: 150ms;
+  --ds-duration-standard: 200ms;
+  --ds-duration-moderate: 250ms;
+  --ds-duration-slow: 350ms;
+  --ds-duration-complex: 500ms;
+  --ds-duration-long: 1000ms;
+  --ds-duration-extra-long: 1400ms;
+
+  /* =======================================================================
+     MICRO-INTERACTIONS
+     ======================================================================= */
+
+  --ds-micro-hover-translate-y: -1px;
+  --ds-micro-hover-scale: 1.01;
+  --ds-micro-hover-duration: 75ms;
+  --ds-micro-hover-easing: cubic-bezier(0, 0, 0.2, 1);
+  --ds-micro-press-scale: 0.98;
+  --ds-micro-press-duration: 75ms;
+  --ds-micro-press-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* =======================================================================
+     FOCUS RING
+     ======================================================================= */
+
+  --ds-focus-ring:
+    0 0 0 1px var(--ds-color-border, var(--foundation-border-light)),
+    0 0 0 4px var(--ds-color-focus, var(--foundation-text-light-primary));
+  --ds-focus-ring-inset:
+    0 0 0 1px var(--ds-color-border, var(--foundation-border-light)),
+    inset 0 0 0 2px var(--ds-color-focus, var(--foundation-text-light-primary));
+  --ds-focus-radius: 2px;
+  --ds-focus-width: 2px;
+  --ds-focus-offset: 4px;
+}
+
+/* =======================================================================
+   FOCUS VISIBLE STYLES
+   ======================================================================= */
+
+/* Focus ring styles */
+:focus-visible {
+  box-shadow: var(--ds-focus-ring);
+  border-radius: var(--ds-focus-radius);
+  outline: none;
+}
+
+/* Inset focus ring (for inputs, etc.) */
+:focus-visible.input-focus-ring {
+  box-shadow: var(--ds-focus-ring-inset);
+  border-radius: var(--ds-focus-radius);
+  outline: none;
+}
+
+/* No outline when focusing with mouse */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* =======================================================================
+   REDUCED MOTION SUPPORT
+   ======================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    /* Faster transitions for reduced motion */
+    --ds-duration-micro: 0ms;
+    --ds-duration-fast: 0ms;
+    --ds-duration-standard: 0ms;
+    --ds-duration-moderate: 0ms;
+    --ds-duration-slow: 0ms;
+    --ds-duration-complex: 0ms;
+    --ds-duration-long: 0ms;
+    --ds-duration-extra-long: 0ms;
+  }
+
+  * {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+  }
+}
+
+/* =======================================================================
+   THEME DATA ATTRIBUTES
+   ======================================================================= */
+
+/* Light theme (default) */
+[data-theme="light"] {
+  --ds-color-border: var(--foundation-border-light);
+  --ds-color-focus: var(--foundation-accent-blue-light);
+  --ds-color-text-primary: var(--foundation-text-light-primary);
+  --ds-color-text-inverse: var(--foundation-text-dark-primary);
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --ds-color-border: var(--foundation-border-dark-default);
+  --ds-color-focus: var(--foundation-accent-blue);
+  --ds-color-text-primary: var(--foundation-text-dark-primary);
+  --ds-color-text-inverse: var(--foundation-text-light-primary);
+}

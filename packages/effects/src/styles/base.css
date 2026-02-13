@@ -1,0 +1,26 @@
+/**
+ * Base styles for effects components
+ */
+
+.effects-component {
+  /* Hardware acceleration hints */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.effects-component-interactive {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Focus visible for keyboard navigation */
+.effects-component-interactive:focus-visible {
+  outline: 2px solid var(--foundation-accent-green);
+  outline-offset: 2px;
+}
+
+/* Hide focus for mouse interactions */
+.effects-component-interactive:focus:not(:focus-visible) {
+  outline: none;
+}

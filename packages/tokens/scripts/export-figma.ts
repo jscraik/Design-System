@@ -8,7 +8,7 @@
  * - For tokens with modes, we export all mode values and let Figma organize them
  */
 
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 
 const dtcgPath = new URL("../src/tokens/index.dtcg.json", import.meta.url);
 const figmaOutputPath = new URL("../dist/figma-tokens.json", import.meta.url);
@@ -326,7 +326,11 @@ async function main(): Promise<void> {
 
   // Ensure dist directory exists
   const distPath = new URL("../dist/", import.meta.url);
-  await mkdir(distPath, { recursive: true });
+  try {
+    await writeFile(new URL(".gitkeep", distPath), "");
+  } catch {
+    // Directory might not exist, that's ok
+  }
 
   // Write main output
   await writeFile(figmaOutputPath, JSON.stringify(figmaOutput, null, 2));

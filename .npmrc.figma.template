@@ -1,0 +1,6 @@
+# Figma org private registry configuration
+# Replace <AUTH_TOKEN> with an admin-generated key from Figma Make settings.
+# Do not commit real tokens.
+
+@astudio:registry=https://npm.figma.com/
+//npm.figma.com/:_authToken=<AUTH_TOKEN>

@@ -1,0 +1,256 @@
+/**
+ * Animation keyframes for effects components
+ */
+
+/* Liquid morph effect */
+@keyframes liquid-morph {
+  0%,
+  100% {
+    border-radius: 8px;
+  }
+  25% {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  }
+  50% {
+    border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
+  }
+  75% {
+    border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
+  }
+}
+
+/* Magnetic follow effect */
+@keyframes magnetic-follow {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(var(--magnetic-x), var(--magnetic-y));
+  }
+}
+
+/* Holographic shimmer */
+@keyframes holo-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* Glow pulse */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 5px var(--glow-color)) drop-shadow(0 0 10px var(--glow-color))
+      drop-shadow(0 0 20px var(--glow-color));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px var(--glow-color)) drop-shadow(0 0 20px var(--glow-color))
+      drop-shadow(0 0 40px var(--glow-color));
+  }
+}
+
+/* Gradient flow */
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
+}
+
+/* Scroll reveal */
+@keyframes scroll-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glow breathing animation */
+@keyframes glow-breathe {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 5px var(--glow-color)) drop-shadow(0 0 10px var(--glow-color));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px var(--glow-color)) drop-shadow(0 0 30px var(--glow-color));
+  }
+}
+
+/* Gradient shimmer */
+@keyframes gradient-shimmer {
+  0% {
+    background-position: -150% center;
+  }
+  100% {
+    background-position: 150% center;
+  }
+}
+
+/* Apply glow animations via utility classes */
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-glow-breathe {
+  animation: glow-breathe 3s ease-in-out infinite;
+}
+
+/* Apply gradient animations via utility classes */
+.animate-gradient-flow {
+  animation: gradient-flow 5s ease-in-out infinite;
+}
+
+.animate-gradient-shimmer {
+  animation: gradient-shimmer 3s linear infinite;
+}
+
+/* ============================================================================
+   SCROLL-DRIVEN ANIMATIONS (Based on @jh3yy patterns)
+   ============================================================================ */
+
+/* Native CSS scroll-driven animation for progress bars */
+@keyframes scroll-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Scroll-driven animations with @supports fallback */
+@supports (animation-timeline: scroll()) {
+  .animate-scroll-progress {
+    animation: scroll-progress linear;
+    animation-timeline: scroll(root);
+  }
+
+  .animate-scroll-progress-vertical {
+    animation: scroll-progress-vertical linear;
+    animation-timeline: scroll(root);
+  }
+}
+
+/* Fallback: Show static progress for browsers without scroll-driven animation support */
+@supports not (animation-timeline: scroll()) {
+  .animate-scroll-progress {
+    width: 100%;
+  }
+
+  .animate-scroll-progress-vertical {
+    height: 100%;
+  }
+}
+
+/* Vertical scroll progress */
+@keyframes scroll-progress-vertical {
+  from {
+    height: 0%;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+/* ============================================================================
+   HOVER ANTI-FLICKER PATTERN (Based on @emilkowalski)
+   ============================================================================ */
+
+/*
+ * Anti-flicker hover pattern: Separate trigger from effect
+ * Listen for hovers on the parent, but animate a child element instead
+ * Reference: https://x.com/emilkowalski/status/1954891053032755560
+ */
+
+.hover-trigger {
+  /* Parent element that receives hover events */
+  position: relative;
+}
+
+.hover-trigger .hover-effect {
+  /* Child element that animates */
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.hover-trigger:hover .hover-effect {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Press state pattern */
+.hover-trigger:active .hover-effect {
+  transform: scale(0.93);
+}
+
+/* ============================================================================
+   FORM VALIDATION STATES (Based on @jh3yy patterns)
+   ============================================================================ */
+
+/*
+ * Use :has() selector to style form based on child input validity
+ * Reference: https://x.com/jh3yy/status/2016903936658030967
+ */
+
+/* Show error state when invalid inputs exist */
+.form-group:has(input:invalid):not(:focus-within) {
+  background: hsl(0 100% 50% / 0.1);
+}
+
+/* Style quantity picker with invalid state */
+.quantity-picker:has(input:invalid):not(:focus-within) {
+  background: hsl(0 100% 50% / 0.14);
+  border-color: hsl(0 100% 50% / 0.5);
+}
+
+/* Collapsible grid rows for accordion */
+.accordion-item > div[inert] {
+  grid-template-rows: 0fr;
+}
+
+.accordion-item > div {
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+/* ============================================================================
+   TRANSITION BEHAVIOR (Based on @jh3yy popover pattern)
+   ============================================================================ */
+
+/*
+ * Allow discrete transitions for popover/dropdown
+ * Reference: https://x.com/jh3yy/status/2016342586135371933
+ */
+
+.transition-discrete {
+  transition-behavior: allow-discrete;
+}
+
+/* ============================================================================
+   REDUCED MOTION OVERRIDES
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+    transition-duration: 0.01ms;
+  }
+}
