@@ -1,7 +1,7 @@
 // Layout & Structural Components
 export * from "../base/accordion";
-export * from "../base/collapsible";
 export * from "../base/CollapsibleSection";
+export * from "../base/collapsible";
 export * from "../base/resizable";
 export * from "../base/ScrollArea";
 export * from "../base/separator";
