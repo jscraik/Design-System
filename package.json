@@ -91,7 +91,7 @@
   },
   "devDependencies": {
     "@argos-ci/cli": "^3.0.6",
-    "@argos-ci/playwright": "^1.7.0",
+    "@argos-ci/playwright": "^6.4.1",
     "@axe-core/playwright": "^4.11.1",
     "@changesets/cli": "^2.27.1",
     "@modelcontextprotocol/inspector": "^0.19.0",
