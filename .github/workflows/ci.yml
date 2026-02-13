@@ -56,7 +56,7 @@ jobs:
           swift-version: "5.9"
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --prod=false
 
       - name: Check version synchronization
         run: pnpm sync:versions:check
@@ -168,7 +168,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --prod=false
 
       - name: Install Playwright
         run: pnpm exec playwright install --with-deps chromium
@@ -225,7 +225,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --prod=false
 
       - name: Install Playwright
         run: pnpm exec playwright install --with-deps chromium
@@ -321,7 +321,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --prod=false
 
       - name: Build web app
         run: pnpm build:web
