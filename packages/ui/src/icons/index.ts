@@ -26,21 +26,9 @@ export * from "./chatgpt/additional-icons";
 // Core ChatGPT icons with hardcoded SVG paths
 export * from "./chatgpt/ChatGPTIconsFixed";
 // Common icon aliases for consistency
-// NEW: Account category icons (from Figma)
-export * as AccountUserIcons from "./account-user";
-// NEW: Arrow icons
-export * as ArrowIcons from "./arrows";
-// NEW: Chat tool icons
-export * as ChatToolsIcons from "./chat-tools";
-// NEW: Misc/utility icons
-export * as MiscIcons from "./misc";
-// NEW: Platform icons
-export * as PlatformIcons from "./platform";
-// NEW: Settings icons
-export * as SettingsIcons from "./settings";
-// ----------------------------------------------------------------------------
-// These provide convenient aliases with Icon* prefix
-export {
+export { IconArrowUpSm as IconArrowUp } from "./chatgpt/ChatGPTIconsFixed";
+// Missing ChatGPT icons
+export * from "./chatgpt/missing-icons";
 export { IconCheckmark as IconCheck } from "./chatgpt/missing-icons";
 export {
   IconGroup,
@@ -106,27 +94,8 @@ export { IconDownload } from "./legacy/chatgpt/public";
 
 // ----------------------------------------------------------------------------
 // NAMED EXPORTS (Icon* prefix for consistency)
-// NEW: Account category icons (from Figma)
-export * as AccountUserIcons from "./account-user";
-// NEW: Arrow icons
-export * as ArrowIcons from "./arrows";
-// NEW: Chat tool icons
-export * as ChatToolsIcons from "./chat-tools";
-// NEW: Misc/utility icons
-export * as MiscIcons from "./misc";
-// NEW: Platform icons
-export * as PlatformIcons from "./platform";
-// NEW: Settings icons
-export * as SettingsIcons from "./settings";
-// NEW: Account category icons (from Figma)
-export * as AccountUserIcons from "./account-user";
-// NEW: Arrow icons
-export * as ArrowIcons from "./arrows";
-// NEW: Chat tool icons
-export * as ChatToolsIcons from "./chat-tools";
-// NEW: Misc/utility icons
-export * as MiscIcons from "./misc";
 // ----------------------------------------------------------------------------
+
 // These provide convenient aliases with Icon* prefix
 export {
   IconArchive,

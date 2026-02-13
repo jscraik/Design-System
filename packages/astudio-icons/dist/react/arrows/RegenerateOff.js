@@ -1,5 +1,0 @@
-import { jsx as _jsx } from "react/jsx-runtime";
-import * as React from "react";
-const RegenerateOff = React.forwardRef((props, ref) => _jsx("svg", { xmlns: "http://www.w3.org/2000/svg", fill: "none", preserveAspectRatio: "none", viewBox: "0 0 24 24", ref: ref, ...props, children: _jsx("g", { fill: "currentColor", children: _jsx("path", { d: "M3.631 2.225A1 1 0 0 0 2.225 3.63l.068.076 2.675 2.675a8.96 8.96 0 0 0-1.898 4.494 1 1 0 0 0 1.984.248 6.96 6.96 0 0 1 1.34-3.316l9.798 9.798A6.96 6.96 0 0 1 12 19a7.15 7.15 0 0 1-4.953-2H9l.103-.005a1 1 0 0 0 0-1.99L9 15H5a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-1.245A9.15 9.15 0 0 0 12 21c2.125 0 4.076-.74 5.616-1.97l2.677 2.677.076.069a1 1 0 0 0 1.407-1.407l-.069-.076-3.254-3.254a1 1 0 0 0-.18-.18L3.708 2.294zM19.462 15.06a1 1 0 0 0 1.227-.703q.122-.45.197-.92l.045-.313a1 1 0 0 0-1.967-.348l-.018.1a7 7 0 0 1-.188.958 1 1 0 0 0 .704 1.227M20.012 4a1 1 0 0 0-2 0v1.254A9.15 9.15 0 0 0 12 3c-.807 0-1.592.106-2.339.307a1 1 0 0 0 .519 1.932A7 7 0 0 1 12 5c1.911 0 3.673.767 4.953 2h-1.941a1 1 0 0 0 0 2h4.004l.034-.002A1 1 0 0 0 20.012 8z" }) }) }));
-RegenerateOff.displayName = "RegenerateOff";
-export default RegenerateOff;

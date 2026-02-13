@@ -1,0 +1,27 @@
+# Cross-platform design
+
+Last updated: 2026-01-09
+
+## Doc requirements
+
+- Audience: Engineers and technical leads
+- Scope: System architecture and component relationships
+- Non-scope: Step-by-step operational procedures
+- Owner: TBD (confirm)
+- Review cadence: TBD (confirm)
+
+## Tokens are the single source of truth
+
+All UI styling (React + widgets) is driven from one canonical DTCG token bundle:
+
+- Canonical: `packages/tokens/src/tokens/index.dtcg.json`
+- Generated web: `packages/ui/src/styles/ui.css`, `packages/ui/src/styles/theme.css` (imports `@design-studio/tokens/tokens.css`)
+- Token reference (authoritative mapping): `docs/theming/token-reference.md`
+
+### Drift prevention
+
+- No hard-coded styling literals in components (except documented escape hatches).
+- Generated artifacts are committed and CI-regenerated and diff-checked.
+- Any new component state requires token coverage (default/pressed/focus/disabled; hover where applicable).
+
+See the [design system adoption checklist](../design-system/ADOPTION_CHECKLIST.md) for step-by-step integration requirements across web, widgets, and Tauri.

@@ -1,0 +1,34 @@
+# AI Prompt Artifact
+
+## Metadata
+- Created: 2026-01-28
+- Slug: hybrid-pattern-validation
+- Title: Implement Hybrid Pattern Validation on UI Components
+
+## Task
+Implement the Hybrid Pattern validation (Option A) as per the DesignStudio migration plan:
+- Implement compound API on 2-3 components (Button, Select, ChatInput)
+- Validate spec's "props for 80%, compound for 20%" principle
+- Measure code size impact
+
+## Requirements
+1. Add `variant="compound"` prop to Button, Select, and ChatInput components
+2. Create compound sub-components (e.g., Button.Primary, Button.Secondary, Select.Trigger, etc.)
+3. Use React Context for state sharing in compound mode
+4. Maintain backward compatibility with existing props API
+5. Run tests to verify all implementations work
+
+## Context
+- Following .spec/architecture-2026-01-26-design-studio.md migration plan
+- Hybrid Pattern: "Props for 80%, compound for 20%"
+- Components already use StatefulComponentProps from @design-studio/tokens
+
+## Success Criteria
+- All tests passing
+- No breaking changes to existing props API
+- Code size impact minimal (<1KB per component)
+- TypeScript types correct
+- Biome lint clean
+
+## Additional Notes
+After implementation, conduct adversarial review to find bugs and fix them.

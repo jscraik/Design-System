@@ -1,0 +1,220 @@
+import { Meta, Canvas, Story, Controls } from "@storybook/addon-docs/blocks";
+import {
+  ChatUIRoot,
+  ChatVariantSplitSidebar,
+  Button,
+  ModelSelector,
+  ContextTag,
+  MessageActions,
+} from "../../index";
+import * as GettingStartedStories from "./GettingStarted.stories";
+
+<Meta of={GettingStartedStories} />
+
+# Getting Started with aStudio
+
+Welcome to the aStudio component library! This guide will help you get up and running quickly with our comprehensive set of React components designed for ChatGPT Apps SDK and standalone applications.
+
+## Installation
+
+```bash
+npm install @design-studio/ui
+# or
+pnpm add @design-studio/ui
+```
+
+## Basic Setup
+
+Every aStudio application should be wrapped with `ChatUIRoot` to provide the necessary theme and context:
+
+<Canvas>
+  <Story name="Basic Setup">
+    <ChatUIRoot>
+      <div className="p-4 space-y-4">
+        <h3 className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary text-lg">
+          Your aStudio App
+        </h3>
+        <Button>Get Started</Button>
+      </div>
+    </ChatUIRoot>
+  </Story>
+</Canvas>
+
+```tsx
+import { ChatUIRoot, Button } from "@design-studio/ui";
+import "@design-studio/ui/styles.css";
+
+function App() {
+  return (
+    <ChatUIRoot>
+      <div className="p-4">
+        <Button>Get Started</Button>
+      </div>
+    </ChatUIRoot>
+  );
+}
+```
+
+## Chat Variants (Slot-Based Layouts)
+
+Use `ChatShell` variants when you want to compose your own chat layout from slots:
+
+<Canvas>
+  <Story name="Chat Variant (Split Sidebar)">
+    {() => {
+      const messages = [
+        {
+          id: "1",
+          role: "assistant",
+          content: "Welcome! This is a split-sidebar layout.",
+          timestamp: new Date(),
+        },
+      ];
+      return (
+        <div className="min-h-[520px]">
+          <ChatVariantSplitSidebar
+            messages={messages}
+            projects={[{ id: "default", label: "General", icon: <span>💬</span> }]}
+            chatHistory={["Welcome thread"]}
+          />
+        </div>
+      );
+    }}
+  </Story>
+</Canvas>
+
+```tsx
+import { ChatVariantSplitSidebar } from "@design-studio/ui";
+
+function App() {
+  return (
+    <ChatVariantSplitSidebar
+      messages={[{ id: "1", role: "assistant", content: "Hello!", timestamp: new Date() }]}
+      projects={[{ id: "default", label: "General", icon: <span>💬</span> }]}
+    />
+  );
+}
+```
+
+## Core Components
+
+### Model Selection
+
+The `ModelSelector` component provides a dropdown for AI model selection:
+
+<Canvas>
+  <Story name="Model Selector">
+    {() => {
+      const [selectedModel, setSelectedModel] = React.useState("GPT-4o");
+      const models = [
+        { name: "GPT-4o", shortName: "4o", description: "Fast and efficient" },
+        { name: "GPT-4", shortName: "4", description: "Most capable" },
+        { name: "GPT-3.5 Turbo", shortName: "3.5", description: "Quick responses" },
+      ];
+      return (
+        <ChatUIRoot>
+          <div className="p-4">
+            <ModelSelector
+              value={selectedModel}
+              models={models}
+              onChange={setSelectedModel}
+              label="ChatGPT"
+            />
+          </div>
+        </ChatUIRoot>
+      );
+    }}
+  </Story>
+</Canvas>
+
+### Context Tags
+
+Use `ContextTag` to show active context or removable items:
+
+<Canvas>
+  <Story name="Context Tags">
+    <ChatUIRoot>
+      <div className="p-4 space-y-3">
+        <ContextTag label="Work with Terminal Tab" variant="green" onClose={() => {}} />
+        <ContextTag label="Active File: main.tsx" variant="blue" icon={<span>📄</span>} />
+      </div>
+    </ChatUIRoot>
+  </Story>
+</Canvas>
+
+### Message Actions
+
+The `MessageActions` component provides interaction buttons for chat messages:
+
+<Canvas>
+  <Story name="Message Actions">
+    <ChatUIRoot>
+      <div className="p-4">
+        <div className="bg-foundation-bg-light-2 dark:bg-foundation-bg-dark-2 p-4 rounded-lg">
+          <p className="text-foundation-text-light-primary dark:text-foundation-text-dark-primary mb-3">
+            This is a sample message that demonstrates the message actions component.
+          </p>
+          <MessageActions
+            messageId="example"
+            actions={["copy", "thumbsUp", "thumbsDown", "share", "regenerate"]}
+          />
+        </div>
+      </div>
+    </ChatUIRoot>
+  </Story>
+</Canvas>
+
+## Component Categories
+
+Our components are organized into logical categories for better discoverability:
+
+### 📝 Form Components
+
+- `Button`, `IconButton` - Various button styles
+- `Input`, `Textarea` - Form inputs
+- `Toggle`, `Checkbox` - Selection controls
+- `Select`, `SegmentedControl` - Dropdowns and controls
+- `RangeSlider` - Range inputs
+
+### 🏗️ Layout Components
+
+- `Card`, `Dialog`, `Sheet` - Containers
+- `Tabs`, `Accordion` - Content organization
+- `Sidebar`, `CollapsibleSection` - Layout helpers
+
+### 💬 Chat-Specific Components
+
+- `ModelSelector` - AI model selection
+- `ContextTag` - Active context display
+- `MessageActions` - Message interactions
+- `ModelBadge` - Model indicators
+
+## Theming
+
+aStudio uses CSS custom properties for consistent theming:
+
+```css
+:root {
+  --foundation-bg-dark-1: #1a1a1a;
+  --foundation-bg-dark-2: #2a2a2a;
+  --foundation-text-dark-primary: #ffffff;
+  --foundation-accent-blue: #0ea5e9;
+  /* ... more tokens */
+}
+```
+
+Components automatically adapt to these theme tokens, and you can override them for custom themes.
+
+## Next Steps
+
+- 📚 **Explore Components**: Browse the component library in the sidebar
+- 🎨 **Design System**: Check out our design tokens and guidelines
+- 🧪 **Interactive Testing**: Use Storybook's controls to experiment with props
+- ♿ **Accessibility**: Review the A11y addon panel for accessibility insights
+
+## Need Help?
+
+- Check component prop tables in each story
+- Use the interactive controls to experiment
+- Review the source code using "Show code"
+- Test accessibility with the A11y addon

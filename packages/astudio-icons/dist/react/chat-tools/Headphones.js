@@ -1,5 +1,0 @@
-import { jsx as _jsx } from "react/jsx-runtime";
-import * as React from "react";
-const Headphones = React.forwardRef((props, ref) => _jsx("svg", { xmlns: "http://www.w3.org/2000/svg", fill: "none", preserveAspectRatio: "none", viewBox: "0 0 24 24", ref: ref, ...props, children: _jsx("path", { fill: "currentColor", d: "M4 15.833v1.334A2.333 2.333 0 0 0 6.333 19.5.667.667 0 0 0 7 18.833v-4.666a.667.667 0 0 0-.667-.667A2.333 2.333 0 0 0 4 15.833M2 12.5c0-5.523 4.477-10 10-10s10 4.477 10 10v4.667a4.333 4.333 0 0 1-4.333 4.333A2.667 2.667 0 0 1 15 18.833v-4.666a2.667 2.667 0 0 1 2.667-2.667c.856 0 1.654.248 2.327.677a8 8 0 0 0-15.988 0 4.3 4.3 0 0 1 2.327-.677A2.667 2.667 0 0 1 9 14.167v4.666A2.667 2.667 0 0 1 6.333 21.5 4.333 4.333 0 0 1 2 17.167zm18 3.333a2.333 2.333 0 0 0-2.333-2.333.667.667 0 0 0-.667.667v4.666c0 .369.299.667.667.667A2.333 2.333 0 0 0 20 17.167z" }) }));
-Headphones.displayName = "Headphones";
-export default Headphones;

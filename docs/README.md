@@ -1,0 +1,129 @@
+# Documentation index for developers
+
+Last updated: 2026-02-06
+
+## Doc requirements
+
+- Audience: Developers (intermediate)
+- Scope: Overview and essential workflows for this area
+- Non-scope: Deep API reference or internal design rationale
+- Owner: Jamie Scott Craik (@jscraik)
+- Review cadence: Monthly or each release (whichever is sooner)
+
+## Contents
+
+- [Doc requirements](#doc-requirements)
+- [Directory structure](#directory-structure)
+- [Start here](#start-here)
+- [Documentation quality checks](#documentation-quality-checks)
+- [Architecture docs](#architecture-docs)
+- [Audit reports](#audit-reports)
+- [Guides](#guides)
+- [Design system governance](#design-system-governance)
+- [Transcripts](#transcripts)
+- [Root documentation](#root-documentation)
+- [Workflow docs](#workflow-docs)
+
+This index helps you find the right doc fast. Start here, then jump into the category you need.
+
+## Directory structure
+
+```
+apps/                # Navigation index (canonical apps under platforms/)
+docs/
+├── architecture/    # System design and architecture documents
+├── audits/          # Design system audits and compliance reports
+├── design-system/   # Design system governance and coverage artifacts
+├── guides/          # How-to guides and quick starts
+├── features/        # Feature design specs and parity notes
+├── foundations/     # Source reference materials (PDFs, specs)
+└── work/            # Work logs, audits, and validation notes
+```
+
+## Start here
+
+- New to the repo? Read the root [README.md](../README.md) first.
+- Releasing? Use [RELEASE_CHECKLIST.md](./guides/RELEASE_CHECKLIST.md).
+- Looking for the CLI? See [packages/cli/README.md](../packages/cli/README.md).
+- Need structure help? See [repo-map.md](./architecture/repo-map.md) (canonical paths live under `platforms/`).
+
+## Documentation quality checks
+
+Run documentation checks from the repo root:
+
+```bash
+pnpm doc:lint
+```
+
+Requirements:
+
+- Vale installed locally (for example, `brew install vale`).
+- `pnpm install` completed so repo scripts are available.
+
+## Architecture docs
+
+Technical architecture and design decisions.
+
+- **[WIDGET_ARCHITECTURE.md](./architecture/WIDGET_ARCHITECTURE.md)** - Widget system architecture
+- **[repo-map.md](./architecture/repo-map.md)** - High-level repository map
+- **[ui-structure-map.md](./architecture/ui-structure-map.md)** - UI library layout and component foldering map
+- **[APPS_SDK_GAP_ANALYSIS.md](./architecture/APPS_SDK_GAP_ANALYSIS.md)** - Apps SDK integration analysis
+- **[CROSS_PLATFORM.md](./architecture/CROSS_PLATFORM.md)** - Cross-platform architecture notes (legacy context included)
+- **[WIDGET_SYSTEM_ENHANCEMENTS.md](./architecture/WIDGET_SYSTEM_ENHANCEMENTS.md)** - Widget infrastructure enhancements
+- **[template-library.md](./architecture/template-library.md)** - Template library layout and parity rules
+- **[template-api.md](./architecture/template-api.md)** - Template and block API (internal)
+- **[DESIGN_SYSTEM_FLOW.md](./architecture/DESIGN_SYSTEM_FLOW.md)** - Token → UI → apps flow diagram
+- **[TOP_LEVEL_INDEX.md](./architecture/TOP_LEVEL_INDEX.md)** - Canonical vs auxiliary top-level folders
+
+## Audit reports
+
+Design system compliance audits and color reference documentation.
+
+- **[APPS_SDK_COMPLIANCE_AUDIT.md](./audits/APPS_SDK_COMPLIANCE_AUDIT.md)** - Apps SDK compliance audit
+- **[COLOR_AUDIT_COMPLETE.md](./audits/COLOR_AUDIT_COMPLETE.md)** - Complete color system audit
+- **[COLOR_REFERENCE.md](./audits/COLOR_REFERENCE.md)** - Color palette reference
+- **[DESIGN_AUDIT_REPORT.md](./audits/DESIGN_AUDIT_REPORT.md)** - Overall design audit report
+- **[TEXT_COLOR_AUDIT_SUMMARY.md](./audits/TEXT_COLOR_AUDIT_SUMMARY.md)** - Text color usage audit
+
+## Guides
+
+Step-by-step guides for common tasks.
+
+- **[PAGES_QUICK_START.md](./guides/PAGES_QUICK_START.md)** - Quick start guide for creating pages
+- **[DESIGN_GUIDELINES.md](./guides/DESIGN_GUIDELINES.md)** - UI design and accessibility guidelines
+- **[UI_COMPONENT_TOOLING.md](./guides/UI_COMPONENT_TOOLING.md)** - UI component tooling and QA sequence
+- **[CHATGPT_INTEGRATION.md](./guides/CHATGPT_INTEGRATION.md)** - Connect an MCP server to ChatGPT
+- **[CLOUDFLARE_DEPLOYMENT.md](./guides/CLOUDFLARE_DEPLOYMENT.md)** - Deploy widgets to Cloudflare Workers
+- **[repo-structure-migration.md](./guides/repo-structure-migration.md)** - Path changes from the 2026 restructure
+- **[RELEASE_CHECKLIST.md](./guides/RELEASE_CHECKLIST.md)** - Release checklist
+
+## Design system governance
+
+- **[CHARTER.md](./design-system/CHARTER.md)** - Design system charter and rules
+- **[UPSTREAM_ALIGNMENT.md](./design-system/UPSTREAM_ALIGNMENT.md)** - Apps SDK UI alignment log
+- **[CONTRACT.md](./design-system/CONTRACT.md)** - Index of governing artifacts
+- **[COVERAGE_MATRIX.md](./design-system/COVERAGE_MATRIX.md)** - Generated component coverage map
+
+## Transcripts
+
+- **[docs/transcripts/README.md](./transcripts/README.md)** - Cleaned + raw video transcripts
+
+## Root documentation
+
+Key project documentation remains at the repository root:
+
+- **[README.md](../README.md)** - Project overview and getting started
+- **[CONTRIBUTING.md](../CONTRIBUTING.md)** - Contribution guidelines
+- **[CHANGELOG.md](../CHANGELOG.md)** - Version history
+- **[SECURITY.md](../SECURITY.md)** - Security policies
+- **[ATTRIBUTIONS.md](../ATTRIBUTIONS.md)** - Third-party attributions
+- **[AGENTS.md](../AGENTS.md)** - AI agent system instructions
+
+## Workflow docs
+
+- **[BUILD_PIPELINE.md](./BUILD_PIPELINE.md)** - Build pipeline architecture and usage
+- **[VERSION_SYNC.md](./VERSION_SYNC.md)** - Version synchronization across packages
+- **[RFC_TEMPLATE.md](./workflows/RFC_TEMPLATE.md)** - RFC workflow template for design-system changes
+- **[QA_EVIDENCE_SCHEMA.md](./operations/QA_EVIDENCE_SCHEMA.md)** - QA evidence requirements and CI gate artifacts
+- **[GOVERNANCE_SECURITY_PRIVACY.md](./operations/GOVERNANCE_SECURITY_PRIVACY.md)** - Security and privacy rules for governance artifacts
+- **[TOKEN_ADD_CHECKLIST.md](./theming/TOKEN_ADD_CHECKLIST.md)** - Add a token without breaking token sources

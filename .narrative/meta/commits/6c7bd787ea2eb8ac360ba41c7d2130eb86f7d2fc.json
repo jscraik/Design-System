@@ -1,0 +1,7 @@
+{
+  "sha": "6c7bd787ea2eb8ac360ba41c7d2130eb86f7d2fc",
+  "subject": "feat(feedback): migrate Toast and AlertDialog to StatefulComponentProps",
+  "author": "jscraik",
+  "authoredAtISO": "2026-01-28T20:42:33Z",
+  "source": "git"
+}

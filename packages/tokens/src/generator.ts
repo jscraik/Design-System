@@ -103,10 +103,7 @@ export class TokenGenerator {
         >
       ).highContrast ?? this.tokens.colors.icon.dark;
     const borderHighContrast = (
-      this.tokens.colors.border as Record<
-        string,
-        { light: string; default: string; heavy: string }
-      >
+      this.tokens.colors.border as Record<string, { light: string; default: string; heavy: string }>
     ).highContrast ?? {
       light: this.tokens.colors.border.dark.light,
       default: this.tokens.colors.border.dark.default,
@@ -130,8 +127,8 @@ export class TokenGenerator {
         >
       ).highContrast ?? this.tokens.colors.accent.dark;
     const interactiveHighContrast =
-      (this.tokens.colors.interactive as Record<string, { ring: string }>)
-        .highContrast ?? this.tokens.colors.interactive.dark;
+      (this.tokens.colors.interactive as Record<string, { ring: string }>).highContrast ??
+      this.tokens.colors.interactive.dark;
 
     const cssContent = `/*
   Apps SDK UI audit tokens (from Figma foundations).
@@ -480,9 +477,7 @@ ${this.generateCSSTypography()}
     const packagePath = new URL("../../ui/package.json", import.meta.url);
     try {
       const raw = await readFile(packagePath, "utf8");
-      const parsed = JSON.parse(raw) as {
-        dependencies?: Record<string, string>;
-      };
+      const parsed = JSON.parse(raw) as { dependencies?: Record<string, string> };
       return parsed.dependencies?.["@openai/apps-sdk-ui"] ?? "unknown";
     } catch {
       return "unknown";
@@ -532,10 +527,7 @@ ${this.generateCSSTypography()}
     // Determine output paths relative to packages/tokens
     const cssOutputPath = join(process.cwd(), "src/foundations.css");
     const aliasesOutputPath = join(process.cwd(), "src/aliases.css");
-    const manifestOutputPath = join(
-      process.cwd(),
-      "docs/outputs/manifest.json",
-    );
+    const manifestOutputPath = join(process.cwd(), "docs/outputs/manifest.json");
 
     await mkdir(dirname(cssOutputPath), { recursive: true });
     await mkdir(dirname(aliasesOutputPath), { recursive: true });
@@ -544,11 +536,7 @@ ${this.generateCSSTypography()}
     // Write files
     await writeFile(cssOutputPath, cssContent, "utf8");
     await writeFile(aliasesOutputPath, aliasesContent, "utf8");
-    await writeFile(
-      manifestOutputPath,
-      JSON.stringify(manifest, null, 2),
-      "utf8",
-    );
+    await writeFile(manifestOutputPath, JSON.stringify(manifest, null, 2), "utf8");
 
     console.log("✅ Token generation complete");
     console.log(`   CSS: ${cssOutputPath}`);
@@ -590,17 +578,13 @@ ${this.generateCSSTypography()}
       lines.push(`  --foundation-${cssKey}-size: ${token.size}px;`);
       lines.push(`  --foundation-${cssKey}-line: ${token.lineHeight}px;`);
       if (token.paragraphSpacing !== undefined) {
-        lines.push(
-          `  --foundation-${cssKey}-paragraph-spacing: ${token.paragraphSpacing}px;`,
-        );
+        lines.push(`  --foundation-${cssKey}-paragraph-spacing: ${token.paragraphSpacing}px;`);
       }
       lines.push(`  --foundation-${cssKey}-weight: ${token.weight};`);
       lines.push(`  --foundation-${cssKey}-weight-regular: ${token.weight};`);
 
       if ("emphasisWeight" in token && token.emphasisWeight !== undefined) {
-        lines.push(
-          `  --foundation-${cssKey}-weight-emphasis: ${token.emphasisWeight};`,
-        );
+        lines.push(`  --foundation-${cssKey}-weight-emphasis: ${token.emphasisWeight};`);
       }
 
       lines.push(`  --foundation-${cssKey}-tracking: ${token.tracking}px;`);
