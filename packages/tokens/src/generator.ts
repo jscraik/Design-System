@@ -103,10 +103,7 @@ export class TokenGenerator {
         >
       ).highContrast ?? this.tokens.colors.icon.dark;
     const borderHighContrast = (
-      this.tokens.colors.border as Record<
-        string,
-        { light: string; default: string; heavy: string }
-      >
+      this.tokens.colors.border as Record<string, { light: string; default: string; heavy: string }>
     ).highContrast ?? {
       light: this.tokens.colors.border.dark.light,
       default: this.tokens.colors.border.dark.default,
@@ -130,8 +127,8 @@ export class TokenGenerator {
         >
       ).highContrast ?? this.tokens.colors.accent.dark;
     const interactiveHighContrast =
-      (this.tokens.colors.interactive as Record<string, { ring: string }>)
-        .highContrast ?? this.tokens.colors.interactive.dark;
+      (this.tokens.colors.interactive as Record<string, { ring: string }>).highContrast ??
+      this.tokens.colors.interactive.dark;
 
     const cssContent = `/*
   Apps SDK UI audit tokens (from Figma foundations).
