@@ -1,0 +1,7 @@
+stateDiagram-v2
+  [*] --> IDEA
+  IDEA --> IN_PROGRESS: guide_started
+  IN_PROGRESS --> REVIEW: tests_ready
+  REVIEW --> RELEASED: checks_pass
+  REVIEW --> IN_PROGRESS: fixes_needed
+  RELEASED --> [*]

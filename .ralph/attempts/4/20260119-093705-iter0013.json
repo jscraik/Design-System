@@ -1,0 +1,20 @@
+{
+  "attempt_id": "20260119-093705-iter0013",
+  "iteration": 13,
+  "task_id": "4",
+  "task_title": "Add Mapbox token guard and remove hardcoded fallback",
+  "started_at": "2026-01-19T09:37:05.014143+00:00",
+  "ended_at": "2026-01-19T09:42:05.371011+00:00",
+  "runner_ok": false,
+  "gates_ok": null,
+  "judge_ok": null,
+  "review_ok": null,
+  "blocked": false,
+  "exit_signal": null,
+  "return_code": 124,
+  "prompt_hash": "1fffe60b225856040d3b58a223bd4abb6cd628617310cf8146c422e0397338c4",
+  "branch": "main",
+  "log_path": "/Users/jamiecraik/dev/aStudio/.ralph/logs/20260119T093705Z-iter0013-claude.log",
+  "receipts_dir": "/Users/jamiecraik/dev/aStudio/.ralph/receipts/4/20260119-093705-iter0013",
+  "context_dir": "/Users/jamiecraik/dev/aStudio/.ralph/context/4/20260119-093705-iter0013"
+}

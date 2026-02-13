@@ -84,10 +84,11 @@ pnpm test:mcp       # MCP server contract tests
 
 ## Next Steps
 
-- Read [Architecture](./architecture/README.md) for system overview
-- Browse [Components](./components/README.md) for available UI elements
-- See [Templates](./templates/README.md) for ready-to-use layouts
+- Read [Architecture Overview](./architecture/APPS_SDK_WRAPPER.md) for system architecture
 - Check [Widget Bundling](./architecture/WIDGET_BUNDLING.md) for embedding info
+- Review [Icon System](./design-system/ICON_CONSOLIDATION.md) for icon usage
+- See [Compatibility](./COMPATIBILITY.md) for version requirements
+- Run `pnpm dev:storybook` and browse interactive component demos
 
 ---
 
