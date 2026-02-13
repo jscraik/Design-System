@@ -2,7 +2,7 @@ import { spawn } from "node:child_process";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 
-import chokidar from "chokidar";
+import chokidar, { type FSWatcher } from "chokidar";
 
 import type { colorTokens } from "../colors.js";
 import type { spacingScale } from "../spacing.js";
@@ -32,7 +32,7 @@ interface ValidationError {
  * // Later: await watcher.stop();
  */
 export class TokenWatcher {
-  private watcher: chokidar.FSWatcher | null = null;
+  private watcher: FSWatcher | null = null;
   private isGenerating = false;
   private pendingRegeneration = false;
 
@@ -360,12 +360,12 @@ export class TokenWatcher {
       },
     });
 
-    this.watcher.on("change", (path) => {
+    this.watcher.on("change", (path: string) => {
       console.log(`\n📝 Token file changed: ${path}`);
       this.regenerateTokens();
     });
 
-    this.watcher.on("error", (error) => {
+    this.watcher.on("error", (error: unknown) => {
       console.error("❌ Watcher error:", error);
     });
   }
@@ -389,7 +389,7 @@ export class TokenWatcher {
       });
 
       child.on("error", reject);
-      child.on("close", (code) => {
+      child.on("close", (code: number | null) => {
         if (code === 0) {
           resolve();
         } else {
