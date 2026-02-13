@@ -1,0 +1,5 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import * as React from "react";
+const Trash = React.forwardRef((props, ref) => _jsx("svg", { xmlns: "http://www.w3.org/2000/svg", fill: "none", preserveAspectRatio: "none", viewBox: "0 0 24 24", ref: ref, ...props, children: _jsxs("g", { fill: "currentColor", children: [_jsx("path", { d: "M11 11a1 1 0 1 0-2 0v5a1 1 0 1 0 2 0zM15 11a1 1 0 1 0-2 0v5a1 1 0 1 0 2 0z" }), _jsx("path", { d: "M12.658 2a4 4 0 0 1 3.88 3.03l.243.97H20a1 1 0 1 1 0 2h-.101l-1.117 10.426A4 4 0 0 1 14.804 22H9.196a4 4 0 0 1-3.977-3.574L4.1 8H4a1 1 0 0 1 0-2h3.219l.243-.97A4 4 0 0 1 11.342 2zm3.363 6H6.113l1.094 10.213A2 2 0 0 0 9.196 20h5.608a2 2 0 0 0 1.989-1.787L17.887 8zM9.402 5.515 9.281 6h5.438l-.121-.485A2 2 0 0 0 12.658 4h-1.316a2 2 0 0 0-1.94 1.515" })] }) }));
+Trash.displayName = "Trash";
+export default Trash;

@@ -1,0 +1,5 @@
+import { jsx as _jsx } from "react/jsx-runtime";
+import * as React from "react";
+const Unarchive = React.forwardRef((props, ref) => _jsx("svg", { xmlns: "http://www.w3.org/2000/svg", fill: "none", preserveAspectRatio: "none", viewBox: "0 0 24 24", ref: ref, ...props, children: _jsx("path", { fill: "currentColor", d: "M18.455 3.911a1 1 0 0 0-1.224-.707L4.19 6.698a1 1 0 0 0-.707 1.225l.194.724a1 1 0 0 0 1.224.708l13.04-3.494a1 1 0 0 0 .707-1.225zm-1.742-2.639a3 3 0 0 1 3.674 2.122l.194.724a3 3 0 0 1-2.12 3.674L5.42 11.286q-.21.057-.421.082V17a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7a1 1 0 1 1 2 0v7a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4v-6.102a3 3 0 0 1-1.254-1.733l-.194-.724a3 3 0 0 1 2.121-3.675zM9 13a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1" }) }));
+Unarchive.displayName = "Unarchive";
+export default Unarchive;

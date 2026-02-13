@@ -1,0 +1,5 @@
+import { jsx as _jsx } from "react/jsx-runtime";
+import * as React from "react";
+const Telescope = React.forwardRef((props, ref) => _jsx("svg", { xmlns: "http://www.w3.org/2000/svg", fill: "none", preserveAspectRatio: "none", viewBox: "0 0 24 24", ref: ref, ...props, children: _jsx("path", { fill: "currentColor", fillRule: "evenodd", d: "M17.824 4.846a.5.5 0 0 0-.63-.32l-.951.308a1 1 0 0 0-.642 1.26l1.545 4.756a1 1 0 0 0 1.26.642l.95-.31a.5.5 0 0 0 .322-.63zm-1.248-2.223a2.5 2.5 0 0 1 3.15 1.605l1.854 5.706a2.5 2.5 0 0 1-1.605 3.15l-.951.31a3 3 0 0 1-2.443-.264l-1.233.346a3.5 3.5 0 0 1-1.07 3.682l2.07 3.312a1 1 0 0 1-1.696 1.06l-2.222-3.556a3.5 3.5 0 0 1-.86 0L9.349 21.53a1 1 0 0 1-1.696-1.06l2.07-3.312a3.5 3.5 0 0 1-1.112-1.786l-2.034.572a3 3 0 0 1-3.665-1.961l-.38-1.172a3 3 0 0 1 1.7-3.697l9.374-3.897a3 3 0 0 1 2.02-2.285zm-2.697 4.646L5 10.961a1 1 0 0 0-.567 1.232l.381 1.172a1 1 0 0 0 1.222.653l2.69-.756a3.5 3.5 0 0 1 5.423-1.526l1.084-.304zM12 13a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3", clipRule: "evenodd" }) }));
+Telescope.displayName = "Telescope";
+export default Telescope;
