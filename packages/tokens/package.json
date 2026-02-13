@@ -1,6 +1,6 @@
 {
   "name": "@design-studio/tokens",
-  "version": "2.0.0",
+  "version": "0.0.1",
   "type": "module",
   "license": "Apache-2.0",
   "description": "DesignStudio Tokens - Type-safe design tokens with CSS variables and runtime theming API",
