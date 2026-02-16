@@ -23,7 +23,9 @@ export type AuthDemoProps = {
 
 function AuthDemoBody({ authStatus, meetsRequiredLevel, user }: AuthDemoProps) {
   if (!authStatus) {
-    return <div className="text-sm text-muted-foreground">No authentication data available.</div>;
+    return (
+      <div className="text-sm text-foreground/80">No authentication data available.</div>
+    );
   }
 
   return (
@@ -34,14 +36,14 @@ function AuthDemoBody({ authStatus, meetsRequiredLevel, user }: AuthDemoProps) {
           className={`px-2 py-1 rounded-full text-xs ${
             authStatus.authenticated
               ? "bg-status-success-muted/20 text-status-success"
-              : "bg-muted text-muted-foreground"
+              : "bg-muted text-foreground/80"
           }`}
         >
           {authStatus.authenticated ? "Authenticated" : "Not authenticated"}
         </span>
       </div>
 
-      <div className="grid gap-2 text-xs text-muted-foreground">
+      <div className="grid gap-2 text-xs text-foreground/80">
         <div className="flex items-center justify-between">
           <span>Level</span>
           <span className="text-foreground/90">{authStatus.level ?? "unknown"}</span>
@@ -78,9 +80,9 @@ function AuthDemoBody({ authStatus, meetsRequiredLevel, user }: AuthDemoProps) {
 
       {user && (
         <div className="rounded-lg border border-border bg-muted p-3">
-          <div className="text-xs uppercase tracking-wide text-muted-foreground">User</div>
+          <div className="text-xs uppercase tracking-wide text-foreground/80">User</div>
           <div className="mt-1 text-sm font-medium text-foreground">{user.name}</div>
-          <div className="text-xs text-muted-foreground">{user.email}</div>
+          <div className="text-xs text-foreground/80">{user.email}</div>
           <div className="mt-2 inline-flex rounded-full bg-muted px-2 py-0.5 text-xs text-foreground/80">
             {user.plan}
           </div>

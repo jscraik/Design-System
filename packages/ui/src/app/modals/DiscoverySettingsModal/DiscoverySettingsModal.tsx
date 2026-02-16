@@ -28,7 +28,8 @@ function SectionHeader({
       </h3>
       <p
         className={
-          descriptionClassName ?? "text-caption text-text-secondary dark:text-text-secondary mb-3"
+          descriptionClassName ??
+          "text-caption text-foreground/80 dark:text-foreground/70 mb-3"
         }
       >
         {description}
@@ -51,7 +52,9 @@ function RangeSlider({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <label className="text-caption text-text-secondary dark:text-text-secondary">{label}</label>
+        <label className="text-caption text-foreground/80 dark:text-foreground/70">
+          {label}
+        </label>
         <span className="text-caption font-medium text-foreground dark:text-foreground">
           {value}k
         </span>
@@ -89,8 +92,8 @@ function SegmentedButtons<T extends string>({
           className={cn(
             "px-4 py-2 rounded-lg text-caption transition-colors flex-1 min-w-[80px]",
             value === option.value
-              ? "bg-accent-green text-foreground"
-              : "bg-secondary text-text-secondary hover:text-foreground dark:bg-muted dark:text-text-secondary dark:hover:text-foreground",
+              ? "bg-accent-green text-text-body-on-color"
+              : "bg-secondary text-foreground/80 hover:text-foreground dark:bg-muted dark:text-foreground/70 dark:hover:text-foreground",
           )}
           aria-pressed={value === option.value}
         >
@@ -122,7 +125,7 @@ function ToggleRow({
           <div className="text-caption font-medium text-foreground dark:text-foreground mb-0.5">
             {title}
           </div>
-          <div className="text-caption font-normal text-text-secondary dark:text-text-secondary">
+          <div className="text-caption font-normal text-foreground/80 dark:text-foreground/70">
             {description}
           </div>
         </div>
@@ -262,7 +265,7 @@ export function DiscoverySettingsModal({
           <SectionHeader
             title="Token Budgets"
             description="Sets the target size for your final prompt. Use 60k for ChatGPT (lite Pro context), higher for CLIAPI tools with larger context windows."
-            descriptionClassName="text-caption text-text-secondary dark:text-text-secondary mb-3"
+            descriptionClassName="text-caption text-foreground/80 dark:text-foreground/70 mb-3"
           />
           <RangeSlider
             label="Target size"
@@ -274,7 +277,7 @@ export function DiscoverySettingsModal({
             <button
               type="button"
               onClick={() => setShowAutoPlanBudget(!showAutoPlanBudget)}
-              className="flex items-center gap-2 text-caption font-normal text-text-secondary hover:text-foreground dark:text-text-secondary dark:hover:text-foreground transition-colors w-full"
+              className="flex items-center gap-2 text-caption font-normal text-foreground/80 hover:text-foreground dark:text-foreground/70 dark:hover:text-foreground transition-colors w-full"
             >
               <svg
                 className={`size-3 transition-transform ${showAutoPlanBudget ? "rotate-90" : ""}`}
@@ -297,14 +300,14 @@ export function DiscoverySettingsModal({
                 <path d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
               <span>Auto Plan Budget</span>
-              <span className="ml-auto text-text-secondary dark:text-text-secondary">
+              <span className="ml-auto text-foreground/80 dark:text-foreground/70">
                 {autoPlanBudget}k
               </span>
             </button>
 
             {showAutoPlanBudget && (
               <div className="mt-3 ml-5 space-y-3">
-                <p className="text-caption text-text-secondary dark:text-text-secondary">
+                <p className="text-caption text-foreground/80 dark:text-foreground/70">
                   Auto Plan runs use CLI/API calls which support larger context windows.
                 </p>
                 <RangeSlider
@@ -332,7 +335,7 @@ export function DiscoverySettingsModal({
             ]}
             onChange={handlePromptEnhancementChange}
           />
-          <p className="text-caption text-text-secondary dark:text-text-secondary">
+          <p className="text-caption text-foreground/80 dark:text-foreground/70">
             {getEnhancementDescription()}
           </p>
         </div>
@@ -341,7 +344,7 @@ export function DiscoverySettingsModal({
           <SectionHeader
             title="Clarifying Questions"
             description="Allow the agent to ask you questions during discovery to better understand your intent."
-            descriptionClassName="text-caption text-text-secondary dark:text-text-secondary mb-3"
+            descriptionClassName="text-caption text-foreground/80 dark:text-foreground/70 mb-3"
           />
           <div className="space-y-4">
             <ToggleRow
