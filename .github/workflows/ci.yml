@@ -182,10 +182,24 @@ jobs:
       - name: Install Playwright
         run: pnpm exec playwright install --with-deps chromium
 
+      - name: Detect Storybook-related changes (PR only)
+        if: github.event_name == 'pull_request'
+        id: storybook_changes
+        shell: bash
+        run: |
+          git fetch origin "${{ github.base_ref }}" --depth=1
+          if git diff --name-only "origin/${{ github.base_ref }}...HEAD" | rg -q '^(platforms/web/apps/storybook/|\.storybook/|.*\.stories\.(ts|tsx|js|jsx|mdx)$)'; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Build Storybook
+        if: github.event_name != 'pull_request' || steps.storybook_changes.outputs.changed == 'true'
         run: pnpm storybook:build
 
       - name: Run Storybook tests (a11y + interactions)
+        if: github.event_name != 'pull_request' || steps.storybook_changes.outputs.changed == 'true'
         run: pnpm storybook:test
 
       - name: Cache UI dist
@@ -333,12 +347,17 @@ jobs:
         run: pnpm install --frozen-lockfile --prod=false
 
       - name: Build web app
-        run: pnpm build:web
+        run: |
+          pnpm build:lib
+          pnpm -C platforms/web/apps/web build
         env:
           VITE_WIDGETS_BASE: http://127.0.0.1:4173
 
       - name: Install Chromium
         run: pnpm exec agent-browser install
+
+      - name: Install Playwright browser (smoke prereq)
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: Run smoke tests
         run: pnpm test:agent-browser:ci
