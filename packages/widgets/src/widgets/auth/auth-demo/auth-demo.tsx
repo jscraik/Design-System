@@ -23,9 +23,7 @@ export type AuthDemoProps = {
 
 function AuthDemoBody({ authStatus, meetsRequiredLevel, user }: AuthDemoProps) {
   if (!authStatus) {
-    return (
-      <div className="text-sm text-foreground/80">No authentication data available.</div>
-    );
+    return <div className="text-sm text-foreground/80">No authentication data available.</div>;
   }
 
   return (

@@ -28,8 +28,7 @@ function SectionHeader({
       </h3>
       <p
         className={
-          descriptionClassName ??
-          "text-caption text-foreground/80 dark:text-foreground/70 mb-3"
+          descriptionClassName ?? "text-caption text-foreground/80 dark:text-foreground/70 mb-3"
         }
       >
         {description}
@@ -52,9 +51,7 @@ function RangeSlider({
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <label className="text-caption text-foreground/80 dark:text-foreground/70">
-          {label}
-        </label>
+        <label className="text-caption text-foreground/80 dark:text-foreground/70">{label}</label>
         <span className="text-caption font-medium text-foreground dark:text-foreground">
           {value}k
         </span>
