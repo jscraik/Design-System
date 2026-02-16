@@ -35,7 +35,20 @@ const cliPath = existsSync(join(rootDir, "node_modules", ".bin", "agent-browser"
   ? join(rootDir, "node_modules", ".bin", "agent-browser")
   : "agent-browser";
 
-function runAgentBrowser(args) {
+const TRANSIENT_DAEMON_PATTERNS = [
+  /resource temporarily unavailable/i,
+  /daemon may be busy or unresponsive/i,
+];
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function isTransientDaemonError(message) {
+  return TRANSIENT_DAEMON_PATTERNS.some((pattern) => pattern.test(message));
+}
+
+function runAgentBrowserOnce(args) {
   return new Promise((resolve, reject) => {
     const proc = spawn(cliPath, args, {
       stdio: ["ignore", "pipe", "pipe"],
@@ -67,6 +80,30 @@ function runAgentBrowser(args) {
       reject(new Error(`Failed to spawn agent-browser: ${err.message}`));
     });
   });
+}
+
+async function runAgentBrowser(args, options = {}) {
+  const maxAttempts = options.maxAttempts ?? 3;
+  const baseDelayMs = options.baseDelayMs ?? 750;
+
+  let lastError = null;
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      return await runAgentBrowserOnce(args);
+    } catch (error) {
+      lastError = error;
+      if (!isTransientDaemonError(error.message) || attempt === maxAttempts) {
+        throw error;
+      }
+      const delay = baseDelayMs * attempt;
+      console.warn(
+        `agent-browser transient daemon error (attempt ${attempt}/${maxAttempts}); retrying in ${delay}ms`,
+      );
+      await sleep(delay);
+    }
+  }
+
+  throw lastError;
 }
 
 async function openUrl(url) {
