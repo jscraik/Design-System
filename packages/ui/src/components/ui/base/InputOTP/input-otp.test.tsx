@@ -3,6 +3,36 @@ import { createRef } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "./InputOTP";
 
+vi.mock("input-otp", async () => {
+  const React = await import("react");
+  const OTPInputContext = React.createContext<{
+    slots: Array<{ char?: string; hasFakeCaret?: boolean; isActive?: boolean }>;
+  }>({ slots: [] });
+
+  const OTPInput = React.forwardRef<HTMLInputElement, Record<string, unknown>>(
+    ({ children, className, containerClassName, maxLength = 6, ...props }, ref) => {
+      const slots = Array.from({ length: Number(maxLength) || 6 }, () => ({
+        char: "",
+        hasFakeCaret: false,
+        isActive: false,
+      }));
+
+      return (
+        <OTPInputContext.Provider value={{ slots }}>
+          <div className={containerClassName as string | undefined}>
+            <input ref={ref} className={className as string | undefined} {...props} />
+            {children as React.ReactNode}
+          </div>
+        </OTPInputContext.Provider>
+      );
+    },
+  );
+
+  OTPInput.displayName = "MockOTPInput";
+
+  return { OTPInput, OTPInputContext };
+});
+
 describe("InputOTP", () => {
   const mockOnStateChange = vi.fn();
 
