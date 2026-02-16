@@ -344,7 +344,7 @@ test.describe("ChatSidebar keyboard shortcuts", () => {
 
     if ((await userMenuBtn.count()) > 0) {
       await userMenuBtn.focus();
-      expect(await userMenuBtn).toBeFocused();
+      await expect(userMenuBtn).toBeFocused();
 
       await pressKey(page, "Enter");
       const settingsBtn = page.locator('[data-testid="chat-sidebar-settings"]');
