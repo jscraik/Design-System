@@ -416,10 +416,10 @@ async function main(): Promise<void> {
     }
 
     if (existingJson !== jsonOutput || existingMd !== mdOutput) {
-      console.warn(
-        "Coverage matrix outputs differ from generated output in this environment; continuing without failing.",
+      console.error(
+        "Coverage matrix outputs are out of date. Run `pnpm ds:matrix:generate` to regenerate.",
       );
-      return;
+      process.exit(1);
     }
 
     console.log("Coverage matrix is up to date.");

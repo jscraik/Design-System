@@ -83,8 +83,8 @@ function runAgentBrowserOnce(args) {
 }
 
 async function runAgentBrowser(args, options = {}) {
-  const maxAttempts = options.maxAttempts ?? 3;
-  const baseDelayMs = options.baseDelayMs ?? 750;
+  const maxAttempts = options.maxAttempts ?? 5;
+  const baseDelayMs = options.baseDelayMs ?? 1500;
 
   let lastError = null;
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
