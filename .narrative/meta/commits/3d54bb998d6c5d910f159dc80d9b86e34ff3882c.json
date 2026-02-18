@@ -1,0 +1,7 @@
+{
+  "sha": "3d54bb998d6c5d910f159dc80d9b86e34ff3882c",
+  "subject": "feat(chat): migrate components to StatefulComponentProps",
+  "author": "jscraik",
+  "authoredAtISO": "2026-01-28T20:32:29Z",
+  "source": "git"
+}

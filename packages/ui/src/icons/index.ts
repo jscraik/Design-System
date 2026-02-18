@@ -20,11 +20,6 @@ import type { chatGPTIconSizes } from "./ChatGPTIconSizes";
 // CHATGPT ICONS (350+ production-ready icons from Figma)
 // ----------------------------------------------------------------------------
 
-// Additional ChatGPT icons (chevrons, arrows, specialized)
-// Note: Some icons may overlap with ChatGPTIconsFixed - they're exported as is
-export * from "./chatgpt/additional-icons";
-// Core ChatGPT icons with hardcoded SVG paths
-export * from "./chatgpt/ChatGPTIconsFixed";
 // Common icon aliases for consistency
 // NEW: Account category icons (from Figma)
 export * as AccountUserIcons from "./account-user";
@@ -32,15 +27,13 @@ export * as AccountUserIcons from "./account-user";
 export * as ArrowIcons from "./arrows";
 // NEW: Chat tool icons
 export * as ChatToolsIcons from "./chat-tools";
-// NEW: Misc/utility icons
-export * as MiscIcons from "./misc";
-// NEW: Platform icons
-export * as PlatformIcons from "./platform";
-// NEW: Settings icons
-export * as SettingsIcons from "./settings";
+// Additional ChatGPT icons (chevrons, arrows, specialized)
+// Note: Some icons may overlap with ChatGPTIconsFixed - they're exported as is
+export * from "./chatgpt/additional-icons";
+// Core ChatGPT icons with hardcoded SVG paths
+export * from "./chatgpt/ChatGPTIconsFixed";
 // ----------------------------------------------------------------------------
 // These provide convenient aliases with Icon* prefix
-export {
 export { IconCheckmark as IconCheck } from "./chatgpt/missing-icons";
 export {
   IconGroup,
@@ -60,6 +53,12 @@ export {
   IconShuffle,
 } from "./legacy/chatgpt/arrows";
 export { IconOperator } from "./legacy/chatgpt/misc";
+// NEW: Misc/utility icons
+export * as MiscIcons from "./misc";
+// NEW: Platform icons
+export * as PlatformIcons from "./platform";
+// NEW: Settings icons
+export * as SettingsIcons from "./settings";
 
 // ----------------------------------------------------------------------------
 // BRAND ICONS
@@ -102,30 +101,20 @@ export {
 // Local implementations to avoid circular dependency with @openai/apps-sdk-ui
 // These replicate the visual appearance without importing from that package
 export { IconSparkles } from "./AppsSDKIconLocal";
-export { IconDownload } from "./legacy/chatgpt/public";
-
 // ----------------------------------------------------------------------------
 // NAMED EXPORTS (Icon* prefix for consistency)
 // NEW: Account category icons (from Figma)
 export * as AccountUserIcons from "./account-user";
-// NEW: Arrow icons
-export * as ArrowIcons from "./arrows";
-// NEW: Chat tool icons
-export * as ChatToolsIcons from "./chat-tools";
-// NEW: Misc/utility icons
-export * as MiscIcons from "./misc";
-// NEW: Platform icons
-export * as PlatformIcons from "./platform";
-// NEW: Settings icons
-export * as SettingsIcons from "./settings";
 // NEW: Account category icons (from Figma)
 export * as AccountUserIcons from "./account-user";
 // NEW: Arrow icons
 export * as ArrowIcons from "./arrows";
+// NEW: Arrow icons
+export * as ArrowIcons from "./arrows";
 // NEW: Chat tool icons
 export * as ChatToolsIcons from "./chat-tools";
-// NEW: Misc/utility icons
-export * as MiscIcons from "./misc";
+// NEW: Chat tool icons
+export * as ChatToolsIcons from "./chat-tools";
 // ----------------------------------------------------------------------------
 // These provide convenient aliases with Icon* prefix
 export {
@@ -168,6 +157,15 @@ export {
   IconPlusSm,
   IconSidebar,
 } from "./legacy/chatgpt/interface";
+export { IconDownload } from "./legacy/chatgpt/public";
+// NEW: Misc/utility icons
+export * as MiscIcons from "./misc";
+// NEW: Misc/utility icons
+export * as MiscIcons from "./misc";
+// NEW: Platform icons
+export * as PlatformIcons from "./platform";
+// NEW: Settings icons
+export * as SettingsIcons from "./settings";
 
 // ----------------------------------------------------------------------------
 // ICON CATALOG (for browsing all icons)

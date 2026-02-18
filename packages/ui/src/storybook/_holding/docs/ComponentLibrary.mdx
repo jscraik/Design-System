@@ -1,0 +1,210 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import * as ComponentLibraryStories from "./ComponentLibrary.stories";
+
+<Meta of={ComponentLibraryStories} />
+
+# Component Library
+
+Welcome to the aStudio Design System. This library provides a comprehensive set of React components and templates for building ChatGPT-style interfaces.
+
+## Quick Navigation
+
+### 📱 Templates
+
+Pre-built layout combinations for common application patterns.
+
+- **[Dashboard Template](/docs/templates-dashboard-template--docs)** - Full app layout with sidebar navigation
+- **[Chat Full Width](/docs/templates-chat-full-width-template--docs)** - Chat interface with full-width messages
+- **[Chat Two Pane](/docs/templates-chat-two-pane-template--docs)** - Split view with sidebar and chat
+- **[Chat Variants](/docs/templates-chat-variants-template--docs)** - Multiple chat layout options
+- **[Settings Panels](/docs/templates-settings-panels-template--docs)** - Complete settings page
+- **[Compose Template](/docs/templates-compose-template--docs)** - Compose mode for prompts
+
+### 💬 Chat Components
+
+Core components for building chat interfaces.
+
+- **[ChatHeader](/docs/components-chat-chat-header--docs)** - Top navigation bar with model selector
+- **[ChatSidebar](/docs/components-chat-chat-sidebar--docs)** - Conversation list with search
+- **[ChatMessages](/docs/components-chat-chat-messages--docs)** - Message display with actions
+- **[ChatInput](/docs/components-chat-chat-input--docs)** - Message input with attachments
+- **[ComposeView](/docs/components-chat-compose-view--docs)** - Advanced compose interface
+
+### ⚙️ Settings Components
+
+Modular settings panels and controls.
+
+- **[SettingRow](/docs/components-settings-setting-row--docs)** - Base settings row component
+- **[SettingToggle](/docs/components-settings-setting-toggle--docs)** - Toggle switch setting
+- **[SettingDropdown](/docs/components-settings-setting-dropdown--docs)** - Dropdown selector setting
+- **[Personalization Panel](/docs/components-settings-personalization-panel--docs)** - Theme and display options
+- **[Data Controls Panel](/docs/components-settings-data-controls-panel--docs)** - Data management controls
+- **[Security Panel](/docs/components-settings-security-panel--docs)** - Privacy and security settings
+
+### 🎨 UI Primitives
+
+#### Base Components
+
+- **[Button](/docs/components-ui-base-button--docs)** - Primary, secondary, destructive variants
+- **[Input](/docs/components-ui-base-input--docs)** - Text input with validation
+- **[Textarea](/docs/components-ui-base-textarea--docs)** - Multi-line text input
+- **[Toggle](/docs/components-ui-base-toggle--docs)** - Switch/toggle control
+- **[Badge](/docs/components-ui-base-badge--docs)** - Status and count badges
+- **[Avatar](/docs/components-ui-base-avatar--docs)** - User avatar display
+
+#### Form Components
+
+- **[Select](/docs/components-ui-base-select--docs)** - Dropdown selection
+- **[Checkbox](/docs/components-ui-base-checkbox--docs)** - Checkbox input
+- **[Radio Group](/docs/components-ui-base-radio-group--docs)** - Radio button groups
+- **[Combobox](/docs/components-ui-forms-combobox--docs)** - Autocomplete input
+- **[Date Picker](/docs/components-ui-forms-date-picker--docs)** - Date selection
+- **[Range Slider](/docs/components-ui-forms-range-slider--docs)** - Range input slider
+- **[Form](/docs/components-ui-forms-form--docs)** - Form with validation
+
+#### Navigation Components
+
+- **[Tabs](/docs/components-ui-navigation-tabs--docs)** - Tabbed navigation
+- **[Breadcrumb](/docs/components-ui-navigation-breadcrumb--docs)** - Breadcrumb trail
+- **[Sidebar](/docs/components-ui-navigation-sidebar--docs)** - Collapsible sidebar
+- **[Pagination](/docs/components-ui-navigation-pagination--docs)** - Page navigation
+- **[Model Selector](/docs/components-ui-navigation-model-selector--docs)** - Model selection dropdown
+- **[View Mode Toggle](/docs/components-ui-navigation-view-mode-toggle--docs)** - View switching control
+
+#### Overlay Components
+
+- **[Dialog](/docs/components-ui-feedback-dialog--docs)** - Modal dialogs
+- **[Modal](/docs/components-ui-overlays-modal--docs)** - Modal overlay
+- **[Tooltip](/docs/components-ui-overlays-tooltip--docs)** - Hover tooltips
+- **[Popover](/docs/components-ui-overlays-popover--docs)** - Popover content
+- **[Sheet](/docs/components-ui-overlays-sheet--docs)** - Slide-out sheets
+- **[Dropdown Menu](/docs/components-ui-overlays-dropdown-menu--docs)** - Context menus
+
+#### Feedback Components
+
+- **[Toast](/docs/components-ui-feedback-toast--docs)** - Toast notifications
+- **[Alert](/docs/components-ui-base-alert--docs)** - Alert banners
+- **[Progress](/docs/components-ui-data-display-progress--docs)** - Progress indicators
+- **[Skeleton](/docs/components-ui-base-skeleton--docs)** - Loading skeletons
+
+#### Data Display Components
+
+- **[Card](/docs/components-ui-data-display-card--docs)** - Content cards
+- **[Table](/docs/components-ui-base-table--docs)** - Data tables
+- **[Chart](/docs/components-ui-data-display-chart--docs)** - Data visualization
+- **[List Item](/docs/components-ui-base-list-item--docs)** - List rows
+
+### 🎭 Modals
+
+Pre-built modal dialogs.
+
+- **[Settings Modal](/docs/components-modals-settings-modal--docs)** - Main settings dialog
+- **[Icon Picker Modal](/docs/components-modals-icon-picker-modal--docs)** - Icon selection
+- **[Discovery Settings Modal](/docs/components-modals-discovery-settings-modal--docs)** - Discovery configuration
+
+### 📄 App Pages
+
+Complete page examples.
+
+- **[Design System Page](/docs/pages-design-system-page--docs)** - Full design system documentation
+- **[Dashboard Page](/docs/pages-dashboard-page--docs)** - Dashboard layout example
+
+## Component Categories
+
+### By Purpose
+
+| Purpose            | Components                                                     |
+| ------------------ | -------------------------------------------------------------- |
+| **Chat Interface** | ChatHeader, ChatSidebar, ChatMessages, ChatInput, ComposeView  |
+| **Settings**       | SettingRow, SettingToggle, SettingDropdown, various panels     |
+| **Forms**          | Input, Textarea, Select, Checkbox, Radio, Combobox, DatePicker |
+| **Navigation**     | Tabs, Breadcrumb, Sidebar, Pagination, Menus                   |
+| **Feedback**       | Toast, Alert, Dialog, Modal, Progress                          |
+| **Layout**         | Card, Separator, ScrollArea, Resizable                         |
+| **Data Display**   | Table, Chart, Badge, Avatar, ListItem                          |
+
+### By Complexity
+
+| Level          | Description            | Examples                        |
+| -------------- | ---------------------- | ------------------------------- |
+| **Foundation** | Low-level primitives   | Button, Input, Badge            |
+| **Composite**  | Built from foundations | SettingRow, ChatInput, Form     |
+| **Templates**  | Full-page layouts      | DashboardTemplate, ChatTemplate |
+| **Features**   | Complex features       | ChatShell, SettingsModal        |
+
+## Design System Docs
+
+- **[Getting Started](/docs/overview-getting-started--page)** - Installation and basic usage
+- **[Design System](/docs/overview-design-system--page)** - Design principles and tokens
+- **[Patterns](/docs/overview-patterns--page)** - Usage patterns and best practices
+- **[API Reference](/docs/overview-api-reference--page)** - Complete API documentation
+- **[Migration](/docs/overview-migration--page)** - Migration guide
+
+## Icon Library
+
+Browse available icons in the **[Iconography Showcase](/docs/documentation-iconography-showcase--docs)**.
+
+Icons are imported from `@design-studio/ui`:
+
+```tsx
+import { IconSettings, IconUser, IconChat } from "@design-studio/ui";
+```
+
+## Design Tokens
+
+Explore the design system foundations:
+
+- **[Colors](/docs/documentation-color-palette-showcase--docs)** - Color palette and usage
+- **[Typography](/docs/documentation-typography-showcase--docs)** - Type scale and styles
+- **[Spacing](/docs/documentation-spacing-showcase--docs)** - Spacing scale
+- **[Design Tokens](/docs/design-system-design-tokens--docs)** - All tokens reference
+
+## Usage Examples
+
+### Basic Component
+
+```tsx
+import { Button } from "@design-studio/ui";
+
+export function Example() {
+  return <Button variant="primary">Click me</Button>;
+}
+```
+
+### With Hooks
+
+```tsx
+import { Button } from "@design-studio/ui";
+import { useState } from "react";
+
+export function Example() {
+  const [count, setCount] = useState(0);
+  return <Button onClick={() => setCount((c) => c + 1)}>Count: {count}</Button>;
+}
+```
+
+### Chat Interface
+
+```tsx
+import { ChatHeader, ChatSidebar, ChatMessages, ChatInput } from "@design-studio/ui";
+
+export function ChatApp() {
+  return (
+    <>
+      <ChatSidebar />
+      <ChatHeader />
+      <ChatMessages messages={messages} />
+      <ChatInput onSend={handleSend} />
+    </>
+  );
+}
+```
+
+---
+
+## Next Steps
+
+1. **Browse Templates** - Start with pre-built layouts
+2. **Explore Components** - Find components by category
+3. **Read Design System** - Learn about tokens and principles
+4. **Check Examples** - See real-world usage patterns

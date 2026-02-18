@@ -1,0 +1,21 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const MicOff = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    preserveAspectRatio="none"
+    viewBox="0 0 24 24"
+    ref={ref}
+    {...props}
+  >
+    <path
+      fill="currentColor"
+      fillRule="evenodd"
+      d="M12 4.5c-.849 0-1.599.422-2.052 1.072a1 1 0 1 1-1.64-1.144A4.5 4.5 0 0 1 16.5 7v3.5q-.002.326-.047.642a1 1 0 0 1-1.98-.284q.026-.175.026-.358V7A2.5 2.5 0 0 0 12 4.5m-8.73-.184a1 1 0 0 1 1.414-.046l11.935 11.19a1 1 0 0 1 .124.116l3.94 3.694a1 1 0 1 1-1.367 1.46L15.873 17.5a8 8 0 0 1-2.873.937V19.5h1.5a1 1 0 1 1 0 2h-5a1 1 0 1 1 0-2H11v-1.062a8.01 8.01 0 0 1-6.669-5.653 1 1 0 1 1 1.917-.57 6.003 6.003 0 0 0 8.064 3.823L3.316 5.73a1 1 0 0 1-.046-1.414m15.725 7.225a1 1 0 0 1 .674 1.244q-.204.684-.52 1.31a1 1 0 1 1-1.787-.9q.237-.469.39-.98a1 1 0 0 1 1.243-.674"
+      clipRule="evenodd"
+    />
+  </svg>
+));
+MicOff.displayName = "MicOff";
+export default MicOff;

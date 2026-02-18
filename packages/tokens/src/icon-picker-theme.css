@@ -1,0 +1,46 @@
+/*
+  Icon Picker Color Palette Override
+  
+  This provides a unified token approach where colors automatically adapt
+  to light/dark themes using CSS custom property overrides.
+  
+  Usage: Import this after your main foundation tokens to enable
+  the new 8-color icon picker palette with proper theme support.
+*/
+
+:root {
+  /* Light theme colors (default) */
+  --foundation-accent-gray: #8f8f8f;
+  --foundation-accent-red: #e02e2a;
+  --foundation-accent-orange: #e25507;
+  --foundation-accent-yellow: #c08c00;
+  --foundation-accent-green: #008635;
+  --foundation-accent-blue: #0285ff;
+  --foundation-accent-purple: #934ff2;
+  --foundation-accent-pink: #e3008d;
+}
+
+/* Dark theme overrides */
+html[data-theme="dark"],
+.dark {
+  --foundation-accent-gray: #ababab;
+  --foundation-accent-red: #ff8583;
+  --foundation-accent-orange: #ff9e6c;
+  --foundation-accent-yellow: #ffd666;
+  --foundation-accent-green: #40c977;
+  --foundation-accent-blue: #5a9ff5;
+  --foundation-accent-purple: #ba8ff7;
+  --foundation-accent-pink: #ff6bc7;
+}
+
+/* Alternative: If you want to preserve existing --foundation-accent-blue usage */
+/*
+:root {
+  --foundation-accent-blue-picker: #0285ff;
+}
+
+html[data-theme="dark"],
+.dark {
+  --foundation-accent-blue-picker: #5a9ff5;
+}
+*/

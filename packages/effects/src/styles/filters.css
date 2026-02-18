@@ -1,0 +1,45 @@
+/**
+ * SVG filter definitions for liquid and morphing effects
+ */
+
+/* SVG filters are applied via inline SVG in components
+   This file contains CSS classes for filter application */
+
+.liquid-filter-active {
+  /* Enable hardware acceleration for smooth morphing */
+  will-change: transform, border-radius;
+  backface-visibility: hidden;
+}
+
+.holo-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--holo-color-1, #ff0080) 0%,
+    var(--holo-color-2, #7928ca) 25%,
+    var(--holo-color-3, #ff0080) 50%,
+    var(--holo-color-4, #7928ca) 75%,
+    var(--holo-color-1, #ff0080) 100%
+  );
+  background-size: 200% auto;
+}
+
+.glow-layer-1 {
+  text-shadow:
+    0 0 5px var(--glow-color),
+    0 0 10px var(--glow-color),
+    0 0 20px var(--glow-color);
+}
+
+.glow-layer-2 {
+  text-shadow:
+    0 0 10px var(--glow-color),
+    0 0 20px var(--glow-color),
+    0 0 40px var(--glow-color);
+}
+
+.glow-layer-3 {
+  text-shadow:
+    0 0 20px var(--glow-color),
+    0 0 40px var(--glow-color),
+    0 0 80px var(--glow-color);
+}

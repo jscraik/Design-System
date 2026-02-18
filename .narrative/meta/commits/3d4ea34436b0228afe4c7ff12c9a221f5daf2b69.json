@@ -1,0 +1,7 @@
+{
+  "sha": "3d4ea34436b0228afe4c7ff12c9a221f5daf2b69",
+  "subject": "fix(calendar): resolve disabled prop type conflict with StatefulComponentProps",
+  "author": "jscraik",
+  "authoredAtISO": "2026-01-28T21:18:30Z",
+  "source": "git"
+}

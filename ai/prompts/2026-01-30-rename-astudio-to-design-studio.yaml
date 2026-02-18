@@ -1,0 +1,16 @@
+id: pr-rename-astudio-to-design-studio-2026-01-30
+tool: claude-code
+mode: normal
+task: "Rename all @astudio/* packages to @design-studio/* for consistency across the monorepo"
+constraints:
+  - "follow RVCP protocol"
+  - "no secrets"
+  - "update all imports, config files, and documentation"
+  - "verify with typecheck, build, and tests"
+outputs_expected:
+  - "8 package.json files (name + dependencies)"
+  - "~40 TypeScript/JavaScript source files (import statements)"
+  - "1 CSS file (@import statement)"
+  - "10+ config files (tsconfig paths)"
+  - "30+ documentation files (.md)"
+  - "pnpm-lock.yaml"

@@ -1,0 +1,7 @@
+{
+  "sha": "b105af72b129f2787907903a6b25b42f10d9f4de",
+  "subject": "build: upgrade node to 24 in mise.toml",
+  "author": "jscraik",
+  "authoredAtISO": "2026-01-28T21:30:02Z",
+  "source": "git"
+}

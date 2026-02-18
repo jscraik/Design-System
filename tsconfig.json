@@ -1,0 +1,12 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/cloudflare-template" },
+    { "path": "./packages/runtime" },
+    { "path": "./packages/tokens" },
+    { "path": "./packages/ui" },
+    { "path": "./packages/widgets" },
+    { "path": "./platforms/web/apps/storybook" },
+    { "path": "./platforms/web/apps/web" }
+  ]
+}
