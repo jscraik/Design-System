@@ -1,0 +1,209 @@
+# ralph-gold regenerate-plan log
+timestamp_utc: 20260119T015332Z
+agent: codex
+cmd: ["timeout", "900", "codex", "exec", "--full-auto", "-"]
+duration_seconds: 8.48
+timed_out: False
+stdin: True
+return_code: 1
+
+--- prompt ---
+# PROMPT_plan.md — Golden Ralph Loop (Planning Mode)
+
+You are running in **PLANNING MODE**.
+The goal is to create or refine a prioritized task tracker that the build loop can execute.
+
+## Hard rule
+
+**Plan only. Do NOT implement production code.**
+
+Allowed outputs:
+- Editing/writing `.ralph/specs/*.md`
+- Editing/writing the task tracker (`.ralph/PRD.md` or `.ralph/prd.json`)
+- Minimal operational notes in `.ralph/progress.md` (optional)
+
+## Files you must use
+
+- `.ralph/specs/*` — requirements and acceptance criteria
+- `src/*` / tests — existing implementation
+- `.ralph/AGENTS.md` — build/test/lint commands (validation expectations)
+- The tracker file (`.ralph/PRD.md` or `.ralph/prd.json`) — the plan you create/update
+
+## Workflow
+
+0. **Orient**
+   - Study `.ralph/specs/*` to understand intended behavior.
+   - Study the codebase (`src/*`, tests, config) to understand what already exists.
+   - Critical guardrail: **don't assume something is missing** — confirm via search/inspection.
+
+1. **Gap analysis**
+   - Compare `.ralph/specs/*` against code.
+   - Identify missing features, partial implementations, TODOs, inconsistent patterns, missing tests.
+   - Capture *what* is missing and *why it matters*.
+
+2. **Write / update the tracker**
+   - Produce a prioritized list of small, verifiable tasks.
+   - Prefer Markdown checkboxes under a `## Tasks` heading (if using `.md`).
+   - Each task should be:
+     - scoped to one commit
+     - objectively verifiable (tests, build, lint, CLI smoke)
+   - Derive validation expectations from acceptance criteria where possible.
+
+3. **Specs health**
+   - If specs are missing/unclear, author or refine `.ralph/specs/<topic>.md` with:
+     - problem statement
+     - acceptance criteria
+     - non-goals
+     - edge cases
+
+4. **Commit planning artifacts**
+   - `git add -A && git commit -m "ralph(plan): update tracker"`
+
+## Exit protocol
+
+At the very end of your output, print exactly one line:
+
+`EXIT_SIGNAL: false`
+
+(Planning mode intentionally does not signal completion. Run the build loop when the plan is ready.)
+
+---
+
+## Orchestrator Addendum (Regenerate Plan)
+
+Target plan/task file: .ralph/prd.json
+
+You are in PLANNING MODE.
+Do NOT implement production code in this run.
+
+Task:
+1) Read specs/*.md and the current codebase.
+2) Perform a gap analysis: what is missing, partial, or inconsistent?
+3) Rewrite the plan file from scratch as a prioritized task queue.
+
+Plan format requirements:
+- Use Markdown checkboxes under a '## Tasks' heading.
+- Each checkbox task must be shippable in ONE iteration / ONE commit.
+- Under each checkbox, add 2-5 indented bullet acceptance criteria.
+- Tasks must be objectively verifiable (tests/lint/typecheck/CLI commands).
+- Keep it short; it's okay to regenerate again later.
+
+Exit protocol:
+At the end of your output, print: EXIT_SIGNAL: false
+
+
+
+--- stdout ---
+
+
+--- stderr ---
+OpenAI Codex v0.87.0-alpha.1 (research preview)
+--------
+workdir: /Users/jamiecraik/dev/aStudio
+model: gpt-5.2-codex
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: none
+reasoning summaries: auto
+session id: 019bd3f5-1480-78b1-9cd7-77fb06718e2b
+--------
+user
+# PROMPT_plan.md — Golden Ralph Loop (Planning Mode)
+
+You are running in **PLANNING MODE**.
+The goal is to create or refine a prioritized task tracker that the build loop can execute.
+
+## Hard rule
+
+**Plan only. Do NOT implement production code.**
+
+Allowed outputs:
+- Editing/writing `.ralph/specs/*.md`
+- Editing/writing the task tracker (`.ralph/PRD.md` or `.ralph/prd.json`)
+- Minimal operational notes in `.ralph/progress.md` (optional)
+
+## Files you must use
+
+- `.ralph/specs/*` — requirements and acceptance criteria
+- `src/*` / tests — existing implementation
+- `.ralph/AGENTS.md` — build/test/lint commands (validation expectations)
+- The tracker file (`.ralph/PRD.md` or `.ralph/prd.json`) — the plan you create/update
+
+## Workflow
+
+0. **Orient**
+   - Study `.ralph/specs/*` to understand intended behavior.
+   - Study the codebase (`src/*`, tests, config) to understand what already exists.
+   - Critical guardrail: **don't assume something is missing** — confirm via search/inspection.
+
+1. **Gap analysis**
+   - Compare `.ralph/specs/*` against code.
+   - Identify missing features, partial implementations, TODOs, inconsistent patterns, missing tests.
+   - Capture *what* is missing and *why it matters*.
+
+2. **Write / update the tracker**
+   - Produce a prioritized list of small, verifiable tasks.
+   - Prefer Markdown checkboxes under a `## Tasks` heading (if using `.md`).
+   - Each task should be:
+     - scoped to one commit
+     - objectively verifiable (tests, build, lint, CLI smoke)
+   - Derive validation expectations from acceptance criteria where possible.
+
+3. **Specs health**
+   - If specs are missing/unclear, author or refine `.ralph/specs/<topic>.md` with:
+     - problem statement
+     - acceptance criteria
+     - non-goals
+     - edge cases
+
+4. **Commit planning artifacts**
+   - `git add -A && git commit -m "ralph(plan): update tracker"`
+
+## Exit protocol
+
+At the very end of your output, print exactly one line:
+
+`EXIT_SIGNAL: false`
+
+(Planning mode intentionally does not signal completion. Run the build loop when the plan is ready.)
+
+---
+
+## Orchestrator Addendum (Regenerate Plan)
+
+Target plan/task file: .ralph/prd.json
+
+You are in PLANNING MODE.
+Do NOT implement production code in this run.
+
+Task:
+1) Read specs/*.md and the current codebase.
+2) Perform a gap analysis: what is missing, partial, or inconsistent?
+3) Rewrite the plan file from scratch as a prioritized task queue.
+
+Plan format requirements:
+- Use Markdown checkboxes under a '## Tasks' heading.
+- Each checkbox task must be shippable in ONE iteration / ONE commit.
+- Under each checkbox, add 2-5 indented bullet acceptance criteria.
+- Tasks must be objectively verifiable (tests/lint/typecheck/CLI commands).
+- Keep it short; it's okay to regenerate again later.
+
+Exit protocol:
+At the end of your output, print: EXIT_SIGNAL: false
+
+
+mcp startup: no servers
+2026-01-19T01:53:33.104085Z ERROR codex_api::endpoint::responses: error=http 401 Unauthorized: Some("{\n  \"error\": {\n    \"message\": \"Missing bearer or basic authentication in header\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": null\n  }\n}")
+Reconnecting... 1/5 (unexpected status 401 Unauthorized: )
+2026-01-19T01:53:33.532408Z ERROR codex_api::endpoint::responses: error=http 401 Unauthorized: Some("{\n  \"error\": {\n    \"message\": \"Missing bearer or basic authentication in header\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": null\n  }\n}")
+Reconnecting... 2/5 (unexpected status 401 Unauthorized: )
+2026-01-19T01:53:34.134868Z ERROR codex_api::endpoint::responses: error=http 401 Unauthorized: Some("{\n  \"error\": {\n    \"message\": \"Missing bearer or basic authentication in header\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": null\n  }\n}")
+Reconnecting... 3/5 (unexpected status 401 Unauthorized: )
+2026-01-19T01:53:35.483793Z ERROR codex_api::endpoint::responses: error=http 401 Unauthorized: Some("{\n  \"error\": {\n    \"message\": \"Missing bearer or basic authentication in header\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": null\n  }\n}")
+Reconnecting... 4/5 (unexpected status 401 Unauthorized: )
+2026-01-19T01:53:37.398409Z ERROR codex_api::endpoint::responses: error=http 401 Unauthorized: Some("{\n  \"error\": {\n    \"message\": \"Missing bearer or basic authentication in header\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": null\n  }\n}")
+Reconnecting... 5/5 (unexpected status 401 Unauthorized: )
+2026-01-19T01:53:41.151870Z ERROR codex_api::endpoint::responses: error=http 401 Unauthorized: Some("{\n  \"error\": {\n    \"message\": \"Missing bearer or basic authentication in header\",\n    \"type\": \"invalid_request_error\",\n    \"param\": null,\n    \"code\": null\n  }\n}")
+ERROR: unexpected status 401 Unauthorized: 
+

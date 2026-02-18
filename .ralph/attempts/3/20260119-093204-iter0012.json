@@ -1,0 +1,20 @@
+{
+  "attempt_id": "20260119-093204-iter0012",
+  "iteration": 12,
+  "task_id": "3",
+  "task_title": "Replace ProjectSettingsModal overlay with ModalDialog",
+  "started_at": "2026-01-19T09:32:04.680331+00:00",
+  "ended_at": "2026-01-19T09:37:05.004127+00:00",
+  "runner_ok": false,
+  "gates_ok": null,
+  "judge_ok": null,
+  "review_ok": null,
+  "blocked": true,
+  "exit_signal": null,
+  "return_code": 124,
+  "prompt_hash": "8cb05553ce3171b55f04d6630652f2d3e8de1f958d9e3a1c8bd9d87e55afc7f7",
+  "branch": "main",
+  "log_path": "/Users/jamiecraik/dev/aStudio/.ralph/logs/20260119T093204Z-iter0012-claude.log",
+  "receipts_dir": "/Users/jamiecraik/dev/aStudio/.ralph/receipts/3/20260119-093204-iter0012",
+  "context_dir": "/Users/jamiecraik/dev/aStudio/.ralph/context/3/20260119-093204-iter0012"
+}

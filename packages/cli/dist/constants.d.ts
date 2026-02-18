@@ -1,0 +1,42 @@
+export declare const TOOL_NAME = "astudio";
+export declare const TOOL_VERSION: string;
+export declare const MCP_DEFAULT_SERVER = "http://127.0.0.1:8787";
+export declare const MCP_DEFAULT_ENDPOINT = "/mcp";
+export declare const MCP_DEFAULT_PROTOCOL_VERSION = "2024-11-05";
+export declare const COMMAND_SCHEMA = "astudio.command.v1";
+export declare const DEFAULT_HINT_USAGE = "Use --help to see available options.";
+export declare const MCP_ENDPOINT_OPTION = "MCP endpoint";
+export declare const MCP_PROTOCOL_VERSION_OPTION = "MCP protocol version";
+export declare const MCP_SERVER_URL_OPTION = "MCP server URL";
+export declare const MCP_ENDPOINT_KEY = "endpoint";
+export declare const MCP_PROTOCOL_VERSION_KEY = "protocol-version";
+export declare const MCP_SERVER_URL_KEY = "server-url";
+export declare const TOKEN_WRITE_HINT = "Re-run with --write to confirm file writes.";
+export declare const TOKEN_GENERATE_WARNING = "--write is required to generate tokens";
+export declare const VERSIONS_WRITE_WARNING = "--write is required to sync versions";
+export declare const COMPONENTS_WRITE_WARNING = "--write is required to generate components";
+export declare const MCP_DRY_RUN_LABEL = "dry_run";
+export declare const MCP_URL_LABEL = "url";
+export declare const MCP_CONFIG_OPTIONS: readonly [readonly ["server-url", "MCP server URL"], readonly ["endpoint", "MCP endpoint"], readonly ["protocol-version", "MCP protocol version"]];
+export declare const MCP_METHOD_TOOLS_LIST = "tools/list";
+export declare const MCP_CHECK_METHOD = "tools/list";
+export declare const EXIT_CODES: {
+    readonly success: 0;
+    readonly failure: 1;
+    readonly usage: 2;
+    readonly policy: 3;
+    readonly partial: 4;
+    readonly abort: 130;
+};
+export declare const ERROR_CODES: {
+    readonly usage: "E_USAGE";
+    readonly validation: "E_VALIDATION";
+    readonly policy: "E_POLICY";
+    readonly partial: "E_PARTIAL";
+    readonly auth: "E_AUTH";
+    readonly network: "E_NETWORK";
+    readonly internal: "E_INTERNAL";
+    readonly exec: "E_EXEC";
+};
+export type ErrorCode = (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
+//# sourceMappingURL=constants.d.ts.map

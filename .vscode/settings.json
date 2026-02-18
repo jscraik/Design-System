@@ -1,0 +1,5 @@
+{
+    "typescript.autoClosingTags": false,
+    "python.languageServer": "None",
+    "html.autoClosingTags": false
+}

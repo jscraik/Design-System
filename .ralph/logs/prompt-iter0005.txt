@@ -1,0 +1,1543 @@
+# Golden Ralph Loop — PROMPT.md
+
+You are operating inside an **autonomous coding loop**.
+Each loop iteration starts from fresh context; **the filesystem is your memory**.
+
+## Files you must use as memory
+- The PRD file (`prd.json` or `PRD.md`) — task list and completion status
+- `progress.md` — append-only learnings across iterations (keep short + actionable)
+- `AGENTS.md` — project-specific build/test/run commands and conventions
+
+## Your job each iteration
+1. Read the PRD file and identify the **single** task selected for this iteration.
+2. Implement that task end-to-end (minimal scope).
+3. Apply **backpressure**:
+   - run the commands listed in `AGENTS.md` (tests/typecheck/lint/build)
+   - fix issues until they pass
+4. Update the PRD file to mark the task as done.
+5. Append a short note to `progress.md`:
+   - what you changed
+   - what failed and how you fixed it
+   - any new constraints / conventions discovered
+6. Commit the changes.
+
+## Hard rules
+- One task per iteration.
+- Don’t “batch” multiple tasks.
+- Don’t invent requirements not in the PRD.
+- Prefer editing existing code over creating new parallel implementations.
+- If you are blocked by missing requirements, write a clarification note into `progress.md`.
+
+## Exit protocol (VERY IMPORTANT)
+At the very end of your output, print exactly one line:
+
+`EXIT_SIGNAL: true`  OR  `EXIT_SIGNAL: false`
+
+- Use `true` ONLY when **all** tasks in the PRD are done *and* the repo is clean with all quality gates passing.
+- Otherwise use `false`.
+
+<ANCHOR>
+# Ralph Gold Anchor
+
+Task: 1 - Replace ProEditConfigModal overlay with ModalDialog
+
+Acceptance criteria:
+- Component compiles without errors
+- Modal opens and closes correctly
+- Focus is trapped inside the modal
+- Visual layout matches previous design
+
+Repo reality:
+- branch: main
+- git status --porcelain:
+```
+M .github/workflows/ci.yml
+ M .spec/PROJECT_REVIEW_REPORT.md
+ M .spec/spec-2026-01-15-component-creation-governance.md
+ M .spec/tech-spec-2026-01-15-component-creation-governance.md
+ M CONTRIBUTING.md
+ M README.md
+ M docs/BUILD_PIPELINE.md
+ M docs/TEST_PLAN.md
+ M docs/work/work_outstanding.md
+ M package.json
+ M platforms/apple/apps/macos/AStudioApp/Package.swift
+ M platforms/apple/apps/macos/AStudioPlayground
+ M platforms/apple/swift/AStudioComponents/Package.swift
+ M platforms/apple/swift/AStudioComponents/Sources/AStudioComponents/Templates/TemplateRegistry.swift
+ M platforms/apple/swift/AStudioFoundation/Package.swift
+ M platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/DesignTokens.swift
+ M platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Icons/ChatGPTIconVectors.swift
+ M platforms/apple/swift/AStudioFoundation/Sources/AStudioFoundation/Icons/ChatGPTIcons.swift
+ M platforms/apple/swift/AStudioMCP/Package.swift
+ M platforms/apple/swift/AStudioShellChatGPT/Package.swift
+ M platforms/apple/swift/AStudioSystemIntegration/Package.swift
+ M platforms/apple/swift/AStudioTestSupport/Package.swift
+ M platforms/apple/swift/AStudioThemes/Package.swift
+ M platforms/apple/swift/ui-swift/Package.swift
+ M platforms/web/apps/storybook/.storybook/main.ts
+ M platforms/web/apps/storybook/package.json
+ M platforms/web/apps/storybook/vitest.config.ts
+ M pnpm-lock.yaml
+ M scripts/build-pipeline.mjs
+ M scripts/build-pipeline.test.js
+ M scripts/build-pipeline.test.mjs
+ M scripts/version-sync.mjs
+?? .agent/EXECPLAN-agent-browser-smoke-tests.md
+?? .ralph/
+?? .spec/ExecPlan.md
+?? .spec/spec-2026-01-19-modal-a11y-mapbox-token.md
+?? mise.toml
+?? scripts/agent-browser/
+```
+- git diff --stat:
+```
+.github/workflows/ci.yml                           |    60 +-
+ .spec/PROJECT_REVIEW_REPORT.md                     |    11 +
+ ...pec-2026-01-15-component-creation-governance.md |     8 +
+ ...pec-2026-01-15-component-creation-governance.md |    12 +
+ CONTRIBUTING.md                                    |     5 +-
+ README.md                                          |     9 +-
+ docs/BUILD_PIPELINE.md                             |    12 +-
+ docs/TEST_PLAN.md                                  |   115 +-
+ docs/work/work_outstanding.md                      |    30 +-
+ package.json                                       |     7 +
+ .../apple/apps/macos/AStudioApp/Package.swift      |     2 +-
+ platforms/apple/apps/macos/AStudioPlayground       |     0
+ .../apple/swift/AStudioComponents/Package.swift    |     4 +-
+ .../Templates/TemplateRegistry.swift               |     5 +-
+ .../apple/swift/AStudioFoundation/Package.swift    |     4 +-
+ .../Sources/AStudioFoundation/DesignTokens.swift   |     2 +-
+ .../Icons/ChatGPTIconVectors.swift                 |    10 +-
+ .../AStudioFoundation/Icons/ChatGPTIcons.swift     |     4 +-
+ platforms/apple/swift/AStudioMCP/Package.swift     |     2 +-
+ .../apple/swift/AStudioShellChatGPT/Package.swift  |     2 +-
+ .../swift/AStudioSystemIntegration/Package.swift   |     2 +-
+ .../apple/swift/AStudioTestSupport/Package.swift   |     2 +-
+ platforms/apple/swift/AStudioThemes/Package.swift  |     4 +-
+ platforms/apple/swift/ui-swift/Package.swift       |     2 +-
+ platforms/web/apps/storybook/.storybook/main.ts    |    16 +-
+ platforms/web/apps/storybook/package.json          |    15 +-
+ platforms/web/apps/storybook/vitest.config.ts      |    64 +-
+ pnpm-lock.yaml                                     | 16520 +++++++------------
+ scripts/build-pipeline.mjs                         |   109 +-
+ scripts/build-pipeline.test.js                     |    24 +-
+ scripts/build-pipeline.test.mjs                    |    14 +-
+ scripts/version-sync.mjs                           |    63 +
+ 32 files changed, 6372 insertions(+), 10767 deletions(-)
+```
+
+Constraints:
+- Work on exactly ONE task per iteration
+- Do not claim completion without passing gates
+- Prefer minimal diffs; keep repo clean
+</ANCHOR>
+
+## Orchestrator Addendum (auto-generated)
+Iteration: 5
+
+Hard iteration constraints:
+- One task per iteration (one commit per iteration).
+- Apply backpressure: run the commands in AGENTS.md and fix until they pass.
+
+Selected task for this iteration:
+- id: 1
+- title: Replace ProEditConfigModal overlay with ModalDialog
+- acceptance:
+  - Component compiles without errors
+  - Modal opens and closes correctly
+  - Focus is trapped inside the modal
+  - Visual layout matches previous design
+
+Do not work on any other task in this iteration.
+
+<PROJECT_MEMORY>
+## .ralph/AGENTS.md
+# Ralph Gold Agents & Gates
+
+This file is read by Ralph Gold each iteration.
+
+## Gates (backpressure)
+
+Ralph Gold will run gates *after* the agent makes changes. Configure them in `.ralph/ralph.toml`.
+
+Recommended patterns:
+
+### Option A (recommended): `prek` as the universal gate runner
+
+- Put your quality contract in `.pre-commit-config.yaml`
+- Then enable the gate:
+  - `[gates.prek] enabled = true` (runs `prek run --all-files`)
+
+No git hooks are installed by Ralph Gold.
+
+### Option B: Explicit commands
+
+Examples:
+- `uv run ruff check .`
+- `uv run mypy src`
+- `uv run pytest -q`
+- `npm test`
+
+## Review gate (cross-model)
+
+Optionally enable `[gates.review]` to require a reviewer model to return `SHIP`.
+
+## Notes
+
+- Receipts are written under `.ralph/receipts/` each iteration.
+- Repo Prompt context packs (if enabled) are written under `.ralph/context/`.
+
+
+## .ralph/prd.json
+{
+  "project": "astudio",
+  "branchName": "ralph/modal-a11y-mapbox",
+  "stories": [
+    {
+      "id": 1,
+      "priority": 1,
+      "title": "Replace ProEditConfigModal overlay with ModalDialog",
+      "description": "Replace the overlay div and fixed modal container with ModalDialog component. Set isOpen, onClose, title, maxWidth props. Move existing content inside ModalDialog body. Use className and overlayClassName to preserve visual styling.",
+      "acceptance": [
+        "Component compiles without errors",
+        "Modal opens and closes correctly",
+        "Focus is trapped inside the modal",
+        "Visual layout matches previous design"
+      ],
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": 2,
+      "priority": 2,
+      "title": "Replace NewProjectModal overlay with ModalDialog",
+      "description": "Replace the outer overlay div with ModalDialog component. Set title='New project' and description to match helper text. Preserve inner card styles as className. Remove onClick stopPropagation.",
+      "acceptance": [
+        "Component compiles without errors",
+        "Modal opens and closes correctly",
+        "Focus is trapped inside the modal",
+        "Overlay click closes modal"
+      ],
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": 3,
+      "priority": 3,
+      "title": "Replace ProjectSettingsModal overlay with ModalDialog",
+      "description": "Replace the outer overlay div with ModalDialog component. Set title='Project settings'. Preserve inner content styling in className. Remove manual overlay/stopPropagation logic.",
+      "acceptance": [
+        "Component compiles without errors",
+        "Modal opens and closes correctly",
+        "Focus is trapped inside the modal",
+        "Escape key closes modal"
+      ],
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": 4,
+      "priority": 4,
+      "title": "Add Mapbox token guard and remove hardcoded fallback",
+      "description": "In packages/widgets/src/widgets/pizzaz/pizzaz-map/main.tsx, remove the hardcoded Mapbox token fallback. Add a guard that renders inline error UI when VITE_MAPBOX_TOKEN is missing. Skip Mapbox initialization when token is missing.",
+      "acceptance": [
+        "Widget shows inline error when token is missing",
+        "Mapbox does not initialize without token",
+        "No token values leaked in logs or UI",
+        "Widget loads normally when token is present"
+      ],
+      "passes": false,
+      "notes": ""
+    },
+    {
+      "id": 5,
+      "priority": 5,
+      "title": "Validate accessibility and run lint",
+      "description": "Manual accessibility checks: Tab key cycles within each modal, Escape closes modal, focus returns to trigger. Run pnpm lint and ensure no errors.",
+      "acceptance": [
+        "All modals trap focus correctly",
+        "Escape key closes all modals",
+        "Focus returns to triggering element on close",
+        "pnpm lint passes without errors",
+        "No visual regressions observed"
+      ],
+      "passes": false,
+      "notes": ""
+    }
+  ]
+}
+
+
+## .ralph/progress.md
+# progress.md
+
+Append-only loop memory.
+Keep entries short; delete nothing; add clarifications when you learn.
+
+---
+- [20260119T082839Z] iter 1 mode=prd status=CONTINUE checks=PASS story=S1 agent=claude branch=main log=20260119T082839Z-iter0001-claude.log
+- [20260119T083339Z] iter 2 mode=prd status=CONTINUE checks=PASS story=S1 agent=claude branch=main log=20260119T083339Z-iter0002-claude.log
+- [20260119T084042Z] iter 3 mode=prd status=CONTINUE checks=PASS story=S1 agent=claude branch=main log=20260119T084042Z-iter0003-claude.log
+[2026-01-19T08:43:09.664333+00:00] BLOCKED task 1 (Replace ProEditConfigModal overlay with ModalDialog) after 3 attempts: unknown
+- [20260119T084309Z] iter 4 mode=prd status=CONTINUE checks=PASS story=S2 agent=claude branch=main log=20260119T084309Z-iter0004-claude.log
+
+
+## .ralph/FEEDBACK.md
+# Feedback (optional)
+
+This file is read by Ralph Gold each iteration.
+
+Use it to add temporary guidance for the next iteration (constraints, clarifications, links, etc.).
+
+Delete entries when no longer needed.
+
+
+## .spec/ExecPlan.md
+# Fix modal accessibility and Mapbox token handling
+
+This ExecPlan is a living document. The sections `Progress`, `Surprises & Discoveries`, `Decision Log`, and `Outcomes & Retrospective` must be kept up to date as work proceeds.
+
+There is no repo-local `PLANS.md` or `.agent/PLANS.md` file. This ExecPlan is written according to `/Users/jamiecraik/.codex/instructions/plans.md` and must be maintained in accordance with it.
+
+## Purpose / Big Picture
+
+After this change, all UI modals in the main app paths use the repo’s accessible modal primitive with focus trap, Escape handling, and proper dialog semantics, and the Mapbox widget no longer ships with a hardcoded token fallback. A user can open and close modals with keyboard and screen reader expectations intact, and the map widget only initializes when a valid environment token is provided.
+
+## Acceptance Criteria
+
+- [ ] All in-scope app modals (`ProEditConfigModal`, `NewProjectModal`, `ProjectSettingsModal`) use `ModalDialog` and no longer render manual overlay divs.
+- [ ] Focus is trapped inside modals, Escape closes modals, and focus returns to the triggering element after modal close.
+- [ ] Modal headings are wired to `aria-labelledby` via `ModalDialog` title handling.
+- [ ] Hardcoded Mapbox token fallback is removed from `pizzaz-map/main.tsx`.
+- [ ] When `VITE_MAPBOX_TOKEN` is missing, the widget renders an inline error state and does not initialize Mapbox.
+- [ ] No logs or UI output reveal token values or use fallback tokens.
+- [ ] `pnpm lint` completes without errors (or skip with note if too heavy for design-only pass).
+
+## Progress
+
+- [ ] (2026-01-19 00:00Z) Implement modal refactors to use `ModalDialog` and remove Mapbox token fallback; add missing a11y attributes and empty-state UI when env token is missing.
+
+## Surprises & Discoveries
+
+- Observation: The repo does not contain `references/components-index.md`, which is referenced by the `react-ui-patterns` skill.
+  Evidence: `rg --files -g 'components-index.md'` returned no results.
+
+## Decision Log
+
+- Decision: Use the existing `packages/ui/src/components/ui/overlays/Modal/Modal.tsx` primitive as the single modal pattern for app modals.
+  Rationale: It already implements focus trap, Escape handling, and WAI-ARIA dialog semantics, and avoids bespoke modal logic.
+  Date/Author: 2026-01-19 / Codex
+
+- Decision: Remove hardcoded Mapbox token fallback and require `VITE_MAPBOX_TOKEN` for map initialization.
+  Rationale: Hardcoded credentials violate repo security policy and create hidden production behavior.
+  Date/Author: 2026-01-19 / Codex
+
+## Outcomes & Retrospective
+
+Pending. Will complete after implementation and validation.
+
+## Context and Orientation
+
+The repo contains a `ModalDialog` primitive at `packages/ui/src/components/ui/overlays/Modal/Modal.tsx` that already implements focus trapping, Escape to close, overlay click handling, and `role="dialog"`, `aria-modal`, and label/description wiring. This plan uses that primitive exclusively. No new modal primitives are introduced.
+
+Several app modals currently render as plain `div` overlays, which bypass accessibility and keyboard support:
+- `packages/ui/src/app/chat/compose/ProEditConfigModal/ProEditConfigModal.tsx`
+- `packages/ui/src/app/chat/ChatSidebar/modals/NewProjectModal/NewProjectModal.tsx`
+- `packages/ui/src/app/chat/ChatSidebar/modals/ProjectSettingsModal/ProjectSettingsModal.tsx`
+
+The Pizzaz map widget hardcodes a Mapbox token fallback:
+- `packages/widgets/src/widgets/pizzaz/pizzaz-map/main.tsx`
+
+“Modal” here means a dialog that interrupts the main UI and must trap focus. “Overlay” means a background layer that dismisses the modal.
+
+## Plan of Work
+
+First, replace the modal shell markup in the three app modal files with the `ModalDialog` primitive. The goal is to preserve all existing layout and styles while delegating focus management, Escape handling, and overlay behavior to the primitive. Do not change any internal modal content structure or state logic.
+
+For `ProEditConfigModal`, keep the existing contents and styles but wrap the modal in `ModalDialog`. Provide `title` and a `maxWidth` that matches the current width. Remove the outer overlay `div` and the manual fixed-position container so the primitive owns the overlay and dialog role. Use `className` and `overlayClassName` to preserve the existing styling.
+
+For `NewProjectModal`, replace the outer overlay `div` with `ModalDialog`. Use `title` and `description` props so the dialog is properly labeled. Preserve the inner card styles as the `className`. Remove `onClick` stopPropagation since overlay behavior is handled by `ModalDialog`.
+
+For `ProjectSettingsModal`, do the same: switch to `ModalDialog`, apply a title, preserve the layout as the dialog content, and remove manual overlay logic.
+
+Second, remove the hardcoded Mapbox token fallback in `packages/widgets/src/widgets/pizzaz/pizzaz-map/main.tsx`. Require `import.meta.env.VITE_MAPBOX_TOKEN`. If the token is missing, render a small inline error state in the widget instead of initializing Mapbox. This error state must be visible and should mention that `VITE_MAPBOX_TOKEN` is required, but it must not log or expose any secret values.
+
+No new dependencies should be added. Avoid any behavior or visual regressions beyond the modal shell and token guard.
+
+## Concrete Steps
+
+1) Update `packages/ui/src/app/chat/compose/ProEditConfigModal/ProEditConfigModal.tsx`.
+   - Replace the overlay `div` and fixed modal container with `ModalDialog`.
+   - Set `isOpen={isOpen}`, `onClose={onClose}`, `title="Pro Edit Settings"`, `maxWidth="720px"`.
+   - Move the existing content inside the `ModalDialog` body.
+   - Use `className` and `overlayClassName` to preserve current visual styling.
+
+2) Update `packages/ui/src/app/chat/ChatSidebar/modals/NewProjectModal/NewProjectModal.tsx`.
+   - Replace the outer overlay `div` with `ModalDialog`.
+   - Set `title` to “New project” and set `description` to match the helper text at the top.
+   - Preserve the inner card styles as the dialog container `className`.
+   - Remove `onClick` stopPropagation since the overlay behavior is handled by `ModalDialog`.
+
+3) Update `packages/ui/src/app/chat/ChatSidebar/modals/ProjectSettingsModal/ProjectSettingsModal.tsx`.
+   - Replace the outer overlay `div` with `ModalDialog`.
+   - Set `title="Project settings"` and optionally include a short description if needed.
+   - Preserve inner content styling in `className`.
+   - Remove manual overlay/stopPropagation logic.
+
+4) Update `packages/widgets/src/widgets/pizzaz/pizzaz-map/main.tsx`.
+   - Replace the token assignment to remove the hardcoded fallback.
+   - Add a guard that renders an inline “missing token” UI when `import.meta.env.VITE_MAPBOX_TOKEN` is not set.
+   - Ensure Mapbox initialization is skipped when the token is missing.
+
+## Validation and Acceptance
+
+Run from repo root:
+
+    pnpm lint
+
+If this is too heavy for a design-only pass, skip with a note and run after implementation.
+
+Manual acceptance checks:
+
+- Each modal traps focus, closes on Escape, and announces a dialog role to screen readers.
+- Clicking outside the modal closes it without requiring manual `stopPropagation`.
+- `ProEditConfigModal` visual layout matches the previous layout (title, mode switch, selects).
+- `NewProjectModal` and `ProjectSettingsModal` layouts match existing presentation.
+- The Pizzaz map widget does not initialize without `VITE_MAPBOX_TOKEN` and instead shows a clear error message.
+
+## Idempotence and Recovery
+
+These changes are safe to reapply. If a modal renders incorrectly, revert the file to its previous structure and reapply the `ModalDialog` wrapper carefully while preserving inner layout. If the map widget fails to render, ensure the token guard is only around Mapbox initialization and not around general layout.
+
+## Artifacts and Notes
+
+Expected replacement pattern for modals:
+
+    <ModalDialog isOpen={isOpen} onClose={onClose} title="..." maxWidth="...px" className="...">
+      ...existing content...
+    </ModalDialog>
+
+Expected token handling in Pizzaz map:
+
+    const token = import.meta.env.VITE_MAPBOX_TOKEN;
+    if (!token) {
+      return <InlineErrorState message="VITE_MAPBOX_TOKEN is required to use the map widget." />;
+    }
+    mapboxgl.accessToken = token;
+
+## Interfaces and Dependencies
+
+- Use `ModalDialog` from `packages/ui/src/components/ui/overlays/Modal/Modal.tsx`.
+- Do not introduce new modal primitives or dialog libraries.
+- Keep component props stable; do not change external APIs for these components.
+- Do not log token values or introduce fallback secrets for Mapbox.
+
+Update note: Added explicit modal pattern constraints and token-handling contract to align with `react-ui-patterns` and security policy, plus strengthened manual acceptance checks and no-regression guidance.
+
+
+## .spec/PROJECT_REVIEW_REPORT.md
+---
+schema_version: 1
+mode: review
+project: aStudio
+---
+
+# Project Review Report: aStudio
+
+**Owner:** Jamie Scott Craik (@jscraik)  
+**Date:** 2026-01-15  
+**Repo:** /Users/jamiecraik/dev/aStudio  
+**Audience:** solo dev  
+**Inputs reviewed:** README.md | docs/architecture/README.md | docs/architecture/WIDGET_ARCHITECTURE.md | docs/architecture/CROSS_PLATFORM.md | docs/BUILD_PIPELINE.md | docs/design-system/CHARTER.md | docs/SECURITY_HArdENING_COMPLETION_REPORT.md | docs/work/work_outstanding.md | package.json
+
+---
+
+## Acceptance Criteria
+
+- [ ] Project review covers executive summary, vision, current state, evidence of usefulness, gap analysis, viability assessment, and realignment plan.
+- [ ] Product gaps are documented: persona clarity, user stories, edge cases, success metrics, and component creation guide.
+- [ ] Engineering gaps are identified: API/schema definitions, security requirements, error handling, and performance targets.
+- [ ] Operational readiness gaps are listed: dashboards/alerts, rollback plan, runbook, and SLOs.
+- [ ] Updated vision statement, scope, and success metrics are defined with measurable targets.
+- [ ] Recommended plan includes top priorities for next 14 days and follow-up deliverables.
+
+---
+
+## 1) Executive Summary
+
+- **Recommendation:** Continue (focus on validation + operational readiness)
+- **Primary goal:** Speed up Jamie’s solo UI development by maximizing component reuse and visual consistency across surfaces.
+- **Why:**
+  - Clear solo-developer design-system vision centered on UI consistency and component reuse.
+  - Strong build pipeline and security hardening documentation already in place.
+  - Architecture and design-system governance are documented and consistent with Apps SDK UI.
+- **Biggest missing pieces:**
+  - Real user demand evidence and success metrics instrumentation.
+  - Operational readiness artifacts (SLOs, runbooks, on-call, incident response).
+  - Version baseline alignment (Node/Swift) with the gold standard policy.
+- **Next 14 days:**
+  - Define primary use cases for solo-dev UI consistency workflows; confirm success metrics.
+  - Instrument core workflows (widget usage, embed success, MCP tool call success).
+  - Establish SLOs + runbook for MCP server and widget delivery pipeline.
+  - Align toolchain baselines (Node 24 LTS, Swift 6 where applicable) and document plan.
+  - Resolve Storybook browser test failures by moving to Playwright component tests for Radix-heavy stories.
+
+---
+
+## 2) Original Vision (Reconstructed)
+
+- **Vision statement (then):** Build a cross-platform UI workbench that enables consistent UI and reusable components for a solo developer across embedded widgets, web apps, and native SwiftUI apps.
+- **Problem statement:** A solo developer needs consistent, accessible, and maintainable UI across multiple surfaces (ChatGPT widgets, web apps, macOS/iOS) without duplicating component logic and tokens.
+  -- **Target users/personas:**
+  - Primary: Solo developer (Jamie) building ChatGPT widgets and web apps.
+  - Secondary: Solo SwiftUI developer needing parity with React components/tokens.
+- **Hypothesis:** A single design-system-first monorepo with shared tokens, runtime abstractions, and widget tooling will reduce duplication and accelerate UI delivery across platforms.
+- **Success metrics (intended):** Faster component delivery, parity across surfaces, fewer UI regressions, and streamlined widget builds.
+
+Sources:
+
+- README.md
+- docs/architecture/WIDGET_ARCHITECTURE.md
+- docs/design-system/CHARTER.md
+- docs/architecture/CROSS_PLATFORM.md
+
+---
+
+## 3) Current State (Reality Check)
+
+- **What exists today:**
+  - Library-first monorepo with `@astudio/ui`, `@astudio/runtime`, `@astudio/tokens`, widget bundles, and MCP server.
+  - Web Widget Gallery + Storybook; Swift packages and macOS apps; token sync and build pipeline.
+  - Security hardening report and extensive test suite documentation.
+- **Who is actually using it (if anyone):** Jamie (solo) for design system and component creation; no external usage metrics in reviewed docs.
+- **Evidence of pain (baseline):**
+  - Median time to ship a new component: ~48 hours (solo dev baseline).
+  - UI inconsistency regressions: baseline unknown; needs instrumentation.
+- **Architecture snapshot:**
+  - Apps SDK UI–first design system, with Radix fallbacks where needed.
+  - Host abstraction (`packages/runtime`) for embedded vs standalone environments.
+  - Widget build pipeline producing standalone HTML for MCP consumption.
+- **React ↔ Swift component parity (current):**
+  - Parity is partial; many React components are complete while Swift counterparts are still in progress.
+  - Component parity is tracked in `docs/architecture/CROSS_PLATFORM.md` and should be treated as a roadmap rather than a completed mirror.
+- **Component authoring guidance (current):**
+  - Guidance exists but is scattered across docs; a single “component creation” guide for Jamie is not clearly centralized.
+  - Relevant sources today:
+    - `docs/guides/UI_COMPONENT_TOOLING.md` (component generator and tooling)
+    - `docs/architecture/ui-structure-map.md` (where to add components, stories, tests)
+    - `docs/architecture/cross-platform-design.md` (token + state requirements)
+- **Known constraints/debt:**
+  - Storybook browser tests partially failing due to Radix + Vitest browser runner limitations.
+  - Swift tests and local dev servers blocked in sandboxed environments.
+  - Toolchain baseline mismatch between docs (Node 18, Swift 5.9) and gold baseline (Node 24, Swift 6 for new modules).
+
+---
+
+## 4) Evidence of Usefulness / Demand
+
+- **User feedback:** N/A — solo dev project; current feedback is owner experience.
+- **Behavioral signals:** Not found (no activation/usage/retention metrics).
+- **Competitive landscape:** Alternative UI kits and platform-specific UI stacks exist, but this repo differentiates via Apps SDK UI alignment + multi-surface parity.
+
+If evidence is missing:
+
+- Track widget usage in the Widget Gallery and MCP embeds (event logs).
+- Add install/download stats for package consumers (npm) and adoption milestones.
+- Capture developer experience feedback via internal surveys or issue templates.
+
+---
+
+## 5) Gap Analysis (What’s missing)
+
+### 5.1 Product gaps
+
+- Missing persona clarity: personas are implied but not explicitly documented.
+- Missing core user stories: no PRD-level user stories for widget, MCP, and Swift parity workflows.
+- Missing edge cases / failure UX: error/empty-state standards exist but are not consolidated into a product-level requirement set.
+- Missing success metrics instrumentation: no measurable KPI targets or telemetry plan.
+- Missing centralized component creation guide: no single, end-to-end component authoring checklist for Jamie (React + Swift parity + tokens + tests).
+
+### 5.2 Engineering gaps
+
+- Missing API/schema definitions: MCP tool contracts are tested but no single source-of-truth spec found in reviewed docs.
+- Missing data model constraints/indexes: N/A — primarily UI and tooling repo, but any persistence in MCP/macOS apps should have explicit data models.
+- Missing security requirements: high-level security guidance exists; operational security requirements for MCP runtime (authz, rate limits, audit logs) need explicit, environment-specific definitions.
+- Missing error handling: cross-surface error-handling conventions should be consolidated into a single spec and enforced via lint/test.
+- Missing performance targets: no clear latency/size budgets for widgets, MCP tool responses, or SwiftUI render paths.
+
+### 5.3 Operational readiness gaps
+
+- Missing dashboards/alerts: no SLO dashboards or alerting doc.
+- Missing rollback plan: partial release checklists exist, but rollback playbook for MCP/widgets is not specified.
+- Missing runbook: no centralized runbook for MCP server + widget delivery.
+- Missing SLOs/error budget policy: no SLO targets or policy defined.
+
+---
+
+## 6) Viability Assessment
+
+- **Problem severity:** High — multi-surface UI consistency is a real cost center and quality risk.
+- **Differentiation / wedge:** Apps SDK UI alignment + shared tokens/runtime + MCP widget delivery pipeline.
+- **Feasibility:** High — existing architecture and build pipeline are in place; missing pieces are governance and validation rather than core tech.
+- **Go-to-market path (even small):**
+  - Internal adoption by teams building ChatGPT widgets and embedded UIs.
+  - Public-facing widget templates and MCP examples to drive adoption.
+- **Biggest assumptions:**
+  - Teams will adopt a unified UI system across React and SwiftUI.
+  - Widget demand will justify sustained maintenance.
+  - Apps SDK UI alignment will remain stable enough to build on.
+- **Kill criteria:**
+  - No active widget or UI package consumers after 2–3 quarters.
+  - High maintenance burden vs. value delivered (e.g., parity debt exceeds adoption).
+  - Solo-dev time cost exceeds measurable time saved for 2 consecutive quarters (threshold: >25% time overhead vs baseline).
+
+---
+
+## 7) Realignment Plan
+
+### Updated vision statement (now)
+
+Provide a production-grade, Apps SDK UI–aligned cross-platform UI workbench with measurable adoption and operational readiness for ChatGPT widgets, React apps, and SwiftUI surfaces.
+
+### Updated scope
+
+- In:
+  - Widget delivery pipeline, MCP integration, and UI parity via shared tokens.
+  - Governance artifacts (SLOs, runbooks, release checklists, metrics).
+  - Developer experience tooling and documentation.
+  - Production-ready MCP allowlist authN/Z policy and tool capability scoping.
+  - Canonical MCP tool contract spec stored with code, referenced in runbook.
+- Out:
+  - Non-UI backend services unrelated to widget/UI contracts.
+  - Marketing sites or non-production experiments.
+
+### Updated success metrics
+
+| Metric                                |                                            Target | Window      | Source                             |
+| ------------------------------------- | ------------------------------------------------: | ----------- | ---------------------------------- |
+| Widget render success rate            |                                           ≥ 99.5% | 30d         | MCP server logs + client telemetry |
+| Widget build time (P95)               |                                           ≤ 5 min | 30d         | CI build logs                      |
+| Component reuse rate                  |    ≥ 70% of new UI built from existing components | 30d         | repo stats + design system audit   |
+| UI consistency regressions            |                      ≤ 2 visual diffs per release | per release | visual regression reports          |
+| Time to new component (idea → merged) | Baseline: 1 day median → Target: ≤ 2 hours median | 30d         | PR timestamps + changelog          |
+| Theme change rollout time             |                                         ≤ 2 hours | 30d         | CI build logs + release notes      |
+| React ↔ Swift parity lag              |                                         ≤ 30 days | quarterly   | parity matrix + release notes      |
+| UI parity coverage                    |                           ≥ 90% components mapped | quarterly   | design-system coverage matrix      |
+| Storybook test pass rate              |                                             ≥ 95% | 30d         | CI test reports                    |
+| MCP tool contract compliance          |                                              100% | 30d         | contract test suite                |
+| Accessibility regression rate         |          0 WCAG 2.2 AA violations in release gate | per release | a11y CI + manual audit notes       |
+| Widget bundle size (P95)              |                       ≤ 250 KB gzipped per widget | 30d         | build artifacts                    |
+| Widget first render (P95)             |                      ≤ 1.5 s on mid-tier hardware | 30d         | perf traces                        |
+| CI build minutes (per week)           |                                         ≤ 120 min | weekly      | CI billing + logs                  |
+| Storage footprint (build artifacts)   |                                            ≤ 5 GB | 30d         | CI artifacts dashboard             |
+
+### Operational readiness (gold baseline)
+
+- **SLO owners (solo):**
+  - MCP server availability/latency — Owner: Jamie
+  - Widget delivery pipeline (build + hosting) — Owner: Jamie
+  - CLI/tooling reliability — Owner: Jamie
+- **SLO policy (minimum):**
+  - Availability SLO: 99.5% monthly; error budget: 0.5% with alert when 50% burned in 7 days.
+  - Latency SLO: P95 tool response ≤ 500 ms (local) / ≤ 1.5 s (remote).
+  - Release gate: block if error budget burn > 80% in 30 days.
+- **Rollback playbook (minimum):**
+  1. Pin last known-good widget build artifact.
+  2. Disable problematic MCP tools via allowlist.
+  3. Revert release tag and redeploy.
+  4. Post-incident note with root cause and follow-up tasks.
+- **MCP auth policy (minimum):**
+  - Default prod allowlist by tool name + version.
+  - Least-privilege tool access; deny unknown tools.
+  - Development mode may allow local-only overrides with explicit flag.
+- **Tool contract versioning:**
+  - Semver for tool schemas; breaking changes require new major version.
+  - Canonical spec in `platforms/mcp/contracts/` validated by `pnpm test:mcp-contract`.
+
+### UX edge case standardization (prioritized)
+
+1. Loading states (skeletons, optimistic updates)
+2. Empty states (no data, first-run)
+3. Error states (tool failure, network failure, auth failure)
+4. Offline/limited connectivity handling
+5. Missing host capabilities (e.g., no `window.openai`)
+6. Slow network timeouts and retry behavior
+
+### Accessibility audit cadence
+
+- Automated a11y checks on every PR; manual audit at least once per release.
+
+---
+
+## 8) Recommended Plan (Actionable)
+
+### Top priorities (next 14 days)
+
+1. Define the solo-dev workflows and top 5 user stories for widget dev + Swift parity (Owner: Jamie) — Done when: PRD draft exists with success metrics and edge cases.
+2. Add telemetry events for widget render and MCP tool calls — Done when: dashboards show baseline metrics and error rates.
+3. Create MCP + widget runbook and rollback playbook — Done when: runbook has incident steps + owners + contact paths.
+4. Align toolchain baselines (Node 24 LTS, Swift 6 plan) — Done when: baseline decision recorded and updated in docs/tooling.
+5. Replace Vitest browser Storybook tests with Playwright component tests for Radix-heavy stories — Done when: CI green with new test target and documented rationale.
+6. Publish a minimal MCP auth policy (prod allowlist) — Done when: policy document exists and tooling enforces allowlist by default.
+7. Define canonical MCP tool contract spec + semver policy — Done when: spec file exists under `platforms/mcp/contracts/` and runbook references it.
+8. Create a centralized component creation guide for Jamie — Done when: a single doc covers React + Swift parity, tokens, tests, and release steps.
+
+### Follow-up deliverables
+
+- [ ] Update PRD (or create new one)
+- [ ] Update Tech Spec
+- [ ] Add ADR(s) for key decisions
+- [ ] Add instrumentation + dashboards
+- [ ] Complete ORR checklist before production launch
+
+---
+
+## 9) Appendix
+
+- Key files/docs reviewed:
+  - README.md
+  - docs/architecture/README.md
+  - docs/architecture/WIDGET_ARCHITECTURE.md
+  - docs/architecture/CROSS_PLATFORM.md
+  - docs/BUILD_PIPELINE.md
+  - docs/design-system/CHARTER.md
+  - docs/SECURITY_HArdENING_COMPLETION_REPORT.md
+  - docs/work/work_outstanding.md
+  - package.json
+- Commands run:
+  - bash /Users/jamiecraik/.codex/skills/product-spec/scripts/collect-project-context.sh
+- Notes:
+  - Review focuses on documented architecture and repo state; no runtime metrics were available.
+  - Assumptions applied (gold standard defaults + user inputs): baseline median component shipping time is 48 hours with target ≤ 2 hours; Playwright component tests are the preferred Storybook strategy; MCP auth policy is prod-ready allowlist; tool contracts follow semver.
+  - Canonical MCP tool contract spec location: `platforms/mcp/contracts/` (recommended best practice), referenced in runbook docs for operational use.
+
+
+## .spec/spec-2026-01-15-component-creation-governance.md
+---
+schema_version: 1
+---
+
+# PRD: aStudio Component Creation & Parity Governance
+
+**Owner:** Jamie Scott Craik (@jscraik)  
+**Status:** Draft  
+**Last updated:** 2026-01-15  
+**Stakeholders:** Jamie (solo dev)  
+**Links:** .spec/PROJECT_REVIEW_REPORT.md | docs/architecture/CROSS_PLATFORM.md | docs/architecture/ui-structure-map.md | docs/guides/UI_COMPONENT_TOOLING.md | docs/architecture/cross-platform-design.md
+
+> Rule: If a section is not applicable, write `N/A` and explain why in 1–2 lines.
+
+---
+
+## Acceptance Criteria
+
+- [ ] A single component creation guide exists that covers React + Swift parity, tokens, tests, and release steps in one place.
+- [ ] Parity checklist is linked from the component guide and updated for new components.
+- [ ] A required list of UX states (loading, empty, error) is documented for new components with validation steps.
+- [ ] Accessibility checks are documented and required for new components with a manual audit cadence.
+- [ ] Definition of done includes parity, UX states, test evidence, and release verification steps.
+
+## 0) PRD Summary
+
+- **One-liner:** A single, repeatable component-creation workflow and parity governance process for Jamie to build consistent React + SwiftUI components quickly.
+- **Why now:** Current guidance is scattered and parity is partial; the solo workflow needs standardization to cut component delivery time.
+- **Desired outcome:** Reduce median time-to-ship for new components from ~48 hours to ≤ 2 hours while improving UI consistency and parity tracking.
+
+---
+
+## 1) Executive Summary
+
+Jamie is building a design-system-first UI workbench across React, ChatGPT widgets, and SwiftUI. Today, component creation is slowed by scattered guidance and partial parity between React and SwiftUI libraries. This PRD defines a unified component creation workflow and parity governance that allows a solo developer to ship components faster without sacrificing consistency or accessibility.
+
+The change introduces a single source of truth for “how to create a component,” explicit parity tracking, and measurable quality gates for UX states, accessibility, and consistency. Success will be measured by reduced time-to-ship, fewer visual regressions, and higher parity coverage. This PRD does not introduce new product features for end users; it focuses on developer productivity and quality.
+
+Out of scope are non-UI backend services, unrelated product features, and any redesign of Apps SDK UI foundations. Technical implementation details are captured in the accompanying Tech Spec.
+
+---
+
+## 2) Problem Statement / Opportunity
+
+### 2.1 Problem
+
+- **Who is affected:** Jamie (solo developer maintaining aStudio’s UI system)
+- **Pain today:** Component creation requires hopping across multiple docs; parity decisions are inconsistent and time-consuming.
+- **Current workaround:** Manual search across guides and architecture docs; ad-hoc parity decisions.
+- **Impact if we do nothing:** Component delivery stays slow (~48 hours), parity lag grows, and UI inconsistencies persist.
+
+### 2.2 Evidence (required)
+
+- Baseline median time-to-ship per component: ~48 hours (solo dev estimate).
+- Parity documentation shows React components complete while Swift counterparts remain in progress.
+- Guidance is scattered across multiple docs with no single “end-to-end” workflow.
+
+### 2.3 Opportunity
+
+- **What improves if solved:** Faster component delivery, fewer UI regressions, and a clear parity roadmap.
+- **Why we’re well-positioned:** Existing architecture, tooling (`pnpm new:component`), and parity docs can be unified into a single workflow.
+
+---
+
+## 3) Target Users / Personas
+
+> Personas must be specific. Each persona should have real context + pain.
+
+| Persona             | Role              | Context                                            | Goals                               | Pain points                               |
+| ------------------- | ----------------- | -------------------------------------------------- | ----------------------------------- | ----------------------------------------- |
+| Jamie               | Solo UI developer | Builds components across React + SwiftUI + widgets | Ship components quickly with parity | Scattered guidance, slow parity decisions |
+| Jamie (Swift focus) | SwiftUI developer | Builds SwiftUI components to match React           | Keep parity without rework          | Unclear parity targets, missing checklist |
+
+**Primary user(s):** Jamie (solo dev)  
+**Secondary user(s):** N/A — single-user project.
+
+---
+
+## 4) User Stories
+
+### 4.1 Core user stories (MVP)
+
+1. **Story [STORY-001]:** As Jamie, I want a single component creation guide so that I can build new components consistently without hunting across docs.  
+   **Acceptance criteria:**
+   - [ ] The guide covers React + Swift parity, tokens, tests, and release steps in one place.
+   - [ ] The guide references existing tooling and required docs.
+         **Priority:** Must
+
+2. **Story [STORY-002]:** As Jamie, I want a parity checklist so that I can track which Swift components mirror React and what remains.  
+   **Acceptance criteria:**
+   - [ ] Parity checklist is linked from the component guide.
+   - [ ] Parity status is updated for new components.
+         **Priority:** Must
+
+3. **Story [STORY-003]:** As Jamie, I want standardized UX state requirements so that every component ships with consistent loading/empty/error states.  
+   **Acceptance criteria:**
+   - [ ] A required list of UX states is documented for new components.
+   - [ ] The guide includes how to validate these states.
+         **Priority:** Must
+
+4. **Story [STORY-004]:** As Jamie, I want an accessibility checklist so that every component meets WCAG 2.2 AA expectations.  
+   **Acceptance criteria:**
+   - [ ] Accessibility checks are documented and required for new components.
+   - [ ] The guide defines a manual audit cadence per release.
+         **Priority:** Must
+
+5. **Story [STORY-005]:** As Jamie, I want a clear definition of done so that I can ship components quickly without rework.  
+   **Acceptance criteria:**
+   - [ ] Definition of done includes parity, UX states, and test evidence.
+   - [ ] The guide includes release verification steps.
+         **Priority:** Should
+
+### 4.2 Use case narratives (recommended)
+
+- **Use case A:** Jamie starts a new component → uses the centralized guide → completes React component + parity checklist → updates Swift parity status → ships with test evidence.
+- **Use case B:** Jamie updates a component → uses the checklist to ensure no UX state regression → runs required tests → releases confidently.
+
+---
+
+## 5) Functional Requirements
+
+### Journey: Component creation
+
+- FR-1: Provide a single, end-to-end component creation guide. (Priority: Must)
+- FR-2: Include parity checklist and update workflow. (Priority: Must)
+- FR-3: Document UX state requirements and validation steps. (Priority: Must)
+- FR-4: Define a clear “definition of done” for component releases. (Priority: Should)
+
+### Edge cases & failure UX (required)
+
+- If a component lacks a Swift equivalent, the guide defines how to record the parity gap.
+- If a component lacks required UX states, the guide blocks release until states are defined.
+- If accessibility checks fail, the guide requires remediation before release.
+
+---
+
+## 6) Non-Functional Requirements
+
+- **Performance:** N/A — documentation-only change; performance budgets are defined in Tech Spec.
+- **Reliability:** The guidance must be stable and versioned with the repo.
+- **Security & privacy:** No sensitive data; ensure no secrets are embedded in docs.
+- **Compliance:** N/A — no regulated data.
+- **Accessibility:** WCAG 2.2 AA baseline for component guidance.
+- **Observability expectation:** Track component creation time and regressions via repo metrics and CI reports.
+
+---
+
+## 7) Success Metrics / KPIs
+
+| Metric                                |                                   Target | Measurement method  | Source                 |
+| ------------------------------------- | ---------------------------------------: | ------------------- | ---------------------- |
+| Time to new component (idea → merged) |             Baseline: 48h → Target: ≤ 2h | PR timestamps       | PR history + changelog |
+| Component reuse rate                  | ≥ 70% of new UI from existing components | repo stats audit    | manual audit + scripts |
+| UI consistency regressions            |             ≤ 2 visual diffs per release | visual test reports | CI visual regression   |
+| Accessibility regression rate         |      0 WCAG 2.2 AA violations at release | a11y test + audit   | CI + manual audit      |
+
+**Measurement window:** 30 days post-adoption
+
+### Guardrails (required)
+
+- CI pass rate must not regress below 95%.
+- Widget build time P95 must stay ≤ 5 minutes.
+
+---
+
+## 8) Scope
+
+### In scope
+
+- Centralized component creation guide (React + Swift parity + tokens + tests)
+- Parity checklist and update workflow
+- UX state requirements and definition of done
+
+### Out of scope (required)
+
+- New UI components or features beyond documentation/process updates
+- Changes to Apps SDK UI or design tokens
+
+### Non-goals (recommended)
+
+- Full React ↔ Swift parity in this phase
+- Redesign of existing components
+
+---
+
+## 9) Dependencies
+
+### Internal
+
+- Existing docs: UI tooling guide, parity docs, UI structure map
+- CI test reports and release workflows
+
+### External
+
+- N/A — no external vendors required
+
+### Assumptions about dependencies (required)
+
+- The existing `pnpm new:component` workflow remains available.
+- The parity docs remain the canonical source for coverage tracking.
+
+---
+
+## 10) Risks and Mitigations
+
+| Risk                     | Likelihood | Impact | Mitigation                                              |
+| ------------------------ | ---------- | ------ | ------------------------------------------------------- |
+| Guide becomes stale      | Med        | Med    | Add review cadence and update checklist in release flow |
+| Parity checklist ignored | Med        | High   | Make parity update part of definition of done           |
+| Metrics not captured     | Med        | Med    | Add simple tracking in CI and changelog review          |
+
+---
+
+## 11) Timeline / Milestones (optional)
+
+| Milestone               | Date       | Notes                       |
+| ----------------------- | ---------- | --------------------------- |
+| Draft guide + checklist | 2026-01-22 | First version in repo       |
+| Review + iterate        | 2026-01-29 | Apply feedback and finalize |
+
+---
+
+## 12) Diagrams & Clarity Checks (recommended)
+
+### 12.1 User journey flow (Mermaid)
+
+```mermaid
+flowchart TD
+  A[Need new component] --> B[Open component creation guide]
+  B --> C[Create React component]
+  C --> D[Apply UX states + accessibility checklist]
+  D --> E[Update parity checklist]
+  E --> F[Run required tests]
+  F --> G{Pass?}
+  G -->|Yes| H[Release component]
+  G -->|No| D
+```
+
+### 12.2 State model (Mermaid)
+
+```mermaid
+stateDiagram-v2
+  [*] --> IDEA
+  IDEA --> IN_PROGRESS: guide_started
+  IN_PROGRESS --> REVIEW: tests_ready
+  REVIEW --> RELEASED: checks_pass
+  REVIEW --> IN_PROGRESS: fixes_needed
+  RELEASED --> [*]
+```
+
+---
+
+## 13) Assumptions & Open Questions (required)
+
+### Assumptions
+
+- A-1: Jamie remains the sole maintainer of the component workflow.
+- A-2: Current parity docs remain the authoritative source.
+
+### Open questions
+
+- Q-1: Where will parity status be displayed for fastest access? (Owner: Jamie, Due: 2026-01-22)
+- Q-2: What is the preferred location for the consolidated guide? (Owner: Jamie, Due: 2026-01-22)
+
+---
+
+## 14) PRD Integrity Rule (required)
+
+- This PRD defines **WHAT / WHY / WHO**.
+- It must **not** prescribe technical implementation details (databases, frameworks, service topology, specific libraries, etc.).
+- If any technical detail seems unavoidable, move it to the Tech Spec and reference it from here.
+
+---
+
+## 15) PRD Review Checklist (required)
+
+- [ ] Problem statement is clear and evidence-backed
+- [ ] Personas are specific and pains are real
+- [ ] Stories follow “As a… I want… so that…”
+- [ ] Acceptance criteria are observable/testable
+- [ ] Success metrics have numeric targets + measurement method
+- [ ] Scope includes explicit OUT
+- [ ] Dependencies listed with assumptions
+- [ ] Risks are realistic and mitigations exist
+- [ ] No technical implementation details
+
+---
+
+=== Debate Complete ===
+Document: PRD
+Rounds: 1
+Models: PM, UI/UX, Frontend, API, Backend, Security, Reliability/SRE, Cost/Scale
+Key refinements:
+
+- No blocking issues identified; documents align with gold-standard baselines.
+
+
+## .spec/spec-2026-01-19-modal-a11y-mapbox-token.md
+schema_version: 1
+
+# PRD: Modal Accessibility Alignment + Mapbox Token Guard
+
+## Executive Summary
+
+This change standardizes core app modals on the existing accessible modal primitive and removes a hardcoded Mapbox token fallback in a widget. Users should be able to open, navigate, and dismiss modals with keyboard and screen reader support that matches platform expectations. The map widget should only initialize when a valid environment token is present and should provide a clear inline error when it is not.
+
+## Problem / Context
+
+Several app modals are built as bespoke overlay divs, bypassing the repository’s `ModalDialog` component that already implements focus trapping, Escape-to-close, and WAI-ARIA dialog semantics. This creates keyboard and screen reader accessibility gaps. Separately, the Pizzaz map widget contains a hardcoded Mapbox token fallback, which violates security policy and hides configuration issues in production.
+
+## Goals
+
+- Align all in-scope app modals with the `ModalDialog` primitive without changing modal content or layout.
+- Ensure modals trap focus, close on Escape, return focus to the trigger, and announce dialog semantics correctly.
+- Require `VITE_MAPBOX_TOKEN` for map widget initialization, and show a clear inline error state when missing.
+
+## Acceptance Criteria
+
+- [ ] All in-scope app modals use `ModalDialog` and no longer render manual overlay divs.
+- [ ] Focus is trapped inside modals and Escape closes the modal.
+- [ ] Focus returns to the triggering element after modal close.
+- [ ] Modal headings are wired to `aria-labelledby` via `ModalDialog` title handling.
+- [ ] Hardcoded Mapbox token fallback is removed.
+- [ ] When `VITE_MAPBOX_TOKEN` is missing, the widget renders an inline error state and does not initialize Mapbox.
+- [ ] No logs or UI output reveal token values or use fallback tokens.
+
+## Non-Goals / Out of Scope
+
+- No redesign of modal visuals or layout.
+- No new modal primitives or dependencies.
+- No refactors outside the identified modal files and the Mapbox widget.
+- No changes to widget data sources or map behavior beyond token gating.
+
+## Personas
+
+- Jamie (Maintainer): needs predictable, accessible modal patterns and policy-compliant secrets handling.
+- End User (Keyboard/Screen Reader): needs modals that trap focus, announce labels, and close with Escape.
+
+## User Stories
+
+STORY-001: Modal accessibility alignment
+As a keyboard or screen reader user, I want app modals to trap focus and announce dialog semantics so that I can use them without losing context.
+Acceptance Criteria:
+- [ ] All in-scope app modals use `ModalDialog` and no longer render manual overlay divs.
+- [ ] Focus is trapped inside modals and Escape closes the modal.
+- [ ] Focus returns to the triggering element after modal close.
+- [ ] Modal headings are wired to `aria-labelledby` via `ModalDialog` title handling.
+
+STORY-002: Map widget token safety
+As a developer, I want the Mapbox widget to fail clearly when no token is provided so that I can configure it correctly without leaking secrets.
+Acceptance Criteria:
+- [ ] Hardcoded Mapbox token fallback is removed.
+- [ ] When `VITE_MAPBOX_TOKEN` is missing, the widget renders an inline error state and does not initialize Mapbox.
+- [ ] No logs or UI output reveal token values or use fallback tokens.
+
+## Functional Requirements
+
+- Replace modal shells in:
+  - `packages/ui/src/app/chat/compose/ProEditConfigModal/ProEditConfigModal.tsx`
+  - `packages/ui/src/app/chat/ChatSidebar/modals/NewProjectModal/NewProjectModal.tsx`
+  - `packages/ui/src/app/chat/ChatSidebar/modals/ProjectSettingsModal/ProjectSettingsModal.tsx`
+  with `ModalDialog` while preserving internal content and styles.
+- Remove the Mapbox token fallback in `packages/widgets/src/widgets/pizzaz/pizzaz-map/main.tsx`.
+- Add a visible inline error state for missing `VITE_MAPBOX_TOKEN` (local to the widget for now).
+
+## Non-Functional Requirements
+
+- Accessibility: focus trap, Escape to close, focus return, correct dialog semantics.
+- Security: no hardcoded tokens or secret exposure, no fallback token usage.
+- Maintainability: use existing primitives and patterns; no new deps.
+- Stability: no behavioral or visual regressions beyond the modal shell and token guard.
+
+## UX / Interaction Notes
+
+- Modal visuals and layout remain unchanged; only the modal wrapper changes.
+- The map widget error state should be concise and actionable (e.g., "VITE_MAPBOX_TOKEN is required to use the map widget.") and appear in place of the map.
+
+## Component Behavior / State Model
+
+Modal interaction flow:
+
+```mermaid
+stateDiagram-v2
+    [*] --> CLOSED
+    CLOSED --> OPEN: user opens modal
+    OPEN --> OPEN: focus trapped / tab cycling
+    OPEN --> CLOSED: Escape key
+    OPEN --> CLOSED: overlay click
+    OPEN --> CLOSED: close button
+    OPEN --> CLOSED: return focus to trigger
+    CLOSED --> [*]
+```
+
+Map widget token guard:
+
+```mermaid
+flowchart TD
+    A[Load widget] --> B{VITE_MAPBOX_TOKEN set?}
+    B -- no --> C[Render inline error]
+    B -- yes --> D[Set mapboxgl.accessToken]
+    D --> E[Initialize map]
+```
+
+## Metrics / Success Criteria
+
+- 100% of in-scope app modals use `ModalDialog`.
+- Manual verification: Tab key cycles within modal; Escape closes modal; focus returns to trigger.
+- Map widget initializes only when token is configured; missing token shows inline error.
+
+## Risks and Mitigations
+
+- Risk: Visual regressions if modal wrapper styles are not preserved.
+  Mitigation: Carry forward existing class names via `ModalDialog` props and verify layouts manually.
+- Risk: Map widget becomes unusable in environments missing the token.
+  Mitigation: Provide clear inline error message with configuration hint.
+
+## Dependencies
+
+- Existing `ModalDialog` component in `packages/ui/src/components/ui/overlays/Modal/Modal.tsx`.
+- Environment variable `VITE_MAPBOX_TOKEN` for map widget.
+
+## Rollout / Validation
+
+- Update components, then run `pnpm lint` if feasible.
+  Pass = lint completes without errors; Fail = any lint error.
+- Manual checks:
+  - Open each modal, verify focus trap, Escape close, and overlay click close.
+  - Verify focus returns to the triggering element on close.
+  - Run map widget without token to confirm error state renders and Mapbox does not initialize.
+  Pass = all checks observed; Fail = any missing behavior.
+
+Rollback plan: revert the modal wrapper changes and/or the token guard in the specific files if regressions occur, then re-run manual checks.
+
+## Open Questions
+
+None. The widget error state will be local to the map widget for now.
+
+
+## .spec/tech-spec-2026-01-15-component-creation-governance.md
+---
+schema_version: 1
+---
+
+# Technical Specification: aStudio Component Creation & Parity Governance
+
+**Owner:** Jamie Scott Craik (@jscraik)  
+**Status:** Draft  
+**Last updated:** 2026-01-15  
+**Related PRD:** specs/spec-2026-01-15-component-creation-governance.md  
+**Repo / Tracking:** /Users/jamiecraik/dev/aStudio  
+**Reviewers:** Jamie (solo)  
+**Release target:** 2026-01-29
+
+---
+
+## Acceptance Criteria
+
+- [ ] CI policy is updated with new validation checks and documentation targets.
+- [ ] Parity checklist and component guide are created and referenced from README/docs index.
+- [ ] MCP tool contracts are validated via existing `pnpm test:mcp-contract` command.
+- [ ] Component creation guide covers React + Swift parity, tokens, tests, and release steps.
+- [ ] Parity governance lifecycle states are defined and documented.
+- [ ] MCP tool contract source-of-truth is defined under `platforms/mcp/contracts/` with allowlist auth policy.
+- [ ] Tech spec quality gate checklist is completed with all items checked.
+
+---
+
+## 0) Summary
+
+- **One-liner:** Implement a unified component creation guide, parity governance, and MCP contract policy with gold-standard quality gates.
+- **Primary goal:** Cut component delivery time to ≤ 2 hours while maintaining parity and consistency.
+- **Key risks:** Documentation drift, parity checklist ignored, lack of measurable signals.
+- **Rollout shape:** Incremental documentation updates + CI gate adoption.
+
+---
+
+## 1) Overview / Context
+
+### Context
+
+The aStudio repo has mature UI components and parity intent but scattered guidance and partial React↔Swift parity. This spec defines the concrete doc structure, validation points, and policy locations to standardize component creation, parity updates, and MCP tool contract governance.
+
+### Constraints
+
+- Platform constraints: pnpm workspace, React/Vite/Tailwind, SwiftUI packages, Apps SDK UI.
+- Integration constraints: Must align with existing build pipeline and tests.
+- Compliance constraints: None beyond WCAG 2.2 AA baseline.
+- Operating constraints: Solo-dev ownership, limited CI time budget.
+
+### Glossary (only if needed)
+
+- Parity checklist: A single, versioned list showing React vs Swift component coverage and status.
+
+---
+
+## 2) Goals and Non-Goals
+
+### Goals
+
+- G1: Provide a single authoritative component creation guide.
+- G2: Define parity governance and lifecycle states for components.
+- G3: Enforce MCP tool contract source-of-truth and allowlist auth policy.
+
+### Non-Goals (required; RNIA — if N/A, say why)
+
+- NG1: Full parity completion across all components (out of scope for this phase).
+- NG2: Redesign of existing UI components.
+
+### Success criteria (engineering)
+
+- CI policy updated with new checks and documentation targets.
+- Parity checklist and component guide referenced from README/docs index.
+- MCP tool contracts validated via existing test command and referenced in runbook.
+
+---
+
+## 3) System Architecture
+
+### Architecture diagram (Mermaid)
+
+```mermaid
+flowchart LR
+  Dev[Jamie] --> Guide[Component Creation Guide]
+  Guide --> Parity[Parity Checklist]
+  Guide --> UX[UX State Standards]
+  Guide --> A11y[Accessibility Checklist]
+  Parity --> CI[CI Validation]
+  MCP[Tool Contracts: platforms/mcp/contracts] --> CI
+  CI --> Release[Release + Runbook]
+```
+
+### Architectural decisions (with rationale)
+
+- **Decision:** Centralize component creation guidance in a single doc.  
+  **Rationale:** Reduces search cost and ambiguity.  
+  **Alternatives:** Leave guidance distributed.  
+  **Tradeoffs:** Requires ongoing maintenance.
+
+- **Decision:** Place MCP tool contract spec under `platforms/mcp/contracts/` and reference it in runbooks.  
+  **Rationale:** Keeps contract near MCP code and enables validation.  
+  **Alternatives:** Store in `docs/runbook/` only.  
+  **Tradeoffs:** Slight duplication risk if docs are not updated.
+
+---
+
+## 4) Component Design
+
+### Component inventory
+
+| Component                | Type       | Status  |
+| ------------------------ | ---------- | ------- |
+| Component Creation Guide | doc        | planned |
+| Parity Checklist         | doc        | planned |
+| MCP Contract Spec        | doc/schema | planned |
+| CI Validation            | pipeline   | current |
+
+### Component: Component Creation Guide
+
+**Status:** planned
+
+**Responsibilities**
+
+- Define end-to-end component creation steps (React + Swift parity).
+- Define UX state and accessibility requirements.
+- Define definition-of-done checklist.
+
+**Inputs**
+
+- Existing docs and tooling references.
+
+**Outputs**
+
+- Updated doc with links and checklists.
+
+**Owned data**
+
+- Guidance content and workflow steps.
+
+**Dependencies**
+
+- docs/architecture/ui-structure-map.md
+- docs/guides/UI_COMPONENT_TOOLING.md
+- docs/architecture/cross-platform-design.md
+
+#### State machine
+
+State machine: N/A (documentation component is stateless).
+
+#### Failure modes & recovery (Required)
+
+- Failure: Guide goes stale.
+  - Detection: Missing parity updates or broken links.
+  - Handling: Add doc review check to release checklist.
+  - User impact: Slower component delivery.
+  - Data impact: None.
+
+### Component: Parity Checklist
+
+**Status:** planned
+
+**Responsibilities**
+
+- Track React ↔ Swift component parity state.
+- Provide quick visibility into parity gaps.
+
+**Inputs**
+
+- Component additions and updates.
+
+**Outputs**
+
+- Updated checklist entries.
+
+**Owned data**
+
+- Component parity status records.
+
+**Dependencies**
+
+- docs/architecture/CROSS_PLATFORM.md
+
+#### State machine (Required for stateful components; RNIA with reason)
+
+```mermaid
+stateDiagram-v2
+  [*] --> UNKNOWN
+  UNKNOWN --> PLANNED: new_component
+  PLANNED --> IN_PROGRESS: work_started
+  IN_PROGRESS --> PARITY: parity_reached
+  IN_PROGRESS --> DIVERGED: intentional_divergence
+  DIVERGED --> IN_PROGRESS: revisit
+  PARITY --> [*]
+```
+
+#### Failure modes & recovery (Required)
+
+- Failure: Parity status not updated.
+  - Detection: Checklist unchanged while new components ship.
+  - Handling: Require update in definition-of-done.
+  - User impact: Hidden parity gaps.
+  - Data impact: Inaccurate roadmap.
+
+---
+
+## 5) API Design
+
+### API overview
+
+N/A — no new network APIs are introduced; changes are documentation and validation only.
+
+---
+
+## 6) Data Models / Database Schema
+
+### Tables / Collections
+
+N/A — no database changes. The MCP contract spec is a versioned JSON file stored in the repo.
+
+#### MCP tool contract schema (file-based)
+
+- File: `platforms/mcp/contracts/tools.json`
+- Fields:
+  - `name`: string (required)
+  - `version`: semver string (required)
+  - `description`: string (required)
+  - `inputSchema`: JSON Schema (required)
+  - `outputSchema`: JSON Schema (required)
+- Constraints:
+  - `version` must follow semver.
+  - `name` must be unique.
+
+---
+
+## 7) Infrastructure Requirements
+
+- Runtime: Node.js (pnpm workspace)
+- Deployment: documentation + CI updates only
+- Environments: dev | CI
+- Config management: existing repo configs
+- Secrets: none
+- Networking: none
+- Cost considerations: CI minutes and storage budget caps
+
+---
+
+## 8) Security Considerations (Required)
+
+- Authentication: MCP tools restricted by allowlist in prod.
+- Authorization: tool name + version allowlist; deny unknown tools.
+- Encryption: N/A (no new data storage).
+- Input validation: JSON schema validation for tool contracts.
+- Secrets management: none in docs; avoid secrets in guides.
+- Threats & mitigations:
+  - T1: Unauthorized tool exposure → enforce allowlist policy.
+  - T2: Schema drift → validate contracts in CI.
+  - T3: Doc leakage of secrets → enforce no-secrets rule in docs.
+
+---
+
+## 9) Error Handling Strategy (Required)
+
+- Error taxonomy: validation | policy | dependency | unknown
+- Timeouts: N/A (doc-only changes)
+- Retry policy: N/A
+- Idempotency strategy: N/A
+- Degraded mode: If validation fails, block release.
+- User-facing error mapping: CI failures with actionable messages.
+
+---
+
+## 10) Performance Requirements / SLAs or SLOs (Required)
+
+| SLI          |                         Target | Measurement                |
+| ------------ | -----------------------------: | -------------------------- |
+| p95 latency  | 500 ms (local), 1.5 s (remote) | tool logs                  |
+| availability |                          99.5% | MCP monitoring             |
+| throughput   |                            N/A | N/A (not a service change) |
+
+## 10b) SLOs and Error Budget (Required or N/A with reason)
+
+- SLIs chosen: availability, p95 latency
+- SLO targets: 99.5% availability; p95 latency targets above
+- Error budget window: 30 days
+- Error budget policy: pause releases at 75% burn; rollback at 100% burn
+
+---
+
+## 11) Observability (Required)
+
+- Logging:
+  - Required fields: component, version, result, latency_ms
+- Metrics:
+  - Counters: tool_calls_total, tool_errors_total
+  - Histograms: tool_latency_ms
+  - Gauges: parity_gap_count
+- Tracing: N/A (doc-only changes)
+- Dashboards:
+  - MCP tool health dashboard
+  - Parity gap tracking dashboard (manual or lightweight)
+- Alerts:
+  - Alert 1: error budget burn > 50% in 7 days → review and pause releases
+
+---
+
+## 12) Testing Strategy (Required)
+
+- Unit tests: N/A (doc-only)
+- Integration tests: MCP contract validation (`pnpm test:mcp-contract`)
+- E2E tests: N/A
+- Load tests: N/A
+- Security tests: existing CI security gates
+- Test data strategy: N/A
+
+---
+
+## 13) Deployment Strategy (Required)
+
+- Build & release: docs updates merged via PR
+- Rollout: immediate on merge
+- Feature flags: N/A
+- Backward compatibility: ensure contract versions increment on breaking changes
+- Rollback: revert doc commit; pin prior tool contract spec version
+- Post-deploy verification: CI green + doc link checks
+
+---
+
+## 14) Migration Plan (if applicable)
+
+- Step 1: Create component guide doc
+- Step 2: Move parity checklist into the guide
+- Step 3: Add MCP contract spec and link in runbook
+- Step 4: Update release checklist to include parity + guide checks
+
+---
+
+## 15) Operational Notes (Recommended)
+
+- Runbook: include MCP tool allowlist policy and contract spec references
+- Manual operations: update parity checklist when a component ships
+- Support playbook: N/A (solo project)
+- On-call readiness: solo dev checklist
+
+---
+
+## 16) Open Questions / Future Considerations (Required)
+
+### Open questions
+
+- Q1: Where should the component guide live (docs root vs guides)? (Owner: Jamie, Due: 2026-01-22)
+- Q2: What minimal dashboard format best tracks parity gaps? (Owner: Jamie, Due: 2026-01-29)
+
+### Future considerations
+
+- Add automated parity extraction from code to reduce manual checklist work.
+
+---
+
+## 17) Tech Spec Quality Gate (Required)
+
+- [ ] Architecture is clear and diagrammed
+- [ ] Every stateful component has a state machine (or N/A + reason)
+- [ ] APIs have complete schemas + errors
+- [ ] Data model includes constraints and indexes
+- [ ] Security threats are identified and mitigations listed
+- [ ] Error handling covers timeouts, retries, idempotency, degraded modes
+- [ ] Performance targets are numeric and measurable
+- [ ] Observability includes logs, metrics, dashboards, alerts
+- [ ] Deployment is repeatable and rollbackable
+- [ ] No ambiguity left for implementers
+
+---
+
+=== Debate Complete ===
+Document: Technical Specification
+Rounds: 1
+Models: PM, UI/UX, Frontend, API, Backend, Security, Reliability/SRE, Cost/Scale
+Key refinements:
+
+- No blocking issues identified; documents align with gold-standard baselines.
+
+
+</PROJECT_MEMORY>
+
+Exit protocol (required):
+At the very end of your output, print exactly one line:
+EXIT_SIGNAL: true  OR  EXIT_SIGNAL: false
+

@@ -1,0 +1,1 @@
+{"version":3,"file":"tokens.d.ts","sourceRoot":"","sources":["../../src/commands/tokens.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,OAAO,EAAE,MAAM,aAAa,CAAC;AAK3C,wBAAsB,aAAa,CAAC,IAAI,EAAE;IACxC,OAAO,EAAE,UAAU,GAAG,UAAU,CAAC;IACjC,KAAK,CAAC,EAAE,OAAO,CAAC;IAChB,IAAI,EAAE,OAAO,CAAC;CACf,GAAG,OAAO,CAAC,MAAM,CAAC,CAelB"}

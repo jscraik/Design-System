@@ -1,0 +1,119 @@
+# ralph-gold regenerate-plan log
+timestamp_utc: 20260119T081111Z
+agent: claude
+cmd: ["claude", "-p", "# PROMPT_plan.md \u2014 Golden Ralph Loop (Planning Mode)\n\nYou are running in **PLANNING MODE**.\nThe goal is to create or refine a prioritized task tracker that the build loop can execute.\n\n## Hard rule\n\n**Plan only. Do NOT implement production code.**\n\nAllowed outputs:\n- Editing/writing `.ralph/specs/*.md`\n- Editing/writing the task tracker (`.ralph/PRD.md` or `.ralph/prd.json`)\n- Minimal operational notes in `.ralph/progress.md` (optional)\n\n## Files you must use\n\n- `.ralph/specs/*` \u2014 requirements and acceptance criteria\n- `src/*` / tests \u2014 existing implementation\n- `.ralph/AGENTS.md` \u2014 build/test/lint commands (validation expectations)\n- The tracker file (`.ralph/PRD.md` or `.ralph/prd.json`) \u2014 the plan you create/update\n\n## Workflow\n\n0. **Orient**\n   - Study `.ralph/specs/*` to understand intended behavior.\n   - Study the codebase (`src/*`, tests, config) to understand what already exists.\n   - Critical guardrail: **don't assume something is missing** \u2014 confirm via search/inspection.\n\n1. **Gap analysis**\n   - Compare `.ralph/specs/*` against code.\n   - Identify missing features, partial implementations, TODOs, inconsistent patterns, missing tests.\n   - Capture *what* is missing and *why it matters*.\n\n2. **Write / update the tracker**\n   - Produce a prioritized list of small, verifiable tasks.\n   - Prefer Markdown checkboxes under a `## Tasks` heading (if using `.md`).\n   - Each task should be:\n     - scoped to one commit\n     - objectively verifiable (tests, build, lint, CLI smoke)\n   - Derive validation expectations from acceptance criteria where possible.\n\n3. **Specs health**\n   - If specs are missing/unclear, author or refine `.ralph/specs/<topic>.md` with:\n     - problem statement\n     - acceptance criteria\n     - non-goals\n     - edge cases\n\n4. **Commit planning artifacts**\n   - `git add -A && git commit -m \"ralph(plan): update tracker\"`\n\n## Exit protocol\n\nAt the very end of your output, print exactly one line:\n\n`EXIT_SIGNAL: false`\n\n(Planning mode intentionally does not signal completion. Run the build loop when the plan is ready.)\n\n---\n\n## Orchestrator Addendum (Regenerate Plan)\n\nTarget plan/task file: .ralph/prd.json\n\nYou are in PLANNING MODE.\nDo NOT implement production code in this run.\n\nTask:\n1) Read specs/*.md and the current codebase.\n2) Perform a gap analysis: what is missing, partial, or inconsistent?\n3) Rewrite the plan file from scratch as a prioritized task queue.\n\nPlan format requirements:\n- Use Markdown checkboxes under a '## Tasks' heading.\n- Each checkbox task must be shippable in ONE iteration / ONE commit.\n- Under each checkbox, add 2-5 indented bullet acceptance criteria.\n- Tasks must be objectively verifiable (tests/lint/typecheck/CLI commands).\n- Keep it short; it's okay to regenerate again later.\n\nSpecs check (from orchestrator):\n```text\nChecked 5 file(s):\n  - .spec/ExecPlan.md\n  - .spec/PROJECT_REVIEW_REPORT.md\n  - .spec/spec-2026-01-15-component-creation-governance.md\n  - .spec/spec-2026-01-19-modal-a11y-mapbox-token.md\n  - .spec/tech-spec-2026-01-15-component-creation-governance.md\n\nErrors:\n  - .spec/ExecPlan.md: missing '## Acceptance Criteria' section\n  - .spec/PROJECT_REVIEW_REPORT.md: missing '## Acceptance Criteria' section\n  - .spec/spec-2026-01-15-component-creation-governance.md: missing '## Acceptance Criteria' section\n  - .spec/spec-2026-01-19-modal-a11y-mapbox-token.md: missing '## Acceptance Criteria' section\n  - .spec/tech-spec-2026-01-15-component-creation-governance.md: missing '## Acceptance Criteria' section\n\nOK: false\n```\n\nExit protocol:\nAt the end of your output, print: EXIT_SIGNAL: false\n\n", "--output-format", "text"]
+duration_seconds: 120.01
+timed_out: True
+stdin: False
+return_code: 124
+
+--- prompt ---
+# PROMPT_plan.md — Golden Ralph Loop (Planning Mode)
+
+You are running in **PLANNING MODE**.
+The goal is to create or refine a prioritized task tracker that the build loop can execute.
+
+## Hard rule
+
+**Plan only. Do NOT implement production code.**
+
+Allowed outputs:
+- Editing/writing `.ralph/specs/*.md`
+- Editing/writing the task tracker (`.ralph/PRD.md` or `.ralph/prd.json`)
+- Minimal operational notes in `.ralph/progress.md` (optional)
+
+## Files you must use
+
+- `.ralph/specs/*` — requirements and acceptance criteria
+- `src/*` / tests — existing implementation
+- `.ralph/AGENTS.md` — build/test/lint commands (validation expectations)
+- The tracker file (`.ralph/PRD.md` or `.ralph/prd.json`) — the plan you create/update
+
+## Workflow
+
+0. **Orient**
+   - Study `.ralph/specs/*` to understand intended behavior.
+   - Study the codebase (`src/*`, tests, config) to understand what already exists.
+   - Critical guardrail: **don't assume something is missing** — confirm via search/inspection.
+
+1. **Gap analysis**
+   - Compare `.ralph/specs/*` against code.
+   - Identify missing features, partial implementations, TODOs, inconsistent patterns, missing tests.
+   - Capture *what* is missing and *why it matters*.
+
+2. **Write / update the tracker**
+   - Produce a prioritized list of small, verifiable tasks.
+   - Prefer Markdown checkboxes under a `## Tasks` heading (if using `.md`).
+   - Each task should be:
+     - scoped to one commit
+     - objectively verifiable (tests, build, lint, CLI smoke)
+   - Derive validation expectations from acceptance criteria where possible.
+
+3. **Specs health**
+   - If specs are missing/unclear, author or refine `.ralph/specs/<topic>.md` with:
+     - problem statement
+     - acceptance criteria
+     - non-goals
+     - edge cases
+
+4. **Commit planning artifacts**
+   - `git add -A && git commit -m "ralph(plan): update tracker"`
+
+## Exit protocol
+
+At the very end of your output, print exactly one line:
+
+`EXIT_SIGNAL: false`
+
+(Planning mode intentionally does not signal completion. Run the build loop when the plan is ready.)
+
+---
+
+## Orchestrator Addendum (Regenerate Plan)
+
+Target plan/task file: .ralph/prd.json
+
+You are in PLANNING MODE.
+Do NOT implement production code in this run.
+
+Task:
+1) Read specs/*.md and the current codebase.
+2) Perform a gap analysis: what is missing, partial, or inconsistent?
+3) Rewrite the plan file from scratch as a prioritized task queue.
+
+Plan format requirements:
+- Use Markdown checkboxes under a '## Tasks' heading.
+- Each checkbox task must be shippable in ONE iteration / ONE commit.
+- Under each checkbox, add 2-5 indented bullet acceptance criteria.
+- Tasks must be objectively verifiable (tests/lint/typecheck/CLI commands).
+- Keep it short; it's okay to regenerate again later.
+
+Specs check (from orchestrator):
+```text
+Checked 5 file(s):
+  - .spec/ExecPlan.md
+  - .spec/PROJECT_REVIEW_REPORT.md
+  - .spec/spec-2026-01-15-component-creation-governance.md
+  - .spec/spec-2026-01-19-modal-a11y-mapbox-token.md
+  - .spec/tech-spec-2026-01-15-component-creation-governance.md
+
+Errors:
+  - .spec/ExecPlan.md: missing '## Acceptance Criteria' section
+  - .spec/PROJECT_REVIEW_REPORT.md: missing '## Acceptance Criteria' section
+  - .spec/spec-2026-01-15-component-creation-governance.md: missing '## Acceptance Criteria' section
+  - .spec/spec-2026-01-19-modal-a11y-mapbox-token.md: missing '## Acceptance Criteria' section
+  - .spec/tech-spec-2026-01-15-component-creation-governance.md: missing '## Acceptance Criteria' section
+
+OK: false
+```
+
+Exit protocol:
+At the end of your output, print: EXIT_SIGNAL: false
+
+
+
+--- stdout ---
+
+
+--- stderr ---
+

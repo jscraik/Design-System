@@ -87,7 +87,13 @@
     "publish:astudio": "pnpm -C packages/tokens publish --access restricted --no-git-checks && pnpm -C packages/ui publish --access restricted --no-git-checks && pnpm -C packages/astudio-icons publish --access restricted --no-git-checks",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "changeset publish"
+    "release": "changeset publish",
+    "prepare": "husky",
+  "lint-staged": {
+    "*.{ts,tsx,json,md}": [
+      "./node_modules/.bin/lint-staged"
+    ]
+  }
   },
   "devDependencies": {
     "@argos-ci/cli": "^3.0.6",
@@ -104,6 +110,8 @@
     "concurrently": "^9.2.1",
     "fast-check": "^4.5.3",
     "hono": "^4.11.7",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "playwright": "^1.58.1",
     "sharp": "^0.34.5",
     "typescript": "^5.9.3",

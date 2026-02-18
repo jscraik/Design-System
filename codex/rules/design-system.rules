@@ -1,0 +1,221 @@
+# Design System Codex Rules
+# Repo-local execpolicy rules for design system workflow
+
+# === Read-only tools (allowed) ===
+prefix_rule(
+    pattern = ["rg"],
+    decision = "allow",
+    justification = "Allow ripgrep for fast project-wide searches.",
+    match = ["rg pattern src/", "rg -t ts TokenValidator"],
+)
+
+prefix_rule(
+    pattern = ["fd"],
+    decision = "allow",
+    justification = "Allow fd for fast file discovery.",
+    match = ["fd . packages/tokens/src", "fd -e md docs"],
+)
+
+prefix_rule(
+    pattern = ["jq"],
+    decision = "allow",
+    justification = "Allow jq for JSON parsing.",
+    match = ["jq . package.json", "jq '.tokens' index.dtcg.json"],
+)
+
+prefix_rule(
+    pattern = ["ls"],
+    decision = "allow",
+    justification = "Allow directory listing.",
+    match = ["ls", "ls -la"],
+)
+
+prefix_rule(
+    pattern = ["cat"],
+    decision = "allow",
+    justification = "Allow file reads.",
+    match = ["cat tokens.ts"],
+)
+
+prefix_rule(
+    pattern = ["sed"],
+    decision = "allow",
+    justification = "Allow sed for safe text substitution.",
+    match = ["sed -i '' 's/old/new/g' file.ts"],
+)
+
+prefix_rule(
+    pattern = ["head"],
+    decision = "allow",
+    justification = "Allow reading file heads.",
+    match = ["head -20 README.md"],
+)
+
+prefix_rule(
+    pattern = ["tail"],
+    decision = "allow",
+    justification = "Allow reading file tails.",
+    match = ["tail -50 package.json"],
+)
+
+prefix_rule(
+    pattern = ["wc"],
+    decision = "allow",
+    justification = "Allow counting lines/words/bytes.",
+    match = ["wc -l tokens.ts"],
+)
+
+prefix_rule(
+    pattern = ["stat"],
+    decision = "allow",
+    justification = "Allow file metadata inspection.",
+    match = ["stat tokens.ts"],
+)
+
+prefix_rule(
+    pattern = ["bat"],
+    decision = "allow",
+    justification = "Allow enhanced cat with syntax highlighting.",
+    match = ["bat tokens.ts"],
+)
+
+# === Git read commands (allowed) ===
+prefix_rule(
+    pattern = ["git", "status"],
+    decision = "allow",
+    justification = "Allow inspecting git status.",
+    match = ["git status"],
+    not_match = ["git diff"],
+)
+
+prefix_rule(
+    pattern = ["git", "diff"],
+    decision = "allow",
+    justification = "Allow diff inspection.",
+    match = ["git diff", "git diff HEAD"],
+)
+
+prefix_rule(
+    pattern = ["git", "log"],
+    decision = "allow",
+    justification = "Allow history inspection.",
+    match = ["git log -5", "git log --oneline"],
+)
+
+prefix_rule(
+    pattern = ["git", "show"],
+    decision = "allow",
+    justification = "Allow commit/file viewing.",
+    match = ["git show HEAD", "git show HEAD:path/to/file"],
+)
+
+prefix_rule(
+    pattern = ["git", "branch"],
+    decision = "allow",
+    justification = "Allow branch listing.",
+    match = ["git branch", "git branch -a"],
+)
+
+prefix_rule(
+    pattern = ["git", "rev-parse"],
+    decision = "allow",
+    justification = "Allow git revision parsing.",
+    match = ["git rev-parse HEAD"],
+)
+
+# === Git write commands (prompt) ===
+prefix_rule(
+    pattern = ["git", ["add", "commit", "push", "pull", "checkout", "merge", "rebase"]],
+    decision = "prompt",
+    justification = "Git write operations require explicit confirmation.",
+    match = ["git add .", "git commit -m message", "git push", "git pull", "git checkout -b new-branch", "git merge main", "git rebase main"],
+)
+
+# === Package managers (prompt) ===
+prefix_rule(
+    pattern = ["pnpm"],
+    decision = "prompt",
+    justification = "Package manager operations require confirmation.",
+    match = ["pnpm install", "pnpm add package", "pnpm -s tokens:generate"],
+    not_match = ["npm install"],
+)
+
+prefix_rule(
+    pattern = ["node"],
+    decision = "prompt",
+    justification = "Node.js execution requires confirmation.",
+    match = ["node script.js"],
+)
+
+prefix_rule(
+    pattern = ["npm"],
+    decision = "prompt",
+    justification = "npm operations require confirmation.",
+    match = ["npm install", "npm run build"],
+)
+
+prefix_rule(
+    pattern = ["bun"],
+    decision = "prompt",
+    justification = "Bun operations require confirmation.",
+    match = ["bun install", "bun run test"],
+)
+
+prefix_rule(
+    pattern = ["cargo"],
+    decision = "prompt",
+    justification = "Cargo operations require confirmation.",
+    match = ["cargo build", "cargo test"],
+)
+
+prefix_rule(
+    pattern = ["uv"],
+    decision = "prompt",
+    justification = "UV package manager requires confirmation.",
+    match = ["uv sync", "uv run pytest"],
+)
+
+prefix_rule(
+    pattern = ["python"],
+    decision = "prompt",
+    justification = "Python execution requires confirmation.",
+    match = ["python script.py"],
+)
+
+prefix_rule(
+    pattern = ["python3"],
+    decision = "prompt",
+    justification = "Python3 execution requires confirmation.",
+    match = ["python3 script.py"],
+)
+
+# === Forbidden commands ===
+prefix_rule(
+    pattern = ["grep"],
+    decision = "forbidden",
+    justification = "Use rg instead of grep.",
+    match = ["grep pattern file"],
+    not_match = ["rg pattern file"],
+)
+
+prefix_rule(
+    pattern = ["find"],
+    decision = "forbidden",
+    justification = "Use fd or rg --files instead of find.",
+    match = ["find . -name '*.ts'"],
+    not_match = ["fd . -e ts", "rg --files -g '*.ts'"],
+)
+
+prefix_rule(
+    pattern = ["rm"],
+    decision = "forbidden",
+    justification = "Deletion requires explicit review; use a prompt workflow.",
+    match = ["rm file.txt", "rm -rf dir/"],
+)
+
+prefix_rule(
+    pattern = ["sudo"],
+    decision = "forbidden",
+    justification = "System-wide changes are not allowed in repo rules.",
+    match = ["sudo apt install", "sudo npm install"],
+)

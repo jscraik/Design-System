@@ -1,0 +1,8 @@
+stateDiagram-v2
+  [*] --> UNKNOWN
+  UNKNOWN --> PLANNED: new_component
+  PLANNED --> IN_PROGRESS: work_started
+  IN_PROGRESS --> COVERED: coverage_reached
+  IN_PROGRESS --> DIVERGED: intentional_divergence
+  DIVERGED --> IN_PROGRESS: revisit
+  COVERED --> [*]
