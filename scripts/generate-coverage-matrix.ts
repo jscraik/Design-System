@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { readdir, readFile, stat, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 type MatrixSource = "upstream_reexport" | "upstream_wrapper" | "radix_fallback" | "local_primitive";
 
@@ -31,7 +32,7 @@ type SurfaceUsage = {
 
 type SurfaceUsageMap = Record<string, SurfaceUsage>;
 
-const ROOT = process.cwd();
+const ROOT = resolve(fileURLToPath(new URL("../..", import.meta.url)));
 const UI_INDEX = join(ROOT, "packages/ui/src/index.ts");
 const COMPONENTS_INDEX = join(ROOT, "packages/ui/src/components/ui/index.ts");
 const FALLBACK_ROOT = join(ROOT, "packages/ui/src/components");

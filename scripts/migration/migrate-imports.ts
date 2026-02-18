@@ -9,7 +9,8 @@
  */
 
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
-import { extname, join, relative } from "node:path";
+import { extname, join, relative, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 interface Options {
   apply: boolean;
@@ -101,7 +102,7 @@ function main() {
     verbose: args.includes("--verbose"),
   };
 
-  const basePath = process.cwd();
+  const basePath = resolve(fileURLToPath(new URL("../../..", import.meta.url)));
   const files = getAllFiles(basePath);
 
   console.log(`🔍 Found ${files.length} files to check\n`);
