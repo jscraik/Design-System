@@ -1,5 +1,6 @@
-import * as React from "react";
 import type { SVGProps } from "react";
+import * as React from "react";
+
 const ArrowCurvedRightXs = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>(
   (props, ref) => (
     <svg

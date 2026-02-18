@@ -1,5 +1,6 @@
-import * as React from "react";
 import type { SVGProps } from "react";
+import * as React from "react";
+
 const BatteryHalf = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" ref={ref} {...props}>
     <rect width={18} height={10} x={2} y={7} stroke="currentColor" strokeWidth={2} rx={2} />
