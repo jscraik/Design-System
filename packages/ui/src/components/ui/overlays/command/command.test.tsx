@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, waitFor } from "../../../../testing/utils";
-import * as Command from "./Command";
+import * as Command from "./command";
 
 describe("Command", () => {
   const mockOnStateChange = vi.fn();

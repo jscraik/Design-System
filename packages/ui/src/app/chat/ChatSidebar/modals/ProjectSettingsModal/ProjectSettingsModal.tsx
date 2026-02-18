@@ -1,4 +1,4 @@
-import { ModalDialog } from "../../../../../components/ui/overlays/Modal/Modal";
+import { ModalDialog } from "../../../../../components/ui/overlays/modal/modal";
 
 /**
  * Props for the project settings modal.

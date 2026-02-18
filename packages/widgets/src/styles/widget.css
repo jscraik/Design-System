@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "../../../ui/dist/ui.css";
-@import "tw-animate-css";
 
 /* Required for Tailwind to find class references in Apps SDK UI components. */
 @source "../../../ui/node_modules/@openai/apps-sdk-ui";

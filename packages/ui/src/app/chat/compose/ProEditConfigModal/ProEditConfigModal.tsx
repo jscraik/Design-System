@@ -1,4 +1,4 @@
-import { ModalDialog } from "../../../../components/ui/overlays/Modal/Modal";
+import { ModalDialog } from "../../../../components/ui/overlays/modal/modal";
 import { IconCheckmark, IconChevronDownMd } from "../../../../icons";
 import type { ProEditMode } from "../shared/types";
 

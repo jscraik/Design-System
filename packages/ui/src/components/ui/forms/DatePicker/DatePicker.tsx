@@ -3,8 +3,8 @@
 import * as React from "react";
 import { useMemo } from "react";
 
-import { Button } from "../../base/Button";
-import { Calendar } from "../../base/Calendar";
+import { Button } from "../../base/button";
+import { Calendar } from "../../base/calendar";
 import { cn } from "../../utils";
 
 /**

@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { transform } from "@svgr/core";
@@ -186,7 +186,12 @@ type IconRecord = {
 };
 
 const loadModule = async (modulePath: string) => {
-  const url = pathToFileURL(join(ROOT, modulePath)).href;
+  const absolutePath = join(ROOT, modulePath);
+  if (!existsSync(absolutePath)) {
+    return null;
+  }
+
+  const url = pathToFileURL(absolutePath).href;
   return import(url);
 };
 
@@ -196,6 +201,11 @@ const collectIcons = async () => {
 
   for (const source of MODULE_SOURCES) {
     const moduleExports = await loadModule(source.path);
+    if (!moduleExports) {
+      console.warn(`Skipping missing icon source: ${source.path}`);
+      continue;
+    }
+
     const exportNames = Object.keys(moduleExports);
 
     for (const exportName of exportNames) {

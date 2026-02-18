@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { cn } from "../../utils";
-import { Skeleton } from "../Skeleton";
+import { Skeleton } from "../skeleton";
 
 export interface ShimmerTextProps extends React.HTMLAttributes<HTMLDivElement> {
   lines?: number;

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen, waitFor } from "../../../../testing/utils";
-import { Combobox } from "./Combobox";
+import { Combobox } from "./combobox";
 
 describe("Combobox", () => {
   const mockOnValueChange = vi.fn();

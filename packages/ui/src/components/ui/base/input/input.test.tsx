@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { expectFocused, render, screen } from "../../../../testing/utils";
 
-import { Input } from "./Input";
+import { Input } from "./input";
 
 describe("Input", () => {
   describe("rendering", () => {

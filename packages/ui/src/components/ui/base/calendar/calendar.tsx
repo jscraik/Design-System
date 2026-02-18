@@ -3,7 +3,7 @@ import * as React from "react";
 import { DayPicker } from "react-day-picker";
 import { IconChevronLeftMd, IconChevronRightMd } from "../../../../icons";
 import { cn } from "../../utils";
-import { buttonVariants } from "../Button";
+import { buttonVariants } from "../button";
 
 /**
  * Props for the Calendar component.

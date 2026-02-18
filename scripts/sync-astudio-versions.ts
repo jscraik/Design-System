@@ -1,7 +1,8 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const ROOT = process.cwd();
+const ROOT = resolve(fileURLToPath(new URL("../..", import.meta.url)));
 const ASTUDIO_PACKAGES = [
   "packages/tokens",
   "packages/ui",

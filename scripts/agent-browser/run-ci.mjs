@@ -16,7 +16,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, "../..");
 
 const PORT = "4173";
-const HOST = "127.0.0.1";
+const HOST = "localhost";
 const BASE_URL = `http://${HOST}:${PORT}`;
 
 let serverProcess = null;
@@ -50,7 +50,7 @@ async function startServer() {
 
   serverProcess = spawn(
     "pnpm",
-    ["-C", "platforms/web/apps/web", "preview", "--", "--host", HOST, "--port", PORT],
+    ["-C", "platforms/web/apps/web", "preview", "--host", HOST, "--port", PORT],
     {
       cwd: rootDir,
       stdio: ["ignore", "pipe", "pipe"],

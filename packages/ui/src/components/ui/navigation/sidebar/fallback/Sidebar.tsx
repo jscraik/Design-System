@@ -8,10 +8,10 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { IconSidebar } from "../../../../../icons";
-import { Button } from "../../../base/Button";
-import { Input } from "../../../base/Input";
-import { Separator } from "../../../base/Separator";
-import { Skeleton } from "../../../base/Skeleton";
+import { Button } from "../../../base/button";
+import { Input } from "../../../base/input";
+import { Separator } from "../../../base/separator";
+import { Skeleton } from "../../../base/skeleton";
 import { useIsMobile } from "../../../base/UseMobile";
 import {
   Sheet,
@@ -19,13 +19,13 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "../../../overlays/Sheet";
+} from "../../../overlays/sheet";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "../../../overlays/Tooltip";
+} from "../../../overlays/tooltip";
 import { cn } from "../../../utils";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";

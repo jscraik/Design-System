@@ -8,7 +8,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "../../feedback/Dialog";
+} from "../../feedback/dialog";
 import { cn } from "../../utils";
 
 /**

@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { readdir, readFile, stat, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 type MatrixSource = "upstream_reexport" | "upstream_wrapper" | "radix_fallback" | "local_primitive";
 
@@ -31,7 +32,7 @@ type SurfaceUsage = {
 
 type SurfaceUsageMap = Record<string, SurfaceUsage>;
 
-const ROOT = process.cwd();
+const ROOT = resolve(fileURLToPath(new URL("../..", import.meta.url)));
 const UI_INDEX = join(ROOT, "packages/ui/src/index.ts");
 const COMPONENTS_INDEX = join(ROOT, "packages/ui/src/components/ui/index.ts");
 const FALLBACK_ROOT = join(ROOT, "packages/ui/src/components");
@@ -44,6 +45,10 @@ const UI_PACKAGE_JSON = join(ROOT, "packages/ui/package.json");
 
 const args = new Set(process.argv.slice(2));
 const checkOnly = args.has("--check");
+
+function compareText(a: string, b: string): number {
+  return a < b ? -1 : a > b ? 1 : 0;
+}
 
 function normalizePath(p: string): string {
   return p.replace(/\\/g, "/");
@@ -197,11 +202,13 @@ async function collectAppsSdkExports(): Promise<NamedExport[]> {
     }
   }
 
-  return exports.sort((a, b) => a.local.localeCompare(b.local));
+  return exports.sort((a, b) => compareText(a.local, b.local));
 }
 
 async function walkFiles(dir: string): Promise<string[]> {
-  const entries = await readdir(dir, { withFileTypes: true });
+  const entries = (await readdir(dir, { withFileTypes: true })).sort((a, b) =>
+    compareText(a.name, b.name),
+  );
   const files: string[] = [];
 
   for (const entry of entries) {
@@ -213,7 +220,7 @@ async function walkFiles(dir: string): Promise<string[]> {
     }
   }
 
-  return files;
+  return files.sort((a, b) => compareText(a, b));
 }
 
 type FallbackMetadata = {
@@ -395,7 +402,7 @@ async function main(): Promise<void> {
     });
   }
 
-  rows.sort((a, b) => a.name.localeCompare(b.name));
+  rows.sort((a, b) => compareText(a.name, b.name));
 
   const jsonOutput = `${JSON.stringify(rows, null, 2)}\n`;
   const mdOutput = buildMarkdown(rows);
@@ -410,7 +417,9 @@ async function main(): Promise<void> {
     }
 
     if (existingJson !== jsonOutput || existingMd !== mdOutput) {
-      console.error("Coverage matrix outputs are out of date. Run pnpm ds:matrix:generate.");
+      console.error(
+        "Coverage matrix outputs are out of date. Run `pnpm ds:matrix:generate` to regenerate.",
+      );
       process.exit(1);
     }
 

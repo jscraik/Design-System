@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { expectFocused, render, screen } from "../../../../testing/utils";
 
-import { Textarea } from "./Textarea";
+import { Textarea } from "./textarea";
 
 describe("Textarea", () => {
   describe("rendering", () => {

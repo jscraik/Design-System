@@ -27,33 +27,33 @@ function DashboardBody({ headerText, stats = [], recentChats = [] }: DashboardWi
 
       <div className="grid gap-3 sm:grid-cols-2">
         {stats.length === 0 ? (
-          <div className="rounded-lg border border-border bg-muted p-3 text-xs text-muted-foreground">
+          <div className="rounded-lg border border-border bg-muted p-3 text-xs text-foreground/80">
             No metrics available.
           </div>
         ) : (
           stats.map((stat) => (
             <div key={stat.label} className="rounded-lg border border-border bg-muted p-3">
-              <div className="text-xs text-muted-foreground">{stat.label}</div>
+              <div className="text-xs text-foreground/80">{stat.label}</div>
               <div className="text-base font-semibold">{stat.value}</div>
-              {stat.change && <div className="text-xs text-muted-foreground">{stat.change}</div>}
+              {stat.change && <div className="text-xs text-foreground/80">{stat.change}</div>}
             </div>
           ))
         )}
       </div>
 
       <div className="rounded-lg border border-border bg-muted p-3">
-        <div className="text-xs uppercase tracking-wide text-muted-foreground">Recent</div>
+        <div className="text-xs uppercase tracking-wide text-foreground/80">Recent</div>
         {recentChats.length === 0 ? (
-          <div className="mt-2 text-xs text-muted-foreground">No recent chats.</div>
+          <div className="mt-2 text-xs text-foreground/80">No recent chats.</div>
         ) : (
           <div className="mt-2 space-y-2">
             {recentChats.map((chat) => (
               <div key={chat.id} className="flex items-center justify-between text-xs">
                 <div>
                   <div className="text-foreground/90">{chat.title}</div>
-                  <div className="text-muted-foreground">{chat.model}</div>
+                  <div className="text-foreground/80">{chat.model}</div>
                 </div>
-                <div className="text-muted-foreground">{chat.time}</div>
+                <div className="text-foreground/80">{chat.time}</div>
               </div>
             ))}
           </div>

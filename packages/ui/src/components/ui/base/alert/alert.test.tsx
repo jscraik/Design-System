@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { render, screen } from "../../../../testing/utils";
 
-import { Alert, AlertDescription, AlertTitle } from "./Alert";
+import { Alert, AlertDescription, AlertTitle } from "./alert";
 
 describe("Alert", () => {
   describe("rendering", () => {

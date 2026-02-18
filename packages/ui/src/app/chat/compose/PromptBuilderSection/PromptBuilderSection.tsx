@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Toggle } from "../../../../components/ui/base/Toggle";
+import { Toggle } from "../../../../components/ui/base/toggle";
 import { ModeSelector } from "../../../../components/ui/navigation/ModeSelector";
 import { IconChevronDownMd } from "../../../../icons";
 import { TemplateFieldGroup } from "../../../../templates/blocks/TemplateFieldGroup";

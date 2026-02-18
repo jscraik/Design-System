@@ -6,7 +6,7 @@
 import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 import * as React from "react";
-import { buttonVariants } from "../../../base/Button";
+import { buttonVariants } from "../../../base/button";
 import { cn } from "../../../utils";
 
 /**
