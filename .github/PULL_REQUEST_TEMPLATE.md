@@ -6,7 +6,7 @@
 
 [PROMPT: Why is this change needed? Link context, incidents, or user feedback.]
 
-Closes #[PROMPT: #123] (or explain why none exists)
+Closes [PROMPT: #123] (or explain why none exists)
 
 ## What changed?
 
@@ -90,7 +90,7 @@ Session: `[PROMPT: artifacts/ai/sessions/YYYY-MM-DD-<slug>.json]`
 - [ ] Updated docs where needed (Required for behavior/config/API/CLI changes)
 - [ ] Internal docs links use full root paths (for example, `/docs/deployment`)
 - [ ] Internal docs links do not use trailing slashes
-- [ ] Ran docs lint: `python3 scripts/docs_lint.py --mode warn --config docs-policy.json`
+- [ ] Ran docs lint (if docs changed): `pnpm doc:lint`
 - [ ] Considered backward compatibility / migrations (Optional)
 - [ ] Verified no secrets are committed (tokens, keys, passwords)
 - [ ] Confirmed CI is green (or explained failures)

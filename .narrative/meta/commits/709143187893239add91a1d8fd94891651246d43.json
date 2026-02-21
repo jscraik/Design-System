@@ -1,0 +1,7 @@
+{
+  "sha": "709143187893239add91a1d8fd94891651246d43",
+  "subject": "feat(overlays): migrate 8 remaining Overlay components to StatefulComponentProps",
+  "author": "jscraik",
+  "authoredAtISO": "2026-01-28T20:07:11Z",
+  "source": "git"
+}

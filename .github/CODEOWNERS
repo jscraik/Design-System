@@ -2,7 +2,9 @@
 * @jscraik
 
 /.github/branch-protection-manifest.md @jscraik
-/.github/workflows/gov-security-gates.yml @jscraik
+/.github/CODEOWNERS @jscraik
+/.github/PULL_REQUEST_TEMPLATE.md @jscraik
+/.github/workflows/** @jscraik
 /.github/scripts/gov_security_gates.py @jscraik
 /GOVERNANCE/** @jscraik
 /COMPLIANCE/** @jscraik
