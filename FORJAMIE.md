@@ -1,13 +1,13 @@
 # FORJAMIE.md
 
-**Last updated:** 2026-02-06
+**Last updated:** 2026-02-22
 **Audience:** Developers (intermediate)
 **Owner:** TBD (confirm)
 **Review cadence:** TBD (confirm)
 
 ## TL;DR
 
-aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. Recent changes added explicit accessibility contracts for local primitives and wired the coverage matrix to reference them.
+aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. The repo now also includes a local Codex skill (`.agents/skills/design-system/`) to standardize design-system analysis and implementation workflows across tokens, typography, spacing, iconography, and mapped theme variables.
 
 ## Architecture & Data Flow (High Level)
 
@@ -58,6 +58,7 @@ flowchart LR
   - `docs/design-system/COVERAGE_MATRIX_SURFACES.json` — surface usage source of truth (web/tauri/widgets)
 - `reports/` — long-form generated reports and audit snapshots (no secrets/PII; follow `docs/operations/GOVERNANCE_SECURITY_PRIVACY.md`)
 - `scripts/` — build, compliance, and version sync tooling
+- `.agents/skills/design-system/` — repo-local Codex skill for design-system audits/implementation (tokens, typography, spacing, iconography, mapped theme variables)
 
 ## How to Run
 
@@ -99,6 +100,7 @@ pnpm test:mcp-contract    # MCP contract tests
 
 ## Recent Changes
 
+- **2026-02-22:** Added a repo-local `design-system` Codex skill at `.agents/skills/design-system/` with a focused `SKILL.md`, canonical design-system source map, output template, contract/evals, and OpenAI skill metadata. Then removed `skill_gate` warnings by adding explicit `schema_version` guidance, cleaning high-risk wording, renaming the prohibited `## Inputs` heading to `## Required inputs`, and adding variation/empowerment guidance. Validation now passes cleanly (`quick_validate`, `skill_gate`, `openclaw`), `analyze_skill` reports 101/120, and `upgrade_skill` reports no suggestions. Impact: design-system requests now have a repeatable, evidence-backed workflow with stronger routing quality and cleaner quality-gate output.
 - **2026-02-07:** Synced `pnpm-lock.yaml` to match workspace dependency specifiers (notably `fast-check@^4.5.3`) and unblocked `pnpm lint` by aligning `biome.json`’s `$schema` to the installed Biome CLI (2.3.11) + applying Biome safe-fixes (format/import order) to a small set of files. Impact: `pnpm install --frozen-lockfile` and `pnpm lint` are green again. (lockfile commit: 81ffc47)
 - **2026-02-06:** Design system hardening pass: (1) Implemented a real Brand → Alias → Mapped CSS flow by generating `packages/tokens/src/aliases.css` and refactoring `packages/ui/src/styles/theme.css` to consume `--ds-*` alias vars (instead of `--foundation-*` directly). (2) Made `packages/tokens/src/foundations.css` variables-only by moving behavioral helpers (reduced-motion override + utility classes) into `packages/ui/src/styles/a11y.css`. (3) Removed bracket-var gradients in widgets (use `from-background` utilities) and switched the solar-system info panel to semantic theme utilities. (4) Replaced hardcoded hex values in the App accent picker with CSS variable-backed accent tokens. (5) Added baseline semantic contrast tests for text/background + updated token generator property tests to include high-contrast/icon fields. Impact: less doc drift, safer theme refactors, clearer layering boundaries, and stronger automated guardrails for accessibility/theming.
 - **2026-02-06:** Added Storybook smoke validation via agent-browser (`pnpm test:agent-browser:storybook:ci`) as a stable alternative to flaky Vitest browser-mode tests for Radix overlay stories (snapshot + screenshot evidence).
