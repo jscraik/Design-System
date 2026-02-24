@@ -6,7 +6,7 @@ This design system provides tokens, components, and icons for building ChatGPT-n
 
 ```tsx
 import { Stack, Text } from "@design-studio/ui";
-import { Icon } from "@design-studio/icons";
+import { Icon } from "@design-studio/astudio-icons";
 import "@design-studio/tokens/tokens.css";
 
 export function Example() {
