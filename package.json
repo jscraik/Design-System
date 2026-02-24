@@ -88,12 +88,12 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset publish",
-    "prepare": "husky",
+    "prepare": "husky"
+  },
   "lint-staged": {
     "*.{ts,tsx,json,md}": [
       "./node_modules/.bin/lint-staged"
     ]
-  }
   },
   "devDependencies": {
     "@argos-ci/cli": "^3.0.6",

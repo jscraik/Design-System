@@ -6,12 +6,5 @@
     "types": ["node"]
   },
   "include": ["src/**/*"],
-  "exclude": [
-    "**/*.stories.*",
-    "**/*.mdx",
-    "**/*.test.*",
-    "**/*.figmaConnect.*",
-    "src/testing/**",
-    "src/dev/**"
-  ]
+  "exclude": ["**/*.stories.*", "**/*.mdx", "**/*.test.*", "**/*.figmaConnect.*", "src/testing/**"]
 }

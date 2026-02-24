@@ -11,7 +11,7 @@
   "dependencies": {
     "@design-studio/tokens": "workspace:*",
     "@design-studio/ui": "workspace:*",
-    "@design-studio/icons": "workspace:*",
+    "@design-studio/astudio-icons": "workspace:*",
     "react": ">=19",
     "react-dom": ">=19"
   }
