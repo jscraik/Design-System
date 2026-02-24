@@ -32,7 +32,7 @@ type SurfaceUsage = {
 
 type SurfaceUsageMap = Record<string, SurfaceUsage>;
 
-const ROOT = resolve(fileURLToPath(new URL("../..", import.meta.url)));
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const UI_INDEX = join(ROOT, "packages/ui/src/index.ts");
 const COMPONENTS_INDEX = join(ROOT, "packages/ui/src/components/ui/index.ts");
 const FALLBACK_ROOT = join(ROOT, "packages/ui/src/components");
@@ -48,6 +48,17 @@ const checkOnly = args.has("--check");
 
 function compareText(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;
+}
+
+function preferCanonicalComponentName(existing: string, candidate: string): string {
+  const existingStartsUpper = /^[A-Z]/.test(existing);
+  const candidateStartsUpper = /^[A-Z]/.test(candidate);
+
+  if (existingStartsUpper !== candidateStartsUpper) {
+    return candidateStartsUpper ? candidate : existing;
+  }
+
+  return compareText(candidate, existing) < 0 ? candidate : existing;
 }
 
 function normalizePath(p: string): string {
@@ -134,7 +145,7 @@ async function collectExportPaths(
 
 async function collectComponentNames(): Promise<Set<string>> {
   const componentFiles = await collectExportPaths(COMPONENTS_INDEX);
-  const names = new Set<string>();
+  const rawNames = new Set<string>();
 
   for (const filePath of componentFiles) {
     const normalized = normalizePath(filePath);
@@ -151,7 +162,7 @@ async function collectComponentNames(): Promise<Set<string>> {
         if (await isBarrelIndex(filePath)) {
           continue;
         }
-        names.add(parent);
+        rawNames.add(parent);
       }
     } else {
       const base = last.replace(/\.tsx?$/, "");
@@ -159,12 +170,22 @@ async function collectComponentNames(): Promise<Set<string>> {
         if (NON_COMPONENT_EXPORTS.has(base)) {
           continue;
         }
-        names.add(base);
+        rawNames.add(base);
       }
     }
   }
 
-  return names;
+  const canonicalByLowerName = new Map<string, string>();
+  for (const name of rawNames) {
+    const lowerName = name.toLowerCase();
+    const existing = canonicalByLowerName.get(lowerName);
+    canonicalByLowerName.set(
+      lowerName,
+      existing ? preferCanonicalComponentName(existing, name) : name,
+    );
+  }
+
+  return new Set(canonicalByLowerName.values());
 }
 
 async function isBarrelIndex(indexPath: string): Promise<boolean> {
@@ -281,7 +302,11 @@ async function readSurfaceUsage(): Promise<SurfaceUsageMap> {
 }
 
 function resolveSurfaceUsage(name: string, surfaceUsage: SurfaceUsageMap) {
-  const entry = surfaceUsage[name] ?? {};
+  const directEntry = surfaceUsage[name];
+  const caseInsensitiveEntry =
+    directEntry ??
+    Object.entries(surfaceUsage).find(([key]) => key.toLowerCase() === name.toLowerCase())?.[1];
+  const entry = caseInsensitiveEntry ?? {};
   return {
     web_used: entry.web_used ?? false,
     tauri_used: entry.tauri_used ?? false,
@@ -364,7 +389,7 @@ async function main(): Promise<void> {
       why_missing_upstream: null,
       migration_trigger: null,
       a11y_contract_ref: null,
-      status: usage.widget_used ? "widget_used" : "active",
+      status: "active",
       ...usage,
     });
   }
@@ -393,11 +418,7 @@ async function main(): Promise<void> {
       why_missing_upstream: fallback?.why_missing_upstream ?? null,
       migration_trigger: fallback?.migration_trigger ?? null,
       a11y_contract_ref: a11yContractRef,
-      status: hasMissingMetadata
-        ? "missing_metadata"
-        : _usage.widget_used
-          ? "widget_used"
-          : "active",
+      status: hasMissingMetadata ? "missing_metadata" : "active",
       ..._usage,
     });
   }

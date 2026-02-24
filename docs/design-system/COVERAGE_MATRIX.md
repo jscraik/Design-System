@@ -4,40 +4,32 @@ Upstream version: @openai/apps-sdk-ui ^0.2.1
 | Component | Source | Upstream | Fallback | Why missing upstream | Migration trigger | A11y contract | Status | Web used | Tauri used | Widget used |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Accordion | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
-| Alert | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#alert | active | no | no | no |
 | AlertDialog | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
-| AppsSDKBadge | upstream_reexport | Badge | - | - | - | - | widget_used | no | no | yes |
-| AppsSDKButton | upstream_reexport | Button | - | - | - | - | widget_used | no | no | yes |
-| AppsSDKCheckbox | upstream_reexport | Checkbox | - | - | - | - | widget_used | no | no | yes |
+| AppsSDKBadge | upstream_reexport | Badge | - | - | - | - | active | no | no | yes |
+| AppsSDKButton | upstream_reexport | Button | - | - | - | - | active | no | no | yes |
+| AppsSDKCheckbox | upstream_reexport | Checkbox | - | - | - | - | active | no | no | yes |
 | AppsSDKCodeBlock | upstream_reexport | CodeBlock | - | - | - | - | active | no | no | no |
 | AppsSDKDownloadIcon | upstream_reexport | Download | - | - | - | - | active | no | no | no |
-| AppsSDKImage | upstream_reexport | Image | - | - | - | - | widget_used | no | no | yes |
-| AppsSDKInput | upstream_reexport | Input | - | - | - | - | widget_used | no | no | yes |
+| AppsSDKImage | upstream_reexport | Image | - | - | - | - | active | no | no | yes |
+| AppsSDKInput | upstream_reexport | Input | - | - | - | - | active | no | no | yes |
 | AppsSDKPopover | upstream_reexport | Popover | - | - | - | - | active | no | no | no |
 | AppsSDKSparklesIcon | upstream_reexport | Sparkles | - | - | - | - | active | no | no | no |
-| AppsSDKTextarea | upstream_reexport | Textarea | - | - | - | - | widget_used | no | no | yes |
-| AppsSDKUIProvider | upstream_reexport | AppsSDKUIProvider | - | - | - | - | widget_used | no | no | yes |
+| AppsSDKTextarea | upstream_reexport | Textarea | - | - | - | - | active | no | no | yes |
+| AppsSDKUIProvider | upstream_reexport | AppsSDKUIProvider | - | - | - | - | active | no | no | yes |
 | AspectRatio | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | Avatar | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | Badge | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | Breadcrumb | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | Button | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
-| Calendar | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#calendar | active | no | no | no |
-| Card | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#card | widget_used | no | no | yes |
-| Carousel | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#carousel | active | no | no | no |
-| Chart | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#chart | active | no | no | no |
 | Checkbox | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | CodeBlock | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#codeblock | active | no | no | no |
 | Collapsible | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | CollapsibleSection | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#collapsiblesection | active | no | no | no |
-| Combobox | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#combobox | active | no | no | no |
-| Command | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#command | active | no | no | no |
 | ContextMenu | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | ContextTag | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#contexttag | active | no | no | no |
 | DatePicker | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#datepicker | active | no | no | no |
 | Dialog | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | DirectionProvider | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
-| Drawer | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#drawer | active | no | no | no |
 | DropdownMenu | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | EmptyMessage | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#emptymessage | active | no | no | no |
 | ErrorBoundary | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#errorboundary | active | no | no | no |
@@ -46,7 +38,6 @@ Upstream version: @openai/apps-sdk-ui ^0.2.1
 | IconButton | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#iconbutton | active | no | no | no |
 | Image | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#image | active | no | no | no |
 | Indicator | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#indicator | active | no | no | no |
-| Input | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#input | active | no | no | no |
 | InputOTP | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#inputotp | active | no | no | no |
 | Label | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | ListItem | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#listitem | active | no | no | no |
@@ -54,17 +45,14 @@ Upstream version: @openai/apps-sdk-ui ^0.2.1
 | Menu | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#menu | active | no | no | no |
 | Menubar | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | MessageActions | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#messageactions | active | no | no | no |
-| Modal | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#modal | active | no | no | no |
 | ModeSelector | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#modeselector | active | no | no | no |
 | ModelBadge | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#modelbadge | active | no | no | no |
 | ModelSelector | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#modelselector | active | no | no | no |
 | NavigationMenu | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
-| Pagination | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#pagination | active | no | no | no |
 | Popover | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | Progress | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | RadioGroup | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | RangeSlider | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#rangeslider | active | no | no | no |
-| Resizable | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#resizable | active | no | no | no |
 | ScrollArea | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | SectionHeader | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#sectionheader | active | no | no | no |
 | SegmentedControl | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#segmentedcontrol | active | no | no | no |
@@ -73,18 +61,30 @@ Upstream version: @openai/apps-sdk-ui ^0.2.1
 | Sheet | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | ShimmerText | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#shimmertext | active | no | no | no |
 | Sidebar | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
-| Skeleton | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#skeleton | active | no | no | no |
 | Slider | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
-| Sonner | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#sonner | active | no | no | no |
 | Switch | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
-| Table | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#table | active | no | no | no |
 | Tabs | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | TagInput | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#taginput | active | no | no | no |
 | TextLink | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#textlink | active | no | no | no |
-| Textarea | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#textarea | active | no | no | no |
-| Toast | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#toast | active | no | no | no |
-| Toggle | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#toggle | active | no | no | no |
 | ToggleGroup | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | Tooltip | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | UseMobile | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#usemobile | active | no | no | no |
 | ViewModeToggle | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#viewmodetoggle | active | no | no | no |
+| alert | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#alert | active | no | no | no |
+| calendar | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#calendar | active | no | no | no |
+| card | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#card | active | no | no | yes |
+| carousel | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#carousel | active | no | no | no |
+| chart | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#chart | active | no | no | no |
+| combobox | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#combobox | active | no | no | no |
+| command | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#command | active | no | no | no |
+| drawer | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#drawer | active | no | no | no |
+| input | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#input | active | no | no | no |
+| modal | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#modal | active | no | no | no |
+| pagination | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#pagination | active | no | no | no |
+| resizable | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#resizable | active | no | no | no |
+| skeleton | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#skeleton | active | no | no | no |
+| sonner | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#sonner | active | no | no | no |
+| table | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#table | active | no | no | no |
+| textarea | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#textarea | active | no | no | no |
+| toast | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#toast | active | no | no | no |
+| toggle | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#toggle | active | no | no | no |
