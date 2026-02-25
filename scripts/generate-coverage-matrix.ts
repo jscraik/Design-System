@@ -42,6 +42,7 @@ const OUTPUT_JSON = join(ROOT, "docs/design-system/COVERAGE_MATRIX.json");
 const OUTPUT_MD = join(ROOT, "docs/design-system/COVERAGE_MATRIX.md");
 const _SURFACE_USAGE_JSON = join(ROOT, "docs/design-system/COVERAGE_MATRIX_SURFACES.json");
 const UI_PACKAGE_JSON = join(ROOT, "packages/ui/package.json");
+const WRAPPER_UPSTREAM_ALIASES = new Map<string, string>([["AppsSDKWrapper", "AppsSDKUIProvider"]]);
 
 const args = new Set(process.argv.slice(2));
 const checkOnly = args.has("--check");
@@ -183,7 +184,8 @@ async function isBarrelIndex(indexPath: string): Promise<boolean> {
 
 async function collectAppsSdkExports(): Promise<NamedExport[]> {
   const content = await readText(UI_INDEX);
-  const exportNamed = /export\s+\{([\s\S]*?)\}\s+from\s+["']\.\/integrations\/apps-sdk["'];/g;
+  const exportNamed =
+    /export\s+\{([\s\S]*?)\}\s+from\s+["']\.\/integrations\/apps-sdk(?:-wrapper)?["'];/g;
   const exports: NamedExport[] = [];
   let match: RegExpExecArray | null = null;
 
@@ -195,8 +197,9 @@ async function collectAppsSdkExports(): Promise<NamedExport[]> {
       if (!trimmed) continue;
       const [upstream, local] = trimmed.split(/\s+as\s+/i).map((v) => v.trim());
       if (!upstream) continue;
+      const canonicalUpstream = WRAPPER_UPSTREAM_ALIASES.get(upstream) ?? upstream;
       exports.push({
-        upstream,
+        upstream: canonicalUpstream,
         local: local ?? upstream,
       });
     }

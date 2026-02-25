@@ -1,9 +1,9 @@
 import { colorTokens } from "./colors.js";
-import { spacingScale } from "./spacing.js";
-import { typographyTokens } from "./typography.js";
 import { radiusTokens } from "./radius.js";
 import { shadowTokens } from "./shadows.js";
 import { sizeTokens } from "./sizes.js";
+import { spacingScale } from "./spacing.js";
+import { typographyTokens } from "./typography.js";
 /**
  * Design token payload used for generating platform outputs.
  */
@@ -47,6 +47,15 @@ export declare class TokenGenerator {
      * This maintains compatibility with existing foundations.css
      */
     generateCSS(): Promise<string>;
+    /**
+     * Generate semantic alias variables (theme-aware) derived from foundation tokens.
+     *
+     * This is the "Alias" layer in the Brand → Alias → Mapped flow:
+     * - Brand: `--foundation-*` variables (audit/source values)
+     * - Alias: `--ds-*` variables (semantic names that vary by theme + high contrast)
+     * - Mapped: app/UI runtime slots (e.g. `--background`) live in `@design-studio/ui`
+     */
+    generateAliasesCSS(): Promise<string>;
     /**
      * Generate manifest with SHA hashes and metadata
      */

@@ -136,11 +136,21 @@ export {
   IconThumbUp,
 } from "./chatgpt/ChatGPTIconsFixed";
 export {
+  IconArrowDownMd,
   IconCheckCircle,
   IconCheckmark,
+  IconClose,
   IconCode,
+  IconExpandSm,
+  IconEye,
+  IconEyeOff,
   IconGrid3x3,
+  IconLock,
+  IconOpenAILogo,
   IconPlusCircle,
+  IconProfile,
+  IconSmile,
+  IconTelescope,
   IconX,
 } from "./chatgpt/missing-icons";
 export {

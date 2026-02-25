@@ -179,7 +179,7 @@ At the end of each month, generate a report including:
 
 - [RUNBOOK.md](./RUNBOOK.md) - Operational procedures
 - [INCIDENT_RESPONSE.md](./INCIDENT_RESPONSE.md) - Incident procedures
-- [.spec/tech-spec-2026-01-15-component-creation-governance.md](../../.spec/tech-spec-2026-01-15-component-creation-governance.md) - Technical specification with SLO details
+- [.spec/archive/tech-spec-2026-01-15-component-creation-governance.md](../../.spec/archive/tech-spec-2026-01-15-component-creation-governance.md) - Technical specification with SLO details
 - [RUNBOOK.md](./RUNBOOK.md#telemetry-data-governance) - Telemetry data governance
 - [a11y-audit-template.md](./a11y-audit-template.md) - Accessibility audit evidence template
 

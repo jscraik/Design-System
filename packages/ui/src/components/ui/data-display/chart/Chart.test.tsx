@@ -1,5 +1,5 @@
 import { Bar, BarChart, CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen, waitFor } from "../../../../testing/utils";
 import {
   ChartContainer,
@@ -8,6 +8,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "./chart";
+
+const RECHARTS_DIMENSION_WARNING = "The width(0) and height(0) of chart should be greater than 0";
 
 describe("Chart", () => {
   const mockOnStateChange = vi.fn();
@@ -19,6 +21,31 @@ describe("Chart", () => {
   const mockConfig = {
     value: { label: "Value", color: "#hsl(var(--chart-1))" },
   };
+
+  const originalWarn = console.warn;
+  const originalError = console.error;
+
+  beforeAll(() => {
+    vi.spyOn(console, "warn").mockImplementation((...args) => {
+      const [firstArg] = args;
+      if (typeof firstArg === "string" && firstArg.includes(RECHARTS_DIMENSION_WARNING)) {
+        return;
+      }
+      originalWarn(...args);
+    });
+
+    vi.spyOn(console, "error").mockImplementation((...args) => {
+      const [firstArg] = args;
+      if (typeof firstArg === "string" && firstArg.includes(RECHARTS_DIMENSION_WARNING)) {
+        return;
+      }
+      originalError(...args);
+    });
+  });
+
+  afterAll(() => {
+    vi.restoreAllMocks();
+  });
 
   beforeEach(() => {
     vi.clearAllMocks();

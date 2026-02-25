@@ -1,6 +1,6 @@
-import { spawn } from "child_process";
-import { join } from "path";
-import { pathToFileURL } from "url";
+import { spawn } from "node:child_process";
+import { join } from "node:path";
+import { pathToFileURL } from "node:url";
 import chokidar from "chokidar";
 /**
  * Watches token source files and regenerates outputs on change.
@@ -14,7 +14,6 @@ export class TokenWatcher {
     watcher = null;
     isGenerating = false;
     pendingRegeneration = false;
-    constructor() { }
     async loadTokens() {
         const cacheBuster = `?v=${Date.now()}`;
         const colorsUrl = pathToFileURL(join(process.cwd(), "src/colors.ts")).href + cacheBuster;

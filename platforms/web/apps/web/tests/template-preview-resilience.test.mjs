@@ -19,10 +19,11 @@ vi.mock("@design-studio/ui", () => ({
 const { TemplateHost } = await import("../src/components/template-browser/TemplateHost.tsx");
 
 const safeTextArb = fc
-  .stringOf(fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789 -_".split("")), {
+  .array(fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789 -_".split("")), {
     minLength: 1,
     maxLength: 40,
   })
+  .map((chars) => chars.join(""))
   .filter((value) => value.trim().length > 0);
 
 describe("Template Preview Resilience Property", () => {

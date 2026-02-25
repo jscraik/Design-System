@@ -12,8 +12,7 @@ function buildModeMap(category) {
         map[key] = {
             light: { path: `color.${category}.light.${key}` },
             dark: { path: `color.${category}.dark.${key}` },
-            // High contrast defaults to dark tokens until dedicated HC tokens exist.
-            highContrast: { path: `color.${category}.dark.${key}` },
+            highContrast: { path: `color.${category}.highContrast.${key}` },
         };
     }
     return map;

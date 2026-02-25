@@ -148,7 +148,7 @@ export function createEmbeddedHost() {
             const openai = getOpenAi();
             if (!openai?.notifyIntrinsicHeight)
                 return undefined;
-            return (args) => openai.notifyIntrinsicHeight(args);
+            return (args) => openai.notifyIntrinsicHeight?.(args);
         },
     };
 }

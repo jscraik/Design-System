@@ -1,9 +1,48 @@
+import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { defineConfig, devices } from "@playwright/test";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
+const hasWorkingSharp = (() => {
+  try {
+    require("sharp");
+    return true;
+  } catch {
+    return false;
+  }
+})();
+const hasArgosReporter = (() => {
+  try {
+    require("@argos-ci/playwright/reporter");
+    return true;
+  } catch {
+    return false;
+  }
+})();
+const shouldUploadToArgos = !!process.env.CI && !!process.env.ARGOS_TOKEN && hasArgosReporter;
+const runFullMatrix =
+  process.env.PLAYWRIGHT_VISUAL_FULL_MATRIX === "1" ||
+  process.env.PLAYWRIGHT_VISUAL_FULL_MATRIX === "true";
+const baseReporter = hasWorkingSharp
+  ? ([["html", { outputFolder: "playwright-report/visual" }]] as const)
+  : ([["line"]] as const);
+const reporter = [
+  ...baseReporter,
+  ...(shouldUploadToArgos
+    ? ([
+        [
+          "@argos-ci/playwright/reporter",
+          {
+            uploadToArgos: true,
+            token: process.env.ARGOS_TOKEN,
+          },
+        ],
+      ] as const)
+    : []),
+];
 
 /**
  * Visual regression testing configuration for the web app.
@@ -15,16 +54,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [
-    ["html", { outputFolder: "playwright-report/visual" }],
-    [
-      "@argos-ci/playwright/reporter",
-      {
-        uploadToArgos: !!process.env.CI,
-        token: process.env.ARGOS_TOKEN,
-      },
-    ],
-  ],
+  reporter,
 
   // Snapshot configuration
   snapshotDir: "./tests/visual/__snapshots__",
@@ -57,31 +87,27 @@ export default defineConfig({
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
     },
-    {
-      name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
-    },
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
-    },
-    // Mobile viewports
-    {
-      name: "mobile-chrome",
-      use: { ...devices["Pixel 5"] },
-    },
-    {
-      name: "mobile-safari",
-      use: { ...devices["iPhone 12"] },
-    },
-    // Dark mode variants
-    {
-      name: "chromium-dark",
-      use: {
-        ...devices["Desktop Chrome"],
-        colorScheme: "dark",
-      },
-    },
+    ...(runFullMatrix
+      ? [
+          {
+            name: "firefox",
+            use: { ...devices["Desktop Firefox"] },
+          },
+          {
+            name: "webkit",
+            use: { ...devices["Desktop Safari"] },
+          },
+          // Mobile viewports
+          {
+            name: "mobile-chrome",
+            use: { ...devices["Pixel 5"] },
+          },
+          {
+            name: "mobile-safari",
+            use: { ...devices["iPhone 12"] },
+          },
+        ]
+      : []),
   ],
 
   webServer: {

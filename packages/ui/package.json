@@ -155,9 +155,9 @@
     "vaul": "^1.1.0"
   },
   "devDependencies": {
-    "@storybook/react-vite": "^10.2.4",
+    "@storybook/react-vite": "10.1.11",
     "@storybook/test": "^8.6.15",
-    "storybook": "^10.2.4",
+    "storybook": "10.1.11",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",

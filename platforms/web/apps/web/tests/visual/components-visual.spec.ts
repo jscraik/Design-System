@@ -23,6 +23,10 @@ import {
  */
 async function setTheme(page: Page, theme: "light" | "dark") {
   await page.emulateMedia({ colorScheme: theme });
+  await page.evaluate((nextTheme) => {
+    window.localStorage.setItem("astudio.theme", nextTheme);
+    document.documentElement.setAttribute("data-theme", nextTheme);
+  }, theme);
   await page.waitForTimeout(100);
 }
 
@@ -331,6 +335,9 @@ test.describe("DiscoverySettingsModal visual regression", () => {
 
     if ((await discoveryTrigger.count()) > 0) {
       await discoveryTrigger.click();
+      const modal = page.locator('[role="dialog"]').first();
+
+      await expect(modal).toBeVisible();
 
       // Light theme
       await captureScreenshot(page, "discovery-settings-sliders");
@@ -345,6 +352,9 @@ test.describe("DiscoverySettingsModal visual regression", () => {
 
     if ((await discoveryTrigger.count()) > 0) {
       await discoveryTrigger.click();
+      const modal = page.locator('[role="dialog"]').first();
+
+      await expect(modal).toBeVisible();
 
       // Light theme
       await captureScreenshot(page, "discovery-settings-segments");
@@ -373,20 +383,22 @@ test.describe("ChatSidebar visual regression", () => {
   });
 
   test("renders collapsed sidebar (rail) in both themes", async ({ page }) => {
-    const collapseBtn = page
-      .locator('[aria-label*="Collapse sidebar"], [aria-label*="Expand sidebar"]')
-      .first();
+    const collapseBtn = page.locator('[aria-label*="Collapse sidebar"]').first();
+    const expandBtn = page.locator('[aria-label*="Expand sidebar"]').first();
 
-    if ((await collapseBtn.count()) > 0) {
+    if (await collapseBtn.isVisible()) {
       await collapseBtn.click();
       await page.waitForTimeout(200); // Wait for transition
-
-      // Light theme
-      await captureScreenshot(page, "sidebar-collapsed");
-
-      // Dark theme
-      await captureScreenshot(page, "sidebar-collapsed", { theme: "dark" });
+    } else if (!(await expandBtn.isVisible())) {
+      return;
     }
+    await page.mouse.move(0, 0);
+
+    // Light theme
+    await captureScreenshot(page, "sidebar-collapsed");
+
+    // Dark theme
+    await captureScreenshot(page, "sidebar-collapsed", { theme: "dark" });
   });
 
   test("renders sidebar with project list in both themes", async ({ page }) => {
@@ -463,12 +475,13 @@ test.describe("Form components visual regression", () => {
   });
 
   test("renders buttons in both themes", async ({ page }) => {
-    const buttons = page.locator("button").all();
+    const buttons = page.locator("button");
+    const buttonCount = await buttons.count();
 
-    if (buttons.length > 0) {
+    if (buttonCount > 0) {
       // Test first few buttons
-      for (let i = 0; i < Math.min(3, buttons.length); i++) {
-        const button = buttons[i];
+      for (let i = 0; i < Math.min(3, buttonCount); i++) {
+        const button = buttons.nth(i);
 
         // Hover state
         await button.hover();
@@ -568,7 +581,7 @@ test.describe("Interactive states visual regression", () => {
   });
 
   test("renders hover states in both themes", async ({ page }) => {
-    const button = page.locator("button").first();
+    const button = page.getByRole("button", { name: "Open Modal" }).first();
 
     if ((await button.count()) > 0) {
       await button.hover();
@@ -583,7 +596,7 @@ test.describe("Interactive states visual regression", () => {
   });
 
   test("renders focus states in both themes", async ({ page }) => {
-    const button = page.locator("button").first();
+    const button = page.getByRole("button", { name: "Open Modal" }).first();
 
     if ((await button.count()) > 0) {
       await button.focus();
@@ -631,12 +644,9 @@ test.describe("Icon and visual elements visual regression", () => {
 
   test("renders icons in both themes", async ({ page }) => {
     // Find all icon buttons/elements
-    const icons = page.locator('svg, [class*="icon"], [class*="Icon"]').all();
-
-    if (icons.length > 0) {
-      // Capture first icon
-      const icon = icons[0];
-
+    const icons = page.locator('svg, [class*="icon"], [class*="Icon"]');
+    if ((await icons.count()) > 0) {
+      const icon = icons.first();
       // Light theme
       const iconBounds = await icon.boundingBox();
       if (iconBounds) {
@@ -650,10 +660,9 @@ test.describe("Icon and visual elements visual regression", () => {
     // Dark theme
     await setTheme(page, "dark");
 
-    const iconsDark = page.locator('svg, [class*="icon"], [class*="Icon"]').all();
-
-    if (iconsDark.length > 0) {
-      const icon = iconsDark[0];
+    const iconsDark = page.locator('svg, [class*="icon"], [class*="Icon"]');
+    if ((await iconsDark.count()) > 0) {
+      const icon = iconsDark.first();
       const iconBounds = await icon.boundingBox();
 
       if (iconBounds) {

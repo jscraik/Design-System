@@ -112,9 +112,9 @@ describe("Apps SDK UI drift suite", () => {
     );
 
     if (replacementCandidates.length > 0) {
-      console.warn("Potential Apps SDK UI replacements for Radix fallbacks detected:");
+      console.info("Potential Apps SDK UI replacements for Radix fallbacks detected:");
       for (const row of replacementCandidates) {
-        console.warn(`- ${row.name} (fallback: ${row.fallback ?? "radix"})`);
+        console.info(`- ${row.name} (fallback: ${row.fallback ?? "radix"})`);
       }
     }
 

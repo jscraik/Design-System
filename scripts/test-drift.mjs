@@ -4,22 +4,63 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 function parseIntegrationExports() {
-  const filePath = resolve("packages/ui/src/integrations/apps-sdk/index.ts");
-  const raw = readFileSync(filePath, "utf8");
-  const regex = /export\s+\{([^}]+)\}\s+from\s+["']@openai\/apps-sdk-ui\/components\/[^"']+["'];/g;
-  const exports = new Set();
-  let match;
+  const legacyPath = resolve("packages/ui/src/integrations/apps-sdk/index.ts");
+  const wrapperPath = resolve("packages/ui/src/integrations/apps-sdk-wrapper/index.tsx");
+  const filePath = existsSync(legacyPath) ? legacyPath : wrapperPath;
 
-  while ((match = regex.exec(raw))) {
-    const body = match[1] ?? "";
-    for (const part of body.split(",")) {
-      const trimmed = part.trim();
-      if (!trimmed) continue;
-      const [name] = trimmed.split(/\s+as\s+/i);
-      if (name) {
-        exports.add(name.trim());
+  if (!existsSync(filePath)) {
+    throw new Error(`Missing integrations source file: ${legacyPath} or ${wrapperPath}`);
+  }
+
+  const raw = readFileSync(filePath, "utf8");
+  const exports = new Set();
+
+  if (filePath === legacyPath) {
+    const exportRegex =
+      /export\s+\{([^}]+)\}\s+from\s+["']@openai\/apps-sdk-ui\/components\/[^"']+["'];/g;
+    let match;
+
+    while ((match = exportRegex.exec(raw))) {
+      const body = match[1] ?? "";
+      for (const part of body.split(",")) {
+        const trimmed = part.trim();
+        if (!trimmed) continue;
+        const [name] = trimmed.split(/\s+as\s+/i);
+        if (name) {
+          exports.add(name.trim());
+        }
       }
     }
+
+    return exports;
+  }
+
+  const importRegex =
+    /import\s+\{?\s*([^}]*)\}?\s*from\s+["']@openai\/apps-sdk-ui\/components\/([^"']+)["'];/g;
+  let match;
+
+  while ((match = importRegex.exec(raw))) {
+    const importsBody = (match[1] ?? "").trim();
+    const componentPath = (match[2] ?? "").trim();
+    const pathSegment = componentPath.split("/")[0];
+
+    if (!pathSegment) {
+      continue;
+    }
+
+    if (pathSegment === "Icon") {
+      for (const part of importsBody.split(",")) {
+        const trimmed = part.trim();
+        if (!trimmed) continue;
+        const [name] = trimmed.split(/\s+as\s+/i);
+        if (name) {
+          exports.add(name.trim());
+        }
+      }
+      continue;
+    }
+
+    exports.add(pathSegment);
   }
 
   return exports;

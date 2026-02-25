@@ -5,14 +5,14 @@
 export const shadowTokens = {
   card: [
     {
-      color: "rgba(0, 0, 0, 0.1)",
+      color: "rgba(0 0 0 / 10%)",
       offsetX: 0,
       offsetY: 10,
       blur: 15,
       spread: -3,
     },
     {
-      color: "rgba(0, 0, 0, 0.1)",
+      color: "rgba(0 0 0 / 10%)",
       offsetX: 0,
       offsetY: 4,
       blur: 6,
@@ -21,14 +21,14 @@ export const shadowTokens = {
   ],
   pip: [
     {
-      color: "rgba(0, 0, 0, 0.1)",
+      color: "rgba(0 0 0 / 10%)",
       offsetX: 0,
       offsetY: 10,
       blur: 15,
       spread: -3,
     },
     {
-      color: "rgba(0, 0, 0, 0.1)",
+      color: "rgba(0 0 0 / 10%)",
       offsetX: 0,
       offsetY: 4,
       blur: 6,
@@ -37,14 +37,14 @@ export const shadowTokens = {
   ],
   pill: [
     {
-      color: "rgba(0, 0, 0, 0.1)",
+      color: "rgba(0 0 0 / 10%)",
       offsetX: 0,
       offsetY: 10,
       blur: 15,
       spread: -3,
     },
     {
-      color: "rgba(0, 0, 0, 0.1)",
+      color: "rgba(0 0 0 / 10%)",
       offsetX: 0,
       offsetY: 4,
       blur: 6,
@@ -53,14 +53,14 @@ export const shadowTokens = {
   ],
   close: [
     {
-      color: "rgba(0, 0, 0, 0.1)",
+      color: "rgba(0 0 0 / 10%)",
       offsetX: 0,
       offsetY: 10,
       blur: 15,
       spread: -3,
     },
     {
-      color: "rgba(0, 0, 0, 0.1)",
+      color: "rgba(0 0 0 / 10%)",
       offsetX: 0,
       offsetY: 4,
       blur: 6,

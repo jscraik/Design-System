@@ -13,7 +13,7 @@ export const spaceTokens = {
     s12: 12,
     s8: 8,
     s4: 4,
-    s2: 4,
+    s2: 2,
     s0: 0,
 };
-export const spacingScale = [128, 64, 48, 40, 32, 24, 16, 12, 8, 4, 4, 0];
+export const spacingScale = [128, 64, 48, 40, 32, 24, 16, 12, 8, 4, 2, 0];

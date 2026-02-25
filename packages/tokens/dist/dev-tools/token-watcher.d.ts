@@ -10,7 +10,6 @@ export declare class TokenWatcher {
     private watcher;
     private isGenerating;
     private pendingRegeneration;
-    constructor();
     private loadTokens;
     /**
      * Validate color token format

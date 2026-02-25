@@ -50,6 +50,7 @@
   --ds-ring: var(--foundation-focus-ring);
 }
 
+:root[data-theme="dark"],
 :where([data-theme="dark"]) {
   /* Backgrounds */
   --ds-bg-primary: var(--foundation-bg-dark-1);

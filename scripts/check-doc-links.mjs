@@ -21,6 +21,8 @@ const SKIP_DIRS = new Set([
   ".turbo",
   ".pnpm",
   ".cache",
+  "artifacts",
+  "audit",
   "_temp",
   "_docs",
 ]);

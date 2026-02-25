@@ -23,7 +23,7 @@ Technical architecture and design decisions for the aStudio system.
 
 - **[repo-map.md](./repo-map.md)** - High-level map of the repository structure
 - **[WIDGET_ARCHITECTURE.md](./WIDGET_ARCHITECTURE.md)** - Widget system architecture, build system, and ChatGPT integration patterns
-- **[CROSS_PLATFORM.md](./CROSS_PLATFORM.md)** - Cross-platform architecture and design decisions
+- **[cross-platform-design.md](./cross-platform-design.md)** - Cross-platform architecture and design decisions
 - **[WIDGET_SYSTEM_ENHANCEMENTS.md](./WIDGET_SYSTEM_ENHANCEMENTS.md)** - Enhanced widget infrastructure implementation details
 
 ### Analysis & Planning

@@ -265,6 +265,6 @@ When migrating a component to `StatefulComponentProps`, ensure:
 
 ## Related Documentation
 
-- [Phase 3 Migration Plan](../.spec/phase-3-component-migration.md)
-- [Adversarial Review](./phase-3-adversarial-review.md)
+- [Phase 3 Migration Plan](../../.spec/phase-3-component-migration.md)
+- [Adversarial Review](../validation/phase-3-adversarial-review.md)
 - [Design Tokens Specification](../../packages/tokens/docs/)

@@ -29,6 +29,7 @@ export default defineConfig({
   plugins: [
     react(),
     dts({
+      tsconfigPath: "./tsconfig.dts.json",
       include: ["src"],
       outDir: "dist",
     }),

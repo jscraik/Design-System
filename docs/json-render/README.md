@@ -367,7 +367,7 @@ function SafeJsonRender({ schema }: { schema: ComponentSchema }) {
 - [REGISTRY.md](./REGISTRY.md) - Complete component registry
 - [AI_GUIDE.md](./AI_GUIDE.md) - Guide for AI agents
 - [EXAMPLES.md](./EXAMPLES.md) - Example schemas and patterns
-- [Widget Development Guide](../page-development.md) - Creating widgets
+- [Pages Quick Start](../guides/PAGES_QUICK_START.md) - Creating widgets
 
 ## Contributing
 

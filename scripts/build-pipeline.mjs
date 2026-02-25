@@ -552,11 +552,16 @@ class BuildPipeline {
    */
   runCommand(command, args, options = {}) {
     return new Promise((resolve, reject) => {
-      const child = spawn(command, args, {
+      const spawnOptions = {
         stdio: "inherit",
-        shell: true,
         ...options,
-      });
+      };
+
+      if (spawnOptions.shell === undefined) {
+        spawnOptions.shell = process.platform === "win32";
+      }
+
+      const child = spawn(command, args, spawnOptions);
 
       child.on("close", (code) => {
         if (code === 0) {

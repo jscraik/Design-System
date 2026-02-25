@@ -30,11 +30,11 @@ const getColorClasses = (colorId: string) => {
     gray: "text-muted-foreground dark:text-muted-foreground",
     red: "text-status-error dark:text-status-error",
     orange: "text-accent-orange-light dark:text-accent-orange",
-    yellow: "text-accent-orange dark:text-accent-orange",
+    yellow: "text-accent-yellow-light dark:text-accent-yellow",
     green: "text-accent-green-light dark:text-accent-green",
     blue: "text-accent-blue-light dark:text-accent-blue",
     purple: "text-accent-purple-light dark:text-accent-purple",
-    pink: "text-accent-purple dark:text-accent-purple",
+    pink: "text-accent-pink-light dark:text-accent-pink",
   };
   return colorMap[colorId] || colorMap.gray;
 };

@@ -15,6 +15,14 @@ export interface ImageProps
   showLoadingState?: boolean;
 }
 
+const normalizeImageSrc = (value: string | undefined) => {
+  if (typeof value !== "string") {
+    return value;
+  }
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : undefined;
+};
+
 /**
  * Renders an image with loading states, error handling, and aspect ratio support.
  *
@@ -51,7 +59,7 @@ function Image({
 }: ImageProps) {
   const [internalLoading, setInternalLoading] = React.useState(true);
   const [internalError, setInternalError] = React.useState(false);
-  const [imageSrc, setImageSrc] = React.useState(src);
+  const [imageSrc, setImageSrc] = React.useState(() => normalizeImageSrc(src));
 
   // Determine effective state (external takes priority over internal)
   const effectiveState: ComponentState = externalLoading
@@ -77,7 +85,7 @@ function Image({
   const hasError = externalError || internalError;
 
   React.useEffect(() => {
-    setImageSrc(src);
+    setImageSrc(normalizeImageSrc(src));
     setInternalLoading(true);
     setInternalError(false);
   }, [src]);

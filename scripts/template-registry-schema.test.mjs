@@ -24,7 +24,10 @@ const kebabChar = fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789".spli
 
 const kebabToken = (maxLength) =>
   fc
-    .array(fc.stringOf(kebabChar, { minLength: 1, maxLength: 8 }), { minLength: 1, maxLength: 4 })
+    .array(
+      fc.array(kebabChar, { minLength: 1, maxLength: 8 }).map((chars) => chars.join("")),
+      { minLength: 1, maxLength: 4 },
+    )
     .map((parts) => parts.join("-"))
     .filter((value) => value.length <= maxLength);
 

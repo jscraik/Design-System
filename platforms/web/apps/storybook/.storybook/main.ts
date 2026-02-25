@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -5,6 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "../../../../..");
 const uiRoot = path.join(repoRoot, "packages/ui/src");
 const uiStorybookRoot = path.join(uiRoot, "storybook");
+const storybookPublicDir = path.join(__dirname, "..", "public");
 const toStorybookRelative = (absolutePath: string) =>
   path.relative(__dirname, absolutePath).split(path.sep).join(path.posix.sep);
 
@@ -179,7 +181,7 @@ const config = {
     },
   },
 
-  staticDirs: ["../public"],
+  staticDirs: fs.existsSync(storybookPublicDir) ? [toStorybookRelative(storybookPublicDir)] : [],
 
   viteFinal: async (viteConfig: any) => {
     const { default: tailwindcss } = await import("@tailwindcss/vite");
