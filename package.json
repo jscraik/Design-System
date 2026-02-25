@@ -92,7 +92,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx,json,md}": [
-      "./node_modules/.bin/lint-staged"
+      "pnpm dlx @biomejs/biome@2.3.11 check --write"
     ]
   },
   "devDependencies": {
