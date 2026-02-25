@@ -11,6 +11,7 @@
 
 ## Token architecture
 - **Brand source of truth (DTCG):** `packages/tokens/src/tokens/index.dtcg.json`
+- **Brand governance:** `brand/README.md`, `docs/design-system/CHARTER.md`, `docs/design-system/UPSTREAM_ALIGNMENT.md`
 - **Generated foundations:** `packages/tokens/src/foundations.css`
 - **Semantic aliases:** `packages/tokens/src/aliases.css`
 - **Tailwind mapping:** `packages/tokens/tailwind.preset.ts`
@@ -60,6 +61,9 @@
   - `docs/design-system/collections/alias-collection-rules.md`
   - `docs/design-system/collections/mapped-collection-rules.md`
   - `docs/design-system/collections/responsive-collection-rules.md`
+  - `docs/design-system/ADOPTION_CHECKLIST.md`
+  - `docs/design-system/A11Y_CONTRACTS.md`
+  - `docs/design-system/COVERAGE_MATRIX.md`
 
 ## Fast retrieval commands
 ```bash
@@ -71,4 +75,5 @@ jq '.radius | keys' packages/tokens/src/tokens/index.dtcg.json
 rg -n "--foundation-|--ds-|--color-" packages/tokens packages/ui/src/styles
 rg -n "@design-studio/ui/icons|@design-studio/astudio-icons" packages/ui/src
 rg -n "Brand|Alias|Mapped" docs/design-system/CONTRACT.md docs/design-system/collections/*.md
+rg -n "CHARTER|UPSTREAM_ALIGNMENT|ADOPTION_CHECKLIST|COVERAGE_MATRIX|A11Y_CONTRACTS" docs/design-system brand/README.md
 ```
