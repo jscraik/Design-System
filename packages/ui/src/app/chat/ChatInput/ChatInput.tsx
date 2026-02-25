@@ -12,7 +12,7 @@ import {
   IconRefresh,
   IconTelescope,
 } from "../../../icons";
-import { Textarea as AppsSDKTextarea } from "../../../integrations/apps-sdk";
+import { Textarea as AppsSDKTextarea } from "../../../integrations";
 import { type AttachmentAction, AttachmentMenu, type MoreAction } from "../AttachmentMenu";
 
 // ============================================================================

@@ -17,7 +17,7 @@ type LocalExport = {
 
 const ROOT_DIR = resolve(process.cwd(), "..", "..");
 const COVERAGE_PATH = resolve(ROOT_DIR, "docs/design-system/COVERAGE_MATRIX.json");
-const INTEGRATION_PATH = resolve(ROOT_DIR, "packages/ui/src/integrations/apps-sdk/index.ts");
+const INTEGRATION_PATH = resolve(ROOT_DIR, "packages/ui/src/integrations/index.ts");
 const require = createRequire(import.meta.url);
 
 function parseIntegrationExports(): LocalExport[] {

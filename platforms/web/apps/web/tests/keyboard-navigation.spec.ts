@@ -9,7 +9,7 @@
  * - Focus restoration on close
  */
 
-import { expect, test } from "@playwright/test";
+import { expect, type Page, test } from "@playwright/test";
 
 // Import test utilities
 import {
@@ -18,9 +18,24 @@ import {
   runAxeScan,
 } from "../../../../../packages/ui/src/testing/utils/keyboard-utils";
 
+async function gotoHarness(page: Page) {
+  await page.goto("/harness");
+  await expect(page.getByRole("button", { name: "Open Modal" })).toBeVisible({ timeout: 60000 });
+}
+
+async function openHarnessModal(
+  page: Page,
+  label: "Open Modal" | "Choose Icon" | "Discovery Settings",
+) {
+  const trigger = page.getByRole("button", { name: label });
+  await expect(trigger).toBeVisible({ timeout: 60000 });
+  await trigger.click();
+  await expect(page.locator('[role="dialog"]')).toBeVisible();
+}
+
 test.describe("ModalDialog keyboard navigation", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/harness");
+    await gotoHarness(page);
   });
 
   test("focuses modal on open", async ({ page }) => {
@@ -41,32 +56,7 @@ test.describe("ModalDialog keyboard navigation", () => {
       console.log("Request failed:", request.url(), request.failure().errorText);
     });
 
-    // Navigate to harness
-    await page.goto("/harness");
-
-    // Wait for React to mount - check for any React-rendered content
-    await page.waitForTimeout(5000);
-
-    // Check if app mounted by looking for any content in #root
-    const rootHasContent = await page.evaluate(() => {
-      const root = document.getElementById("root");
-      return root && root.innerHTML.length > 0;
-    });
-    console.log("Root has innerHTML:", rootHasContent);
-
-    // If React hasn't mounted, try forcing a reload
-    if (!rootHasContent) {
-      console.log("React not mounted, reloading...");
-      await page.reload();
-      await page.waitForTimeout(5000);
-    }
-
-    // Check for buttons again
-    const buttons = await page.locator("button").all();
-    console.log("Found buttons count:", buttons.length);
-
-    // Open a modal (assuming there's a way to open it in the harness)
-    await page.click('button:has-text("Open Modal")');
+    await openHarnessModal(page, "Open Modal");
 
     // Modal should be focused
     const focused = await getFocusedElement(page);
@@ -78,7 +68,7 @@ test.describe("ModalDialog keyboard navigation", () => {
   });
 
   test("traps focus within modal (Tab cycles)", async ({ page }) => {
-    await page.click('button:has-text("Open Modal")');
+    await openHarnessModal(page, "Open Modal");
     const modal = page.locator('[role="dialog"]');
 
     // Get initial focused element
@@ -100,7 +90,7 @@ test.describe("ModalDialog keyboard navigation", () => {
   });
 
   test("traps focus within modal (Shift+Tab cycles backward)", async ({ page }) => {
-    await page.click('button:has-text("Open Modal")');
+    await openHarnessModal(page, "Open Modal");
     const modal = page.locator('[role="dialog"]');
 
     // Press Shift+Tab - should move to previous focusable element within modal
@@ -137,8 +127,7 @@ test.describe("ModalDialog keyboard navigation", () => {
     const overlay = page.locator('[role="presentation"] > button').first();
 
     // Open modal
-    await page.click('button:has-text("Open Modal")');
-    await expect(modal).toBeVisible();
+    await openHarnessModal(page, "Open Modal");
 
     // Click overlay
     await overlay.evaluate((el) => (el as HTMLButtonElement).click());
@@ -171,7 +160,7 @@ test.describe("ModalDialog keyboard navigation", () => {
   });
 
   test("has proper ARIA attributes", async ({ page }) => {
-    await page.click('button:has-text("Open Modal")');
+    await openHarnessModal(page, "Open Modal");
     const modal = page.locator('[role="dialog"]');
 
     // Check role
@@ -186,7 +175,7 @@ test.describe("ModalDialog keyboard navigation", () => {
   });
 
   test("passes Axe accessibility scan", async ({ page }) => {
-    await page.click('button:has-text("Open Modal")');
+    await openHarnessModal(page, "Open Modal");
     // Run Axe scan on modal
     await runAxeScan(page, '[role="dialog"]');
   });
@@ -290,15 +279,13 @@ test.describe("SettingsModal keyboard navigation", () => {
 
 test.describe("IconPickerModal keyboard navigation", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/harness");
+    await gotoHarness(page);
   });
 
   test("navigates icon grid with arrow keys", async ({ page }) => {
     // Open Icon Picker
-    await page.click('button:has-text("Choose Icon")');
+    await openHarnessModal(page, "Choose Icon");
     const modal = page.locator('[role="dialog"]');
-
-    await expect(modal).toBeVisible();
 
     // Try arrow key navigation in icon grid
     await pressKey(page, "ArrowRight");
@@ -317,7 +304,7 @@ test.describe("IconPickerModal keyboard navigation", () => {
   });
 
   test("selects color and icon with keyboard", async ({ page }) => {
-    await page.click('button:has-text("Choose Icon")');
+    await openHarnessModal(page, "Choose Icon");
 
     // Focus should be in modal
     const focused = await getFocusedElement(page);
@@ -336,7 +323,7 @@ test.describe("IconPickerModal keyboard navigation", () => {
   });
 
   test("passes Axe accessibility scan", async ({ page }) => {
-    await page.click('button:has-text("Choose Icon")');
+    await openHarnessModal(page, "Choose Icon");
     // Run Axe scan
     await runAxeScan(page, '[role="dialog"]');
   });
@@ -344,11 +331,11 @@ test.describe("IconPickerModal keyboard navigation", () => {
 
 test.describe("DiscoverySettingsModal keyboard navigation", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/harness");
+    await gotoHarness(page);
   });
 
   test("navigates form controls with Tab", async ({ page }) => {
-    await page.click('button:has-text("Discovery Settings")');
+    await openHarnessModal(page, "Discovery Settings");
     const modal = page.locator('[role="dialog"]');
 
     // Tab through all controls
@@ -367,7 +354,7 @@ test.describe("DiscoverySettingsModal keyboard navigation", () => {
   });
 
   test("operates range sliders with arrow keys", async ({ page }) => {
-    await page.click('button:has-text("Discovery Settings")');
+    await openHarnessModal(page, "Discovery Settings");
 
     // Find a range slider (input type="range")
     const slider = page.locator('input[type="range"]').first();
@@ -385,7 +372,7 @@ test.describe("DiscoverySettingsModal keyboard navigation", () => {
   });
 
   test("toggles toggles with Space", async ({ page }) => {
-    await page.click('button:has-text("Discovery Settings")');
+    await openHarnessModal(page, "Discovery Settings");
 
     // Find all toggles/switches
     const toggles = page.locator('[role="switch"]');
@@ -404,7 +391,7 @@ test.describe("DiscoverySettingsModal keyboard navigation", () => {
   });
 
   test("passes Axe accessibility scan", async ({ page }) => {
-    await page.click('button:has-text("Discovery Settings")');
+    await openHarnessModal(page, "Discovery Settings");
     // Run Axe scan
     await runAxeScan(page, '[role="dialog"]');
   });

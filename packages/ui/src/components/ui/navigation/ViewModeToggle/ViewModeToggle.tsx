@@ -1,7 +1,7 @@
 import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
 import { IconChat } from "../../../../icons";
-import { Sparkles } from "../../../../integrations/apps-sdk";
+import { Sparkles } from "../../../../integrations";
 import { cn } from "../../utils";
 
 /**
