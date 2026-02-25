@@ -20,15 +20,9 @@ import {
   Checkbox as AppsSDKCheckbox,
   type CheckboxProps as AppsSDKCheckboxProps,
 } from "@openai/apps-sdk-ui/components/Checkbox";
-import {
-  CodeBlock as AppsSDKCodeBlock,
-  type CodeBlockProps as AppsSDKCodeBlockProps,
-} from "@openai/apps-sdk-ui/components/CodeBlock";
-import { type IconProps as AppsSDKIconProps, Download } from "@openai/apps-sdk-ui/components/Icon";
-import {
-  Image as AppsSDKImage,
-  type ImageProps as AppsSDKImageProps,
-} from "@openai/apps-sdk-ui/components/Image";
+import { CodeBlock as AppsSDKCodeBlock } from "@openai/apps-sdk-ui/components/CodeBlock";
+import { Download } from "@openai/apps-sdk-ui/components/Icon";
+import { Image as AppsSDKImage } from "@openai/apps-sdk-ui/components/Image";
 import {
   Input as AppsSDKInput,
   type InputProps as AppsSDKInputProps,
@@ -42,6 +36,11 @@ import {
   type TextareaProps as AppsSDKTextareaProps,
 } from "@openai/apps-sdk-ui/components/Textarea";
 import type { ReactNode } from "react";
+import type {
+  CodeBlockProps as AppsSDKCodeBlockProps,
+  IconProps as AppsSDKIconProps,
+  ImageProps as AppsSDKImageProps,
+} from "./types";
 
 // Re-export types for consumers
 export type {
@@ -68,7 +67,6 @@ export const MIN_APPSSDK_UI_VERSION = "0.2.1";
  */
 function assertVersion(): void {
   const currentVersion =
-    // @ts-expect-error - safe access for version check
     typeof AppsSDKUIProvider !== "undefined"
       ? (AppsSDKUIProvider as { version?: string }).version || "unknown"
       : "unknown";
@@ -192,7 +190,6 @@ export function AppsSDKWrapper({
  * Returns undefined if version cannot be detected.
  */
 export function getAppsSDKVersion(): string | undefined {
-  // @ts-expect-error - safe access for version check
   return typeof AppsSDKUIProvider !== "undefined"
     ? (AppsSDKUIProvider as { version?: string }).version
     : undefined;
