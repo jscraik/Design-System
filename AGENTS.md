@@ -109,3 +109,7 @@ When fixing mise trust errors, run `mise trust` explicitly and verify with `mise
 ### Tool Installation Verification
 
 After installing development tools, always verify installation with `--version` or equivalent and confirm the tool is in PATH.
+
+## Repository preflight helper
+- Use `scripts/codex-preflight.sh` before multi-step, destructive, or path-sensitive workflows.
+- Source it with `source scripts/codex-preflight.sh` and run `preflight_repo` (or `preflight_js`, `preflight_py`, `preflight_rust`) as a guard before changing repo state.
