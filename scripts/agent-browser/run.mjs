@@ -40,6 +40,9 @@ const TRANSIENT_DAEMON_PATTERNS = [
   /daemon may be busy or unresponsive/i,
 ];
 
+const MAX_FLOW_ATTEMPTS = 3;
+const FLOW_RETRY_BASE_DELAY_MS = 2000;
+
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -80,6 +83,14 @@ function runAgentBrowserOnce(args) {
       reject(new Error(`Failed to spawn agent-browser: ${err.message}`));
     });
   });
+}
+
+async function closeSession() {
+  try {
+    await runAgentBrowser(["--session", SESSION_NAME, "close"]);
+  } catch (_error) {
+    // Close may fail if session is already gone or daemon is unavailable; continue.
+  }
 }
 
 async function runAgentBrowser(args, options = {}) {
@@ -172,6 +183,32 @@ async function flowChatShell() {
   await takeScreenshot("chatshell");
 }
 
+async function runFlowWithRetries(name, flowFn) {
+  let lastError;
+
+  for (let attempt = 1; attempt <= MAX_FLOW_ATTEMPTS; attempt += 1) {
+    try {
+      await flowFn();
+      return;
+    } catch (error) {
+      lastError = error;
+
+      if (!isTransientDaemonError(String(error?.message || error)) || attempt >= MAX_FLOW_ATTEMPTS) {
+        throw error;
+      }
+
+      const delayMs = FLOW_RETRY_BASE_DELAY_MS * attempt;
+      console.warn(
+        `Flow ${name} hit transient daemon error (attempt ${attempt}/${MAX_FLOW_ATTEMPTS}); retrying in ${delayMs}ms`,
+      );
+      await closeSession();
+      await sleep(delayMs);
+    }
+  }
+
+  throw lastError;
+}
+
 async function flowHarnessModal() {
   console.log("Flow: Harness Modal");
   const url = `${BASE_URL}/harness`;
@@ -251,7 +288,7 @@ async function main() {
 
   for (const flow of flows) {
     try {
-      await flow.fn();
+      await runFlowWithRetries(flow.name, flow.fn);
       passed += 1;
       console.log(`PASS: ${flow.name}`);
     } catch (error) {
