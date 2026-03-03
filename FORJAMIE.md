@@ -133,3 +133,7 @@ pnpm test:mcp-contract    # MCP contract tests
 - **2026-02-14:** Enforced non-color alias path validation with an explicit computed-value allowlist, updated alias rules documentation, and added tests so raw values are rejected unless allowlisted. Impact: stronger guardrails around token alias integrity.
 
 - **2026-02-13:** Recovery PR prepared to restore repository structure after erroneous mass-deletion merges to main; tree reset to commit 153ecdd as baseline for immediate continuity.
+
+## Recent Changes
+
+- 2026-03-03: Added baseline .greptile governance files (.greptile/config.json, .greptile/rules.md, .greptile/files.json) to enable consistent Greptile policy-gated PR review context for automation triage.
