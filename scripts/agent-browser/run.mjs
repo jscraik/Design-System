@@ -193,7 +193,10 @@ async function runFlowWithRetries(name, flowFn) {
     } catch (error) {
       lastError = error;
 
-      if (!isTransientDaemonError(String(error?.message || error)) || attempt >= MAX_FLOW_ATTEMPTS) {
+      if (
+        !isTransientDaemonError(String(error?.message || error)) ||
+        attempt >= MAX_FLOW_ATTEMPTS
+      ) {
         throw error;
       }
 
