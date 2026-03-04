@@ -8,7 +8,8 @@ Step-by-step guide for releasing design system packages.
 
 - Clean working tree (no uncommitted changes)
 - Up-to-date main branch
-- Write access to `@design-studio` npm packages
+- Write access to `@design-studio` npm packages (public scope)
+- Write access to `@brainwav/design-system-guidance` (restricted scope)
 - GitHub token for creating PRs
 
 ---
@@ -89,12 +90,11 @@ This runs `changeset publish` which:
 
 ## Package Access
 
-Design system packages use `restricted` access:
-- `@design-studio/ui`
-- `@design-studio/tokens`
-- etc.
+Access posture:
+- `@design-studio/ui`, `@design-studio/tokens`, `@design-studio/runtime`: **public**
+- `@brainwav/design-system-guidance`: **restricted**
 
-**You must be an org member** to publish these packages.
+You must have the appropriate org/package permissions for each scope.
 
 ---
 
@@ -163,6 +163,7 @@ Notify team that version X.Y.Z is broken and X.Y.(Z+1) is the fix.
    ```bash
    npm view @design-studio/ui
    npm view @design-studio/tokens
+   npm view @brainwav/design-system-guidance
    ```
 
 2. **Update dependents**:

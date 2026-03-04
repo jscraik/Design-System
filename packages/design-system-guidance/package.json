@@ -1,0 +1,43 @@
+{
+  "name": "@brainwav/design-system-guidance",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Private guidance checks and bootstrap tooling for design-system docs.",
+  "bin": {
+    "design-system-guidance": "dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./rules": "./rules.json",
+    "./rules.json": "./rules.json",
+    "./guidelines/*": "./guidelines/*"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "guidelines",
+    "docs",
+    "rules.json",
+    ".design-system-guidance.json"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "type-check": "tsc -p tsconfig.json --noEmit",
+    "check": "pnpm run build && node dist/cli.js check .",
+    "check:ci": "pnpm run build && node dist/cli.js check . --ci",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.1",
+    "typescript": "^5.9.3"
+  }
+}

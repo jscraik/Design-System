@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "configFile": ".design-system-guidance.json",
+  "rules": [
+    {
+      "id": "config-required",
+      "level": "error",
+      "description": "Target path must include the guidance config file."
+    },
+    {
+      "id": "config-invalid",
+      "level": "error",
+      "description": "Guidance config must be valid JSON and include a docs string array."
+    },
+    {
+      "id": "docs-exist",
+      "level": "error",
+      "description": "All configured markdown docs must exist."
+    },
+    {
+      "id": "docs-toc",
+      "level": "warn",
+      "description": "Markdown docs should include a ## Table of Contents heading."
+    },
+    {
+      "id": "no-deprecated-icons-import",
+      "level": "error",
+      "description": "Deprecated icon package imports are disallowed. Use @design-studio/ui/icons."
+    },
+    {
+      "id": "no-raw-hex-colors",
+      "level": "warn",
+      "description": "Raw hex colors should be replaced by semantic design tokens."
+    },
+    {
+      "id": "no-raw-px-values",
+      "level": "warn",
+      "description": "Raw pixel values should be replaced by spacing/typography tokens."
+    }
+  ]
+}

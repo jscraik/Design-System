@@ -454,6 +454,16 @@ Then install normally:
 pnpm add @design-studio/ui @design-studio/runtime @design-studio/tokens
 ```
 
+Optional private guidance/enforcement package:
+
+```bash
+pnpm add -D @brainwav/design-system-guidance
+npx design-system-guidance init .
+npx design-system-guidance check .
+```
+
+For CI-failing mode and onboarding details, see `docs/guides/PRIVATE_GUIDANCE_PACKAGE.md`.
+
 ## Creating New Components
 
 Use the component generator:

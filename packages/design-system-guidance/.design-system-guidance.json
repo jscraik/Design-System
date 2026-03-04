@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "docs": [
+    "guidelines/README.md",
+    "guidelines/tokens.md",
+    "guidelines/typography.md",
+    "guidelines/spacing.md",
+    "guidelines/color.md",
+    "guidelines/iconography.md"
+  ],
+  "include": ["src", "app", "components", "styles"],
+  "ignore": ["node_modules", "dist", ".git", "coverage", ".next", "build"]
+}

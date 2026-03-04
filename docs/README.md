@@ -94,6 +94,7 @@ Step-by-step guides for common tasks.
 - **[UI_COMPONENT_TOOLING.md](./guides/UI_COMPONENT_TOOLING.md)** - UI component tooling and QA sequence
 - **[CHATGPT_INTEGRATION.md](./guides/CHATGPT_INTEGRATION.md)** - Connect an MCP server to ChatGPT
 - **[CLOUDFLARE_DEPLOYMENT.md](./guides/CLOUDFLARE_DEPLOYMENT.md)** - Deploy widgets to Cloudflare Workers
+- **[PRIVATE_GUIDANCE_PACKAGE.md](./guides/PRIVATE_GUIDANCE_PACKAGE.md)** - Adopt `@brainwav/design-system-guidance` in consumer projects
 - **[repo-structure-migration.md](./guides/repo-structure-migration.md)** - Path changes from the 2026 restructure
 - **[RELEASE_CHECKLIST.md](./guides/RELEASE_CHECKLIST.md)** - Release checklist
 
