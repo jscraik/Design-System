@@ -4,9 +4,10 @@ Step-by-step guide for releasing design system packages.
 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
-- [Release tracks](#release-tracks)
-- [Track A: Public `@design-studio/*` packages](#track-a-public-design-studio-packages)
-- [Track B: Restricted `@brainwav/design-system-guidance`](#track-b-restricted-brainwavdesign-system-guidance)
+- [Release track](#release-track)
+- [Run the GitHub workflow](#run-the-github-workflow)
+- [Local commands (optional)](#local-commands-optional)
+- [GitHub/npm setup](#githubnpm-setup)
 - [Rollback procedure](#rollback-procedure)
 - [Pre-release checklist](#pre-release-checklist)
 - [Post-release](#post-release)
@@ -15,66 +16,26 @@ Step-by-step guide for releasing design system packages.
 
 - Clean working tree (no uncommitted changes)
 - Up-to-date `main` branch
-- npm publish permissions for required scopes:
-  - `@design-studio/*` (public)
-  - `@brainwav/design-system-guidance` (restricted)
-- GitHub token for release automation
+- npm publish permission for `@brainwav/design-system-guidance` (restricted)
 
-## Release tracks
+## Release track
 
-This repository has two release tracks:
+This repository now publishes only one package via GitHub Actions:
 
-1. **Public track** (`@design-studio/*`) — managed by Changesets in `.github/workflows/release.yml`.
-2. **Restricted guidance track** (`@brainwav/design-system-guidance`) — managed by `.github/workflows/release-guidance.yml`.
+1. **Restricted guidance track** (`@brainwav/design-system-guidance`) — managed by `.github/workflows/release-guidance.yml`.
 
-`@brainwav/design-system-guidance` is intentionally excluded from the Changesets publish flow via `.changeset/config.json`.
+`.github/workflows/release.yml` is retained as a manual guardrail validator only and does not publish.
 
-## Track A: Public `@design-studio/*` packages
-
-### 1) Create a changeset
-
-```bash
-pnpm changeset
-```
-
-### 2) Commit the changeset
-
-```bash
-git add .changeset/*.md
-git commit -m "changes: <summary>"
-```
-
-### 3) Merge to `main`
-
-The release workflow (`.github/workflows/release.yml`) will:
-- run release validation gates (`type-check`, token validation, policy, matrix check, build)
-- open/update a Changesets release PR when changesets exist
-- publish when the release PR is merged
-
-### 4) Manual local public release command (if needed)
-
-```bash
-pnpm release:public
-```
-
-This runs:
-- `pnpm build:lib`
-- `pnpm release` (`changeset publish`)
-
-## Track B: Restricted `@brainwav/design-system-guidance`
-
-### 1) Bump `packages/design-system-guidance/package.json` version
-
-Use semver and commit the version change to `main`.
-
-### 2) Run guidance release workflow
+## Run the GitHub workflow
 
 Use GitHub Actions workflow **Release Guidance Package** (`release-guidance.yml`):
-- `publish = false` to validate only
-- `publish = true` to validate + publish
+- `publish = false` → validate only
+- `publish = true` → validate + publish
 - optional `npm_tag` (default `latest`)
 
-### 3) Local validation command (optional)
+## Local commands (optional)
+
+### Validate before publishing
 
 ```bash
 pnpm release:guidance:validate
@@ -85,11 +46,16 @@ This runs:
 - `pnpm design-system-guidance:build`
 - `pnpm design-system-guidance:check:ci`
 
-### 4) Local publish command (optional/manual)
-
+### Manual publish
 ```bash
 pnpm -C packages/design-system-guidance publish --access restricted --no-git-checks
 ```
+
+## GitHub/npm setup
+
+1. Add repository secret: `BRAINWAV_NPM_TOKEN`.
+2. Ensure token has access to publish `@brainwav/design-system-guidance`.
+3. (Optional) Enable npm Trusted Publisher (OIDC) later and remove token usage when ready.
 
 ## Rollback procedure
 
@@ -109,8 +75,7 @@ git revert <release-commit-hash>
 - [ ] `pnpm test` passes
 - [ ] `pnpm test:policy` passes
 - [ ] `pnpm ds:matrix:check` passes
-- [ ] `pnpm build:lib` passes
-- [ ] `pnpm release:guidance:validate` passes (if guidance package changed)
+- [ ] `pnpm release:guidance:validate` passes
 - [ ] Version bump is correct
 - [ ] CHANGELOG/release notes are accurate
 
@@ -119,9 +84,6 @@ git revert <release-commit-hash>
 1. Verify published versions:
 
 ```bash
-npm view @design-studio/ui
-npm view @design-studio/tokens
-npm view @design-studio/runtime
 npm view @brainwav/design-system-guidance
 ```
 

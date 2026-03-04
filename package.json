@@ -25,7 +25,6 @@
     "design-system-guidance:type-check": "pnpm -C packages/design-system-guidance type-check",
     "design-system-guidance:check": "pnpm -C packages/design-system-guidance check",
     "design-system-guidance:check:ci": "pnpm -C packages/design-system-guidance check:ci",
-    "release:public": "pnpm build:lib && pnpm release",
     "release:guidance:validate": "pnpm design-system-guidance:type-check && pnpm design-system-guidance:build && pnpm design-system-guidance:check:ci",
     "generate:tokens": "pnpm -C packages/tokens generate && pnpm dlx @biomejs/biome@2.3.11 format --write packages/tokens/src/colors.ts packages/tokens/src/spacing.ts packages/tokens/src/typography.ts packages/tokens/src/radius.ts packages/tokens/src/shadows.ts packages/tokens/src/sizes.ts packages/tokens/docs/outputs/manifest.json",
     "ds:matrix:generate": "pnpm -C packages/tokens exec tsx ../../scripts/generate-coverage-matrix.ts",
