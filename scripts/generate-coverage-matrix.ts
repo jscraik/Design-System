@@ -32,7 +32,7 @@ type SurfaceUsage = {
 
 type SurfaceUsageMap = Record<string, SurfaceUsage>;
 
-const ROOT = resolve(fileURLToPath(new URL("../..", import.meta.url)));
+const ROOT = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const UI_INDEX = join(ROOT, "packages/ui/src/index.ts");
 const COMPONENTS_INDEX = join(ROOT, "packages/ui/src/components/ui/index.ts");
 const FALLBACK_ROOT = join(ROOT, "packages/ui/src/components");
@@ -49,6 +49,10 @@ const checkOnly = args.has("--check");
 
 function compareText(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;
+}
+
+function preferCanonicalComponentName(existing: string, candidate: string): string {
+  return compareText(existing, candidate) <= 0 ? existing : candidate;
 }
 
 function normalizePath(p: string): string {
@@ -195,7 +199,7 @@ async function isBarrelIndex(indexPath: string): Promise<boolean> {
 async function collectAppsSdkExports(): Promise<NamedExport[]> {
   const content = await readText(UI_INDEX);
   const exportNamed =
-    /export\s+\{([\s\S]*?)\}\s+from\s+["']\.\/integrations\/apps-sdk(?:-wrapper)?["'];/g;
+    /export\s+\{([\s\S]*?)\}\s+from\s+["']\.\/integrations(?:\/apps-sdk(?:-wrapper)?)?["'];/g;
   const exports: NamedExport[] = [];
   let match: RegExpExecArray | null = null;
 

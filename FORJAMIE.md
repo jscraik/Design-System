@@ -1,14 +1,6 @@
 # FORJAMIE.md
 
-<<<<<<< ours
-<<<<<<< ours
-**Last updated:** 2026-02-25
-=======
-**Last updated:** 2026-02-26
->>>>>>> theirs
-=======
-**Last updated:** 2026-02-26
->>>>>>> theirs
+**Last updated:** 2026-03-04
 **Audience:** Developers (intermediate)
 **Owner:** TBD (confirm)
 **Review cadence:** TBD (confirm)
@@ -26,7 +18,7 @@
 
 ## TL;DR
 
-aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. The repo now also includes a local Codex skill (`.agents/skills/design-system/`) to standardize design-system analysis and implementation workflows across tokens, typography, spacing, iconography, and mapped theme variables.
+aStudio is a library-first monorepo for building ChatGPT-style UI across multiple surfaces (widgets, web apps, and MCP integrations). The core output is `@design-studio/ui` (React components), supported by runtime adapters, tokens, widget bundles, and platform apps. The repo now also includes a private guidance package `@brainwav/design-system-guidance` (rules + CLI check/init) so consumer projects can adopt token and documentation policies consistently.
 
 ## Architecture & Data Flow (High Level)
 
@@ -64,6 +56,7 @@ flowchart LR
   - `ui/` — core React component library
   - `runtime/` — host adapters and providers
   - `tokens/` — design tokens + Tailwind preset
+  - `design-system-guidance/` — private guidance package with rules + CLI (`check`, `init`)
   - `widgets/` — standalone widget bundles
   - `cloudflare-template/` — MCP deployment template
 - `platforms/` — app surfaces
@@ -85,6 +78,8 @@ flowchart LR
 pnpm install
 pnpm dev           # Widget Gallery (localhost:5173)
 pnpm dev:storybook # Storybook (localhost:6006)
+pnpm design-system-guidance:build
+pnpm design-system-guidance:check
 ```
 
 ## How to Test
@@ -97,6 +92,7 @@ pnpm test:e2e:web         # E2E tests (Playwright)
 pnpm test:visual:web      # Visual regression
 pnpm test:a11y:widgets    # Accessibility tests
 pnpm test:mcp-contract    # MCP contract tests
+pnpm design-system-guidance:check:ci # Fail on guidance violations
 ```
 
 ## Lessons Learned
@@ -119,8 +115,8 @@ pnpm test:mcp-contract    # MCP contract tests
 
 ## Recent Changes
 
-<<<<<<< ours
-<<<<<<< ours
+- **2026-03-04:** Stabilized design-system health gates. Fixes include Apps SDK wrapper type compatibility in `packages/ui/src/integrations/apps-sdk-wrapper/index.tsx`, corrected root resolution in `scripts/generate-coverage-matrix.ts`, and canonical icon import cleanup in `packages/astudio-make-template/src/index.tsx`. Impact: baseline quality gates (`type-check`, `ds:matrix:check`, policy checks, and library builds) are green again for the stabilized surfaces.
+- **2026-03-03:** Added baseline .greptile governance files (`.greptile/config.json`, `.greptile/rules.md`, `.greptile/files.json`) to enable consistent Greptile policy-gated PR review context for automation triage.
 - **2026-02-25:** Recovered and merged the durable part of remaining local stashes by applying design-system skill governance updates from stash (`.agents/skills/design-system/{SKILL.md,references/contract.yaml,references/system-map.md}`). The skill now explicitly validates brand/accessibility contracts and includes stronger retrieval paths for charter/adoption/alignment docs. Impact: future design-system runs follow tighter brand-contract checks with clearer evidence requirements.
 - **2026-02-25:** Hardened pre-commit hook stability for autonomous sweeps: changed `.husky/pre-commit` to run `pnpm lint-staged --no-stash` (preventing backup-stash explosions), and updated `package.json` lint-staged command to `pnpm dlx @biomejs/biome@2.3.11 check --write --no-errors-on-unmatched` so docs-only commits don't fail when Biome ignores unmatched files. Also cleaned accumulated `lint-staged automatic backup` entries to restore a sane stash list. Impact: repeated autonomous commits now run deterministically without creating hundreds of stashes or failing on ignored-only staged sets.
 - **2026-02-25:** Fixed `packages/ui` TypeScript project drift so local type-check works again. Updated `packages/ui/tsconfig.json` to exclude `src/dev.ts` (dev-only entrypoint) and override `@design-studio/runtime` / `@design-studio/tokens` path resolution to their package declaration outputs (`../runtime/dist/index.d.ts`, `../tokens/dist/index.d.ts`) for composite checks. Impact: `pnpm -C packages/ui type-check` now passes cleanly, while sweep validation (`pnpm test` + `pnpm lint`) stays green.
@@ -130,12 +126,8 @@ pnpm test:mcp-contract    # MCP contract tests
 - **2026-02-25:** Fixed `lockfile99` regression sweep issues in UI integrations/icons: restored compatibility shims at `packages/ui/src/integrations/apps-sdk/{index.ts,vendor.ts}` (re-exporting canonical `integrations/{index,vendor}.ts`), updated Apps SDK drift test to point at the canonical file, switched chat consumers to `src/integrations` with matching Vitest aliases, and repaired `packages/ui/src/icons/index.ts` (removed duplicate namespace exports and restored missing exports from `chatgpt/missing-icons`). Impact: `pnpm lint` and `pnpm test` are green again; Apps SDK drift checks resolve the canonical adapter; chat surfaces no longer crash from undefined icon exports.
 - **2026-02-25:** Fixed pre-commit recursion in root `lint-staged` config (`package.json`) by replacing the self-invoking `lint-staged` command with `pnpm dlx @biomejs/biome@2.3.11 check --write`. Impact: commits no longer spawn recursive lint-staged processes or produce runaway stash backups.
 - **2026-02-25:** Fixed build-time regressions blocking local install/build: corrected `packages/astudio-make-template` dependency/import/docs from `@design-studio/icons` to `@design-studio/astudio-icons`, and removed invalid root exports in `packages/ui/src/index.ts` that referenced non-existent top-level icon module paths. Impact: `pnpm install` no longer fails on missing workspace package, `pnpm -C packages/ui build` resolves modules successfully, and sweep validation (`pnpm lint && pnpm test`) remains green.
-=======
-=======
->>>>>>> theirs
 - **2026-02-26:** Documented the Storybook dependency security bump (`storybook` 10.1.11 → 10.2.10 in `packages/ui` and `platforms/web/apps/storybook`) so project memory reflects the tooling/config update required by repo policy. Impact: FORJAMIE now stays in sync with dependency-driven behavior/security updates and review handoffs.
 - **2026-02-24:** Updated `@design-studio/make-template` to consume `@design-studio/astudio-icons` (dependency + source import) and synchronized shipped guidelines examples to the renamed package path. Refreshed `pnpm-lock.yaml` to keep workspace resolution consistent. Impact: template consumers now install and import the same icon package name that the template source and docs reference.
->>>>>>> theirs
 - **2026-02-22:** Added a repo-local `design-system` Codex skill at `.agents/skills/design-system/` with a focused `SKILL.md`, canonical design-system source map, output template, contract/evals, and OpenAI skill metadata. Then removed `skill_gate` warnings by adding explicit `schema_version` guidance, cleaning high-risk wording, renaming the prohibited `## Inputs` heading to `## Required inputs`, and adding variation/empowerment guidance. Validation now passes cleanly (`quick_validate`, `skill_gate`, `openclaw`), `analyze_skill` reports 101/120, and `upgrade_skill` reports no suggestions. Impact: design-system requests now have a repeatable, evidence-backed workflow with stronger routing quality and cleaner quality-gate output.
 - **2026-02-07:** Synced `pnpm-lock.yaml` to match workspace dependency specifiers (notably `fast-check@^4.5.3`) and unblocked `pnpm lint` by aligning `biome.json`’s `$schema` to the installed Biome CLI (2.3.11) + applying Biome safe-fixes (format/import order) to a small set of files. Impact: `pnpm install --frozen-lockfile` and `pnpm lint` are green again. (lockfile commit: 81ffc47)
 - **2026-02-06:** Design system hardening pass: (1) Implemented a real Brand → Alias → Mapped CSS flow by generating `packages/tokens/src/aliases.css` and refactoring `packages/ui/src/styles/theme.css` to consume `--ds-*` alias vars (instead of `--foundation-*` directly). (2) Made `packages/tokens/src/foundations.css` variables-only by moving behavioral helpers (reduced-motion override + utility classes) into `packages/ui/src/styles/a11y.css`. (3) Removed bracket-var gradients in widgets (use `from-background` utilities) and switched the solar-system info panel to semantic theme utilities. (4) Replaced hardcoded hex values in the App accent picker with CSS variable-backed accent tokens. (5) Added baseline semantic contrast tests for text/background + updated token generator property tests to include high-contrast/icon fields. Impact: less doc drift, safer theme refactors, clearer layering boundaries, and stronger automated guardrails for accessibility/theming.
@@ -169,7 +161,3 @@ pnpm test:mcp-contract    # MCP contract tests
 - **2026-02-14:** Enforced non-color alias path validation with an explicit computed-value allowlist, updated alias rules documentation, and added tests so raw values are rejected unless allowlisted. Impact: stronger guardrails around token alias integrity.
 
 - **2026-02-13:** Recovery PR prepared to restore repository structure after erroneous mass-deletion merges to main; tree reset to commit 153ecdd as baseline for immediate continuity.
-
-## Recent Changes
-
-- 2026-03-03: Added baseline .greptile governance files (.greptile/config.json, .greptile/rules.md, .greptile/files.json) to enable consistent Greptile policy-gated PR review context for automation triage.

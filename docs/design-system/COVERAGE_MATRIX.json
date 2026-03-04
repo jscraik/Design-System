@@ -78,7 +78,7 @@
     "widget_used": false
   },
   {
-    "name": "AppsSDKDownloadIcon",
+    "name": "AppsSDKDownload",
     "source": "upstream_reexport",
     "upstream": "Download",
     "fallback": null,
@@ -130,7 +130,7 @@
     "widget_used": false
   },
   {
-    "name": "AppsSDKSparklesIcon",
+    "name": "AppsSDKSparkles",
     "source": "upstream_reexport",
     "upstream": "Sparkles",
     "fallback": null,
@@ -559,19 +559,6 @@
     "widget_used": false
   },
   {
-    "name": "ModeSelector",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#modeselector",
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
-  },
-  {
     "name": "ModelBadge",
     "source": "local_primitive",
     "upstream": null,
@@ -826,45 +813,6 @@
     "why_missing_upstream": null,
     "migration_trigger": null,
     "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#textlink",
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
-  },
-  {
-    "name": "Textarea",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#textarea",
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
-  },
-  {
-    "name": "Toast",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#toast",
-    "status": "active",
-    "web_used": false,
-    "tauri_used": false,
-    "widget_used": false
-  },
-  {
-    "name": "Toggle",
-    "source": "local_primitive",
-    "upstream": null,
-    "fallback": null,
-    "why_missing_upstream": null,
-    "migration_trigger": null,
-    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#toggle",
     "status": "active",
     "web_used": false,
     "tauri_used": false,
