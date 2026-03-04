@@ -37,7 +37,7 @@ jobs:
           version: 10.28.0
 
       - name: Install deps
-        run: pnpm -C packages/design-system-guidance install --ignore-workspace --prod=false
+        run: pnpm -C packages/design-system-guidance install --ignore-workspace --prod=false --lockfile=false
 
       - name: Validate package gates
         run: |
@@ -72,7 +72,7 @@ jobs:
           version: 10.28.0
 
       - name: Install deps
-        run: pnpm -C packages/design-system-guidance install --ignore-workspace --prod=false
+        run: pnpm -C packages/design-system-guidance install --ignore-workspace --prod=false --lockfile=false
 
       - name: Publish @brainwav/design-system-guidance (restricted)
         run: |
