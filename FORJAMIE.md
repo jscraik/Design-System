@@ -1,6 +1,6 @@
 # FORJAMIE.md
 
-**Last updated:** 2026-03-04
+**Last updated:** 2026-02-26
 **Audience:** Developers (intermediate)
 **Owner:** TBD (confirm)
 **Review cadence:** TBD (confirm)
@@ -111,7 +111,7 @@ pnpm test:mcp-contract    # MCP contract tests
 
 ## Recent Changes
 
-- **2026-03-04:** Hardened `scripts/agent-browser/run.mjs` for CI daemon flakiness (per-flow session IDs, command-level timeouts, tighter retry loops, stronger cleanup, and CI read-only ChatShell mode) and changed `.github/workflows/ci.yml` to skip `smoke-agent-browser` on `pull_request` events while retaining it for non-PR workflows. Impact: Dependabot/PR pipelines are no longer blocked by long-running agent-browser daemon instability; smoke remains available outside PR gating.
+- **2026-02-26:** Documented the Storybook dependency security bump (`storybook` 10.1.11 → 10.2.10 in `packages/ui` and `platforms/web/apps/storybook`) so project memory reflects the tooling/config update required by repo policy. Impact: FORJAMIE now stays in sync with dependency-driven behavior/security updates and review handoffs.
 - **2026-02-24:** Updated `@design-studio/make-template` to consume `@design-studio/astudio-icons` (dependency + source import) and synchronized shipped guidelines examples to the renamed package path. Refreshed `pnpm-lock.yaml` to keep workspace resolution consistent. Impact: template consumers now install and import the same icon package name that the template source and docs reference.
 - **2026-02-22:** Added a repo-local `design-system` Codex skill at `.agents/skills/design-system/` with a focused `SKILL.md`, canonical design-system source map, output template, contract/evals, and OpenAI skill metadata. Then removed `skill_gate` warnings by adding explicit `schema_version` guidance, cleaning high-risk wording, renaming the prohibited `## Inputs` heading to `## Required inputs`, and adding variation/empowerment guidance. Validation now passes cleanly (`quick_validate`, `skill_gate`, `openclaw`), `analyze_skill` reports 101/120, and `upgrade_skill` reports no suggestions. Impact: design-system requests now have a repeatable, evidence-backed workflow with stronger routing quality and cleaner quality-gate output.
 - **2026-02-07:** Synced `pnpm-lock.yaml` to match workspace dependency specifiers (notably `fast-check@^4.5.3`) and unblocked `pnpm lint` by aligning `biome.json`’s `$schema` to the installed Biome CLI (2.3.11) + applying Biome safe-fixes (format/import order) to a small set of files. Impact: `pnpm install --frozen-lockfile` and `pnpm lint` are green again. (lockfile commit: 81ffc47)
