@@ -7,7 +7,7 @@
  * @see https://developers.openai.com/apps-sdk
  */
 
-import { AppsSDKUIProvider } from "@openai/apps-sdk-ui/components/AppsSDKUIProvider";
+import type { ReactNode } from "react";
 import {
   Badge as AppsSDKBadge,
   type BadgeProps as AppsSDKBadgeProps,
@@ -20,9 +20,15 @@ import {
   Checkbox as AppsSDKCheckbox,
   type CheckboxProps as AppsSDKCheckboxProps,
 } from "@openai/apps-sdk-ui/components/Checkbox";
-import { CodeBlock as AppsSDKCodeBlock } from "@openai/apps-sdk-ui/components/CodeBlock";
-import { Download } from "@openai/apps-sdk-ui/components/Icon";
-import { Image as AppsSDKImage } from "@openai/apps-sdk-ui/components/Image";
+import {
+  CodeBlock as AppsSDKCodeBlock,
+  type CodeBlockProps as AppsSDKCodeBlockProps,
+} from "@openai/apps-sdk-ui/components/CodeBlock";
+import { Download, type IconProps as AppsSDKIconProps } from "@openai/apps-sdk-ui/components/Icon";
+import {
+  Image as AppsSDKImage,
+  type ImageProps as AppsSDKImageProps,
+} from "@openai/apps-sdk-ui/components/Image";
 import {
   Input as AppsSDKInput,
   type InputProps as AppsSDKInputProps,
@@ -35,12 +41,7 @@ import {
   Textarea as AppsSDKTextarea,
   type TextareaProps as AppsSDKTextareaProps,
 } from "@openai/apps-sdk-ui/components/Textarea";
-import type { ReactNode } from "react";
-import type {
-  CodeBlockProps as AppsSDKCodeBlockProps,
-  IconProps as AppsSDKIconProps,
-  ImageProps as AppsSDKImageProps,
-} from "./types";
+import { AppsSDKUIProvider } from "@openai/apps-sdk-ui/components/AppsSDKUIProvider";
 
 // Re-export types for consumers
 export type {
