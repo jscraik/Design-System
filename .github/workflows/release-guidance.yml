@@ -81,4 +81,4 @@ jobs:
       - name: Publish @brainwav/design-system-guidance (restricted)
         run: |
           cd packages/design-system-guidance
-          npm publish --provenance --access restricted --tag "${{ inputs.npm_tag }}"
+          npm publish --access restricted --tag "${{ inputs.npm_tag }}"
