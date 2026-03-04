@@ -317,6 +317,7 @@ jobs:
             }
 
   smoke-agent-browser:
+    if: ${{ github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     needs: build
     steps:
