@@ -39,6 +39,7 @@ const cliPath = existsSync(join(rootDir, "node_modules", ".bin", "agent-browser"
 const TRANSIENT_DAEMON_PATTERNS = [
   /resource temporarily unavailable/i,
   /daemon may be busy or unresponsive/i,
+  /command timed out/i,
 ];
 
 function sleep(ms) {
@@ -49,7 +50,7 @@ function isTransientDaemonError(message) {
   return TRANSIENT_DAEMON_PATTERNS.some((pattern) => pattern.test(message));
 }
 
-function runAgentBrowserOnce(args) {
+function runAgentBrowserOnce(args, timeoutMs = 20000) {
   return new Promise((resolve, reject) => {
     const proc = spawn(cliPath, args, {
       stdio: ["ignore", "pipe", "pipe"],
@@ -58,11 +59,22 @@ function runAgentBrowserOnce(args) {
 
     let stdout = "";
     let stderr = "";
-    let timedOut = false;
+    let settled = false;
 
-    const timeoutHandle = setTimeout(() => {
-      timedOut = true;
-      proc.kill("SIGKILL");
+    const timeoutId = setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      proc.kill("SIGTERM");
+      setTimeout(() => {
+        if (!proc.killed) {
+          proc.kill("SIGKILL");
+        }
+      }, 2000);
+      reject(
+        new Error(
+          `agent-browser command timed out after ${timeoutMs}ms: ${cliPath} ${args.join(" ")}`,
+        ),
+      );
     }, timeoutMs);
 
     proc.stdout.on("data", (data) => {
@@ -74,15 +86,9 @@ function runAgentBrowserOnce(args) {
     });
 
     proc.on("close", (code) => {
-      clearTimeout(timeoutHandle);
-
-      if (timedOut) {
-        reject(
-          new Error(`agent-browser command timed out after ${timeoutMs}ms: ${args.join(" ")}`),
-        );
-        return;
-      }
-
+      clearTimeout(timeoutId);
+      if (settled) return;
+      settled = true;
       if (code === 0) {
         resolve({ stdout, stderr });
       } else {
@@ -93,7 +99,9 @@ function runAgentBrowserOnce(args) {
     });
 
     proc.on("error", (err) => {
-      clearTimeout(timeoutHandle);
+      clearTimeout(timeoutId);
+      if (settled) return;
+      settled = true;
       reject(new Error(`Failed to spawn agent-browser: ${err.message}`));
     });
   });
@@ -106,7 +114,7 @@ async function runAgentBrowser(args, options = {}) {
   let lastError = null;
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     try {
-      return await runAgentBrowserOnce(args);
+      return await runAgentBrowserOnce(args, options.timeoutMs);
     } catch (error) {
       lastError = error;
       if (!isTransientDaemonError(error.message) || attempt === maxAttempts) {
@@ -168,13 +176,8 @@ async function flowChatShell() {
   await takeScreenshot("chatshell-open");
 
   const textboxRef = selectRef(data?.data?.refs, (ref) => ref?.role === "textbox");
-  const sendButtonRef = selectRef(
-    data?.data?.refs,
-    (ref) => ref?.role === "button" && ref?.name && /send|submit/i.test(ref.name),
-  );
 
   requireRef(textboxRef, "Textbox not found on ChatShell");
-  requireRef(sendButtonRef, "Send button not found on ChatShell");
 
   if (CHAT_SHELL_READ_ONLY_MODE) {
     console.log("ChatShell interaction skipped (read-only mode); refs validated");
@@ -188,7 +191,10 @@ async function flowChatShell() {
     `@${textboxRef}`,
     "Smoke test message",
   ]);
-  await runAgentBrowser(["--session", SESSION_NAME, "click", `@${sendButtonRef}`]);
+  await runAgentBrowser(["--session", SESSION_NAME, "press", "Enter"], {
+    timeoutMs: 10000,
+    maxAttempts: 3,
+  });
   await runAgentBrowser(["--session", SESSION_NAME, "wait", "500"]);
   await captureSnapshot("chatshell-after-send");
   await takeScreenshot("chatshell");

@@ -46,8 +46,7 @@ describe("Combobox", () => {
 
       expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
 
-      trigger.click();
-
+      fireEvent.click(trigger);
       await waitFor(() => {
         expect(screen.getByRole("listbox")).toBeInTheDocument();
       });
@@ -57,14 +56,13 @@ describe("Combobox", () => {
       render(<Combobox options={sampleOptions} onValueChange={mockOnValueChange} />);
 
       // Open dropdown
-      screen.getByRole("combobox").click();
+      fireEvent.click(screen.getByRole("combobox"));
       await waitFor(() => {
         expect(screen.getByRole("listbox")).toBeInTheDocument();
       });
 
       // Click option
-      screen.getByText("React").click();
-
+      fireEvent.click(screen.getByText("React"));
       await waitFor(() => {
         expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
       });
@@ -74,7 +72,7 @@ describe("Combobox", () => {
       render(<Combobox options={sampleOptions} />);
 
       // Open dropdown
-      screen.getByRole("combobox").click();
+      fireEvent.click(screen.getByRole("combobox"));
       await waitFor(() => {
         expect(screen.getByRole("listbox")).toBeInTheDocument();
       });
@@ -92,7 +90,7 @@ describe("Combobox", () => {
     it("shows search input when dropdown open", async () => {
       render(<Combobox options={sampleOptions} searchPlaceholder="Search..." />);
 
-      screen.getByRole("combobox").click();
+      fireEvent.click(screen.getByRole("combobox"));
       await waitFor(() => {
         expect(screen.getByPlaceholderText("Search...")).toBeInTheDocument();
       });
@@ -101,7 +99,7 @@ describe("Combobox", () => {
     it("filters options based on search", async () => {
       render(<Combobox options={sampleOptions} />);
 
-      screen.getByRole("combobox").click();
+      fireEvent.click(screen.getByRole("combobox"));
       await waitFor(() => {
         expect(screen.getByRole("listbox")).toBeInTheDocument();
       });
@@ -116,7 +114,7 @@ describe("Combobox", () => {
     it("shows empty message when no results", async () => {
       render(<Combobox options={sampleOptions} emptyMessage="No frameworks found" />);
 
-      screen.getByRole("combobox").click();
+      fireEvent.click(screen.getByRole("combobox"));
       await waitFor(() => {
         expect(screen.getByRole("listbox")).toBeInTheDocument();
       });
@@ -132,13 +130,12 @@ describe("Combobox", () => {
     it("calls onValueChange when option selected", async () => {
       render(<Combobox options={sampleOptions} onValueChange={mockOnValueChange} />);
 
-      screen.getByRole("combobox").click();
+      fireEvent.click(screen.getByRole("combobox"));
       await waitFor(() => {
         expect(screen.getByRole("listbox")).toBeInTheDocument();
       });
 
-      screen.getByText("Vue").click();
-
+      fireEvent.click(screen.getByText("Vue"));
       expect(mockOnValueChange).toHaveBeenCalledWith("vue");
     });
 
@@ -150,13 +147,12 @@ describe("Combobox", () => {
 
       render(<Combobox options={optionsWithDisabled} onValueChange={mockOnValueChange} />);
 
-      screen.getByRole("combobox").click();
+      fireEvent.click(screen.getByRole("combobox"));
       await waitFor(() => {
         expect(screen.getByRole("listbox")).toBeInTheDocument();
       });
 
-      screen.getByText("Next.js").click();
-
+      fireEvent.click(screen.getByText("Next.js"));
       expect(mockOnValueChange).not.toHaveBeenCalled();
     });
 
@@ -165,7 +161,7 @@ describe("Combobox", () => {
         <Combobox options={sampleOptions} allowCustomValue onValueChange={mockOnValueChange} />,
       );
 
-      screen.getByRole("combobox").click();
+      fireEvent.click(screen.getByRole("combobox"));
       await waitFor(() => {
         expect(screen.getByRole("listbox")).toBeInTheDocument();
       });
@@ -193,7 +189,7 @@ describe("Combobox", () => {
     it("navigates options with ArrowDown and ArrowUp", async () => {
       render(<Combobox options={sampleOptions} />);
 
-      screen.getByRole("combobox").click();
+      fireEvent.click(screen.getByRole("combobox"));
       await waitFor(() => {
         expect(screen.getByRole("listbox")).toBeInTheDocument();
       });
@@ -212,7 +208,7 @@ describe("Combobox", () => {
     it("selects highlighted option with Enter", async () => {
       render(<Combobox options={sampleOptions} onValueChange={mockOnValueChange} />);
 
-      screen.getByRole("combobox").click();
+      fireEvent.click(screen.getByRole("combobox"));
       await waitFor(() => {
         expect(screen.getByRole("listbox")).toBeInTheDocument();
       });
@@ -229,7 +225,7 @@ describe("Combobox", () => {
     it("closes dropdown with Escape", async () => {
       render(<Combobox options={sampleOptions} />);
 
-      screen.getByRole("combobox").click();
+      fireEvent.click(screen.getByRole("combobox"));
       await waitFor(() => {
         expect(screen.getByRole("listbox")).toBeInTheDocument();
       });
@@ -274,7 +270,7 @@ describe("Combobox", () => {
     it("shows error message when error", async () => {
       render(<Combobox options={sampleOptions} error="Invalid selection" />);
 
-      screen.getByRole("combobox").click();
+      fireEvent.click(screen.getByRole("combobox"));
       await waitFor(() => {
         expect(screen.getByText("Invalid selection")).toBeInTheDocument();
       });
@@ -299,8 +295,7 @@ describe("Combobox", () => {
     it("prevents opening dropdown when disabled", () => {
       render(<Combobox options={sampleOptions} disabled />);
 
-      screen.getByRole("combobox").click();
-
+      fireEvent.click(screen.getByRole("combobox"));
       expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
     });
   });
@@ -361,7 +356,7 @@ describe("Combobox", () => {
     it("options have role option and aria-selected", async () => {
       render(<Combobox options={sampleOptions} value="react" />);
 
-      screen.getByRole("combobox").click();
+      fireEvent.click(screen.getByRole("combobox"));
       await waitFor(() => {
         expect(screen.getByRole("listbox")).toBeInTheDocument();
       });
@@ -379,7 +374,7 @@ describe("Combobox", () => {
 
       render(<Combobox options={optionsWithDisabled} />);
 
-      screen.getByRole("combobox").click();
+      fireEvent.click(screen.getByRole("combobox"));
       await waitFor(() => {
         expect(screen.getByRole("listbox")).toBeInTheDocument();
       });

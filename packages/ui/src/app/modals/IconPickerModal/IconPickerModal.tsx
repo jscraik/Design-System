@@ -72,11 +72,11 @@ const colors = [
   {
     id: "yellow",
     name: "Yellow",
-    lightClass: "text-accent-orange",
-    darkClass: "text-accent-orange",
-    lightBg: "bg-accent-orange",
-    darkBg: "bg-accent-orange",
-    bgClasses: "bg-accent-orange dark:bg-accent-orange",
+    lightClass: "text-accent-yellow",
+    darkClass: "text-accent-yellow",
+    lightBg: "bg-accent-yellow",
+    darkBg: "bg-accent-yellow",
+    bgClasses: "bg-accent-yellow dark:bg-accent-yellow",
   },
   {
     id: "green",
@@ -108,11 +108,11 @@ const colors = [
   {
     id: "pink",
     name: "Pink",
-    lightClass: "text-accent-purple",
-    darkClass: "text-accent-purple",
-    lightBg: "bg-accent-purple",
-    darkBg: "bg-accent-purple",
-    bgClasses: "bg-accent-purple dark:bg-accent-purple",
+    lightClass: "text-accent-pink",
+    darkClass: "text-accent-pink",
+    lightBg: "bg-accent-pink",
+    darkBg: "bg-accent-pink",
+    bgClasses: "bg-accent-pink dark:bg-accent-pink",
   },
 ];
 
@@ -174,7 +174,7 @@ function IconPreview({
           "p-6 rounded-2xl transition-all duration-200",
           "bg-muted dark:bg-muted/50",
           "border border-muted dark:border-muted",
-          "shadow-lg shadow-muted/50 dark:shadow-muted/",
+          "shadow-lg shadow-muted/50 dark:shadow-muted/50",
         )}
       >
         <SelectedIconComponent className={cn("size-10", colorClasses.text)} />
@@ -332,6 +332,8 @@ export function IconPickerModal({
             title="Close dialog"
             className={cn(
               "p-1.5 rounded-lg transition-colors duration-200",
+              "text-text-secondary dark:text-text-secondary",
+              "hover:text-foreground dark:hover:text-foreground",
               "hover:bg-muted dark:hover:bg-muted",
               "focus-visible:outline-none focus-visible:ring-2",
               "focus-visible:ring-accent-blue dark:focus-visible:ring-accent-blue",
@@ -340,7 +342,7 @@ export function IconPickerModal({
             )}
           >
             <svg
-              className="size-4 text-muted-foreground dark:text-muted-foreground"
+              className="size-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

@@ -24,6 +24,7 @@ description: "Analyze and implement repository-grounded design-system work (toke
 ## Working agreement
 - Follow `/Users/jamiecraik/dev/design-system/AGENTS.md` and treat docs as maps.
 - Prefer retrieval-led reasoning: inspect canonical files before proposing answers/changes.
+- This skill is a design/brand map for the repo; when token or visual guidance is requested, validate both design contracts (`docs/design-system/CHARTER.md`, `docs/design-system/UPSTREAM_ALIGNMENT.md`) and canonical token sources before editing.
 - Use `zsh -lc`, `rg`, `fd`, and `jq`; avoid `grep`/`find` for repo-wide scans.
 - Artifact boundary:
   - Local CLI: write outputs to `./artifacts/`
@@ -42,21 +43,34 @@ description: "Analyze and implement repository-grounded design-system work (toke
 ## Required context
 Collect only the minimum set needed for the user request:
 
-1. Canonical token source:
+1. Brand and adoption contracts:
+   - `brand/README.md`
+   - `docs/design-system/CHARTER.md`
+   - `docs/design-system/ADOPTION_CHECKLIST.md`
+   - `docs/design-system/UPSTREAM_ALIGNMENT.md`
+
+2. Canonical token source:
    - `packages/tokens/src/tokens/index.dtcg.json`
-2. Generated token outputs:
+   - `packages/tokens/src/alias-map.ts`
+   - `packages/tokens/schema/dtcg.schema.json`
+3. Generated token outputs:
    - `packages/tokens/src/foundations.css`
    - `packages/tokens/src/aliases.css`
+   - `packages/tokens/src/tokens.css`
+   - `packages/tokens/src/enhanced.css`
    - `packages/tokens/tailwind.preset.ts`
-3. Runtime mapped theme slots:
+4. Runtime mapped theme slots:
    - `packages/ui/src/styles/theme.css`
-4. Icon system source:
+5. Icon system source:
    - `packages/ui/src/icons/index.ts`
    - `docs/design-system/ICON_CONSOLIDATION.md`
-5. Governance + rules:
+6. Governance + rules:
    - `docs/design-system/CONTRACT.md`
    - `docs/design-system/collections/*.md`
-6. Surface examples:
+   - `docs/design-system/COVERAGE_MATRIX.md`
+   - `docs/design-system/A11Y_CONTRACTS.md`
+   - `packages/tokens/docs/FIGMA_EXPORT_GUIDE.md`
+7. Surface examples:
    - `packages/ui/src/storybook/design-system/**`
    - `packages/ui/src/design-system/showcase/**`
 
@@ -78,15 +92,18 @@ If the request is ambiguous, ask one focused clarification question.
 1. **Classify the request mode**
    - `audit`, `implementation`, `migration`, or `Q&A`.
 2. **Build a focused system snapshot**
-   - Use `jq` for DTCG keys/values and `rg` for CSS variable usage.
-   - Record only relevant pillars: color, typography, spacing, radius/size/shadow, icons.
+   - Verify brand posture with `docs/design-system/CHARTER.md` and `ADOPTION_CHECKLIST.md` before touching tokens or theme.
+   - Use `jq` for DTCG keys/values and `rg`/`fd` for CSS variable and component usage.
+   - Record only relevant pillars: color, typography, spacing, radius/size/shadow, motion, icons, brand-mode behavior.
 3. **Trace the layer path for each finding/change**
    - Brand token in DTCG → generated foundation vars → alias vars → mapped theme vars → component/story usage.
 4. **Produce response or implement edits**
    - Include exact file references and affected token names.
    - For code changes, avoid introducing hex/rgb literals or ad-hoc px values in component code unless explicitly requested.
+   - For brand decisions (new/renamed semantic tokens, dark/high contrast additions), cite `docs/design-system/CONTRACT.md` and `docs/design-system/collections/brand-collection-rules.md`.
 5. **Validate**
    - Run the smallest relevant checks from [Validation](#validation).
+   - If token files changed, verify schema version in `packages/tokens/SCHEMA_VERSION` and the generated artifacts stay coherent.
 6. **Write artifacts**
    - Save the summary/report under `./artifacts/design-system/` (or `/mnt/data/design-system/`).
 
@@ -95,12 +112,14 @@ Depending on user request, produce one or more:
 - `design-system-brief.md` — current state + evidence table by pillar.
 - `design-system-delta.md` — what changed, why, and layer impact.
 - `token-impact-matrix.md` — token path tracing (Brand/Alias/Mapped/Usage).
+- `brand-audit-matrix.md` — brand-asset, contract, and accessibility constraints checked.
 - `migration-checklist.md` — ordered migration steps + risk notes.
 - `validation-report.md` — commands run + pass/fail summary.
 - For structured outputs (YAML/JSON), include a top-level `schema_version` field.
 
 ## Constraints
 - Keep changes in the correct token tier; preserve Brand → Alias → Mapped layering.
+- Preserve brand-mode parity (`light`, `dark`, `highContrast`) when editing design tokens.
 - Prefer semantic tokens in UI code; avoid introducing raw literals unless explicitly required.
 - Redact secrets and avoid destructive actions without explicit confirmation.
 
@@ -123,16 +142,20 @@ Targeted checks:
 jq 'keys' packages/tokens/src/tokens/index.dtcg.json
 jq '.type.web | keys' packages/tokens/src/tokens/index.dtcg.json
 jq '.space | keys' packages/tokens/src/tokens/index.dtcg.json
+jq '.color | keys' packages/tokens/src/tokens/index.dtcg.json
+jq '.radius | keys' packages/tokens/src/tokens/index.dtcg.json
 
 # find direct token usage or potential literals in UI code
 rg -n "--foundation-|--ds-|--color-" packages/ui/src
 rg -n "#[0-9a-fA-F]{3,8}|rgba?\(" packages/ui/src
+rg -n "highContrast|--background|--foreground" packages/ui/src/styles/theme.css packages/tokens/src/tokens/index.dtcg.json
 ```
 
 ## Anti-patterns
 - ❌ Editing only `theme.css` when the real change belongs in DTCG/alias layers.
 - ❌ Adding raw color/spacing literals to components when semantic tokens exist.
 - ❌ Treating deprecated icon sources as canonical (`@design-studio/astudio-icons` for new work).
+- ❌ Skipping brand-mode/accessibility contracts when updating color systems or motion defaults.
 - ❌ Returning advice without file-path evidence from this repository.
 
 ## Examples
@@ -141,6 +164,7 @@ rg -n "#[0-9a-fA-F]{3,8}|rgba?\(" packages/ui/src
 - Non-triggering prompt: “Debug MCP tool auth timeouts in the Cloudflare worker.”
 
 ## Reference map
+- `brand/README.md` — current brand asset catalog and visual identity entry points.
 - `./references/system-map.md` — canonical file map by design-system pillar.
 - `./references/contract.yaml` — expected behavior and boundaries.
 - `./references/evals.yaml` — trigger and safety eval cases.

@@ -17,7 +17,7 @@ type LocalExport = {
 
 const ROOT_DIR = resolve(process.cwd(), "..", "..");
 const COVERAGE_PATH = resolve(ROOT_DIR, "docs/design-system/COVERAGE_MATRIX.json");
-const INTEGRATION_PATH = resolve(ROOT_DIR, "packages/ui/src/integrations/apps-sdk/index.ts");
+const INTEGRATION_PATH = resolve(ROOT_DIR, "packages/ui/src/integrations/index.ts");
 const require = createRequire(import.meta.url);
 
 function parseIntegrationExports(): LocalExport[] {
@@ -112,9 +112,9 @@ describe("Apps SDK UI drift suite", () => {
     );
 
     if (replacementCandidates.length > 0) {
-      console.warn("Potential Apps SDK UI replacements for Radix fallbacks detected:");
+      console.info("Potential Apps SDK UI replacements for Radix fallbacks detected:");
       for (const row of replacementCandidates) {
-        console.warn(`- ${row.name} (fallback: ${row.fallback ?? "radix"})`);
+        console.info(`- ${row.name} (fallback: ${row.fallback ?? "radix"})`);
       }
     }
 

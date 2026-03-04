@@ -1,2 +1,2 @@
-export { createEmbeddedHost, createStandaloneHost, createMockHost, createHostAdapter, type HostAdapterOptions, type Host, } from "./index.js";
+export { createEmbeddedHost, createHostAdapter, createMockHost, createStandaloneHost, type Host, type HostAdapterOptions, } from "./index.js";
 //# sourceMappingURL=host-adapter.d.ts.map

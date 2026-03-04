@@ -352,6 +352,7 @@ ${this.generateCSSTypography()}
   --ds-ring: var(--foundation-focus-ring);
 }
 
+:root[data-theme="dark"],
 :where([data-theme="dark"]) {
   /* Backgrounds */
   --ds-bg-primary: var(--foundation-bg-dark-1);
@@ -536,7 +537,7 @@ ${this.generateCSSTypography()}
     // Write files
     await writeFile(cssOutputPath, cssContent, "utf8");
     await writeFile(aliasesOutputPath, aliasesContent, "utf8");
-    await writeFile(manifestOutputPath, JSON.stringify(manifest, null, 2), "utf8");
+    await writeFile(manifestOutputPath, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
 
     console.log("✅ Token generation complete");
     console.log(`   CSS: ${cssOutputPath}`);

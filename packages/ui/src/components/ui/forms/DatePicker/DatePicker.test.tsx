@@ -42,8 +42,7 @@ describe("DatePicker", () => {
 
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
 
-      screen.getByRole("button").click();
-
+      fireEvent.click(screen.getByRole("button"));
       await waitFor(() => {
         expect(screen.getByRole("dialog")).toBeInTheDocument();
       });
@@ -53,7 +52,7 @@ describe("DatePicker", () => {
       render(<DatePicker onValueChange={mockOnValueChange} />);
 
       // Open calendar
-      screen.getByRole("button").click();
+      fireEvent.click(screen.getByRole("button"));
       await waitFor(() => {
         expect(screen.getByRole("dialog")).toBeInTheDocument();
       });
@@ -70,7 +69,7 @@ describe("DatePicker", () => {
       render(<DatePicker />);
 
       // Open calendar
-      screen.getByRole("button").click();
+      fireEvent.click(screen.getByRole("button"));
       await waitFor(() => {
         expect(screen.getByRole("dialog")).toBeInTheDocument();
       });
@@ -87,7 +86,7 @@ describe("DatePicker", () => {
       render(<DatePicker />);
 
       // Open calendar
-      screen.getByRole("button").click();
+      fireEvent.click(screen.getByRole("button"));
       await waitFor(() => {
         expect(screen.getByRole("dialog")).toBeInTheDocument();
       });
@@ -107,7 +106,7 @@ describe("DatePicker", () => {
       // The DatePicker just passes the callback to Calendar
       render(<DatePicker onValueChange={mockOnValueChange} />);
 
-      screen.getByRole("button").click();
+      fireEvent.click(screen.getByRole("button"));
       // Calendar component handles selection and calls onValueChange
     });
 
@@ -116,15 +115,14 @@ describe("DatePicker", () => {
       render(<DatePicker value={date} onValueChange={mockOnValueChange} />);
 
       // Open calendar
-      screen.getByRole("button").click();
+      fireEvent.click(screen.getByRole("button"));
       await waitFor(() => {
         expect(screen.getByRole("dialog")).toBeInTheDocument();
       });
 
       // Click Clear button
       const clearButton = screen.getByText("Clear");
-      clearButton.click();
-
+      fireEvent.click(clearButton);
       expect(mockOnValueChange).toHaveBeenCalledWith(undefined);
     });
   });
@@ -158,8 +156,7 @@ describe("DatePicker", () => {
     it("prevents opening calendar when disabled", () => {
       render(<DatePicker disabled />);
 
-      screen.getByRole("button").click();
-
+      fireEvent.click(screen.getByRole("button"));
       expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     });
   });
@@ -180,7 +177,7 @@ describe("DatePicker", () => {
     it("calendar has role dialog and aria-modal", async () => {
       render(<DatePicker />);
 
-      screen.getByRole("button").click();
+      fireEvent.click(screen.getByRole("button"));
       await waitFor(() => {
         const dialog = screen.getByRole("dialog");
         expect(dialog).toBeInTheDocument();
@@ -195,7 +192,7 @@ describe("DatePicker", () => {
       const date = new Date(2024, 0, 15);
       render(<DatePicker value={date} />);
 
-      screen.getByRole("button").click();
+      fireEvent.click(screen.getByRole("button"));
       await waitFor(() => {
         expect(screen.getByText("Clear")).toBeInTheDocument();
       });
@@ -204,7 +201,7 @@ describe("DatePicker", () => {
     it("does not show Clear button when no date selected", async () => {
       render(<DatePicker />);
 
-      screen.getByRole("button").click();
+      fireEvent.click(screen.getByRole("button"));
       await waitFor(() => {
         expect(screen.queryByText("Clear")).not.toBeInTheDocument();
       });
@@ -248,7 +245,7 @@ describe("DateRangePicker", () => {
     it("prompts for start date first", async () => {
       render(<DateRangePicker onRangeChange={mockOnRangeChange} />);
 
-      screen.getByRole("button").click();
+      fireEvent.click(screen.getByRole("button"));
       await waitFor(() => {
         expect(screen.getByRole("dialog")).toBeInTheDocument();
         expect(screen.getByText("Select start date")).toBeInTheDocument();
@@ -258,7 +255,7 @@ describe("DateRangePicker", () => {
     it("prompts for end date after start selected", async () => {
       render(<DateRangePicker onRangeChange={mockOnRangeChange} />);
 
-      screen.getByRole("button").click();
+      fireEvent.click(screen.getByRole("button"));
       await waitFor(() => {
         expect(screen.getByText("Select start date")).toBeInTheDocument();
       });
@@ -278,14 +275,13 @@ describe("DateRangePicker", () => {
         />,
       );
 
-      screen.getByRole("button").click();
+      fireEvent.click(screen.getByRole("button"));
       await waitFor(() => {
         expect(screen.getByText("Clear")).toBeInTheDocument();
       });
 
       const clearButton = screen.getByText("Clear");
-      clearButton.click();
-
+      fireEvent.click(clearButton);
       expect(mockOnRangeChange).toHaveBeenCalledWith(undefined, undefined);
     });
   });
@@ -303,7 +299,7 @@ describe("DateRangePicker", () => {
     it("calendar has aria-label for range picker", async () => {
       render(<DateRangePicker />);
 
-      screen.getByRole("button").click();
+      fireEvent.click(screen.getByRole("button"));
       await waitFor(() => {
         const dialog = screen.getByRole("dialog");
         expect(dialog).toHaveAttribute("aria-label", "Choose date range");
@@ -317,7 +313,7 @@ describe("DateRangePicker", () => {
       const endDate = new Date(2024, 0, 20);
       render(<DateRangePicker startDate={startDate} endDate={endDate} />);
 
-      screen.getByRole("button").click();
+      fireEvent.click(screen.getByRole("button"));
       await waitFor(() => {
         expect(screen.getByText("Clear")).toBeInTheDocument();
       });
@@ -327,7 +323,7 @@ describe("DateRangePicker", () => {
       const startDate = new Date(2024, 0, 10);
       render(<DateRangePicker startDate={startDate} />);
 
-      screen.getByRole("button").click();
+      fireEvent.click(screen.getByRole("button"));
       await waitFor(() => {
         expect(screen.getByText("Clear")).toBeInTheDocument();
       });

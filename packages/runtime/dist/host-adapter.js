@@ -1,1 +1,1 @@
-export { createEmbeddedHost, createStandaloneHost, createMockHost, createHostAdapter, } from "./index.js";
+export { createEmbeddedHost, createHostAdapter, createMockHost, createStandaloneHost, } from "./index.js";

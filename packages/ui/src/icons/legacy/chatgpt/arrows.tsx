@@ -189,11 +189,11 @@ export function IconArrowCurvedRightXs({ className = "size-6" }: { className?: s
 // Diagonal Arrow Icons
 export function IconArrowTopRightSm({ className = "size-6" }: { className?: string }) {
   return (
-    <div className={className}>
+    <span className={className}>
       <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 24 24">
         <path d={paths.p13c75480} fill="currentColor" />
       </svg>
-    </div>
+    </span>
   );
 }
 

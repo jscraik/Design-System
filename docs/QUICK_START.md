@@ -85,8 +85,8 @@ pnpm test:mcp       # MCP server contract tests
 ## Next Steps
 
 - Read [Architecture](./architecture/README.md) for system overview
-- Browse [Components](./components/README.md) for available UI elements
-- See [Templates](./templates/README.md) for ready-to-use layouts
+- Browse [Components](../packages/ui/src/components/README.md) for available UI elements
+- See [Pages Quick Start](./guides/PAGES_QUICK_START.md) for ready-to-use layout workflows
 - Check [Widget Bundling](./architecture/WIDGET_BUNDLING.md) for embedding info
 
 ---

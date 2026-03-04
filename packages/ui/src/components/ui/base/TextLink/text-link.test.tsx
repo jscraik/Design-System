@@ -203,8 +203,8 @@ describe("TextLink", () => {
           Link
         </TextLink>,
       );
-      // IconArrowTopRightSm wraps svg in a div with the className
-      const iconWrapper = container.querySelector("div.size-3\\.5");
+      // IconArrowTopRightSm wraps svg in a span with the className
+      const iconWrapper = container.querySelector("span.size-3\\.5");
       expect(iconWrapper).toBeInTheDocument();
       expect(iconWrapper?.querySelector("svg")).toBeInTheDocument();
     });

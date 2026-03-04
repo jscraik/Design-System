@@ -2,6 +2,20 @@ import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
 import { afterEach, vi } from "vitest";
 
+// Ensure DOM event constructors come from jsdom's window instance.
+// Radix FocusScope dispatches CustomEvent via globalThis, and Node's built-in
+// Event/CustomEvent constructors are not always compatible with jsdom EventTarget.
+Object.defineProperty(globalThis, "Event", {
+  configurable: true,
+  writable: true,
+  value: window.Event,
+});
+Object.defineProperty(globalThis, "CustomEvent", {
+  configurable: true,
+  writable: true,
+  value: window.CustomEvent,
+});
+
 vi.mock("@openai/apps-sdk-ui/components/Icon", () => ({
   Download: () => null,
   Sparkles: () => null,

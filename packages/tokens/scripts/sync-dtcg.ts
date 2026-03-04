@@ -51,6 +51,11 @@ type DtcgRoot = {
     background: {
       light: { primary: DtcgColorToken; secondary: DtcgColorToken; tertiary: DtcgColorToken };
       dark: { primary: DtcgColorToken; secondary: DtcgColorToken; tertiary: DtcgColorToken };
+      highContrast: {
+        primary: DtcgColorToken;
+        secondary: DtcgColorToken;
+        tertiary: DtcgColorToken;
+      };
     };
     text: {
       light: {
@@ -60,6 +65,12 @@ type DtcgRoot = {
         inverted: DtcgColorToken;
       };
       dark: {
+        primary: DtcgColorToken;
+        secondary: DtcgColorToken;
+        tertiary: DtcgColorToken;
+        inverted: DtcgColorToken;
+      };
+      highContrast: {
         primary: DtcgColorToken;
         secondary: DtcgColorToken;
         tertiary: DtcgColorToken;
@@ -87,6 +98,16 @@ type DtcgRoot = {
         statusWarning: DtcgColorToken;
         statusSuccess: DtcgColorToken;
       };
+      highContrast: {
+        primary: DtcgColorToken;
+        secondary: DtcgColorToken;
+        tertiary: DtcgColorToken;
+        inverted: DtcgColorToken;
+        accent: DtcgColorToken;
+        statusError: DtcgColorToken;
+        statusWarning: DtcgColorToken;
+        statusSuccess: DtcgColorToken;
+      };
     };
     border: {
       light: {
@@ -98,6 +119,11 @@ type DtcgRoot = {
         default: DtcgColorToken;
         heavy: DtcgColorToken;
         light: DtcgColorToken;
+      };
+      highContrast: {
+        light: DtcgColorToken;
+        default: DtcgColorToken;
+        heavy: DtcgColorToken;
       };
     };
     accent: {
@@ -123,10 +149,22 @@ type DtcgRoot = {
         pink: DtcgColorToken;
         foreground: DtcgColorToken;
       };
+      highContrast: {
+        gray: DtcgColorToken;
+        red: DtcgColorToken;
+        orange: DtcgColorToken;
+        yellow: DtcgColorToken;
+        green: DtcgColorToken;
+        blue: DtcgColorToken;
+        purple: DtcgColorToken;
+        pink: DtcgColorToken;
+        foreground: DtcgColorToken;
+      };
     };
     interactive: {
       light: { ring: DtcgColorToken };
       dark: { ring: DtcgColorToken };
+      highContrast: { ring: DtcgColorToken };
     };
   };
   space: Record<string, DtcgDimensionToken>;
@@ -225,6 +263,20 @@ function buildColors(dtcg: DtcgRoot) {
         secondary: getColorValue(c.background.dark.secondary, "color.background.dark.secondary"),
         tertiary: getColorValue(c.background.dark.tertiary, "color.background.dark.tertiary"),
       },
+      highContrast: {
+        primary: getColorValue(
+          c.background.highContrast.primary,
+          "color.background.highContrast.primary",
+        ),
+        secondary: getColorValue(
+          c.background.highContrast.secondary,
+          "color.background.highContrast.secondary",
+        ),
+        tertiary: getColorValue(
+          c.background.highContrast.tertiary,
+          "color.background.highContrast.tertiary",
+        ),
+      },
     },
     text: {
       light: {
@@ -238,6 +290,15 @@ function buildColors(dtcg: DtcgRoot) {
         secondary: getColorValue(c.text.dark.secondary, "color.text.dark.secondary"),
         tertiary: getColorValue(c.text.dark.tertiary, "color.text.dark.tertiary"),
         inverted: getColorValue(c.text.dark.inverted, "color.text.dark.inverted"),
+      },
+      highContrast: {
+        primary: getColorValue(c.text.highContrast.primary, "color.text.highContrast.primary"),
+        secondary: getColorValue(
+          c.text.highContrast.secondary,
+          "color.text.highContrast.secondary",
+        ),
+        tertiary: getColorValue(c.text.highContrast.tertiary, "color.text.highContrast.tertiary"),
+        inverted: getColorValue(c.text.highContrast.inverted, "color.text.highContrast.inverted"),
       },
     },
     icon: {
@@ -261,6 +322,28 @@ function buildColors(dtcg: DtcgRoot) {
         statusWarning: getColorValue(c.icon.dark.statusWarning, "color.icon.dark.statusWarning"),
         statusSuccess: getColorValue(c.icon.dark.statusSuccess, "color.icon.dark.statusSuccess"),
       },
+      highContrast: {
+        primary: getColorValue(c.icon.highContrast.primary, "color.icon.highContrast.primary"),
+        secondary: getColorValue(
+          c.icon.highContrast.secondary,
+          "color.icon.highContrast.secondary",
+        ),
+        tertiary: getColorValue(c.icon.highContrast.tertiary, "color.icon.highContrast.tertiary"),
+        inverted: getColorValue(c.icon.highContrast.inverted, "color.icon.highContrast.inverted"),
+        accent: getColorValue(c.icon.highContrast.accent, "color.icon.highContrast.accent"),
+        statusError: getColorValue(
+          c.icon.highContrast.statusError,
+          "color.icon.highContrast.statusError",
+        ),
+        statusWarning: getColorValue(
+          c.icon.highContrast.statusWarning,
+          "color.icon.highContrast.statusWarning",
+        ),
+        statusSuccess: getColorValue(
+          c.icon.highContrast.statusSuccess,
+          "color.icon.highContrast.statusSuccess",
+        ),
+      },
     },
     border: {
       light: {
@@ -272,6 +355,11 @@ function buildColors(dtcg: DtcgRoot) {
         default: getColorValue(c.border.dark.default, "color.border.dark.default"),
         heavy: getColorValue(c.border.dark.heavy, "color.border.dark.heavy"),
         light: getColorValue(c.border.dark.light, "color.border.dark.light"),
+      },
+      highContrast: {
+        light: getColorValue(c.border.highContrast.light, "color.border.highContrast.light"),
+        default: getColorValue(c.border.highContrast.default, "color.border.highContrast.default"),
+        heavy: getColorValue(c.border.highContrast.heavy, "color.border.highContrast.heavy"),
       },
     },
     accent: {
@@ -297,6 +385,20 @@ function buildColors(dtcg: DtcgRoot) {
         pink: getColorValue(c.accent.dark.pink, "color.accent.dark.pink"),
         foreground: getColorValue(c.accent.dark.foreground, "color.accent.dark.foreground"),
       },
+      highContrast: {
+        gray: getColorValue(c.accent.highContrast.gray, "color.accent.highContrast.gray"),
+        red: getColorValue(c.accent.highContrast.red, "color.accent.highContrast.red"),
+        orange: getColorValue(c.accent.highContrast.orange, "color.accent.highContrast.orange"),
+        yellow: getColorValue(c.accent.highContrast.yellow, "color.accent.highContrast.yellow"),
+        green: getColorValue(c.accent.highContrast.green, "color.accent.highContrast.green"),
+        blue: getColorValue(c.accent.highContrast.blue, "color.accent.highContrast.blue"),
+        purple: getColorValue(c.accent.highContrast.purple, "color.accent.highContrast.purple"),
+        pink: getColorValue(c.accent.highContrast.pink, "color.accent.highContrast.pink"),
+        foreground: getColorValue(
+          c.accent.highContrast.foreground,
+          "color.accent.highContrast.foreground",
+        ),
+      },
     },
     interactive: {
       light: {
@@ -304,6 +406,9 @@ function buildColors(dtcg: DtcgRoot) {
       },
       dark: {
         ring: getColorValue(c.interactive.dark.ring, "color.interactive.dark.ring"),
+      },
+      highContrast: {
+        ring: getColorValue(c.interactive.highContrast.ring, "color.interactive.highContrast.ring"),
       },
     },
   } as const;

@@ -1,7 +1,14 @@
-import { readFile } from "fs/promises";
+import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { tokenAliasMap } from "../alias-map.js";
+const NON_COLOR_ALIAS_VALUE_ALLOWLIST = {
+    space: new Set(),
+    radius: new Set(),
+    size: new Set(),
+    shadow: new Set(),
+    type: new Set(),
+};
 const CONTRAST_PAIRS = [
     { background: "background.primary", text: "text.primary", min: 4.5 },
     { background: "background.secondary", text: "text.primary", min: 4.5 },
@@ -41,7 +48,7 @@ function isTokenGroup(value) {
     return Object.values(value).some((entry) => {
         if (!entry || typeof entry !== "object")
             return false;
-        return "value" in entry;
+        return "$value" in entry;
     });
 }
 function collectModeKeys(value) {
@@ -53,15 +60,26 @@ function validateModeCompleteness(root) {
     for (const category of categories) {
         const light = root.color?.[category]?.light ?? {};
         const dark = root.color?.[category]?.dark ?? {};
+        const highContrast = root.color?.[category]?.highContrast ?? {};
         const lightKeys = collectModeKeys(light);
         const darkKeys = collectModeKeys(dark);
+        const highContrastKeys = collectModeKeys(highContrast);
         const missingInDark = lightKeys.filter((key) => !darkKeys.includes(key));
         const missingInLight = darkKeys.filter((key) => !lightKeys.includes(key));
-        if (missingInDark.length > 0 || missingInLight.length > 0) {
+        const missingInHighContrastFromLight = lightKeys.filter((key) => !highContrastKeys.includes(key));
+        const missingInHighContrastFromDark = darkKeys.filter((key) => !highContrastKeys.includes(key));
+        const missingInLightFromHighContrast = highContrastKeys.filter((key) => !lightKeys.includes(key));
+        const missingInDarkFromHighContrast = highContrastKeys.filter((key) => !darkKeys.includes(key));
+        if (missingInDark.length > 0 ||
+            missingInLight.length > 0 ||
+            missingInHighContrastFromLight.length > 0 ||
+            missingInHighContrastFromDark.length > 0 ||
+            missingInLightFromHighContrast.length > 0 ||
+            missingInDarkFromHighContrast.length > 0) {
             errors.push({
                 code: "TOKEN_MODE_MISSING",
                 message: `Color mode mismatch in '${category}'.`,
-                suggestion: `Ensure light and dark mode tokens have matching keys. Missing dark: ${missingInDark.join(", ") || "none"}. Missing light: ${missingInLight.join(", ") || "none"}.`,
+                suggestion: `Ensure light, dark, and highContrast mode tokens have matching keys. Missing dark: ${missingInDark.join(", ") || "none"}. Missing light: ${missingInLight.join(", ") || "none"}. Missing highContrast (from light): ${missingInHighContrastFromLight.join(", ") || "none"}. Missing highContrast (from dark): ${missingInHighContrastFromDark.join(", ") || "none"}. Missing light (from highContrast): ${missingInLightFromHighContrast.join(", ") || "none"}. Missing dark (from highContrast): ${missingInDarkFromHighContrast.join(", ") || "none"}.`,
             });
         }
     }
@@ -83,7 +101,7 @@ function validateAliasMap(root, aliasMap) {
                 }
                 if ("path" in value) {
                     const token = resolvePath(root, value.path);
-                    if (!token || token.value === undefined) {
+                    if (!token || token.$value === undefined) {
                         errors.push({
                             code: "TOKEN_ALIAS_MISSING",
                             message: `Alias '${category}.${tokenName}.${mode}' references missing path '${value.path}'.`,
@@ -103,10 +121,30 @@ function validateAliasMap(root, aliasMap) {
     ];
     for (const [category, mapping] of nonModeCategories) {
         for (const [tokenName, value] of Object.entries(mapping)) {
+            if ("value" in value && value.value !== undefined) {
+                const allowlist = NON_COLOR_ALIAS_VALUE_ALLOWLIST[category];
+                if (!allowlist.has(value.value)) {
+                    errors.push({
+                        code: "TOKEN_ALIAS_COMPUTED_VALUE_NOT_ALLOWED",
+                        message: `Alias '${category}.${tokenName}' uses computed value '${value.value}' outside the allowlist.`,
+                        suggestion: `Prefer a brand path reference (${category}.*) or add the value to the allowlist in token-validator.ts.`,
+                    });
+                }
+                continue;
+            }
             if ("path" in value && value.path) {
+                const expectedPrefix = `${category}.`;
+                if (!value.path.startsWith(expectedPrefix)) {
+                    errors.push({
+                        code: "TOKEN_ALIAS_NON_COLOR_BRAND_PATH",
+                        message: `Alias '${category}.${tokenName}' must reference a Brand path starting with '${expectedPrefix}'.`,
+                        suggestion: `Update the alias to reference a Brand token (for example: ${expectedPrefix}${tokenName}).`,
+                    });
+                    continue;
+                }
                 const token = resolvePath(root, value.path);
-                if (!token || token.value === undefined) {
-                    if (category === "type" && isTokenGroup(token)) {
+                if (!token || token.$value === undefined) {
+                    if (category === "type" && token && isTokenGroup(token)) {
                         continue;
                     }
                     errors.push({
@@ -149,7 +187,7 @@ function hexToRgb(hex) {
 function relativeLuminance({ r, g, b }) {
     const [rs, gs, bs] = [r, g, b].map((value) => {
         const normalized = value / 255;
-        return normalized <= 0.03928 ? normalized / 12.92 : Math.pow((normalized + 0.055) / 1.055, 2.4);
+        return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
     });
     return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
 }
@@ -173,15 +211,15 @@ function resolveAliasColor(root, category, tokenName, mode, aliasMap) {
     }
     if ("path" in alias) {
         const token = resolvePath(root, alias.path);
-        if (token && typeof token.value === "string") {
-            return token.value;
+        if (token && typeof token.$value === "string") {
+            return token.$value;
         }
     }
     return null;
 }
 function validateContrast(root, aliasMap) {
     const errors = [];
-    const modes = ["light", "dark"];
+    const modes = ["light", "dark", "highContrast"];
     for (const pair of CONTRAST_PAIRS) {
         const [backgroundCategory, backgroundToken] = pair.background.split(".");
         const [textCategory, textToken] = pair.text.split(".");
@@ -213,3 +251,8 @@ export async function validateTokens() {
     ];
     return { errors };
 }
+/**
+ * Read-only view of the non-color alias value allowlist.
+ * The underlying configuration should only be modified within this module.
+ */
+export const NON_COLOR_ALIAS_VALUE_ALLOWLIST_READONLY = NON_COLOR_ALIAS_VALUE_ALLOWLIST;

@@ -32,6 +32,10 @@ export * as ChatToolsIcons from "./chat-tools";
 export * from "./chatgpt/additional-icons";
 // Core ChatGPT icons with hardcoded SVG paths
 export * from "./chatgpt/ChatGPTIconsFixed";
+// Common icon aliases for consistency
+export { IconArrowUpSm as IconArrowUp } from "./chatgpt/ChatGPTIconsFixed";
+// Missing ChatGPT icons
+export * from "./chatgpt/missing-icons";
 // ----------------------------------------------------------------------------
 // These provide convenient aliases with Icon* prefix
 export { IconCheckmark as IconCheck } from "./chatgpt/missing-icons";
@@ -103,18 +107,6 @@ export {
 export { IconSparkles } from "./AppsSDKIconLocal";
 // ----------------------------------------------------------------------------
 // NAMED EXPORTS (Icon* prefix for consistency)
-// NEW: Account category icons (from Figma)
-export * as AccountUserIcons from "./account-user";
-// NEW: Account category icons (from Figma)
-export * as AccountUserIcons from "./account-user";
-// NEW: Arrow icons
-export * as ArrowIcons from "./arrows";
-// NEW: Arrow icons
-export * as ArrowIcons from "./arrows";
-// NEW: Chat tool icons
-export * as ChatToolsIcons from "./chat-tools";
-// NEW: Chat tool icons
-export * as ChatToolsIcons from "./chat-tools";
 // ----------------------------------------------------------------------------
 // These provide convenient aliases with Icon* prefix
 export {
@@ -144,11 +136,21 @@ export {
   IconThumbUp,
 } from "./chatgpt/ChatGPTIconsFixed";
 export {
+  IconArrowDownMd,
   IconCheckCircle,
   IconCheckmark,
+  IconClose,
   IconCode,
+  IconExpandSm,
+  IconEye,
+  IconEyeOff,
   IconGrid3x3,
+  IconLock,
+  IconOpenAILogo,
   IconPlusCircle,
+  IconProfile,
+  IconSmile,
+  IconTelescope,
   IconX,
 } from "./chatgpt/missing-icons";
 export {
@@ -158,14 +160,6 @@ export {
   IconSidebar,
 } from "./legacy/chatgpt/interface";
 export { IconDownload } from "./legacy/chatgpt/public";
-// NEW: Misc/utility icons
-export * as MiscIcons from "./misc";
-// NEW: Misc/utility icons
-export * as MiscIcons from "./misc";
-// NEW: Platform icons
-export * as PlatformIcons from "./platform";
-// NEW: Settings icons
-export * as SettingsIcons from "./settings";
 
 // ----------------------------------------------------------------------------
 // ICON CATALOG (for browsing all icons)

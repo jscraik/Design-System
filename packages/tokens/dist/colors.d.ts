@@ -13,6 +13,11 @@ export declare const colorTokens: {
             readonly secondary: "#2A2A2A";
             readonly tertiary: "#3A3A3A";
         };
+        readonly highContrast: {
+            readonly primary: "#000000";
+            readonly secondary: "#1A1A1A";
+            readonly tertiary: "#2B2B2B";
+        };
     };
     readonly text: {
         readonly light: {
@@ -26,6 +31,12 @@ export declare const colorTokens: {
             readonly secondary: "#E0E0E0";
             readonly tertiary: "#B8B8B8";
             readonly inverted: "#0D0D0D";
+        };
+        readonly highContrast: {
+            readonly primary: "#FFFFFF";
+            readonly secondary: "#E6E6E6";
+            readonly tertiary: "#CFCFCF";
+            readonly inverted: "#000000";
         };
     };
     readonly icon: {
@@ -49,6 +60,16 @@ export declare const colorTokens: {
             readonly statusWarning: "#FF9E6C";
             readonly statusSuccess: "#40C977";
         };
+        readonly highContrast: {
+            readonly primary: "#FFFFFF";
+            readonly secondary: "#E6E6E6";
+            readonly tertiary: "#CFCFCF";
+            readonly inverted: "#000000";
+            readonly accent: "#4DA3FF";
+            readonly statusError: "#FF4D4D";
+            readonly statusWarning: "#FF8A3D";
+            readonly statusSuccess: "#4DFF88";
+        };
     };
     readonly border: {
         readonly light: {
@@ -60,6 +81,11 @@ export declare const colorTokens: {
             readonly default: "#FFFFFF26";
             readonly heavy: "#FFFFFF26";
             readonly light: "#FFFFFF0D";
+        };
+        readonly highContrast: {
+            readonly light: "#FFFFFF33";
+            readonly default: "#FFFFFF66";
+            readonly heavy: "#FFFFFF";
         };
     };
     readonly accent: {
@@ -85,6 +111,17 @@ export declare const colorTokens: {
             readonly pink: "#FF66AD";
             readonly foreground: "#FFFFFF";
         };
+        readonly highContrast: {
+            readonly gray: "#D9D9D9";
+            readonly red: "#FF4D4D";
+            readonly orange: "#FF8A3D";
+            readonly yellow: "#FFD84D";
+            readonly green: "#4DFF88";
+            readonly blue: "#4DA3FF";
+            readonly purple: "#B884FF";
+            readonly pink: "#FF66CC";
+            readonly foreground: "#000000";
+        };
     };
     readonly interactive: {
         readonly light: {
@@ -92,6 +129,9 @@ export declare const colorTokens: {
         };
         readonly dark: {
             readonly ring: "#0285FF";
+        };
+        readonly highContrast: {
+            readonly ring: "#FFFFFF";
         };
     };
 };

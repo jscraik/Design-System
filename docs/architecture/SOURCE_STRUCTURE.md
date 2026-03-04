@@ -53,7 +53,7 @@ import { Button } from '@design-studio/ui/base';
 ```
 
 You're getting:
-1. Wrapper function from `src/integrations/apps-sdk-wrapper/index.ts`
+1. Wrapper function from `src/integrations/apps-sdk-wrapper/index.tsx`
 2. Which wraps `@openai/apps-sdk-ui/components/Button`
 3. After build, this becomes `dist/base.js`
 

@@ -10,7 +10,7 @@ This test plan addresses the critical testing gaps identified in the codebase au
 
 **Last updated**: 2026-01-18
 
-For the latest test execution results and current status, see [docs/work/work_outstanding.md](../work/work_outstanding.md). That document tracks:
+For the latest test execution results and current status, see [docs/work/work_outstanding.md](./work/work_outstanding.md). That document tracks:
 - 477 tests passing in `packages/ui`
 - 37/107 Storybook browser test files failing due to Vitest browser + Radix dynamic import limitation (stories render correctly in Storybook UI)
 - 65/107 Storybook browser test files passing (206 tests)
@@ -27,7 +27,7 @@ For the latest test execution results and current status, see [docs/work/work_ou
 
 ### Coverage Status
 
-**Note**: The <20% coverage estimate in the Executive Summary is historical and based on the original audit. Current actual coverage needs to be re-measured with up-to-date tooling. See [docs/work/work_outstanding.md](../work/work_outstanding.md) for current test execution metrics.
+**Note**: The <20% coverage estimate in the Executive Summary is historical and based on the original audit. Current actual coverage needs to be re-measured with up-to-date tooling. See [docs/work/work_outstanding.md](./work/work_outstanding.md) for current test execution metrics.
 
 ### Critical Gaps
 

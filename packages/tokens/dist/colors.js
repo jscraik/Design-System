@@ -14,6 +14,11 @@ export const colorTokens = {
             secondary: "#2A2A2A",
             tertiary: "#3A3A3A",
         },
+        highContrast: {
+            primary: "#000000",
+            secondary: "#1A1A1A",
+            tertiary: "#2B2B2B",
+        },
     },
     text: {
         light: {
@@ -27,6 +32,12 @@ export const colorTokens = {
             secondary: "#E0E0E0",
             tertiary: "#B8B8B8",
             inverted: "#0D0D0D",
+        },
+        highContrast: {
+            primary: "#FFFFFF",
+            secondary: "#E6E6E6",
+            tertiary: "#CFCFCF",
+            inverted: "#000000",
         },
     },
     icon: {
@@ -50,6 +61,16 @@ export const colorTokens = {
             statusWarning: "#FF9E6C",
             statusSuccess: "#40C977",
         },
+        highContrast: {
+            primary: "#FFFFFF",
+            secondary: "#E6E6E6",
+            tertiary: "#CFCFCF",
+            inverted: "#000000",
+            accent: "#4DA3FF",
+            statusError: "#FF4D4D",
+            statusWarning: "#FF8A3D",
+            statusSuccess: "#4DFF88",
+        },
     },
     border: {
         light: {
@@ -61,6 +82,11 @@ export const colorTokens = {
             default: "#FFFFFF26",
             heavy: "#FFFFFF26",
             light: "#FFFFFF0D",
+        },
+        highContrast: {
+            light: "#FFFFFF33",
+            default: "#FFFFFF66",
+            heavy: "#FFFFFF",
         },
     },
     accent: {
@@ -86,6 +112,17 @@ export const colorTokens = {
             pink: "#FF66AD",
             foreground: "#FFFFFF",
         },
+        highContrast: {
+            gray: "#D9D9D9",
+            red: "#FF4D4D",
+            orange: "#FF8A3D",
+            yellow: "#FFD84D",
+            green: "#4DFF88",
+            blue: "#4DA3FF",
+            purple: "#B884FF",
+            pink: "#FF66CC",
+            foreground: "#000000",
+        },
     },
     interactive: {
         light: {
@@ -93,6 +130,9 @@ export const colorTokens = {
         },
         dark: {
             ring: "#0285FF",
+        },
+        highContrast: {
+            ring: "#FFFFFF",
         },
     },
 };

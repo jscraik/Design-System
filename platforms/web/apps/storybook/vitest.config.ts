@@ -14,14 +14,47 @@ const argosVitestPluginUrl = pathToFileURL(
   path.join(argosStorybookRoot, "dist", "vitest-plugin.js"),
 ).href;
 const argosVitestSetupFilePath = path.join(argosStorybookRoot, "dist", "vitest-setup-file.js");
+const appsSdkIconMockPath = path.join(_dirname, ".storybook", "mocks", "apps-sdk-ui-icon.tsx");
+const appsSdkObjectIconMockPath = path.join(
+  _dirname,
+  ".storybook",
+  "mocks",
+  "apps-sdk-ui-object-icon.tsx",
+);
 const { argosVitestPlugin } = await import(argosVitestPluginUrl);
 const enableArgosVitest =
   process.env.ARGOS_VITEST === "1" || process.env.ARGOS_VITEST === "true" || !!process.env.CI;
 const enableBrowser = process.env.STORYBOOK_BROWSER_TESTS === "1";
 
+function appsSdkObjectIconWorkaround() {
+  return {
+    name: "apps-sdk-object-icon-workaround",
+    enforce: "pre" as const,
+    resolveId(source: string, importer: string | undefined) {
+      if (
+        source === "./svg/Object" &&
+        importer?.includes("@openai/apps-sdk-ui/dist/es/components/Icon/index.js")
+      ) {
+        return appsSdkObjectIconMockPath;
+      }
+
+      if (
+        source.endsWith("/components/Icon/svg/Object") ||
+        source.endsWith("/components/Icon/svg/Object.js") ||
+        source.endsWith("/components/Icon/svg/Object.tsx")
+      ) {
+        return appsSdkObjectIconMockPath;
+      }
+
+      return null;
+    },
+  };
+}
+
 const storybookProject = {
   extends: true,
   plugins: [
+    appsSdkObjectIconWorkaround(),
     storybookTest({ configDir: ".storybook" }),
     ...(enableArgosVitest
       ? [
@@ -34,6 +67,11 @@ const storybookProject = {
   ],
   test: {
     name: "storybook",
+    server: {
+      deps: {
+        external: ["@openai/apps-sdk-ui"],
+      },
+    },
     // When disabled, set enabled: false to ensure project exists but browser tests don't run
     ...(enableBrowser
       ? {
@@ -80,6 +118,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@argos-ci/storybook/internal/vitest-setup-file": argosVitestSetupFilePath,
+      "@openai/apps-sdk-ui/components/Icon": appsSdkIconMockPath,
     },
   },
   test: {

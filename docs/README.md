@@ -68,7 +68,7 @@ Technical architecture and design decisions.
 - **[repo-map.md](./architecture/repo-map.md)** - High-level repository map
 - **[ui-structure-map.md](./architecture/ui-structure-map.md)** - UI library layout and component foldering map
 - **[APPS_SDK_GAP_ANALYSIS.md](./architecture/APPS_SDK_GAP_ANALYSIS.md)** - Apps SDK integration analysis
-- **[CROSS_PLATFORM.md](./architecture/CROSS_PLATFORM.md)** - Cross-platform architecture notes (legacy context included)
+- **[cross-platform-design.md](./architecture/cross-platform-design.md)** - Cross-platform architecture notes (legacy context included)
 - **[WIDGET_SYSTEM_ENHANCEMENTS.md](./architecture/WIDGET_SYSTEM_ENHANCEMENTS.md)** - Widget infrastructure enhancements
 - **[template-library.md](./architecture/template-library.md)** - Template library layout and parity rules
 - **[template-api.md](./architecture/template-api.md)** - Template and block API (internal)

@@ -291,10 +291,10 @@
   --foundation-size-hit-target: 44px;
 
   /* Shadows */
-  --foundation-shadow-card: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --foundation-shadow-pip: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --foundation-shadow-pill: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --foundation-shadow-close: 0px 10px 15px -3px rgba(0, 0, 0, 0.1), 0px 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --foundation-shadow-card: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
+  --foundation-shadow-pip: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
+  --foundation-shadow-pill: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
+  --foundation-shadow-close: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
 
   /* Accessibility */
   --foundation-focus-ring: #0285ff;

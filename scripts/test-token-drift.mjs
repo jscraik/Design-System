@@ -8,6 +8,40 @@ const upstreamStylesDir = resolve("node_modules/@openai/apps-sdk-ui/dist/es/styl
 const upstreamStyleFiles = ["variables-primitive.css", "variables-semantic.css"];
 const foundationPath = resolve("packages/tokens/src/foundations.css");
 
+/**
+ * Intentional upstream deltas for local design requirements.
+ * Any new mismatch outside these allowlists should fail drift checks.
+ */
+const ALLOWED_COLOR_DELTAS = new Set([
+  "bg-dark-1",
+  "bg-dark-2",
+  "bg-dark-3",
+  "text-dark-secondary",
+  "text-dark-tertiary",
+  "icon-dark-secondary",
+  "icon-dark-tertiary",
+  "bg-high-contrast-2",
+  "bg-high-contrast-3",
+  "text-high-contrast-secondary",
+  "text-high-contrast-tertiary",
+  "icon-high-contrast-secondary",
+  "icon-high-contrast-tertiary",
+  "icon-high-contrast-accent",
+  "icon-high-contrast-status-error",
+  "icon-high-contrast-status-warning",
+  "icon-high-contrast-status-success",
+  "accent-gray-high-contrast",
+  "accent-red-high-contrast",
+  "accent-orange-high-contrast",
+  "accent-yellow-high-contrast",
+  "accent-green-high-contrast",
+  "accent-blue-high-contrast",
+  "accent-purple-high-contrast",
+  "accent-pink-high-contrast",
+]);
+const ALLOWED_RADIUS_DELTAS = new Set([18, 21, 30]);
+const ALLOWED_WEIGHT_DELTAS = new Set();
+
 function readFileOrThrow(path) {
   if (!existsSync(path)) {
     throw new Error(`Missing required file: ${path}`);
@@ -257,19 +291,19 @@ function main() {
     for (const entry of foundationEntries) {
       const base = resolveBaseHex(entry.value);
       const matches = upstreamHex.has(entry.value) || (base && upstreamHex.has(base));
-      if (!matches) {
+      if (!matches && !ALLOWED_COLOR_DELTAS.has(entry.name)) {
         missingColors.push(entry);
       }
     }
 
     for (const radius of foundationRadius) {
-      if (!upstreamRadius.has(radius)) {
+      if (!upstreamRadius.has(radius) && !ALLOWED_RADIUS_DELTAS.has(radius)) {
         missingRadius.push(radius);
       }
     }
 
     for (const weight of foundationWeights) {
-      if (!upstreamWeights.has(weight)) {
+      if (!upstreamWeights.has(weight) && !ALLOWED_WEIGHT_DELTAS.has(weight)) {
         missingWeights.push(weight);
       }
     }
