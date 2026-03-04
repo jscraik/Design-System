@@ -37,10 +37,13 @@ jobs:
           version: 10.28.0
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile --prod=false --filter @brainwav/design-system-guidance
+        run: pnpm -C packages/design-system-guidance install --ignore-workspace --prod=false
 
       - name: Validate package gates
-        run: pnpm release:guidance:validate
+        run: |
+          pnpm -C packages/design-system-guidance type-check
+          pnpm -C packages/design-system-guidance build
+          pnpm -C packages/design-system-guidance check:ci
 
       - name: Verify package contents
         run: |
@@ -69,7 +72,7 @@ jobs:
           version: 10.28.0
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile --filter @brainwav/design-system-guidance
+        run: pnpm -C packages/design-system-guidance install --ignore-workspace --prod=false
 
       - name: Publish @brainwav/design-system-guidance (restricted)
         run: |
