@@ -76,6 +76,7 @@ jobs:
 
       - name: Publish @brainwav/design-system-guidance (restricted)
         run: |
-          pnpm -C packages/design-system-guidance publish --access restricted --tag "${{ inputs.npm_tag }}"
+          cd packages/design-system-guidance
+          npm publish --access restricted --tag "${{ inputs.npm_tag }}"
         env:
           NPM_TOKEN: ${{ secrets.BRAINWAV_NPM_TOKEN }}
