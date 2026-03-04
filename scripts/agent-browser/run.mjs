@@ -44,6 +44,8 @@ const TRANSIENT_DAEMON_PATTERNS = [
 
 const MAX_FLOW_ATTEMPTS = 5;
 const FLOW_RETRY_BASE_DELAY_MS = 1500;
+const CHAT_SHELL_READ_ONLY_MODE =
+  process.env.AGENT_BROWSER_CHAT_SHELL_MODE === "read-only" || process.env.CI === "true";
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -204,6 +206,11 @@ async function flowChatShell() {
 
   requireRef(textboxRef, "Textbox not found on ChatShell");
   requireRef(sendButtonRef, "Send button not found on ChatShell");
+
+  if (CHAT_SHELL_READ_ONLY_MODE) {
+    console.log("ChatShell interaction skipped (read-only mode); refs validated");
+    return;
+  }
 
   await runAgentBrowser([
     "--session",
