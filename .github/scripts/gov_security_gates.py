@@ -74,11 +74,7 @@ def section_present(sections, keys):
     for key, aliases in keys.items():
         text = None
         for heading, value in sections.items():
-<<<<<<< ours
             if any(re.search(alias, heading, re.I) for alias in aliases):
-=======
-            if any(re.search(alias, heading) for alias in aliases):
->>>>>>> theirs
                 text = value
                 break
         if text is None:
