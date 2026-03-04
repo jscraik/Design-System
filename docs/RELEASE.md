@@ -48,14 +48,15 @@ This runs:
 
 ### Manual publish
 ```bash
-pnpm -C packages/design-system-guidance publish --access restricted --no-git-checks
+cd packages/design-system-guidance
+npm publish --access restricted --tag latest
 ```
 
 ## GitHub/npm setup
 
-1. Add repository secret: `BRAINWAV_NPM_TOKEN`.
-2. Ensure token has access to publish `@brainwav/design-system-guidance`.
-3. (Optional) Enable npm Trusted Publisher (OIDC) later and remove token usage when ready.
+1. Configure npm Trusted Publisher (OIDC) for repo `jscraik/Design-System` and workflow `.github/workflows/release-guidance.yml`.
+2. Keep workflow permissions set to include `id-token: write` for the publish job.
+3. `BRAINWAV_NPM_TOKEN` is no longer required for GitHub Actions publish (keep only if you still do manual token-based local publishing).
 
 ## Rollback procedure
 
