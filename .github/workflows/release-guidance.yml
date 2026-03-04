@@ -74,6 +74,9 @@ jobs:
       - name: Install deps
         run: pnpm -C packages/design-system-guidance install --ignore-workspace --prod=false --lockfile=false
 
+      - name: Build package
+        run: pnpm -C packages/design-system-guidance build
+
       - name: Publish @brainwav/design-system-guidance (restricted)
         run: |
           cd packages/design-system-guidance
