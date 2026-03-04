@@ -39,13 +39,7 @@ const cliPath = existsSync(join(rootDir, "node_modules", ".bin", "agent-browser"
 const TRANSIENT_DAEMON_PATTERNS = [
   /resource temporarily unavailable/i,
   /daemon may be busy or unresponsive/i,
-  /timed out after/i,
 ];
-
-const MAX_FLOW_ATTEMPTS = 5;
-const FLOW_RETRY_BASE_DELAY_MS = 1500;
-const CHAT_SHELL_READ_ONLY_MODE =
-  process.env.AGENT_BROWSER_CHAT_SHELL_MODE === "read-only" || process.env.CI === "true";
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -55,9 +49,7 @@ function isTransientDaemonError(message) {
   return TRANSIENT_DAEMON_PATTERNS.some((pattern) => pattern.test(message));
 }
 
-function runAgentBrowserOnce(args, options = {}) {
-  const timeoutMs = options.timeoutMs ?? 45000;
-
+function runAgentBrowserOnce(args) {
   return new Promise((resolve, reject) => {
     const proc = spawn(cliPath, args, {
       stdio: ["ignore", "pipe", "pipe"],
@@ -107,26 +99,14 @@ function runAgentBrowserOnce(args, options = {}) {
   });
 }
 
-async function closeSession() {
-  try {
-    await runAgentBrowser(["--session", SESSION_NAME, "close"], {
-      maxAttempts: 1,
-      timeoutMs: 10000,
-    });
-  } catch (_error) {
-    // Close may fail if session is already gone or daemon is unavailable; continue.
-  }
-}
-
 async function runAgentBrowser(args, options = {}) {
-  const maxAttempts = options.maxAttempts ?? 2;
-  const baseDelayMs = options.baseDelayMs ?? 1000;
-  const timeoutMs = options.timeoutMs ?? 45000;
+  const maxAttempts = options.maxAttempts ?? 5;
+  const baseDelayMs = options.baseDelayMs ?? 1500;
 
   let lastError = null;
   for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
     try {
-      return await runAgentBrowserOnce(args, { timeoutMs });
+      return await runAgentBrowserOnce(args);
     } catch (error) {
       lastError = error;
       if (!isTransientDaemonError(error.message) || attempt === maxAttempts) {
@@ -141,17 +121,6 @@ async function runAgentBrowser(args, options = {}) {
   }
 
   throw lastError;
-}
-
-function flowSessionName(flowName, attempt) {
-  const slug = String(flowName)
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 32);
-
-  const safeSlug = slug || "flow";
-  return `${SESSION_PREFIX}-${safeSlug}-${attempt}-${Date.now().toString(36)}`;
 }
 
 async function openUrl(url) {

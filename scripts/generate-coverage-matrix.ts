@@ -32,7 +32,7 @@ type SurfaceUsage = {
 
 type SurfaceUsageMap = Record<string, SurfaceUsage>;
 
-const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const ROOT = resolve(fileURLToPath(new URL("../..", import.meta.url)));
 const UI_INDEX = join(ROOT, "packages/ui/src/index.ts");
 const COMPONENTS_INDEX = join(ROOT, "packages/ui/src/components/ui/index.ts");
 const FALLBACK_ROOT = join(ROOT, "packages/ui/src/components");
@@ -48,17 +48,6 @@ const checkOnly = args.has("--check");
 
 function compareText(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0;
-}
-
-function preferCanonicalComponentName(existing: string, candidate: string): string {
-  const existingStartsUpper = /^[A-Z]/.test(existing);
-  const candidateStartsUpper = /^[A-Z]/.test(candidate);
-
-  if (existingStartsUpper !== candidateStartsUpper) {
-    return candidateStartsUpper ? candidate : existing;
-  }
-
-  return compareText(candidate, existing) < 0 ? candidate : existing;
 }
 
 function normalizePath(p: string): string {

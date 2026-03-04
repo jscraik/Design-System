@@ -45,6 +45,7 @@ Upstream version: @openai/apps-sdk-ui ^0.2.1
 | Menu | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#menu | active | no | no | no |
 | Menubar | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | MessageActions | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#messageactions | active | no | no | no |
+| Modal | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#modal | active | no | no | no |
 | ModeSelector | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#modeselector | active | no | no | no |
 | ModelBadge | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#modelbadge | active | no | no | no |
 | ModelSelector | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#modelselector | active | no | no | no |
@@ -66,6 +67,9 @@ Upstream version: @openai/apps-sdk-ui ^0.2.1
 | Tabs | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | TagInput | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#taginput | active | no | no | no |
 | TextLink | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#textlink | active | no | no | no |
+| Textarea | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#textarea | active | no | no | no |
+| Toast | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#toast | active | no | no | no |
+| Toggle | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#toggle | active | no | no | no |
 | ToggleGroup | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | Tooltip | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | UseMobile | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#usemobile | active | no | no | no |
