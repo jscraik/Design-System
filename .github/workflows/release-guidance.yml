@@ -37,7 +37,7 @@ jobs:
           version: 10.28.0
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile --prod=false
+        run: pnpm install --frozen-lockfile --prod=false --filter @brainwav/design-system-guidance...
 
       - name: Validate package gates
         run: pnpm release:guidance:validate
@@ -69,7 +69,7 @@ jobs:
           version: 10.28.0
 
       - name: Install deps
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --filter @brainwav/design-system-guidance...
 
       - name: Publish @brainwav/design-system-guidance (restricted)
         run: |
