@@ -3,9 +3,14 @@ name: Release
 on:
   push:
     branches: ["main"]
+  workflow_dispatch:
+
+concurrency:
+  group: release-main
+  cancel-in-progress: false
 
 jobs:
-  release:
+  validate-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,12 +27,46 @@ jobs:
           version: 10.28.0
 
       - name: Install deps
+        run: pnpm install --frozen-lockfile --prod=false
+
+      - name: Validate public release gates
+        run: |
+          pnpm -C packages/ui type-check
+          pnpm -C packages/runtime type-check
+          pnpm -C packages/tokens type-check
+          pnpm -C packages/tokens validate
+          pnpm ds:matrix:check
+          pnpm test:policy
+          pnpm build:lib
+
+  release-public:
+    needs: validate-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.0
+
+      - name: Install deps
         run: pnpm install --frozen-lockfile
 
       - name: Create release PR or publish
         uses: changesets/action@v1
         with:
-          publish: pnpm release
+          publish: pnpm release:public
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

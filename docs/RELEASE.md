@@ -2,194 +2,128 @@
 
 Step-by-step guide for releasing design system packages.
 
----
+## Table of Contents
+- [Prerequisites](#prerequisites)
+- [Release tracks](#release-tracks)
+- [Track A: Public `@design-studio/*` packages](#track-a-public-design-studio-packages)
+- [Track B: Restricted `@brainwav/design-system-guidance`](#track-b-restricted-brainwavdesign-system-guidance)
+- [Rollback procedure](#rollback-procedure)
+- [Pre-release checklist](#pre-release-checklist)
+- [Post-release](#post-release)
 
 ## Prerequisites
 
 - Clean working tree (no uncommitted changes)
-- Up-to-date main branch
-- Write access to `@design-studio` npm packages (public scope)
-- Write access to `@brainwav/design-system-guidance` (restricted scope)
-- GitHub token for creating PRs
+- Up-to-date `main` branch
+- npm publish permissions for required scopes:
+  - `@design-studio/*` (public)
+  - `@brainwav/design-system-guidance` (restricted)
+- GitHub token for release automation
 
----
+## Release tracks
 
-## Step 1: Create Changeset
+This repository has two release tracks:
+
+1. **Public track** (`@design-studio/*`) — managed by Changesets in `.github/workflows/release.yml`.
+2. **Restricted guidance track** (`@brainwav/design-system-guidance`) — managed by `.github/workflows/release-guidance.yml`.
+
+`@brainwav/design-system-guidance` is intentionally excluded from the Changesets publish flow via `.changeset/config.json`.
+
+## Track A: Public `@design-studio/*` packages
+
+### 1) Create a changeset
 
 ```bash
 pnpm changeset
 ```
 
-1. Select change type (major/minor/patch)
-2. Select affected packages
-3. Write meaningful change summary
-
-**Example**:
-```
-? What kind of change is this for @design-studio/ui?
-  minor: Added new component, backward compatible
-? Which packages would you like to include?
-  @design-studio/ui
-  @design-studio/tokens
-? Please enter a summary for this change:
-  Add Modal component with dark mode support
-```
-
-This creates `.changeset/NAME.md` files.
-
----
-
-## Step 2: Commit Changeset
+### 2) Commit the changeset
 
 ```bash
 git add .changeset/*.md
-git commit -m "changes: add feature X"
+git commit -m "changes: <summary>"
 ```
 
-**Don't include other changes** in the changeset commit. Keep it atomic.
+### 3) Merge to `main`
 
----
+The release workflow (`.github/workflows/release.yml`) will:
+- run release validation gates (`type-check`, token validation, policy, matrix check, build)
+- open/update a Changesets release PR when changesets exist
+- publish when the release PR is merged
 
-## Step 3: Version Packages
-
-Create a PR for version bumping:
+### 4) Manual local public release command (if needed)
 
 ```bash
-git checkout -b version-bump
-pnpm version-packages
-git push origin version-bump
+pnpm release:public
 ```
 
-This:
-- Updates package.json versions
-- Generates CHANGELOG.md
-- Creates version commit
+This runs:
+- `pnpm build:lib`
+- `pnpm release` (`changeset publish`)
 
-**Merge this PR** before publishing.
+## Track B: Restricted `@brainwav/design-system-guidance`
 
----
+### 1) Bump `packages/design-system-guidance/package.json` version
 
-## Step 4: Publish to npm
+Use semver and commit the version change to `main`.
 
-After version bump merges to main:
+### 2) Run guidance release workflow
+
+Use GitHub Actions workflow **Release Guidance Package** (`release-guidance.yml`):
+- `publish = false` to validate only
+- `publish = true` to validate + publish
+- optional `npm_tag` (default `latest`)
+
+### 3) Local validation command (optional)
 
 ```bash
-git pull origin main
-pnpm release
+pnpm release:guidance:validate
 ```
 
-This runs `changeset publish` which:
-- Builds all packages
-- Publishes to npm
-- Creates git tags
-- Pushes tags to remote
+This runs:
+- `pnpm design-system-guidance:type-check`
+- `pnpm design-system-guidance:build`
+- `pnpm design-system-guidance:check:ci`
 
-**First publish may require `--no-git-checks` flag.**
-
----
-
-## Package Access
-
-Access posture:
-- `@design-studio/ui`, `@design-studio/tokens`, `@design-studio/runtime`: **public**
-- `@brainwav/design-system-guidance`: **restricted**
-
-You must have the appropriate org/package permissions for each scope.
-
----
-
-## Version Bump Guidelines
-
-| Type | When | Example |
-|-------|--------|---------|
-| **Major** | Breaking changes, API redesign | 1.0.0 → 2.0.0 |
-| **Minor** | New features, backward compatible | 1.2.0 → 1.3.0 |
-| **Patch** | Bug fixes, minor changes | 1.2.0 → 1.2.1 |
-
----
-
-## Rollback Procedure
-
-If a release breaks things:
-
-### 1. Identify the bad version
+### 4) Local publish command (optional/manual)
 
 ```bash
-git log --oneline -10
+pnpm -C packages/design-system-guidance publish --access restricted --no-git-checks
 ```
 
-### 2. Revert the release commit
+## Rollback procedure
+
+If a release breaks:
+
+1. Identify offending commit/version.
+2. Revert the release commit:
 
 ```bash
 git revert <release-commit-hash>
 ```
 
-### 3. Bump patch version
+3. Ship a patch release via the same track used originally.
 
-```bash
-pnpm changeset
-# Select "patch" type
-```
+## Pre-release checklist
 
-### 4. Publish hotfix
-
-```bash
-# Version and publish
-pnpm version-packages
-pnpm release
-```
-
-### 5. Announce the rollback
-
-Notify team that version X.Y.Z is broken and X.Y.(Z+1) is the fix.
-
----
-
-## Pre-Release Checklist
-
-- [ ] All tests pass: `pnpm test`
-- [ ] Type check passes: `pnpm typecheck`
-- [ ] Lint passes: `pnpm lint`
-- [ ] Build succeeds: `pnpm build:lib`
-- [ ] CHANGELOG.md is accurate
+- [ ] `pnpm test` passes
+- [ ] `pnpm test:policy` passes
+- [ ] `pnpm ds:matrix:check` passes
+- [ ] `pnpm build:lib` passes
+- [ ] `pnpm release:guidance:validate` passes (if guidance package changed)
 - [ ] Version bump is correct
-- [ ] Changesets are in place
+- [ ] CHANGELOG/release notes are accurate
 
----
+## Post-release
 
-## Post-Release
-
-1. **Verify on npm**:
-   ```bash
-   npm view @design-studio/ui
-   npm view @design-studio/tokens
-   npm view @brainwav/design-system-guidance
-   ```
-
-2. **Update dependents**:
-   - Run `pnpm install --force` in dependent repos
-   - Test integration
-
-3. **Monitor for issues**:
-   - Check GitHub Issues for new bug reports
-   - Be ready to hotfix if critical issues found
-
----
-
-## Emergency Hotfix
-
-For critical bugs that can't wait for full release:
+1. Verify published versions:
 
 ```bash
-# Create patch changeset directly in main
-git checkout main
-echo "Hotfix: critical bug fix" > .changeset/hotfix.md
-git add .changeset/
-git commit -m "changes: hotfix"
-
-# Version and publish (no PR needed for hotfix)
-pnpm version-packages
-pnpm release
+npm view @design-studio/ui
+npm view @design-studio/tokens
+npm view @design-studio/runtime
+npm view @brainwav/design-system-guidance
 ```
 
-Use this sparingly — it bypasses normal review process.
+2. Update dependents and run integration tests.
+3. Monitor issues and prepare hotfix if needed.

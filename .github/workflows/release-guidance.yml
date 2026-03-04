@@ -1,0 +1,78 @@
+name: Release Guidance Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish @brainwav/design-system-guidance after validation"
+        required: true
+        type: boolean
+        default: false
+      npm_tag:
+        description: "npm dist-tag"
+        required: false
+        default: "latest"
+        type: string
+
+concurrency:
+  group: release-guidance
+  cancel-in-progress: false
+
+jobs:
+  validate-guidance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.0
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile --prod=false
+
+      - name: Validate package gates
+        run: pnpm release:guidance:validate
+
+      - name: Verify package contents
+        run: |
+          cd packages/design-system-guidance
+          npm pack --dry-run
+
+  publish-guidance:
+    needs: validate-guidance
+    if: ${{ inputs.publish }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.28.0
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Publish @brainwav/design-system-guidance (restricted)
+        run: |
+          pnpm -C packages/design-system-guidance publish --access restricted --no-git-checks --tag "${{ inputs.npm_tag }}"
+        env:
+          NPM_TOKEN: ${{ secrets.BRAINWAV_NPM_TOKEN }}
