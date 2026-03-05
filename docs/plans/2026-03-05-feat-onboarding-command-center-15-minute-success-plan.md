@@ -1,7 +1,7 @@
 ---
 title: "feat: Onboarding Command Center MVP (15-minute success)"
 type: feat
-status: active
+status: completed
 date: 2026-03-05
 origin: docs/brainstorms/2026-03-05-onboarding-command-center-brainstorm.md
 ---
