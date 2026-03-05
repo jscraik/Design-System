@@ -154,6 +154,7 @@ Regenerate: `diagram all . --output-dir .diagram`
 
 ## Weaknesses & Improvements
 
+- **Debt-radar automation still pending:** Canonical docs/templates now exist, but automated weekly generation and scoring logic are still manual-first and should be productized next.
 - **Coverage visibility:** Coverage goals exist, but measurement should be kept current. Consider adding a CI artifact or dashboard link in `docs/TEST_PLAN.md`.
 - **Testing guidance location:** Ensure `docs/testing/` stays aligned with ADRs and contributor docs (like `CONTRIBUTING.md`).
 - **A11y contract maintenance:** Keep `docs/design-system/A11Y_CONTRACTS.md` updated whenever a local primitive changes keyboard or ARIA behavior.
@@ -167,6 +168,7 @@ Regenerate: `diagram all . --output-dir .diagram`
 
 ## Recent Changes
 
+- **2026-03-05:** Added Quality Debt Radar planning deliverables from the approved brainstorm: new canonical contract at `docs/operations/quality-debt-radar.md`, weekly report template at `reports/qa/quality-debt-burndown-template.md`, rollout checklist at `docs/operations/quality-debt-radar-rollout-checklist.md`, plus index/schema linking updates in `docs/README.md` and `docs/operations/QA_EVIDENCE_SCHEMA.md`. Impact: debt visibility now has an explicit category/freshness/warn-first policy and a repeatable weekly reporting format for maintainers and release owners.
 - **2026-03-05:** Shipped an onboarding hardening pass centered on a new canonical entrypoint `docs/guides/ONBOARDING_COMMAND_CENTER.md` plus task-first routes in `docs/guides/tasks/` (`add-token`, `ship-widget`, `test-mcp-integration`, and full-path). Updated `README.md`, `docs/README.md`, `docs/guides/README.md`, and `docs/QUICK_START.md` to route discovery to the new command center and fix stale commands/paths. Added onboarding guardrail scripts (`scripts/check-onboarding-parity.mjs`, `scripts/check-onboarding-outcomes.mjs`), wired scripts into `package.json` (`onboarding:parity:check`, `onboarding:outcome:check`, `onboarding:check`), and enabled CI enforcement in `.github/workflows/ci.yml`. Added rollout artifacts in `docs/work/` (entrypoint inventory, baseline metrics, rollback runbook). Impact: onboarding now has one authoritative path with automated parity/outcome checks to reduce doc drift and false success.
 - **2026-03-05:** Updated `.github/workflows/release-guidance.yml` to run on Node `24` for both validate and publish jobs. npm Trusted Publisher requires newer Node/npm (Node `22.14+` / npm `11.5.1+`), and Node 20 prevented OIDC auth from being used. Impact: release jobs now meet npm OIDC runtime requirements.
 - **2026-03-05:** Adjusted OIDC release workflow setup for `@brainwav/design-system-guidance` by removing `registry-url` from `actions/setup-node` in `.github/workflows/release-guidance.yml`. This prevents implicit npm token auth wiring from `setup-node` and allows npm Trusted Publisher OIDC flow to be used in publish runs. Impact: publish attempts should no longer authenticate with an unintended token path.

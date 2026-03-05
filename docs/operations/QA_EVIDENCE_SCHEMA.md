@@ -52,6 +52,15 @@ Evidence bundle
 - Local artifacts: `test-results/`, `playwright-report/`
 - Evidence bundles: `reports/qa/` (recommended) or CI artifacts
 - A11y audits: `docs/operations/a11y-audit-template.md`
+- Weekly debt-radar snapshots: `reports/qa/quality-debt-burndown-YYYY-WW.md` (see `docs/operations/quality-debt-radar.md`)
+
+## Weekly Quality Debt Radar Snapshot
+
+To keep quality-risk trends visible, include a weekly debt-radar snapshot:
+
+- Use template: `reports/qa/quality-debt-burndown-template.md`
+- Required fields: category status, freshness, trend, owner, and next action
+- If data is stale/unavailable, record it explicitly (never report as clean)
 
 ## Exceptions
 

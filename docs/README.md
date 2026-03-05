@@ -128,5 +128,7 @@ Key project documentation remains at the repository root:
 - **[VERSION_SYNC.md](./VERSION_SYNC.md)** - Version synchronization across packages
 - **[RFC_TEMPLATE.md](./workflows/RFC_TEMPLATE.md)** - RFC workflow template for design-system changes
 - **[QA_EVIDENCE_SCHEMA.md](./operations/QA_EVIDENCE_SCHEMA.md)** - QA evidence requirements and CI gate artifacts
+- **[quality-debt-radar.md](./operations/quality-debt-radar.md)** - Canonical debt categories, freshness semantics, and warn-first rollout policy
+- **[quality-debt-radar-rollout-checklist.md](./operations/quality-debt-radar-rollout-checklist.md)** - Rollout and verification checklist for debt-radar adoption
 - **[GOVERNANCE_SECURITY_PRIVACY.md](./operations/GOVERNANCE_SECURITY_PRIVACY.md)** - Security and privacy rules for governance artifacts
 - **[TOKEN_ADD_CHECKLIST.md](./theming/TOKEN_ADD_CHECKLIST.md)** - Add a token without breaking token sources
