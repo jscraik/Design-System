@@ -155,7 +155,7 @@ jobs:
           CODEX_APPROVAL_POSTURE: require
         run: |
           export PATH="$HOME/.local/bin:$PATH"
-          ralph check-environment --contract harness.contract.json --json --attestation artifacts/policy/ralph-smoke-attestation.json
+          ralph doctor
       - name: Upload dependency policy artifacts
         if: always()
         uses: actions/upload-artifact@v4
