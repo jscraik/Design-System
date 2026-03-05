@@ -155,7 +155,31 @@ jobs:
           CODEX_APPROVAL_POSTURE: require
         run: |
           export PATH="$HOME/.local/bin:$PATH"
-          ralph doctor
+          mkdir -p artifacts/policy
+          set +e
+          ralph doctor 2>&1 | tee artifacts/policy/ralph-doctor.log
+          STATUS=${PIPESTATUS[0]}
+          set -e
+          python3 - <<'PY'
+          from pathlib import Path
+          import sys
+
+          log_path = Path("artifacts/policy/ralph-doctor.log")
+          allowed_missing = ("codex", "claude", "copilot")
+          lines = log_path.read_text().splitlines()
+          misses = [line for line in lines if line.startswith("[MISS]")]
+          unexpected = [
+              line for line in misses if not any(f"[MISS] {name}:" in line for name in allowed_missing)
+          ]
+          if unexpected:
+              print("Unexpected Ralph doctor misses detected:")
+              for line in unexpected:
+                  print(line)
+              sys.exit(1)
+          PY
+          if [ "${STATUS}" -ne 0 ]; then
+            echo "Ralph doctor reported only expected missing local agent CLIs; continuing."
+          fi
       - name: Upload dependency policy artifacts
         if: always()
         uses: actions/upload-artifact@v4
