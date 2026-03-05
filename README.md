@@ -100,7 +100,7 @@ pnpm build:widget          # Single-file widget HTML (for MCP harness)
 
 For the canonical first-week onboarding path (humans + AI coding agents), use:
 
-- [`docs/guides/ONBOARDING_COMMAND_CENTER.md`](./docs/guides/ONBOARDING_COMMAND_CENTER.md)
+- [`/docs/guides/ONBOARDING_COMMAND_CENTER.md`](/docs/guides/ONBOARDING_COMMAND_CENTER.md)
 
 Task-first routes:
 - Add a token safely

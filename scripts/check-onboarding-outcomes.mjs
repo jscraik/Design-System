@@ -80,7 +80,10 @@ async function main() {
   const commandCenter = await read("docs/guides/ONBOARDING_COMMAND_CENTER.md");
   for (const route of Object.keys(TASK_DOCS)) {
     const filename = route.split("/").at(-1);
-    if (!commandCenter.includes(`./tasks/${filename}`)) {
+    if (
+      !commandCenter.includes(`./tasks/${filename}`) &&
+      !commandCenter.includes(`/docs/guides/tasks/${filename}`)
+    ) {
       errors.push(`Command center is missing link to ${route}`);
     }
   }

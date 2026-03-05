@@ -37,10 +37,10 @@ pnpm install
 
 ## Task Routes
 
-- [Add a token safely](./tasks/add-token.md)
-- [Ship/update a widget](./tasks/ship-widget.md)
-- [Test MCP integration](./tasks/test-mcp-integration.md)
-- [Full path: token + widget + MCP](./tasks/full-path-token-widget-mcp.md)
+- [Add a token safely](/docs/guides/tasks/add-token.md)
+- [Ship/update a widget](/docs/guides/tasks/ship-widget.md)
+- [Test MCP integration](/docs/guides/tasks/test-mcp-integration.md)
+- [Full path: token + widget + MCP](/docs/guides/tasks/full-path-token-widget-mcp.md)
 
 ## Deterministic Agent Checklist
 
@@ -69,6 +69,6 @@ node scripts/check-doc-links.mjs
 
 ## Related Docs
 
-- Root overview: [../../README.md](../../README.md)
-- Docs index: [../README.md](../README.md)
-- Guides index: [./README.md](./README.md)
+- Root overview: [/README.md](/README.md)
+- Docs index: [/docs/README.md](/docs/README.md)
+- Guides index: [/docs/guides/README.md](/docs/guides/README.md)

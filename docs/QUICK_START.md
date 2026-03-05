@@ -3,7 +3,7 @@
 > **Status: Redirecting to Onboarding Command Center**
 >
 > This page is a legacy quick-start.  
-> Use the canonical onboarding routes at [`docs/guides/ONBOARDING_COMMAND_CENTER.md`](./guides/ONBOARDING_COMMAND_CENTER.md).
+> Use the canonical onboarding routes at [`/docs/guides/ONBOARDING_COMMAND_CENTER.md`](/docs/guides/ONBOARDING_COMMAND_CENTER.md).
 
 Get up and running with the Design System in under 5 minutes.
 

@@ -34,11 +34,11 @@ Use these when you want step-by-step workflows, not API reference.
 
 ### Development Guides
 
-- **[ONBOARDING_COMMAND_CENTER.md](./ONBOARDING_COMMAND_CENTER.md)** - Canonical onboarding entrypoint with task routes
-- **[tasks/add-token.md](./tasks/add-token.md)** - Add a token safely in ~15 minutes
-- **[tasks/ship-widget.md](./tasks/ship-widget.md)** - Build and verify a widget in ~15 minutes
-- **[tasks/test-mcp-integration.md](./tasks/test-mcp-integration.md)** - Verify MCP integration in ~15 minutes
-- **[tasks/full-path-token-widget-mcp.md](./tasks/full-path-token-widget-mcp.md)** - End-to-end onboarding path
+- **[ONBOARDING_COMMAND_CENTER.md](/docs/guides/ONBOARDING_COMMAND_CENTER.md)** - Canonical onboarding entrypoint with task routes
+- **[tasks/add-token.md](/docs/guides/tasks/add-token.md)** - Add a token safely in ~15 minutes
+- **[tasks/ship-widget.md](/docs/guides/tasks/ship-widget.md)** - Build and verify a widget in ~15 minutes
+- **[tasks/test-mcp-integration.md](/docs/guides/tasks/test-mcp-integration.md)** - Verify MCP integration in ~15 minutes
+- **[tasks/full-path-token-widget-mcp.md](/docs/guides/tasks/full-path-token-widget-mcp.md)** - End-to-end onboarding path
 - **[PAGES_QUICK_START.md](./PAGES_QUICK_START.md)** - Quick start guide for creating new pages in the aStudio system
 - **[DESIGN_GUIDELINES.md](./DESIGN_GUIDELINES.md)** - Design system guidelines and best practices (includes UI states checklist)
 - **[SECURITY_BEST_PRACTICES.md](./SECURITY_BEST_PRACTICES.md)** - Security best practices for deployment and widget development
