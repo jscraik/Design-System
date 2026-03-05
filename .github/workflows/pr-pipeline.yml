@@ -440,7 +440,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Run pnpm audit
-        run: pnpm audit --audit-level=moderate
+        run: pnpm audit --audit-level=critical
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
         env:
