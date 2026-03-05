@@ -280,7 +280,7 @@ jobs:
 
   evidence-verify:
     name: evidence-verify
-    needs: [review-gate]
+    needs: [review-gate, risk-policy-gate]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -336,7 +336,7 @@ jobs:
 
   remediation-decision:
     name: remediation-decision
-    needs: [evidence-verify]
+    needs: [evidence-verify, risk-policy-gate]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
