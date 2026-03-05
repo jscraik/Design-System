@@ -66,6 +66,8 @@ flowchart LR
   - `mcp/` — MCP server integration
 - `docs/` — architecture, guides, test plans, and policies
   - `docs/architecture/` — ADRs and architecture map
+  - `docs/guides/ONBOARDING_COMMAND_CENTER.md` — canonical onboarding entrypoint for humans + agents
+  - `docs/guides/tasks/` — task-first onboarding routes (`add-token`, `ship-widget`, `test-mcp-integration`, full-path)
   - `docs/design-system/ADOPTION_CHECKLIST.md` — step-by-step integration checklist for web, widgets, and Tauri
   - `docs/testing/` — testing guidelines (smart testing rules)
   - `docs/design-system/COVERAGE_MATRIX_SURFACES.json` — surface usage source of truth (web/tauri/widgets)
@@ -165,6 +167,7 @@ Regenerate: `diagram all . --output-dir .diagram`
 
 ## Recent Changes
 
+- **2026-03-05:** Shipped an onboarding hardening pass centered on a new canonical entrypoint `docs/guides/ONBOARDING_COMMAND_CENTER.md` plus task-first routes in `docs/guides/tasks/` (`add-token`, `ship-widget`, `test-mcp-integration`, and full-path). Updated `README.md`, `docs/README.md`, `docs/guides/README.md`, and `docs/QUICK_START.md` to route discovery to the new command center and fix stale commands/paths. Added onboarding guardrail scripts (`scripts/check-onboarding-parity.mjs`, `scripts/check-onboarding-outcomes.mjs`), wired scripts into `package.json` (`onboarding:parity:check`, `onboarding:outcome:check`, `onboarding:check`), and enabled CI enforcement in `.github/workflows/ci.yml`. Added rollout artifacts in `docs/work/` (entrypoint inventory, baseline metrics, rollback runbook). Impact: onboarding now has one authoritative path with automated parity/outcome checks to reduce doc drift and false success.
 - **2026-03-05:** Updated `.github/workflows/release-guidance.yml` to run on Node `24` for both validate and publish jobs. npm Trusted Publisher requires newer Node/npm (Node `22.14+` / npm `11.5.1+`), and Node 20 prevented OIDC auth from being used. Impact: release jobs now meet npm OIDC runtime requirements.
 - **2026-03-05:** Adjusted OIDC release workflow setup for `@brainwav/design-system-guidance` by removing `registry-url` from `actions/setup-node` in `.github/workflows/release-guidance.yml`. This prevents implicit npm token auth wiring from `setup-node` and allows npm Trusted Publisher OIDC flow to be used in publish runs. Impact: publish attempts should no longer authenticate with an unintended token path.
 - **2026-03-04:** Bumped `@brainwav/design-system-guidance` to `0.0.2` in `packages/design-system-guidance/package.json` to execute the first post-OIDC restricted publish flow (after `0.0.1`). Impact: provides a new publishable version for workflow validation under npm Trusted Publisher.

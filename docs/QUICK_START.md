@@ -1,5 +1,10 @@
 # Quick Start (5 minutes)
 
+> **Status: Redirecting to Onboarding Command Center**
+>
+> This page is a legacy quick-start.  
+> Use the canonical onboarding routes at [`docs/guides/ONBOARDING_COMMAND_CENTER.md`](./guides/ONBOARDING_COMMAND_CENTER.md).
+
 Get up and running with the Design System in under 5 minutes.
 
 ---
@@ -54,7 +59,7 @@ Opens Storybook at `http://localhost:6006` with:
 pnpm build:widget
 ```
 
-Creates single-file widget HTML in `packages/widgets/dist/` for ChatGPT embedding.
+Creates single-file widget HTML in `platforms/web/apps/web/dist/widget.html` for ChatGPT embedding.
 
 ---
 
@@ -62,7 +67,7 @@ Creates single-file widget HTML in `packages/widgets/dist/` for ChatGPT embeddin
 
 ```bash
 pnpm test           # UI package tests
-pnpm test:mcp       # MCP server contract tests
+pnpm test:mcp-contract  # MCP server contract tests
 ```
 
 ---

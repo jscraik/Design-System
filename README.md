@@ -46,6 +46,7 @@ Note: `apps/` is a navigation index only; canonical app paths remain under `plat
 - [Prerequisites](#prerequisites)
 - [Compatibility matrix](#compatibility-matrix)
 - [Quick Start](#quick-start)
+- [Onboarding Command Center](#onboarding-command-center)
 - [Verify](#verify)
 - [Common tasks](#common-tasks)
 - [Widget Gallery & Development](#widget-gallery--development)
@@ -94,6 +95,18 @@ pnpm build:web             # Web-only build
 pnpm build:widgets         # Widget bundles
 pnpm build:widget          # Single-file widget HTML (for MCP harness)
 ```
+
+## Onboarding Command Center
+
+For the canonical first-week onboarding path (humans + AI coding agents), use:
+
+- [`docs/guides/ONBOARDING_COMMAND_CENTER.md`](./docs/guides/ONBOARDING_COMMAND_CENTER.md)
+
+Task-first routes:
+- Add a token safely
+- Ship/update a widget
+- Test MCP integration
+- Full integration path (token + widget + MCP)
 
 ### Verify
 

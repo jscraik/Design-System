@@ -101,6 +101,10 @@ jobs:
         if: matrix.platform == 'web'
         run: pnpm lint:compliance
 
+      - name: Onboarding parity + outcome checks (web platform only)
+        if: matrix.platform == 'web'
+        run: pnpm onboarding:check
+
       - name: Type-check packages (web platform only)
         if: matrix.platform == 'web'
         run: |

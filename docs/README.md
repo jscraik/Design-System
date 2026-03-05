@@ -43,6 +43,7 @@ docs/
 ## Start here
 
 - New to the repo? Read the root [README.md](../README.md) first.
+- For canonical onboarding routes (15-minute success paths), use [ONBOARDING_COMMAND_CENTER.md](./guides/ONBOARDING_COMMAND_CENTER.md).
 - Releasing? Use [RELEASE_CHECKLIST.md](./guides/RELEASE_CHECKLIST.md).
 - Looking for the CLI? See [packages/cli/README.md](../packages/cli/README.md).
 - Need structure help? See [repo-map.md](./architecture/repo-map.md) (canonical paths live under `platforms/`).
@@ -89,6 +90,7 @@ Design system compliance audits and color reference documentation.
 
 Step-by-step guides for common tasks.
 
+- **[ONBOARDING_COMMAND_CENTER.md](./guides/ONBOARDING_COMMAND_CENTER.md)** - Canonical onboarding entrypoint and task routes
 - **[PAGES_QUICK_START.md](./guides/PAGES_QUICK_START.md)** - Quick start guide for creating pages
 - **[DESIGN_GUIDELINES.md](./guides/DESIGN_GUIDELINES.md)** - UI design and accessibility guidelines
 - **[UI_COMPONENT_TOOLING.md](./guides/UI_COMPONENT_TOOLING.md)** - UI component tooling and QA sequence
