@@ -166,7 +166,6 @@ jobs:
 
   risk-policy-gate:
     name: risk-policy-gate
-    if: ${{ false }}
     needs: [pr-template, dependency-chain]
     runs-on: ubuntu-latest
     steps:
