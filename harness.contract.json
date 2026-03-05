@@ -23,30 +23,20 @@
     "platforms/web/apps/storybook/**": "low"
   },
   "mergePolicy": {
-    "high": [
-      "review-gate",
-      "evidence-verify"
-    ],
-    "medium": [
-      "review-gate"
-    ],
+    "high": ["review-gate", "evidence-verify"],
+    "medium": ["review-gate"],
     "low": []
   },
   "docsDriftRules": {},
   "reviewPolicy": {
     "timeoutSeconds": 600,
     "timeoutAction": "fail",
-    "requiredChecks": [
-      "security-scan"
-    ],
+    "requiredChecks": ["security-scan"],
     "enforceReviewerIndependence": false
   },
   "evidencePolicy": {
     "requiredFor": [],
-    "allowedTypes": [
-      "png",
-      "jpeg"
-    ],
+    "allowedTypes": ["png", "jpeg"],
     "maxFileSizeBytes": 1048576
   },
   "diffBudget": {
@@ -72,26 +62,12 @@
     "provider": "local",
     "sessionIdTemplate": "repo:<name>:task:<id>",
     "domain": "default",
-    "requiredTags": [
-      "repo",
-      "area",
-      "type"
-    ],
+    "requiredTags": ["repo", "area", "type"],
     "maxObservationsPerStep": 3,
-    "allowedLevels": [
-      "observation",
-      "learning",
-      "pattern"
-    ],
+    "allowedLevels": ["observation", "learning", "pattern"],
     "requireStartRead": true,
     "requireCloseoutSummary": true,
-    "forbiddenContentPatterns": [
-      "token",
-      "api[_-]?key",
-      "secret",
-      "password",
-      "credential"
-    ]
+    "forbiddenContentPatterns": ["token", "api[_-]?key", "secret", "password", "credential"]
   },
   "memoryMaintenancePolicy": {
     "validateSchedule": "weekly",
@@ -101,11 +77,7 @@
   },
   "memoryEvalPolicy": {
     "trialsPerTask": 3,
-    "requiredMetrics": [
-      "pass^k",
-      "tool_errors",
-      "duplicate_rate"
-    ],
+    "requiredMetrics": ["pass^k", "tool_errors", "duplicate_rate"],
     "passPowKThreshold": 0.8
   },
   "observabilityPolicy": {
@@ -113,11 +85,7 @@
     "collectorEndpoint": "http://localhost:4318"
   },
   "packageManagerPolicy": {
-    "allowedManagers": [
-      "pnpm",
-      "npm",
-      "yarn"
-    ],
+    "allowedManagers": ["pnpm", "npm", "yarn"],
     "requiredManager": null
   },
   "remediationPolicy": {
@@ -138,78 +106,42 @@
   },
   "loopStageContracts": {
     "risk-policy-gate": {
-      "inputs": [
-        "changed_files",
-        "harness.contract.json"
-      ],
-      "outputs": [
-        "risk-policy-gate.result"
-      ],
+      "inputs": ["changed_files", "harness.contract.json"],
+      "outputs": ["risk-policy-gate.result"],
       "schema": "loop-stage-contract/v1",
       "failPolicy": "fail_closed",
       "if": "always()",
-      "permissions": [
-        "contents:read",
-        "pull-requests:read"
-      ],
+      "permissions": ["contents:read", "pull-requests:read"],
       "timeoutMinutes": 15,
       "concurrency": "none"
     },
     "review-gate": {
-      "inputs": [
-        "risk-policy-gate.result",
-        "head_sha",
-        "harness.contract.json"
-      ],
-      "outputs": [
-        "review-gate.result"
-      ],
+      "inputs": ["risk-policy-gate.result", "head_sha", "harness.contract.json"],
+      "outputs": ["review-gate.result"],
       "schema": "loop-stage-contract/v1",
       "failPolicy": "fail_closed",
       "if": "always()",
-      "permissions": [
-        "contents:read",
-        "pull-requests:read"
-      ],
+      "permissions": ["contents:read", "pull-requests:read"],
       "timeoutMinutes": 15,
       "concurrency": "none"
     },
     "evidence-verify": {
-      "inputs": [
-        "review-gate.result",
-        "evidence_files",
-        "harness.contract.json"
-      ],
-      "outputs": [
-        "evidence-verify.result",
-        "browser-evidence-artifacts"
-      ],
+      "inputs": ["review-gate.result", "evidence_files", "harness.contract.json"],
+      "outputs": ["evidence-verify.result", "browser-evidence-artifacts"],
       "schema": "loop-stage-contract/v1",
       "failPolicy": "fail_closed",
       "if": "always()",
-      "permissions": [
-        "contents:read"
-      ],
+      "permissions": ["contents:read"],
       "timeoutMinutes": 15,
       "concurrency": "none"
     },
     "remediation-decision": {
-      "inputs": [
-        "evidence-verify.result",
-        "findings.json",
-        "harness.contract.json"
-      ],
-      "outputs": [
-        "remediation-decision.result",
-        "remediation-decision-artifacts"
-      ],
+      "inputs": ["evidence-verify.result", "findings.json", "harness.contract.json"],
+      "outputs": ["remediation-decision.result", "remediation-decision-artifacts"],
       "schema": "loop-stage-contract/v1",
       "failPolicy": "fail_closed",
       "if": "always()",
-      "permissions": [
-        "contents:read",
-        "pull-requests:write"
-      ],
+      "permissions": ["contents:read", "pull-requests:write"],
       "timeoutMinutes": 15,
       "concurrency": "none"
     }
@@ -227,18 +159,10 @@
     "mode": "manual"
   },
   "pilotAuthzPolicy": {
-    "githubScopeAllowlist": [
-      "pull_requests:write",
-      "contents:read",
-      "issues:write"
-    ],
+    "githubScopeAllowlist": ["pull_requests:write", "contents:read", "issues:write"],
     "repoAllowlist": [],
     "branchAllowlist": [],
-    "protectedBranchDenylist": [
-      "main",
-      "master",
-      "release/*"
-    ],
+    "protectedBranchDenylist": ["main", "master", "release/*"],
     "enforceBranchProtection": true
   }
 }

@@ -9,11 +9,7 @@
     {
       "level": "observation",
       "content": "Harness installed and configured for design-system monorepo. Risk tiers: auth/runtime/mcp=high, ui/tokens/effects=medium, tests/docs=low. UI loop mapped to Storybook + Playwright.",
-      "tags": [
-        "repo:jscraik/Design-System",
-        "area:setup",
-        "type:configuration"
-      ],
+      "tags": ["repo:jscraik/Design-System", "area:setup", "type:configuration"],
       "session_id": "bootstrap/init",
       "source": "harness init",
       "observed_at": "2026-03-04T23:05:00.000Z"

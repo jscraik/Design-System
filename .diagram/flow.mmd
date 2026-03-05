@@ -1,0 +1,20 @@
+flowchart TD
+  Start(["Start"])
+  tailwind_config_base_114ae127["tailwind.config.base"]
+  Start --> tailwind_config_base_114ae127
+  sync_astudio_versions_3b91e590["sync-astudio-versions"]
+  tailwind_config_base_114ae127 --> sync_astudio_versions_3b91e590
+  generate_coverage_matrix_1bd9ebaf["generate-coverage-matrix"]
+  sync_astudio_versions_3b91e590 --> generate_coverage_matrix_1bd9ebaf
+  migrate_package_refs_b4c4a036["migrate-package-refs"]
+  generate_coverage_matrix_1bd9ebaf --> migrate_package_refs_b4c4a036
+  migrate_imports_aec4410b["migrate-imports"]
+  migrate_package_refs_b4c4a036 --> migrate_imports_aec4410b
+  vite_config_c473fba0["vite.config"]
+  migrate_imports_aec4410b --> vite_config_c473fba0
+  tailwind_config_f3bfbed8["tailwind.config"]
+  vite_config_c473fba0 --> tailwind_config_f3bfbed8
+  playwright_a11y_config_6e906656["playwright.a11y.config"]
+  tailwind_config_f3bfbed8 --> playwright_a11y_config_6e906656
+  End(["End"])
+  playwright_a11y_config_6e906656 --> End

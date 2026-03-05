@@ -1,0 +1,1659 @@
+{
+  "rootPath": "/Users/jamiecraik/dev/design-system",
+  "components": [
+    {
+      "name": "tailwind.config.base",
+      "originalName": "tailwind.config.base",
+      "filePath": "./tailwind.config.base.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "@design-studio/tokens/tailwind.preset",
+          "line": 1
+        }
+      ],
+      "directory": ".",
+      "dependencies": []
+    },
+    {
+      "name": "sync-astudio-versions",
+      "originalName": "sync-astudio-versions",
+      "filePath": "scripts/sync-astudio-versions.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "node:fs",
+          "line": 1
+        },
+        {
+          "path": "node:path",
+          "line": 2
+        },
+        {
+          "path": "node:url",
+          "line": 3
+        }
+      ],
+      "directory": "scripts",
+      "dependencies": []
+    },
+    {
+      "name": "generate-coverage-matrix",
+      "originalName": "generate-coverage-matrix",
+      "filePath": "scripts/generate-coverage-matrix.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "node:fs",
+          "line": 1
+        },
+        {
+          "path": "node:fs/promises",
+          "line": 2
+        },
+        {
+          "path": "node:path",
+          "line": 3
+        },
+        {
+          "path": "node:url",
+          "line": 4
+        }
+      ],
+      "directory": "scripts",
+      "dependencies": []
+    },
+    {
+      "name": "migrate-package-refs",
+      "originalName": "migrate-package-refs",
+      "filePath": "scripts/migration/migrate-package-refs.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "node:fs",
+          "line": 11
+        },
+        {
+          "path": "node:path",
+          "line": 12
+        }
+      ],
+      "directory": "scripts/migration",
+      "dependencies": []
+    },
+    {
+      "name": "migrate-imports",
+      "originalName": "migrate-imports",
+      "filePath": "scripts/migration/migrate-imports.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "node:fs",
+          "line": 11
+        },
+        {
+          "path": "node:path",
+          "line": 12
+        },
+        {
+          "path": "node:url",
+          "line": 13
+        }
+      ],
+      "directory": "scripts/migration",
+      "dependencies": []
+    },
+    {
+      "name": "vite.config",
+      "originalName": "vite.config",
+      "filePath": "packages/widgets/vite.config.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "node:path",
+          "line": 1
+        },
+        {
+          "path": "node:url",
+          "line": 2
+        },
+        {
+          "path": "@tailwindcss/vite",
+          "line": 4
+        },
+        {
+          "path": "@vitejs/plugin-react",
+          "line": 5
+        },
+        {
+          "path": "vite",
+          "line": 6
+        },
+        {
+          "path": "./src/sdk/plugins/widget-manifest",
+          "line": 8
+        }
+      ],
+      "directory": "packages/widgets",
+      "dependencies": []
+    },
+    {
+      "name": "tailwind.config",
+      "originalName": "tailwind.config",
+      "filePath": "packages/widgets/tailwind.config.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "../tokens/tailwind.preset",
+          "line": 1
+        }
+      ],
+      "directory": "packages/widgets",
+      "dependencies": ["tailwind.preset"]
+    },
+    {
+      "name": "playwright.a11y.config",
+      "originalName": "playwright.a11y.config",
+      "filePath": "packages/widgets/playwright.a11y.config.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "node:path",
+          "line": 1
+        },
+        {
+          "path": "node:url",
+          "line": 2
+        },
+        {
+          "path": "@playwright/test",
+          "line": 4
+        }
+      ],
+      "directory": "packages/widgets",
+      "dependencies": []
+    },
+    {
+      "name": "vite.config_1",
+      "originalName": "vite.config",
+      "filePath": "packages/validation-prototype/vite.config.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "@vitejs/plugin-react",
+          "line": 7
+        },
+        {
+          "path": "vite",
+          "line": 8
+        }
+      ],
+      "directory": "packages/validation-prototype",
+      "dependencies": []
+    },
+    {
+      "name": "vitest.config",
+      "originalName": "vitest.config",
+      "filePath": "packages/skill-ingestion/vitest.config.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "vitest/config",
+          "line": 1
+        }
+      ],
+      "directory": "packages/skill-ingestion",
+      "dependencies": []
+    },
+    {
+      "name": "vitest.setup",
+      "originalName": "vitest.setup",
+      "filePath": "packages/tokens/vitest.setup.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "@testing-library/jest-dom/matchers",
+          "line": 1
+        },
+        {
+          "path": "@testing-library/react",
+          "line": 2
+        },
+        {
+          "path": "vitest",
+          "line": 3
+        }
+      ],
+      "directory": "packages/tokens",
+      "dependencies": []
+    },
+    {
+      "name": "vitest.config_1",
+      "originalName": "vitest.config",
+      "filePath": "packages/tokens/vitest.config.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "vitest/config",
+          "line": 1
+        }
+      ],
+      "directory": "packages/tokens",
+      "dependencies": []
+    },
+    {
+      "name": "tailwind.preset",
+      "originalName": "tailwind.preset",
+      "filePath": "packages/tokens/tailwind.preset.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/tokens",
+      "dependencies": []
+    },
+    {
+      "name": "vitest.config_2",
+      "originalName": "vitest.config",
+      "filePath": "packages/ui/vitest.config.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "node:path",
+          "line": 1
+        },
+        {
+          "path": "@vitejs/plugin-react",
+          "line": 3
+        },
+        {
+          "path": "vitest/config",
+          "line": 4
+        }
+      ],
+      "directory": "packages/ui",
+      "dependencies": []
+    },
+    {
+      "name": "vite.config_2",
+      "originalName": "vite.config",
+      "filePath": "packages/ui/vite.config.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "node:path",
+          "line": 1
+        },
+        {
+          "path": "@vitejs/plugin-react",
+          "line": 3
+        },
+        {
+          "path": "vite",
+          "line": 4
+        },
+        {
+          "path": "vite-plugin-dts",
+          "line": 5
+        }
+      ],
+      "directory": "packages/ui",
+      "dependencies": []
+    },
+    {
+      "name": "vite.config_3",
+      "originalName": "vite.config",
+      "filePath": "packages/json-render/vite.config.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "node:path",
+          "line": 1
+        },
+        {
+          "path": "@vitejs/plugin-react",
+          "line": 3
+        },
+        {
+          "path": "vite",
+          "line": 4
+        },
+        {
+          "path": "vite-plugin-dts",
+          "line": 5
+        }
+      ],
+      "directory": "packages/json-render",
+      "dependencies": []
+    },
+    {
+      "name": "vitest.setup_1",
+      "originalName": "vitest.setup",
+      "filePath": "packages/effects/vitest.setup.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "@testing-library/jest-dom/matchers",
+          "line": 1
+        },
+        {
+          "path": "@testing-library/react",
+          "line": 2
+        },
+        {
+          "path": "vitest",
+          "line": 3
+        }
+      ],
+      "directory": "packages/effects",
+      "dependencies": []
+    },
+    {
+      "name": "vitest.config_3",
+      "originalName": "vitest.config",
+      "filePath": "packages/effects/vitest.config.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "vitest/config",
+          "line": 1
+        }
+      ],
+      "directory": "packages/effects",
+      "dependencies": []
+    },
+    {
+      "name": "vite.config_4",
+      "originalName": "vite.config",
+      "filePath": "packages/effects/vite.config.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "node:path",
+          "line": 1
+        },
+        {
+          "path": "@vitejs/plugin-react",
+          "line": 3
+        },
+        {
+          "path": "vite",
+          "line": 4
+        },
+        {
+          "path": "vite-plugin-dts",
+          "line": 5
+        }
+      ],
+      "directory": "packages/effects",
+      "dependencies": []
+    },
+    {
+      "name": "worker-configuration.d",
+      "originalName": "worker-configuration.d",
+      "filePath": "packages/cloudflare-template/worker-configuration.d.ts",
+      "type": "class",
+      "imports": [
+        {
+          "path": "./src/worker/index",
+          "line": 6
+        },
+        {
+          "path": "my-main-module",
+          "line": 11188
+        }
+      ],
+      "directory": "packages/cloudflare-template",
+      "dependencies": []
+    },
+    {
+      "name": "vite.config_5",
+      "originalName": "vite.config",
+      "filePath": "packages/cloudflare-template/vite.config.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "@cloudflare/vite-plugin",
+          "line": 1
+        },
+        {
+          "path": "vite",
+          "line": 2
+        }
+      ],
+      "directory": "packages/cloudflare-template",
+      "dependencies": []
+    },
+    {
+      "name": "svgr.config",
+      "originalName": "svgr.config",
+      "filePath": "packages/astudio-icons/svgr.config.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "react",
+          "line": 26
+        }
+      ],
+      "directory": "packages/astudio-icons",
+      "dependencies": []
+    },
+    {
+      "name": "svgr.config.d",
+      "originalName": "svgr.config.d",
+      "filePath": "packages/astudio-icons/svgr.config.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/astudio-icons",
+      "dependencies": []
+    },
+    {
+      "name": "a11y.spec",
+      "originalName": "a11y.spec",
+      "filePath": "packages/widgets/tests/a11y.spec.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "@axe-core/playwright",
+          "line": 1
+        },
+        {
+          "path": "@playwright/test",
+          "line": 2
+        }
+      ],
+      "directory": "packages/widgets/tests",
+      "dependencies": []
+    },
+    {
+      "name": "types",
+      "originalName": "types",
+      "filePath": "packages/skill-ingestion/src/types.ts",
+      "type": "function",
+      "imports": [
+        {
+          "path": "node:os",
+          "line": 1
+        },
+        {
+          "path": "node:path",
+          "line": 2
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "types.d",
+      "originalName": "types.d",
+      "filePath": "packages/skill-ingestion/src/types.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "scan",
+      "originalName": "scan",
+      "filePath": "packages/skill-ingestion/src/scan.ts",
+      "type": "function",
+      "imports": [
+        {
+          "path": "node:fs",
+          "line": 1
+        },
+        {
+          "path": "node:path",
+          "line": 2
+        },
+        {
+          "path": "./hash.js",
+          "line": 3
+        },
+        {
+          "path": "./metadata.js",
+          "line": 4
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "scan.d",
+      "originalName": "scan.d",
+      "filePath": "packages/skill-ingestion/src/scan.d.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "./types.js",
+          "line": 1
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "remoteClient",
+      "originalName": "remoteClient",
+      "filePath": "packages/skill-ingestion/src/remoteClient.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "node:crypto",
+          "line": 1
+        },
+        {
+          "path": "node:fs",
+          "line": 2
+        },
+        {
+          "path": "node:os",
+          "line": 3
+        },
+        {
+          "path": "node:path",
+          "line": 4
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "remoteClient.test",
+      "originalName": "remoteClient.test",
+      "filePath": "packages/skill-ingestion/src/remoteClient.test.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "node:crypto",
+          "line": 1
+        },
+        {
+          "path": "vitest",
+          "line": 2
+        },
+        {
+          "path": "./remoteClient.js",
+          "line": 3
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "remoteClient.d",
+      "originalName": "remoteClient.d",
+      "filePath": "packages/skill-ingestion/src/remoteClient.d.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "./types.js",
+          "line": 1
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "publisher",
+      "originalName": "publisher",
+      "filePath": "packages/skill-ingestion/src/publisher.ts",
+      "type": "function",
+      "imports": [
+        {
+          "path": "node:child_process",
+          "line": 1
+        },
+        {
+          "path": "node:fs",
+          "line": 2
+        },
+        {
+          "path": "node:os",
+          "line": 3
+        },
+        {
+          "path": "node:path",
+          "line": 4
+        },
+        {
+          "path": "./hash.js",
+          "line": 5
+        },
+        {
+          "path": "./installer.js",
+          "line": 6
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "publisher.test",
+      "originalName": "publisher.test",
+      "filePath": "packages/skill-ingestion/src/publisher.test.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "vitest",
+          "line": 1
+        },
+        {
+          "path": "./publisher.js",
+          "line": 2
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "publisher.integration.test",
+      "originalName": "publisher.integration.test",
+      "filePath": "packages/skill-ingestion/src/publisher.integration.test.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "node:child_process",
+          "line": 1
+        },
+        {
+          "path": "node:events",
+          "line": 2
+        },
+        {
+          "path": "node:fs",
+          "line": 3
+        },
+        {
+          "path": "node:os",
+          "line": 4
+        },
+        {
+          "path": "node:path",
+          "line": 5
+        },
+        {
+          "path": "vitest",
+          "line": 6
+        },
+        {
+          "path": "./publisher.js",
+          "line": 7
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "publisher.d",
+      "originalName": "publisher.d",
+      "filePath": "packages/skill-ingestion/src/publisher.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "metadata",
+      "originalName": "metadata",
+      "filePath": "packages/skill-ingestion/src/metadata.ts",
+      "type": "function",
+      "imports": [],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "metadata.test",
+      "originalName": "metadata.test",
+      "filePath": "packages/skill-ingestion/src/metadata.test.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "vitest",
+          "line": 1
+        },
+        {
+          "path": "./metadata.js",
+          "line": 2
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "metadata.d",
+      "originalName": "metadata.d",
+      "filePath": "packages/skill-ingestion/src/metadata.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "installer.zip.test",
+      "originalName": "installer.zip.test",
+      "filePath": "packages/skill-ingestion/src/installer.zip.test.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "node:child_process",
+          "line": 1
+        },
+        {
+          "path": "node:fs",
+          "line": 2
+        },
+        {
+          "path": "node:os",
+          "line": 3
+        },
+        {
+          "path": "node:path",
+          "line": 4
+        },
+        {
+          "path": "vitest",
+          "line": 5
+        },
+        {
+          "path": "./installer.js",
+          "line": 6
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "installer",
+      "originalName": "installer",
+      "filePath": "packages/skill-ingestion/src/installer.ts",
+      "type": "function",
+      "imports": [
+        {
+          "path": "node:child_process",
+          "line": 1
+        },
+        {
+          "path": "node:fs",
+          "line": 2
+        },
+        {
+          "path": "node:os",
+          "line": 3
+        },
+        {
+          "path": "node:path",
+          "line": 4
+        },
+        {
+          "path": "./hash.js",
+          "line": 5
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "installer.test",
+      "originalName": "installer.test",
+      "filePath": "packages/skill-ingestion/src/installer.test.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "node:fs",
+          "line": 1
+        },
+        {
+          "path": "node:os",
+          "line": 2
+        },
+        {
+          "path": "node:path",
+          "line": 3
+        },
+        {
+          "path": "vitest",
+          "line": 4
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "installer.d",
+      "originalName": "installer.d",
+      "filePath": "packages/skill-ingestion/src/installer.d.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "./types.js",
+          "line": 1
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "index",
+      "originalName": "index",
+      "filePath": "packages/skill-ingestion/src/index.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "index.d",
+      "originalName": "index.d",
+      "filePath": "packages/skill-ingestion/src/index.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "hash",
+      "originalName": "hash",
+      "filePath": "packages/skill-ingestion/src/hash.ts",
+      "type": "function",
+      "imports": [
+        {
+          "path": "node:crypto",
+          "line": 1
+        },
+        {
+          "path": "node:fs",
+          "line": 2
+        },
+        {
+          "path": "node:path",
+          "line": 3
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "hash.test",
+      "originalName": "hash.test",
+      "filePath": "packages/skill-ingestion/src/hash.test.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "node:fs",
+          "line": 1
+        },
+        {
+          "path": "node:os",
+          "line": 2
+        },
+        {
+          "path": "node:path",
+          "line": 3
+        },
+        {
+          "path": "vitest",
+          "line": 4
+        },
+        {
+          "path": "./hash.js",
+          "line": 5
+        }
+      ],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "hash.d",
+      "originalName": "hash.d",
+      "filePath": "packages/skill-ingestion/src/hash.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/src",
+      "dependencies": []
+    },
+    {
+      "name": "mock-host",
+      "originalName": "mock-host",
+      "filePath": "packages/runtime/src/mock-host.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/runtime/src",
+      "dependencies": []
+    },
+    {
+      "name": "host-adapter",
+      "originalName": "host-adapter",
+      "filePath": "packages/runtime/src/host-adapter.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/runtime/src",
+      "dependencies": []
+    },
+    {
+      "name": "token-validator.test",
+      "originalName": "token-validator.test",
+      "filePath": "packages/tokens/tests/token-validator.test.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "vitest",
+          "line": 1
+        },
+        {
+          "path": "../src/alias-map.js",
+          "line": 3
+        }
+      ],
+      "directory": "packages/tokens/tests",
+      "dependencies": []
+    },
+    {
+      "name": "token-validation.test",
+      "originalName": "token-validation.test",
+      "filePath": "packages/tokens/tests/token-validation.test.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "vitest",
+          "line": 1
+        },
+        {
+          "path": "../src/colors.js",
+          "line": 3
+        },
+        {
+          "path": "../src/sizes.js",
+          "line": 4
+        },
+        {
+          "path": "../src/spacing.js",
+          "line": 5
+        },
+        {
+          "path": "../src/typography.js",
+          "line": 6
+        }
+      ],
+      "directory": "packages/tokens/tests",
+      "dependencies": []
+    },
+    {
+      "name": "generator.test",
+      "originalName": "generator.test",
+      "filePath": "packages/tokens/tests/generator.test.ts",
+      "type": "class",
+      "imports": [
+        {
+          "path": "fast-check",
+          "line": 1
+        },
+        {
+          "path": "vitest",
+          "line": 2
+        },
+        {
+          "path": "../src/generator.js",
+          "line": 4
+        },
+        {
+          "path": "../src/spacing.js",
+          "line": 5
+        }
+      ],
+      "directory": "packages/tokens/tests",
+      "dependencies": []
+    },
+    {
+      "name": "aliases-cascade.test",
+      "originalName": "aliases-cascade.test",
+      "filePath": "packages/tokens/tests/aliases-cascade.test.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "node:fs",
+          "line": 1
+        },
+        {
+          "path": "node:path",
+          "line": 2
+        },
+        {
+          "path": "vitest",
+          "line": 3
+        }
+      ],
+      "directory": "packages/tokens/tests",
+      "dependencies": []
+    },
+    {
+      "name": "types.d_1",
+      "originalName": "types.d",
+      "filePath": "packages/skill-ingestion/dist/types.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/dist",
+      "dependencies": []
+    },
+    {
+      "name": "scan.d_1",
+      "originalName": "scan.d",
+      "filePath": "packages/skill-ingestion/dist/scan.d.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "./types.js",
+          "line": 1
+        }
+      ],
+      "directory": "packages/skill-ingestion/dist",
+      "dependencies": []
+    },
+    {
+      "name": "remoteClient.test.d",
+      "originalName": "remoteClient.test.d",
+      "filePath": "packages/skill-ingestion/dist/remoteClient.test.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/dist",
+      "dependencies": []
+    },
+    {
+      "name": "remoteClient.d_1",
+      "originalName": "remoteClient.d",
+      "filePath": "packages/skill-ingestion/dist/remoteClient.d.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "./types.js",
+          "line": 1
+        }
+      ],
+      "directory": "packages/skill-ingestion/dist",
+      "dependencies": []
+    },
+    {
+      "name": "publisher.test.d",
+      "originalName": "publisher.test.d",
+      "filePath": "packages/skill-ingestion/dist/publisher.test.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/dist",
+      "dependencies": []
+    },
+    {
+      "name": "publisher.integration.test.d",
+      "originalName": "publisher.integration.test.d",
+      "filePath": "packages/skill-ingestion/dist/publisher.integration.test.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/dist",
+      "dependencies": []
+    },
+    {
+      "name": "publisher.d_1",
+      "originalName": "publisher.d",
+      "filePath": "packages/skill-ingestion/dist/publisher.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/dist",
+      "dependencies": []
+    },
+    {
+      "name": "metadata.test.d",
+      "originalName": "metadata.test.d",
+      "filePath": "packages/skill-ingestion/dist/metadata.test.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/dist",
+      "dependencies": []
+    },
+    {
+      "name": "metadata.d_1",
+      "originalName": "metadata.d",
+      "filePath": "packages/skill-ingestion/dist/metadata.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/dist",
+      "dependencies": []
+    },
+    {
+      "name": "installer.zip.test.d",
+      "originalName": "installer.zip.test.d",
+      "filePath": "packages/skill-ingestion/dist/installer.zip.test.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/dist",
+      "dependencies": []
+    },
+    {
+      "name": "installer.test.d",
+      "originalName": "installer.test.d",
+      "filePath": "packages/skill-ingestion/dist/installer.test.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/dist",
+      "dependencies": []
+    },
+    {
+      "name": "installer.d_1",
+      "originalName": "installer.d",
+      "filePath": "packages/skill-ingestion/dist/installer.d.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "./types.js",
+          "line": 1
+        }
+      ],
+      "directory": "packages/skill-ingestion/dist",
+      "dependencies": []
+    },
+    {
+      "name": "index.d_1",
+      "originalName": "index.d",
+      "filePath": "packages/skill-ingestion/dist/index.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/dist",
+      "dependencies": []
+    },
+    {
+      "name": "hash.test.d",
+      "originalName": "hash.test.d",
+      "filePath": "packages/skill-ingestion/dist/hash.test.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/dist",
+      "dependencies": []
+    },
+    {
+      "name": "hash.d_1",
+      "originalName": "hash.d",
+      "filePath": "packages/skill-ingestion/dist/hash.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/skill-ingestion/dist",
+      "dependencies": []
+    },
+    {
+      "name": "typography",
+      "originalName": "typography",
+      "filePath": "packages/tokens/src/typography.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/tokens/src",
+      "dependencies": []
+    },
+    {
+      "name": "spacing",
+      "originalName": "spacing",
+      "filePath": "packages/tokens/src/spacing.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/tokens/src",
+      "dependencies": []
+    },
+    {
+      "name": "sizes",
+      "originalName": "sizes",
+      "filePath": "packages/tokens/src/sizes.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/tokens/src",
+      "dependencies": []
+    },
+    {
+      "name": "shadows",
+      "originalName": "shadows",
+      "filePath": "packages/tokens/src/shadows.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/tokens/src",
+      "dependencies": []
+    },
+    {
+      "name": "radius",
+      "originalName": "radius",
+      "filePath": "packages/tokens/src/radius.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/tokens/src",
+      "dependencies": []
+    },
+    {
+      "name": "index_1",
+      "originalName": "index",
+      "filePath": "packages/tokens/src/index.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "@design-studio/tokens",
+          "line": 33
+        }
+      ],
+      "directory": "packages/tokens/src",
+      "dependencies": []
+    },
+    {
+      "name": "generator",
+      "originalName": "generator",
+      "filePath": "packages/tokens/src/generator.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "node:crypto",
+          "line": 1
+        },
+        {
+          "path": "node:fs/promises",
+          "line": 2
+        },
+        {
+          "path": "node:path",
+          "line": 3
+        },
+        {
+          "path": "./colors.js",
+          "line": 5
+        },
+        {
+          "path": "./radius.js",
+          "line": 6
+        },
+        {
+          "path": "./shadows.js",
+          "line": 7
+        },
+        {
+          "path": "./sizes.js",
+          "line": 8
+        },
+        {
+          "path": "./spacing.js",
+          "line": 9
+        },
+        {
+          "path": "./typography.js",
+          "line": 10
+        }
+      ],
+      "directory": "packages/tokens/src",
+      "dependencies": []
+    },
+    {
+      "name": "colors",
+      "originalName": "colors",
+      "filePath": "packages/tokens/src/colors.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/tokens/src",
+      "dependencies": []
+    },
+    {
+      "name": "alias-map",
+      "originalName": "alias-map",
+      "filePath": "packages/tokens/src/alias-map.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "./colors.js",
+          "line": 1
+        },
+        {
+          "path": "./radius.js",
+          "line": 2
+        },
+        {
+          "path": "./shadows.js",
+          "line": 3
+        },
+        {
+          "path": "./sizes.js",
+          "line": 4
+        },
+        {
+          "path": "./spacing.js",
+          "line": 5
+        },
+        {
+          "path": "./typography.js",
+          "line": 6
+        }
+      ],
+      "directory": "packages/tokens/src",
+      "dependencies": []
+    },
+    {
+      "name": "watch-tokens",
+      "originalName": "watch-tokens",
+      "filePath": "packages/tokens/scripts/watch-tokens.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "node:child_process",
+          "line": 3
+        },
+        {
+          "path": "node:fs",
+          "line": 4
+        },
+        {
+          "path": "node:path",
+          "line": 5
+        }
+      ],
+      "directory": "packages/tokens/scripts",
+      "dependencies": []
+    },
+    {
+      "name": "validate-tokens",
+      "originalName": "validate-tokens",
+      "filePath": "packages/tokens/scripts/validate-tokens.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "node:fs/promises",
+          "line": 1
+        },
+        {
+          "path": "../src/validation/token-validator.js",
+          "line": 3
+        }
+      ],
+      "directory": "packages/tokens/scripts",
+      "dependencies": []
+    },
+    {
+      "name": "sync-dtcg",
+      "originalName": "sync-dtcg",
+      "filePath": "packages/tokens/scripts/sync-dtcg.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "node:fs/promises",
+          "line": 1
+        }
+      ],
+      "directory": "packages/tokens/scripts",
+      "dependencies": []
+    },
+    {
+      "name": "generate-tokens",
+      "originalName": "generate-tokens",
+      "filePath": "packages/tokens/scripts/generate-tokens.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "../src/generator.js",
+          "line": 3
+        }
+      ],
+      "directory": "packages/tokens/scripts",
+      "dependencies": []
+    },
+    {
+      "name": "export-figma",
+      "originalName": "export-figma",
+      "filePath": "packages/tokens/scripts/export-figma.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "node:fs/promises",
+          "line": 11
+        }
+      ],
+      "directory": "packages/tokens/scripts",
+      "dependencies": []
+    },
+    {
+      "name": "dev-tools",
+      "originalName": "dev-tools",
+      "filePath": "packages/tokens/scripts/dev-tools.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "./watch-tokens.js",
+          "line": 5
+        },
+        {
+          "path": "node:http",
+          "line": 100
+        }
+      ],
+      "directory": "packages/tokens/scripts",
+      "dependencies": []
+    },
+    {
+      "name": "mock-host.d",
+      "originalName": "mock-host.d",
+      "filePath": "packages/runtime/dist/mock-host.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/runtime/dist",
+      "dependencies": []
+    },
+    {
+      "name": "index.d_2",
+      "originalName": "index.d",
+      "filePath": "packages/runtime/dist/index.d.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "react/jsx-runtime",
+          "line": 141
+        }
+      ],
+      "directory": "packages/runtime/dist",
+      "dependencies": []
+    },
+    {
+      "name": "host-provider.d",
+      "originalName": "host-provider.d",
+      "filePath": "packages/runtime/dist/host-provider.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/runtime/dist",
+      "dependencies": []
+    },
+    {
+      "name": "host-adapter.d",
+      "originalName": "host-adapter.d",
+      "filePath": "packages/runtime/dist/host-adapter.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/runtime/dist",
+      "dependencies": []
+    },
+    {
+      "name": "typography.d",
+      "originalName": "typography.d",
+      "filePath": "packages/tokens/dist/typography.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/tokens/dist",
+      "dependencies": []
+    },
+    {
+      "name": "theme.test.d",
+      "originalName": "theme.test.d",
+      "filePath": "packages/tokens/dist/theme.test.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/tokens/dist",
+      "dependencies": []
+    },
+    {
+      "name": "theme.d",
+      "originalName": "theme.d",
+      "filePath": "packages/tokens/dist/theme.d.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "react",
+          "line": 7
+        },
+        {
+          "path": "react/jsx-runtime",
+          "line": 40
+        }
+      ],
+      "directory": "packages/tokens/dist",
+      "dependencies": []
+    },
+    {
+      "name": "spacing.d",
+      "originalName": "spacing.d",
+      "filePath": "packages/tokens/dist/spacing.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/tokens/dist",
+      "dependencies": []
+    },
+    {
+      "name": "sizes.d",
+      "originalName": "sizes.d",
+      "filePath": "packages/tokens/dist/sizes.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/tokens/dist",
+      "dependencies": []
+    },
+    {
+      "name": "shadows.d",
+      "originalName": "shadows.d",
+      "filePath": "packages/tokens/dist/shadows.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/tokens/dist",
+      "dependencies": []
+    },
+    {
+      "name": "radius.d",
+      "originalName": "radius.d",
+      "filePath": "packages/tokens/dist/radius.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/tokens/dist",
+      "dependencies": []
+    },
+    {
+      "name": "index.d_3",
+      "originalName": "index.d",
+      "filePath": "packages/tokens/dist/index.d.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "@design-studio/tokens",
+          "line": 33
+        }
+      ],
+      "directory": "packages/tokens/dist",
+      "dependencies": []
+    },
+    {
+      "name": "generator.d",
+      "originalName": "generator.d",
+      "filePath": "packages/tokens/dist/generator.d.ts",
+      "type": "module",
+      "imports": [
+        {
+          "path": "./colors.js",
+          "line": 1
+        },
+        {
+          "path": "./radius.js",
+          "line": 2
+        },
+        {
+          "path": "./shadows.js",
+          "line": 3
+        },
+        {
+          "path": "./sizes.js",
+          "line": 4
+        },
+        {
+          "path": "./spacing.js",
+          "line": 5
+        },
+        {
+          "path": "./typography.js",
+          "line": 6
+        }
+      ],
+      "directory": "packages/tokens/dist",
+      "dependencies": []
+    },
+    {
+      "name": "colors.d",
+      "originalName": "colors.d",
+      "filePath": "packages/tokens/dist/colors.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/tokens/dist",
+      "dependencies": []
+    },
+    {
+      "name": "alias-map.d",
+      "originalName": "alias-map.d",
+      "filePath": "packages/tokens/dist/alias-map.d.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/tokens/dist",
+      "dependencies": []
+    },
+    {
+      "name": "styles",
+      "originalName": "styles",
+      "filePath": "packages/ui/src/styles.ts",
+      "type": "file",
+      "imports": [
+        {
+          "path": "./styles/ui.css",
+          "line": 1
+        }
+      ],
+      "directory": "packages/ui/src",
+      "dependencies": []
+    },
+    {
+      "name": "index_2",
+      "originalName": "index",
+      "filePath": "packages/ui/src/index.ts",
+      "type": "module",
+      "imports": [],
+      "directory": "packages/ui/src",
+      "dependencies": []
+    }
+  ],
+  "entryPoints": [
+    "packages/skill-ingestion/src/index.ts",
+    "packages/tokens/src/index.ts",
+    "packages/ui/src/index.ts"
+  ],
+  "languages": {
+    "typescript": 100
+  },
+  "directories": [
+    "packages/astudio-icons",
+    "packages/cloudflare-template",
+    "packages/effects",
+    "packages/json-render",
+    "packages/runtime/dist",
+    "packages/runtime/src",
+    "packages/skill-ingestion",
+    "packages/skill-ingestion/dist",
+    "packages/skill-ingestion/src",
+    "packages/tokens",
+    "packages/tokens/dist",
+    "packages/tokens/scripts",
+    "packages/tokens/src",
+    "packages/tokens/tests",
+    "packages/ui",
+    "packages/ui/src",
+    "packages/validation-prototype",
+    "packages/widgets",
+    "packages/widgets/tests",
+    "scripts",
+    "scripts/migration"
+  ]
+}
