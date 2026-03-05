@@ -3,7 +3,7 @@
 **Week:** `YYYY-WW`  
 **Generated on:** `YYYY-MM-DD`  
 **Owner:** `@owner`  
-**Source contract:** `/Users/jamiecraik/dev/design-system/docs/operations/quality-debt-radar.md`
+**Source contract:** `/docs/operations/quality-debt-radar.md`
 
 ## Table of Contents
 

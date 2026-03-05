@@ -96,13 +96,12 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset publish",
-    "prepare": "prek install"
+    "prepare": "command -v prek >/dev/null && prek install || echo \"prek unavailable; skipping git hook install\""
   },
   "devDependencies": {
     "@argos-ci/cli": "^3.0.6",
     "@argos-ci/playwright": "^1.7.0",
     "@axe-core/playwright": "^4.11.1",
-    "@brainwav/coding-harness": "^0.6.0",
     "@changesets/cli": "^2.27.1",
     "@modelcontextprotocol/inspector": "^0.19.0",
     "@openai/apps-sdk-ui": "0.2.1",

@@ -100,7 +100,7 @@ pnpm design-system-guidance:check:ci # Fail on guidance violations
 
 ## Coding Harness
 
-This repo uses `@brainwav/coding-harness` as the control plane for agentic development, replacing husky/lint-staged with `prek` (Rust-based pre-commit).
+This repo uses `harness.contract.json` for risk-tier policy gates and `prek` (Rust-based pre-commit) for local hook automation; `prek` is expected from the local toolchain rather than a repo-pinned npm package.
 
 ### Key Files
 
@@ -224,5 +224,5 @@ Regenerate: `diagram all . --output-dir .diagram`
 - **2026-02-14:** Adjusted the coverage matrix generator to ignore barrel-only exports (like `forms`/`utils`) and regenerated the matrix so it reflects real UI components. Impact: cleaner coverage reporting for the design system.
 - **2026-02-14:** Enforced non-color alias path validation with an explicit computed-value allowlist, updated alias rules documentation, and added tests so raw values are rejected unless allowlisted. Impact: stronger guardrails around token alias integrity.
 
-- **2026-03-05:** Installed `@brainwav/coding-harness` v0.6.0 as the agentic development control plane. Replaced husky + lint-staged with `prek` (Rust-based pre-commit). Configured custom risk tiers in `harness.contract.json` mapping auth/runtime/mcp as high-risk, UI/tokens/effects as medium, tests/docs as low. Generated architecture diagrams via `@brainwav/diagram` CLI (`.diagram/*.mmd`). Removed conflicting `scripts/setup-git-hooks.js` (TypeScript syntax in .js file, conflicts with prek). Impact: deterministic git hooks, risk-tiered PR gates, architecture evidence artifacts.
+- **2026-03-05:** Removed the repo-pinned private npm dependency `@brainwav/coding-harness` and switched `prepare` to gracefully skip hook install when `prek` is unavailable in PATH. Kept `harness.contract.json` policy gates and `prek` workflow docs intact. Impact: CI installs no longer depend on private npm access, while local pre-commit hooks still work when `prek` is installed.
 - **2026-02-13:** Recovery PR prepared to restore repository structure after erroneous mass-deletion merges to main; tree reset to commit 153ecdd as baseline for immediate continuity.

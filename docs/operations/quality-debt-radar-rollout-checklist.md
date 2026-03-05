@@ -2,7 +2,7 @@
 
 **Owner:** Platform Team (confirm)  
 **Last updated:** 2026-03-05  
-**Related plan:** `/Users/jamiecraik/dev/design-system/docs/plans/2026-03-05-feat-quality-debt-radar-burn-down-engine-plan.md`
+**Related plan:** `/docs/plans/2026-03-05-feat-quality-debt-radar-burn-down-engine-plan.md`
 
 ## Table of Contents
 
@@ -19,8 +19,8 @@
   - Command: `bash -lc "source scripts/codex-preflight.sh && preflight_repo design-system git,bash,sed,rg,fd,jq,node,pnpm AGENTS.md,docs,scripts"`
   - Expected: `✅ preflight passed`
 - [ ] Confirm baseline docs exist:
-  - `/Users/jamiecraik/dev/design-system/docs/operations/quality-debt-radar.md`
-  - `/Users/jamiecraik/dev/design-system/reports/qa/quality-debt-burndown-template.md`
+  - `/docs/operations/quality-debt-radar.md`
+  - `/reports/qa/quality-debt-burndown-template.md`
 
 ## Source Signal Validation
 
@@ -40,7 +40,7 @@
 ## First Weekly Report
 
 - [ ] Create first weekly report from template:
-  - Output path: `/Users/jamiecraik/dev/design-system/reports/qa/quality-debt-burndown-YYYY-WW.md`
+  - Output path: `/reports/qa/quality-debt-burndown-YYYY-WW.md`
 - [ ] Populate all canonical categories from radar spec.
 - [ ] Assign status and freshness for each category.
 - [ ] Record at least one top action and owner per non-green category.
@@ -54,12 +54,12 @@
 ## Release Touchpoint Validation
 
 - [ ] Confirm CI touchpoint references are accurate:
-  - `/Users/jamiecraik/dev/design-system/.github/workflows/ci.yml`
+  - `/.github/workflows/ci.yml`
 - [ ] Confirm release touchpoint references are accurate:
-  - `/Users/jamiecraik/dev/design-system/.github/workflows/release.yml`
-  - `/Users/jamiecraik/dev/design-system/.github/workflows/release-guidance.yml`
+  - `/.github/workflows/release.yml`
+  - `/.github/workflows/release-guidance.yml`
 - [ ] Confirm evidence contract alignment:
-  - `/Users/jamiecraik/dev/design-system/docs/operations/QA_EVIDENCE_SCHEMA.md`
+  - `/docs/operations/QA_EVIDENCE_SCHEMA.md`
 
 ## Completion Criteria
 

@@ -40,11 +40,11 @@ Debt is tracked by category. Do not collapse to a single score.
 
 | Category | Description | Source Anchors |
 | --- | --- | --- |
-| Lint suppressions | Lint rules intentionally disabled or broadly suppressed that hide real issues | `/Users/jamiecraik/dev/design-system/biome.json`, `/Users/jamiecraik/dev/design-system/FORJAMIE.md` |
-| A11y debt | Accessibility-lint suppressions and uncovered contract gaps for local primitives | `/Users/jamiecraik/dev/design-system/docs/design-system/A11Y_CONTRACTS.md`, `/Users/jamiecraik/dev/design-system/docs/design-system/COVERAGE_MATRIX.md` |
-| CSS lint coverage gap | CSS excluded from current lint surface due parser/tooling constraints | `/Users/jamiecraik/dev/design-system/biome.json` |
-| Integration drift | Drift between upstream/contracts and local integration seams (Apps SDK, exports, wrappers) | `/Users/jamiecraik/dev/design-system/scripts/test-drift.mjs`, `/Users/jamiecraik/dev/design-system/docs/design-system/UPSTREAM_ALIGNMENT.md` |
-| Gate reliability debt | Known flaky/degraded quality signals that reduce confidence in passing CI | `/Users/jamiecraik/dev/design-system/docs/work/work_outstanding.md`, `/Users/jamiecraik/dev/design-system/docs/operations/QA_EVIDENCE_SCHEMA.md` |
+| Lint suppressions | Lint rules intentionally disabled or broadly suppressed that hide real issues | `/biome.json`, `/FORJAMIE.md` |
+| A11y debt | Accessibility-lint suppressions and uncovered contract gaps for local primitives | `/docs/design-system/A11Y_CONTRACTS.md`, `/docs/design-system/COVERAGE_MATRIX.md` |
+| CSS lint coverage gap | CSS excluded from current lint surface due parser/tooling constraints | `/biome.json` |
+| Integration drift | Drift between upstream/contracts and local integration seams (Apps SDK, exports, wrappers) | `/scripts/test-drift.mjs`, `/docs/design-system/UPSTREAM_ALIGNMENT.md` |
+| Gate reliability debt | Known flaky/degraded quality signals that reduce confidence in passing CI | `/docs/work/work_outstanding.md`, `/docs/operations/QA_EVIDENCE_SCHEMA.md` |
 
 ## Status and Freshness Semantics
 
@@ -82,23 +82,23 @@ Phase policy for this initiative:
 
 Weekly output format is defined in:
 
-- `/Users/jamiecraik/dev/design-system/reports/qa/quality-debt-burndown-template.md`
+- `/reports/qa/quality-debt-burndown-template.md`
 
 Expected weekly report path pattern:
 
-- `/Users/jamiecraik/dev/design-system/reports/qa/quality-debt-burndown-YYYY-WW.md`
+- `/reports/qa/quality-debt-burndown-YYYY-WW.md`
 
 ## CI and Release Touchpoints
 
 Radar inputs and parity surfaces:
 
 - CI quality checks:
-  - `/Users/jamiecraik/dev/design-system/.github/workflows/ci.yml`
+  - `/.github/workflows/ci.yml`
 - Release validation:
-  - `/Users/jamiecraik/dev/design-system/.github/workflows/release.yml`
-  - `/Users/jamiecraik/dev/design-system/.github/workflows/release-guidance.yml`
+  - `/.github/workflows/release.yml`
+  - `/.github/workflows/release-guidance.yml`
 - Evidence contract:
-  - `/Users/jamiecraik/dev/design-system/docs/operations/QA_EVIDENCE_SCHEMA.md`
+  - `/docs/operations/QA_EVIDENCE_SCHEMA.md`
 
 ## Failure-State Handling
 
