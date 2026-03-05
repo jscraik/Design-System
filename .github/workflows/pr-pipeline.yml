@@ -155,7 +155,7 @@ jobs:
           CODEX_APPROVAL_POSTURE: require
         run: |
           export PATH="$HOME/.local/bin:$PATH"
-          ralph doctor || true
+          ralph doctor
       - name: Upload dependency policy artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -179,11 +179,6 @@ jobs:
         run: corepack enable
       - name: Install dependencies
         run: pnpm install
-      - name: Install Ralph runtime
-        run: |
-          python3 -m pip install --user pipx
-          export PATH="$HOME/.local/bin:$PATH"
-          python3 -m pipx install "git+https://github.com/jscraik/ralph-gold.git@5d4b57537a29c3edb566665c9482ae5ca1d49eed" --force
       - name: Enforce docs drift baseline
         run: node scripts/check-doc-links.mjs
       - name: Run risk-policy gate
@@ -192,8 +187,7 @@ jobs:
           START_MS="$(date +%s%3N)"
           CHANGED_FILES="$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}" | paste -sd, -)"
           set +e
-          export PATH="$HOME/.local/bin:$PATH"
-          ralph risk-policy-gate --contract harness.contract.json --files "$CHANGED_FILES" --max-tier medium
+          pnpm dlx @brainwav/coding-harness@0.6.0 preflight-gate --contract harness.contract.json --files "$CHANGED_FILES" --max-tier medium
           STATUS=$?
           set -e
           END_MS="$(date +%s%3N)"
@@ -229,18 +223,12 @@ jobs:
         run: corepack enable
       - name: Install dependencies
         run: pnpm install
-      - name: Install Ralph runtime
-        run: |
-          python3 -m pip install --user pipx
-          export PATH="$HOME/.local/bin:$PATH"
-          python3 -m pipx install "git+https://github.com/jscraik/ralph-gold.git@5d4b57537a29c3edb566665c9482ae5ca1d49eed" --force
       - name: Run review gate against current SHA
         run: |
           mkdir -p artifacts/telemetry
           START_MS="$(date +%s%3N)"
           set +e
-          export PATH="$HOME/.local/bin:$PATH"
-          ralph review-gate             --token "${{ secrets.GITHUB_TOKEN }}"             --owner "${{ github.repository_owner }}"             --repo "${{ github.event.repository.name }}"             --pr "${{ github.event.pull_request.number }}"             --sha "${{ github.event.pull_request.head.sha }}"             --check "risk-policy-gate"             --contract harness.contract.json
+          pnpm dlx @brainwav/coding-harness@0.6.0 review-gate             --token "${{ secrets.GITHUB_TOKEN }}"             --owner "${{ github.repository_owner }}"             --repo "${{ github.event.repository.name }}"             --pr "${{ github.event.pull_request.number }}"             --sha "${{ github.event.pull_request.head.sha }}"             --check "risk-policy-gate"             --contract harness.contract.json
           STATUS=$?
           set -e
           END_MS="$(date +%s%3N)"
@@ -278,11 +266,6 @@ jobs:
         run: corepack enable
       - name: Install dependencies
         run: pnpm install
-      - name: Install Ralph runtime
-        run: |
-          python3 -m pip install --user pipx
-          export PATH="$HOME/.local/bin:$PATH"
-          python3 -m pipx install "git+https://github.com/jscraik/ralph-gold.git@5d4b57537a29c3edb566665c9482ae5ca1d49eed" --force
       - name: Capture browser evidence fixture
         run: |
           mkdir -p artifacts/evidence
@@ -295,8 +278,7 @@ jobs:
           START_MS="$(date +%s%3N)"
           CHANGED_FILES="$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}" | paste -sd, -)"
           set +e
-          export PATH="$HOME/.local/bin:$PATH"
-          ralph evidence-verify --contract harness.contract.json --files artifacts/evidence/loop-stage-smoke.png --changed "$CHANGED_FILES"
+          pnpm dlx @brainwav/coding-harness@0.6.0 evidence-verify --contract harness.contract.json --files artifacts/evidence/loop-stage-smoke.png
           STATUS=$?
           set -e
           END_MS="$(date +%s%3N)"
@@ -339,11 +321,6 @@ jobs:
         run: corepack enable
       - name: Install dependencies
         run: pnpm install
-      - name: Install Ralph runtime
-        run: |
-          python3 -m pip install --user pipx
-          export PATH="$HOME/.local/bin:$PATH"
-          python3 -m pipx install "git+https://github.com/jscraik/ralph-gold.git@5d4b57537a29c3edb566665c9482ae5ca1d49eed" --force
       - name: Run remediation-decision stage (plan only)
         run: |
           mkdir -p artifacts/remediation
@@ -351,8 +328,7 @@ jobs:
           START_MS="$(date +%s%3N)"
           echo "[]" > artifacts/remediation/findings.json
           set +e
-          export PATH="$HOME/.local/bin:$PATH"
-          ralph remediate run --findings artifacts/remediation/findings.json --contract harness.contract.json --mode run --json
+          pnpm dlx @brainwav/coding-harness@0.6.0 remediate run --findings artifacts/remediation/findings.json --contract harness.contract.json --mode run --json
           STATUS=$?
           set -e
           END_MS="$(date +%s%3N)"
