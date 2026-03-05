@@ -192,6 +192,8 @@ jobs:
     name: risk-policy-gate
     needs: [pr-template, dependency-chain]
     runs-on: ubuntu-latest
+    outputs:
+      tier: ${{ steps.risk_policy.outputs.tier }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -206,12 +208,13 @@ jobs:
       - name: Enforce docs drift baseline
         run: node scripts/check-doc-links.mjs
       - name: Run risk-policy gate
+        id: risk_policy
         run: |
           mkdir -p artifacts/telemetry
           START_MS="$(date +%s%3N)"
           CHANGED_FILES="$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}" | paste -sd, -)"
           set +e
-          pnpm dlx git+https://github.com/jscraik/coding-harness.git#968b60aa030bc16174799082fd2d2ab000a3941b preflight-gate --contract harness.contract.json --files "$CHANGED_FILES" --max-tier medium
+          python3 scripts/harness_pr_pipeline.py preflight-gate --contract harness.contract.json --files "$CHANGED_FILES" --max-tier medium
           STATUS=$?
           set -e
           END_MS="$(date +%s%3N)"
@@ -236,7 +239,7 @@ jobs:
 
   review-gate:
     name: review-gate
-    needs: [risk-policy-gate]
+    needs: [risk-policy-gate, security-scan]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -252,7 +255,7 @@ jobs:
           mkdir -p artifacts/telemetry
           START_MS="$(date +%s%3N)"
           set +e
-          pnpm dlx git+https://github.com/jscraik/coding-harness.git#968b60aa030bc16174799082fd2d2ab000a3941b review-gate             --token "${{ secrets.GITHUB_TOKEN }}"             --owner "${{ github.repository_owner }}"             --repo "${{ github.event.repository.name }}"             --pr "${{ github.event.pull_request.number }}"             --sha "${{ github.event.pull_request.head.sha }}"             --check "risk-policy-gate"             --contract harness.contract.json
+          python3 scripts/harness_pr_pipeline.py review-gate --contract harness.contract.json --tier "${{ needs.risk-policy-gate.outputs.tier }}"
           STATUS=$?
           set -e
           END_MS="$(date +%s%3N)"
@@ -300,9 +303,8 @@ jobs:
         run: |
           mkdir -p artifacts/telemetry
           START_MS="$(date +%s%3N)"
-          CHANGED_FILES="$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}" | paste -sd, -)"
           set +e
-          pnpm dlx git+https://github.com/jscraik/coding-harness.git#968b60aa030bc16174799082fd2d2ab000a3941b evidence-verify --contract harness.contract.json --files artifacts/evidence/loop-stage-smoke.png
+          python3 scripts/harness_pr_pipeline.py evidence-verify --contract harness.contract.json --tier "${{ needs.risk-policy-gate.outputs.tier }}" --files artifacts/evidence/loop-stage-smoke.png
           STATUS=$?
           set -e
           END_MS="$(date +%s%3N)"
@@ -352,7 +354,7 @@ jobs:
           START_MS="$(date +%s%3N)"
           echo "[]" > artifacts/remediation/findings.json
           set +e
-          pnpm dlx git+https://github.com/jscraik/coding-harness.git#968b60aa030bc16174799082fd2d2ab000a3941b remediate run --findings artifacts/remediation/findings.json --contract harness.contract.json --mode run --json
+          python3 scripts/harness_pr_pipeline.py remediate-run --findings artifacts/remediation/findings.json --contract harness.contract.json --mode run --tier "${{ needs.risk-policy-gate.outputs.tier }}" --json
           STATUS=$?
           set -e
           END_MS="$(date +%s%3N)"
