@@ -102,6 +102,8 @@ Thumbs.db
 /ai/tmp/
 /ai/cache/
 /ai/raw/
+# Local agent skill feedback logs
+ops/metrics/skill-feedback/*.jsonl
 # Internal docs (do not commit)
 docs/transcripts/
 

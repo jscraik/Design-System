@@ -269,7 +269,7 @@ export function TemplateFieldGroupDemo() {
                 id="apiKey"
                 type="text"
                 aria-label="API Key"
-                value="sk_live_1234567890abcdef"
+                value="demo_api_key_1234567890abcdef"
                 readOnly
                 className="w-full px-3 py-2 rounded-lg border border-border bg-muted text-text-secondary font-mono text-sm"
               />

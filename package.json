@@ -96,13 +96,12 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset publish",
-    "prepare": "prek install"
+    "prepare": "if command -v prek >/dev/null; then prek install; else echo \"prek unavailable; skipping git hook install\"; fi"
   },
   "devDependencies": {
     "@argos-ci/cli": "^3.0.6",
     "@argos-ci/playwright": "^1.7.0",
     "@axe-core/playwright": "^4.11.1",
-    "@brainwav/coding-harness": "^0.6.0",
     "@changesets/cli": "^2.27.1",
     "@modelcontextprotocol/inspector": "^0.19.0",
     "@openai/apps-sdk-ui": "0.2.1",
@@ -116,6 +115,7 @@
     "hono": "^4.11.10",
     "playwright": "^1.58.1",
     "sharp": "^0.34.5",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   },
@@ -139,8 +139,11 @@
       "react-router@>=7.0.0 <7.12.0": ">=7.12.0",
       "react-router@>=7.0.0 <7.9.6": ">=7.9.6",
       "react-router@>=7.0.0 <=7.8.2": ">=7.9.0",
-      "hono@<4.11.10": ">=4.11.10",
+      "hono@<4.12.4": ">=4.12.4",
+      "@hono/node-server@<1.19.10": ">=1.19.10",
+      "basic-ftp@<5.2.0": ">=5.2.0",
       "diff@<8.0.3": ">=8.0.3",
+      "fast-xml-parser@<5.3.5": ">=5.3.5",
       "undici@>=7.0.0 <7.18.2": ">=7.18.2",
       "tar@<=7.5.2": ">=7.5.3",
       "@isaacs/brace-expansion@<=5.0.0": ">=5.0.1",
