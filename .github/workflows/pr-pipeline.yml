@@ -211,7 +211,7 @@ jobs:
           START_MS="$(date +%s%3N)"
           CHANGED_FILES="$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}" | paste -sd, -)"
           set +e
-          pnpm dlx @brainwav/coding-harness@0.6.0 preflight-gate --contract harness.contract.json --files "$CHANGED_FILES" --max-tier medium
+          pnpm dlx github:jscraik/coding-harness#968b60aa030bc16174799082fd2d2ab000a3941b preflight-gate --contract harness.contract.json --files "$CHANGED_FILES" --max-tier medium
           STATUS=$?
           set -e
           END_MS="$(date +%s%3N)"
@@ -252,7 +252,7 @@ jobs:
           mkdir -p artifacts/telemetry
           START_MS="$(date +%s%3N)"
           set +e
-          pnpm dlx @brainwav/coding-harness@0.6.0 review-gate             --token "${{ secrets.GITHUB_TOKEN }}"             --owner "${{ github.repository_owner }}"             --repo "${{ github.event.repository.name }}"             --pr "${{ github.event.pull_request.number }}"             --sha "${{ github.event.pull_request.head.sha }}"             --check "risk-policy-gate"             --contract harness.contract.json
+          pnpm dlx github:jscraik/coding-harness#968b60aa030bc16174799082fd2d2ab000a3941b review-gate             --token "${{ secrets.GITHUB_TOKEN }}"             --owner "${{ github.repository_owner }}"             --repo "${{ github.event.repository.name }}"             --pr "${{ github.event.pull_request.number }}"             --sha "${{ github.event.pull_request.head.sha }}"             --check "risk-policy-gate"             --contract harness.contract.json
           STATUS=$?
           set -e
           END_MS="$(date +%s%3N)"
@@ -302,7 +302,7 @@ jobs:
           START_MS="$(date +%s%3N)"
           CHANGED_FILES="$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}" | paste -sd, -)"
           set +e
-          pnpm dlx @brainwav/coding-harness@0.6.0 evidence-verify --contract harness.contract.json --files artifacts/evidence/loop-stage-smoke.png
+          pnpm dlx github:jscraik/coding-harness#968b60aa030bc16174799082fd2d2ab000a3941b evidence-verify --contract harness.contract.json --files artifacts/evidence/loop-stage-smoke.png
           STATUS=$?
           set -e
           END_MS="$(date +%s%3N)"
@@ -352,7 +352,7 @@ jobs:
           START_MS="$(date +%s%3N)"
           echo "[]" > artifacts/remediation/findings.json
           set +e
-          pnpm dlx @brainwav/coding-harness@0.6.0 remediate run --findings artifacts/remediation/findings.json --contract harness.contract.json --mode run --json
+          pnpm dlx github:jscraik/coding-harness#968b60aa030bc16174799082fd2d2ab000a3941b remediate run --findings artifacts/remediation/findings.json --contract harness.contract.json --mode run --json
           STATUS=$?
           set -e
           END_MS="$(date +%s%3N)"
