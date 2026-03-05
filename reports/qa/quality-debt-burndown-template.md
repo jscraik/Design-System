@@ -25,11 +25,11 @@
 
 | Category | Current status | Freshness | Metric | Trend | Owner | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| Lint suppressions | `Green/Amber/Red` | `Fresh/Stale/Unavailable` | `<value>` | `<+/-/=>` | `@owner` | `<note>` |
-| A11y debt | `Green/Amber/Red` | `Fresh/Stale/Unavailable` | `<value>` | `<+/-/=>` | `@owner` | `<note>` |
-| CSS lint coverage gap | `Green/Amber/Red` | `Fresh/Stale/Unavailable` | `<value>` | `<+/-/=>` | `@owner` | `<note>` |
-| Integration drift | `Green/Amber/Red` | `Fresh/Stale/Unavailable` | `<value>` | `<+/-/=>` | `@owner` | `<note>` |
-| Gate reliability debt | `Green/Amber/Red` | `Fresh/Stale/Unavailable` | `<value>` | `<+/-/=>` | `@owner` | `<note>` |
+| Lint suppressions | `Green/Amber/Red` | `Fresh/Stale/Unavailable` | `<value>` | `<+/-/=>` | `` `@owner` `` | `<note>` |
+| A11y debt | `Green/Amber/Red` | `Fresh/Stale/Unavailable` | `<value>` | `<+/-/=>` | `` `@owner` `` | `<note>` |
+| CSS lint coverage gap | `Green/Amber/Red` | `Fresh/Stale/Unavailable` | `<value>` | `<+/-/=>` | `` `@owner` `` | `<note>` |
+| Integration drift | `Green/Amber/Red` | `Fresh/Stale/Unavailable` | `<value>` | `<+/-/=>` | `` `@owner` `` | `<note>` |
+| Gate reliability debt | `Green/Amber/Red` | `Fresh/Stale/Unavailable` | `<value>` | `<+/-/=>` | `` `@owner` `` | `<note>` |
 
 ## Trend vs Previous Week
 
