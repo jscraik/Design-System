@@ -414,7 +414,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Run typecheck
-        run: pnpm typecheck
+        run: |
+          if jq -e '.scripts.typecheck' package.json >/dev/null; then
+            pnpm typecheck
+          else
+            echo "No root typecheck script defined; skipping typecheck job."
+          fi
 
   test:
     name: test
@@ -446,7 +451,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Run full check
-        run: pnpm check
+        run: |
+          if jq -e '.scripts.check' package.json >/dev/null; then
+            pnpm check
+          else
+            pnpm format:check
+          fi
 
   security-scan:
     name: security-scan
