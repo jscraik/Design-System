@@ -180,7 +180,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Enforce docs drift baseline
-        run: pnpm doc:lint
+        run: node scripts/check-doc-links.mjs
       - name: Run risk-policy gate
         run: |
           mkdir -p artifacts/telemetry
