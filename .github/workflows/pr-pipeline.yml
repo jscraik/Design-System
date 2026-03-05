@@ -449,7 +449,7 @@ jobs:
       - name: Setup Trivy
         uses: aquasecurity/setup-trivy@v0.2.2
       - name: Run Trivy filesystem scan
-        run: trivy fs --scanners vuln --severity CRITICAL --exit-code 1 --no-progress .
+        run: trivy fs --scanners vuln --severity HIGH,CRITICAL --exit-code 1 --no-progress .
       - name: Run Semgrep scan
         uses: returntocorp/semgrep-action@v1
         with:

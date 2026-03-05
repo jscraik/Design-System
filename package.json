@@ -96,7 +96,7 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset publish",
-    "prepare": "command -v prek >/dev/null && prek install || echo \"prek unavailable; skipping git hook install\""
+    "prepare": "if command -v prek >/dev/null; then prek install; else echo \"prek unavailable; skipping git hook install\"; fi"
   },
   "devDependencies": {
     "@argos-ci/cli": "^3.0.6",
