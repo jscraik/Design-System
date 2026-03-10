@@ -55,6 +55,8 @@ function App() {
 }
 ```
 
+`@design-studio/ui/styles.css` is the supported public stylesheet entry for consumers. Do not import internal style subpaths such as `@design-studio/ui/styles/ui.css` or `@design-studio/ui/styles/theme.css`.
+
 ## Verify
 
 - Run Storybook (`pnpm dev:storybook`) and confirm the UI stories render.

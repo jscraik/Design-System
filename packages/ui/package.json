@@ -17,6 +17,7 @@
       "import": "./dist/icons.js"
     },
     "./styles.css": "./dist/ui.css",
+    "./styles/ui.css": "./dist/ui.css",
     "./dist/ui.css": "./dist/ui.css",
     "./base": {
       "types": "./dist/src/components/ui/base/index.d.ts",

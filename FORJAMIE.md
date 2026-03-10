@@ -63,6 +63,7 @@ flowchart LR
 - `platforms/mcp/` contains the MCP server integration harness and contract tests.
 - `docs/` holds architecture, adoption, rollout, and governance guidance.
 - `scripts/` holds build, validation, drift-check, onboarding, and release tooling.
+- Consumer projects should import `@design-studio/ui/styles.css` as the public stylesheet entry; internal style subpaths are implementation details and raw `file:` installs of `packages/ui` are not a supported external adoption path.
 
 ## What's done / what's not
 
@@ -108,11 +109,13 @@ See also: `~/.codex/instructions/Learnings.md`
 - Dependency drift can still show up as lockfile-only noise; keep package specifiers aligned with the lockfile when pre-release packages are involved.
 - `FORJAMIE.md` had started drifting toward a placeholder template; keep it as a real project map, not just a status shell.
 - The repo still carries known lint and accessibility debt that should be paid down incrementally as touched areas are updated.
+- Cross-project adoption used to look more flexible than it really was; keep README and checklist guidance aligned with the actual exported package surface and supported install modes.
 
 ## Recent changes
 
 ### 2026-03-10
 
+- Clarified the supported downstream adoption path: consumer apps should import `@design-studio/ui/styles.css`, and docs now steer people toward workspace or published-package installs instead of the previously documented raw `file:`/submodule route that does not resolve `workspace:*` dependencies outside the monorepo.
 - Added a root `pnpm.overrides` pin for `express-rate-limit@8.2.2` and refreshed `pnpm-lock.yaml` so the repo no longer resolves the Trivy-flagged `8.2.1` release pulled through `@modelcontextprotocol/sdk`.
 - Pinned `packages/ui` `vitest-axe` from a floating pre-release range to exact `1.0.0-pre.3` and updated `pnpm-lock.yaml` to match. This reduces install drift and keeps the repo on the previously expected pre-release build instead of silently floating to `1.0.0-pre.5`.
 - Restored `FORJAMIE.md` to a detailed project map with current run/test guidance so the repo satisfies its living-document gate in the same change-set.

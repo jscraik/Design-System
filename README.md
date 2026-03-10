@@ -418,6 +418,20 @@ Set `COMPLIANCE_STRICT=1` to turn warnings into errors.
 
 ## Using in Other Projects
 
+Supported consumer paths today are:
+
+- The same pnpm workspace / monorepo, using `workspace:*`
+- Published packages from npm or a private registry
+
+For a consistent UI setup, use the public stylesheet entry:
+
+```css
+@import "tailwindcss";
+@import "@design-studio/ui/styles.css";
+```
+
+Do not import internal style subpaths such as `@design-studio/ui/styles/ui.css` or `@design-studio/ui/styles/theme.css`; those are implementation details bundled into `@design-studio/ui/styles.css`.
+
 ### Option 1: Workspace Reference (Monorepo)
 
 If your other projects are in the same monorepo:
@@ -432,25 +446,7 @@ If your other projects are in the same monorepo:
 }
 ```
 
-### Option 2: Git Submodule
-
-Add this repo as a submodule in your project:
-
-```bash
-git submodule add <repo-url> packages/astudio
-```
-
-Then reference in your package.json:
-
-```json
-{
-  "dependencies": {
-    "@design-studio/ui": "file:./packages/astudio/packages/ui"
-  }
-}
-```
-
-### Option 3: Published Package (npm/GitHub Packages)
+### Option 2: Published Package (npm/GitHub Packages)
 
 Publish to npm or GitHub Packages:
 
@@ -466,6 +462,8 @@ Then install normally:
 ```bash
 pnpm add @design-studio/ui @design-studio/runtime @design-studio/tokens
 ```
+
+Raw `file:` installs of `packages/ui` or a checked-out git submodule are not a supported consumer path. Those source manifests keep `workspace:*` links for local monorepo development, so use either a shared workspace or published packages instead.
 
 Optional private guidance/enforcement package:
 

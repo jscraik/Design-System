@@ -35,32 +35,47 @@ Example (workspace dependency):
 
 **Web (React/Vite/Next)**
 
-- [ ] Import the Apps SDK UI styles + tokens + UI theme in your global CSS:
+- [ ] Import the supported consumer stylesheet in your app entry and let it pull in the required token, Apps SDK UI, theme, and accessibility layers:
 
 ```css
 @import "tailwindcss";
-@import "@openai/apps-sdk-ui/css";
-@import "@design-studio/tokens/foundations.css";
-@import "@design-studio/ui/styles/ui.css";
-@import "@design-studio/ui/styles/theme.css";
+@import "@design-studio/ui/styles.css";
 ```
+
+- [ ] Do not import internal UI style subpaths such as `@design-studio/ui/styles/ui.css` or `@design-studio/ui/styles/theme.css`; those are implementation details, not supported consumer entry points.
 
 - [ ] Ensure Tailwind v4 scans the UI package (if applicable):
 
   **Monorepo (workspace:\* dependencies)**
 
   ```css
-  @source "../../packages/apps-sdk-ui/src";
+  @source "../../node_modules/@openai/apps-sdk-ui";
   @source "../../packages/ui/src";
+  ```
+
+  **Installed packages / separate repo**
+
+  ```css
+  @source "../node_modules/@openai/apps-sdk-ui";
+  @source "../node_modules/@design-studio/ui/dist";
+  ```
+
 **Widgets (standalone bundles)**
 
-- [ ] Include the same CSS imports in the widget entry stylesheet.
-- [ ] Validate the bundle outputs include `tokens.css`, `ui.css`, and `theme.css`.
+- [ ] Include the same `@design-studio/ui/styles.css` import in the widget entry stylesheet.
+- [ ] Validate the bundle output includes the resolved `@design-studio/ui/styles.css` payload rather than relying on internal `ui.css` / `theme.css` subpaths.
 
 **Tauri (desktop)**
 
-- [ ] Import the same CSS in the webview entry stylesheet.
+- [ ] Import the same `@design-studio/ui/styles.css` entry in the webview stylesheet.
 - [ ] Confirm the theme variables load before your app root renders.
+
+### Supported install modes
+
+- [ ] Use one of the supported dependency models:
+  - Same pnpm workspace / monorepo with `workspace:*`
+  - Published packages from npm or a private registry
+- [ ] Do **not** treat raw `file:` installs of `packages/ui` or a checked-out git submodule as a supported consumer path; the source package manifests intentionally use workspace dependencies for local development.
 
 ### 3) Use tokens correctly
 
