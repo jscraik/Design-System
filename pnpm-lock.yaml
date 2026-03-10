@@ -597,8 +597,8 @@ importers:
         specifier: ^4.0.18
         version: 4.0.18(@opentelemetry/api@1.9.0)(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.5.0)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2)
       vitest-axe:
-        specifier: ^1.0.0-pre.3
-        version: 1.0.0-pre.5(vitest@4.0.18)
+        specifier: 1.0.0-pre.3
+        version: 1.0.0-pre.3(vitest@4.0.18)
 
   packages/validation-prototype:
     dependencies:
@@ -7949,10 +7949,10 @@ packages:
       yaml:
         optional: true
 
-  vitest-axe@1.0.0-pre.5:
-    resolution: {integrity: sha512-eUGxjpXnceha9lkqIVyMgOUeDmWU9LVjNiLTjAjDtMew0WbaBDtixoUvdftOhZfqRI03G2Ay4ZxaU1KG6jNCiQ==}
+  vitest-axe@1.0.0-pre.3:
+    resolution: {integrity: sha512-vrsyixV225vMe0vGZV0aZjOYez2Pan5MxIx2RqnYnpbbRrUN2lJpQS9ong6dfF5a7BfQenR0LOD6hei3IQIPSw==}
     peerDependencies:
-      vitest: '>=1'
+      vitest: '>=0.31.0'
 
   vitest@4.0.18:
     resolution: {integrity: sha512-hOQuK7h0FGKgBAas7v0mSAsnvrIgAvWmRFjmzpJ7SwFHH3g1k2u37JtYwOwmEKhK6ZO3v9ggDBBm0La1LCK4uQ==}
@@ -17228,9 +17228,8 @@ snapshots:
       tsx: 4.21.0
       yaml: 2.8.2
 
-  vitest-axe@1.0.0-pre.5(vitest@4.0.18):
+  vitest-axe@1.0.0-pre.3(vitest@4.0.18):
     dependencies:
-      '@vitest/pretty-format': 3.2.4
       axe-core: 4.11.1
       chalk: 5.6.2
       lodash-es: 4.17.23
