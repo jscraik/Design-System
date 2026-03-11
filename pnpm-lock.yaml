@@ -72,8 +72,8 @@ importers:
         specifier: ^4.5.3
         version: 4.5.3
       hono:
-        specifier: '>=4.12.4'
-        version: 4.12.5
+        specifier: ^4.12.7
+        version: 4.12.7
       playwright:
         specifier: ^1.58.1
         version: 1.58.1
@@ -716,8 +716,8 @@ importers:
         specifier: ^1.26.0
         version: 1.26.0(@cfworker/json-schema@4.1.1)(zod@4.3.5)
       hono:
-        specifier: '>=4.12.4'
-        version: 4.12.5
+        specifier: ^4.12.7
+        version: 4.12.7
       zod:
         specifier: ^4.3.5
         version: 4.3.5
@@ -5593,6 +5593,10 @@ packages:
 
   hono@4.12.5:
     resolution: {integrity: sha512-3qq+FUBtlTHhtYxbxheZgY8NIFnkkC/MR8u5TTsr7YZ3wixryQ3cCwn3iZbg8p8B88iDBBAYSfZDS75t8MN7Vg==}
+    engines: {node: '>=16.9.0'}
+
+  hono@4.12.7:
+    resolution: {integrity: sha512-jq9l1DM0zVIvsm3lv9Nw9nlJnMNPOcAtsbsgiUhWcFzPE99Gvo6yRTlszSLLYacMeQ6quHD6hMfId8crVHvexw==}
     engines: {node: '>=16.9.0'}
 
   html-encoding-sniffer@6.0.0:
@@ -14325,6 +14329,8 @@ snapshots:
   hls.js@1.6.15: {}
 
   hono@4.12.5: {}
+
+  hono@4.12.7: {}
 
   html-encoding-sniffer@6.0.0:
     dependencies:
