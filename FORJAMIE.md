@@ -113,6 +113,10 @@ See also: `~/.codex/instructions/Learnings.md`
 
 ## Recent changes
 
+### 2026-03-11
+
+- Added targeted root `pnpm.overrides` remediations for open GitHub Dependabot alerts (`hono`, `axios`, `svgo`, `rollup`, `ajv`, and vulnerable `minimatch` ranges), then regenerated `pnpm-lock.yaml` so resolution now lands on patched versions across workspaces.
+
 ### 2026-03-10
 
 - Clarified the supported downstream adoption path: consumer apps should import `@design-studio/ui/styles.css`, and docs now steer people toward workspace or published-package installs instead of the previously documented raw `file:`/submodule route that does not resolve `workspace:*` dependencies outside the monorepo.
@@ -134,7 +138,7 @@ project: design-system
 repo: ~/dev/design-system
 status: IN_PROGRESS
 health: yellow
-last_updated: 2026-03-10
+last_updated: 2026-03-11
 open_prs: 0
 blockers: none
 next_milestone: ChatGPT widget integration
