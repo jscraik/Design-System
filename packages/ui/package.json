@@ -159,7 +159,7 @@
     "@storybook/addon-vitest": "10.2.10",
     "@storybook/react-vite": "10.2.10",
     "@storybook/test": "^8.6.15",
-    "storybook": "10.2.10",
+    "storybook": "10.2.17",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
