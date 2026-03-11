@@ -26,6 +26,10 @@ const RESULTS_DIR =
 const SCREENSHOTS_DIR = join(RESULTS_DIR, "screenshots");
 const SNAPSHOTS_DIR = join(RESULTS_DIR, "snapshots");
 
+// Retry configuration for transient daemon errors
+const MAX_FLOW_ATTEMPTS = Number(process.env.MAX_FLOW_ATTEMPTS) || 3;
+const FLOW_RETRY_BASE_DELAY_MS = Number(process.env.FLOW_RETRY_BASE_DELAY_MS) || 1000;
+
 [RESULTS_DIR, SCREENSHOTS_DIR, SNAPSHOTS_DIR].forEach((dir) => {
   if (!existsSync(dir)) {
     mkdirSync(dir, { recursive: true });

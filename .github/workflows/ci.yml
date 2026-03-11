@@ -200,14 +200,6 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Build Storybook
-        if: github.event_name != 'pull_request' || steps.storybook_changes.outputs.changed == 'true'
-        run: pnpm storybook:build
-
-      - name: Run Storybook tests (a11y + interactions)
-        if: github.event_name != 'pull_request' || steps.storybook_changes.outputs.changed == 'true'
-        run: pnpm storybook:test
-
       - name: Cache UI dist
         id: ui-dist-cache
         uses: actions/cache@v5
@@ -218,6 +210,14 @@ jobs:
       - name: Build UI (if cache miss)
         if: steps.ui-dist-cache.outputs.cache-hit != 'true'
         run: pnpm -C packages/ui build
+
+      - name: Build Storybook
+        if: github.event_name != 'pull_request' || steps.storybook_changes.outputs.changed == 'true'
+        run: pnpm storybook:build
+
+      - name: Run Storybook tests (a11y + interactions)
+        if: github.event_name != 'pull_request' || steps.storybook_changes.outputs.changed == 'true'
+        run: pnpm storybook:test
 
       - name: Run widget a11y audit
         run: pnpm test:a11y:widgets:ci
