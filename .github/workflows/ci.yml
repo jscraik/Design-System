@@ -185,6 +185,12 @@ jobs:
       - name: Install deps
         run: pnpm install --frozen-lockfile --prod=false
 
+      - name: Download build artifacts
+        uses: actions/download-artifact@v7
+        with:
+          name: build-artifacts-web
+          path: .
+
       - name: Install Playwright
         run: pnpm exec playwright install --with-deps chromium
 
@@ -255,6 +261,12 @@ jobs:
 
       - name: Install deps
         run: pnpm install --frozen-lockfile --prod=false
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v7
+        with:
+          name: build-artifacts-web
+          path: .
 
       - name: Install Playwright
         run: pnpm exec playwright install --with-deps chromium
@@ -353,10 +365,14 @@ jobs:
       - name: Install deps
         run: pnpm install --frozen-lockfile --prod=false
 
+      - name: Download build artifacts
+        uses: actions/download-artifact@v7
+        with:
+          name: build-artifacts-web
+          path: .
+
       - name: Build web app
-        run: |
-          pnpm build:lib
-          pnpm -C platforms/web/apps/web build
+        run: pnpm -C platforms/web/apps/web build
         env:
           VITE_WIDGETS_BASE: http://127.0.0.1:4173
 

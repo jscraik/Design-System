@@ -54,6 +54,18 @@ function isTransientDaemonError(message) {
   return TRANSIENT_DAEMON_PATTERNS.some((pattern) => pattern.test(message));
 }
 
+function flowSessionName(flowName, attempt) {
+  return `${SESSION_PREFIX}-${flowName.toLowerCase().replace(/\s+/g, "-")}-${attempt}`;
+}
+
+async function closeSession() {
+  try {
+    await runAgentBrowserOnce(["--session", SESSION_NAME, "close"], 5000);
+  } catch {
+    // Session may not exist, ignore
+  }
+}
+
 function runAgentBrowserOnce(args, timeoutMs = 20000) {
   return new Promise((resolve, reject) => {
     const proc = spawn(cliPath, args, {
