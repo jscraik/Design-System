@@ -77,6 +77,8 @@ jobs:
         run: pnpm -C packages/design-system-guidance build
 
       - name: Publish @brainwav/design-system-guidance (restricted)
+        env:
+          NPM_TAG: ${{ inputs.npm_tag }}
         run: |
           cd packages/design-system-guidance
-          npm publish --access restricted --tag "${{ inputs.npm_tag }}"
+          npm publish --access restricted --tag "$NPM_TAG"
