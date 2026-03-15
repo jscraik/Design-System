@@ -19,6 +19,64 @@ export type InstallResult = {
 
 const DEFAULT_SOURCE = "clawdhub";
 
+// ─── SECURITY HELPERS ─────────────────────────────────────────────────────────
+
+/**
+ * Validates that a resolved `candidate` path is strictly inside `base`.
+ * Throws if the resolved path escapes the base directory (path traversal guard).
+ */
+function assertWithinBase(base: string, candidate: string, label: string): void {
+  const resolvedBase = path.resolve(base);
+  const resolvedCandidate = fs.realpathSync.native(
+    // realpathSync needs the path to exist; use resolve for pre-existence checks
+    candidate,
+  );
+  if (!resolvedCandidate.startsWith(resolvedBase + path.sep) && resolvedCandidate !== resolvedBase) {
+    throw new Error(
+      `Security: ${label} path "${candidate}" escapes allowed base "${resolvedBase}".`,
+    );
+  }
+}
+
+/**
+ * Same as assertWithinBase but works before the path exists on disk
+ * (uses path.resolve rather than realpathSync).
+ */
+function assertWithinBaseResolved(base: string, candidate: string, label: string): void {
+  const resolvedBase = path.resolve(base);
+  const resolvedCandidate = path.resolve(candidate);
+  if (
+    !resolvedCandidate.startsWith(resolvedBase + path.sep) &&
+    resolvedCandidate !== resolvedBase
+  ) {
+    throw new Error(
+      `Security: ${label} path "${candidate}" escapes allowed base "${resolvedBase}".`,
+    );
+  }
+}
+
+/** Slug must be a simple identifier — no slashes, dots, or shell metacharacters. */
+const SAFE_SLUG_RE = /^[\w][\w.-]{0,127}$/;
+function validateSlug(slug: string): string {
+  if (!SAFE_SLUG_RE.test(slug)) {
+    throw new Error(
+      `Security: slug "${slug}" contains invalid characters. Only alphanumeric, hyphens, underscores, and dots are allowed.`,
+    );
+  }
+  return slug;
+}
+
+/** Zip path must be an absolute, existing file. */
+function validateZipPath(zipPath: string): string {
+  const resolved = path.resolve(zipPath);
+  if (!fs.existsSync(resolved) || !fs.statSync(resolved).isFile()) {
+    throw new Error(`Security: zipPath "${zipPath}" is not a valid existing file.`);
+  }
+  return resolved;
+}
+
+// ─── PUBLIC API ───────────────────────────────────────────────────────────────
+
 export async function installSkillFromZip(
   zipPath: string,
   destinations: InstallDestination[],
@@ -28,16 +86,21 @@ export async function installSkillFromZip(
     throw new Error("At least one install destination is required.");
   }
 
+  const safeSlug = validateSlug(options.slug);
+  const safeZipPath = validateZipPath(zipPath);
+
   const tempExtract = fs.mkdtempSync(path.join(os.tmpdir(), "skill-extract-"));
   try {
-    await unzip(zipPath, tempExtract);
+    await unzip(safeZipPath, tempExtract);
     const skillRoot = findSkillRoot(tempExtract, options.strictSingleSkill ?? true);
-    const origin = buildOrigin(options);
+    const origin = buildOrigin({ ...options, slug: safeSlug });
 
     const installPaths: string[] = [];
     for (const destination of destinations) {
-      fs.mkdirSync(destination.rootPath, { recursive: true });
-      const finalPath = uniqueDestinationPath(destination.rootPath, options.slug);
+      const safeRoot = path.resolve(destination.rootPath);
+      fs.mkdirSync(safeRoot, { recursive: true });
+      const finalPath = uniqueDestinationPath(safeRoot, safeSlug);
+      // finalPath is already validated inside uniqueDestinationPath
       if (fs.existsSync(finalPath)) {
         fs.rmSync(finalPath, { recursive: true, force: true });
       }
@@ -48,7 +111,7 @@ export async function installSkillFromZip(
 
     const selected = destinations[0];
     return {
-      selectedId: `${selected.storageKey}-${options.slug}`,
+      selectedId: `${selected.storageKey}-${safeSlug}`,
       installPaths,
     };
   } finally {
@@ -57,22 +120,32 @@ export async function installSkillFromZip(
 }
 
 export function findSkillRoot(rootDir: string, strictSingleSkill: boolean): string {
-  const direct = path.join(rootDir, "SKILL.md");
-  if (fs.existsSync(direct)) return rootDir;
+  const resolvedRoot = path.resolve(rootDir);
+
+  const direct = path.join(resolvedRoot, "SKILL.md");
+  if (fs.existsSync(direct)) return resolvedRoot;
 
   const children = fs
-    .readdirSync(rootDir, { withFileTypes: true })
+    .readdirSync(resolvedRoot, { withFileTypes: true })
     .filter((entry) => entry.isDirectory());
 
   const candidates = children
-    .map((entry) => path.join(rootDir, entry.name))
-    .filter((dir) => fs.existsSync(path.join(dir, "SKILL.md")));
+    .map((entry) => path.join(resolvedRoot, entry.name))
+    // Guard: candidate must stay inside rootDir (symlink escape prevention)
+    .filter((dir) => {
+      try {
+        assertWithinBaseResolved(resolvedRoot, dir, "skill-root candidate");
+        return fs.existsSync(path.join(dir, "SKILL.md"));
+      } catch {
+        return false;
+      }
+    });
 
   if (candidates.length === 1) return candidates[0];
   if (strictSingleSkill) {
     throw new Error("Zip did not contain a single skill root with SKILL.md.");
   }
-  return candidates[0] ?? rootDir;
+  return candidates[0] ?? resolvedRoot;
 }
 
 export function writeOrigin(destination: string, origin: OriginMetadata) {
@@ -90,13 +163,33 @@ export function buildOrigin(options: InstallOptions): OriginMetadata {
   };
 }
 
+/**
+ * Builds a unique destination path for slug within base.
+ *
+ * Security hardening vs original:
+ * - slug is pre-validated by validateSlug() before this is called
+ * - resolvedBase is computed once to prevent TOCTOU races
+ * - candidate is asserted within base before being returned
+ * - loop count is capped to prevent DoS via infinite collision
+ */
 export function uniqueDestinationPath(base: string, slug: string): string {
-  let candidate = path.join(base, slug);
+  const resolvedBase = path.resolve(base);
+  let candidate = path.join(resolvedBase, slug);
   let suffix = 1;
+  const MAX_SUFFIX = 1000;
+
   while (fs.existsSync(candidate)) {
-    candidate = path.join(base, `${slug}-${suffix}`);
+    if (suffix > MAX_SUFFIX) {
+      throw new Error(
+        `uniqueDestinationPath: could not find a free slot for slug "${slug}" after ${MAX_SUFFIX} attempts.`,
+      );
+    }
+    candidate = path.join(resolvedBase, `${slug}-${suffix}`);
     suffix += 1;
   }
+
+  // Final guard: resolved candidate must be inside base
+  assertWithinBaseResolved(resolvedBase, candidate, "install destination");
   return candidate;
 }
 
@@ -132,6 +225,7 @@ export function savePublishHash(slug: string, skillPath: string) {
 }
 
 function unzip(zipPath: string, destination: string): Promise<void> {
+  // zipPath and destination are both resolved absolute paths at this point.
   return new Promise((resolve, reject) => {
     const proc = childProcess.spawn("/usr/bin/ditto", ["-x", "-k", zipPath, destination]);
     const stderr: Buffer[] = [];

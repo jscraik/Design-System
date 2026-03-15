@@ -144,6 +144,31 @@ const config = {
       title: "App",
       files: "**/*.stories.tsx",
     },
+
+    // ─── Holding area ────────────────────────────────────────────────────────
+    // These stories were in _holding/ (not wired). Now promoted so agents and
+    // Agentation can see, annotate, and fix them. Prefix "Holding/" keeps them
+    // visually distinct from fully-promoted stories.
+    {
+      directory: toStorybookRelative(path.join(uiStorybookRoot, "_holding", "component-stories")),
+      title: "Holding/Components",
+      files: "**/*.stories.tsx",
+    },
+    {
+      directory: toStorybookRelative(path.join(uiStorybookRoot, "_holding", "docs")),
+      title: "Holding/Docs",
+      files: "**/*.stories.tsx",
+    },
+    {
+      directory: toStorybookRelative(path.join(uiStorybookRoot, "_holding", "pages")),
+      title: "Holding/Pages",
+      files: "**/*.stories.tsx",
+    },
+    {
+      directory: toStorybookRelative(path.join(uiStorybookRoot, "_holding", "App")),
+      title: "Holding/App",
+      files: "**/*.stories.tsx",
+    },
   ],
 
   addons: [
@@ -151,6 +176,7 @@ const config = {
     "@storybook/addon-a11y",
     "@storybook/addon-vitest",
     "@storybook/addon-themes",
+    "@storybook/addon-coverage",
   ],
 
   framework: {

@@ -4,6 +4,27 @@ import { computeSkillHash } from "./hash.js";
 import { formatTitle, parseMetadata, stripFrontmatter } from "./metadata.js";
 import type { SkillPlatform, SkillReference, SkillStats, SkillSummary } from "./types.js";
 
+// ─── SECURITY HELPERS ─────────────────────────────────────────────────────────
+
+/** Ensures `candidate` is strictly inside `base` — prevents path traversal via symlinks or `..` segments. */
+function isWithinBase(base: string, candidate: string): boolean {
+  const resolvedBase = path.resolve(base);
+  const resolvedCandidate = path.resolve(candidate);
+  return (
+    resolvedCandidate === resolvedBase ||
+    resolvedCandidate.startsWith(resolvedBase + path.sep)
+  );
+}
+
+/** Validates a storage key is safe to embed in IDs (no path separators or shell metacharacters). */
+const SAFE_KEY_RE = /^[\w][\w.:/-]{0,127}$/;
+function validateStorageKey(key: string): string {
+  if (!SAFE_KEY_RE.test(key)) {
+    throw new Error(`Security: storageKey "${key}" contains invalid characters.`);
+  }
+  return key;
+}
+
 type ScanResult = {
   id: string;
   name: string;
@@ -22,18 +43,27 @@ export function scanSkills(
 ): ScanResult[] {
   if (!fs.existsSync(basePath)) return [];
 
-  const entries = fs.readdirSync(basePath, { withFileTypes: true });
+  // Resolve once so all child path comparisons use the same canonical base
+  const resolvedBase = path.resolve(basePath);
+  const safeKey = validateStorageKey(storageKey);
+
+  const entries = fs.readdirSync(resolvedBase, { withFileTypes: true });
   const skills: ScanResult[] = [];
 
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
-    const skillDir = path.join(basePath, entry.name);
+
+    const skillDir = path.join(resolvedBase, entry.name);
+
+    // Guard: skillDir must still be within the resolved base (prevents symlink escape)
+    if (!isWithinBase(resolvedBase, skillDir)) continue;
+
     const skillMd = path.join(skillDir, "SKILL.md");
     if (!fs.existsSync(skillMd)) continue;
 
     const markdown = fs.readFileSync(skillMd, "utf8");
     const metadata = parseMetadata(markdown);
-    const references = referenceFiles(path.join(skillDir, "references"));
+    const references = referenceFiles(path.join(skillDir, "references"), resolvedBase);
     const stats: SkillStats = {
       references: references.length,
       assets: countEntries(path.join(skillDir, "assets")),
@@ -42,7 +72,7 @@ export function scanSkills(
     };
 
     skills.push({
-      id: `${storageKey}-${entry.name}`,
+      id: `${safeKey}-${entry.name}`,
       name: entry.name,
       displayName: formatTitle(metadata.name ?? entry.name),
       description: metadata.description ?? "No description available.",
@@ -58,14 +88,20 @@ export function scanSkills(
   );
 }
 
-export function referenceFiles(dirPath: string): SkillReference[] {
+export function referenceFiles(dirPath: string, allowedBase?: string): SkillReference[] {
   if (!fs.existsSync(dirPath)) return [];
+
+  // If a base is provided, ensure dirPath is still within it
+  if (allowedBase && !isWithinBase(allowedBase, dirPath)) return [];
+
   const entries = fs.readdirSync(dirPath, { withFileTypes: true });
 
   const refs = entries
     .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith(".md"))
     .map((entry) => {
       const filePath = path.join(dirPath, entry.name);
+      // Guard each individual ref file path too
+      if (allowedBase && !isWithinBase(allowedBase, filePath)) return null;
       const name = formatTitle(path.basename(entry.name, path.extname(entry.name)));
       return {
         id: filePath,
@@ -73,6 +109,7 @@ export function referenceFiles(dirPath: string): SkillReference[] {
         path: filePath,
       };
     })
+    .filter((ref): ref is SkillReference => ref !== null)
     .sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: "base" }));
 
   return refs;

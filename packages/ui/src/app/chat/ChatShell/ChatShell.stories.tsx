@@ -20,6 +20,7 @@ import {
 } from "../ChatVariants";
 
 const meta: Meta = {
+  tags: ['autodocs'],
   title: "Components/Chat/Chat Shell",
   component: ChatVariantSplitSidebar,
   parameters: {

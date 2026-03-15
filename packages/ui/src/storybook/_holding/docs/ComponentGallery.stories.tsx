@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 const Stub = () => null;
 
 const meta = {
+  tags: ['autodocs'],
   title: "Overview/Component Gallery",
   component: Stub,
   parameters: {

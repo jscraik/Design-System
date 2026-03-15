@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { fn } from "@storybook/test";
+import { expect, fn, userEvent, within } from "@storybook/test";
 import { useState } from "react";
+
 
 import { IconMessaging, IconUserLock } from "../../../icons/ChatGPTIcons";
 
@@ -128,3 +129,74 @@ export const AllStates: Story = {
     </div>
   ),
 };
+
+// ─── Interaction tests ────────────────────────────────────────────────────────
+
+export const ClickToToggle: Story = {
+  args: {
+    checked: false,
+    label: "Notifications",
+    onCheckedChange: fn(),
+  },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.step("Toggle is initially unchecked", async () => {
+      const toggle = canvas.getByRole("switch", { name: /notifications/i });
+      expect(toggle).toHaveAttribute("aria-checked", "false");
+    });
+
+    await userEvent.step("Click toggle to check it", async () => {
+      const toggle = canvas.getByRole("switch", { name: /notifications/i });
+      await userEvent.click(toggle);
+      expect(args.onCheckedChange).toHaveBeenCalledWith(true);
+    });
+  },
+};
+
+export const KeyboardToggle: Story = {
+  args: {
+    checked: false,
+    label: "Push Notifications",
+    onCheckedChange: fn(),
+  },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.step("Tab to focus the toggle", async () => {
+      await userEvent.tab();
+      const toggle = canvas.getByRole("switch", { name: /push notifications/i });
+      expect(toggle).toHaveFocus();
+    });
+
+    await userEvent.step("Press Space to activate", async () => {
+      await userEvent.keyboard(" ");
+      expect(args.onCheckedChange).toHaveBeenCalledWith(true);
+    });
+  },
+};
+
+export const LabelVisible: Story = {
+  args: {
+    checked: true,
+    label: "Two-factor authentication",
+    description: "Adds an extra layer of security",
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.step("Label text is rendered", () => {
+      expect(canvas.getByText("Two-factor authentication")).toBeInTheDocument();
+    });
+
+    await userEvent.step("Description text is rendered", () => {
+      expect(canvas.getByText("Adds an extra layer of security")).toBeInTheDocument();
+    });
+
+    await userEvent.step("Toggle reflects checked state", () => {
+      const toggle = canvas.getByRole("switch");
+      expect(toggle).toHaveAttribute("aria-checked", "true");
+    });
+  },
+};
+
