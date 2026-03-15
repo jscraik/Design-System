@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { fn } from "@storybook/test";
+import { expect, fn, userEvent, within } from "@storybook/test";
 import { useForm } from "react-hook-form";
 
 import { Button } from "../../base/Button";
@@ -29,6 +29,8 @@ type Story = StoryObj<typeof Form>;
 type FormValues = {
   email: string;
 };
+
+// ─── Display stories ──────────────────────────────────────────────────────────
 
 export const Default: Story = {
   render: () => {
@@ -60,5 +62,44 @@ export const Default: Story = {
         </form>
       </Form>
     );
+  },
+};
+
+// ─── Interaction tests ────────────────────────────────────────────────────────
+
+export const ValidateRequired: Story = {
+  render: Default.render,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.step("Submit empty form", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: /submit/i }));
+    });
+
+    await userEvent.step("Validation message appears", async () => {
+      const errorMsg = await canvas.findByText("Email is required");
+      expect(errorMsg).toBeInTheDocument();
+      expect(errorMsg).toHaveClass("text-destructive");
+    });
+  },
+};
+
+export const SuccessfulSubmit: Story = {
+  render: Default.render,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.step("Type valid email", async () => {
+      const input = canvas.getByRole("textbox", { name: /email/i });
+      await userEvent.type(input, "agent@example.com");
+    });
+
+    await userEvent.step("Submit form", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: /submit/i }));
+    });
+
+    await userEvent.step("No validation errors exist", () => {
+      expect(canvas.queryByText("Email is required")).not.toBeInTheDocument();
+    });
   },
 };

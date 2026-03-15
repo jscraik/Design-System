@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 import { useRef, useState } from "react";
 
 import { Button } from "../../base/Button";
@@ -215,3 +216,56 @@ export const ToastStack: Story = {
     );
   },
 };
+
+// ─── Interaction tests ────────────────────────────────────────────────────────
+
+export const DismissToast: Story = {
+  render: WithCloseButton.render,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.step("Toast is visible", () => {
+      expect(canvas.getByText("Dismissible Toast")).toBeInTheDocument();
+    });
+
+    await userEvent.step("Click close button", async () => {
+      const closeBtn = canvas.getByRole("button", { name: /close toast/i });
+      await userEvent.click(closeBtn);
+    });
+
+    await userEvent.step("Toast is dismissed", () => {
+      expect(canvas.queryByText("Dismissible Toast")).not.toBeInTheDocument();
+    });
+  },
+};
+
+export const ToastStackAddAndRemove: Story = {
+  render: ToastStack.render,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.step("Initial toasts are rendered", () => {
+      expect(canvas.getByText("First toast")).toBeInTheDocument();
+      expect(canvas.getByText("Second toast")).toBeInTheDocument();
+      expect(canvas.getByText("Third toast")).toBeInTheDocument();
+    });
+
+    await userEvent.step("Click Add Toast", async () => {
+      await userEvent.click(canvas.getByRole("button", { name: /add toast/i }));
+    });
+
+    await userEvent.step("New toast is added", () => {
+      expect(canvas.getByText("Toast #4")).toBeInTheDocument();
+    });
+
+    await userEvent.step("Dismiss the first toast", async () => {
+      const firstToastCloseBtn = within(canvas.getByText("First toast").closest("div") as HTMLElement).getByRole("button", { name: /close toast/i });
+      await userEvent.click(firstToastCloseBtn);
+    });
+
+    await userEvent.step("First toast is removed", () => {
+      expect(canvas.queryByText("First toast")).not.toBeInTheDocument();
+    });
+  },
+};
+
