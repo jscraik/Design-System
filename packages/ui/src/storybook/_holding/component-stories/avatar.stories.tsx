@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 import { Avatar, AvatarFallback, AvatarImage } from "./fallback/Avatar";
 
@@ -33,3 +34,17 @@ export const Fallback: Story = {
     </Avatar>
   ),
 };
+
+// ─── Interaction tests ────────────────────────────────────────────────────────
+
+export const AvatarRenders: Story = {
+  render: Default.render,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.step("Avatar image renders", () => {
+      expect(canvas.getByRole("img", { name: /profile/i })).toBeInTheDocument();
+    });
+  },
+};
+
