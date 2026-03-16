@@ -1,4 +1,5 @@
 import "./preview.css";
+import "dialkit/styles.css";
 
 import { createMockHost, HostProvider } from "@design-studio/runtime";
 import { AppsSDKUIProvider } from "@design-studio/ui";
@@ -16,15 +17,21 @@ import React from "react";
 // Handlers are applied per-story via `parameters.msw.handlers`.
 mswInitialize({ onUnhandledRequest: "bypass" });
 
-// ─── Agentation (dev-only annotation layer) ───────────────────────────────────
-// Dynamically imported so it is fully tree-shaken in production Storybook builds.
 let AgentationComponent: React.ComponentType<{ endpoint?: string }> | null = null;
+let DialRootComponent: React.ComponentType | null = null;
+
 if (import.meta.env.DEV) {
   // eslint-disable-next-line no-console
   import("agentation").then((mod) => {
     AgentationComponent = mod.Agentation;
   }).catch(() => {
     // agentation unavailable — annotations simply won't appear
+  });
+  
+  import("dialkit").then((mod) => {
+    DialRootComponent = mod.DialRoot;
+  }).catch(() => {
+    // dialkit unavailable
   });
 }
 
@@ -228,9 +235,12 @@ const preview: Preview = {
             >
               <Story />
             </div>
-            {/* Agentation annotation layer — dev only, never in production builds */}
+            {/* Dev overlays: Agentation and Dialkit — dev only, never in production builds */}
             {import.meta.env.DEV && AgentationComponent && (
               <AgentationComponent endpoint="http://localhost:4747" />
+            )}
+            {import.meta.env.DEV && DialRootComponent && (
+              <DialRootComponent />
             )}
           </AppsSDKUIProvider>
         </HostProvider>
