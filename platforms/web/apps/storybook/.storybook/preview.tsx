@@ -1,5 +1,5 @@
 import "./preview.css";
-import "dialkit/styles.css";
+// dialkit styles are only needed in dev — import is guarded below
 
 import { createMockHost, HostProvider } from "@design-studio/runtime";
 import { AppsSDKUIProvider } from "@design-studio/ui";
