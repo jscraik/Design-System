@@ -10,7 +10,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./Card";
+} from "@design-studio/ui";
 
 const meta: Meta<typeof Card> = {
   title: "Components/UI/Data Display/Card",

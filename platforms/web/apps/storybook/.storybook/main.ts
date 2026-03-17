@@ -176,7 +176,7 @@ const config = {
     "@storybook/addon-a11y",
     "@storybook/addon-vitest",
     "@storybook/addon-themes",
-    "@storybook/addon-coverage",
+
   ],
 
   framework: {
@@ -222,6 +222,12 @@ const config = {
         "@design-studio/ui/icons": path.join(repoRoot, "packages/ui/src/icons"),
         "@design-studio/runtime": path.join(repoRoot, "packages/runtime/src"),
         "@design-studio/tokens": path.join(repoRoot, "packages/tokens/src"),
+        // Allows stories in packages/ui/src/storybook/ to import MSW handlers
+        // without a fragile relative path across package boundaries
+        "@storybook-msw": path.join(__dirname, "msw"),
+        // Resolves ../../../../icons relative imports from deep within _holding/ stories
+        // during Rollup production builds (Vite fs.allow covers dev mode already)
+        [path.join(uiRoot, "icons")]: path.join(repoRoot, "packages/ui/src/icons"),
       },
     };
 

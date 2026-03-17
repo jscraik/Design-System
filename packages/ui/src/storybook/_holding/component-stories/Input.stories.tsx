@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "@storybook/test";
 import { useState } from "react";
-import { IconEye, IconEyeOff, IconSearch } from "../../../../icons";
+import { IconEye, IconEyeOff, IconSearch } from "@design-studio/ui/icons";
 import { Button, Input, Label } from "@design-studio/ui";
 
 

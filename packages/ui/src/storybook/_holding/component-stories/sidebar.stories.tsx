@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 
-import { IconChat, IconFolder, IconSettings } from "../../../../icons";
+import { IconChat, IconFolder, IconSettings } from "@design-studio/ui/icons";
 
 import {
   Sidebar,

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "@storybook/test";
 
-import { Button, ListItem } from "../../../components/ui";
+import { Button, ListItem } from "@design-studio/ui";
 
 import { DashboardPage } from "./DashboardPage";
 

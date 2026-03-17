@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
-import { sampleComposeModes } from "../../../../fixtures/sample-data";
+import { sampleComposeModes } from "@design-studio/ui/fixtures/sample-data";
 import { ModeSelector } from "@design-studio/ui";
 
 const meta: Meta<typeof ModeSelector> = {
