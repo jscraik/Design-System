@@ -466,26 +466,14 @@ EOF
     needs: [risk-policy-gate]
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+      - name: Run dependency review (pull_request)
+        if: github.event_name == 'pull_request' && steps.dependency-review-support.outputs.supported == 'true'
+        uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4.9.0
         with:
-          node-version: "24"
-      - name: Enable corepack
-        run: corepack enable
-      - name: Install dependencies
-        run: pnpm install
-      - name: Build tokens (generates dist/ for comparison)
-        run: pnpm --filter @design-studio/tokens build
-        continue-on-error: true
-      - name: Check token drift (advisory)
-        # Advisory mode: reports drift without failing the PR.
-        # Once the 95 existing drifted vars are resolved, replace with:
-        #   node scripts/check-token-drift.mjs --fail
-        run: node scripts/check-token-drift.mjs --json | tee artifacts/token-drift.json
-      - name: Summarise drift in job summary
-        if: always()
-        run: |
-          DRIFT=$(node -e "const d=require('./artifacts/token-drift.json'); console.log(d.summary.driftCount)")
-          if [ "$DRIFT" -eq "0" ]; then
+          fail-on-severity: high
+      - name: Skip dependency review when repository support is unavailable
+        if: github.event_name == 'pull_request' && steps.dependency-review-support.outputs.supported != 'true'
+        run: echo "Dependency review unsupported (requires dependency graph + advanced security); skipping."
             echo "✅ No token drift detected." >> "$GITHUB_STEP_SUMMARY"
           else
             echo "⚠️ Token drift: **$DRIFT** consumed CSS vars not declared in tokens/dist." >> "$GITHUB_STEP_SUMMARY"
