@@ -212,12 +212,16 @@ const config = {
   viteFinal: async (viteConfig: any) => {
     const { default: tailwindcss } = await import("@tailwindcss/vite");
     viteConfig.plugins = [removeModuleDirectives(), ...(viteConfig.plugins ?? []), tailwindcss()];
-    viteConfig.base = "./";
+    viteConfig.base = "/";
 
     viteConfig.resolve = {
       ...(viteConfig.resolve ?? {}),
       alias: {
         ...(viteConfig.resolve?.alias ?? {}),
+        "react": path.join(repoRoot, "node_modules/.pnpm/react@19.2.3/node_modules/react"),
+        "react-dom": path.join(repoRoot, "node_modules/.pnpm/react-dom@19.2.3/node_modules/react-dom"),
+        "react/jsx-runtime": path.join(repoRoot, "node_modules/.pnpm/react@19.2.3/node_modules/react/jsx-runtime"),
+        "react/jsx-dev-runtime": path.join(repoRoot, "node_modules/.pnpm/react@19.2.3/node_modules/react/jsx-dev-runtime"),
         "@design-studio/ui": path.join(repoRoot, "packages/ui/src"),
         "@design-studio/ui/icons": path.join(repoRoot, "packages/ui/src/icons"),
         "@design-studio/runtime": path.join(repoRoot, "packages/runtime/src"),
@@ -229,6 +233,10 @@ const config = {
         // during Rollup production builds (Vite fs.allow covers dev mode already)
         [path.join(uiRoot, "icons")]: path.join(repoRoot, "packages/ui/src/icons"),
       },
+      // Force a single copy of React — prevents error #527 caused by pnpm
+      // having react@19.0.0 (packages/ui) and react@19.2.x (storybook app)
+      // in the same build graph
+      dedupe: ["react", "react-dom"],
     };
 
     viteConfig.server = {
