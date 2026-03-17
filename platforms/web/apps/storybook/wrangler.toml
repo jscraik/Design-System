@@ -1,0 +1,19 @@
+# Cloudflare Pages — Storybook deployment
+# Project: design-system-storybook
+# Deployed at: https://storybook.design-system.pages.dev (or custom domain)
+#
+# This is a static site deployment — Storybook builds to storybook-static/
+# and Cloudflare Pages serves it directly.
+#
+# Local deploy:
+#   pnpm storybook:build
+#   wrangler pages deploy platforms/web/apps/storybook/storybook-static --project-name=design-system-storybook
+
+name = "design-system-storybook"
+pages_build_output_dir = "storybook-static"
+
+[env.preview]
+# Preview deployments use the same config
+
+[env.production]
+# Production deployed from main branch
