@@ -7,7 +7,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./Carousel";
+} from "@design-studio/ui";
 
 const meta: Meta<typeof Carousel> = {
   title: "Components/UI/Navigation/Carousel",

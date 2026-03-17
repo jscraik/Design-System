@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { TextLink } from "./TextLink";
+import { TextLink } from "@design-studio/ui";
 
 /**
  * TextLink component - accessible anchor element with variant styling.

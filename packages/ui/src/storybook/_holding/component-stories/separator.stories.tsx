@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { Separator } from "./fallback/Separator";
+import { Separator } from "@design-studio/ui";
 
 const meta: Meta<typeof Separator> = {
   title: "Components/UI/Base/Separator",

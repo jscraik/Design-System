@@ -10,7 +10,7 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from "./Command";
+} from "@design-studio/ui";
 
 const meta: Meta<typeof Command> = {
   title: "Components/UI/Overlays/Command",

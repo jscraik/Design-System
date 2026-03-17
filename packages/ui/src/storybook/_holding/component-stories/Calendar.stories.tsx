@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 
-import { Calendar } from "./Calendar";
+import { Calendar } from "@design-studio/ui";
 
 const meta: Meta<typeof Calendar> = {
   title: "Components/UI/Base/Calendar",

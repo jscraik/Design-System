@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { CollapsibleSection } from "./CollapsibleSection";
+import { CollapsibleSection } from "@design-studio/ui";
 
 const meta: Meta<typeof CollapsibleSection> = {
   title: "Components/UI/Base/Collapsible Section",

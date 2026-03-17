@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "@storybook/test";
 import { useState } from "react";
 
-import { Button } from "../../base/Button";
-import { Input } from "../../base/Input";
-import { Label } from "../../base/Label";
+import { Button } from "@design-studio/ui";
+import { Input } from "@design-studio/ui";
+import { Label } from "@design-studio/ui";
 
 import {
   Dialog,
@@ -15,7 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./fallback/Dialog";
+} from "@design-studio/ui";
 
 /**
  * Dialog component built on Radix UI primitives.

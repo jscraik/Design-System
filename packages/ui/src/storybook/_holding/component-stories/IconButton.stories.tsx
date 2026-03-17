@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 
-import { IconButton } from "./IconButton";
+import { IconButton } from "@design-studio/ui";
 
 // Mock icons for the story
 const CopyIcon = () => (

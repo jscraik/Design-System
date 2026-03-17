@@ -3,7 +3,7 @@ import { expect, userEvent, within } from "@storybook/test";
 import { useState } from "react";
 
 
-import { Combobox } from "./Combobox";
+import { Combobox } from "@design-studio/ui";
 
 const meta: Meta<typeof Combobox> = {
   title: "Components/UI/Forms/Combobox",

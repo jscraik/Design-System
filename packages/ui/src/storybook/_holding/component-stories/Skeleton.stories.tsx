@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 
-import { Skeleton } from "./Skeleton";
+import { Skeleton } from "@design-studio/ui";
 
 const meta: Meta<typeof Skeleton> = {
   title: "Components/UI/Base/Skeleton",

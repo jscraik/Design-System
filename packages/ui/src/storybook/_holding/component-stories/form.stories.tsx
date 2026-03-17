@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "@storybook/test";
 import { useForm } from "react-hook-form";
 
-import { Button } from "../../base/Button";
-import { Input } from "../../base/Input";
+import { Button } from "@design-studio/ui";
+import { Input } from "@design-studio/ui";
 
 import {
   Form,
@@ -13,7 +13,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./fallback/Form";
+} from "@design-studio/ui";
 
 const meta: Meta<typeof Form> = {
   title: "Components/UI/Forms/Form",

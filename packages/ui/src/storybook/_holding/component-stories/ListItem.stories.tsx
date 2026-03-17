@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { fn } from "@storybook/test";
 
-import { ListItem } from "./ListItem";
+import { ListItem } from "@design-studio/ui";
 
 const meta: Meta<typeof ListItem> = {
   title: "Components/UI/Base/List Item",

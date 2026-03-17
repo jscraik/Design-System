@@ -3,9 +3,9 @@ import { expect, userEvent, within } from "@storybook/test";
 import type { ComponentProps } from "react";
 import { useState } from "react";
 
-import { Button } from "../../base/Button";
+import { Button } from "@design-studio/ui";
 
-import { ModalDialog } from "./Modal";
+import { ModalDialog } from "@design-studio/ui";
 
 const meta: Meta<typeof ModalDialog> = {
   title: "Components/UI/Overlays/Modal",

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 import { useState } from "react";
 
-import { SegmentedControl } from "./SegmentedControl";
+import { SegmentedControl } from "@design-studio/ui";
 
 const meta: Meta<typeof SegmentedControl> = {
   title: "Components/UI/Base/Segmented Control",

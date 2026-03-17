@@ -3,7 +3,7 @@ import { fn } from "@storybook/test";
 
 import { IconCode, IconFolder, IconImage } from "../../../../icons";
 
-import { ContextTag } from "./ContextTag";
+import { ContextTag } from "@design-studio/ui";
 
 const meta: Meta<typeof ContextTag> = {
   title: "Components/UI/Overlays/Context Tag",

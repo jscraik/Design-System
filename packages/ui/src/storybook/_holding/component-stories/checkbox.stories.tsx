@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 
-import { Label } from "../Label";
+import { Label } from "@design-studio/ui";
 
-import { Checkbox } from "./fallback/Checkbox";
+import { Checkbox } from "@design-studio/ui";
 
 const meta: Meta<typeof Checkbox> = {
   title: "Components/UI/Base/Checkbox",

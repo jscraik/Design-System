@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "@storybook/test";
 
-import { Button } from "../../base/Button";
+import { Button } from "@design-studio/ui";
 
 import {
   Sheet,
@@ -12,7 +12,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./fallback/Sheet";
+} from "@design-studio/ui";
 
 const meta: Meta<typeof Sheet> = {
   title: "Components/UI/Overlays/Sheet",

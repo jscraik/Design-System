@@ -19,7 +19,7 @@ import {
   SidebarProvider,
   SidebarSeparator,
   SidebarTrigger,
-} from "./fallback/Sidebar";
+} from "@design-studio/ui";
 
 const meta: Meta<typeof SidebarProvider> = {
   title: "Components/UI/Navigation/Sidebar",

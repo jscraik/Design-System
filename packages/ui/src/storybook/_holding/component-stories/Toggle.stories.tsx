@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 import { useState } from "react";
 
-import { Toggle } from "./Toggle";
+import { Toggle } from "@design-studio/ui";
 
 const meta: Meta<typeof Toggle> = {
   title: "Components/UI/Base/Toggle",

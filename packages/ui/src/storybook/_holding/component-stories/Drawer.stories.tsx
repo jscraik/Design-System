@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "@storybook/test";
 
-import { Button } from "../../base/Button";
+import { Button } from "@design-studio/ui";
 
 import {
   Drawer,
@@ -12,7 +12,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "./Drawer";
+} from "@design-studio/ui";
 
 const meta: Meta<typeof Drawer> = {
   title: "Components/UI/Overlays/Drawer",

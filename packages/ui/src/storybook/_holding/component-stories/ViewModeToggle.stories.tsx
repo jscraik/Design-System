@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
 
-import { ViewModeToggle } from "./ViewModeToggle";
+import { ViewModeToggle } from "@design-studio/ui";
 
 const meta: Meta<typeof ViewModeToggle> = {
   title: "Components/UI/Navigation/View Mode Toggle",

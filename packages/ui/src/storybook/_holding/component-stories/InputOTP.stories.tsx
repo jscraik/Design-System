@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 import * as React from "react";
 
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "./InputOTP";
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@design-studio/ui";
 
 const meta: Meta<typeof InputOTP> = {
   title: "Components/UI/Base/Input OTP",

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./fallback/Accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@design-studio/ui";
 
 const meta: Meta<typeof Accordion> = {
   title: "Components/UI/Base/Accordion",
