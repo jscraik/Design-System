@@ -9,7 +9,7 @@ import {
   ContextMenuLabel,
   ContextMenuSeparator,
   ContextMenuTrigger,
-} from "./fallback/ContextMenu";
+} from "@design-studio/ui";
 
 const meta: Meta<typeof ContextMenu> = {
   title: "Components/UI/Overlays/Context Menu",

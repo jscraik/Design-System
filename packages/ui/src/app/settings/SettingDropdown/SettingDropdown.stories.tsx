@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { fn } from "@storybook/test";
+import { expect, fn, userEvent, within } from "@storybook/test";
 import { useState } from "react";
+
 
 import { type DropdownOption, SettingDropdown } from "./SettingDropdown";
 
@@ -170,3 +171,54 @@ export const MultipleDropdowns: Story = {
     );
   },
 };
+
+// ─── Interaction tests ────────────────────────────────────────────────────────
+
+export const SelectOption: Story = {
+  args: {
+    label: "Theme",
+    value: "dark",
+    options: themeOptions,
+    onValueChange: fn(),
+  },
+  play: async ({ canvasElement, args }) => {
+    const body = within(canvasElement.ownerDocument.body);
+
+    await userEvent.step("Open the dropdown", async () => {
+      const trigger = canvasElement.querySelector("[role='combobox'], button");
+      if (trigger) await userEvent.click(trigger as HTMLElement);
+    });
+
+    await userEvent.step("Select 'Auto' option", async () => {
+      const option = await body.findByRole("option", { name: /auto/i });
+      await userEvent.click(option);
+    });
+
+    await userEvent.step("Verify callback fired", () => {
+      expect(args.onValueChange).toHaveBeenCalledWith("auto");
+    });
+  },
+};
+
+export const LabelRendered: Story = {
+  args: {
+    label: "Theme Preference",
+    value: "dark",
+    options: themeOptions,
+    description: "Choose your preferred color scheme",
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.step("Label is visible", async () => {
+      const label = canvas.getByText("Theme Preference");
+      expect(label).toBeInTheDocument();
+    });
+
+    await userEvent.step("Description is visible", async () => {
+      const desc = canvas.getByText("Choose your preferred color scheme");
+      expect(desc).toBeInTheDocument();
+    });
+  },
+};
+

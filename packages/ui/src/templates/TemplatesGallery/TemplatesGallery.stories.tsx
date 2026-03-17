@@ -4,6 +4,7 @@ import { blockRegistry } from "../blocks/registry";
 import { templateRegistry } from "../registry";
 
 const meta: Meta = {
+  tags: ['autodocs'],
   title: "Components/Templates/Gallery",
   parameters: {
     layout: "fullscreen",

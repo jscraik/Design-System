@@ -10,7 +10,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "./fallback/Select";
+} from "@design-studio/ui";
 
 type SelectStoryArgs = React.ComponentProps<typeof Select> & {
   triggerSize: "sm" | "default";

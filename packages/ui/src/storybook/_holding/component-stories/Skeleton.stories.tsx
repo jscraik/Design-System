@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
-import { Skeleton } from "./Skeleton";
+import { Skeleton } from "@design-studio/ui";
 
 const meta: Meta<typeof Skeleton> = {
   title: "Components/UI/Base/Skeleton",
@@ -14,7 +15,13 @@ export default meta;
 type Story = StoryObj<typeof Skeleton>;
 
 export const Default: Story = {
-  render: () => <Skeleton className="h-5 w-40" />,
+  render: () => <Skeleton className="h-5 w-40 max-w-full" data-testid="skeleton-default" />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.step("Skeleton appears in document", () => {
+      expect(canvas.getByTestId("skeleton-default")).toBeInTheDocument();
+    });
+  },
 };
 
 export const Card: Story = {
@@ -26,3 +33,4 @@ export const Card: Story = {
     </div>
   ),
 };
+

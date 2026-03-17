@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 import {
   Carousel,
@@ -6,7 +7,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./Carousel";
+} from "@design-studio/ui";
 
 const meta: Meta<typeof Carousel> = {
   title: "Components/UI/Navigation/Carousel",
@@ -35,4 +36,18 @@ export const Default: Story = {
       <CarouselNext />
     </Carousel>
   ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.step("Carousel navigation buttons exist", () => {
+      expect(canvas.getByRole("button", { name: /previous slide/i })).toBeInTheDocument();
+      expect(canvas.getByRole("button", { name: /next slide/i })).toBeInTheDocument();
+    });
+
+    await userEvent.step("Click next navigates to next slide", async () => {
+      const nextBtn = canvas.getByRole("button", { name: /next slide/i });
+      await userEvent.click(nextBtn);
+    });
+  },
 };
+

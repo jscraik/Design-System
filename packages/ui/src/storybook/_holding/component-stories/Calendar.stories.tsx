@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
-import { Calendar } from "./Calendar";
+import { Calendar } from "@design-studio/ui";
 
 const meta: Meta<typeof Calendar> = {
   title: "Components/UI/Base/Calendar",
@@ -19,6 +20,13 @@ const rangeEnd = new Date(Date.UTC(2024, 0, 16, 12));
 
 export const Default: Story = {
   render: () => <Calendar mode="single" selected={referenceDate} className="rounded-md border" />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await userEvent.step("Calendar renders month view", () => {
+      expect(canvas.getByRole("button", { name: /previous month/i })).toBeInTheDocument();
+      expect(canvas.getByRole("button", { name: /next month/i })).toBeInTheDocument();
+    });
+  },
 };
 
 export const Range: Story = {

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
-import { Alert, AlertDescription, AlertTitle } from "./Alert";
+import { Alert, AlertDescription, AlertTitle } from "@design-studio/ui";
 
 const meta: Meta<typeof Alert> = {
   title: "Components/UI/Base/Alert",
@@ -30,3 +31,19 @@ export const Destructive: Story = {
     </Alert>
   ),
 };
+
+// ─── Interaction tests ────────────────────────────────────────────────────────
+
+export const AlertRendersWithRole: Story = {
+  render: Default.render,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.step("Alert correctly identifies as an alert region", () => {
+      const alert = canvas.getByRole("alert");
+      expect(alert).toBeInTheDocument();
+      expect(alert).toHaveTextContent("Heads up");
+    });
+  },
+};
+

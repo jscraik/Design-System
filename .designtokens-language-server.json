@@ -1,0 +1,9 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/language-server/config.json",
+  "tokenFiles": [
+    "packages/tokens/src/tokens/**/*.dtcg.json"
+  ],
+  "outputFiles": [
+    "packages/tokens/dist/*.css"
+  ]
+}

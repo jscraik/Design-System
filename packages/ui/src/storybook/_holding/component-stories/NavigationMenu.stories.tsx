@@ -9,7 +9,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   NavigationMenuViewport,
-} from "./fallback/NavigationMenu";
+} from "@design-studio/ui";
 
 const meta: Meta<typeof NavigationMenu> = {
   title: "Components/UI/Navigation/Navigation Menu",

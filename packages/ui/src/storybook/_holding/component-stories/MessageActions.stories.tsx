@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { MessageActions } from "./MessageActions";
+import { MessageActions } from "@design-studio/ui";
 
 const meta: Meta<typeof MessageActions> = {
   title: "Components/Chat/Message Actions",

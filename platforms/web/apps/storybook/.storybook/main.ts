@@ -144,6 +144,31 @@ const config = {
       title: "App",
       files: "**/*.stories.tsx",
     },
+
+    // ─── Holding area ────────────────────────────────────────────────────────
+    // These stories were in _holding/ (not wired). Now promoted so agents and
+    // Agentation can see, annotate, and fix them. Prefix "Holding/" keeps them
+    // visually distinct from fully-promoted stories.
+    {
+      directory: toStorybookRelative(path.join(uiStorybookRoot, "_holding", "component-stories")),
+      title: "Holding/Components",
+      files: "**/*.stories.tsx",
+    },
+    {
+      directory: toStorybookRelative(path.join(uiStorybookRoot, "_holding", "docs")),
+      title: "Holding/Docs",
+      files: "**/*.stories.tsx",
+    },
+    {
+      directory: toStorybookRelative(path.join(uiStorybookRoot, "_holding", "pages")),
+      title: "Holding/Pages",
+      files: "**/*.stories.tsx",
+    },
+    {
+      directory: toStorybookRelative(path.join(uiStorybookRoot, "_holding", "App")),
+      title: "Holding/App",
+      files: "**/*.stories.tsx",
+    },
   ],
 
   addons: [
@@ -151,6 +176,7 @@ const config = {
     "@storybook/addon-a11y",
     "@storybook/addon-vitest",
     "@storybook/addon-themes",
+
   ],
 
   framework: {
@@ -186,17 +212,31 @@ const config = {
   viteFinal: async (viteConfig: any) => {
     const { default: tailwindcss } = await import("@tailwindcss/vite");
     viteConfig.plugins = [removeModuleDirectives(), ...(viteConfig.plugins ?? []), tailwindcss()];
-    viteConfig.base = "./";
+    viteConfig.base = "/";
 
     viteConfig.resolve = {
       ...(viteConfig.resolve ?? {}),
       alias: {
         ...(viteConfig.resolve?.alias ?? {}),
+        "react": path.join(repoRoot, "node_modules/.pnpm/react@19.2.3/node_modules/react"),
+        "react-dom": path.join(repoRoot, "node_modules/.pnpm/react-dom@19.2.3/node_modules/react-dom"),
+        "react/jsx-runtime": path.join(repoRoot, "node_modules/.pnpm/react@19.2.3/node_modules/react/jsx-runtime"),
+        "react/jsx-dev-runtime": path.join(repoRoot, "node_modules/.pnpm/react@19.2.3/node_modules/react/jsx-dev-runtime"),
         "@design-studio/ui": path.join(repoRoot, "packages/ui/src"),
         "@design-studio/ui/icons": path.join(repoRoot, "packages/ui/src/icons"),
         "@design-studio/runtime": path.join(repoRoot, "packages/runtime/src"),
         "@design-studio/tokens": path.join(repoRoot, "packages/tokens/src"),
+        // Allows stories in packages/ui/src/storybook/ to import MSW handlers
+        // without a fragile relative path across package boundaries
+        "@storybook-msw": path.join(__dirname, "msw"),
+        // Resolves ../../../../icons relative imports from deep within _holding/ stories
+        // during Rollup production builds (Vite fs.allow covers dev mode already)
+        [path.join(uiRoot, "icons")]: path.join(repoRoot, "packages/ui/src/icons"),
       },
+      // Force a single copy of React — prevents error #527 caused by pnpm
+      // having react@19.0.0 (packages/ui) and react@19.2.x (storybook app)
+      // in the same build graph
+      dedupe: ["react", "react-dom"],
     };
 
     viteConfig.server = {

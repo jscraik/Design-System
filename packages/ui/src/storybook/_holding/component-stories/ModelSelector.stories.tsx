@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
-import { ModelSelector } from "./ModelSelector";
+import { ModelSelector } from "@design-studio/ui";
 
 const meta: Meta<typeof ModelSelector> = {
   title: "Components/UI/Navigation/Model Selector",

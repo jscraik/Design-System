@@ -30,6 +30,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@radix-ui/react-visually-hidden": "^1.2.4",
     "@storybook/addon-a11y": "10.2.10",
+    "@storybook/addon-coverage": "^3.0.0",
     "@storybook/addon-docs": "10.2.10",
     "@storybook/addon-themes": "10.2.10",
     "@storybook/addon-vitest": "10.2.10",
@@ -37,8 +38,17 @@
     "@storybook/react-vite": "10.2.10",
     "@storybook/test": "^8.6.15",
     "@tailwindcss/vite": "4.1.18",
+    "agentation": "^2.3.3",
+    "dialkit": "^1.1.0",
+    "msw": "^2.12.10",
+    "msw-storybook-addon": "^2.0.6",
     "storybook": "10.2.17",
     "tailwindcss": "4.1.18",
     "tw-animate-css": "^1.3.8"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
   }
 }

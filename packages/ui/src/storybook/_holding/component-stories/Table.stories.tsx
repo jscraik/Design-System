@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 import {
   Table,
@@ -8,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./Table";
+} from "@design-studio/ui";
 
 const meta: Meta<typeof Table> = {
   title: "Components/UI/Base/Table",
@@ -52,3 +53,24 @@ export const Default: Story = {
     </Table>
   ),
 };
+
+// ─── Interaction tests ────────────────────────────────────────────────────────
+
+export const TableRendersWithA11y: Story = {
+  render: Default.render,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.step("Table identifying elements exist", () => {
+      // Because it's an HTML table, it naturally has the table role
+      // However radices sometimes don't bind this on generic <div>s if not using real <table>
+      // Assuming Table component uses real HTML tables:
+      expect(canvas.getByRole("table")).toBeInTheDocument();
+      expect(canvas.getByRole("columnheader", { name: /project/i })).toBeInTheDocument();
+      
+      const rows = canvas.getAllByRole("row");
+      expect(rows.length).toBeGreaterThan(1); // 1 header + body rows
+    });
+  },
+};
+

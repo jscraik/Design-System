@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 import { useState } from "react";
 
-import { RangeSlider } from "./RangeSlider";
+import { RangeSlider } from "@design-studio/ui";
 
 const meta: Meta<typeof RangeSlider> = {
   title: "Components/UI/Forms/Range Slider",
@@ -23,6 +24,22 @@ export const Default: Story = {
         <RangeSlider value={value} onChange={setValue} />
       </div>
     );
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await userEvent.step("RangeSlider renders correctly", () => {
+      // We look for slider roles
+      const slider = canvas.getByRole("slider");
+      expect(slider).toBeInTheDocument();
+    });
+
+    await userEvent.step("Keyboard adjustment works", async () => {
+      const slider = canvas.getByRole("slider");
+      slider.focus();
+      await userEvent.keyboard("[ArrowRight]");
+      expect(slider).toHaveAttribute("aria-valuenow", "51");
+    });
   },
 };
 

@@ -11,6 +11,7 @@ import { PersonalizationPanelTemplate } from "../PersonalizationPanelTemplate";
 import { SecurityPanelTemplate } from "../SecurityPanelTemplate";
 
 const meta: Meta = {
+  tags: ['autodocs'],
   title: "Components/Templates/Settings/Settings Panels",
   parameters: {
     layout: "fullscreen",
