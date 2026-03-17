@@ -1,13 +1,6 @@
+import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "@storybook/test";
-
-import {
-  Button,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@design-studio/ui";
-
 
 const meta: Meta<typeof Tooltip> = {
   title: "Components/UI/Overlays/Tooltip",

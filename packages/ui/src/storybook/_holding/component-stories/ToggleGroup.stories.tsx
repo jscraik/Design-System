@@ -1,7 +1,6 @@
+import { ToggleGroup, ToggleGroupItem } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
-
-import { ToggleGroup, ToggleGroupItem } from "@design-studio/ui";
 
 const meta: Meta<typeof ToggleGroup> = {
   title: "Components/UI/Base/Toggle Group",
@@ -56,7 +55,10 @@ export const SingleSelectToggle: Story = {
 
     await userEvent.step("Click Center — it becomes selected, Left deselected", async () => {
       await userEvent.click(canvas.getByRole("radio", { name: /center/i }));
-      expect(canvas.getByRole("radio", { name: /center/i })).toHaveAttribute("aria-checked", "true");
+      expect(canvas.getByRole("radio", { name: /center/i })).toHaveAttribute(
+        "aria-checked",
+        "true",
+      );
       expect(canvas.getByRole("radio", { name: /left/i })).toHaveAttribute("aria-checked", "false");
     });
   },
@@ -81,13 +83,22 @@ export const MultipleSelectToggle: Story = {
     await userEvent.step("Click Italic — both Bold and Italic are pressed", async () => {
       await userEvent.click(canvas.getByRole("button", { name: /italic/i }));
       expect(canvas.getByRole("button", { name: /bold/i })).toHaveAttribute("aria-pressed", "true");
-      expect(canvas.getByRole("button", { name: /italic/i })).toHaveAttribute("aria-pressed", "true");
+      expect(canvas.getByRole("button", { name: /italic/i })).toHaveAttribute(
+        "aria-pressed",
+        "true",
+      );
     });
 
     await userEvent.step("Click Bold to unpress it — only Italic remains", async () => {
       await userEvent.click(canvas.getByRole("button", { name: /bold/i }));
-      expect(canvas.getByRole("button", { name: /bold/i })).toHaveAttribute("aria-pressed", "false");
-      expect(canvas.getByRole("button", { name: /italic/i })).toHaveAttribute("aria-pressed", "true");
+      expect(canvas.getByRole("button", { name: /bold/i })).toHaveAttribute(
+        "aria-pressed",
+        "false",
+      );
+      expect(canvas.getByRole("button", { name: /italic/i })).toHaveAttribute(
+        "aria-pressed",
+        "true",
+      );
     });
   },
 };

@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "@storybook/test";
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,7 +10,8 @@ import {
   AlertDialogTrigger,
   Button,
 } from "@design-studio/ui";
-
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 const meta: Meta<typeof AlertDialog> = {
   title: "Components/UI/Feedback/Alert Dialog",
@@ -56,7 +54,9 @@ export const Closed: Story = {
   render: () => (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button size="sm" variant="destructive">Open alert</Button>
+        <Button size="sm" variant="destructive">
+          Open alert
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
@@ -78,14 +78,14 @@ export const OpenAndCancel: Story = {
   render: () => (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button size="sm" variant="destructive">Delete account</Button>
+        <Button size="sm" variant="destructive">
+          Delete account
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Delete your account?</AlertDialogTitle>
-          <AlertDialogDescription>
-            All data will be permanently removed.
-          </AlertDialogDescription>
+          <AlertDialogDescription>All data will be permanently removed.</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -128,7 +128,9 @@ export const OpenAndConfirm: Story = {
   render: () => (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button size="sm" variant="destructive">Delete project</Button>
+        <Button size="sm" variant="destructive">
+          Delete project
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

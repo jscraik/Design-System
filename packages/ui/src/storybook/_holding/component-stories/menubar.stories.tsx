@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "@storybook/test";
-
 import {
   Menubar,
   MenubarContent,
@@ -10,6 +7,8 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from "@design-studio/ui";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 const meta: Meta<typeof Menubar> = {
   title: "Components/UI/Navigation/Menubar",

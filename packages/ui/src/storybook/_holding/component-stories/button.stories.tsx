@@ -1,9 +1,7 @@
+import { Button } from "@design-studio/ui";
+import { IconChevronRightMd, IconEmail, IconPlusLg, IconRefresh } from "@design-studio/ui/icons";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "@storybook/test";
-
-import { IconChevronRightMd, IconEmail, IconPlusLg, IconRefresh } from "@design-studio/ui/icons";
-
-import { Button } from "@design-studio/ui";
 
 /**
  * Button component following Apps SDK UI patterns.

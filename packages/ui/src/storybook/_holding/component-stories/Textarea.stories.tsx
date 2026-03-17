@@ -1,7 +1,6 @@
+import { Textarea } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
-
-import { Textarea } from "@design-studio/ui";
 
 const meta: Meta<typeof Textarea> = {
   title: "Components/UI/Base/Textarea",

@@ -6,7 +6,7 @@ import { ChatMessagesTemplate } from "../ChatMessagesTemplate";
 import { ChatSidebarTemplate } from "../ChatSidebarTemplate";
 
 const meta: Meta = {
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   title: "Components/Templates/Chat/Chat Blocks",
   parameters: {
     layout: "fullscreen",

@@ -222,4 +222,4 @@ function Calendar({
   );
 }
 
-export { Calendar, CalendarWrapper, CalendarError };
+export { Calendar, CalendarError, CalendarWrapper };

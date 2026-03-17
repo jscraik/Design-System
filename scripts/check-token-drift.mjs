@@ -23,9 +23,7 @@ const repoRoot = path.resolve(__dirname, "..");
 
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
 
-const TOKEN_DIST_DIRS = [
-  path.join(repoRoot, "packages/tokens/dist"),
-];
+const TOKEN_DIST_DIRS = [path.join(repoRoot, "packages/tokens/dist")];
 
 const UI_SRC_DIRS = [
   path.join(repoRoot, "packages/ui/src"),
@@ -39,12 +37,11 @@ const TOKEN_CONSUMPTION_PATTERN = /var\(\s*(--[\w-]+)/g;
 // CSS vars that are allowed to be consumed without being in tokens/dist
 // (browser built-ins, third-party overrides, etc.)
 const ALLOWLIST = new Set([
-  "--sb-",       // Storybook internals (prefix match below)
-  "--radix-",    // Radix UI internals
+  "--sb-", // Storybook internals (prefix match below)
+  "--radix-", // Radix UI internals
 ]);
 
-const isAllowlisted = (varName) =>
-  [...ALLOWLIST].some((prefix) => varName.startsWith(prefix));
+const isAllowlisted = (varName) => [...ALLOWLIST].some((prefix) => varName.startsWith(prefix));
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 
@@ -147,7 +144,9 @@ if (jsonOutput) {
   if (driftEntries.length === 0) {
     console.log(`\n✅ No drift — all consumed CSS vars are declared in tokens.\n`);
   } else {
-    console.log(`\n❌ Drift detected — ${driftEntries.length} consumed var(s) not in tokens output:\n`);
+    console.log(
+      `\n❌ Drift detected — ${driftEntries.length} consumed var(s) not in tokens output:\n`,
+    );
     for (const { varName, files } of driftEntries) {
       console.log(`  ${varName}`);
       for (const f of files.slice(0, 3)) {

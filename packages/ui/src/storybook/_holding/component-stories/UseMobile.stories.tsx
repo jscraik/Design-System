@@ -1,7 +1,6 @@
+import { useIsMobile } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react";
 import * as React from "react";
-
-import { useIsMobile } from "@design-studio/ui";
 
 /**
  * useIsMobile hook - detects mobile viewport based on 768px breakpoint.

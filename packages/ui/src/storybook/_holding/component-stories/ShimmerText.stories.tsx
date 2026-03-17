@@ -1,6 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-
 import { ShimmerText } from "@design-studio/ui";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 /**
  * ShimmerText component - loading placeholder with animated shimmer effect.

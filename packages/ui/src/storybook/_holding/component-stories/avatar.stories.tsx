@@ -1,7 +1,6 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@design-studio/ui";
 
 const meta: Meta<typeof Avatar> = {
   title: "Components/UI/Base/Avatar",
@@ -47,4 +46,3 @@ export const AvatarRenders: Story = {
     });
   },
 };
-

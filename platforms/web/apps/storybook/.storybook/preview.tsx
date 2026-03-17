@@ -22,17 +22,21 @@ let DialRootComponent: React.ComponentType | null = null;
 
 if (import.meta.env.DEV) {
   // eslint-disable-next-line no-console
-  import("agentation").then((mod) => {
-    AgentationComponent = mod.Agentation;
-  }).catch(() => {
-    // agentation unavailable — annotations simply won't appear
-  });
-  
-  import("dialkit").then((mod) => {
-    DialRootComponent = mod.DialRoot;
-  }).catch(() => {
-    // dialkit unavailable
-  });
+  import("agentation")
+    .then((mod) => {
+      AgentationComponent = mod.Agentation;
+    })
+    .catch(() => {
+      // agentation unavailable — annotations simply won't appear
+    });
+
+  import("dialkit")
+    .then((mod) => {
+      DialRootComponent = mod.DialRoot;
+    })
+    .catch(() => {
+      // dialkit unavailable
+    });
 }
 
 const host = createMockHost();
@@ -222,7 +226,8 @@ const preview: Preview = {
               data-theme={theme}
               data-high-contrast={isHighContrast ? "" : undefined}
               style={{
-                backgroundColor: resolvedBackground ||
+                backgroundColor:
+                  resolvedBackground ||
                   (isLight ? "var(--foundation-bg-light-1)" : "var(--foundation-bg-dark-1)"),
                 color: isLight
                   ? "var(--foundation-text-light-primary)"
@@ -239,9 +244,7 @@ const preview: Preview = {
             {import.meta.env.DEV && AgentationComponent && (
               <AgentationComponent endpoint="http://localhost:4747" />
             )}
-            {import.meta.env.DEV && DialRootComponent && (
-              <DialRootComponent />
-            )}
+            {import.meta.env.DEV && DialRootComponent && <DialRootComponent />}
           </AppsSDKUIProvider>
         </HostProvider>
       );

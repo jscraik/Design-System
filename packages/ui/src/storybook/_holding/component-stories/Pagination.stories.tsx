@@ -1,8 +1,7 @@
+import { Pagination } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 import { useState } from "react";
-
-import { Pagination } from "@design-studio/ui";
 
 const meta: Meta<typeof Pagination> = {
   title: "Components/UI/Navigation/Pagination",

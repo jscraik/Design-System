@@ -1,8 +1,7 @@
+import { RangeSlider } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 import { useState } from "react";
-
-import { RangeSlider } from "@design-studio/ui";
 
 const meta: Meta<typeof RangeSlider> = {
   title: "Components/UI/Forms/Range Slider",

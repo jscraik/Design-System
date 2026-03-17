@@ -1,13 +1,5 @@
+import { Button, DirectionProvider, Input, Label, useDirection } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-
-import {
-  Button,
-  DirectionProvider,
-  Input,
-  Label,
-  useDirection,
-} from "@design-studio/ui";
-
 
 const meta: Meta<typeof DirectionProvider> = {
   title: "Components/UI/Base/Direction Provider",

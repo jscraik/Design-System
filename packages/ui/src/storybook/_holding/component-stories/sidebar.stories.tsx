@@ -1,8 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "@storybook/test";
-
-import { IconChat, IconFolder, IconSettings } from "@design-studio/ui/icons";
-
 import {
   Sidebar,
   SidebarContent,
@@ -20,6 +15,9 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from "@design-studio/ui";
+import { IconChat, IconFolder, IconSettings } from "@design-studio/ui/icons";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 const meta: Meta<typeof SidebarProvider> = {
   title: "Components/UI/Navigation/Sidebar",

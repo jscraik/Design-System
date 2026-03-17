@@ -1,13 +1,6 @@
+import { Button, Popover, PopoverContent, PopoverTrigger } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
-
-import {
-  Button,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@design-studio/ui";
-
 
 const meta: Meta<typeof Popover> = {
   title: "Components/UI/Overlays/Popover",

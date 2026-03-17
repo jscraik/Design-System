@@ -1,7 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-
 import { Input, Label } from "@design-studio/ui";
-
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 const meta: Meta<typeof Label> = {
   title: "Components/UI/Base/Label",

@@ -1,0 +1,26 @@
+flowchart TD
+  UserRequest["User request"]
+  Decision{Record exists?}
+  generate_coverage_matrix_1bd9ebaf["generate-coverage-matrix"]
+  UserRequest --> generate_coverage_matrix_1bd9ebaf
+  generate_coverage_matrix_1bd9ebaf --> generate_coverage_matrix_1bd9ebaf_result["result"]
+  migrate_package_refs_b4c4a036["migrate-package-refs"]
+  UserRequest --> migrate_package_refs_b4c4a036
+  migrate_package_refs_b4c4a036 --> migrate_package_refs_b4c4a036_result["result"]
+  migrate_imports_aec4410b["migrate-imports"]
+  UserRequest --> migrate_imports_aec4410b
+  migrate_imports_aec4410b --> migrate_imports_aec4410b_result["result"]
+  vite_config_2_24e3337d["vite.config"]
+  UserRequest --> vite_config_2_24e3337d
+  vite_config_2_24e3337d --> vite_config_2_24e3337d_result["result"]
+  worker_configuration_d_5b64e8b5["worker-configuration.d"]
+  UserRequest --> worker_configuration_d_5b64e8b5
+  worker_configuration_d_5b64e8b5 --> worker_configuration_d_5b64e8b5_result["result"]
+  generator_9123dcbb["generator"]
+  UserRequest --> generator_9123dcbb
+  generator_9123dcbb --> generator_9123dcbb_result["result"]
+  validate_tokens_7b611756["validate-tokens"]
+  UserRequest --> validate_tokens_7b611756
+  validate_tokens_7b611756 --> validate_tokens_7b611756_result["result"]
+  classDef dbNode fill:#0ea5e9,color:#fff
+  classDef decisionNode fill:#0284c7,color:#fff

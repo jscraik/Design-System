@@ -1,7 +1,6 @@
+import { Slider } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
-
-import { Slider } from "@design-studio/ui";
 
 const meta: Meta<typeof Slider> = {
   title: "Components/UI/Base/Slider",

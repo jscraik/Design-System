@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "@storybook/test";
-
 import {
   Carousel,
   CarouselContent,
@@ -8,6 +5,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@design-studio/ui";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 const meta: Meta<typeof Carousel> = {
   title: "Components/UI/Navigation/Carousel",
@@ -50,4 +49,3 @@ export const Default: Story = {
     });
   },
 };
-

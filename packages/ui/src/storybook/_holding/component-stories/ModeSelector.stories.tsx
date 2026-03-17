@@ -1,8 +1,7 @@
+import { ModeSelector } from "@design-studio/ui";
+import { sampleComposeModes } from "@design-studio/ui/fixtures/sample-data";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useState } from "react";
-
-import { sampleComposeModes } from "@design-studio/ui/fixtures/sample-data";
-import { ModeSelector } from "@design-studio/ui";
 
 const meta: Meta<typeof ModeSelector> = {
   title: "Components/UI/Navigation/Mode Selector",

@@ -1,7 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "@storybook/test";
-import type * as React from "react";
-
 import {
   Select,
   SelectContent,
@@ -11,6 +7,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@design-studio/ui";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
+import type * as React from "react";
 
 type SelectStoryArgs = React.ComponentProps<typeof Select> & {
   triggerSize: "sm" | "default";

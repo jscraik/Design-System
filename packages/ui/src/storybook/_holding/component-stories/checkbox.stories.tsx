@@ -1,8 +1,6 @@
+import { Checkbox, Label } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
-
-import { Checkbox, Label } from "@design-studio/ui";
-
 
 const meta: Meta<typeof Checkbox> = {
   title: "Components/UI/Base/Checkbox",
@@ -49,11 +47,15 @@ export const Disabled: Story = {
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
         <Checkbox id="dis-off" disabled />
-        <Label htmlFor="dis-off" className="opacity-50">Disabled (unchecked)</Label>
+        <Label htmlFor="dis-off" className="opacity-50">
+          Disabled (unchecked)
+        </Label>
       </div>
       <div className="flex items-center gap-2">
         <Checkbox id="dis-on" defaultChecked disabled />
-        <Label htmlFor="dis-on" className="opacity-50">Disabled (checked)</Label>
+        <Label htmlFor="dis-on" className="opacity-50">
+          Disabled (checked)
+        </Label>
       </div>
     </div>
   ),
@@ -76,7 +78,9 @@ export const AllStates: Story = {
       </div>
       <div className="flex items-center gap-2">
         <Checkbox id="c-dis" disabled />
-        <Label htmlFor="c-dis" className="opacity-50">Disabled</Label>
+        <Label htmlFor="c-dis" className="opacity-50">
+          Disabled
+        </Label>
       </div>
     </div>
   ),

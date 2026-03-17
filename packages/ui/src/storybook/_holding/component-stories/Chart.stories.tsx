@@ -1,7 +1,6 @@
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import * as RechartsPrimitive from "recharts";
-
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@design-studio/ui";
 
 const meta: Meta<typeof ChartContainer> = {
   title: "Components/UI/Data Display/Chart",

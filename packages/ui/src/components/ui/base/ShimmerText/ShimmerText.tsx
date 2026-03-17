@@ -81,4 +81,4 @@ function ShimmerInline({
   );
 }
 
-export { ShimmerText, ShimmerInline };
+export { ShimmerInline, ShimmerText };

@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "@storybook/test";
-
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -10,6 +7,8 @@ import {
   NavigationMenuTrigger,
   NavigationMenuViewport,
 } from "@design-studio/ui";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 const meta: Meta<typeof NavigationMenu> = {
   title: "Components/UI/Navigation/Navigation Menu",

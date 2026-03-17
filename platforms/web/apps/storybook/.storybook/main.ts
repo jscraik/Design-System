@@ -176,7 +176,6 @@ const config = {
     "@storybook/addon-a11y",
     "@storybook/addon-vitest",
     "@storybook/addon-themes",
-
   ],
 
   framework: {
@@ -218,10 +217,19 @@ const config = {
       ...(viteConfig.resolve ?? {}),
       alias: {
         ...(viteConfig.resolve?.alias ?? {}),
-        "react": path.join(repoRoot, "node_modules/.pnpm/react@19.2.3/node_modules/react"),
-        "react-dom": path.join(repoRoot, "node_modules/.pnpm/react-dom@19.2.3/node_modules/react-dom"),
-        "react/jsx-runtime": path.join(repoRoot, "node_modules/.pnpm/react@19.2.3/node_modules/react/jsx-runtime"),
-        "react/jsx-dev-runtime": path.join(repoRoot, "node_modules/.pnpm/react@19.2.3/node_modules/react/jsx-dev-runtime"),
+        react: path.join(repoRoot, "node_modules/.pnpm/react@19.2.3/node_modules/react"),
+        "react-dom": path.join(
+          repoRoot,
+          "node_modules/.pnpm/react-dom@19.2.3/node_modules/react-dom",
+        ),
+        "react/jsx-runtime": path.join(
+          repoRoot,
+          "node_modules/.pnpm/react@19.2.3/node_modules/react/jsx-runtime",
+        ),
+        "react/jsx-dev-runtime": path.join(
+          repoRoot,
+          "node_modules/.pnpm/react@19.2.3/node_modules/react/jsx-dev-runtime",
+        ),
         "@design-studio/ui": path.join(repoRoot, "packages/ui/src"),
         "@design-studio/ui/icons": path.join(repoRoot, "packages/ui/src/icons"),
         "@design-studio/runtime": path.join(repoRoot, "packages/runtime/src"),

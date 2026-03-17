@@ -15,8 +15,8 @@ import { expect, waitFor, within } from "@storybook/test";
 import {
   emptyStateHandlers,
   errorHandlers,
-  happyPathHandlers,
   handlers,
+  happyPathHandlers,
   slowNetworkHandlers,
 } from "@storybook-msw/handlers";
 
@@ -25,7 +25,9 @@ import {
 // This minimal component exists purely to demonstrate the MSW patterns.
 
 function MessageList() {
-  const [messages, setMessages] = React.useState<Array<{ id: string; role: string; content: string }>>([]);
+  const [messages, setMessages] = React.useState<
+    Array<{ id: string; role: string; content: string }>
+  >([]);
   const [status, setStatus] = React.useState<"loading" | "success" | "error">("loading");
 
   React.useEffect(() => {
@@ -42,11 +44,19 @@ function MessageList() {
   }, []);
 
   if (status === "loading") {
-    return <div data-testid="loading-state" aria-busy="true">Loading messages…</div>;
+    return (
+      <div data-testid="loading-state" aria-busy="true">
+        Loading messages…
+      </div>
+    );
   }
 
   if (status === "error") {
-    return <div data-testid="error-state" role="alert">Failed to load messages. Please try again.</div>;
+    return (
+      <div data-testid="error-state" role="alert">
+        Failed to load messages. Please try again.
+      </div>
+    );
   }
 
   if (messages.length === 0) {
@@ -56,7 +66,10 @@ function MessageList() {
   return (
     <ul data-testid="message-list" className="space-y-2">
       {messages.map((msg) => (
-        <li key={msg.id} className={`p-3 rounded-lg ${msg.role === "user" ? "bg-blue-500/20" : "bg-white/10"}`}>
+        <li
+          key={msg.id}
+          className={`p-3 rounded-lg ${msg.role === "user" ? "bg-blue-500/20" : "bg-white/10"}`}
+        >
           <span className="text-xs opacity-50 uppercase">{msg.role}</span>
           <p className="text-sm mt-1">{msg.content}</p>
         </li>

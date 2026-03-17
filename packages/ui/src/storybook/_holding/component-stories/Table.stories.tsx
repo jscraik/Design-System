@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "@storybook/test";
-
 import {
   Table,
   TableBody,
@@ -10,6 +7,8 @@ import {
   TableHeader,
   TableRow,
 } from "@design-studio/ui";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 const meta: Meta<typeof Table> = {
   title: "Components/UI/Base/Table",
@@ -67,10 +66,9 @@ export const TableRendersWithA11y: Story = {
       // Assuming Table component uses real HTML tables:
       expect(canvas.getByRole("table")).toBeInTheDocument();
       expect(canvas.getByRole("columnheader", { name: /project/i })).toBeInTheDocument();
-      
+
       const rows = canvas.getAllByRole("row");
       expect(rows.length).toBeGreaterThan(1); // 1 header + body rows
     });
   },
 };
-

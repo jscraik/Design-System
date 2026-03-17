@@ -11,8 +11,7 @@ function isWithinBase(base: string, candidate: string): boolean {
   const resolvedBase = path.resolve(base);
   const resolvedCandidate = path.resolve(candidate);
   return (
-    resolvedCandidate === resolvedBase ||
-    resolvedCandidate.startsWith(resolvedBase + path.sep)
+    resolvedCandidate === resolvedBase || resolvedCandidate.startsWith(resolvedBase + path.sep)
   );
 }
 

@@ -149,4 +149,4 @@ function Input({
   return inputElement;
 }
 
-export { Input, InputWrapper, InputError };
+export { Input, InputError, InputWrapper };

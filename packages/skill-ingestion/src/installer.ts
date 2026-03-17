@@ -31,7 +31,10 @@ function assertWithinBase(base: string, candidate: string, label: string): void 
     // realpathSync needs the path to exist; use resolve for pre-existence checks
     candidate,
   );
-  if (!resolvedCandidate.startsWith(resolvedBase + path.sep) && resolvedCandidate !== resolvedBase) {
+  if (
+    !resolvedCandidate.startsWith(resolvedBase + path.sep) &&
+    resolvedCandidate !== resolvedBase
+  ) {
     throw new Error(
       `Security: ${label} path "${candidate}" escapes allowed base "${resolvedBase}".`,
     );
