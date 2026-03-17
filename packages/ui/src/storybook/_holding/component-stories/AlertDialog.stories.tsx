@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 
-import { Button } from "@design-studio/ui";
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,7 +11,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
+  Button,
 } from "@design-studio/ui";
+
 
 const meta: Meta<typeof AlertDialog> = {
   title: "Components/UI/Feedback/Alert Dialog",
