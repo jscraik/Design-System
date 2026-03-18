@@ -1,7 +1,6 @@
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, within } from "@storybook/test";
-
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@design-studio/ui";
 
 const meta: Meta<typeof HoverCard> = {
   title: "Components/UI/Overlays/Hover Card",

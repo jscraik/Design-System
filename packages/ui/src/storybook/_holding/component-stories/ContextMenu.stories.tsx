@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, fn, userEvent, within } from "@storybook/test";
-
 import {
   ContextMenu,
   ContextMenuCheckboxItem,
@@ -10,6 +7,8 @@ import {
   ContextMenuSeparator,
   ContextMenuTrigger,
 } from "@design-studio/ui";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, fn, userEvent, within } from "@storybook/test";
 
 const meta: Meta<typeof ContextMenu> = {
   title: "Components/UI/Overlays/Context Menu",

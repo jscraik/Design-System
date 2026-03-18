@@ -1,8 +1,6 @@
+import { Label, Switch } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
-
-import { Label, Switch } from "@design-studio/ui";
-
 
 const meta: Meta<typeof Switch> = {
   title: "Components/UI/Base/Switch",
@@ -40,11 +38,15 @@ export const Disabled: Story = {
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
         <Switch id="disabled-off" disabled />
-        <Label htmlFor="disabled-off" className="opacity-50">Disabled (off)</Label>
+        <Label htmlFor="disabled-off" className="opacity-50">
+          Disabled (off)
+        </Label>
       </div>
       <div className="flex items-center gap-2">
         <Switch id="disabled-on" defaultChecked disabled />
-        <Label htmlFor="disabled-on" className="opacity-50">Disabled (on)</Label>
+        <Label htmlFor="disabled-on" className="opacity-50">
+          Disabled (on)
+        </Label>
       </div>
     </div>
   ),
@@ -63,7 +65,9 @@ export const AllStates: Story = {
       </div>
       <div className="flex items-center gap-2">
         <Switch id="s-dis" disabled />
-        <Label htmlFor="s-dis" className="opacity-50">Disabled</Label>
+        <Label htmlFor="s-dis" className="opacity-50">
+          Disabled
+        </Label>
       </div>
     </div>
   ),

@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "@storybook/test";
 import { useState } from "react";
 
-
 import { type DropdownOption, SettingDropdown } from "./SettingDropdown";
 
 /**
@@ -221,4 +220,3 @@ export const LabelRendered: Story = {
     });
   },
 };
-

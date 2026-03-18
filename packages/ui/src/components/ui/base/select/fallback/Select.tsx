@@ -393,13 +393,13 @@ Select.Separator = SelectSubComponents.Separator;
 
 export {
   Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectScrollDownButton,
+  SelectScrollUpButton,
+  SelectSeparator,
   SelectTrigger,
   SelectValue,
-  SelectContent,
-  SelectLabel,
-  SelectItem,
-  SelectGroup,
-  SelectSeparator,
-  SelectScrollUpButton,
-  SelectScrollDownButton,
 };

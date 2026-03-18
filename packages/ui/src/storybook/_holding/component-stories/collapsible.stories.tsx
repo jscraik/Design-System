@@ -1,13 +1,6 @@
+import { Button, Collapsible, CollapsibleContent, CollapsibleTrigger } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
-
-import {
-  Button,
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@design-studio/ui";
-
 
 const meta: Meta<typeof Collapsible> = {
   title: "Components/UI/Base/Collapsible",
@@ -48,7 +41,9 @@ export const ClosedByDefault: Story = {
       <div className="flex w-[320px] items-center justify-between rounded-md border px-3 py-2">
         <div className="text-sm font-medium">Advanced settings</div>
         <CollapsibleTrigger asChild>
-          <Button variant="outline" size="sm">Show</Button>
+          <Button variant="outline" size="sm">
+            Show
+          </Button>
         </CollapsibleTrigger>
       </div>
       <CollapsibleContent className="mt-2 rounded-md border p-3 text-sm">
@@ -66,7 +61,9 @@ export const ExpandAndCollapse: Story = {
       <div className="flex w-[320px] items-center justify-between rounded-md border px-3 py-2">
         <div className="text-sm font-medium">Details</div>
         <CollapsibleTrigger asChild>
-          <Button variant="outline" size="sm">Toggle</Button>
+          <Button variant="outline" size="sm">
+            Toggle
+          </Button>
         </CollapsibleTrigger>
       </div>
       <CollapsibleContent className="mt-2 rounded-md border p-3 text-sm">

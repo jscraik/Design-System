@@ -84,4 +84,4 @@ export function requireNetwork(opts: Record<string, unknown>, action: string): v
 }
 
 // Re-export constants for convenience
-export { ERROR_CODES, EXIT_CODES, TOKEN_GENERATE_WARNING, COMPONENTS_WRITE_WARNING };
+export { COMPONENTS_WRITE_WARNING, ERROR_CODES, EXIT_CODES, TOKEN_GENERATE_WARNING };

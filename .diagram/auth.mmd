@@ -1,0 +1,16 @@
+flowchart TD
+  Request["Authentication request"]
+  Boundary{"Auth Boundary"}
+  Request --> Boundary
+  worker_configuration_d_5b64e8b5["worker-configuration.d"]
+  Boundary --> worker_configuration_d_5b64e8b5
+  token_validator_test_146cbf6c["token-validator.test"]
+  Boundary --> token_validator_test_146cbf6c
+  token_validation_test_742b9f6a["token-validation.test"]
+  Boundary --> token_validation_test_742b9f6a
+  validate_tokens_7b611756["validate-tokens"]
+  Boundary --> validate_tokens_7b611756
+  my_main_module_ac300685[("my-main-module")]
+  vitest_a9127f3d[("vitest")]
+  node_fs_df6b52af[("node:fs")]
+  classDef authNode fill:#7c3aed,color:#fff

@@ -1,8 +1,7 @@
+import { SegmentedControl } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 import { useState } from "react";
-
-import { SegmentedControl } from "@design-studio/ui";
 
 const meta: Meta<typeof SegmentedControl> = {
   title: "Components/UI/Base/Segmented Control",
@@ -102,7 +101,9 @@ export const ClickToSwitch: Story = {
           ]}
           onChange={setValue}
         />
-        <p className="text-xs opacity-60" data-testid="selected">Selected: {value}</p>
+        <p className="text-xs opacity-60" data-testid="selected">
+          Selected: {value}
+        </p>
       </div>
     );
   },

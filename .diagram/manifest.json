@@ -1,0 +1,87 @@
+{
+  "generatedAt": "2026-03-15T19:02:06.733Z",
+  "rootPath": "/Users/jamiecraik/dev/Design-System",
+  "diagramDir": ".diagram",
+  "diagrams": [
+    {
+      "type": "architecture",
+      "file": "architecture.mmd",
+      "outputPath": ".diagram/architecture.mmd",
+      "lines": 147,
+      "bytes": 5807,
+      "isPlaceholder": false
+    },
+    {
+      "type": "sequence",
+      "file": "sequence.mmd",
+      "outputPath": ".diagram/sequence.mmd",
+      "lines": 2,
+      "bytes": 53,
+      "isPlaceholder": false
+    },
+    {
+      "type": "dependency",
+      "file": "dependency.mmd",
+      "outputPath": ".diagram/dependency.mmd",
+      "lines": 141,
+      "bytes": 8795,
+      "isPlaceholder": false
+    },
+    {
+      "type": "class",
+      "file": "class.mmd",
+      "outputPath": ".diagram/class.mmd",
+      "lines": 7,
+      "bytes": 201,
+      "isPlaceholder": false
+    },
+    {
+      "type": "flow",
+      "file": "flow.mmd",
+      "outputPath": ".diagram/flow.mmd",
+      "lines": 20,
+      "bytes": 952,
+      "isPlaceholder": false
+    },
+    {
+      "type": "database",
+      "file": "database.mmd",
+      "outputPath": ".diagram/database.mmd",
+      "lines": 26,
+      "bytes": 1356,
+      "isPlaceholder": false
+    },
+    {
+      "type": "user",
+      "file": "user.mmd",
+      "outputPath": ".diagram/user.mmd",
+      "lines": 36,
+      "bytes": 1330,
+      "isPlaceholder": false
+    },
+    {
+      "type": "events",
+      "file": "events.mmd",
+      "outputPath": ".diagram/events.mmd",
+      "lines": 7,
+      "bytes": 254,
+      "isPlaceholder": false
+    },
+    {
+      "type": "auth",
+      "file": "auth.mmd",
+      "outputPath": ".diagram/auth.mmd",
+      "lines": 16,
+      "bytes": 649,
+      "isPlaceholder": false
+    },
+    {
+      "type": "security",
+      "file": "security.mmd",
+      "outputPath": ".diagram/security.mmd",
+      "lines": 43,
+      "bytes": 1631,
+      "isPlaceholder": false
+    }
+  ]
+}

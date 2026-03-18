@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 import { useState } from "react";
 
-
 import { AttachmentMenu } from "./AttachmentMenu";
 
 const meta: Meta<typeof AttachmentMenu> = {
@@ -164,4 +163,3 @@ export const MenuClosedByDefault: Story = {
     });
   },
 };
-

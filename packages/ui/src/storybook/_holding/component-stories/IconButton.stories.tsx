@@ -1,7 +1,6 @@
+import { IconButton } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
-
-import { IconButton } from "@design-studio/ui";
 
 // Mock icons for the story
 const CopyIcon = () => (
@@ -53,7 +52,7 @@ export const Default: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    
+
     await userEvent.step("Icon button renders with title", () => {
       // It should be accessible via its title/aria-label
       expect(canvas.getByRole("button", { name: /copy to clipboard/i })).toBeInTheDocument();

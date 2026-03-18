@@ -1,8 +1,7 @@
+import { DatePicker, DateRangePicker } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "@storybook/test";
 import { useState } from "react";
-
-import { DatePicker, DateRangePicker } from "@design-studio/ui";
 
 const meta: Meta<typeof DatePicker> = {
   title: "Components/UI/Forms/Date Picker",

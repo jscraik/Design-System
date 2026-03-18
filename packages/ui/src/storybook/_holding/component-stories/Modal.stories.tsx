@@ -1,10 +1,8 @@
+import { Button, ModalDialog } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 import type { ComponentProps } from "react";
 import { useState } from "react";
-
-import { Button, ModalDialog } from "@design-studio/ui";
-
 
 const meta: Meta<typeof ModalDialog> = {
   title: "Components/UI/Overlays/Modal",

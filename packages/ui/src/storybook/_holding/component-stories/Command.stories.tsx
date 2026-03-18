@@ -1,6 +1,3 @@
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { expect, userEvent, within } from "@storybook/test";
-
 import {
   Command,
   CommandEmpty,
@@ -11,6 +8,8 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@design-studio/ui";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "@storybook/test";
 
 const meta: Meta<typeof Command> = {
   title: "Components/UI/Overlays/Command",

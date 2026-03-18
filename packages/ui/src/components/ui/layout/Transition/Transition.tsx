@@ -181,4 +181,4 @@ function SlideIn({
   );
 }
 
-export { Transition, Stagger, Collapse, SlideIn };
+export { Collapse, SlideIn, Stagger, Transition };

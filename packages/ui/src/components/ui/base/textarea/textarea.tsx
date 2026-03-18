@@ -140,4 +140,4 @@ function Textarea({
   return textareaElement;
 }
 
-export { Textarea, TextareaWrapper, TextareaError };
+export { Textarea, TextareaError, TextareaWrapper };

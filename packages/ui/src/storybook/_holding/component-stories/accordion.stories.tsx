@@ -1,7 +1,6 @@
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
-
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@design-studio/ui";
 
 const meta: Meta<typeof Accordion> = {
   title: "Components/UI/Base/Accordion",
@@ -95,7 +94,9 @@ export const ClickToOpenPanel: Story = {
         </AccordionItem>
         <AccordionItem value="item-2">
           <AccordionTrigger>Is it themeable?</AccordionTrigger>
-          <AccordionContent>Yes — tokens and classNames are designed to be customized.</AccordionContent>
+          <AccordionContent>
+            Yes — tokens and classNames are designed to be customized.
+          </AccordionContent>
         </AccordionItem>
       </Accordion>
     </div>

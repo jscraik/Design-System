@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, fn, userEvent, within } from "@storybook/test";
 import { useState } from "react";
 
-
 import { IconMessaging, IconUserLock } from "../../../icons/ChatGPTIcons";
 
 import { SettingToggle } from "./SettingToggle";
@@ -199,4 +198,3 @@ export const LabelVisible: Story = {
     });
   },
 };
-

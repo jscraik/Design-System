@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 
-
 import { ChatInput } from "./ChatInput";
 
 const meta: Meta<typeof ChatInput> = {
@@ -106,4 +105,3 @@ export const FocusableByKeyboard: Story = {
     });
   },
 };
-

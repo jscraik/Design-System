@@ -1,8 +1,6 @@
+import { Label, RadioGroup, RadioGroupItem } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
-
-import { Label, RadioGroup, RadioGroupItem } from "@design-studio/ui";
-
 
 const meta: Meta<typeof RadioGroup> = {
   title: "Components/UI/Base/Radio Group",
@@ -160,7 +158,9 @@ export const DisabledItemNotSelectable: Story = {
       </div>
       <div className="flex items-center gap-2">
         <RadioGroupItem id="radio-disabled" value="disabled-opt" disabled />
-        <Label htmlFor="radio-disabled" className="opacity-50">Disabled option</Label>
+        <Label htmlFor="radio-disabled" className="opacity-50">
+          Disabled option
+        </Label>
       </div>
     </RadioGroup>
   ),

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ChatTemplate } from "./ChatTemplate";
 
 const meta: Meta<typeof ChatTemplate> = {
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   title: "Components/Templates/Chat/Chat Template",
   component: ChatTemplate,
   parameters: {

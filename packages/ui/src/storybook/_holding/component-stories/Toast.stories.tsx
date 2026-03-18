@@ -1,9 +1,7 @@
+import { Button, Toast, ToastContainer } from "@design-studio/ui";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { expect, userEvent, within } from "@storybook/test";
 import { useRef, useState } from "react";
-
-import { Button, Toast, ToastContainer } from "@design-studio/ui";
-
 
 const meta: Meta<typeof Toast> = {
   title: "Components/UI/Feedback/Toast",
@@ -258,7 +256,9 @@ export const ToastStackAddAndRemove: Story = {
     });
 
     await userEvent.step("Dismiss the first toast", async () => {
-      const firstToastCloseBtn = within(canvas.getByText("First toast").closest("div") as HTMLElement).getByRole("button", { name: /close toast/i });
+      const firstToastCloseBtn = within(
+        canvas.getByText("First toast").closest("div") as HTMLElement,
+      ).getByRole("button", { name: /close toast/i });
       await userEvent.click(firstToastCloseBtn);
     });
 
@@ -267,4 +267,3 @@ export const ToastStackAddAndRemove: Story = {
     });
   },
 };
-
