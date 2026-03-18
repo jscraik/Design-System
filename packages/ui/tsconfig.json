@@ -17,6 +17,7 @@
     "**/*.figmaConnect.*",
     "src/testing/**",
     "src/dev/**",
-    "src/dev.ts"
+    "src/dev.ts",
+    "src/storybook/_holding/**"
   ]
 }
