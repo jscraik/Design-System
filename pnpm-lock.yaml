@@ -755,8 +755,8 @@ importers:
         version: 19.2.3(react@19.2.3)
     devDependencies:
       '@argos-ci/storybook':
-        specifier: ^5.2.13
-        version: 5.2.13
+        specifier: ^5.2.14
+        version: 5.2.14
       '@radix-ui/react-dialog':
         specifier: ^1.1.15
         version: 1.1.15(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -931,20 +931,20 @@ packages:
     resolution: {integrity: sha512-jERRoj+da36Y9NwFyws00LKFmCLHBTklIE0DYRptrPUSf3aitly6KmllkKHGi2UU1XcIqAO2Pzy1l5shCs/FXw==}
     engines: {node: '>=20.0.0'}
 
-  '@argos-ci/core@5.1.0':
-    resolution: {integrity: sha512-Yi3Wbhz9qMjYPmUkNCNaS5A6LCwiyTIcpqyd9y5Smx9uWRw/JkhYXmjUCaixegoa9R88Ym67xj2aG+2NWVTw/A==}
+  '@argos-ci/core@5.1.1':
+    resolution: {integrity: sha512-RI5pYb5wmWUoXzWefNCjKSqGA3BroUB2ac9awlYV3McJjSAW8nCGJUt2Eds90Shkp+i4S6KbMLnLG56slhTCsg==}
     engines: {node: '>=20.0.0'}
 
   '@argos-ci/playwright@1.9.3':
     resolution: {integrity: sha512-kgMy7SHkBj4MFXfpeqh8Gk6upQwgs16/4zcV9U/C2A8JpXRov96IKetK5vlCqqcrO/k0oglS+eZypMP5bvmfsw==}
     engines: {node: '>=16.0.0'}
 
-  '@argos-ci/playwright@6.4.1':
-    resolution: {integrity: sha512-24TnYsD50dPNH9NbDsHvrJW4O3eY5l4MapOIqaBZALfyLKJ7/1hC8dJObXUs5zz05lEVIdewaEK49TizSy3qjw==}
+  '@argos-ci/playwright@6.4.2':
+    resolution: {integrity: sha512-0HE4rmgx2/znlMUi3z0Bp8OD7u7zNls9SlljL+qTVoWQRW22sDvpmRdZpjzb4pEjoe6onqPTDOqm5/f8QYHMwg==}
     engines: {node: '>=20.0.0'}
 
-  '@argos-ci/storybook@5.2.13':
-    resolution: {integrity: sha512-D6xxJ0723T1MjRO+/UShZdXU0da+HxgSz+hUa90l2RgapEVpWm//+teGt0lHJppEwiskcIUMuM2v8Z4SDe9+sQ==}
+  '@argos-ci/storybook@5.2.14':
+    resolution: {integrity: sha512-Kg81jUjkeK6LScjRunGgMDVItrpTLbrayJcyVuWsLIchcOjGhNyQu1ez5IHvKqjn71xwZV2WX3X6jO835CpYcg==}
     engines: {node: '>=20.0.0'}
 
   '@argos-ci/util@1.2.1':
@@ -6611,8 +6611,8 @@ packages:
     resolution: {integrity: sha512-YgBpdJHPyQ2UE5x+hlSXcnejzAvD0b22U2OuAP+8OnlJT+PjWPxtgmGqKKc+RgTM63U9gN0YzrYc71R2WT/hTA==}
     engines: {node: '>=18'}
 
-  openapi-fetch@0.15.0:
-    resolution: {integrity: sha512-OjQUdi61WO4HYhr9+byCPMj0+bgste/LtSBEcV6FzDdONTs7x0fWn8/ndoYwzqCsKWIxEZwo4FN/TG1c1rI8IQ==}
+  openapi-fetch@0.15.2:
+    resolution: {integrity: sha512-rdYTzUmSsJevmNqg7fwUVGuKc2Gfb9h6ph74EVPkPfIGJaZTfqdIbJahtbJ3qg1LKinln30hqZniLnKpH0RJBg==}
 
   openapi-typescript-helpers@0.0.15:
     resolution: {integrity: sha512-opyTPaunsklCBpTK8JGef6mfPhLSnyy5a0IN9vKtx3+4aExf+KxEqYwIy3hqkedXIB97u357uLMJsOnm3GVjsw==}
@@ -8433,14 +8433,14 @@ snapshots:
   '@argos-ci/api-client@0.14.0':
     dependencies:
       debug: 4.4.3
-      openapi-fetch: 0.15.0
+      openapi-fetch: 0.15.2
     transitivePeerDependencies:
       - supports-color
 
   '@argos-ci/api-client@0.16.0':
     dependencies:
       debug: 4.4.3
-      openapi-fetch: 0.15.0
+      openapi-fetch: 0.15.2
     transitivePeerDependencies:
       - supports-color
 
@@ -8485,7 +8485,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@argos-ci/core@5.1.0':
+  '@argos-ci/core@5.1.1':
     dependencies:
       '@argos-ci/api-client': 0.16.0
       '@argos-ci/util': 3.2.0
@@ -8510,19 +8510,19 @@ snapshots:
       - react-native-b4a
       - supports-color
 
-  '@argos-ci/playwright@6.4.1':
+  '@argos-ci/playwright@6.4.2':
     dependencies:
       '@argos-ci/browser': 5.1.2
-      '@argos-ci/core': 5.1.0
+      '@argos-ci/core': 5.1.1
       '@argos-ci/util': 3.2.0
       chalk: 5.6.2
       debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
 
-  '@argos-ci/storybook@5.2.13':
+  '@argos-ci/storybook@5.2.14':
     dependencies:
-      '@argos-ci/playwright': 6.4.1
+      '@argos-ci/playwright': 6.4.2
       '@argos-ci/util': 3.2.0
     transitivePeerDependencies:
       - supports-color
@@ -14573,7 +14573,7 @@ snapshots:
       is-inside-container: 1.0.0
       wsl-utils: 0.1.0
 
-  openapi-fetch@0.15.0:
+  openapi-fetch@0.15.2:
     dependencies:
       openapi-typescript-helpers: 0.0.15
 
