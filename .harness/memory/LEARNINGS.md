@@ -16,3 +16,4 @@ Repo-specific agent knowledge base. Append-only.
 > **Scope:** This repo only. Universal gotchas → `~/.codex/instructions/Learnings.md`.
 > **Format:** `**YYYY-MM-DD [Agent]:** <problem> → <fix>`
 
+- **2026-03-12 [Codex]:** In doc reviews, MCP `filesystem/read_multiple_files` can drop with `Transport closed` on small plan/spec batches; fall back to direct `sed`/`rg` reads for the target docs instead of retrying the batch call.
