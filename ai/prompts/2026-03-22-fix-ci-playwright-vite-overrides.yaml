@@ -1,0 +1,13 @@
+id: fix-ci-playwright-vite-overrides-2026-03-22
+tool: claude-code
+mode: normal
+task: "Fix failing CI on main branch: ubuntu build failing due to two playwright versions (1.58.1 + 1.58.2) coexisting and a phantom vite@6.4.1 variant causing vitest module resolution failure."
+constraints:
+  - "follow PR template exactly"
+  - "no secrets"
+  - "pin playwright and vite to single versions via pnpm.overrides"
+outputs_expected:
+  - "package.json (overrides + bump playwright/playwright-test to 1.58.2)"
+  - "pnpm-lock.yaml (regenerated without vite@6 and playwright@1.58.1 variants)"
+  - "ai/prompts/2026-03-22-fix-ci-playwright-vite-overrides.yaml"
+  - "ai/sessions/2026-03-22-fix-ci-playwright-vite-overrides.json"
