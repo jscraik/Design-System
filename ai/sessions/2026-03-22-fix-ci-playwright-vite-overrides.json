@@ -1,0 +1,9 @@
+{
+  "tool": "claude-code",
+  "started_at": "2026-03-22T15:51:00Z",
+  "ended_at": "2026-03-22T16:10:00Z",
+  "files_touched": ["package.json", "pnpm-lock.yaml"],
+  "tests_run": ["pnpm install (lockfile regeneration)"],
+  "human_verification": "Verified vite@6 refs dropped to 0 and playwright@1.58.1 refs dropped to 0 in regenerated lockfile. pnpm install completed successfully with +8/-15 packages.",
+  "notes": "Root cause: @vitest/mocker@4.0.18 accepts vite ^6||^7 as peer dep. vite-plugin-istanbul@6.0.2 has peer dep vite >=4 <=6 (out of range for project vite@7). pnpm was resolving a phantom vite@6.4.1 branch, which cascaded into a second @vitest/browser-playwright variant using playwright@1.58.2+vite@6.4.1. Separately, @argos-ci/playwright@6.4.2 (transitive via @argos-ci/storybook) introduced playwright@1.58.2 alongside the root playwright@1.58.1, causing the two-versions Playwright singleton conflict. Fix: add pnpm.overrides for playwright=1.58.2, playwright-core=1.58.2, vite=7.3.1 to collapse all variants to a single version each."
+}
