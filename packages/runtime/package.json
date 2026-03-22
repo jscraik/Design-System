@@ -23,7 +23,9 @@
     "lint": "biome check .",
     "format": "biome format --write .",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "docs:generate": "typedoc",
+    "docs:watch": "typedoc --watch"
   },
   "publishConfig": {
     "access": "public"

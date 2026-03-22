@@ -1,0 +1,26 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/index.ts"],
+  "out": "docs",
+  "name": "@design-studio/tokens",
+  "readme": "README.md",
+  "includeVersion": true,
+  "categorizeByGroup": true,
+  "defaultCategory": "Other",
+  "categoryOrder": [
+    "Foundation Tokens",
+    "Enhanced Tokens",
+    "Motion",
+    "Focus",
+    "Spacing",
+    "Z-Index",
+    "Patterns",
+    "Runtime Theming",
+    "Other"
+  ],
+  "exclude": ["**/*.test.ts", "**/node_modules/**", "**/dist/**"],
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "plugin": [],
+  "tsconfig": "tsconfig.json"
+}

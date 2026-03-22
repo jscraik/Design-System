@@ -23,17 +23,17 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: 20
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4
         with:
           version: 10.28.0
 
@@ -42,7 +42,7 @@ jobs:
         run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
-        uses: actions/cache@v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -51,7 +51,7 @@ jobs:
 
       - name: Setup Swift (macOS only)
         if: matrix.os == 'macos-latest'
-        uses: swift-actions/setup-swift@v3
+        uses: swift-actions/setup-swift@364295d9c23900ce04d4e5cc708387921b4e50f9 # v3
         with:
           swift-version: "5.9"
 
@@ -112,6 +112,11 @@ jobs:
           pnpm -C packages/runtime type-check
           pnpm -C packages/tokens type-check
 
+      - name: Strict type-check (informational — tracks migration to noUncheckedIndexedAccess)
+        if: matrix.platform == 'web'
+        continue-on-error: true
+        run: pnpm exec tsc -p tsconfig.strict.json --noEmit 2>&1 | tail -5 || true
+
       - name: Icon generation property tests (web platform only)
         if: matrix.platform == 'web'
         run: pnpm test:astudio-icons
@@ -141,7 +146,7 @@ jobs:
         run: pnpm bundle:monitor:strict
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           name: build-artifacts-${{ matrix.platform }}
           path: |
@@ -156,17 +161,17 @@ jobs:
     needs: build
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: 20
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4
         with:
           version: 10.28.0
 
@@ -175,7 +180,7 @@ jobs:
         run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
-        uses: actions/cache@v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -186,7 +191,7 @@ jobs:
         run: pnpm install --frozen-lockfile --prod=false
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: build-artifacts-web
           path: .
@@ -208,7 +213,7 @@ jobs:
 
       - name: Cache UI dist
         id: ui-dist-cache
-        uses: actions/cache@v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: packages/ui/dist
           key: ${{ runner.os }}-ui-dist-${{ hashFiles('packages/ui/src/**', 'packages/ui/package.json', 'pnpm-lock.yaml') }}
@@ -227,7 +232,7 @@ jobs:
 
       - name: Upload Storybook static output
         if: github.event_name != 'pull_request' || steps.storybook_changes.outputs.changed == 'true'
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           name: storybook-static
           path: platforms/web/apps/storybook/storybook-static/
@@ -243,15 +248,15 @@ jobs:
     needs: build
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: 20
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4
         with:
           version: 10.28.0
 
@@ -260,7 +265,7 @@ jobs:
         run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
-        uses: actions/cache@v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -271,7 +276,7 @@ jobs:
         run: pnpm install --frozen-lockfile --prod=false
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: build-artifacts-web
           path: .
@@ -285,7 +290,7 @@ jobs:
 
       - name: Upload screenshot artifacts (on failure)
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           name: visual-screenshots-diff
           path: |
@@ -299,7 +304,7 @@ jobs:
 
       - name: Comment PR with visual diff results
         if: failure() && github.event_name == 'pull_request'
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         with:
           script: |
             const { data: comments } = await github.rest.issues.listComments({
@@ -346,15 +351,15 @@ jobs:
     needs: build
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
           node-version: 20
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4
         with:
           version: 10.28.0
 
@@ -363,7 +368,7 @@ jobs:
         run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - name: Setup pnpm cache
-        uses: actions/cache@v5
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5
         with:
           path: ${{ env.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -374,7 +379,7 @@ jobs:
         run: pnpm install --frozen-lockfile --prod=false
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: build-artifacts-web
           path: .
@@ -395,7 +400,7 @@ jobs:
 
       - name: Upload smoke test artifacts (on failure)
         if: failure()
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
         with:
           name: smoke-test-agent-browser
           path: test-results/agent-browser/**
@@ -426,10 +431,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Download Storybook static output
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
           name: storybook-static
           path: storybook-static/
@@ -449,7 +454,7 @@ jobs:
       - name: Deploy to Cloudflare Pages
         if: steps.artifact_check.outputs.exists == 'true'
         id: cf_deploy
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@da0e0dfe58b7a431659754fdf3f186c529afbe65 # v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -460,7 +465,7 @@ jobs:
           github.event_name == 'pull_request' &&
           steps.artifact_check.outputs.exists == 'true' &&
           steps.cf_deploy.outputs.deployment-url != ''
-        uses: actions/github-script@v8
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         with:
           script: |
             const url = '${{ steps.cf_deploy.outputs.deployment-url }}';

@@ -129,6 +129,7 @@ export {
 
 // Re-export storage key for convenience
 export {
+  type EffectiveTheme,
   THEME_STORAGE_KEY,
   type Theme,
   ThemeProvider,

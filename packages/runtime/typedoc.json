@@ -1,0 +1,16 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/index.tsx"],
+  "out": "docs",
+  "name": "@design-studio/runtime",
+  "readme": "README.md",
+  "includeVersion": true,
+  "categorizeByGroup": true,
+  "defaultCategory": "Other",
+  "categoryOrder": ["Host Adapter", "Providers", "Hooks", "Types", "Other"],
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/node_modules/**", "**/dist/**"],
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "plugin": [],
+  "tsconfig": "tsconfig.json"
+}

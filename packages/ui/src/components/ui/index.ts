@@ -42,9 +42,10 @@ export * from "./base/UseMobile";
 // Chat - Chat-specific components
 export * from "./chat/MessageActions";
 export * from "./data-display/CodeBlock";
-// Data Display - Components for visualizing data
 export * from "./data-display/card";
 export * from "./data-display/chart";
+// Data Display - Components for visualizing data
+export * from "./data-display/DataTable";
 export * from "./data-display/EmptyMessage";
 export * from "./data-display/Image";
 export * from "./data-display/Indicator";
@@ -54,10 +55,15 @@ export * from "./data-display/progress";
 export * from "./feedback/AlertDialog";
 export * from "./feedback/dialog";
 export * from "./feedback/ErrorBoundary";
+export * from "./feedback/Spinner";
 export * from "./feedback/sonner";
 export * from "./feedback/toast";
 // Forms - Form-specific components
 export * from "./forms";
+// Layout primitives
+export * from "./layout/Flex";
+export * from "./layout/Grid";
+export * from "./layout/Stack";
 // Navigation - Navigation and menu components
 export * from "./navigation/breadcrumb";
 export * from "./navigation/carousel";

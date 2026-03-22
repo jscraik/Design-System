@@ -14,6 +14,7 @@ export * from "../base/textarea";
 export * from "../base/toggle";
 export * from "./combobox";
 export * from "./DatePicker";
+export * from "./FileUpload";
 export * from "./form";
 export * from "./RangeSlider";
 export * from "./TagInput";

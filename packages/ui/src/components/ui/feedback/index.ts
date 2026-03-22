@@ -2,5 +2,6 @@
 export * from "./AlertDialog";
 export * from "./dialog";
 export * from "./ErrorBoundary";
+export * from "./Spinner";
 export * from "./sonner";
 export * from "./toast";
