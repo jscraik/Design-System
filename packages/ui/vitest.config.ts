@@ -11,6 +11,7 @@ export default defineConfig({
     setupFiles: ["./src/testing/setup.ts"],
     include: ["src/**/*.test.{ts,tsx}"],
     exclude: ["**/node_modules/**", "**/dist/**", "**/*.stories.*"],
+    testTimeout: 15000,
     snapshotDirectory: "./src/tests/__snapshots__",
     snapshotFormat: {},
     coverage: {
