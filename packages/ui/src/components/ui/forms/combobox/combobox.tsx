@@ -202,6 +202,7 @@ function Combobox({
     >
       <Button
         type="button"
+        role="combobox"
         variant="outline"
         aria-expanded={open}
         aria-haspopup="listbox"

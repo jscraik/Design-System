@@ -1,6 +1,6 @@
 import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
-import { TextLink } from "../../base/TextLink";
+import { sanitizeHref, TextLink } from "../../base/TextLink";
 import { cn } from "../../utils";
 import { CodeBlock } from "../CodeBlock";
 
@@ -129,7 +129,12 @@ const parseInline = (text: string): React.ReactNode => {
     {
       regex: /\[([^\]]+)\]\(([^)]+)\)/,
       render: (match: RegExpMatchArray) => (
-        <TextLink key={`link-${key++}`} href={match[2]} variant="default" showExternalIcon>
+        <TextLink
+          key={`link-${key++}`}
+          href={sanitizeHref(match[2])}
+          variant="default"
+          showExternalIcon
+        >
           {match[1]}
         </TextLink>
       ),
