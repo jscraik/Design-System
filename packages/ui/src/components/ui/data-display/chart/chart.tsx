@@ -162,6 +162,18 @@ function ChartContainer({
   );
 }
 
+/**
+ * Injects per-chart CSS custom properties into a `<style>` tag.
+ *
+ * **Security:** All values are sanitized before injection:
+ * - `id` → `escapeCssSelector` (wraps `CSS.escape`)
+ * - color values → `getSafeColor` (CSS color allow-list)
+ * - config keys → `toSafeCssVarKey` (`[a-z0-9_-]` only)
+ *
+ * `ChartConfig` MUST contain only developer-controlled values.
+ * Do NOT populate it from untrusted user input (API responses, URL
+ * params, or form data) without an explicit sanitization step.
+ */
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const safeChartId = escapeCssSelector(id);
   const colorConfig = Object.entries(config).filter(([, config]) => config.theme || config.color);
