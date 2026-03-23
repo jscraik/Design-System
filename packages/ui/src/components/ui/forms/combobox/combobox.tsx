@@ -78,6 +78,8 @@ function Combobox({
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
+  // Defer the search value so the input stays responsive while the list filters
+  const deferredSearch = React.useDeferredValue(search);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const listRef = React.useRef<HTMLDivElement>(null);
   const [highlightedIndex, setHighlightedIndex] = React.useState(-1);
@@ -103,14 +105,14 @@ function Combobox({
   const selectedOption = options.find((opt) => opt.value === value);
 
   const filteredOptions = React.useMemo(() => {
-    if (!search) return options;
-    const searchLower = search.toLowerCase();
+    if (!deferredSearch) return options;
+    const searchLower = deferredSearch.toLowerCase();
     return options.filter(
       (opt) =>
         opt.label.toLowerCase().includes(searchLower) ||
         opt.value.toLowerCase().includes(searchLower),
     );
-  }, [options, search]);
+  }, [options, deferredSearch]);
 
   const handleSelect = (optionValue: string) => {
     onValueChange?.(optionValue);
