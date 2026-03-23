@@ -65,7 +65,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <h4
       data-slot="card-title"
-      className={cn("leading-none text-card-title text-foreground", className)}
+      className={cn("leading-none text-card-title text-foreground text-balance", className)}
       {...props}
     />
   );

@@ -83,7 +83,9 @@ export class UIErrorBoundary extends Component<UIErrorBoundaryProps, UIErrorBoun
                 />
               </svg>
             </div>
-            <h3 className="text-lg font-semibold text-foreground mb-2">Something went wrong</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-2 text-balance">
+              Something went wrong
+            </h3>
             <p className="text-sm text-muted-foreground mb-4">
               {error?.message || "An unexpected error occurred"}
             </p>

@@ -227,7 +227,10 @@ export function ModalHeader({
       )}
     >
       <div className="flex-1">
-        <h2 id={generatedTitleId} className="text-body-small font-semibold text-foreground">
+        <h2
+          id={generatedTitleId}
+          className="text-body-small font-semibold text-foreground text-balance"
+        >
           {title}
         </h2>
         {subtitle && <p className="text-caption text-text-secondary mt-0.5">{subtitle}</p>}

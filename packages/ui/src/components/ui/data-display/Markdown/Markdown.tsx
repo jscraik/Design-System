@@ -45,7 +45,7 @@ const parseMarkdown = (content: string): React.ReactNode[] => {
 
     if (line.startsWith("### ")) {
       elements.push(
-        <h3 key={index} className="mt-6 mb-2 text-lg font-semibold text-foreground">
+        <h3 key={index} className="mt-6 mb-2 text-lg font-semibold text-foreground text-balance">
           {line.slice(4)}
         </h3>,
       );
@@ -54,7 +54,7 @@ const parseMarkdown = (content: string): React.ReactNode[] => {
 
     if (line.startsWith("## ")) {
       elements.push(
-        <h2 key={index} className="mt-8 mb-3 text-xl font-semibold text-foreground">
+        <h2 key={index} className="mt-8 mb-3 text-xl font-semibold text-foreground text-balance">
           {line.slice(3)}
         </h2>,
       );
@@ -63,7 +63,7 @@ const parseMarkdown = (content: string): React.ReactNode[] => {
 
     if (line.startsWith("# ")) {
       elements.push(
-        <h1 key={index} className="mt-8 mb-4 text-2xl font-semibold text-foreground">
+        <h1 key={index} className="mt-8 mb-4 text-2xl font-semibold text-foreground text-balance">
           {line.slice(2)}
         </h1>,
       );
@@ -107,7 +107,7 @@ const parseMarkdown = (content: string): React.ReactNode[] => {
 
     if (line.trim()) {
       elements.push(
-        <p key={index} className="my-2 leading-relaxed text-foreground">
+        <p key={index} className="my-2 leading-relaxed text-foreground text-pretty">
           {parseInline(line)}
         </p>,
       );
