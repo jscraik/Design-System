@@ -35,7 +35,7 @@ function ButtonSpinner() {
  * Defines the base class names and variant mappings for the Button component.
  */
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-round font-foundation text-button-label font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background aria-invalid:ring-2 aria-invalid:ring-status-error aria-invalid:ring-offset-2 aria-invalid:ring-offset-background",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-round font-foundation text-button-label font-medium transition-[colors,transform] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:scale-[1.01] hover:-translate-y-px active:scale-[0.98] motion-reduce:hover:scale-100 motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100",
   {
     variants: {
       variant: {

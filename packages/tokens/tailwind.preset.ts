@@ -371,6 +371,24 @@ const preset: Config = {
         tooltip: "var(--ds-z-tooltip)",
         maximum: "var(--ds-z-maximum)",
       },
+      transitionDuration: {
+        // Design system motion tokens — prefer these over raw ms values.
+        // Values are driven by --ds-duration-* CSS custom properties so they
+        // can be overridden per-context (e.g. reduced-motion hosts).
+        "ds-micro": "var(--ds-duration-micro)",
+        "ds-fast": "var(--ds-duration-fast)",
+        "ds-standard": "var(--ds-duration-standard)",
+        "ds-moderate": "var(--ds-duration-moderate)",
+        "ds-slow": "var(--ds-duration-slow)",
+        "ds-complex": "var(--ds-duration-complex)",
+      },
+      transitionTimingFunction: {
+        // Design system easing tokens.
+        "ds-swift": "var(--ds-easing-swift)",
+        "ds-standard": "var(--ds-easing-standard)",
+        "ds-ease-out": "var(--ds-easing-ease-out)",
+        "ds-ease-in": "var(--ds-easing-ease-in)",
+      },
       boxShadow: {
         // Legacy component shadows (backward-compatible)
         "foundation-card": "var(--foundation-shadow-card)",
