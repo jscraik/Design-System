@@ -94,3 +94,47 @@ Add a JSDoc warning on `ChartStyle` clarifying that `ChartConfig` must be develo
 
 - SEC-03 JSDoc comment not applied — security hook blocked edits to `chart.tsx`. Risk is low given existing sanitization helpers. Add manually.
 - `sanitizeHref` uses `new URL()` which throws on unparseable strings — caught and treated as relative (safe). Edge case: protocol-relative URLs (`//example.com`) are treated as `https:` by browser — passed through. Acceptable for library context.
+
+---
+
+## Session 2 — 2026-03-23 (Frontend Design Review)
+
+**Scope:** `alert.tsx`, `button/fallback/Button.tsx`, `focus.ts`, `tailwind.preset.ts`
+**Standard:** OWASP Top 10:2025
+
+### Executive Summary
+
+Low-risk session. Reviewed the design system improvements from the frontend design audit. Two semantic/accessibility issues remediated; two informational notes raised.
+
+| ID | Severity | Status | File |
+|----|----------|--------|------|
+| S-01 | Medium | ✅ Fixed | `focus.ts` |
+| S-02 | Low | ✅ Fixed | `button/fallback/Button.tsx` |
+| S-03 | Info | Documented | `tailwind.preset.ts` |
+| S-04 | Info | ✅ Fixed | `alert.tsx` |
+
+### Findings
+
+**[S-01] Medium — Global `:focus-visible` selector creates style injection surface**
+OWASP A05:2021 Misconfiguration. The `focusVisibleCSS` export used a bare `:focus-visible` selector. If injected into a host's `<style>` tag alongside user-controlled content, the global selector could be weaponised to suppress focus styles site-wide (aiding clickjacking). Fixed: scoped to `.ds-focusable` / `[data-ds-focusable]` opt-in classes with `@warning` JSDoc.
+
+**[S-02] Low — `aria-invalid` on `<button>` (invalid WAI-ARIA, accessibility bypass)**
+OWASP A11:2021. `aria-invalid` is not a valid ARIA attribute for `<button>` elements. Screen readers may announce incorrect state, misleading assistive technology users about form validity. Removed from button base class.
+
+**[S-03] Info — No CSP nonce support for Tailwind-injected CSS**
+New motion tokens in the preset use CSS variables injected via `<style>` tags in Tailwind JIT mode. Host apps with strict `style-src 'self'` CSP may block these. Integration concern for consumers — document that a nonce attribute must be configured on the Tailwind/Vite style injector.
+
+**[S-04] Info — AlertTitle ref type mismatch (TypeScript type safety)**
+`AlertTitle` ref was typed as `HTMLParagraphElement` but renders `<h5>`. Consuming code accessing heading-specific properties through a wrong ref type could silently fail. Fixed: corrected to `HTMLHeadingElement`.
+
+### Checks Executed
+
+| Check | Result |
+|---|---|
+| TypeScript typecheck | ✅ Clean (no output) |
+| Alert + button unit tests (`pnpm --filter @design-studio/ui test`) | ✅ 17/17 passing |
+| OWASP mapping review | ✅ Complete |
+
+### Deviations / Risks
+
+- S-03 (CSP nonce) is an integration concern for host apps. No action required in this package.

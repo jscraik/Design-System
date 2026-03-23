@@ -10,9 +10,15 @@ function customRender(ui: ReactElement, options?: Omit<RenderOptions, "wrapper">
     return <>{children}</>;
   };
 
+  // render first so the DOM environment is fully active before user-event touches it.
+  // user-event@14 captures globalThis.document at module load time (before jsdom is
+  // ready), so we extract the live document from the rendered container instead.
+  const renderResult = render(ui, { wrapper: Wrapper, ...options });
+  const doc = renderResult.baseElement.ownerDocument;
+
   return {
-    user: userEvent.setup(),
-    ...render(ui, { wrapper: Wrapper, ...options }),
+    user: userEvent.setup({ document: doc }),
+    ...renderResult,
   };
 }
 
