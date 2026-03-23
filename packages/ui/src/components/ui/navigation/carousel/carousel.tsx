@@ -205,18 +205,50 @@ function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 /**
+ * Props for the carousel item.
+ */
+export interface CarouselItemProps extends React.ComponentProps<"div"> {
+  /**
+   * 0-based index of this slide within the carousel.
+   * Provide alongside `total` to enable positional announcements
+   * ("1 of 5") for screen readers.
+   */
+  index?: number;
+  /**
+   * Total number of slides in the carousel.
+   * Required when `index` is provided.
+   */
+  total?: number;
+}
+
+/**
  * Renders a carousel slide item.
  *
- * @param props - Div props for the item.
+ * Supply `index` and `total` to announce slide position to screen readers.
+ *
+ * @example
+ * ```tsx
+ * {items.map((item, i) => (
+ *   <CarouselItem key={item.id} index={i} total={items.length}>
+ *     ...
+ *   </CarouselItem>
+ * ))}
+ * ```
+ *
+ * @param props - Carousel item props.
  * @returns A carousel item element.
  */
-function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
+function CarouselItem({ className, index, total, ...props }: CarouselItemProps) {
   const { orientation } = useCarousel();
+
+  const slideLabel =
+    index !== undefined && total !== undefined ? `${index + 1} of ${total}` : undefined;
 
   return (
     <div
       role="group"
       aria-roledescription="slide"
+      aria-label={slideLabel}
       data-slot="carousel-item"
       className={cn(
         "min-w-0 shrink-0 grow-0 basis-full",
