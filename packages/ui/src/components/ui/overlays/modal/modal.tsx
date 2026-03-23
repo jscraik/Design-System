@@ -147,7 +147,7 @@ export function ModalDialog({
           "max-h-[90vh] overflow-y-auto",
           isDisabled && "opacity-50 pointer-events-none",
           error && "ring-2 ring-status-error/50",
-          loading && "animate-pulse",
+          loading && "animate-pulse motion-reduce:animate-none",
           className,
         )}
         style={{ maxWidth }}

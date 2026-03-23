@@ -160,7 +160,7 @@ export function ModeSelector({
             "text-caption text-foreground flex items-center gap-2 hover:bg-muted transition-colors",
             isDisabled && "opacity-50 cursor-not-allowed",
             error && "border border-status-error ring-2 ring-status-error/50 rounded-lg",
-            loading && "animate-pulse",
+            loading && "animate-pulse motion-reduce:animate-none",
             triggerClasses[variant],
           )}
         >

@@ -136,7 +136,7 @@ function TagInput({
         variant === "outline" && "border-border/60 bg-transparent focus-within:border-ring",
         isDisabled && "cursor-not-allowed opacity-50",
         error && "ring-2 ring-status-error/50",
-        loading && "animate-pulse",
+        loading && "animate-pulse motion-reduce:animate-none",
         className,
       )}
       onClick={() => inputRef.current?.focus()}

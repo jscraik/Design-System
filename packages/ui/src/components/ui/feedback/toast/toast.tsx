@@ -125,7 +125,7 @@ function Toast({
         toastVariants({ variant }),
         isDisabled && "opacity-60 pointer-events-none",
         error && "ring-2 ring-status-error/50",
-        loading && "animate-pulse",
+        loading && "animate-pulse motion-reduce:animate-none",
         className,
       )}
       {...props}

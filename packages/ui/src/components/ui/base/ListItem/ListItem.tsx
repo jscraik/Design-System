@@ -133,7 +133,7 @@ export function ListItem({
         selected && "bg-secondary",
         isDisabled && "opacity-50 cursor-not-allowed",
         error && "border border-status-error/50",
-        loading && "animate-pulse",
+        loading && "animate-pulse motion-reduce:animate-none",
         dataRailItem && "justify-center px-2",
         className,
       )}

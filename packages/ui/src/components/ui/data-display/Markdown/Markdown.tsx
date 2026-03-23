@@ -243,7 +243,7 @@ function Markdown({
         "max-w-none text-foreground",
         "[&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
         isDisabled && "opacity-50 pointer-events-none",
-        loading && "animate-pulse",
+        loading && "animate-pulse motion-reduce:animate-none",
         className,
       )}
       {...props}

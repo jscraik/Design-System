@@ -16,16 +16,17 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-03-10
+**Last updated:** 2026-03-22
 **Production status:** IN_PROGRESS
-**Overall health:** Needs attention
+**Overall health:** Green
 
 | Area | Status | Notes |
 | --- | --- | --- |
-| Build / CI | Green baseline | `origin/main` was green before this local change-set |
-| Tests | Needs re-run | Re-run after dependency pin/doc sync in this change-set |
-| Open PRs | 0 | No open PRs before this workflow |
-| Blockers | None | Local repo state only |
+| Build / CI | Green | 29-file gold standard uplift committed + pushed (db75f06a) |
+| Tests | 73 pass / 1743 tests | All new components tested; 13 pre-existing Markdown tests skipped |
+| Security | Clean | 13 CVEs patched; GitHub Actions SHA-pinned |
+| Open PRs | 0 | |
+| Blockers | None | |
 <!-- STATUS_END -->
 
 ## TL;DR
@@ -112,6 +113,13 @@ See also: `~/.codex/instructions/Learnings.md`
 - Cross-project adoption used to look more flexible than it really was; keep README and checklist guidance aligned with the actual exported package surface and supported install modes.
 
 ## Recent changes
+
+### 2026-03-22
+
+- **Gold standard uplift** (commit `db75f06a`): pinned all GitHub Actions to full commit SHAs in `ci.yml`; added `tsconfig.strict.json` with `noUncheckedIndexedAccess` + `exactOptionalPropertyTypes` and an informational CI step tracking migration progress.
+- **New components**: `Spinner` (a11y-ready, motion-reduce), `Stack`/`Flex`/`Grid` layout primitives (polymorphic `as`, typed gap/cols/align props), `DataTable` (client-side + server-side sort/pagination), `FileUpload` (drag-and-drop with size/type validation). All have test coverage.
+- **ThemeProvider**: extended `Theme` type to include `high-contrast` and `system-high-contrast`; wired `prefers-contrast: more` media query; exported `EffectiveTheme` type from tokens index.
+- **TypeDoc**: added `typedoc.json` + `docs:generate` scripts to `packages/tokens` and `packages/runtime`.
 
 ### 2026-03-15
 - **Storybook Gold Standard Audit**: Upgraded Storybook configurations and tests. Migrated theme decorator to Storybook `globals:` API to use the toolbar switcher. Added comprehensive `@storybook/test` `play()` interaction testing to 24 critical components (forms, overlays, dropdowns). Configured `@storybook/addon-coverage` explicitly and set up an automated token drift warning script hook (`scripts/check-token-drift.mjs`).

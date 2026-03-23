@@ -59,7 +59,7 @@ function Command({
         "bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md",
         isDisabled && "opacity-50 pointer-events-none",
         error && "ring-2 ring-status-error/50 rounded-md",
-        loading && "animate-pulse",
+        loading && "animate-pulse motion-reduce:animate-none",
         className,
       )}
       {...props}

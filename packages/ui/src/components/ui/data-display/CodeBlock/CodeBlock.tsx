@@ -88,7 +88,7 @@ function CodeBlock({
         "group relative w-full overflow-hidden rounded-lg border border-border bg-muted",
         isDisabled && "opacity-50 pointer-events-none",
         error && "ring-2 ring-status-error/50",
-        loading && "animate-pulse",
+        loading && "animate-pulse motion-reduce:animate-none",
         className,
       )}
     >

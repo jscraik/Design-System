@@ -88,7 +88,7 @@ export function ViewModeToggle({
         "flex items-center gap-2 px-4 py-2 border border-border rounded-xl hover:bg-secondary transition-colors",
         isDisabled && "opacity-50 cursor-not-allowed",
         error && "border-status-error ring-2 ring-status-error/50",
-        loading && "animate-pulse",
+        loading && "animate-pulse motion-reduce:animate-none",
         className,
       )}
       onClick={handleToggle}

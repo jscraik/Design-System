@@ -104,7 +104,7 @@ function Indicator({
       >
         <span
           className={cn(
-            "inline-block rounded-full border-2 border-current border-t-transparent animate-spin",
+            "inline-block rounded-full border-2 border-current border-t-transparent animate-spin motion-reduce:animate-none",
             "size-full",
             isDisabled && "animate-pulse",
           )}

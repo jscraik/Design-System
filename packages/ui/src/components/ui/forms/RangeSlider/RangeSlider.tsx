@@ -137,7 +137,7 @@ export function RangeSlider({
           "[&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:bg-[var(--range-thumb)] [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:cursor-pointer",
           isDisabled && "opacity-50 cursor-not-allowed",
           error && "ring-2 ring-status-error/50",
-          loading && "animate-pulse",
+          loading && "animate-pulse motion-reduce:animate-none",
         )}
         style={{ background: gradient || defaultGradient }}
       />

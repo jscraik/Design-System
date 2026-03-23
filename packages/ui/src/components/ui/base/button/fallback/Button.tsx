@@ -15,7 +15,7 @@ import { cn } from "../../../utils";
 function ButtonSpinner() {
   return (
     <svg
-      className="animate-spin size-4"
+      className="animate-spin motion-reduce:animate-none size-4"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

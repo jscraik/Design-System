@@ -96,7 +96,7 @@ function EmptyMessage({
     >
       <div className="rounded-full bg-muted p-6">
         {loading ? (
-          <div className="size-8 rounded-full border-2 border-current border-t-transparent animate-spin" />
+          <div className="size-8 rounded-full border-2 border-current border-t-transparent animate-spin motion-reduce:animate-none" />
         ) : (
           iconNode
         )}

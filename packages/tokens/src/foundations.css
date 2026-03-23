@@ -32,9 +32,17 @@
   --foundation-bg-light-3: #F3F3F3;
 
   /* Light text */
-  --foundation-text-light-primary: #0D0D0D;
-  --foundation-text-light-secondary: #5D5D5D;
-  --foundation-text-light-tertiary: #8F8F8F;
+  --foundation-text-light-primary: #0D0D0D;     /* on white: 19.6:1 — AAA */
+  --foundation-text-light-secondary: #5D5D5D;   /* on white:  5.2:1 — AA  */
+  /*
+   * ACCESSIBILITY WARNING: --foundation-text-light-tertiary (#8F8F8F) on white
+   * achieves 3.4:1 — below the WCAG AA threshold of 4.5:1 for normal text.
+   * Permitted uses: decorative text, placeholders, disabled state labels.
+   * Prohibited uses: informational content, timestamps, table cell data,
+   *   error/status messages, or any text conveying meaning.
+   * Use --foundation-text-light-secondary (#5D5D5D) for readable secondary copy.
+   */
+  --foundation-text-light-tertiary: #8F8F8F;   /* on white:  3.4:1 — decorative only */
 
   /* Light icon */
   --foundation-icon-light-primary: #0D0D0D;
@@ -126,9 +134,29 @@
   --foundation-space-2: 2px;
   --foundation-space-0: 0px;
 
+  /*
+   * Semantic radius aliases — maps raw px tokens to meaningful names.
+   * Use these in component CSS rather than --foundation-radius-N directly.
+   * Both the CSS var and the Tailwind preset DEFAULT now resolve to 8px.
+   */
+  --radius-sm:   var(--foundation-radius-6);    /* 6px  — badges, chips, tags */
+  --radius:      var(--foundation-radius-8);    /* 8px  — inputs, buttons, cards (DEFAULT) */
+  --radius-md:   var(--foundation-radius-10);   /* 10px — dropdowns, tooltips */
+  --radius-lg:   var(--foundation-radius-12);   /* 12px — modals, sheets, drawers */
+  --radius-xl:   var(--foundation-radius-16);   /* 16px — large cards, panels */
+  --radius-full: var(--foundation-radius-round); /* pills, toggles, avatars */
+
   /* Typography */
+  /*
+   * --font-display: hero headings, marketing copy, dashboard titles.
+   * --foundation-font-family: all body/UI text.
+   * Separating them allows a distinctive display face to be wired in
+   * without touching the base font stack.
+   */
+  --font-display:
+    "SF Pro Display", "SF Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --foundation-font-family:
-    "SF Pro", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    "SF Pro Text", "SF Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --foundation-hero-size: 40px;
   --foundation-hero-line: 48px;
   --foundation-hero-paragraph-spacing: 32px;
@@ -290,11 +318,24 @@
   --foundation-size-card-header-height: 56px;
   --foundation-size-hit-target: 44px;
 
-  /* Shadows */
-  --foundation-shadow-card: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
-  --foundation-shadow-pip: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
-  --foundation-shadow-pill: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
-  --foundation-shadow-close: 0px 10px 15px -3px rgba(0 0 0 / 10%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
+  /* Shadows — semantic component shadows */
+  --foundation-shadow-card: 0px 10px 15px -3px rgba(0 0 0 / 14%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
+  --foundation-shadow-pip: 0px 10px 15px -3px rgba(0 0 0 / 14%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
+  --foundation-shadow-pill: 0px 10px 15px -3px rgba(0 0 0 / 14%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
+  --foundation-shadow-close: 0px 10px 15px -3px rgba(0 0 0 / 14%), 0px 4px 6px -4px rgba(0 0 0 / 10%);
+
+  /*
+   * Elevation scale — use these for general UI depth hierarchy.
+   * xs/sm are visually distinct (6% vs 12% alpha); md/lg/xl increase size.
+   * Prefer elevation tokens over component-specific shadows for new work.
+   */
+  --shadow-xs:    0 1px 2px 0 rgba(0 0 0 / 6%);
+  --shadow-sm:    0 1px 3px 0 rgba(0 0 0 / 12%), 0 1px 2px -1px rgba(0 0 0 / 8%);
+  --shadow-md:    0 4px 6px -1px rgba(0 0 0 / 14%), 0 2px 4px -2px rgba(0 0 0 / 10%);
+  --shadow-lg:    0 10px 15px -3px rgba(0 0 0 / 14%), 0 4px 6px -4px rgba(0 0 0 / 10%);
+  --shadow-xl:    0 20px 25px -5px rgba(0 0 0 / 16%), 0 8px 10px -6px rgba(0 0 0 / 10%);
+  --shadow-2xl:   0 25px 50px -12px rgba(0 0 0 / 28%);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0 0 0 / 8%);
 
   /* Accessibility */
   --foundation-focus-ring: #0285ff;

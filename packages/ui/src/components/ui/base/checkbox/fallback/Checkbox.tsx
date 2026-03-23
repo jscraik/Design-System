@@ -17,7 +17,7 @@ import { cn } from "../../../utils";
 function CheckboxSpinner() {
   return (
     <svg
-      className="animate-spin size-3.5"
+      className="animate-spin motion-reduce:animate-none size-3.5"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
