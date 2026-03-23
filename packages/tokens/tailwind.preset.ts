@@ -355,6 +355,22 @@ const preset: Config = {
         xl: "var(--radius-xl)", // 16px
         full: "var(--radius-full)", // 9999px
       },
+      zIndex: {
+        // Semantic z-index scale — prefer these over raw numbers or z-[n] utilities.
+        // Values are driven by --ds-z-* CSS custom properties from enhanced.css,
+        // so the scale can be overridden per-context (e.g. embedded widget hosts).
+        behind: "var(--ds-z-behind)",
+        base: "var(--ds-z-base)",
+        raised: "var(--ds-z-raised)",
+        dropdown: "var(--ds-z-dropdown)",
+        sticky: "var(--ds-z-sticky)",
+        header: "var(--ds-z-header)",
+        "modal-backdrop": "var(--ds-z-modal-backdrop)",
+        modal: "var(--ds-z-modal)",
+        popover: "var(--ds-z-popover)",
+        tooltip: "var(--ds-z-tooltip)",
+        maximum: "var(--ds-z-maximum)",
+      },
       boxShadow: {
         // Legacy component shadows (backward-compatible)
         "foundation-card": "var(--foundation-shadow-card)",
