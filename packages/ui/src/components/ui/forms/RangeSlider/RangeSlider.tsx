@@ -74,6 +74,7 @@ export function RangeSlider({
   className,
 }: RangeSliderProps) {
   const inputId = React.useId();
+  const errorId = `${inputId}-error`;
   const percentage = ((value - min) / (max - min)) * 100;
 
   // Determine effective state (priority: loading > error > disabled > default)
@@ -102,8 +103,6 @@ export function RangeSlider({
       data-error={error ? "true" : undefined}
       data-required={required ? "true" : undefined}
       aria-disabled={isDisabled || undefined}
-      aria-invalid={error ? "true" : required ? "false" : undefined}
-      aria-required={required || undefined}
       aria-busy={loading || undefined}
     >
       {(label || showValue) && (
@@ -131,6 +130,9 @@ export function RangeSlider({
         onChange={(e) => onChange?.(Number(e.target.value))}
         disabled={isDisabled}
         aria-label={ariaLabel ?? label ?? "Range slider"}
+        aria-invalid={error ? "true" : undefined}
+        aria-required={required || undefined}
+        aria-describedby={error ? errorId : undefined}
         className={cn(
           "w-full h-1.5 rounded-lg appearance-none cursor-pointer [--range-track:var(--muted)] [--range-thumb:var(--background)] [--range-fill:var(--status-success)]",
           "[&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[var(--range-thumb)] [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-sm",
@@ -141,6 +143,11 @@ export function RangeSlider({
         )}
         style={{ background: gradient || defaultGradient }}
       />
+      {error && (
+        <p id={errorId} className="text-sm text-status-error mt-1">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

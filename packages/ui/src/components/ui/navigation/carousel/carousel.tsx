@@ -61,6 +61,7 @@ function Carousel({
   disabled = false,
   required,
   onStateChange,
+  "aria-label": ariaLabel,
   ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
   const [carouselRef, api] = useEmblaCarousel(
@@ -157,6 +158,7 @@ function Carousel({
         )}
         role="region"
         aria-roledescription="carousel"
+        aria-label={ariaLabel ?? "Content slideshow"}
         data-slot="carousel"
         data-state={effectiveState}
         data-error={error ? "true" : undefined}

@@ -135,12 +135,16 @@ function CodeBlock({
           <code className="text-foreground">
             {showLineNumbers ? (
               <table className="w-full border-collapse">
+                <caption className="sr-only">Code with line numbers</caption>
                 <tbody>
                   {lines.map((line, index) => (
                     <tr key={`${index}-${line}`}>
-                      <td className="pr-4 text-right text-muted-foreground/70 select-none">
+                      <th
+                        scope="row"
+                        className="pr-4 text-right text-muted-foreground/70 select-none font-normal"
+                      >
                         {index + 1}
-                      </td>
+                      </th>
                       <td className="pl-2 whitespace-pre">{line || "\n"}</td>
                     </tr>
                   ))}

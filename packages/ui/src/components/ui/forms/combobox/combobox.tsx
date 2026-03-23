@@ -81,6 +81,7 @@ function Combobox({
   const inputRef = React.useRef<HTMLInputElement>(null);
   const listRef = React.useRef<HTMLDivElement>(null);
   const [highlightedIndex, setHighlightedIndex] = React.useState(-1);
+  const listboxId = React.useId();
 
   // Determine effective state (priority: loading > error > disabled > default)
   const effectiveState: ComponentState = loading
@@ -202,9 +203,9 @@ function Combobox({
       <Button
         type="button"
         variant="outline"
-        role="combobox"
         aria-expanded={open}
         aria-haspopup="listbox"
+        aria-controls={open ? listboxId : undefined}
         disabled={isDisabled}
         loading={loading}
         onClick={() => !isDisabled && setOpen(!open)}
@@ -246,6 +247,13 @@ function Combobox({
                   disabled={isDisabled}
                   className="w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-text-placeholder focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-label={searchPlaceholder}
+                  aria-autocomplete="list"
+                  aria-controls={listboxId}
+                  aria-activedescendant={
+                    highlightedIndex >= 0 && filteredOptions[highlightedIndex]
+                      ? `${listboxId}-option-${filteredOptions[highlightedIndex]!.value}`
+                      : undefined
+                  }
                   aria-disabled={isDisabled || undefined}
                 />
               </div>
@@ -254,6 +262,7 @@ function Combobox({
 
               <div
                 ref={listRef}
+                id={listboxId}
                 role="listbox"
                 className="max-h-60 overflow-auto p-1"
                 aria-label="Options"
@@ -266,6 +275,7 @@ function Combobox({
                   filteredOptions.map((option, index) => (
                     <div
                       key={option.value}
+                      id={`${listboxId}-option-${option.value}`}
                       role="option"
                       aria-selected={value === option.value}
                       aria-disabled={option.disabled || isDisabled}
