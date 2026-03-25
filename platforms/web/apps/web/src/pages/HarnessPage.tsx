@@ -239,7 +239,7 @@ export function HarnessPage() {
       >
         <ModalHeader title="Test Modal" subtitle="Keyboard navigation baseline" />
         <ModalBody className="space-y-4">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-text-secondary">
             This modal exists to validate focus trap, Escape, and overlay behavior.
           </p>
           <label htmlFor="modal-test-input" className="block text-sm font-medium text-foreground">

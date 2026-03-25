@@ -223,6 +223,7 @@ See also: `~/.codex/instructions/Learnings.md`
 
 ### 2026-03-24
 
+- Fixed the current PR #131 web accessibility regression by raising the contrast of small descriptive copy in `TemplateBrowserPage` and the harness modal. The failing E2E Axe scans were both tripping on low-contrast small text after the design-system hardening pass, so those helper lines now use the stronger secondary text token instead of `text-muted-foreground`.
 - Fixed PR #131 CI version-sync drift by aligning `packages/ui`, `packages/widgets`, and `packages/cloudflare-template` back to the root workspace version `0.0.1`. This unblocks `pnpm sync:versions:check` in the build lanes and keeps the agent-UI hardening branch mergeable.
 - Fixed the token-regeneration truth bug behind PR #131's new build failure. `packages/tokens/scripts/sync-dtcg.ts` now preserves the semantic `elevation` shadow scale and `ElevationToken` type when it regenerates `src/shadows.ts`, so the build pipeline's `pnpm generate:tokens` step no longer rewrites the token package into a shape that breaks `packages/tokens/src/index.ts`.
 - Stabilized Storybook exemplar capture for PR #131 by pinning Playwright Storybook visuals to `en-US` / `UTC` and forcing fullscreen chat/settings stories onto the exact `1280x720` viewport inside `storybook-visual.spec.ts`. This is aimed at the Ubuntu-only drift seen in the `Exemplar evaluation (web platform only)` lane, where fullscreen Storybook screenshots diverged from the committed macOS-recorded baselines.

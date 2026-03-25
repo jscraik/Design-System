@@ -13,7 +13,7 @@ export function TemplateBrowserPage({ templateId }: TemplateBrowserPageProps) {
       <div className="mb-6 flex items-center justify-between gap-4">
         <div className="space-y-2">
           <h1 className="text-2xl font-semibold text-balance">ChatGPT UI Templates</h1>
-          <p className="text-body-small text-muted-foreground text-pretty">
+          <p className="text-body-small text-text-secondary text-pretty">
             Browse production-ready templates and copy usage snippets.
           </p>
         </div>
