@@ -94,6 +94,8 @@ export default defineConfig({
     screenshot: "only-on-failure",
     // Consistent viewport for screenshots
     viewport: { width: 1280, height: 720 },
+    locale: "en-US",
+    timezoneId: "UTC",
     // Disable animations for consistent screenshots
     actionTimeout: 10000,
   },
