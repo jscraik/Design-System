@@ -39,10 +39,10 @@ describe("Button", () => {
 
   describe("sizes", () => {
     it.each([
-      ["default", "h-[var(--foundation-size-control-height)]"],
-      ["sm", "h-[var(--foundation-size-control-height)]"],
-      ["lg", "h-[var(--foundation-size-control-height)]"],
-      ["icon", "size-[var(--foundation-size-control-height)]"],
+      ["default", "h-11"],
+      ["sm", "h-11"],
+      ["lg", "h-11"],
+      ["icon", "size-11"],
     ] as const)("renders %s size with correct styles", (size, expectedClass) => {
       render(<Button size={size}>Button</Button>);
       expect(screen.getByRole("button")).toHaveClass(expectedClass);

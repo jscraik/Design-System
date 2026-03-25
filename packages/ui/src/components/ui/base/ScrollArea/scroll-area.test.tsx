@@ -151,7 +151,7 @@ describe("ScrollArea", () => {
     it("viewport has focus-visible ring classes", () => {
       const { container } = render(<ScrollArea>Content</ScrollArea>);
       const viewport = container.querySelector('[data-slot="scroll-area-viewport"]');
-      expect(viewport).toHaveClass("focus-visible:ring-[3px]");
+      expect(viewport).toHaveClass("focus-visible:ring-2");
     });
   });
 });
