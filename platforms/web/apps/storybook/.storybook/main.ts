@@ -254,6 +254,19 @@ const config = {
         strict: false,
         allow: [repoRoot, path.resolve(repoRoot, "packages")],
       },
+      watch: {
+        ...(viteConfig.server?.watch ?? {}),
+        ignored: [
+          ...(Array.isArray(viteConfig.server?.watch?.ignored)
+            ? viteConfig.server.watch.ignored
+            : viteConfig.server?.watch?.ignored
+              ? [viteConfig.server.watch.ignored]
+              : []),
+          "**/playwright-report/**",
+          "**/test-results/**",
+          "**/__snapshots__/**",
+        ],
+      },
     };
 
     viteConfig.optimizeDeps = {

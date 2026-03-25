@@ -12,7 +12,7 @@ const meta: Meta<typeof SettingsModal> = {
     layout: "fullscreen",
   },
   render: (args) => (
-    <div className="h-screen bg-[var(--background)]">
+    <div className="min-h-dvh bg-background">
       <SettingsModal {...args} />
     </div>
   ),
@@ -33,11 +33,11 @@ export const Interactive: Story = {
   render: () => {
     const [isOpen, setIsOpen] = useState(true);
     return (
-      <div className="h-screen bg-[var(--background)] flex items-center justify-center">
+      <div className="flex min-h-dvh items-center justify-center bg-background">
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="px-4 py-2 bg-[var(--secondary)] hover:bg-[var(--muted)] text-[var(--foreground)] rounded-lg transition-colors"
+          className="rounded-lg bg-secondary px-4 py-2 text-foreground transition-colors hover:bg-muted"
         >
           Open Settings
         </button>

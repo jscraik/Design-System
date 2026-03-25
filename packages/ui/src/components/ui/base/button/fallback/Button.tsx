@@ -50,10 +50,10 @@ const buttonVariants = cva(
         link: "text-interactive underline decoration-interactive underline-offset-4 hover:decoration-interactive/70",
       },
       size: {
-        default: "h-[var(--foundation-size-control-height)] px-4 py-2 has-[>svg]:px-3",
-        sm: "h-[var(--foundation-size-control-height)] gap-1.5 px-3 has-[>svg]:px-2.5 text-button-label-small",
-        lg: "h-[var(--foundation-size-control-height)] px-6 has-[>svg]:px-4 text-button-label",
-        icon: "size-[var(--foundation-size-control-height)]",
+        default: "h-11 px-4 py-2 has-[>svg]:px-3",
+        sm: "h-11 gap-1.5 px-3 has-[>svg]:px-2.5 text-button-label-small",
+        lg: "h-11 px-6 has-[>svg]:px-4 text-button-label",
+        icon: "size-11",
       },
     },
     defaultVariants: {

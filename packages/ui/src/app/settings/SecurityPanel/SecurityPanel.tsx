@@ -1,54 +1,63 @@
 import { useState } from "react";
 
-import { IconChevronLeftMd } from "../../../icons/ChatGPTIcons";
+import { Spinner } from "../../../components/ui/feedback/Spinner/Spinner";
 import { SettingToggle } from "../SettingToggle";
-import type { SettingsPanelProps } from "../shared/types";
+import { SettingsPanelShell } from "../shared/SettingsPanelShell";
+import { SettingsPanelState } from "../shared/SettingsPanelState";
+import type { SettingsAsyncState, SettingsPanelProps } from "../shared/types";
 
-export function SecurityPanel({ onBack }: SettingsPanelProps) {
-  const [mfaEnabled, setMfaEnabled] = useState(true);
+export interface SecurityPanelProps extends SettingsPanelProps {
+  state?: Exclude<SettingsAsyncState, "empty">;
+  busy?: boolean;
+  initialMfaEnabled?: boolean;
+  errorDescription?: string;
+}
+
+export function SecurityPanel({
+  onBack,
+  state = "ready",
+  busy = false,
+  initialMfaEnabled = true,
+  errorDescription = "We couldn't load your security settings. Try again in a moment.",
+}: SecurityPanelProps) {
+  const [mfaEnabled, setMfaEnabled] = useState(initialMfaEnabled);
 
   return (
-    <>
-      <div className="px-6 py-4 border-b border-foreground/10 flex items-center gap-3">
-        <div className="flex gap-2">
+    <SettingsPanelShell title="Security" onBack={onBack}>
+      <SettingsPanelState
+        state={state}
+        loadingLabel="Loading security settings"
+        emptyTitle="Security settings unavailable"
+        emptyDescription="Security controls will appear here once your account finishes provisioning."
+        errorTitle="Couldn't load security settings"
+        errorDescription={errorDescription}
+      >
+        {busy ? (
+          <div
+            className="mb-4 flex items-center gap-2 px-3 text-caption text-muted-foreground"
+            role="status"
+          >
+            <Spinner size="sm" variant="muted" label="Saving security settings" />
+            <span>Saving security settings…</span>
+          </div>
+        ) : null}
+        <SettingToggle
+          label="Multi-factor authentication"
+          checked={mfaEnabled}
+          onCheckedChange={setMfaEnabled}
+          description="You'll only be able to log in using Google while this is on."
+          disabled={busy}
+        />
+        <div className="mt-1 px-3">
           <button
             type="button"
-            onClick={onBack}
-            className="size-3 rounded-full bg-status-error hover:bg-status-error/80 transition-colors"
-            aria-label="Close"
-          />
-          <div className="size-3 rounded-full bg-accent-orange" />
-          <div className="size-3 rounded-full bg-accent-green" />
+            disabled={busy}
+            className="text-caption text-interactive transition-colors hover:text-interactive-hover hover:underline disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            Learn more
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={onBack}
-          className="p-1 hover:bg-muted rounded transition-colors"
-          aria-label="Back to settings"
-        >
-          <IconChevronLeftMd className="size-4 text-foreground" />
-        </button>
-        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foreground">
-          Security
-        </h2>
-      </div>
-
-      <div className="overflow-y-auto max-h-[calc(85vh-80px)] px-6 py-4">
-        {/* Multi-factor authentication */}
-        <div>
-          <SettingToggle
-            label="Multi-factor authentication"
-            checked={mfaEnabled}
-            onCheckedChange={setMfaEnabled}
-          />
-          <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-muted-foreground px-3 mt-1">
-            You'll only be able to log in using Google while this is on.{" "}
-            <button type="button" className="text-accent-blue hover:underline">
-              Learn more
-            </button>
-          </p>
-        </div>
-      </div>
-    </>
+      </SettingsPanelState>
+    </SettingsPanelShell>
   );
 }

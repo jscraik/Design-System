@@ -51,7 +51,7 @@ export function PromptBuilderSection({
   const [showTooltip, setShowTooltip] = useState(false);
 
   return (
-    <div className="min-h-[200px]">
+    <div className="min-h-52">
       <TemplatePanel
         header={
           <TemplateHeaderBar
@@ -60,10 +60,10 @@ export function PromptBuilderSection({
               <button
                 type="button"
                 aria-label="Run discovery"
-                className="flex items-center gap-2 px-3 py-1.5 bg-secondary dark:bg-secondary hover:bg-secondary/80 dark:hover:bg-secondary/80 border border-muted dark:border-muted text-foreground dark:text-foreground rounded-lg transition-colors text-caption leading-5"
+                className="flex items-center gap-2 rounded-lg border border-muted bg-secondary px-3 py-1.5 text-caption leading-5 text-foreground transition-colors hover:bg-secondary/80 dark:bg-secondary dark:border-muted dark:text-foreground dark:hover:bg-secondary/80"
               >
                 <svg
-                  className="size-[18px]"
+                  className="size-5"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -90,7 +90,7 @@ export function PromptBuilderSection({
           <div className="space-y-5">
             {/* Model and System Message */}
             <div className="flex gap-6">
-              <div className="w-[200px] flex-shrink-0">
+              <div className="w-52 flex-shrink-0">
                 <TemplateFormField label="Model">
                   <div className="bg-secondary dark:bg-secondary border border-muted dark:border-muted rounded-lg px-3 py-2.5">
                     <div className="flex items-center justify-between">
@@ -114,7 +114,7 @@ export function PromptBuilderSection({
                     value={systemMessage}
                     onChange={(e) => onSystemMessageChange(e.target.value)}
                     placeholder="Describe desired modal behavior (tone, tool usage, response style)"
-                    className="w-full h-[60px] bg-secondary dark:bg-secondary border border-muted dark:border-muted rounded-lg px-3 py-2.5 text-caption leading-5 text-foreground dark:text-foreground placeholder:text-text-secondary dark:placeholder:text-text-secondary focus:outline-none focus:border-muted/70 dark:focus:border-muted/70 resize-none"
+                    className="h-15 w-full resize-none rounded-lg border border-muted bg-secondary px-3 py-2.5 text-caption leading-5 text-foreground placeholder:text-text-secondary focus:border-muted/70 focus:outline-none dark:bg-secondary dark:border-muted dark:text-foreground dark:placeholder:text-text-secondary dark:focus:border-muted/70"
                     aria-label="System message input"
                   />
                 </TemplateFormField>
@@ -151,7 +151,7 @@ export function PromptBuilderSection({
                       </button>
 
                       {showTooltip && (
-                        <div className="absolute right-0 top-8 w-[320px] bg-background dark:bg-secondary border border-muted dark:border-muted rounded-lg p-4 shadow-xl z-50">
+                        <div className="absolute right-0 top-8 z-50 w-80 rounded-lg border border-muted bg-background p-4 shadow-xl dark:bg-secondary dark:border-muted">
                           <div className="text-caption leading-5 text-foreground dark:text-foreground space-y-3">
                             {promptEnhancement === "rewrite" && (
                               <>
@@ -231,7 +231,7 @@ export function PromptBuilderSection({
                     value={taskDescription}
                     onChange={(e) => onTaskDescriptionChange(e.target.value)}
                     placeholder={taskConfig.placeholder}
-                    className="w-full h-[120px] bg-secondary dark:bg-secondary border border-muted dark:border-muted rounded-lg px-3 py-2.5 pr-24 text-caption leading-5 text-foreground dark:text-foreground placeholder:text-text-secondary dark:placeholder:text-text-secondary focus:outline-none focus:border-muted/70 dark:focus:border-muted/70 resize-none"
+                    className="h-30 w-full resize-none rounded-lg border border-muted bg-secondary px-3 py-2.5 pr-24 text-caption leading-5 text-foreground placeholder:text-text-secondary focus:border-muted/70 focus:outline-none dark:bg-secondary dark:border-muted dark:text-foreground dark:placeholder:text-text-secondary dark:focus:border-muted/70"
                     aria-label={taskConfig.label}
                   />
 
@@ -239,7 +239,7 @@ export function PromptBuilderSection({
                     type="button"
                     onClick={onOpenDiscoverySettings}
                     aria-label={`Run discovery: ${taskConfig.buttonText}`}
-                    className="absolute top-2.5 right-2.5 px-3 py-1.5 bg-secondary dark:bg-secondary hover:bg-secondary/80 dark:hover:bg-secondary/80 text-foreground dark:text-foreground rounded-lg transition-all text-caption leading-5 whitespace-nowrap flex items-center gap-1.5"
+                    className="absolute right-2.5 top-2.5 flex items-center gap-1.5 whitespace-nowrap rounded-lg bg-secondary px-3 py-1.5 text-caption leading-5 text-foreground transition-all hover:bg-secondary/80 dark:bg-secondary dark:text-foreground dark:hover:bg-secondary/80"
                   >
                     <span className="rounded-sm bg-accent-green/20 dark:bg-accent-green/20 px-1 text-foreground dark:text-foreground text-caption">
                       {targetSize}k
@@ -275,7 +275,7 @@ export function PromptBuilderSection({
                 </div>
 
                 <Toggle checked={autoPlan} onChange={onAutoPlanChange} ariaLabel="Auto create" />
-                <span className="text-caption leading-5 text-text-secondary dark:text-text-secondary min-w-[32px]">
+                <span className="min-w-8 text-caption leading-5 text-text-secondary dark:text-text-secondary">
                   {autoPlan ? "On" : "Off"}
                 </span>
               </div>

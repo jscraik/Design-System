@@ -55,14 +55,14 @@
  */
 export { colorTokens } from "./colors";
 export { radiusTokens } from "./radius";
-export { shadowTokens } from "./shadows";
+export { type ElevationToken, elevation, shadowTokens } from "./shadows";
 export { sizeTokens } from "./sizes";
 export { spaceTokens, spacingScale } from "./spacing";
 export { typographyTokens } from "./typography";
 export { focus, focusColors, focusCSSVars, focusRing, focusStyles, focusVisibleCSS, } from "./enhanced/focus";
-export { type DurationToken, duration, durationCSSVars, type EasingToken, easing, easingCSSVars, getDuration, getEasing, getMotion, hoverTransition, microInteractionCSSVars, microInteractions, motionTokens, pressTransition, transition, } from "./enhanced/motion";
+export { type DurationToken, duration, durationCSSVars, type EasingToken, easing, easingCSSVars, getDuration, getEasing, getMotion, hoverTransition, microInteractionCSSVars, microInteractions, motionTokens, pressTransition, reducedMotion, transition, } from "./enhanced/motion";
 export { type ComponentState, errorStyles, formStateStyles, getStateStyles, loadingStyles, type StatefulComponentProps, stateTransitions, withState, } from "./enhanced/patterns";
 export { getSpacing, type SpacingToken, spacing, spacingCSSVars, spacingPixels, } from "./enhanced/spacing";
 export { getZIndex, type ZIndexToken, zIndex, zIndexCSSVars, } from "./enhanced/z-index";
-export { THEME_STORAGE_KEY, type Theme, ThemeProvider, type ThemeProviderProps, useEffectiveTheme, useTheme, } from "./theme";
+export { type EffectiveTheme, THEME_STORAGE_KEY, type Theme, ThemeProvider, type ThemeProviderProps, useEffectiveTheme, useTheme, } from "./theme";
 //# sourceMappingURL=index.d.ts.map

@@ -192,7 +192,7 @@ function ColorPicker({
 }) {
   return (
     <div className="mb-8">
-      <h3 className="text-[14px] font-medium leading-[18px] tracking-[-0.3px] text-foreground dark:text-foreground mb-4">
+      <h3 className="mb-4 text-body-small font-medium text-foreground dark:text-foreground">
         Color
       </h3>
       <div className="flex items-center justify-center gap-3">
@@ -237,10 +237,8 @@ function IconGrid({
 
   return (
     <div className="space-y-4">
-      <h3 className="text-[14px] font-medium leading-[18px] tracking-[-0.3px] text-foreground dark:text-foreground">
-        Icon
-      </h3>
-      <div className="grid grid-cols-7 gap-2 max-h-[280px] overflow-y-auto pr-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted dark:scrollbar-thumb-muted">
+      <h3 className="text-body-small font-medium text-foreground dark:text-foreground">Icon</h3>
+      <div className="grid max-h-[17.5rem] grid-cols-7 gap-2 overflow-y-auto pr-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted dark:scrollbar-thumb-muted">
         {icons.map((icon) => {
           const IconComponent = icon.component;
           const isSelected = selectedIcon === icon.id;
@@ -311,17 +309,17 @@ export function IconPickerModal({
       isOpen={isOpen}
       onClose={onClose}
       title="Choose icon"
-      maxWidth="440px"
-      className="bg-background dark:bg-secondary border border-muted dark:border-muted rounded-2xl shadow-2xl p-0"
+      maxWidth="27.5rem"
+      className="rounded-2xl border border-muted bg-background p-0 shadow-2xl dark:border-muted dark:bg-secondary"
       showOverlay={false}
     >
       <div className="px-6 py-4 border-b border-muted dark:border-muted">
         <div className="flex items-center justify-between">
           <div className="flex-1">
-            <h2 className="text-[16px] font-medium leading-[26px] tracking-[-0.4px] text-foreground dark:text-foreground">
+            <h2 className="text-body font-medium text-foreground dark:text-foreground">
               Choose icon
             </h2>
-            <p className="text-[12px] font-normal leading-[16px] tracking-[-0.1px] text-text-secondary dark:text-text-secondary mt-0.5">
+            <p className="mt-0.5 text-caption font-normal text-text-secondary dark:text-text-secondary">
               {projectName}
             </p>
           </div>
@@ -373,7 +371,7 @@ export function IconPickerModal({
           onClick={onClose}
           className={cn(
             "px-4 py-2 rounded-lg transition-all duration-200",
-            "text-[14px] font-normal leading-[18px] tracking-[-0.3px]",
+            "text-body-small font-normal",
             "text-text-secondary dark:text-text-secondary",
             "hover:text-foreground dark:hover:text-foreground",
             "hover:bg-muted dark:hover:bg-muted",
@@ -390,7 +388,7 @@ export function IconPickerModal({
           onClick={handleSave}
           className={cn(
             "px-4 py-2 rounded-lg transition-all duration-200",
-            "text-[14px] font-medium leading-[18px] tracking-[-0.3px]",
+            "text-body-small font-medium",
             "bg-accent-green dark:bg-accent-green",
             "text-text-body-on-color",
             "hover:opacity-90 hover:scale-105 active:scale-95",

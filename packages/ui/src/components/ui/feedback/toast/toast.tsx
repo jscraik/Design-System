@@ -205,7 +205,7 @@ function ToastContainer({ position = "bottom-right", children, className }: Toas
     <div
       data-slot="toast-container"
       className={cn(
-        "fixed z-modal-backdrop flex max-h-dvh w-full flex-col-reverse gap-2 p-4 sm:max-w-[420px]",
+        "fixed z-modal-backdrop flex max-h-dvh w-full flex-col-reverse gap-2 p-4 sm:max-w-[26.25rem]",
         positionClasses[position],
         className,
       )}

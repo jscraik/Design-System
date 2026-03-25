@@ -9,11 +9,11 @@ type TemplateBrowserPageProps = {
 
 export function TemplateBrowserPage({ templateId }: TemplateBrowserPageProps) {
   return (
-    <div className="min-h-screen bg-foundation-bg-light-1 px-6 py-6 text-foundation-text-light-primary dark:bg-foundation-bg-dark-1 dark:text-foundation-text-dark-primary">
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold">ChatGPT UI Templates</h1>
-          <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+    <div className="min-h-dvh bg-background px-6 py-6 text-foreground">
+      <div className="mb-6 flex items-center justify-between gap-4">
+        <div className="space-y-2">
+          <h1 className="text-2xl font-semibold text-balance">ChatGPT UI Templates</h1>
+          <p className="text-body-small text-muted-foreground text-pretty">
             Browse production-ready templates and copy usage snippets.
           </p>
         </div>
@@ -24,7 +24,7 @@ export function TemplateBrowserPage({ templateId }: TemplateBrowserPageProps) {
             window.location.href = "/";
           }}
         >
-          <IconArrowLeftSm className="mr-2 h-4 w-4" />
+          <IconArrowLeftSm className="mr-2 size-4" />
           Widget Gallery
         </AppsSDKButton>
       </div>

@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import { cn } from "../../../components/ui/utils";
+
 export interface SettingRowProps {
   icon?: ReactNode;
   label: string;
@@ -22,21 +24,23 @@ export function SettingRow({
   onClick,
   className = "",
 }: SettingRowProps) {
-  const baseClasses = "flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors";
-  const hoverClasses = onClick ? "hover:bg-secondary dark:hover:bg-secondary cursor-pointer" : "";
+  const baseClasses = "flex items-center justify-between rounded-lg px-3 py-2.5 transition-colors";
+  const interactiveClasses = onClick
+    ? "cursor-pointer text-left hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+    : "";
 
   const content = (
     <>
-      <div className="flex items-center gap-3 flex-1">
-        {icon && <span className="text-text-secondary dark:text-text-secondary">{icon}</span>}
-        <div className="flex-1">
-          <span className="text-body-small font-normal   text-foreground">{label}</span>
-          {description && (
-            <p className="text-caption   text-muted-foreground mt-1">{description}</p>
-          )}
+      <div className="flex min-w-0 flex-1 items-center gap-3">
+        {icon && <span className="shrink-0 text-text-secondary">{icon}</span>}
+        <div className="min-w-0 flex-1">
+          <span className="text-body-small text-foreground">{label}</span>
+          {description ? (
+            <p className="mt-1 text-caption text-muted-foreground">{description}</p>
+          ) : null}
         </div>
       </div>
-      {right && <div className="ml-3 flex-shrink-0">{right}</div>}
+      {right ? <div className="ml-3 shrink-0">{right}</div> : null}
     </>
   );
 
@@ -45,12 +49,12 @@ export function SettingRow({
       <button
         type="button"
         onClick={onClick}
-        className={`w-full ${baseClasses} ${hoverClasses} ${className}`}
+        className={cn("w-full", baseClasses, interactiveClasses, className)}
       >
         {content}
       </button>
     );
   }
 
-  return <div className={`${baseClasses} ${className}`}>{content}</div>;
+  return <div className={cn(baseClasses, className)}>{content}</div>;
 }

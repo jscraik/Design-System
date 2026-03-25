@@ -98,3 +98,6 @@ pnpm -C platforms/web/apps/web dev -- --port 5174
 ## Routes
 
 - `/`: Widget gallery UI (HarnessPage)
+- `/templates`: template browser shell with searchable preview
+- `/templates/<template-id>`: template browser deep-link with that template selected
+- `/template-widget/<template-id>`: isolated single-template widget shell for stable previews and widget-style verification

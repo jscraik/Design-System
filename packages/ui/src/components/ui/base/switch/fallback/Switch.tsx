@@ -124,7 +124,7 @@ function Switch({
           // Thumb background - using Apps SDK UI tokens
           "bg-background",
           // Thumb translation
-          "data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0",
+          "data-[state=checked]:translate-x-[calc(100%-0.125rem)] data-[state=unchecked]:translate-x-0",
           // Error state for thumb
           error && "data-[state=checked]:bg-status-error",
         )}

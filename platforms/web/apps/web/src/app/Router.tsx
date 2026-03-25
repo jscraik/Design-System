@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ChatShellPage } from "../pages/ChatShellPage";
 import { HarnessPage } from "../pages/HarnessPage";
 import { TemplateBrowserPage } from "../pages/TemplateBrowserPage";
+import { TemplateWidgetPage } from "../pages/TemplateWidgetPage";
 
 const getTemplateId = (pathname: string, search: string) => {
   const params = new URLSearchParams(search);
@@ -15,6 +16,15 @@ const getTemplateId = (pathname: string, search: string) => {
   }
 
   return undefined;
+};
+
+const getTemplateWidgetId = (pathname: string) => {
+  if (!pathname.startsWith("/template-widget/")) {
+    return undefined;
+  }
+
+  const slug = pathname.replace("/template-widget/", "");
+  return slug ? decodeURIComponent(slug) : undefined;
 };
 
 /**
@@ -36,6 +46,11 @@ export function Router() {
     window.addEventListener("popstate", handleChange);
     return () => window.removeEventListener("popstate", handleChange);
   }, []);
+
+  const widgetTemplateId = getTemplateWidgetId(location.pathname);
+  if (widgetTemplateId) {
+    return <TemplateWidgetPage templateId={widgetTemplateId} />;
+  }
 
   if (location.pathname.startsWith("/templates")) {
     return <TemplateBrowserPage templateId={getTemplateId(location.pathname, location.search)} />;

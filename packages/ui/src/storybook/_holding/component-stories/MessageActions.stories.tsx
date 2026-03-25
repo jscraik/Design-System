@@ -9,8 +9,8 @@ const meta: Meta<typeof MessageActions> = {
     backgrounds: {
       default: "dark",
       values: [
-        { name: "dark", value: "var(--foundation-bg-dark-1)" },
-        { name: "light", value: "var(--foundation-bg-light-1)" },
+        { name: "dark", value: "var(--background)" },
+        { name: "light", value: "var(--background)" },
       ],
     },
   },
@@ -64,10 +64,10 @@ export const CustomActions: Story = {
 
 export const InMessageContext: Story = {
   render: () => (
-    <div className="max-w-md p-4 bg-foundation-bg-dark-1 rounded-lg">
+    <div className="max-w-md rounded-lg bg-background p-4">
       <div className="group">
-        <div className="mb-3 p-3 bg-foundation-bg-dark-2 rounded-lg">
-          <p className="text-foundation-text-dark-primary text-sm mb-2">
+        <div className="mb-3 rounded-lg bg-secondary p-3">
+          <p className="mb-2 text-sm text-foreground">
             This is a sample assistant message that demonstrates how the MessageActions component
             appears in context.
           </p>

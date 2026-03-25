@@ -12,6 +12,19 @@
 import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
 
+const storybookBaseUrl =
+  process.env.PLAYWRIGHT_STORYBOOK_BASE_URL ??
+  `http://127.0.0.1:${process.env.PLAYWRIGHT_STORYBOOK_PORT ?? process.env.STORYBOOK_PORT ?? "6006"}`;
+
+function parseStoryIdsEnv(name: string): string[] | null {
+  const raw = process.env[name];
+  if (!raw) return null;
+  return raw
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+}
+
 /**
  * Helper to set theme and wait for transition
  */
@@ -21,17 +34,22 @@ async function setTheme(page: Page, theme: "light" | "dark") {
 }
 
 function storyUrl(storyId: string, theme: "light" | "dark") {
-  const params = new URLSearchParams();
-  params.set("id", storyId);
-  params.set("globals", `backgrounds.value:${theme === "light" ? "light" : "dark"}`);
-  return `http://localhost:6006/iframe.html?${params.toString()}`;
+  const url = new URL("/iframe.html", storybookBaseUrl);
+  url.searchParams.set("id", storyId);
+  url.searchParams.set(
+    "globals",
+    [`theme:${theme}`, `backgrounds.value:${theme === "light" ? "light" : "dark"}`].join(";"),
+  );
+  url.searchParams.set("devOverlays", "0");
+  url.searchParams.set("agentation", "0");
+  return url.toString();
 }
 
 /**
  * Critical UI components to test (from each major category)
  * Format: "title--story" from story title (e.g., "Components/UI/Base/Button" + "Default" = "components-ui-base-button--default")
  */
-const CRITICAL_STORIES = [
+const DEFAULT_CRITICAL_STORIES = [
   // Base primitives
   "components-ui-base-button--default",
   "components-ui-base-button--secondary",
@@ -115,6 +133,18 @@ const CRITICAL_STORIES = [
   "documentation-design-system-iconography-showcase--default",
 ];
 
+const DEFAULT_INTERACTIVE_STORIES = [
+  "components-ui-base-button--default",
+  "components-ui-base-input--default",
+  "components-ui-base-icon-button--default",
+  "components-ui-base-switch--default",
+];
+
+const CRITICAL_STORIES =
+  parseStoryIdsEnv("PLAYWRIGHT_STORYBOOK_STORY_IDS") ?? DEFAULT_CRITICAL_STORIES;
+const INTERACTIVE_STORIES =
+  parseStoryIdsEnv("PLAYWRIGHT_STORYBOOK_INTERACTIVE_STORY_IDS") ?? DEFAULT_INTERACTIVE_STORIES;
+
 test.describe("Storybook visual regression - Light Theme", () => {
   test.beforeEach(async ({ page }) => {
     await setTheme(page, "light");
@@ -147,13 +177,6 @@ test.describe("Storybook visual regression - Dark Theme", () => {
 
 test.describe("Storybook visual regression - Interactive States", () => {
   // Test hover/focus states for critical interactive elements
-  const INTERACTIVE_STORIES = [
-    "components-ui-base-button--default",
-    "components-ui-base-input--default",
-    "components-ui-base-icon-button--default",
-    "components-ui-base-switch--default",
-  ];
-
   for (const storyId of INTERACTIVE_STORIES) {
     test(`${storyId} - hover state`, async ({ page }) => {
       await setTheme(page, "light");

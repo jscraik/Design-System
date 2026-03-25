@@ -80,6 +80,8 @@ screenshots/
 **/storybook-static/
 **/test-results/
 **/playwright-report/
+**/node_modules/.vite/
+**/node_modules/.tmp/
 
 # Misc
 .cache/
@@ -106,6 +108,9 @@ Thumbs.db
 ops/metrics/skill-feedback/*.jsonl
 # Internal docs (do not commit)
 docs/transcripts/
+# Local audit/run artifacts
+reports/audit-report.md
+reports/audit-screenshot-*.png
 
 # Project memory doc (FORJAMIE.md) is tracked in git.
 

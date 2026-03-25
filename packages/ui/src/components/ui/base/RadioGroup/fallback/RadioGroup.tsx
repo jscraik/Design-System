@@ -99,7 +99,7 @@ function RadioGroupItem({
         "text-foreground",
         // Focus styles - using Apps SDK UI tokens
         "focus-visible:border-ring focus-visible:ring-ring/50",
-        "focus-visible:ring-[3px]",
+        "focus-visible:ring-2",
         // Error state styling
         "aria-invalid:ring-status-error/20 dark:aria-invalid:ring-status-error/40",
         "aria-invalid:border-status-error",

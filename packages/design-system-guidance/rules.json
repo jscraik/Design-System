@@ -23,9 +23,39 @@
       "description": "Markdown docs should include a ## Table of Contents heading."
     },
     {
+      "id": "exemption-ledger-missing",
+      "level": "error",
+      "description": "Configured exemption ledger must exist."
+    },
+    {
+      "id": "exemption-ledger-invalid",
+      "level": "error",
+      "description": "Configured exemption ledger entries must include the required metadata."
+    },
+    {
+      "id": "exemption-ledger-expired",
+      "level": "error",
+      "description": "Exemption ledger entries must not remain past removeBy."
+    },
+    {
       "id": "no-deprecated-icons-import",
       "level": "error",
       "description": "Deprecated icon package imports are disallowed. Use @design-studio/ui/icons."
+    },
+    {
+      "id": "no-foundation-token-usage",
+      "level": "warn",
+      "description": "Foundation token references should be replaced by semantic or mapped tokens on product surfaces."
+    },
+    {
+      "id": "no-global-focus-visible",
+      "level": "warn",
+      "description": "Global or unscoped :focus-visible rules should be replaced with scoped focus selectors."
+    },
+    {
+      "id": "no-h-screen",
+      "level": "warn",
+      "description": "h-screen should be replaced by dvh-safe shell patterns on product surfaces."
     },
     {
       "id": "no-raw-hex-colors",
@@ -36,6 +66,11 @@
       "id": "no-raw-px-values",
       "level": "warn",
       "description": "Raw pixel values should be replaced by spacing/typography tokens."
+    },
+    {
+      "id": "no-arbitrary-tracking-values",
+      "level": "warn",
+      "description": "Arbitrary tracking utilities should be replaced by semantic text roles or token-backed styles."
     }
   ]
 }

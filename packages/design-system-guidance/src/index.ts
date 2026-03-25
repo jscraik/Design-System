@@ -8,8 +8,12 @@ export {
 export type {
   CheckOptions,
   CheckResult,
+  ExemptionClassification,
   GuidanceConfig,
+  GuidanceExemption,
+  GuidanceExemptionLedger,
   GuidanceRule,
+  GuidanceScopeName,
   GuidanceViolation,
   InitOptions,
   InitResult,

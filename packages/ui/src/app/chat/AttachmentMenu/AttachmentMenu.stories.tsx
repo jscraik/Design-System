@@ -12,8 +12,8 @@ const meta: Meta<typeof AttachmentMenu> = {
     backgrounds: {
       default: "dark",
       values: [
-        { name: "dark", value: "#212121" },
-        { name: "light", value: "#ffffff" },
+        { name: "dark", value: "var(--secondary)" },
+        { name: "light", value: "var(--background)" },
       ],
     },
   },
@@ -40,7 +40,7 @@ export const Interactive: Story = {
     const [isWebSearchActive, setIsWebSearchActive] = useState(false);
 
     return (
-      <div className="p-8 bg-background min-h-[400px]">
+      <div className="min-h-96 bg-background p-8">
         <AttachmentMenu
           {...args}
           open={open}
@@ -66,7 +66,7 @@ export const Default: Story = {
     isWebSearchActive: false,
   },
   render: (args) => (
-    <div className="p-8 bg-background">
+    <div className="bg-background p-8">
       <AttachmentMenu {...args} />
     </div>
   ),
@@ -79,7 +79,7 @@ export const OpenPrimary: Story = {
     isWebSearchActive: false,
   },
   render: (args) => (
-    <div className="p-8 bg-background min-h-[400px]">
+    <div className="min-h-96 bg-background p-8">
       <AttachmentMenu {...args} />
     </div>
   ),
@@ -92,7 +92,7 @@ export const WebSearchActive: Story = {
     isWebSearchActive: true,
   },
   render: (args) => (
-    <div className="p-8 bg-background min-h-[400px]">
+    <div className="min-h-96 bg-background p-8">
       <AttachmentMenu {...args} />
     </div>
   ),
@@ -104,7 +104,7 @@ export const OpenMenuByClick: Story = {
   render: () => {
     const [open, setOpen] = useState(false);
     return (
-      <div className="p-8 bg-background min-h-[400px]">
+      <div className="min-h-96 bg-background p-8">
         <AttachmentMenu
           open={open}
           onOpenChange={setOpen}
@@ -145,7 +145,7 @@ export const MenuClosedByDefault: Story = {
     isWebSearchActive: false,
   },
   render: (args) => (
-    <div className="p-8 bg-background">
+    <div className="bg-background p-8">
       <AttachmentMenu {...args} />
     </div>
   ),

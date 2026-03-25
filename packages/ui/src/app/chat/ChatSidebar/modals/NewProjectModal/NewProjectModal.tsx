@@ -53,7 +53,7 @@ export function NewProjectModal({
       onClose={onClose}
       title="New project"
       description="Projects give ChatGPT shared context across chats and files, all in one place."
-      maxWidth="420px"
+      maxWidth="26.25rem"
       className="bg-background dark:bg-secondary border border-muted dark:border-muted text-foreground dark:text-foreground rounded-2xl shadow-2xl"
       overlayClassName="bg-background/70 backdrop-blur-sm"
     >

@@ -1,5 +1,11 @@
 # @design-studio/cloudflare-template
 
+## 0.0.2
+
+### Patch Changes
+
+- @design-studio/widgets@0.0.2
+
 Last updated: 2026-01-09
 
 ## Doc requirements

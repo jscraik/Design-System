@@ -30,13 +30,6 @@ const meta: Meta<typeof SettingDropdown> = {
   component: SettingDropdown,
   parameters: {
     layout: "padded",
-    backgrounds: {
-      default: "dark",
-      values: [
-        { name: "dark", value: "#1a1a1a" },
-        { name: "light", value: "#ffffff" },
-      ],
-    },
   },
   tags: ["autodocs"],
   argTypes: {

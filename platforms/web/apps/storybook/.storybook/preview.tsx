@@ -19,8 +19,12 @@ mswInitialize({ onUnhandledRequest: "bypass" });
 
 let AgentationComponent: React.ComponentType<{ endpoint?: string }> | null = null;
 let DialRootComponent: React.ComponentType | null = null;
+const searchParams =
+  typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+const shouldDisableDevOverlays =
+  searchParams?.get("devOverlays") === "0" || searchParams?.get("agentation") === "0";
 
-if (import.meta.env.DEV) {
+if (import.meta.env.DEV && !shouldDisableDevOverlays) {
   // eslint-disable-next-line no-console
   import("agentation")
     .then((mod) => {
@@ -241,10 +245,12 @@ const preview: Preview = {
               <Story />
             </div>
             {/* Dev overlays: Agentation and Dialkit — dev only, never in production builds */}
-            {import.meta.env.DEV && AgentationComponent && (
+            {!shouldDisableDevOverlays && import.meta.env.DEV && AgentationComponent && (
               <AgentationComponent endpoint="http://localhost:4747" />
             )}
-            {import.meta.env.DEV && DialRootComponent && <DialRootComponent />}
+            {!shouldDisableDevOverlays && import.meta.env.DEV && DialRootComponent && (
+              <DialRootComponent />
+            )}
           </AppsSDKUIProvider>
         </HostProvider>
       );

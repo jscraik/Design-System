@@ -180,16 +180,13 @@ export function SettingsModal({ isOpen, onClose, account, appInfo }: SettingsMod
           <div className="size-3 rounded-full bg-accent-orange" />
           <div className="size-3 rounded-full bg-accent-green" />
         </div>
-        <h2
-          id="settings-modal-title"
-          className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foreground"
-        >
+        <h2 id="settings-modal-title" className="text-heading-3 font-semibold text-foreground">
           Settings
         </h2>
       </div>
 
       {/* Main content */}
-      <div className="overflow-y-auto max-h-[calc(85vh-80px)] px-6 py-4">
+      <div className="max-h-[calc(85vh-5rem)] overflow-y-auto px-6 py-4">
         <AccountSection account={account} onNavigate={handleNavigate} />
         <AppSection
           appLanguage={appLanguage}
@@ -237,8 +234,8 @@ export function SettingsModal({ isOpen, onClose, account, appInfo }: SettingsMod
       onClose={handleClose}
       title="Settings"
       titleId="settings-modal-title"
-      maxWidth="560px"
-      className="bg-background border border-foreground/10 rounded-[16px] shadow-2xl max-h-[85vh] overflow-hidden"
+      maxWidth="35rem"
+      className="max-h-[85vh] overflow-hidden rounded-2xl border border-foreground/10 bg-background shadow-2xl"
       showOverlay={false}
     >
       {currentView !== "main" ? renderPanel() : mainContent}

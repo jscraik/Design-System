@@ -248,6 +248,8 @@ export class TokenGenerator {
 ${this.generateCSSSpacing()}
 
   /* Typography */
+  --font-display:
+    "${this.tokens.typography.fontDisplay}", "SF Pro Display", "SF Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --foundation-font-family:
     "${this.tokens.typography.fontFamily}", "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 ${this.generateCSSTypography()}
@@ -560,9 +562,9 @@ ${this.generateCSSTypography()}
     const lines: string[] = [];
 
     Object.entries(this.tokens.typography).forEach(([key, value]) => {
-      if (key === "fontFamily") return; // Already handled above
+      if (key === "fontFamily" || key === "fontDisplay") return; // Already handled above
 
-      // Type assertion: after skipping fontFamily, value is an object with typography properties
+      // Type assertion: after skipping font family entries, value is a typography style object
       const token = value as {
         size: number;
         lineHeight: number;

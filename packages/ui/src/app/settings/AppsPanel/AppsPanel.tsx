@@ -1,154 +1,145 @@
-import { IconChevronLeftMd, IconChevronRightMd } from "../../../icons/ChatGPTIcons";
-import type { SettingsPanelProps } from "../shared/types";
+import { IconChevronRightMd } from "../../../icons/ChatGPTIcons";
+import { SettingsPanelShell } from "../shared/SettingsPanelShell";
+import { SettingsPanelState } from "../shared/SettingsPanelState";
+import type { SettingsAsyncState, SettingsPanelProps } from "../shared/types";
 
-const LIGHT_TEXT_HEX = "#0D0D0D";
-const DARK_TEXT_HEX = "#FFFFFF";
+interface AppsPanelItem {
+  name: string;
+  icon: string;
+  toneClass: string;
+  textClass?: string;
+}
 
-const hexToRgb = (hex: string) => {
-  const normalized = hex.replace("#", "");
-  if (normalized.length !== 6) return null;
-  const r = Number.parseInt(normalized.slice(0, 2), 16);
-  const g = Number.parseInt(normalized.slice(2, 4), 16);
-  const b = Number.parseInt(normalized.slice(4, 6), 16);
-  if (Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)) return null;
-  return { r, g, b };
-};
+export interface AppsPanelProps extends SettingsPanelProps {
+  state?: SettingsAsyncState;
+  enabledApps?: AppsPanelItem[];
+  errorDescription?: string;
+}
 
-const relativeLuminance = ({ r, g, b }: { r: number; g: number; b: number }) => {
-  const toLinear = (c: number) => {
-    const normalized = c / 255;
-    return normalized <= 0.04045 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
-  };
-  const rLin = toLinear(r);
-  const gLin = toLinear(g);
-  const bLin = toLinear(b);
-  return 0.2126 * rLin + 0.7152 * gLin + 0.0722 * bLin;
-};
+const DEFAULT_ENABLED_APPS: AppsPanelItem[] = [
+  { name: "Canva", icon: "C", toneClass: "bg-accent-green" },
+  { name: "Code for Slack", icon: "S", toneClass: "bg-accent-orange" },
+  { name: "Dropbox", icon: "D", toneClass: "bg-accent-blue" },
+  { name: "Figma", icon: "F", toneClass: "bg-status-error" },
+  {
+    name: "GitHub",
+    icon: "G",
+    toneClass: "bg-secondary border border-border",
+    textClass: "text-foreground",
+  },
+  { name: "Linear", icon: "L", toneClass: "bg-accent-blue" },
+  { name: "Linear Coder Agent", icon: "L", toneClass: "bg-accent-blue" },
+  {
+    name: "Notion",
+    icon: "N",
+    toneClass: "bg-secondary border border-border",
+    textClass: "text-foreground",
+  },
+  { name: "Outlook Calendar", icon: "O", toneClass: "bg-accent-blue" },
+  { name: "Outlook Email", icon: "O", toneClass: "bg-accent-blue" },
+  { name: "PEER", icon: "P", toneClass: "bg-muted-foreground" },
+  { name: "SharePoint", icon: "S", toneClass: "bg-accent-blue" },
+  { name: "Shopping research", icon: "S", toneClass: "bg-accent-green" },
+  { name: "Slack", icon: "S", toneClass: "bg-accent-orange" },
+  {
+    name: "Sora",
+    icon: "S",
+    toneClass: "bg-secondary border border-border",
+    textClass: "text-foreground",
+  },
+  { name: "Teams", icon: "T", toneClass: "bg-accent-blue" },
+  { name: "todo", icon: "T", toneClass: "bg-accent-blue" },
+  { name: "Your 'app with ChatGPT'", icon: "Y", toneClass: "bg-accent-orange" },
+];
 
-const contrastRatio = (hexA: string, hexB: string) => {
-  const rgbA = hexToRgb(hexA);
-  const rgbB = hexToRgb(hexB);
-  if (!rgbA || !rgbB) return 1;
-  const l1 = relativeLuminance(rgbA);
-  const l2 = relativeLuminance(rgbB);
-  const lighter = Math.max(l1, l2);
-  const darker = Math.min(l1, l2);
-  return (lighter + 0.05) / (darker + 0.05);
-};
-
-const getReadableTextClass = (backgroundHex: string) => {
-  const onLight = contrastRatio(backgroundHex, LIGHT_TEXT_HEX);
-  const onDark = contrastRatio(backgroundHex, DARK_TEXT_HEX);
-  return onLight >= onDark ? "text-foreground" : "text-foreground";
-};
-
-// App icon component for consistent styling
-function AppIcon({ children, color }: { children: React.ReactNode; color: string }) {
-  const textClass = getReadableTextClass(color);
+function AppIcon({
+  children,
+  toneClass,
+  textClass = "text-text-body-on-color",
+}: {
+  children: React.ReactNode;
+  toneClass: string;
+  textClass?: string;
+}) {
   return (
-    <div
-      className={`size-5 rounded flex items-center justify-center flex-shrink-0 ${textClass}`}
-      style={{ backgroundColor: color }}
-    >
-      <span className="text-text-body-on-color text-[11px] font-semibold">{children}</span>
+    <div className={`flex size-5 shrink-0 items-center justify-center rounded ${toneClass}`}>
+      <span className={`${textClass} text-caption font-semibold`}>{children}</span>
     </div>
   );
 }
 
-export function AppsPanel({ onBack }: SettingsPanelProps) {
-  const enabledApps = [
-    { name: "Canva", icon: "C", color: "#00C4CC" },
-    { name: "Code for Slack", icon: "S", color: "#4A154B" },
-    { name: "Dropbox", icon: "D", color: "#0061FF" },
-    { name: "Figma", icon: "F", color: "#F24E1E" },
-    { name: "GitHub", icon: "G", color: "#24292e" },
-    { name: "Linear", icon: "L", color: "#5E6AD2" },
-    { name: "Linear Coder Agent", icon: "L", color: "#5E6AD2" },
-    { name: "Notion", icon: "N", color: "#000000" },
-    { name: "Outlook Calendar", icon: "O", color: "#0078D4" },
-    { name: "Outlook Email", icon: "O", color: "#0078D4" },
-    { name: "PEER", icon: "P", color: "#6B7280" },
-    { name: "SharePoint", icon: "S", color: "#0078D4" },
-    { name: "Shopping research", icon: "S", color: "#10a37f" },
-    { name: "Slack", icon: "S", color: "#4A154B" },
-    { name: "Sora", icon: "S", color: "#000000" },
-    { name: "Teams", icon: "T", color: "#6264A7" },
-    { name: "todo", icon: "T", color: "#2564CF" },
-    { name: "Your 'app with ChatGPT'", icon: "Y", color: "#FF6B35" },
-  ];
+function BrowseAppsButton() {
+  return (
+    <button
+      type="button"
+      className="rounded-md bg-secondary px-4 py-2 text-body-small text-foreground transition-colors hover:bg-secondary/80"
+    >
+      Browse Apps
+    </button>
+  );
+}
+
+export function AppsPanel({
+  onBack,
+  state = "ready",
+  enabledApps = DEFAULT_ENABLED_APPS,
+  errorDescription = "We couldn't load your app connections right now. Try refreshing this panel.",
+}: AppsPanelProps) {
+  const effectiveState = state === "ready" && enabledApps.length === 0 ? "empty" : state;
 
   return (
-    <>
-      <div className="px-6 py-4 border-b border-foreground/10 flex items-center gap-3">
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={onBack}
-            className="size-3 rounded-full bg-status-error hover:bg-status-error/80 transition-colors"
-            aria-label="Close"
-          />
-          <div className="size-3 rounded-full bg-accent-orange" />
-          <div className="size-3 rounded-full bg-accent-green" />
-        </div>
-        <button
-          type="button"
-          onClick={onBack}
-          className="p-1 hover:bg-muted rounded transition-colors"
-        >
-          <IconChevronLeftMd className="size-4 text-foreground" />
-        </button>
-        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foreground">
-          Apps
-        </h2>
-      </div>
-
-      <div className="overflow-y-auto max-h-[calc(85vh-80px)] px-6 py-4">
-        {/* Enabled apps section */}
+    <SettingsPanelShell title="Apps" onBack={onBack}>
+      <SettingsPanelState
+        state={effectiveState}
+        loadingLabel="Loading apps"
+        emptyTitle="No apps enabled yet"
+        emptyDescription="Connect an app to let ChatGPT work with your files, docs, and tools."
+        emptyAction={<BrowseAppsButton />}
+        errorTitle="Couldn't load apps"
+        errorDescription={errorDescription}
+      >
         <div className="mb-6">
-          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foreground mb-2 px-3">
-            Enabled apps
-          </h3>
+          <h3 className="mb-2 px-3 text-body-small font-semibold text-foreground">Enabled apps</h3>
           <div className="space-y-0.5">
             {enabledApps.map((app) => (
               <button
                 type="button"
                 key={app.name}
-                className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-secondary rounded-lg transition-colors"
+                className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 <div className="flex items-center gap-3">
-                  <AppIcon color={app.color}>{app.icon}</AppIcon>
-                  <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground">
-                    {app.name}
-                  </span>
+                  <AppIcon toneClass={app.toneClass} textClass={app.textClass}>
+                    {app.icon}
+                  </AppIcon>
+                  <span className="text-body-small text-foreground">{app.name}</span>
                 </div>
                 <IconChevronRightMd className="size-4 text-muted-foreground" />
               </button>
             ))}
           </div>
 
-          {/* Info text */}
-          <div className="px-3 mt-3">
-            <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-muted-foreground">
+          <div className="mt-3 px-3">
+            <p className="text-caption text-muted-foreground">
               ChatGPT can access information from connected apps. Your permissions are always
               respected.{" "}
-              <button type="button" className="text-accent-blue hover:underline">
+              <button
+                type="button"
+                className="text-interactive transition-colors hover:text-interactive-hover hover:underline"
+              >
                 Learn more
               </button>
             </p>
           </div>
         </div>
 
-        {/* All apps section */}
         <div>
-          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foreground mb-2 px-3">
-            All apps
-          </h3>
+          <h3 className="mb-2 px-3 text-body-small font-semibold text-foreground">All apps</h3>
           <button
             type="button"
-            className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-secondary rounded-lg transition-colors"
+            className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             <div className="flex items-center gap-3">
-              <div className="size-5 rounded bg-muted flex items-center justify-center">
+              <div className="bg-muted flex size-5 items-center justify-center rounded">
                 <svg
                   className="size-3 text-text-secondary"
                   fill="none"
@@ -163,14 +154,12 @@ export function AppsPanel({ onBack }: SettingsPanelProps) {
                   />
                 </svg>
               </div>
-              <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground">
-                Browse Apps
-              </span>
+              <span className="text-body-small text-foreground">Browse Apps</span>
             </div>
             <IconChevronRightMd className="size-4 text-muted-foreground" />
           </button>
         </div>
-      </div>
-    </>
+      </SettingsPanelState>
+    </SettingsPanelShell>
   );
 }

@@ -1,3 +1,5 @@
+import { useId } from "react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -5,6 +7,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "../../../components/ui/overlays/DropdownMenu";
+import { cn } from "../../../components/ui/utils";
 import { IconCheckmark, IconChevronDownMd } from "../../../icons/ChatGPTIcons";
 
 export interface DropdownOption {
@@ -36,41 +39,41 @@ export function SettingDropdown({
   align = "end",
   className = "",
 }: SettingDropdownProps) {
+  const descriptionId = useId();
   const selectedOption = options.find((opt) => opt.value === value);
 
   return (
     <div className={className}>
-      <div className="flex items-center justify-between px-3 py-2.5 hover:bg-secondary dark:hover:bg-secondary rounded-lg transition-colors">
-        <span className="text-body-small font-normal   text-foreground">{label}</span>
+      <div className="flex items-center justify-between rounded-lg px-3 py-2.5 transition-colors hover:bg-secondary">
+        <span className="text-body-small text-foreground">{label}</span>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button
               type="button"
-              className="flex items-center gap-1.5 px-3 py-1.5 hover:bg-muted rounded-md transition-colors"
+              className="flex items-center gap-1.5 rounded-md px-3 py-1.5 transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              aria-describedby={description ? descriptionId : undefined}
             >
-              <span className="text-body-small font-normal   text-text-secondary">
+              <span className="text-body-small text-text-secondary">
                 {selectedOption?.label || value}
               </span>
-              <IconChevronDownMd className="size-3.5 text-text-secondary dark:text-text-secondary" />
+              <IconChevronDownMd className="size-3.5 text-text-secondary" />
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align={align} className="min-w-[270px]">
+          <DropdownMenuContent align={align} className="min-w-72">
             <DropdownMenuRadioGroup value={value} onValueChange={onValueChange}>
               {options.map((option) => (
                 <DropdownMenuRadioItem key={option.value} value={option.value}>
-                  <div className="flex items-center justify-between w-full">
+                  <div className="flex w-full items-center justify-between">
                     <div className="flex-1">
-                      <div className="text-body-small font-normal   text-foreground">
-                        {option.label}
-                      </div>
+                      <div className="text-body-small text-foreground">{option.label}</div>
                       {option.description && (
-                        <div className="text-caption  tracking-[-0.24px] text-text-secondary mt-0.5">
+                        <div className="mt-0.5 text-caption text-text-secondary">
                           {option.description}
                         </div>
                       )}
                     </div>
                     {value === option.value && (
-                      <IconCheckmark className="size-4 text-foreground dark:text-foreground ml-2 flex-shrink-0" />
+                      <IconCheckmark className="ml-2 size-4 shrink-0 text-foreground" />
                     )}
                   </div>
                 </DropdownMenuRadioItem>
@@ -79,9 +82,11 @@ export function SettingDropdown({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      {description && (
-        <p className="text-caption   text-muted-foreground px-3 mt-2">{description}</p>
-      )}
+      {description ? (
+        <p id={descriptionId} className={cn("mt-2 px-3 text-caption text-muted-foreground")}>
+          {description}
+        </p>
+      ) : null}
     </div>
   );
 }

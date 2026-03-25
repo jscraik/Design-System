@@ -16,6 +16,11 @@ describe("Token Validator Properties", () => {
     expect(result.errors).toEqual([]);
   });
 
+  test("Typography aliases keep top-level font family tokens outside type.web", () => {
+    expect(tokenAliasMap.type.fontFamily).toEqual({ path: "type.fontFamily" });
+    expect(tokenAliasMap.type.fontDisplay).toEqual({ path: "type.fontDisplay" });
+  });
+
   test("Non-color aliases use brand paths or allowlisted computed values", () => {
     const categories = ["space", "radius", "size", "shadow", "type"] as const;
 

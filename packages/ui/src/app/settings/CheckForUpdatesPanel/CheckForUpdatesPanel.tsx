@@ -1,35 +1,20 @@
-import { IconChevronLeftMd } from "../../../icons/ChatGPTIcons";
+import { SettingsPanelShell } from "../shared/SettingsPanelShell";
+import { SettingsPanelState } from "../shared/SettingsPanelState";
 import type { SettingsPanelProps } from "../shared/types";
 
 export function CheckForUpdatesPanel({ onBack }: SettingsPanelProps) {
   return (
-    <>
-      <div className="px-6 py-4 border-b border-foreground/10 flex items-center gap-3">
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={onBack}
-            className="size-3 rounded-full bg-status-error hover:bg-status-error/80 transition-colors"
-            aria-label="Close"
-          />
-          <div className="size-3 rounded-full bg-accent-orange" />
-          <div className="size-3 rounded-full bg-accent-green" />
-        </div>
-        <button
-          type="button"
-          onClick={onBack}
-          className="p-1 hover:bg-muted rounded transition-colors"
-        >
-          <IconChevronLeftMd className="size-4 text-foreground" />
-        </button>
-        <h2 className="text-heading-3 font-semibold   text-foreground">Check for Updates</h2>
-      </div>
-
-      <div className="overflow-y-auto max-h-[calc(85vh-80px)] px-6 py-4">
-        <p className="text-body-small text-text-secondary">
-          Update checking functionality will be implemented here.
-        </p>
-      </div>
-    </>
+    <SettingsPanelShell title="Check for Updates" onBack={onBack}>
+      <SettingsPanelState
+        state="empty"
+        loadingLabel="Checking for updates"
+        emptyTitle="Update checks will live here"
+        emptyDescription="This panel will show desktop version details, release notes, and manual update actions."
+        errorTitle="Update details are unavailable"
+        errorDescription="We couldn't load update details right now."
+      >
+        <div />
+      </SettingsPanelState>
+    </SettingsPanelShell>
   );
 }

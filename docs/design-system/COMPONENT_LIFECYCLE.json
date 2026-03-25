@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-03-23",
+  "components": [
+    {
+      "name": "Stack",
+      "path": "packages/ui/src/components/ui/layout/Stack/Stack.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Primary vertical composition primitive for product surfaces."
+    },
+    {
+      "name": "Flex",
+      "path": "packages/ui/src/components/ui/layout/Flex/Flex.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Primary row and inline alignment primitive for product surfaces."
+    },
+    {
+      "name": "Grid",
+      "path": "packages/ui/src/components/ui/layout/Grid/Grid.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Use when a real grid is needed; do not replace list-based settings layouts with Grid by default."
+    },
+    {
+      "name": "SectionHeader",
+      "path": "packages/ui/src/components/ui/base/SectionHeader/SectionHeader.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Preferred section heading primitive for grouped settings and product sections."
+    },
+    {
+      "name": "CollapsibleSection",
+      "path": "packages/ui/src/components/ui/base/CollapsibleSection/CollapsibleSection.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Preferred expandable section primitive when progressive disclosure is needed."
+    },
+    {
+      "name": "EmptyMessage",
+      "path": "packages/ui/src/components/ui/data-display/EmptyMessage/EmptyMessage.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Preferred neutral no-data state primitive."
+    },
+    {
+      "name": "Spinner",
+      "path": "packages/ui/src/components/ui/feedback/Spinner/Spinner.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Preferred loading-state primitive."
+    },
+    {
+      "name": "ErrorBoundary",
+      "path": "packages/ui/src/components/ui/feedback/ErrorBoundary/ErrorBoundary.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Preferred shared error boundary primitive."
+    },
+    {
+      "name": "DataTable",
+      "path": "packages/ui/src/components/ui/data-display/DataTable/DataTable.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Use for tabular data views; do not hand-roll table layouts when this fits."
+    },
+    {
+      "name": "ChatShell",
+      "path": "packages/ui/src/app/chat/ChatShell/ChatShell.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Preferred shell reference for chat-oriented surfaces."
+    },
+    {
+      "name": "SettingRow",
+      "path": "packages/ui/src/app/settings/SettingRow/SettingRow.tsx",
+      "lifecycle": "transitional",
+      "routing_tier": 2,
+      "notes": "Existing settings row primitive that should anchor recipe-first normalization before any new exports are added."
+    },
+    {
+      "name": "SettingToggle",
+      "path": "packages/ui/src/app/settings/SettingToggle/SettingToggle.tsx",
+      "lifecycle": "transitional",
+      "routing_tier": 2,
+      "notes": "Existing control-row primitive that should replace repeated hand-rolled toggle rows in settings surfaces."
+    },
+    {
+      "name": "SettingDropdown",
+      "path": "packages/ui/src/app/settings/SettingDropdown/SettingDropdown.tsx",
+      "lifecycle": "transitional",
+      "routing_tier": 2,
+      "notes": "Existing settings selector primitive pending cluster-wide normalization."
+    }
+  ]
+}

@@ -58,7 +58,7 @@
 // ============================================================================
 export { colorTokens } from "./colors";
 export { radiusTokens } from "./radius";
-export { shadowTokens } from "./shadows";
+export { elevation, shadowTokens } from "./shadows";
 export { sizeTokens } from "./sizes";
 export { spaceTokens, spacingScale } from "./spacing";
 export { typographyTokens } from "./typography";
@@ -68,7 +68,7 @@ export { typographyTokens } from "./typography";
 // Focus (focus ring system)
 export { focus, focusColors, focusCSSVars, focusRing, focusStyles, focusVisibleCSS, } from "./enhanced/focus";
 // Motion (easing, duration, micro-interactions)
-export { duration, durationCSSVars, easing, easingCSSVars, getDuration, getEasing, getMotion, hoverTransition, microInteractionCSSVars, microInteractions, motionTokens, pressTransition, transition, } from "./enhanced/motion";
+export { duration, durationCSSVars, easing, easingCSSVars, getDuration, getEasing, getMotion, hoverTransition, microInteractionCSSVars, microInteractions, motionTokens, pressTransition, reducedMotion, transition, } from "./enhanced/motion";
 // Patterns (component state patterns)
 export { errorStyles, formStateStyles, getStateStyles, loadingStyles, stateTransitions, withState, } from "./enhanced/patterns";
 // Spacing (10-step scale)

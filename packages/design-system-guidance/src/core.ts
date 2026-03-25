@@ -5,7 +5,10 @@ import type {
   CheckOptions,
   CheckResult,
   GuidanceConfig,
+  GuidanceExemption,
+  GuidanceExemptionLedger,
   GuidanceRule,
+  GuidanceScopeName,
   GuidanceViolation,
   InitOptions,
   InitResult,
@@ -26,6 +29,9 @@ const SCAN_EXTENSIONS = new Set([
   ".html",
   ".mdx",
 ]);
+const ISO_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+const DEFAULT_SCOPE_PRECEDENCE: GuidanceScopeName[] = ["error", "warn", "exempt"];
+const EXEMPTION_CLASSIFICATIONS = new Set(["temporary", "transitional", "deprecated"]);
 
 const RULE_PATTERNS: Record<string, { regex: RegExp; message: string }> = {
   "no-deprecated-icons-import": {
@@ -39,6 +45,23 @@ const RULE_PATTERNS: Record<string, { regex: RegExp; message: string }> = {
   "no-raw-px-values": {
     regex: /\b\d+(?:\.\d+)?px\b/g,
     message: "Raw pixel value found. Use spacing/typography tokens instead of literal px values.",
+  },
+  "no-foundation-token-usage": {
+    regex: /(?:var\(--foundation-[^)]+\)|--foundation-[\w-]+)/g,
+    message: "Foundation token usage found. Use semantic or mapped tokens on product surfaces.",
+  },
+  "no-global-focus-visible": {
+    regex: /(^|[,{]\s*)(?:[a-z*][\w-]*\s*)?:focus-visible\b/gm,
+    message: "Global or unscoped :focus-visible rule found. Use a scoped focus selector instead.",
+  },
+  "no-h-screen": {
+    regex: /\bh-screen\b/g,
+    message: "h-screen found. Use a 100dvh-safe shell pattern for protected surfaces.",
+  },
+  "no-arbitrary-tracking-values": {
+    regex: /\btracking-\[[^\]]+\]/g,
+    message:
+      "Arbitrary tracking utility found. Use a semantic text role or token-backed style instead.",
   },
 };
 
@@ -54,6 +77,12 @@ const DEFAULT_CONFIG: GuidanceConfig = {
   ],
   include: ["src", "app", "components", "styles"],
   ignore: ["node_modules", "dist", ".git", "coverage", ".next", "build"],
+  scopes: {
+    error: [],
+    warn: [],
+    exempt: [],
+  },
+  scopePrecedence: [...DEFAULT_SCOPE_PRECEDENCE],
 };
 
 function getPackageRoot(): string {
@@ -98,6 +127,39 @@ function parseStringArray(value: unknown): string[] | null {
   return items;
 }
 
+function parseScopes(value: unknown): GuidanceConfig["scopes"] | null {
+  if (value === undefined) return { ...DEFAULT_CONFIG.scopes };
+  if (!isObject(value)) return null;
+
+  const error = value.error === undefined ? [] : parseStringArray(value.error);
+  const warn = value.warn === undefined ? [] : parseStringArray(value.warn);
+  const exempt = value.exempt === undefined ? [] : parseStringArray(value.exempt);
+
+  if (error === null || warn === null || exempt === null) return null;
+  return { error, warn, exempt };
+}
+
+function parseScopePrecedence(value: unknown): GuidanceScopeName[] | null {
+  if (value === undefined) return [...DEFAULT_SCOPE_PRECEDENCE];
+  const entries = parseStringArray(value);
+  if (!entries) return null;
+
+  const normalized = entries.filter(
+    (entry): entry is GuidanceScopeName =>
+      entry === "error" || entry === "warn" || entry === "exempt",
+  );
+  if (normalized.length !== entries.length) return null;
+
+  const deduped = Array.from(new Set(normalized));
+  for (const scope of DEFAULT_SCOPE_PRECEDENCE) {
+    if (!deduped.includes(scope)) {
+      deduped.push(scope);
+    }
+  }
+
+  return deduped;
+}
+
 function parseConfig(raw: string): GuidanceConfig | null {
   try {
     const parsed = JSON.parse(raw) as unknown;
@@ -116,11 +178,28 @@ function parseConfig(raw: string): GuidanceConfig | null {
       ignoreRaw === undefined ? [...(DEFAULT_CONFIG.ignore ?? [])] : parseStringArray(ignoreRaw);
     if (ignore === null) return null;
 
+    const scopes = parseScopes(parsed.scopes);
+    if (scopes === null) return null;
+
+    const scopePrecedence = parseScopePrecedence(parsed.scopePrecedence);
+    if (scopePrecedence === null) return null;
+
+    const exemptionLedger =
+      parsed.exemptionLedger === undefined
+        ? undefined
+        : typeof parsed.exemptionLedger === "string" && parsed.exemptionLedger.trim().length > 0
+          ? parsed.exemptionLedger
+          : null;
+    if (exemptionLedger === null) return null;
+
     return {
       schemaVersion: Number(parsed.schemaVersion ?? 1),
       docs,
       include,
       ignore,
+      scopes,
+      exemptionLedger,
+      scopePrecedence,
     };
   } catch {
     return null;
@@ -199,12 +278,240 @@ function collectPatternViolations(
   return matches;
 }
 
+function normalizeRelativePath(rootPath: string, filePath: string): string {
+  return path.relative(rootPath, filePath).split(path.sep).join("/");
+}
+
+function escapeRegexChar(value: string): string {
+  return value.replace(/[|\\{}()[\]^$+?.]/g, "\\$&");
+}
+
+function globFragmentToRegex(glob: string): string {
+  let pattern = "";
+
+  for (let index = 0; index < glob.length; index += 1) {
+    const char = glob[index];
+
+    if (char === "*") {
+      if (glob[index + 1] === "*") {
+        const nextChar = glob[index + 2];
+        if (nextChar === "/") {
+          pattern += "(?:.*/)?";
+          index += 2;
+        } else {
+          pattern += ".*";
+          index += 1;
+        }
+      } else {
+        pattern += "[^/]*";
+      }
+      continue;
+    }
+
+    if (char === "?") {
+      pattern += "[^/]";
+      continue;
+    }
+
+    if (char === "{") {
+      const endIndex = glob.indexOf("}", index);
+      if (endIndex === -1) {
+        pattern += "\\{";
+        continue;
+      }
+      const body = glob.slice(index + 1, endIndex);
+      const parts = body.split(",").map((part) => globFragmentToRegex(part));
+      pattern += `(?:${parts.join("|")})`;
+      index = endIndex;
+      continue;
+    }
+
+    pattern += escapeRegexChar(char);
+  }
+
+  return pattern;
+}
+
+const globRegexCache = new Map<string, RegExp>();
+
+function globToRegExp(glob: string): RegExp {
+  const normalized = glob.split(path.sep).join("/");
+  const cached = globRegexCache.get(normalized);
+  if (cached) return cached;
+
+  const regex = new RegExp(`^${globFragmentToRegex(normalized)}$`);
+  globRegexCache.set(normalized, regex);
+  return regex;
+}
+
+function matchesGlob(filePath: string, glob: string): boolean {
+  return globToRegExp(glob).test(filePath);
+}
+
+function scoreGlobSpecificity(glob: string): { literalLength: number; wildcardCount: number } {
+  const normalized = glob.split(path.sep).join("/");
+  const withoutBraceBodies = normalized.replace(/\{[^}]*\}/g, "");
+
+  return {
+    literalLength: withoutBraceBodies.replace(/[*?]/g, "").length,
+    wildcardCount: (withoutBraceBodies.match(/[*?]/g) ?? []).length,
+  };
+}
+
+function findBestScopeMatch(
+  filePath: string,
+  scopes: GuidanceConfig["scopes"],
+  precedence: GuidanceScopeName[],
+): GuidanceScopeName | null {
+  if (!scopes) return null;
+
+  let bestMatch: {
+    scope: GuidanceScopeName;
+    literalLength: number;
+    wildcardCount: number;
+    precedenceIndex: number;
+  } | null = null;
+
+  for (const scope of ["error", "warn", "exempt"] as const) {
+    for (const glob of scopes[scope] ?? []) {
+      if (!matchesGlob(filePath, glob)) continue;
+
+      const { literalLength, wildcardCount } = scoreGlobSpecificity(glob);
+      const precedenceIndex = precedence.indexOf(scope);
+
+      if (
+        !bestMatch ||
+        wildcardCount < bestMatch.wildcardCount ||
+        (wildcardCount === bestMatch.wildcardCount && literalLength > bestMatch.literalLength) ||
+        (wildcardCount === bestMatch.wildcardCount &&
+          literalLength === bestMatch.literalLength &&
+          precedenceIndex < bestMatch.precedenceIndex)
+      ) {
+        bestMatch = {
+          scope,
+          literalLength,
+          wildcardCount,
+          precedenceIndex,
+        };
+      }
+    }
+  }
+
+  return bestMatch?.scope ?? null;
+}
+
+function isIsoDate(value: string): boolean {
+  return ISO_DATE_PATTERN.test(value);
+}
+
+function parseExemptionLedger(raw: string): {
+  ledger: GuidanceExemptionLedger | null;
+  errors: string[];
+} {
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (!isObject(parsed)) {
+      return { ledger: null, errors: ["Ledger must be a JSON object."] };
+    }
+
+    if (!Array.isArray(parsed.exemptions)) {
+      return { ledger: null, errors: ["Ledger must include an exemptions array."] };
+    }
+
+    const errors: string[] = [];
+    const exemptions: GuidanceExemption[] = [];
+
+    parsed.exemptions.forEach((entry, index) => {
+      if (!isObject(entry)) {
+        errors.push(`Entry ${index} must be an object.`);
+        return;
+      }
+
+      const pathValue = entry.path;
+      const ruleId = entry.ruleId;
+      const rationale = entry.rationale;
+      const owner = entry.owner;
+      const createdAt = entry.createdAt;
+      const removeBy = entry.removeBy;
+      const targetIssue = entry.targetIssue;
+      const classification = entry.classification;
+
+      if (
+        typeof pathValue !== "string" ||
+        typeof ruleId !== "string" ||
+        typeof rationale !== "string" ||
+        typeof owner !== "string" ||
+        typeof createdAt !== "string" ||
+        typeof removeBy !== "string" ||
+        typeof targetIssue !== "string" ||
+        typeof classification !== "string"
+      ) {
+        errors.push(`Entry ${index} is missing one or more required string fields.`);
+        return;
+      }
+
+      if (!isIsoDate(createdAt) || !isIsoDate(removeBy)) {
+        errors.push(`Entry ${index} must use YYYY-MM-DD dates for createdAt and removeBy.`);
+        return;
+      }
+
+      if (!EXEMPTION_CLASSIFICATIONS.has(classification)) {
+        errors.push(
+          `Entry ${index} has invalid classification '${classification}'. Expected temporary, transitional, or deprecated.`,
+        );
+        return;
+      }
+
+      exemptions.push({
+        path: pathValue,
+        ruleId,
+        rationale,
+        owner,
+        createdAt,
+        removeBy,
+        targetIssue,
+        classification: classification as GuidanceExemption["classification"],
+      });
+    });
+
+    return {
+      ledger: {
+        schemaVersion: Number(parsed.schemaVersion ?? 1),
+        exemptions,
+        updated_at: typeof parsed.updated_at === "string" ? parsed.updated_at : undefined,
+        last_updated: typeof parsed.last_updated === "string" ? parsed.last_updated : undefined,
+      },
+      errors,
+    };
+  } catch {
+    return { ledger: null, errors: ["Ledger must contain valid JSON."] };
+  }
+}
+
+function isExpired(removeBy: string): boolean {
+  return removeBy < new Date().toISOString().slice(0, 10);
+}
+
+function hasMatchingExemption(
+  exemptions: GuidanceExemption[],
+  filePath: string,
+  ruleId: string,
+): boolean {
+  return exemptions.some((entry) => entry.ruleId === ruleId && matchesGlob(filePath, entry.path));
+}
+
 export function createBaselineConfig(): GuidanceConfig {
   return {
     ...DEFAULT_CONFIG,
     docs: [...DEFAULT_CONFIG.docs],
     include: [...(DEFAULT_CONFIG.include ?? [])],
     ignore: [...(DEFAULT_CONFIG.ignore ?? [])],
+    scopes: {
+      error: [...(DEFAULT_CONFIG.scopes?.error ?? [])],
+      warn: [...(DEFAULT_CONFIG.scopes?.warn ?? [])],
+      exempt: [...(DEFAULT_CONFIG.scopes?.exempt ?? [])],
+    },
+    scopePrecedence: [...(DEFAULT_CONFIG.scopePrecedence ?? [])],
   };
 }
 
@@ -239,8 +546,51 @@ export async function runCheck(
         ruleId: "config-invalid",
         level: findRuleLevel(rules, "config-invalid", "error"),
         file: configPath,
-        message: "Config is invalid. Expected JSON with docs/include/ignore string arrays.",
+        message:
+          "Config is invalid. Expected JSON with docs/include/ignore arrays and optional scopes/exemptionLedger metadata.",
       });
+    }
+  }
+
+  let exemptions: GuidanceExemption[] = [];
+  if (config?.exemptionLedger) {
+    const ledgerPath = path.join(targetPath, config.exemptionLedger);
+    if (!(await exists(ledgerPath))) {
+      violations.push({
+        ruleId: "exemption-ledger-missing",
+        level: findRuleLevel(rules, "exemption-ledger-missing", "error"),
+        file: ledgerPath,
+        message: `Configured exemption ledger is missing: ${config.exemptionLedger}`,
+      });
+    } else {
+      const rawLedger = await readFile(ledgerPath, "utf8");
+      const { ledger, errors } = parseExemptionLedger(rawLedger);
+      if (!ledger || errors.length > 0) {
+        for (const error of errors) {
+          violations.push({
+            ruleId: "exemption-ledger-invalid",
+            level: findRuleLevel(rules, "exemption-ledger-invalid", "error"),
+            file: ledgerPath,
+            message: error,
+          });
+        }
+      }
+
+      if (ledger) {
+        exemptions = ledger.exemptions.filter((entry) => {
+          if (!isExpired(entry.removeBy)) {
+            return true;
+          }
+
+          violations.push({
+            ruleId: "exemption-ledger-expired",
+            level: findRuleLevel(rules, "exemption-ledger-expired", "error"),
+            file: ledgerPath,
+            message: `Exemption for ${entry.ruleId} on ${entry.path} expired on ${entry.removeBy}.`,
+          });
+          return false;
+        });
+      }
     }
   }
 
@@ -273,18 +623,43 @@ export async function runCheck(
     const includePaths = config.include ?? [];
     const ignoreDirs = config.ignore ?? [];
     const files = await collectScannableFiles(targetPath, includePaths, ignoreDirs);
+    const fileContents = await Promise.all(
+      files.map(async (filePath) => ({
+        filePath,
+        relativePath: normalizeRelativePath(targetPath, filePath),
+        content: await readFile(filePath, "utf8"),
+      })),
+    );
 
     for (const rule of rules.rules) {
       const pattern = RULE_PATTERNS[rule.id];
       if (!pattern) continue;
-      for (const filePath of files) {
-        const content = await readFile(filePath, "utf8");
-        const matches = collectPatternViolations(content, pattern.regex);
+
+      for (const file of fileContents) {
+        if (hasMatchingExemption(exemptions, file.relativePath, rule.id)) {
+          continue;
+        }
+
+        const matchedScope = findBestScopeMatch(
+          file.relativePath,
+          config.scopes,
+          config.scopePrecedence ?? DEFAULT_SCOPE_PRECEDENCE,
+        );
+        if (matchedScope === "exempt") {
+          continue;
+        }
+
+        const level =
+          matchedScope === "error" || matchedScope === "warn"
+            ? matchedScope
+            : normalizeLevel(rule.level);
+
+        const matches = collectPatternViolations(file.content, pattern.regex);
         for (const match of matches) {
           violations.push({
             ruleId: rule.id,
-            level: normalizeLevel(rule.level),
-            file: filePath,
+            level,
+            file: file.filePath,
             line: match.line,
             message: pattern.message,
           });
@@ -294,8 +669,7 @@ export async function runCheck(
   }
 
   const hasErrors = violations.some((violation) => violation.level === "error");
-  const hasWarnings = violations.some((violation) => violation.level === "warn");
-  const shouldFail = ciMode ? hasErrors || hasWarnings : false;
+  const shouldFail = ciMode ? hasErrors : false;
 
   return {
     targetPath,
@@ -335,7 +709,12 @@ export async function initGuidance(
 
 export function formatCheckResult(result: CheckResult): string {
   const lines: string[] = [];
-  const prefix = result.violations.length === 0 ? "PASS" : result.ciMode ? "FAIL" : "WARN";
+  const prefix =
+    result.violations.length === 0
+      ? "PASS"
+      : result.ciMode && result.exitCode > 0
+        ? "FAIL"
+        : "WARN";
 
   lines.push(`${prefix} design-system-guidance check (${result.targetPath})`);
 

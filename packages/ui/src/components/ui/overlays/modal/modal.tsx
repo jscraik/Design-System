@@ -63,7 +63,7 @@ export function ModalDialog({
   title,
   titleId,
   description,
-  maxWidth = "420px",
+  maxWidth = "26.25rem",
   showOverlay = true,
   className,
   overlayClassName,

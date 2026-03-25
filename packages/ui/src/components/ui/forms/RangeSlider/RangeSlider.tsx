@@ -104,6 +104,8 @@ export function RangeSlider({
       data-required={required ? "true" : undefined}
       aria-disabled={isDisabled || undefined}
       aria-busy={loading || undefined}
+      aria-invalid={error ? "true" : undefined}
+      aria-required={required || undefined}
     >
       {(label || showValue) && (
         <div className="flex items-center justify-between">

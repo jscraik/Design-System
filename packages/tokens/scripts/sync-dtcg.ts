@@ -173,6 +173,7 @@ type DtcgRoot = {
   shadow: Record<string, DtcgShadowToken>;
   type: {
     fontFamily: DtcgFontFamilyToken;
+    fontDisplay: DtcgFontFamilyToken;
     web: {
       hero: DtcgTypographyStyle;
       h1: DtcgTypographyStyle;
@@ -491,6 +492,7 @@ function buildTypography(dtcg: DtcgRoot) {
   const web = t.web;
   return {
     fontFamily: t.fontFamily.$value,
+    fontDisplay: t.fontDisplay.$value,
     hero: {
       size: getDimensionValue(web.hero.size, "type.web.hero.size"),
       lineHeight: getDimensionValue(web.hero.lineHeight, "type.web.hero.lineHeight"),

@@ -19,13 +19,6 @@ const meta: Meta<typeof AppsPanel> = {
   component: AppsPanel,
   parameters: {
     layout: "fullscreen",
-    backgrounds: {
-      default: "dark",
-      values: [
-        { name: "dark", value: "#1a1a1a" },
-        { name: "light", value: "#ffffff" },
-      ],
-    },
   },
   tags: ["autodocs"],
   argTypes: {
@@ -42,6 +35,24 @@ export default meta;
 type Story = StoryObj<typeof AppsPanel>;
 
 export const Default: Story = {};
+
+export const Loading: Story = {
+  args: {
+    state: "loading",
+  },
+};
+
+export const Empty: Story = {
+  args: {
+    enabledApps: [],
+  },
+};
+
+export const Error: Story = {
+  args: {
+    state: "error",
+  },
+};
 
 export const InContainer: Story = {
   render: (args) => (

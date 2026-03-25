@@ -229,4 +229,133 @@ export declare function hoverTransition(properties?: string | string[]): string;
  * Helper to build press transition string
  */
 export declare function pressTransition(properties?: string | string[]): string;
+/**
+ * Reduced-motion fallbacks for every motion token.
+ *
+ * Map each token to its `prefers-reduced-motion: reduce` equivalent.
+ * Use these values inside `@media (prefers-reduced-motion: reduce)` blocks
+ * so consumers cannot accidentally skip the override.
+ *
+ * @example
+ * ```css
+ * .my-element {
+ *   transition: opacity var(--ds-duration-standard) var(--ds-easing-standard);
+ * }
+ * @media (prefers-reduced-motion: reduce) {
+ *   .my-element {
+ *     transition-duration: 0ms;
+ *     transition-timing-function: linear;
+ *   }
+ * }
+ * ```
+ *
+ * @example (JS)
+ * ```tsx
+ * const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ * const dur = prefersReduced ? reducedMotion.duration : duration.standard;
+ * ```
+ */
+export declare const reducedMotion: {
+    /**
+     * Duration to use inside `prefers-reduced-motion: reduce` contexts.
+     * Zero eliminates all animation timing — the state change is instant.
+     */
+    readonly duration: 0;
+    /**
+     * Easing to use inside `prefers-reduced-motion: reduce` contexts.
+     * Linear with 0ms duration produces an instant, imperceptible transition.
+     */
+    readonly easing: "linear";
+    /**
+     * Per-token overrides for `motionTokens`.
+     * Each entry mirrors the motionTokens shape and maps to instant (0ms) timing.
+     */
+    readonly tokens: {
+        readonly overlay: {
+            readonly enter: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+            readonly exit: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+        };
+        readonly popover: {
+            readonly enter: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+            readonly exit: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+        };
+        readonly dropdown: {
+            readonly enter: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+            readonly exit: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+        };
+        readonly toggle: {
+            readonly active: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+            readonly inactive: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+        };
+        readonly tab: {
+            readonly enter: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+            readonly exit: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+        };
+        readonly tooltip: {
+            readonly enter: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+            readonly exit: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+        };
+        readonly focus: {
+            readonly enter: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+            readonly exit: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+        };
+        readonly page: {
+            readonly enter: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+            readonly exit: {
+                readonly easing: "linear";
+                readonly duration: 0;
+            };
+        };
+    };
+    /**
+     * CSS override block — paste this inside any `@media (prefers-reduced-motion: reduce)` rule.
+     * Sets duration to 0ms and timing function to linear for all DS transition properties.
+     */
+    readonly cssBlock: string;
+};
 //# sourceMappingURL=motion.d.ts.map

@@ -18,7 +18,7 @@ const meta: Meta<typeof ChatInput> = {
     layout: "fullscreen",
   },
   render: (args) => (
-    <div className="min-h-screen bg-background flex items-end">
+    <div className="flex min-h-dvh items-end bg-background">
       <div className="w-full">
         <ChatInput {...args} />
       </div>
@@ -37,7 +37,7 @@ export const LightTheme: Story = {
     backgrounds: { default: "light" },
   },
   render: (args) => (
-    <div className="min-h-screen bg-background flex items-end">
+    <div className="flex min-h-dvh items-end bg-background">
       <div className="w-full">
         <ChatInput {...args} />
       </div>

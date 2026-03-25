@@ -6,9 +6,20 @@ Review cadence: Every release or monthly (whichever is sooner)
 
 This index links all governing artifacts for the UI design system.
 
+## Table of Contents
+
+- [Governance](#governance)
+- [Tokens](#tokens)
+- [Coverage and Enforcement](#coverage-and-enforcement)
+- [Export Naming Policy](#export-naming-policy)
+- [QA Gates](#qa-gates)
+- [Required Updates When Changing UI](#required-updates-when-changing-ui)
+
 ## Governance
 
 - Charter: `docs/design-system/CHARTER.md`
+- Professional UI contract: `docs/design-system/PROFESSIONAL_UI_CONTRACT.md`
+- Agent routing guide: `docs/design-system/AGENT_UI_ROUTING.md`
 - Upstream alignment: `docs/design-system/UPSTREAM_ALIGNMENT.md`
 - RFC template: `docs/workflows/RFC_TEMPLATE.md`
 - Transcripts index (training/reference): `docs/transcripts/README.md`
@@ -55,6 +66,8 @@ Evidence: docs/transcripts/rYzstFEY0t8.cleaned.md
 - Coverage matrix (JSON): `docs/design-system/COVERAGE_MATRIX.json`
 - Coverage matrix (MD): `docs/design-system/COVERAGE_MATRIX.md`
 - Coverage matrix surface usage: `docs/design-system/COVERAGE_MATRIX_SURFACES.json`
+- Component lifecycle manifest: `docs/design-system/COMPONENT_LIFECYCLE.json`
+- Enforcement exemptions ledger: `docs/design-system/ENFORCEMENT_EXEMPTIONS.json`
 - Matrix generator: `scripts/generate-coverage-matrix.ts`
 - Policy enforcement rules: `scripts/policy/run.mjs`
 - QA evidence schema: `docs/operations/QA_EVIDENCE_SCHEMA.md`

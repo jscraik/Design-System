@@ -265,7 +265,7 @@ export function ComposeInstructionsPanel({
         onChange={(e) => onInstructionsChange(e.target.value)}
         placeholder="Enter your prompt's task specific instructions. Use {{template variables}} for dynamic inputs"
         aria-label="Prompt instructions"
-        className="w-full h-[187px] bg-secondary dark:bg-secondary px-4 py-3 text-body-small leading-6 text-foreground dark:text-foreground placeholder:text-text-secondary dark:placeholder:text-text-secondary focus:outline-none resize-none border-0"
+        className="h-48 w-full resize-none border-0 bg-secondary px-4 py-3 text-body-small leading-6 text-foreground placeholder:text-text-secondary focus:outline-none"
       />
     </TemplatePanel>
   );

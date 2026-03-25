@@ -1,5 +1,12 @@
 # @design-studio/web
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies
+  - @design-studio/ui@0.1.0
+
 Last updated: 2026-01-09
 
 ## Doc requirements

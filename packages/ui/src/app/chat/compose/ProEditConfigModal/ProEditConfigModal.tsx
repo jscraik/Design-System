@@ -37,8 +37,8 @@ export function ProEditConfigModal({
       isOpen={isOpen}
       onClose={onClose}
       title="Pro Edit Settings"
-      maxWidth="720px"
-      className="bg-background dark:bg-secondary border border-muted dark:border-muted rounded-[12px] shadow-2xl p-8"
+      maxWidth="45rem"
+      className="rounded-xl border border-muted bg-background p-8 shadow-2xl dark:bg-secondary dark:border-muted"
       overlayClassName="bg-background/60"
     >
       <div className="flex items-center gap-2 mb-4">

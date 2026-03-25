@@ -64,7 +64,7 @@ export class UIErrorBoundary extends Component<UIErrorBoundaryProps, UIErrorBoun
       }
 
       return (
-        <div className="flex items-center justify-center min-h-[200px] p-6">
+        <div className="flex min-h-[12.5rem] items-center justify-center p-6">
           <div className="text-center">
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-status-error-muted/10 mb-4">
               <svg
@@ -123,7 +123,7 @@ export function DefaultErrorFallback({
   resetError: () => void;
 }) {
   return (
-    <div className="flex items-center justify-center min-h-[200px] p-6">
+    <div className="flex min-h-[12.5rem] items-center justify-center p-6">
       <div className="text-center max-w-md">
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-status-error-muted/10 mb-4">
           <svg

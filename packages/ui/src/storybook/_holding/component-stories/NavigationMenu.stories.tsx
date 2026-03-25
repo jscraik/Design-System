@@ -23,7 +23,7 @@ type Story = StoryObj<typeof NavigationMenu>;
 
 export const Default: Story = {
   render: () => (
-    <NavigationMenu className="w-[480px]">
+    <NavigationMenu className="w-[30rem]">
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>

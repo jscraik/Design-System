@@ -138,6 +138,10 @@ jobs:
             pnpm exec playwright install chromium
           fi
 
+      - name: Exemplar evaluation (web platform only)
+        if: matrix.platform == 'web'
+        run: pnpm test:exemplar-evaluation
+
       - name: Enhanced build pipeline
         run: node scripts/build-pipeline.mjs --platforms ${{ matrix.platform }}
 

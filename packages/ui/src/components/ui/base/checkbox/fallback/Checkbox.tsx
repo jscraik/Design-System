@@ -102,7 +102,7 @@ function Checkbox({
       checked={checked}
       className={cn(
         // Base styles with Apps SDK UI tokens
-        "peer border size-4 shrink-0 rounded-[4px] shadow-xs transition-shadow outline-none",
+        "peer border size-4 shrink-0 rounded shadow-xs transition-shadow outline-none",
         // Background colors - using Apps SDK UI tokens
         "bg-input-background dark:bg-input/30",
         // Checked state - using Apps SDK UI tokens
@@ -110,7 +110,7 @@ function Checkbox({
         "dark:data-[state=checked]:bg-primary data-[state=checked]:border-primary",
         // Focus styles - using Apps SDK UI tokens
         "focus-visible:border-ring focus-visible:ring-ring/50",
-        "focus-visible:ring-[3px]",
+        "focus-visible:ring-2",
         // Error state styling
         error && "border-status-error focus:border-status-error focus:ring-status-error",
         // Loading state styling

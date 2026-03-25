@@ -63,10 +63,13 @@ const reporter = [
 export default defineConfig({
   testDir: ".",
   testMatch: "storybook-visual.spec.ts",
-  fullyParallel: true,
+  fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: 1,
+  // The protected settings exemplar slice is sequential and can run hot late in the dark-theme sweep.
+  // Give it extra headroom so the gate reflects real regressions instead of long-run starvation.
+  timeout: 90000,
   reporter,
 
   // Snapshot configuration

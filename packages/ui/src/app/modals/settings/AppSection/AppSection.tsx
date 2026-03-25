@@ -90,7 +90,7 @@ export function AppSection({
               </div>
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="min-w-[200px]">
+          <DropdownMenuContent align="end" className="min-w-50">
             <DropdownMenuRadioGroup
               value={showInMenuBar}
               onValueChange={(v) => onChange("showInMenuBar", v)}
@@ -125,7 +125,7 @@ export function AppSection({
               </div>
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="min-w-[140px]">
+          <DropdownMenuContent align="end" className="min-w-36">
             <DropdownMenuRadioGroup
               value={accentColor}
               onValueChange={(v) => onChange("accentColor", v)}

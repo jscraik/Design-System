@@ -184,13 +184,13 @@ export function ModeSelector({
             aria-modal="true"
             aria-label="Mode selector"
             className={cn(
-              "fixed z-50 bg-card border border-border rounded-[16px] shadow-2xl overflow-hidden",
+              "fixed z-50 overflow-hidden rounded-2xl border border-border bg-card shadow-2xl",
               showPreview
-                ? "top-16 right-4 w-[960px]"
-                : "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px]",
+                ? "top-16 right-4 w-[60rem]"
+                : "top-1/2 left-1/2 w-[25rem] -translate-x-1/2 -translate-y-1/2",
             )}
           >
-            <div className={cn("flex", showPreview && "h-[600px]")}>
+            <div className={cn("flex", showPreview && "h-[37.5rem]")}>
               {/* Preview Panel */}
               {showPreview && previewMode && (
                 <div className="flex-1 p-8 overflow-y-auto">
@@ -266,7 +266,7 @@ export function ModeSelector({
               <div
                 className={cn(
                   "bg-card p-6",
-                  showPreview ? "w-[360px] border-l border-border" : "w-full",
+                  showPreview ? "w-[22.5rem] border-l border-border" : "w-full",
                 )}
               >
                 <h3 className="text-body-small font-semibold text-muted-foreground mb-4">

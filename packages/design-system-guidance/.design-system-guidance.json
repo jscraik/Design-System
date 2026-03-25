@@ -9,5 +9,11 @@
     "guidelines/iconography.md"
   ],
   "include": ["src", "app", "components", "styles"],
-  "ignore": ["node_modules", "dist", ".git", "coverage", ".next", "build"]
+  "ignore": ["node_modules", "dist", ".git", "coverage", ".next", "build"],
+  "scopes": {
+    "error": [],
+    "warn": [],
+    "exempt": []
+  },
+  "scopePrecedence": ["error", "warn", "exempt"]
 }

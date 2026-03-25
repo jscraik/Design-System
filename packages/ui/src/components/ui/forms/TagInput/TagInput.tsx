@@ -138,6 +138,13 @@ function TagInput({
       data-required={required ? "true" : undefined}
       aria-disabled={isDisabled || undefined}
       aria-busy={loading || undefined}
+      aria-invalid={error ? "true" : undefined}
+      aria-required={required || undefined}
+      className={cn(
+        error && "ring-2 ring-status-error/50 rounded-md",
+        loading && "animate-pulse motion-reduce:animate-none",
+      )}
+      onClick={() => inputRef.current?.focus()}
     >
       {/* Live region announces add/remove to screen readers */}
       <span role="status" aria-live="polite" className="sr-only">
@@ -149,11 +156,8 @@ function TagInput({
           variant === "default" && "border-border bg-muted/30 focus-within:border-border/70",
           variant === "outline" && "border-border/60 bg-transparent focus-within:border-ring",
           isDisabled && "cursor-not-allowed opacity-50",
-          error && "ring-2 ring-status-error/50",
-          loading && "animate-pulse motion-reduce:animate-none",
           className,
         )}
-        onClick={() => inputRef.current?.focus()}
       >
         {tags.map((tag) => (
           <Badge key={tag.id} variant="secondary" className="gap-1 pr-1 text-sm">
@@ -190,7 +194,7 @@ function TagInput({
             aria-required={required || undefined}
             aria-describedby={error ? errorId : undefined}
             className={cn(
-              "flex-1 min-w-[120px] bg-transparent text-sm outline-none placeholder:text-muted-foreground",
+              "flex-1 min-w-30 bg-transparent text-sm outline-none placeholder:text-muted-foreground",
               isDisabled && "cursor-not-allowed",
             )}
             {...props}

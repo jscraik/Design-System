@@ -95,14 +95,14 @@ Compact button for displaying icons with consistent sizing and interaction state
             <IconButton
               icon={<span>❤️</span>}
               active={liked}
-              activeColor="var(--foundation-accent-red)"
+              activeColor="var(--accent-red)"
               onClick={() => setLiked(!liked)}
               title="Like"
             />
             <IconButton
               icon={<span>🔖</span>}
               active={bookmarked}
-              activeColor="var(--foundation-accent-blue)"
+              activeColor="var(--accent-blue)"
               onClick={() => setBookmarked(!bookmarked)}
               title="Bookmark"
             />
@@ -357,7 +357,7 @@ Most components accept these common styling props:
 All components accept a `className` prop for custom CSS classes:
 
 ```tsx
-<Button className="bg-foundation-accent-purple text-accent-foreground hover:bg-foundation-accent-purple/90">
+<Button className="bg-accent-purple text-accent-foreground hover:bg-accent-purple/90">
   Custom Button
 </Button>
 ```
@@ -367,7 +367,7 @@ All components accept a `className` prop for custom CSS classes:
 Components use CSS custom properties that can be overridden:
 
 ```tsx
-<Button style={{ "--button-radius": "12px" }}>Custom Radius</Button>
+<Button style={{ "--button-radius": "0.75rem" }}>Custom Radius</Button>
 ```
 
 ## 🔧 Advanced Usage
