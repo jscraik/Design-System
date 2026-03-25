@@ -9,6 +9,11 @@
 ## Overview
 This package provides guidance checks and an initialization command for consumer repositories.
 
+It now supports:
+- scope-aware pattern enforcement for protected, warning-only, and exempt surfaces
+- an optional exemption ledger path with required ownership and expiry metadata
+- configurable scope precedence for overlapping glob matches
+
 ## Package guidelines
 - [Guidelines index](../guidelines/README.md)
 - [Getting started](./guidelines/getting-started.md)

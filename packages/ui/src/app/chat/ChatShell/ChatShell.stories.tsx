@@ -47,7 +47,7 @@ export const SplitSidebar: Story = {
     user: sampleUser,
   },
   render: (args) => (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-dvh bg-background">
       <ChatVariantSplitSidebar {...args} />
     </div>
   ),
@@ -60,7 +60,7 @@ export const Compact: Story = {
     messages: sampleMessages,
   },
   render: (args) => (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-dvh bg-background">
       <ChatVariantCompact {...args} />
     </div>
   ),
@@ -81,15 +81,15 @@ export const ContextRail: Story = {
     user: sampleUser,
     contextPanel: (
       <div className="p-4 space-y-3">
-        <h3 className="text-sm font-semibold text-foreground">Context</h3>
-        <div className="rounded-lg border border-muted p-3 text-sm text-text-secondary">
+        <h3 className="text-body-small font-semibold text-foreground">Context</h3>
+        <div className="rounded-lg border border-muted p-3 text-body-small text-text-secondary">
           Pin references, files, or tools here.
         </div>
       </div>
     ),
   },
   render: (args) => (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-dvh bg-background">
       <ChatVariantContextRail {...args} />
     </div>
   ),

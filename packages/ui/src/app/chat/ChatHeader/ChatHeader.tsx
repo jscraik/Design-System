@@ -250,11 +250,11 @@ export function ChatHeader({
                   isModelSelectorOpen && "bg-secondary dark:bg-muted",
                 )}
               >
-                <span className="text-[13px] font-semibold text-foreground dark:text-foreground">
+                <span className="text-body-small font-semibold text-foreground dark:text-foreground">
                   ChatGPT
                 </span>
                 <div className="w-px h-4 bg-border dark:bg-border" />
-                <span className="text-[13px] font-medium text-muted-foreground dark:text-muted-foreground">
+                <span className="text-body-small font-medium text-muted-foreground dark:text-muted-foreground">
                   {modelName}
                 </span>
                 <IconChevronDown
@@ -271,7 +271,7 @@ export function ChatHeader({
               align="start"
               sideOffset={8}
               className={cn(
-                "z-50 w-[320px] rounded-2xl overflow-hidden",
+                "z-50 w-80 rounded-2xl overflow-hidden",
                 "border border-border dark:border-border",
                 "bg-background dark:bg-secondary",
                 "shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.24)]",
@@ -303,7 +303,7 @@ export function ChatHeader({
                           {model.badge && (
                             <span
                               className={cn(
-                                "text-[10px] font-semibold px-1.5 py-0.5 rounded-md uppercase tracking-wide",
+                                "text-caption font-semibold px-1.5 py-0.5 rounded-md uppercase tracking-wide",
                                 model.badge === "New"
                                   ? "bg-accent-green/10 text-accent-green dark:bg-accent-green/20"
                                   : "bg-accent-blue/10 text-accent-blue dark:bg-accent-blue/20",
@@ -358,14 +358,14 @@ export function ChatHeader({
                     align="start"
                     sideOffset={8}
                     className={cn(
-                      "z-50 w-[280px] rounded-2xl overflow-hidden",
+                      "z-50 w-72 rounded-2xl overflow-hidden",
                       "border border-border dark:border-border",
                       "bg-background dark:bg-secondary",
                       "shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.24)]",
                       "animate-in fade-in-0 zoom-in-95 slide-in-from-left-2 duration-200",
                     )}
                   >
-                    <div className="p-2 max-h-[320px] overflow-y-auto scrollbar-thin scrollbar-thumb-muted dark:scrollbar-thumb-muted scrollbar-track-transparent">
+                    <div className="max-h-80 overflow-y-auto p-2 scrollbar-thin scrollbar-thumb-muted dark:scrollbar-thumb-muted scrollbar-track-transparent">
                       <div className="space-y-0.5">
                         {legacyModels.map((model) => (
                           <button

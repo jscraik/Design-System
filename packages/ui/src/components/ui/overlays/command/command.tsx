@@ -59,7 +59,7 @@ function Command({
         "bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md",
         isDisabled && "opacity-50 pointer-events-none",
         error && "ring-2 ring-status-error/50 rounded-md",
-        loading && "animate-pulse",
+        loading && "animate-pulse motion-reduce:animate-none",
         className,
       )}
       {...props}
@@ -143,7 +143,7 @@ function CommandList({ className, ...props }: React.ComponentProps<typeof Comman
   return (
     <CommandPrimitive.List
       data-slot="command-list"
-      className={cn("max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto", className)}
+      className={cn("max-h-[18.75rem] scroll-py-1 overflow-x-hidden overflow-y-auto", className)}
       {...props}
     />
   );

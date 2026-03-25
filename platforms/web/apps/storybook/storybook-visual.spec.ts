@@ -12,6 +12,19 @@
 import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
 
+const storybookBaseUrl =
+  process.env.PLAYWRIGHT_STORYBOOK_BASE_URL ??
+  `http://127.0.0.1:${process.env.PLAYWRIGHT_STORYBOOK_PORT ?? process.env.STORYBOOK_PORT ?? "6006"}`;
+
+function parseStoryIdsEnv(name: string): string[] | null {
+  const raw = process.env[name];
+  if (!raw) return null;
+  return raw
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+}
+
 /**
  * Helper to set theme and wait for transition
  */
@@ -21,17 +34,91 @@ async function setTheme(page: Page, theme: "light" | "dark") {
 }
 
 function storyUrl(storyId: string, theme: "light" | "dark") {
-  const params = new URLSearchParams();
-  params.set("id", storyId);
-  params.set("globals", `backgrounds.value:${theme === "light" ? "light" : "dark"}`);
-  return `http://localhost:6006/iframe.html?${params.toString()}`;
+  const url = new URL("/iframe.html", storybookBaseUrl);
+  url.searchParams.set("id", storyId);
+  url.searchParams.set(
+    "globals",
+    [`theme:${theme}`, `backgrounds.value:${theme === "light" ? "light" : "dark"}`].join(";"),
+  );
+  url.searchParams.set("devOverlays", "0");
+  url.searchParams.set("agentation", "0");
+  return url.toString();
+}
+
+const FULLSCREEN_STORY_IDS = new Set([
+  "components-chat-chat-sidebar--defaultopen",
+  "components-chat-chat-sidebar--loading",
+  "components-chat-chat-sidebar--error-state",
+  "components-chat-chat-sidebar--open-project-settings-flow",
+  "components-chat-chat-sidebar-history--default-selected",
+  "components-chat-new-project-modal--default",
+  "components-chat-project-settings-modal--project-only",
+  "components-chat-chat-ui-root--default",
+  "components-chat-chat-ui-root--loading-overlay",
+  "components-chat-chat-ui-root--error-overlay",
+  "components-chat-chat-ui-root--full-overlay-open",
+  "components-chat-chat-shell--split-sidebar",
+  "components-settings-apps-panel--default",
+  "components-settings-apps-panel--loading",
+  "components-settings-apps-panel--empty",
+  "components-settings-apps-panel--error",
+  "components-settings-manage-apps-panel--default",
+  "components-settings-manage-apps-panel--loading",
+  "components-settings-manage-apps-panel--empty",
+  "components-settings-manage-apps-panel--error",
+  "components-settings-notifications-panel--default",
+  "components-settings-notifications-panel--loading",
+  "components-settings-notifications-panel--empty",
+  "components-settings-notifications-panel--error",
+  "components-settings-security-panel--default",
+  "components-settings-security-panel--loading",
+  "components-settings-security-panel--busy",
+  "components-settings-security-panel--error",
+  "components-settings-data-controls-panel--default",
+  "components-settings-data-controls-panel--loading",
+  "components-settings-data-controls-panel--busy",
+  "components-settings-data-controls-panel--error",
+  "components-settings-setting-toggle--default",
+]);
+
+async function stabilizeVisualCapture(page: Page, storyId: string) {
+  await page.addStyleTag({
+    content: `
+      html, body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden !important;
+        background: transparent;
+      }
+    `,
+  });
+
+  if (!FULLSCREEN_STORY_IDS.has(storyId)) {
+    return;
+  }
+
+  await page.addStyleTag({
+    content: `
+      html,
+      body,
+      #storybook-root {
+        width: 1280px !important;
+        min-width: 1280px !important;
+        max-width: 1280px !important;
+        height: 720px !important;
+        min-height: 720px !important;
+        max-height: 720px !important;
+        overflow: hidden !important;
+      }
+    `,
+  });
 }
 
 /**
  * Critical UI components to test (from each major category)
  * Format: "title--story" from story title (e.g., "Components/UI/Base/Button" + "Default" = "components-ui-base-button--default")
  */
-const CRITICAL_STORIES = [
+const DEFAULT_CRITICAL_STORIES = [
   // Base primitives
   "components-ui-base-button--default",
   "components-ui-base-button--secondary",
@@ -115,6 +202,18 @@ const CRITICAL_STORIES = [
   "documentation-design-system-iconography-showcase--default",
 ];
 
+const DEFAULT_INTERACTIVE_STORIES = [
+  "components-ui-base-button--default",
+  "components-ui-base-input--default",
+  "components-ui-base-icon-button--default",
+  "components-ui-base-switch--default",
+];
+
+const CRITICAL_STORIES =
+  parseStoryIdsEnv("PLAYWRIGHT_STORYBOOK_STORY_IDS") ?? DEFAULT_CRITICAL_STORIES;
+const INTERACTIVE_STORIES =
+  parseStoryIdsEnv("PLAYWRIGHT_STORYBOOK_INTERACTIVE_STORY_IDS") ?? DEFAULT_INTERACTIVE_STORIES;
+
 test.describe("Storybook visual regression - Light Theme", () => {
   test.beforeEach(async ({ page }) => {
     await setTheme(page, "light");
@@ -125,6 +224,7 @@ test.describe("Storybook visual regression - Light Theme", () => {
       await page.goto(storyUrl(storyId, "light"));
       await page.waitForLoadState("networkidle");
       await page.waitForFunction(() => !document.fonts || document.fonts.status === "loaded");
+      await stabilizeVisualCapture(page, storyId);
       await expect(page).toHaveScreenshot(`${storyId}-light.png`);
     });
   }
@@ -140,6 +240,7 @@ test.describe("Storybook visual regression - Dark Theme", () => {
       await page.goto(storyUrl(storyId, "dark"));
       await page.waitForLoadState("networkidle");
       await page.waitForFunction(() => !document.fonts || document.fonts.status === "loaded");
+      await stabilizeVisualCapture(page, storyId);
       await expect(page).toHaveScreenshot(`${storyId}-dark.png`);
     });
   }
@@ -147,19 +248,13 @@ test.describe("Storybook visual regression - Dark Theme", () => {
 
 test.describe("Storybook visual regression - Interactive States", () => {
   // Test hover/focus states for critical interactive elements
-  const INTERACTIVE_STORIES = [
-    "components-ui-base-button--default",
-    "components-ui-base-input--default",
-    "components-ui-base-icon-button--default",
-    "components-ui-base-switch--default",
-  ];
-
   for (const storyId of INTERACTIVE_STORIES) {
     test(`${storyId} - hover state`, async ({ page }) => {
       await setTheme(page, "light");
       await page.goto(storyUrl(storyId, "light"));
       await page.waitForLoadState("networkidle");
       await page.waitForFunction(() => !document.fonts || document.fonts.status === "loaded");
+      await stabilizeVisualCapture(page, storyId);
 
       // Hover over the main element
       const root = page.locator("#storybook-root");
@@ -176,6 +271,7 @@ test.describe("Storybook visual regression - Interactive States", () => {
       await page.goto(storyUrl(storyId, "light"));
       await page.waitForLoadState("networkidle");
       await page.waitForFunction(() => !document.fonts || document.fonts.status === "loaded");
+      await stabilizeVisualCapture(page, storyId);
 
       const root = page.locator("#storybook-root");
       const interactive = root.locator("button, input, a, [role='button']").first();

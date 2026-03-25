@@ -14,6 +14,7 @@ const ThemeContext = createContext(undefined);
  * Local storage key for theme persistence
  */
 export const THEME_STORAGE_KEY = "astudio-theme";
+const VALID_THEMES = ["light", "dark", "system", "high-contrast", "system-high-contrast"];
 /**
  * Get initial theme from localStorage or system preference
  */
@@ -22,7 +23,7 @@ function getInitialTheme(defaultTheme) {
         return defaultTheme;
     try {
         const stored = localStorage.getItem(THEME_STORAGE_KEY);
-        if (stored && (stored === "light" || stored === "dark" || stored === "system")) {
+        if (stored && VALID_THEMES.includes(stored)) {
             return stored;
         }
     }
@@ -32,9 +33,20 @@ function getInitialTheme(defaultTheme) {
     return defaultTheme;
 }
 /**
- * Get effective theme (resolves "system" to actual theme)
+ * Get effective theme (resolves "system" and "system-high-contrast" to an actual theme).
  */
 function getEffectiveTheme(theme) {
+    if (theme === "high-contrast")
+        return "high-contrast";
+    if (theme === "system-high-contrast") {
+        if (typeof window === "undefined")
+            return "light";
+        return window.matchMedia("(prefers-contrast: more)").matches
+            ? "high-contrast"
+            : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+    }
     if (theme !== "system")
         return theme;
     if (typeof window === "undefined")
@@ -59,18 +71,21 @@ export function ThemeProvider({ children, defaultTheme = "system", storageKey = 
         };
         updateEffectiveTheme();
         // Listen for system theme changes
-        const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-        mediaQuery.addEventListener("change", updateEffectiveTheme);
+        const colorSchemeQuery = window.matchMedia("(prefers-color-scheme: dark)");
+        const contrastQuery = window.matchMedia("(prefers-contrast: more)");
+        colorSchemeQuery.addEventListener("change", updateEffectiveTheme);
+        contrastQuery.addEventListener("change", updateEffectiveTheme);
         return () => {
-            mediaQuery.removeEventListener("change", updateEffectiveTheme);
+            colorSchemeQuery.removeEventListener("change", updateEffectiveTheme);
+            contrastQuery.removeEventListener("change", updateEffectiveTheme);
         };
     }, [theme]);
     // Apply theme to document root
     useEffect(() => {
         const root = document.documentElement;
         root.setAttribute("data-theme", effectiveTheme);
-        // Add class for backwards compatibility
-        root.classList.remove("light", "dark");
+        // Remove all known theme classes then apply effective
+        root.classList.remove("light", "dark", "high-contrast");
         root.classList.add(effectiveTheme);
     }, [effectiveTheme]);
     // Persist theme to localStorage

@@ -1,6 +1,6 @@
 # Design System Audits
 
-Last updated: 2026-01-04
+Last updated: 2026-03-23
 
 ## Doc requirements
 
@@ -14,6 +14,7 @@ Last updated: 2026-01-04
 
 - [Doc requirements](#doc-requirements)
 - [Documents](#documents)
+  - [[AGENT_UI_MARCH_2026_AUDIT.md](./AGENT_UI_MARCH_2026_AUDIT.md)](#agentuimarch2026auditmdagentuimarch2026auditmd)
   - [[APPS_SDK_COMPLIANCE_AUDIT.md](./APPS_SDK_COMPLIANCE_AUDIT.md)](#appssdkcomplianceauditmdappssdkcomplianceauditmd)
   - [[COLOR_AUDIT_COMPLETE.md](./COLOR_AUDIT_COMPLETE.md)](#colorauditcompletemdcolorauditcompletemd)
   - [[COLOR_REFERENCE.md](./COLOR_REFERENCE.md)](#colorreferencemdcolorreferencemd)
@@ -24,6 +25,17 @@ Last updated: 2026-01-04
 Comprehensive audits of design system compliance and implementation.
 
 ## Documents
+
+### [AGENT_UI_MARCH_2026_AUDIT.md](./AGENT_UI_MARCH_2026_AUDIT.md)
+
+March 2026 audit of the design system as an agent-facing UI production system.
+
+**Topics:**
+
+- design-system integrity gaps
+- semantic token discipline
+- professional UI guidance for agents
+- prioritized improvement roadmap
 
 ### [APPS_SDK_COMPLIANCE_AUDIT.md](./APPS_SDK_COMPLIANCE_AUDIT.md)
 

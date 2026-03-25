@@ -1,71 +1,98 @@
-import { IconChevronLeftMd, IconChevronRightMd } from "../../../icons/ChatGPTIcons";
-import type { SettingsPanelProps } from "../shared/types";
+import { IconChevronRightMd } from "../../../icons/ChatGPTIcons";
+import { SettingsPanelShell } from "../shared/SettingsPanelShell";
+import { SettingsPanelState } from "../shared/SettingsPanelState";
+import type { SettingsAsyncState, SettingsPanelProps } from "../shared/types";
 
-function AppIcon({ name, color }: { name: string; color: string }) {
+interface ManagedApp {
+  name: string;
+  status: string;
+  toneClass: string;
+  textClass?: string;
+}
+
+export interface ManageAppsPanelProps extends SettingsPanelProps {
+  state?: SettingsAsyncState;
+  connectedApps?: ManagedApp[];
+  availableApps?: ManagedApp[];
+  errorDescription?: string;
+}
+
+const DEFAULT_CONNECTED_APPS: ManagedApp[] = [
+  { name: "Notes", status: "Enabled via Accessibility", toneClass: "bg-accent-orange" },
+  { name: "Script Editor", status: "Enabled via Accessibility", toneClass: "bg-muted-foreground" },
+  {
+    name: "Terminal",
+    status: "Enabled via Accessibility",
+    toneClass: "bg-secondary border border-border",
+    textClass: "text-foreground",
+  },
+  { name: "TextEdit", status: "Enabled via Accessibility", toneClass: "bg-accent-blue" },
+  { name: "Warp", status: "Enabled via Accessibility", toneClass: "bg-accent-green" },
+];
+
+const DEFAULT_AVAILABLE_APPS: ManagedApp[] = [
+  { name: "Code", status: "Requires extension", toneClass: "bg-accent-blue" },
+  { name: "Code - Insiders", status: "Requires extension", toneClass: "bg-accent-green" },
+];
+
+function AppIcon({
+  name,
+  toneClass,
+  textClass = "text-text-body-on-color",
+}: {
+  name: string;
+  toneClass: string;
+  textClass?: string;
+}) {
   return (
-    <div
-      className="size-5 rounded flex items-center justify-center flex-shrink-0"
-      style={{ backgroundColor: color }}
-    >
-      <span className="text-text-body-on-color text-[11px] font-semibold">
+    <div className={`flex size-5 shrink-0 items-center justify-center rounded ${toneClass}`}>
+      <span className={`${textClass} text-caption font-semibold`}>
         {name.charAt(0).toUpperCase()}
       </span>
     </div>
   );
 }
 
-export function ManageAppsPanel({ onBack }: SettingsPanelProps) {
-  const connectedApps = [
-    { name: "Notes", status: "Enabled via Accessibility", color: "#F9C74F" },
-    { name: "Script Editor", status: "Enabled via Accessibility", color: "#6C757D" },
-    { name: "Terminal", status: "Enabled via Accessibility", color: "#2D3436" },
-    { name: "TextEdit", status: "Enabled via Accessibility", color: "#4A90E2" },
-    { name: "Warp", status: "Enabled via Accessibility", color: "#01D3A7" },
-  ];
+function ConnectAppsAction() {
+  return (
+    <button
+      type="button"
+      className="rounded-md bg-secondary px-4 py-2 text-body-small text-foreground transition-colors hover:bg-secondary/80"
+    >
+      Explore app connections
+    </button>
+  );
+}
 
-  const availableApps = [
-    { name: "Code", status: "Requires extension", color: "#007ACC" },
-    { name: "Code - Insiders", status: "Requires extension", color: "#1A9E5A" },
-  ];
+export function ManageAppsPanel({
+  onBack,
+  state = "ready",
+  connectedApps = DEFAULT_CONNECTED_APPS,
+  availableApps = DEFAULT_AVAILABLE_APPS,
+  errorDescription = "We couldn't load your app connection status. Try again in a moment.",
+}: ManageAppsPanelProps) {
+  const effectiveState =
+    state === "ready" && connectedApps.length === 0 && availableApps.length === 0 ? "empty" : state;
 
   return (
-    <>
-      <div className="px-6 py-4 border-b border-foreground/10 flex items-center gap-3">
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={onBack}
-            className="size-3 rounded-full bg-status-error hover:bg-status-error/80 transition-colors"
-            aria-label="Close"
-          />
-          <div className="size-3 rounded-full bg-accent-orange" />
-          <div className="size-3 rounded-full bg-accent-green" />
-        </div>
-        <button
-          type="button"
-          onClick={onBack}
-          className="p-1 hover:bg-muted rounded transition-colors"
-        >
-          <IconChevronLeftMd className="size-4 text-foreground" />
-        </button>
-        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foreground">
-          Manage Apps
-        </h2>
-      </div>
-
-      <div className="overflow-y-auto max-h-[calc(85vh-80px)] px-6 py-4">
-        {/* Work with Apps section */}
+    <SettingsPanelShell title="Manage Apps" onBack={onBack}>
+      <SettingsPanelState
+        state={effectiveState}
+        loadingLabel="Loading app management"
+        emptyTitle="No app connections yet"
+        emptyDescription="Connect an editor or tool so ChatGPT can work with your apps directly."
+        emptyAction={<ConnectAppsAction />}
+        errorTitle="Couldn't load app management"
+        errorDescription={errorDescription}
+      >
         <div className="mb-6">
-          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foreground mb-1">
-            Work with Apps
-          </h3>
-          <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-muted-foreground mb-4">
+          <h3 className="mb-1 text-body-small font-semibold text-foreground">Work with Apps</h3>
+          <p className="mb-4 text-caption text-muted-foreground">
             Allow ChatGPT to work with code and text editors.
           </p>
 
-          {/* Connected apps */}
           <div className="mb-6">
-            <h4 className="text-[13px] font-semibold leading-[18px] tracking-[-0.32px] text-muted-foreground mb-2 px-3">
+            <h4 className="mb-2 px-3 text-caption font-semibold text-muted-foreground">
               Connected apps
             </h4>
             <div className="space-y-0.5">
@@ -73,23 +100,17 @@ export function ManageAppsPanel({ onBack }: SettingsPanelProps) {
                 <button
                   type="button"
                   key={app.name}
-                  className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-secondary rounded-lg transition-colors"
+                  className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   <div className="flex items-center gap-3">
-                    <AppIcon name={app.name} color={app.color} />
-                    <div className="text-left">
-                      <div className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground">
-                        {app.name}
-                      </div>
-                      <div className="text-[12px] leading-[16px] tracking-[-0.24px] text-accent-green">
-                        {app.status}
-                      </div>
+                    <AppIcon name={app.name} toneClass={app.toneClass} textClass={app.textClass} />
+                    <div>
+                      <div className="text-body-small text-foreground">{app.name}</div>
+                      <div className="text-caption text-accent-green">{app.status}</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-text-secondary">
-                      Manage
-                    </span>
+                    <span className="text-body-small text-text-secondary">Manage</span>
                     <IconChevronRightMd className="size-4 text-muted-foreground" />
                   </div>
                 </button>
@@ -97,9 +118,8 @@ export function ManageAppsPanel({ onBack }: SettingsPanelProps) {
             </div>
           </div>
 
-          {/* Available to Connect */}
           <div>
-            <h4 className="text-[13px] font-semibold leading-[18px] tracking-[-0.32px] text-muted-foreground mb-2 px-3">
+            <h4 className="mb-2 px-3 text-caption font-semibold text-muted-foreground">
               Available to Connect
             </h4>
             <div className="space-y-0.5">
@@ -107,23 +127,17 @@ export function ManageAppsPanel({ onBack }: SettingsPanelProps) {
                 <button
                   type="button"
                   key={app.name}
-                  className="w-full flex items-center justify-between px-3 py-2.5 hover:bg-secondary rounded-lg transition-colors"
+                  className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   <div className="flex items-center gap-3">
-                    <AppIcon name={app.name} color={app.color} />
-                    <div className="text-left">
-                      <div className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground">
-                        {app.name}
-                      </div>
-                      <div className="text-[12px] leading-[16px] tracking-[-0.24px] text-muted-foreground">
-                        {app.status}
-                      </div>
+                    <AppIcon name={app.name} toneClass={app.toneClass} textClass={app.textClass} />
+                    <div>
+                      <div className="text-body-small text-foreground">{app.name}</div>
+                      <div className="text-caption text-muted-foreground">{app.status}</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-text-secondary">
-                      Install Extension
-                    </span>
+                    <span className="text-body-small text-text-secondary">Install Extension</span>
                     <IconChevronRightMd className="size-4 text-muted-foreground" />
                   </div>
                 </button>
@@ -131,7 +145,7 @@ export function ManageAppsPanel({ onBack }: SettingsPanelProps) {
             </div>
           </div>
         </div>
-      </div>
-    </>
+      </SettingsPanelState>
+    </SettingsPanelShell>
   );
 }

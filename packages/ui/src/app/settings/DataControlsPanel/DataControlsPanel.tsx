@@ -1,191 +1,156 @@
-import { useId, useState } from "react";
+import { useState } from "react";
 
-import { IconChevronLeftMd } from "../../../icons/ChatGPTIcons";
-import type { SettingsPanelProps } from "../shared/types";
+import { SectionHeader } from "../../../components/ui/base/SectionHeader";
+import { Spinner } from "../../../components/ui/feedback/Spinner/Spinner";
+import { SettingToggle } from "../SettingToggle";
+import { SettingsPanelShell } from "../shared/SettingsPanelShell";
+import { SettingsPanelState } from "../shared/SettingsPanelState";
+import type { SettingsAsyncState, SettingsPanelProps } from "../shared/types";
 
-export function DataControlsPanel({ onBack }: SettingsPanelProps) {
-  const [improveModel, setImproveModel] = useState(true);
-  const [includeAudioRecordings, setIncludeAudioRecordings] = useState(true);
-  const [includeVideoRecordings, setIncludeVideoRecordings] = useState(true);
-  const improveModelId = useId();
-  const includeAudioId = useId();
-  const includeVideoId = useId();
+export interface DataControlsPanelProps extends SettingsPanelProps {
+  state?: Exclude<SettingsAsyncState, "empty">;
+  busy?: boolean;
+  initialImproveModel?: boolean;
+  initialIncludeAudioRecordings?: boolean;
+  initialIncludeVideoRecordings?: boolean;
+  errorDescription?: string;
+}
+
+export function DataControlsPanel({
+  onBack,
+  state = "ready",
+  busy = false,
+  initialImproveModel = true,
+  initialIncludeAudioRecordings = true,
+  initialIncludeVideoRecordings = true,
+  errorDescription = "We couldn't load your data controls. Try again in a moment.",
+}: DataControlsPanelProps) {
+  const [improveModel, setImproveModel] = useState(initialImproveModel);
+  const [includeAudioRecordings, setIncludeAudioRecordings] = useState(
+    initialIncludeAudioRecordings,
+  );
+  const [includeVideoRecordings, setIncludeVideoRecordings] = useState(
+    initialIncludeVideoRecordings,
+  );
 
   return (
-    <>
-      <div className="px-6 py-4 border-b border-foreground/10 flex items-center gap-3">
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={onBack}
-            className="size-3 rounded-full bg-status-error hover:bg-status-error/80 transition-colors"
-            aria-label="Close"
-          />
-          <div className="size-3 rounded-full bg-accent-orange" />
-          <div className="size-3 rounded-full bg-accent-green" />
-        </div>
-        <button
-          type="button"
-          onClick={onBack}
-          className="p-1 hover:bg-muted rounded transition-colors"
-          aria-label="Back to settings"
-        >
-          <IconChevronLeftMd className="size-4 text-foreground" />
-        </button>
-        <h2 className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foreground">
-          Data controls
-        </h2>
-      </div>
-
-      <div className="overflow-y-auto max-h-[calc(85vh-80px)] px-6 py-4">
-        {/* Improve the model for everyone */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between px-3 py-2.5">
-            <span
-              id={improveModelId}
-              className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground"
+    <SettingsPanelShell title="Data controls" onBack={onBack}>
+      <SettingsPanelState
+        state={state}
+        loadingLabel="Loading data controls"
+        emptyTitle="Data controls unavailable"
+        emptyDescription="Data controls will appear here once your workspace finishes provisioning."
+        errorTitle="Couldn't load data controls"
+        errorDescription={errorDescription}
+      >
+        <div className="space-y-6">
+          {busy ? (
+            <div
+              className="mb-4 flex items-center gap-2 px-3 text-caption text-muted-foreground"
+              role="status"
             >
-              Improve the model for everyone
-            </span>
-            <button
-              type="button"
-              onClick={() => setImproveModel(!improveModel)}
-              role="switch"
-              aria-checked={improveModel}
-              aria-labelledby={improveModelId}
-              className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${improveModel ? "bg-accent-green" : "bg-muted"}`}
-            >
-              <span
-                className={`inline-block size-4 transform rounded-full bg-background transition-transform ${improveModel ? "translate-x-[18px]" : "translate-x-0.5"}`}
-              />
-            </button>
-          </div>
-          <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-muted-foreground px-3 mt-1">
-            Allow your content to be used to train our models, which makes ChatGPT better for you
-            and everyone who uses it. We take steps to protect your privacy.{" "}
-            <button type="button" className="text-accent-blue hover:underline">
-              Learn more
-            </button>
-          </p>
-        </div>
+              <Spinner size="sm" variant="muted" label="Saving data controls" />
+              <span>Saving data controls…</span>
+            </div>
+          ) : null}
 
-        {/* Voice mode section */}
-        <div className="mb-6">
-          <h3 className="text-[14px] font-semibold leading-[20px] tracking-[-0.3px] text-foreground mb-2 px-3">
-            Voice mode
-          </h3>
-
-          {/* Include audio recordings */}
-          <div className="mb-3">
-            <div className="flex items-center justify-between px-3 py-2.5">
-              <span
-                id={includeAudioId}
-                className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground"
-              >
-                Include audio recordings
-              </span>
+          <div>
+            <SettingToggle
+              checked={improveModel}
+              onCheckedChange={setImproveModel}
+              label="Improve the model for everyone"
+              description="Allow your content to be used to train our models, which makes ChatGPT better for you and everyone who uses it. We take steps to protect your privacy."
+              disabled={busy}
+            />
+            <div className="mt-1 px-3">
               <button
                 type="button"
-                onClick={() => setIncludeAudioRecordings(!includeAudioRecordings)}
-                role="switch"
-                aria-checked={includeAudioRecordings}
-                aria-labelledby={includeAudioId}
-                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${includeAudioRecordings ? "bg-accent-green" : "bg-muted"}`}
+                disabled={busy}
+                className="text-caption text-interactive transition-colors hover:text-interactive-hover hover:underline disabled:cursor-not-allowed disabled:opacity-60"
               >
-                <span
-                  className={`inline-block size-4 transform rounded-full bg-background transition-transform ${includeAudioRecordings ? "translate-x-[18px]" : "translate-x-0.5"}`}
-                />
-              </button>
-            </div>
-          </div>
-
-          {/* Include video recordings */}
-          <div className="mb-3">
-            <div className="flex items-center justify-between px-3 py-2.5">
-              <span
-                id={includeVideoId}
-                className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground"
-              >
-                Include video recordings
-              </span>
-              <button
-                type="button"
-                onClick={() => setIncludeVideoRecordings(!includeVideoRecordings)}
-                role="switch"
-                aria-checked={includeVideoRecordings}
-                aria-labelledby={includeVideoId}
-                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${includeVideoRecordings ? "bg-accent-green" : "bg-muted"}`}
-              >
-                <span
-                  className={`inline-block size-4 transform rounded-full bg-background transition-transform ${includeVideoRecordings ? "translate-x-[18px]" : "translate-x-0.5"}`}
-                />
-              </button>
-            </div>
-            <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-muted-foreground px-3 mt-1">
-              Include your audio or video recordings from Voice Mode to train our models.
-              Transcripts and other data are covered by "Improve the model for everyone".{" "}
-              <button type="button" className="text-accent-blue hover:underline">
                 Learn more
               </button>
-            </p>
+            </div>
           </div>
-        </div>
 
-        {/* Archive all chats */}
-        <div className="mb-3">
-          <div className="flex items-center justify-between px-3 py-2.5">
-            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground">
-              Archive all chats
-            </span>
+          <div className="space-y-3">
+            <SectionHeader title="Voice mode" size="md" className="px-3" />
+
+            <div>
+              <SettingToggle
+                checked={includeAudioRecordings}
+                onCheckedChange={setIncludeAudioRecordings}
+                label="Include audio recordings"
+                disabled={busy}
+              />
+            </div>
+
+            <div>
+              <SettingToggle
+                checked={includeVideoRecordings}
+                onCheckedChange={setIncludeVideoRecordings}
+                label="Include video recordings"
+                description="Include your audio or video recordings from Voice Mode to train our models. Transcripts and other data are covered by Improve the model for everyone."
+                disabled={busy}
+              />
+              <div className="mt-1 px-3">
+                <button
+                  type="button"
+                  disabled={busy}
+                  className="text-caption text-interactive transition-colors hover:text-interactive-hover hover:underline disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  Learn more
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex items-center justify-between px-3 py-2.5">
+              <span className="text-body-small font-normal text-foreground">Archive all chats</span>
+              <button
+                type="button"
+                disabled={busy}
+                className="rounded-md bg-muted px-3 py-1.5 text-body-small font-normal text-foreground transition-colors hover:bg-muted/80 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                Archive
+              </button>
+            </div>
+
+            <div className="flex items-center justify-between px-3 py-2.5">
+              <span className="text-body-small font-normal text-foreground">Delete all chats</span>
+              <button
+                type="button"
+                disabled={busy}
+                className="rounded-md bg-status-error px-3 py-1.5 text-body-small font-normal text-text-body-on-color transition-colors hover:bg-status-error/80 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                Delete all
+              </button>
+            </div>
+
+            <div className="flex items-center justify-between px-3 py-2.5">
+              <span className="text-body-small font-normal text-foreground">Export data</span>
+              <button
+                type="button"
+                disabled={busy}
+                className="rounded-md bg-muted px-3 py-1.5 text-body-small font-normal text-foreground transition-colors hover:bg-muted/80 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                Export
+              </button>
+            </div>
+          </div>
+
+          <div className="px-3">
             <button
               type="button"
-              className="px-3 py-1.5 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground bg-muted hover:bg-muted/80 rounded-md transition-colors"
+              disabled={busy}
+              className="text-body-small font-normal text-status-error transition-colors hover:underline disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Archive
+              Delete account
             </button>
           </div>
         </div>
-
-        {/* Delete all chats */}
-        <div className="mb-3">
-          <div className="flex items-center justify-between px-3 py-2.5">
-            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground">
-              Delete all chats
-            </span>
-            <button
-              type="button"
-              className="px-3 py-1.5 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-text-body-on-color bg-status-error hover:bg-status-error/80 rounded-md transition-colors"
-            >
-              Delete all
-            </button>
-          </div>
-        </div>
-
-        {/* Export data */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between px-3 py-2.5">
-            <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground">
-              Export data
-            </span>
-            <button
-              type="button"
-              className="px-3 py-1.5 text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground bg-muted hover:bg-muted/80 rounded-md transition-colors"
-            >
-              Export
-            </button>
-          </div>
-        </div>
-
-        {/* Delete account */}
-        <div className="px-3">
-          <button
-            type="button"
-            className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-status-error hover:underline"
-          >
-            Delete account
-          </button>
-        </div>
-      </div>
-    </>
+      </SettingsPanelState>
+    </SettingsPanelShell>
   );
 }

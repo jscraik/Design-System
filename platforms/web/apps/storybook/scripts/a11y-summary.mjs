@@ -71,6 +71,6 @@ if (process.env.GITHUB_STEP_SUMMARY) {
       : "### ✅ All stories pass accessibility checks",
   ].join("\n");
 
-  fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md + "\n");
+  fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${md}\n`);
   console.log("Step summary written to GITHUB_STEP_SUMMARY.");
 }

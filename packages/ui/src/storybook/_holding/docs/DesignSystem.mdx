@@ -12,28 +12,28 @@ The aStudio design system provides a comprehensive set of design tokens, compone
 
 Our color system is built around semantic color tokens that adapt to different themes and contexts.
 
-### Foundation Colors
+### Core Theme Colors
 
 <ColorPalette>
   <ColorItem
-    title="Background Dark 1"
-    subtitle="Primary dark background"
-    colors={{ "bg-dark-1": "var(--foundation-bg-dark-1)" }}
+    title="Background"
+    subtitle="Primary app canvas and shell surfaces"
+    colors={{ background: "var(--background)" }}
   />
   <ColorItem
-    title="Background Dark 2"
-    subtitle="Secondary dark background"
-    colors={{ "bg-dark-2": "var(--foundation-bg-dark-2)" }}
+    title="Secondary"
+    subtitle="Muted and secondary surfaces"
+    colors={{ secondary: "var(--secondary)" }}
   />
   <ColorItem
-    title="Text Dark Primary"
-    subtitle="Primary text on dark backgrounds"
-    colors={{ "text-dark-primary": "var(--foundation-text-dark-primary)" }}
+    title="Foreground"
+    subtitle="Primary text and icon tone"
+    colors={{ foreground: "var(--foreground)" }}
   />
   <ColorItem
-    title="Text Dark Secondary"
-    subtitle="Secondary text on dark backgrounds"
-    colors={{ "text-dark-secondary": "var(--foundation-text-dark-secondary)" }}
+    title="Muted Foreground"
+    subtitle="Supporting copy and metadata"
+    colors={{ "muted-foreground": "var(--muted-foreground)" }}
   />
 </ColorPalette>
 
@@ -43,42 +43,42 @@ Our color system is built around semantic color tokens that adapt to different t
   <ColorItem
     title="Gray"
     subtitle="Neutral and secondary elements"
-    colors={{ gray: "var(--foundation-accent-gray)" }}
+    colors={{ gray: "var(--accent-gray)" }}
   />
   <ColorItem
     title="Red"
     subtitle="Errors and destructive actions"
-    colors={{ red: "var(--foundation-accent-red)" }}
+    colors={{ red: "var(--accent-red)" }}
   />
   <ColorItem
     title="Orange"
     subtitle="Warnings and attention"
-    colors={{ orange: "var(--foundation-accent-orange)" }}
+    colors={{ orange: "var(--accent-orange)" }}
   />
   <ColorItem
     title="Yellow"
     subtitle="Caution and highlights"
-    colors={{ yellow: "var(--foundation-accent-yellow)" }}
+    colors={{ yellow: "var(--accent-yellow)" }}
   />
   <ColorItem
     title="Green"
     subtitle="Success and positive actions"
-    colors={{ green: "var(--foundation-accent-green)" }}
+    colors={{ green: "var(--accent-green)" }}
   />
   <ColorItem
     title="Blue"
     subtitle="Primary accent color"
-    colors={{ blue: "var(--foundation-accent-blue)" }}
+    colors={{ blue: "var(--accent-blue)" }}
   />
   <ColorItem
     title="Purple"
     subtitle="Special features and premium"
-    colors={{ purple: "var(--foundation-accent-purple)" }}
+    colors={{ purple: "var(--accent-purple)" }}
   />
   <ColorItem
     title="Pink"
     subtitle="Creative and expressive elements"
-    colors={{ pink: "var(--foundation-accent-pink)" }}
+    colors={{ pink: "var(--accent-pink)" }}
   />
 </ColorPalette>
 
@@ -91,40 +91,40 @@ Our spacing system uses a consistent scale based on rem units:
     <div className="p-6 space-y-4">
       <div className="space-y-3">
         <div className="flex items-center gap-4">
-          <div className="w-20 text-foundation-text-light-primary dark:text-foundation-text-dark-primary text-sm">
+          <div className="w-20 text-sm text-foreground">
             xs (0.25rem)
           </div>
-          <div className="bg-foundation-accent-blue h-4" style={{ width: "0.25rem" }} />
+          <div className="h-4 bg-accent-blue" style={{ width: "0.25rem" }} />
         </div>
         <div className="flex items-center gap-4">
-          <div className="w-20 text-foundation-text-light-primary dark:text-foundation-text-dark-primary text-sm">
+          <div className="w-20 text-sm text-foreground">
             sm (0.5rem)
           </div>
-          <div className="bg-foundation-accent-blue h-4" style={{ width: "0.5rem" }} />
+          <div className="h-4 bg-accent-blue" style={{ width: "0.5rem" }} />
         </div>
         <div className="flex items-center gap-4">
-          <div className="w-20 text-foundation-text-light-primary dark:text-foundation-text-dark-primary text-sm">
+          <div className="w-20 text-sm text-foreground">
             md (1rem)
           </div>
-          <div className="bg-foundation-accent-blue h-4" style={{ width: "1rem" }} />
+          <div className="h-4 bg-accent-blue" style={{ width: "1rem" }} />
         </div>
         <div className="flex items-center gap-4">
-          <div className="w-20 text-foundation-text-light-primary dark:text-foundation-text-dark-primary text-sm">
+          <div className="w-20 text-sm text-foreground">
             lg (1.5rem)
           </div>
-          <div className="bg-foundation-accent-blue h-4" style={{ width: "1.5rem" }} />
+          <div className="h-4 bg-accent-blue" style={{ width: "1.5rem" }} />
         </div>
         <div className="flex items-center gap-4">
-          <div className="w-20 text-foundation-text-light-primary dark:text-foundation-text-dark-primary text-sm">
+          <div className="w-20 text-sm text-foreground">
             xl (2rem)
           </div>
-          <div className="bg-foundation-accent-blue h-4" style={{ width: "2rem" }} />
+          <div className="h-4 bg-accent-blue" style={{ width: "2rem" }} />
         </div>
         <div className="flex items-center gap-4">
-          <div className="w-20 text-foundation-text-light-primary dark:text-foundation-text-dark-primary text-sm">
+          <div className="w-20 text-sm text-foreground">
             2xl (3rem)
           </div>
-          <div className="bg-foundation-accent-blue h-4" style={{ width: "3rem" }} />
+          <div className="h-4 bg-accent-blue" style={{ width: "3rem" }} />
         </div>
       </div>
     </div>
@@ -138,25 +138,25 @@ Typography follows a clear hierarchy with consistent sizing and spacing:
 <Canvas>
   <Story name="Typography Scale">
     <div className="p-6 space-y-4">
-      <h1 className="text-3xl font-bold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+      <h1 className="text-3xl font-bold text-foreground">
         Heading 1 - 3xl/bold
       </h1>
-      <h2 className="text-2xl font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+      <h2 className="text-2xl font-semibold text-foreground">
         Heading 2 - 2xl/semibold
       </h2>
-      <h3 className="text-xl font-semibold text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+      <h3 className="text-xl font-semibold text-foreground">
         Heading 3 - xl/semibold
       </h3>
-      <h4 className="text-lg font-medium text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+      <h4 className="text-lg font-medium text-foreground">
         Heading 4 - lg/medium
       </h4>
-      <p className="text-base text-foundation-text-light-primary dark:text-foundation-text-dark-primary">
+      <p className="text-base text-foreground">
         Body text - base/normal
       </p>
-      <p className="text-sm text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+      <p className="text-sm text-muted-foreground">
         Small text - sm/normal
       </p>
-      <p className="text-xs text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+      <p className="text-xs text-muted-foreground">
         Caption text - xs/normal
       </p>
     </div>
@@ -218,9 +218,9 @@ All color combinations meet WCAG AA standards:
 
 ```css
 .my-component {
-  background-color: var(--foundation-bg-dark-1);
-  color: var(--foundation-text-dark-primary);
-  border: 1px solid var(--foundation-accent-blue);
+  background-color: var(--background);
+  color: var(--foreground);
+  border-color: var(--accent-blue);
   padding: var(--spacing-md);
   border-radius: var(--radius-lg);
 }
@@ -229,7 +229,7 @@ All color combinations meet WCAG AA standards:
 ### Tailwind Classes
 
 ```tsx
-<div className="bg-[var(--foundation-bg-dark-1)] text-[var(--foundation-text-dark-primary)] p-4 rounded-lg">
+<div className="bg-background text-foreground p-4 rounded-lg border border-border">
   Content with design tokens
 </div>
 ```
@@ -240,7 +240,7 @@ All color combinations meet WCAG AA standards:
 import { colors, spacing } from "@design-studio/ui";
 
 const styles = {
-  backgroundColor: colors.bg.dark1,
+  backgroundColor: "var(--background)",
   padding: spacing.md,
 };
 ```
@@ -251,8 +251,8 @@ const styles = {
 
 ```css
 :root {
-  --foundation-accent-blue: #0066cc; /* Custom blue */
-  --foundation-bg-dark-1: #0a0a0a; /* Darker background */
+  --accent-blue: var(--accent-purple); /* Retint the accent */
+  --background: var(--card); /* Reuse the elevated surface tone */
 }
 ```
 
@@ -260,8 +260,8 @@ const styles = {
 
 ```tsx
 <Button
-  className="bg-foundation-accent-purple text-accent-foreground hover:bg-foundation-accent-purple/90"
-  style={{ "--button-radius": "12px" }}
+  className="bg-accent-purple text-accent-foreground hover:bg-accent-purple/90"
+  style={{ "--button-radius": "0.75rem" }}
 >
   Custom Button
 </Button>

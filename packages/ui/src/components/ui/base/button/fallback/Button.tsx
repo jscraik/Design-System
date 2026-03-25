@@ -15,7 +15,7 @@ import { cn } from "../../../utils";
 function ButtonSpinner() {
   return (
     <svg
-      className="animate-spin size-4"
+      className="animate-spin motion-reduce:animate-none size-4"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -35,7 +35,7 @@ function ButtonSpinner() {
  * Defines the base class names and variant mappings for the Button component.
  */
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-round font-foundation text-button-label font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background aria-invalid:ring-2 aria-invalid:ring-status-error aria-invalid:ring-offset-2 aria-invalid:ring-offset-background",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-round font-foundation text-button-label font-medium transition-[colors,transform] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background hover:scale-[1.01] hover:-translate-y-px active:scale-[0.98] motion-reduce:hover:scale-100 motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100",
   {
     variants: {
       variant: {
@@ -50,10 +50,10 @@ const buttonVariants = cva(
         link: "text-interactive underline decoration-interactive underline-offset-4 hover:decoration-interactive/70",
       },
       size: {
-        default: "h-[var(--foundation-size-control-height)] px-4 py-2 has-[>svg]:px-3",
-        sm: "h-[var(--foundation-size-control-height)] gap-1.5 px-3 has-[>svg]:px-2.5 text-button-label-small",
-        lg: "h-[var(--foundation-size-control-height)] px-6 has-[>svg]:px-4 text-button-label",
-        icon: "size-[var(--foundation-size-control-height)]",
+        default: "h-11 px-4 py-2 has-[>svg]:px-3",
+        sm: "h-11 gap-1.5 px-3 has-[>svg]:px-2.5 text-button-label-small",
+        lg: "h-11 px-6 has-[>svg]:px-4 text-button-label",
+        icon: "size-11",
       },
     },
     defaultVariants: {

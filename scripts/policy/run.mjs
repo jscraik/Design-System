@@ -1,5 +1,6 @@
 import path from "node:path";
 import { readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 import {
   extractClassNameStrings,
   extractImportSources,
@@ -101,6 +102,49 @@ const IGNORE_PATTERNS = [
   "eslint.config.js",
   "prettier.config.cjs",
   "packages/ui/eslint-rules-*.js",
+];
+
+const DESIGN_SYSTEM_SUBCONTRACTS = [
+  {
+    id: "token-truth",
+    label: "Token Truth",
+    command: ["pnpm", "-C", "packages/tokens", "validate"],
+    remediation: "pnpm validate:tokens",
+    description:
+      "Ensures token validation catches schema/alias drift instead of letting root policy stay green.",
+  },
+  {
+    id: "coverage-freshness",
+    label: "Coverage Freshness",
+    command: [
+      "pnpm",
+      "-C",
+      "packages/tokens",
+      "exec",
+      "tsx",
+      "../../scripts/generate-coverage-matrix.ts",
+      "--check",
+    ],
+    remediation: "pnpm ds:matrix:check",
+    description:
+      "Verifies committed design-system coverage artifacts are fresh and match the current codebase.",
+  },
+  {
+    id: "guidance-enforcement",
+    label: "Guidance Enforcement",
+    command: ["pnpm", "design-system-guidance:check:ci"],
+    remediation: "pnpm design-system-guidance:check:ci",
+    description:
+      "Runs the current design-system guidance contract so policy surfaces guidance regressions explicitly.",
+  },
+  {
+    id: "guidance-ratchet",
+    label: "Touched-file Ratchet",
+    command: ["pnpm", "design-system-guidance:ratchet"],
+    remediation: "pnpm design-system-guidance:ratchet",
+    description:
+      "Fails when touched warn-scope files in the ratcheted surface set still carry design-system warnings.",
+  },
 ];
 
 function normalize(filePath) {
@@ -402,20 +446,90 @@ async function checkPolicies() {
   return issues;
 }
 
-function printIssues(issues) {
+function formatCommand(command) {
+  return command.join(" ");
+}
+
+function indentBlock(text, prefix = "    ") {
+  return text
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => `${prefix}${line}`)
+    .join("\n");
+}
+
+function runSubcontract(subcontract) {
+  const result = spawnSync(subcontract.command[0], subcontract.command.slice(1), {
+    cwd: ROOT,
+    encoding: "utf8",
+    stdio: "pipe",
+  });
+
+  const stdout = (result.stdout ?? "").trim();
+  const stderr = (result.stderr ?? "").trim();
+  const output = [stdout, stderr].filter(Boolean).join("\n");
+
+  return {
+    ...subcontract,
+    status: result.status === 0 ? "pass" : "fail",
+    exitCode: result.status ?? 1,
+    output,
+  };
+}
+
+function printSubcontractSummary(results) {
+  console.log("policy: design-system subcontracts");
+  for (const result of results) {
+    console.log(
+      `  [${result.status === "pass" ? "PASS" : "FAIL"}] ${result.label}`
+    );
+    console.log(`    check: ${formatCommand(result.command)}`);
+    console.log(`    remediate: ${result.remediation}`);
+    if (result.description) {
+      console.log(`    note: ${result.description}`);
+    }
+    if (result.output) {
+      console.log("    output:");
+      console.log(indentBlock(result.output));
+    }
+  }
+}
+
+function printPolicyIssues(issues) {
   if (!issues.length) {
-    console.log("policy: ok");
-    return;
+    console.log("policy: repository rules ok");
+    return false;
   }
 
-  console.log(`policy: ${issues.length} issue(s) found`);
+  console.log(`policy: repository rules found ${issues.length} issue(s)`);
   for (const issue of issues) {
     console.log(
       `${issue.rule} ${issue.filePath.path}:${issue.line} ${issue.message}`
     );
   }
-  process.exitCode = 1;
+  return true;
 }
 
+const subcontractResults = DESIGN_SYSTEM_SUBCONTRACTS.map(runSubcontract);
+printSubcontractSummary(subcontractResults);
+
 const issues = await checkPolicies();
-printIssues(issues);
+const hasPolicyIssues = printPolicyIssues(issues);
+const hasSubcontractFailures = subcontractResults.some(
+  (result) => result.status === "fail"
+);
+
+if (!hasSubcontractFailures && !hasPolicyIssues) {
+  console.log("policy: ok");
+} else {
+  console.log("policy: failed");
+  if (hasSubcontractFailures) {
+    console.log(
+      "policy: one or more design-system subcontracts failed. Run the remediation command shown above."
+    );
+  }
+  if (hasPolicyIssues) {
+    console.log("policy: repository rule violations remain.");
+  }
+  process.exitCode = 1;
+}

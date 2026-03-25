@@ -38,6 +38,27 @@ export interface TextLinkProps
   showExternalIcon?: boolean;
 }
 
+/** Safe URL protocols that TextLink will navigate to. */
+const SAFE_PROTOCOLS = new Set(["https:", "http:", "mailto:", "tel:", "/"]);
+
+/**
+ * Returns `href` unchanged when the protocol is in the allow-list,
+ * or `undefined` to suppress navigation for dangerous protocols such as
+ * `javascript:` and `data:`.
+ */
+function sanitizeHref(href: string | undefined): string | undefined {
+  if (!href) return href;
+  // Relative paths and anchors are always safe
+  if (href.startsWith("/") || href.startsWith("#") || href.startsWith(".")) return href;
+  try {
+    const { protocol } = new URL(href);
+    return SAFE_PROTOCOLS.has(protocol) ? href : undefined;
+  } catch {
+    // Unparseable — treat as relative (safe)
+    return href;
+  }
+}
+
 function TextLink({
   className,
   variant,
@@ -55,7 +76,8 @@ function TextLink({
   rel: userRel,
   ...props
 }: TextLinkProps) {
-  const isExternal = external || (href ? href.startsWith("http") : false);
+  const safeHref = sanitizeHref(href);
+  const isExternal = external || (safeHref ? safeHref.startsWith("http") : false);
 
   // Determine effective state
   const effectiveState: ComponentState = loading
@@ -85,7 +107,7 @@ function TextLink({
       data-state={effectiveState}
       data-error={error ? "true" : undefined}
       data-required={required ? "true" : undefined}
-      href={disabled ? undefined : href}
+      href={disabled ? undefined : safeHref}
       className={cn(
         textLinkVariants({ variant, size }),
         // Disabled state styling
@@ -109,4 +131,4 @@ function TextLink({
   );
 }
 
-export { TextLink, textLinkVariants };
+export { TextLink, textLinkVariants, sanitizeHref };

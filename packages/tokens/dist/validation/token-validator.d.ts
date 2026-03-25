@@ -12,7 +12,7 @@ export declare function validateTokens(): Promise<ValidationResult>;
 type NonColorAliasValueAllowlist = Readonly<{
     [K in keyof typeof NON_COLOR_ALIAS_VALUE_ALLOWLIST]: ReadonlySet<string>;
 }>;
-export type { ValidationError, NonColorAliasValueAllowlist };
+export type { NonColorAliasValueAllowlist, ValidationError };
 /**
  * Read-only view of the non-color alias value allowlist.
  * The underlying configuration should only be modified within this module.

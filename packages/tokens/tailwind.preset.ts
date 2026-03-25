@@ -284,6 +284,7 @@ const preset: Config = {
       },
       fontFamily: {
         foundation: ["var(--foundation-font-family)", "sans-serif"],
+        display: ["var(--font-display)", "sans-serif"],
       },
       letterSpacing: {
         // Foundation tracking values
@@ -334,6 +335,7 @@ const preset: Config = {
         "button-label-small": "var(--foundation-button-label-small-line)",
       },
       borderRadius: {
+        // Raw px tokens (backward-compatible)
         6: "var(--foundation-radius-6)",
         8: "var(--foundation-radius-8)",
         10: "var(--foundation-radius-10)",
@@ -344,12 +346,64 @@ const preset: Config = {
         24: "var(--foundation-radius-24)",
         30: "var(--foundation-radius-30)",
         round: "var(--foundation-radius-round)",
+        // Semantic aliases — prefer these in new component code.
+        // DEFAULT aligns with --radius (8px) so `rounded` and `--radius` produce identical corners.
+        sm: "var(--radius-sm)", // 6px
+        DEFAULT: "var(--radius)", // 8px — fixes the Tailwind/CSS-var mismatch
+        md: "var(--radius-md)", // 10px
+        lg: "var(--radius-lg)", // 12px
+        xl: "var(--radius-xl)", // 16px
+        full: "var(--radius-full)", // 9999px
+      },
+      zIndex: {
+        // Semantic z-index scale — prefer these over raw numbers or z-[n] utilities.
+        // Values are driven by --ds-z-* CSS custom properties from enhanced.css,
+        // so the scale can be overridden per-context (e.g. embedded widget hosts).
+        behind: "var(--ds-z-behind)",
+        base: "var(--ds-z-base)",
+        raised: "var(--ds-z-raised)",
+        dropdown: "var(--ds-z-dropdown)",
+        sticky: "var(--ds-z-sticky)",
+        header: "var(--ds-z-header)",
+        "modal-backdrop": "var(--ds-z-modal-backdrop)",
+        modal: "var(--ds-z-modal)",
+        popover: "var(--ds-z-popover)",
+        tooltip: "var(--ds-z-tooltip)",
+        maximum: "var(--ds-z-maximum)",
+      },
+      transitionDuration: {
+        // Design system motion tokens — prefer these over raw ms values.
+        // Values are driven by --ds-duration-* CSS custom properties so they
+        // can be overridden per-context (e.g. reduced-motion hosts).
+        "ds-micro": "var(--ds-duration-micro)",
+        "ds-fast": "var(--ds-duration-fast)",
+        "ds-standard": "var(--ds-duration-standard)",
+        "ds-moderate": "var(--ds-duration-moderate)",
+        "ds-slow": "var(--ds-duration-slow)",
+        "ds-complex": "var(--ds-duration-complex)",
+      },
+      transitionTimingFunction: {
+        // Design system easing tokens.
+        "ds-swift": "var(--ds-easing-swift)",
+        "ds-standard": "var(--ds-easing-standard)",
+        "ds-ease-out": "var(--ds-easing-ease-out)",
+        "ds-ease-in": "var(--ds-easing-ease-in)",
       },
       boxShadow: {
+        // Legacy component shadows (backward-compatible)
         "foundation-card": "var(--foundation-shadow-card)",
         "foundation-pip": "var(--foundation-shadow-pip)",
         "foundation-pill": "var(--foundation-shadow-pill)",
         "foundation-close": "var(--foundation-shadow-close)",
+        // Semantic elevation scale — use these for new components.
+        // Prefer elevation tokens over hard-coded shadow values.
+        "elevation-xs": "var(--shadow-xs)",
+        "elevation-sm": "var(--shadow-sm)",
+        "elevation-md": "var(--shadow-md)",
+        "elevation-lg": "var(--shadow-lg)",
+        "elevation-xl": "var(--shadow-xl)",
+        "elevation-2xl": "var(--shadow-2xl)",
+        "elevation-inner": "var(--shadow-inner)",
       },
     },
   },

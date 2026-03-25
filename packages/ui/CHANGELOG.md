@@ -1,5 +1,45 @@
 # @design-studio/ui
 
+## 0.1.0
+
+### Minor Changes
+
+- **CarouselItem: add `index` and `total` props for accessible slide position announcements**
+
+  Screen readers using the ARIA carousel pattern expect each slide to announce
+  its position within the set (e.g. "slide 2 of 5"). Without this, keyboard
+  users navigating a carousel have no sense of how many slides exist or where
+  they are.
+
+  `CarouselItem` now accepts two optional props:
+
+  | Prop    | Type     | Description            |
+  | ------- | -------- | ---------------------- |
+  | `index` | `number` | 0-based slide index    |
+  | `total` | `number` | Total number of slides |
+
+  When both are provided, an `aria-label` of `"N of total"` is rendered on the
+  slide's `role="group"` element. Existing call-sites that omit these props are
+  unaffected — the label is only added when both values are present.
+
+  **Migration**
+
+  ```tsx
+  // Before — no positional label
+  {
+    items.map((item) => <CarouselItem key={item.id}>...</CarouselItem>);
+  }
+
+  // After — screen reader announces "1 of 5", "2 of 5", etc.
+  {
+    items.map((item, i) => (
+      <CarouselItem key={item.id} index={i} total={items.length}>
+        ...
+      </CarouselItem>
+    ));
+  }
+  ```
+
 Last updated: 2026-01-09
 
 ## Doc requirements

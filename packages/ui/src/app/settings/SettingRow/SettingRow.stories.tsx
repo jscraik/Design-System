@@ -27,13 +27,6 @@ const meta: Meta<typeof SettingRow> = {
   component: SettingRow,
   parameters: {
     layout: "padded",
-    backgrounds: {
-      default: "dark",
-      values: [
-        { name: "dark", value: "#1a1a1a" },
-        { name: "light", value: "#ffffff" },
-      ],
-    },
   },
   tags: ["autodocs"],
   argTypes: {
@@ -72,7 +65,7 @@ export const WithDescription: Story = {
 
 export const WithIcon: Story = {
   args: {
-    icon: <IconSettings className="size-4 text-[var(--text-secondary)]" />,
+    icon: <IconSettings className="size-4 text-text-secondary" />,
     label: "Account Settings",
     description: "Manage your account preferences",
   },
@@ -80,18 +73,18 @@ export const WithIcon: Story = {
 
 export const WithRightContent: Story = {
   args: {
-    icon: <IconBook className="size-4 text-[var(--text-secondary)]" />,
+    icon: <IconBook className="size-4 text-text-secondary" />,
     label: "Memory",
-    right: <IconChevronRightMd className="size-4 text-[var(--muted-foreground)]" />,
+    right: <IconChevronRightMd className="size-4 text-muted-foreground" />,
   },
 };
 
 export const Clickable: Story = {
   args: {
-    icon: <IconSettings className="size-4 text-[var(--text-secondary)]" />,
+    icon: <IconSettings className="size-4 text-text-secondary" />,
     label: "Privacy Settings",
     description: "Control your privacy and data",
-    right: <IconChevronRightMd className="size-4 text-[var(--muted-foreground)]" />,
+    right: <IconChevronRightMd className="size-4 text-muted-foreground" />,
     onClick: fn(),
   },
 };
@@ -110,14 +103,14 @@ export const AllVariants: Story = {
       <SettingRow label="Simple Row" />
       <SettingRow label="With Description" description="Additional context here" />
       <SettingRow
-        icon={<IconSettings className="size-4 text-[var(--text-secondary)]" />}
+        icon={<IconSettings className="size-4 text-text-secondary" />}
         label="With Icon"
       />
       <SettingRow
-        icon={<IconBook className="size-4 text-[var(--text-secondary)]" />}
+        icon={<IconBook className="size-4 text-text-secondary" />}
         label="Clickable Row"
         description="Click to navigate"
-        right={<IconChevronRightMd className="size-4 text-[var(--muted-foreground)]" />}
+        right={<IconChevronRightMd className="size-4 text-muted-foreground" />}
         onClick={fn()}
       />
     </div>

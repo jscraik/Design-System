@@ -300,11 +300,11 @@ export function App() {
 ### Using Design Tokens
 
 ```tsx
-import { FColor, FSpacing, FType } from "@design-studio/ui/foundation";
+import { spacing } from "@design-studio/ui";
 
 // Tokens are available as CSS variables
 const styles = {
-  color: "var(--foundation-text-primary)",
+  color: "var(--foreground)",
   padding: "var(--spacing-s16)",
   fontSize: "var(--type-body-medium)",
 };
@@ -319,8 +319,8 @@ const styles = {
 
 <style>
 .custom-button {
-  background: var(--foundation-accent-blue);
-  color: var(--foundation-text-primary);
+  background: var(--accent-blue);
+  color: var(--foreground);
 }
 </style>
 ```

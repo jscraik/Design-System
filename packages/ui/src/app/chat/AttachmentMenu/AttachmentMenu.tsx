@@ -149,7 +149,7 @@ const MenuItem = React.forwardRef<
       "w-full flex items-center gap-3 px-3 py-2.5 text-left transition-colors rounded-lg",
       "text-foreground dark:text-foreground",
       "hover:bg-muted dark:hover:bg-muted",
-      "text-[15px] font-normal leading-[22px] tracking-[-0.3px]",
+      "text-body-small font-normal",
       "group disabled:opacity-50 disabled:cursor-not-allowed",
       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-blue dark:focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-secondary dark:focus-visible:ring-offset-secondary",
       className,
@@ -273,7 +273,7 @@ export function AttachmentMenu({
         align="start"
         sideOffset={10}
         className={cn(
-          "z-[60] w-[240px] rounded-xl border border-muted dark:border-muted",
+          "z-[60] w-60 rounded-xl border border-muted dark:border-muted",
           "bg-secondary dark:bg-secondary shadow-2xl outline-none p-2",
           "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
           "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
@@ -322,15 +322,15 @@ export function AttachmentMenu({
             align="start"
             sideOffset={8}
             className={cn(
-              "z-[70] w-[240px] rounded-xl border border-muted dark:border-muted",
+              "z-[70] w-60 rounded-xl border border-muted dark:border-muted",
               "bg-secondary dark:bg-secondary shadow-2xl outline-none p-2",
-              "max-h-[400px] overflow-y-auto",
+              "max-h-96 overflow-y-auto",
               "animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
               "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
             )}
           >
             {/* Add sources header */}
-            <div className="px-3 py-2 text-[13px] text-muted-foreground dark:text-muted-foreground font-normal leading-[18px] tracking-[-0.3px]">
+            <div className="px-3 py-2 text-body-small font-normal text-muted-foreground dark:text-muted-foreground">
               Add sources
             </div>
 

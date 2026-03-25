@@ -112,7 +112,7 @@ function Input({
       aria-required={required ? "true" : undefined}
       tabIndex={isDisabled ? -1 : undefined}
       className={cn(
-        "font-foundation text-body placeholder:text-text-placeholder selection:bg-interactive selection:text-text-body-on-color border-border flex min-h-[var(--foundation-size-control-height)] w-full min-w-0 rounded-md border px-3 py-1 bg-background text-foreground transition-colors outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-body-small file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+        "font-foundation text-body placeholder:text-text-placeholder selection:bg-interactive selection:text-text-body-on-color border-border flex min-h-11 w-full min-w-0 rounded-md border px-3 py-1 bg-background text-foreground transition-colors outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-body-small file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
         // Focus styles
         "focus-visible:border-interactive focus-visible:ring-2 focus-visible:ring-ring",
         // Error state

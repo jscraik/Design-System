@@ -1,6 +1,6 @@
 import type { ComponentState, StatefulComponentProps } from "@design-studio/tokens";
 import * as React from "react";
-import { TextLink } from "../../base/TextLink";
+import { sanitizeHref, TextLink } from "../../base/TextLink";
 import { cn } from "../../utils";
 import { CodeBlock } from "../CodeBlock";
 
@@ -45,7 +45,7 @@ const parseMarkdown = (content: string): React.ReactNode[] => {
 
     if (line.startsWith("### ")) {
       elements.push(
-        <h3 key={index} className="mt-6 mb-2 text-lg font-semibold text-foreground">
+        <h3 key={index} className="mt-6 mb-2 text-lg font-semibold text-foreground text-balance">
           {line.slice(4)}
         </h3>,
       );
@@ -54,7 +54,7 @@ const parseMarkdown = (content: string): React.ReactNode[] => {
 
     if (line.startsWith("## ")) {
       elements.push(
-        <h2 key={index} className="mt-8 mb-3 text-xl font-semibold text-foreground">
+        <h2 key={index} className="mt-8 mb-3 text-xl font-semibold text-foreground text-balance">
           {line.slice(3)}
         </h2>,
       );
@@ -63,7 +63,7 @@ const parseMarkdown = (content: string): React.ReactNode[] => {
 
     if (line.startsWith("# ")) {
       elements.push(
-        <h1 key={index} className="mt-8 mb-4 text-2xl font-semibold text-foreground">
+        <h1 key={index} className="mt-8 mb-4 text-2xl font-semibold text-foreground text-balance">
           {line.slice(2)}
         </h1>,
       );
@@ -107,7 +107,7 @@ const parseMarkdown = (content: string): React.ReactNode[] => {
 
     if (line.trim()) {
       elements.push(
-        <p key={index} className="my-2 leading-relaxed text-foreground">
+        <p key={index} className="my-2 leading-relaxed text-foreground text-pretty">
           {parseInline(line)}
         </p>,
       );
@@ -129,7 +129,12 @@ const parseInline = (text: string): React.ReactNode => {
     {
       regex: /\[([^\]]+)\]\(([^)]+)\)/,
       render: (match: RegExpMatchArray) => (
-        <TextLink key={`link-${key++}`} href={match[2]} variant="default" showExternalIcon>
+        <TextLink
+          key={`link-${key++}`}
+          href={sanitizeHref(match[2])}
+          variant="default"
+          showExternalIcon
+        >
           {match[1]}
         </TextLink>
       ),
@@ -243,7 +248,7 @@ function Markdown({
         "max-w-none text-foreground",
         "[&>*:first-child]:mt-0 [&>*:last-child]:mb-0",
         isDisabled && "opacity-50 pointer-events-none",
-        loading && "animate-pulse",
+        loading && "animate-pulse motion-reduce:animate-none",
         className,
       )}
       {...props}

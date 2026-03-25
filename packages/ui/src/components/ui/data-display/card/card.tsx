@@ -53,7 +53,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-header"
       className={cn(
-        "@container/card-header grid min-h-[var(--foundation-size-card-header-height)] auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-4 pt-4 pr-2 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-4",
+        "@container/card-header grid min-h-14 auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-4 pt-4 pr-2 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-4",
         className,
       )}
       {...props}
@@ -65,7 +65,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <h4
       data-slot="card-title"
-      className={cn("leading-none text-card-title text-foreground", className)}
+      className={cn("leading-none text-card-title text-foreground text-balance", className)}
       {...props}
     />
   );

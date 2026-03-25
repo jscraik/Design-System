@@ -1,5 +1,5 @@
 {
-  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$schema": "../../schema/dtcg.schema.json",
   "meta": {
     "name": "ChatUI",
     "version": "1.0.0",
@@ -875,6 +875,10 @@
   "type": {
     "fontFamily": {
       "$value": "SF Pro",
+      "$type": "fontFamily"
+    },
+    "fontDisplay": {
+      "$value": "SF Pro Display",
       "$type": "fontFamily"
     },
     "web": {

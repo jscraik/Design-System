@@ -125,7 +125,7 @@ function Toast({
         toastVariants({ variant }),
         isDisabled && "opacity-60 pointer-events-none",
         error && "ring-2 ring-status-error/50",
-        loading && "animate-pulse",
+        loading && "animate-pulse motion-reduce:animate-none",
         className,
       )}
       {...props}
@@ -205,7 +205,7 @@ function ToastContainer({ position = "bottom-right", children, className }: Toas
     <div
       data-slot="toast-container"
       className={cn(
-        "fixed z-[100] flex max-h-screen w-full flex-col-reverse gap-2 p-4 sm:max-w-[420px]",
+        "fixed z-modal-backdrop flex max-h-dvh w-full flex-col-reverse gap-2 p-4 sm:max-w-[26.25rem]",
         positionClasses[position],
         className,
       )}

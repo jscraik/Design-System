@@ -170,7 +170,7 @@ function SelectTrigger({
         // Icon color - using Apps SDK UI tokens
         "[&_svg:not([class*='text-'])]:text-muted-foreground",
         // Focus styles - using Apps SDK UI tokens
-        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2",
         // Error state styling - using Apps SDK UI tokens
         error && "border-status-error focus:border-status-error focus:ring-status-error/50",
         effectiveState === "error" && "ring-status-error/20 dark:ring-status-error/40",
@@ -183,7 +183,7 @@ function SelectTrigger({
         // Loading state styling
         effectiveState === "loading" && "opacity-70 cursor-wait",
         // Size variants
-        "data-[size=default]:min-h-[var(--foundation-size-control-height)] data-[size=sm]:min-h-[var(--foundation-size-control-height)]",
+        "data-[size=default]:min-h-11 data-[size=sm]:min-h-11",
         // Select value styling
         "*:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2",
         // Icon styling

@@ -122,7 +122,7 @@ export function IconButton({
       aria-label={ariaLabelledBy ? undefined : accessibleLabel}
       aria-labelledby={ariaLabelledBy}
       className={cn(
-        "rounded-md transition-colors flex items-center justify-center font-foundation min-h-[var(--foundation-size-hit-target)] min-w-[var(--foundation-size-hit-target)]",
+        "rounded-md transition-colors flex items-center justify-center font-foundation min-h-11 min-w-11",
         "focus-visible:outline-none focus-visible:ring-2",
         "focus-visible:ring-ring",
         "focus-visible:ring-offset-2",

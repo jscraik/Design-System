@@ -207,8 +207,8 @@ export function ChatSidebar({
         aria-required={required || undefined}
         aria-busy={loading || undefined}
         className={cn(
-          "bg-background dark:bg-background text-foreground dark:text-foreground flex flex-col h-full border-r border-muted dark:border-muted transition-all duration-300 shrink-0 w-[260px] relative",
-          isCollapsed && "w-[64px]",
+          "relative flex h-full w-64 shrink-0 flex-col border-r border-muted bg-background text-foreground transition-all duration-300 dark:border-muted dark:bg-background dark:text-foreground",
+          isCollapsed && "w-16",
           isDisabled && "opacity-50 pointer-events-none",
           error && "ring-2 ring-status-error/50",
           loading && "animate-pulse",
@@ -319,7 +319,7 @@ export function ChatSidebar({
             selected={selectedAction === "images"}
             right={
               !isCollapsed && (
-                <span className="text-[10px] font-semibold leading-[14px] tracking-[0.5px] px-1.5 py-0.5 bg-secondary dark:bg-secondary rounded text-foreground dark:text-foreground uppercase">
+                <span className="rounded bg-secondary px-1.5 py-0.5 text-caption font-semibold uppercase text-foreground dark:bg-secondary dark:text-foreground">
                   NEW
                 </span>
               )
@@ -367,7 +367,7 @@ export function ChatSidebar({
               <div className="px-2 pb-1 pt-2">
                 <CollapsibleTrigger asChild>
                   <button className="w-full flex items-center gap-2 px-3 py-2 rounded-lg transition-colors hover:bg-secondary dark:hover:bg-secondary">
-                    <span className="text-[13px] font-normal leading-[18px] tracking-[-0.3px] text-foreground dark:text-foreground flex-1 text-left">
+                    <span className="flex-1 text-left text-body-small font-normal text-foreground dark:text-foreground">
                       GPTs
                     </span>
                     <IconChevronRightMd
@@ -401,7 +401,7 @@ export function ChatSidebar({
               <div className="px-2 pb-1 pt-2">
                 <CollapsibleTrigger asChild>
                   <button className="w-full flex items-center gap-2 px-3 py-2 rounded-lg transition-colors hover:bg-secondary dark:hover:bg-secondary">
-                    <span className="text-[13px] font-normal leading-[18px] tracking-[-0.3px] text-foreground dark:text-foreground flex-1 text-left">
+                    <span className="flex-1 text-left text-body-small font-normal text-foreground dark:text-foreground">
                       Group chats
                     </span>
                     <IconChevronRightMd
@@ -440,7 +440,7 @@ export function ChatSidebar({
               <div className="px-2 pb-1 pt-2">
                 <CollapsibleTrigger asChild>
                   <button className="w-full flex items-center gap-2 px-3 py-2 rounded-lg transition-colors hover:bg-secondary dark:hover:bg-secondary">
-                    <span className="text-[13px] font-normal leading-[18px] tracking-[-0.3px] text-foreground dark:text-foreground flex-1 text-left">
+                    <span className="flex-1 text-left text-body-small font-normal text-foreground dark:text-foreground">
                       Your chats
                     </span>
                     <IconChevronRightMd
@@ -499,7 +499,7 @@ export function ChatSidebar({
                 align="start"
                 side="top"
                 sideOffset={8}
-                className="min-w-[220px] bg-background dark:bg-secondary border border-muted dark:border-muted rounded-xl shadow-2xl py-1"
+                className="min-w-56 rounded-xl border border-muted bg-background py-1 shadow-2xl dark:border-muted dark:bg-secondary"
               >
                 <DropdownMenuLabel className="px-3 py-2.5 border-b border-muted dark:border-muted">
                   <div className="flex items-center gap-2 text-body-small">

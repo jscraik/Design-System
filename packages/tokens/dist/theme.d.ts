@@ -6,16 +6,25 @@
  */
 import { type ReactNode } from "react";
 /**
- * Theme type
+ * Theme type.
+ *
+ * - `"light"` / `"dark"`: explicit colour scheme
+ * - `"system"`: follows `prefers-color-scheme`
+ * - `"high-contrast"`: explicit high-contrast mode (WCAG enhanced contrast)
+ * - `"system-high-contrast"`: follows `prefers-contrast: more`, resolves to high-contrast or system
  */
-export type Theme = "light" | "dark" | "system";
+export type Theme = "light" | "dark" | "system" | "high-contrast" | "system-high-contrast";
+/**
+ * Resolved theme (after system preferences are applied).
+ */
+export type EffectiveTheme = "light" | "dark" | "high-contrast";
 /**
  * Theme context type
  */
 interface ThemeContextValue {
     theme: Theme;
     setTheme: (theme: Theme) => void;
-    effectiveTheme: "light" | "dark";
+    effectiveTheme: EffectiveTheme;
 }
 /**
  * Theme provider props
@@ -53,6 +62,6 @@ export declare function useTheme(): ThemeContextValue;
  *   const effectiveTheme = useEffectiveTheme();
  *   const isDark = effectiveTheme === "dark";
  */
-export declare function useEffectiveTheme(): "light" | "dark";
+export declare function useEffectiveTheme(): EffectiveTheme;
 export {};
 //# sourceMappingURL=theme.d.ts.map

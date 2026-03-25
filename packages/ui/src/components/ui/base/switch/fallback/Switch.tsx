@@ -16,7 +16,7 @@ import { cn } from "../../../utils";
 function SwitchSpinner() {
   return (
     <svg
-      className="animate-spin size-2"
+      className="animate-spin motion-reduce:animate-none size-2"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -124,7 +124,7 @@ function Switch({
           // Thumb background - using Apps SDK UI tokens
           "bg-background",
           // Thumb translation
-          "data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0",
+          "data-[state=checked]:translate-x-[calc(100%-0.125rem)] data-[state=unchecked]:translate-x-0",
           // Error state for thumb
           error && "data-[state=checked]:bg-status-error",
         )}

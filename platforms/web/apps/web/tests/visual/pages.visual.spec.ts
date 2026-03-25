@@ -70,6 +70,22 @@ test.describe("Page Visual Regression", () => {
       fullPage: true,
     });
   });
+
+  test("template browser page", async ({ page }) => {
+    await page.goto("/templates");
+    await page.waitForTimeout(500);
+    await expect(page).toHaveScreenshot("template-browser-page.png", {
+      fullPage: true,
+    });
+  });
+
+  test("template widget page", async ({ page }) => {
+    await page.goto("/template-widget/educational-starter");
+    await page.waitForTimeout(500);
+    await expect(page).toHaveScreenshot("template-widget-page.png", {
+      fullPage: true,
+    });
+  });
 });
 
 test.describe("Component Visual Regression", () => {

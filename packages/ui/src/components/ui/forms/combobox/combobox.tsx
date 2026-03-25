@@ -78,9 +78,12 @@ function Combobox({
 }: ComboboxProps) {
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
+  // Defer the search value so the input stays responsive while the list filters
+  const deferredSearch = React.useDeferredValue(search);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const listRef = React.useRef<HTMLDivElement>(null);
   const [highlightedIndex, setHighlightedIndex] = React.useState(-1);
+  const listboxId = React.useId();
 
   // Determine effective state (priority: loading > error > disabled > default)
   const effectiveState: ComponentState = loading
@@ -102,14 +105,14 @@ function Combobox({
   const selectedOption = options.find((opt) => opt.value === value);
 
   const filteredOptions = React.useMemo(() => {
-    if (!search) return options;
-    const searchLower = search.toLowerCase();
+    if (!deferredSearch) return options;
+    const searchLower = deferredSearch.toLowerCase();
     return options.filter(
       (opt) =>
         opt.label.toLowerCase().includes(searchLower) ||
         opt.value.toLowerCase().includes(searchLower),
     );
-  }, [options, search]);
+  }, [options, deferredSearch]);
 
   const handleSelect = (optionValue: string) => {
     onValueChange?.(optionValue);
@@ -201,10 +204,11 @@ function Combobox({
     >
       <Button
         type="button"
-        variant="outline"
         role="combobox"
+        variant="outline"
         aria-expanded={open}
         aria-haspopup="listbox"
+        aria-controls={open ? listboxId : undefined}
         disabled={isDisabled}
         loading={loading}
         onClick={() => !isDisabled && setOpen(!open)}
@@ -246,6 +250,13 @@ function Combobox({
                   disabled={isDisabled}
                   className="w-full rounded-md border border-border bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-text-placeholder focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50 disabled:cursor-not-allowed"
                   aria-label={searchPlaceholder}
+                  aria-autocomplete="list"
+                  aria-controls={listboxId}
+                  aria-activedescendant={
+                    highlightedIndex >= 0 && filteredOptions[highlightedIndex]
+                      ? `${listboxId}-option-${filteredOptions[highlightedIndex]!.value}`
+                      : undefined
+                  }
                   aria-disabled={isDisabled || undefined}
                 />
               </div>
@@ -254,6 +265,7 @@ function Combobox({
 
               <div
                 ref={listRef}
+                id={listboxId}
                 role="listbox"
                 className="max-h-60 overflow-auto p-1"
                 aria-label="Options"
@@ -266,6 +278,7 @@ function Combobox({
                   filteredOptions.map((option, index) => (
                     <div
                       key={option.value}
+                      id={`${listboxId}-option-${option.value}`}
                       role="option"
                       aria-selected={value === option.value}
                       aria-disabled={option.disabled || isDisabled}

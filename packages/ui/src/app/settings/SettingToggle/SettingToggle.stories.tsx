@@ -27,13 +27,6 @@ const meta: Meta<typeof SettingToggle> = {
   component: SettingToggle,
   parameters: {
     layout: "padded",
-    backgrounds: {
-      default: "dark",
-      values: [
-        { name: "dark", value: "#1a1a1a" },
-        { name: "light", value: "#ffffff" },
-      ],
-    },
   },
   tags: ["autodocs"],
   argTypes: {
@@ -86,7 +79,7 @@ export const WithDescription: Story = {
 export const WithIcon: Story = {
   args: {
     checked: true,
-    icon: <IconMessaging className="size-4 text-[var(--text-secondary)]" />,
+    icon: <IconMessaging className="size-4 text-text-secondary" />,
     label: "Push Notifications",
     description: "Get notified about important events",
   },
@@ -99,7 +92,7 @@ export const Interactive: Story = {
       <SettingToggle
         checked={checked}
         onCheckedChange={setChecked}
-        icon={<IconUserLock className="size-4 text-[var(--text-secondary)]" />}
+        icon={<IconUserLock className="size-4 text-text-secondary" />}
         label="Two-factor authentication"
         description="Add an extra layer of security to your account"
       />
@@ -121,7 +114,7 @@ export const AllStates: Story = {
       <SettingToggle
         checked={true}
         onCheckedChange={fn()}
-        icon={<IconMessaging className="size-4 text-[var(--text-secondary)]" />}
+        icon={<IconMessaging className="size-4 text-text-secondary" />}
         label="With Icon"
         description="Icon on the left side"
       />

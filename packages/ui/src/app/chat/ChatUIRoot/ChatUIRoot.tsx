@@ -47,7 +47,7 @@ export interface ChatUIRootProps extends StatefulComponentProps {
 
   /**
    * Breakpoint for mobile overlay behavior.
-   * Default: 768px
+   * Default: 48rem
    */
   mobileBreakpointPx?: number;
 
@@ -169,7 +169,8 @@ export function ChatUIRoot({
   // Effective disabled state (disabled if explicitly disabled OR loading)
   const isDisabled = disabled || loading;
 
-  const isMobile = useMediaQuery(`(max-width: ${mobileBreakpointPx}px)`);
+  const mobileBreakpointRem = mobileBreakpointPx / 16;
+  const isMobile = useMediaQuery(`(max-width: ${mobileBreakpointRem}rem)`);
   const slotsValue = useMemo(() => slots ?? {}, [slots]);
 
   const [mode] = useControllableState({
@@ -395,7 +396,7 @@ export function ChatUIRoot({
 
   return (
     <div
-      className="min-h-screen w-full flex bg-background dark:bg-background overflow-hidden"
+      className="flex min-h-dvh w-full overflow-hidden bg-background dark:bg-background"
       data-testid="chat-ui-root"
       data-state={effectiveState}
       data-error={error ? "true" : undefined}

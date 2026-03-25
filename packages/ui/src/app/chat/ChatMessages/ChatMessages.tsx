@@ -142,7 +142,7 @@ const MessageRow = React.memo(
         ) : (
           <div className="flex justify-end">
             <div className="flex items-start gap-2 max-w-[70%]">
-              <div className="bg-secondary dark:bg-secondary text-foreground dark:text-foreground text-body-medium font-normal rounded-[20px] px-4 py-3 border border-muted dark:border-muted">
+              <div className="rounded-3xl border border-muted bg-secondary px-4 py-3 text-body-medium font-normal text-foreground dark:border-muted dark:bg-secondary dark:text-foreground">
                 {message.content}
               </div>
               <div className="mt-1">

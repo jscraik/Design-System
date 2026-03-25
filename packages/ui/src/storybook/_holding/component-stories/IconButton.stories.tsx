@@ -112,7 +112,7 @@ export const Active: Story = {
   args: {
     icon: <HeartIcon />,
     active: true,
-    activeColor: "var(--foundation-accent-red)",
+    activeColor: "var(--accent-red)",
     title: "Active state",
   },
 };

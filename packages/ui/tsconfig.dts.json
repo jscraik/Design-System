@@ -15,5 +15,12 @@
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["**/*.stories.*", "**/*.mdx", "**/*.test.*", "**/*.figmaConnect.*", "src/testing/**"]
+  "exclude": [
+    "**/*.stories.*",
+    "**/*.mdx",
+    "**/*.test.*",
+    "**/*.figmaConnect.*",
+    "src/testing/**",
+    "src/storybook/_holding/**"
+  ]
 }

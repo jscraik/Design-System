@@ -25,14 +25,21 @@ const entries = {
   experimental: resolve(__dirname, "src/experimental.ts"),
 };
 
+const shouldEmitDts =
+  process.env.DESIGN_STUDIO_UI_SKIP_DTS !== "1" && process.env.DESIGN_STUDIO_UI_SKIP_DTS !== "true";
+
 export default defineConfig({
   plugins: [
     react(),
-    dts({
-      tsconfigPath: "./tsconfig.dts.json",
-      include: ["src"],
-      outDir: "dist",
-    }),
+    ...(shouldEmitDts
+      ? [
+          dts({
+            tsconfigPath: "./tsconfig.dts.json",
+            include: ["src"],
+            outDir: "dist",
+          }),
+        ]
+      : []),
   ],
   // Warn handler to handle circular dependencies
   onwarn(warning, warn) {

@@ -87,7 +87,7 @@ function SegmentedButtons<T extends string>({
           type="button"
           onClick={() => onChange(option.value)}
           className={cn(
-            "px-4 py-2 rounded-lg text-caption transition-colors flex-1 min-w-[80px]",
+            "min-w-20 flex-1 rounded-lg px-4 py-2 text-caption transition-colors",
             value === option.value
               ? "bg-accent-green text-text-body-on-color"
               : "bg-secondary text-foreground/80 hover:text-foreground dark:bg-muted dark:text-foreground/70 dark:hover:text-foreground",
@@ -140,8 +140,8 @@ function ToggleRow({
       >
         <span
           className={cn(
-            "inline-block size-4 transform rounded-full bg-background dark:bg-foreground transition-transform",
-            checked ? "translate-x-[18px]" : "translate-x-0.5",
+            "inline-block size-4 transform rounded-full bg-background transition-transform dark:bg-foreground",
+            checked ? "translate-x-[1.125rem]" : "translate-x-0.5",
           )}
         />
       </button>
@@ -243,14 +243,14 @@ export function DiscoverySettingsModal({
       onClose={onClose}
       title="Discovery Settings"
       titleId="discovery-settings-title"
-      maxWidth="420px"
-      className="bg-background dark:bg-background border border-muted dark:border-foreground/10 rounded-[16px] shadow-2xl"
+      maxWidth="26.25rem"
+      className="rounded-2xl border border-muted bg-background shadow-2xl dark:border-foreground/10 dark:bg-background"
       showOverlay={false}
     >
       <div className="px-6 py-4 border-b border-muted dark:border-foreground/10 flex items-center justify-between">
         <h2
           id="discovery-settings-title"
-          className="text-[18px] font-semibold leading-[26px] tracking-[-0.45px] text-foreground dark:text-foreground"
+          className="text-heading-3 font-semibold text-foreground dark:text-foreground"
         >
           Discovery Settings
         </h2>

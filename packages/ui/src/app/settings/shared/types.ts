@@ -4,6 +4,8 @@ export interface SettingsPanelProps {
   onBack: () => void;
 }
 
+export type SettingsAsyncState = "ready" | "loading" | "empty" | "error";
+
 export interface BaseStyleOption {
   value: string;
   description: string;

@@ -81,7 +81,7 @@ export function ModelBadge({
         sizes[size],
         isDisabled && "opacity-50 pointer-events-none",
         error && "border border-status-error",
-        loading && "animate-pulse",
+        loading && "animate-pulse motion-reduce:animate-none",
         className,
       )}
       aria-disabled={isDisabled || undefined}

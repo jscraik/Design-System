@@ -27,7 +27,7 @@ export function ProjectSettingsModal({
       isOpen={true}
       onClose={onClose}
       title="Project settings"
-      maxWidth="380px"
+      maxWidth="23.75rem"
       className="bg-background dark:bg-secondary border border-muted dark:border-muted text-foreground dark:text-foreground rounded-2xl shadow-2xl"
       overlayClassName="bg-background/70 backdrop-blur-sm"
     >

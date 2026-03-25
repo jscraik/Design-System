@@ -80,19 +80,30 @@ export function focusRing(options?: { inset?: boolean; color?: string; radius?: 
 }
 
 /**
- * Focus styles for keyboard navigation
- * Use with :focus-visible to show only for keyboard users
+ * Focus styles for keyboard navigation.
+ *
+ * @warning The bare `:focus-visible` selector applies to **every** focusable
+ * element on the page, including components that define their own focus styles
+ * (dropdowns, checkboxes, custom sliders). Including this block in a global
+ * stylesheet can produce double-ring conflicts with component-level focus styles.
+ *
+ * Preferred approaches (in order):
+ * 1. Use the `focus-visible:ring-*` Tailwind utilities per-component.
+ * 2. Scope to an opt-in class: `.ds-focusable:focus-visible { … }`.
+ * 3. Only use this global block if your project has no per-component focus styles.
  */
 export const focusVisibleCSS = `
-  /* Focus ring styles */
-  :focus-visible {
+  /* Focus ring styles — scope with .ds-focusable or apply per-component via Tailwind utilities */
+  .ds-focusable:focus-visible,
+  [data-ds-focusable]:focus-visible {
     box-shadow: var(--ds-focus-ring);
     border-radius: var(--ds-focus-radius);
     outline: none;
   }
 
   /* Inset focus ring (for inputs, etc.) */
-  :focus-visible.input-focus-ring {
+  .ds-focusable.input-focus-ring:focus-visible,
+  [data-ds-focusable].input-focus-ring:focus-visible {
     box-shadow: var(--ds-focus-ring-inset);
     border-radius: var(--ds-focus-radius);
     outline: none;
@@ -105,7 +116,8 @@ export const focusVisibleCSS = `
 
   /* Respect reduced motion preference */
   @media (prefers-reduced-motion: reduce) {
-    :focus-visible {
+    .ds-focusable:focus-visible,
+    [data-ds-focusable]:focus-visible {
       transition: none;
     }
   }

@@ -63,7 +63,7 @@ export function ModalDialog({
   title,
   titleId,
   description,
-  maxWidth = "420px",
+  maxWidth = "26.25rem",
   showOverlay = true,
   className,
   overlayClassName,
@@ -147,7 +147,7 @@ export function ModalDialog({
           "max-h-[90vh] overflow-y-auto",
           isDisabled && "opacity-50 pointer-events-none",
           error && "ring-2 ring-status-error/50",
-          loading && "animate-pulse",
+          loading && "animate-pulse motion-reduce:animate-none",
           className,
         )}
         style={{ maxWidth }}
@@ -227,7 +227,10 @@ export function ModalHeader({
       )}
     >
       <div className="flex-1">
-        <h2 id={generatedTitleId} className="text-body-small font-semibold text-foreground">
+        <h2
+          id={generatedTitleId}
+          className="text-body-small font-semibold text-foreground text-balance"
+        >
           {title}
         </h2>
         {subtitle && <p className="text-caption text-text-secondary mt-0.5">{subtitle}</p>}

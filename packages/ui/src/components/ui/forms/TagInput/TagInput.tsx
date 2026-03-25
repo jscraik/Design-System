@@ -37,11 +37,15 @@ function TagInput({
   error,
   required,
   onStateChange,
+  "aria-label": ariaLabel,
   ...props
 }: TagInputProps) {
   const [inputValue, setInputValue] = React.useState("");
+  const [announcement, setAnnouncement] = React.useState("");
   const inputRef = React.useRef<HTMLInputElement>(null);
   const idCounter = React.useRef(0);
+  const inputId = React.useId();
+  const errorId = `${inputId}-error`;
 
   // Determine effective state (priority: loading > error > disabled > default)
   const effectiveState: ComponentState = loading
@@ -88,6 +92,7 @@ function TagInput({
       onTagsChange(newTags);
       onTagAdd?.(newTag);
       setInputValue("");
+      setAnnouncement(`${trimmedLabel} added`);
     },
     [allowDuplicates, createTagId, isDisabled, maxTags, onTagAdd, onTagsChange, tags],
   );
@@ -99,6 +104,7 @@ function TagInput({
       const newTags = tags.filter((tag) => tag.id !== tagToRemove.id);
       onTagsChange(newTags);
       onTagRemove?.(tagToRemove);
+      setAnnouncement(`${tagToRemove.label} removed`);
     },
     [isDisabled, onTagRemove, onTagsChange, tags],
   );
@@ -120,62 +126,85 @@ function TagInput({
     }
   };
 
+  const groupLabel = ariaLabel ?? "Tag input";
+
   return (
     <div
+      role="group"
+      aria-label={groupLabel}
       data-slot="tag-input"
       data-state={effectiveState}
       data-error={error ? "true" : undefined}
       data-required={required ? "true" : undefined}
       aria-disabled={isDisabled || undefined}
-      aria-invalid={error ? "true" : required ? "false" : undefined}
-      aria-required={required || undefined}
       aria-busy={loading || undefined}
+      aria-invalid={error ? "true" : undefined}
+      aria-required={required || undefined}
       className={cn(
-        "flex min-h-10 w-full flex-wrap gap-2 rounded-md border px-3 py-2 transition-colors",
-        variant === "default" && "border-border bg-muted/30 focus-within:border-border/70",
-        variant === "outline" && "border-border/60 bg-transparent focus-within:border-ring",
-        isDisabled && "cursor-not-allowed opacity-50",
-        error && "ring-2 ring-status-error/50",
-        loading && "animate-pulse",
-        className,
+        error && "ring-2 ring-status-error/50 rounded-md",
+        loading && "animate-pulse motion-reduce:animate-none",
       )}
       onClick={() => inputRef.current?.focus()}
     >
-      {tags.map((tag) => (
-        <Badge key={tag.id} variant="secondary" className="gap-1 pr-1 text-sm">
-          {tag.label}
-          <button
-            type="button"
-            onClick={(event) => {
-              event.stopPropagation();
-              if (isDisabled) return;
-              removeTag(tag);
-            }}
-            disabled={isDisabled}
-            className="rounded-sm opacity-70 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50 disabled:cursor-not-allowed"
-            aria-label={`Remove ${tag.label}`}
-          >
-            <IconX className="size-3" />
-          </button>
-        </Badge>
-      ))}
+      {/* Live region announces add/remove to screen readers */}
+      <span role="status" aria-live="polite" className="sr-only">
+        {announcement}
+      </span>
+      <div
+        className={cn(
+          "flex min-h-10 w-full flex-wrap gap-2 rounded-md border px-3 py-2 transition-colors",
+          variant === "default" && "border-border bg-muted/30 focus-within:border-border/70",
+          variant === "outline" && "border-border/60 bg-transparent focus-within:border-ring",
+          isDisabled && "cursor-not-allowed opacity-50",
+          className,
+        )}
+      >
+        {tags.map((tag) => (
+          <Badge key={tag.id} variant="secondary" className="gap-1 pr-1 text-sm">
+            {tag.label}
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                if (isDisabled) return;
+                removeTag(tag);
+              }}
+              disabled={isDisabled}
+              className="rounded-sm opacity-70 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label={`Remove ${tag.label}`}
+            >
+              <IconX className="size-3" aria-hidden="true" />
+            </button>
+          </Badge>
+        ))}
 
-      {(!maxTags || tags.length < maxTags) && (
-        <input
-          ref={inputRef}
-          type="text"
-          value={inputValue}
-          onChange={(event) => setInputValue(event.target.value)}
-          onKeyDown={handleKeyDown}
-          onBlur={handleBlur}
-          placeholder={tags.length === 0 ? placeholder : ""}
-          disabled={isDisabled}
-          className={cn(
-            "flex-1 min-w-[120px] bg-transparent text-sm outline-none placeholder:text-muted-foreground",
-            isDisabled && "cursor-not-allowed",
-          )}
-          {...props}
-        />
+        {(!maxTags || tags.length < maxTags) && (
+          <input
+            ref={inputRef}
+            id={inputId}
+            type="text"
+            value={inputValue}
+            onChange={(event) => setInputValue(event.target.value)}
+            onKeyDown={handleKeyDown}
+            onBlur={handleBlur}
+            placeholder={tags.length === 0 ? placeholder : ""}
+            disabled={isDisabled}
+            aria-label={groupLabel}
+            aria-invalid={error ? "true" : undefined}
+            aria-required={required || undefined}
+            aria-describedby={error ? errorId : undefined}
+            className={cn(
+              "flex-1 min-w-30 bg-transparent text-sm outline-none placeholder:text-muted-foreground",
+              isDisabled && "cursor-not-allowed",
+            )}
+            {...props}
+          />
+        )}
+      </div>
+      {error && (
+        <p id={errorId} className="text-sm text-status-error mt-1">
+          {error}
+        </p>
       )}
     </div>
   );

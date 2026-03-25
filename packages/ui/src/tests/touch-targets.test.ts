@@ -12,22 +12,22 @@ const TARGET_RULES: TargetRule[] = [
   {
     path: join(ROOT_DIR, "packages/ui/src/components/ui/base/button/fallback/Button.tsx"),
     description: "Buttons use control height tokens for 44px touch targets.",
-    patterns: [/foundation-size-control-height/, /foundation-size-hit-target/],
+    patterns: [/h-11/, /size-11/, /foundation-size-control-height/, /foundation-size-hit-target/],
   },
   {
     path: join(ROOT_DIR, "packages/ui/src/components/ui/base/IconButton/IconButton.tsx"),
     description: "Icon buttons declare the hit target token as a minimum size.",
-    patterns: [/foundation-size-hit-target/],
+    patterns: [/min-h-11/, /min-w-11/, /foundation-size-hit-target/],
   },
   {
     path: join(ROOT_DIR, "packages/ui/src/components/ui/base/input/input.tsx"),
     description: "Inputs use control height tokens for touch targets.",
-    patterns: [/foundation-size-control-height/],
+    patterns: [/min-h-11/, /foundation-size-control-height/],
   },
   {
     path: join(ROOT_DIR, "packages/ui/src/components/ui/base/select/fallback/Select.tsx"),
     description: "Select triggers use control height tokens for touch targets.",
-    patterns: [/foundation-size-control-height/],
+    patterns: [/min-h-11/, /foundation-size-control-height/],
   },
   {
     path: join(ROOT_DIR, "packages/ui/src/components/ui/base/textarea/textarea.tsx"),

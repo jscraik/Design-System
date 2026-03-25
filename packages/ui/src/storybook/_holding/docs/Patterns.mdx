@@ -226,7 +226,7 @@ Compose chat surfaces with slot-based variants:
 <Canvas>
   <Story name="Chat Variant - Split Sidebar">
     {() => (
-      <div className="min-h-[520px]">
+      <div className="min-h-[32.5rem]">
         <ChatVariantSplitSidebar
           messages={[
             {
@@ -253,7 +253,7 @@ Always use CSS custom properties for consistent theming:
 
 ```tsx
 // ✅ Good - Uses design tokens
-<div className="bg-[var(--foundation-bg-dark-1)] text-[var(--foundation-text-dark-primary)]">
+<div className="bg-background text-foreground">
   Content
 </div>
 

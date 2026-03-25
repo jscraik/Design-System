@@ -73,6 +73,12 @@ const WIDGETS: Widget[] = [
 
 const getWidgetUrl = (widgetId: string) => `${WIDGET_BASE_URL}/${widgetId}`;
 
+const KEYBOARD_SHORTCUTS = [
+  { key: "?", description: "Help" },
+  { key: "G", description: "Next widget" },
+  { key: "Esc", description: "Close modal" },
+];
+
 export function HarnessPage() {
   const [selectedWidget, setSelectedWidget] = useState<Widget>(WIDGETS[0]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -89,120 +95,139 @@ export function HarnessPage() {
   const [targetSize, setTargetSize] = useState(60);
 
   return (
-    <div className="flex h-screen">
-      {/* Widget List */}
-      <div className="w-80 border-r border-foundation-bg-light-3 bg-foundation-bg-light-2 p-4">
-        <h2 className="text-lg font-semibold mb-4 text-foundation-text-light-primary">
-          Widget Gallery
-        </h2>
+    <div className="flex min-h-dvh flex-col bg-background px-6 py-6 text-foreground">
+      <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <div className="space-y-2">
-          {WIDGETS.map((widget) => (
-            <button
-              type="button"
-              key={widget.id}
-              onClick={() => setSelectedWidget(widget)}
-              className={`w-full text-left p-3 rounded-lg border transition-colors ${
-                selectedWidget.id === widget.id
-                  ? "bg-foundation-bg-light-1 border-foundation-accent-blue/40"
-                  : "bg-foundation-bg-light-1 border-foundation-bg-light-3 hover:bg-foundation-bg-light-2"
-              }`}
-            >
-              <div className="font-medium text-foundation-text-light-primary">{widget.name}</div>
-              <div className="text-sm text-foundation-text-light-secondary mt-1">
-                {widget.description}
-              </div>
-            </button>
-          ))}
+          <h1 className="text-2xl font-semibold text-balance">Widget Harness</h1>
+          <p className="text-body-small text-muted-foreground text-pretty">
+            Preview embedded widget surfaces, modal flows, and keyboard behavior from one stable
+            verification route.
+          </p>
         </div>
-
-        <div className="mt-6 pt-4 border-t border-foundation-bg-light-3">
-          <h3 className="font-medium mb-2 text-foundation-text-light-primary">
-            Keyboard Shortcuts
-          </h3>
-          <div className="text-sm text-foundation-text-light-secondary space-y-1">
-            <div>
-              <kbd className="px-1 py-0.5 bg-foundation-bg-light-3 rounded text-xs">?</kbd> Help
-            </div>
-            <div>
-              <kbd className="px-1 py-0.5 bg-foundation-bg-light-3 rounded text-xs">G</kbd> Next
-              widget
-            </div>
-            <div>
-              <kbd className="px-1 py-0.5 bg-foundation-bg-light-3 rounded text-xs">Esc</kbd> Close
-              modal
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6 pt-4 border-t border-foundation-bg-light-3">
-          <h3 className="font-medium mb-2 text-foundation-text-light-primary">
-            Modal Test Controls
-          </h3>
-          <div className="space-y-2">
-            <AppsSDKButton
-              size="sm"
-              variant="outline"
-              className="w-full justify-start"
-              onClick={() => setIsModalOpen(true)}
-            >
-              Open Modal
-            </AppsSDKButton>
-            <AppsSDKButton
-              size="sm"
-              variant="outline"
-              className="w-full justify-start"
-              onClick={() => setIsSettingsOpen(true)}
-            >
-              Open Settings
-            </AppsSDKButton>
-            <AppsSDKButton
-              size="sm"
-              variant="outline"
-              className="w-full justify-start"
-              onClick={() => setIsIconPickerOpen(true)}
-            >
-              Choose Icon
-            </AppsSDKButton>
-            <AppsSDKButton
-              size="sm"
-              variant="outline"
-              className="w-full justify-start"
-              onClick={() => setIsDiscoveryOpen(true)}
-            >
-              Discovery Settings
-            </AppsSDKButton>
-          </div>
-        </div>
+        <AppsSDKButton
+          size="sm"
+          variant="outline"
+          onClick={() =>
+            window.open(getWidgetUrl(selectedWidget.id), "_blank", "noopener,noreferrer")
+          }
+        >
+          Open Selected Widget
+        </AppsSDKButton>
       </div>
 
-      {/* Widget Preview */}
-      <div className="flex-1 flex flex-col">
-        <div className="border-b border-foundation-bg-light-3 p-4 bg-foundation-bg-light-1">
-          <h1 className="text-xl font-semibold text-foundation-text-light-primary">
-            {selectedWidget.name}
-          </h1>
-          <p className="text-foundation-text-light-secondary mt-1">{selectedWidget.description}</p>
-          <div className="mt-2 flex gap-2">
-            <AppsSDKButton
-              size="sm"
-              variant="outline"
-              onClick={() =>
-                window.open(getWidgetUrl(selectedWidget.id), "_blank", "noopener,noreferrer")
-              }
-            >
-              Open in New Tab
-            </AppsSDKButton>
+      <div className="flex flex-1 flex-col gap-6 lg:flex-row">
+        <aside className="w-full shrink-0 rounded-2xl border border-border bg-muted/20 p-6 lg:w-80">
+          <div className="mb-4 space-y-1">
+            <h2 className="text-lg font-semibold">Widget Gallery</h2>
+            <p className="text-body-small text-muted-foreground">
+              Choose a widget shell to preview in the live iframe.
+            </p>
           </div>
-        </div>
+          <div className="space-y-2">
+            {WIDGETS.map((widget) => (
+              <button
+                type="button"
+                key={widget.id}
+                onClick={() => setSelectedWidget(widget)}
+                className={`w-full rounded-xl border px-4 py-3 text-left transition-colors ${
+                  selectedWidget.id === widget.id
+                    ? "border-ring/40 bg-background shadow-sm"
+                    : "border-border bg-background hover:bg-muted/40"
+                }`}
+              >
+                <div className="font-medium">{widget.name}</div>
+                <div className="mt-1 text-body-small text-muted-foreground">
+                  {widget.description}
+                </div>
+              </button>
+            ))}
+          </div>
 
-        <div className="flex-1 p-4">
-          <iframe
-            key={selectedWidget.id}
-            src={getWidgetUrl(selectedWidget.id)}
-            className="w-full h-full border rounded-lg"
-            title={selectedWidget.name}
-          />
-        </div>
+          <div className="mt-6 border-t border-border pt-4">
+            <h3 className="mb-2 font-medium">Keyboard Shortcuts</h3>
+            <div className="space-y-1 text-body-small text-muted-foreground">
+              {KEYBOARD_SHORTCUTS.map((shortcut) => (
+                <div key={shortcut.key} className="flex items-center gap-2">
+                  <kbd className="rounded-md border border-border bg-background px-1.5 py-0.5 text-xs text-foreground">
+                    {shortcut.key}
+                  </kbd>
+                  <span>{shortcut.description}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6 border-t border-border pt-4">
+            <h3 className="mb-2 font-medium">Modal Test Controls</h3>
+            <div className="space-y-2">
+              <AppsSDKButton
+                size="sm"
+                variant="outline"
+                className="w-full justify-start"
+                onClick={() => setIsModalOpen(true)}
+              >
+                Open Modal
+              </AppsSDKButton>
+              <AppsSDKButton
+                size="sm"
+                variant="outline"
+                className="w-full justify-start"
+                onClick={() => setIsSettingsOpen(true)}
+              >
+                Open Settings
+              </AppsSDKButton>
+              <AppsSDKButton
+                size="sm"
+                variant="outline"
+                className="w-full justify-start"
+                onClick={() => setIsIconPickerOpen(true)}
+              >
+                Choose Icon
+              </AppsSDKButton>
+              <AppsSDKButton
+                size="sm"
+                variant="outline"
+                className="w-full justify-start"
+                onClick={() => setIsDiscoveryOpen(true)}
+              >
+                Discovery Settings
+              </AppsSDKButton>
+            </div>
+          </div>
+        </aside>
+
+        <main className="flex min-h-96 flex-1 flex-col rounded-2xl border border-border bg-background shadow-sm">
+          <div className="border-b border-border px-6 py-5">
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div className="space-y-1">
+                <h2 className="text-xl font-semibold">{selectedWidget.name}</h2>
+                <p className="text-body-small text-muted-foreground">
+                  {selectedWidget.description}
+                </p>
+              </div>
+              <AppsSDKButton
+                size="sm"
+                variant="outline"
+                onClick={() =>
+                  window.open(getWidgetUrl(selectedWidget.id), "_blank", "noopener,noreferrer")
+                }
+              >
+                Open in New Tab
+              </AppsSDKButton>
+            </div>
+          </div>
+
+          <div className="flex-1 bg-muted/10 p-4">
+            <div className="h-full overflow-hidden rounded-2xl border border-border bg-background">
+              <iframe
+                key={selectedWidget.id}
+                src={getWidgetUrl(selectedWidget.id)}
+                className="h-full min-h-96 w-full"
+                title={selectedWidget.name}
+              />
+            </div>
+          </div>
+        </main>
       </div>
 
       <ModalDialog
@@ -210,22 +235,19 @@ export function HarnessPage() {
         onClose={() => setIsModalOpen(false)}
         title="Test Modal"
         description="Modal dialog for keyboard navigation tests."
-        maxWidth="480px"
+        maxWidth="30rem"
       >
         <ModalHeader title="Test Modal" subtitle="Keyboard navigation baseline" />
         <ModalBody className="space-y-4">
-          <p className="text-sm text-foundation-text-light-primary dark:text-foundation-text-dark-secondary">
+          <p className="text-sm text-text-secondary">
             This modal exists to validate focus trap, Escape, and overlay behavior.
           </p>
-          <label
-            htmlFor="modal-test-input"
-            className="block text-sm text-foundation-text-light-primary dark:text-foundation-text-dark-primary"
-          >
+          <label htmlFor="modal-test-input" className="block text-sm font-medium text-foreground">
             Sample input
             <input
               id="modal-test-input"
               aria-label="Sample input"
-              className="mt-2 w-full rounded-md border border-foundation-bg-light-3 dark:border-foundation-bg-dark-3 bg-transparent px-3 py-2 text-sm"
+              className="mt-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm"
               placeholder="Type here"
             />
           </label>

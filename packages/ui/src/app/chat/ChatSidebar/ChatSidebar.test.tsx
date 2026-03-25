@@ -39,7 +39,7 @@ describe("ChatSidebar", () => {
     it("renders in expanded state by default", () => {
       render(<ChatSidebar isOpen={true} onToggle={mockOnToggle} />);
       const sidebar = screen.getByTestId("chat-sidebar");
-      expect(sidebar).toHaveClass("w-[260px]");
+      expect(sidebar).toHaveClass("w-64");
     });
 
     it("collapses when toggle button clicked", () => {
@@ -48,7 +48,7 @@ describe("ChatSidebar", () => {
 
       fireEvent.click(toggleButton);
       const sidebar = screen.getByTestId("chat-sidebar");
-      expect(sidebar).toHaveClass("w-[64px]");
+      expect(sidebar).toHaveClass("w-16");
     });
   });
 

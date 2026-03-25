@@ -120,7 +120,11 @@ export const motionTokens = {
     enter: { easing: easing.easeOut, duration: duration.micro },
     exit: { easing: easing.easeOut, duration: duration.micro },
   },
-  // Page transitions
+  // Page transitions — ambient scene cinema only.
+  // @usage Route changes, hero section reveals, large page-level animations.
+  //        For interactive overlays (modals, drawers, popovers) use `overlay`
+  //        or `popover` tokens instead — their durations stay within the 300ms
+  //        interactive-response ceiling.
   page: {
     enter: { easing: easing.standard, duration: duration.moderate },
     exit: { easing: easing.easeOut, duration: duration.moderate },
@@ -248,3 +252,76 @@ export function pressTransition(properties: string | string[] = "transform"): st
   const props = Array.isArray(properties) ? properties.join(", ") : properties;
   return `${props} ${microInteractions.press.duration}ms ${microInteractions.press.easing}`;
 }
+
+// ============================================================================
+// REDUCED MOTION (prefers-reduced-motion companion)
+// ============================================================================
+
+/**
+ * Reduced-motion fallbacks for every motion token.
+ *
+ * Map each token to its `prefers-reduced-motion: reduce` equivalent.
+ * Use these values inside `@media (prefers-reduced-motion: reduce)` blocks
+ * so consumers cannot accidentally skip the override.
+ *
+ * @example
+ * ```css
+ * .my-element {
+ *   transition: opacity var(--ds-duration-standard) var(--ds-easing-standard);
+ * }
+ * @media (prefers-reduced-motion: reduce) {
+ *   .my-element {
+ *     transition-duration: 0ms;
+ *     transition-timing-function: linear;
+ *   }
+ * }
+ * ```
+ *
+ * @example (JS)
+ * ```tsx
+ * const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ * const dur = prefersReduced ? reducedMotion.duration : duration.standard;
+ * ```
+ */
+export const reducedMotion = {
+  /**
+   * Duration to use inside `prefers-reduced-motion: reduce` contexts.
+   * Zero eliminates all animation timing — the state change is instant.
+   */
+  duration: 0,
+
+  /**
+   * Easing to use inside `prefers-reduced-motion: reduce` contexts.
+   * Linear with 0ms duration produces an instant, imperceptible transition.
+   */
+  easing: "linear",
+
+  /**
+   * Per-token overrides for `motionTokens`.
+   * Each entry mirrors the motionTokens shape and maps to instant (0ms) timing.
+   */
+  tokens: {
+    overlay: { enter: { easing: "linear", duration: 0 }, exit: { easing: "linear", duration: 0 } },
+    popover: { enter: { easing: "linear", duration: 0 }, exit: { easing: "linear", duration: 0 } },
+    dropdown: { enter: { easing: "linear", duration: 0 }, exit: { easing: "linear", duration: 0 } },
+    toggle: {
+      active: { easing: "linear", duration: 0 },
+      inactive: { easing: "linear", duration: 0 },
+    },
+    tab: { enter: { easing: "linear", duration: 0 }, exit: { easing: "linear", duration: 0 } },
+    tooltip: { enter: { easing: "linear", duration: 0 }, exit: { easing: "linear", duration: 0 } },
+    focus: { enter: { easing: "linear", duration: 0 }, exit: { easing: "linear", duration: 0 } },
+    page: { enter: { easing: "linear", duration: 0 }, exit: { easing: "linear", duration: 0 } },
+  },
+
+  /**
+   * CSS override block — paste this inside any `@media (prefers-reduced-motion: reduce)` rule.
+   * Sets duration to 0ms and timing function to linear for all DS transition properties.
+   */
+  cssBlock: [
+    "transition-duration: 0ms !important;",
+    "animation-duration: 0ms !important;",
+    "animation-iteration-count: 1 !important;",
+    "transition-timing-function: linear !important;",
+  ].join("\n  "),
+} as const;

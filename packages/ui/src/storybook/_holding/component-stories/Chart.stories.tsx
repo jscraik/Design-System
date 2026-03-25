@@ -24,13 +24,13 @@ const chartData = [
 const chartConfig = {
   visits: {
     label: "Visits",
-    color: "var(--foundation-accent-green)",
+    color: "var(--accent-green)",
   },
 };
 
 export const Default: Story = {
   render: () => (
-    <ChartContainer config={chartConfig} className="h-[220px] w-[360px]">
+    <ChartContainer config={chartConfig} className="h-[13.75rem] w-[22.5rem]">
       <RechartsPrimitive.BarChart data={chartData} margin={{ left: 8, right: 8 }}>
         <RechartsPrimitive.CartesianGrid vertical={false} />
         <RechartsPrimitive.XAxis dataKey="day" tickLine={false} axisLine={false} />
@@ -46,7 +46,7 @@ export const LightTheme: Story = {
     backgrounds: { default: "light" },
   },
   render: () => (
-    <ChartContainer config={chartConfig} className="h-[220px] w-[360px]">
+    <ChartContainer config={chartConfig} className="h-[13.75rem] w-[22.5rem]">
       <RechartsPrimitive.BarChart data={chartData} margin={{ left: 8, right: 8 }}>
         <RechartsPrimitive.CartesianGrid vertical={false} />
         <RechartsPrimitive.XAxis dataKey="day" tickLine={false} axisLine={false} />

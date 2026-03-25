@@ -9,11 +9,11 @@ export function TemplateWidgetPage({ templateId }: TemplateWidgetPageProps) {
   const TemplateComponent = selectedTemplate?.Component;
 
   return (
-    <div className="min-h-screen bg-foundation-bg-light-1 text-foundation-text-light-primary dark:bg-foundation-bg-dark-1 dark:text-foundation-text-dark-primary">
+    <div className="min-h-dvh bg-background text-foreground">
       {TemplateComponent ? (
         <TemplateComponent />
       ) : (
-        <div className="h-full min-h-[600px] flex items-center justify-center text-foundation-text-light-tertiary dark:text-foundation-text-dark-tertiary">
+        <div className="flex min-h-dvh items-center justify-center text-muted-foreground">
           Template not found: {templateId}
         </div>
       )}

@@ -340,7 +340,7 @@ describe("Select", () => {
           </SelectContent>
         </Select>,
       );
-      expect(screen.getByRole("combobox")).toHaveClass("focus-visible:ring-[3px]");
+      expect(screen.getByRole("combobox")).toHaveClass("focus-visible:ring-2");
     });
   });
 });

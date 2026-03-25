@@ -60,7 +60,7 @@
 
 export { colorTokens } from "./colors";
 export { radiusTokens } from "./radius";
-export { shadowTokens } from "./shadows";
+export { type ElevationToken, elevation, shadowTokens } from "./shadows";
 export { sizeTokens } from "./sizes";
 export { spaceTokens, spacingScale } from "./spacing";
 export { typographyTokens } from "./typography";
@@ -94,6 +94,7 @@ export {
   microInteractions,
   motionTokens,
   pressTransition,
+  reducedMotion,
   transition,
 } from "./enhanced/motion";
 // Patterns (component state patterns)

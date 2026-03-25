@@ -156,7 +156,7 @@ export function MessageActions({
         showOnHover && "opacity-0 group-hover:opacity-100 transition-opacity",
         isDisabled && "opacity-50",
         error && "ring-2 ring-status-error/50 rounded-lg",
-        loading && "animate-pulse",
+        loading && "animate-pulse motion-reduce:animate-none",
         className,
       )}
     >

@@ -15,6 +15,11 @@ import {
 import { Textarea as AppsSDKTextarea } from "../../../integrations";
 import { type AttachmentAction, AttachmentMenu, type MoreAction } from "../AttachmentMenu";
 
+const composerTextareaStyle = {
+  minHeight: "1.625rem",
+  maxHeight: "12.5rem",
+} as const;
+
 // ============================================================================
 // TYPES
 // ============================================================================
@@ -156,7 +161,7 @@ function ComposerArea({ className, children }: { className?: string; children?: 
               "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg",
               "bg-accent-blue/10 dark:bg-accent-blue/10",
               "text-accent-blue dark:text-accent-blue",
-              "text-[13px] font-medium leading-[18px] tracking-[-0.3px]",
+              "text-body-small font-medium",
             )}
           >
             <IconGlobe className={iconSm} />
@@ -174,12 +179,12 @@ function ComposerArea({ className, children }: { className?: string; children?: 
         rows={1}
         className={cn(
           "w-full bg-transparent resize-none focus:outline-none",
-          "text-[16px] font-normal leading-[26px] tracking-[-0.4px]",
+          "text-base font-normal leading-relaxed tracking-normal",
           "text-foreground dark:text-foreground",
           "placeholder:text-muted-foreground dark:placeholder:text-muted-foreground",
           disabled && "opacity-50 cursor-not-allowed",
         )}
-        style={{ minHeight: "26px", maxHeight: "200px" }}
+        style={composerTextareaStyle}
         onKeyDown={(e) => {
           if (e.nativeEvent.isComposing) {
             return;
@@ -283,9 +288,7 @@ function LeftActions({ className, children }: { className?: string; children?: R
         )}
       >
         <IconGlobe className={iconMd} />
-        {isSearchEnabled && (
-          <span className="text-[14px] font-normal leading-[18px] tracking-[-0.3px]">Search</span>
-        )}
+        {isSearchEnabled && <span className="text-body-small font-normal">Search</span>}
       </button>
 
       <button
@@ -307,9 +310,7 @@ function LeftActions({ className, children }: { className?: string; children?: R
         )}
       >
         <IconTelescope className={iconMd} />
-        {isResearchEnabled && (
-          <span className="text-[14px] font-normal leading-[18px] tracking-[-0.3px]">Research</span>
-        )}
+        {isResearchEnabled && <span className="text-body-small font-normal">Research</span>}
       </button>
 
       {/* Model Badge */}
@@ -319,7 +320,7 @@ function LeftActions({ className, children }: { className?: string; children?: R
             "ml-2 px-2.5 py-1 rounded-lg",
             "bg-accent-blue/10 dark:bg-accent-blue/10",
             "text-accent-blue dark:text-accent-blue",
-            "text-[12px] font-medium leading-[16px] tracking-[-0.1px]",
+            "text-caption font-medium",
           )}
         >
           {selectedModel.shortName}
@@ -348,7 +349,7 @@ function RightActions({ className, children }: { className?: string; children?: 
           title="Auto-clear conversation"
           className={cn(
             "flex items-center gap-1.5 px-3 py-1.5 rounded-full",
-            "text-[13px] font-normal leading-[18px] tracking-[-0.3px]",
+            "text-body-small font-normal",
             "bg-muted dark:bg-muted",
             "hover:bg-muted/80 dark:hover:bg-muted/80",
             "text-text-secondary dark:text-text-secondary",
@@ -623,7 +624,7 @@ export function ChatInput({
           <form onSubmit={handleSubmit} className="max-w-3xl mx-auto" data-testid="chat-input">
             <div
               className={cn(
-                "rounded-[24px] overflow-hidden transition-all duration-200",
+                "overflow-hidden rounded-3xl transition-all duration-200",
                 "bg-secondary dark:bg-secondary",
                 "border border-muted dark:border-muted",
                 "shadow-sm hover:shadow-md dark:shadow-muted/",
@@ -652,7 +653,7 @@ export function ChatInput({
       <form onSubmit={handleSubmit} className="max-w-3xl mx-auto" data-testid="chat-input">
         <div
           className={cn(
-            "rounded-[24px] overflow-hidden transition-all duration-200",
+            "overflow-hidden rounded-3xl transition-all duration-200",
             "bg-secondary dark:bg-secondary",
             "border border-muted dark:border-muted",
             "shadow-sm hover:shadow-md dark:shadow-muted/",
@@ -670,7 +671,7 @@ export function ChatInput({
                     "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg",
                     "bg-accent-blue/10 dark:bg-accent-blue/10",
                     "text-accent-blue dark:text-accent-blue",
-                    "text-[13px] font-medium leading-[18px] tracking-[-0.3px]",
+                    "text-body-small font-medium",
                   )}
                 >
                   <IconGlobe className={iconSm} />
@@ -688,12 +689,12 @@ export function ChatInput({
               rows={1}
               className={cn(
                 "w-full bg-transparent resize-none focus:outline-none",
-                "text-[16px] font-normal leading-[26px] tracking-[-0.4px]",
+                "text-base font-normal leading-relaxed tracking-normal",
                 "text-foreground dark:text-foreground",
                 "placeholder:text-muted-foreground dark:placeholder:text-muted-foreground",
                 disabled && "opacity-50 cursor-not-allowed",
               )}
-              style={{ minHeight: "26px", maxHeight: "200px" }}
+              style={composerTextareaStyle}
               onKeyDown={(e) => {
                 if (e.nativeEvent.isComposing) {
                   return;
@@ -746,11 +747,7 @@ export function ChatInput({
                 )}
               >
                 <IconGlobe className={iconMd} />
-                {isSearchEnabled && (
-                  <span className="text-[14px] font-normal leading-[18px] tracking-[-0.3px]">
-                    Search
-                  </span>
-                )}
+                {isSearchEnabled && <span className="text-body-small font-normal">Search</span>}
               </button>
               <button
                 type="button"
@@ -771,11 +768,7 @@ export function ChatInput({
                 )}
               >
                 <IconTelescope className={iconMd} />
-                {isResearchEnabled && (
-                  <span className="text-[14px] font-normal leading-[18px] tracking-[-0.3px]">
-                    Research
-                  </span>
-                )}
+                {isResearchEnabled && <span className="text-body-small font-normal">Research</span>}
               </button>
               {/* Model Badge */}
               <div
@@ -783,7 +776,7 @@ export function ChatInput({
                   "ml-2 px-2.5 py-1 rounded-lg",
                   "bg-accent-blue/10 dark:bg-accent-blue/10",
                   "text-accent-blue dark:text-accent-blue",
-                  "text-[12px] font-medium leading-[16px] tracking-[-0.1px]",
+                  "text-caption font-medium",
                 )}
               >
                 {defaultModel.shortName}
@@ -800,7 +793,7 @@ export function ChatInput({
                   title="Auto-clear conversation"
                   className={cn(
                     "flex items-center gap-1.5 px-3 py-1.5 rounded-full",
-                    "text-[13px] font-normal leading-[18px] tracking-[-0.3px]",
+                    "text-body-small font-normal",
                     "bg-muted dark:bg-muted",
                     "hover:bg-muted/80 dark:hover:bg-muted/80",
                     "text-text-secondary dark:text-text-secondary",

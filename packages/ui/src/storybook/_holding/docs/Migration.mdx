@@ -74,7 +74,7 @@ The `IconButton` component now uses an `active` prop with `activeColor` instead 
   icon={<Icon />}
   variant="ghost"
   active={isActive}
-  activeColor="var(--foundation-accent-blue)"
+  activeColor="var(--accent-blue)"
 />
 ```
 
@@ -89,11 +89,11 @@ The `IconButton` component now uses an `active` prop with `activeColor` instead 
               icon={<span>❤️</span>}
               variant="ghost"
               active={isActive}
-              activeColor="var(--foundation-accent-red)"
+              activeColor="var(--accent-red)"
               onClick={() => setIsActive(!isActive)}
               title="Toggle active state"
             />
-            <span className="text-foundation-text-light-secondary dark:text-foundation-text-dark-secondary">
+            <span className="text-muted-foreground">
               {isActive ? "Active" : "Inactive"}
             </span>
           </div>
@@ -204,7 +204,7 @@ const styles = {
 };
 
 // Dynamic theme changes
-setCSSVar("--foundation-accent-blue", "#0066cc");
+setCSSVar("--accent-blue", "var(--accent-purple)");
 ```
 
 ### Testing Utilities

@@ -27,7 +27,7 @@ const meta: Meta<typeof ChatHeader> = {
     layout: "fullscreen",
   },
   render: (args) => (
-    <div className="h-[80px] bg-background">
+    <div className="h-20 bg-background">
       <ChatHeader {...args} />
     </div>
   ),

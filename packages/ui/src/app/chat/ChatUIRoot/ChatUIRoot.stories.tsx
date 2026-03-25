@@ -41,7 +41,7 @@ const meta: Meta<typeof ChatUIRoot> = {
     layout: "fullscreen",
   },
   render: (args) => (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-dvh bg-background">
       <ChatUIRoot {...args} />
     </div>
   ),
@@ -135,7 +135,7 @@ export const WithComposerSlots: Story = {
     composerLeft: (
       <button
         type="button"
-        className="p-2 bg-[var(--accent-blue)]/20 text-[var(--accent-blue)] rounded-lg transition-colors"
+        className="rounded-lg bg-accent-blue/20 p-2 text-accent-blue transition-colors"
         aria-label="Custom Tool"
       >
         <IconLightBulb className="size-4" />
@@ -158,6 +158,32 @@ export const ComposeMode: Story = {
     defaultMode: "twoPane",
     defaultSidebarOpen: true,
     defaultViewMode: "compose",
+  },
+};
+
+export const LoadingOverlay: Story = {
+  args: {
+    defaultMode: "twoPane",
+    defaultSidebarOpen: true,
+    defaultViewMode: "chat",
+    loading: true,
+  },
+};
+
+export const ErrorOverlay: Story = {
+  args: {
+    defaultMode: "twoPane",
+    defaultSidebarOpen: true,
+    defaultViewMode: "chat",
+    error: "Connection failed",
+  },
+};
+
+export const FullOverlayOpen: Story = {
+  args: {
+    defaultMode: "full",
+    sidebarOpen: true,
+    defaultViewMode: "chat",
   },
 };
 
@@ -187,7 +213,7 @@ export const WithAllSlots: Story = {
     composerLeft: (
       <button
         type="button"
-        className="p-2 bg-[var(--accent-blue)]/20 text-[var(--accent-blue)] rounded-lg transition-colors"
+        className="rounded-lg bg-accent-blue/20 p-2 text-accent-blue transition-colors"
         aria-label="Custom Tool"
       >
         <IconLightBulb className="size-4" />

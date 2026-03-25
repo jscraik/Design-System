@@ -19,13 +19,6 @@ const meta: Meta<typeof ManageAppsPanel> = {
   component: ManageAppsPanel,
   parameters: {
     layout: "fullscreen",
-    backgrounds: {
-      default: "dark",
-      values: [
-        { name: "dark", value: "#1a1a1a" },
-        { name: "light", value: "#ffffff" },
-      ],
-    },
   },
   tags: ["autodocs"],
   argTypes: {
@@ -43,9 +36,28 @@ type Story = StoryObj<typeof ManageAppsPanel>;
 
 export const Default: Story = {};
 
+export const Loading: Story = {
+  args: {
+    state: "loading",
+  },
+};
+
+export const Empty: Story = {
+  args: {
+    connectedApps: [],
+    availableApps: [],
+  },
+};
+
+export const Error: Story = {
+  args: {
+    state: "error",
+  },
+};
+
 export const InContainer: Story = {
   render: (args) => (
-    <div className="max-w-2xl mx-auto bg-[var(--background)] rounded-lg overflow-hidden">
+    <div className="mx-auto max-w-2xl overflow-hidden rounded-lg bg-background">
       <ManageAppsPanel {...args} />
     </div>
   ),

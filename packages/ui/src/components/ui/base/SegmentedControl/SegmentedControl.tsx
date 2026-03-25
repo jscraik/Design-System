@@ -177,7 +177,7 @@ export function SegmentedControl<T extends string = string>({
                 : "transparent",
             }}
           >
-            {option.icon}
+            {option.icon && <span aria-hidden="true">{option.icon}</span>}
             {option.label}
           </button>
         );

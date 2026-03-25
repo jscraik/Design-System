@@ -196,7 +196,7 @@ export function ModelSelector({
           {/* Main Menu */}
           <div
             className={cn(
-              "absolute top-full left-0 mt-2 z-50 w-[320px] rounded-2xl overflow-hidden",
+              "absolute top-full left-0 z-50 mt-2 w-80 overflow-hidden rounded-2xl",
               "border border-border",
               "bg-card",
               "shadow-xl",
@@ -245,14 +245,14 @@ export function ModelSelector({
                     {isLegacyOpen && (
                       <div
                         className={cn(
-                          "absolute left-full top-0 ml-2 w-[280px] rounded-2xl overflow-hidden",
+                          "absolute left-full top-0 ml-2 w-72 overflow-hidden rounded-2xl",
                           "border border-border",
                           "bg-card",
                           "shadow-xl",
                           "animate-in fade-in-0 slide-in-from-left-2 duration-200",
                         )}
                       >
-                        <div className="p-2 max-h-[320px] overflow-y-auto">
+                        <div className="max-h-80 overflow-y-auto p-2">
                           {legacyModels.map((model) => (
                             <LegacyModelOption
                               key={model.name}
@@ -315,7 +315,7 @@ function ModelOption({ model, isSelected, onSelect }: ModelOptionProps) {
           {model.badge && (
             <span
               className={cn(
-                "text-[10px] font-medium px-1.5 py-0.5 rounded-full",
+                "rounded-full px-1.5 py-0.5 text-caption font-medium",
                 badgeColors[model.badgeVariant ?? "default"],
               )}
             >

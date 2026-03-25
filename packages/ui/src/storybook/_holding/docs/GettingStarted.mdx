@@ -71,7 +71,7 @@ Use `ChatShell` variants when you want to compose your own chat layout from slot
         },
       ];
       return (
-        <div className="min-h-[520px]">
+        <div className="min-h-[32.5rem]">
           <ChatVariantSplitSidebar
             messages={messages}
             projects={[{ id: "default", label: "General", icon: <span>💬</span> }]}
@@ -195,10 +195,10 @@ aStudio uses CSS custom properties for consistent theming:
 
 ```css
 :root {
-  --foundation-bg-dark-1: #1a1a1a;
-  --foundation-bg-dark-2: #2a2a2a;
-  --foundation-text-dark-primary: #ffffff;
-  --foundation-accent-blue: #0ea5e9;
+  --background: var(--card);
+  --secondary: var(--muted);
+  --foreground: var(--foreground);
+  --accent-blue: var(--accent-purple);
   /* ... more tokens */
 }
 ```

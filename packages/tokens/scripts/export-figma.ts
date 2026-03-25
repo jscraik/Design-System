@@ -49,6 +49,7 @@ type DtcgRoot = {
   shadow: Record<string, DtcgShadowToken>;
   type: {
     fontFamily: DtcgFontFamilyToken;
+    fontDisplay: DtcgFontFamilyToken;
     web: Record<
       string,
       {
@@ -228,6 +229,10 @@ function flattenTypographyTokens(typeData: DtcgRoot["type"]): FigmaCollection {
   collection.fontFamily = {
     $type: "string",
     $value: typeData.fontFamily.$value,
+  };
+  collection.fontDisplay = {
+    $type: "string",
+    $value: typeData.fontDisplay.$value,
   };
 
   // Typography styles

@@ -69,7 +69,7 @@ export function ChatView({
 
   return (
     <div className="flex-1 flex flex-col relative h-full overflow-hidden">
-      <div ref={scrollContainerRef} className="flex-1 overflow-y-auto pb-[180px]">
+      <div ref={scrollContainerRef} className="flex-1 overflow-y-auto pb-44">
         <ChatMessages
           emptyState={emptyState}
           messages={messages}
@@ -83,13 +83,13 @@ export function ChatView({
           onClick={scrollToBottom}
           aria-label="Scroll to bottom"
           title="Scroll to bottom"
-          className="absolute bottom-[200px] left-1/2 -translate-x-1/2 z-10 flex items-center justify-center size-10 bg-secondary dark:bg-secondary hover:bg-secondary/80 dark:hover:bg-secondary/80 border border-muted dark:border-muted rounded-full shadow-lg transition-all duration-200 ease-out hover:scale-110"
+          className="absolute bottom-48 left-1/2 z-10 flex size-10 -translate-x-1/2 items-center justify-center rounded-full border border-muted bg-secondary shadow-lg transition-all duration-200 ease-out hover:scale-110 hover:bg-secondary/80"
         >
-          <IconArrowDownMd className="size-5 text-foreground dark:text-foreground" />
+          <IconArrowDownMd className="size-5 text-foreground" />
         </button>
       )}
 
-      <div className="absolute bottom-0 left-0 right-0 bg-background dark:bg-background">
+      <div className="absolute bottom-0 left-0 right-0 bg-background">
         <ChatInput
           selectedModel={selectedModel}
           composerLeft={composerLeft}

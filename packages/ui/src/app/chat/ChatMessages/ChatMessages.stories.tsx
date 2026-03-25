@@ -12,7 +12,7 @@ const meta: Meta<typeof ChatMessages> = {
     layout: "fullscreen",
   },
   render: (args) => (
-    <div className="min-h-screen bg-[var(--background)] flex">
+    <div className="flex min-h-dvh bg-background">
       <ChatMessages {...args} />
     </div>
   ),
@@ -32,7 +32,7 @@ export const EmptyState: Story = {
   args: {
     messages: [],
     emptyState: (
-      <div className="flex-1 flex items-center justify-center text-[var(--muted-foreground)] text-sm">
+      <div className="flex flex-1 items-center justify-center text-sm text-muted-foreground">
         No messages yet
       </div>
     ),

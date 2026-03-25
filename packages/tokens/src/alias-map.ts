@@ -70,8 +70,8 @@ function buildRecordMap<T extends Record<string, unknown>>(
 function buildTypographyMap(record: typeof typographyTokens): Record<string, AliasValue> {
   return Object.fromEntries(
     Object.keys(record).map((key) => {
-      if (key === "fontFamily") {
-        return [key, { path: "type.fontFamily" }];
+      if (key === "fontFamily" || key === "fontDisplay") {
+        return [key, { path: `type.${key}` }];
       }
       return [key, { path: `type.web.${key}` }];
     }),

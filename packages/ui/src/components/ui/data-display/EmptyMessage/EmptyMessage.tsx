@@ -96,18 +96,18 @@ function EmptyMessage({
     >
       <div className="rounded-full bg-muted p-6">
         {loading ? (
-          <div className="size-8 rounded-full border-2 border-current border-t-transparent animate-spin" />
+          <div className="size-8 rounded-full border-2 border-current border-t-transparent animate-spin motion-reduce:animate-none" />
         ) : (
           iconNode
         )}
       </div>
 
       <div className="max-w-md space-y-2">
-        <h3 className="font-semibold text-foreground">
+        <h3 className="font-semibold text-foreground text-balance">
           {loading ? "Loading..." : error ? "Error" : title}
         </h3>
         {description && !loading && !error && (
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <p className="text-sm text-muted-foreground text-pretty">{description}</p>
         )}
         {error && <p className="text-sm text-status-error">{error}</p>}
       </div>

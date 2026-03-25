@@ -226,11 +226,13 @@ describe("Token Validation", () => {
     it("should have a valid font family", () => {
       expect(typeof typographyTokens.fontFamily).toBe("string");
       expect(typographyTokens.fontFamily.trim()).not.toBe("");
+      expect(typeof typographyTokens.fontDisplay).toBe("string");
+      expect(typographyTokens.fontDisplay.trim()).not.toBe("");
     });
 
     it("should have valid font sizes", () => {
       Object.entries(typographyTokens).forEach(([key, value]) => {
-        if (key === "fontFamily") return;
+        if (key === "fontFamily" || key === "fontDisplay") return;
 
         const token = value as { size?: number };
         expect(typeof token.size).toBe("number");
@@ -240,7 +242,7 @@ describe("Token Validation", () => {
 
     it("should have valid line heights", () => {
       Object.entries(typographyTokens).forEach(([key, value]) => {
-        if (key === "fontFamily") return;
+        if (key === "fontFamily" || key === "fontDisplay") return;
 
         const token = value as { lineHeight?: number };
         expect(typeof token.lineHeight).toBe("number");
@@ -250,7 +252,7 @@ describe("Token Validation", () => {
 
     it("should have valid font weights", () => {
       Object.entries(typographyTokens).forEach(([key, value]) => {
-        if (key === "fontFamily") return;
+        if (key === "fontFamily" || key === "fontDisplay") return;
 
         const token = value as {
           weight?: number;
@@ -270,7 +272,7 @@ describe("Token Validation", () => {
 
     it("should have valid tracking values", () => {
       Object.entries(typographyTokens).forEach(([key, value]) => {
-        if (key === "fontFamily") return;
+        if (key === "fontFamily" || key === "fontDisplay") return;
 
         const token = value as { tracking?: number };
         expect(typeof token.tracking).toBe("number");
@@ -279,7 +281,7 @@ describe("Token Validation", () => {
 
     it("should have line height greater than or equal to font size", () => {
       Object.entries(typographyTokens).forEach(([key, value]) => {
-        if (key === "fontFamily") return;
+        if (key === "fontFamily" || key === "fontDisplay") return;
 
         const token = value as { lineHeight?: number; size?: number };
         expect(token.lineHeight).toBeGreaterThanOrEqual(token.size);

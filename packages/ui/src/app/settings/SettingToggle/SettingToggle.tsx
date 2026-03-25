@@ -1,4 +1,6 @@
-import type { ReactNode } from "react";
+import { type ReactNode, useId } from "react";
+
+import { cn } from "../../../components/ui/utils";
 
 export interface SettingToggleProps {
   checked: boolean;
@@ -7,6 +9,7 @@ export interface SettingToggleProps {
   label: string;
   description?: string;
   className?: string;
+  disabled?: boolean;
 }
 
 /**
@@ -21,38 +24,49 @@ export function SettingToggle({
   label,
   description,
   className = "",
+  disabled = false,
 }: SettingToggleProps) {
+  const descriptionId = useId();
+
   return (
     <div className={className}>
-      <div className="flex items-center justify-between px-3 py-2.5">
-        <div className="flex items-center gap-3 flex-1">
-          {icon}
-          <span className="text-[14px] font-normal leading-[20px] tracking-[-0.3px] text-foreground">
-            {label}
-          </span>
+      <div className="flex items-start justify-between gap-4 rounded-lg px-3 py-2.5">
+        <div className="flex min-w-0 flex-1 items-start gap-3">
+          {icon ? <span className="mt-0.5 shrink-0 text-text-secondary">{icon}</span> : null}
+          <div className="min-w-0 flex-1">
+            <span className="text-body-small text-foreground">{label}</span>
+            {description ? (
+              <p id={descriptionId} className="mt-1 text-caption text-muted-foreground">
+                {description}
+              </p>
+            ) : null}
+          </div>
         </div>
         <button
           type="button"
-          onClick={() => onCheckedChange(!checked)}
-          className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors flex-shrink-0 ${
-            checked ? "bg-accent-green" : "bg-muted"
-          }`}
+          onClick={() => {
+            if (!disabled) {
+              onCheckedChange(!checked);
+            }
+          }}
+          disabled={disabled}
+          className={cn(
+            "relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-60",
+            checked ? "bg-accent-green" : "bg-muted",
+          )}
           role="switch"
           aria-checked={checked}
           aria-label={label}
+          aria-describedby={description ? descriptionId : undefined}
+          aria-disabled={disabled}
         >
           <span
-            className={`inline-block size-4 transform rounded-full bg-background transition-transform ${
-              checked ? "translate-x-[18px]" : "translate-x-0.5"
+            className={`inline-block size-5 transform rounded-full bg-background transition-transform ${
+              checked ? "translate-x-5" : "translate-x-0.5"
             }`}
           />
         </button>
       </div>
-      {description && (
-        <p className="text-[13px] leading-[18px] tracking-[-0.32px] text-muted-foreground px-3 mt-1">
-          {description}
-        </p>
-      )}
     </div>
   );
 }
