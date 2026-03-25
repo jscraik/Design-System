@@ -144,6 +144,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - The web and Storybook visual suites are finally deterministic enough to build on, and the first touched-file ratchet is now in place for the initial protected surface set. The remaining work is widening that ratchet gradually without turning warning debt back into hidden drift.
 - The first touched-file ratchet now covers the full settings panel/story family, the touched forms component slice, and app pages including both template pages. It should keep expanding gradually, but only after adjacent surfaces stay clean long enough that the next boundary is believable.
 - `packages/ui` still carries some internal Storybook `_holding` demo code that looks like package-consumer code. Keep that material out of declaration generation, or it will reintroduce self-import type noise into otherwise healthy package builds.
+- `packages/tokens/src/shadows.ts` is generated, but it cannot be a pure mirror of the DTCG shadow source. The DTCG file only defines the legacy `card/pip/pill/close` map; the generated TypeScript layer must also re-emit the semantic `elevation` API and `ElevationToken` type or `packages/tokens/src/index.ts` will compile locally until the next `pnpm generate:tokens`, then break in CI.
 
 ## Recent changes
 
@@ -223,6 +224,7 @@ See also: `~/.codex/instructions/Learnings.md`
 ### 2026-03-24
 
 - Fixed PR #131 CI version-sync drift by aligning `packages/ui`, `packages/widgets`, and `packages/cloudflare-template` back to the root workspace version `0.0.1`. This unblocks `pnpm sync:versions:check` in the build lanes and keeps the agent-UI hardening branch mergeable.
+- Fixed the token-regeneration truth bug behind PR #131's new build failure. `packages/tokens/scripts/sync-dtcg.ts` now preserves the semantic `elevation` shadow scale and `ElevationToken` type when it regenerates `src/shadows.ts`, so the build pipeline's `pnpm generate:tokens` step no longer rewrites the token package into a shape that breaks `packages/tokens/src/index.ts`.
 - Stabilized Storybook exemplar capture for PR #131 by pinning Playwright Storybook visuals to `en-US` / `UTC` and forcing fullscreen chat/settings stories onto the exact `1280x720` viewport inside `storybook-visual.spec.ts`. This is aimed at the Ubuntu-only drift seen in the `Exemplar evaluation (web platform only)` lane, where fullscreen Storybook screenshots diverged from the committed macOS-recorded baselines.
 - Moved the always-on `pnpm test:exemplar-evaluation` CI step from the Ubuntu web build to the macOS build lane. That keeps the exemplar gate aligned with the currently committed macOS-recorded Storybook baselines while leaving the Ubuntu lane focused on policy/build coverage and downstream web-only jobs.
 

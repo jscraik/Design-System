@@ -14,6 +14,10 @@ function formatTokenFile(doc: string, exportLine: string): string {
   return `${banner}/**\n * ${doc}\n */\n${exportLine}\n`;
 }
 
+function formatShadowsFile(shadowTokens: Record<string, unknown>): string {
+  return `${banner}/**\n * Shadow tokens with offsets, blur, and spread in px plus hex colors.\n *\n * ## Elevation scale\n * Prefer \`elevation.*\` tokens for general UI depth. They form a visually\n * distinct 7-step scale (xs → 2xl + inner). The legacy \`card/pip/pill/close\`\n * tokens are kept for backward compatibility and map to \`elevation.lg\`.\n *\n * ## Accessibility note\n * Shadows must not be the sole indicator of focus or state — always pair with\n * a border or colour change for high-contrast mode compatibility.\n */\n\n/**\n * Semantic elevation scale.\n * Values are CSS shadow strings ready for use in \`box-shadow\`.\n * Alpha values are intentionally higher than Tailwind defaults (10%)\n * to ensure xs/sm are visually distinguishable on white backgrounds.\n */\nexport const elevation = {\n  /** Hairline lift — table rows, subtle chips (6% alpha). */\n  xs: "0 1px 2px 0 rgba(0,0,0,0.06)",\n  /** Card resting state — inputs, flat cards (12% alpha). */\n  sm: "0 1px 3px 0 rgba(0,0,0,0.12), 0 1px 2px -1px rgba(0,0,0,0.08)",\n  /** Dropdown menus, context menus (14% alpha). */\n  md: "0 4px 6px -1px rgba(0,0,0,0.14), 0 2px 4px -2px rgba(0,0,0,0.10)",\n  /** Popover, tooltip, floating panels (14% alpha). */\n  lg: "0 10px 15px -3px rgba(0,0,0,0.14), 0 4px 6px -4px rgba(0,0,0,0.10)",\n  /** Side sheets, large popovers (16% alpha). */\n  xl: "0 20px 25px -5px rgba(0,0,0,0.16), 0 8px 10px -6px rgba(0,0,0,0.10)",\n  /** Full-screen dialogs, modals (28% alpha). */\n  "2xl": "0 25px 50px -12px rgba(0,0,0,0.28)",\n  /** Inset — recessed inputs, pressed states. */\n  inner: "inset 0 2px 4px 0 rgba(0,0,0,0.08)",\n} as const;\n\nexport type ElevationToken = keyof typeof elevation;\n\nexport const shadowTokens = ${JSON.stringify(shadowTokens, null, 2)} as const;\n`;
+}
+
 // DTCG-compliant token types
 type DtcgDimensionValue = { value: number; unit: "px" | "rem" | "em" | "%" };
 type DtcgColorValue = string;
@@ -721,13 +725,7 @@ await writeFile(
   ),
 );
 
-await writeFile(
-  shadowPath,
-  formatTokenFile(
-    "Shadow tokens with offsets, blur, and spread in px plus hex colors.",
-    `export const shadowTokens = ${JSON.stringify(shadowTokens, null, 2)} as const;`,
-  ),
-);
+await writeFile(shadowPath, formatShadowsFile(shadowTokens));
 
 await writeFile(
   sizePath,
