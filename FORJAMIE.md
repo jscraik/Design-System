@@ -128,6 +128,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - Storybook visual captures now disable Agentation and Dialkit overlays by URL flag during Playwright runs. If a visual failure suddenly shows the MCP/annotation panel inside the screenshot, the preview/test URL contract has drifted and should be repaired before blessing any baseline.
 - Storybook visual regression now runs single-worker with a 90s test timeout. That is intentional: the settings exemplar slice proved flaky under local parallel capture and late dark-theme sweeps, so determinism now wins over speed for this gate.
 - Storybook visual captures now pin Playwright to `en-US` / `UTC`, and fullscreen exemplar stories are forced onto the exact `1280x720` capture surface inside the spec harness. If Ubuntu-only screenshot drift shows up on chat/settings fullscreen stories, check the visual harness before re-blessing baselines.
+- The exemplar visual gate now belongs to the macOS build lane in CI, not the Ubuntu web lane. The committed Storybook/fullscreen baselines are currently mac-recorded, so running the always-on exemplar check on macOS keeps the gate trustworthy while Linux still handles policy/build coverage.
 - Storybook dev must ignore Playwright artifact paths during visual runs. If the server starts reloading or dropping mid-capture, check `.storybook/main.ts` first and confirm `playwright-report`, `test-results`, and `__snapshots__` are excluded from Vite watch globs so the visual gate is not watching its own outputs.
 - The touched-file ratchet must include untracked files via `git ls-files --others --exclude-standard`, not just tracked diffs. Otherwise a brand-new protected-surface file can dodge the ratchet until it is staged.
 - Keep the committed visual baselines, but ignore local runtime artifacts. The repo now explicitly ignores nested `node_modules/.vite`, nested `node_modules/.tmp`, Playwright HTML reports, and `reports/audit-*` outputs so UI verification runs do not turn branch state into cache noise.
@@ -223,6 +224,7 @@ See also: `~/.codex/instructions/Learnings.md`
 
 - Fixed PR #131 CI version-sync drift by aligning `packages/ui`, `packages/widgets`, and `packages/cloudflare-template` back to the root workspace version `0.0.1`. This unblocks `pnpm sync:versions:check` in the build lanes and keeps the agent-UI hardening branch mergeable.
 - Stabilized Storybook exemplar capture for PR #131 by pinning Playwright Storybook visuals to `en-US` / `UTC` and forcing fullscreen chat/settings stories onto the exact `1280x720` viewport inside `storybook-visual.spec.ts`. This is aimed at the Ubuntu-only drift seen in the `Exemplar evaluation (web platform only)` lane, where fullscreen Storybook screenshots diverged from the committed macOS-recorded baselines.
+- Moved the always-on `pnpm test:exemplar-evaluation` CI step from the Ubuntu web build to the macOS build lane. That keeps the exemplar gate aligned with the currently committed macOS-recorded Storybook baselines while leaving the Ubuntu lane focused on policy/build coverage and downstream web-only jobs.
 
 ### 2026-03-05
 
