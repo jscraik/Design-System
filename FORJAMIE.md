@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-03-24
+**Last updated:** 2026-03-28
 **Production status:** IN_PROGRESS
 **Overall health:** Yellow
 
@@ -189,6 +189,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - **Exemplar evaluation wiring**: added a dedicated `pnpm test:exemplar-evaluation` runner for the protected settings exemplar visuals plus `TemplateBrowserPage`, with Storybook visual tests filterable through env-driven story ID lists. This gate now belongs in browser-aware CI after Playwright install rather than inside the browser-free `pnpm test:policy` contract.
 - **Policy/CI ordering fix**: removed the Playwright-backed exemplar subcontract from `scripts/policy/run.mjs` so `pnpm test:policy` stays safe for pre-Playwright CI and release workflows, and added a dedicated `Exemplar evaluation (web platform only)` step in `.github/workflows/ci.yml` immediately after Playwright installation. That preserves the browser-backed guardrail without breaking the repo's existing workflow ordering.
 - **Review follow-up fixes**: expired entries in `docs/design-system/ENFORCEMENT_EXEMPTIONS.json` no longer suppress the underlying guidance violation once `removeBy` has passed, so CI now reports both the stale-ledger problem and the real rule failure. `scripts/codex-preflight.sh` also now uses the configured `rest_api.host` for all observe smoke probes instead of hard-coding `127.0.0.1`.
+- **Preflight source-safe compatibility**: `scripts/codex-preflight.sh` now preserves the documented sourced-shell workflow (`source scripts/codex-preflight.sh && preflight_repo`) by restoring the `preflight_*` wrapper entrypoints, switching `main` to return instead of exiting when sourced, and clearing the Local Memory `RETURN` trap before the function unwinds. The script also keeps the newer workspace-root-aware git checks and optional Local Memory mode example.
 - **Root design-system hardening**: landed the first execution wave of the March 2026 agent-UI plan. Token truth now uses the vendored DTCG schema path, `fontDisplay` resolves from the correct top-level alias, coverage artifacts are regenerated and freshness-checked, and `scripts/policy/run.mjs` now runs the repo-wide guidance contract rather than the package-local self-check.
 - **Professional UI contract + routing docs**: added `docs/design-system/PROFESSIONAL_UI_CONTRACT.md`, `docs/design-system/AGENT_UI_ROUTING.md`, `docs/design-system/COMPONENT_LIFECYCLE.json`, and `docs/design-system/ENFORCEMENT_EXEMPTIONS.json`, and linked them from `docs/design-system/CONTRACT.md`. This is the new handoff grammar for agents and reviewers.
 - **Protected settings migration**: migrated the first protected settings surfaces onto a shared `SettingsPanelShell` recipe and semantic typography/focus patterns. The main touched files are `AppsPanel`, `ManageAppsPanel`, `PersonalizationPanel`, `ArchivedChatsPanel`, `AudioSettingsPanel`, `CheckForUpdatesPanel`, `NotificationsPanel`, `SecurityPanel`, `DataControlsPanel`, `SettingToggle`, `SettingDropdown`, and `TemplateBrowserPage`.
