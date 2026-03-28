@@ -20,7 +20,7 @@ Options:
 Examples:
   ./scripts/codex-preflight.sh
   ./scripts/codex-preflight.sh --stack js
-  ./scripts/codex-preflight.sh --stack py --mode required
+  ./scripts/codex-preflight.sh --stack py --mode optional
   ./scripts/codex-preflight.sh --repo-fragment local-memory
 
 Legacy compatibility:
@@ -67,11 +67,6 @@ extract_local_memory_rest_value() {
 			exit
 		}
 	' "${config_path}"
-}
-
-is_local_memory_pidfile_sandbox_block() {
-	local output="${1:-}"
-	[[ "${output}" == *"failed to write PID file"* && "${output}" == *"operation not permitted"* ]]
 }
 
 
@@ -248,7 +243,6 @@ preflight_local_memory_gold() {
 	fi
 
 	local health_url="http://${rest_host}:${rest_port}/api/v1/health"
-	local observe_url="http://${rest_host}:${rest_port}/api/v1/observe"
 	local health_json
 	if [[ "${running}" != 'true' ]]; then
 		if health_json="$(curl -fsS "${health_url}" 2>/dev/null)"; then
@@ -262,6 +256,7 @@ preflight_local_memory_gold() {
 		log_err 'local-memory daemon is not running'
 		return 1
 	fi
+
 	if ! health_json="$(curl -fsS "${health_url}")"; then
 		log_err "REST health endpoint unreachable at ${health_url}"
 		return 1
@@ -279,21 +274,15 @@ preflight_local_memory_gold() {
 
 	local observe_a_json
 	local observe_b_json
-	local observe_a_output
-	if ! observe_a_output="$(local-memory observe "${content_a}" --domain 'coding-harness' --tags 'preflight,local-memory' --source 'codex_preflight' --json 2>&1)"; then
-		if is_local_memory_pidfile_sandbox_block "${observe_a_output}"; then
-			log_warn 'local-memory CLI smoke write skipped: sandbox blocked PID file write while daemon health was already verified'
-			log_ok 'local-memory preflight passed'
-			return 0
-		fi
+	observe_a_json="$(local-memory observe "${content_a}" --domain 'coding-harness' --tags 'preflight,local-memory' --source 'codex_preflight' --json 2>/dev/null)" || {
 		log_err 'observe A failed'
 		return 1
-	fi
-	observe_a_json="$(extract_last_json_line "${observe_a_output}")"
-	if ! observe_b_json="$(local-memory observe "${content_b}" --domain 'coding-harness' --tags 'preflight,local-memory' --source 'codex_preflight' --json 2>/dev/null)"; then
+	}
+	observe_b_json="$(local-memory observe "${content_b}" --domain 'coding-harness' --tags 'preflight,local-memory' --source 'codex_preflight' --json 2>/dev/null)" || {
 		log_err 'observe B failed'
 		return 1
-	fi
+	}
+	observe_a_json="$(extract_last_json_line "${observe_a_json}")"
 	observe_b_json="$(extract_last_json_line "${observe_b_json}")"
 
 	local id_a
@@ -350,8 +339,10 @@ preflight_local_memory_gold() {
 	malformed_code="$(curl -sS -o "${malformed_output}" -w '%{http_code}' \
 		-H 'Content-Type: application/json' \
 		-d '{"level":"observation"}' \
-		"${observe_url}")"
+		"http://127.0.0.1:${rest_port}/api/v1/observe")"
 	if [[ "${malformed_code}" -lt 400 ]]; then
+		trap - RETURN
+		rm -f "${malformed_output}" "${dup_output_1}" "${dup_output_2}"
 		log_err "malformed payload did not return an error (HTTP ${malformed_code})"
 		return 1
 	fi
@@ -364,11 +355,11 @@ preflight_local_memory_gold() {
 	dup_code_1="$(curl -sS -o "${dup_output_1}" -w '%{http_code}' \
 		-H 'Content-Type: application/json' \
 		-d "${dup_payload}" \
-		"${observe_url}")"
+		"http://127.0.0.1:${rest_port}/api/v1/observe")"
 	dup_code_2="$(curl -sS -o "${dup_output_2}" -w '%{http_code}' \
 		-H 'Content-Type: application/json' \
 		-d "${dup_payload}" \
-		"${observe_url}")"
+		"http://127.0.0.1:${rest_port}/api/v1/observe")"
 	echo "ℹ️ duplicate behavior snapshot: first=${dup_code_1}, second=${dup_code_2}"
 
 	local daemon_log="${HOME}/.local-memory/daemon.log"
@@ -384,6 +375,8 @@ preflight_local_memory_gold() {
 		log_warn "daemon log not found at ${daemon_log}"
 	fi
 
+	trap - RETURN
+	rm -f "${malformed_output}" "${dup_output_1}" "${dup_output_2}"
 	log_ok 'local-memory preflight passed'
 }
 
@@ -398,7 +391,7 @@ main() {
 		if (( $# > 3 )); then
 			log_err "legacy positional mode accepts at most 3 arguments"
 			usage >&2
-			exit 2
+			return 2
 		fi
 		expected_repo="${1:-}"
 		bins_csv="${2:-}"
@@ -431,19 +424,19 @@ main() {
 				;;
 			-h|--help)
 				usage
-				exit 0
+				return 0
 				;;
 			*)
 				log_err "unknown argument: $1"
 				usage >&2
-				exit 2
+				return 2
 				;;
 		esac
 	done
 
 	case "${local_memory_mode}" in
 		off|optional|required) ;;
-		*) log_err "invalid --mode: ${local_memory_mode}"; exit 2 ;;
+		*) log_err "invalid --mode: ${local_memory_mode}"; return 2 ;;
 	esac
 
 	log_section 'Codex Preflight'
@@ -451,31 +444,32 @@ main() {
 
 	if ! command -v git >/dev/null 2>&1; then
 		log_err 'missing binary: git'
-		exit 2
+		return 2
 	fi
 
-	local root
-	if ! root="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+	local git_root
+	if ! git_root="$(git rev-parse --show-toplevel 2>/dev/null)"; then
 		log_err 'not inside a git repo (git rev-parse failed)'
-		exit 2
+		return 2
 	fi
-	if [[ -z "${root}" ]]; then
+	if [[ -z "${git_root}" ]]; then
 		log_err 'git rev-parse returned empty root'
-		exit 2
+		return 2
 	fi
-	root="$(cd -- "${root}" && pwd -P)"
-	echo "repo root: ${root}"
+	git_root="$(cd -- "${git_root}" && pwd -P)"
+	echo "git root: ${git_root}"
+	echo "workspace root: ${WORKSPACE_ROOT}"
 
-	if [[ "${root}" != "${WORKSPACE_ROOT}" ]]; then
-		log_err "script workspace mismatch: expected ${WORKSPACE_ROOT}"
-		exit 2
+	if [[ "${WORKSPACE_ROOT}" != "${git_root}" && "${WORKSPACE_ROOT}" != "${git_root}"/* ]]; then
+		log_err "script workspace mismatch: ${WORKSPACE_ROOT} is not inside git root ${git_root}"
+		return 2
 	fi
-	if [[ -n "${expected_repo}" && "${root}" != *"${expected_repo}"* ]]; then
-		log_err "repo mismatch: expected fragment '${expected_repo}' in '${root}'"
-		exit 2
+	if [[ -n "${expected_repo}" && "${WORKSPACE_ROOT}" != *"${expected_repo}"* ]]; then
+		log_err "repo mismatch: expected fragment '${expected_repo}' in '${WORKSPACE_ROOT}'"
+		return 2
 	fi
 
-	cd "${root}"
+	cd "${WORKSPACE_ROOT}"
 
 	if [[ "${stack}" == 'auto' ]]; then
 		stack="$(detect_stack)"
@@ -490,16 +484,16 @@ main() {
 	fi
 
 	check_bins "${bins_csv}"
-	check_paths "${root}" "${paths_csv}"
+	check_paths "${WORKSPACE_ROOT}" "${paths_csv}"
 
-	echo "git branch: $(git rev-parse --abbrev-ref HEAD)"
-	echo "clean?: $(git status --porcelain | wc -l | tr -d ' ') changes"
+	echo "git branch: $(git -C "${WORKSPACE_ROOT}" rev-parse --abbrev-ref HEAD)"
+	echo "clean?: $(git -C "${WORKSPACE_ROOT}" status --porcelain -- . | wc -l | tr -d ' ') changes"
 
 	if [[ "${local_memory_mode}" != 'off' ]]; then
 		if ! preflight_local_memory_gold; then
 			if [[ "${local_memory_mode}" == 'required' ]]; then
 				log_err 'local-memory preflight failed (required mode)'
-				exit 2
+				return 2
 			fi
 			log_warn 'local-memory preflight failed (optional mode)'
 		fi
@@ -508,4 +502,22 @@ main() {
 	log_ok 'preflight passed'
 }
 
-main "$@"
+preflight_repo() {
+	main --stack repo --mode off "$@"
+}
+
+preflight_js() {
+	main --stack js --mode off "$@"
+}
+
+preflight_py() {
+	main --stack py --mode off "$@"
+}
+
+preflight_rust() {
+	main --stack rust --mode off "$@"
+}
+
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+	main "$@"
+fi
