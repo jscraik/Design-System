@@ -128,7 +128,7 @@ fi
 	for hook_spec in "${required_prek_hooks[@]}"; do
 		hook_name="${hook_spec%%|*}"
 		hook_command="${hook_spec#*|}"
-		if ! rg -q "^[[:space:]]*${hook_name}[[:space:]]*=[[:space:]]*\\[[[:space:]]*\"${hook_command}\"[[:space:]]*\\][[:space:]]*$" "$PREK_CONFIG_PATH"; then
+		if ! rg -q "id[[:space:]]*=[[:space:]]*\"${hook_name}\"" "$PREK_CONFIG_PATH" || ! rg -q "entry[[:space:]]*=[[:space:]]*\"${hook_command}\"" "$PREK_CONFIG_PATH"; then
 			echo "Error: required prek hook '$hook_name' is missing or out of date in $PREK_CONFIG_PATH"
 			exit 1
 		fi
