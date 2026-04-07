@@ -20,14 +20,10 @@ export const DEFAULT_MASKS: FieldMask[] = [
   { field: "user", level: "internal", mask: "partial" },
 ];
 
+import { createHash } from "node:crypto";
+
 function hashValue(value: string): string {
-  // Simple hash for demonstration - in production use crypto.createHash
-  let hash = 0;
-  for (let i = 0; i < value.length; i++) {
-    const char = value.charCodeAt(i);
-    hash = ((hash << 5) - hash + char) | 0;
-  }
-  return Math.abs(hash).toString(16).padStart(8, "0");
+  return createHash("sha256").update(value).digest("hex").slice(0, 16);
 }
 
 export function maskValue(value: string, mask: MaskType): string {
