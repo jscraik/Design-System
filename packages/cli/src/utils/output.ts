@@ -1,9 +1,31 @@
 import { COMMAND_SCHEMA, TOOL_NAME } from "../constants.js";
 import type { CliArgs, JsonEnvelope, JsonError, JsonValue } from "../types.js";
 import { getToolVersion } from "./env.js";
+import { maskObject } from "./mask.js";
+import type { TraceContext } from "./trace.js";
 
 function nowIso(): string {
   return new Date().toISOString();
+}
+
+// Global trace context for the current CLI invocation
+let globalTraceContext: TraceContext | undefined;
+let globalShowSensitive = false;
+
+export function setTraceContext(context: TraceContext): void {
+  globalTraceContext = context;
+}
+
+export function getTraceContext(): TraceContext | undefined {
+  return globalTraceContext;
+}
+
+export function setShowSensitive(show: boolean): void {
+  globalShowSensitive = show;
+}
+
+export function shouldMask(): boolean {
+  return !globalShowSensitive;
 }
 
 export function outputJson(envelope: JsonEnvelope): void {
@@ -89,13 +111,27 @@ export function createEnvelope(
   status: JsonEnvelope["status"],
   data: Record<string, JsonValue>,
   errors: JsonError[] = [],
+  traceContext?: TraceContext,
 ): JsonEnvelope {
+  // Use provided context, fall back to global context, then undefined
+  const context = traceContext ?? globalTraceContext;
+  // Mask sensitive data unless show-sensitive is enabled
+  const maskedData = shouldMask() ? maskObject(data) : data;
   return {
     schema: COMMAND_SCHEMA,
-    meta: { tool: TOOL_NAME, version: getToolVersion(), timestamp: nowIso() },
+    meta: {
+      tool: TOOL_NAME,
+      version: getToolVersion(),
+      timestamp: nowIso(),
+      ...(context && {
+        request_id: context.requestId,
+        trace_id: context.traceId,
+        parent_id: context.parentId,
+      }),
+    },
     summary,
     status,
-    data,
+    data: maskedData,
     errors,
   };
 }

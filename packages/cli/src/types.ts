@@ -61,6 +61,8 @@ export type JsonEnvelope = {
     version: string;
     timestamp: string;
     request_id?: string;
+    trace_id?: string;
+    parent_id?: string;
   };
   summary: string;
   status: "success" | "warn" | "error";

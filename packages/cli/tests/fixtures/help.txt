@@ -8,6 +8,7 @@ Commands:
   astudio mcp                    MCP server utilities
   astudio tokens <command>       Generate or validate design tokens
   astudio versions <command>     Sync version metadata across workspace
+  astudio skills                 Discover, install, and publish skills (Clawdhub)
   astudio components new <name>  Generate a new UI component
   astudio lint                   Run lint checks
   astudio format                 Format code or check formatting

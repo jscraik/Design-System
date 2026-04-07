@@ -12,7 +12,17 @@ import { versionsCommand } from "./commands/versions.js";
 import { COMMAND_SCHEMA, ERROR_CODES, EXIT_CODES, TOOL_NAME, TOOL_VERSION } from "./constants.js";
 import { CliError, normalizeFailure, toJsonError } from "./error.js";
 import type { CliArgs } from "./types.js";
-import { createEnvelope, outputJson, outputPlainRecord } from "./utils/output.js";
+import {
+  createEnvelope,
+  outputJson,
+  outputPlainRecord,
+  setShowSensitive,
+  setTraceContext,
+} from "./utils/output.js";
+import { createTraceContext } from "./utils/trace.js";
+
+// Initialize global trace context for this CLI invocation
+setTraceContext(createTraceContext());
 
 // Import helper constants
 const _MCP_SERVER_URL_KEY = "server-url";
@@ -44,7 +54,12 @@ function addGlobalOptions(argv: Argv): Argv {
     .option("network", { type: "boolean", description: "Allow network access" })
     .option("cwd", { type: "string", description: "Run as if from this directory" })
     .option("config", { type: "string", description: "Config file override" })
-    .option("dry-run", { type: "boolean", description: "Preview without changes" });
+    .option("dry-run", { type: "boolean", description: "Preview without changes" })
+    .option("show-sensitive", {
+      type: "boolean",
+      description: "Show sensitive data (expert only)",
+      hidden: true,
+    });
 }
 
 const cli = yargs(hideBin(process.argv))
@@ -63,6 +78,9 @@ const cli = yargs(hideBin(process.argv))
         exitCode: EXIT_CODES.usage,
         hint: "Choose one output mode.",
       });
+    }
+    if (argv.showSensitive) {
+      setShowSensitive(true);
     }
   })
   .command(
