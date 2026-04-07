@@ -119,3 +119,8 @@ environment.toml
 # Architecture diagrams (non-deterministic generation)
 .diagram/
 artifacts/policy/
+
+# Mutable build outputs (regenerated every build, non-deterministic hashes)
+.build-cache/
+packages/runtime/node_modules/.tmp/
+packages/widgets/src/sdk/generated/widget-manifest.ts
