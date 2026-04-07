@@ -146,11 +146,11 @@ export class TokenWatcher {
     validateTypographyTokens(tokens) {
         const errors = [];
         Object.entries(tokens.typographyTokens).forEach(([key, value]) => {
-            if (key === "fontFamily") {
+            if (key === "fontFamily" || key === "fontDisplay") {
                 if (typeof value !== "string" || value.trim() === "") {
                     errors.push({
-                        field: "typographyTokens.fontFamily",
-                        message: "Font family must be a non-empty string",
+                        field: `typographyTokens.${key}`,
+                        message: `${key} must be a non-empty string`,
                         suggestion: 'Provide a valid font family name (e.g., "SF Pro")',
                     });
                 }

@@ -25,8 +25,8 @@ function buildRecordMap(record, prefix) {
 }
 function buildTypographyMap(record) {
     return Object.fromEntries(Object.keys(record).map((key) => {
-        if (key === "fontFamily") {
-            return [key, { path: "type.fontFamily" }];
+        if (key === "fontFamily" || key === "fontDisplay") {
+            return [key, { path: `type.${key}` }];
         }
         return [key, { path: `type.web.${key}` }];
     }));
