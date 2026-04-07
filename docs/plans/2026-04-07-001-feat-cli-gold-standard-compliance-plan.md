@@ -155,7 +155,7 @@ export function createEnvelope(
 - Modify: `packages/cli/src/types.ts`
 - Modify: `packages/cli/src/utils/output.ts`
 - Modify: `packages/cli/src/utils/env.ts`
-- Test: `packages/cli/tests/trace.test.ts`
+- Test: `packages/cli/tests/trace.test.mjs`
 
 **Approach:**
 - Create `TraceContext` interface with traceId, requestId, parentId, sampled
@@ -196,7 +196,7 @@ export function createEnvelope(
 - Modify: `packages/cli/src/utils/output.ts`
 - Modify: `packages/cli/src/types.ts`
 - Modify: `packages/cli/src/index.ts` (add `--show-sensitive` flag)
-- Test: `packages/cli/tests/mask.test.ts`
+- Test: `packages/cli/tests/mask.test.mjs`
 
 **Approach:**
 - Define `SensitivityLevel` type: `public | internal | confidential | secret`
@@ -244,7 +244,7 @@ export function createEnvelope(
 - Modify: `packages/cli/src/types.ts` (add Suggestion type)
 - Modify: `packages/cli/src/error.ts` (add did_you_mean to JsonError)
 - Modify: `packages/cli/src/index.ts` (integrate into fail handler)
-- Test: `packages/cli/tests/suggest.test.ts`
+- Test: `packages/cli/tests/suggest.test.mjs`
 
 **Approach:**
 - Add dependency: `fastest-levenshtein@^1.0.16`
@@ -272,7 +272,7 @@ export function createEnvelope(
 
 ---
 
-- [ ] **Unit 2.2: Implement fix suggestion generation**
+- [x] **Unit 2.2: Implement fix suggestion generation**
 
 **Goal:** Generate corrected command suggestions for common policy errors.
 
@@ -281,17 +281,15 @@ export function createEnvelope(
 **Dependencies:** Unit 2.1
 
 **Files:**
-- Create: `packages/cli/src/utils/fix.ts`
 - Modify: `packages/cli/src/error.ts` (add fix_suggestion to JsonError)
-- Modify: `packages/cli/src/index.ts` (integrate into fail handler)
-- Test: `packages/cli/tests/fix.test.ts`
+- Modify: `packages/cli/src/index.ts` (implement `generateFixSuggestion()` in fail handler)
+- Test: `packages/cli/tests/suggest.test.mjs` (covers fix suggestion in JSON output)
 
 **Approach:**
-- Implement `generateFix()` that analyzes error and original argv
+- Implement `generateFixSuggestion()` inline in fail handler that analyzes error and original argv
 - Handle E_POLICY errors: suggest adding `--exec`, `--network`, or `--write`
-- Handle E_USAGE errors: suggest `--help`
-- Implement `reconstructCommand()` to build corrected command string
-- Mark automated fixes vs manual fixes (security flags require manual opt-in)
+- Reconstruct corrected command string by appending missing flags
+- Note: Implementation is inline in index.ts rather than separate module for tighter integration with yargs fail handler context
 
 **Patterns to follow:**
 - Similar to existing hint generation in error handlers
@@ -325,7 +323,7 @@ export function createEnvelope(
 - Create: `packages/cli/src/utils/help.ts`
 - Modify: `packages/cli/src/index.ts` (add help level parsing)
 - Modify: `packages/cli/src/commands/*.ts` (add examples, topics)
-- Test: `packages/cli/tests/help.test.ts`
+- Test: `packages/cli/tests/help.test.mjs`
 
 **Approach:**
 - Define `HelpLevel` type: `minimal | common | full | expert`

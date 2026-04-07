@@ -43,8 +43,7 @@ import {
 } from "./utils/suggest.js";
 import { createTraceContext } from "./utils/trace.js";
 
-// Global agent mode state
-let agentModeActive = false;
+// Agent mode state is managed by utils/agent.ts (single source of truth)
 
 // Check for --help-topic= and --help=level before yargs processing
 const rawArgs = process.argv.slice(2);
@@ -65,10 +64,18 @@ if (topicArg) {
   process.exit(2);
 }
 
-// Handle --help=minimal
-if (helpLevelArg === "--help=minimal") {
-  process.stdout.write(`${getMinimalHelp()}\n`);
-  process.exit(0);
+// Handle --help=<level> (minimal and common only; full/expert handled by yargs)
+if (helpLevelArg) {
+  const level = helpLevelArg.slice("--help=".length);
+  const parsedLevel = parseHelpLevel(level);
+  if (parsedLevel === "minimal" || parsedLevel === "common") {
+    process.stdout.write(`${getMinimalHelp()}\n`);
+    if (parsedLevel === "common") {
+      process.stdout.write("\nCommon commands:\n  dev, build, test, lint, format, doctor\n");
+    }
+    process.exit(0);
+  }
+  // full/expert: let yargs handle normally; unknown: let yargs error
 }
 
 // Initialize global trace context for this CLI invocation
@@ -161,8 +168,8 @@ function generateFixSuggestion(
   );
 
   if (commandIdx === -1) {
-    // Fallback: reconstruct from what we have
-    return `astudio ${missingFlags.join(" ")}`;
+    // Cannot determine original command - don't suggest an incomplete fix
+    return undefined;
   }
 
   // Build fixed command
@@ -192,7 +199,6 @@ const cli = yargs(hideBin(process.argv))
     }
     if (argv.agent) {
       setAgentMode(true);
-      agentModeActive = true;
     }
   })
   .command(
@@ -473,8 +479,9 @@ const cli = yargs(hideBin(process.argv))
     // In agent mode with auto-accept, we might want to exit with a special code
     // or potentially auto-execute (disabled for safety)
     if (isAgent && autoAcceptSuggestion && !wantsJson && !wantsPlain) {
+      const fullSuggestion = fixSuggestion || `astudio ${suggestions[0].suggestion}`;
       process.stderr.write(
-        `\n🤖 Agent Mode: High confidence match. In future, use: astudio ${suggestions[0].suggestion}\n`,
+        `\n🤖 Agent Mode: High confidence match. Suggested command: ${fullSuggestion}\n`,
       );
     }
 

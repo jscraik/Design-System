@@ -48,11 +48,8 @@ function shouldMaskField(key: string, masks: FieldMask[]): FieldMask | undefined
 function maskValueRecursive(value: unknown, masks: FieldMask[], inDebugMode: boolean): unknown {
   if (inDebugMode) return value;
 
+  // Strings are only masked when they're values of sensitive keys (handled in object branch)
   if (typeof value === "string") {
-    const mask = shouldMaskField(value, masks);
-    if (mask) {
-      return maskValue(value, mask.mask ?? "redact");
-    }
     return value;
   }
 
@@ -64,8 +61,10 @@ function maskValueRecursive(value: unknown, masks: FieldMask[], inDebugMode: boo
     const result: Record<string, unknown> = {};
     for (const [key, val] of Object.entries(value)) {
       const mask = shouldMaskField(key, masks);
-      if (mask && typeof val === "string") {
-        result[key] = maskValue(val, mask.mask ?? "redact");
+      if (mask) {
+        // Mask any value type, not just strings
+        result[key] =
+          typeof val === "string" ? maskValue(val, mask.mask ?? "redact") : "[REDACTED]";
       } else {
         result[key] = maskValueRecursive(val, masks, inDebugMode);
       }

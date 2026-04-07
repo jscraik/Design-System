@@ -86,7 +86,7 @@ export function generateAgentErrorHelp(
   sections.push("\n📚 For comprehensive help:");
   sections.push("  astudio --help              # General help");
   sections.push("  astudio <command> --help    # Command-specific help");
-  sections.push("  cat docs/cli/AGENTS.md      # AI agent guide");
+  sections.push("  cat packages/cli/AGENTS.md  # AI agent guide");
 
   return sections.join("\n");
 }
@@ -108,11 +108,13 @@ export function generateLearningNote(
         `The CLI uses specific command names. Use 'astudio --help' to see all available commands.`
       );
 
-    case "missing_flag":
+    case "missing_flag": {
+      const flag = corrected.split(" ").pop();
       return (
         `\n📝 Learning note: This command requires explicit permission flags for safety. ` +
-        `Always include ${corrected.split(" ").pop()} when ${getFlagPurpose(corrected.split(" ").pop() || "")}.`
+        `Always include ${flag} when ${getFlagPurpose(flag)}.`
       );
+    }
 
     case "format":
       return (

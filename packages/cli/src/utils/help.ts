@@ -131,10 +131,12 @@ export const HELP_TOPICS: HelpTopic[] = [
  * Parse help level from --help=level syntax
  */
 export function parseHelpLevel(arg: string): HelpLevel | undefined {
-  if (arg === "--help=minimal") return "minimal";
-  if (arg === "--help=common") return "common";
-  if (arg === "--help=full") return "full";
-  if (arg === "--help=expert") return "expert";
+  // Support both full argument form (--help=minimal) and level only (minimal)
+  const level = arg.startsWith("--help=") ? arg.slice("--help=".length) : arg;
+  if (level === "minimal") return "minimal";
+  if (level === "common") return "common";
+  if (level === "full") return "full";
+  if (level === "expert") return "expert";
   return undefined;
 }
 
@@ -176,14 +178,22 @@ export function generateTopicHelp(topicName: string): string | undefined {
   const topic = getHelpTopic(topicName);
   if (!topic) return undefined;
 
+  const otherTopics = HELP_TOPICS.filter((t) => t.name !== topicName)
+    .slice(0, 2)
+    .map((t) => t.name);
+  const seeAlso = otherTopics.map((t) => `astudio --help-topic=${t}`).join(" | ");
+
   const lines: string[] = [
     `${topic.title}`,
     `${"=".repeat(topic.title.length)}`,
     "",
     ...topic.content,
     "",
-    `See also: astudio --help-topic=output | astudio --help-topic=safety`,
   ];
+
+  if (seeAlso) {
+    lines.push(`See also: ${seeAlso}`);
+  }
 
   return lines.join("\n");
 }

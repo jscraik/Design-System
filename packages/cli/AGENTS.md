@@ -87,7 +87,7 @@ When you get an error, check for these fields in `--json` output:
 **Auto-fix pattern:**
 1. Check `fix_suggestion` field
 2. If present, retry with that exact command
-3. If `did_you_mean` has high confidence (>0.8), use that suggestion
+3. If `did_you_mean` has high confidence (≥0.85), use that suggestion
 
 ## 📋 Response Format
 
@@ -173,6 +173,7 @@ TRACEPARENT=00-abc123...-def456...-01 astudio doctor --json
 ## 🧪 Testing Commands
 
 Safe commands (no side effects):
+
 ```bash
 astudio doctor              # Health check
 astudio --help              # Show help
@@ -180,6 +181,7 @@ astudio tokens validate     # Read-only validation
 ```
 
 Require `--dry-run` first:
+
 ```bash
 astudio tokens generate --dry-run
 astudio build web --dry-run

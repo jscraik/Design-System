@@ -36,13 +36,16 @@ export function shouldColor(opts: GlobalOptions): boolean {
   return true;
 }
 
-export function baseEnv(opts: GlobalOptions): NodeJS.ProcessEnv {
+export function baseEnv(opts: GlobalOptions, traceContext?: TraceContext): NodeJS.ProcessEnv {
   const env = { ...process.env };
   if (!shouldColor(opts)) {
     env.NO_COLOR = "1";
     env.FORCE_COLOR = "0";
   } else if (parseBooleanEnv(process.env.ASTUDIO_COLOR) === true) {
     env.FORCE_COLOR = "1";
+  }
+  if (traceContext) {
+    Object.assign(env, getTraceEnv(traceContext));
   }
   return env;
 }

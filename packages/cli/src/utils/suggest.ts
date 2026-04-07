@@ -70,6 +70,7 @@ export function suggestFlag(
 // Known available commands in the CLI
 export const AVAILABLE_COMMANDS = [
   "help",
+  "help-topics",
   "dev",
   "build",
   "test",
@@ -99,5 +100,6 @@ export const AVAILABLE_FLAGS = [
   "--cwd",
   "--config",
   "--dry-run",
+  "--agent",
   "--show-sensitive",
 ];

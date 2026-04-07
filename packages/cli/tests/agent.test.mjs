@@ -46,13 +46,13 @@ test("agent mode provides suggestions for typos", async () => {
 });
 
 test("agent mode provides enhanced error output", async () => {
-  const { code, stdout } = await runCli(["--agent", "xyz", "--json"]);
+  const { code, stdout } = await runCli(["--agent", "devv", "--json"]);
   assert.equal(code, 2);
   const payload = JSON.parse(stdout);
-  // In agent mode, errors should include did_you_mean
+  // In agent mode, errors should include did_you_mean for typos like "devv"
   assert.ok(
-    payload.errors[0].did_you_mean || payload.errors[0].message,
-    "Should include error details",
+    payload.errors[0].did_you_mean,
+    "Agent mode errors should include did_you_mean suggestions",
   );
 });
 
@@ -74,7 +74,12 @@ test("agent mode threshold is lower than normal", async () => {
   // Enable agent mode
   setAgentMode(true);
 
-  // Agent threshold should be 0.5
-  const agentThreshold = getSuggestionThreshold();
-  assert.equal(agentThreshold, 0.5);
+  try {
+    // Agent threshold should be 0.5
+    const agentThreshold = getSuggestionThreshold();
+    assert.equal(agentThreshold, 0.5);
+  } finally {
+    // Reset to avoid polluting other tests
+    setAgentMode(false);
+  }
 });

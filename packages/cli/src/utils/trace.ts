@@ -157,6 +157,6 @@ export function createTraceContext(parentContext?: TraceContext): TraceContext {
  */
 export function formatTraceparent(context: TraceContext): string {
   const flags = context.sampled ? "01" : "00";
-  const parentId = context.parentId ?? "0000000000000000";
-  return `00-${context.traceId}-${parentId.slice(0, 16)}-${flags}`;
+  const parentId = (context.parentId ?? "0000000000000000").padEnd(16, "0").slice(0, 16);
+  return `00-${context.traceId}-${parentId}-${flags}`;
 }
