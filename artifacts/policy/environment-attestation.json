@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-04-07T14:13:53.042Z",
+  "policyFingerprint": "468c2339bbf714ed",
+  "sandboxMode": "sandboxed",
+  "hasSecretsFilter": false,
+  "hasApprovalPosture": true,
+  "passed": true,
+  "violations": []
+}

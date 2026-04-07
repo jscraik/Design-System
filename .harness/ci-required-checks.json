@@ -1,12 +1,13 @@
 {
   "version": 1,
-  "activeProvider": "github-actions",
+  "activeProvider": "circleci",
   "requiredChecks": [
     {
       "policyId": "required-check-1",
       "displayName": "pr-template",
-      "sourceAppSlug": "github-actions",
-      "sourceAppId": "github-actions",
+      "githubCheckName": "pr-pipeline",
+      "sourceAppSlug": "circleci",
+      "sourceAppId": "circleci",
       "externalIdPattern": "^pr-template$",
       "requiredOnEvents": [
         "pull_request",
@@ -17,10 +18,11 @@
     },
     {
       "policyId": "required-check-2",
-      "displayName": "risk-policy-gate",
-      "sourceAppSlug": "github-actions",
-      "sourceAppId": "github-actions",
-      "externalIdPattern": "^risk-policy-gate$",
+      "displayName": "linear-gate",
+      "githubCheckName": "pr-pipeline",
+      "sourceAppSlug": "circleci",
+      "sourceAppId": "circleci",
+      "externalIdPattern": "^linear-gate$",
       "requiredOnEvents": [
         "pull_request",
         "merge_group"
@@ -30,10 +32,11 @@
     },
     {
       "policyId": "required-check-3",
-      "displayName": "dependency-review",
-      "sourceAppSlug": "github-actions",
-      "sourceAppId": "github-actions",
-      "externalIdPattern": "^dependency-review$",
+      "displayName": "risk-policy-gate",
+      "githubCheckName": "pr-pipeline",
+      "sourceAppSlug": "circleci",
+      "sourceAppId": "circleci",
+      "externalIdPattern": "^risk-policy-gate$",
       "requiredOnEvents": [
         "pull_request",
         "merge_group"
@@ -43,10 +46,11 @@
     },
     {
       "policyId": "required-check-4",
-      "displayName": "actions-pinning",
-      "sourceAppSlug": "github-actions",
-      "sourceAppId": "github-actions",
-      "externalIdPattern": "^actions-pinning$",
+      "displayName": "dependency-scan",
+      "githubCheckName": "pr-pipeline",
+      "sourceAppSlug": "circleci",
+      "sourceAppId": "circleci",
+      "externalIdPattern": "^dependency-scan$",
       "requiredOnEvents": [
         "pull_request",
         "merge_group"
@@ -56,10 +60,11 @@
     },
     {
       "policyId": "required-check-5",
-      "displayName": "consistency-drift-health",
-      "sourceAppSlug": "github-actions",
-      "sourceAppId": "github-actions",
-      "externalIdPattern": "^consistency-drift-health$",
+      "displayName": "orb-pinning",
+      "githubCheckName": "pr-pipeline",
+      "sourceAppSlug": "circleci",
+      "sourceAppId": "circleci",
+      "externalIdPattern": "^orb-pinning$",
       "requiredOnEvents": [
         "pull_request",
         "merge_group"
@@ -69,10 +74,11 @@
     },
     {
       "policyId": "required-check-6",
-      "displayName": "docs-gate",
-      "sourceAppSlug": "github-actions",
-      "sourceAppId": "github-actions",
-      "externalIdPattern": "^docs-gate$",
+      "displayName": "consistency-drift-health",
+      "githubCheckName": "pr-pipeline",
+      "sourceAppSlug": "circleci",
+      "sourceAppId": "circleci",
+      "externalIdPattern": "^consistency-drift-health$",
       "requiredOnEvents": [
         "pull_request",
         "merge_group"
@@ -82,10 +88,11 @@
     },
     {
       "policyId": "required-check-7",
-      "displayName": "lint",
-      "sourceAppSlug": "github-actions",
-      "sourceAppId": "github-actions",
-      "externalIdPattern": "^lint$",
+      "displayName": "docs-gate",
+      "githubCheckName": "pr-pipeline",
+      "sourceAppSlug": "circleci",
+      "sourceAppId": "circleci",
+      "externalIdPattern": "^docs-gate$",
       "requiredOnEvents": [
         "pull_request",
         "merge_group"
@@ -95,10 +102,11 @@
     },
     {
       "policyId": "required-check-8",
-      "displayName": "typecheck",
-      "sourceAppSlug": "github-actions",
-      "sourceAppId": "github-actions",
-      "externalIdPattern": "^typecheck$",
+      "displayName": "lint",
+      "githubCheckName": "pr-pipeline",
+      "sourceAppSlug": "circleci",
+      "sourceAppId": "circleci",
+      "externalIdPattern": "^lint$",
       "requiredOnEvents": [
         "pull_request",
         "merge_group"
@@ -108,10 +116,11 @@
     },
     {
       "policyId": "required-check-9",
-      "displayName": "test",
-      "sourceAppSlug": "github-actions",
-      "sourceAppId": "github-actions",
-      "externalIdPattern": "^test$",
+      "displayName": "typecheck",
+      "githubCheckName": "pr-pipeline",
+      "sourceAppSlug": "circleci",
+      "sourceAppId": "circleci",
+      "externalIdPattern": "^typecheck$",
       "requiredOnEvents": [
         "pull_request",
         "merge_group"
@@ -121,10 +130,11 @@
     },
     {
       "policyId": "required-check-10",
-      "displayName": "audit",
-      "sourceAppSlug": "github-actions",
-      "sourceAppId": "github-actions",
-      "externalIdPattern": "^audit$",
+      "displayName": "test",
+      "githubCheckName": "pr-pipeline",
+      "sourceAppSlug": "circleci",
+      "sourceAppId": "circleci",
+      "externalIdPattern": "^test$",
       "requiredOnEvents": [
         "pull_request",
         "merge_group"
@@ -134,10 +144,11 @@
     },
     {
       "policyId": "required-check-11",
-      "displayName": "check",
-      "sourceAppSlug": "github-actions",
-      "sourceAppId": "github-actions",
-      "externalIdPattern": "^check$",
+      "displayName": "audit",
+      "githubCheckName": "pr-pipeline",
+      "sourceAppSlug": "circleci",
+      "sourceAppId": "circleci",
+      "externalIdPattern": "^audit$",
       "requiredOnEvents": [
         "pull_request",
         "merge_group"
@@ -147,10 +158,11 @@
     },
     {
       "policyId": "required-check-12",
-      "displayName": "memory",
-      "sourceAppSlug": "github-actions",
-      "sourceAppId": "github-actions",
-      "externalIdPattern": "^memory$",
+      "displayName": "check",
+      "githubCheckName": "pr-pipeline",
+      "sourceAppSlug": "circleci",
+      "sourceAppId": "circleci",
+      "externalIdPattern": "^check$",
       "requiredOnEvents": [
         "pull_request",
         "merge_group"
@@ -160,10 +172,11 @@
     },
     {
       "policyId": "required-check-13",
-      "displayName": "security-scan",
-      "sourceAppSlug": "github-actions",
-      "sourceAppId": "github-actions",
-      "externalIdPattern": "^security-scan$",
+      "displayName": "memory",
+      "githubCheckName": "pr-pipeline",
+      "sourceAppSlug": "circleci",
+      "sourceAppId": "circleci",
+      "externalIdPattern": "^memory$",
       "requiredOnEvents": [
         "pull_request",
         "merge_group"
@@ -173,9 +186,24 @@
     },
     {
       "policyId": "required-check-14",
+      "displayName": "security-scan",
+      "githubCheckName": "pr-pipeline",
+      "sourceAppSlug": "circleci",
+      "sourceAppId": "circleci",
+      "externalIdPattern": "^security-scan$",
+      "requiredOnEvents": [
+        "pull_request",
+        "merge_group"
+      ],
+      "freshnessWindowDays": 7,
+      "class": "required"
+    },
+    {
+      "policyId": "required-check-15",
       "displayName": "CodeRabbit",
-      "sourceAppSlug": "github-actions",
-      "sourceAppId": "github-actions",
+      "githubCheckName": "pr-pipeline",
+      "sourceAppSlug": "circleci",
+      "sourceAppId": "circleci",
       "externalIdPattern": "^CodeRabbit$",
       "requiredOnEvents": [
         "pull_request",

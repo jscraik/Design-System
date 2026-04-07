@@ -1,74 +1,196 @@
 # Contributing
 
-Last updated: 2026-01-07
+## Table of Contents
 
-## Doc requirements
+- [Minimum workflow contract](#minimum-workflow-contract)
+- [Why this workflow exists](#why-this-workflow-exists)
+- [Branching and PR rule](#branching-and-pr-rule)
+- [Branch name policy](#branch-name-policy)
+- [Required pre-merge gates](#required-pre-merge-gates)
+- [Required tooling baseline](#required-tooling-baseline)
+- [Repo-local verification wrapper](#repo-local-verification-wrapper)
+- [Repo-local harness wrapper](#repo-local-harness-wrapper)
+- [Recommended security scanner baseline](#recommended-security-scanner-baseline)
+- [Review artifacts requirement](#review-artifacts-requirement)
+- [Credential-safe evidence snippets](#credential-safe-evidence-snippets)
+- [Branch protection recommendation](#branch-protection-recommendation)
 
-- Audience: Developers (intermediate)
-- Scope: Topic defined by this document
-- Non-scope: Anything not explicitly covered here
-- Owner: TBD (confirm)
-- Review cadence: Every release or monthly (whichever is sooner)
+## Minimum workflow contract
 
-Thanks for helping improve aStudio. This repo is a library-first monorepo with Apps SDK UI as the design system.
+- Branch off `main` for every change.
+- No direct push to `main`.
+- Pull request required for every merge.
+- Required checks must pass before merge.
+- CodeRabbit + Codex review artifacts are required before merge.
+- The coding agent must not approve its own PR; review must be independent.
+- Merge only after all gates pass.
+- Delete branch/worktree after merge.
 
-## Prerequisites
+## Why this workflow exists
 
-- Node.js 18+
-- pnpm 10.28.0 (see `packageManager` in `package.json`)
+This workflow keeps delivery auditable, reversible, and consistent even for solo development.
 
-## Development setup
+## Branching and PR rule
 
-```bash
-pnpm install
-pnpm dev
-```
+1. Create a dedicated branch/worktree for each task:
+   - Agent-created branch: `git switch -c codex/<short-description>`
+   - Agent-created worktree: `git worktree add ../tmp-worktree -b codex/<short-description>`
+   - Human-authored branch prefixes (when not using `codex/`): `feat/`, `fix/`, `docs/`, `refactor/`, `chore/`, `test/`
+2. Keep commits small and focused.
+3. Open a PR to merge into `main`.
+4. Do not merge until checks, reviews, and checklist items are complete.
+5. After merge, delete the remote branch and remove local worktree/branch.
 
-### Verify
+## Branch name policy
 
-- Web app: <http://localhost:5173/>
-- Storybook: <http://localhost:6006/>
+- Use lower-case, kebab-case slugs.
+- Agent-created branches must use `codex/<short-description>`.
+- Human-authored branches may use: `feat/`, `fix/`, `docs/`, `refactor/`, `chore/`, `test/`.
+- Avoid `main`-like names and do not include secrets or issue-pii.
 
-## Project structure
+## Required pre-merge gates
 
-- `packages/ui`: UI components and layouts
-- `packages/runtime`: host adapters + mocks
-- `packages/tokens`: design tokens (CSS + TS)
-- `packages/widgets`: standalone widget bundles
-- `platforms/web/apps/web`: reference app
-- `platforms/web/apps/storybook`: component docs
-- `platforms/mcp`: MCP integration harness
+- bash scripts/validate-codestyle.sh
+- pnpm check
+- test -f memory.json && jq -e '.meta.version == "1.0" and (.preamble.bootstrap | type == "boolean") and (.preamble.search | type == "boolean") and (.entries | type == "array")' memory.json >/dev/null
 
-## Code style
+## Required tooling baseline
 
-- Run `pnpm lint` (Biome) before pushing.
-- Run `pnpm format` (Biome) to auto-format if needed.
+Harness-managed repositories should keep this baseline available locally before claiming the repo is ready:
 
-## Tests
+- `prek`
+- `diagram`
+- `mise`
+- `vale`
+- `argos`
+- `cosign`
+- `cloudflared`
+- `vitest`
+- `ruff`
+- `eslint`
+- `agent-browser`
+- `agentation` (backed by the `agentation-mcp` CLI)
+- `mermaid-cli` (via the `mmdc` CLI)
+- `markdownlint-cli2`
+- `wrangler`
+- `beautiful-mermaid`
+- `semgrep`
+- `semver`
+- `trivy`
+- `rsearch` (arXiv research)
+- `wsearch` (Wikidata search)
 
-- `pnpm test` (UI unit tests)
-- `pnpm test:agent-browser` (Built-preview smoke tests - local)
-- `pnpm test:agent-browser:ci` (Built-preview smoke tests - CI)
-- `pnpm test:mcp-contract` (MCP tool contract test)
-- `pnpm test:visual:web` (Playwright visual tests for web)
+Recommended policy:
 
-## Commit conventions (recommended)
+- Pin repo-managed tooling in `.mise.toml` where possible.
+- Treat `scripts/codex-preflight.sh` as required project bootstrap infrastructure.
+- Treat `CODESTYLE.md` and `scripts/validate-codestyle.sh` as required repo-local contract files.
+- Keep `CODESTYLE.md` as a real repo-local file in generated repositories even when the harness authoring source is maintained globally.
+- Scaffold `scripts/codex-enforced` and `scripts/codex-learn` together with preflight so repo-local wrappers own repo-local state.
+- Keep `preflight_repo` in `required` mode by default; only relax mode (`optional` or `off`) when the project documents why.
+- Adjust preflight binary/path lists per project scope instead of deleting the script.
+- Keep repo-scoped telemetry and learned overrides under `.harness/memory/`, and global telemetry under `~/.codex/`.
+- Treat `scripts/verify-work.sh` as the canonical repo-facing verification command and keep it wired to repo-local preflight defaults.
+- Treat `scripts/validate-codestyle.sh` as the fail-closed codestyle gate and require exact proof-of-pass in change summaries and PRs.
+- Treat `scripts/prepare-worktree.sh` as required first-push bootstrap for freshly created worktrees so local hooks run with dependencies and canonical hook wiring.
+- Treat `scripts/check-environment.sh` as the local readiness gate for required tooling.
+- Block merge or promotion work when a required CLI is missing rather than silently skipping the corresponding validation lane.
+- For repositories with explicit `ui` / `chatgpt_apps_sdk` capabilities or matching dependency signals, install `@brainwav/design-system-guidance` and treat its absence as a readiness failure.
 
-Use Conventional Commits where possible:
+## Repo-local verification wrapper
 
-- `feat:` new features
-- `fix:` bug fixes
-- `chore:` tooling, deps
-- `docs:` documentation
+- `harness init` scaffolds `scripts/verify-work.sh` as the canonical repo-local verification entrypoint.
+- The wrapper always runs `scripts/codex-preflight.sh` in `required` Local Memory mode with scaffold-safe path and binary expectations.
+- `scripts/validate-codestyle.sh` is the canonical fail-closed codestyle gate and is reused by `verify-work`, local hooks, and downstream repo docs.
+- Repo-local launches should prefer `./scripts/codex-enforced` so preflight failures are recorded into repo-scoped learn state.
+- Use `./scripts/codex-learn analyze` and `./scripts/codex-learn apply` to inspect repo-scoped failure patterns and write override files into `.harness/memory/`.
+- Use `bash scripts/validate-codestyle.sh --fast` during iteration for focused codestyle validation.
+- Use `bash scripts/validate-codestyle.sh` before handoff for the fail-closed codestyle bundle.
+- Use `bash scripts/verify-work.sh` for the broader verification bundle.
+- Use `bash scripts/verify-work.sh --fast` for preflight + codestyle fast lane coverage.
+- Before the first push from a fresh worktree, run `bash scripts/prepare-worktree.sh`.
 
-## PR checklist
+## Repo-local harness wrapper
 
-- [ ] Lint passes (`pnpm lint` - Biome)
-- [ ] Format check passes (`pnpm format:check` - Biome)
-- [ ] Build succeeds (`pnpm build`)
-- [ ] Tests run for the area you changed
-- [ ] Smoke tests pass (`pnpm test:agent-browser:ci`)
-- [ ] Docs updated if the public API or workflows changed
-- [ ] Coverage matrix updated or gap recorded (`docs/design-system/COVERAGE_MATRIX.md`)
-- [ ] A11y audit artifact saved (use `docs/operations/a11y-audit-template.md`) when UI changes
-- [ ] RFC created for design-system changes (`docs/workflows/RFC_TEMPLATE.md`)
+- `harness init` also scaffolds `scripts/harness-cli.sh` for repositories that want a repo-local wrapper around the published CLI package.
+- The wrapper resolves `@brainwav/coding-harness/dist/cli.js` from the current repository before running any harness command.
+- If the wrapper cannot resolve the package, treat that as local install/bootstrap drift rather than a harness command failure.
+- Repair from the repo root with:
+  - `pnpm install`
+  - `pnpm add -D @brainwav/coding-harness`
+- After repair, rerun:
+  - `bash scripts/harness-cli.sh <command>`
+  - `pnpm exec harness <command>`
+
+## Recommended security scanner baseline
+
+For repositories that use Harness, recommend installing these scanners as project prerequisites:
+
+- Gitleaks
+- Trivy
+- Semgrep
+
+Recommended policy:
+
+- Keep scanner binaries available in local development environments and CI runners.
+- Run scanner checks in CI on pull requests and pushes to protected branches.
+- Treat scanner findings as merge blockers unless explicitly waived with rationale.
+
+## Review artifacts requirement
+
+Each PR must include:
+
+- CodeRabbit review artifact (URL, report, or comment reference).
+- Codex review artifact (URL, report, or comment reference).
+- Confirmation that reviewer agent is independent from coding agent.
+
+If a required review artifact is missing, block merge until it is added or explicitly waived by repository policy.
+
+## Credential-safe evidence snippets
+
+- Never use command substitution in commit messages, PR bodies, or evidence notes for secrets.
+- Do **not** use `$(gh auth token)` (or similar) inside `git commit -m ...` / `gh pr create --body ...`.
+- Use placeholders in text output:
+  - ✅ `$GITHUB_TOKEN`
+  - ✅ `${GITHUB_TOKEN}`
+  - ❌ expanded token values
+- If a token value is ever exposed in commit/PR text, treat it as compromised: rotate/revoke, rewrite history where applicable, and document remediation in the issue/PR.
+
+## Branch protection recommendation
+
+Configure GitHub branch protection (or rulesets) on `main`:
+
+- Bootstrap baseline via harness:
+  - `harness branch-protect --owner <owner> --repo <repo>`
+- Token resolution for `branch-protect`:
+  - `--token <PAT>` or env `GITHUB_TOKEN` / `GITHUB_PERSONAL_ACCESS_TOKEN`
+- Require pull request before merge.
+- Allow `0` required reviewers for solo-maintainer repositories.
+- Dismiss stale approvals when new commits are pushed.
+- Require conversation resolution before merge.
+- Restrict branch deletions.
+- Block force pushes.
+- Require linear history.
+- Require status checks:
+  - `pr-template`
+  - `linear-gate`
+  - `risk-policy-gate`
+  - `dependency-scan`
+  - `orb-pinning`
+  - `consistency-drift-health`
+  - `docs-gate`
+  - `lint`
+  - `typecheck`
+  - `test`
+  - `audit`
+  - `check`
+  - `memory`
+  - `security-scan`
+  - `CodeRabbit`
+- Require branches to be up to date before merge.
+- Require code quality results with severity `all`.
+- In public repositories, require `CodeQL` code scanning results with `high_or_higher` security alerts and `errors` alerts thresholds.
+- Allow merge commits, squash merges, and rebase merges.
+- Require workflows to pin third-party actions to full commit SHAs.
+- Configure required checks workflows to run on both `pull_request` and `merge_group` when using merge queue.
+- Block direct pushes to `main`.

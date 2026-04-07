@@ -4,26 +4,7 @@
     "src/auth/**": "high",
     "src/api/**": "high",
     "src/lib/**": "medium",
-    "**/*.test.ts": "low",
-    "packages/widgets/src/widgets/auth/**": "high",
-    "packages/runtime/src/**": "high",
-    "packages/cloudflare-template/src/**": "high",
-    "platforms/mcp/**": "high",
-    "packages/ui/src/**": "medium",
-    "packages/tokens/src/**": "medium",
-    "packages/json-render/src/**": "medium",
-    "packages/effects/src/**": "medium",
-    "packages/cli/src/**": "medium",
-    "packages/design-system-guidance/src/**": "medium",
-    "packages/skill-ingestion/src/**": "medium",
-    "platforms/web/apps/web/src/**": "medium",
-    "**/*.test.tsx": "low",
-    "**/*.spec.ts": "low",
-    "**/*.spec.tsx": "low",
-    "**/*.stories.tsx": "low",
-    "packages/*/docs/**": "low",
-    "packages/*/examples/**": "low",
-    "platforms/web/apps/storybook/**": "low"
+    "**/*.test.ts": "low"
   },
   "mergePolicy": {
     "high": ["review-gate", "evidence-verify"],
@@ -31,15 +12,10 @@
     "low": []
   },
   "docsDriftRules": {},
-  "reviewPolicy": {
-    "timeoutSeconds": 600,
-    "timeoutAction": "fail",
-    "requiredChecks": ["security-scan"],
-    "enforceReviewerIndependence": false
-  },
   "branchProtection": {
     "requiredChecks": [
       "pr-template",
+      "linear-gate",
       "risk-policy-gate",
       "dependency-scan",
       "orb-pinning",
@@ -376,6 +352,7 @@
         "preflight",
         "worktree-ready",
         "verify-work",
+        "codestyle",
         "hooks",
         "hooks-pre-commit",
         "hooks-pre-push",
@@ -431,6 +408,15 @@
       ]
     }
   },
+  "issueTrackingPolicy": {
+    "provider": "linear",
+    "requirePackageBugsUrl": true,
+    "disableGitHubIssues": true,
+    "requireBranchIssueKey": true,
+    "requirePrIssueKey": true,
+    "prReferenceMode": "either",
+    "branchPrefix": "codex"
+  },
   "evidencePolicy": {
     "requiredFor": [],
     "allowedTypes": ["png", "jpeg"],
@@ -442,16 +428,16 @@
     "overrideLabel": "diff-budget-override"
   },
   "uiLoopPolicy": {
-    "fastCommand": "pnpm dev:storybook",
-    "verifyCommand": "pnpm test:e2e:web",
-    "exploreCommand": "pnpm test:agent-browser:storybook",
+    "fastCommand": "pnpm ui:fast",
+    "verifyCommand": "pnpm ui:verify",
+    "exploreCommand": "pnpm ui:explore",
     "sloTargets": {
       "fastLoopSeconds": 30,
-      "verifyLoopSeconds": 180
+      "verifyLoopSeconds": 120
     }
   },
   "runtimePolicy": {
-    "nodeVersion": "24.x",
+    "nodeVersion": "20.x",
     "createIssueOnAgentFindings": true
   },
   "memoryPolicy": {
@@ -487,10 +473,6 @@
   },
   "remediationPolicy": {
     "providerDefaults": {
-      "greptile": {
-        "autoApplyMaxTier": "medium",
-        "dryRunOnlyByDefault": false
-      },
       "codex": {
         "autoApplyMaxTier": "medium",
         "dryRunOnlyByDefault": false
@@ -576,7 +558,7 @@
     }
   },
   "ciProviderPolicy": {
-    "activeProvider": "github-actions",
+    "activeProvider": "circleci",
     "mode": "shadow",
     "migrationStage": "dual-provider",
     "transitionStatusArtifactPath": ".harness/ci-provider-transition-status.json",

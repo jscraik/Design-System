@@ -409,7 +409,7 @@ export function createEnvelope(
 
 ## Sources & References
 
-- **Origin document:** [docs/cli-specs/astudio-cli-gold-standard-2026.md](../../../docs/cli-specs/astudio-cli-gold-standard-2026.md)
+- **Origin document:** [docs/cli-specs/astudio-cli-gold-standard-2026.md](../cli-specs/astudio-cli-gold-standard-2026.md)
 - **Related code:** `packages/cli/src/`
 - **External spec:** W3C Trace Context, OpenTelemetry Semantic Conventions
 - **Dependencies:** `fastest-levenshtein@^1.0.16`

@@ -44,7 +44,7 @@ Three findings were identified in the UI package. Two have been remediated in th
 **File:** `packages/ui/src/components/ui/data-display/Markdown/Markdown.tsx:132`
 **Status:** Fixed
 
-**Impact:** The custom markdown parser extracts `[text](url)` links and passes `match[2]` (the raw URL string from markdown source) directly to `<TextLink href={...}>`. When rendering untrusted content (AI responses, user text), a crafted `javascript:` URL in the markdown executes on click.
+**Impact:** The custom markdown parser extracts ``text (url)`` links and passes `match[2]` (the raw URL string from markdown source) directly to `<TextLink href={...}>`. When rendering untrusted content (AI responses, user text), a crafted `javascript:` URL in the markdown executes on click.
 
 **Root cause:** No URL sanitization at the parse boundary — `match[2]` is the raw regex capture group.
 

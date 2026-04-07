@@ -1,5 +1,5 @@
 {
-  "repo": "jscraik/Design-System",
+  "repo": "replace-with-repo-name",
   "session_id": "bootstrap/init",
   "preamble": {
     "bootstrap": true,
@@ -8,19 +8,19 @@
   "entries": [
     {
       "level": "observation",
-      "content": "Harness installed and configured for design-system monorepo. Risk tiers: auth/runtime/mcp=high, ui/tokens/effects=medium, tests/docs=low. UI loop mapped to Storybook + Playwright.",
-      "tags": ["repo:jscraik/Design-System", "area:setup", "type:configuration"],
+      "content": "Harness memory baseline initialized. Replace with task-specific observations.",
+      "tags": ["repo:unknown", "area:bootstrap", "type:setup"],
       "session_id": "bootstrap/init",
       "source": "harness init",
-      "observed_at": "2026-03-04T23:05:00.000Z"
+      "observed_at": "2026-01-01T00:00:00.000Z"
     }
   ],
   "closeout": {
     "forjamie_updated": false,
-    "date": "2026-03-04T23:05:00.000Z"
+    "date": "2026-01-01T00:00:00.000Z"
   },
   "meta": {
-    "created_at": "2026-03-04T23:05:00.000Z",
+    "created_at": "2026-01-01T00:00:00.000Z",
     "version": "1.0"
   }
 }
