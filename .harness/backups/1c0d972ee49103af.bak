@@ -1,0 +1,6 @@
+# Issue template configuration
+blank_issues_enabled: false
+contact_links:
+  - name: Private security disclosure
+    url: mailto:security@example.com
+    about: Report security vulnerabilities privately instead of using public issue flows.

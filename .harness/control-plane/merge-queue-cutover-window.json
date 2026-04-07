@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "ci-migrate-merge-queue-window/v1",
+  "snapshotId": "snapshot-2026-04-07T14-22-38-926Z",
+  "stage": "revalidated",
+  "pausedAt": "2026-04-07T14:23:12.342Z",
+  "preCutover": {
+    "status": "satisfied",
+    "scannedOpenPrs": 0,
+    "failingPrs": []
+  },
+  "postCutover": {
+    "status": "satisfied",
+    "scannedOpenPrs": 0,
+    "failingPrs": []
+  },
+  "drainedAt": "2026-04-07T14:23:12.362Z",
+  "revalidatedAt": "2026-04-07T14:23:12.362Z"
+}

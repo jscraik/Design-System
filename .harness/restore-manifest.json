@@ -1,49 +1,180 @@
 {
-  "harnessVersion": "0.6.0",
+  "harnessVersion": "0.12.0",
+  "ciProvider": "circleci",
   "files": [
     {
       "path": "harness.contract.json",
-      "action": "created"
+      "action": "modified",
+      "backupHash": "367515e7c11972e1"
     },
     {
       "path": "memory.json",
+      "action": "modified",
+      "backupHash": "5d9fc88f6936a6a7"
+    },
+    {
+      "path": ".harness/ci-required-checks.json",
+      "action": "modified",
+      "backupHash": "f1a6cf9855ac3530"
+    },
+    {
+      "path": ".harness/ci-provider-transition-status.json",
+      "action": "modified",
+      "backupHash": "ffd5aa8435951b83"
+    },
+    {
+      "path": ".npmrc",
+      "action": "modified",
+      "backupHash": "e813096d69c49812"
+    },
+    {
+      "path": ".coderabbit.yaml",
+      "action": "modified",
+      "backupHash": "c0f93b6ec1bb8a97"
+    },
+    {
+      "path": ".circleci/config.yml",
       "action": "created"
     },
     {
-      "path": ".github/workflows/pr-pipeline.yml",
-      "action": "created"
+      "path": "CONTRIBUTING.md",
+      "action": "modified",
+      "backupHash": "eca12c0a30e25b4b"
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "action": "modified",
+      "backupHash": "18813c86948efc57"
     },
     {
       "path": "scripts/validate-commit-msg.js",
-      "action": "created"
+      "action": "modified",
+      "backupHash": "9dd586a81c5075a6"
     },
     {
       "path": "scripts/setup-git-hooks.js",
-      "action": "created"
+      "action": "modified",
+      "backupHash": "c8e00f3d8d413b5e"
     },
     {
-      "path": "AI/diagrams/.gitkeep",
-      "action": "created"
+      "path": "scripts/check-staged-secrets.sh",
+      "action": "modified",
+      "backupHash": "fbf819e1b716c5c7"
     },
     {
-      "path": "AI/context/diagram-context.md",
-      "action": "created"
+      "path": "scripts/check-doc-style.sh",
+      "action": "modified",
+      "backupHash": "bfa7144e675aaf4c"
+    },
+    {
+      "path": "scripts/check-related-tests.sh",
+      "action": "modified",
+      "backupHash": "192f4f59cf18a0bd"
+    },
+    {
+      "path": "scripts/check-semgrep-changed.sh",
+      "action": "modified",
+      "backupHash": "99f572fb5c9e13f3"
+    },
+    {
+      "path": "scripts/semgrep-pre-push.yml",
+      "action": "modified",
+      "backupHash": "55b989fe88b4d061"
+    },
+    {
+      "path": "scripts/refresh-diagram-context.sh",
+      "action": "modified",
+      "backupHash": "6fd2e9ff2695a32b"
+    },
+    {
+      "path": "scripts/check-diagram-freshness.sh",
+      "action": "modified",
+      "backupHash": "f7fe2b4307b0355d"
+    },
+    {
+      "path": ".diagram/.gitkeep",
+      "action": "modified",
+      "backupHash": "09571f259e6a00f7"
+    },
+    {
+      "path": ".diagram/context/diagram-context.md",
+      "action": "modified",
+      "backupHash": "25565be2835e93d9"
     },
     {
       "path": ".diagramrc",
-      "action": "created"
+      "action": "modified",
+      "backupHash": "31ca75a1693be0c0"
+    },
+    {
+      "path": "biome.json",
+      "action": "modified",
+      "backupHash": "2bc8a1f5e9380d5a"
     },
     {
       "path": ".gitleaks.toml",
-      "action": "created"
+      "action": "modified",
+      "backupHash": "f40ac94aac00bf36"
     },
     {
       "path": "prek.toml",
-      "action": "created"
+      "action": "modified",
+      "backupHash": "72359463e1c50ddc"
+    },
+    {
+      "path": ".mise.toml",
+      "action": "modified",
+      "backupHash": "1bac9641068b68e6"
+    },
+    {
+      "path": "CODESTYLE.md",
+      "action": "modified",
+      "backupHash": "df7c79c06946f702"
+    },
+    {
+      "path": "scripts/codex-preflight.sh",
+      "action": "modified",
+      "backupHash": "fd7b3a1bc4680d29"
+    },
+    {
+      "path": "scripts/codex-preflight-local-memory-legacy.sh",
+      "action": "modified",
+      "backupHash": "1900c08b5aaa36f7"
+    },
+    {
+      "path": "scripts/codex-learn",
+      "action": "modified",
+      "backupHash": "9f4b60c501994740"
+    },
+    {
+      "path": "scripts/codex-enforced",
+      "action": "modified",
+      "backupHash": "4fe821f9d33571d8"
+    },
+    {
+      "path": "scripts/verify-work.sh",
+      "action": "modified",
+      "backupHash": "4a334492b87b9acd"
+    },
+    {
+      "path": "scripts/validate-codestyle.sh",
+      "action": "modified",
+      "backupHash": "3bc246236933c384"
+    },
+    {
+      "path": "scripts/prepare-worktree.sh",
+      "action": "modified",
+      "backupHash": "4d00f3bb35320f2d"
+    },
+    {
+      "path": "scripts/harness-cli.sh",
+      "action": "modified",
+      "backupHash": "ed1f3730a2d906d7"
     },
     {
       "path": "scripts/check-environment.sh",
-      "action": "created"
+      "action": "modified",
+      "backupHash": "5999dbce2ab20fe2"
     },
     {
       "path": ".codex/environments/environment.toml",
@@ -51,24 +182,24 @@
       "backupHash": "cd49adffccd28c2b"
     },
     {
-      "path": ".github/ISSUE_TEMPLATE/issue.yml",
-      "action": "created"
-    },
-    {
-      "path": ".github/ISSUE_TEMPLATE/feature.yml",
-      "action": "created"
-    },
-    {
-      "path": ".github/ISSUE_TEMPLATE/security.yml",
-      "action": "created"
-    },
-    {
       "path": ".github/ISSUE_TEMPLATE/config.yml",
-      "action": "created"
+      "action": "modified",
+      "backupHash": "1c0d972ee49103af"
+    },
+    {
+      "path": ".github/CODEOWNERS",
+      "action": "modified",
+      "backupHash": "3d36a1bf06148bc6"
     },
     {
       "path": "Makefile",
-      "action": "created"
+      "action": "modified",
+      "backupHash": "76ed074a9305c040"
+    },
+    {
+      "path": "WORKFLOW.md",
+      "action": "modified",
+      "backupHash": "5d83168955333f83"
     }
   ]
 }

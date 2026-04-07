@@ -1153,6 +1153,51 @@ pnpm 'release'
 '''
 
 [[actions]]
+name = "Script: codestyle:validate"
+icon = "debug"
+command = '''
+set -euo pipefail
+
+pnpm 'codestyle:validate'
+'''
+
+[[actions]]
+name = "Script: secrets:staged"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'secrets:staged'
+'''
+
+[[actions]]
+name = "Script: docs:style:changed"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'docs:style:changed'
+'''
+
+[[actions]]
+name = "Script: test:related"
+icon = "test"
+command = '''
+set -euo pipefail
+
+pnpm 'test:related'
+'''
+
+[[actions]]
+name = "Script: semgrep:changed"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'semgrep:changed'
+'''
+
+[[actions]]
 name = "Script: prepare"
 icon = "tool"
 command = '''

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "ci-migrate-state/v1",
+  "snapshotId": "snapshot-2026-04-07T14-22-38-926Z",
+  "stage": "committed",
+  "sourceProvider": "github-actions",
+  "targetProvider": "circleci",
+  "reportDigest": "ef6a1d6db84c90c416b9d171af434583501821911a041872c52325ec3692f05e",
+  "requiredChecksDigest": "c57a7b67c910af4f68e4ad18229327bd7744911597596548849be2153c9ca0d5",
+  "preCutoverStatus": "satisfied",
+  "createdAt": "2026-04-07T14:22:38.936Z",
+  "updatedAt": "2026-04-07T14:23:12.363Z"
+}
