@@ -1,0 +1,10 @@
+{
+	"schema_version": 1,
+	"generated_at": "2026-04-07T15:53:23Z",
+	"git_head": "66d09b58",
+	"context_sha256": "d06cafa37d754a213bea0e39a2de227e41f8a117a2fb735259e0fedf4fe14e93",
+	"diagram_count": 5,
+	"last_generated_epoch": 1775577202,
+	"min_interval_seconds": 1800,
+	"changed": true
+}
