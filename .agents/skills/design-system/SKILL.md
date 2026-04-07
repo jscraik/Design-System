@@ -1,6 +1,12 @@
 ---
 name: design-system
 description: "Analyze and implement repository-grounded design-system work (tokens, typography, iconography, spacing, styles, aliases, and theme variables) for this monorepo. Use when requests involve UI styling systems or token-layer changes; don’t use for backend/MCP-only tasks with no UI impact. Outputs: evidence-backed analysis or changes with canonical file references, layer impact, and validation commands. Success: work aligns to Brand→Alias→Mapped rules and passes design-system checks."
+metadata:
+  skill-type: product_verification
+  lifecycle_state: active
+  maturity: canonical
+  owner: Design System Team
+  last_reviewed: 2026-03-28
 ---
 
 # Design System
@@ -17,6 +23,7 @@ description: "Analyze and implement repository-grounded design-system work (toke
 - [Constraints](#constraints)
 - [Validation](#validation)
 - [Anti-patterns](#anti-patterns)
+- [Failure mode](#failure-mode)
 - [Examples](#examples)
 - [Reference map](#reference-map)
 - [Remember](#remember)
@@ -26,6 +33,7 @@ description: "Analyze and implement repository-grounded design-system work (toke
 - Prefer retrieval-led reasoning: inspect canonical files before proposing answers/changes.
 - This skill is a design/brand map for the repo; when token or visual guidance is requested, validate both design contracts (`docs/design-system/CHARTER.md`, `docs/design-system/UPSTREAM_ALIGNMENT.md`) and canonical token sources before editing.
 - Use `zsh -lc`, `rg`, `fd`, and `jq`; avoid `grep`/`find` for repo-wide scans.
+- For multi-step or path-sensitive work, run `bash -lc 'source scripts/codex-preflight.sh && preflight_repo'` before editing.
 - Artifact boundary:
   - Local CLI: write outputs to `./artifacts/`
   - Hosted shell: write outputs to `/mnt/data/`
@@ -66,6 +74,10 @@ Collect only the minimum set needed for the user request:
    - `docs/design-system/ICON_CONSOLIDATION.md`
 6. Governance + rules:
    - `docs/design-system/CONTRACT.md`
+   - `docs/design-system/PROFESSIONAL_UI_CONTRACT.md`
+   - `docs/design-system/AGENT_UI_ROUTING.md`
+   - `docs/design-system/COMPONENT_LIFECYCLE.json`
+   - `docs/design-system/ENFORCEMENT_EXEMPTIONS.json`
    - `docs/design-system/collections/*.md`
    - `docs/design-system/COVERAGE_MATRIX.md`
    - `docs/design-system/A11Y_CONTRACTS.md`
@@ -73,6 +85,9 @@ Collect only the minimum set needed for the user request:
 7. Surface examples:
    - `packages/ui/src/storybook/design-system/**`
    - `packages/ui/src/design-system/showcase/**`
+8. Guidance policy + scope:
+   - `.design-system-guidance.json`
+   - `packages/design-system-guidance/**`
 
 If the request is ambiguous, ask one focused clarification question.
 
@@ -92,6 +107,7 @@ If the request is ambiguous, ask one focused clarification question.
 1. **Classify the request mode**
    - `audit`, `implementation`, `migration`, or `Q&A`.
 2. **Build a focused system snapshot**
+   - For path-sensitive work, run repo preflight first (`source scripts/codex-preflight.sh && preflight_repo` via `bash`).
    - Verify brand posture with `docs/design-system/CHARTER.md` and `ADOPTION_CHECKLIST.md` before touching tokens or theme.
    - Use `jq` for DTCG keys/values and `rg`/`fd` for CSS variable and component usage.
    - Record only relevant pillars: color, typography, spacing, radius/size/shadow, motion, icons, brand-mode behavior.
@@ -104,6 +120,7 @@ If the request is ambiguous, ask one focused clarification question.
 5. **Validate**
    - Run the smallest relevant checks from [Validation](#validation).
    - If token files changed, verify schema version in `packages/tokens/SCHEMA_VERSION` and the generated artifacts stay coherent.
+   - If guidance policy scope or protected surfaces changed, run both `design-system-guidance:ratchet` and `design-system-guidance:check:ci` and report warn/error counts.
 6. **Write artifacts**
    - Save the summary/report under `./artifacts/design-system/` (or `/mnt/data/design-system/`).
 
@@ -132,6 +149,8 @@ Run only what matches the touched area:
 pnpm validate:tokens
 pnpm ds:matrix:check
 pnpm test:policy
+pnpm design-system-guidance:ratchet
+pnpm design-system-guidance:check:ci
 pnpm -C packages/ui build
 ```
 
@@ -156,7 +175,13 @@ rg -n "highContrast|--background|--foreground" packages/ui/src/styles/theme.css 
 - ❌ Adding raw color/spacing literals to components when semantic tokens exist.
 - ❌ Treating deprecated icon sources as canonical (`@design-studio/astudio-icons` for new work).
 - ❌ Skipping brand-mode/accessibility contracts when updating color systems or motion defaults.
+- ❌ Skipping guidance policy checks when touching protected surfaces or `.design-system-guidance.json`.
 - ❌ Returning advice without file-path evidence from this repository.
+
+## Failure mode
+- If the task is backend-only, infra-only, or MCP-only with no UI/token impact, decline this skill and route to a backend/infra skill path.
+- If scope is too vague to locate touched surfaces, ask one focused clarification question before edits.
+- If required design-system checks fail due unrelated repo-wide debt, report the exact failing gate and continue with bounded evidence for touched files only.
 
 ## Examples
 - Triggering prompt: “Audit our typography and spacing tokens and show where they map into UI styles.”
@@ -169,6 +194,8 @@ rg -n "highContrast|--background|--foreground" packages/ui/src/styles/theme.css 
 - `./references/contract.yaml` — expected behavior and boundaries.
 - `./references/evals.yaml` — trigger and safety eval cases.
 - `./references/plan.md` — build plan and assumptions.
+- `docs/design-system/PROFESSIONAL_UI_CONTRACT.md` — quality bar and semantics contract for UI outputs.
+- `docs/design-system/AGENT_UI_ROUTING.md` — route-first map from request type to canonical surfaces.
 - `./assets/design-system-brief-template.md` — report template for outputs.
 
 ## Remember
