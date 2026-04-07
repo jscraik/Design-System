@@ -1,0 +1,15 @@
+id: pr-harness-v0.12.0-migration-2026-04-07
+tool: claude-code
+mode: normal
+task: "Migrate CI/CD from GitHub Actions to CircleCI, replace Greptile with CodeRabbit, update harness to v0.12.0"
+constraints:
+  - "follow PR template exactly"
+  - "no secrets"
+  - "preserve all existing check gates"
+outputs_expected:
+  - ".circleci/config.yml"
+  - ".coderabbit.yaml"
+  - "harness.contract.json"
+  - "memory.json"
+  - ".harness/ci-required-checks.json"
+  - ".harness/restore-manifest.json"

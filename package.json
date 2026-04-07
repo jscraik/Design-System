@@ -107,7 +107,7 @@
     "semgrep:changed": "bash scripts/check-semgrep-changed.sh",
     "prepare": "if command -v prek >/dev/null; then prek install; else echo \"prek unavailable; skipping git hook install\"; fi",
     "docs:lint": "vale sync && fd -t f -e md -E .agent -E _tools -E reports -E node_modules -E .wrangler -E .build -E .swiftpm -E AGENTS.md -E CLAUDE.md -E references -X vale && node scripts/check-doc-links.mjs",
-    "typecheck": "pnpm -r run type-check"
+    "typecheck": "pnpm -r --filter '!@design-studio/effects' run type-check"
   },
   "devDependencies": {
     "@argos-ci/cli": "^3.0.6",

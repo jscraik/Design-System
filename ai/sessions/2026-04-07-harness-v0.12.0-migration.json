@@ -1,0 +1,26 @@
+{
+  "tool": "claude-code",
+  "started_at": "2026-04-07T14:00:00Z",
+  "ended_at": "2026-04-07T16:30:00Z",
+  "files_touched": [
+    ".circleci/config.yml",
+    ".coderabbit.yaml",
+    ".codex/environments/environment.toml",
+    ".github/CODEOWNERS",
+    ".github/ISSUE_TEMPLATE/config.yml",
+    ".github/PULL_REQUEST_TEMPLATE.md",
+    ".harness/ci-required-checks.json",
+    ".harness/restore-manifest.json",
+    "harness.contract.json",
+    "memory.json",
+    "package.json",
+    "pnpm-lock.yaml",
+    "scripts/check-environment.sh",
+    "scripts/codex-preflight.sh",
+    "scripts/verify-work.sh",
+    "FORJAMIE.md"
+  ],
+  "tests_run": ["bash scripts/validate-codestyle.sh", "pnpm check", "jq validation on memory.json"],
+  "human_verification": "Reviewed CI pipeline structure, CodeRabbit config, harness contract, and memory.json schema",
+  "notes": "Full CI/CD provider migration from GitHub Actions to CircleCI. Greptile replaced with CodeRabbit for code review. Harness upgraded to v0.12.0 with updated contract."
+}

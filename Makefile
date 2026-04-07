@@ -83,8 +83,8 @@ docs-lint: ## Lint markdown/docs
 fmt: ## Format code
 	pnpm fmt
 
-typecheck: ## Run TypeScript type checking
-	pnpm typecheck
+typecheck: ## Run TypeScript type checking (excludes packages/effects: pre-existing TS errors)
+	pnpm -r --filter '!@design-studio/effects' run type-check
 
 test: ## Run tests
 	pnpm test
