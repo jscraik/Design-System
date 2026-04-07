@@ -118,3 +118,4 @@ reports/audit-screenshot-*.png
 environment.toml
 # Architecture diagrams (non-deterministic generation)
 .diagram/
+artifacts/policy/
