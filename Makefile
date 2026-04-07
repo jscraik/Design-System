@@ -27,7 +27,7 @@ verify-work: ## Run canonical repo-local verification wrapper
 	@bash ./scripts/verify-work.sh
 
 hooks: ## Setup git hooks
-	node scripts/setup-git-hooks.js
+	pnpm exec simple-git-hooks
 
 hooks-pre-commit: ## Run local pre-commit gates before creating a commit
 	pnpm lint

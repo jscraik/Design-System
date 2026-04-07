@@ -110,7 +110,7 @@ jobs:
             const commentBody = (greptileComments[0].body || '').toLowerCase();
             const scorePatterns = [
               /(?:confidence|score)[:\s]*(\d)(?:\s*/\s*5)?/,
-              /(\d)\s*/\s*5.*confidence/,
+              /(\d)\s*\/\s*5.*confidence/,
               /overall[:\s]*(\d)/,
               /rating[:\s]*(\d)/
             ];

@@ -30,10 +30,10 @@
     },
     {
       "policyId": "required-check-3",
-      "displayName": "dependency-scan",
+      "displayName": "dependency-review",
       "sourceAppSlug": "github-actions",
       "sourceAppId": "github-actions",
-      "externalIdPattern": "^dependency-scan$",
+      "externalIdPattern": "^dependency-review$",
       "requiredOnEvents": [
         "pull_request",
         "merge_group"
@@ -43,10 +43,10 @@
     },
     {
       "policyId": "required-check-4",
-      "displayName": "orb-pinning",
+      "displayName": "actions-pinning",
       "sourceAppSlug": "github-actions",
       "sourceAppId": "github-actions",
-      "externalIdPattern": "^orb-pinning$",
+      "externalIdPattern": "^actions-pinning$",
       "requiredOnEvents": [
         "pull_request",
         "merge_group"
