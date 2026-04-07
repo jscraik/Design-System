@@ -28,4 +28,5 @@ Options:
       --cwd       Run as if from this directory                                             [string]
       --config    Config file override                                                      [string]
       --dry-run   Preview without changes                                                  [boolean]
+      --agent     AI agent mode: enhanced help, intent-over-syntax, educational errors     [boolean]
   -h, --help      Show help                                                                [boolean]

@@ -12,7 +12,8 @@ Last updated: 2026-01-09
 
 Unified developer CLI for the aStudio monorepo (dev/build/test/mcp/tokens/versions).
 
-See `CLI_SPEC.md` for the full interface contract.
+- See `CLI_SPEC.md` for the full interface contract
+- See `AGENTS.md` for AI agent / automation guide
 
 ## Install (workspace)
 
@@ -86,6 +87,22 @@ pnpm astudio tokens validate --exec
 pnpm astudio mcp tools list --dry-run --plain
 ```
 
+## AI Agent Mode
+
+The CLI includes special support for AI coding agents via the `--agent` flag:
+
+```bash
+pnpm astudio --agent dev web --exec
+```
+
+Agent mode features:
+- **Intent-over-syntax**: More forgiving of typos with lower suggestion thresholds
+- **Educational errors**: Detailed error messages with examples and corrections
+- **Auto-accept**: High-confidence suggestions marked for auto-acceptance
+- **Learning notes**: Explains how to correctly issue commands
+
+See `AGENTS.md` for comprehensive agent documentation.
+
 ## JSON output schema
 
 ```json
@@ -95,7 +112,8 @@ pnpm astudio mcp tools list --dry-run --plain
     "tool": "astudio",
     "version": "x.y.z",
     "timestamp": "ISO-8601",
-    "request_id": "optional"
+    "request_id": "abc123...",
+    "trace_id": "xyz789..."
   },
   "summary": "short summary",
   "status": "success|warn|error",
@@ -105,7 +123,16 @@ pnpm astudio mcp tools list --dry-run --plain
       "code": "E_USAGE",
       "message": "human-readable message",
       "details": {},
-      "hint": "optional fix or next step"
+      "hint": "optional fix or next step",
+      "did_you_mean": [
+        {
+          "type": "command",
+          "input": "devv",
+          "suggestion": "dev",
+          "confidence": 0.89
+        }
+      ],
+      "fix_suggestion": "astudio dev web --exec"
     }
   ]
 }

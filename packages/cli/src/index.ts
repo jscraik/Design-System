@@ -13,6 +13,15 @@ import { COMMAND_SCHEMA, ERROR_CODES, EXIT_CODES, TOOL_NAME, TOOL_VERSION } from
 import { CliError, normalizeFailure, toJsonError } from "./error.js";
 import type { CliArgs } from "./types.js";
 import {
+  generateAgentErrorHelp,
+  generateLearningNote,
+  getCommandExamples,
+  getSuggestionThreshold,
+  isAgentMode,
+  setAgentMode,
+  shouldAutoAccept,
+} from "./utils/agent.js";
+import {
   createEnvelope,
   outputJson,
   outputPlainRecord,
@@ -26,6 +35,9 @@ import {
   suggestFlag,
 } from "./utils/suggest.js";
 import { createTraceContext } from "./utils/trace.js";
+
+// Global agent mode state
+let agentModeActive = false;
 
 // Initialize global trace context for this CLI invocation
 setTraceContext(createTraceContext());
@@ -61,6 +73,10 @@ function addGlobalOptions(argv: Argv): Argv {
     .option("cwd", { type: "string", description: "Run as if from this directory" })
     .option("config", { type: "string", description: "Config file override" })
     .option("dry-run", { type: "boolean", description: "Preview without changes" })
+    .option("agent", {
+      type: "boolean",
+      description: "AI agent mode: enhanced help, intent-over-syntax, educational errors",
+    })
     .option("show-sensitive", {
       type: "boolean",
       description: "Show sensitive data (expert only)",
@@ -72,12 +88,13 @@ function generateSuggestions(msg?: string): import("./types.js").Suggestion[] {
   if (!msg) return [];
 
   const suggestions: import("./types.js").Suggestion[] = [];
+  const threshold = getSuggestionThreshold();
 
   // Try to extract unknown command
   const cmdMatch = msg.match(/Unknown command: (\S+)/);
   if (cmdMatch) {
     const unknown = cmdMatch[1];
-    const suggestion = suggestCommand(unknown, AVAILABLE_COMMANDS);
+    const suggestion = suggestCommand(unknown, AVAILABLE_COMMANDS, threshold);
     if (suggestion) suggestions.push(suggestion);
   }
 
@@ -85,7 +102,7 @@ function generateSuggestions(msg?: string): import("./types.js").Suggestion[] {
   const argMatch = msg.match(/Unknown argument: (\S+)/) || msg.match(/Unknown option: (\S+)/);
   if (argMatch) {
     const unknown = argMatch[1];
-    const suggestion = suggestFlag(unknown, AVAILABLE_FLAGS);
+    const suggestion = suggestFlag(unknown, AVAILABLE_FLAGS, threshold);
     if (suggestion) suggestions.push(suggestion);
   }
 
@@ -140,6 +157,10 @@ const cli = yargs(hideBin(process.argv))
     }
     if (argv.showSensitive) {
       setShowSensitive(true);
+    }
+    if (argv.agent) {
+      setAgentMode(true);
+      agentModeActive = true;
     }
   })
   .command(
@@ -310,18 +331,37 @@ const cli = yargs(hideBin(process.argv))
     const parsedArgv = (yargsInstance as { parsed?: { argv?: CliArgs } }).parsed?.argv;
     const wantsJson = Boolean(parsedArgv?.json || process.argv.includes("--json"));
     const wantsPlain = Boolean(parsedArgv?.plain || process.argv.includes("--plain"));
+    const isAgent = isAgentMode();
     const failure = normalizeFailure(msg, err ?? undefined);
 
     // Generate suggestions for unknown commands/flags
     const suggestions = generateSuggestions(msg);
     const fixSuggestion = generateFixSuggestion(failure, process.argv);
 
-    // Enhance error with suggestions
-    const enhancedError = {
+    // In agent mode, check if we should auto-accept a high-confidence suggestion
+    const autoAcceptSuggestion = suggestions.length > 0 && shouldAutoAccept(suggestions[0]);
+
+    // Enhance error with suggestions and agent-mode learning notes
+    const enhancedError: import("./types.js").JsonError = {
       ...toJsonError(failure),
       ...(suggestions.length > 0 && { did_you_mean: suggestions }),
       ...(fixSuggestion && { fix_suggestion: fixSuggestion }),
     };
+
+    // Add agent guidance to error details
+    if (isAgent) {
+      const cmdMatch = msg?.match(/Unknown command: (\S+)/);
+      const cmd = cmdMatch ? cmdMatch[1] : undefined;
+
+      enhancedError.details = {
+        ...enhancedError.details,
+        agent_guidance: generateAgentErrorHelp(
+          cmd,
+          failure.code === ERROR_CODES.policy ? "policy_error" : "unknown_command",
+        ),
+        examples: cmd ? getCommandExamples(cmd) : [],
+      };
+    }
 
     if (wantsJson) {
       outputJson(createEnvelope("error", "error", {}, [enhancedError]));
@@ -345,7 +385,10 @@ const cli = yargs(hideBin(process.argv))
       if (suggestions.length > 0) {
         process.stderr.write("\nDid you mean:\n");
         for (const s of suggestions) {
-          process.stderr.write(`  ${s.suggestion.padEnd(20)} (confidence: ${s.confidence})\n`);
+          const autoMark = isAgent && shouldAutoAccept(s) ? " [auto-accept in agent mode]" : "";
+          process.stderr.write(
+            `  ${s.suggestion.padEnd(20)} (confidence: ${s.confidence})${autoMark}\n`,
+          );
         }
       }
 
@@ -353,7 +396,32 @@ const cli = yargs(hideBin(process.argv))
         process.stderr.write(`\nFix suggestion:\n  ${fixSuggestion}\n`);
       }
 
-      if (failure.hint && suggestions.length === 0) {
+      // Agent mode: show educational content
+      if (isAgent) {
+        const cmdMatch = msg?.match(/Unknown command: (\S+)/);
+        const cmd = cmdMatch ? cmdMatch[1] : undefined;
+
+        process.stderr.write(
+          generateAgentErrorHelp(
+            cmd,
+            failure.code === ERROR_CODES.policy ? "policy_error" : "unknown_command",
+          ),
+        );
+
+        // Show examples for suggested command
+        if (suggestions.length > 0) {
+          const suggestedCmd = suggestions[0].suggestion;
+          const examples = getCommandExamples(suggestedCmd);
+          if (examples.length > 0) {
+            process.stderr.write("\n📖 Example usage:\n");
+            for (const ex of examples.slice(0, 3)) {
+              process.stderr.write(`  ${ex}\n`);
+            }
+          }
+        }
+      }
+
+      if (failure.hint && (suggestions.length === 0 || !isAgent)) {
         process.stderr.write(`Hint: ${failure.hint}\n`);
       }
 
@@ -361,6 +429,15 @@ const cli = yargs(hideBin(process.argv))
         yargsInstance.showHelp();
       }
     }
+
+    // In agent mode with auto-accept, we might want to exit with a special code
+    // or potentially auto-execute (disabled for safety)
+    if (isAgent && autoAcceptSuggestion && !wantsJson && !wantsPlain) {
+      process.stderr.write(
+        `\n🤖 Agent Mode: High confidence match. In future, use: astudio ${suggestions[0].suggestion}\n`,
+      );
+    }
+
     process.exitCode = failure.exitCode;
   });
 

@@ -36,10 +36,9 @@ export function maskValue(value: string, mask: MaskType): string {
       return "*".repeat(Math.min(value.length, 20));
     case "partial":
       if (value.length <= 8) return "****";
-      return value.slice(0, 4) + "..." + value.slice(-4);
+      return `${value.slice(0, 4)}...${value.slice(-4)}`;
     case "hash":
       return `[hash:${hashValue(value)}]`;
-    case "redact":
     default:
       return "[REDACTED]";
   }
