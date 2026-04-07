@@ -148,6 +148,11 @@ See also: `~/.codex/instructions/Learnings.md`
 
 ## Recent changes
 
+### 2026-03-28
+
+- **Design-system skill refresh (repo-grounded)**: updated `.agents/skills/design-system/SKILL.md` and supporting references (`contract.yaml`, `system-map.md`, `plan.md`, `evals.yaml`, `agents/openai.yaml`) to match current project contracts and workflows. The skill now explicitly includes preflight expectations, guidance-policy sources (`.design-system-guidance.json`, `PROFESSIONAL_UI_CONTRACT`, `AGENT_UI_ROUTING`, lifecycle/exemptions docs), and clearer fail-mode routing for non-UI requests.
+- **Validation/evals hardening**: expanded skill eval coverage with stronger trigger and non-trigger cases across token audits, Storybook semantic cleanup, guidance-ratchet triage, high-contrast parity, and backend/infra exclusions. This lowers misrouting risk and makes the skill more reliable for real design-system work in this monorepo.
+
 ### 2026-03-23
 
 - **Visual build packaging fix**: `packages/ui/package.json` no longer strips declaration generation from `build:visual`; it now uses the same safe `vite build` path as the canonical package build, and `packages/ui/tsconfig.dts.json` explicitly excludes `src/storybook/_holding/**` so internal Storybook demo pages do not leak into public declaration generation. That fixes the review regression where browser-test prebuilds could leave `@design-studio/ui` effectively untyped and also removes the non-fatal `TS7016` self-import warning from package builds.
