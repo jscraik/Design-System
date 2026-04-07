@@ -47,11 +47,20 @@ export type RunResult = {
   dryRun?: boolean;
 };
 
+export type Suggestion = {
+  type: "command" | "flag" | "value";
+  input: string;
+  suggestion: string;
+  confidence: number;
+};
+
 export type JsonError = {
   code: string;
   message: string;
   details?: Record<string, JsonValue>;
   hint?: string;
+  did_you_mean?: Suggestion[];
+  fix_suggestion?: string;
 };
 
 export type JsonEnvelope = {

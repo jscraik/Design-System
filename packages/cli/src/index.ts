@@ -19,6 +19,12 @@ import {
   setShowSensitive,
   setTraceContext,
 } from "./utils/output.js";
+import {
+  AVAILABLE_COMMANDS,
+  AVAILABLE_FLAGS,
+  suggestCommand,
+  suggestFlag,
+} from "./utils/suggest.js";
 import { createTraceContext } from "./utils/trace.js";
 
 // Initialize global trace context for this CLI invocation
@@ -60,6 +66,59 @@ function addGlobalOptions(argv: Argv): Argv {
       description: "Show sensitive data (expert only)",
       hidden: true,
     });
+}
+
+function generateSuggestions(msg?: string): import("./types.js").Suggestion[] {
+  if (!msg) return [];
+
+  const suggestions: import("./types.js").Suggestion[] = [];
+
+  // Try to extract unknown command
+  const cmdMatch = msg.match(/Unknown command: (\S+)/);
+  if (cmdMatch) {
+    const unknown = cmdMatch[1];
+    const suggestion = suggestCommand(unknown, AVAILABLE_COMMANDS);
+    if (suggestion) suggestions.push(suggestion);
+  }
+
+  // Try to extract unknown argument/flag
+  const argMatch = msg.match(/Unknown argument: (\S+)/) || msg.match(/Unknown option: (\S+)/);
+  if (argMatch) {
+    const unknown = argMatch[1];
+    const suggestion = suggestFlag(unknown, AVAILABLE_FLAGS);
+    if (suggestion) suggestions.push(suggestion);
+  }
+
+  return suggestions;
+}
+
+function generateFixSuggestion(
+  failure: import("./error.js").CliError,
+  argv: string[],
+): string | undefined {
+  if (failure.code !== ERROR_CODES.policy) return undefined;
+
+  const missingFlags: string[] = [];
+
+  if (failure.message.includes("--exec")) missingFlags.push("--exec");
+  if (failure.message.includes("--network")) missingFlags.push("--network");
+  if (failure.message.includes("--write")) missingFlags.push("--write");
+
+  if (missingFlags.length === 0) return undefined;
+
+  // Find the command in argv (skip node and script path)
+  const commandIdx = argv.findIndex((arg) =>
+    AVAILABLE_COMMANDS.some((cmd) => arg === cmd || arg.startsWith(`${cmd} `)),
+  );
+
+  if (commandIdx === -1) {
+    // Fallback: reconstruct from what we have
+    return `astudio ${missingFlags.join(" ")}`;
+  }
+
+  // Build fixed command
+  const baseCommand = argv.slice(commandIdx).join(" ");
+  return `astudio ${baseCommand} ${missingFlags.join(" ")}`;
 }
 
 const cli = yargs(hideBin(process.argv))
@@ -253,8 +312,19 @@ const cli = yargs(hideBin(process.argv))
     const wantsPlain = Boolean(parsedArgv?.plain || process.argv.includes("--plain"));
     const failure = normalizeFailure(msg, err ?? undefined);
 
+    // Generate suggestions for unknown commands/flags
+    const suggestions = generateSuggestions(msg);
+    const fixSuggestion = generateFixSuggestion(failure, process.argv);
+
+    // Enhance error with suggestions
+    const enhancedError = {
+      ...toJsonError(failure),
+      ...(suggestions.length > 0 && { did_you_mean: suggestions }),
+      ...(fixSuggestion && { fix_suggestion: fixSuggestion }),
+    };
+
     if (wantsJson) {
-      outputJson(createEnvelope("error", "error", {}, [toJsonError(failure)]));
+      outputJson(createEnvelope("error", "error", {}, [enhancedError]));
     } else if (wantsPlain) {
       outputPlainRecord({
         schema: COMMAND_SCHEMA,
@@ -263,12 +333,30 @@ const cli = yargs(hideBin(process.argv))
         error_code: failure.code,
         error_message: failure.message,
         hint: failure.hint ?? null,
+        ...(suggestions.length > 0 && {
+          suggestions: suggestions.map((s) => `${s.input} -> ${s.suggestion}`).join(", "),
+        }),
+        ...(fixSuggestion && { fix_suggestion: fixSuggestion }),
       });
     } else {
       process.stderr.write(`Error: ${failure.message}\n`);
-      if (failure.hint) {
+
+      // Show suggestions in human-readable format
+      if (suggestions.length > 0) {
+        process.stderr.write("\nDid you mean:\n");
+        for (const s of suggestions) {
+          process.stderr.write(`  ${s.suggestion.padEnd(20)} (confidence: ${s.confidence})\n`);
+        }
+      }
+
+      if (fixSuggestion) {
+        process.stderr.write(`\nFix suggestion:\n  ${fixSuggestion}\n`);
+      }
+
+      if (failure.hint && suggestions.length === 0) {
         process.stderr.write(`Hint: ${failure.hint}\n`);
       }
+
       if (failure.code === ERROR_CODES.usage || failure.code === ERROR_CODES.validation) {
         yargsInstance.showHelp();
       }
