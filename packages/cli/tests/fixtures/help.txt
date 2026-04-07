@@ -1,6 +1,7 @@
 astudio [command]
 
 Commands:
+  astudio help-topics            List available help topics
   astudio help [command]         Show help for a command
   astudio dev [target]           Start development servers
   astudio build [target]         Build targets

@@ -22,6 +22,13 @@ import {
   shouldAutoAccept,
 } from "./utils/agent.js";
 import {
+  generateTopicHelp,
+  getMinimalHelp,
+  isTopicHelpRequest,
+  listHelpTopics,
+  parseHelpLevel,
+} from "./utils/help.js";
+import {
   createEnvelope,
   outputJson,
   outputPlainRecord,
@@ -38,6 +45,31 @@ import { createTraceContext } from "./utils/trace.js";
 
 // Global agent mode state
 let agentModeActive = false;
+
+// Check for --help-topic= and --help=level before yargs processing
+const rawArgs = process.argv.slice(2);
+const topicArg = rawArgs.find((arg) => arg.startsWith("--help-topic="));
+const helpLevelArg = rawArgs.find(
+  (arg) => arg.startsWith("--help=") && !arg.startsWith("--help-topic="),
+);
+
+// Handle --help-topic=<topic>
+if (topicArg) {
+  const topicName = topicArg.slice("--help-topic=".length);
+  const help = generateTopicHelp(topicName);
+  if (help) {
+    process.stdout.write(`${help}\n`);
+    process.exit(0);
+  }
+  process.stderr.write(`Error: Unknown help topic "${topicName}"\n\n${listHelpTopics()}\n`);
+  process.exit(2);
+}
+
+// Handle --help=minimal
+if (helpLevelArg === "--help=minimal") {
+  process.stdout.write(`${getMinimalHelp()}\n`);
+  process.exit(0);
+}
 
 // Initialize global trace context for this CLI invocation
 setTraceContext(createTraceContext());
@@ -163,6 +195,14 @@ const cli = yargs(hideBin(process.argv))
       agentModeActive = true;
     }
   })
+  .command(
+    "help-topics",
+    "List available help topics",
+    () => {},
+    () => {
+      process.stdout.write(`${listHelpTopics()}\n`);
+    },
+  )
   .command(
     "help [command]",
     "Show help for a command",
