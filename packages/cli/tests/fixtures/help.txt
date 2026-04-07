@@ -1,6 +1,7 @@
 astudio [command]
 
 Commands:
+  astudio help-topics            List available help topics
   astudio help [command]         Show help for a command
   astudio dev [target]           Start development servers
   astudio build [target]         Build targets
@@ -8,6 +9,7 @@ Commands:
   astudio mcp                    MCP server utilities
   astudio tokens <command>       Generate or validate design tokens
   astudio versions <command>     Sync version metadata across workspace
+  astudio skills                 Discover, install, and publish skills (Clawdhub)
   astudio components new <name>  Generate a new UI component
   astudio lint                   Run lint checks
   astudio format                 Format code or check formatting
@@ -27,4 +29,5 @@ Options:
       --cwd       Run as if from this directory                                             [string]
       --config    Config file override                                                      [string]
       --dry-run   Preview without changes                                                  [boolean]
+      --agent     AI agent mode: enhanced help, intent-over-syntax, educational errors     [boolean]
   -h, --help      Show help                                                                [boolean]

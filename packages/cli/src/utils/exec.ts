@@ -3,7 +3,7 @@ import { CliError, ERROR_CODES, EXIT_CODES, requireExec, toJsonError } from "../
 import type { GlobalOptions, JsonError, JsonValue, RunResult } from "../types.js";
 import { baseEnv, resolveCwd, resolvePnpmCommand } from "./env.js";
 import { logInfo } from "./logger.js";
-import { createEnvelope, outputJson, outputPlainRecord } from "./output.js";
+import { createEnvelope, getTraceContext, outputJson, outputPlainRecord } from "./output.js";
 
 export async function runPnpm(
   opts: GlobalOptions,
@@ -12,7 +12,8 @@ export async function runPnpm(
 ): Promise<RunResult> {
   const started = Date.now();
   const cwd = overrides?.cwd ?? resolveCwd(opts);
-  const env = overrides?.env ?? baseEnv(opts);
+  const traceContext = getTraceContext();
+  const env = overrides?.env ?? baseEnv(opts, traceContext);
   const pnpmCommand = resolvePnpmCommand();
 
   const commandLabel = `${pnpmCommand} ${args.join(" ")}`;
