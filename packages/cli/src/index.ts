@@ -47,6 +47,12 @@ import { createTraceContext } from "./utils/trace.js";
 
 // Check for --help-topic= and --help=level before yargs processing
 const rawArgs = process.argv.slice(2);
+
+// Initialize agent mode EARLY from raw args (before yargs middleware runs)
+// This ensures unknown-command errors are handled with agent-mode enhancements
+if (rawArgs.includes("--agent")) {
+  setAgentMode(true);
+}
 const topicArg = rawArgs.find((arg) => arg.startsWith("--help-topic="));
 const helpLevelArg = rawArgs.find(
   (arg) => arg.startsWith("--help=") && !arg.startsWith("--help-topic="),

@@ -157,6 +157,8 @@ export function createTraceContext(parentContext?: TraceContext): TraceContext {
  */
 export function formatTraceparent(context: TraceContext): string {
   const flags = context.sampled ? "01" : "00";
-  const parentId = (context.parentId ?? "0000000000000000").padEnd(16, "0").slice(0, 16);
+  // Use current span ID (requestId) as the parent-id for child processes
+  // This establishes correct parent-child linkage in distributed traces
+  const parentId = context.requestId.padStart(16, "0").slice(0, 16);
   return `00-${context.traceId}-${parentId}-${flags}`;
 }
