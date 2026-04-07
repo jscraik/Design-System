@@ -1,14 +1,8 @@
 /**
  * Typography tokens for web usage. Sizes, line heights, and tracking are numeric values.
- *
- * ## Font families
- * - `fontFamily`: UI / body text — SF Pro Text, system-ui fallback chain.
- * - `fontDisplay`: Hero headings and marketing copy — SF Pro Display.
- *   Wire via `--font-display` CSS variable or `font-display` Tailwind class.
- *   On macOS/iOS, SF Pro Display activates automatically for sizes ≥ 20px.
  */
 export declare const typographyTokens: {
-    readonly fontFamily: "SF Pro Text";
+    readonly fontFamily: "SF Pro";
     readonly fontDisplay: "SF Pro Display";
     readonly hero: {
         readonly size: 40;
