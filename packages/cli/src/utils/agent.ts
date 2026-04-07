@@ -148,6 +148,9 @@ export function shouldAutoAccept(suggestion: Suggestion): boolean {
 
 /**
  * Format examples for a specific command
+ *
+ * TODO: Derive examples dynamically from command registry to avoid drift.
+ * When adding new commands/options, update this mapping to keep examples in sync.
  */
 export function getCommandExamples(command: string): string[] {
   const examples: Record<string, string[]> = {

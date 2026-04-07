@@ -116,7 +116,9 @@ export function createEnvelope(
   // Use provided context, fall back to global context, then undefined
   const context = traceContext ?? globalTraceContext;
   // Mask sensitive data unless show-sensitive is enabled
-  const maskedData = shouldMask() ? maskObject(data) : data;
+  // Short-circuit for empty objects to avoid unnecessary recursion
+  const needsMasking = shouldMask() && Object.keys(data).length > 0;
+  const maskedData = needsMasking ? maskObject(data) : data;
   return {
     schema: COMMAND_SCHEMA,
     meta: {

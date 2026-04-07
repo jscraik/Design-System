@@ -76,9 +76,17 @@ export function parseXrayTrace(xrayHeader: string): TraceContext | undefined {
   const sampled = sampledMatch?.slice(8) === "1";
 
   // Convert X-Ray trace ID format to W3C format if needed
-  // X-Ray: 1-5759e988-bd862e3fe1be46a994272793
-  // W3C: 5759e988bd862e3fe1be46a994272793 (without version and timestamp)
-  const normalizedTraceId = traceId.replace(/-/g, "").slice(1).toLowerCase();
+  // X-Ray: 1-5759e988-bd862e3fe1be46a994272793 (version-timestamp-random)
+  // W3C: 5759e988bd862e3fe1be46a994272793 (timestamp+random without dashes)
+  // Split on '-' and use last two segments to handle any version prefix length
+  const segments = traceId.split("-");
+  const normalizedTraceId =
+    segments.length >= 3
+      ? segments
+          .slice(-2)
+          .join("")
+          .toLowerCase() // timestamp+random
+      : traceId.replace(/-/g, "").toLowerCase(); // fallback: no dashes
 
   if (normalizedTraceId.length !== 32) return undefined;
 

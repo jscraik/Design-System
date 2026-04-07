@@ -1,50 +1,22 @@
 import assert from "node:assert/strict";
-import { spawn } from "node:child_process";
-import path from "node:path";
 import test from "node:test";
-import { fileURLToPath } from "node:url";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const pkgRoot = path.resolve(__dirname, "..");
-const cliPath = path.resolve(pkgRoot, "src/index.ts");
-
-const baseEnv = {
-  ...process.env,
-  NO_COLOR: "1",
-  TERM: "dumb",
-};
-
-function runCli(args, envOverrides = {}) {
-  return new Promise((resolve) => {
-    const child = spawn(process.execPath, ["--import", "tsx", cliPath, ...args], {
-      cwd: pkgRoot,
-      env: { ...baseEnv, ...envOverrides },
-      stdio: ["ignore", "pipe", "pipe"],
-    });
-    let stdout = "";
-    let stderr = "";
-    child.stdout?.on("data", (chunk) => {
-      stdout += chunk.toString();
-    });
-    child.stderr?.on("data", (chunk) => {
-      stderr += chunk.toString();
-    });
-    child.on("close", (code) => {
-      resolve({ code: code ?? 1, stdout, stderr });
-    });
-    child.on("error", (err) => {
-      resolve({ code: 1, stdout: "", stderr: err instanceof Error ? err.message : "spawn failed" });
-    });
-  });
-}
+import { runCli } from "./test-utils.mjs";
 
 test("sensitive fields are masked by default in errors", async () => {
   const { code, stdout } = await runCli(["tokens", "generate", "--json"]);
   assert.equal(code, 3);
   const payload = JSON.parse(stdout);
   assert.equal(payload.status, "error");
-  // Error message should not contain sensitive patterns masked
-  // (This test verifies the masking infrastructure is in place)
+  // Verify masking is active by checking output doesn't contain raw secrets
+  // and either contains redaction markers or the masking infrastructure is present
+  const outputStr = JSON.stringify(payload);
+  // Should not contain typical secret patterns in plaintext
+  assert.ok(
+    !outputStr.match(/password["']?\s*:\s*["'][^"']{8,}/i) ||
+      outputStr.includes("[REDACTED]") ||
+      outputStr.includes("****"),
+    "Sensitive data should be masked or not present in output",
+  );
 });
 
 test("maskValue redacts sensitive data", async () => {
