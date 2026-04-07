@@ -41,7 +41,7 @@ hooks-pre-commit: ## Run local pre-commit gates before creating a commit
 	$(MAKE) related-tests
 
 hooks-pre-push: ## Run local pre-push governance gates before pushing
-	@bash ./scripts/check-doc-links.mjs
+	@node ./scripts/check-doc-links.mjs
 	@bash ./scripts/check-diagram-freshness.sh
 	@bash ./scripts/check-environment.sh
 	$(MAKE) semgrep-changed
