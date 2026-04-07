@@ -4,6 +4,12 @@ set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 
+# Skip if .diagram/ is not tracked (gitignored)
+if git -C "$REPO_ROOT" check-ignore -q "$REPO_ROOT/.diagram" 2>/dev/null; then
+	echo "Diagram freshness check skipped: .diagram/ is gitignored."
+	exit 0
+fi
+
 TRACKED_ARTIFACT_PATHS=(
 	".diagram"
 	".diagram/context/diagram-context.md"
