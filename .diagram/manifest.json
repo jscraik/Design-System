@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-07T15:53:23.267Z",
+  "generatedAt": "2026-04-07T15:54:00.724Z",
   "rootPath": "/Users/jamiecraik/dev/design-system",
   "diagramDir": ".diagram",
   "diagrams": [
@@ -7,8 +7,8 @@
       "type": "architecture",
       "file": "architecture.mmd",
       "outputPath": ".diagram/architecture.mmd",
-      "lines": 1457,
-      "bytes": 98599,
+      "lines": 1453,
+      "bytes": 98360,
       "isPlaceholder": true
     },
     {

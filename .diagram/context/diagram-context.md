@@ -1,6 +1,6 @@
 # Diagram Context Pack
 
-Generated: 2026-04-07T15:53:23Z
+Generated: 2026-04-07T15:54:00Z
 
 ## architecture
 
@@ -1170,9 +1170,6 @@ graph TD
   subgraph sg_packages_widgets_node_modules_zod_src_ae409065["packages/widgets/node_modules/zod/src"]
     node_packages_widgets_node_modules_zod_src_index_bb662a90["index"]
   end
-  subgraph sg_packages_widgets_node_modules_zod_src_locales_419ed218["packages/widgets/node_modules/zod/src/locales"]
-    node_packages_widgets_node_modules_zod_src_locales_in_00c1b0fd["index"]
-  end
   subgraph sg_packages_widgets_node_modules_zod_src_mini_a10cbd60["packages/widgets/node_modules/zod/src/mini"]
     node_packages_widgets_node_modules_zod_src_mini_index_62100cbd["index"]
   end
@@ -1198,9 +1195,6 @@ graph TD
     node_packages_widgets_node_modules_zod_v3_types_d_88575ebc["types.d"]
     node_packages_widgets_node_modules_zod_v3_zoderror_d_fe1106cc["ZodError.d"]
   end
-  subgraph sg_packages_widgets_node_modules_zod_v3_locales_29d926fc["packages/widgets/node_modules/zod/v3/locales"]
-    node_packages_widgets_node_modules_zod_v3_locales_en__123061a4["en.d"]
-  end
   subgraph sg_packages_widgets_node_modules_zod_v4_3a800599["packages/widgets/node_modules/zod/v4"]
     node_packages_widgets_node_modules_zod_v4_index_d_394eca64["index.d"]
   end
@@ -1208,6 +1202,8 @@ graph TD
     node_packages_widgets_node_modules_zod_v4_mini_index__4dac2109["index.d"]
   end
   subgraph sg_packages_widgets_node_modules_zod_v4_classic_430fec5b["packages/widgets/node_modules/zod/v4/classic"]
+    node_packages_widgets_node_modules_zod_v4_classic_che_7faad649["checks.d"]
+    node_packages_widgets_node_modules_zod_v4_classic_coe_bc34493a["coerce.d"]
     node_packages_widgets_node_modules_zod_v4_classic_com_e7239125["compat.d"]
     node_packages_widgets_node_modules_zod_v4_classic_err_6d5aa62f["errors.d"]
     node_packages_widgets_node_modules_zod_v4_classic_ext_b6d55e38["external.d"]
@@ -1611,8 +1607,8 @@ graph LR
   ext_vitejs_plugin_react_dd2375aa["@vitejs/plugin-react"] --> node_packages_widgets_vite_config_fa86e9e3
   ext_vitejs_plugin_react_dd2375aa["@vitejs/plugin-react"] --> node_packages_validation_prototype_vite_config_ce195410
   ext_vitejs_plugin_react_dd2375aa["@vitejs/plugin-react"] --> node_packages_ui_vite_config_c1ffddae
-  ext_vitejs_plugin_react_dd2375aa["@vitejs/plugin-react"] --> node_packages_json_render_vite_config_e34d24e1
   ext_vitejs_plugin_react_dd2375aa["@vitejs/plugin-react"] --> node_packages_effects_vite_config_e93d80ab
+  ext_vitejs_plugin_react_dd2375aa["@vitejs/plugin-react"] --> node_packages_json_render_vite_config_e34d24e1
   ext_vitejs_plugin_react_dd2375aa["@vitejs/plugin-react"] --> node_docs_validation_prototype_vite_config_e56131a7
   ext_vitejs_plugin_react_dd2375aa["@vitejs/plugin-react"] --> node_platforms_web_apps_web_vite_config_567f388d
   ext_vitejs_plugin_react_dd2375aa["@vitejs/plugin-react"] --> node_packages_ui_vitest_config_ad87e3e5
@@ -2321,8 +2317,8 @@ graph LR
   ext_node_path_78811c13["node:path"] --> node_packages_design_system_guidance_node_modules_typ_8095a8fd
   ext_node_path_78811c13["node:path"] --> node_packages_widgets_vite_config_fa86e9e3
   ext_node_path_78811c13["node:path"] --> node_packages_ui_vite_config_c1ffddae
-  ext_node_path_78811c13["node:path"] --> node_packages_json_render_vite_config_e34d24e1
   ext_node_path_78811c13["node:path"] --> node_packages_effects_vite_config_e93d80ab
+  ext_node_path_78811c13["node:path"] --> node_packages_json_render_vite_config_e34d24e1
   ext_node_path_78811c13["node:path"] --> node_platforms_web_apps_web_vite_config_567f388d
   ext_node_path_78811c13["node:path"] --> node_packages_ui_vitest_config_ad87e3e5
   ext_node_path_78811c13["node:path"] --> node_platforms_web_apps_storybook_vitest_config_12d89545
@@ -3426,13 +3422,13 @@ graph LR
   ext_util_281811fa["util"] --> node_packages_design_system_guidance_node_modules_typ_29796ad9
   ext_v8_f2cbea7e["v8"] --> node_packages_design_system_guidance_node_modules_typ_2289fb96
   ext_vite_plugin_dts_24fd5af1["vite-plugin-dts"] --> node_packages_ui_vite_config_c1ffddae
-  ext_vite_plugin_dts_24fd5af1["vite-plugin-dts"] --> node_packages_json_render_vite_config_e34d24e1
   ext_vite_plugin_dts_24fd5af1["vite-plugin-dts"] --> node_packages_effects_vite_config_e93d80ab
+  ext_vite_plugin_dts_24fd5af1["vite-plugin-dts"] --> node_packages_json_render_vite_config_e34d24e1
   ext_vite_9907d3c4["vite"] --> node_packages_widgets_vite_config_fa86e9e3
   ext_vite_9907d3c4["vite"] --> node_packages_validation_prototype_vite_config_ce195410
   ext_vite_9907d3c4["vite"] --> node_packages_ui_vite_config_c1ffddae
-  ext_vite_9907d3c4["vite"] --> node_packages_json_render_vite_config_e34d24e1
   ext_vite_9907d3c4["vite"] --> node_packages_effects_vite_config_e93d80ab
+  ext_vite_9907d3c4["vite"] --> node_packages_json_render_vite_config_e34d24e1
   ext_vite_9907d3c4["vite"] --> node_packages_cloudflare_template_vite_config_186c05db
   ext_vite_9907d3c4["vite"] --> node_docs_validation_prototype_vite_config_e56131a7
   ext_vite_9907d3c4["vite"] --> node_platforms_web_apps_web_vite_config_567f388d
