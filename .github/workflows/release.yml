@@ -7,8 +7,13 @@ concurrency:
   group: release-main-guardrail
   cancel-in-progress: false
 
+permissions:
+  contents: read
+
 jobs:
   validate-release:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

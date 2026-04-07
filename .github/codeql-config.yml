@@ -31,6 +31,12 @@ paths:
     - platforms/apple/**/*Tests.swift
     - platforms/apple/**/.build/**/*.swift
     - platforms/apple/**/DerivedData/**/*.swift
+    # Exclude generated/bundled code and test artifacts
+    - '**/dist/**'
+    - '**/coverage/**'
+    - '**/node_modules/**'
+    - '**/*.min.js'
+    - '**/vendor-*.js'
 
 # Security query suites
 query-suite:
