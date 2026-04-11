@@ -6,6 +6,7 @@
 - [Validation and checks](03-validation.md)
 - [Contradictions and cleanup](04-contradictions-and-cleanup.md)
 - [Dev reference (library imports, styling, host adapter, public API)](05-dev-reference.md)
+- [Hook governance scope defaults](hook-governance-scope-defaults.md)
 
 ## Instruction chain
 

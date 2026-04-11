@@ -1,0 +1,166 @@
+#!/usr/bin/env python3
+"""Evaluate docstring coverage ratchet from explicit classification and metrics inputs."""
+
+from __future__ import annotations
+
+import argparse
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+
+def _read_json(path: Path, label: str) -> Any:
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError as exc:
+        raise SystemExit(f"[evaluate_docstring_ratchet] {label} not found: {path}") from exc
+    except json.JSONDecodeError as exc:
+        raise SystemExit(f"[evaluate_docstring_ratchet] invalid JSON in {path}: {exc}") from exc
+
+
+def _extract_coverage(metrics: Any) -> tuple[float | None, float | None]:
+    if not isinstance(metrics, dict):
+        return (None, None)
+
+    previous_candidates = [
+        metrics.get("previous_coverage"),
+        metrics.get("previous"),
+        (metrics.get("coverage") or {}).get("previous")
+        if isinstance(metrics.get("coverage"), dict)
+        else None,
+    ]
+    current_candidates = [
+        metrics.get("current_coverage"),
+        metrics.get("current"),
+        (metrics.get("coverage") or {}).get("current")
+        if isinstance(metrics.get("coverage"), dict)
+        else None,
+    ]
+
+    previous = next((float(v) for v in previous_candidates if isinstance(v, (int, float))), None)
+    current = next((float(v) for v in current_candidates if isinstance(v, (int, float))), None)
+    return (previous, current)
+
+
+def _extract_per_symbol_regressions(metrics: Any) -> list[dict[str, Any]]:
+    if not isinstance(metrics, dict):
+        return []
+    per_symbol = metrics.get("per_symbol", [])
+    if not isinstance(per_symbol, list):
+        return []
+
+    regressions: list[dict[str, Any]] = []
+    for row in per_symbol:
+        if not isinstance(row, dict):
+            continue
+        previous = row.get("previous")
+        current = row.get("current")
+        if isinstance(previous, (int, float)) and isinstance(current, (int, float)) and current < previous:
+            regressions.append(
+                {
+                    "symbol": row.get("symbol") or row.get("name") or "(unknown)",
+                    "previous": previous,
+                    "current": current,
+                    "delta": current - previous,
+                }
+            )
+    return regressions
+
+
+def _classification_count(classification: Any) -> int:
+    if isinstance(classification, dict):
+        symbols = classification.get("symbols", [])
+        return len(symbols) if isinstance(symbols, list) else 0
+    if isinstance(classification, list):
+        return len(classification)
+    return 0
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description="Evaluate docstring ratchet from explicit classification and metrics inputs."
+    )
+    parser.add_argument(
+        "--classification",
+        required=True,
+        help="Path to public API classification JSON (required, no default fallback).",
+    )
+    parser.add_argument(
+        "--metrics",
+        required=True,
+        help="Path to docstring metrics JSON (required, no default fallback).",
+    )
+    parser.add_argument(
+        "--window-days",
+        type=int,
+        default=14,
+        help="Reference window for report metadata.",
+    )
+    parser.add_argument(
+        "--out",
+        required=True,
+        help="Path to write JSON report.",
+    )
+    args = parser.parse_args()
+
+    classification_path = Path(args.classification).expanduser().resolve()
+    metrics_path = Path(args.metrics).expanduser().resolve()
+    out_path = Path(args.out).expanduser().resolve()
+
+    classification = _read_json(classification_path, "classification")
+    metrics = _read_json(metrics_path, "metrics")
+
+    previous_coverage, current_coverage = _extract_coverage(metrics)
+    regressions = _extract_per_symbol_regressions(metrics)
+    overall_regression = (
+        previous_coverage is not None
+        and current_coverage is not None
+        and current_coverage < previous_coverage
+    )
+
+    if overall_regression:
+        regressions.insert(
+            0,
+            {
+                "symbol": "__overall__",
+                "previous": previous_coverage,
+                "current": current_coverage,
+                "delta": current_coverage - previous_coverage,
+            },
+        )
+
+    generated_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+    report = {
+        "generated_at": generated_at,
+        "window_days": args.window_days,
+        "classification": str(classification_path),
+        "metrics": str(metrics_path),
+        "summary": {
+            "classified_symbols": _classification_count(classification),
+            "regression_count": len(regressions),
+            "pass": len(regressions) == 0,
+        },
+        "coverage": {
+            "previous": previous_coverage,
+            "current": current_coverage,
+            "delta": None
+            if previous_coverage is None or current_coverage is None
+            else current_coverage - previous_coverage,
+        },
+        "regressions": regressions,
+    }
+
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+
+    if regressions:
+        print(f"[evaluate_docstring_ratchet] regressions detected: {len(regressions)}")
+        return 1
+
+    print("[evaluate_docstring_ratchet] pass")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

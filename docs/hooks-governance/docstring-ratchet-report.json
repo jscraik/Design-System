@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-04-11T20:57:36.590295Z",
+  "window_days": 14,
+  "classification": "/Users/jamiecraik/dev/design-system/docs/hooks-governance/public-api-classification.json",
+  "metrics": "/Users/jamiecraik/dev/design-system/docs/hooks-governance/docstring-ratchet-metrics.json",
+  "summary": {
+    "classified_symbols": 0,
+    "regression_count": 0,
+    "pass": true
+  },
+  "coverage": {
+    "previous": 100.0,
+    "current": 100.0,
+    "delta": 0.0
+  },
+  "regressions": []
+}
