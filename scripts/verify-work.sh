@@ -91,35 +91,37 @@ write_project_local_governance_inputs() {
 	local repo_name
 	repo_name="$(basename "$repo_root")"
 
-	cat >"$inventory_path" <<JSON
-{
-  "generated_at": "$now_utc",
-  "repos": [
-    {
-      "name": "$repo_name",
-      "path": "$repo_root",
-      "status": "ok",
-      "last_validated_at": "$now_utc"
-    }
-  ]
-}
-JSON
+	jq -n \
+		--arg generated_at "$now_utc" \
+		--arg repo_name "$repo_name" \
+		--arg repo_path "$repo_root" \
+		'{
+			generated_at: $generated_at,
+			repos: [
+				{
+					name: $repo_name,
+					path: $repo_path,
+					status: "ok",
+					last_validated_at: $generated_at
+				}
+			]
+		}' >"$inventory_path"
 
-	cat >"$classification_path" <<JSON
-{
-  "generated_at": "$now_utc",
-  "symbols": []
-}
-JSON
+	jq -n \
+		--arg generated_at "$now_utc" \
+		'{
+			generated_at: $generated_at,
+			symbols: []
+		}' >"$classification_path"
 
-	cat >"$metrics_path" <<JSON
-{
-  "generated_at": "$now_utc",
-  "previous_coverage": 100,
-  "current_coverage": 100,
-  "per_symbol": []
-}
-JSON
+	jq -n \
+		--arg generated_at "$now_utc" \
+		'{
+			generated_at: $generated_at,
+			previous_coverage: 100,
+			current_coverage: 100,
+			per_symbol: []
+		}' >"$metrics_path"
 }
 
 run_hook_governance_checks() {
@@ -127,8 +129,15 @@ run_hook_governance_checks() {
 	local docstring_script="$repo_root/scripts/hook-governance/evaluate_docstring_ratchet.py"
 
 	if [[ ! -f "$rollout_script" || ! -f "$docstring_script" ]]; then
-		echo "[verify-work] skipping hook-governance checks (scripts missing)"
-		return 0
+		if [[ "${SKIP_GOVERNANCE_CHECKS:-}" == "1" ]]; then
+			echo "[verify-work] WARNING: skipping hook-governance checks (scripts missing, SKIP_GOVERNANCE_CHECKS=1)"
+			return 0
+		fi
+		echo "[verify-work] ERROR: hook-governance scripts missing" >&2
+		echo "  Expected: $rollout_script" >&2
+		echo "  Expected: $docstring_script" >&2
+		echo "  Set SKIP_GOVERNANCE_CHECKS=1 to bypass this check" >&2
+		exit 1
 	fi
 
 	local inventory_path=""
@@ -218,7 +227,11 @@ while (( $# > 0 )); do
 			shift
 			;;
 		--repo-scope-manifest)
-			workspace_manifest="${2:-}"
+			if [[ -z "${2:-}" || "${2:-}" == --* ]]; then
+				echo "[verify-work] ERROR: --repo-scope-manifest requires a non-empty value" >&2
+				exit 2
+			fi
+			workspace_manifest="$2"
 			shift 2
 			;;
 		--repo-root)
@@ -239,6 +252,11 @@ done
 
 if [[ -z "$repo_root" ]]; then
 	repo_root="$REPO_ROOT"
+fi
+
+if [[ -n "$workspace_manifest" && "$governance_scope" != "workspace" ]]; then
+	echo "[verify-work] ERROR: --repo-scope-manifest is only valid with --workspace-governance" >&2
+	exit 2
 fi
 
 cd "$repo_root"

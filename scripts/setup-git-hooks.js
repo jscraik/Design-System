@@ -34,7 +34,19 @@ const PREK_HOOK_PATCH = [
 ].join("\n");
 
 function patchInstalledPrekHooks() {
-  const hooksDir = resolve(process.cwd(), ".git/hooks");
+  let hooksDir;
+  try {
+    hooksDir = execFileSync("git", ["rev-parse", "--git-path", "hooks"], {
+      encoding: "utf8",
+      cwd: process.cwd(),
+    }).trim();
+    if (!hooksDir) {
+      return 0;
+    }
+  } catch {
+    return 0;
+  }
+
   if (!existsSync(hooksDir)) {
     return 0;
   }

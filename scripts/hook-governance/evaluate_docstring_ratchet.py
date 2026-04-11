@@ -21,7 +21,7 @@ def _read_json(path: Path, label: str) -> Any:
 
 def _extract_coverage(metrics: Any) -> tuple[float | None, float | None]:
     if not isinstance(metrics, dict):
-        return (None, None)
+        raise TypeError(f"metrics must be a dict, got {type(metrics).__name__}")
 
     previous_candidates = [
         metrics.get("previous_coverage"),
@@ -45,18 +45,22 @@ def _extract_coverage(metrics: Any) -> tuple[float | None, float | None]:
 
 def _extract_per_symbol_regressions(metrics: Any) -> list[dict[str, Any]]:
     if not isinstance(metrics, dict):
-        return []
+        raise TypeError(f"metrics must be a dict, got {type(metrics).__name__}")
     per_symbol = metrics.get("per_symbol", [])
     if not isinstance(per_symbol, list):
-        return []
+        raise TypeError(f"metrics['per_symbol'] must be a list, got {type(per_symbol).__name__}")
 
     regressions: list[dict[str, Any]] = []
-    for row in per_symbol:
+    for idx, row in enumerate(per_symbol):
         if not isinstance(row, dict):
-            continue
+            raise TypeError(f"metrics['per_symbol'][{idx}] must be a dict, got {type(row).__name__}")
         previous = row.get("previous")
         current = row.get("current")
-        if isinstance(previous, (int, float)) and isinstance(current, (int, float)) and current < previous:
+        if not isinstance(previous, (int, float)):
+            raise TypeError(f"metrics['per_symbol'][{idx}]['previous'] must be numeric, got {type(previous).__name__}")
+        if not isinstance(current, (int, float)):
+            raise TypeError(f"metrics['per_symbol'][{idx}]['current'] must be numeric, got {type(current).__name__}")
+        if current < previous:
             regressions.append(
                 {
                     "symbol": row.get("symbol") or row.get("name") or "(unknown)",
@@ -71,10 +75,12 @@ def _extract_per_symbol_regressions(metrics: Any) -> list[dict[str, Any]]:
 def _classification_count(classification: Any) -> int:
     if isinstance(classification, dict):
         symbols = classification.get("symbols", [])
-        return len(symbols) if isinstance(symbols, list) else 0
+        if not isinstance(symbols, list):
+            raise TypeError(f"classification['symbols'] must be a list, got {type(symbols).__name__}")
+        return len(symbols)
     if isinstance(classification, list):
         return len(classification)
-    return 0
+    raise TypeError(f"classification must be a dict or list, got {type(classification).__name__}")
 
 
 def main() -> int:
@@ -111,8 +117,33 @@ def main() -> int:
     classification = _read_json(classification_path, "classification")
     metrics = _read_json(metrics_path, "metrics")
 
-    previous_coverage, current_coverage = _extract_coverage(metrics)
-    regressions = _extract_per_symbol_regressions(metrics)
+    try:
+        previous_coverage, current_coverage = _extract_coverage(metrics)
+        regressions = _extract_per_symbol_regressions(metrics)
+        classified_count = _classification_count(classification)
+    except (ValueError, TypeError) as exc:
+        print(f"[evaluate_docstring_ratchet] invalid input: {exc}", file=__import__("sys").stderr)
+        error_report = {
+            "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+            "window_days": args.window_days,
+            "classification": args.classification,
+            "metrics": args.metrics,
+            "summary": {
+                "classified_symbols": 0,
+                "regression_count": 0,
+                "pass": False,
+            },
+            "coverage": {
+                "previous": None,
+                "current": None,
+                "delta": None,
+            },
+            "regressions": [],
+            "error": str(exc),
+        }
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(json.dumps(error_report, indent=2) + "\n", encoding="utf-8")
+        return 1
     overall_regression = (
         previous_coverage is not None
         and current_coverage is not None
@@ -134,10 +165,10 @@ def main() -> int:
     report = {
         "generated_at": generated_at,
         "window_days": args.window_days,
-        "classification": str(classification_path),
-        "metrics": str(metrics_path),
+        "classification": args.classification,
+        "metrics": args.metrics,
         "summary": {
-            "classified_symbols": _classification_count(classification),
+            "classified_symbols": classified_count,
             "regression_count": len(regressions),
             "pass": len(regressions) == 0,
         },

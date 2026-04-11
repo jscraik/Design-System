@@ -239,7 +239,16 @@ for hook_id, contract in expected.items():
         )
         sys.exit(1)
     expected_stages = contract["stages"]
-    if expected_stages is not None and hook.get("stages") != expected_stages:
+    actual_stages = hook.get("stages")
+    if expected_stages is None:
+        # When contract specifies None, accept either None or ["pre-commit"]
+        if actual_stages is not None and actual_stages != ["pre-commit"]:
+            print(
+                f"Error: required prek hook '{hook_id}' has the wrong stages in {path}",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+    elif actual_stages != expected_stages:
         print(
             f"Error: required prek hook '{hook_id}' has the wrong stages in {path}",
             file=sys.stderr,
@@ -261,7 +270,7 @@ PY
 			fi
 		done
 
-		if jq -e 'has("simple-git-hooks") or ((.devDependencies // {}) | has("simple-git-hooks"))' "$PACKAGE_JSON_PATH" >/dev/null; then
+		if jq -e 'has("simple-git-hooks") or ((.dependencies // {}) | has("simple-git-hooks")) or ((.devDependencies // {}) | has("simple-git-hooks"))' "$PACKAGE_JSON_PATH" >/dev/null; then
 			echo "Error: legacy package.json hook metadata must be removed from $PACKAGE_JSON_PATH"
 			echo "Fix: run node scripts/setup-git-hooks.js"
 			exit 1

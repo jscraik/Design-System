@@ -47,12 +47,16 @@ class RepoStatus:
 
 def _extract_repos(inventory: Any) -> list[dict[str, Any]]:
     if isinstance(inventory, dict):
-        repos = inventory.get("repos", [])
+        if "repos" not in inventory:
+            raise ValueError("inventory dict is missing required 'repos' key")
+        repos = inventory["repos"]
+        if not isinstance(repos, list):
+            raise ValueError(f"inventory['repos'] must be a list, got {type(repos).__name__}")
+        return repos
     elif isinstance(inventory, list):
-        repos = inventory
+        return inventory
     else:
-        repos = []
-    return repos if isinstance(repos, list) else []
+        raise ValueError(f"inventory must be a dict or list, got {type(inventory).__name__}")
 
 
 def _evaluate_repo(repo: dict[str, Any], now_utc: datetime, recovery_slo_hours: int) -> RepoStatus:
@@ -110,13 +114,33 @@ def main() -> int:
     out_path = Path(args.out).expanduser().resolve()
     now_utc = datetime.now(timezone.utc)
     inventory = _read_json(inventory_path)
-    repos = _extract_repos(inventory)
+
+    try:
+        repos = _extract_repos(inventory)
+    except ValueError as exc:
+        print(f"[rollout_check] invalid inventory: {exc}", file=__import__("sys").stderr)
+        error_report = {
+            "generated_at": now_utc.isoformat().replace("+00:00", "Z"),
+            "inventory": args.inventory,
+            "recovery_slo_hours": args.recovery_slo_hours,
+            "summary": {
+                "total_repos": 0,
+                "stale_repos": 0,
+                "pass": False,
+            },
+            "repos": [],
+            "error": str(exc),
+        }
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        out_path.write_text(json.dumps(error_report, indent=2) + "\n", encoding="utf-8")
+        return 1
+
     evaluated = [_evaluate_repo(repo, now_utc, args.recovery_slo_hours) for repo in repos]
     stale = [repo for repo in evaluated if repo.stale_reason is not None]
 
     report = {
         "generated_at": now_utc.isoformat().replace("+00:00", "Z"),
-        "inventory": str(inventory_path),
+        "inventory": args.inventory,
         "recovery_slo_hours": args.recovery_slo_hours,
         "summary": {
             "total_repos": len(evaluated),

@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-04-09
+**Last updated:** 2026-04-11
 **Production status:** IN_PROGRESS
 **Overall health:** Yellow
 
@@ -149,19 +149,13 @@ See also: `~/.codex/instructions/Learnings.md`
 
 ## Recent changes
 
-### 2026-04-09
+### 2026-04-11
 
 - **Canonical `prek` hook contract**: the root hook surfaces now align on `prek` only. `Makefile` adds the required `hooks-commit-msg` wrapper, `prek.toml` installs `pre-commit`, `commit-msg`, and `pre-push` from canonical wrapper targets, `scripts/setup-git-hooks.js` now strips legacy package hook metadata before running `prek install`, and `scripts/check-environment.sh` fails if old package-level hook metadata is still present.
 - **Husky fully removed**: the stale `.husky/` bootstrap directory has been deleted, and `scripts/check-environment.sh` now fails if Husky scaffolding comes back. `prek` is the only supported hook runtime in this repo.
 - **Repo-canonical tooling inventory**: `scripts/check-environment.sh` now treats `docs/agents/tooling.md` as the default local tooling inventory path instead of a home-directory file. The script now owns the canonical enforced lists (`required_mise_tools`, `required_bins`, and required Codex actions), can generate the doc via `bash scripts/check-environment.sh --write-tooling-doc`, and fails if the checked-in doc drifts from those enforced lists.
 - **Environment gate portability fix**: local and CI environments now read tooling evidence from repository files only. This removes external-path assumptions and keeps `bash scripts/check-environment.sh` portable across contributors and runners.
-
-### 2026-04-10
-
 - **Worktree hook bootstrap cleanup**: `scripts/prepare-worktree.sh` no longer tries to execute a removed legacy package-hook binary after `node scripts/setup-git-hooks.js`. Worktree bootstrap now goes through the same `prek install` path as the rest of the repo, which removes one dead compatibility branch and keeps the runtime contract aligned with the validator text.
-
-### 2026-04-11
-
 - **Sandbox-safe prek hook regeneration**: `scripts/setup-git-hooks.js` now patches generated `prek` shims so each hook exports `PREK_HOME="${PREK_HOME:-$HERE/../.cache/prek}"` before `hook-impl`, keeping cache/log writes repo-local under `.git/.cache/prek` in sandboxed environments. Root `prepare` now runs `node scripts/setup-git-hooks.js` (instead of raw `prek install`) so regenerated hooks consistently keep that safety patch.
 - **Hook governance scope defaults**: `scripts/verify-work.sh` now defaults governance checks to project-local mode and adds explicit `--project-governance` / `--workspace-governance` control (plus `--repo-scope-manifest` override). New `scripts/hook-governance/rollout_check.py` and `scripts/hook-governance/evaluate_docstring_ratchet.py` require explicit `--inventory`, `--classification`, and `--metrics` inputs with no hidden workspace fallbacks, and `docs/agents/hook-governance-scope-defaults.md` documents the invocation contract and rollout policy.
 - **Agent mutation policy finalized**: `docs/agents/hook-governance-scope-defaults.md` now includes the explicit **Agent Mutation Default** contract and date-stamped section naming so agent behavior is unambiguous: local-project mutation by default, workspace mutation opt-in only, and executable wrapper/script-input scope takes precedence over inferred workspace defaults.
