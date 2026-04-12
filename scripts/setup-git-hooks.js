@@ -12,7 +12,7 @@
  */
 
 import { execFileSync } from "node:child_process";
-import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const PACKAGE_JSON_PATH = resolve(process.cwd(), "package.json");
@@ -60,6 +60,9 @@ function patchInstalledPrekHooks() {
   let patchedCount = 0;
   for (const hookName of readdirSync(hooksDir)) {
     const hookPath = resolve(hooksDir, hookName);
+    if (!statSync(hookPath).isFile()) {
+      continue;
+    }
     let hookContent = "";
     try {
       hookContent = readFileSync(hookPath, "utf8");
