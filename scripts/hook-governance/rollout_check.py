@@ -15,6 +15,12 @@ from typing import Any
 COLOR_ENABLED = True
 
 
+class RolloutError(Exception):
+    """Exception raised for rollout check errors."""
+
+    pass
+
+
 def _parse_iso8601(value: str) -> datetime | None:
     candidate = value.strip()
     if not candidate:
@@ -34,9 +40,9 @@ def _read_json(path: Path) -> Any:
     try:
         return json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError as exc:
-        raise SystemExit(f"[rollout_check] inventory not found: {path}") from exc
+        raise RolloutError(f"[rollout_check] inventory not found: {path}") from exc
     except json.JSONDecodeError as exc:
-        raise SystemExit(f"[rollout_check] invalid JSON in {path}: {exc}") from exc
+        raise RolloutError(f"[rollout_check] invalid JSON in {path}: {exc}") from exc
 
 
 @dataclass(frozen=True)
@@ -98,6 +104,17 @@ def _evaluate_repo(repo: dict[str, Any], now_utc: datetime, recovery_slo_hours: 
     )
 
 
+def positive_int(value: str) -> int:
+    """Validate that value is a positive integer."""
+    try:
+        ivalue = int(value)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f'"{value}" is not a valid integer')
+    if ivalue <= 0:
+        raise argparse.ArgumentTypeError(f'"{value}" must be a positive integer (> 0)')
+    return ivalue
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Check governance rollout freshness from an explicit inventory file."
@@ -109,7 +126,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--recovery-slo-hours",
-        type=int,
+        type=positive_int,
         default=24,
         help="Allowed age window in hours before a repo is considered stale.",
     )
@@ -201,13 +218,13 @@ def main() -> int:
     if args.now:
         now_utc = _parse_iso8601(args.now)
         if now_utc is None:
-            raise SystemExit(f'service:"rollout_check" invalid --now timestamp: {args.now}')
+            raise RolloutError(f'service:"rollout_check" invalid --now timestamp: {args.now}')
     else:
         now_utc = datetime.now(timezone.utc)
 
     try:
         repos = load_inventory(inventory_path)
-    except ValueError as exc:
+    except (ValueError, RolloutError) as exc:
         print(f'service:"rollout_check" {exc}', file=sys.stderr)
         error_report = {
             "generated_at": now_utc.isoformat().replace("+00:00", "Z"),
@@ -225,7 +242,7 @@ def main() -> int:
         return 1
 
     if not repos:
-        raise SystemExit('service:"rollout_check" inventory contains no repos to validate')
+        raise RolloutError('service:"rollout_check" inventory contains no repos to validate')
 
     evaluated = evaluate_repos(repos, now_utc, args.recovery_slo_hours)
     report = build_report(evaluated, args.inventory, args.recovery_slo_hours, now_utc)

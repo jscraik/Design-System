@@ -20,11 +20,11 @@ process.on("SIGINT", () => forwardSignal("SIGINT"));
 process.on("SIGTERM", () => forwardSignal("SIGTERM"));
 
 child.on("exit", (code, signal) => {
-  if (code !== null) {
-    process.exit(code);
-  }
-  if (signal !== null) {
-    process.exit(1);
-  }
-  process.exit(0);
+	if (code !== null) {
+		process.exit(code);
+	}
+	if (signal !== null) {
+		process.exit(1);
+	}
+	process.exit(0);
 });

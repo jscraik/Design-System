@@ -35,7 +35,7 @@ const PREK_HOOK_PATCH = [
 
 const SIMPLE_GIT_HOOKS_BOOTSTRAP_PATTERN = /^(?:npx\s+)?simple-git-hooks(?:\s+install)?$/;
 
-function patchInstalledPrekHooks() {
+function resolveHooksDir() {
   let hooksDir;
   try {
     hooksDir = execFileSync("git", ["rev-parse", "--git-path", "hooks"], {
@@ -57,51 +57,64 @@ function patchInstalledPrekHooks() {
     throw new Error(`git hooks directory does not exist: ${hooksDir}`);
   }
 
+  return hooksDir;
+}
+
+function processAndPatchHook(hookPath, hookName) {
+  let hookContent = "";
+  try {
+    hookContent = readFileSync(hookPath, "utf8");
+  } catch (error) {
+    throw new Error(
+      `failed to read installed hook "${hookName}" while applying ${PREK_HOME_EXPORT}: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    );
+  }
+
+  if (!hookContent.includes(PREK_HOOK_MARKER)) {
+    return false;
+  }
+  if (hookContent.includes(PREK_HOME_EXPORT)) {
+    return false;
+  }
+
+  const patched = hookContent.replace(
+    'fi\n\nexec "$PREK" hook-impl',
+    `fi\n\n${PREK_HOOK_PATCH}exec "$PREK" hook-impl`,
+  );
+  if (patched === hookContent) {
+    throw new Error(
+      `Hook "${hookName}" has the prek marker but could not be patched. ` +
+        `The prek shim format may have changed. Cannot proceed with installation.`,
+    );
+  }
+
+  try {
+    writeFileSync(hookPath, patched);
+  } catch (error) {
+    throw new Error(
+      `failed to patch installed hook "${hookName}" with PREK_HOOK_PATCH: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    );
+  }
+
+  return true;
+}
+
+function patchInstalledPrekHooks() {
+  const hooksDir = resolveHooksDir();
+
   let patchedCount = 0;
   for (const hookName of readdirSync(hooksDir)) {
     const hookPath = resolve(hooksDir, hookName);
     if (!statSync(hookPath).isFile()) {
       continue;
     }
-    let hookContent = "";
-    try {
-      hookContent = readFileSync(hookPath, "utf8");
-    } catch (error) {
-      throw new Error(
-        `failed to read installed hook "${hookName}" while applying ${PREK_HOME_EXPORT}: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
-      );
+    if (processAndPatchHook(hookPath, hookName)) {
+      patchedCount += 1;
     }
-
-    if (!hookContent.includes(PREK_HOOK_MARKER)) {
-      continue;
-    }
-    if (hookContent.includes(PREK_HOME_EXPORT)) {
-      continue;
-    }
-
-    const patched = hookContent.replace(
-      'fi\n\nexec "$PREK" hook-impl',
-      `fi\n\n${PREK_HOOK_PATCH}exec "$PREK" hook-impl`,
-    );
-    if (patched === hookContent) {
-      throw new Error(
-        `Hook "${hookName}" has the prek marker but could not be patched. ` +
-          `The prek shim format may have changed. Cannot proceed with installation.`,
-      );
-    }
-
-    try {
-      writeFileSync(hookPath, patched);
-    } catch (error) {
-      throw new Error(
-        `failed to patch installed hook "${hookName}" with PREK_HOOK_PATCH: ${
-          error instanceof Error ? error.message : String(error)
-        }`,
-      );
-    }
-    patchedCount += 1;
   }
 
   return patchedCount;
