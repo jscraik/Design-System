@@ -43,14 +43,18 @@ function patchInstalledPrekHooks() {
       cwd: process.cwd(),
     }).trim();
     if (!hooksDir) {
-      return 0;
+      throw new Error("git returned an empty hooks directory");
     }
-  } catch {
-    return 0;
+  } catch (error) {
+    throw new Error(
+      `failed to resolve git hooks directory for marker ${PREK_HOOK_MARKER}: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    );
   }
 
   if (!existsSync(hooksDir)) {
-    return 0;
+    throw new Error(`git hooks directory does not exist: ${hooksDir}`);
   }
 
   let patchedCount = 0;
@@ -59,8 +63,12 @@ function patchInstalledPrekHooks() {
     let hookContent = "";
     try {
       hookContent = readFileSync(hookPath, "utf8");
-    } catch {
-      continue;
+    } catch (error) {
+      throw new Error(
+        `failed to read installed hook "${hookName}" while applying ${PREK_HOME_EXPORT}: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
     }
 
     if (!hookContent.includes(PREK_HOOK_MARKER)) {
@@ -78,7 +86,15 @@ function patchInstalledPrekHooks() {
       continue;
     }
 
-    writeFileSync(hookPath, patched);
+    try {
+      writeFileSync(hookPath, patched);
+    } catch (error) {
+      throw new Error(
+        `failed to patch installed hook "${hookName}" with PREK_HOOK_PATCH: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+    }
     patchedCount += 1;
   }
 
@@ -216,8 +232,10 @@ function main() {
     console.info("  • pre-commit: make hooks-pre-commit");
     console.info("  • commit-msg: validates conventional commit format");
     console.info("  • pre-push: make hooks-pre-push");
-  } catch {
-    console.error("\n⚠️  Failed to run `prek install`. Install prek and run it manually.");
+  } catch (error) {
+    console.error(
+      `\n✗ setup-git-hooks failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
     process.exitCode = 1;
   }
 }

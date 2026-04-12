@@ -19,6 +19,10 @@ def _read_json(path: Path, label: str) -> Any:
         raise SystemExit(f"[evaluate_docstring_ratchet] invalid JSON in {path}: {exc}") from exc
 
 
+def _is_real_number(value: object) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool)
+
+
 def _extract_coverage(metrics: Any) -> tuple[float | None, float | None]:
     if not isinstance(metrics, dict):
         raise TypeError(f"metrics must be a dict, got {type(metrics).__name__}")
@@ -38,8 +42,8 @@ def _extract_coverage(metrics: Any) -> tuple[float | None, float | None]:
         else None,
     ]
 
-    previous = next((float(v) for v in previous_candidates if isinstance(v, (int, float))), None)
-    current = next((float(v) for v in current_candidates if isinstance(v, (int, float))), None)
+    previous = next((float(v) for v in previous_candidates if _is_real_number(v)), None)
+    current = next((float(v) for v in current_candidates if _is_real_number(v)), None)
     return (previous, current)
 
 
@@ -56,9 +60,9 @@ def _extract_per_symbol_regressions(metrics: Any) -> list[dict[str, Any]]:
             raise TypeError(f"metrics['per_symbol'][{idx}] must be a dict, got {type(row).__name__}")
         previous = row.get("previous")
         current = row.get("current")
-        if not isinstance(previous, (int, float)):
+        if not _is_real_number(previous):
             raise TypeError(f"metrics['per_symbol'][{idx}]['previous'] must be numeric, got {type(previous).__name__}")
-        if not isinstance(current, (int, float)):
+        if not _is_real_number(current):
             raise TypeError(f"metrics['per_symbol'][{idx}]['current'] must be numeric, got {type(current).__name__}")
         if current < previous:
             regressions.append(
