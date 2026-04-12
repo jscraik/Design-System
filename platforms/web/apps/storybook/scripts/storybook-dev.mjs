@@ -1,9 +1,14 @@
 import { spawn } from "node:child_process";
+import path from "node:path";
 
 const port = process.env.STORYBOOK_PORT ?? process.env.PORT ?? "6006";
-const args = ["exec", "storybook", "dev", "-p", String(port), "-c", ".storybook"];
+const storybookBin = path.resolve(
+  process.cwd(),
+  "../../../../node_modules/storybook/dist/bin/dispatcher.js",
+);
+const args = [storybookBin, "dev", "-p", String(port), "-c", ".storybook"];
 
-const child = spawn("pnpm", args, {
+const child = spawn("node", args, {
   stdio: "inherit",
 });
 
