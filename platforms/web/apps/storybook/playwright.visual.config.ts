@@ -127,8 +127,8 @@ export default defineConfig({
         timeout: 120000,
       }
     : {
-        // Use the root-level Storybook binary to avoid broken package-local bin shims in hoisted installs.
-        command: `pnpm exec storybook dev -p ${storybookPort} -c platforms/web/apps/storybook/.storybook`,
+        // Launch Storybook via the root-resolved dispatcher to avoid package-context shim breakage.
+        command: `node node_modules/storybook/dist/bin/dispatcher.js dev -p ${storybookPort} -c platforms/web/apps/storybook/.storybook`,
         url: baseURL,
         reuseExistingServer,
         timeout: 120000,
