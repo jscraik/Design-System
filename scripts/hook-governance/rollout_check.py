@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -52,11 +53,17 @@ def _extract_repos(inventory: Any) -> list[dict[str, Any]]:
         repos = inventory["repos"]
         if not isinstance(repos, list):
             raise ValueError(f"inventory['repos'] must be a list, got {type(repos).__name__}")
-        return repos
     elif isinstance(inventory, list):
-        return inventory
+        repos = inventory
     else:
         raise ValueError(f"inventory must be a dict or list, got {type(inventory).__name__}")
+
+    for index, repo in enumerate(repos):
+        if not isinstance(repo, dict):
+            raise ValueError(
+                f"inventory repos entry {index} must be an object, got {type(repo).__name__}"
+            )
+    return repos
 
 
 def _evaluate_repo(repo: dict[str, Any], now_utc: datetime, recovery_slo_hours: int) -> RepoStatus:
@@ -108,6 +115,16 @@ def main() -> int:
         required=True,
         help="Path to write JSON report.",
     )
+    parser.add_argument(
+        "--plain",
+        action="store_true",
+        help="Run in plain mode (no interactive UI).",
+    )
+    parser.add_argument(
+        "--no-color",
+        action="store_true",
+        help="Disable colored output.",
+    )
     args = parser.parse_args()
 
     inventory_path = Path(args.inventory).expanduser().resolve()
@@ -117,7 +134,7 @@ def main() -> int:
     try:
         repos = _extract_repos(inventory)
     except ValueError as exc:
-        print(f"[rollout_check] invalid inventory: {exc}", file=__import__("sys").stderr)
+        print(f"[rollout_check] invalid inventory: {exc}", file=sys.stderr)
         error_report = {
             "generated_at": now_utc.isoformat().replace("+00:00", "Z"),
             "inventory": args.inventory,
