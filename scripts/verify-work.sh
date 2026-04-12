@@ -145,6 +145,7 @@ run_hook_governance_checks() {
 	local metrics_path=""
 	local rollout_out=""
 	local docstring_out=""
+	local recovery_slo_hours=24
 
 	if [[ "$governance_scope" == "workspace" ]]; then
 		local manifest_path="$workspace_manifest"
@@ -160,6 +161,15 @@ run_hook_governance_checks() {
 		inventory_path="$(jq -r '.inventory // "docs/hooks-governance/repo-profile-matrix.json"' "$manifest_path")"
 		classification_path="$(jq -r '.classification // "docs/hooks-governance/public-api-classification.json"' "$manifest_path")"
 		metrics_path="$(jq -r '.metrics // "docs/hooks-governance/docstring-ratchet-metrics.json"' "$manifest_path")"
+		local manifest_recovery_slo
+		manifest_recovery_slo="$(jq -r '.recovery_slo_hours // empty' "$manifest_path")"
+		if [[ -n "$manifest_recovery_slo" ]]; then
+			recovery_slo_hours="$manifest_recovery_slo"
+		else
+			# Workspace inventories are checked in and refresh periodically;
+			# use a wider default than 24h unless the manifest sets a stricter SLO.
+			recovery_slo_hours="${VERIFY_WORK_WORKSPACE_RECOVERY_SLO_HOURS:-720}"
+		fi
 		rollout_out="docs/hooks-governance/rollout-check-report.json"
 		docstring_out="docs/hooks-governance/docstring-ratchet-report.json"
 
@@ -191,7 +201,7 @@ run_hook_governance_checks() {
 	echo "==> hook-governance rollout-check ($governance_scope)"
 	python3 "$rollout_script" \
 		--inventory "$inventory_path" \
-		--recovery-slo-hours 24 \
+		--recovery-slo-hours "$recovery_slo_hours" \
 		--out "$rollout_out"
 
 	echo

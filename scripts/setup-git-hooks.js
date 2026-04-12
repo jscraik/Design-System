@@ -207,18 +207,18 @@ function main() {
 
   const effectiveHooksPath = getGitConfigValue("core.hooksPath");
   if (effectiveHooksPath) {
-    console.error(
-      `✗ Effective core.hooksPath is still set to "${effectiveHooksPath}".\n` +
-        "Unset worktree/global/system core.hooksPath before installing hooks.",
+    console.warn(
+      `⚠ Effective core.hooksPath is set to "${effectiveHooksPath}".\n` +
+        "Proceeding without overriding it; hooks will install to that configured path.",
     );
     const originEntries = getGitConfigValue("--show-origin", "--get-all", "core.hooksPath");
     if (originEntries) {
-      console.error("\nDetected core.hooksPath sources:");
-      console.error(originEntries);
+      console.warn("\nDetected core.hooksPath sources:");
+      console.warn(originEntries);
     }
-    process.exit(1);
+  } else {
+    console.info("✓ No effective core.hooksPath override remains");
   }
-  console.info("✓ No effective core.hooksPath override remains");
 
   console.info("\nInstalling prek git hooks...");
   try {

@@ -5,11 +5,7 @@ import { fileURLToPath } from "node:url";
 import { defineConfig, devices } from "@playwright/test";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const workspaceRoot = path.resolve(__dirname, "../../../..");
-const storybookDispatcher = path.join(
-  workspaceRoot,
-  "node_modules/storybook/dist/bin/dispatcher.js",
-);
+const storybookDevScript = path.join(__dirname, "scripts/storybook-dev.mjs");
 const require = createRequire(import.meta.url);
 
 /**
@@ -131,10 +127,14 @@ export default defineConfig({
         timeout: 120000,
       }
     : {
-        command: `node ${storybookDispatcher} dev -p ${storybookPort} -c .storybook`,
+        command: `node "${storybookDevScript}"`,
         url: baseURL,
         reuseExistingServer,
         timeout: 120000,
         cwd: __dirname,
+        env: {
+          ...process.env,
+          STORYBOOK_PORT: String(storybookPort),
+        },
       },
 });
