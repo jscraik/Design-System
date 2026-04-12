@@ -160,14 +160,17 @@ run_hook_governance_checks() {
 		inventory_path="$(jq -r '.inventory // "docs/hooks-governance/repo-profile-matrix.json"' "$manifest_path")"
 		classification_path="$(jq -r '.classification // "docs/hooks-governance/public-api-classification.json"' "$manifest_path")"
 		metrics_path="$(jq -r '.metrics // "docs/hooks-governance/docstring-ratchet-metrics.json"' "$manifest_path")"
+		rollout_out="docs/hooks-governance/rollout-check-report.json"
+		docstring_out="docs/hooks-governance/docstring-ratchet-report.json"
 
-		inventory_path="$(resolve_artifact_path "$inventory_path")"
-		classification_path="$(resolve_artifact_path "$classification_path")"
-		metrics_path="$(resolve_artifact_path "$metrics_path")"
-		rollout_out="$repo_root/docs/hooks-governance/rollout-check-report.json"
-		docstring_out="$repo_root/docs/hooks-governance/docstring-ratchet-report.json"
+		local inventory_path_check
+		local classification_path_check
+		local metrics_path_check
+		inventory_path_check="$(resolve_artifact_path "$inventory_path")"
+		classification_path_check="$(resolve_artifact_path "$classification_path")"
+		metrics_path_check="$(resolve_artifact_path "$metrics_path")"
 
-		for required_path in "$inventory_path" "$classification_path" "$metrics_path"; do
+		for required_path in "$inventory_path_check" "$classification_path_check" "$metrics_path_check"; do
 			if [[ ! -f "$required_path" ]]; then
 				echo "[verify-work] workspace governance input not found: $required_path" >&2
 				return 2

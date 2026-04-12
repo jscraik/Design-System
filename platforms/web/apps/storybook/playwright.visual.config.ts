@@ -6,6 +6,10 @@ import { defineConfig, devices } from "@playwright/test";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const workspaceRoot = path.resolve(__dirname, "../../../..");
+const storybookDispatcher = path.join(
+  workspaceRoot,
+  "node_modules/storybook/dist/bin/dispatcher.js",
+);
 const require = createRequire(import.meta.url);
 
 /**
@@ -127,11 +131,10 @@ export default defineConfig({
         timeout: 120000,
       }
     : {
-        // Launch Storybook via the root-resolved dispatcher to avoid package-context shim breakage.
-        command: `node node_modules/storybook/dist/bin/dispatcher.js dev -p ${storybookPort} -c platforms/web/apps/storybook/.storybook`,
+        command: `node ${storybookDispatcher} dev -p ${storybookPort} -c .storybook`,
         url: baseURL,
         reuseExistingServer,
         timeout: 120000,
-        cwd: workspaceRoot,
+        cwd: __dirname,
       },
 });
