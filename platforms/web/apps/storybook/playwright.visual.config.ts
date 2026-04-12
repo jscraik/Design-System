@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { defineConfig, devices } from "@playwright/test";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const workspaceRoot = path.resolve(__dirname, "../../../..");
 const require = createRequire(import.meta.url);
 
 /**
@@ -126,10 +127,11 @@ export default defineConfig({
         timeout: 120000,
       }
     : {
-        command: `pnpm exec storybook dev -p ${storybookPort}`,
+        // Use the root-level Storybook binary to avoid broken package-local bin shims in hoisted installs.
+        command: `pnpm exec storybook dev -p ${storybookPort} -c platforms/web/apps/storybook/.storybook`,
         url: baseURL,
         reuseExistingServer,
         timeout: 120000,
-        cwd: __dirname,
+        cwd: workspaceRoot,
       },
 });

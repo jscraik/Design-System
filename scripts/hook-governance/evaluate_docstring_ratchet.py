@@ -5,18 +5,26 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+SERVICE_ID = "design-system.docstring-ratchet"
+
+
+def _emit(message: str, *, stderr: bool = False) -> None:
+    stream = sys.stderr if stderr else sys.stdout
+    print(f"[{SERVICE_ID}] {message}", file=stream)
 
 
 def _read_json(path: Path, label: str) -> Any:
     try:
         return json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError as exc:
-        raise SystemExit(f"[evaluate_docstring_ratchet] {label} not found: {path}") from exc
+        raise SystemExit(f"[{SERVICE_ID}] {label} not found: {path}") from exc
     except json.JSONDecodeError as exc:
-        raise SystemExit(f"[evaluate_docstring_ratchet] invalid JSON in {path}: {exc}") from exc
+        raise SystemExit(f"[{SERVICE_ID}] invalid JSON in {path}: {exc}") from exc
 
 
 def _is_real_number(value: object) -> bool:
@@ -92,6 +100,16 @@ def main() -> int:
         description="Evaluate docstring ratchet from explicit classification and metrics inputs."
     )
     parser.add_argument(
+        "--plain",
+        action="store_true",
+        help="Emit plain text output (accepted for contract parity; output is always plain text).",
+    )
+    parser.add_argument(
+        "--no-color",
+        action="store_true",
+        help="Disable color output (accepted for contract parity; output is always uncolored).",
+    )
+    parser.add_argument(
         "--classification",
         required=True,
         help="Path to public API classification JSON (required, no default fallback).",
@@ -126,7 +144,7 @@ def main() -> int:
         regressions = _extract_per_symbol_regressions(metrics)
         classified_count = _classification_count(classification)
     except (ValueError, TypeError) as exc:
-        print(f"[evaluate_docstring_ratchet] invalid input: {exc}", file=__import__("sys").stderr)
+        _emit(f"invalid input: {exc}", stderr=True)
         error_report = {
             "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             "window_days": args.window_days,
@@ -192,17 +210,14 @@ def main() -> int:
     out_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
     if not coverage_complete:
-        print(
-            "[evaluate_docstring_ratchet] coverage metrics missing "
-            "(expected previous/current coverage values)"
-        )
+        _emit("coverage metrics missing (expected previous/current coverage values)", stderr=True)
         return 1
 
     if regressions:
-        print(f"[evaluate_docstring_ratchet] regressions detected: {len(regressions)}")
+        _emit(f"regressions detected: {len(regressions)}", stderr=True)
         return 1
 
-    print("[evaluate_docstring_ratchet] pass")
+    _emit("pass")
     return 0
 
 

@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-04-11
+**Last updated:** 2026-04-12
 **Production status:** IN_PROGRESS
 **Overall health:** Yellow
 
@@ -151,6 +151,8 @@ See also: `~/.codex/instructions/Learnings.md`
 
 ### 2026-04-12
 
+- **Storybook CI launcher fix (hoisted installs)**: `platforms/web/apps/storybook/playwright.visual.config.ts` now starts the Storybook web server from the workspace root and points explicitly at `platforms/web/apps/storybook/.storybook`. This avoids package-local Storybook bin shim failures (`.../platforms/web/apps/storybook/node_modules/storybook/dist/bin/dispatcher.js`) seen on CI hoisted installs while keeping the same Storybook config surface.
+- **Docstring-ratchet CLI contract parity**: `scripts/hook-governance/evaluate_docstring_ratchet.py` now accepts `--plain` and `--no-color` compatibility flags and emits consistent service-prefixed stdout/stderr messages (`[design-system.docstring-ratchet] ...`) so automation and reviewers can reliably attribute failures.
 - **Workspace Vite shim hardening**: `packages/ui`, `packages/json-render`, and `packages/widgets` now run build/dev scripts through the root-installed Vite binary (`node ../../node_modules/vite/bin/vite.js ...`) instead of per-package shim resolution. This avoids CI failures when package-local `.bin/vite` shims are missing under hoisted installs while preserving package-local cwd for each Vite config.
 - **Web app Vite shim hardening**: `platforms/web/apps/web` now runs `dev`, `build`, `preview`, and `build:widget` through the root-installed Vite binary (`node ../../../../node_modules/vite/bin/vite.js ...`). This fixes CI/web build failures where `platforms/web/apps/web/node_modules/vite/bin/vite.js` was missing under hoisted installs.
 - **Workspace Vitest shim hardening**: `packages/ui` test scripts now run through the root-installed Vitest entrypoint (`node ../../node_modules/vitest/vitest.mjs ...`) so hook/test runs stop failing when package-local Vitest shims are absent in hoisted installs.
