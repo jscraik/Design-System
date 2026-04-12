@@ -83,6 +83,9 @@ function patchInstalledPrekHooks() {
       `fi\n\n${PREK_HOOK_PATCH}exec "$PREK" hook-impl`,
     );
     if (patched === hookContent) {
+      console.warn(
+        `⚠ Hook "${hookName}" has the prek marker but could not be patched (shim format may have changed)`,
+      );
       continue;
     }
 

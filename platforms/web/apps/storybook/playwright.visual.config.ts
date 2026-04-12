@@ -127,7 +127,7 @@ export default defineConfig({
         timeout: 120000,
       }
     : {
-        command: `node "${storybookDevScript}"`,
+        command: `pnpm exec node "${storybookDevScript}"`,
         url: baseURL,
         reuseExistingServer,
         timeout: 120000,
