@@ -1,9 +1,9 @@
 import { spawn } from "node:child_process";
 
 const port = process.env.STORYBOOK_PORT ?? process.env.PORT ?? "6006";
-const args = ["dev", "-p", String(port)];
+const args = ["exec", "storybook", "dev", "-p", String(port), "-c", ".storybook"];
 
-const child = spawn(process.platform === "win32" ? "storybook.cmd" : "storybook", args, {
+const child = spawn("pnpm", args, {
   stdio: "inherit",
 });
 
