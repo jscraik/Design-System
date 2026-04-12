@@ -11,6 +11,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+# Global flag for color output control
+COLOR_ENABLED = True
+
 
 def _parse_iso8601(value: str) -> datetime | None:
     candidate = value.strip()
@@ -126,6 +129,15 @@ def main() -> int:
         help="Disable colored output.",
     )
     args = parser.parse_args()
+
+    # Honor --plain and --no-color flags
+    global COLOR_ENABLED
+    COLOR_ENABLED = True
+    if args.plain:
+        # Disable interactive UI and color
+        COLOR_ENABLED = False
+    if args.no_color:
+        COLOR_ENABLED = False
 
     inventory_path = Path(args.inventory).expanduser().resolve()
     out_path = Path(args.out).expanduser().resolve()
