@@ -19,6 +19,12 @@ const forwardSignal = (signal) => {
 process.on("SIGINT", () => forwardSignal("SIGINT"));
 process.on("SIGTERM", () => forwardSignal("SIGTERM"));
 
-child.on("exit", (code) => {
-  process.exit(code ?? 0);
+child.on("exit", (code, signal) => {
+  if (code !== null) {
+    process.exit(code);
+  }
+  if (signal !== null) {
+    process.exit(1);
+  }
+  process.exit(0);
 });

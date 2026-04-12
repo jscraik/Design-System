@@ -98,7 +98,7 @@ def _evaluate_repo(repo: dict[str, Any], now_utc: datetime, recovery_slo_hours: 
     )
 
 
-def main() -> int:
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Check governance rollout freshness from an explicit inventory file."
     )
@@ -128,50 +128,45 @@ def main() -> int:
         action="store_true",
         help="Disable colored output.",
     )
+    parser.add_argument(
+        "--now",
+        type=str,
+        help="ISO8601 timestamp for 'now' (for testing; defaults to current UTC time).",
+    )
     args = parser.parse_args()
 
     # Honor --plain and --no-color flags
     global COLOR_ENABLED
-    COLOR_ENABLED = True
-    if args.plain:
-        # Disable interactive UI and color
-        COLOR_ENABLED = False
-    if args.no_color:
-        COLOR_ENABLED = False
+    COLOR_ENABLED = not (args.plain or args.no_color)
 
-    inventory_path = Path(args.inventory).expanduser().resolve()
-    out_path = Path(args.out).expanduser().resolve()
-    now_utc = datetime.now(timezone.utc)
-    inventory = _read_json(inventory_path)
+    return args
+
+
+def load_inventory(path: Path) -> list[dict[str, Any]]:
+    inventory = _read_json(path)
     try:
-        repos = _extract_repos(inventory)
+        return _extract_repos(inventory)
     except ValueError as exc:
-        print(f"[rollout_check] invalid inventory: {exc}", file=sys.stderr)
-        error_report = {
-            "generated_at": now_utc.isoformat().replace("+00:00", "Z"),
-            "inventory": args.inventory,
-            "recovery_slo_hours": args.recovery_slo_hours,
-            "summary": {
-                "total_repos": 0,
-                "stale_repos": 0,
-                "pass": False,
-            },
-            "repos": [],
-            "error": str(exc),
-        }
-        out_path.parent.mkdir(parents=True, exist_ok=True)
-        out_path.write_text(json.dumps(error_report, indent=2) + "\n", encoding="utf-8")
-        return 1
+        raise ValueError(f"invalid inventory: {exc}") from exc
 
-    if not repos:
-        raise SystemExit("[rollout_check] inventory contains no repos to validate")
-    evaluated = [_evaluate_repo(repo, now_utc, args.recovery_slo_hours) for repo in repos]
+
+def evaluate_repos(
+    repos: list[dict[str, Any]], now_utc: datetime, recovery_slo_hours: int
+) -> list[RepoStatus]:
+    return [_evaluate_repo(repo, now_utc, recovery_slo_hours) for repo in repos]
+
+
+def build_report(
+    evaluated: list[RepoStatus],
+    inventory_path: str,
+    recovery_slo_hours: int,
+    now_utc: datetime,
+) -> dict[str, Any]:
     stale = [repo for repo in evaluated if repo.stale_reason is not None]
-
-    report = {
+    return {
         "generated_at": now_utc.isoformat().replace("+00:00", "Z"),
-        "inventory": args.inventory,
-        "recovery_slo_hours": args.recovery_slo_hours,
+        "inventory": inventory_path,
+        "recovery_slo_hours": recovery_slo_hours,
         "summary": {
             "total_repos": len(evaluated),
             "stale_repos": len(stale),
@@ -190,15 +185,59 @@ def main() -> int:
         ],
     }
 
+
+def write_report(report: dict[str, Any], out_path: Path) -> None:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
-    if stale:
-        names = ", ".join(repo.name for repo in stale)
-        print(f"[rollout_check] stale repos detected: {names}")
+
+def main() -> int:
+    args = parse_args()
+
+    inventory_path = Path(args.inventory).expanduser().resolve()
+    out_path = Path(args.out).expanduser().resolve()
+
+    # Parse --now or default to current UTC time
+    if args.now:
+        now_utc = _parse_iso8601(args.now)
+        if now_utc is None:
+            raise SystemExit(f'service:"rollout_check" invalid --now timestamp: {args.now}')
+    else:
+        now_utc = datetime.now(timezone.utc)
+
+    try:
+        repos = load_inventory(inventory_path)
+    except ValueError as exc:
+        print(f'service:"rollout_check" {exc}', file=sys.stderr)
+        error_report = {
+            "generated_at": now_utc.isoformat().replace("+00:00", "Z"),
+            "inventory": args.inventory,
+            "recovery_slo_hours": args.recovery_slo_hours,
+            "summary": {
+                "total_repos": 0,
+                "stale_repos": 0,
+                "pass": False,
+            },
+            "repos": [],
+            "error": str(exc),
+        }
+        write_report(error_report, out_path)
         return 1
 
-    print(f"[rollout_check] pass ({len(evaluated)} repos)")
+    if not repos:
+        raise SystemExit('service:"rollout_check" inventory contains no repos to validate')
+
+    evaluated = evaluate_repos(repos, now_utc, args.recovery_slo_hours)
+    report = build_report(evaluated, args.inventory, args.recovery_slo_hours, now_utc)
+    write_report(report, out_path)
+
+    stale = [repo for repo in evaluated if repo.stale_reason is not None]
+    if stale:
+        names = ", ".join(repo.name for repo in stale)
+        print(f'service:"rollout_check" stale repos detected: {names}')
+        return 1
+
+    print(f'service:"rollout_check" pass ({len(evaluated)} repos)')
     return 0
 
 
