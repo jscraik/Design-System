@@ -114,7 +114,6 @@ def main() -> int:
     out_path = Path(args.out).expanduser().resolve()
     now_utc = datetime.now(timezone.utc)
     inventory = _read_json(inventory_path)
-
     try:
         repos = _extract_repos(inventory)
     except ValueError as exc:
@@ -135,6 +134,8 @@ def main() -> int:
         out_path.write_text(json.dumps(error_report, indent=2) + "\n", encoding="utf-8")
         return 1
 
+    if not repos:
+        raise SystemExit("[rollout_check] inventory contains no repos to validate")
     evaluated = [_evaluate_repo(repo, now_utc, args.recovery_slo_hours) for repo in repos]
     stale = [repo for repo in evaluated if repo.stale_reason is not None]
 

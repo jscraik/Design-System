@@ -176,6 +176,10 @@ See also: `~/.codex/instructions/Learnings.md`
 - **Agent mutation policy finalized**: `docs/agents/hook-governance-scope-defaults.md` now includes the explicit **Agent Mutation Default** contract and date-stamped section naming so agent behavior is unambiguous: local-project mutation by default, workspace mutation opt-in only, and executable wrapper/script-input scope takes precedence over inferred workspace defaults.
 - **Local-memory preflight fail-closed guard**: `scripts/codex-preflight.sh` now treats explicit Local Memory failure markers in helper output (for example `❌` lines and `observe A/B returned HTTP ...`) as hard failures even when a helper process exits `0`. This prevents false-positive `preflight passed` outcomes in `--mode required` when upstream helper wrappers misreport success.
 
+### 2026-04-12
+
+- **Empty inventory guard for rollout checks**: `scripts/hook-governance/rollout_check.py` now fails closed when the provided inventory has no repos to evaluate, so `--workspace-governance` no longer reports a passing run from an empty `{"repos": []}` payload.
+
 ### 2026-03-28
 
 - **Design-system skill refresh (repo-grounded)**: updated `.agents/skills/design-system/SKILL.md` and supporting references (`contract.yaml`, `system-map.md`, `plan.md`, `evals.yaml`, `agents/openai.yaml`) to match current project contracts and workflows. The skill now explicitly includes preflight expectations, guidance-policy sources (`.design-system-guidance.json`, `PROFESSIONAL_UI_CONTRACT`, `AGENT_UI_ROUTING`, lifecycle/exemptions docs), and clearer fail-mode routing for non-UI requests.
