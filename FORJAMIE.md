@@ -151,6 +151,7 @@ See also: `~/.codex/instructions/Learnings.md`
 
 ### 2026-04-12
 
+- **Workspace Vite shim hardening**: `packages/ui`, `packages/json-render`, and `packages/widgets` now run build/dev scripts through the root-installed Vite binary (`node ../../node_modules/vite/bin/vite.js ...`) instead of per-package shim resolution. This avoids CI failures when package-local `.bin/vite` shims are missing under hoisted installs while preserving package-local cwd for each Vite config.
 - **CI token generation hardening**: `packages/tokens/package.json` now runs token generation and validation scripts via `node --import tsx` instead of package-local `tsx` bin shims. This removes dependency on per-package `.bin` layout and fixes CI failures where `packages/tokens/node_modules/tsx/dist/cli.mjs` was missing under hoisted installs.
 - **Tailwind preset resolution stability**: `tailwind.config.base.ts` now imports the preset through the monorepo source path (`./packages/tokens/tailwind.preset`) so strict TypeScript checks stop failing on unresolved `@design-studio/tokens/tailwind.preset` during workspace builds.
 

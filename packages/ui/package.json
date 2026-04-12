@@ -85,9 +85,9 @@
     "./dist/ui.css"
   ],
   "scripts": {
-    "build": "vite build",
-    "build:visual": "vite build",
-    "dev": "vite build --watch",
+    "build": "node ../../node_modules/vite/bin/vite.js build",
+    "build:visual": "node ../../node_modules/vite/bin/vite.js build",
+    "dev": "node ../../node_modules/vite/bin/vite.js build --watch",
     "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
