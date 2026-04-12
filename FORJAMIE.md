@@ -149,6 +149,11 @@ See also: `~/.codex/instructions/Learnings.md`
 
 ## Recent changes
 
+### 2026-04-12
+
+- **CI token generation hardening**: `packages/tokens/package.json` now runs token generation and validation scripts via `node --import tsx` instead of package-local `tsx` bin shims. This removes dependency on per-package `.bin` layout and fixes CI failures where `packages/tokens/node_modules/tsx/dist/cli.mjs` was missing under hoisted installs.
+- **Tailwind preset resolution stability**: `tailwind.config.base.ts` now imports the preset through the monorepo source path (`./packages/tokens/tailwind.preset`) so strict TypeScript checks stop failing on unresolved `@design-studio/tokens/tailwind.preset` during workspace builds.
+
 ### 2026-04-11
 
 - **Canonical `prek` hook contract**: the root hook surfaces now align on `prek` only. `Makefile` adds the required `hooks-commit-msg` wrapper, `prek.toml` installs `pre-commit`, `commit-msg`, and `pre-push` from canonical wrapper targets, `scripts/setup-git-hooks.js` now strips legacy package hook metadata before running `prek install`, and `scripts/check-environment.sh` fails if old package-level hook metadata is still present.
