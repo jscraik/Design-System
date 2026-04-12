@@ -5,7 +5,6 @@ import { fileURLToPath } from "node:url";
 import { defineConfig, devices } from "@playwright/test";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const storybookDevScript = path.join(__dirname, "scripts/storybook-dev.mjs");
 const require = createRequire(import.meta.url);
 
 /**
@@ -127,7 +126,7 @@ export default defineConfig({
         timeout: 120000,
       }
     : {
-        command: `pnpm exec node "${storybookDevScript}"`,
+        command: "node ./scripts/storybook-dev.mjs",
         url: baseURL,
         reuseExistingServer,
         timeout: 120000,
