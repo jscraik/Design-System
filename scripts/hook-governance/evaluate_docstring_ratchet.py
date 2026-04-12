@@ -161,6 +161,7 @@ def main() -> int:
             },
         )
 
+    coverage_complete = previous_coverage is not None and current_coverage is not None
     generated_at = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     report = {
         "generated_at": generated_at,
@@ -170,7 +171,8 @@ def main() -> int:
         "summary": {
             "classified_symbols": classified_count,
             "regression_count": len(regressions),
-            "pass": len(regressions) == 0,
+            "coverage_complete": coverage_complete,
+            "pass": coverage_complete and len(regressions) == 0,
         },
         "coverage": {
             "previous": previous_coverage,
@@ -184,6 +186,13 @@ def main() -> int:
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+
+    if not coverage_complete:
+        print(
+            "[evaluate_docstring_ratchet] coverage metrics missing "
+            "(expected previous/current coverage values)"
+        )
+        return 1
 
     if regressions:
         print(f"[evaluate_docstring_ratchet] regressions detected: {len(regressions)}")

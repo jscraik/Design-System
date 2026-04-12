@@ -33,6 +33,8 @@ const PREK_HOOK_PATCH = [
   "",
 ].join("\n");
 
+const SIMPLE_GIT_HOOKS_BOOTSTRAP_PATTERN = /^(?:npx\s+)?simple-git-hooks(?:\s+install)?$/;
+
 function patchInstalledPrekHooks() {
   let hooksDir;
   try {
@@ -83,6 +85,25 @@ function patchInstalledPrekHooks() {
   return patchedCount;
 }
 
+function splitCommandSequence(command) {
+  return command
+    .split(/&&|;/)
+    .map((segment) => segment.trim())
+    .filter(Boolean);
+}
+
+function isLegacySimpleGitHooksBootstrap(command) {
+  return SIMPLE_GIT_HOOKS_BOOTSTRAP_PATTERN.test(command.trim());
+}
+
+function getGitConfigValue(...args) {
+  try {
+    return execFileSync("git", ["config", ...args], { encoding: "utf8" }).trim();
+  } catch {
+    return "";
+  }
+}
+
 function main() {
   if (!existsSync(PACKAGE_JSON_PATH)) {
     console.error("Error: package.json not found in current directory");
@@ -117,10 +138,24 @@ function main() {
   }
 
   const scripts = packageJson.scripts;
-  if (scripts.postinstall?.includes("simple-git-hooks")) {
-    delete scripts.postinstall;
-    console.info("✓ Removed legacy hook postinstall bootstrap");
-    modified = true;
+  if (typeof scripts.postinstall === "string") {
+    const postinstallSteps = splitCommandSequence(scripts.postinstall);
+    const legacyBootstrapSteps = postinstallSteps.filter((step) =>
+      isLegacySimpleGitHooksBootstrap(step),
+    );
+    if (legacyBootstrapSteps.length > 0) {
+      if (legacyBootstrapSteps.length !== postinstallSteps.length) {
+        console.error(
+          "Error: scripts.postinstall mixes simple-git-hooks bootstrap with other commands.\n" +
+            "Remove the simple-git-hooks segment manually before running setup-git-hooks.",
+        );
+        process.exit(1);
+      }
+
+      delete scripts.postinstall;
+      console.info("✓ Removed legacy hook postinstall bootstrap");
+      modified = true;
+    }
   }
 
   // Enforce required helper scripts used by the hook targets
@@ -153,6 +188,21 @@ function main() {
   } catch {
     console.info("✓ No local core.hooksPath override set");
   }
+
+  const effectiveHooksPath = getGitConfigValue("core.hooksPath");
+  if (effectiveHooksPath) {
+    console.error(
+      `✗ Effective core.hooksPath is still set to "${effectiveHooksPath}".\n` +
+        "Unset worktree/global/system core.hooksPath before installing hooks.",
+    );
+    const originEntries = getGitConfigValue("--show-origin", "--get-all", "core.hooksPath");
+    if (originEntries) {
+      console.error("\nDetected core.hooksPath sources:");
+      console.error(originEntries);
+    }
+    process.exit(1);
+  }
+  console.info("✓ No effective core.hooksPath override remains");
 
   console.info("\nInstalling prek git hooks...");
   try {
