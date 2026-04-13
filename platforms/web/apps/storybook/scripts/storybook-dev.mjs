@@ -3,7 +3,7 @@ import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 const port = process.env.STORYBOOK_PORT ?? process.env.PORT ?? "6006";
-const storybookBin = require.resolve("storybook/dist/bin/dispatcher.js");
+const storybookBin = require.resolve("storybook/internal/bin/dispatcher");
 const args = [storybookBin, "dev", "-p", String(port), "-c", ".storybook"];
 
 const child = spawn("node", args, {

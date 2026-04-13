@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-04-12
+**Last updated:** 2026-04-13
 **Production status:** IN_PROGRESS
 **Overall health:** Yellow
 
@@ -149,6 +149,10 @@ See also: `~/.codex/instructions/Learnings.md`
 
 ## Recent changes
 
+### 2026-04-13
+
+- **Storybook dispatcher export-path fix (macOS CI unblock)**: `platforms/web/apps/storybook/scripts/storybook-dev.mjs` now resolves Storybook via the exported package subpath `storybook/internal/bin/dispatcher` instead of the non-exported `storybook/dist/bin/dispatcher.js` path. This removes the `ERR_PACKAGE_PATH_NOT_EXPORTED` startup crash in the macOS exemplar lane and keeps the wrapper-based launch flow intact.
+
 ### 2026-04-12
 
 - **Workspace governance path-stability fix**: `scripts/verify-work.sh --workspace-governance` now keeps manifest-derived `inventory`, `classification`, and `metrics` inputs repo-relative when invoking governance scripts. Validation still resolves absolute paths for existence checks, but generated governance reports no longer capture machine-specific checkout roots.
@@ -274,7 +278,7 @@ project: design-system
 repo: ~/dev/design-system
 status: IN_PROGRESS
 health: yellow
-last_updated: 2026-04-12
+last_updated: 2026-04-13
 open_prs: 0
 blockers: none
 next_milestone: ChatGPT widget integration
