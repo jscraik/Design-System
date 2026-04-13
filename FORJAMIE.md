@@ -234,6 +234,10 @@ See also: `~/.codex/instructions/Learnings.md`
 - **Guidance scope rollout**: the root `.design-system-guidance.json` now uses an explicit product-surface allowlist for the protected settings wave plus `TemplateBrowserPage`, while broader app, storybook, and showcase surfaces stay in `warn`. This keeps the policy credible without pretending the rest of the repo is already clean.
 - **Agent-facing design-system audit**: added `docs/audits/AGENT_UI_MARCH_2026_AUDIT.md` and indexed it in `docs/audits/README.md`. The audit captures March 2026 gaps that affect whether agents can consistently produce professional UI, including broken token validation, stale coverage checks, semantic-token bypasses, thin guidance rules, and missing component-routing guardrails.
 
+### 2026-04-13
+
+- Added the PR #142 dependency bump map entry for the `hono` tooling/runtime update so the documented project state stays aligned with the current branch contents and repo guidance.
+
 ### 2026-03-22
 
 - **Gold standard uplift** (commit `db75f06a`): pinned all GitHub Actions to full commit SHAs in `ci.yml`; added `tsconfig.strict.json` with `noUncheckedIndexedAccess` + `exactOptionalPropertyTypes` and an informational CI step tracking migration progress.
