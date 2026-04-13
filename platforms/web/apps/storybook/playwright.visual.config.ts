@@ -126,10 +126,14 @@ export default defineConfig({
         timeout: 120000,
       }
     : {
-        command: `pnpm exec storybook dev -p ${storybookPort}`,
+        command: "node ./scripts/storybook-dev.mjs",
         url: baseURL,
         reuseExistingServer,
         timeout: 120000,
         cwd: __dirname,
+        env: {
+          ...process.env,
+          STORYBOOK_PORT: String(storybookPort),
+        },
       },
 });

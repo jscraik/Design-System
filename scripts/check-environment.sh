@@ -14,7 +14,96 @@ CONTRACT_PATH="$REPO_ROOT/harness.contract.json"
 	PREK_CONFIG_PATH="$REPO_ROOT/prek.toml"
 	PACKAGE_JSON_PATH="$REPO_ROOT/package.json"
 	CODESTYLE_PATH="$REPO_ROOT/CODESTYLE.md"
-	TOOLING_DOC_PATH="${TOOLING_DOC_PATH:-$HOME/dev/config/codex/instructions/tooling.md}"
+	TOOLING_DOC_PATH="${TOOLING_DOC_PATH:-$REPO_ROOT/docs/agents/tooling.md}"
+
+required_mise_tools=("node" "pnpm" "python" "uv" "cargo:prek" "npm:@brainwav/diagram" "npm:@argos-ci/cli" "cosign" "cloudflared" "npm:vitest" "ruff" "npm:eslint" "npm:agent-browser" "npm:agentation" "npm:agentation-mcp" "npm:@mermaid-js/mermaid-cli" "npm:@brainwav/rsearch" "npm:@brainwav/wsearch-cli" "npm:beautiful-mermaid" "npm:markdownlint-cli2" "npm:semver" "npm:wrangler" "semgrep" "trivy" "vale")
+required_bins=("pnpm" "node" "jq" "make" "rg" "fd" "prek" "diagram" "mise" "vale" "argos" "cosign" "cloudflared" "vitest" "ruff" "eslint" "agent-browser" "agentation-mcp" "mmdc" "markdownlint-cli2" "wrangler" "beautiful-mermaid" "semgrep" "semver" "trivy" "rsearch" "wsearch")
+required_codex_actions=("Tools|tool" "Run|run" "Debug|debug" "Test|test" "Prek|test" "Diagram|tool" "Ralph|debug" "Mise|tool" "Vale|debug" "Argos|test" "Cosign|debug" "Cloudflared|run" "Vitest|test" "Ruff|debug" "ESLint|debug" "Agent Browser|tool" "Agentation|tool" "Mermaid CLI|tool" "MarkdownLint|debug" "Wrangler|run" "1Password|tool" "Beautiful Mermaid|tool" "Auth0|tool" "Semgrep|debug" "Semver|tool" "Trivy|debug" "Gitleaks|debug" "Research|tool" "WSearch|tool")
+
+render_tooling_doc() {
+	cat <<'DOC_HEADER'
+# Tooling Inventory (Repo Canonical)
+
+## Table of Contents
+
+- [Scope](#scope)
+- [Required `.mise.toml` tools](#required-misetoml-tools)
+- [Required binaries](#required-binaries)
+- [Required Codex actions](#required-codex-actions)
+- [Regeneration](#regeneration)
+
+## Scope
+
+This file is generated from `scripts/check-environment.sh` and only documents the exact tooling contract enforced by that script.
+
+## Required `.mise.toml` tools
+DOC_HEADER
+	for tool in "${required_mise_tools[@]}"; do
+		printf -- '- `%s`\n' "$tool"
+	done
+
+	cat <<'DOC_MIDDLE'
+
+## Required binaries
+DOC_MIDDLE
+	for bin in "${required_bins[@]}"; do
+		printf -- '- `%s`\n' "$bin"
+	done
+
+	cat <<'DOC_ACTIONS'
+
+## Required Codex actions
+DOC_ACTIONS
+	for action in "${required_codex_actions[@]}"; do
+		name="${action%%|*}"
+		icon="${action##*|}"
+		printf -- '- `%s` (`icon = "%s"`)\n' "$name" "$icon"
+	done
+
+	cat <<'DOC_FOOTER'
+
+## Regeneration
+
+```bash
+bash scripts/check-environment.sh --write-tooling-doc
+```
+DOC_FOOTER
+}
+
+write_tooling_doc() {
+	mkdir -p "$(dirname "$TOOLING_DOC_PATH")"
+	render_tooling_doc > "$TOOLING_DOC_PATH"
+	echo "Wrote tooling inventory: $TOOLING_DOC_PATH"
+}
+
+check_tooling_doc_sync() {
+	local expected_doc=""
+	if [[ ! -f "$TOOLING_DOC_PATH" ]]; then
+		echo "Error: tooling inventory is missing at $TOOLING_DOC_PATH"
+		echo "Fix: run 'bash scripts/check-environment.sh --write-tooling-doc'"
+		exit 1
+	fi
+
+	expected_doc="$(mktemp "${TMPDIR:-/tmp}/tooling-doc.XXXXXX")"
+	render_tooling_doc > "$expected_doc"
+	if ! cmp -s "$expected_doc" "$TOOLING_DOC_PATH"; then
+		echo "Error: tooling inventory is out of sync with scripts/check-environment.sh: $TOOLING_DOC_PATH"
+		echo "Fix: run 'bash scripts/check-environment.sh --write-tooling-doc'"
+		rm -f "$expected_doc"
+		exit 1
+	fi
+	rm -f "$expected_doc"
+}
+
+if [[ "${1:-}" == "--print-tooling-doc" ]]; then
+	render_tooling_doc
+	exit 0
+fi
+
+if [[ "${1:-}" == "--write-tooling-doc" ]]; then
+	write_tooling_doc
+	exit 0
+fi
 
 if [[ ! -f "$CONTRACT_PATH" ]]; then
 	echo "Error: missing contract file at $CONTRACT_PATH"
@@ -70,7 +159,6 @@ fi
 eval "$(mise activate bash)"
 export CLAUDE_APPROVAL_POSTURE="${CLAUDE_APPROVAL_POSTURE:-require}"
 
-required_mise_tools=("node" "pnpm" "python" "uv" "cargo:prek" "npm:@brainwav/diagram" "npm:@argos-ci/cli" "cosign" "cloudflared" "npm:vitest" "ruff" "npm:eslint" "npm:agent-browser" "npm:agentation" "npm:agentation-mcp" "npm:@mermaid-js/mermaid-cli" "npm:@brainwav/rsearch" "npm:@brainwav/wsearch-cli" "npm:beautiful-mermaid" "npm:markdownlint-cli2" "npm:semver" "npm:wrangler" "semgrep" "trivy" "vale")
 for tool in "${required_mise_tools[@]}"; do
 	tool_pattern="$(printf '%s' "$tool" | sed 's/[][(){}.^$*+?|\\]/\\&/g')"
 	if ! rg -q "^[[:space:]]*(\"${tool_pattern}\"|${tool_pattern})[[:space:]]*=" "$MISE_PATH"; then
@@ -80,21 +168,8 @@ for tool in "${required_mise_tools[@]}"; do
 	fi
 done
 
-if [[ -f "$TOOLING_DOC_PATH" ]]; then
-	required_tooling_doc_terms=("node" "pnpm" "python" "uv" "make" "rg" "fd" "jq" "prek" "diagram" "mise" "vale" "argos" "cosign" "cloudflared" "vitest" "ruff" "eslint" "agent-browser" "agentation" "mermaid-cli" "markdownlint-cli2" "wrangler" "beautiful-mermaid" "semgrep" "semver" "trivy" "rsearch" "wsearch")
-	for term in "${required_tooling_doc_terms[@]}"; do
-		if ! rg -qi "(^|[^A-Za-z0-9_-])${term}([^A-Za-z0-9_-]|$)" "$TOOLING_DOC_PATH"; then
-			echo "Error: tooling doc missing expected term '$term': $TOOLING_DOC_PATH"
-			echo "Fix: update tooling inventory and keep it aligned with $MISE_PATH."
-			echo "Interactive flow: run a Codex AskQuestion/request_user_input prompt before applying installs."
-			exit 1
-		fi
-	done
-else
-	echo "Warning: tooling doc not found at $TOOLING_DOC_PATH; skipping doc sync check."
-fi
+check_tooling_doc_sync
 
-	required_bins=("pnpm" "node" "jq" "make" "rg" "fd" "prek" "diagram" "mise" "vale" "argos" "cosign" "cloudflared" "vitest" "ruff" "eslint" "agent-browser" "agentation-mcp" "mmdc" "markdownlint-cli2" "wrangler" "beautiful-mermaid" "semgrep" "semver" "trivy" "rsearch" "wsearch")
 	for bin in "${required_bins[@]}"; do
 		if ! command -v "$bin" >/dev/null 2>&1; then
 			echo "Error: required binary '$bin' is not installed or not on PATH"
@@ -102,7 +177,6 @@ fi
 		fi
 	done
 
-	required_codex_actions=("Tools|tool" "Run|run" "Debug|debug" "Test|test" "Prek|test" "Diagram|tool" "Ralph|debug" "Mise|tool" "Vale|debug" "Argos|test" "Cosign|debug" "Cloudflared|run" "Vitest|test" "Ruff|debug" "ESLint|debug" "Agent Browser|tool" "Agentation|tool" "Mermaid CLI|tool" "MarkdownLint|debug" "Wrangler|run" "1Password|tool" "Beautiful Mermaid|tool" "Auth0|tool" "Semgrep|debug" "Semver|tool" "Trivy|debug" "Gitleaks|debug" "Research|tool" "WSearch|tool")
 	for action in "${required_codex_actions[@]}"; do
 		name="${action%%|*}"
 		icon="${action##*|}"
@@ -116,7 +190,7 @@ fi
 		fi
 	done
 
-	required_make_targets=("help" "install" "setup" "preflight" "worktree-ready" "verify-work" "codestyle" "hooks" "hooks-pre-commit" "hooks-pre-push" "secrets-staged" "docs-style-changed" "related-tests" "semgrep-changed" "diagrams-check" "lint" "docs-lint" "fmt" "typecheck" "test" "check" "audit" "secrets" "security" "clean" "reset" "ci" "diagrams" "env-check")
+	required_make_targets=("help" "install" "setup" "preflight" "worktree-ready" "verify-work" "codestyle" "hooks" "hooks-pre-commit" "hooks-commit-msg" "hooks-pre-push" "secrets-staged" "docs-style-changed" "related-tests" "semgrep-changed" "diagrams-check" "lint" "docs-lint" "fmt" "typecheck" "test" "check" "audit" "secrets" "security" "clean" "reset" "ci" "diagrams" "env-check")
 	for target in "${required_make_targets[@]}"; do
 		if ! rg -q "^${target}:" "$MAKEFILE_PATH"; then
 			echo "Error: required Makefile target '$target' is missing from $MAKEFILE_PATH"
@@ -124,15 +198,63 @@ fi
 		fi
 	done
 
-	required_prek_hooks=("pre-commit|make hooks-pre-commit" "pre-push|make hooks-pre-push")
-	for hook_spec in "${required_prek_hooks[@]}"; do
-		hook_name="${hook_spec%%|*}"
-		hook_command="${hook_spec#*|}"
-		if ! rg -q "id[[:space:]]*=[[:space:]]*\"${hook_name}\"" "$PREK_CONFIG_PATH" || ! rg -q "entry[[:space:]]*=[[:space:]]*\"${hook_command}\"" "$PREK_CONFIG_PATH"; then
-			echo "Error: required prek hook '$hook_name' is missing or out of date in $PREK_CONFIG_PATH"
-			exit 1
-		fi
-	done
+	python3 - "$PREK_CONFIG_PATH" <<'PY'
+import sys
+import tomllib
+
+path = sys.argv[1]
+with open(path, "rb") as fh:
+    data = tomllib.load(fh)
+
+expected = {
+    "pre-commit": {
+        "entry": "make hooks-pre-commit",
+        "stages": None,
+    },
+    "commit-msg": {
+        "entry": 'bash -lc \'make hooks-commit-msg HOOK_COMMIT_MSG_FILE="$1"\' --',
+        "stages": ["commit-msg"],
+    },
+    "pre-push": {
+        "entry": "make hooks-pre-push",
+        "stages": ["pre-push"],
+    },
+}
+
+hooks = {}
+for repo in data.get("repos", []):
+    if repo.get("repo") != "local":
+        continue
+    for hook in repo.get("hooks", []):
+        hook_id = hook.get("id")
+        if hook_id:
+            hooks[hook_id] = hook
+
+for hook_id, contract in expected.items():
+    hook = hooks.get(hook_id)
+    if not hook or hook.get("entry") != contract["entry"]:
+        print(
+            f"Error: required prek hook '{hook_id}' is missing or out of date in {path}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+    expected_stages = contract["stages"]
+    actual_stages = hook.get("stages")
+    if expected_stages is None:
+        # When contract specifies None, accept either None or ["pre-commit"]
+        if actual_stages is not None and actual_stages != ["pre-commit"]:
+            print(
+                f"Error: required prek hook '{hook_id}' has the wrong stages in {path}",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+    elif actual_stages != expected_stages:
+        print(
+            f"Error: required prek hook '{hook_id}' has the wrong stages in {path}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+PY
 
 	if [[ -f "$PACKAGE_JSON_PATH" ]]; then
 		required_package_scripts=("codestyle:validate|bash scripts/validate-codestyle.sh" "secrets:staged|bash scripts/check-staged-secrets.sh" "docs:style:changed|bash scripts/check-doc-style.sh" "test:related|bash scripts/check-related-tests.sh" "semgrep:changed|bash scripts/check-semgrep-changed.sh")
@@ -148,18 +270,17 @@ fi
 			fi
 		done
 
-		required_simple_git_hooks=("pre-commit|make hooks-pre-commit" "commit-msg|node scripts/validate-commit-msg.js \$1" "pre-push|make hooks-pre-push")
-		for hook_spec in "${required_simple_git_hooks[@]}"; do
-			hook_name="${hook_spec%%|*}"
-			hook_command="${hook_spec#*|}"
-			if ! jq -e --arg hook_name "$hook_name" --arg hook_command "$hook_command" '
-				.["simple-git-hooks"][$hook_name] == $hook_command
-			' "$PACKAGE_JSON_PATH" >/dev/null; then
-				echo "Error: simple-git-hooks entry '$hook_name' is missing or out of date in $PACKAGE_JSON_PATH"
-				echo "Fix: run node scripts/setup-git-hooks.js"
-				exit 1
-			fi
-		done
+		if jq -e 'has("simple-git-hooks") or ((.dependencies // {}) | has("simple-git-hooks")) or ((.devDependencies // {}) | has("simple-git-hooks"))' "$PACKAGE_JSON_PATH" >/dev/null; then
+			echo "Error: legacy package.json hook metadata must be removed from $PACKAGE_JSON_PATH"
+			echo "Fix: run node scripts/setup-git-hooks.js"
+			exit 1
+		fi
+
+		if [[ -d "$REPO_ROOT/.husky" ]]; then
+			echo "Error: legacy Husky directory must be removed from $REPO_ROOT/.husky" >&2
+			echo "Fix: delete .husky and use prek as the only git hook runtime." >&2
+			exit 1
+		fi
 
 		has_package_marker() {
 			local marker="$1"

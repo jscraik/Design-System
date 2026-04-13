@@ -1,7 +1,7 @@
 # Harness Development Makefile
 # Run `make help` to see available commands
 
-.PHONY: help install setup preflight worktree-ready verify-work codestyle hooks hooks-pre-commit hooks-pre-push secrets-staged docs-style-changed related-tests semgrep-changed diagrams-check dev build lint docs-lint fmt typecheck test check audit secrets security clean reset ci diagrams env-check
+.PHONY: all help install setup preflight worktree-ready verify-work codestyle hooks hooks-pre-commit hooks-commit-msg hooks-pre-push secrets-staged docs-style-changed related-tests semgrep-changed diagrams-check dev build lint docs-lint fmt typecheck test check audit secrets security clean reset ci diagrams env-check
 
 # Default target
 help: ## Show this help message
@@ -39,6 +39,21 @@ hooks-pre-commit: ## Run local pre-commit gates before creating a commit
 	$(MAKE) secrets-staged
 	$(MAKE) docs-style-changed
 	$(MAKE) related-tests
+
+hooks-commit-msg: ## Validate commit message policy
+	@if [ -n "$$HOOK_COMMIT_MSG" ]; then \
+		tmp_file="$$(mktemp)"; \
+		trap 'rm -f "$$tmp_file"' EXIT; \
+		printf '%s\n' "$$HOOK_COMMIT_MSG" > "$$tmp_file"; \
+		node scripts/validate-commit-msg.js "$$tmp_file"; \
+	elif [ -n "$$HOOK_COMMIT_MSG_FILE" ]; then \
+		node scripts/validate-commit-msg.js "$$HOOK_COMMIT_MSG_FILE"; \
+	elif [ -n "$$MSG_FILE" ]; then \
+		node scripts/validate-commit-msg.js "$$MSG_FILE"; \
+	else \
+		echo "Error: set HOOK_COMMIT_MSG, HOOK_COMMIT_MSG_FILE, or MSG_FILE"; \
+		exit 1; \
+	fi
 
 hooks-pre-push: ## Run local pre-push governance gates before pushing
 	@node ./scripts/check-doc-links.mjs

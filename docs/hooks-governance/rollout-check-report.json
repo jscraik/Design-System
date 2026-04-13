@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-04-11T20:57:36.554419Z",
+  "inventory": "/Users/jamiecraik/dev/design-system/docs/hooks-governance/repo-profile-matrix.json",
+  "recovery_slo_hours": 24,
+  "summary": {
+    "total_repos": 1,
+    "stale_repos": 0,
+    "pass": true
+  },
+  "repos": [
+    {
+      "name": "design-system",
+      "path": ".",
+      "status": "ok",
+      "last_validated_at": "2026-04-11T00:00:00Z",
+      "age_hours": 20.96,
+      "stale_reason": null
+    }
+  ]
+}

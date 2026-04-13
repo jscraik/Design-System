@@ -28,8 +28,8 @@
     "design-system-guidance:ratchet": "pnpm -C packages/design-system-guidance run build && node scripts/policy/run-guidance-ratchet.mjs",
     "release:guidance:validate": "pnpm design-system-guidance:type-check && pnpm design-system-guidance:build && pnpm design-system-guidance:check:ci",
     "generate:tokens": "pnpm -C packages/tokens generate && pnpm dlx @biomejs/biome@2.3.11 format --write packages/tokens/src/colors.ts packages/tokens/src/spacing.ts packages/tokens/src/typography.ts packages/tokens/src/radius.ts packages/tokens/src/shadows.ts packages/tokens/src/sizes.ts packages/tokens/docs/outputs/manifest.json",
-    "ds:matrix:generate": "pnpm -C packages/tokens exec tsx ../../scripts/generate-coverage-matrix.ts",
-    "ds:matrix:check": "pnpm -C packages/tokens exec tsx ../../scripts/generate-coverage-matrix.ts --check",
+    "ds:matrix:generate": "pnpm exec tsx scripts/generate-coverage-matrix.ts",
+    "ds:matrix:check": "pnpm exec tsx scripts/generate-coverage-matrix.ts --check",
     "ds:alignment:stamp": "node scripts/stamp-upstream-alignment.mjs",
     "ds:astudio:sync-versions": "pnpm -C packages/tokens exec tsx ../../scripts/sync-astudio-versions.ts",
     "sync:versions": "node scripts/version-sync.mjs",
@@ -105,7 +105,7 @@
     "docs:style:changed": "bash scripts/check-doc-style.sh",
     "test:related": "bash scripts/check-related-tests.sh",
     "semgrep:changed": "bash scripts/check-semgrep-changed.sh",
-    "prepare": "if command -v prek >/dev/null; then prek install; else echo \"prek unavailable; skipping git hook install\"; fi",
+    "prepare": "if command -v prek >/dev/null; then node scripts/setup-git-hooks.js; else echo \"prek unavailable; skipping git hook install\"; fi",
     "docs:lint": "vale sync && fd -t f -e md -E .agent -E _tools -E reports -E node_modules -E .wrangler -E .build -E .swiftpm -E AGENTS.md -E CLAUDE.md -E references -X vale && node scripts/check-doc-links.mjs",
     "check": "pnpm lint && pnpm docs:lint && pnpm typecheck && pnpm test",
     "typecheck": "pnpm -r --filter '!@design-studio/effects' run type-check"
@@ -114,7 +114,6 @@
     "@argos-ci/cli": "^3.0.6",
     "@argos-ci/playwright": "^1.7.0",
     "@axe-core/playwright": "^4.11.1",
-    "@brainwav/coding-harness": "^0.12.0",
     "@changesets/cli": "^2.27.1",
     "@modelcontextprotocol/inspector": "^0.19.0",
     "@openai/apps-sdk-ui": "0.2.1",
@@ -131,11 +130,6 @@
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "make hooks-pre-commit",
-    "commit-msg": "node scripts/validate-commit-msg.js $1",
-    "pre-push": "make hooks-pre-push"
   },
   "pnpm": {
     "peerDependencyRules": {

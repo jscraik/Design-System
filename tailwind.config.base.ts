@@ -1,5 +1,5 @@
-import chatUIPreset from "@design-studio/tokens/tailwind.preset";
 import type { Config } from "tailwindcss";
+import chatUIPreset from "./packages/tokens/tailwind.preset";
 
 /**
  * Base Tailwind configuration for ChatUI projects

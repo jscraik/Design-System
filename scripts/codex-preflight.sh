@@ -284,6 +284,12 @@ run_local_memory_preflight_with_runner() {
 	if output="$("${command[@]}" 2>&1)"; then
 		if [[ -n "${output}" ]]; then
 			printf '%s\n' "${output}"
+			case "${output}" in
+				*"❌ "*|*"local-memory preflight failed"*|*"observe A returned HTTP"*|*"observe B returned HTTP"*|*"relationship create returned HTTP"*|*"search returned HTTP"*)
+					log_warn "Local Memory helper reported failure output despite exit 0: ${runner_label}"
+					return 1
+					;;
+			esac
 		fi
 		return 0
 	fi

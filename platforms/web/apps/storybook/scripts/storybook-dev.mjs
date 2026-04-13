@@ -1,9 +1,12 @@
 import { spawn } from "node:child_process";
+import { createRequire } from "node:module";
 
+const require = createRequire(import.meta.url);
 const port = process.env.STORYBOOK_PORT ?? process.env.PORT ?? "6006";
-const args = ["dev", "-p", String(port)];
+const storybookBin = require.resolve("storybook/internal/bin/dispatcher");
+const args = [storybookBin, "dev", "-p", String(port), "-c", ".storybook"];
 
-const child = spawn(process.platform === "win32" ? "storybook.cmd" : "storybook", args, {
+const child = spawn("node", args, {
   stdio: "inherit",
 });
 
@@ -16,6 +19,12 @@ const forwardSignal = (signal) => {
 process.on("SIGINT", () => forwardSignal("SIGINT"));
 process.on("SIGTERM", () => forwardSignal("SIGTERM"));
 
-child.on("exit", (code) => {
-  process.exit(code ?? 0);
+child.on("exit", (code, signal) => {
+  if (code !== null) {
+    process.exit(code);
+  }
+  if (signal !== null) {
+    process.exit(1);
+  }
+  process.exit(0);
 });

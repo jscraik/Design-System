@@ -4,10 +4,10 @@
   "version": "0.0.2",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "build:widget": "vite build && node ./scripts/inline-widget.mjs",
+    "dev": "node ../../../../node_modules/vite/bin/vite.js",
+    "build": "node ../../../../node_modules/vite/bin/vite.js build",
+    "preview": "node ../../../../node_modules/vite/bin/vite.js preview",
+    "build:widget": "node ../../../../node_modules/vite/bin/vite.js build && node ./scripts/inline-widget.mjs",
     "registry:generate": "tsx scripts/generate-template-registry.ts",
     "registry:check": "tsx scripts/generate-template-registry.ts --check"
   },

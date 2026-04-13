@@ -124,3 +124,4 @@ artifacts/policy/
 .build-cache/
 packages/runtime/node_modules/.tmp/
 packages/widgets/src/sdk/generated/widget-manifest.ts
+/.codex/hook-conformance.json

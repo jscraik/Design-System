@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-03-28
+**Last updated:** 2026-04-13
 **Production status:** IN_PROGRESS
 **Overall health:** Yellow
 
@@ -100,6 +100,7 @@ pnpm test:exemplar-evaluation:update
 pnpm design-system-guidance:ratchet
 pnpm test:visual:web -- --list
 pnpm test:visual:storybook -- --list
+bash scripts/check-environment.sh
 ```
 
 The visual suites now go through `scripts/run-playwright-suite.mjs`, which prebuilds `packages/ui` with `pnpm -C packages/ui build:visual` before handing the remaining args straight to Playwright. Use that path when you need reliable `--list`, `--grep`, or `--update-snapshots` behavior from the root scripts without leaving the package in a declaration-broken state.
@@ -147,6 +148,38 @@ See also: `~/.codex/instructions/Learnings.md`
 - `packages/tokens/src/shadows.ts` is generated, but it cannot be a pure mirror of the DTCG shadow source. The DTCG file only defines the legacy `card/pip/pill/close` map; the generated TypeScript layer must also re-emit the semantic `elevation` API and `ElevationToken` type or `packages/tokens/src/index.ts` will compile locally until the next `pnpm generate:tokens`, then break in CI.
 
 ## Recent changes
+
+### 2026-04-13
+
+- **Storybook dispatcher export-path fix (macOS CI unblock)**: `platforms/web/apps/storybook/scripts/storybook-dev.mjs` now resolves Storybook via the exported package subpath `storybook/internal/bin/dispatcher` instead of the non-exported `storybook/dist/bin/dispatcher.js` path. This removes the `ERR_PACKAGE_PATH_NOT_EXPORTED` startup crash in the macOS exemplar lane and keeps the wrapper-based launch flow intact.
+
+### 2026-04-12
+
+- **Workspace governance path-stability fix**: `scripts/verify-work.sh --workspace-governance` now keeps manifest-derived `inventory`, `classification`, and `metrics` inputs repo-relative when invoking governance scripts. Validation still resolves absolute paths for existence checks, but generated governance reports no longer capture machine-specific checkout roots.
+- **Storybook Playwright server context fix (intermediate)**: `platforms/web/apps/storybook/playwright.visual.config.ts` briefly launched Storybook from the app directory (`cwd: __dirname`) to avoid workspace-root command-resolution drift.
+- **Workspace inventory freshness refresh**: `docs/hooks-governance/repo-profile-matrix.json` timestamps were refreshed to the current validation window so `rollout_check.py` does not fail immediately due to an already-expired `last_validated_at`.
+- **Empty inventory guard for rollout checks**: `scripts/hook-governance/rollout_check.py` now fails closed when the provided inventory has no repos to evaluate, so `--workspace-governance` no longer reports a passing run from an empty `{"repos": []}` payload.
+- **Storybook CI launcher fix (current)**: `platforms/web/apps/storybook/playwright.visual.config.ts` now launches the repo wrapper script (`scripts/storybook-dev.mjs`) from the Storybook app directory and passes `STORYBOOK_PORT` explicitly, while the wrapper itself runs the workspace-root Storybook dispatcher via `node ../../../../node_modules/storybook/dist/bin/dispatcher.js dev -p ... -c .storybook`. This avoids the app-local bin shim that was resolving to a missing dispatcher path in CI.
+- **Docstring-ratchet CLI contract parity**: `scripts/hook-governance/evaluate_docstring_ratchet.py` now accepts `--plain` and `--no-color` compatibility flags and emits consistent service-prefixed stdout/stderr messages (`[design-system.docstring-ratchet] ...`) so automation and reviewers can reliably attribute failures.
+- **Workspace Vite shim hardening**: `packages/ui`, `packages/json-render`, and `packages/widgets` now run build/dev scripts through the root-installed Vite binary (`node ../../node_modules/vite/bin/vite.js ...`) instead of per-package shim resolution. This avoids CI failures when package-local `.bin/vite` shims are missing under hoisted installs while preserving package-local cwd for each Vite config.
+- **Web app Vite shim hardening**: `platforms/web/apps/web` now runs `dev`, `build`, `preview`, and `build:widget` through the root-installed Vite binary (`node ../../../../node_modules/vite/bin/vite.js ...`). This fixes CI/web build failures where `platforms/web/apps/web/node_modules/vite/bin/vite.js` was missing under hoisted installs.
+- **Workspace Vitest shim hardening**: `packages/ui` test scripts now run through the root-installed Vitest entrypoint (`node ../../node_modules/vitest/vitest.mjs ...`) so hook/test runs stop failing when package-local Vitest shims are absent in hoisted installs.
+- **CI token generation hardening**: `packages/tokens/package.json` now runs token generation and validation scripts via `node --import tsx` instead of package-local `tsx` bin shims. This removes dependency on per-package `.bin` layout and fixes CI failures where `packages/tokens/node_modules/tsx/dist/cli.mjs` was missing under hoisted installs.
+- **Tailwind preset resolution stability**: `tailwind.config.base.ts` now imports the preset through the monorepo source path (`./packages/tokens/tailwind.preset`) so strict TypeScript checks stop failing on unresolved `@design-studio/tokens/tailwind.preset` during workspace builds.
+
+### 2026-04-11
+
+- **Canonical `prek` hook contract**: the root hook surfaces now align on `prek` only. `Makefile` adds the required `hooks-commit-msg` wrapper, `prek.toml` installs `pre-commit`, `commit-msg`, and `pre-push` from canonical wrapper targets, `scripts/setup-git-hooks.js` now strips legacy package hook metadata before running `prek install`, and `scripts/check-environment.sh` fails if old package-level hook metadata is still present.
+- **Husky fully removed**: the stale `.husky/` bootstrap directory has been deleted, and `scripts/check-environment.sh` now fails if Husky scaffolding comes back. `prek` is the only supported hook runtime in this repo.
+- **Repo-canonical tooling inventory**: `scripts/check-environment.sh` now treats `docs/agents/tooling.md` as the default local tooling inventory path instead of a home-directory file. The script now owns the canonical enforced lists (`required_mise_tools`, `required_bins`, and required Codex actions), can generate the doc via `bash scripts/check-environment.sh --write-tooling-doc`, and fails if the checked-in doc drifts from those enforced lists.
+- **Environment gate portability fix**: local and CI environments now read tooling evidence from repository files only. This removes external-path assumptions and keeps `bash scripts/check-environment.sh` portable across contributors and runners.
+- **Worktree hook bootstrap cleanup**: `scripts/prepare-worktree.sh` no longer tries to execute a removed legacy package-hook binary after `node scripts/setup-git-hooks.js`. Worktree bootstrap now goes through the same `prek install` path as the rest of the repo, which removes one dead compatibility branch and keeps the runtime contract aligned with the validator text.
+- **Sandbox-safe prek hook regeneration**: `scripts/setup-git-hooks.js` now patches generated `prek` shims so each hook exports `PREK_HOME="${PREK_HOME:-$HERE/../.cache/prek}"` before `hook-impl`, keeping cache/log writes repo-local under `.git/.cache/prek` in sandboxed environments. Root `prepare` now runs `node scripts/setup-git-hooks.js` (instead of raw `prek install`) so regenerated hooks consistently keep that safety patch.
+- **Hook governance scope defaults**: `scripts/verify-work.sh` now defaults governance checks to project-local mode and adds explicit `--project-governance` / `--workspace-governance` control (plus `--repo-scope-manifest` override). New `scripts/hook-governance/rollout_check.py` and `scripts/hook-governance/evaluate_docstring_ratchet.py` require explicit `--inventory`, `--classification`, and `--metrics` inputs with no hidden workspace fallbacks, and `docs/agents/hook-governance-scope-defaults.md` documents the invocation contract and rollout policy.
+- **Fail-closed hook-governance + hook-install hardening**: `scripts/hook-governance/evaluate_docstring_ratchet.py` now fails when either previous or current coverage metrics are missing and records `coverage_complete` in the report summary so CI cannot pass on incomplete coverage input. `scripts/setup-git-hooks.js` now only removes `scripts.postinstall` when it is exclusively a legacy `simple-git-hooks` bootstrap command, exits with remediation text when mixed postinstall commands are present, and fails installation when an effective non-local `core.hooksPath` override still exists (including origin details for debugging).
+- **Policy runner tsx invocation hardening**: `scripts/policy/run.mjs` now runs token validation and coverage-matrix checks through root-level `pnpm exec tsx ...` commands instead of package-local `-C packages/tokens` execution. This avoids the broken package-local `tsx` shim path seen in CI/worktree installs and keeps policy checks deterministic across hoisted node-module layouts.
+- **Agent mutation policy finalized**: `docs/agents/hook-governance-scope-defaults.md` now includes the explicit **Agent Mutation Default** contract and date-stamped section naming so agent behavior is unambiguous: local-project mutation by default, workspace mutation opt-in only, and executable wrapper/script-input scope takes precedence over inferred workspace defaults.
+- **Local-memory preflight fail-closed guard**: `scripts/codex-preflight.sh` now treats explicit Local Memory failure markers in helper output (for example `❌` lines and `observe A/B returned HTTP ...`) as hard failures even when a helper process exits `0`. This prevents false-positive `preflight passed` outcomes in `--mode required` when upstream helper wrappers misreport success.
 
 ### 2026-03-28
 
@@ -245,7 +278,7 @@ project: design-system
 repo: ~/dev/design-system
 status: IN_PROGRESS
 health: yellow
-last_updated: 2026-03-24
+last_updated: 2026-04-13
 open_prs: 0
 blockers: none
 next_milestone: ChatGPT widget integration
