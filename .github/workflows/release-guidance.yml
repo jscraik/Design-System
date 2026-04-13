@@ -33,7 +33,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 10.28.0
+          version: 10.33.0
 
       - name: Install deps
         run: pnpm -C packages/design-system-guidance install --ignore-workspace --prod=false --lockfile=false
@@ -68,7 +68,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
         with:
-          version: 10.28.0
+          version: 10.33.0
 
       - name: Install deps
         run: pnpm -C packages/design-system-guidance install --ignore-workspace --prod=false --lockfile=false
