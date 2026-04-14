@@ -156,7 +156,7 @@ jobs:
         run: pnpm bundle:monitor:strict
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: build-artifacts-${{ matrix.platform }}
           path: |
@@ -245,7 +245,7 @@ jobs:
 
       - name: Upload Storybook static output
         if: github.event_name != 'pull_request' || steps.storybook_changes.outputs.changed == 'true'
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: storybook-static
           path: platforms/web/apps/storybook/storybook-static/
@@ -308,7 +308,7 @@ jobs:
 
       - name: Upload screenshot artifacts (on failure)
         if: failure()
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: visual-screenshots-diff
           path: |
@@ -421,7 +421,7 @@ jobs:
 
       - name: Upload smoke test artifacts (on failure)
         if: failure()
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: smoke-test-agent-browser
           path: test-results/agent-browser/**
