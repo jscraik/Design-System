@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "agent-design.rules.v1",
+  "ruleManifestVersion": "1.0.0",
+  "rulePackVersion": "astudio-professional-ui@1",
+  "sources": [
+    "docs/design-system/PROFESSIONAL_UI_CONTRACT.md",
+    "docs/design-system/AGENT_UI_ROUTING.md",
+    "docs/design-system/COMPONENT_LIFECYCLE.json",
+    "docs/design-system/COVERAGE_MATRIX.json"
+  ],
+  "rules": [
+    {
+      "id": "ui.hierarchy.primary-title",
+      "group": "ui.hierarchy",
+      "severity": "error",
+      "predicate": "requires-h1",
+      "message": "DESIGN.md must define one primary title so agents can infer the page or panel hierarchy.",
+      "sourcePath": "docs/design-system/PROFESSIONAL_UI_CONTRACT.md",
+      "fixture": "missing-primary-title.md"
+    },
+    {
+      "id": "ui.surface-role.shell",
+      "group": "ui.surface-role",
+      "severity": "error",
+      "predicate": "mentions-surface-role-shell",
+      "message": "Contract must state the shell surface role for viewport and safe-area ownership.",
+      "sourcePath": "docs/design-system/PROFESSIONAL_UI_CONTRACT.md",
+      "fixture": "missing-shell-role.md"
+    },
+    {
+      "id": "ui.state.async-states",
+      "group": "ui.state",
+      "severity": "warn",
+      "predicate": "mentions-loading-empty-error",
+      "message": "Contract should document loading, empty, and error state behavior.",
+      "sourcePath": "docs/design-system/PROFESSIONAL_UI_CONTRACT.md",
+      "fixture": "missing-state-model.md"
+    },
+    {
+      "id": "ui.focus.scoped-focus",
+      "group": "ui.focus",
+      "severity": "error",
+      "predicate": "requires-scoped-focus",
+      "message": "Contract must require scoped focus affordances instead of global focus-ring rules.",
+      "sourcePath": "docs/design-system/PROFESSIONAL_UI_CONTRACT.md",
+      "fixture": "missing-focus.md"
+    },
+    {
+      "id": "ui.motion.reduced-motion",
+      "group": "ui.motion",
+      "severity": "warn",
+      "predicate": "mentions-reduced-motion",
+      "message": "Contract should include reduced-motion fallback expectations.",
+      "sourcePath": "docs/design-system/PROFESSIONAL_UI_CONTRACT.md",
+      "fixture": "missing-motion.md"
+    },
+    {
+      "id": "ui.viewport-input.dynamic-viewport",
+      "group": "ui.viewport-input",
+      "severity": "error",
+      "predicate": "mentions-dynamic-viewport-or-safe-area",
+      "message": "Contract must mention dynamic viewport or safe-area handling for agent-generated UI.",
+      "sourcePath": "docs/design-system/PROFESSIONAL_UI_CONTRACT.md",
+      "fixture": "missing-viewport.md"
+    },
+    {
+      "id": "ui.routing.lifecycle-source",
+      "group": "ui.routing",
+      "severity": "error",
+      "predicate": "mentions-lifecycle-and-coverage-sources",
+      "message": "Contract must route new UI through lifecycle and coverage sources before creating abstractions.",
+      "sourcePath": "docs/design-system/AGENT_UI_ROUTING.md",
+      "fixture": "missing-routing.md"
+    },
+    {
+      "id": "ui.routing.lifecycle-manifest",
+      "group": "ui.routing",
+      "severity": "error",
+      "predicate": "mentions-component-lifecycle",
+      "message": "Contract must name COMPONENT_LIFECYCLE.json as the component ownership source.",
+      "sourcePath": "docs/design-system/COMPONENT_LIFECYCLE.json",
+      "fixture": "missing-component-lifecycle.md"
+    },
+    {
+      "id": "ui.routing.coverage-matrix",
+      "group": "ui.routing",
+      "severity": "error",
+      "predicate": "mentions-coverage-matrix",
+      "message": "Contract must name COVERAGE_MATRIX.json before agents add new UI abstractions.",
+      "sourcePath": "docs/design-system/COVERAGE_MATRIX.json",
+      "fixture": "missing-coverage-matrix.md"
+    }
+  ]
+}

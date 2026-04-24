@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "success": [
+    {
+      "name": "lint-explicit-file",
+      "kind": "astudio.design.lint.v1",
+      "cwd": "$REPO_ROOT",
+      "args": ["design", "lint", "--file", "$REPO_ROOT/DESIGN.md", "--json"]
+    },
+    {
+      "name": "diff-explicit-files",
+      "kind": "astudio.design.diff.v1",
+      "cwd": "$REPO_ROOT",
+      "args": [
+        "design",
+        "diff",
+        "--before",
+        "$REPO_ROOT/DESIGN.md",
+        "--after",
+        "$REPO_ROOT/DESIGN.md",
+        "--json"
+      ]
+    },
+    {
+      "name": "export-explicit-file",
+      "kind": "astudio.design.export.v1",
+      "cwd": "$REPO_ROOT",
+      "args": [
+        "design",
+        "export",
+        "--file",
+        "$REPO_ROOT/DESIGN.md",
+        "--format",
+        "json@agent-design.v1",
+        "--json"
+      ]
+    },
+    {
+      "name": "check-brand-explicit-file",
+      "kind": "astudio.design.checkBrand.v1",
+      "cwd": "$REPO_ROOT",
+      "args": ["design", "check-brand", "--file", "$REPO_ROOT/DESIGN.md", "--json"]
+    },
+    {
+      "name": "init-dry-run",
+      "kind": "astudio.design.init.v1",
+      "cwd": "$REPO_ROOT",
+      "args": ["design", "init", "--target", "$REPO_ROOT", "--dry-run", "--json"]
+    },
+    {
+      "name": "migrate-dry-run",
+      "kind": "astudio.design.migrate.v1",
+      "cwd": "$TEMP_VALID_DESIGN_PROJECT",
+      "args": ["design", "migrate", "--to", "design-md", "--dry-run", "--json"]
+    },
+    {
+      "name": "doctor-root",
+      "kind": "astudio.design.doctor.v1",
+      "cwd": "$REPO_ROOT",
+      "args": ["design", "doctor", "--json"]
+    }
+  ],
+  "errors": [
+    {
+      "name": "policy-write-required",
+      "cwd": "$REPO_ROOT",
+      "args": ["design", "init", "--json"],
+      "expectedExitCode": 3,
+      "expectedErrorCode": "E_POLICY",
+      "recovery": "nextCommand"
+    },
+    {
+      "name": "policy-unavailable-agent-plain",
+      "cwd": "$REPO_ROOT",
+      "args": ["design", "lint", "--file", "$REPO_ROOT/DESIGN.md", "--agent", "--plain"],
+      "expectedExitCode": 3,
+      "expectedErrorCode": "E_POLICY",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "discovery-required-in-ci",
+      "cwd": "$REPO_ROOT",
+      "env": {
+        "CI": "true"
+      },
+      "args": ["design", "lint", "--json"],
+      "expectedExitCode": 2,
+      "expectedErrorCode": "E_DESIGN_DISCOVERY_REQUIRED",
+      "recovery": "none"
+    },
+    {
+      "name": "profile-override-forbidden-in-ci",
+      "cwd": "$REPO_ROOT",
+      "env": {
+        "CI": "true"
+      },
+      "args": [
+        "design",
+        "check-brand",
+        "--file",
+        "$REPO_ROOT/DESIGN.md",
+        "--profile",
+        "astudio-default@1",
+        "--json"
+      ],
+      "expectedExitCode": 3,
+      "expectedErrorCode": "E_DESIGN_PROFILE_OVERRIDE_FORBIDDEN",
+      "recovery": "none"
+    },
+    {
+      "name": "unknown-brand-profile",
+      "cwd": "$TEMP_UNKNOWN_PROFILE_PROJECT",
+      "args": ["design", "lint", "--file", "DESIGN.md", "--json"],
+      "expectedExitCode": 2,
+      "expectedErrorCode": "E_DESIGN_PROFILE_UNKNOWN",
+      "recovery": "none"
+    }
+  ],
+  "stdout": {
+    "encoding": "utf8",
+    "lineCount": 1,
+    "trailingNewline": true,
+    "stderr": ""
+  }
+}

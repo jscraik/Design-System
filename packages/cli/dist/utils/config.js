@@ -2,7 +2,7 @@ import fs from "node:fs";
 import fsp from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
-import { MCP_DEFAULT_SERVER, MCP_DEFAULT_ENDPOINT, MCP_DEFAULT_PROTOCOL_VERSION } from "../constants.js";
+import { MCP_DEFAULT_ENDPOINT, MCP_DEFAULT_PROTOCOL_VERSION, MCP_DEFAULT_SERVER, } from "../constants.js";
 import { CliError, ERROR_CODES, EXIT_CODES } from "../error.js";
 import { resolveCwd } from "./env.js";
 export function mergeMcpConfigs(...configs) {

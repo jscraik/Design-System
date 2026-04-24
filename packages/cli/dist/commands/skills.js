@@ -1,7 +1,7 @@
-import { RemoteSkillClient, installSkillFromZip, platformRootPath, platformStorageKey, publishSkill } from "@design-studio/skill-ingestion";
-import { emitSkillResults, emitSkillInstall, emitPublishResult } from "../utils/output.js";
-import { CliError, ERROR_CODES, EXIT_CODES } from "../error.js";
 import path from "node:path";
+import { installSkillFromZip, platformRootPath, platformStorageKey, publishSkill, RemoteSkillClient, } from "@design-studio/skill-ingestion";
+import { CliError, ERROR_CODES, EXIT_CODES } from "../error.js";
+import { emitPublishResult, emitSkillInstall, emitSkillResults } from "../utils/output.js";
 export async function skillsSearchCommand(args) {
     const { query, limit, allowUnsafe, argv } = args;
     const client = new RemoteSkillClient({ strictIntegrity: !allowUnsafe });
@@ -30,7 +30,10 @@ export async function skillsInstallCommand(args) {
 export async function skillsPublishCommand(args) {
     const { skillPath, slug, latestVersion, bump, changelog, tags, dryRun, argv } = args;
     const resolvedSlug = slug ?? path.basename(skillPath);
-    const parsedTags = tags?.split(",").map((t) => t.trim()).filter(Boolean);
+    const parsedTags = tags
+        ?.split(",")
+        .map((t) => t.trim())
+        .filter(Boolean);
     const result = await publishSkill({
         skillPath,
         slug: resolvedSlug,

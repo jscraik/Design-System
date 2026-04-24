@@ -1,6 +1,6 @@
+import type { SkillPlatform } from "@design-studio/skill-ingestion";
 import type { Argv } from "yargs";
 import type { CliArgs } from "../types.js";
-import type { SkillPlatform } from "@design-studio/skill-ingestion";
 export declare function skillsSearchCommand(args: {
     query: string;
     limit?: number;

@@ -1,4 +1,9 @@
-import type { JsonValue, JsonEnvelope, JsonError, CliArgs } from "../types.js";
+import type { CliArgs, JsonEnvelope, JsonError, JsonValue } from "../types.js";
+import type { TraceContext } from "./trace.js";
+export declare function setTraceContext(context: TraceContext): void;
+export declare function getTraceContext(): TraceContext | undefined;
+export declare function setShowSensitive(show: boolean): void;
+export declare function shouldMask(): boolean;
 export declare function outputJson(envelope: JsonEnvelope): void;
 export declare function outputPlain(lines: string[]): void;
 export declare function outputPlainRecord(record: Record<string, JsonValue | undefined>): void;
@@ -14,5 +19,5 @@ export declare function emitPublishResult(argv: CliArgs, result: {
     skipped: boolean;
     command?: string[];
 }, slug: string): void;
-export declare function createEnvelope(summary: string, status: JsonEnvelope["status"], data: Record<string, JsonValue>, errors?: JsonError[]): JsonEnvelope;
+export declare function createEnvelope(summary: string, status: JsonEnvelope["status"], data: Record<string, JsonValue>, errors?: JsonError[], traceContext?: TraceContext): JsonEnvelope;
 //# sourceMappingURL=output.d.ts.map

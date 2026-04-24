@@ -8,6 +8,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const pkgRoot = path.resolve(__dirname, "..");
 const cliPath = path.resolve(pkgRoot, "src/index.ts");
+const tsxImport = import.meta.resolve("tsx");
 
 const baseEnv = {
   ...process.env,
@@ -21,10 +22,10 @@ const baseEnv = {
  * @param {Record<string, string>} envOverrides - Environment variable overrides
  * @returns {Promise<{code: number, stdout: string, stderr: string}>}
  */
-export function runCli(args, envOverrides = {}) {
+export function runCli(args, envOverrides = {}, options = {}) {
   return new Promise((resolve) => {
-    const child = spawn(process.execPath, ["--import", "tsx", cliPath, ...args], {
-      cwd: pkgRoot,
+    const child = spawn(process.execPath, ["--import", tsxImport, cliPath, ...args], {
+      cwd: options.cwd ?? pkgRoot,
       env: { ...baseEnv, ...envOverrides },
       stdio: ["ignore", "pipe", "pipe"],
     });

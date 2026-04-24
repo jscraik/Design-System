@@ -63,6 +63,15 @@ The external project at `/Users/jamiecraik/dev/system-design` is useful as a mig
 - formatted headings can bypass section-order linting
 - advertised text output format behavior is incomplete
 
+2026-04-24 implementation evidence:
+
+- Auto-review and helper-swarm artifacts were written to `artifacts/reviews/jsc208-correctness-auto.md`, `artifacts/reviews/jsc208-testing-auto.md`, `artifacts/reviews/jsc208-simplify-auto.md`, `artifacts/reviews/jsc208-plan-audit.md`, `artifacts/reviews/jsc208-implementation-gap-audit.md`, and `artifacts/reviews/jsc208-validation-audit.md`.
+- Focused fixes landed for parser line numbers, explicit component extraction, profile error coverage, non-mutating init validation, project-root migration targeting, corrupt rollback metadata refusal, rollback quarantine, structured recovery payloads, design compatibility manifests, and CLI Biome command parity.
+- Follow-up CLI protocol fixtures landed for every `astudio design *` success command plus policy, discovery, profile, and unavailable-recovery error cases. The fixtures validate the `astudio.command.v1` envelope with JSON Schema and assert the one-line stdout / empty-stderr byte contract.
+- Local focused gates passed for `packages/agent-design-engine`, `packages/cli`, and `packages/design-system-guidance`.
+- Root release-readiness gates passed for `pnpm test:policy`, `pnpm validate:tokens`, `pnpm ds:matrix:check`, `pnpm docs:lint`, `pnpm design-system-guidance:check:ci`, `pnpm test:e2e:web`, `pnpm test:a11y:widgets`, `pnpm build`, and `git diff --check`.
+- Release readiness note: the focused JSC-208 path is green locally. Browser-backed gates require Playwright Chromium plus an unsandboxed macOS launch path; once that environment was available, the web E2E, widget a11y, and aggregate build gates passed. Remaining rollout risk is deeper migration fault-injection/race coverage and wrapper/engine boundary enforcement before GA.
+
 ## Non-Negotiable Decisions
 
 1. Create `packages/agent-design-engine` as the internal semantic engine.
@@ -618,7 +627,7 @@ Every wrapper release must include a compatibility manifest:
   ],
   "parityBaseline": {
     "source": "https://github.com/jscraik/system-design.md.git",
-    "commit": "TBD"
+    "commit": "8ecd4645b957e6a683a05fb9c79cd6c9028873d0"
   }
 }
 ```
@@ -659,12 +668,12 @@ Goal: make the execution surface unambiguous before coding.
 
 Tasks:
 
-- [ ] Record the frozen `system-design` baseline commit.
-- [ ] Inventory `system-design` examples, fixtures, parser tests, and exporter snapshots.
-- [ ] Vendor parity fixtures or document the chosen subtree/submodule strategy.
-- [ ] Confirm package naming for the internal engine before publishing any package-scoped command in docs.
-- [ ] Keep validation commands path-based until package naming is final.
-- [ ] Confirm that v1 profile definitions remain in `design-system-guidance`.
+- [x] Record the frozen `system-design` baseline commit.
+- [x] Inventory `system-design` examples, fixtures, parser tests, and exporter snapshots.
+- [x] Vendor parity fixtures or document the chosen subtree/submodule strategy.
+- [x] Confirm package naming for the internal engine before publishing any package-scoped command in docs.
+- [x] Keep validation commands path-based until package naming is final.
+- [x] Confirm that v1 profile definitions remain in `design-system-guidance`.
 - [ ] Add or update the implementation issue/roadmap entry that points to this plan.
 
 Validation:
@@ -679,13 +688,13 @@ Goal: create the internal package with tests before adding aStudio-specific beha
 
 Tasks:
 
-- [ ] Create `packages/agent-design-engine`.
-- [ ] Add TypeScript build, type-check, and test scripts.
-- [ ] Define public exports only.
-- [ ] Add parser/model interfaces.
-- [ ] Add fixture loader and snapshot harness.
-- [ ] Import frozen parity fixtures from `system-design`.
-- [ ] Add explicit delta fixtures for known behavior fixes.
+- [x] Create `packages/agent-design-engine`.
+- [x] Add TypeScript build, type-check, and test scripts.
+- [x] Define public exports only.
+- [x] Add parser/model interfaces.
+- [x] Add fixture loader and snapshot harness.
+- [x] Import frozen parity fixtures from `system-design`.
+- [x] Add explicit delta fixtures for known behavior fixes.
 
 Validation:
 
@@ -700,18 +709,18 @@ Goal: make `DESIGN.md` parseable, lintable, diffable, and exportable.
 
 Tasks:
 
-- [ ] Implement frontmatter parser for `schemaVersion` and `brandProfile`.
-- [ ] Implement body parser and normalized semantic model.
-- [ ] Implement lint finding model with stable IDs and severities.
-- [ ] Add canonical `agent-design.rules.v1` manifest with source references, predicates, severities, fixture names, and rule source digests.
-- [ ] Implement machine-checkable rule groups for hierarchy, surface roles, state, focus, motion, viewport/input, and component routing.
-- [ ] Add fixtures derived from `PROFESSIONAL_UI_CONTRACT.md`, `AGENT_UI_ROUTING.md`, `COMPONENT_LIFECYCLE.json`, and `COVERAGE_MATRIX.json`.
-- [ ] Add rule provenance to contract-resolving payloads and finding snapshots.
-- [ ] Implement normalized model schema `agent-design.normalizedModel.v1`.
-- [ ] Implement semantic diff schema `agent-design.diff.v1`.
-- [ ] Add before/after rule provenance and `ruleContextDelta` to semantic diff output.
-- [ ] Implement token export targets `json@agent-design.v1`, `dtcg@2025`, and `tailwind@4`.
-- [ ] Add deterministic output canonicalization.
+- [x] Implement frontmatter parser for `schemaVersion` and `brandProfile`.
+- [x] Implement body parser and normalized semantic model.
+- [x] Implement lint finding model with stable IDs and severities.
+- [x] Add canonical `agent-design.rules.v1` manifest with source references, predicates, severities, fixture names, and rule source digests.
+- [x] Implement machine-checkable rule groups for hierarchy, surface roles, state, focus, motion, viewport/input, and component routing.
+- [x] Add fixtures derived from `PROFESSIONAL_UI_CONTRACT.md`, `AGENT_UI_ROUTING.md`, `COMPONENT_LIFECYCLE.json`, and `COVERAGE_MATRIX.json`.
+- [x] Add rule provenance to contract-resolving payloads and finding snapshots.
+- [x] Implement normalized model schema `agent-design.normalizedModel.v1`.
+- [x] Implement semantic diff schema `agent-design.diff.v1`.
+- [x] Add before/after rule provenance and `ruleContextDelta` to semantic diff output.
+- [x] Implement token export targets `json@agent-design.v1`, `dtcg@2025`, and `tailwind@4`.
+- [x] Add deterministic output canonicalization.
 
 Validation:
 
@@ -726,20 +735,20 @@ Goal: keep consumers stable while adding `design-md` mode.
 
 Tasks:
 
-- [ ] Update `.design-system-guidance.json` schema to separate rollout state from contract metadata.
-- [ ] Add v1/v2 dual-read support for existing guidance config.
-- [ ] Preserve `docs`, `include`, `ignore`, `scopes`, `scopePrecedence`, and `exemptionLedger` during migration.
-- [ ] Block `init --force --yes` from overwriting v2 or migrated guidance config until schema-aware round-trip writing preserves `designContract` and unknown forward metadata.
-- [ ] Add `legacy` and `design-md` mode handling.
-- [ ] Add compatibility manifest validation.
-- [ ] Add strict v1/v2 config decoding and downgrade/unsupported-mode refusal tests.
-- [ ] Add wrapper-to-engine integration path.
+- [x] Update `.design-system-guidance.json` schema to separate rollout state from contract metadata.
+- [x] Add v1/v2 dual-read support for existing guidance config.
+- [x] Preserve `docs`, `include`, `ignore`, `scopes`, `scopePrecedence`, and `exemptionLedger` during migration.
+- [x] Block `init --force --yes` from overwriting v2 or migrated guidance config until schema-aware round-trip writing preserves `designContract` and unknown forward metadata.
+- [x] Add `legacy` and `design-md` mode handling.
+- [x] Add compatibility manifest validation.
+- [x] Add strict v1/v2 config decoding and downgrade/unsupported-mode refusal tests.
+- [x] Add wrapper-to-engine integration path.
 - [ ] Add boundary checks preventing wrapper parser/rule duplication.
-- [ ] Keep existing legacy checks operational.
-- [ ] Add transactional migration, rollback, and resume state handling.
+- [x] Keep existing legacy checks operational.
+- [x] Add transactional migration, rollback, and resume state handling.
 - [ ] Implement the migration transition table and crash-safe `partial` marker before mutation.
 - [ ] Implement required rollback metadata fields, authenticity checks, path-root checks, compatibility algorithm, and checksum validation.
-- [ ] Add rollback quarantine behavior for migrated `DESIGN.md`.
+- [x] Add rollback quarantine behavior for migrated `DESIGN.md`.
 - [ ] Add collision-safe quarantine paths, atomic create semantics, repeated rollback/remigration tests, and concurrent-writer race tests.
 
 Validation:
@@ -756,24 +765,24 @@ Goal: expose the engine through agent-safe `astudio design` commands.
 
 Tasks:
 
-- [ ] Register `astudio design lint`.
-- [ ] Register `astudio design diff`.
-- [ ] Register `astudio design export`.
-- [ ] Register `astudio design check-brand`.
-- [ ] Register `astudio design init`.
-- [ ] Register `astudio design migrate`.
-- [ ] Register `astudio design doctor`.
-- [ ] Add command JSON schemas and fixtures.
-- [ ] Keep `astudio.command.v1` outer envelope unchanged and put design payload under `data`.
-- [ ] Add per-command exit-code tests.
+- [x] Register `astudio design lint`.
+- [x] Register `astudio design diff`.
+- [x] Register `astudio design export`.
+- [x] Register `astudio design check-brand`.
+- [x] Register `astudio design init`.
+- [x] Register `astudio design migrate`.
+- [x] Register `astudio design doctor`.
+- [x] Add command JSON schemas and fixtures.
+- [x] Keep `astudio.command.v1` outer envelope unchanged and put design payload under `data`.
+- [x] Add per-command exit-code tests.
 - [ ] Add design-command exit normalization for external execution so raw child exits cannot leak.
-- [ ] Resolve top-level command before design manifest validation so non-design aStudio commands bypass design manifest checks.
-- [ ] Scope compatibility manifest command gating to `astudio design *`.
-- [ ] Add profile-resolution precedence and profile error tests.
+- [x] Resolve top-level command before design manifest validation so non-design aStudio commands bypass design manifest checks.
+- [x] Scope compatibility manifest command gating to `astudio design *`.
+- [x] Add profile-resolution precedence and profile error tests.
 - [ ] Add recovery payload fixtures for policy, safety, compatibility, discovery, profile, and execution failures, including unavailable-recovery cases.
-- [ ] Represent `recovery.nextCommand` as structured argv/cwd/env JSON in machine mode and reject shell-string retry commands.
-- [ ] Add agent/CI output-mode tests proving omitted mode defaults to JSON and explicit incompatible modes fail with `E_POLICY`.
-- [ ] Ensure command output follows existing `astudio.command.v1` envelope.
+- [x] Represent `recovery.nextCommand` as structured argv/cwd/env JSON in machine mode and reject shell-string retry commands.
+- [x] Add agent/CI output-mode tests proving omitted mode defaults to JSON and explicit incompatible modes fail with `E_POLICY`.
+- [x] Ensure command output follows existing `astudio.command.v1` envelope.
 
 Validation:
 
@@ -788,13 +797,13 @@ Goal: make the feature operational for humans and agents.
 
 Tasks:
 
-- [ ] Update `docs/guides/PRIVATE_GUIDANCE_PACKAGE.md`.
-- [ ] Add `docs/guides/DESIGN_MD_CONTRACT.md`.
-- [ ] Update `docs/design-system/CONTRACT.md`.
-- [ ] Update CLI agent guide with `astudio design` workflows.
-- [ ] Update release checklist with compatibility manifest requirements.
-- [ ] Add rollout notes for legacy, beta, and GA states.
-- [ ] Update `FORJAMIE.md` if implementation changes package structure, commands, or operating model.
+- [x] Update `docs/guides/PRIVATE_GUIDANCE_PACKAGE.md`.
+- [x] Add `docs/guides/DESIGN_MD_CONTRACT.md`.
+- [x] Update `docs/design-system/CONTRACT.md`.
+- [x] Update CLI agent guide with `astudio design` workflows.
+- [x] Update release checklist with compatibility manifest requirements.
+- [x] Add rollout notes for legacy, beta, and GA states.
+- [x] Update `FORJAMIE.md` if implementation changes package structure, commands, or operating model.
 
 Validation:
 
@@ -809,12 +818,12 @@ Goal: prove the integrated path before rollout.
 
 Tasks:
 
-- [ ] Run engine tests.
-- [ ] Run CLI tests.
-- [ ] Run guidance tests.
-- [ ] Run root policy checks.
-- [ ] Run token and matrix checks if docs or token contracts changed.
-- [ ] Produce release readiness notes with remaining risks.
+- [x] Run engine tests.
+- [x] Run CLI tests.
+- [x] Run guidance tests.
+- [x] Run root policy checks.
+- [x] Run token and matrix checks if docs or token contracts changed.
+- [x] Produce release readiness notes with remaining risks.
 
 Validation:
 
@@ -999,11 +1008,10 @@ These items are intentionally not part of v1 implementation because they add opt
 
 Recommended next stage: `he-work`.
 
-Start with Phase 0 only. Do not create the engine package until the frozen `system-design` baseline commit and package/profile ownership decisions are recorded.
+The JSC-208 vertical slice is implemented and locally validated. The next stage should stay in `he-work` for pre-GA hardening, not first-package creation.
 
-First implementation task:
+Recommended next implementation tasks:
 
-1. Capture the `system-design` baseline commit.
-2. Inventory parity fixtures.
-3. Confirm package/profile ownership in this plan.
-4. Open the first implementation branch for `packages/agent-design-engine`.
+1. Expand migration tests with repeated rollback/remigration, concurrent-writer collision paths, and fault injection around the `partial` marker.
+2. Prove wrapper/engine boundary checks with deep-import and parser/rule-duplication guards.
+3. Expand rollback metadata authenticity, path-root, checksum-compatibility, and support-window coverage before GA.

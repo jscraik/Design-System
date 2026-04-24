@@ -1,0 +1,32 @@
+{
+  "name": "@brainwav/agent-design-engine",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "DESIGN.md parser, semantic rule engine, diff, and exports for agent-authored UI contracts.",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./rules": "./rules/agent-design.rules.v1.json",
+    "./rules/agent-design.rules.v1.json": "./rules/agent-design.rules.v1.json"
+  },
+  "files": [
+    "dist",
+    "rules",
+    "README.md"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "type-check": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm run build && node --test tests/*.test.mjs",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.1",
+    "typescript": "^5.9.3"
+  }
+}

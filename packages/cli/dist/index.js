@@ -1,27 +1,67 @@
 #!/usr/bin/env node
-import { hideBin } from "yargs/helpers";
 import yargs from "yargs";
-import { TOOL_NAME, TOOL_VERSION, COMMAND_SCHEMA, EXIT_CODES, ERROR_CODES, } from "./constants.js";
-import { normalizeFailure, toJsonError, CliError, } from "./error.js";
-import { outputJson, outputPlainRecord, createEnvelope, } from "./utils/output.js";
-import { devCommand, buildCommand, testCommand, mcpCommand, } from "./commands/index.js";
+import { hideBin } from "yargs/helpers";
+import { componentsCommand } from "./commands/components.js";
+import { doctorCommand } from "./commands/doctor.js";
+import { formatCommand } from "./commands/format.js";
+import { buildCommand, designCommand, devCommand, mcpCommand, testCommand, } from "./commands/index.js";
+import { lintCommand } from "./commands/lint.js";
+import { skillsCommand } from "./commands/skills.js";
 import { tokensCommand } from "./commands/tokens.js";
 import { versionsCommand } from "./commands/versions.js";
-import { skillsCommand } from "./commands/skills.js";
-import { componentsCommand } from "./commands/components.js";
-import { lintCommand } from "./commands/lint.js";
-import { formatCommand } from "./commands/format.js";
-import { doctorCommand } from "./commands/doctor.js";
+import { COMMAND_SCHEMA, ERROR_CODES, EXIT_CODES, TOOL_NAME, TOOL_VERSION } from "./constants.js";
+import { CliError, normalizeFailure, toJsonError } from "./error.js";
+import { generateAgentErrorHelp, getCommandExamples, getSuggestionThreshold, isAgentMode, setAgentMode, shouldAutoAccept, } from "./utils/agent.js";
+import { generateTopicHelp, getMinimalHelp, listHelpTopics, parseHelpLevel, } from "./utils/help.js";
+import { createEnvelope, outputJson, outputPlainRecord, setShowSensitive, setTraceContext, } from "./utils/output.js";
+import { AVAILABLE_COMMANDS, AVAILABLE_FLAGS, suggestCommand, suggestFlag, } from "./utils/suggest.js";
+import { createTraceContext } from "./utils/trace.js";
+// Agent mode state is managed by utils/agent.ts (single source of truth)
+// Check for --help-topic= and --help=level before yargs processing
+const rawArgs = process.argv.slice(2);
+// Initialize agent mode EARLY from raw args (before yargs middleware runs)
+// This ensures unknown-command errors are handled with agent-mode enhancements
+if (rawArgs.includes("--agent")) {
+    setAgentMode(true);
+}
+const topicArg = rawArgs.find((arg) => arg.startsWith("--help-topic="));
+const helpLevelArg = rawArgs.find((arg) => arg.startsWith("--help=") && !arg.startsWith("--help-topic="));
+// Handle --help-topic=<topic>
+if (topicArg) {
+    const topicName = topicArg.slice("--help-topic=".length);
+    const help = generateTopicHelp(topicName);
+    if (help) {
+        process.stdout.write(`${help}\n`);
+        process.exit(0);
+    }
+    process.stderr.write(`Error: Unknown help topic "${topicName}"\n\n${listHelpTopics()}\n`);
+    process.exit(2);
+}
+// Handle --help=<level> (minimal and common only; full/expert handled by yargs)
+if (helpLevelArg) {
+    const level = helpLevelArg.slice("--help=".length);
+    const parsedLevel = parseHelpLevel(level);
+    if (parsedLevel === "minimal" || parsedLevel === "common") {
+        process.stdout.write(`${getMinimalHelp()}\n`);
+        if (parsedLevel === "common") {
+            process.stdout.write("\nCommon commands:\n  dev, build, test, lint, format, doctor\n");
+        }
+        process.exit(0);
+    }
+    // full/expert: let yargs handle normally; unknown: let yargs error
+}
+// Initialize global trace context for this CLI invocation
+setTraceContext(createTraceContext());
 // Import helper constants
-const MCP_SERVER_URL_KEY = "server-url";
-const MCP_ENDPOINT_KEY = "endpoint";
-const MCP_PROTOCOL_VERSION_KEY = "protocol-version";
-const TOKEN_GENERATE_WARNING = "--write is required to generate tokens";
-const VERSIONS_WRITE_WARNING = "--write is required to sync versions";
-const COMPONENTS_WRITE_WARNING = "--write is required to generate components";
-const TOKEN_WRITE_HINT = "Re-run with --write to confirm file writes.";
+const _MCP_SERVER_URL_KEY = "server-url";
+const _MCP_ENDPOINT_KEY = "endpoint";
+const _MCP_PROTOCOL_VERSION_KEY = "protocol-version";
+const _TOKEN_GENERATE_WARNING = "--write is required to generate tokens";
+const _VERSIONS_WRITE_WARNING = "--write is required to sync versions";
+const _COMPONENTS_WRITE_WARNING = "--write is required to generate components";
+const _TOKEN_WRITE_HINT = "Re-run with --write to confirm file writes.";
 // Re-export error class constants for use in other modules
-export { ERROR_CODES, EXIT_CODES, TOKEN_GENERATE_WARNING, COMPONENTS_WRITE_WARNING } from "./constants.js";
+export { COMPONENTS_WRITE_WARNING, ERROR_CODES, EXIT_CODES, TOKEN_GENERATE_WARNING, } from "./constants.js";
 function addGlobalOptions(argv) {
     return argv
         .option("quiet", { alias: "q", type: "boolean", description: "Errors only" })
@@ -35,7 +75,61 @@ function addGlobalOptions(argv) {
         .option("network", { type: "boolean", description: "Allow network access" })
         .option("cwd", { type: "string", description: "Run as if from this directory" })
         .option("config", { type: "string", description: "Config file override" })
-        .option("dry-run", { type: "boolean", description: "Preview without changes" });
+        .option("dry-run", { type: "boolean", description: "Preview without changes" })
+        .option("agent", {
+        type: "boolean",
+        description: "AI agent mode: enhanced help, intent-over-syntax, educational errors",
+    })
+        .option("show-sensitive", {
+        type: "boolean",
+        description: "Show sensitive data (expert only)",
+        hidden: true,
+    });
+}
+function generateSuggestions(msg) {
+    if (!msg)
+        return [];
+    const suggestions = [];
+    const threshold = getSuggestionThreshold();
+    // Try to extract unknown command
+    const cmdMatch = msg.match(/Unknown command: (\S+)/);
+    if (cmdMatch) {
+        const unknown = cmdMatch[1];
+        const suggestion = suggestCommand(unknown, AVAILABLE_COMMANDS, threshold);
+        if (suggestion)
+            suggestions.push(suggestion);
+    }
+    // Try to extract unknown argument/flag
+    const argMatch = msg.match(/Unknown argument: (\S+)/) || msg.match(/Unknown option: (\S+)/);
+    if (argMatch) {
+        const unknown = argMatch[1];
+        const suggestion = suggestFlag(unknown, AVAILABLE_FLAGS, threshold);
+        if (suggestion)
+            suggestions.push(suggestion);
+    }
+    return suggestions;
+}
+function generateFixSuggestion(failure, argv) {
+    if (failure.code !== ERROR_CODES.policy)
+        return undefined;
+    const missingFlags = [];
+    if (failure.message.includes("--exec"))
+        missingFlags.push("--exec");
+    if (failure.message.includes("--network"))
+        missingFlags.push("--network");
+    if (failure.message.includes("--write"))
+        missingFlags.push("--write");
+    if (missingFlags.length === 0)
+        return undefined;
+    // Find the command in argv (skip node and script path)
+    const commandIdx = argv.findIndex((arg) => AVAILABLE_COMMANDS.some((cmd) => arg === cmd || arg.startsWith(`${cmd} `)));
+    if (commandIdx === -1) {
+        // Cannot determine original command - don't suggest an incomplete fix
+        return undefined;
+    }
+    // Build fixed command
+    const baseCommand = argv.slice(commandIdx).join(" ");
+    return `astudio ${baseCommand} ${missingFlags.join(" ")}`;
 }
 const cli = yargs(hideBin(process.argv))
     .scriptName(TOOL_NAME)
@@ -54,6 +148,15 @@ const cli = yargs(hideBin(process.argv))
             hint: "Choose one output mode.",
         });
     }
+    if (argv.showSensitive) {
+        setShowSensitive(true);
+    }
+    if (argv.agent) {
+        setAgentMode(true);
+    }
+})
+    .command("help-topics", "List available help topics", () => { }, () => {
+    process.stdout.write(`${listHelpTopics()}\n`);
 })
     .command("help [command]", "Show help for a command", (cmd) => cmd.positional("command", { type: "string" }), (argv) => {
     if (argv.command) {
@@ -108,6 +211,9 @@ const cli = yargs(hideBin(process.argv))
     .command("mcp", "MCP server utilities", (yargs) => mcpCommand(yargs), () => {
     process.exitCode = EXIT_CODES.usage;
 })
+    .command("design", "DESIGN.md contract utilities", (yargs) => designCommand(yargs), () => {
+    process.exitCode = EXIT_CODES.usage;
+})
     .command("tokens <command>", "Generate or validate design tokens", (cmd) => cmd
     .positional("command", { type: "string", choices: ["generate", "validate"] })
     .option("write", { type: "boolean", description: "Required to generate tokens" }), async (argv) => {
@@ -156,11 +262,39 @@ const cli = yargs(hideBin(process.argv))
 })
     .fail((msg, err, yargsInstance) => {
     const parsedArgv = yargsInstance.parsed?.argv;
-    const wantsJson = Boolean(parsedArgv?.json || process.argv.includes("--json"));
+    const ciWantsJson = typeof process.env.CI === "string" &&
+        process.env.CI.length > 0 &&
+        process.env.CI.toLowerCase() !== "false";
+    const isDesignCommand = process.argv.slice(2).includes("design");
+    const wantsJson = Boolean(parsedArgv?.json ||
+        process.argv.includes("--json") ||
+        (isDesignCommand && (parsedArgv?.agent || process.argv.includes("--agent") || ciWantsJson)));
     const wantsPlain = Boolean(parsedArgv?.plain || process.argv.includes("--plain"));
+    const isAgent = isAgentMode();
     const failure = normalizeFailure(msg, err ?? undefined);
+    // Generate suggestions for unknown commands/flags
+    const suggestions = generateSuggestions(msg);
+    const fixSuggestion = generateFixSuggestion(failure, process.argv);
+    // In agent mode, check if we should auto-accept a high-confidence suggestion
+    const autoAcceptSuggestion = suggestions.length > 0 && shouldAutoAccept(suggestions[0]);
+    // Enhance error with suggestions and agent-mode learning notes
+    const enhancedError = {
+        ...toJsonError(failure),
+        ...(suggestions.length > 0 && { did_you_mean: suggestions }),
+        ...(fixSuggestion && { fix_suggestion: fixSuggestion }),
+    };
+    // Add agent guidance to error details
+    if (isAgent) {
+        const cmdMatch = msg?.match(/Unknown command: (\S+)/);
+        const cmd = cmdMatch ? cmdMatch[1] : undefined;
+        enhancedError.details = {
+            ...enhancedError.details,
+            agent_guidance: generateAgentErrorHelp(cmd, failure.code === ERROR_CODES.policy ? "policy_error" : "unknown_command"),
+            examples: cmd ? getCommandExamples(cmd) : [],
+        };
+    }
     if (wantsJson) {
-        outputJson(createEnvelope("error", "error", {}, [toJsonError(failure)]));
+        outputJson(createEnvelope("error", "error", {}, [enhancedError]));
     }
     else if (wantsPlain) {
         outputPlainRecord({
@@ -170,16 +304,54 @@ const cli = yargs(hideBin(process.argv))
             error_code: failure.code,
             error_message: failure.message,
             hint: failure.hint ?? null,
+            ...(suggestions.length > 0 && {
+                suggestions: suggestions.map((s) => `${s.input} -> ${s.suggestion}`).join(", "),
+            }),
+            ...(fixSuggestion && { fix_suggestion: fixSuggestion }),
         });
     }
     else {
         process.stderr.write(`Error: ${failure.message}\n`);
-        if (failure.hint) {
+        // Show suggestions in human-readable format
+        if (suggestions.length > 0) {
+            process.stderr.write("\nDid you mean:\n");
+            for (const s of suggestions) {
+                const autoMark = isAgent && shouldAutoAccept(s) ? " [auto-accept in agent mode]" : "";
+                process.stderr.write(`  ${s.suggestion.padEnd(20)} (confidence: ${s.confidence})${autoMark}\n`);
+            }
+        }
+        if (fixSuggestion) {
+            process.stderr.write(`\nFix suggestion:\n  ${fixSuggestion}\n`);
+        }
+        // Agent mode: show educational content
+        if (isAgent) {
+            const cmdMatch = msg?.match(/Unknown command: (\S+)/);
+            const cmd = cmdMatch ? cmdMatch[1] : undefined;
+            process.stderr.write(generateAgentErrorHelp(cmd, failure.code === ERROR_CODES.policy ? "policy_error" : "unknown_command"));
+            // Show examples for suggested command
+            if (suggestions.length > 0) {
+                const suggestedCmd = suggestions[0].suggestion;
+                const examples = getCommandExamples(suggestedCmd);
+                if (examples.length > 0) {
+                    process.stderr.write("\n📖 Example usage:\n");
+                    for (const ex of examples.slice(0, 3)) {
+                        process.stderr.write(`  ${ex}\n`);
+                    }
+                }
+            }
+        }
+        if (failure.hint && (suggestions.length === 0 || !isAgent)) {
             process.stderr.write(`Hint: ${failure.hint}\n`);
         }
         if (failure.code === ERROR_CODES.usage || failure.code === ERROR_CODES.validation) {
             yargsInstance.showHelp();
         }
+    }
+    // In agent mode with auto-accept, we might want to exit with a special code
+    // or potentially auto-execute (disabled for safety)
+    if (isAgent && autoAcceptSuggestion && !wantsJson && !wantsPlain) {
+        const fullSuggestion = fixSuggestion || `astudio ${suggestions[0].suggestion}`;
+        process.stderr.write(`\n🤖 Agent Mode: High confidence match. Suggested command: ${fullSuggestion}\n`);
     }
     process.exitCode = failure.exitCode;
 });

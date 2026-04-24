@@ -1,0 +1,119 @@
+# JSC-223 Repo Cleanup Inventory
+
+Last updated: 2026-04-24
+
+## Table of Contents
+
+- [Purpose](#purpose)
+- [Current Slice](#current-slice)
+- [Removed From Tracking](#removed-from-tracking)
+- [Removed From Source](#removed-from-source)
+- [Deferred Decisions](#deferred-decisions)
+- [Follow-Up Issue Candidates](#follow-up-issue-candidates)
+- [Validation](#validation)
+
+## Purpose
+
+This inventory records the repo-wide cleanup decisions for JSC-223 so generated
+artifact removal does not get mixed with higher-risk package, docs, or publish
+contract changes.
+
+## Current Slice
+
+The current cleanup slice is intentionally conservative:
+
+- Remove tracked files that are already ignored and are clearly local runtime,
+  cache, coverage, or test-output artifacts.
+- Remove accidental zero-byte root artifacts.
+- Keep tracked build outputs and generated source files until the repo has an
+  explicit package publish and regeneration contract for each path family.
+- Capture higher-risk cleanup as follow-up issues rather than deleting broad
+  surfaces without an owner decision.
+
+## Removed From Tracking
+
+The following tracked-ignored runtime artifacts were removed from the Git index
+with `git rm --cached`; local files were left on disk:
+
+- `.DS_Store`
+- `.ralph/**`
+- `**/node_modules/**`
+- `**/node_modules/.vite/**`
+- `**/node_modules/.tmp/**`
+- `**/.cache/**`
+- `**/coverage/**`
+- `**/test-results/.last-run.json`
+- `**/*.tsbuildinfo`
+
+Evidence after the cleanup:
+
+- `git diff --cached --name-only | wc -l` reported `3186` staged de-indexed
+  paths.
+- The removed runtime/cache/test-output pattern returned `0` remaining tracked
+  ignored matches.
+- `git ls-files -ci --exclude-standard | wc -l` reported `914` remaining
+  tracked-ignored paths, mostly deferred build-output and policy-artifact
+  families.
+
+## Removed From Source
+
+Three accidental zero-byte root files were deleted:
+
+- `EOF`
+- `npm`
+- `{`
+
+Each file was tracked with the empty blob hash
+`e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` and had no content.
+
+## Deferred Decisions
+
+These path families are not removed in this slice because they need an explicit
+owner or release-contract decision:
+
+- `**/dist/**` and `platforms/web/apps/web/dist/**`: likely build outputs, but
+  some package publish flows may expect committed artifacts.
+- `platforms/web/apps/storybook/screenshots/**`: visual artifacts that may be
+  historical review evidence, but they are large and churn-heavy.
+- `.spec/**`, `.agent/**`, and `.kiro/**`: ignored planning/spec surfaces that
+  may be intentional project memory.
+- `packages/widgets/src/sdk/generated/**`,
+  `platforms/web/apps/web/src/generated/**`, and
+  `packages/cloudflare-template/src/worker/*.generated.ts`: generated source
+  files that may be runtime inputs and need a deterministic regeneration
+  contract before untracking.
+- Legacy reports under `reports/**`: duplicate historical report clusters
+  contain stale absolute paths and should be consolidated rather than silently
+  deleted.
+- Older review rounds under `artifacts/reviews/**`: useful as historical
+  evidence, but should be indexed or archived behind one canonical synthesis per
+  review family.
+
+## Follow-Up Issue Candidates
+
+Create or link follow-up Linear issues for:
+
+- Publish artifact contract: decide which `dist/**` outputs are intentional
+  release artifacts and align `.gitignore` with that decision.
+- Generated source contract: define which generated source files are committed,
+  which are build-derived, and which command regenerates them.
+- Docs/report archive: consolidate January 2026 generated report clusters and
+  add a `docs/plans/README.md` authority index.
+- CI hygiene guard: add a small gate that blocks newly tracked ignored runtime
+  artifacts while allowing explicitly documented generated-source exceptions.
+- Script/package cleanup: decide whether orphaned scripts and prototype
+  packages should be wired into active commands or archived.
+
+## Validation
+
+Validation for this slice must prove the cleanup is behavior-preserving:
+
+```bash
+pnpm format:check
+pnpm docs:lint
+pnpm test:policy
+pnpm -C packages/cli test
+pnpm -C packages/agent-design-engine test
+pnpm -C packages/design-system-guidance build
+git diff --check
+```

@@ -1,12 +1,13 @@
 import { spawn } from "node:child_process";
+import { CliError, ERROR_CODES, EXIT_CODES, requireExec, toJsonError } from "../error.js";
 import { baseEnv, resolveCwd, resolvePnpmCommand } from "./env.js";
 import { logInfo } from "./logger.js";
-import { outputJson, outputPlainRecord, createEnvelope } from "./output.js";
-import { toJsonError, CliError, ERROR_CODES, EXIT_CODES, requireExec } from "../error.js";
+import { createEnvelope, getTraceContext, outputJson, outputPlainRecord } from "./output.js";
 export async function runPnpm(opts, args, overrides) {
     const started = Date.now();
     const cwd = overrides?.cwd ?? resolveCwd(opts);
-    const env = overrides?.env ?? baseEnv(opts);
+    const traceContext = getTraceContext();
+    const env = overrides?.env ?? baseEnv(opts, traceContext);
     const pnpmCommand = resolvePnpmCommand();
     const commandLabel = `${pnpmCommand} ${args.join(" ")}`;
     if (opts.dryRun) {

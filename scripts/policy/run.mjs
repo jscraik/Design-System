@@ -108,7 +108,7 @@ const DESIGN_SYSTEM_SUBCONTRACTS = [
   {
     id: "token-truth",
     label: "Token Truth",
-    command: ["pnpm", "exec", "tsx", "packages/tokens/scripts/validate-tokens.ts"],
+    command: ["node", "--import", "tsx", "packages/tokens/scripts/validate-tokens.ts"],
     remediation: "pnpm validate:tokens",
     description:
       "Ensures token validation catches schema/alias drift instead of letting root policy stay green.",
@@ -116,7 +116,7 @@ const DESIGN_SYSTEM_SUBCONTRACTS = [
   {
     id: "coverage-freshness",
     label: "Coverage Freshness",
-    command: ["pnpm", "exec", "tsx", "scripts/generate-coverage-matrix.ts", "--check"],
+    command: ["node", "--import", "tsx", "scripts/generate-coverage-matrix.ts", "--check"],
     remediation: "pnpm ds:matrix:check",
     description:
       "Verifies committed design-system coverage artifacts are fresh and match the current codebase.",

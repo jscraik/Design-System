@@ -36,11 +36,29 @@ export type RunResult = {
     stderr?: string;
     dryRun?: boolean;
 };
+export type Suggestion = {
+    type: "command" | "flag" | "value";
+    input: string;
+    suggestion: string;
+    confidence: number;
+};
+export type RecoveryAction = {
+    fix_suggestion?: string;
+    nextCommand?: {
+        argv: string[];
+        cwd?: string;
+        env?: Record<string, string>;
+    };
+    recoveryUnavailableReason?: string;
+};
 export type JsonError = {
     code: string;
     message: string;
     details?: Record<string, JsonValue>;
     hint?: string;
+    did_you_mean?: Suggestion[];
+    fix_suggestion?: string;
+    recovery?: RecoveryAction;
 };
 export type JsonEnvelope = {
     schema: string;
@@ -48,7 +66,10 @@ export type JsonEnvelope = {
         tool: string;
         version: string;
         timestamp: string;
+        outputMode?: "json" | "plain";
         request_id?: string;
+        trace_id?: string;
+        parent_id?: string;
     };
     summary: string;
     status: "success" | "warn" | "error";

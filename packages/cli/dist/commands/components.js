@@ -1,6 +1,6 @@
-import { handleRun } from "../utils/exec.js";
-import { CliError, ERROR_CODES, EXIT_CODES, COMPONENTS_WRITE_WARNING } from "../error.js";
 import { TOKEN_WRITE_HINT } from "../constants.js";
+import { CliError, COMPONENTS_WRITE_WARNING, ERROR_CODES, EXIT_CODES } from "../error.js";
+import { handleRun } from "../utils/exec.js";
 export async function componentsCommand(args) {
     const { name, write, argv } = args;
     if (!write) {

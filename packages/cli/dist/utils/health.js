@@ -1,9 +1,9 @@
-import { resolveConfig, findRepoRoot } from "./config.js";
-import { resolveCwd, resolvePnpmCommand } from "./env.js";
-import { jsonRpcRequest } from "./mcp.js";
 import { MCP_CHECK_METHOD } from "../constants.js";
+import { findRepoRoot, resolveConfig } from "./config.js";
+import { resolveCwd, resolvePnpmCommand } from "./env.js";
 import { runCommandCapture } from "./exec.js";
-import { outputJson, outputPlain, createEnvelope } from "./output.js";
+import { jsonRpcRequest } from "./mcp.js";
+import { createEnvelope, outputJson, outputPlain } from "./output.js";
 export async function checkPnpm(execAllowed) {
     if (!execAllowed) {
         return { name: "pnpm", status: "warn", details: "skipped (exec disabled)" };
@@ -59,7 +59,11 @@ export async function doctor(opts) {
     const durationMs = Date.now() - started;
     const hasError = checks.some((check) => check.status === "error");
     const hasWarn = checks.some((check) => check.status === "warn");
-    const overallStatus = hasError ? "error" : hasWarn ? "warn" : "success";
+    const overallStatus = hasError
+        ? "error"
+        : hasWarn
+            ? "warn"
+            : "success";
     if (opts.json) {
         outputJson(createEnvelope("doctor", overallStatus, {
             checks,

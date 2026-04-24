@@ -1,15 +1,17 @@
-import { ERROR_CODES, EXIT_CODES, DEFAULT_HINT_USAGE, TOKEN_GENERATE_WARNING, COMPONENTS_WRITE_WARNING, } from "./constants.js";
+import { COMPONENTS_WRITE_WARNING, DEFAULT_HINT_USAGE, ERROR_CODES, EXIT_CODES, TOKEN_GENERATE_WARNING, } from "./constants.js";
 export class CliError extends Error {
     code;
     exitCode;
     hint;
     details;
+    recovery;
     constructor(message, options) {
         super(message);
         this.code = options.code;
         this.exitCode = options.exitCode;
         this.hint = options.hint;
         this.details = options.details;
+        this.recovery = options.recovery;
     }
 }
 export function normalizeFailure(msg, err) {
@@ -42,6 +44,8 @@ export function toJsonError(error) {
         jsonError.hint = error.hint;
     if (error.details)
         jsonError.details = error.details;
+    if (error.recovery)
+        jsonError.recovery = error.recovery;
     return jsonError;
 }
 export function requireExec(opts, action) {
@@ -67,5 +71,5 @@ export function requireNetwork(opts, action) {
     }
 }
 // Re-export constants for convenience
-export { ERROR_CODES, EXIT_CODES, TOKEN_GENERATE_WARNING, COMPONENTS_WRITE_WARNING };
+export { COMPONENTS_WRITE_WARNING, ERROR_CODES, EXIT_CODES, TOKEN_GENERATE_WARNING };
 //# sourceMappingURL=error.js.map

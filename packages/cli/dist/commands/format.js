@@ -1,5 +1,5 @@
-import { handleRun } from "../utils/exec.js";
 import { CliError, ERROR_CODES, EXIT_CODES } from "../error.js";
+import { handleRun } from "../utils/exec.js";
 export function formatCommand(args) {
     const { check, write, argv } = args;
     if (!check && !write) {

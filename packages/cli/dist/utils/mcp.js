@@ -1,9 +1,9 @@
-import { MCP_DRY_RUN_LABEL, MCP_URL_LABEL, MCP_SERVER_URL_KEY, MCP_PROTOCOL_VERSION_KEY, } from "../constants.js";
-import { resolveMcpSettings, resolveConfig, } from "./config.js";
-import { logDebug, logError, logInfo } from "./logger.js";
-import { outputJson, outputPlainRecord, createEnvelope } from "./output.js";
-import { toJsonError, CliError, ERROR_CODES, EXIT_CODES, requireNetwork } from "../error.js";
+import { MCP_DRY_RUN_LABEL, MCP_PROTOCOL_VERSION_KEY, MCP_SERVER_URL_KEY, MCP_URL_LABEL, } from "../constants.js";
+import { CliError, ERROR_CODES, EXIT_CODES, requireNetwork, toJsonError } from "../error.js";
+import { resolveConfig, resolveMcpSettings } from "./config.js";
 import { parseJsonString } from "./json.js";
+import { logDebug, logError, logInfo } from "./logger.js";
+import { createEnvelope, outputJson, outputPlainRecord } from "./output.js";
 export async function jsonRpcRequest(opts, config, method, params) {
     const { protocolVersion, url } = resolveMcpSettings(config);
     const payload = {
@@ -129,7 +129,7 @@ export async function handleMcpRpc(opts, config, method, params, summaryMethod) 
             });
         }
         else {
-            process.stdout.write(`dry_run=1 method=${method} url=${url}` + "\n");
+            process.stdout.write(`dry_run=1 method=${method} url=${url}\n`);
         }
         return EXIT_CODES.success;
     }

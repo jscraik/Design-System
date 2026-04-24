@@ -1,0 +1,197 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://design-studio.local/schemas/astudio-design-command.v1.schema.json",
+  "title": "aStudio design command envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "definitions": {
+    "designKind": {
+      "enum": [
+        "astudio.design.lint.v1",
+        "astudio.design.diff.v1",
+        "astudio.design.export.v1",
+        "astudio.design.checkBrand.v1",
+        "astudio.design.init.v1",
+        "astudio.design.migrate.v1",
+        "astudio.design.doctor.v1"
+      ]
+    }
+  },
+  "required": ["schema", "meta", "summary", "status", "data", "errors"],
+  "properties": {
+    "schema": {
+      "const": "astudio.command.v1"
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tool", "version", "timestamp", "outputMode"],
+      "properties": {
+        "tool": {
+          "const": "astudio"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timestamp": {
+          "type": "string",
+          "minLength": 1
+        },
+        "outputMode": {
+          "enum": ["json", "plain"]
+        },
+        "request_id": {
+          "type": "string"
+        },
+        "trace_id": {
+          "type": "string"
+        },
+        "parent_id": {
+          "type": "string"
+        }
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": ["success", "warn", "error"]
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "kind": {
+          "$ref": "#/definitions/designKind"
+        }
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "message"],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "details": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "hint": {
+            "type": "string",
+            "minLength": 1
+          },
+          "did_you_mean": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "fix_suggestion": {
+            "type": "string",
+            "minLength": 1
+          },
+          "recovery": {
+            "type": "object",
+            "additionalProperties": false,
+            "minProperties": 1,
+            "properties": {
+              "fix_suggestion": {
+                "type": "string",
+                "minLength": 1
+              },
+              "nextCommand": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["argv"],
+                "properties": {
+                  "argv": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "cwd": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "env": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "recoveryUnavailableReason": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "enum": ["success", "warn"]
+          }
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "$ref": "#/definitions/designKind"
+              }
+            },
+            "required": ["kind"]
+          },
+          "errors": {
+            "type": "array",
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "const": "error"
+          }
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "errors": {
+            "type": "array",
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ]
+}

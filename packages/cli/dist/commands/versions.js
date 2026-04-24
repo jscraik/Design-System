@@ -1,6 +1,6 @@
-import { handleRun } from "../utils/exec.js";
+import { TOKEN_WRITE_HINT, VERSIONS_WRITE_WARNING } from "../constants.js";
 import { CliError, ERROR_CODES, EXIT_CODES } from "../error.js";
-import { VERSIONS_WRITE_WARNING, TOKEN_WRITE_HINT } from "../constants.js";
+import { handleRun } from "../utils/exec.js";
 export async function versionsCommand(args) {
     const { command, write, argv } = args;
     if (!write) {

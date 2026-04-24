@@ -1,6 +1,7 @@
 import fs from "node:fs";
-import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { formatTraceparent } from "./trace.js";
 export function parseBooleanEnv(value) {
     if (!value)
         return undefined;
@@ -41,7 +42,7 @@ export function shouldColor(opts) {
         return false;
     return true;
 }
-export function baseEnv(opts) {
+export function baseEnv(opts, traceContext) {
     const env = { ...process.env };
     if (!shouldColor(opts)) {
         env.NO_COLOR = "1";
@@ -49,6 +50,9 @@ export function baseEnv(opts) {
     }
     else if (parseBooleanEnv(process.env.ASTUDIO_COLOR) === true) {
         env.FORCE_COLOR = "1";
+    }
+    if (traceContext) {
+        Object.assign(env, getTraceEnv(traceContext));
     }
     return env;
 }
@@ -62,7 +66,16 @@ export function resolveCwd(opts) {
 export function resolvePnpmCommand() {
     return process.env.ASTUDIO_PNPM?.trim() || "pnpm";
 }
-function nowIso() {
+function _nowIso() {
     return new Date().toISOString();
+}
+/**
+ * Get environment variables for propagating trace context to child processes
+ */
+export function getTraceEnv(context) {
+    return {
+        TRACEPARENT: formatTraceparent(context),
+        ASTUDIO_TRACE_ID: context.traceId,
+    };
 }
 //# sourceMappingURL=env.js.map

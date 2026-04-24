@@ -4,7 +4,13 @@ import { hideBin } from "yargs/helpers";
 import { componentsCommand } from "./commands/components.js";
 import { doctorCommand } from "./commands/doctor.js";
 import { formatCommand } from "./commands/format.js";
-import { buildCommand, devCommand, mcpCommand, testCommand } from "./commands/index.js";
+import {
+  buildCommand,
+  designCommand,
+  devCommand,
+  mcpCommand,
+  testCommand,
+} from "./commands/index.js";
 import { lintCommand } from "./commands/lint.js";
 import { skillsCommand } from "./commands/skills.js";
 import { tokensCommand } from "./commands/tokens.js";
@@ -296,6 +302,14 @@ const cli = yargs(hideBin(process.argv))
     },
   )
   .command(
+    "design",
+    "DESIGN.md contract utilities",
+    (yargs) => designCommand(yargs),
+    () => {
+      process.exitCode = EXIT_CODES.usage;
+    },
+  )
+  .command(
     "tokens <command>",
     "Generate or validate design tokens",
     (cmd) =>
@@ -381,7 +395,16 @@ const cli = yargs(hideBin(process.argv))
   )
   .fail((msg, err, yargsInstance) => {
     const parsedArgv = (yargsInstance as { parsed?: { argv?: CliArgs } }).parsed?.argv;
-    const wantsJson = Boolean(parsedArgv?.json || process.argv.includes("--json"));
+    const ciWantsJson =
+      typeof process.env.CI === "string" &&
+      process.env.CI.length > 0 &&
+      process.env.CI.toLowerCase() !== "false";
+    const isDesignCommand = process.argv.slice(2).includes("design");
+    const wantsJson = Boolean(
+      parsedArgv?.json ||
+        process.argv.includes("--json") ||
+        (isDesignCommand && (parsedArgv?.agent || process.argv.includes("--agent") || ciWantsJson)),
+    );
     const wantsPlain = Boolean(parsedArgv?.plain || process.argv.includes("--plain"));
     const isAgent = isAgentMode();
     const failure = normalizeFailure(msg, err ?? undefined);

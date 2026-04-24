@@ -2,6 +2,7 @@
 
 export { buildCommand } from "./build.js";
 export { componentsCommand } from "./components.js";
+export { designCommand } from "./design.js";
 export { devCommand } from "./dev.js";
 export { doctorCommand } from "./doctor.js";
 export { formatCommand } from "./format.js";
