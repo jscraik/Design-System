@@ -144,7 +144,7 @@ pnpm lint                   # Biome
 pnpm format                 # Biome (write)
 pnpm format:check           # Biome (check only)
 pnpm lint:compliance        # Check compliance rules
-pnpm doc:lint               # Vale sync + markdown linting + link check
+pnpm docs:lint              # Vale sync + markdown linting + link check
 
 # Building
 pnpm build                  # Full build pipeline

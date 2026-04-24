@@ -53,7 +53,7 @@ docs/
 Run documentation checks from the repo root:
 
 ```bash
-pnpm doc:lint
+pnpm docs:lint
 ```
 
 Requirements:

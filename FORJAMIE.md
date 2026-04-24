@@ -162,6 +162,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - Workspace package scripts should prefer `node --import tsx ...` when they depend on hoisted `tsx`; bare package-local `tsx` shims have already failed in this workspace layout.
 - `docs/plans/README.md`, `reports/README.md`, and `artifacts/reviews/README.md` are now the authority indexes for plan, report, and review-evidence routing. Prefer those front doors before trusting filename recency or old embedded status text.
 - `pnpm tracked-ignored:check` is the guard that keeps ignored runtime, cache, test-output, build-output, and ad hoc audit artifacts from becoming tracked again. It allows the documented planning/config exceptions, so do not replace it with a blanket ban on every `git ls-files -ci --exclude-standard` result.
+- `docs:lint` is the canonical docs quality command; `doc:lint` is only a compatibility alias. Theme propagation has an active property-test surface at `pnpm test:theme-propagation`, and the tree-shaking prototype is intentionally retained behind `pnpm validation-prototype:build`.
 
 ## Weaknesses & improvements
 
@@ -184,6 +185,7 @@ See also: `~/.codex/instructions/Learnings.md`
 
 ### 2026-04-24
 
+- **Orphan lifecycle cleanup**: JSC-229 removes the unused one-shot autodocs tagging script, turns `doc:lint` into a non-drifting alias for `docs:lint`, wires `scripts/theme-propagation.test.mjs` into `pnpm test:theme-propagation` and `pnpm test:web:property`, and gives the harness helper plus validation prototype explicit root command surfaces.
 - **Tracked ignored artifact guard**: JSC-228 adds `pnpm tracked-ignored:check` plus classifier self-tests, documents the allowed tracked-ignored planning/config exceptions in `docs/plans/2026-04-24-jsc228-tracked-ignored-guard.md`, and wires the guard into `pnpm test:policy` so runtime/cache/test/build/audit artifacts cannot quietly return to source control.
 - **Generated source contract**: JSC-226 classifies the tracked web template registry, widget JavaScript manifest, and Cloudflare worker manifest as committed deterministic runtime inputs; keeps the mutable TypeScript widget manifest ignored; removes the Cloudflare manifest timestamp; fixes the web registry script to use `node --import tsx`; and adds `pnpm generated-source:check` to root policy.
 - **Docs/report authority cleanup**: JSC-227 adds authority indexes for `docs/plans/**`, `reports/**`, and `artifacts/reviews/**`, archives the January 2026 template-migration report cluster under `reports/archive/2026-01-template-migration/`, and moves older multi-round Agent Design Engine review artifacts under `artifacts/reviews/archive/2026-04-agent-design-engine/` while keeping round 3 summaries as current review authority.

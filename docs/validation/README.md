@@ -64,6 +64,7 @@ The validation phase (Week 1) is complete. All five validation tasks have been c
 ### ✅ Task 3: Tree-Shaking Validation
 **Deliverable:** `docs/validation/tree-shaking-validation-report.md`, `docs/validation/tree-shaking-results.md`
 **Prototype:** `packages/validation-prototype/`
+**Command:** `pnpm validation-prototype:build`
 
 **Status:** ✅ **COMPLETE - Validation Successful!**
 

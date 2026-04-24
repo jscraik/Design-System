@@ -107,6 +107,11 @@ so newly tracked ignored runtime, cache, test-output, build-output, and
 ad hoc audit artifacts fail policy while documented planning/config exceptions
 remain allowed.
 
+JSC-229 resolved the orphan lifecycle candidates by removing the one-shot
+autodocs migration helper, wiring the theme propagation property test into an
+active test command, aliasing `doc:lint` to canonical `docs:lint`, and exposing
+root command surfaces for the harness helper and validation prototype.
+
 ## Deferred Decisions
 
 These path families are not removed in this slice because they need an explicit
@@ -126,8 +131,7 @@ Create or link follow-up Linear issues for:
 - Generated source contract: resolved by JSC-226.
 - Docs/report archive: resolved by JSC-227.
 - CI hygiene guard: resolved by JSC-228.
-- Script/package cleanup: decide whether orphaned scripts and prototype
-  packages should be wired into active commands or archived.
+- Script/package cleanup: resolved by JSC-229.
 
 ## Validation
 

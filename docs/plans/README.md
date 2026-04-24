@@ -36,6 +36,8 @@ These files are active cleanup authority for JSC-223 and its linked slices:
   regeneration and freshness contract.
 - `2026-04-24-jsc228-tracked-ignored-guard.md` - ignored runtime, cache,
   test-output, build-output, and audit-artifact tracking guard.
+- `2026-04-24-jsc229-orphan-lifecycle.md` - orphaned script and validation
+  prototype lifecycle decisions.
 
 ## Historical Plans
 
