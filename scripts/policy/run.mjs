@@ -137,6 +137,14 @@ const DESIGN_SYSTEM_SUBCONTRACTS = [
     description:
       "Fails when touched warn-scope files in the ratcheted surface set still carry design-system warnings.",
   },
+  {
+    id: "generated-source-freshness",
+    label: "Generated Source Freshness",
+    command: ["pnpm", "generated-source:check"],
+    remediation: "pnpm generated-source:check",
+    description:
+      "Regenerates tracked source manifests and fails if committed generated-source outputs are stale.",
+  },
 ];
 
 function normalize(filePath) {

@@ -34,6 +34,7 @@
     "ds:astudio:sync-versions": "pnpm -C packages/tokens exec tsx ../../scripts/sync-astudio-versions.ts",
     "sync:versions": "node scripts/version-sync.mjs",
     "sync:versions:check": "node scripts/version-sync.mjs --check",
+    "generated-source:check": "node scripts/check-generated-sources.mjs",
     "validate:tokens": "pnpm -C packages/tokens validate",
     "tokens:validate": "pnpm validate:tokens",
     "mcp:dev": "pnpm -C platforms/mcp dev",

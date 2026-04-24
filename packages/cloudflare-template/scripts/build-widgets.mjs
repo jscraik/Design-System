@@ -81,8 +81,6 @@ async function buildWidgets() {
 
   // Convert the TypeScript export to a simple re-export for the worker
   const workerManifestContent = `// Auto-generated widget manifest for Cloudflare Workers
-// Generated at: ${new Date().toISOString()}
-
 ${manifestContent}`;
 
   const workerManifestPath = resolve(templateRoot, "src/worker/widget-manifest.generated.ts");

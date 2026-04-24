@@ -35,6 +35,9 @@ JSC-225 has now resolved the build-output and Storybook screenshot portion of
 that deferral. See
 `docs/plans/2026-04-24-jsc225-build-artifact-contract.md`.
 
+JSC-226 has now resolved the generated-source portion of that deferral. See
+`docs/plans/2026-04-24-jsc226-generated-source-contract.md`.
+
 ## Removed From Tracking
 
 The following tracked-ignored runtime artifacts were removed from the Git index
@@ -88,6 +91,11 @@ The package publish contract is build-before-pack/publish:
 The visual artifact contract is Playwright baselines, CI artifacts, and Argos
 comparisons, not committed Storybook screenshot capture folders.
 
+JSC-226 decided that deterministic generated runtime inputs remain tracked when
+source code imports them directly, while mutable local build mirrors stay
+ignored. The root freshness gate is `pnpm generated-source:check`, and
+`pnpm test:policy` now runs that generated-source subcontract.
+
 ## Deferred Decisions
 
 These path families are not removed in this slice because they need an explicit
@@ -95,11 +103,6 @@ owner or release-contract decision:
 
 - `.spec/**`, `.agent/**`, and `.kiro/**`: ignored planning/spec surfaces that
   may be intentional project memory.
-- `packages/widgets/src/sdk/generated/**`,
-  `platforms/web/apps/web/src/generated/**`, and
-  `packages/cloudflare-template/src/worker/*.generated.ts`: generated source
-  files that may be runtime inputs and need a deterministic regeneration
-  contract before untracking.
 - Legacy reports under `reports/**`: duplicate historical report clusters
   contain stale absolute paths and should be consolidated rather than silently
   deleted.
@@ -111,8 +114,7 @@ owner or release-contract decision:
 
 Create or link follow-up Linear issues for:
 
-- Generated source contract: define which generated source files are committed,
-  which are build-derived, and which command regenerates them.
+- Generated source contract: resolved by JSC-226.
 - Docs/report archive: consolidate January 2026 generated report clusters and
   add a `docs/plans/README.md` authority index.
 - CI hygiene guard: add a small gate that blocks newly tracked ignored runtime

@@ -102,7 +102,8 @@ JSC-225 resolves the broad tracked build-output and screenshot decision. The
 remaining tracked ignored files are separate cleanup categories and should stay
 with their dedicated follow-up issues:
 
-- generated source regeneration contract: JSC-226;
+- generated source regeneration contract: resolved by JSC-226 in
+  `docs/plans/2026-04-24-jsc226-generated-source-contract.md`;
 - stale reports and plan authority index: JSC-227;
 - guard for newly tracked ignored runtime artifacts: JSC-228;
 - orphaned scripts and prototype package lifecycle: JSC-229.

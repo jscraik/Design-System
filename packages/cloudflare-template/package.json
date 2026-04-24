@@ -12,7 +12,7 @@
     "build-deploy": "pnpm run build && pnpm run deploy",
     "cf-typegen": "wrangler types --env development",
     "typecheck": "tsc --noEmit",
-    "check": "pnpm run typecheck && pnpm run build && wrangler deploy --dry-run"
+    "check": "pnpm run prebuild && pnpm run typecheck && pnpm run build && wrangler deploy --dry-run"
   },
   "dependencies": {
     "@design-studio/widgets": "workspace:*",
