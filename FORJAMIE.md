@@ -123,7 +123,7 @@ bash scripts/check-environment.sh
 The visual suites now go through `scripts/run-playwright-suite.mjs`, which prebuilds `packages/ui` with `pnpm -C packages/ui build:visual` before handing the remaining args straight to Playwright. Use that path when you need reliable `--list`, `--grep`, or `--update-snapshots` behavior from the root scripts without leaving the package in a declaration-broken state.
 The policy-owned exemplar slice now has its own root entry points. Use `pnpm test:exemplar-evaluation:list` to inspect the exact protected Storybook checks, and `pnpm test:exemplar-evaluation:update` to refresh only those baselines instead of hand-copying long `PLAYWRIGHT_STORYBOOK_*` env strings. `TemplateBrowserPage` is now part of the always-on exemplar slice, but that browser-backed check runs as an explicit exemplar gate rather than as part of the browser-free `pnpm test:policy` contract.
 For template-family QA, use `/templates` for the searchable browser shell and `/template-widget/<template-id>` for the isolated single-template widget shell that mirrors widget-style rendering without needing `VITE_TEMPLATE_ID`.
-Committed visual baselines live under `tests/visual/__snapshots__`. Local Playwright HTML reports, nested Vite cache outputs under `node_modules/.vite`, nested `.tmp` build scratch files, and ad hoc `reports/audit-*` outputs are now gitignored so browser runs stop polluting the branch.
+Committed visual baselines live under `tests/visual/__snapshots__`. Local Playwright HTML reports, nested Vite cache outputs under `node_modules/.vite`, nested `.tmp` build scratch files, Storybook screenshot captures, package/app `dist` outputs, and ad hoc `reports/audit-*` outputs are now gitignored so browser and build runs stop polluting the branch.
 
 ## Learnings & gotchas
 
@@ -156,6 +156,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - `astudio design init` validates the starter contract before writing, but it must still enforce the write gate first so a missing `--write` remains a policy error instead of a provenance error.
 - Package-level Biome scripts need to use the same pinned Biome 2.x command as the root scripts. The workspace still contains older Biome 1.x dependencies for other packages, and those cannot parse the current `biome.json` schema.
 - Browser-backed Playwright gates need a provisioned Chromium cache and a macOS launch path that is not blocked by the Codex sandbox. If every browser test fails at launch with `bootstrap_check_in ... Permission denied (1100)`, treat it as an environment permission issue and rerun the browser gate through the approved unsandboxed path before debugging UI code.
+- Package manifests can point at `dist` in `main`, `types`, `exports`, `bin`, or `files`, but those generated outputs are no longer committed source. Build before pack, publish, or direct `node packages/*/dist/...` execution.
 
 ## Weaknesses & improvements
 
@@ -177,6 +178,7 @@ See also: `~/.codex/instructions/Learnings.md`
 
 ### 2026-04-24
 
+- **Build artifact contract cleanup**: JSC-225 defines `dist/**`, `platforms/web/apps/web/dist/**`, and `platforms/web/apps/storybook/screenshots/**` as generated outputs rather than source-control authority, removes 802 tracked ignored generated files from the Git index, and records the build-before-pack/publish plus Playwright/Argos visual evidence contract in `docs/plans/2026-04-24-jsc225-build-artifact-contract.md`.
 - **Repo-wide cleanup inventory**: JSC-223 removed tracked ignored runtime artifacts from the Git index while keeping local files on disk, deleted three accidental zero-byte root files (`EOF`, `npm`, and `{`), and added `docs/plans/2026-04-24-jsc223-repo-cleanup-inventory.md` to separate safe cleanup from higher-risk publish-output, generated-source, docs-archive, and CI-hygiene follow-ups.
 - **Agent design review hardening**: parser headings now preserve original `DESIGN.md` line numbers after frontmatter, component extraction only records explicit backticked component names, and profile fallback no longer exposes an unused manifest-default path.
 - **Agent review follow-up**: the he-work agent pass added a cross-package profile parity test so every `@brainwav/design-system-guidance` supported profile must also parse through `@brainwav/agent-design-engine`, and the branch drops tracked Vite/test-output artifacts that were already ignored by repo policy.

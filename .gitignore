@@ -4,6 +4,9 @@ node_modules/
 .pnp.*
 
 # Build outputs
+# Generated package/app artifacts are rebuilt by package scripts and release
+# workflows. Keep source, package manifests, and workflow contracts tracked;
+# do not commit local dist/build outputs.
 dist/
 dist-ssr/
 build/

@@ -8,6 +8,7 @@ Last updated: 2026-04-24
 - [Current Slice](#current-slice)
 - [Removed From Tracking](#removed-from-tracking)
 - [Removed From Source](#removed-from-source)
+- [Resolved Follow-Up Decisions](#resolved-follow-up-decisions)
 - [Deferred Decisions](#deferred-decisions)
 - [Follow-Up Issue Candidates](#follow-up-issue-candidates)
 - [Validation](#validation)
@@ -29,6 +30,10 @@ The current cleanup slice is intentionally conservative:
   explicit package publish and regeneration contract for each path family.
 - Capture higher-risk cleanup as follow-up issues rather than deleting broad
   surfaces without an owner decision.
+
+JSC-225 has now resolved the build-output and Storybook screenshot portion of
+that deferral. See
+`docs/plans/2026-04-24-jsc225-build-artifact-contract.md`.
 
 ## Removed From Tracking
 
@@ -66,15 +71,28 @@ Three accidental zero-byte root files were deleted:
 Each file was tracked with the empty blob hash
 `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` and had no content.
 
+## Resolved Follow-Up Decisions
+
+JSC-225 decided that generated `dist/**` outputs and
+`platforms/web/apps/storybook/screenshots/**` captures are not source-control
+authority. The cleanup removed 802 tracked ignored generated files from the Git
+index while leaving local files on disk.
+
+The package publish contract is build-before-pack/publish:
+
+- `.github/workflows/publish-astudio.yml` builds aStudio packages before
+  `pnpm publish:astudio`.
+- `.github/workflows/release-guidance.yml` builds
+  `@brainwav/design-system-guidance` before `npm pack --dry-run` and publish.
+
+The visual artifact contract is Playwright baselines, CI artifacts, and Argos
+comparisons, not committed Storybook screenshot capture folders.
+
 ## Deferred Decisions
 
 These path families are not removed in this slice because they need an explicit
 owner or release-contract decision:
 
-- `**/dist/**` and `platforms/web/apps/web/dist/**`: likely build outputs, but
-  some package publish flows may expect committed artifacts.
-- `platforms/web/apps/storybook/screenshots/**`: visual artifacts that may be
-  historical review evidence, but they are large and churn-heavy.
 - `.spec/**`, `.agent/**`, and `.kiro/**`: ignored planning/spec surfaces that
   may be intentional project memory.
 - `packages/widgets/src/sdk/generated/**`,
@@ -93,8 +111,6 @@ owner or release-contract decision:
 
 Create or link follow-up Linear issues for:
 
-- Publish artifact contract: decide which `dist/**` outputs are intentional
-  release artifacts and align `.gitignore` with that decision.
 - Generated source contract: define which generated source files are committed,
   which are build-derived, and which command regenerates them.
 - Docs/report archive: consolidate January 2026 generated report clusters and
