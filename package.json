@@ -35,6 +35,8 @@
     "sync:versions": "node scripts/version-sync.mjs",
     "sync:versions:check": "node scripts/version-sync.mjs --check",
     "generated-source:check": "node scripts/check-generated-sources.mjs",
+    "tracked-ignored:check": "node scripts/check-tracked-ignored-artifacts.mjs",
+    "tracked-ignored:check:self-test": "node scripts/check-tracked-ignored-artifacts.mjs --self-test",
     "validate:tokens": "pnpm -C packages/tokens validate",
     "tokens:validate": "pnpm validate:tokens",
     "mcp:dev": "pnpm -C platforms/mcp dev",

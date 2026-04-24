@@ -145,6 +145,14 @@ const DESIGN_SYSTEM_SUBCONTRACTS = [
     description:
       "Regenerates tracked source manifests and fails if committed generated-source outputs are stale.",
   },
+  {
+    id: "tracked-ignored-artifacts",
+    label: "Tracked Ignored Artifact Guard",
+    command: ["pnpm", "tracked-ignored:check"],
+    remediation: "pnpm tracked-ignored:check",
+    description:
+      "Fails when ignored runtime, cache, test, build, or audit outputs are tracked again.",
+  },
 ];
 
 function normalize(filePath) {

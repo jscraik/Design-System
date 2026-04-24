@@ -34,6 +34,8 @@ These files are active cleanup authority for JSC-223 and its linked slices:
   screenshot tracking contract.
 - `2026-04-24-jsc226-generated-source-contract.md` - generated-source
   regeneration and freshness contract.
+- `2026-04-24-jsc228-tracked-ignored-guard.md` - ignored runtime, cache,
+  test-output, build-output, and audit-artifact tracking guard.
 
 ## Historical Plans
 

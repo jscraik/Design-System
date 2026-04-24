@@ -102,6 +102,11 @@ artifacts under `artifacts/reviews/archive/2026-04-agent-design-engine/`, and
 added authority indexes for `docs/plans/**`, `reports/**`, and
 `artifacts/reviews/**`.
 
+JSC-228 added `pnpm tracked-ignored:check` and wired it into `pnpm test:policy`
+so newly tracked ignored runtime, cache, test-output, build-output, and
+ad hoc audit artifacts fail policy while documented planning/config exceptions
+remain allowed.
+
 ## Deferred Decisions
 
 These path families are not removed in this slice because they need an explicit
@@ -120,8 +125,7 @@ Create or link follow-up Linear issues for:
 
 - Generated source contract: resolved by JSC-226.
 - Docs/report archive: resolved by JSC-227.
-- CI hygiene guard: add a small gate that blocks newly tracked ignored runtime
-  artifacts while allowing explicitly documented generated-source exceptions.
+- CI hygiene guard: resolved by JSC-228.
 - Script/package cleanup: decide whether orphaned scripts and prototype
   packages should be wired into active commands or archived.
 
