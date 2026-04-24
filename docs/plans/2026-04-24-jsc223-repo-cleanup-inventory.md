@@ -96,6 +96,12 @@ source code imports them directly, while mutable local build mirrors stay
 ignored. The root freshness gate is `pnpm generated-source:check`, and
 `pnpm test:policy` now runs that generated-source subcontract.
 
+JSC-227 archived the January 2026 template-migration report cluster under
+`reports/archive/2026-01-template-migration/`, moved older multi-round review
+artifacts under `artifacts/reviews/archive/2026-04-agent-design-engine/`, and
+added authority indexes for `docs/plans/**`, `reports/**`, and
+`artifacts/reviews/**`.
+
 ## Deferred Decisions
 
 These path families are not removed in this slice because they need an explicit
@@ -103,20 +109,17 @@ owner or release-contract decision:
 
 - `.spec/**`, `.agent/**`, and `.kiro/**`: ignored planning/spec surfaces that
   may be intentional project memory.
-- Legacy reports under `reports/**`: duplicate historical report clusters
-  contain stale absolute paths and should be consolidated rather than silently
-  deleted.
-- Older review rounds under `artifacts/reviews/**`: useful as historical
-  evidence, but should be indexed or archived behind one canonical synthesis per
-  review family.
+- Legacy reports under `reports/**`: resolved by JSC-227 archive and reports
+  index.
+- Older review rounds under `artifacts/reviews/**`: resolved by JSC-227 archive
+  and review artifact index.
 
 ## Follow-Up Issue Candidates
 
 Create or link follow-up Linear issues for:
 
 - Generated source contract: resolved by JSC-226.
-- Docs/report archive: consolidate January 2026 generated report clusters and
-  add a `docs/plans/README.md` authority index.
+- Docs/report archive: resolved by JSC-227.
 - CI hygiene guard: add a small gate that blocks newly tracked ignored runtime
   artifacts while allowing explicitly documented generated-source exceptions.
 - Script/package cleanup: decide whether orphaned scripts and prototype

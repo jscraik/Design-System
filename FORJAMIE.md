@@ -160,6 +160,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - `pnpm generated-source:check` is the canonical freshness gate for tracked generated runtime inputs. It regenerates the web template registry, widget JavaScript manifest, and Cloudflare worker manifest, formats the tracked generated source with Biome 2.3.11, and fails if the committed snapshot is stale.
 - `packages/widgets/src/sdk/generated/widget-manifest.ts` is still an ignored mutable local mirror. The tracked runtime authority is `packages/widgets/src/sdk/generated/widget-manifest.js`, and Cloudflare consumes its own deterministic `src/worker/widget-manifest.generated.ts` mirror after `pnpm -C packages/cloudflare-template run prebuild`.
 - Workspace package scripts should prefer `node --import tsx ...` when they depend on hoisted `tsx`; bare package-local `tsx` shims have already failed in this workspace layout.
+- `docs/plans/README.md`, `reports/README.md`, and `artifacts/reviews/README.md` are now the authority indexes for plan, report, and review-evidence routing. Prefer those front doors before trusting filename recency or old embedded status text.
 
 ## Weaknesses & improvements
 
@@ -183,6 +184,7 @@ See also: `~/.codex/instructions/Learnings.md`
 ### 2026-04-24
 
 - **Generated source contract**: JSC-226 classifies the tracked web template registry, widget JavaScript manifest, and Cloudflare worker manifest as committed deterministic runtime inputs; keeps the mutable TypeScript widget manifest ignored; removes the Cloudflare manifest timestamp; fixes the web registry script to use `node --import tsx`; and adds `pnpm generated-source:check` to root policy.
+- **Docs/report authority cleanup**: JSC-227 adds authority indexes for `docs/plans/**`, `reports/**`, and `artifacts/reviews/**`, archives the January 2026 template-migration report cluster under `reports/archive/2026-01-template-migration/`, and moves older multi-round Agent Design Engine review artifacts under `artifacts/reviews/archive/2026-04-agent-design-engine/` while keeping round 3 summaries as current review authority.
 - **Build artifact contract cleanup**: JSC-225 defines `dist/**`, `platforms/web/apps/web/dist/**`, and `platforms/web/apps/storybook/screenshots/**` as generated outputs rather than source-control authority, removes 802 tracked ignored generated files from the Git index, and records the build-before-pack/publish plus Playwright/Argos visual evidence contract in `docs/plans/2026-04-24-jsc225-build-artifact-contract.md`.
 - **Repo-wide cleanup inventory**: JSC-223 removed tracked ignored runtime artifacts from the Git index while keeping local files on disk, deleted three accidental zero-byte root files (`EOF`, `npm`, and `{`), and added `docs/plans/2026-04-24-jsc223-repo-cleanup-inventory.md` to separate safe cleanup from higher-risk publish-output, generated-source, docs-archive, and CI-hygiene follow-ups.
 - **Agent design review hardening**: parser headings now preserve original `DESIGN.md` line numbers after frontmatter, component extraction only records explicit backticked component names, and profile fallback no longer exposes an unused manifest-default path.
