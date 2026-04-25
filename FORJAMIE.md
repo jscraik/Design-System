@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-04-24
+**Last updated:** 2026-04-25
 **Production status:** IN_PROGRESS
 **Overall health:** Yellow
 
@@ -110,6 +110,7 @@ pnpm test:policy
 pnpm test:exemplar-evaluation:list
 pnpm test:exemplar-evaluation:update
 pnpm design-system-guidance:ratchet
+pnpm agent-design:boundaries
 pnpm agent-design:type-check
 pnpm agent-design:test
 pnpm -C packages/design-system-guidance build
@@ -180,8 +181,13 @@ See also: `~/.codex/instructions/Learnings.md`
 - `astudio design migrate` writes rollout state, rollback metadata, and quarantines migrated `DESIGN.md` files during rollback, but deeper crash-recovery, race, and repeated rollback/remigration tests should expand before using it as the only migration safety net for external consumer repos.
 - `astudio design check-brand --strict` now has non-tautological mismatch logic, but only `astudio-default@1` is currently supported. Add a second supported profile fixture before treating cross-profile mismatch behavior as fully proven.
 - `pnpm generated-source:check` intentionally rebuilds widget assets and may print Vite chunk-size warnings. Treat it as a correctness/freshness gate, not as the package performance budget.
+- `pnpm agent-design:boundaries` is the ownership tripwire for the Agent Design Engine: wrappers can call public package exports, but parser, lint, diff, export, and profile-comparison implementation must stay in `packages/agent-design-engine`.
 
 ## Recent changes
+
+### 2026-04-25
+
+- **Agent design boundary guard**: JSC-217 adds `pnpm agent-design:boundaries` and a self-test mode to prevent other packages from deep-importing `packages/agent-design-engine/src/**` or reimplementing `DESIGN.md` parser/rule ownership in `packages/design-system-guidance`. The guard now runs inside `pnpm test:policy`, and the `DESIGN.md` contract docs plus source plan mark the boundary enforcement item complete.
 
 ### 2026-04-24
 
@@ -343,7 +349,7 @@ project: design-system
 repo: ~/dev/design-system
 status: IN_PROGRESS
 health: yellow
-last_updated: 2026-04-13
+last_updated: 2026-04-25
 open_prs: 0
 blockers: none
 next_milestone: ChatGPT widget integration

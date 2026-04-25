@@ -35,6 +35,8 @@
     "sync:versions": "node scripts/version-sync.mjs",
     "sync:versions:check": "node scripts/version-sync.mjs --check",
     "generated-source:check": "node scripts/check-generated-sources.mjs",
+    "agent-design:boundaries": "node scripts/check-agent-design-boundaries.mjs",
+    "agent-design:boundaries:self-test": "node scripts/check-agent-design-boundaries.mjs --self-test",
     "tracked-ignored:check": "node scripts/check-tracked-ignored-artifacts.mjs",
     "tracked-ignored:check:self-test": "node scripts/check-tracked-ignored-artifacts.mjs --self-test",
     "harness:pr-pipeline": "python3 scripts/harness_pr_pipeline.py",

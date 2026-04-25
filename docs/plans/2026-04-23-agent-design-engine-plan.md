@@ -138,7 +138,7 @@ The boundary must be enforced mechanically:
 - No package may import `agent-design-engine/src/**`.
 - `design-system-guidance` may not parse markdown/YAML for `DESIGN.md`.
 - `design-system-guidance` may not implement semantic lint, diff, token export, or profile comparison logic.
-- Add a dependency-boundary test or policy rule that fails on deep imports and duplicate parser ownership.
+- `pnpm agent-design:boundaries` fails on deep imports and duplicate parser/rule ownership; `pnpm test:policy` runs the same guard as a design-system subcontract.
 
 ## Contract Model
 
@@ -743,7 +743,7 @@ Tasks:
 - [x] Add compatibility manifest validation.
 - [x] Add strict v1/v2 config decoding and downgrade/unsupported-mode refusal tests.
 - [x] Add wrapper-to-engine integration path.
-- [ ] Add boundary checks preventing wrapper parser/rule duplication.
+- [x] Add boundary checks preventing wrapper parser/rule duplication.
 - [x] Keep existing legacy checks operational.
 - [x] Add transactional migration, rollback, and resume state handling.
 - [ ] Implement the migration transition table and crash-safe `partial` marker before mutation.

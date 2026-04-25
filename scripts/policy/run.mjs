@@ -153,6 +153,14 @@ const DESIGN_SYSTEM_SUBCONTRACTS = [
     description:
       "Fails when ignored runtime, cache, test, build, or audit outputs are tracked again.",
   },
+  {
+    id: "agent-design-boundaries",
+    label: "Agent Design Boundary Guard",
+    command: ["pnpm", "agent-design:boundaries"],
+    remediation: "pnpm agent-design:boundaries",
+    description:
+      "Prevents wrapper code from deep-importing engine source or reimplementing DESIGN.md semantic ownership.",
+  },
 ];
 
 function normalize(filePath) {

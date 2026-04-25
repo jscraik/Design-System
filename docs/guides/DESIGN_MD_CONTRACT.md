@@ -33,6 +33,13 @@ The semantic engine lives in `packages/agent-design-engine`. The wrapper package
 the compatibility manifest. The CLI in `packages/cli` exposes both through
 `astudio design ...` commands.
 
+Boundary ownership is guarded by `pnpm agent-design:boundaries`, which blocks
+packages from deep-importing `packages/agent-design-engine/src/**` and blocks
+the guidance wrapper from reimplementing `DESIGN.md` markdown/YAML parsing,
+semantic lint, diff, export, or profile-comparison logic. Public package
+exports such as `@brainwav/agent-design-engine` remain the allowed integration
+path.
+
 ## Required Frontmatter
 
 Every v1 contract requires this frontmatter:
