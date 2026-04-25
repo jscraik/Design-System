@@ -24,6 +24,41 @@
       "notes": "Use when a real grid is needed; do not replace list-based settings layouts with Grid by default."
     },
     {
+      "name": "ProductPageShell",
+      "path": "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Preferred page-level composition primitive for new product surfaces that need viewport-safe layout, heading structure, optional sidebar, main region, and footer."
+    },
+    {
+      "name": "ProductPanel",
+      "path": "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Preferred semantic panel primitive for grouped product regions with heading, actions, body, and footer slots."
+    },
+    {
+      "name": "ProductSection",
+      "path": "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Preferred section-level composition primitive when a surface needs consistent heading and spacing rhythm."
+    },
+    {
+      "name": "ProductDataView",
+      "path": "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Preferred async collection primitive for results, tables, and lists that need ready, loading, empty, error, or busy state routing."
+    },
+    {
+      "name": "ProductStateWrapper",
+      "path": "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Preferred local async-state wrapper inside panels and sections."
+    },
+    {
       "name": "SectionHeader",
       "path": "packages/ui/src/components/ui/base/SectionHeader/SectionHeader.tsx",
       "lifecycle": "canonical",

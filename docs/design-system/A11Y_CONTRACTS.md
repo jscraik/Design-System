@@ -230,6 +230,13 @@ Each local primitive component has an explicit accessibility contract below. Use
 - **States & announcements**: Current page uses `aria-current="page"`.
 - **Notes**: Disabled buttons use `aria-disabled`.
 
+## ProductComposition
+
+- **Keyboard & focus**: Delegates focus handling to contained controls; page, panel, section, data-view, and state wrappers must not add unexpected focus stops.
+- **ARIA & semantics**: Preserve heading hierarchy through page titles and section headers; loading/busy states expose `aria-busy`, empty states use status semantics, and errors use alert semantics.
+- **States & announcements**: Loading, empty, error, busy, and ready states must have visible text labels that can be announced when content changes.
+- **Notes**: Use these primitives to keep agent-authored product surfaces semantic before falling back to loose layout utilities.
+
 ## RangeSlider
 
 - **Keyboard & focus**: Arrow keys adjust value; PageUp/PageDown for larger steps; Home/End for min/max.

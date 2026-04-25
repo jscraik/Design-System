@@ -5,8 +5,8 @@
 export const widgetManifest = {
   "auth-demo": {
     "name": "auth-demo",
-    "uri": "auth-demo.7ec54e03",
-    "hash": "7ec54e03",
+    "uri": "auth-demo.7a88fea2",
+    "hash": "7a88fea2",
     "originalPath": "src/widgets/auth/auth-demo/index.html"
   },
   "past-orders": {
@@ -23,80 +23,80 @@ export const widgetManifest = {
   },
   "chat-header": {
     "name": "chat-header",
-    "uri": "chat-header.28824e23",
-    "hash": "28824e23",
+    "uri": "chat-header.abd13d82",
+    "hash": "abd13d82",
     "originalPath": "src/widgets/chat/chat-header/index.html"
   },
   "chat-input": {
     "name": "chat-input",
-    "uri": "chat-input.9306bc1a",
-    "hash": "9306bc1a",
+    "uri": "chat-input.f16b04ff",
+    "hash": "f16b04ff",
     "originalPath": "src/widgets/chat/chat-input/index.html"
   },
   "chat-messages": {
     "name": "chat-messages",
-    "uri": "chat-messages.9f5e7ab2",
-    "hash": "9f5e7ab2",
+    "uri": "chat-messages.5a73447c",
+    "hash": "5a73447c",
     "originalPath": "src/widgets/chat/chat-messages/index.html"
   },
   "chat-sidebar": {
     "name": "chat-sidebar",
-    "uri": "chat-sidebar.a2729bb9",
-    "hash": "a2729bb9",
+    "uri": "chat-sidebar.831463b0",
+    "hash": "831463b0",
     "originalPath": "src/widgets/chat/chat-sidebar/index.html"
   },
   "chat-template": {
     "name": "chat-template",
-    "uri": "chat-template.ec9f3372",
-    "hash": "ec9f3372",
+    "uri": "chat-template.96f770a9",
+    "hash": "96f770a9",
     "originalPath": "src/widgets/chat/chat-template/index.html"
   },
   "chat-view": {
     "name": "chat-view",
-    "uri": "chat-view.62e7ef11",
-    "hash": "62e7ef11",
+    "uri": "chat-view.f672dd5b",
+    "hash": "f672dd5b",
     "originalPath": "src/widgets/chat/chat-view/index.html"
   },
   "compose-view": {
     "name": "compose-view",
-    "uri": "compose-view.60e253df",
-    "hash": "60e253df",
+    "uri": "compose-view.4ba6dc6c",
+    "hash": "4ba6dc6c",
     "originalPath": "src/widgets/chat/compose-view/index.html"
   },
   "shopping-cart": {
     "name": "shopping-cart",
-    "uri": "shopping-cart.123153ff",
-    "hash": "123153ff",
+    "uri": "shopping-cart.865d2aa4",
+    "hash": "865d2aa4",
     "originalPath": "src/widgets/commerce/shopping-cart/index.html"
   },
   "dashboard-widget": {
     "name": "dashboard-widget",
-    "uri": "dashboard-widget.2a69194d",
-    "hash": "2a69194d",
+    "uri": "dashboard-widget.e4a84790",
+    "hash": "e4a84790",
     "originalPath": "src/widgets/dashboard/dashboard-widget/index.html"
   },
   "json-render-demo": {
     "name": "json-render-demo",
-    "uri": "json-render-demo.b62aca59",
-    "hash": "b62aca59",
+    "uri": "json-render-demo.8fa024f4",
+    "hash": "8fa024f4",
     "originalPath": "src/widgets/demo/json-render-demo/index.html"
   },
   "kitchen-sink-lite": {
     "name": "kitchen-sink-lite",
-    "uri": "kitchen-sink-lite.5e5d31d6",
-    "hash": "5e5d31d6",
+    "uri": "kitchen-sink-lite.e4265449",
+    "hash": "e4265449",
     "originalPath": "src/widgets/demo/kitchen-sink-lite/index.html"
   },
   "pizzaz-carousel": {
     "name": "pizzaz-carousel",
-    "uri": "pizzaz-carousel.06169623",
-    "hash": "06169623",
+    "uri": "pizzaz-carousel.ab74fad1",
+    "hash": "ab74fad1",
     "originalPath": "src/widgets/pizzaz/pizzaz-carousel/index.html"
   },
   "pizzaz-gallery": {
     "name": "pizzaz-gallery",
-    "uri": "pizzaz-gallery.b6d872f7",
-    "hash": "b6d872f7",
+    "uri": "pizzaz-gallery.9ff23c9c",
+    "hash": "9ff23c9c",
     "originalPath": "src/widgets/pizzaz/pizzaz-gallery/index.html"
   },
   "pizzaz-map": {
@@ -107,32 +107,32 @@ export const widgetManifest = {
   },
   "pizzaz-markdown": {
     "name": "pizzaz-markdown",
-    "uri": "pizzaz-markdown.d95c7f02",
-    "hash": "d95c7f02",
+    "uri": "pizzaz-markdown.8a40ee10",
+    "hash": "8a40ee10",
     "originalPath": "src/widgets/pizzaz/pizzaz-markdown/index.html"
   },
   "pizzaz-shop": {
     "name": "pizzaz-shop",
-    "uri": "pizzaz-shop.22a531a8",
-    "hash": "22a531a8",
+    "uri": "pizzaz-shop.30402c1c",
+    "hash": "30402c1c",
     "originalPath": "src/widgets/pizzaz/pizzaz-shop/index.html"
   },
   "pizzaz-table": {
     "name": "pizzaz-table",
-    "uri": "pizzaz-table.00a51f53",
-    "hash": "00a51f53",
+    "uri": "pizzaz-table.b076039c",
+    "hash": "b076039c",
     "originalPath": "src/widgets/pizzaz/pizzaz-table/index.html"
   },
   "solar-system": {
     "name": "solar-system",
-    "uri": "solar-system.7b010195",
-    "hash": "7b010195",
+    "uri": "solar-system.d4fb07de",
+    "hash": "d4fb07de",
     "originalPath": "src/widgets/science/solar-system/index.html"
   },
   "search-results": {
     "name": "search-results",
-    "uri": "search-results.913969e3",
-    "hash": "913969e3",
+    "uri": "search-results.a9e3bccb",
+    "hash": "a9e3bccb",
     "originalPath": "src/widgets/search/search-results/index.html"
   }
 };

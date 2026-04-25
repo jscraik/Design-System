@@ -63,6 +63,7 @@ export * from "./forms";
 // Layout primitives
 export * from "./layout/Flex";
 export * from "./layout/Grid";
+export * from "./layout/ProductComposition";
 export * from "./layout/Stack";
 // Navigation - Navigation and menu components
 export * from "./navigation/breadcrumb";
