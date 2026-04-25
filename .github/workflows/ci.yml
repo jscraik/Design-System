@@ -26,7 +26,6 @@ jobs:
     env:
       SNAPSHOT_TESTS: ${{ matrix.platform == 'macos' && '1' || '0' }}
       SNAPSHOT_RECORD: "0"
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 
     steps:
       - name: Checkout
@@ -59,9 +58,9 @@ jobs:
 
       - name: Setup Swift (macOS only)
         if: matrix.os == 'macos-latest'
-        uses: swift-actions/setup-swift@364295d9c23900ce04d4e5cc708387921b4e50f9 # v3
-        with:
-          swift-version: "5.9.2"
+        run: |
+          swift --version
+          xcrun --find swift
 
       - name: Install deps
         run: pnpm install --frozen-lockfile --prod=false
