@@ -17,6 +17,10 @@ const steps = [
     command: ["pnpm", "-C", "platforms/web/apps/web", "registry:generate"],
   },
   {
+    label: "build workspace libraries for manifest generation",
+    command: ["pnpm", "build:lib"],
+  },
+  {
     label: "regenerate widget build manifest",
     command: ["pnpm", "-C", "packages/widgets", "build"],
   },
