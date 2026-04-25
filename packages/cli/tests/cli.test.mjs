@@ -157,6 +157,41 @@ function rollbackMetadata(targetDir) {
   return readJsonFile(rollbackMetadataPath(targetDir));
 }
 
+function migrationArtifactDir(targetDir) {
+  return path.join(targetDir, "artifacts", "design-migrations");
+}
+
+function listFilesRecursive(dir) {
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const filePath = path.join(dir, entry.name);
+    return entry.isDirectory() ? listFilesRecursive(filePath) : [filePath];
+  });
+}
+
+function quarantineFiles(targetDir) {
+  return listFilesRecursive(migrationArtifactDir(targetDir)).filter((filePath) =>
+    /-DESIGN(?:-\d+)?\.md$/.test(path.basename(filePath)),
+  );
+}
+
+function rollbackMetadataFiles(targetDir) {
+  return listFilesRecursive(migrationArtifactDir(targetDir)).filter((filePath) =>
+    filePath.endsWith("-guidance-rollback.json"),
+  );
+}
+
+function migrationScratchFiles(targetDir) {
+  return listFilesRecursive(targetDir).filter((filePath) => {
+    const entry = path.basename(filePath);
+    return entry.includes(".tmp") || entry.endsWith(".lock");
+  });
+}
+
+function assertNoMigrationScratchFiles(targetDir) {
+  assert.deepEqual(migrationScratchFiles(targetDir), []);
+}
+
 function stripRollbackSignature(metadata) {
   const {
     metadataDigest: _metadataDigest,
@@ -977,6 +1012,7 @@ test("design migrate rollback quarantines migrated DESIGN.md", async () => {
     { cwd: tempDir },
   );
   assert.equal(migrate.code, 0);
+  const metadata = rollbackMetadata(tempDir);
 
   const rollback = await runCli(
     ["design", "migrate", "--rollback", "--write", "--json"],
@@ -989,6 +1025,46 @@ test("design migrate rollback quarantines migrated DESIGN.md", async () => {
   assert.equal(fs.existsSync(path.join(tempDir, "DESIGN.md")), false);
   assert.equal(typeof payload.data.quarantinePath, "string");
   assert.equal(fs.existsSync(payload.data.quarantinePath), true);
+  assert.equal(
+    path.dirname(payload.data.quarantinePath),
+    path.join(fs.realpathSync(migrationArtifactDir(tempDir)), metadata.operationId),
+  );
+  assertNoMigrationScratchFiles(tempDir);
+});
+
+test("design migrate rollback allocates collision-safe quarantine paths", async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-guidance-"));
+  writeValidDesignProject(tempDir);
+
+  const migrate = await runCli(
+    ["design", "migrate", "--to", "design-md", "--write", "--json"],
+    {},
+    { cwd: tempDir },
+  );
+  assert.equal(migrate.code, 0);
+
+  const metadata = rollbackMetadata(tempDir);
+  const designContent = fs.readFileSync(path.join(tempDir, "DESIGN.md"), "utf8");
+  const baseName = `${checksum(designContent).slice(0, 12)}-DESIGN.md`;
+  const quarantineDir = path.join(migrationArtifactDir(tempDir), metadata.operationId);
+  fs.mkdirSync(quarantineDir, { recursive: true });
+  const firstCollisionPath = path.join(quarantineDir, baseName);
+  const secondCollisionPath = path.join(quarantineDir, baseName.replace(/\.md$/, "-1.md"));
+  fs.writeFileSync(firstCollisionPath, "existing quarantine collision\n", { flag: "wx" });
+  fs.writeFileSync(secondCollisionPath, "second quarantine collision\n", { flag: "wx" });
+
+  const rollback = await runCli(
+    ["design", "migrate", "--rollback", "--write", "--json"],
+    {},
+    { cwd: tempDir },
+  );
+  assert.equal(rollback.code, 0, `${rollback.stdout}${rollback.stderr}`);
+  const payload = JSON.parse(rollback.stdout);
+  assert.equal(path.basename(payload.data.quarantinePath), baseName.replace(/\.md$/, "-2.md"));
+  assert.equal(fs.readFileSync(firstCollisionPath, "utf8"), "existing quarantine collision\n");
+  assert.equal(fs.readFileSync(secondCollisionPath, "utf8"), "second quarantine collision\n");
+  assert.equal(fs.existsSync(payload.data.quarantinePath), true);
+  assertNoMigrationScratchFiles(tempDir);
 });
 
 test("design migrate rollback rejects tampered metadata without mutating config", async () => {
@@ -1114,6 +1190,7 @@ test("design migrate writes partial marker before final mutation failure", async
   assert.equal(config.designContract.mode, "design-md");
   assert.equal(config.designContract.migrationState, "partial");
   assert.equal(fs.existsSync(path.join(tempDir, config.designContract.rollbackMetadata)), true);
+  assertNoMigrationScratchFiles(tempDir);
 
   const resume = await runCli(
     ["design", "migrate", "--resume", "--write", "--json"],
@@ -1123,6 +1200,47 @@ test("design migrate writes partial marker before final mutation failure", async
   assert.equal(resume.code, 0, `${resume.stdout}${resume.stderr}`);
   const resumedPayload = JSON.parse(resume.stdout);
   assert.equal(resumedPayload.data.migrationState, "active");
+  assertNoMigrationScratchFiles(tempDir);
+});
+
+test("design migrate rollback partial failure remains recoverable", async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-guidance-"));
+  writeValidDesignProject(tempDir);
+
+  const migrate = await runCli(
+    ["design", "migrate", "--to", "design-md", "--write", "--json"],
+    {},
+    { cwd: tempDir },
+  );
+  assert.equal(migrate.code, 0, `${migrate.stdout}${migrate.stderr}`);
+
+  const failedRollback = await runCli(
+    ["design", "migrate", "--rollback", "--write", "--json"],
+    { ASTUDIO_GUIDANCE_FAIL_AFTER_PARTIAL: "1" },
+    { cwd: tempDir },
+  );
+  assert.equal(failedRollback.code, 4, `${failedRollback.stdout}${failedRollback.stderr}`);
+  const failedPayload = JSON.parse(failedRollback.stdout);
+  assert.equal(failedPayload.errors[0].code, "E_PARTIAL");
+
+  const partialConfig = readJsonFile(guidanceConfigPath(tempDir));
+  assert.equal(partialConfig.designContract.mode, "design-md");
+  assert.equal(partialConfig.designContract.migrationState, "partial");
+  assert.equal(fs.existsSync(path.join(tempDir, "DESIGN.md")), true);
+  assert.deepEqual(quarantineFiles(tempDir), []);
+  assertNoMigrationScratchFiles(tempDir);
+
+  const rollback = await runCli(
+    ["design", "migrate", "--rollback", "--write", "--json"],
+    {},
+    { cwd: tempDir },
+  );
+  assert.equal(rollback.code, 0, `${rollback.stdout}${rollback.stderr}`);
+  const payload = JSON.parse(rollback.stdout);
+  assert.equal(payload.data.migrationState, "rolled-back");
+  assert.equal(fs.existsSync(path.join(tempDir, "DESIGN.md")), false);
+  assert.equal(quarantineFiles(tempDir).length, 1);
+  assertNoMigrationScratchFiles(tempDir);
 });
 
 test("design migrate transition table rejects invalid mutations without touching config", async () => {
@@ -1213,6 +1331,8 @@ test("design migrate remigration allocates fresh rollback metadata after rollbac
     { cwd: tempDir },
   );
   assert.equal(rollback.code, 0, `${rollback.stdout}${rollback.stderr}`);
+  const firstRollbackPayload = JSON.parse(rollback.stdout);
+  const firstQuarantinePath = firstRollbackPayload.data.quarantinePath;
 
   writeValidDesignContract(tempDir);
   const secondMigrate = await runCli(
@@ -1226,6 +1346,20 @@ test("design migrate remigration allocates fresh rollback metadata after rollbac
   assert.notEqual(secondMetadataPath, firstMetadataPath);
   assert.equal(fs.existsSync(firstMetadataPath), true);
   assert.equal(fs.existsSync(secondMetadataPath), true);
+
+  const secondRollback = await runCli(
+    ["design", "migrate", "--rollback", "--write", "--json"],
+    {},
+    { cwd: tempDir },
+  );
+  assert.equal(secondRollback.code, 0, `${secondRollback.stdout}${secondRollback.stderr}`);
+  const secondRollbackPayload = JSON.parse(secondRollback.stdout);
+  const secondQuarantinePath = secondRollbackPayload.data.quarantinePath;
+  assert.notEqual(secondQuarantinePath, firstQuarantinePath);
+  assert.equal(fs.existsSync(firstQuarantinePath), true);
+  assert.equal(fs.existsSync(secondQuarantinePath), true);
+  assert.equal(quarantineFiles(tempDir).length, 2);
+  assertNoMigrationScratchFiles(tempDir);
 });
 
 test("design migrate refuses active migration lock without mutating config", async () => {
@@ -1290,8 +1424,48 @@ test("design migrate concurrent writers leave parseable active state", async () 
   const config = readJsonFile(guidanceConfigPath(tempDir));
   assert.equal(config.designContract.mode, "design-md");
   assert.equal(config.designContract.migrationState, "active");
-  assert.equal(
-    fs.readdirSync(tempDir).some((entry) => entry.includes(".tmp") || entry.endsWith(".lock")),
-    false,
+  assert.equal(rollbackMetadataFiles(tempDir).length, 1);
+  assertNoMigrationScratchFiles(tempDir);
+});
+
+test("design migrate concurrent rollbacks allocate one quarantine path", async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-guidance-"));
+  writeValidDesignProject(tempDir);
+
+  const migrate = await runCli(
+    ["design", "migrate", "--to", "design-md", "--write", "--json"],
+    {},
+    { cwd: tempDir },
   );
+  assert.equal(migrate.code, 0, `${migrate.stdout}${migrate.stderr}`);
+
+  const results = await Promise.all(
+    Array.from({ length: 4 }, () =>
+      runCli(["design", "migrate", "--rollback", "--write", "--json"], {}, { cwd: tempDir }),
+    ),
+  );
+
+  const successes = results.filter((result) => result.code === 0);
+  assert.equal(
+    successes.length,
+    1,
+    results.map((result) => `${result.code}: ${result.stdout}${result.stderr}`).join("\n"),
+  );
+  for (const result of results) {
+    if (result.code === 0) continue;
+    const payload = JSON.parse(result.stdout);
+    assert.ok(
+      ["E_DESIGN_MIGRATION_LOCKED", "E_DESIGN_MIGRATION_STATE_INVALID"].includes(
+        payload.errors[0].code,
+      ),
+      payload.errors[0].code,
+    );
+  }
+
+  const config = readJsonFile(guidanceConfigPath(tempDir));
+  assert.equal(config.designContract.mode, "legacy");
+  assert.equal(config.designContract.migrationState, "rolled-back");
+  assert.equal(fs.existsSync(path.join(tempDir, "DESIGN.md")), false);
+  assert.equal(quarantineFiles(tempDir).length, 1);
+  assertNoMigrationScratchFiles(tempDir);
 });

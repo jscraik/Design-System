@@ -607,6 +607,8 @@ Rollback quarantine behavior:
 - concurrent rollback attempts must be covered by race tests that prove only one writer wins each quarantine path
 - retention cleanup is explicit future work; v1 may report stale quarantine artifacts but must not prune them automatically
 
+JSC-220 implementation note: rollback quarantine paths now derive their artifact directory from the authenticated rollback metadata `operationId`, not a fresh random id at rollback time. The quarantine writer uses atomic hardlink creation, appends `-<n>` on existing artifact collisions, rejects path-unsafe operation ids, keeps rollback partial failures in a retryable `design-md/partial` state until quarantine succeeds, and has CLI coverage for collision suffixes, repeated rollback/remigration artifacts, concurrent rollback writers, and temp/lock cleanup after successful and failed writes.
+
 ### Compatibility Manifest
 
 Every wrapper release must include a compatibility manifest:
@@ -754,7 +756,7 @@ Tasks:
 - [x] Implement the migration transition table and crash-safe `partial` marker before mutation.
 - [x] Implement required rollback metadata fields, authenticity checks, path-root checks, compatibility algorithm, and checksum validation.
 - [x] Add rollback quarantine behavior for migrated `DESIGN.md`.
-- [ ] Add collision-safe quarantine paths, atomic create semantics, repeated rollback/remigration tests, and concurrent-writer race tests.
+- [x] Add collision-safe quarantine paths, atomic create semantics, repeated rollback/remigration tests, and concurrent-writer race tests.
 
 Validation:
 
@@ -1018,6 +1020,6 @@ The JSC-208 vertical slice is implemented and locally validated. The next stage 
 
 Recommended next implementation tasks:
 
-1. Expand migration tests with repeated rollback/remigration, concurrent-writer collision paths, and fault injection around the `partial` marker.
-2. Prove wrapper/engine boundary checks with deep-import and parser/rule-duplication guards.
-3. Expand rollback metadata authenticity, path-root, checksum-compatibility, and support-window coverage before GA.
+1. Expand rollback metadata support-window coverage and compatibility fixtures before GA.
+2. Continue wrapper/engine boundary checks with deep-import and parser/rule-duplication guards as the guard surface changes.
+3. Add fixture coverage for repeated `migrate --resume` and `migrate --rollback` idempotency after the remaining support-window rules are fixed.

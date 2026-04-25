@@ -993,13 +993,12 @@ function toConfigRelativePath(targetPath: string, filePath: string): string {
 async function quarantineDesignFile(
   targetPath: string,
   rollbackDir: string,
-  rawConfig: string,
+  operationId: string,
 ): Promise<string | undefined> {
   const designPath = path.join(targetPath, "DESIGN.md");
   if (!(await exists(designPath))) return undefined;
 
   const content = await readFile(designPath, "utf8");
-  const operationId = `${new Date().toISOString().replace(/[:.]/g, "-")}-${checksum(rawConfig).slice(0, 8)}-${randomUUID()}`;
   const quarantineDir = path.join(rollbackDir, operationId);
   await mkdir(quarantineDir, { recursive: true });
 
@@ -1009,7 +1008,12 @@ async function quarantineDesignFile(
     const candidate = path.join(quarantineDir, fileName);
     try {
       await link(designPath, candidate);
-      await unlink(designPath);
+      try {
+        await unlink(designPath);
+      } catch (error) {
+        await unlink(candidate).catch(() => undefined);
+        throw error;
+      }
       return candidate;
     } catch (error) {
       const code = (error as NodeJS.ErrnoException).code;
@@ -1192,7 +1196,7 @@ async function assertRollbackMetadata(
   currentRawConfig: string,
   metadataPath: string,
   parsed: unknown,
-): Promise<void> {
+): Promise<string> {
   if (!isObject(parsed)) {
     throw rollbackMetadataError();
   }
@@ -1256,7 +1260,10 @@ async function assertRollbackMetadata(
   if (!ISO_DATE_PATTERN.test(legacySupportEndsAtAtWrite)) {
     throw rollbackMetadataError();
   }
-  requiredString(parsed.operationId);
+  const operationId = requiredString(parsed.operationId);
+  if (!/^[A-Za-z0-9._-]+$/.test(operationId)) {
+    throw rollbackMetadataError();
+  }
 
   const guidanceConfigChecksum = requiredString(parsed.guidanceConfigChecksum);
   const designFileChecksum = requiredString(parsed.designFileChecksum);
@@ -1303,6 +1310,8 @@ async function assertRollbackMetadata(
   if (checksum(await readFile(designFilePath, "utf8")) !== designFileChecksum) {
     throw rollbackMetadataError();
   }
+
+  return operationId;
 }
 
 function migrationOperation(options: MigrationOptions): MigrationOperation {
@@ -1349,8 +1358,13 @@ async function requireReadableRollbackMetadata(
   try {
     const raw = await readFile(metadataPath, "utf8");
     const parsed = JSON.parse(raw) as unknown;
-    await assertRollbackMetadata(targetPath, configPath, currentRawConfig, metadataPath, parsed);
-    return metadataPath;
+    return await assertRollbackMetadata(
+      targetPath,
+      configPath,
+      currentRawConfig,
+      metadataPath,
+      parsed,
+    );
   } catch (error) {
     if (error instanceof GuidanceError) throw error;
     throw rollbackMetadataError();
@@ -1481,9 +1495,11 @@ async function migrateGuidanceConfigUnlocked(
   const isRollback = operation === "rollback";
   const freshMigrationNeedsNewMetadata =
     operation === "fresh" && beforeState.migrationState !== "active";
-  const rollbackMetadataPath = transition.requiresReadableMetadata
+  const rollbackOperationId = transition.requiresReadableMetadata
     ? await requireReadableRollbackMetadata(targetPath, configPath, raw, beforeState)
-    : beforeState.rollbackMetadata && !freshMigrationNeedsNewMetadata
+    : undefined;
+  const rollbackMetadataPath =
+    beforeState.rollbackMetadata && !freshMigrationNeedsNewMetadata
       ? resolveRollbackMetadataPath(targetPath, beforeState.rollbackMetadata)
       : newRollbackMetadataPath(rollbackDir, raw);
   const rollbackMetadataConfigPath = toConfigRelativePath(targetPath, rollbackMetadataPath);
@@ -1520,13 +1536,20 @@ async function migrateGuidanceConfigUnlocked(
     designContract: afterState,
   };
   const nextRaw = stableJson(nextConfig);
+  const partialState: GuidanceDesignContractState = isRollback
+    ? {
+        ...beforeState,
+        migrationState: "partial",
+        rollbackMetadata: rollbackMetadataConfigPath,
+      }
+    : {
+        ...afterState,
+        migrationState: "partial",
+      };
   const partialRaw = stableJson({
     ...config,
     schemaVersion: nextConfig.schemaVersion,
-    designContract: {
-      ...afterState,
-      migrationState: "partial",
-    },
+    designContract: partialState,
   });
   const changed = raw !== nextRaw;
   let quarantinePath: string | undefined;
@@ -1559,13 +1582,13 @@ async function migrateGuidanceConfigUnlocked(
         ),
       );
 
-    if (isRollback) {
-      quarantinePath = await quarantineDesignFile(targetPath, rollbackDir, raw);
-    }
-
     await writeAtomic(configPath, partialRaw);
     if (shouldFailAfterPartialWrite()) {
       throw partialMigrationError();
+    }
+    if (isRollback) {
+      if (!rollbackOperationId) throw rollbackMetadataError();
+      quarantinePath = await quarantineDesignFile(targetPath, rollbackDir, rollbackOperationId);
     }
     await writeAtomic(configPath, nextRaw);
   }
