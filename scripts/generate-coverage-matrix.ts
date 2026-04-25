@@ -120,7 +120,10 @@ async function collectExportPaths(
   for (const regex of [exportAll, exportNamed]) {
     let match: RegExpExecArray | null = null;
     while ((match = regex.exec(content))) {
-      exportPaths.push(match[1]);
+      const exportPath = match[1];
+      if (exportPath) {
+        exportPaths.push(exportPath);
+      }
     }
   }
 

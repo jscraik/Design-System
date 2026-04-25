@@ -676,14 +676,13 @@ test.describe("Icon and visual elements visual regression", () => {
 
   test("renders accent colors consistently in both themes", async ({ page }) => {
     // Find elements with accent colors (green, blue, orange, red)
-    const accentElements = page
+    const accentElements = await page
       .locator('[class*="accent"], [class*="text-green"], [class*="text-blue"]')
       .all();
 
     if (accentElements.length > 0) {
       // Light theme - capture accent elements
-      for (let i = 0; i < Math.min(3, accentElements.length); i++) {
-        const element = accentElements[i];
+      for (const [i, element] of accentElements.slice(0, 3).entries()) {
         const bounds = await element.boundingBox();
 
         if (bounds) {
@@ -698,13 +697,12 @@ test.describe("Icon and visual elements visual regression", () => {
     // Dark theme
     await setTheme(page, "dark");
 
-    const accentDark = page
+    const accentDark = await page
       .locator('[class*="accent"], [class*="text-green"], [class*="text-blue"]')
       .all();
 
     if (accentDark.length > 0) {
-      for (let i = 0; i < Math.min(3, accentDark.length); i++) {
-        const element = accentDark[i];
+      for (const [i, element] of accentDark.slice(0, 3).entries()) {
         const bounds = await element.boundingBox();
 
         if (bounds) {
