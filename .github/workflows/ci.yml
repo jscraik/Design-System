@@ -130,7 +130,7 @@ jobs:
             echo "Strict type-check remains informational; see sanitized tail below."
             tail -20 /tmp/strict-typecheck.log | sed -E 's/^([^()]+)\(([0-9]+),([0-9]+)\): error TS/strict-typecheck \1:\2:\3 TS/'
           fi
-          exit 0
+          exit "$strict_status"
 
       - name: Icon generation property tests (web platform only)
         if: matrix.platform == 'web'
