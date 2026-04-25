@@ -596,6 +596,8 @@ Rollback metadata schema:
 - `doctor` must detect every non-healthy state in the migration transition table and print the next valid command
 - missing or unreadable metadata must never trigger best-effort rollback mutation. `doctor` must emit one canonical remediation path, either restore the metadata from the recorded artifact location or rerun migration after manually clearing the invalid partial state.
 
+JSC-219 implementation note: rollback metadata now carries the required path, schema, checksum, support-window, digest, and HMAC signature fields bound to the local rollback artifact signing key plus compatibility manifest. Rollback and resume read paths reject tampered metadata, forged public signatures, malformed or unsupported wrapper versions, symlink escapes, config checksum drift, and `DESIGN.md` checksum drift before mutation.
+
 Rollback quarantine behavior:
 
 - quarantine paths use `artifacts/design-migrations/<operationId>/<contentHash>-DESIGN.md`
@@ -750,7 +752,7 @@ Tasks:
 - [x] Keep existing legacy checks operational.
 - [x] Add transactional migration, rollback, and resume state handling.
 - [x] Implement the migration transition table and crash-safe `partial` marker before mutation.
-- [ ] Implement required rollback metadata fields, authenticity checks, path-root checks, compatibility algorithm, and checksum validation.
+- [x] Implement required rollback metadata fields, authenticity checks, path-root checks, compatibility algorithm, and checksum validation.
 - [x] Add rollback quarantine behavior for migrated `DESIGN.md`.
 - [ ] Add collision-safe quarantine paths, atomic create semantics, repeated rollback/remigration tests, and concurrent-writer race tests.
 

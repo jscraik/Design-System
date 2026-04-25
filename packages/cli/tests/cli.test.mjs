@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -118,6 +119,23 @@ function jsonLine(value) {
   return `${JSON.stringify(value, null, 2)}\n`;
 }
 
+function canonicalJson(value) {
+  if (Array.isArray(value)) {
+    return `[${value.map((entry) => canonicalJson(entry)).join(",")}]`;
+  }
+  if (value && typeof value === "object") {
+    return `{${Object.keys(value)
+      .sort()
+      .map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`)
+      .join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
+
+function checksum(value) {
+  return createHash("sha256").update(value).digest("hex");
+}
+
 function readJsonFile(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
@@ -133,6 +151,62 @@ function guidanceConfigPath(targetDir) {
 function rollbackMetadataPath(targetDir) {
   const config = readJsonFile(guidanceConfigPath(targetDir));
   return path.join(targetDir, config.designContract.rollbackMetadata);
+}
+
+function rollbackMetadata(targetDir) {
+  return readJsonFile(rollbackMetadataPath(targetDir));
+}
+
+function stripRollbackSignature(metadata) {
+  const {
+    metadataDigest: _metadataDigest,
+    metadataSignature: _metadataSignature,
+    ...unsigned
+  } = metadata;
+  return unsigned;
+}
+
+function publicManifestRollbackSignature(metadataDigest) {
+  return `hmac-sha256:${checksum(
+    [
+      metadataDigest,
+      DESIGN_COMPATIBILITY_MANIFEST.schema,
+      DESIGN_COMPATIBILITY_MANIFEST.wrapperVersion,
+      DESIGN_COMPATIBILITY_MANIFEST.parityBaseline.commit,
+    ].join(":"),
+  )}`;
+}
+
+async function assertRollbackFailsWithoutMutation(mutateProject) {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-guidance-"));
+  writeValidDesignProject(tempDir);
+
+  const migrate = await runCli(
+    ["design", "migrate", "--to", "design-md", "--write", "--json"],
+    {},
+    { cwd: tempDir },
+  );
+  assert.equal(migrate.code, 0, `${migrate.stdout}${migrate.stderr}`);
+
+  await mutateProject({
+    tempDir,
+    metadataPath: rollbackMetadataPath(tempDir),
+    configPath: guidanceConfigPath(tempDir),
+    designPath: path.join(tempDir, "DESIGN.md"),
+  });
+  const configBefore = fs.readFileSync(guidanceConfigPath(tempDir), "utf8");
+  const designBefore = fs.readFileSync(path.join(tempDir, "DESIGN.md"), "utf8");
+
+  const rollback = await runCli(
+    ["design", "migrate", "--rollback", "--write", "--json"],
+    {},
+    { cwd: tempDir },
+  );
+  assert.equal(rollback.code, 3, `${rollback.stdout}${rollback.stderr}`);
+  const payload = JSON.parse(rollback.stdout);
+  assert.equal(payload.errors[0].code, "E_DESIGN_ROLLBACK_METADATA_UNREADABLE");
+  assert.equal(fs.readFileSync(guidanceConfigPath(tempDir), "utf8"), configBefore);
+  assert.equal(fs.readFileSync(path.join(tempDir, "DESIGN.md"), "utf8"), designBefore);
 }
 
 function resolveFixtureString(value, context) {
@@ -355,7 +429,7 @@ test("design diff --json exposes two-input protocol fields", async () => {
   assert.ok(Array.isArray(payload.data.afterRuleSourceDigests));
 });
 
-test("design diff fails on regression in CI mode", async () => {
+test("design diff rejects unsupported after schema in CI mode", async () => {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-design-diff-"));
   const before = path.join(tempDir, "before.DESIGN.md");
   const after = path.join(tempDir, "after.DESIGN.md");
@@ -371,11 +445,11 @@ test("design diff fails on regression in CI mode", async () => {
     { CI: "1" },
     { cwd: repoRoot },
   );
-  assert.equal(code, 1);
+  assert.equal(code, 2);
   assert.equal(stderr, "");
   const payload = JSON.parse(stdout);
-  assert.equal(payload.data.kind, "astudio.design.diff.v1");
-  assert.equal(payload.data.hasRegression, true);
+  assert.equal(payload.status, "error");
+  assert.equal(payload.errors[0].code, "E_DESIGN_SCHEMA_INVALID");
 });
 
 test("design export accepts scope and preserves design tokens", async () => {
@@ -797,7 +871,7 @@ test("design discovery fails deterministically when contracts are ambiguous", as
   assert.equal(payload.errors[0].code, "E_DESIGN_CONTRACT_AMBIGUOUS");
 });
 
-test("design diff fail-on-regression returns failure for schema regressions", async () => {
+test("design diff fail-on-regression rejects unsupported after schema", async () => {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-design-diff-"));
   const beforePath = path.join(tempDir, "before.md");
   const afterPath = path.join(tempDir, "after.md");
@@ -822,10 +896,10 @@ test("design diff fail-on-regression returns failure for schema regressions", as
     {},
     { cwd: repoRoot },
   );
-  assert.equal(code, 1);
+  assert.equal(code, 2);
   const payload = JSON.parse(stdout);
-  assert.equal(payload.status, "warn");
-  assert.equal(payload.data.hasRegression, true);
+  assert.equal(payload.status, "error");
+  assert.equal(payload.errors[0].code, "E_DESIGN_SCHEMA_INVALID");
 });
 
 test("design migrate stores rollback metadata as project-relative config", async () => {
@@ -850,6 +924,49 @@ test("design migrate stores rollback metadata as project-relative config", async
   assert.equal(path.isAbsolute(config.designContract.rollbackMetadata), false);
 });
 
+test("design migrate writes authenticated rollback metadata contract", async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-guidance-"));
+  writeValidDesignProject(tempDir);
+
+  const result = await runCli(
+    ["design", "migrate", "--to", "design-md", "--write", "--json"],
+    {},
+    { cwd: tempDir },
+  );
+  assert.equal(result.code, 0, `${result.stdout}${result.stderr}`);
+
+  const metadata = rollbackMetadata(tempDir);
+  for (const field of [
+    "schema",
+    "writtenByWrapperVersion",
+    "writtenAt",
+    "sourceMode",
+    "targetMode",
+    "guidanceConfigPath",
+    "guidanceConfigChecksum",
+    "designFilePath",
+    "designFileChecksum",
+    "rollbackArtifactDir",
+    "legacySupportEndsAtAtWrite",
+    "operationId",
+    "signatureKeyId",
+    "metadataDigest",
+    "metadataSignature",
+  ]) {
+    assert.equal(typeof metadata[field], "string", field);
+  }
+  assert.equal(metadata.schema, "astudio.design.rollback.v1");
+  assert.equal(metadata.sourceSchemaVersion, 1);
+  assert.equal(metadata.targetSchemaVersion, 2);
+  assert.match(metadata.guidanceConfigChecksum, /^[a-f0-9]{64}$/);
+  assert.match(metadata.designFileChecksum, /^[a-f0-9]{64}$/);
+  assert.match(metadata.signatureKeyId, /^[a-f0-9]{64}$/);
+  assert.match(metadata.metadataDigest, /^[a-f0-9]{64}$/);
+  assert.match(metadata.metadataSignature, /^hmac-sha256:[a-f0-9]{64}$/);
+  assert.equal(metadata.checksums.config, metadata.guidanceConfigChecksum);
+  assert.equal(metadata.checksums.design, metadata.designFileChecksum);
+});
+
 test("design migrate rollback quarantines migrated DESIGN.md", async () => {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-guidance-"));
   writeValidDesignProject(tempDir);
@@ -872,6 +989,56 @@ test("design migrate rollback quarantines migrated DESIGN.md", async () => {
   assert.equal(fs.existsSync(path.join(tempDir, "DESIGN.md")), false);
   assert.equal(typeof payload.data.quarantinePath, "string");
   assert.equal(fs.existsSync(payload.data.quarantinePath), true);
+});
+
+test("design migrate rollback rejects tampered metadata without mutating config", async () => {
+  await assertRollbackFailsWithoutMutation(({ metadataPath }) => {
+    const metadata = readJsonFile(metadataPath);
+    metadata.targetMode = "legacy";
+    writeJsonFile(metadataPath, metadata);
+  });
+});
+
+test("design migrate rollback rejects public forged metadata signature without mutating config", async () => {
+  await assertRollbackFailsWithoutMutation(({ metadataPath }) => {
+    const metadata = readJsonFile(metadataPath);
+    metadata.targetMode = "legacy";
+    metadata.metadataDigest = checksum(canonicalJson(stripRollbackSignature(metadata)));
+    metadata.metadataSignature = publicManifestRollbackSignature(metadata.metadataDigest);
+    writeJsonFile(metadataPath, metadata);
+  });
+});
+
+test("design migrate rollback rejects malformed wrapper metadata without mutating config", async () => {
+  await assertRollbackFailsWithoutMutation(({ metadataPath }) => {
+    const metadata = readJsonFile(metadataPath);
+    metadata.writtenByWrapperVersion = "bogus";
+    writeJsonFile(metadataPath, metadata);
+  });
+});
+
+test("design migrate rollback rejects symlinked metadata escape without mutating config", async () => {
+  await assertRollbackFailsWithoutMutation(({ metadataPath }) => {
+    const outsideDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-metadata-escape-"));
+    const outsideMetadata = path.join(outsideDir, "rollback.json");
+    fs.copyFileSync(metadataPath, outsideMetadata);
+    fs.unlinkSync(metadataPath);
+    fs.symlinkSync(outsideMetadata, metadataPath);
+  });
+});
+
+test("design migrate rollback rejects config checksum drift without mutating config", async () => {
+  await assertRollbackFailsWithoutMutation(({ configPath }) => {
+    const config = readJsonFile(configPath);
+    config.docs = [...config.docs, "docs/design-system/EXTRA.md"];
+    writeJsonFile(configPath, config);
+  });
+});
+
+test("design migrate rollback rejects design checksum drift without mutating config", async () => {
+  await assertRollbackFailsWithoutMutation(({ designPath }) => {
+    fs.appendFileSync(designPath, "\n<!-- drift -->\n");
+  });
 });
 
 test("design migrate resume preserves original rollback metadata", async () => {

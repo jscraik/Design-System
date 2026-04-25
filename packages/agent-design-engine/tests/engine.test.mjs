@@ -22,6 +22,15 @@ test("parses DESIGN.md frontmatter and provenance", async () => {
   assert.equal(contract.provenance.ruleSourceDigests.length, 4);
 });
 
+test("rejects unsupported schema versions deterministically", async () => {
+  await assert.rejects(
+    parseDesignContract(valid.replace("agent-design.v1", "agent-design.v2"), {
+      rootDir,
+    }),
+    { code: "E_DESIGN_SCHEMA_INVALID" },
+  );
+});
+
 test("extracts only explicit component code spans", async () => {
   const contract = await parseDesignContract(rootDesign, { rootDir, filePath: "DESIGN.md" });
   assert.deepEqual(contract.components, [

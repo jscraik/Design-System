@@ -121,7 +121,7 @@
     "agent-design:build": "pnpm -C packages/agent-design-engine build",
     "agent-design:type-check": "pnpm -C packages/agent-design-engine type-check",
     "agent-design:test": "pnpm -C packages/agent-design-engine test",
-    "agent-design:lint": "node packages/cli/dist/index.js design lint --file DESIGN.md --json"
+    "agent-design:lint": "pnpm agent-design:build && pnpm -C packages/cli build && node packages/cli/dist/index.js design lint --file DESIGN.md --json"
   },
   "devDependencies": {
     "@argos-ci/cli": "^3.0.6",

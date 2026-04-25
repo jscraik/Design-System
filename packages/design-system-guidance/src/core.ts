@@ -1,4 +1,4 @@
-import { createHash, randomUUID } from "node:crypto";
+import { createHash, createHmac, randomBytes, randomUUID } from "node:crypto";
 import {
   access,
   link,
@@ -6,6 +6,7 @@ import {
   open,
   readdir,
   readFile,
+  realpath,
   rename,
   stat,
   unlink,
@@ -13,6 +14,7 @@ import {
 } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { DESIGN_COMPATIBILITY_MANIFEST } from "./compatibility.js";
 import type {
   CheckOptions,
   CheckResult,
@@ -64,6 +66,9 @@ const ROLLBACK_SCHEMA = "astudio.design.rollback.v1";
 const GUIDANCE_WRAPPER_VERSION = "0.0.2";
 const MIGRATION_LOCK_ERROR = "E_DESIGN_MIGRATION_LOCKED";
 const PARTIAL_FAULT_ENV = "ASTUDIO_GUIDANCE_FAIL_AFTER_PARTIAL";
+const ROLLBACK_SIGNATURE_PREFIX = "hmac-sha256";
+const ROLLBACK_SIGNING_KEY_FILE = ".rollback-metadata-signing-key";
+const SEMVER_PATTERN = /^\d+\.\d+\.\d+$/;
 
 type MigrationOperation = "fresh" | "rollback" | "resume";
 
@@ -72,6 +77,19 @@ interface MigrationTransitionRule {
   migrationState: GuidanceMigrationState;
   operations: MigrationOperation[];
   requiresReadableMetadata: boolean;
+}
+
+interface RollbackMetadataInput {
+  targetPath: string;
+  configPath: string;
+  rollbackDir: string;
+  rawConfig: string;
+  partialRaw: string;
+  nextRaw: string;
+  beforeState: GuidanceDesignContractState;
+  afterState: GuidanceDesignContractState;
+  config: GuidanceConfig;
+  nextConfig: GuidanceConfig;
 }
 
 const MIGRATION_TRANSITION_TABLE: MigrationTransitionRule[] = [
@@ -878,8 +896,54 @@ function stableJson(value: unknown): string {
   return `${JSON.stringify(value, null, 2)}\n`;
 }
 
+function canonicalJson(value: unknown): string {
+  if (Array.isArray(value)) {
+    return `[${value.map((entry) => canonicalJson(entry)).join(",")}]`;
+  }
+  if (isObject(value)) {
+    return `{${Object.keys(value)
+      .sort()
+      .map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`)
+      .join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
+
 function checksum(value: string): string {
   return createHash("sha256").update(value).digest("hex");
+}
+
+function addDays(date: Date, days: number): Date {
+  return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
+}
+
+function formatDateOnly(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+function compareSemver(left: string, right: string): number {
+  const parse = (value: string): number[] => {
+    if (!SEMVER_PATTERN.test(value)) {
+      throw rollbackMetadataError();
+    }
+    return value.split(".").map((part) => Number(part));
+  };
+  const leftParts = parse(left);
+  const rightParts = parse(right);
+  for (let index = 0; index < 3; index += 1) {
+    const delta = (leftParts[index] ?? 0) - (rightParts[index] ?? 0);
+    if (delta !== 0) return delta;
+  }
+  return 0;
+}
+
+function assertSupportedWrapperVersion(version: string): void {
+  if (
+    compareSemver(version, DESIGN_COMPATIBILITY_MANIFEST.minWrapper) < 0 ||
+    compareSemver(version, DESIGN_COMPATIBILITY_MANIFEST.maxWrapperTested) > 0
+  ) {
+    throw rollbackMetadataError();
+  }
 }
 
 function isPathInside(rootPath: string, candidatePath: string): boolean {
@@ -962,46 +1026,282 @@ async function quarantineDesignFile(
   });
 }
 
-function assertRollbackMetadata(targetPath: string, metadataPath: string, parsed: unknown): void {
+function rollbackMetadataDigest(metadata: Record<string, unknown>): string {
+  return checksum(canonicalJson(metadata));
+}
+
+function rollbackSigningKeyPath(rollbackDir: string): string {
+  return path.join(rollbackDir, ROLLBACK_SIGNING_KEY_FILE);
+}
+
+function assertRollbackSigningKey(key: string): string {
+  const trimmed = key.trim();
+  if (!/^[a-f0-9]{64}$/.test(trimmed)) {
+    throw rollbackMetadataError();
+  }
+  return trimmed;
+}
+
+async function readRollbackSigningKey(rollbackDir: string): Promise<string> {
+  return assertRollbackSigningKey(await readFile(rollbackSigningKeyPath(rollbackDir), "utf8"));
+}
+
+async function readOrCreateRollbackSigningKey(rollbackDir: string): Promise<string> {
+  await mkdir(rollbackDir, { recursive: true });
+  const keyPath = rollbackSigningKeyPath(rollbackDir);
+  try {
+    return assertRollbackSigningKey(await readFile(keyPath, "utf8"));
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+      throw error;
+    }
+  }
+
+  const key = randomBytes(32).toString("hex");
+  try {
+    await writeFile(keyPath, `${key}\n`, { encoding: "utf8", flag: "wx", mode: 0o600 });
+    return key;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "EEXIST") {
+      throw error;
+    }
+    return readRollbackSigningKey(rollbackDir);
+  }
+}
+
+function rollbackMetadataSignature(metadataDigest: string, signingKey: string): string {
+  const signature = createHmac("sha256", signingKey)
+    .update(
+      [
+        metadataDigest,
+        DESIGN_COMPATIBILITY_MANIFEST.schema,
+        DESIGN_COMPATIBILITY_MANIFEST.wrapperVersion,
+        DESIGN_COMPATIBILITY_MANIFEST.parityBaseline.commit,
+      ].join(":"),
+    )
+    .digest("hex");
+  return `${ROLLBACK_SIGNATURE_PREFIX}:${signature}`;
+}
+
+function stripRollbackMetadataSignature(parsed: Record<string, unknown>): Record<string, unknown> {
+  const {
+    metadataDigest: _metadataDigest,
+    metadataSignature: _metadataSignature,
+    ...unsigned
+  } = parsed;
+  return unsigned;
+}
+
+async function buildRollbackMetadata(
+  input: RollbackMetadataInput,
+): Promise<Record<string, unknown>> {
+  const writtenAt = new Date();
+  const designPath = path.join(input.targetPath, "DESIGN.md");
+  const designContent = await readFile(designPath, "utf8");
+  const designChecksum = checksum(designContent);
+  const signingKey = await readOrCreateRollbackSigningKey(input.rollbackDir);
+  const supportEndsAt = addDays(writtenAt, DESIGN_COMPATIBILITY_MANIFEST.legacySupport.daysAfterGa);
+  const failedConfig: GuidanceConfig = {
+    ...input.config,
+    schemaVersion: input.nextConfig.schemaVersion,
+    designContract: {
+      ...input.afterState,
+      migrationState: "failed",
+    },
+  };
+  const unsigned = {
+    schema: ROLLBACK_SCHEMA,
+    schemaVersion: ROLLBACK_SCHEMA,
+    writtenByWrapperVersion: GUIDANCE_WRAPPER_VERSION,
+    writtenAt: writtenAt.toISOString(),
+    sourceMode: input.beforeState.mode,
+    targetMode: input.afterState.mode,
+    sourceSchemaVersion: input.config.schemaVersion,
+    targetSchemaVersion: input.nextConfig.schemaVersion,
+    targetPath: input.targetPath,
+    guidanceConfigPath: input.configPath,
+    configPath: input.configPath,
+    guidanceConfigChecksum: checksum(input.nextRaw),
+    configChecksum: checksum(input.nextRaw),
+    designFilePath: designPath,
+    designFileChecksum: designChecksum,
+    rollbackArtifactDir: input.rollbackDir,
+    legacySupportEndsAtAtWrite: formatDateOnly(supportEndsAt),
+    operationId: `${writtenAt.toISOString().replace(/[:.]/g, "-")}-${checksum(input.rawConfig).slice(0, 8)}`,
+    compatibilityManifest: DESIGN_COMPATIBILITY_MANIFEST.schema,
+    signatureKeyId: checksum(signingKey),
+    checksums: {
+      sourceConfig: checksum(input.rawConfig),
+      targetConfig: checksum(input.nextRaw),
+      partialConfig: checksum(input.partialRaw),
+      failedConfig: checksum(stableJson(failedConfig)),
+      config: checksum(input.nextRaw),
+      design: designChecksum,
+    },
+    beforeMode: input.beforeState.mode,
+    afterMode: input.afterState.mode,
+    beforeSchemaVersion: input.config.schemaVersion,
+    afterSchemaVersion: input.nextConfig.schemaVersion,
+    createdAt: writtenAt.toISOString(),
+    before: JSON.parse(input.rawConfig) as unknown,
+  };
+  const metadataDigest = rollbackMetadataDigest(unsigned);
+  return {
+    ...unsigned,
+    metadataDigest,
+    metadataSignature: rollbackMetadataSignature(metadataDigest, signingKey),
+  };
+}
+
+function resolveRecordedPath(targetPath: string, recordedPath: string): string {
+  return path.resolve(
+    path.isAbsolute(recordedPath) ? recordedPath : path.join(targetPath, recordedPath),
+  );
+}
+
+async function assertExistingPathInside(targetPath: string, candidatePath: string): Promise<void> {
+  if (!isPathInside(targetPath, candidatePath)) {
+    throw rollbackMetadataError();
+  }
+  const [targetRealPath, candidateRealPath] = await Promise.all([
+    realpath(targetPath),
+    realpath(candidatePath),
+  ]);
+  if (!isPathInside(targetRealPath, candidateRealPath)) {
+    throw rollbackMetadataError();
+  }
+}
+
+function requiredString(value: unknown): string {
+  if (typeof value !== "string" || value.length === 0) {
+    throw rollbackMetadataError();
+  }
+  return value;
+}
+
+function requiredNumber(value: unknown): number {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    throw rollbackMetadataError();
+  }
+  return value;
+}
+
+async function assertRollbackMetadata(
+  targetPath: string,
+  configPath: string,
+  currentRawConfig: string,
+  metadataPath: string,
+  parsed: unknown,
+): Promise<void> {
   if (!isObject(parsed)) {
     throw rollbackMetadataError();
   }
 
-  const schema = parsed.schema ?? parsed.schemaVersion;
-  const target = parsed.targetPath;
-  const configPath = parsed.configPath;
-  const configChecksum = parsed.configChecksum;
-  const before = parsed.before;
-  const checksums = parsed.checksums;
+  const schema = requiredString(parsed.schema);
+  if (!DESIGN_COMPATIBILITY_MANIFEST.supportedMigrationSchemas.includes(schema)) {
+    throw rollbackMetadataError();
+  }
 
+  const writtenByWrapperVersion = requiredString(parsed.writtenByWrapperVersion);
+  assertSupportedWrapperVersion(writtenByWrapperVersion);
+  const writtenAt = requiredString(parsed.writtenAt);
+  if (Number.isNaN(Date.parse(writtenAt))) {
+    throw rollbackMetadataError();
+  }
+
+  const sourceMode = requiredString(parsed.sourceMode);
+  const targetMode = requiredString(parsed.targetMode);
   if (
-    schema !== ROLLBACK_SCHEMA ||
-    typeof target !== "string" ||
-    typeof configPath !== "string" ||
-    typeof configChecksum !== "string" ||
-    !/^[a-f0-9]{64}$/.test(configChecksum) ||
-    !isObject(before)
+    !DESIGN_MODES.has(sourceMode as GuidanceDesignMode) ||
+    !DESIGN_MODES.has(targetMode as GuidanceDesignMode)
   ) {
     throw rollbackMetadataError();
   }
 
-  if (path.resolve(target) !== targetPath) {
+  const sourceSchemaVersion = requiredNumber(parsed.sourceSchemaVersion);
+  const targetSchemaVersion = requiredNumber(parsed.targetSchemaVersion);
+  if (
+    !SUPPORTED_SCHEMA_VERSIONS.has(sourceSchemaVersion) ||
+    !SUPPORTED_SCHEMA_VERSIONS.has(targetSchemaVersion)
+  ) {
     throw rollbackMetadataError();
   }
 
-  const resolvedConfigPath = path.resolve(configPath);
-  if (!isPathInside(targetPath, resolvedConfigPath)) {
+  const recordedTargetPath = requiredString(parsed.targetPath);
+  if (path.resolve(recordedTargetPath) !== targetPath) {
     throw rollbackMetadataError();
   }
 
-  if (!isPathInside(targetPath, metadataPath)) {
+  const recordedConfigPath = resolveRecordedPath(
+    targetPath,
+    requiredString(parsed.guidanceConfigPath),
+  );
+  if (recordedConfigPath !== configPath) {
+    throw rollbackMetadataError();
+  }
+  const designFilePath = resolveRecordedPath(targetPath, requiredString(parsed.designFilePath));
+  const rollbackArtifactDir = resolveRecordedPath(
+    targetPath,
+    requiredString(parsed.rollbackArtifactDir),
+  );
+  await Promise.all([
+    assertExistingPathInside(targetPath, metadataPath),
+    assertExistingPathInside(targetPath, recordedConfigPath),
+    assertExistingPathInside(targetPath, designFilePath),
+    assertExistingPathInside(targetPath, rollbackArtifactDir),
+    assertExistingPathInside(targetPath, rollbackSigningKeyPath(rollbackArtifactDir)),
+  ]);
+
+  const legacySupportEndsAtAtWrite = requiredString(parsed.legacySupportEndsAtAtWrite);
+  if (!ISO_DATE_PATTERN.test(legacySupportEndsAtAtWrite)) {
+    throw rollbackMetadataError();
+  }
+  requiredString(parsed.operationId);
+
+  const guidanceConfigChecksum = requiredString(parsed.guidanceConfigChecksum);
+  const designFileChecksum = requiredString(parsed.designFileChecksum);
+  const signatureKeyId = requiredString(parsed.signatureKeyId);
+  const metadataDigest = requiredString(parsed.metadataDigest);
+  const metadataSignature = requiredString(parsed.metadataSignature);
+  if (
+    !/^[a-f0-9]{64}$/.test(guidanceConfigChecksum) ||
+    !/^[a-f0-9]{64}$/.test(designFileChecksum) ||
+    !/^[a-f0-9]{64}$/.test(signatureKeyId) ||
+    !/^[a-f0-9]{64}$/.test(metadataDigest)
+  ) {
     throw rollbackMetadataError();
   }
 
-  if (checksums !== undefined) {
-    if (!isObject(checksums) || checksums.config !== configChecksum) {
-      throw rollbackMetadataError();
-    }
+  const signingKey = await readRollbackSigningKey(rollbackArtifactDir);
+  const recomputedDigest = rollbackMetadataDigest(stripRollbackMetadataSignature(parsed));
+  if (
+    checksum(signingKey) !== signatureKeyId ||
+    recomputedDigest !== metadataDigest ||
+    rollbackMetadataSignature(metadataDigest, signingKey) !== metadataSignature
+  ) {
+    throw rollbackMetadataError();
+  }
+
+  const checksums = parsed.checksums;
+  if (!isObject(checksums)) {
+    throw rollbackMetadataError();
+  }
+
+  const currentConfigChecksum = checksum(currentRawConfig);
+  const acceptedConfigChecksums = [
+    checksums.targetConfig,
+    checksums.partialConfig,
+    checksums.failedConfig,
+  ];
+  if (
+    !acceptedConfigChecksums.includes(currentConfigChecksum) ||
+    checksums.config !== guidanceConfigChecksum
+  ) {
+    throw rollbackMetadataError();
+  }
+
+  if (checksum(await readFile(designFilePath, "utf8")) !== designFileChecksum) {
+    throw rollbackMetadataError();
   }
 }
 
@@ -1037,6 +1337,8 @@ function shouldFailAfterPartialWrite(): boolean {
 
 async function requireReadableRollbackMetadata(
   targetPath: string,
+  configPath: string,
+  currentRawConfig: string,
   state: GuidanceDesignContractState,
 ): Promise<string> {
   if (!state.rollbackMetadata) {
@@ -1047,7 +1349,7 @@ async function requireReadableRollbackMetadata(
   try {
     const raw = await readFile(metadataPath, "utf8");
     const parsed = JSON.parse(raw) as unknown;
-    assertRollbackMetadata(targetPath, metadataPath, parsed);
+    await assertRollbackMetadata(targetPath, configPath, currentRawConfig, metadataPath, parsed);
     return metadataPath;
   } catch (error) {
     if (error instanceof GuidanceError) throw error;
@@ -1180,7 +1482,7 @@ async function migrateGuidanceConfigUnlocked(
   const freshMigrationNeedsNewMetadata =
     operation === "fresh" && beforeState.migrationState !== "active";
   const rollbackMetadataPath = transition.requiresReadableMetadata
-    ? await requireReadableRollbackMetadata(targetPath, beforeState)
+    ? await requireReadableRollbackMetadata(targetPath, configPath, raw, beforeState)
     : beforeState.rollbackMetadata && !freshMigrationNeedsNewMetadata
       ? resolveRollbackMetadataPath(targetPath, beforeState.rollbackMetadata)
       : newRollbackMetadataPath(rollbackDir, raw);
@@ -1218,6 +1520,14 @@ async function migrateGuidanceConfigUnlocked(
     designContract: afterState,
   };
   const nextRaw = stableJson(nextConfig);
+  const partialRaw = stableJson({
+    ...config,
+    schemaVersion: nextConfig.schemaVersion,
+    designContract: {
+      ...afterState,
+      migrationState: "partial",
+    },
+  });
   const changed = raw !== nextRaw;
   let quarantinePath: string | undefined;
 
@@ -1233,37 +1543,26 @@ async function migrateGuidanceConfigUnlocked(
     if (shouldWriteRollbackMetadata)
       await writeRollbackMetadata(
         rollbackMetadataPath,
-        stableJson({
-          schema: ROLLBACK_SCHEMA,
-          schemaVersion: ROLLBACK_SCHEMA,
-          writtenByWrapperVersion: GUIDANCE_WRAPPER_VERSION,
-          targetPath,
-          configPath,
-          configChecksum: checksum(raw),
-          checksums: {
-            config: checksum(raw),
-          },
-          beforeMode: beforeState.mode,
-          afterMode: afterState.mode,
-          beforeSchemaVersion: config.schemaVersion,
-          afterSchemaVersion: nextConfig.schemaVersion,
-          createdAt: new Date().toISOString(),
-          before: JSON.parse(raw) as unknown,
-        }),
+        stableJson(
+          await buildRollbackMetadata({
+            targetPath,
+            configPath,
+            rollbackDir,
+            rawConfig: raw,
+            partialRaw,
+            nextRaw,
+            beforeState,
+            afterState,
+            config,
+            nextConfig,
+          }),
+        ),
       );
 
     if (isRollback) {
       quarantinePath = await quarantineDesignFile(targetPath, rollbackDir, raw);
     }
 
-    const partialRaw = stableJson({
-      ...config,
-      schemaVersion: nextConfig.schemaVersion,
-      designContract: {
-        ...afterState,
-        migrationState: "partial",
-      },
-    });
     await writeAtomic(configPath, partialRaw);
     if (shouldFailAfterPartialWrite()) {
       throw partialMigrationError();

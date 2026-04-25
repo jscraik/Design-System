@@ -4,6 +4,7 @@ import type { DesignContract, DesignFrontmatter, DesignSection, ParseOptions } f
 import { DesignEngineError } from "./types.js";
 
 const FRONTMATTER_PATTERN = /^---\n([\s\S]*?)\n---\n?/;
+const SUPPORTED_SCHEMA_VERSIONS = new Set(["agent-design.v1"]);
 const SUPPORTED_PROFILES = new Set(["astudio-default@1"]);
 
 function parseFrontmatterBlock(block: string): DesignFrontmatter {
@@ -29,6 +30,13 @@ function parseFrontmatterBlock(block: string): DesignFrontmatter {
         exitCode: 2,
       },
     );
+  }
+
+  if (!SUPPORTED_SCHEMA_VERSIONS.has(raw.schemaVersion)) {
+    throw new DesignEngineError(`Unsupported DESIGN.md schemaVersion "${raw.schemaVersion}".`, {
+      code: "E_DESIGN_SCHEMA_INVALID",
+      exitCode: 2,
+    });
   }
 
   return {
