@@ -59,7 +59,7 @@ flowchart LR
 - `packages/design-system-guidance` packages the policy and guidance checks used to keep downstream consumers aligned, including repo-scoped protected-surface enforcement and an exemption ledger.
 - `packages/agent-design-engine` parses `DESIGN.md`, computes professional-UI rule provenance, lints semantic UI contract requirements, diffs design contracts, and exports agent-readable token/contract payloads.
 - `packages/cli` exposes the engine through `astudio design` commands while keeping the existing `astudio.command.v1` JSON envelope for agents.
-- `packages/design-system-guidance` now accepts additive `designContract` rollout state and migration metadata while preserving legacy v1 guidance fields.
+- `packages/design-system-guidance` now accepts additive `designContract` rollout state and migration metadata while preserving legacy v1 guidance fields, and its migration path enforces the command transition table before any writable side effect.
 
 ## Codebase map
 
@@ -152,6 +152,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - The touched-file ratchet must include untracked files via `git ls-files --others --exclude-standard`, not just tracked diffs. Otherwise a brand-new protected-surface file can dodge the ratchet until it is staged.
 - Keep the committed visual baselines, but ignore local runtime artifacts. The repo now explicitly ignores nested `node_modules/.vite`, nested `node_modules/.tmp`, Playwright HTML reports, and `reports/audit-*` outputs so UI verification runs do not turn branch state into cache noise.
 - Design command outputs go through the same masking path as other `astudio` JSON envelopes. If agent consumers need raw token payloads for a safe local export, use the dedicated `design export` artifact path and validate the resulting JSON before handing it to downstream tooling.
+- The migration transition table should run before rollback metadata lookup. That keeps invalid state/operation pairs as `E_DESIGN_MIGRATION_STATE_INVALID` no-op failures, while metadata readability tests must start from rollback-eligible states such as `design-md/active`, `partial`, or `failed`.
 - The `DESIGN.md` engine computes source digests from `docs/design-system/PROFESSIONAL_UI_CONTRACT.md`, `AGENT_UI_ROUTING.md`, `COMPONENT_LIFECYCLE.json`, and `COVERAGE_MATRIX.json`. If any of those files move or become unreadable, design lint/export should fail before semantic evaluation.
 - `DESIGN.md` section line numbers must stay anchored to the original file, including YAML frontmatter. Lint findings use those lines as agent remediation evidence.
 - `astudio design init` validates the starter contract before writing, but it must still enforce the write gate first so a missing `--write` remains a policy error instead of a provenance error.
@@ -178,7 +179,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - `packages/ui` still carries some internal Storybook `_holding` demo code that looks like package-consumer code. Keep that material out of declaration generation, or it will reintroduce self-import type noise into otherwise healthy package builds.
 - `packages/tokens/src/shadows.ts` is generated, but it cannot be a pure mirror of the DTCG shadow source. The DTCG file only defines the legacy `card/pip/pill/close` map; the generated TypeScript layer must also re-emit the semantic `elevation` API and `ElevationToken` type or `packages/tokens/src/index.ts` will compile locally until the next `pnpm generate:tokens`, then break in CI.
 - The first `agent-design-engine` slice is intentionally semantic and deterministic, but it is not yet a full AST-aware UI reviewer. It catches missing contract concepts, not every bad JSX or CSS pattern an agent might write.
-- `astudio design migrate` writes rollout state, rollback metadata, and quarantines migrated `DESIGN.md` files during rollback, but deeper crash-recovery, race, and repeated rollback/remigration tests should expand before using it as the only migration safety net for external consumer repos.
+- `astudio design migrate` now enforces its state transition table, writes rollout state and rollback metadata, marks crash-recoverable `partial` state before final mutation, and quarantines migrated `DESIGN.md` files during rollback. The remaining pre-GA hardening is rollback metadata authenticity, path-root validation, collision-safe quarantine paths, repeated rollback/remigration coverage, and concurrent-writer race tests.
 - `astudio design check-brand --strict` now has non-tautological mismatch logic, but only `astudio-default@1` is currently supported. Add a second supported profile fixture before treating cross-profile mismatch behavior as fully proven.
 - `pnpm generated-source:check` intentionally rebuilds widget assets and may print Vite chunk-size warnings. Treat it as a correctness/freshness gate, not as the package performance budget.
 - `pnpm agent-design:boundaries` is the ownership tripwire for the Agent Design Engine: wrappers can call public package exports, but parser, lint, diff, export, and profile-comparison implementation must stay in `packages/agent-design-engine`.
@@ -187,6 +188,7 @@ See also: `~/.codex/instructions/Learnings.md`
 
 ### 2026-04-25
 
+- **Migration transition hardening**: JSC-218 encodes the `astudio design migrate` transition table in `packages/design-system-guidance`, rejects invalid command/state pairs with `E_DESIGN_MIGRATION_STATE_INVALID` before mutation, writes `migrationState: partial` before final config mutation, and adds CLI coverage for failed-state resume, invalid-transition no-op behavior, and fault-injected `E_PARTIAL` recovery through `migrate --resume`.
 - **Agent design boundary guard**: JSC-217 adds `pnpm agent-design:boundaries` and a self-test mode to prevent other packages from deep-importing `packages/agent-design-engine/src/**` or reimplementing `DESIGN.md` parser/rule ownership in `packages/design-system-guidance`. The guard now runs inside `pnpm test:policy`, and the `DESIGN.md` contract docs plus source plan mark the boundary enforcement item complete.
 
 ### 2026-04-24

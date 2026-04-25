@@ -615,7 +615,19 @@ test("design migrate rollback requires readable metadata", async () => {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-guidance-"));
   fs.writeFileSync(
     path.join(tempDir, ".design-system-guidance.json"),
-    `${JSON.stringify({ schemaVersion: 1, docs: ["docs/design-system/CONTRACT.md"] }, null, 2)}\n`,
+    `${JSON.stringify(
+      {
+        schemaVersion: 2,
+        docs: ["docs/design-system/CONTRACT.md"],
+        designContract: {
+          mode: "design-md",
+          migrationState: "active",
+          rollbackMetadata: "artifacts/design-migrations/missing.json",
+        },
+      },
+      null,
+      2,
+    )}\n`,
   );
 
   const { code, stdout } = await runCli(
@@ -889,6 +901,109 @@ test("design migrate resume preserves original rollback metadata", async () => {
   const payload = JSON.parse(resume.stdout);
   assert.equal(payload.data.migrationState, "active");
   assert.equal(fs.readFileSync(metadataPath, "utf8"), metadataBefore);
+});
+
+test("design migrate resume accepts failed migration state with readable metadata", async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-guidance-"));
+  writeValidDesignProject(tempDir);
+
+  const migrate = await runCli(
+    ["design", "migrate", "--to", "design-md", "--write", "--json"],
+    {},
+    { cwd: tempDir },
+  );
+  assert.equal(migrate.code, 0);
+
+  const configPath = guidanceConfigPath(tempDir);
+  const failedConfig = readJsonFile(configPath);
+  failedConfig.designContract.migrationState = "failed";
+  writeJsonFile(configPath, failedConfig);
+
+  const resume = await runCli(
+    ["design", "migrate", "--resume", "--write", "--json"],
+    {},
+    { cwd: tempDir },
+  );
+  assert.equal(resume.code, 0, `${resume.stdout}${resume.stderr}`);
+  const payload = JSON.parse(resume.stdout);
+  assert.equal(payload.data.migrationState, "active");
+});
+
+test("design migrate writes partial marker before final mutation failure", async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-guidance-"));
+  writeValidDesignProject(tempDir);
+
+  const result = await runCli(
+    ["design", "migrate", "--to", "design-md", "--write", "--json"],
+    { ASTUDIO_GUIDANCE_FAIL_AFTER_PARTIAL: "1" },
+    { cwd: tempDir },
+  );
+  assert.equal(result.code, 4, `${result.stdout}${result.stderr}`);
+  const payload = JSON.parse(result.stdout);
+  assert.equal(payload.errors[0].code, "E_PARTIAL");
+
+  const config = readJsonFile(guidanceConfigPath(tempDir));
+  assert.equal(config.schemaVersion, 2);
+  assert.equal(config.designContract.mode, "design-md");
+  assert.equal(config.designContract.migrationState, "partial");
+  assert.equal(fs.existsSync(path.join(tempDir, config.designContract.rollbackMetadata)), true);
+
+  const resume = await runCli(
+    ["design", "migrate", "--resume", "--write", "--json"],
+    {},
+    { cwd: tempDir },
+  );
+  assert.equal(resume.code, 0, `${resume.stdout}${resume.stderr}`);
+  const resumedPayload = JSON.parse(resume.stdout);
+  assert.equal(resumedPayload.data.migrationState, "active");
+});
+
+test("design migrate transition table rejects invalid mutations without touching config", async () => {
+  const cases = [
+    {
+      name: "fresh migration from partial state",
+      designContract: { mode: "legacy", migrationState: "partial" },
+      args: ["design", "migrate", "--to", "design-md", "--write", "--json"],
+    },
+    {
+      name: "rollback from not-started state",
+      designContract: { mode: "legacy", migrationState: "not-started" },
+      args: ["design", "migrate", "--rollback", "--write", "--json"],
+    },
+    {
+      name: "rollback alias from not-started state",
+      designContract: { mode: "legacy", migrationState: "not-started" },
+      args: ["design", "migrate", "--to", "legacy", "--write", "--json"],
+    },
+    {
+      name: "resume from active state",
+      designContract: { mode: "design-md", migrationState: "active" },
+      args: ["design", "migrate", "--resume", "--write", "--json"],
+    },
+    {
+      name: "fresh migration from invalid design-md not-started state",
+      designContract: { mode: "design-md", migrationState: "not-started" },
+      args: ["design", "migrate", "--to", "design-md", "--write", "--json"],
+    },
+  ];
+
+  for (const entry of cases) {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-guidance-"));
+    writeValidDesignContract(tempDir);
+    const config = {
+      schemaVersion: 2,
+      docs: ["docs/design-system/CONTRACT.md"],
+      designContract: entry.designContract,
+    };
+    writeGuidanceConfig(tempDir, config);
+    const before = fs.readFileSync(guidanceConfigPath(tempDir), "utf8");
+
+    const result = await runCli(entry.args, {}, { cwd: tempDir });
+    assert.equal(result.code, 1, `${entry.name}: ${result.stdout}${result.stderr}`);
+    const payload = JSON.parse(result.stdout);
+    assert.equal(payload.errors[0].code, "E_DESIGN_MIGRATION_STATE_INVALID", entry.name);
+    assert.equal(fs.readFileSync(guidanceConfigPath(tempDir), "utf8"), before, entry.name);
+  }
 });
 
 test("design migrate rollback preserves original rollback metadata", async () => {

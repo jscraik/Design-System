@@ -544,6 +544,7 @@ Each delta must include:
 
 - validates current guidance config
 - validates canonical `DESIGN.md`
+- enforces the migration transition table before any writable side effect
 - runs semantic lint
 - runs brand check
 - writes rollback metadata before mutation
@@ -582,6 +583,8 @@ Migration transition table:
 | any | any non-terminal state | missing or unreadable | `doctor`, `migrate --rollback` | fail closed with `E_DESIGN_ROLLBACK_METADATA_UNREADABLE`, exit `3`, and no side effects; rollback is permitted only as a deterministic fail-closed no-op |
 
 All combinations not listed are invalid states. `doctor` must detect every invalid `(mode, migrationState, metadata)` combination and return a deterministic next action; it must not special-case only `partial` and `failed`.
+
+JSC-218 implementation note: `packages/design-system-guidance/src/core.ts` now encodes the migration-command transition table, rejects invalid state/operation pairs with `E_DESIGN_MIGRATION_STATE_INVALID` before mutation, and writes a crash-recoverable `partial` marker before the final config mutation. `packages/cli/tests/cli.test.mjs` covers valid failed-state resume, invalid transition no-op behavior, and fault-injected `E_PARTIAL` recovery through `migrate --resume`.
 
 Rollback metadata schema:
 
@@ -746,7 +749,7 @@ Tasks:
 - [x] Add boundary checks preventing wrapper parser/rule duplication.
 - [x] Keep existing legacy checks operational.
 - [x] Add transactional migration, rollback, and resume state handling.
-- [ ] Implement the migration transition table and crash-safe `partial` marker before mutation.
+- [x] Implement the migration transition table and crash-safe `partial` marker before mutation.
 - [ ] Implement required rollback metadata fields, authenticity checks, path-root checks, compatibility algorithm, and checksum validation.
 - [x] Add rollback quarantine behavior for migrated `DESIGN.md`.
 - [ ] Add collision-safe quarantine paths, atomic create semantics, repeated rollback/remigration tests, and concurrent-writer race tests.
@@ -757,6 +760,7 @@ Validation:
 pnpm -C packages/design-system-guidance type-check
 pnpm -C packages/design-system-guidance build
 pnpm -C packages/design-system-guidance check:ci
+pnpm -C packages/cli test
 ```
 
 ### Phase 4: CLI Integration

@@ -63,6 +63,73 @@ const SUPPORTED_SCHEMA_VERSIONS = new Set([1, 2]);
 const ROLLBACK_SCHEMA = "astudio.design.rollback.v1";
 const GUIDANCE_WRAPPER_VERSION = "0.0.2";
 const MIGRATION_LOCK_ERROR = "E_DESIGN_MIGRATION_LOCKED";
+const PARTIAL_FAULT_ENV = "ASTUDIO_GUIDANCE_FAIL_AFTER_PARTIAL";
+
+type MigrationOperation = "fresh" | "rollback" | "resume";
+
+interface MigrationTransitionRule {
+  mode: GuidanceDesignMode;
+  migrationState: GuidanceMigrationState;
+  operations: MigrationOperation[];
+  requiresReadableMetadata: boolean;
+}
+
+const MIGRATION_TRANSITION_TABLE: MigrationTransitionRule[] = [
+  {
+    mode: "legacy",
+    migrationState: "not-started",
+    operations: ["fresh"],
+    requiresReadableMetadata: false,
+  },
+  {
+    mode: "legacy",
+    migrationState: "initialized",
+    operations: ["fresh"],
+    requiresReadableMetadata: false,
+  },
+  {
+    mode: "legacy",
+    migrationState: "partial",
+    operations: ["rollback", "resume"],
+    requiresReadableMetadata: true,
+  },
+  {
+    mode: "legacy",
+    migrationState: "failed",
+    operations: ["rollback", "resume"],
+    requiresReadableMetadata: true,
+  },
+  {
+    mode: "legacy",
+    migrationState: "rolled-back",
+    operations: ["fresh"],
+    requiresReadableMetadata: false,
+  },
+  {
+    mode: "design-md",
+    migrationState: "active",
+    operations: ["fresh", "rollback"],
+    requiresReadableMetadata: true,
+  },
+  {
+    mode: "design-md",
+    migrationState: "partial",
+    operations: ["rollback", "resume"],
+    requiresReadableMetadata: true,
+  },
+  {
+    mode: "design-md",
+    migrationState: "failed",
+    operations: ["rollback", "resume"],
+    requiresReadableMetadata: true,
+  },
+  {
+    mode: "design-md",
+    migrationState: "rolled-back",
+    operations: ["fresh"],
+    requiresReadableMetadata: false,
+  },
+];
 
 const RULE_PATTERNS: Record<string, { regex: RegExp; message: string }> = {
   "no-deprecated-icons-import": {
@@ -828,6 +895,14 @@ function migrationStateError(message: string): GuidanceError {
   });
 }
 
+function partialMigrationError(): GuidanceError {
+  return new GuidanceError("Guidance migration stopped after writing partial state.", {
+    code: "E_PARTIAL",
+    exitCode: 4,
+    hint: "Run migrate --resume to finish the migration or migrate --rollback after verifying rollback metadata.",
+  });
+}
+
 function rollbackMetadataError(): GuidanceError {
   return new GuidanceError(
     "Rollback metadata is missing, unreadable, or outside the project root.",
@@ -930,6 +1005,36 @@ function assertRollbackMetadata(targetPath: string, metadataPath: string, parsed
   }
 }
 
+function migrationOperation(options: MigrationOptions): MigrationOperation {
+  if (options.resume) return "resume";
+  if (options.rollback || options.to === "legacy") return "rollback";
+  return "fresh";
+}
+
+function assertMigrationTransition(
+  state: GuidanceDesignContractState,
+  operation: MigrationOperation,
+): MigrationTransitionRule {
+  const rule = MIGRATION_TRANSITION_TABLE.find(
+    (entry) => entry.mode === state.mode && entry.migrationState === state.migrationState,
+  );
+  if (!rule) {
+    throw migrationStateError(
+      `Invalid guidance migration state: ${state.mode}/${state.migrationState}.`,
+    );
+  }
+  if (!rule.operations.includes(operation)) {
+    throw migrationStateError(
+      `Guidance migration cannot run ${operation} from ${state.mode}/${state.migrationState}.`,
+    );
+  }
+  return rule;
+}
+
+function shouldFailAfterPartialWrite(): boolean {
+  return process.env[PARTIAL_FAULT_ENV] === "1";
+}
+
 async function requireReadableRollbackMetadata(
   targetPath: string,
   state: GuidanceDesignContractState,
@@ -963,21 +1068,6 @@ function assertSingleMigrationOperation(options: MigrationOptions): void {
       hint: "Run one migration operation at a time.",
     });
   }
-}
-
-function assertFreshMigrationAllowed(state: GuidanceDesignContractState): void {
-  if (
-    state.mode === "legacy" &&
-    ["not-started", "initialized", "rolled-back"].includes(state.migrationState)
-  ) {
-    return;
-  }
-  if (state.mode === "design-md" && state.migrationState === "active") {
-    return;
-  }
-  throw migrationStateError(
-    "Fresh migration is allowed only from legacy not-started, initialized, rolled-back, or design-md active state.",
-  );
 }
 
 async function readGuidanceConfig(
@@ -1082,24 +1172,18 @@ async function migrateGuidanceConfigUnlocked(
   config: GuidanceConfig,
 ): Promise<MigrationResult> {
   const beforeState = config.designContract ?? defaultDesignState();
-  if (options.resume && !["partial", "failed"].includes(beforeState.migrationState)) {
-    throw migrationStateError(
-      "Guidance migration can resume only from partial or failed migration state.",
-    );
-  }
+  const operation = migrationOperation(options);
+  const transition = assertMigrationTransition(beforeState, operation);
 
   const rollbackDir = path.join(targetPath, "artifacts", "design-migrations");
-  const isRollback = Boolean(options.rollback || options.to === "legacy");
-  const activeMigrationNeedsExistingMetadata =
-    !isRollback && !options.resume && beforeState.migrationState === "active";
+  const isRollback = operation === "rollback";
   const freshMigrationNeedsNewMetadata =
-    !isRollback && !options.resume && beforeState.migrationState !== "active";
-  const rollbackMetadataPath =
-    isRollback || options.resume || activeMigrationNeedsExistingMetadata
-      ? await requireReadableRollbackMetadata(targetPath, beforeState)
-      : beforeState.rollbackMetadata && !freshMigrationNeedsNewMetadata
-        ? resolveRollbackMetadataPath(targetPath, beforeState.rollbackMetadata)
-        : newRollbackMetadataPath(rollbackDir, raw);
+    operation === "fresh" && beforeState.migrationState !== "active";
+  const rollbackMetadataPath = transition.requiresReadableMetadata
+    ? await requireReadableRollbackMetadata(targetPath, beforeState)
+    : beforeState.rollbackMetadata && !freshMigrationNeedsNewMetadata
+      ? resolveRollbackMetadataPath(targetPath, beforeState.rollbackMetadata)
+      : newRollbackMetadataPath(rollbackDir, raw);
   const rollbackMetadataConfigPath = toConfigRelativePath(targetPath, rollbackMetadataPath);
   const shouldWriteRollbackMetadata =
     !isRollback && !options.resume && changedMigrationStart(beforeState);
@@ -1112,7 +1196,7 @@ async function migrateGuidanceConfigUnlocked(
       migrationState: "rolled-back",
       rollbackMetadata: rollbackMetadataConfigPath,
     };
-  } else if (options.resume) {
+  } else if (operation === "resume") {
     afterState = {
       ...beforeState,
       mode: beforeState.mode === "design-md" ? "design-md" : (options.to ?? "design-md"),
@@ -1120,7 +1204,6 @@ async function migrateGuidanceConfigUnlocked(
       rollbackMetadata: rollbackMetadataConfigPath,
     };
   } else {
-    assertFreshMigrationAllowed(beforeState);
     afterState = {
       ...beforeState,
       mode: options.to ?? "design-md",
@@ -1182,6 +1265,9 @@ async function migrateGuidanceConfigUnlocked(
       },
     });
     await writeAtomic(configPath, partialRaw);
+    if (shouldFailAfterPartialWrite()) {
+      throw partialMigrationError();
+    }
     await writeAtomic(configPath, nextRaw);
   }
 
