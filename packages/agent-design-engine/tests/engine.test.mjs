@@ -45,6 +45,17 @@ test("extracts only explicit component code spans", async () => {
   assert.equal(contract.components.includes("Loading"), false);
 });
 
+test("parses headings without regex backtracking on long spacing runs", async () => {
+  const hostileHeading = `${"#".repeat(6)} ${" ".repeat(50_000)}Stable title${" ".repeat(50_000)}`;
+  const contract = await parseDesignContract(valid.replace("## Surface Roles", hostileHeading), {
+    rootDir,
+    filePath: "DESIGN.md",
+  });
+  const parsedHeading = contract.sections.find((section) => section.title === "Stable title");
+  assert.equal(parsedHeading?.level, 6);
+  assert.equal(parsedHeading?.title, "Stable title");
+});
+
 test("lints professional UI rule groups with source references", async () => {
   const result = await lintDesignContract(invalid, { rootDir });
   assert.equal(result.ok, false);

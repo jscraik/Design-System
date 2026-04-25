@@ -52,12 +52,12 @@ function parseSections(body: string, lineOffset = 0): DesignSection[] {
   let current: DesignSection | null = null;
 
   lines.forEach((line, index) => {
-    const heading = /^(#{1,6})\s+(.+?)\s*$/.exec(line);
+    const heading = parseHeadingLine(line);
     if (heading) {
       if (current) sections.push(current);
       current = {
-        title: heading[2].trim(),
-        level: heading[1].length,
+        title: heading.title,
+        level: heading.level,
         body: "",
         line: lineOffset + index + 1,
       };
@@ -71,6 +71,21 @@ function parseSections(body: string, lineOffset = 0): DesignSection[] {
 
   if (current) sections.push(current);
   return sections;
+}
+
+function parseHeadingLine(line: string): { level: number; title: string } | null {
+  let level = 0;
+  while (level < line.length && line[level] === "#") {
+    level += 1;
+  }
+
+  if (level < 1 || level > 6) return null;
+  const separator = line[level];
+  if (separator !== " " && separator !== "\t") return null;
+
+  const title = line.slice(level + 1).trim();
+  if (!title) return null;
+  return { level, title };
 }
 
 function parseTokenLines(body: string): Record<string, string> {
