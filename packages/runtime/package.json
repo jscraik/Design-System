@@ -17,7 +17,7 @@
   "types": "./dist/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -b tsconfig.build.json --force",
     "type-check": "tsc -p tsconfig.json --noEmit",
     "clean": "rm -rf dist",
     "lint": "biome check .",

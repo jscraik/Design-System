@@ -27,6 +27,13 @@ Each local primitive component has an explicit accessibility contract below. Use
 
 ---
 
+## Shared Focus Indicator
+
+- **Keyboard & focus**: The shared design-system ring is opt-in through `.ds-focusable:focus-visible`, `[data-ds-focusable]:focus-visible`, or component-local `focus-visible:ring-*` utilities that produce one visible ring.
+- **ARIA & semantics**: Focus indicators must not replace accessible names, roles, or state attributes.
+- **States & announcements**: Focus styling must remain visible in loading, busy, error, and disabled-adjacent states where controls remain reachable.
+- **Notes**: Shared CSS must not apply a bare global `:focus-visible` ring or remove native outlines from arbitrary elements. See `docs/design-system/PROFESSIONAL_FINISH_REVIEW.md` for the review rubric.
+
 ## Alert
 
 - **Keyboard & focus**: No required keyboard behavior; alerts should not steal focus unless explicitly dismissible.

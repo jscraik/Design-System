@@ -59,8 +59,10 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      "@design-studio/json-render": resolve(__dirname, "../json-render/src"),
       "@design-studio/runtime": resolve(__dirname, "../runtime/src"),
       "@design-studio/tokens": resolve(__dirname, "../tokens/src"),
+      "@design-studio/ui": resolve(__dirname, "../ui/src"),
     },
   },
 });

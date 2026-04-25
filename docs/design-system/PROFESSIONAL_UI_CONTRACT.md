@@ -1,6 +1,6 @@
 # Professional UI Contract
 
-Last updated: 2026-03-23
+Last updated: 2026-04-25
 Owner: Jamie Scott Craik (@jscraik)
 Review cadence: Every release or monthly (whichever is sooner)
 
@@ -13,6 +13,7 @@ Review cadence: Every release or monthly (whichever is sooner)
 - [State Model](#state-model)
 - [State Presentation Matrix](#state-presentation-matrix)
 - [Focus Contract](#focus-contract)
+- [Professional Finish Review Loop](#professional-finish-review-loop)
 - [Motion Contract](#motion-contract)
 - [Viewport And Input Defaults](#viewport-and-input-defaults)
 - [Executable Detection](#executable-detection)
@@ -127,6 +128,23 @@ Rules:
 - Focus affordances should come from a scoped class or data attribute pattern.
 - Unscoped elements should keep safe native behavior instead of receiving design-system-imposed rings.
 - Keyboard focus must be visually distinct with one ring, not stacked or doubled.
+- Mouse-only focus suppression must also stay scoped. Shared CSS must not remove native outlines from arbitrary elements.
+
+The canonical implementation lives in `packages/tokens/src/enhanced.css` and `packages/tokens/src/enhanced/focus.ts`.
+
+## Professional Finish Review Loop
+
+Professional finish is reviewed through `docs/design-system/PROFESSIONAL_FINISH_REVIEW.md`.
+
+Protected exemplar surfaces must pass the rubric for:
+
+- hierarchy
+- spacing rhythm
+- focus quality
+- state quality
+- motion restraint
+
+The gold-standard reference set in that document defines the minimum Storybook and web surfaces that agents should compare against structurally. Do not treat screenshot diff parity as sufficient if one of those rubric dimensions regresses.
 
 ## Motion Contract
 
@@ -170,6 +188,8 @@ Current executable rules cover:
 
 State completeness is enforced through the state model in this document, protected settings exemplars, and the `pnpm test:exemplar-evaluation` browser gate. Do not treat a passing source scan as permission to skip loading, empty, error, and busy states on async surfaces.
 
+Professional finish is enforced by pairing that browser gate with the professional-finish contract precheck. The precheck fails when the rubric/reference document drifts or shared focus CSS reintroduces bare global focus selectors.
+
 ## Enforcement Inputs
 
 The contract is enforced through:
@@ -182,5 +202,6 @@ The contract is enforced through:
 - `pnpm ds:matrix:check`
 - `pnpm design-system-guidance:check:ci`
 - `pnpm test:policy`
+- `pnpm test:exemplar-evaluation`
 
 If this contract and a local surface disagree, the protected-surface rules in this document win unless a time-bounded exemption is present in the enforcement ledger.

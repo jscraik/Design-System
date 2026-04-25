@@ -94,22 +94,25 @@
    FOCUS VISIBLE STYLES
    ======================================================================= */
 
-/* Focus ring styles */
-:focus-visible {
+/* Focus ring styles are opt-in to avoid double rings on component-owned controls. */
+.ds-focusable:focus-visible,
+[data-ds-focusable]:focus-visible {
   box-shadow: var(--ds-focus-ring);
   border-radius: var(--ds-focus-radius);
   outline: none;
 }
 
 /* Inset focus ring (for inputs, etc.) */
-:focus-visible.input-focus-ring {
+.ds-focusable.input-focus-ring:focus-visible,
+[data-ds-focusable].input-focus-ring:focus-visible {
   box-shadow: var(--ds-focus-ring-inset);
   border-radius: var(--ds-focus-radius);
   outline: none;
 }
 
-/* No outline when focusing with mouse */
-:focus:not(:focus-visible) {
+/* No outline when focusing scoped design-system elements with mouse */
+.ds-focusable:focus:not(:focus-visible),
+[data-ds-focusable]:focus:not(:focus-visible) {
   outline: none;
 }
 

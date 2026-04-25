@@ -11,7 +11,8 @@
  * - Respects prefers-reduced-motion
  *
  * Usage in CSS:
- *   .my-element:focus-visible {
+ *   .ds-focusable:focus-visible,
+ *   [data-ds-focusable]:focus-visible {
  *     box-shadow: var(--ds-focus-ring);
  *     border-radius: var(--ds-focus-radius);
  *   }

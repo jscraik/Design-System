@@ -31,7 +31,7 @@
     "./src/enhanced.css"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -b tsconfig.build.json --force",
     "type-check": "tsc -p tsconfig.json --noEmit",
     "clean": "rm -rf dist",
     "generate": "node --import tsx scripts/sync-dtcg.ts && node --import tsx scripts/generate-tokens.ts && node --import tsx scripts/export-figma.ts",
