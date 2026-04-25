@@ -41,8 +41,19 @@ export function maskValue(value: string, mask: MaskType): string {
 }
 
 function shouldMaskField(key: string, masks: FieldMask[]): FieldMask | undefined {
+  const keySegments = key
+    .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter(Boolean);
   const lowerKey = key.toLowerCase();
-  return masks.find((mask) => lowerKey.includes(mask.field.toLowerCase()));
+  return masks.find((mask) => {
+    const field = mask.field.toLowerCase();
+    if (field === "token") {
+      return keySegments.includes("token");
+    }
+    return lowerKey.includes(field);
+  });
 }
 
 function maskValueRecursive(value: unknown, masks: FieldMask[], inDebugMode: boolean): unknown {

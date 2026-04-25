@@ -8,6 +8,13 @@ function nowIso(): string {
   return new Date().toISOString();
 }
 
+function currentOutputMode(): "json" | "plain" | undefined {
+  if (process.argv.includes("--plain")) return "plain";
+  if (process.argv.includes("--json") || process.argv.includes("--agent")) return "json";
+  if (process.env.CI && process.env.CI.toLowerCase() !== "false") return "json";
+  return undefined;
+}
+
 // Global trace context for the current CLI invocation
 let globalTraceContext: TraceContext | undefined;
 let globalShowSensitive = false;
@@ -115,6 +122,7 @@ export function createEnvelope(
 ): JsonEnvelope {
   // Use provided context, fall back to global context, then undefined
   const context = traceContext ?? globalTraceContext;
+  const outputMode = currentOutputMode();
   // Mask sensitive data unless show-sensitive is enabled
   // Short-circuit for empty objects to avoid unnecessary recursion
   const needsMasking = shouldMask() && Object.keys(data).length > 0;
@@ -125,6 +133,7 @@ export function createEnvelope(
       tool: TOOL_NAME,
       version: getToolVersion(),
       timestamp: nowIso(),
+      ...(outputMode ? { outputMode } : {}),
       ...(context && {
         request_id: context.requestId,
         trace_id: context.traceId,

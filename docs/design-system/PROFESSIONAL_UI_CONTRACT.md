@@ -5,6 +5,7 @@ Owner: Jamie Scott Craik (@jscraik)
 Review cadence: Every release or monthly (whichever is sooner)
 
 ## Table of Contents
+
 - [Purpose](#purpose)
 - [Protected Surfaces](#protected-surfaces)
 - [Hierarchy Grammar](#hierarchy-grammar)
@@ -14,6 +15,7 @@ Review cadence: Every release or monthly (whichever is sooner)
 - [Focus Contract](#focus-contract)
 - [Motion Contract](#motion-contract)
 - [Viewport And Input Defaults](#viewport-and-input-defaults)
+- [Executable Detection](#executable-detection)
 - [Enforcement Inputs](#enforcement-inputs)
 
 ## Purpose
@@ -152,6 +154,21 @@ Input defaults:
 - Minimum touch target is `44x44`.
 - Hover-only affordances must have a touch or click path.
 - Icon-only controls must expose accessible names.
+
+## Executable Detection
+
+`design-system-guidance` turns the contract into source checks for representative product surfaces.
+
+Current executable rules cover:
+
+- semantic-slot discipline through foundation-token, raw-color, and raw-pixel checks
+- scoped focus behavior through global `:focus-visible` checks
+- viewport-safe layout through `h-screen` checks
+- typography discipline through arbitrary tracking checks
+- accessibility labeling through empty-label and hidden-focusable checks
+- motion restraint through long-duration and infinite-animation checks
+
+State completeness is enforced through the state model in this document, protected settings exemplars, and the `pnpm test:exemplar-evaluation` browser gate. Do not treat a passing source scan as permission to skip loading, empty, error, and busy states on async surfaces.
 
 ## Enforcement Inputs
 

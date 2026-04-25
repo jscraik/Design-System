@@ -1,0 +1,207 @@
+{
+  "schemaVersion": 1,
+  "success": [
+    {
+      "name": "lint-explicit-file",
+      "kind": "astudio.design.lint.v1",
+      "cwd": "$REPO_ROOT",
+      "args": ["design", "lint", "--file", "$REPO_ROOT/DESIGN.md", "--json"]
+    },
+    {
+      "name": "diff-explicit-files",
+      "kind": "astudio.design.diff.v1",
+      "cwd": "$REPO_ROOT",
+      "args": [
+        "design",
+        "diff",
+        "--before",
+        "$REPO_ROOT/DESIGN.md",
+        "--after",
+        "$REPO_ROOT/DESIGN.md",
+        "--json"
+      ]
+    },
+    {
+      "name": "export-explicit-file",
+      "kind": "astudio.design.export.v1",
+      "cwd": "$REPO_ROOT",
+      "args": [
+        "design",
+        "export",
+        "--file",
+        "$REPO_ROOT/DESIGN.md",
+        "--format",
+        "json@agent-design.v1",
+        "--json"
+      ]
+    },
+    {
+      "name": "check-brand-explicit-file",
+      "kind": "astudio.design.checkBrand.v1",
+      "cwd": "$REPO_ROOT",
+      "args": ["design", "check-brand", "--file", "$REPO_ROOT/DESIGN.md", "--json"]
+    },
+    {
+      "name": "init-dry-run",
+      "kind": "astudio.design.init.v1",
+      "cwd": "$REPO_ROOT",
+      "args": ["design", "init", "--target", "$REPO_ROOT", "--dry-run", "--json"]
+    },
+    {
+      "name": "migrate-dry-run",
+      "kind": "astudio.design.migrate.v1",
+      "cwd": "$TEMP_VALID_DESIGN_PROJECT",
+      "args": ["design", "migrate", "--to", "design-md", "--dry-run", "--json"]
+    },
+    {
+      "name": "doctor-root",
+      "kind": "astudio.design.doctor.v1",
+      "cwd": "$REPO_ROOT",
+      "args": ["design", "doctor", "--json"]
+    },
+    {
+      "name": "doctor-legacy-warnings",
+      "kind": "astudio.design.doctor.v1",
+      "cwd": "$TEMP_NO_DESIGN_PROJECT",
+      "args": ["design", "doctor", "--json"],
+      "expectedWarningCheck": "design-file"
+    }
+  ],
+  "errors": [
+    {
+      "name": "policy-write-required",
+      "cwd": "$REPO_ROOT",
+      "args": ["design", "init", "--json"],
+      "expectedExitCode": 3,
+      "expectedErrorCode": "E_POLICY",
+      "recovery": "nextCommand"
+    },
+    {
+      "name": "policy-unavailable-agent-plain",
+      "cwd": "$REPO_ROOT",
+      "args": ["design", "lint", "--file", "$REPO_ROOT/DESIGN.md", "--agent", "--plain"],
+      "expectedExitCode": 3,
+      "expectedErrorCode": "E_POLICY",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "discovery-required-in-ci",
+      "cwd": "$REPO_ROOT",
+      "env": {
+        "CI": "true"
+      },
+      "args": ["design", "lint", "--json"],
+      "expectedExitCode": 2,
+      "expectedErrorCode": "E_DESIGN_DISCOVERY_REQUIRED",
+      "recovery": "nextCommand"
+    },
+    {
+      "name": "discovery-contract-missing",
+      "cwd": "$TEMP_NO_DESIGN_PROJECT",
+      "args": ["design", "lint", "--json"],
+      "expectedExitCode": 2,
+      "expectedErrorCode": "E_DESIGN_CONTRACT_MISSING",
+      "recovery": "nextCommand"
+    },
+    {
+      "name": "discovery-contract-ambiguous",
+      "cwd": "$TEMP_AMBIGUOUS_DESIGN_SUBDIR",
+      "args": ["design", "lint", "--json"],
+      "expectedExitCode": 2,
+      "expectedErrorCode": "E_DESIGN_CONTRACT_AMBIGUOUS",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "profile-override-forbidden-in-ci",
+      "cwd": "$REPO_ROOT",
+      "env": {
+        "CI": "true"
+      },
+      "args": [
+        "design",
+        "check-brand",
+        "--file",
+        "$REPO_ROOT/DESIGN.md",
+        "--profile",
+        "astudio-default@1",
+        "--json"
+      ],
+      "expectedExitCode": 3,
+      "expectedErrorCode": "E_DESIGN_PROFILE_OVERRIDE_FORBIDDEN",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "unknown-brand-profile",
+      "cwd": "$TEMP_UNKNOWN_PROFILE_PROJECT",
+      "args": ["design", "lint", "--file", "DESIGN.md", "--json"],
+      "expectedExitCode": 2,
+      "expectedErrorCode": "E_DESIGN_PROFILE_UNKNOWN",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "unsupported-brand-profile",
+      "cwd": "$TEMP_UNSUPPORTED_PROFILE_PROJECT",
+      "args": ["design", "lint", "--file", "DESIGN.md", "--json"],
+      "expectedExitCode": 3,
+      "expectedErrorCode": "E_DESIGN_PROFILE_UNSUPPORTED",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "schema-invalid",
+      "cwd": "$TEMP_INVALID_SCHEMA_PROJECT",
+      "args": ["design", "lint", "--file", "DESIGN.md", "--json"],
+      "expectedExitCode": 2,
+      "expectedErrorCode": "E_DESIGN_SCHEMA_INVALID",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "guidance-config-invalid",
+      "cwd": "$TEMP_INVALID_GUIDANCE_PROJECT",
+      "args": ["design", "migrate", "--to", "design-md", "--dry-run", "--json"],
+      "expectedExitCode": 2,
+      "expectedErrorCode": "E_DESIGN_CONFIG_INVALID",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "rollback-metadata-unreadable",
+      "cwd": "$TEMP_ROLLBACK_METADATA_MISSING_PROJECT",
+      "args": ["design", "migrate", "--rollback", "--dry-run", "--json"],
+      "expectedExitCode": 3,
+      "expectedErrorCode": "E_DESIGN_ROLLBACK_METADATA_UNREADABLE",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "migration-state-invalid",
+      "cwd": "$TEMP_FAILED_MIGRATION_PROJECT",
+      "args": ["design", "migrate", "--to", "design-md", "--dry-run", "--json"],
+      "expectedExitCode": 1,
+      "expectedErrorCode": "E_DESIGN_MIGRATION_STATE_INVALID",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "safety-contract-exists",
+      "cwd": "$TEMP_VALID_DESIGN_PROJECT",
+      "args": ["design", "init", "--write", "--json"],
+      "expectedExitCode": 3,
+      "expectedErrorCode": "E_DESIGN_CONTRACT_EXISTS",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "execution-active-check-failed",
+      "cwd": "$REPO_ROOT",
+      "env": {
+        "ASTUDIO_PNPM": "$FAKE_PNPM_EXIT_7"
+      },
+      "args": ["design", "doctor", "--active", "--exec", "--json"],
+      "expectedExitCode": 1,
+      "expectedErrorCode": "E_EXEC",
+      "recovery": "unavailable"
+    }
+  ],
+  "stdout": {
+    "encoding": "utf8",
+    "lineCount": 1,
+    "trailingNewline": true,
+    "stderr": ""
+  }
+}

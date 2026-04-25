@@ -1,3 +1,4 @@
+import { ProductSection } from "../../../components/ui/layout/ProductComposition";
 import { IconChevronRightMd } from "../../../icons/ChatGPTIcons";
 import { SettingsPanelShell } from "../shared/SettingsPanelShell";
 import { SettingsPanelState } from "../shared/SettingsPanelState";
@@ -85,66 +86,69 @@ export function ManageAppsPanel({
         errorTitle="Couldn't load app management"
         errorDescription={errorDescription}
       >
-        <div className="mb-6">
-          <h3 className="mb-1 text-body-small font-semibold text-foreground">Work with Apps</h3>
-          <p className="mb-4 text-caption text-muted-foreground">
-            Allow ChatGPT to work with code and text editors.
-          </p>
-
-          <div className="mb-6">
-            <h4 className="mb-2 px-3 text-caption font-semibold text-muted-foreground">
-              Connected apps
-            </h4>
-            <div className="space-y-0.5">
-              {connectedApps.map((app) => (
-                <button
-                  type="button"
-                  key={app.name}
-                  className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                >
-                  <div className="flex items-center gap-3">
-                    <AppIcon name={app.name} toneClass={app.toneClass} textClass={app.textClass} />
-                    <div>
-                      <div className="text-body-small text-foreground">{app.name}</div>
-                      <div className="text-caption text-accent-green">{app.status}</div>
+        <ProductSection
+          title="Work with Apps"
+          description="Allow ChatGPT to work with code and text editors."
+          density="compact"
+        >
+          <div className="space-y-6">
+            <ProductSection title="Connected apps" density="compact">
+              <div className="space-y-0.5">
+                {connectedApps.map((app) => (
+                  <button
+                    type="button"
+                    key={app.name}
+                    className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  >
+                    <div className="flex items-center gap-3">
+                      <AppIcon
+                        name={app.name}
+                        toneClass={app.toneClass}
+                        textClass={app.textClass}
+                      />
+                      <div>
+                        <div className="text-body-small text-foreground">{app.name}</div>
+                        <div className="text-caption text-accent-green">{app.status}</div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-body-small text-text-secondary">Manage</span>
-                    <IconChevronRightMd className="size-4 text-muted-foreground" />
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h4 className="mb-2 px-3 text-caption font-semibold text-muted-foreground">
-              Available to Connect
-            </h4>
-            <div className="space-y-0.5">
-              {availableApps.map((app) => (
-                <button
-                  type="button"
-                  key={app.name}
-                  className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-                >
-                  <div className="flex items-center gap-3">
-                    <AppIcon name={app.name} toneClass={app.toneClass} textClass={app.textClass} />
-                    <div>
-                      <div className="text-body-small text-foreground">{app.name}</div>
-                      <div className="text-caption text-muted-foreground">{app.status}</div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-body-small text-text-secondary">Manage</span>
+                      <IconChevronRightMd className="size-4 text-muted-foreground" />
                     </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-body-small text-text-secondary">Install Extension</span>
-                    <IconChevronRightMd className="size-4 text-muted-foreground" />
-                  </div>
-                </button>
-              ))}
-            </div>
+                  </button>
+                ))}
+              </div>
+            </ProductSection>
+
+            <ProductSection title="Available to Connect" density="compact">
+              <div className="space-y-0.5">
+                {availableApps.map((app) => (
+                  <button
+                    type="button"
+                    key={app.name}
+                    className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  >
+                    <div className="flex items-center gap-3">
+                      <AppIcon
+                        name={app.name}
+                        toneClass={app.toneClass}
+                        textClass={app.textClass}
+                      />
+                      <div>
+                        <div className="text-body-small text-foreground">{app.name}</div>
+                        <div className="text-caption text-muted-foreground">{app.status}</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-body-small text-text-secondary">Install Extension</span>
+                      <IconChevronRightMd className="size-4 text-muted-foreground" />
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </ProductSection>
           </div>
-        </div>
+        </ProductSection>
       </SettingsPanelState>
     </SettingsPanelShell>
   );

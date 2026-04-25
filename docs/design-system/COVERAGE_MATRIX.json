@@ -663,6 +663,19 @@
     "widget_used": false
   },
   {
+    "name": "ProductComposition",
+    "source": "local_primitive",
+    "upstream": null,
+    "fallback": null,
+    "why_missing_upstream": null,
+    "migration_trigger": null,
+    "a11y_contract_ref": "docs/design-system/A11Y_CONTRACTS.md#productcomposition",
+    "status": "active",
+    "web_used": false,
+    "tauri_used": false,
+    "widget_used": false
+  },
+  {
     "name": "Progress",
     "source": "radix_fallback",
     "upstream": null,

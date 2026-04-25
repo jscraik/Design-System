@@ -1,4 +1,13 @@
-import { AppsSDKButton, ModalBody, ModalDialog, ModalFooter, ModalHeader } from "@design-studio/ui";
+import {
+  AppsSDKButton,
+  ModalBody,
+  ModalDialog,
+  ModalFooter,
+  ModalHeader,
+  ProductPageShell,
+  ProductPanel,
+  ProductSection,
+} from "@design-studio/ui";
 import { DiscoverySettingsModal, IconPickerModal, SettingsModal } from "@design-studio/ui/modals";
 import { useState } from "react";
 
@@ -95,15 +104,12 @@ export function HarnessPage() {
   const [targetSize, setTargetSize] = useState(60);
 
   return (
-    <div className="flex min-h-dvh flex-col bg-background px-6 py-6 text-foreground">
-      <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
-        <div className="space-y-2">
-          <h1 className="text-2xl font-semibold text-balance">Widget Harness</h1>
-          <p className="text-body-small text-muted-foreground text-pretty">
-            Preview embedded widget surfaces, modal flows, and keyboard behavior from one stable
-            verification route.
-          </p>
-        </div>
+    <ProductPageShell
+      title="Widget Harness"
+      description="Preview embedded widget surfaces, modal flows, and keyboard behavior from one stable verification route."
+      sidebarClassName="lg:w-80"
+      mainClassName="flex min-h-96"
+      actions={
         <AppsSDKButton
           size="sm"
           variant="outline"
@@ -113,16 +119,15 @@ export function HarnessPage() {
         >
           Open Selected Widget
         </AppsSDKButton>
-      </div>
-
-      <div className="flex flex-1 flex-col gap-6 lg:flex-row">
-        <aside className="w-full shrink-0 rounded-2xl border border-border bg-muted/20 p-6 lg:w-80">
-          <div className="mb-4 space-y-1">
-            <h2 className="text-lg font-semibold">Widget Gallery</h2>
-            <p className="text-body-small text-muted-foreground">
-              Choose a widget shell to preview in the live iframe.
-            </p>
-          </div>
+      }
+      sidebar={
+        <ProductPanel
+          title="Widget Gallery"
+          description="Choose a widget shell to preview in the live iframe."
+          density="spacious"
+          tone="muted"
+          className="h-full"
+        >
           <div className="space-y-2">
             {WIDGETS.map((widget) => (
               <button
@@ -143,8 +148,7 @@ export function HarnessPage() {
             ))}
           </div>
 
-          <div className="mt-6 border-t border-border pt-4">
-            <h3 className="mb-2 font-medium">Keyboard Shortcuts</h3>
+          <ProductSection title="Keyboard Shortcuts" density="compact" className="mt-6">
             <div className="space-y-1 text-body-small text-muted-foreground">
               {KEYBOARD_SHORTCUTS.map((shortcut) => (
                 <div key={shortcut.key} className="flex items-center gap-2">
@@ -155,10 +159,9 @@ export function HarnessPage() {
                 </div>
               ))}
             </div>
-          </div>
+          </ProductSection>
 
-          <div className="mt-6 border-t border-border pt-4">
-            <h3 className="mb-2 font-medium">Modal Test Controls</h3>
+          <ProductSection title="Modal Test Controls" density="compact" className="mt-6">
             <div className="space-y-2">
               <AppsSDKButton
                 size="sm"
@@ -193,42 +196,38 @@ export function HarnessPage() {
                 Discovery Settings
               </AppsSDKButton>
             </div>
+          </ProductSection>
+        </ProductPanel>
+      }
+    >
+      <ProductPanel
+        title={selectedWidget.name}
+        description={selectedWidget.description}
+        className="flex flex-1 overflow-hidden"
+        bodyClassName="flex flex-1"
+        actions={
+          <AppsSDKButton
+            size="sm"
+            variant="outline"
+            onClick={() =>
+              window.open(getWidgetUrl(selectedWidget.id), "_blank", "noopener,noreferrer")
+            }
+          >
+            Open in New Tab
+          </AppsSDKButton>
+        }
+      >
+        <div className="flex min-h-96 flex-1 bg-muted/10 p-4">
+          <div className="flex flex-1 overflow-hidden rounded-lg border border-border bg-background">
+            <iframe
+              key={selectedWidget.id}
+              src={getWidgetUrl(selectedWidget.id)}
+              className="h-full min-h-96 w-full"
+              title={selectedWidget.name}
+            />
           </div>
-        </aside>
-
-        <main className="flex min-h-96 flex-1 flex-col rounded-2xl border border-border bg-background shadow-sm">
-          <div className="border-b border-border px-6 py-5">
-            <div className="flex flex-wrap items-start justify-between gap-4">
-              <div className="space-y-1">
-                <h2 className="text-xl font-semibold">{selectedWidget.name}</h2>
-                <p className="text-body-small text-muted-foreground">
-                  {selectedWidget.description}
-                </p>
-              </div>
-              <AppsSDKButton
-                size="sm"
-                variant="outline"
-                onClick={() =>
-                  window.open(getWidgetUrl(selectedWidget.id), "_blank", "noopener,noreferrer")
-                }
-              >
-                Open in New Tab
-              </AppsSDKButton>
-            </div>
-          </div>
-
-          <div className="flex-1 bg-muted/10 p-4">
-            <div className="h-full overflow-hidden rounded-2xl border border-border bg-background">
-              <iframe
-                key={selectedWidget.id}
-                src={getWidgetUrl(selectedWidget.id)}
-                className="h-full min-h-96 w-full"
-                title={selectedWidget.name}
-              />
-            </div>
-          </div>
-        </main>
-      </div>
+        </div>
+      </ProductPanel>
 
       <ModalDialog
         isOpen={isModalOpen}
@@ -297,6 +296,6 @@ export function HarnessPage() {
           onTargetSizeChange={setTargetSize}
         />
       )}
-    </div>
+    </ProductPageShell>
   );
 }

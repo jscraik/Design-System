@@ -1,20 +1,40 @@
-import { access, mkdir, readdir, readFile, stat, writeFile } from "node:fs/promises";
+import { createHash, createHmac, randomBytes, randomUUID } from "node:crypto";
+import {
+  access,
+  link,
+  mkdir,
+  open,
+  readdir,
+  readFile,
+  realpath,
+  rename,
+  stat,
+  unlink,
+  writeFile,
+} from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { DESIGN_COMPATIBILITY_MANIFEST } from "./compatibility.js";
 import type {
   CheckOptions,
   CheckResult,
   GuidanceConfig,
+  GuidanceDesignContractState,
+  GuidanceDesignMode,
   GuidanceExemption,
   GuidanceExemptionLedger,
+  GuidanceMigrationState,
   GuidanceRule,
   GuidanceScopeName,
   GuidanceViolation,
   InitOptions,
   InitResult,
+  MigrationOptions,
+  MigrationResult,
   RuleLevel,
   RulesDocument,
 } from "./types.js";
+import { GuidanceError } from "./types.js";
 
 const TOC_PATTERN = /^##\s+Table of Contents\b/m;
 const SCAN_EXTENSIONS = new Set([
@@ -32,6 +52,102 @@ const SCAN_EXTENSIONS = new Set([
 const ISO_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const DEFAULT_SCOPE_PRECEDENCE: GuidanceScopeName[] = ["error", "warn", "exempt"];
 const EXEMPTION_CLASSIFICATIONS = new Set(["temporary", "transitional", "deprecated"]);
+const DESIGN_MODES = new Set<GuidanceDesignMode>(["legacy", "design-md"]);
+const MIGRATION_STATES = new Set<GuidanceMigrationState>([
+  "not-started",
+  "initialized",
+  "active",
+  "partial",
+  "failed",
+  "rolled-back",
+]);
+const SUPPORTED_SCHEMA_VERSIONS = new Set([1, 2]);
+const ROLLBACK_SCHEMA = "astudio.design.rollback.v1";
+const GUIDANCE_WRAPPER_VERSION = "0.0.2";
+const MIGRATION_LOCK_ERROR = "E_DESIGN_MIGRATION_LOCKED";
+const PARTIAL_FAULT_ENV = "ASTUDIO_GUIDANCE_FAIL_AFTER_PARTIAL";
+const ROLLBACK_SIGNATURE_PREFIX = "hmac-sha256";
+const ROLLBACK_SIGNING_KEY_FILE = ".rollback-metadata-signing-key";
+const SEMVER_PATTERN = /^\d+\.\d+\.\d+$/;
+
+type MigrationOperation = "fresh" | "rollback" | "resume";
+
+interface MigrationTransitionRule {
+  mode: GuidanceDesignMode;
+  migrationState: GuidanceMigrationState;
+  operations: MigrationOperation[];
+  requiresReadableMetadata: boolean;
+}
+
+interface RollbackMetadataInput {
+  targetPath: string;
+  configPath: string;
+  rollbackDir: string;
+  rawConfig: string;
+  partialRaw: string;
+  nextRaw: string;
+  beforeState: GuidanceDesignContractState;
+  afterState: GuidanceDesignContractState;
+  config: GuidanceConfig;
+  nextConfig: GuidanceConfig;
+}
+
+const MIGRATION_TRANSITION_TABLE: MigrationTransitionRule[] = [
+  {
+    mode: "legacy",
+    migrationState: "not-started",
+    operations: ["fresh"],
+    requiresReadableMetadata: false,
+  },
+  {
+    mode: "legacy",
+    migrationState: "initialized",
+    operations: ["fresh"],
+    requiresReadableMetadata: false,
+  },
+  {
+    mode: "legacy",
+    migrationState: "partial",
+    operations: ["rollback", "resume"],
+    requiresReadableMetadata: true,
+  },
+  {
+    mode: "legacy",
+    migrationState: "failed",
+    operations: ["rollback", "resume"],
+    requiresReadableMetadata: true,
+  },
+  {
+    mode: "legacy",
+    migrationState: "rolled-back",
+    operations: ["fresh"],
+    requiresReadableMetadata: false,
+  },
+  {
+    mode: "design-md",
+    migrationState: "active",
+    operations: ["fresh", "rollback"],
+    requiresReadableMetadata: true,
+  },
+  {
+    mode: "design-md",
+    migrationState: "partial",
+    operations: ["rollback", "resume"],
+    requiresReadableMetadata: true,
+  },
+  {
+    mode: "design-md",
+    migrationState: "failed",
+    operations: ["rollback", "resume"],
+    requiresReadableMetadata: true,
+  },
+  {
+    mode: "design-md",
+    migrationState: "rolled-back",
+    operations: ["fresh"],
+    requiresReadableMetadata: false,
+  },
+];
 
 const RULE_PATTERNS: Record<string, { regex: RegExp; message: string }> = {
   "no-deprecated-icons-import": {
@@ -62,6 +178,22 @@ const RULE_PATTERNS: Record<string, { regex: RegExp; message: string }> = {
     regex: /\btracking-\[[^\]]+\]/g,
     message:
       "Arbitrary tracking utility found. Use a semantic text role or token-backed style instead.",
+  },
+  "no-empty-accessible-label": {
+    regex: /\b(?:aria-label|aria-labelledby|title)=\{?["'`]\s*["'`]\}?/g,
+    message:
+      "Empty accessible label found. Icon-only controls and labeled regions need a meaningful accessible name.",
+  },
+  "no-aria-hidden-focusable": {
+    regex: /<(?:a|button|input|select|summary|textarea)\b[^>]*\baria-hidden=\{?["']true["']\}?/g,
+    message:
+      "Focusable element is hidden from assistive technology. Remove aria-hidden or move focus to an accessible control.",
+  },
+  "no-long-motion-duration": {
+    regex:
+      /\bduration-(?:[5-9]\d{2,}|[1-9]\d{3,})\b|(?:animationDuration|transitionDuration)\s*[:=]\s*["']?(?:[5-9]\d{2,}|[1-9]\d{3,})ms\b|animation(?:-[^:]+)?:\s*[^;{}]*\binfinite\b/g,
+    message:
+      "Long or looping motion found. Use restrained durations, reduced-motion fallbacks, or a ledgered exception.",
   },
 };
 
@@ -160,10 +292,53 @@ function parseScopePrecedence(value: unknown): GuidanceScopeName[] | null {
   return deduped;
 }
 
+function parseSupportedSchemaVersion(value: unknown): number | null {
+  if (value === undefined) return 1;
+  if (!Number.isInteger(value) || !SUPPORTED_SCHEMA_VERSIONS.has(value as number)) return null;
+  return value as number;
+}
+
+function parseDesignContractState(value: unknown): GuidanceDesignContractState | null | undefined {
+  if (value === undefined) return undefined;
+  if (!isObject(value)) return null;
+
+  const mode = value.mode;
+  const migrationState = value.migrationState;
+  if (
+    mode !== undefined &&
+    (typeof mode !== "string" || !DESIGN_MODES.has(mode as GuidanceDesignMode))
+  ) {
+    return null;
+  }
+  if (
+    migrationState !== undefined &&
+    (typeof migrationState !== "string" ||
+      !MIGRATION_STATES.has(migrationState as GuidanceMigrationState))
+  ) {
+    return null;
+  }
+
+  const rollbackMetadata = value.rollbackMetadata;
+  if (rollbackMetadata !== undefined && typeof rollbackMetadata !== "string") return null;
+
+  const compatibilityManifest = value.compatibilityManifest;
+  if (compatibilityManifest !== undefined && typeof compatibilityManifest !== "string") return null;
+
+  return {
+    mode: (mode as GuidanceDesignMode | undefined) ?? "legacy",
+    migrationState: (migrationState as GuidanceMigrationState | undefined) ?? "not-started",
+    ...(rollbackMetadata ? { rollbackMetadata } : {}),
+    ...(compatibilityManifest ? { compatibilityManifest } : {}),
+  };
+}
+
 function parseConfig(raw: string): GuidanceConfig | null {
   try {
     const parsed = JSON.parse(raw) as unknown;
     if (!isObject(parsed)) return null;
+
+    const schemaVersion = parseSupportedSchemaVersion(parsed.schemaVersion);
+    if (schemaVersion === null) return null;
 
     const docs = parseStringArray(parsed.docs);
     if (!docs) return null;
@@ -184,6 +359,9 @@ function parseConfig(raw: string): GuidanceConfig | null {
     const scopePrecedence = parseScopePrecedence(parsed.scopePrecedence);
     if (scopePrecedence === null) return null;
 
+    const designContract = parseDesignContractState(parsed.designContract);
+    if (designContract === null) return null;
+
     const exemptionLedger =
       parsed.exemptionLedger === undefined
         ? undefined
@@ -193,13 +371,15 @@ function parseConfig(raw: string): GuidanceConfig | null {
     if (exemptionLedger === null) return null;
 
     return {
-      schemaVersion: Number(parsed.schemaVersion ?? 1),
+      ...parsed,
+      schemaVersion,
       docs,
       include,
       ignore,
       scopes,
       exemptionLedger,
       scopePrecedence,
+      ...(designContract ? { designContract } : {}),
     };
   } catch {
     return null;
@@ -691,6 +871,20 @@ export async function initGuidance(
 
   const hasConfig = await exists(configPath);
   if (!hasConfig || options.force) {
+    if (hasConfig && options.force) {
+      const existing = parseConfig(await readFile(configPath, "utf8"));
+      if (existing?.schemaVersion === 2 || existing?.designContract) {
+        throw new GuidanceError(
+          "Refusing to force-init over v2 or migrated guidance config. Roll back or edit the existing config instead.",
+          {
+            code: "E_POLICY",
+            exitCode: 3,
+            hint: "Roll back or edit the existing config instead of force-initializing over migration state.",
+          },
+        );
+      }
+    }
+
     const config = createBaselineConfig();
     await writeFile(configPath, `${JSON.stringify(config, null, 2)}\n`, "utf8");
     return {
@@ -705,6 +899,732 @@ export async function initGuidance(
     configPath,
     created: false,
   };
+}
+
+function defaultDesignState(): GuidanceDesignContractState {
+  return {
+    mode: "legacy",
+    migrationState: "not-started",
+  };
+}
+
+function stableJson(value: unknown): string {
+  return `${JSON.stringify(value, null, 2)}\n`;
+}
+
+function canonicalJson(value: unknown): string {
+  if (Array.isArray(value)) {
+    return `[${value.map((entry) => canonicalJson(entry)).join(",")}]`;
+  }
+  if (isObject(value)) {
+    return `{${Object.keys(value)
+      .sort()
+      .map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`)
+      .join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
+
+function checksum(value: string): string {
+  return createHash("sha256").update(value).digest("hex");
+}
+
+function addDays(date: Date, days: number): Date {
+  return new Date(date.getTime() + days * 24 * 60 * 60 * 1000);
+}
+
+function formatDateOnly(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+function compareSemver(left: string, right: string): number {
+  const parse = (value: string): number[] => {
+    if (!SEMVER_PATTERN.test(value)) {
+      throw rollbackMetadataError();
+    }
+    return value.split(".").map((part) => Number(part));
+  };
+  const leftParts = parse(left);
+  const rightParts = parse(right);
+  for (let index = 0; index < 3; index += 1) {
+    const delta = (leftParts[index] ?? 0) - (rightParts[index] ?? 0);
+    if (delta !== 0) return delta;
+  }
+  return 0;
+}
+
+function assertSupportedWrapperVersion(version: string): void {
+  if (
+    compareSemver(version, DESIGN_COMPATIBILITY_MANIFEST.legacySupport.rollbackMetadataMinWrapper) <
+      0 ||
+    compareSemver(version, DESIGN_COMPATIBILITY_MANIFEST.maxWrapperTested) > 0
+  ) {
+    throw rollbackMetadataError();
+  }
+}
+
+function isPathInside(rootPath: string, candidatePath: string): boolean {
+  const relative = path.relative(rootPath, candidatePath);
+  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
+}
+
+function migrationStateError(message: string): GuidanceError {
+  return new GuidanceError(message, {
+    code: "E_DESIGN_MIGRATION_STATE_INVALID",
+    exitCode: 1,
+    hint: "Use --resume only for partial or failed migrations, --rollback for rollback, or --to design-md for a fresh migration.",
+  });
+}
+
+function partialMigrationError(): GuidanceError {
+  return new GuidanceError("Guidance migration stopped after writing partial state.", {
+    code: "E_PARTIAL",
+    exitCode: 4,
+    hint: "Run migrate --resume to finish the migration or migrate --rollback after verifying rollback metadata.",
+  });
+}
+
+function rollbackMetadataError(): GuidanceError {
+  return new GuidanceError(
+    "Rollback metadata is missing, unreadable, or outside the project root.",
+    {
+      code: "E_DESIGN_ROLLBACK_METADATA_UNREADABLE",
+      exitCode: 3,
+      hint: "Restore the recorded rollback metadata before retrying rollback or resume.",
+    },
+  );
+}
+
+function resolveRollbackMetadataPath(targetPath: string, metadataPath: string): string {
+  const resolved = path.resolve(targetPath, metadataPath);
+  if (!isPathInside(targetPath, resolved)) {
+    throw rollbackMetadataError();
+  }
+  return resolved;
+}
+
+function toConfigRelativePath(targetPath: string, filePath: string): string {
+  return path.relative(targetPath, filePath).split(path.sep).join("/");
+}
+
+async function quarantineDesignFile(
+  targetPath: string,
+  rollbackDir: string,
+  operationId: string,
+): Promise<string | undefined> {
+  const designPath = path.join(targetPath, "DESIGN.md");
+  if (!(await exists(designPath))) return undefined;
+
+  const content = await readFile(designPath, "utf8");
+  const quarantineDir = path.join(rollbackDir, operationId);
+  await mkdir(quarantineDir, { recursive: true });
+
+  const baseName = `${checksum(content).slice(0, 12)}-DESIGN.md`;
+  for (let attempt = 0; attempt < 100; attempt += 1) {
+    const fileName = attempt === 0 ? baseName : baseName.replace(/\.md$/, `-${attempt}.md`);
+    const candidate = path.join(quarantineDir, fileName);
+    try {
+      await link(designPath, candidate);
+      try {
+        await unlink(designPath);
+      } catch (error) {
+        await unlink(candidate).catch(() => undefined);
+        throw error;
+      }
+      return candidate;
+    } catch (error) {
+      const code = (error as NodeJS.ErrnoException).code;
+      if (code === "EEXIST") continue;
+      if (code === "ENOENT") return undefined;
+      throw error;
+    }
+  }
+
+  throw new GuidanceError("Unable to allocate a collision-safe DESIGN.md quarantine path.", {
+    code: "E_DESIGN_ROLLBACK_METADATA_UNREADABLE",
+    exitCode: 3,
+    hint: "Remove stale quarantine collisions or choose a clean rollback artifact directory.",
+  });
+}
+
+function rollbackMetadataDigest(metadata: Record<string, unknown>): string {
+  return checksum(canonicalJson(metadata));
+}
+
+function rollbackSigningKeyPath(rollbackDir: string): string {
+  return path.join(rollbackDir, ROLLBACK_SIGNING_KEY_FILE);
+}
+
+function assertRollbackSigningKey(key: string): string {
+  const trimmed = key.trim();
+  if (!/^[a-f0-9]{64}$/.test(trimmed)) {
+    throw rollbackMetadataError();
+  }
+  return trimmed;
+}
+
+async function readRollbackSigningKey(rollbackDir: string): Promise<string> {
+  return assertRollbackSigningKey(await readFile(rollbackSigningKeyPath(rollbackDir), "utf8"));
+}
+
+async function readOrCreateRollbackSigningKey(rollbackDir: string): Promise<string> {
+  await mkdir(rollbackDir, { recursive: true });
+  const keyPath = rollbackSigningKeyPath(rollbackDir);
+  try {
+    return assertRollbackSigningKey(await readFile(keyPath, "utf8"));
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+      throw error;
+    }
+  }
+
+  const key = randomBytes(32).toString("hex");
+  try {
+    await writeFile(keyPath, `${key}\n`, { encoding: "utf8", flag: "wx", mode: 0o600 });
+    return key;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "EEXIST") {
+      throw error;
+    }
+    return readRollbackSigningKey(rollbackDir);
+  }
+}
+
+function rollbackMetadataSignature(metadataDigest: string, signingKey: string): string {
+  const signature = createHmac("sha256", signingKey)
+    .update(
+      [
+        metadataDigest,
+        DESIGN_COMPATIBILITY_MANIFEST.schema,
+        DESIGN_COMPATIBILITY_MANIFEST.wrapperVersion,
+        DESIGN_COMPATIBILITY_MANIFEST.parityBaseline.commit,
+      ].join(":"),
+    )
+    .digest("hex");
+  return `${ROLLBACK_SIGNATURE_PREFIX}:${signature}`;
+}
+
+function stripRollbackMetadataSignature(parsed: Record<string, unknown>): Record<string, unknown> {
+  const {
+    metadataDigest: _metadataDigest,
+    metadataSignature: _metadataSignature,
+    ...unsigned
+  } = parsed;
+  return unsigned;
+}
+
+async function buildRollbackMetadata(
+  input: RollbackMetadataInput,
+): Promise<Record<string, unknown>> {
+  const writtenAt = new Date();
+  const designPath = path.join(input.targetPath, "DESIGN.md");
+  const designContent = await readFile(designPath, "utf8");
+  const designChecksum = checksum(designContent);
+  const signingKey = await readOrCreateRollbackSigningKey(input.rollbackDir);
+  const supportEndsAt = addDays(writtenAt, DESIGN_COMPATIBILITY_MANIFEST.legacySupport.daysAfterGa);
+  const failedConfig: GuidanceConfig = {
+    ...input.config,
+    schemaVersion: input.nextConfig.schemaVersion,
+    designContract: {
+      ...input.afterState,
+      migrationState: "failed",
+    },
+  };
+  const unsigned = {
+    schema: ROLLBACK_SCHEMA,
+    schemaVersion: ROLLBACK_SCHEMA,
+    writtenByWrapperVersion: GUIDANCE_WRAPPER_VERSION,
+    writtenAt: writtenAt.toISOString(),
+    sourceMode: input.beforeState.mode,
+    targetMode: input.afterState.mode,
+    sourceSchemaVersion: input.config.schemaVersion,
+    targetSchemaVersion: input.nextConfig.schemaVersion,
+    targetPath: input.targetPath,
+    guidanceConfigPath: input.configPath,
+    configPath: input.configPath,
+    guidanceConfigChecksum: checksum(input.nextRaw),
+    configChecksum: checksum(input.nextRaw),
+    designFilePath: designPath,
+    designFileChecksum: designChecksum,
+    rollbackArtifactDir: input.rollbackDir,
+    legacySupportEndsAtAtWrite: formatDateOnly(supportEndsAt),
+    operationId: `${writtenAt.toISOString().replace(/[:.]/g, "-")}-${checksum(input.rawConfig).slice(0, 8)}`,
+    compatibilityManifest: DESIGN_COMPATIBILITY_MANIFEST.schema,
+    signatureKeyId: checksum(signingKey),
+    checksums: {
+      sourceConfig: checksum(input.rawConfig),
+      targetConfig: checksum(input.nextRaw),
+      partialConfig: checksum(input.partialRaw),
+      failedConfig: checksum(stableJson(failedConfig)),
+      config: checksum(input.nextRaw),
+      design: designChecksum,
+    },
+    beforeMode: input.beforeState.mode,
+    afterMode: input.afterState.mode,
+    beforeSchemaVersion: input.config.schemaVersion,
+    afterSchemaVersion: input.nextConfig.schemaVersion,
+    createdAt: writtenAt.toISOString(),
+    before: JSON.parse(input.rawConfig) as unknown,
+  };
+  const metadataDigest = rollbackMetadataDigest(unsigned);
+  return {
+    ...unsigned,
+    metadataDigest,
+    metadataSignature: rollbackMetadataSignature(metadataDigest, signingKey),
+  };
+}
+
+function resolveRecordedPath(targetPath: string, recordedPath: string): string {
+  return path.resolve(
+    path.isAbsolute(recordedPath) ? recordedPath : path.join(targetPath, recordedPath),
+  );
+}
+
+async function assertExistingPathInside(targetPath: string, candidatePath: string): Promise<void> {
+  if (!isPathInside(targetPath, candidatePath)) {
+    throw rollbackMetadataError();
+  }
+  const [targetRealPath, candidateRealPath] = await Promise.all([
+    realpath(targetPath),
+    realpath(candidatePath),
+  ]);
+  if (!isPathInside(targetRealPath, candidateRealPath)) {
+    throw rollbackMetadataError();
+  }
+}
+
+function requiredString(value: unknown): string {
+  if (typeof value !== "string" || value.length === 0) {
+    throw rollbackMetadataError();
+  }
+  return value;
+}
+
+function requiredNumber(value: unknown): number {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    throw rollbackMetadataError();
+  }
+  return value;
+}
+
+async function assertRollbackMetadata(
+  targetPath: string,
+  configPath: string,
+  currentRawConfig: string,
+  metadataPath: string,
+  parsed: unknown,
+): Promise<string> {
+  if (!isObject(parsed)) {
+    throw rollbackMetadataError();
+  }
+
+  const schema = requiredString(parsed.schema);
+  if (!DESIGN_COMPATIBILITY_MANIFEST.supportedMigrationSchemas.includes(schema)) {
+    throw rollbackMetadataError();
+  }
+
+  const writtenByWrapperVersion = requiredString(parsed.writtenByWrapperVersion);
+  assertSupportedWrapperVersion(writtenByWrapperVersion);
+  const writtenAt = requiredString(parsed.writtenAt);
+  if (Number.isNaN(Date.parse(writtenAt))) {
+    throw rollbackMetadataError();
+  }
+
+  const sourceMode = requiredString(parsed.sourceMode);
+  const targetMode = requiredString(parsed.targetMode);
+  if (
+    !DESIGN_MODES.has(sourceMode as GuidanceDesignMode) ||
+    !DESIGN_MODES.has(targetMode as GuidanceDesignMode)
+  ) {
+    throw rollbackMetadataError();
+  }
+
+  const sourceSchemaVersion = requiredNumber(parsed.sourceSchemaVersion);
+  const targetSchemaVersion = requiredNumber(parsed.targetSchemaVersion);
+  if (
+    !SUPPORTED_SCHEMA_VERSIONS.has(sourceSchemaVersion) ||
+    !SUPPORTED_SCHEMA_VERSIONS.has(targetSchemaVersion)
+  ) {
+    throw rollbackMetadataError();
+  }
+
+  const recordedTargetPath = requiredString(parsed.targetPath);
+  if (path.resolve(recordedTargetPath) !== targetPath) {
+    throw rollbackMetadataError();
+  }
+
+  const recordedConfigPath = resolveRecordedPath(
+    targetPath,
+    requiredString(parsed.guidanceConfigPath),
+  );
+  if (recordedConfigPath !== configPath) {
+    throw rollbackMetadataError();
+  }
+  const designFilePath = resolveRecordedPath(targetPath, requiredString(parsed.designFilePath));
+  const rollbackArtifactDir = resolveRecordedPath(
+    targetPath,
+    requiredString(parsed.rollbackArtifactDir),
+  );
+  await Promise.all([
+    assertExistingPathInside(targetPath, metadataPath),
+    assertExistingPathInside(targetPath, recordedConfigPath),
+    assertExistingPathInside(targetPath, designFilePath),
+    assertExistingPathInside(targetPath, rollbackArtifactDir),
+    assertExistingPathInside(targetPath, rollbackSigningKeyPath(rollbackArtifactDir)),
+  ]);
+
+  const legacySupportEndsAtAtWrite = requiredString(parsed.legacySupportEndsAtAtWrite);
+  if (!ISO_DATE_PATTERN.test(legacySupportEndsAtAtWrite)) {
+    throw rollbackMetadataError();
+  }
+  const operationId = requiredString(parsed.operationId);
+  if (!/^[A-Za-z0-9._-]+$/.test(operationId)) {
+    throw rollbackMetadataError();
+  }
+
+  const guidanceConfigChecksum = requiredString(parsed.guidanceConfigChecksum);
+  const designFileChecksum = requiredString(parsed.designFileChecksum);
+  const signatureKeyId = requiredString(parsed.signatureKeyId);
+  const metadataDigest = requiredString(parsed.metadataDigest);
+  const metadataSignature = requiredString(parsed.metadataSignature);
+  if (
+    !/^[a-f0-9]{64}$/.test(guidanceConfigChecksum) ||
+    !/^[a-f0-9]{64}$/.test(designFileChecksum) ||
+    !/^[a-f0-9]{64}$/.test(signatureKeyId) ||
+    !/^[a-f0-9]{64}$/.test(metadataDigest)
+  ) {
+    throw rollbackMetadataError();
+  }
+
+  const signingKey = await readRollbackSigningKey(rollbackArtifactDir);
+  const recomputedDigest = rollbackMetadataDigest(stripRollbackMetadataSignature(parsed));
+  if (
+    checksum(signingKey) !== signatureKeyId ||
+    recomputedDigest !== metadataDigest ||
+    rollbackMetadataSignature(metadataDigest, signingKey) !== metadataSignature
+  ) {
+    throw rollbackMetadataError();
+  }
+
+  const checksums = parsed.checksums;
+  if (!isObject(checksums)) {
+    throw rollbackMetadataError();
+  }
+
+  const currentConfigChecksum = checksum(currentRawConfig);
+  const acceptedConfigChecksums = [
+    checksums.targetConfig,
+    checksums.partialConfig,
+    checksums.failedConfig,
+  ];
+  if (
+    !acceptedConfigChecksums.includes(currentConfigChecksum) ||
+    checksums.config !== guidanceConfigChecksum
+  ) {
+    throw rollbackMetadataError();
+  }
+
+  if (checksum(await readFile(designFilePath, "utf8")) !== designFileChecksum) {
+    throw rollbackMetadataError();
+  }
+
+  return operationId;
+}
+
+function migrationOperation(options: MigrationOptions): MigrationOperation {
+  if (options.resume) return "resume";
+  if (options.rollback || options.to === "legacy") return "rollback";
+  return "fresh";
+}
+
+function assertMigrationTransition(
+  state: GuidanceDesignContractState,
+  operation: MigrationOperation,
+): MigrationTransitionRule {
+  const rule = MIGRATION_TRANSITION_TABLE.find(
+    (entry) => entry.mode === state.mode && entry.migrationState === state.migrationState,
+  );
+  if (!rule) {
+    throw migrationStateError(
+      `Invalid guidance migration state: ${state.mode}/${state.migrationState}.`,
+    );
+  }
+  if (!rule.operations.includes(operation)) {
+    throw migrationStateError(
+      `Guidance migration cannot run ${operation} from ${state.mode}/${state.migrationState}.`,
+    );
+  }
+  return rule;
+}
+
+function shouldFailAfterPartialWrite(): boolean {
+  return process.env[PARTIAL_FAULT_ENV] === "1";
+}
+
+async function requireReadableRollbackMetadata(
+  targetPath: string,
+  configPath: string,
+  currentRawConfig: string,
+  state: GuidanceDesignContractState,
+): Promise<string> {
+  if (!state.rollbackMetadata) {
+    throw rollbackMetadataError();
+  }
+
+  const metadataPath = resolveRollbackMetadataPath(targetPath, state.rollbackMetadata);
+  try {
+    const raw = await readFile(metadataPath, "utf8");
+    const parsed = JSON.parse(raw) as unknown;
+    return await assertRollbackMetadata(
+      targetPath,
+      configPath,
+      currentRawConfig,
+      metadataPath,
+      parsed,
+    );
+  } catch (error) {
+    if (error instanceof GuidanceError) throw error;
+    throw rollbackMetadataError();
+  }
+}
+
+function assertSingleMigrationOperation(options: MigrationOptions): void {
+  const requested = [
+    options.to ? "--to" : null,
+    options.rollback ? "--rollback" : null,
+    options.resume ? "--resume" : null,
+  ].filter(Boolean);
+  if (requested.length > 1) {
+    throw new GuidanceError("Choose one migration operation: --to, --rollback, or --resume.", {
+      code: "E_USAGE",
+      exitCode: 2,
+      hint: "Run one migration operation at a time.",
+    });
+  }
+}
+
+async function readGuidanceConfig(
+  targetPath: string,
+  configPathInput?: string,
+): Promise<{
+  configPath: string;
+  raw: string;
+  config: GuidanceConfig;
+}> {
+  const configPath = configPathInput ?? path.join(targetPath, (await readRules()).configFile);
+  const raw = await readFile(configPath, "utf8");
+  const config = parseConfig(raw);
+  if (!config) {
+    throw new GuidanceError(
+      "Config is invalid. Expected supported guidance JSON with v1 fields and optional designContract.",
+      {
+        code: "E_DESIGN_CONFIG_INVALID",
+        exitCode: 2,
+        hint: "Use schemaVersion 1 or 2 and preserve the required docs array.",
+      },
+    );
+  }
+  return { configPath, raw, config };
+}
+
+async function writeAtomic(filePath: string, contents: string): Promise<void> {
+  const tempPath = `${filePath}.${process.pid}.${randomUUID()}.tmp`;
+  try {
+    await writeFile(tempPath, contents, { encoding: "utf8", flag: "wx" });
+    await rename(tempPath, filePath);
+  } catch (error) {
+    await unlink(tempPath).catch(() => undefined);
+    throw error;
+  }
+}
+
+function newRollbackMetadataPath(rollbackDir: string, rawConfig: string): string {
+  return path.join(
+    rollbackDir,
+    `${checksum(rawConfig).slice(0, 12)}-${randomUUID()}-guidance-rollback.json`,
+  );
+}
+
+async function writeRollbackMetadata(filePath: string, contents: string): Promise<void> {
+  await writeFile(filePath, contents, { encoding: "utf8", flag: "wx" });
+}
+
+function migrationLockedError(): GuidanceError {
+  return new GuidanceError("Guidance migration is already running for this config.", {
+    code: MIGRATION_LOCK_ERROR,
+    exitCode: 3,
+    hint: "Retry after the active migration completes, or remove a stale migration lock only after verifying no migration process is running.",
+  });
+}
+
+async function withMigrationLock<T>(
+  configPath: string,
+  enabled: boolean,
+  operation: () => Promise<T>,
+): Promise<T> {
+  if (!enabled) return operation();
+
+  const lockPath = `${configPath}.migration.lock`;
+  let handle: Awaited<ReturnType<typeof open>> | undefined;
+  try {
+    handle = await open(lockPath, "wx");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "EEXIST") {
+      throw migrationLockedError();
+    }
+    throw error;
+  }
+
+  try {
+    await handle.writeFile(`${process.pid}\n${new Date().toISOString()}\n`, "utf8");
+    return await operation();
+  } finally {
+    await handle?.close();
+    await unlink(lockPath).catch(() => undefined);
+  }
+}
+
+export async function migrateGuidanceConfig(
+  options: MigrationOptions = {},
+): Promise<MigrationResult> {
+  assertSingleMigrationOperation(options);
+  const targetPath = path.resolve(options.targetPath ?? ".");
+  const rules = await readRules();
+  const configPath = path.join(targetPath, rules.configFile);
+  return withMigrationLock(configPath, Boolean(options.write && !options.dryRun), async () => {
+    const { raw, config } = await readGuidanceConfig(targetPath, configPath);
+    return migrateGuidanceConfigUnlocked(options, targetPath, configPath, raw, config);
+  });
+}
+
+async function migrateGuidanceConfigUnlocked(
+  options: MigrationOptions,
+  targetPath: string,
+  configPath: string,
+  raw: string,
+  config: GuidanceConfig,
+): Promise<MigrationResult> {
+  const beforeState = config.designContract ?? defaultDesignState();
+  const operation = migrationOperation(options);
+  const transition = assertMigrationTransition(beforeState, operation);
+
+  const rollbackDir = path.join(targetPath, "artifacts", "design-migrations");
+  const isRollback = operation === "rollback";
+  const freshMigrationNeedsNewMetadata =
+    operation === "fresh" && beforeState.migrationState !== "active";
+  const rollbackOperationId = transition.requiresReadableMetadata
+    ? await requireReadableRollbackMetadata(targetPath, configPath, raw, beforeState)
+    : undefined;
+  const rollbackMetadataPath =
+    beforeState.rollbackMetadata && !freshMigrationNeedsNewMetadata
+      ? resolveRollbackMetadataPath(targetPath, beforeState.rollbackMetadata)
+      : newRollbackMetadataPath(rollbackDir, raw);
+  const rollbackMetadataConfigPath = toConfigRelativePath(targetPath, rollbackMetadataPath);
+  const shouldWriteRollbackMetadata =
+    !isRollback && !options.resume && changedMigrationStart(beforeState);
+
+  let afterState: GuidanceDesignContractState;
+  if (isRollback) {
+    afterState = {
+      ...beforeState,
+      mode: "legacy",
+      migrationState: "rolled-back",
+      rollbackMetadata: rollbackMetadataConfigPath,
+    };
+  } else if (operation === "resume") {
+    afterState = {
+      ...beforeState,
+      mode: beforeState.mode === "design-md" ? "design-md" : (options.to ?? "design-md"),
+      migrationState: "active",
+      rollbackMetadata: rollbackMetadataConfigPath,
+    };
+  } else {
+    afterState = {
+      ...beforeState,
+      mode: options.to ?? "design-md",
+      migrationState: options.to === "legacy" ? "rolled-back" : "active",
+      rollbackMetadata: rollbackMetadataConfigPath,
+    };
+  }
+
+  const nextConfig: GuidanceConfig = {
+    ...config,
+    schemaVersion: Math.max(Number(config.schemaVersion ?? 1), 2),
+    designContract: afterState,
+  };
+  const nextRaw = stableJson(nextConfig);
+  const partialState: GuidanceDesignContractState = isRollback
+    ? {
+        ...beforeState,
+        migrationState: "partial",
+        rollbackMetadata: rollbackMetadataConfigPath,
+      }
+    : {
+        ...afterState,
+        migrationState: "partial",
+      };
+  const partialRaw = stableJson({
+    ...config,
+    schemaVersion: nextConfig.schemaVersion,
+    designContract: partialState,
+  });
+  const changed = raw !== nextRaw;
+  let quarantinePath: string | undefined;
+
+  if (changed && !options.dryRun) {
+    if (!options.write) {
+      throw new GuidanceError("Guidance migration requires --write unless --dry-run is set.", {
+        code: "E_DESIGN_WRITE_REQUIRED",
+        exitCode: 3,
+        hint: "Re-run with --write to allow mutation, or use --dry-run to preview migration.",
+      });
+    }
+    await mkdir(rollbackDir, { recursive: true });
+    if (shouldWriteRollbackMetadata)
+      await writeRollbackMetadata(
+        rollbackMetadataPath,
+        stableJson(
+          await buildRollbackMetadata({
+            targetPath,
+            configPath,
+            rollbackDir,
+            rawConfig: raw,
+            partialRaw,
+            nextRaw,
+            beforeState,
+            afterState,
+            config,
+            nextConfig,
+          }),
+        ),
+      );
+
+    await writeAtomic(configPath, partialRaw);
+    if (shouldFailAfterPartialWrite()) {
+      throw partialMigrationError();
+    }
+    if (isRollback) {
+      if (!rollbackOperationId) throw rollbackMetadataError();
+      quarantinePath = await quarantineDesignFile(targetPath, rollbackDir, rollbackOperationId);
+    }
+    await writeAtomic(configPath, nextRaw);
+  }
+
+  return {
+    targetPath,
+    configPath,
+    beforeMode: beforeState.mode,
+    afterMode: afterState.mode,
+    migrationState: afterState.migrationState,
+    changed,
+    dryRun: Boolean(options.dryRun),
+    rollbackMetadataPath,
+    quarantinePath,
+  };
+}
+
+function changedMigrationStart(state: GuidanceDesignContractState): boolean {
+  return state.migrationState !== "active";
 }
 
 export function formatCheckResult(result: CheckResult): string {

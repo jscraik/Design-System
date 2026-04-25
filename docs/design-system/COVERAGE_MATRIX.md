@@ -54,6 +54,7 @@ Upstream version: @openai/apps-sdk-ui ^0.2.1
 | ModelSelector | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#modelselector | active | no | no | no |
 | NavigationMenu | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | Popover | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
+| ProductComposition | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#productcomposition | active | no | no | no |
 | Progress | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | RadioGroup | radix_fallback | - | radix | Apps SDK UI lacks this component or required API parity. | Replace with Apps SDK UI component when available with matching props and behavior. | docs/KEYBOARD_NAVIGATION_TESTS.md | active | no | no | no |
 | RangeSlider | local_primitive | - | - | - | - | docs/design-system/A11Y_CONTRACTS.md#rangeslider | active | no | no | no |

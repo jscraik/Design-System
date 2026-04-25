@@ -4,6 +4,9 @@ node_modules/
 .pnp.*
 
 # Build outputs
+# Generated package/app artifacts are rebuilt by package scripts and release
+# workflows. Keep source, package manifests, and workflow contracts tracked;
+# do not commit local dist/build outputs.
 dist/
 dist-ssr/
 build/
@@ -123,5 +126,7 @@ artifacts/policy/
 # Mutable build outputs (regenerated every build, non-deterministic hashes)
 .build-cache/
 packages/runtime/node_modules/.tmp/
+# The TypeScript widget manifest is mutated by local dev/build. The tracked
+# JavaScript manifest is deterministic build output and is freshness-checked by
+# `pnpm generated-source:check`.
 packages/widgets/src/sdk/generated/widget-manifest.ts
-/.codex/hook-conformance.json

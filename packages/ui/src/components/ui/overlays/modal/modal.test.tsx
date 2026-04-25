@@ -55,7 +55,7 @@ describe("ModalDialog", () => {
           <div>Content</div>
         </ModalDialog>,
       );
-      const overlay = container.querySelector('[aria-hidden="true"]');
+      const overlay = container.querySelector('[aria-label="Close modal"]');
       expect(overlay).toBeInTheDocument();
     });
 
@@ -65,7 +65,7 @@ describe("ModalDialog", () => {
           <div>Content</div>
         </ModalDialog>,
       );
-      const overlay = container.querySelector('[aria-hidden="true"]');
+      const overlay = container.querySelector('[aria-label="Close modal"]');
       expect(overlay).not.toBeInTheDocument();
     });
 
@@ -434,7 +434,7 @@ describe("ModalDialog", () => {
           <div>Content</div>
         </ModalDialog>,
       );
-      const overlay = container.querySelector('[aria-hidden="true"]');
+      const overlay = container.querySelector('[aria-label="Close modal"]');
       expect(overlay).toHaveClass("custom-overlay");
     });
 

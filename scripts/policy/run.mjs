@@ -108,7 +108,7 @@ const DESIGN_SYSTEM_SUBCONTRACTS = [
   {
     id: "token-truth",
     label: "Token Truth",
-    command: ["pnpm", "exec", "tsx", "packages/tokens/scripts/validate-tokens.ts"],
+    command: ["node", "--import", "tsx", "packages/tokens/scripts/validate-tokens.ts"],
     remediation: "pnpm validate:tokens",
     description:
       "Ensures token validation catches schema/alias drift instead of letting root policy stay green.",
@@ -116,7 +116,7 @@ const DESIGN_SYSTEM_SUBCONTRACTS = [
   {
     id: "coverage-freshness",
     label: "Coverage Freshness",
-    command: ["pnpm", "exec", "tsx", "scripts/generate-coverage-matrix.ts", "--check"],
+    command: ["node", "--import", "tsx", "scripts/generate-coverage-matrix.ts", "--check"],
     remediation: "pnpm ds:matrix:check",
     description:
       "Verifies committed design-system coverage artifacts are fresh and match the current codebase.",
@@ -136,6 +136,30 @@ const DESIGN_SYSTEM_SUBCONTRACTS = [
     remediation: "pnpm design-system-guidance:ratchet",
     description:
       "Fails when touched warn-scope files in the ratcheted surface set still carry design-system warnings.",
+  },
+  {
+    id: "generated-source-freshness",
+    label: "Generated Source Freshness",
+    command: ["pnpm", "generated-source:check"],
+    remediation: "pnpm generated-source:check",
+    description:
+      "Regenerates tracked source manifests and fails if committed generated-source outputs are stale.",
+  },
+  {
+    id: "tracked-ignored-artifacts",
+    label: "Tracked Ignored Artifact Guard",
+    command: ["pnpm", "tracked-ignored:check"],
+    remediation: "pnpm tracked-ignored:check",
+    description:
+      "Fails when ignored runtime, cache, test, build, or audit outputs are tracked again.",
+  },
+  {
+    id: "agent-design-boundaries",
+    label: "Agent Design Boundary Guard",
+    command: ["pnpm", "agent-design:boundaries"],
+    remediation: "pnpm agent-design:boundaries",
+    description:
+      "Prevents wrapper code from deep-importing engine source or reimplementing DESIGN.md semantic ownership.",
   },
 ];
 

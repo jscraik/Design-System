@@ -45,6 +45,7 @@ export type RunResult = {
   stdout?: string;
   stderr?: string;
   dryRun?: boolean;
+  failureKind?: "exit" | "signal" | "timeout" | "start";
 };
 
 export type Suggestion = {
@@ -54,6 +55,16 @@ export type Suggestion = {
   confidence: number;
 };
 
+export type RecoveryAction = {
+  fix_suggestion?: string;
+  nextCommand?: {
+    argv: string[];
+    cwd?: string;
+    env?: Record<string, string>;
+  };
+  recoveryUnavailableReason?: string;
+};
+
 export type JsonError = {
   code: string;
   message: string;
@@ -61,6 +72,7 @@ export type JsonError = {
   hint?: string;
   did_you_mean?: Suggestion[];
   fix_suggestion?: string;
+  recovery?: RecoveryAction;
 };
 
 export type JsonEnvelope = {
@@ -69,6 +81,7 @@ export type JsonEnvelope = {
     tool: string;
     version: string;
     timestamp: string;
+    outputMode?: "json" | "plain";
     request_id?: string;
     trace_id?: string;
     parent_id?: string;

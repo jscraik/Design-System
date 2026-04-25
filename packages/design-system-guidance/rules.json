@@ -71,6 +71,21 @@
       "id": "no-arbitrary-tracking-values",
       "level": "warn",
       "description": "Arbitrary tracking utilities should be replaced by semantic text roles or token-backed styles."
+    },
+    {
+      "id": "no-empty-accessible-label",
+      "level": "warn",
+      "description": "Accessible labels must not be empty; icon-only controls and named regions need meaningful names."
+    },
+    {
+      "id": "no-aria-hidden-focusable",
+      "level": "warn",
+      "description": "Focusable elements must not be hidden from assistive technology with aria-hidden=true."
+    },
+    {
+      "id": "no-long-motion-duration",
+      "level": "warn",
+      "description": "Long or looping motion should be replaced by restrained durations, reduced-motion fallbacks, or ledgered exceptions."
     }
   ]
 }

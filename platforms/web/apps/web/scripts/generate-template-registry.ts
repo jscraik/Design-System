@@ -1,3 +1,4 @@
+import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -13,6 +14,8 @@ const schemaPath = path.join(repoRoot, "scripts/schema/template-registry.schema.
 const jsonOutputPath = path.join(appRoot, "TEMPLATE_REGISTRY.json");
 const markdownOutputPath = path.join(appRoot, "TEMPLATE_REGISTRY.md");
 const tsOutputPath = path.join(generatedRoot, "template-registry.ts");
+const jsonOutputRelativePath = path.relative(repoRoot, jsonOutputPath);
+const tsOutputRelativePath = path.relative(repoRoot, tsOutputPath);
 
 const CATEGORY_ORDER = [
   "educational",
@@ -267,7 +270,7 @@ const writeMarkdown = (templates: TemplateMetadata[]) => {
     lines.push("");
   }
 
-  fs.writeFileSync(markdownOutputPath, `${lines.join("\n")}\n`);
+  fs.writeFileSync(markdownOutputPath, `${lines.join("\n").trimEnd()}\n`);
 };
 
 const writeTypeScriptModule = (templates: TemplateMetadata[]) => {
@@ -349,7 +352,31 @@ const writeTypeScriptModule = (templates: TemplateMetadata[]) => {
   ];
 
   fs.mkdirSync(generatedRoot, { recursive: true });
-  fs.writeFileSync(tsOutputPath, `${content.join("\n")}\n`);
+  fs.writeFileSync(tsOutputPath, `${content.join("\n").trimEnd()}\n`);
+};
+
+const formatGeneratedOutputs = () => {
+  const result = spawnSync(
+    "pnpm",
+    [
+      "dlx",
+      "@biomejs/biome@2.3.11",
+      "format",
+      "--write",
+      jsonOutputRelativePath,
+      tsOutputRelativePath,
+    ],
+    {
+      cwd: repoRoot,
+      encoding: "utf8",
+      stdio: "inherit",
+    },
+  );
+
+  if (result.status !== 0) {
+    console.error(`Template registry formatting failed with exit code ${result.status ?? 1}.`);
+    process.exit(result.status ?? 1);
+  }
 };
 
 const main = () => {
@@ -371,6 +398,7 @@ const main = () => {
     writeJson(templates);
     writeMarkdown(templates);
     writeTypeScriptModule(templates);
+    formatGeneratedOutputs();
 
     const nextJson = fs.readFileSync(jsonOutputPath, "utf8");
     const nextMarkdown = fs.readFileSync(markdownOutputPath, "utf8");
@@ -387,6 +415,7 @@ const main = () => {
   writeJson(templates);
   writeMarkdown(templates);
   writeTypeScriptModule(templates);
+  formatGeneratedOutputs();
 };
 
 main();

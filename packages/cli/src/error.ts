@@ -5,21 +5,23 @@ import {
   EXIT_CODES,
   TOKEN_GENERATE_WARNING,
 } from "./constants.js";
-import type { ErrorCode, JsonError, JsonValue } from "./types.js";
+import type { JsonError, JsonValue, RecoveryAction } from "./types.js";
 
 export class CliError extends Error {
-  code: ErrorCode;
+  code: string;
   exitCode: number;
   hint?: string;
   details?: Record<string, JsonValue>;
+  recovery?: RecoveryAction;
 
   constructor(
     message: string,
     options: {
-      code: ErrorCode;
+      code: string;
       exitCode: number;
       hint?: string;
       details?: Record<string, JsonValue>;
+      recovery?: RecoveryAction;
     },
   ) {
     super(message);
@@ -27,6 +29,7 @@ export class CliError extends Error {
     this.exitCode = options.exitCode;
     this.hint = options.hint;
     this.details = options.details;
+    this.recovery = options.recovery;
   }
 }
 
@@ -58,6 +61,7 @@ export function toJsonError(error: CliError): JsonError {
   };
   if (error.hint) jsonError.hint = error.hint;
   if (error.details) jsonError.details = error.details;
+  if (error.recovery) jsonError.recovery = error.recovery;
   return jsonError;
 }
 

@@ -1,6 +1,6 @@
 # UI Design System Contract Index
 
-Last updated: 2026-01-09
+Last updated: 2026-04-24
 Owner: Jamie Scott Craik (@jscraik)
 Review cadence: Every release or monthly (whichever is sooner)
 
@@ -9,6 +9,7 @@ This index links all governing artifacts for the UI design system.
 ## Table of Contents
 
 - [Governance](#governance)
+- [Agent Design Contract](#agent-design-contract)
 - [Tokens](#tokens)
 - [Coverage and Enforcement](#coverage-and-enforcement)
 - [Export Naming Policy](#export-naming-policy)
@@ -20,9 +21,31 @@ This index links all governing artifacts for the UI design system.
 - Charter: `docs/design-system/CHARTER.md`
 - Professional UI contract: `docs/design-system/PROFESSIONAL_UI_CONTRACT.md`
 - Agent routing guide: `docs/design-system/AGENT_UI_ROUTING.md`
+- Agent design contract guide: `docs/guides/DESIGN_MD_CONTRACT.md`
 - Upstream alignment: `docs/design-system/UPSTREAM_ALIGNMENT.md`
 - RFC template: `docs/workflows/RFC_TEMPLATE.md`
 - Transcripts index (training/reference): `docs/transcripts/README.md`
+
+## Agent Design Contract
+
+- Repo contract: `DESIGN.md`
+- Semantic engine: `packages/agent-design-engine`
+- Guidance wrapper and compatibility manifest: `packages/design-system-guidance`
+- CLI entrypoint: `astudio design ...` in `packages/cli`
+- Baseline inventory: `docs/plans/2026-04-24-agent-design-engine-baseline-inventory.md`
+- Implementation plan: `docs/plans/2026-04-23-agent-design-engine-plan.md`
+
+`DESIGN.md` owns design contract metadata and body requirements. The guidance
+config `.design-system-guidance.json` owns rollout state only. Agents should run
+the design CLI before changing UI so they can read the active profile, rule
+manifest version, rule pack version, and rule source digests.
+
+Required rule-source provenance for v1:
+
+- `docs/design-system/PROFESSIONAL_UI_CONTRACT.md`
+- `docs/design-system/AGENT_UI_ROUTING.md`
+- `docs/design-system/COMPONENT_LIFECYCLE.json`
+- `docs/design-system/COVERAGE_MATRIX.json`
 
 ## Tokens
 
@@ -68,6 +91,9 @@ Evidence: docs/transcripts/rYzstFEY0t8.cleaned.md
 - Coverage matrix surface usage: `docs/design-system/COVERAGE_MATRIX_SURFACES.json`
 - Component lifecycle manifest: `docs/design-system/COMPONENT_LIFECYCLE.json`
 - Enforcement exemptions ledger: `docs/design-system/ENFORCEMENT_EXEMPTIONS.json`
+- DESIGN.md contract guide: `docs/guides/DESIGN_MD_CONTRACT.md`
+- Agent design rules manifest: `packages/agent-design-engine/rules/agent-design.rules.v1.json`
+- Guidance compatibility manifest: `packages/design-system-guidance/src/compatibility.ts`
 - Matrix generator: `scripts/generate-coverage-matrix.ts`
 - Policy enforcement rules: `scripts/policy/run.mjs`
 - QA evidence schema: `docs/operations/QA_EVIDENCE_SCHEMA.md`
@@ -91,6 +117,9 @@ Evidence: docs/transcripts/rYzstFEY0t8.cleaned.md
 - Widget a11y: `pnpm test:a11y:widgets:ci`
 - UI verification (includes focus/touch property tests): `pnpm test`
 - Bundle size budgets: `pnpm bundle:monitor:strict`
+- Agent design engine: `pnpm -C packages/agent-design-engine test`
+- Agent design CLI: `pnpm -C packages/cli build` and `pnpm -C packages/cli test`
+- Guidance wrapper: `pnpm -C packages/design-system-guidance check:ci`
 
 ### Token Tiering Checklist (manual gate)
 - Brand tier contains all raw values (DTCG + foundations output).  
@@ -102,5 +131,7 @@ Evidence: docs/transcripts/rYzstFEY0t8.cleaned.md
 ## Required Updates When Changing UI
 
 - Update component docs and coverage matrix.
+- Update `DESIGN.md` when the UI contract, required states, profile, token
+  notes, or component-routing expectations change.
 - Run drift tests if apps-sdk-ui changes.
 - Include migration notes for breaking changes.

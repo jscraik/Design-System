@@ -18,5 +18,6 @@ export * from "../overlays/drawer";
 export * from "../overlays/sheet";
 export * from "./Flex";
 export * from "./Grid";
+export * from "./ProductComposition";
 export * from "./Stack";
 export * from "./Transition";

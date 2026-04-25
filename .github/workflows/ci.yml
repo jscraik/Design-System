@@ -58,9 +58,9 @@ jobs:
 
       - name: Setup Swift (macOS only)
         if: matrix.os == 'macos-latest'
-        uses: swift-actions/setup-swift@364295d9c23900ce04d4e5cc708387921b4e50f9 # v3
-        with:
-          swift-version: "5.9"
+        run: |
+          swift --version
+          xcrun --find swift
 
       - name: Install deps
         run: pnpm install --frozen-lockfile --prod=false
@@ -122,7 +122,15 @@ jobs:
       - name: Strict type-check (informational — tracks migration to noUncheckedIndexedAccess)
         if: matrix.platform == 'web'
         continue-on-error: true
-        run: pnpm exec tsc -p tsconfig.strict.json --noEmit 2>&1 | tail -5 || true
+        run: |
+          set +e
+          pnpm exec tsc -p tsconfig.strict.json --noEmit > /tmp/strict-typecheck.log 2>&1
+          strict_status=$?
+          if [ "$strict_status" -ne 0 ]; then
+            echo "Strict type-check remains informational; see sanitized tail below."
+            tail -20 /tmp/strict-typecheck.log | sed -E 's/^([^()]+)\(([0-9]+),([0-9]+)\): error TS/strict-typecheck \1:\2:\3 TS/'
+          fi
+          exit "$strict_status"
 
       - name: Icon generation property tests (web platform only)
         if: matrix.platform == 'web'
@@ -173,6 +181,8 @@ jobs:
       actions: read
     runs-on: ubuntu-latest
     needs: build
+    outputs:
+      storybook_changed: ${{ steps.storybook_changes.outputs.changed || 'false' }}
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -445,7 +455,7 @@ jobs:
     # Deploy on main push always; on PRs only if stories changed
     if: |
       github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
-      || github.event_name == 'pull_request'
+      || github.event_name == 'pull_request' && needs.a11y.outputs.storybook_changed == 'true'
     permissions:
       contents: read
       deployments: write

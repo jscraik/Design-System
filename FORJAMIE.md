@@ -16,14 +16,14 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-04-13
+**Last updated:** 2026-04-25
 **Production status:** IN_PROGRESS
 **Overall health:** Yellow
 
 | Area | Status | Notes |
 | --- | --- | --- |
-| Build / CI | Yellow | Root design-system policy now blocks on token truth, coverage freshness, and repo-wide guidance; broader warn backlog still exists |
-| Tests | Yellow | `pnpm -C packages/ui exec vitest run src/app/settings/settings-panels.exemplar.test.tsx` passes; the broader `pnpm design-system-guidance:check:ci` command currently exits on the known repo-wide warn backlog |
+| Build / CI | Yellow | Focused policy, token, matrix, docs, guidance, whitespace, browser, widget a11y, and aggregate build gates pass for the Agent Design Engine slice |
+| Tests | Yellow | Agent-design and release-readiness gates pass (`agent-design-engine`, `cli`, `design-system-guidance`, web E2E, widget a11y, and root build), including fixture-backed CLI JSON/recovery/migration coverage |
 | Security | Clean | 13 CVEs patched; GitHub Actions SHA-pinned |
 | Open PRs | 0 | |
 | Blockers | None | |
@@ -32,6 +32,8 @@
 ## TL;DR
 
 This monorepo is the aStudio design system and Apps SDK UI foundation. It ships reusable token, UI, runtime, icon, and widget packages, plus example web and Storybook surfaces and an MCP integration harness so downstream apps can build consistent ChatGPT-style experiences.
+
+`DESIGN.md` is now the repo-level agent UI contract. Coding agents can use `astudio design ...` to lint, diff, export, initialize, migrate, and diagnose the contract before generating UI, while `packages/agent-design-engine` owns the semantic parsing and rule provenance behind those commands.
 
 ## Architecture & data flow
 
@@ -43,7 +45,10 @@ flowchart LR
   UI --> Storybook["platforms/web/apps/storybook"]
   Widgets["packages/widgets"] --> Web
   Web --> MCP["platforms/mcp"]
-  Guidance["packages/design-system-guidance"] --> Docs["docs/"]
+  DesignMd["DESIGN.md"] --> Engine["packages/agent-design-engine"]
+  Engine --> CLI["packages/cli astudio design"]
+  CLI --> Guidance["packages/design-system-guidance"]
+  Guidance --> Docs["docs/"]
 ```
 
 - `packages/tokens` generates the design primitives and semantic variables that feed the UI layer.
@@ -52,12 +57,17 @@ flowchart LR
 - `packages/widgets` packages standalone widget bundles used by the web surface and MCP integration paths.
 - `platforms/mcp` contains the MCP integration harness and tool contract tests.
 - `packages/design-system-guidance` packages the policy and guidance checks used to keep downstream consumers aligned, including repo-scoped protected-surface enforcement and an exemption ledger.
+- `packages/agent-design-engine` parses `DESIGN.md`, computes professional-UI rule provenance, lints semantic UI contract requirements, diffs design contracts, and exports agent-readable token/contract payloads.
+- `pnpm agent-design:lint` is the clean-checkout-safe root lint wrapper. It builds `packages/agent-design-engine` and `packages/cli` before invoking `packages/cli/dist/index.js`, so direct `dist` execution does not depend on tracked build artifacts.
+- `packages/cli` exposes the engine through `astudio design` commands while keeping the existing `astudio.command.v1` JSON envelope for agents.
+- `packages/design-system-guidance` now accepts additive `designContract` rollout state and migration metadata while preserving legacy v1 guidance fields. Its migration path enforces the command transition table and authenticates rollback metadata before any writable rollback or resume side effect.
 
 ## Codebase map
 
 - `packages/ui/` contains the core React components, styles, integrations, and Vitest coverage for the public UI library.
 - `packages/tokens/` owns token generation, validation, and the source-of-truth design primitives.
 - `packages/runtime/` contains host adapters and runtime abstractions shared by UI consumers.
+- `packages/agent-design-engine/` owns the `DESIGN.md` semantic engine, rule manifest, parity fixtures, and engine tests.
 - `packages/widgets/` contains embeddable widget bundles and a11y coverage for widget delivery.
 - `platforms/web/apps/web/` is the primary development surface for exercising the design system in a real app shell.
 - `platforms/web/apps/storybook/` is the component documentation and visual verification surface.
@@ -73,6 +83,8 @@ flowchart LR
 | Core package structure | Done | Tokens, UI, runtime, widgets, icons, and MCP/web surfaces are all established |
 | Adoption and guidance docs | Done | Onboarding command center, release docs, and governance docs exist |
 | Guidance package | Done | `@brainwav/design-system-guidance` now supports repo-scoped `error`/`warn`/`exempt` enforcement, path specificity, and exemption-ledger validation |
+| Agent design engine | Initial vertical slice done | `@brainwav/agent-design-engine` parses/lints/diffs/exports `DESIGN.md` and records rule-source provenance for agent UI work |
+| aStudio design CLI | Initial vertical slice done | `astudio design lint/diff/export/check-brand/init/migrate/doctor` is available with schema-backed JSON envelopes, one-line stdout fixtures, and write gates |
 | Protected settings migration | In progress | The initial settings wave is migrated onto shared shell/composition patterns, with explicit state stories and jsdom exemplar tests for the protected settings slice; broader app/storybook warn backlog remains intentionally non-blocking |
 | Visual regression workflow | In progress | Root visual scripts now route through `scripts/run-playwright-suite.mjs` and `packages/ui build:visual`, and the exemplar gate now covers both the template browser shell and an isolated template-widget shell route |
 | Current dependency hygiene | In progress | This change-set pins `vitest-axe` back to `1.0.0-pre.3` for deterministic installs |
@@ -85,6 +97,7 @@ pnpm install
 pnpm dev
 pnpm dev:storybook
 pnpm build
+pnpm agent-design:lint
 ```
 
 ## How to test
@@ -98,6 +111,12 @@ pnpm test:policy
 pnpm test:exemplar-evaluation:list
 pnpm test:exemplar-evaluation:update
 pnpm design-system-guidance:ratchet
+pnpm agent-design:boundaries
+pnpm agent-design:type-check
+pnpm agent-design:test
+pnpm -C packages/design-system-guidance build
+pnpm -C packages/cli build
+pnpm -C packages/cli test
 pnpm test:visual:web -- --list
 pnpm test:visual:storybook -- --list
 bash scripts/check-environment.sh
@@ -106,7 +125,7 @@ bash scripts/check-environment.sh
 The visual suites now go through `scripts/run-playwright-suite.mjs`, which prebuilds `packages/ui` with `pnpm -C packages/ui build:visual` before handing the remaining args straight to Playwright. Use that path when you need reliable `--list`, `--grep`, or `--update-snapshots` behavior from the root scripts without leaving the package in a declaration-broken state.
 The policy-owned exemplar slice now has its own root entry points. Use `pnpm test:exemplar-evaluation:list` to inspect the exact protected Storybook checks, and `pnpm test:exemplar-evaluation:update` to refresh only those baselines instead of hand-copying long `PLAYWRIGHT_STORYBOOK_*` env strings. `TemplateBrowserPage` is now part of the always-on exemplar slice, but that browser-backed check runs as an explicit exemplar gate rather than as part of the browser-free `pnpm test:policy` contract.
 For template-family QA, use `/templates` for the searchable browser shell and `/template-widget/<template-id>` for the isolated single-template widget shell that mirrors widget-style rendering without needing `VITE_TEMPLATE_ID`.
-Committed visual baselines live under `tests/visual/__snapshots__`. Local Playwright HTML reports, nested Vite cache outputs under `node_modules/.vite`, nested `.tmp` build scratch files, and ad hoc `reports/audit-*` outputs are now gitignored so browser runs stop polluting the branch.
+Committed visual baselines live under `tests/visual/__snapshots__`. Local Playwright HTML reports, nested Vite cache outputs under `node_modules/.vite`, nested `.tmp` build scratch files, Storybook screenshot captures, package/app `dist` outputs, and ad hoc `reports/audit-*` outputs are now gitignored so browser and build runs stop polluting the branch.
 
 ## Learnings & gotchas
 
@@ -133,6 +152,23 @@ See also: `~/.codex/instructions/Learnings.md`
 - Storybook dev must ignore Playwright artifact paths during visual runs. If the server starts reloading or dropping mid-capture, check `.storybook/main.ts` first and confirm `playwright-report`, `test-results`, and `__snapshots__` are excluded from Vite watch globs so the visual gate is not watching its own outputs.
 - The touched-file ratchet must include untracked files via `git ls-files --others --exclude-standard`, not just tracked diffs. Otherwise a brand-new protected-surface file can dodge the ratchet until it is staged.
 - Keep the committed visual baselines, but ignore local runtime artifacts. The repo now explicitly ignores nested `node_modules/.vite`, nested `node_modules/.tmp`, Playwright HTML reports, and `reports/audit-*` outputs so UI verification runs do not turn branch state into cache noise.
+- Design command outputs go through the same masking path as other `astudio` JSON envelopes. If agent consumers need raw token payloads for a safe local export, use the dedicated `design export` artifact path and validate the resulting JSON before handing it to downstream tooling.
+- The migration transition table should run before rollback metadata lookup. That keeps invalid state/operation pairs as `E_DESIGN_MIGRATION_STATE_INVALID` no-op failures, while metadata readability tests must start from rollback-eligible states such as `design-md/active`, `partial`, or `failed`.
+- Rollback metadata authentication is intentionally local-artifact bound rather than a remote signing service in this pre-GA slice. Treat the rollback artifact signing key, `metadataDigest`, `metadataSignature`, path-root checks, config checksums, and `DESIGN.md` checksums as one fail-closed contract: if any piece drifts, rollback/resume must exit `3` without mutation.
+- The `DESIGN.md` engine computes source digests from `docs/design-system/PROFESSIONAL_UI_CONTRACT.md`, `AGENT_UI_ROUTING.md`, `COMPONENT_LIFECYCLE.json`, and `COVERAGE_MATRIX.json`. If any of those files move or become unreadable, design lint/export should fail before semantic evaluation.
+- `DESIGN.md` schema versions are fail-closed. The v1 engine only accepts `schemaVersion: agent-design.v1`; future contract versions must add explicit parser/rule-pack support before `lint` or `export` can proceed.
+- `DESIGN.md` section line numbers must stay anchored to the original file, including YAML frontmatter. Lint findings use those lines as agent remediation evidence.
+- `astudio design init` validates the starter contract before writing, but it must still enforce the write gate first so a missing `--write` remains a policy error instead of a provenance error.
+- Package-level Biome scripts need to use the same pinned Biome 2.x command as the root scripts. The workspace still contains older Biome 1.x dependencies for other packages, and those cannot parse the current `biome.json` schema.
+- Browser-backed Playwright gates need a provisioned Chromium cache and a macOS launch path that is not blocked by the Codex sandbox. If every browser test fails at launch with `bootstrap_check_in ... Permission denied (1100)`, treat it as an environment permission issue and rerun the browser gate through the approved unsandboxed path before debugging UI code.
+- Package manifests can point at `dist` in `main`, `types`, `exports`, `bin`, or `files`, but those generated outputs are no longer committed source. Build before pack, publish, or direct `node packages/*/dist/...` execution.
+- `pnpm generated-source:check` is the canonical freshness gate for tracked generated runtime inputs. It regenerates the web template registry, widget JavaScript manifest, and Cloudflare worker manifest, formats the tracked generated source with Biome 2.3.11, and fails if the committed snapshot is stale.
+- `packages/widgets/src/sdk/generated/widget-manifest.ts` is still an ignored mutable local mirror. The tracked runtime authority is `packages/widgets/src/sdk/generated/widget-manifest.js`, and Cloudflare consumes its own deterministic `src/worker/widget-manifest.generated.ts` mirror after `pnpm -C packages/cloudflare-template run prebuild`.
+- Workspace package scripts should prefer `node --import tsx ...` when they depend on hoisted `tsx`; bare package-local `tsx` shims have already failed in this workspace layout.
+- `docs/plans/README.md`, `reports/README.md`, and `artifacts/reviews/README.md` are now the authority indexes for plan, report, and review-evidence routing. Prefer those front doors before trusting filename recency or old embedded status text.
+- `pnpm tracked-ignored:check` is the guard that keeps ignored runtime, cache, test-output, build-output, and ad hoc audit artifacts from becoming tracked again. It allows the documented planning/config exceptions, so do not replace it with a blanket ban on every `git ls-files -ci --exclude-standard` result.
+- `docs:lint` is the canonical docs quality command; `doc:lint` is only a compatibility alias. Theme propagation has an active property-test surface at `pnpm test:theme-propagation`, and the tree-shaking prototype is intentionally retained behind `pnpm validation-prototype:build`.
+- Rollback quarantine recovery depends on preserving `design-md/partial` until the quarantine move succeeds. Switching to `legacy/partial` before removing `DESIGN.md` strands retry paths because authenticated metadata still expects the design file and active/partial config checksums.
 
 ## Weaknesses & improvements
 
@@ -146,8 +182,59 @@ See also: `~/.codex/instructions/Learnings.md`
 - The first touched-file ratchet now covers the full settings panel/story family, the touched forms component slice, and app pages including both template pages. It should keep expanding gradually, but only after adjacent surfaces stay clean long enough that the next boundary is believable.
 - `packages/ui` still carries some internal Storybook `_holding` demo code that looks like package-consumer code. Keep that material out of declaration generation, or it will reintroduce self-import type noise into otherwise healthy package builds.
 - `packages/tokens/src/shadows.ts` is generated, but it cannot be a pure mirror of the DTCG shadow source. The DTCG file only defines the legacy `card/pip/pill/close` map; the generated TypeScript layer must also re-emit the semantic `elevation` API and `ElevationToken` type or `packages/tokens/src/index.ts` will compile locally until the next `pnpm generate:tokens`, then break in CI.
+- The first `agent-design-engine` slice is intentionally semantic and deterministic, but it is not yet a full AST-aware UI reviewer. It catches missing contract concepts, not every bad JSX or CSS pattern an agent might write.
+- `astudio design migrate` now enforces its state transition table, writes authenticated rollback metadata, checks rollback paths and file checksums before mutation, marks crash-recoverable `partial` state before final mutation, and quarantines migrated `DESIGN.md` files during rollback. Quarantine paths are collision-safe and covered by repeated rollback/remigration plus concurrent-writer race tests; remaining pre-GA migration hardening should focus on support-window compatibility fixtures and explicit idempotency edge cases.
+- `astudio design check-brand --strict` now has non-tautological mismatch logic, but only `astudio-default@1` is currently supported. Add a second supported profile fixture before treating cross-profile mismatch behavior as fully proven.
+- `pnpm generated-source:check` intentionally rebuilds widget assets and may print Vite chunk-size warnings. Treat it as a correctness/freshness gate, not as the package performance budget.
+- `pnpm agent-design:boundaries` is the ownership tripwire for the Agent Design Engine: wrappers can call public package exports, but parser, lint, diff, export, and profile-comparison implementation must stay in `packages/agent-design-engine`.
 
 ## Recent changes
+
+### 2026-04-25
+
+- **Exemplar surface composition migration**: JSC-76 migrates the issue-listed product exemplars (`HarnessPage`, `TemplateBrowserPage`, `AppsPanel`, and `ManageAppsPanel`) onto `ProductPageShell`, `ProductPanel`, and `ProductSection`, keeps them clean of foundation-token bypasses and literal style escapes, and documents the follow-on pattern in `docs/design-system/AGENT_UI_ROUTING.md` plus `artifacts/design-system/jsc-76-exemplar-surface-migration.md`.
+- **macOS exemplar visual tolerance**: the Storybook and web exemplar visual gates now allow up to 1% pixel-ratio drift. This matches the measured GitHub macOS Chromium renderer variance after the JSC-76 composition migration, including the stable harness-page delta observed in the web visual lane.
+- **External execution exit normalization**: JSC-221 normalizes subprocess failures behind `astudio` external command execution so nonzero child exits, start failures, signal termination, and timeouts produce deterministic `E_EXEC` machine output instead of leaking raw child status as the wrapper exit class. JSON mode still captures child stdout/stderr under `data` but keeps process stderr empty and reports a stable `failure_kind` plus normalized `exit_code` for agent recovery.
+- **Design recovery fixture matrix**: JSC-222 expands the design-command fixture suite across policy, safety, compatibility, discovery, profile, warning-only, and execution failures. Safe retries now stay in structured `recovery.nextCommand` argv/cwd JSON, unsafe or unavailable paths emit `recoveryUnavailableReason`, warning-only doctor output keeps `errors[]` empty, and `design doctor --active --exec` exercises the normalized external execution contract through an active pnpm check.
+- **Parser regex hardening**: agent-design `DESIGN.md` section parsing now uses a bounded heading scanner instead of a regex over library input, closing the CodeQL polynomial-regex alert while preserving heading levels, trimmed titles, and section line numbers.
+- **CI annotation cleanup**: strict type-check annotations are resolved in the coverage matrix generator and visual accent tests, the informational strict check now sanitizes its log tail so pre-existing strict debt does not create PR annotations, and the macOS lane verifies the runner's installed Swift toolchain directly instead of invoking the Node 20-based `swift-actions/setup-swift` action.
+- **Storybook deploy annotation guard**: the a11y job now exposes its Storybook-change detector as a job output, and the Cloudflare Pages deploy job only runs on PRs when that output says Storybook artifacts were built. Non-Storybook PRs no longer emit a missing `storybook-static` artifact annotation.
+- **Exemplar visual clean-checkout repair**: `pnpm test:exemplar-evaluation` now builds workspace libraries before running Storybook and web visual exemplar checks, so clean macOS CI runners can resolve token package declarations before Vite's declaration generation starts.
+- **Rollback support-window compatibility**: rollback metadata validation now uses the compatibility manifest's explicit `legacySupport.rollbackMetadataMinWrapper` rather than the normal design-command `minWrapper`, so the current wrapper can read older rollback metadata across the published legacy support window while still rejecting metadata older than that window.
+- **macOS CI Swift runner verification**: the macOS build lane now checks the runner-provided Swift toolchain with `swift --version` and `xcrun --find swift`, avoiding the deprecated JavaScript setup action while still proving Swift availability before exemplar visuals run.
+- **Harness pre-push runtime repair**: `scripts/harness-cli.sh` now resolves project mise shims before Homebrew tools and falls back to the mise-managed `harness` command when the private `@brainwav/coding-harness` package is not installed in the repo. The repo runtime pin/contract use `uv 0.11.3`, and the Semgrep changed-file gate now rebuilds its pinned cache when a broken launcher makes the version probe exit nonzero.
+- **Generated-source clean-checkout repair**: `pnpm generated-source:check` now builds the workspace libraries before regenerating the widget build manifest, so clean CI runners can resolve `@design-studio/ui` package exports without depending on an earlier build step.
+- **Rollback quarantine race coverage**: JSC-220 makes rollback quarantine directories come from the authenticated rollback metadata `operationId`, rejects path-unsafe operation ids, preserves retryable `design-md/partial` state until rollback quarantine succeeds, and expands CLI coverage for quarantine collisions, repeated rollback/remigration artifact retention, concurrent rollback writers, and stale temp/lock cleanup after successful and failed writes.
+- **Agent design review fixes**: `packages/agent-design-engine` now rejects unsupported `DESIGN.md` schema versions with `E_DESIGN_SCHEMA_INVALID`, and `pnpm agent-design:lint` builds both the engine and CLI before executing the generated CLI entrypoint so clean checkouts do not depend on tracked `dist` artifacts.
+- **Rollback metadata authentication**: JSC-219 expands migration rollback metadata with required schema, wrapper, path, checksum, support-window, digest, and HMAC signature fields bound to the local rollback artifact signing key plus compatibility manifest. Rollback and resume now reject tampered metadata, forged public signatures, malformed or unsupported wrapper versions, symlink escapes, active-config checksum drift, and `DESIGN.md` checksum drift with `E_DESIGN_ROLLBACK_METADATA_UNREADABLE` before any mutation.
+- **Migration transition hardening**: JSC-218 encodes the `astudio design migrate` transition table in `packages/design-system-guidance`, rejects invalid command/state pairs with `E_DESIGN_MIGRATION_STATE_INVALID` before mutation, writes `migrationState: partial` before final config mutation, and adds CLI coverage for failed-state resume, invalid-transition no-op behavior, and fault-injected `E_PARTIAL` recovery through `migrate --resume`.
+- **Agent design boundary guard**: JSC-217 adds `pnpm agent-design:boundaries` and a self-test mode to prevent other packages from deep-importing `packages/agent-design-engine/src/**` or reimplementing `DESIGN.md` parser/rule ownership in `packages/design-system-guidance`. The guard now runs inside `pnpm test:policy`, and the `DESIGN.md` contract docs plus source plan mark the boundary enforcement item complete.
+
+### 2026-04-24
+
+- **Orphan lifecycle cleanup**: JSC-229 removes the unused one-shot autodocs tagging script, turns `doc:lint` into a non-drifting alias for `docs:lint`, wires `scripts/theme-propagation.test.mjs` into `pnpm test:theme-propagation` and `pnpm test:web:property`, and gives the harness helper plus validation prototype explicit root command surfaces.
+- **Tracked ignored artifact guard**: JSC-228 adds `pnpm tracked-ignored:check` plus classifier self-tests, documents the allowed tracked-ignored planning/config exceptions in `docs/plans/2026-04-24-jsc228-tracked-ignored-guard.md`, and wires the guard into `pnpm test:policy` so runtime/cache/test/build/audit artifacts cannot quietly return to source control.
+- **Generated source contract**: JSC-226 classifies the tracked web template registry, widget JavaScript manifest, and Cloudflare worker manifest as committed deterministic runtime inputs; keeps the mutable TypeScript widget manifest ignored; removes the Cloudflare manifest timestamp; fixes the web registry script to use `node --import tsx`; and adds `pnpm generated-source:check` to root policy.
+- **Docs/report authority cleanup**: JSC-227 adds authority indexes for `docs/plans/**`, `reports/**`, and `artifacts/reviews/**`, archives the January 2026 template-migration report cluster under `reports/archive/2026-01-template-migration/`, and moves older multi-round Agent Design Engine review artifacts under `artifacts/reviews/archive/2026-04-agent-design-engine/` while keeping round 3 summaries as current review authority.
+- **Build artifact contract cleanup**: JSC-225 defines `dist/**`, `platforms/web/apps/web/dist/**`, and `platforms/web/apps/storybook/screenshots/**` as generated outputs rather than source-control authority, removes 802 tracked ignored generated files from the Git index, and records the build-before-pack/publish plus Playwright/Argos visual evidence contract in `docs/plans/2026-04-24-jsc225-build-artifact-contract.md`.
+- **Repo-wide cleanup inventory**: JSC-223 removed tracked ignored runtime artifacts from the Git index while keeping local files on disk, deleted three accidental zero-byte root files (`EOF`, `npm`, and `{`), and added `docs/plans/2026-04-24-jsc223-repo-cleanup-inventory.md` to separate safe cleanup from higher-risk publish-output, generated-source, docs-archive, and CI-hygiene follow-ups.
+- **Agent design review hardening**: parser headings now preserve original `DESIGN.md` line numbers after frontmatter, component extraction only records explicit backticked component names, and profile fallback no longer exposes an unused manifest-default path.
+- **Agent review follow-up**: the he-work agent pass added a cross-package profile parity test so every `@brainwav/design-system-guidance` supported profile must also parse through `@brainwav/agent-design-engine`, and the branch drops tracked Vite/test-output artifacts that were already ignored by repo policy.
+- **Design command protocol fixtures**: `packages/cli/tests/fixtures/design-schemas/astudio-design-command.v1.schema.json` and `packages/cli/tests/fixtures/design-command-fixtures.json` now lock every `astudio design *` success command to the `astudio.command.v1` envelope, expected `data.kind`, one-line JSON stdout, empty stderr, and representative policy/discovery/profile recovery errors.
+- **Design CLI safety fixes**: `astudio design init` validates before writing, `astudio design migrate` resolves subdirectory calls to the project root, rollback refuses corrupt metadata without mutating config, rollback quarantines migrated `DESIGN.md`, and CLI tests now cover CI discovery, ambiguity, profile errors, fail-on-regression, root-target migration behavior, and structured recovery payloads.
+- **Compatibility and profile surface added**: `@brainwav/design-system-guidance` now owns the v1 design compatibility manifest, supported profile list, and supported command-schema guard used by `astudio design` before emitting machine-readable payloads.
+- **Agent adoption docs landed**: `docs/guides/DESIGN_MD_CONTRACT.md`, `docs/guides/PRIVATE_GUIDANCE_PACKAGE.md`, `docs/design-system/CONTRACT.md`, `docs/guides/RELEASE_CHECKLIST.md`, and the JSC-208 baseline inventory now describe the `DESIGN.md` contract, rollout states, rollback flow, compatibility manifest, and validation lane.
+- **Validation evidence**: `pnpm -C packages/agent-design-engine test`, `pnpm -C packages/design-system-guidance type-check`, `pnpm -C packages/design-system-guidance build`, `pnpm -C packages/agent-design-engine type-check`, `pnpm -C packages/cli lint`, `pnpm -C packages/cli build`, `pnpm -C packages/design-system-guidance check:ci`, `pnpm -C packages/cli test`, `pnpm docs:lint`, `pnpm test:policy`, `pnpm validate:tokens`, `pnpm ds:matrix:check`, `pnpm design-system-guidance:check:ci`, and `git diff --check` all pass locally for this focused slice.
+- **Release-readiness evidence**: `pnpm exec playwright install chromium`, `pnpm test:e2e:web`, `pnpm test:a11y:widgets`, and `pnpm build` pass locally after allowing Playwright to launch Chromium outside the macOS sandbox. The sandboxed browser run failed before test execution with Chromium `bootstrap_check_in ... Permission denied (1100)`, then the same suites passed unsandboxed.
+- **Focused tooling alignment**: `packages/cli lint` now uses the same pinned Biome 2.3.11 command as the root lint script, avoiding the stale Biome 1.x parser path that cannot read the current root `biome.json`.
+- **Docs lint sync repair**: `.vale.ini` now relies on the vendored `.vale/styles/Google` rules instead of asking `vale sync` to resolve the remote `Google` package alias, so `pnpm docs:lint` syncs zero packages and validates the current markdown/link set cleanly.
+
+### 2026-04-23
+
+- **Agent design engine added**: `packages/agent-design-engine` now owns the `DESIGN.md` parser, normalized contract model, professional UI rule manifest, lint findings with source references, semantic diff output, and JSON/DTCG/Tailwind export helpers. The frozen upstream source baseline for parity work is `/Users/jamiecraik/dev/system-design` at `8ecd4645b957e6a683a05fb9c79cd6c9028873d0`.
+- **Repo-level DESIGN.md contract added**: root `DESIGN.md` captures the brand profile, surface roles, state/focus/motion/viewport expectations, component routing sources, and token notes that agents should use before designing UI.
+- **Guidance wrapper migration path added**: `@brainwav/design-system-guidance` now accepts additive `designContract` state, exposes `migrateGuidanceConfig`, and supports `design-system-guidance migrate` dry-run/write flows with rollback metadata.
+- **aStudio design CLI added**: `astudio design lint`, `diff`, `export`, `check-brand`, `init`, `migrate`, and `doctor` are registered under `packages/cli` with the existing `astudio.command.v1` JSON envelope. New root scripts `agent-design:type-check`, `agent-design:test`, `agent-design:build`, and `agent-design:lint` provide the focused validation lane.
 
 ### 2026-04-13
 
@@ -213,6 +300,8 @@ See also: `~/.codex/instructions/Learnings.md`
 - **Storybook exemplar timeout headroom**: bumped `platforms/web/apps/storybook/playwright.visual.config.ts` from a 60-second to a 90-second test timeout after the protected dark-theme `ManageAppsPanel` states started timing out late in the sequential exemplar sweep. The targeted rerun for those loading/empty states now completes cleanly under the same gate path.
 - **PR1 protected-scope expansion**: widened the hard-error settings wave to cover the remaining settings Storybook stories plus `platforms/web/apps/web/src/pages/TemplateWidgetPage.tsx`. The story wrappers now rely on semantic `bg-background` / token-backed text utilities instead of raw hex background presets and raw CSS-variable utility escapes, and `TemplateWidgetPage` now uses a semantic `min-h-dvh` shell with `bg-background`, `text-foreground`, and `text-muted-foreground` instead of foundation-token and raw-pixel fallbacks. `pnpm design-system-guidance:ratchet`, `pnpm test:policy`, and `git diff --check` all pass with the widened boundary.
 - **Touched-file ratchet**: added `pnpm design-system-guidance:ratchet` and wired it into root policy as `Touched-file Ratchet`. The new `scripts/policy/run-guidance-ratchet.mjs` fails only when touched warn-scope files inside the first ratcheted surface set still carry guidance warnings. To support that, the guidance CLI now has a `--json` mode and flushes large JSON payloads before exiting, and `TagInput` dropped its raw `min-w-[120px]` utility in favor of `min-w-30` so the touched reusable-forms slice stays clean.
+- **Professional UI guidance expansion**: `@brainwav/design-system-guidance` now detects empty accessible labels, focusable elements hidden with `aria-hidden=true`, and long or looping motion in repo-scoped product surfaces. The professional UI contract now documents which expectations are executable source checks and which state-completeness expectations remain covered by protected exemplars and the browser-backed exemplar gate.
+- **Agent-native composition primitives**: `packages/ui/src/components/ui/layout/ProductComposition` now exports `ProductPageShell`, `ProductPanel`, `ProductSection`, `ProductDataView`, and `ProductStateWrapper` so agents can start from semantic page, panel, section, data-view, and async-state roles instead of loose utility chains. `docs/design-system/AGENT_UI_ROUTING.md`, `docs/design-system/COMPONENT_LIFECYCLE.json`, `docs/design-system/A11Y_CONTRACTS.md`, and the generated coverage matrix now route these primitives as canonical tier-2 local composition targets after Apps SDK primitives and before fallback components.
 - **Exemplar update path**: `scripts/policy/run-exemplar-evaluation.mjs` now forwards passthrough Playwright args, and the root scripts `pnpm test:exemplar-evaluation:list` / `pnpm test:exemplar-evaluation:update` are the canonical way to inspect or refresh the policy-owned exemplar slice. This replaces the fragile manual env-string approach that drifted onto stale `app-settings-*` story IDs and shell newline breakage.
 - **Exemplar runner alignment**: the exemplar runner now mirrors the current test contract exactly. It forwards Playwright passthrough args for the protected Storybook settings slice, strips pnpm's script-argument delimiter before invoking Playwright, and always includes the `TemplateBrowserPage` web visual now that the page-level baseline is committed.
 - **Storybook overlay isolation**: visual regression URLs now pass `devOverlays=0` / `agentation=0`, and Storybook preview honors those flags before mounting Agentation or Dialkit. This keeps Playwright captures stable and prevents the annotation/MCP overlay from poisoning settings-panel snapshots.
@@ -283,7 +372,7 @@ project: design-system
 repo: ~/dev/design-system
 status: IN_PROGRESS
 health: yellow
-last_updated: 2026-04-13
+last_updated: 2026-04-25
 open_prs: 0
 blockers: none
 next_milestone: ChatGPT widget integration

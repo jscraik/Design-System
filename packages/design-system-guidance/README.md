@@ -8,6 +8,7 @@ Private guidance package for enforcing design-system usage in consumer projects.
 - [Check](#check)
 - [CI mode](#ci-mode)
 - [Scope-Aware Enforcement](#scope-aware-enforcement)
+- [DESIGN.md migration](#designmd-migration)
 - [Included guidance](#included-guidance)
 
 ## Install
@@ -64,9 +65,34 @@ Behavior:
 - files matching `scopes.exempt` skip pattern-rule evaluation
 - the exemption ledger can suppress a specific `ruleId` for a specific path glob when the entry includes ownership and expiry metadata
 
+## DESIGN.md migration
+
+The guidance wrapper accepts legacy v1 configs and additive v2 configs with `designContract` rollout state.
+The contract metadata itself belongs in `DESIGN.md`; `.design-system-guidance.json` stores only rollout state and migration metadata.
+
+Dry-run a migration:
+
+```bash
+npx design-system-guidance migrate . --to design-md --dry-run --json
+```
+
+Write the migration after review:
+
+```bash
+npx design-system-guidance migrate . --to design-md --write --yes
+```
+
+Rollback or resume use the same explicit write gate:
+
+```bash
+npx design-system-guidance migrate . --rollback --dry-run --json
+npx design-system-guidance migrate . --resume --dry-run --json
+```
+
 ## Included guidance
 - `guidelines/` markdown guidance for tokens, typography, spacing, color, and iconography
 - `rules.json` machine-readable policy rules
 - CLI commands:
   - `design-system-guidance init [path]`
   - `design-system-guidance check [path] [--ci]`
+  - `design-system-guidance migrate [path] --to design-md [--dry-run|--write]`

@@ -15,6 +15,19 @@ Unified developer CLI for the aStudio monorepo (dev/build/test/mcp/tokens/versio
 - See `CLI_SPEC.md` for the full interface contract
 - See `AGENTS.md` for AI agent / automation guide
 
+## Table of Contents
+
+- [Install (workspace)](#install-workspace)
+- [Usage](#usage)
+- [Command overview](#command-overview)
+- [Design commands](#design-commands)
+- [Safety / risk flags](#safety--risk-flags)
+- [Output modes](#output-modes)
+- [Config & env](#config--env)
+- [Examples](#examples)
+- [AI Agent Mode](#ai-agent-mode)
+- [JSON output schema](#json-output-schema)
+
 ## Install (workspace)
 
 ```bash
@@ -38,12 +51,31 @@ pnpm astudio doctor
 - `build [web|widgets|lib|macos|all]`
 - `test [ui|e2e-web|a11y-widgets|visual-web|visual-storybook|swift|mcp-contract|all]`
 - `mcp <dev|start|test|inspector|rpc|tools|resources|prompts>`
+- `design <lint|diff|export|check-brand|init|migrate|doctor>`
 - `tokens <generate|validate>`
 - `versions <sync|sync-swift>`
 - `components new <Name>`
 - `lint [--compliance]`
 - `format [--check|--write]`
 - `doctor`
+
+## Design commands
+
+`astudio design` is the agent-safe entry point for `DESIGN.md` contracts.
+
+```bash
+pnpm astudio design lint --file DESIGN.md --json
+pnpm astudio design diff --before old-DESIGN.md --after DESIGN.md --json
+pnpm astudio design export --file DESIGN.md --format json@agent-design.v1 --json
+pnpm astudio design check-brand --file DESIGN.md --json
+pnpm astudio design init --target . --dry-run --json
+pnpm astudio design migrate --to design-md --dry-run --json
+pnpm astudio design doctor --file DESIGN.md --json
+```
+
+Design command JSON keeps the outer `astudio.command.v1` envelope and places command-specific payloads under `data.kind`, such as `astudio.design.lint.v1`.
+Mutation commands require `--write` unless `--dry-run` is used.
+Agent mode and CI default to JSON output for design commands unless the caller explicitly chooses another mode.
 
 ## Safety / risk flags
 
