@@ -783,7 +783,7 @@ Tasks:
 - [x] Add command JSON schemas and fixtures.
 - [x] Keep `astudio.command.v1` outer envelope unchanged and put design payload under `data`.
 - [x] Add per-command exit-code tests.
-- [ ] Add design-command exit normalization for external execution so raw child exits cannot leak.
+- [x] Add design-command exit normalization for external execution so raw child exits cannot leak.
 - [x] Resolve top-level command before design manifest validation so non-design aStudio commands bypass design manifest checks.
 - [x] Scope compatibility manifest command gating to `astudio design *`.
 - [x] Add profile-resolution precedence and profile error tests.

@@ -144,6 +144,13 @@ function writeJsonFile(filePath, value) {
   fs.writeFileSync(filePath, jsonLine(value));
 }
 
+function writeExecutableScript(targetDir, name, body) {
+  const scriptPath = path.join(targetDir, name);
+  fs.writeFileSync(scriptPath, `#!/bin/sh\n${body}\n`);
+  fs.chmodSync(scriptPath, 0o755);
+  return scriptPath;
+}
+
 function guidanceConfigPath(targetDir) {
   return path.join(targetDir, ".design-system-guidance.json");
 }
@@ -384,6 +391,93 @@ test("policy error returns E_POLICY and exit code 3", async () => {
   const payload = JSON.parse(stdout);
   assert.equal(payload.status, "error");
   assert.equal(payload.errors[0].code, "E_POLICY");
+});
+
+test("external execution normalizes nonzero child exits in JSON mode", async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-exec-"));
+  const fakePnpm = writeExecutableScript(tempDir, "fake-pnpm", 'echo "child failed" >&2\nexit 7');
+  const { code, stdout, stderr } = await runCli(["test", "ui", "--exec", "--json"], {
+    ASTUDIO_PNPM: fakePnpm,
+  });
+
+  assert.equal(code, 1);
+  assert.equal(stderr, "");
+  const payload = JSON.parse(stdout);
+  assert.equal(payload.status, "error");
+  assert.equal(payload.data.exit_code, 1);
+  assert.equal(payload.data.failure_kind, "exit");
+  assert.equal(payload.data.stderr.trim(), "child failed");
+  assert.equal(payload.errors[0].code, "E_EXEC");
+  assert.equal(payload.errors[0].message, "External command failed");
+  assert.deepEqual(payload.errors[0].details, { exit_code: 1, failure_kind: "exit" });
+});
+
+test("external execution normalizes signal termination", async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-exec-"));
+  const fakePnpm = writeExecutableScript(tempDir, "fake-pnpm", "kill -TERM $$");
+  const { code, stdout, stderr } = await runCli(["test", "ui", "--exec", "--json"], {
+    ASTUDIO_PNPM: fakePnpm,
+  });
+
+  assert.equal(code, 1);
+  assert.equal(stderr, "");
+  const payload = JSON.parse(stdout);
+  assert.equal(payload.data.exit_code, 1);
+  assert.equal(payload.data.failure_kind, "signal");
+  assert.equal(payload.errors[0].code, "E_EXEC");
+  assert.equal(payload.errors[0].message, "External command was terminated");
+  assert.deepEqual(payload.errors[0].details, { exit_code: 1, failure_kind: "signal" });
+});
+
+test("external execution preserves operator abort exit class", async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-exec-"));
+  const fakePnpm = writeExecutableScript(tempDir, "fake-pnpm", "kill -INT $$");
+  const { code, stdout, stderr } = await runCli(["test", "ui", "--exec", "--json"], {
+    ASTUDIO_PNPM: fakePnpm,
+  });
+
+  assert.equal(code, 130);
+  assert.equal(stderr, "");
+  const payload = JSON.parse(stdout);
+  assert.equal(payload.data.exit_code, 130);
+  assert.equal(payload.data.failure_kind, "signal");
+  assert.equal(payload.errors[0].code, "E_EXEC");
+  assert.equal(payload.errors[0].message, "External command was aborted");
+  assert.deepEqual(payload.errors[0].details, { exit_code: 130, failure_kind: "signal" });
+});
+
+test("external execution normalizes timeouts", async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-exec-"));
+  const fakePnpm = writeExecutableScript(tempDir, "fake-pnpm", "exec sleep 10");
+  const { code, stdout, stderr } = await runCli(["test", "ui", "--exec", "--json"], {
+    ASTUDIO_EXEC_TIMEOUT_MS: "50",
+    ASTUDIO_PNPM: fakePnpm,
+  });
+
+  assert.equal(code, 1);
+  assert.equal(stderr, "");
+  const payload = JSON.parse(stdout);
+  assert.equal(payload.data.exit_code, 1);
+  assert.equal(payload.data.failure_kind, "timeout");
+  assert.equal(payload.errors[0].code, "E_EXEC");
+  assert.equal(payload.errors[0].message, "External command timed out");
+  assert.deepEqual(payload.errors[0].details, { exit_code: 1, failure_kind: "timeout" });
+});
+
+test("external execution normalizes spawn failures", async () => {
+  const missingPnpm = path.join(os.tmpdir(), "astudio-missing-pnpm");
+  const { code, stdout, stderr } = await runCli(["test", "ui", "--exec", "--json"], {
+    ASTUDIO_PNPM: missingPnpm,
+  });
+
+  assert.equal(code, 1);
+  assert.equal(stderr, "");
+  const payload = JSON.parse(stdout);
+  assert.equal(payload.data.exit_code, 1);
+  assert.equal(payload.data.failure_kind, "start");
+  assert.equal(payload.errors[0].code, "E_EXEC");
+  assert.equal(payload.errors[0].message, "External command could not be started");
+  assert.deepEqual(payload.errors[0].details, { exit_code: 1, failure_kind: "start" });
 });
 
 test("design lint --json emits design envelope", async () => {

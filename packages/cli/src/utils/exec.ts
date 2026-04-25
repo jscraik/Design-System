@@ -5,6 +5,43 @@ import { baseEnv, resolveCwd, resolvePnpmCommand } from "./env.js";
 import { logInfo } from "./logger.js";
 import { createEnvelope, getTraceContext, outputJson, outputPlainRecord } from "./output.js";
 
+type ExternalExitStatus = {
+  code: number | null;
+  signal: NodeJS.Signals | null;
+  timedOut?: boolean;
+};
+
+type NormalizedExternalExit = {
+  exitCode: number;
+  failureKind?: RunResult["failureKind"];
+};
+
+const EXEC_TIMEOUT_ENV = "ASTUDIO_EXEC_TIMEOUT_MS";
+
+function parseExecutionTimeoutMs(env: NodeJS.ProcessEnv): number | undefined {
+  const value = env[EXEC_TIMEOUT_ENV];
+  if (!value) return undefined;
+  const timeoutMs = Number.parseInt(value, 10);
+  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) return undefined;
+  return timeoutMs;
+}
+
+export function normalizeExternalExit(status: ExternalExitStatus): NormalizedExternalExit {
+  if (status.timedOut) {
+    return { exitCode: EXIT_CODES.failure, failureKind: "timeout" };
+  }
+  if (status.signal === "SIGINT") {
+    return { exitCode: EXIT_CODES.abort, failureKind: "signal" };
+  }
+  if (status.signal) {
+    return { exitCode: EXIT_CODES.failure, failureKind: "signal" };
+  }
+  if (status.code === 0) {
+    return { exitCode: EXIT_CODES.success };
+  }
+  return { exitCode: EXIT_CODES.failure, failureKind: "exit" };
+}
+
 export async function runPnpm(
   opts: GlobalOptions,
   args: string[],
@@ -34,6 +71,15 @@ export async function runPnpm(
         : "inherit";
 
     const child = spawn(pnpmCommand, args, { cwd, env, stdio });
+    const timeoutMs = parseExecutionTimeoutMs(env);
+    let timedOut = false;
+    const timeout =
+      timeoutMs === undefined
+        ? undefined
+        : setTimeout(() => {
+            timedOut = true;
+            child.kill("SIGTERM");
+          }, timeoutMs);
 
     let stdout = "";
     let stderr = "";
@@ -50,26 +96,32 @@ export async function runPnpm(
       });
     }
 
-    child.on("close", (code) => {
+    child.on("close", (code, signal) => {
+      if (timeout) clearTimeout(timeout);
       const durationMs = Date.now() - started;
-      resolve({
+      const normalized = normalizeExternalExit({ code, signal, timedOut });
+      const result: RunResult = {
         command: commandLabel,
-        exitCode: code ?? 1,
+        exitCode: normalized.exitCode,
         durationMs,
         stdout: stdout || undefined,
         stderr: stderr || undefined,
         cwd,
-      });
+      };
+      if (normalized.failureKind) result.failureKind = normalized.failureKind;
+      resolve(result);
     });
 
     child.on("error", (err) => {
+      if (timeout) clearTimeout(timeout);
       const durationMs = Date.now() - started;
       resolve({
         command: commandLabel,
-        exitCode: 1,
+        exitCode: EXIT_CODES.failure,
         durationMs,
         stderr: err instanceof Error ? err.message : "Failed to start command",
         cwd,
+        failureKind: "start",
       });
     });
   });
@@ -102,6 +154,7 @@ function buildRunResultData(result: RunResult): Record<string, JsonValue> {
     target: result.target ?? null,
     cwd: result.cwd ?? null,
     exit_code: result.exitCode,
+    failure_kind: result.failureKind ?? null,
     duration_ms: result.durationMs,
     stdout: result.stdout ?? null,
     stderr: result.stderr ?? null,
@@ -109,14 +162,32 @@ function buildRunResultData(result: RunResult): Record<string, JsonValue> {
   };
 }
 
+function runResultErrorMessage(result: RunResult): string {
+  switch (result.failureKind) {
+    case "start":
+      return "External command could not be started";
+    case "signal":
+      return result.exitCode === EXIT_CODES.abort
+        ? "External command was aborted"
+        : "External command was terminated";
+    case "timeout":
+      return "External command timed out";
+    default:
+      return "External command failed";
+  }
+}
+
 function buildRunResultError(result: RunResult): JsonError[] {
   if (result.exitCode === 0) return [];
   return [
     toJsonError(
-      new CliError("Command failed", {
+      new CliError(runResultErrorMessage(result), {
         code: ERROR_CODES.exec,
-        exitCode: EXIT_CODES.failure,
-        details: { exit_code: result.exitCode },
+        exitCode: result.exitCode,
+        details: {
+          exit_code: result.exitCode,
+          failure_kind: result.failureKind ?? "exit",
+        },
       }),
     ),
   ];
@@ -148,7 +219,7 @@ export function emitResult(opts: GlobalOptions, result: RunResult, summary: stri
       stdout: includeOutput ? (data.stdout as string) : undefined,
       stderr: includeOutput ? (data.stderr as string) : undefined,
       error_code: result.exitCode === 0 ? undefined : ERROR_CODES.exec,
-      error_message: result.exitCode === 0 ? undefined : "Command failed",
+      error_message: result.exitCode === 0 ? undefined : runResultErrorMessage(result),
     });
   }
 }

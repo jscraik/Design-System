@@ -45,6 +45,7 @@ export type RunResult = {
   stdout?: string;
   stderr?: string;
   dryRun?: boolean;
+  failureKind?: "exit" | "signal" | "timeout" | "start";
 };
 
 export type Suggestion = {
