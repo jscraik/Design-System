@@ -58,6 +58,13 @@
       "kind": "astudio.design.doctor.v1",
       "cwd": "$REPO_ROOT",
       "args": ["design", "doctor", "--json"]
+    },
+    {
+      "name": "doctor-legacy-warnings",
+      "kind": "astudio.design.doctor.v1",
+      "cwd": "$TEMP_NO_DESIGN_PROJECT",
+      "args": ["design", "doctor", "--json"],
+      "expectedWarningCheck": "design-file"
     }
   ],
   "errors": [
@@ -86,7 +93,23 @@
       "args": ["design", "lint", "--json"],
       "expectedExitCode": 2,
       "expectedErrorCode": "E_DESIGN_DISCOVERY_REQUIRED",
-      "recovery": "none"
+      "recovery": "nextCommand"
+    },
+    {
+      "name": "discovery-contract-missing",
+      "cwd": "$TEMP_NO_DESIGN_PROJECT",
+      "args": ["design", "lint", "--json"],
+      "expectedExitCode": 2,
+      "expectedErrorCode": "E_DESIGN_CONTRACT_MISSING",
+      "recovery": "nextCommand"
+    },
+    {
+      "name": "discovery-contract-ambiguous",
+      "cwd": "$TEMP_AMBIGUOUS_DESIGN_SUBDIR",
+      "args": ["design", "lint", "--json"],
+      "expectedExitCode": 2,
+      "expectedErrorCode": "E_DESIGN_CONTRACT_AMBIGUOUS",
+      "recovery": "unavailable"
     },
     {
       "name": "profile-override-forbidden-in-ci",
@@ -105,7 +128,7 @@
       ],
       "expectedExitCode": 3,
       "expectedErrorCode": "E_DESIGN_PROFILE_OVERRIDE_FORBIDDEN",
-      "recovery": "none"
+      "recovery": "unavailable"
     },
     {
       "name": "unknown-brand-profile",
@@ -113,7 +136,66 @@
       "args": ["design", "lint", "--file", "DESIGN.md", "--json"],
       "expectedExitCode": 2,
       "expectedErrorCode": "E_DESIGN_PROFILE_UNKNOWN",
-      "recovery": "none"
+      "recovery": "unavailable"
+    },
+    {
+      "name": "unsupported-brand-profile",
+      "cwd": "$TEMP_UNSUPPORTED_PROFILE_PROJECT",
+      "args": ["design", "lint", "--file", "DESIGN.md", "--json"],
+      "expectedExitCode": 3,
+      "expectedErrorCode": "E_DESIGN_PROFILE_UNSUPPORTED",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "schema-invalid",
+      "cwd": "$TEMP_INVALID_SCHEMA_PROJECT",
+      "args": ["design", "lint", "--file", "DESIGN.md", "--json"],
+      "expectedExitCode": 2,
+      "expectedErrorCode": "E_DESIGN_SCHEMA_INVALID",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "guidance-config-invalid",
+      "cwd": "$TEMP_INVALID_GUIDANCE_PROJECT",
+      "args": ["design", "migrate", "--to", "design-md", "--dry-run", "--json"],
+      "expectedExitCode": 2,
+      "expectedErrorCode": "E_DESIGN_CONFIG_INVALID",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "rollback-metadata-unreadable",
+      "cwd": "$TEMP_ROLLBACK_METADATA_MISSING_PROJECT",
+      "args": ["design", "migrate", "--rollback", "--dry-run", "--json"],
+      "expectedExitCode": 3,
+      "expectedErrorCode": "E_DESIGN_ROLLBACK_METADATA_UNREADABLE",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "migration-state-invalid",
+      "cwd": "$TEMP_FAILED_MIGRATION_PROJECT",
+      "args": ["design", "migrate", "--to", "design-md", "--dry-run", "--json"],
+      "expectedExitCode": 1,
+      "expectedErrorCode": "E_DESIGN_MIGRATION_STATE_INVALID",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "safety-contract-exists",
+      "cwd": "$TEMP_VALID_DESIGN_PROJECT",
+      "args": ["design", "init", "--write", "--json"],
+      "expectedExitCode": 3,
+      "expectedErrorCode": "E_DESIGN_CONTRACT_EXISTS",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "execution-active-check-failed",
+      "cwd": "$REPO_ROOT",
+      "env": {
+        "ASTUDIO_PNPM": "$FAKE_PNPM_EXIT_7"
+      },
+      "args": ["design", "doctor", "--active", "--exec", "--json"],
+      "expectedExitCode": 1,
+      "expectedErrorCode": "E_EXEC",
+      "recovery": "unavailable"
     }
   ],
   "stdout": {

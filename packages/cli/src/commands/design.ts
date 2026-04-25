@@ -24,6 +24,7 @@ import { CliError } from "../error.js";
 import type { CliArgs, JsonValue } from "../types.js";
 import { findRepoRoot } from "../utils/config.js";
 import { resolveCwd } from "../utils/env.js";
+import { runPnpm } from "../utils/exec.js";
 import { createEnvelope, outputJson, outputPlain } from "../utils/output.js";
 
 const DEFAULT_DESIGN_FILE = "DESIGN.md";
@@ -53,6 +54,7 @@ interface DesignArgs extends CliArgs {
   to?: "legacy" | "design-md";
   rollback?: boolean;
   resume?: boolean;
+  active?: boolean;
 }
 
 interface DesignDiscovery {
@@ -117,6 +119,57 @@ function designRetryCommand(
   };
 }
 
+function designCommandRecovery(
+  argv: DesignArgs,
+  args: string[],
+): {
+  argv: string[];
+  cwd: string;
+} {
+  return {
+    argv: ["astudio", ...args],
+    cwd: commandCwd(argv),
+  };
+}
+
+function unavailableRecovery(reason: string): {
+  recoveryUnavailableReason: string;
+} {
+  return { recoveryUnavailableReason: reason };
+}
+
+function recoveryForDesignErrorCode(
+  code: string,
+): { recoveryUnavailableReason: string } | undefined {
+  switch (code) {
+    case "E_DESIGN_CONFIG_INVALID":
+      return unavailableRecovery("The guidance config must be repaired before migration can run.");
+    case "E_DESIGN_MIGRATION_STATE_INVALID":
+      return unavailableRecovery(
+        "The migration state must be repaired or rolled back before this command can retry safely.",
+      );
+    case "E_DESIGN_PROFILE_OVERRIDE_FORBIDDEN":
+      return unavailableRecovery(
+        "CI profile overrides are intentionally blocked; update the command or DESIGN.md frontmatter.",
+      );
+    case "E_DESIGN_PROFILE_UNKNOWN":
+    case "E_DESIGN_PROFILE_UNSUPPORTED":
+      return unavailableRecovery(
+        "The DESIGN.md brand profile must be changed to a supported profile before retrying.",
+      );
+    case "E_DESIGN_ROLLBACK_METADATA_UNREADABLE":
+      return unavailableRecovery(
+        "Rollback metadata must be restored or repaired before rollback can continue safely.",
+      );
+    case "E_DESIGN_SCHEMA_INVALID":
+      return unavailableRecovery(
+        "The DESIGN.md schema or frontmatter must be repaired before retrying.",
+      );
+    default:
+      return undefined;
+  }
+}
+
 function assertDesignOutputMode(argv: DesignArgs): void {
   if (argv.plain && (argv.agent || isCiEnvironment())) {
     throw new CliError("Design commands require JSON output in agent or CI mode.", {
@@ -134,16 +187,20 @@ function assertDesignOutputMode(argv: DesignArgs): void {
 function normalizeDesignError(error: unknown): CliError {
   if (error instanceof CliError) return error;
   if (error instanceof GuidanceError) {
+    const recovery = recoveryForDesignErrorCode(error.code);
     return new CliError(error.message, {
       code: error.code,
       exitCode: error.exitCode,
       hint: error.hint,
+      ...(recovery ? { recovery } : {}),
     });
   }
   if (error instanceof DesignEngineError) {
+    const recovery = recoveryForDesignErrorCode(error.code);
     return new CliError(error.message, {
       code: error.code,
       exitCode: error.exitCode,
+      ...(recovery ? { recovery } : {}),
     });
   }
   return new CliError(error instanceof Error ? error.message : "Design command failed", {
@@ -229,6 +286,10 @@ async function resolveDesignContract(argv: DesignArgs): Promise<DesignDiscovery>
       code: "E_DESIGN_DISCOVERY_REQUIRED",
       exitCode: EXIT_CODES.usage,
       hint: "Pass --file DESIGN.md, --scope root, or --scope nearest.",
+      recovery: {
+        fix_suggestion: "Retry with an explicit design discovery scope.",
+        nextCommand: designRetryCommand(argv, ["--scope", "root"]),
+      },
     });
   }
 
@@ -248,6 +309,10 @@ async function resolveDesignContract(argv: DesignArgs): Promise<DesignDiscovery>
       code: "E_DESIGN_CONTRACT_MISSING",
       exitCode: EXIT_CODES.usage,
       hint: "Pass --file, --scope root, or create DESIGN.md with astudio design init --write.",
+      recovery: {
+        fix_suggestion: "Preview a starter DESIGN.md before writing a new design contract.",
+        nextCommand: designCommandRecovery(argv, ["design", "init", "--dry-run", "--json"]),
+      },
     });
   }
 
@@ -257,6 +322,9 @@ async function resolveDesignContract(argv: DesignArgs): Promise<DesignDiscovery>
       exitCode: EXIT_CODES.usage,
       details: { candidates },
       hint: "Pass --file or choose --scope root|nearest.",
+      recovery: unavailableRecovery(
+        "Multiple DESIGN.md files were discovered; an operator must choose the intended contract.",
+      ),
     });
   }
 
@@ -286,6 +354,9 @@ async function readDesignFile(filePath: string): Promise<string> {
       code: "E_DESIGN_CONTRACT_MISSING",
       exitCode: EXIT_CODES.usage,
       hint: "Pass --file or create DESIGN.md with astudio design init --write.",
+      recovery: unavailableRecovery(
+        "The explicit --file path does not exist, so the caller must provide the intended contract path.",
+      ),
     });
   }
 }
@@ -529,7 +600,8 @@ function migrateOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
 function doctorOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
   return cmd
     .option("file", { type: "string" })
-    .option("scope", { choices: ["root", "nearest"] as const });
+    .option("scope", { choices: ["root", "nearest"] as const })
+    .option("active", { type: "boolean" });
 }
 
 export function designCommand(yargs: Argv): Argv {
@@ -683,6 +755,9 @@ export function designCommand(yargs: Argv): Argv {
               code: "E_DESIGN_CONTRACT_EXISTS",
               exitCode: EXIT_CODES.policy,
               hint: "Pass --force --yes with --write only when replacing this DESIGN.md is intentional.",
+              recovery: unavailableRecovery(
+                "Replacing an existing DESIGN.md requires an explicit operator decision.",
+              ),
             });
           }
           const contract = await parseDesignContract(markdown, { filePath, rootDir: target });
@@ -698,6 +773,9 @@ export function designCommand(yargs: Argv): Argv {
                   code: "E_DESIGN_CONTRACT_EXISTS",
                   exitCode: EXIT_CODES.policy,
                   hint: "Pass --force --yes with --write only when replacing this DESIGN.md is intentional.",
+                  recovery: unavailableRecovery(
+                    "Replacing an existing DESIGN.md requires an explicit operator decision.",
+                  ),
                 });
               }
               throw error;
@@ -795,6 +873,40 @@ export function designCommand(yargs: Argv): Argv {
               migrationState: guidanceState.migrationState,
               rollbackMetadata: guidanceState.rollbackMetadata,
               violations: guidance.violations,
+            });
+          }
+          if (argv.active) {
+            if (!argv.exec) {
+              throw new CliError("design doctor --active requires --exec.", {
+                code: ERROR_CODES.policy,
+                exitCode: EXIT_CODES.policy,
+                hint: "Re-run with --exec to allow active external checks.",
+                recovery: {
+                  fix_suggestion: "Re-run with --exec to allow active external checks.",
+                  nextCommand: designRetryCommand(argv, ["--exec"]),
+                },
+              });
+            }
+            const pnpm = await runPnpm(argv, ["--version"]);
+            if (pnpm.exitCode !== EXIT_CODES.success) {
+              throw new CliError("Design doctor active check failed.", {
+                code: ERROR_CODES.exec,
+                exitCode: pnpm.exitCode,
+                hint: "Fix the external tool failure or rerun design doctor without --active.",
+                details: {
+                  command: pnpm.command,
+                  exit_code: pnpm.exitCode,
+                  failure_kind: pnpm.failureKind ?? "exit",
+                },
+                recovery: unavailableRecovery(
+                  "Active checks depend on external tool availability and cannot be retried safely by changing design arguments.",
+                ),
+              });
+            }
+            checks.push({
+              name: "pnpm",
+              status: "pass",
+              version: pnpm.stdout?.trim() ?? null,
             });
           }
           const result = {

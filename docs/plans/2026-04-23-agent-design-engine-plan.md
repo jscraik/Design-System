@@ -67,7 +67,7 @@ The external project at `/Users/jamiecraik/dev/system-design` is useful as a mig
 
 - Auto-review and helper-swarm artifacts were written to `artifacts/reviews/jsc208-correctness-auto.md`, `artifacts/reviews/jsc208-testing-auto.md`, `artifacts/reviews/jsc208-simplify-auto.md`, `artifacts/reviews/jsc208-plan-audit.md`, `artifacts/reviews/jsc208-implementation-gap-audit.md`, and `artifacts/reviews/jsc208-validation-audit.md`.
 - Focused fixes landed for parser line numbers, explicit component extraction, profile error coverage, non-mutating init validation, project-root migration targeting, corrupt rollback metadata refusal, rollback quarantine, structured recovery payloads, design compatibility manifests, and CLI Biome command parity.
-- Follow-up CLI protocol fixtures landed for every `astudio design *` success command plus policy, discovery, profile, and unavailable-recovery error cases. The fixtures validate the `astudio.command.v1` envelope with JSON Schema and assert the one-line stdout / empty-stderr byte contract.
+- Follow-up CLI protocol fixtures landed for every `astudio design *` success command plus policy, safety, compatibility, discovery, profile, warning-only, and execution error cases. The fixtures validate the `astudio.command.v1` envelope with JSON Schema, assert the one-line stdout / empty-stderr byte contract, and prove safe retries use structured `recovery.nextCommand` while unsafe paths emit `recoveryUnavailableReason`.
 - Local focused gates passed for `packages/agent-design-engine`, `packages/cli`, and `packages/design-system-guidance`.
 - Root release-readiness gates passed for `pnpm test:policy`, `pnpm validate:tokens`, `pnpm ds:matrix:check`, `pnpm docs:lint`, `pnpm design-system-guidance:check:ci`, `pnpm test:e2e:web`, `pnpm test:a11y:widgets`, `pnpm build`, and `git diff --check`.
 - Release readiness note: the focused JSC-208 path is green locally. Browser-backed gates require Playwright Chromium plus an unsandboxed macOS launch path; once that environment was available, the web E2E, widget a11y, and aggregate build gates passed. Remaining rollout risk is deeper migration fault-injection/race coverage and wrapper/engine boundary enforcement before GA.
@@ -787,7 +787,7 @@ Tasks:
 - [x] Resolve top-level command before design manifest validation so non-design aStudio commands bypass design manifest checks.
 - [x] Scope compatibility manifest command gating to `astudio design *`.
 - [x] Add profile-resolution precedence and profile error tests.
-- [ ] Add recovery payload fixtures for policy, safety, compatibility, discovery, profile, and execution failures, including unavailable-recovery cases.
+- [x] Add recovery payload fixtures for policy, safety, compatibility, discovery, profile, and execution failures, including unavailable-recovery cases.
 - [x] Represent `recovery.nextCommand` as structured argv/cwd/env JSON in machine mode and reject shell-string retry commands.
 - [x] Add agent/CI output-mode tests proving omitted mode defaults to JSON and explicit incompatible modes fail with `E_POLICY`.
 - [x] Ensure command output follows existing `astudio.command.v1` envelope.

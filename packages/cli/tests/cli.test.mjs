@@ -97,11 +97,78 @@ function writeUnknownProfileProject(targetDir) {
   );
 }
 
+function writeUnsupportedProfileProject(targetDir) {
+  writeValidDesignProject(targetDir);
+  const designPath = path.join(targetDir, "DESIGN.md");
+  fs.writeFileSync(
+    designPath,
+    fs
+      .readFileSync(designPath, "utf8")
+      .replace("brandProfile: astudio-default@1", "brandProfile: astudio-default@2"),
+  );
+}
+
+function writeInvalidSchemaProject(targetDir) {
+  writeValidDesignProject(targetDir);
+  const designPath = path.join(targetDir, "DESIGN.md");
+  fs.writeFileSync(
+    designPath,
+    fs
+      .readFileSync(designPath, "utf8")
+      .replace("schemaVersion: agent-design.v1", "schemaVersion: agent-design.v2"),
+  );
+}
+
+function writeAmbiguousDesignProject(targetDir) {
+  writeValidDesignProject(targetDir);
+  fs.mkdirSync(path.join(targetDir, "packages", "web"), { recursive: true });
+  fs.writeFileSync(path.join(targetDir, "pnpm-workspace.yaml"), "packages:\n  - packages/*\n");
+  fs.copyFileSync(
+    path.join(targetDir, "DESIGN.md"),
+    path.join(targetDir, "packages", "web", "DESIGN.md"),
+  );
+}
+
+function writeInvalidGuidanceProject(targetDir) {
+  writeValidDesignProject(targetDir);
+  writeGuidanceConfig(targetDir, { schemaVersion: 999 });
+}
+
+function writeRollbackMetadataMissingProject(targetDir) {
+  writeValidDesignProject(targetDir);
+  writeGuidanceConfig(targetDir, {
+    schemaVersion: 2,
+    docs: ["docs/design-system/CONTRACT.md"],
+    designContract: {
+      mode: "design-md",
+      migrationState: "active",
+      rollbackMetadata: "artifacts/design-migrations/missing-guidance-rollback.json",
+    },
+  });
+}
+
+function writeFailedMigrationProject(targetDir) {
+  writeValidDesignProject(targetDir);
+  writeGuidanceConfig(targetDir, {
+    schemaVersion: 2,
+    docs: ["docs/design-system/CONTRACT.md"],
+    designContract: {
+      mode: "legacy",
+      migrationState: "failed",
+      rollbackMetadata: "artifacts/design-migrations/missing.json",
+    },
+  });
+}
+
 function makeFixtureContext(fixture) {
   const context = {
     $REPO_ROOT: repoRoot,
   };
   const encodedFixture = JSON.stringify(fixture);
+  if (encodedFixture.includes("$TEMP_NO_DESIGN_PROJECT")) {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-no-design-fixture-"));
+    context.$TEMP_NO_DESIGN_PROJECT = tempDir;
+  }
   if (encodedFixture.includes("$TEMP_VALID_DESIGN_PROJECT")) {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-design-fixture-"));
     writeValidDesignProject(tempDir);
@@ -111,6 +178,44 @@ function makeFixtureContext(fixture) {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-profile-fixture-"));
     writeUnknownProfileProject(tempDir);
     context.$TEMP_UNKNOWN_PROFILE_PROJECT = tempDir;
+  }
+  if (encodedFixture.includes("$TEMP_UNSUPPORTED_PROFILE_PROJECT")) {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-unsupported-profile-fixture-"));
+    writeUnsupportedProfileProject(tempDir);
+    context.$TEMP_UNSUPPORTED_PROFILE_PROJECT = tempDir;
+  }
+  if (encodedFixture.includes("$TEMP_INVALID_SCHEMA_PROJECT")) {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-invalid-schema-fixture-"));
+    writeInvalidSchemaProject(tempDir);
+    context.$TEMP_INVALID_SCHEMA_PROJECT = tempDir;
+  }
+  if (
+    encodedFixture.includes("$TEMP_AMBIGUOUS_DESIGN_PROJECT") ||
+    encodedFixture.includes("$TEMP_AMBIGUOUS_DESIGN_SUBDIR")
+  ) {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-ambiguous-design-fixture-"));
+    writeAmbiguousDesignProject(tempDir);
+    context.$TEMP_AMBIGUOUS_DESIGN_PROJECT = tempDir;
+    context.$TEMP_AMBIGUOUS_DESIGN_SUBDIR = path.join(tempDir, "packages", "web");
+  }
+  if (encodedFixture.includes("$TEMP_INVALID_GUIDANCE_PROJECT")) {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-invalid-guidance-fixture-"));
+    writeInvalidGuidanceProject(tempDir);
+    context.$TEMP_INVALID_GUIDANCE_PROJECT = tempDir;
+  }
+  if (encodedFixture.includes("$TEMP_ROLLBACK_METADATA_MISSING_PROJECT")) {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-rollback-missing-fixture-"));
+    writeRollbackMetadataMissingProject(tempDir);
+    context.$TEMP_ROLLBACK_METADATA_MISSING_PROJECT = tempDir;
+  }
+  if (encodedFixture.includes("$TEMP_FAILED_MIGRATION_PROJECT")) {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-failed-migration-fixture-"));
+    writeFailedMigrationProject(tempDir);
+    context.$TEMP_FAILED_MIGRATION_PROJECT = tempDir;
+  }
+  if (encodedFixture.includes("$FAKE_PNPM_EXIT_7")) {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-fake-pnpm-"));
+    context.$FAKE_PNPM_EXIT_7 = writeExecutableScript(tempDir, "pnpm-exit-7", "exit 7");
   }
   return context;
 }
@@ -348,6 +453,14 @@ test("design command JSON fixtures match the schema and byte contract", async (t
       assert.equal(payload.status, "success");
       assert.equal(payload.data.kind, fixture.kind);
       assert.equal(payload.meta.outputMode, "json");
+      if (fixture.expectedWarningCheck) {
+        assert.deepEqual(payload.errors, []);
+        assert.ok(
+          payload.data.checks.some(
+            (check) => check.name === fixture.expectedWarningCheck && check.status === "warn",
+          ),
+        );
+      }
     });
   }
 });
