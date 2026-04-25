@@ -42,6 +42,8 @@ export interface ProductPageShellProps extends Omit<React.HTMLAttributes<HTMLDiv
   sidebar?: React.ReactNode;
   footer?: React.ReactNode;
   density?: ProductDensity;
+  sidebarClassName?: string;
+  mainClassName?: string;
 }
 
 export function ProductPageShell({
@@ -51,6 +53,8 @@ export function ProductPageShell({
   sidebar,
   footer,
   density = "default",
+  sidebarClassName,
+  mainClassName,
   className,
   children,
   ...props
@@ -70,7 +74,7 @@ export function ProductPageShell({
           <div className="min-w-0 space-y-1">
             {title && <h1 className="text-title-2 font-semibold tracking-body">{title}</h1>}
             {description && (
-              <p className="max-w-3xl text-body-small text-muted-foreground">{description}</p>
+              <p className="max-w-3xl text-body-small text-text-secondary">{description}</p>
             )}
           </div>
           {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
@@ -79,11 +83,14 @@ export function ProductPageShell({
 
       <div className={cn("flex min-h-0 flex-1 flex-col gap-6", sidebar && "lg:flex-row")}>
         {sidebar && (
-          <aside data-slot="page-shell-sidebar" className="min-h-0 lg:w-64 lg:shrink-0">
+          <aside
+            data-slot="page-shell-sidebar"
+            className={cn("min-h-0 lg:w-64 lg:shrink-0", sidebarClassName)}
+          >
             {sidebar}
           </aside>
         )}
-        <main data-slot="page-shell-main" className="min-w-0 flex-1">
+        <main data-slot="page-shell-main" className={cn("min-w-0 flex-1", mainClassName)}>
           {children}
         </main>
       </div>
@@ -101,6 +108,7 @@ export interface ProductPanelProps extends React.HTMLAttributes<HTMLElement> {
   density?: ProductDensity;
   tone?: ProductTone;
   as?: "article" | "aside" | "div" | "section";
+  bodyClassName?: string;
 }
 
 export function ProductPanel({
@@ -111,6 +119,7 @@ export function ProductPanel({
   density = "default",
   tone = "default",
   as: Component = "section",
+  bodyClassName,
   className,
   children,
   ...props
@@ -132,7 +141,7 @@ export function ProductPanel({
           {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
         </div>
       )}
-      <div data-slot="product-panel-body" className="min-w-0">
+      <div data-slot="product-panel-body" className={cn("min-w-0", bodyClassName)}>
         {children}
       </div>
       {footer && (

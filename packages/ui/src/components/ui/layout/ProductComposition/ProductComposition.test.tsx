@@ -18,6 +18,7 @@ describe("ProductPageShell", () => {
     );
 
     expect(screen.getByRole("heading", { level: 1, name: "Projects" })).toBeInTheDocument();
+    expect(screen.getByText("Manage active work")).toHaveClass("text-text-secondary");
     expect(document.querySelector('[data-slot="page-shell"]')).toHaveClass("min-h-dvh");
     expect(document.querySelector('[data-slot="page-shell-main"]')).toHaveTextContent(
       "Project list",
@@ -26,12 +27,19 @@ describe("ProductPageShell", () => {
 
   it("renders sidebar and footer slots when provided", () => {
     render(
-      <ProductPageShell sidebar={<nav>Filters</nav>} footer={<span>Status</span>}>
+      <ProductPageShell
+        sidebar={<nav>Filters</nav>}
+        sidebarClassName="lg:w-80"
+        mainClassName="overflow-hidden"
+        footer={<span>Status</span>}
+      >
         <div>Content</div>
       </ProductPageShell>,
     );
 
     expect(document.querySelector('[data-slot="page-shell-sidebar"]')).toHaveTextContent("Filters");
+    expect(document.querySelector('[data-slot="page-shell-sidebar"]')).toHaveClass("lg:w-80");
+    expect(document.querySelector('[data-slot="page-shell-main"]')).toHaveClass("overflow-hidden");
     expect(document.querySelector('[data-slot="page-shell-footer"]')).toHaveTextContent("Status");
   });
 });
@@ -42,6 +50,7 @@ describe("ProductPanel", () => {
       <ProductPanel
         title="Usage"
         description="Current month"
+        bodyClassName="grid"
         footer={<button type="button">Export</button>}
       >
         <p>Usage table</p>
@@ -53,6 +62,7 @@ describe("ProductPanel", () => {
     expect(document.querySelector('[data-slot="product-panel-body"]')).toHaveTextContent(
       "Usage table",
     );
+    expect(document.querySelector('[data-slot="product-panel-body"]')).toHaveClass("grid");
     expect(document.querySelector('[data-slot="product-panel-footer"]')).toHaveTextContent(
       "Export",
     );

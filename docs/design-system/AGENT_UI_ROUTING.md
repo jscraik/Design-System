@@ -1,6 +1,6 @@
 # Agent UI Routing
 
-Last updated: 2026-03-23
+Last updated: 2026-04-25
 Owner: Jamie Scott Craik (@jscraik)
 Review cadence: Every release or monthly (whichever is sooner)
 
@@ -9,6 +9,7 @@ Review cadence: Every release or monthly (whichever is sooner)
 - [Purpose](#purpose)
 - [Routing order](#routing-order)
 - [Agent Composition Primitives](#agent-composition-primitives)
+- [Exemplar surface migration](#exemplar-surface-migration)
 - [Lifecycle source of truth](#lifecycle-source-of-truth)
 - [Settings cluster defaults](#settings-cluster-defaults)
 - [Do not create these by default](#do-not-create-these-by-default)
@@ -54,6 +55,23 @@ Routing rules:
 - Use fallback primitives only when the component lifecycle manifest marks a local wrapper as transitional or missing.
 - Use templates for complete known product patterns; use product composition primitives for new surfaces and partial workflows.
 - Add a lifecycle entry before making a new primitive a recommended routing target.
+
+## Exemplar surface migration
+
+Protected exemplar surfaces should model the patterns agents are expected to copy:
+
+- Start app pages with `ProductPageShell` instead of hand-rolled viewport wrappers.
+- Use `ProductPanel` for framed preview or control regions instead of ad hoc card chains.
+- Use `ProductSection` for repeated groups inside panels and settings surfaces.
+- Keep surface color and text roles on mapped semantic utilities such as `bg-background`, `bg-card`, `bg-muted`, `text-foreground`, `text-text-secondary`, `text-muted-foreground`, `border-border`, `ring-ring`, and `text-interactive`.
+- Do not use foundation utilities, raw color literals, raw pixel values, or arbitrary tracking/layout escapes in product exemplar surfaces unless a documented exception is added to the guidance ledger.
+
+Current migrated exemplars:
+
+- `platforms/web/apps/web/src/pages/HarnessPage.tsx`
+- `platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx`
+- `packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx`
+- `packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.tsx`
 
 ## Lifecycle source of truth
 
