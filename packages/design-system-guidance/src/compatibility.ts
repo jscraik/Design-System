@@ -28,6 +28,7 @@ export const DESIGN_COMPATIBILITY_MANIFEST: DesignCompatibilityManifest = {
     policy: "later-of",
     daysAfterGa: 90,
     minorReleasesAfterGa: 2,
+    rollbackMetadataMinWrapper: "0.0.1",
   },
 };
 

@@ -596,7 +596,7 @@ Rollback metadata schema:
 - `doctor` must detect every non-healthy state in the migration transition table and print the next valid command
 - missing or unreadable metadata must never trigger best-effort rollback mutation. `doctor` must emit one canonical remediation path, either restore the metadata from the recorded artifact location or rerun migration after manually clearing the invalid partial state.
 
-JSC-219 implementation note: rollback metadata now carries the required path, schema, checksum, support-window, digest, and HMAC signature fields bound to the local rollback artifact signing key plus compatibility manifest. Rollback and resume read paths reject tampered metadata, forged public signatures, malformed or unsupported wrapper versions, symlink escapes, config checksum drift, and `DESIGN.md` checksum drift before mutation.
+JSC-219 implementation note: rollback metadata now carries the required path, schema, checksum, support-window, digest, and HMAC signature fields bound to the local rollback artifact signing key plus compatibility manifest. Rollback and resume read paths reject tampered metadata, forged public signatures, malformed or unsupported wrapper versions, symlink escapes, config checksum drift, and `DESIGN.md` checksum drift before mutation. The rollback read window is governed by the manifest's explicit `legacySupport.rollbackMetadataMinWrapper`, so older metadata inside the published legacy support window remains readable even when the normal design-command `minWrapper` advances.
 
 Rollback quarantine behavior:
 

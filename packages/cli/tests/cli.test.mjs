@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { createHash } from "node:crypto";
+import { createHash, createHmac } from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -322,6 +322,28 @@ function publicManifestRollbackSignature(metadataDigest) {
       DESIGN_COMPATIBILITY_MANIFEST.parityBaseline.commit,
     ].join(":"),
   )}`;
+}
+
+function localRollbackSignature(metadataDigest, signingKey) {
+  return `hmac-sha256:${createHmac("sha256", signingKey)
+    .update(
+      [
+        metadataDigest,
+        DESIGN_COMPATIBILITY_MANIFEST.schema,
+        DESIGN_COMPATIBILITY_MANIFEST.wrapperVersion,
+        DESIGN_COMPATIBILITY_MANIFEST.parityBaseline.commit,
+      ].join(":"),
+    )
+    .digest("hex")}`;
+}
+
+function resignRollbackMetadata(metadata) {
+  const signingKey = fs
+    .readFileSync(path.join(metadata.rollbackArtifactDir, ".rollback-metadata-signing-key"), "utf8")
+    .trim();
+  metadata.metadataDigest = checksum(canonicalJson(stripRollbackSignature(metadata)));
+  metadata.metadataSignature = localRollbackSignature(metadata.metadataDigest, signingKey);
+  return metadata;
 }
 
 async function assertRollbackFailsWithoutMutation(mutateProject) {
@@ -1297,6 +1319,42 @@ test("design migrate rollback rejects malformed wrapper metadata without mutatin
     const metadata = readJsonFile(metadataPath);
     metadata.writtenByWrapperVersion = "bogus";
     writeJsonFile(metadataPath, metadata);
+  });
+});
+
+test("design migrate rollback accepts metadata inside published legacy support window", async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-guidance-"));
+  writeValidDesignProject(tempDir);
+
+  const migrate = await runCli(
+    ["design", "migrate", "--to", "design-md", "--write", "--json"],
+    {},
+    { cwd: tempDir },
+  );
+  assert.equal(migrate.code, 0, `${migrate.stdout}${migrate.stderr}`);
+
+  const metadataPath = rollbackMetadataPath(tempDir);
+  const metadata = rollbackMetadata(tempDir);
+  metadata.writtenByWrapperVersion =
+    DESIGN_COMPATIBILITY_MANIFEST.legacySupport.rollbackMetadataMinWrapper;
+  writeJsonFile(metadataPath, resignRollbackMetadata(metadata));
+
+  const rollback = await runCli(
+    ["design", "migrate", "--rollback", "--write", "--json"],
+    {},
+    { cwd: tempDir },
+  );
+  assert.equal(rollback.code, 0, `${rollback.stdout}${rollback.stderr}`);
+  const payload = JSON.parse(rollback.stdout);
+  assert.equal(payload.data.migrationState, "rolled-back");
+  assert.equal(fs.existsSync(path.join(tempDir, "DESIGN.md")), false);
+});
+
+test("design migrate rollback rejects metadata older than legacy support window", async () => {
+  await assertRollbackFailsWithoutMutation(({ metadataPath }) => {
+    const metadata = readJsonFile(metadataPath);
+    metadata.writtenByWrapperVersion = "0.0.0";
+    writeJsonFile(metadataPath, resignRollbackMetadata(metadata));
   });
 });
 

@@ -939,7 +939,8 @@ function compareSemver(left: string, right: string): number {
 
 function assertSupportedWrapperVersion(version: string): void {
   if (
-    compareSemver(version, DESIGN_COMPATIBILITY_MANIFEST.minWrapper) < 0 ||
+    compareSemver(version, DESIGN_COMPATIBILITY_MANIFEST.legacySupport.rollbackMetadataMinWrapper) <
+      0 ||
     compareSemver(version, DESIGN_COMPATIBILITY_MANIFEST.maxWrapperTested) > 0
   ) {
     throw rollbackMetadataError();

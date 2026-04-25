@@ -61,6 +61,7 @@ export interface DesignCompatibilityManifest {
     policy: "later-of";
     daysAfterGa: number;
     minorReleasesAfterGa: number;
+    rollbackMetadataMinWrapper: string;
   };
 }
 
