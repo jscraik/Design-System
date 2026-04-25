@@ -4,6 +4,11 @@ set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 
+MISE_SHIMS="${HOME:-}/.local/share/mise/shims"
+if [[ -n "${HOME:-}" && -d "$MISE_SHIMS" ]]; then
+	export PATH="$MISE_SHIMS:$PATH"
+fi
+
 if ! command -v node >/dev/null 2>&1; then
 	echo "Error: node is required to run scripts/harness-cli.sh." >&2
 	echo "Install Node.js and retry." >&2
