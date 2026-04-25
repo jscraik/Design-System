@@ -44,6 +44,10 @@ const FOCUS_STORY_IDS = [
 
 const checks = [
   {
+    label: "Workspace library build",
+    command: ["pnpm", "build:lib"],
+  },
+  {
     label: "Storybook settings exemplar visuals",
     command: ["pnpm", "test:visual:storybook", ...passthroughArgs],
     env: {
