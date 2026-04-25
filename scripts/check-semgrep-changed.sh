@@ -23,7 +23,10 @@ ensure_semgrep_version() {
 	fi
 
 	local detected_version
-	detected_version="$("$SEMGREP_BIN" --version 2>/dev/null | tr -d '[:space:]')"
+	if ! detected_version="$("$SEMGREP_BIN" --version 2>/dev/null | tr -d '[:space:]')"; then
+		install_semgrep
+		return
+	fi
 	if [[ "$detected_version" != "$SEMGREP_VERSION" ]]; then
 		install_semgrep
 	fi
