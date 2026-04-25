@@ -47,23 +47,27 @@ resolution_status=$?
 set -e
 
 if [[ $resolution_status -eq 42 || -z "$CLI_PATH" ]]; then
-	echo "Error: local @brainwav/coding-harness could not be resolved from this repo." >&2
+	if command -v harness >/dev/null 2>&1; then
+		exec harness "$@"
+	fi
+
+	echo "Error: @brainwav/coding-harness could not be resolved locally or from PATH." >&2
 	echo "This is a local install/bootstrap problem, not a harness command failure." >&2
-	echo "Repair from the repo root with one of:" >&2
+	echo "Repair with one of:" >&2
+	echo "  mise install npm:@brainwav/coding-harness" >&2
 	echo "  pnpm install" >&2
-	echo "  pnpm add -D @brainwav/coding-harness" >&2
-	echo "After the package is installed, rerun:" >&2
+	echo "After the package is available, rerun:" >&2
 	echo "  bash scripts/harness-cli.sh <command>" >&2
-	echo "  pnpm exec harness <command>" >&2
+	echo "  harness <command>" >&2
 	exit 1
 fi
 
 if [[ $resolution_status -ne 0 ]]; then
 	echo "Error: failed to resolve the local @brainwav/coding-harness CLI entrypoint." >&2
 	echo "This indicates a local install/bootstrap problem, not a harness command failure." >&2
-	echo "Repair from the repo root with one of:" >&2
+	echo "Repair with one of:" >&2
+	echo "  mise install npm:@brainwav/coding-harness" >&2
 	echo "  pnpm install" >&2
-	echo "  pnpm add -D @brainwav/coding-harness" >&2
 	exit 1
 fi
 
