@@ -126,7 +126,7 @@ export function ModalDialog({
             error && "bg-status-error/30",
             overlayClassName,
           )}
-          aria-hidden="true"
+          aria-label="Close modal"
           tabIndex={-1}
           onClick={onClose}
         />

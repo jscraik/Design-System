@@ -179,6 +179,22 @@ const RULE_PATTERNS: Record<string, { regex: RegExp; message: string }> = {
     message:
       "Arbitrary tracking utility found. Use a semantic text role or token-backed style instead.",
   },
+  "no-empty-accessible-label": {
+    regex: /\b(?:aria-label|aria-labelledby|title)=\{?["'`]\s*["'`]\}?/g,
+    message:
+      "Empty accessible label found. Icon-only controls and labeled regions need a meaningful accessible name.",
+  },
+  "no-aria-hidden-focusable": {
+    regex: /<(?:a|button|input|select|summary|textarea)\b[^>]*\baria-hidden=\{?["']true["']\}?/g,
+    message:
+      "Focusable element is hidden from assistive technology. Remove aria-hidden or move focus to an accessible control.",
+  },
+  "no-long-motion-duration": {
+    regex:
+      /\bduration-(?:[5-9]\d{2,}|[1-9]\d{3,})\b|(?:animationDuration|transitionDuration)\s*[:=]\s*["']?(?:[5-9]\d{2,}|[1-9]\d{3,})ms\b|animation(?:-[^:]+)?:\s*[^;{}]*\binfinite\b/g,
+    message:
+      "Long or looping motion found. Use restrained durations, reduced-motion fallbacks, or a ledgered exception.",
+  },
 };
 
 const DEFAULT_CONFIG: GuidanceConfig = {
