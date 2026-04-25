@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "paths": {
-      "@design-studio/ui": ["packages/ui/dist/index.d.ts"]
+      "@design-studio/ui": ["../../packages/ui/src/index.ts"]
     }
   },
   "include": ["src/**/*"],

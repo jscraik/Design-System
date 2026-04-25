@@ -5,8 +5,8 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
     "types": ["node"],
     "paths": {
-      "@design-studio/runtime": ["packages/runtime/dist/index.d.ts"],
-      "@design-studio/tokens": ["packages/tokens/dist/index.d.ts"]
+      "@design-studio/runtime": ["../../packages/runtime/dist/index.d.ts"],
+      "@design-studio/tokens": ["../../packages/tokens/dist/index.d.ts"]
     }
   },
   "include": ["src/**/*"],
