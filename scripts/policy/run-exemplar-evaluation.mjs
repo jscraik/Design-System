@@ -63,8 +63,10 @@ const GOLD_STANDARD_REFERENCES = [
 
 function assertIncludes(content, needle, source) {
   if (!content.includes(needle)) {
+    const preview = content.slice(0, 200);
     throw new Error(
-      `${SERVICE_LOG_TAG} ${source} is missing required professional-finish marker: ${needle}`,
+      `${SERVICE_LOG_TAG} ${source} is missing required professional-finish marker: ${needle}\n` +
+        `${SERVICE_LOG_TAG} Content preview: ${preview}...`,
     );
   }
 }
