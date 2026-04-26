@@ -328,6 +328,8 @@ See also: `~/.codex/instructions/Learnings.md`
 
 ### 2026-04-13
 
+- Synced the React security bump branch notes with the updated root overrides and lockfile inputs so the repo map reflects the current source-of-truth versions for `react` and `@types/react`.
+- Aligned `react-dom` back to the exact `react` patch version after CI surfaced a runtime mismatch, then regenerated the lockfile so the build lane and the documented source of truth stay in lockstep.
 - Added the PR #142 dependency bump map entry for the `hono` tooling/runtime update so the documented project state stays aligned with the current branch contents and repo guidance.
 
 ### 2026-03-22
