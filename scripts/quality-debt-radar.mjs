@@ -3,7 +3,9 @@ import path from "node:path";
 import process from "node:process";
 
 const ROOT = process.cwd();
-const CONTRACT_PATH = "docs/operations/quality-debt-radar.categories.json";
+const CONTRACT_PATH =
+  process.env.QUALITY_DEBT_RADAR_CONTRACT_PATH ??
+  "docs/operations/quality-debt-radar.categories.json";
 const TEMPLATE_PATH = "reports/qa/quality-debt-burndown-template.md";
 const DEFAULT_REPORT_DIR = "reports/qa";
 const SERVICE_ID = 'service:"quality-debt-radar"';
@@ -13,6 +15,13 @@ const REQUIRED_FRESHNESS_FIELDS = [
   "work_outstanding_stale_after_days",
 ];
 const REQUIRED_STATUS_FIELDS = ["green", "amber", "red"];
+const SUPPORTED_PROBES = new Set([
+  "a11y_disabled_rules",
+  "biome_disabled_rules",
+  "css_excluded_from_biome",
+  "upstream_alignment_stamp",
+  "work_outstanding_reliability_markers",
+]);
 const STATUS_RANK = new Map([
   ["Green", 0],
   ["Amber", 1],
@@ -41,7 +50,8 @@ function usage(exitCode = 0) {
  * @returns {*} The parsed JSON value.
  */
 function readJson(relativePath) {
-  return JSON.parse(readFileSync(path.join(ROOT, relativePath), "utf8"));
+  const absolutePath = path.isAbsolute(relativePath) ? relativePath : path.join(ROOT, relativePath);
+  return JSON.parse(readFileSync(absolutePath, "utf8"));
 }
 
 /**
@@ -50,7 +60,8 @@ function readJson(relativePath) {
  * @returns {string} The file contents decoded as UTF-8.
  */
 function readText(relativePath) {
-  return readFileSync(path.join(ROOT, relativePath), "utf8");
+  const absolutePath = path.isAbsolute(relativePath) ? relativePath : path.join(ROOT, relativePath);
+  return readFileSync(absolutePath, "utf8");
 }
 
 /**
@@ -129,6 +140,7 @@ function validateStatusRules(category) {
  * @throws {Error} If the freshness contract is invalid.
  * @throws {Error} If no categories are defined.
  * @throws {Error} If a category is missing a required field (`id`, `label`, `owner`, `description`, or `probe`).
+ * @throws {Error} If a category references an unsupported probe.
  * @throws {Error} If duplicate category `id`s are present.
  * @throws {Error} If a category lacks `source_anchors` or `source_commands`.
  * @throws {Error} If a category's `status_rules` are invalid.
@@ -154,6 +166,9 @@ function loadContract() {
       throw new Error(`Duplicate radar category id: ${category.id}`);
     }
     ids.add(category.id);
+    if (!SUPPORTED_PROBES.has(category.probe)) {
+      throw new Error(`Radar category ${category.id} uses unsupported probe: ${category.probe}`);
+    }
     if (!Array.isArray(category.source_anchors) || category.source_anchors.length === 0) {
       throw new Error(`Radar category ${category.id} needs source_anchors.`);
     }
@@ -403,27 +418,50 @@ function probeA11yDisabledRules(category) {
 }
 
 /**
+ * Find an explicit package script that covers CSS linting outside Biome.
+ * @returns {string|null} The matching `package.json` script name, or `null` when no equivalent CSS lint check is declared.
+ */
+function findEquivalentCssLintScript() {
+  const packageJson = readJson("package.json");
+  const scripts = packageJson.scripts ?? {};
+  for (const [scriptName, command] of Object.entries(scripts)) {
+    const scriptLooksCssSpecific = /(^|:)(lint:css|css:lint)($|:)/i.test(scriptName);
+    const commandUsesCssLinter = /stylelint|csslint/i.test(command);
+    if (scriptLooksCssSpecific || commandUsesCssLinter) {
+      return scriptName;
+    }
+  }
+  return null;
+}
+
+/**
  * Assess whether CSS files are included in Biome's lint surface for the given contract category.
  * @param {Object} category - The contract category to evaluate.
- * @returns {Object} A result object containing `category`, `status`, `freshness`, `metric`, `trend`, `notes`, and `nextAction`. `status` is `"Green"` when CSS is included, `"Amber"` when CSS is explicitly excluded, or `"Red"` with `freshness` `"Unavailable"` if evidence cannot be read.
+ * @returns {Object} A result object containing `category`, `status`, `freshness`, `metric`, `trend`, `notes`, and `nextAction`. `status` is `"Green"` when CSS is included or an equivalent explicit CSS lint check exists, `"Amber"` when CSS is explicitly excluded without equivalent coverage, or `"Red"` with `freshness` `"Unavailable"` if evidence cannot be read.
  */
 function probeCssLintCoverageGap(category) {
   try {
     const biome = parseBiome();
     const includes = biome.files?.includes ?? [];
     const cssExcluded = includes.some((entry) => entry.startsWith("!") && entry.endsWith(".css"));
+    const equivalentCssLintScript = cssExcluded ? findEquivalentCssLintScript() : null;
+    const cssCovered = !cssExcluded || Boolean(equivalentCssLintScript);
     return makeResult(
       category,
-      cssExcluded ? "Amber" : "Green",
+      cssCovered ? "Green" : "Amber",
       "Fresh",
-      cssExcluded ? "CSS excluded from Biome" : "CSS included in Biome",
+      cssExcluded
+        ? (equivalentCssLintScript ?? "CSS excluded from Biome")
+        : "CSS included in Biome",
       "baseline",
-      cssExcluded
-        ? "Biome still excludes CSS from the lint surface, so CSS debt stays warn-first."
-        : "CSS appears inside the Biome lint surface.",
-      cssExcluded
-        ? "Add or document an equivalent CSS lint check before promoting this category to green."
-        : "Keep CSS lint coverage active.",
+      cssCovered
+        ? equivalentCssLintScript
+          ? `Biome excludes CSS, but package script \`${equivalentCssLintScript}\` provides an equivalent explicit CSS lint check.`
+          : "CSS appears inside the Biome lint surface."
+        : "Biome still excludes CSS from the lint surface, and no equivalent explicit CSS lint check is declared.",
+      cssCovered
+        ? "Keep CSS lint coverage active."
+        : "Add or document an equivalent CSS lint check before promoting this category to green.",
     );
   } catch (error) {
     return makeResult(
