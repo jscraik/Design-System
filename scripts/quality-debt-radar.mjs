@@ -235,6 +235,35 @@ function parseDateOption(value) {
 }
 
 /**
+ * Return the number of ISO weeks in a UTC year.
+ * @param {number} year - Four-digit calendar year.
+ * @returns {number} The final ISO week number for the year, either 52 or 53.
+ */
+function isoWeeksInYear(year) {
+  return Number(getIsoWeek(new Date(Date.UTC(year, 11, 28))).slice(6));
+}
+
+/**
+ * Validate a `YYYY-WW` ISO week option and return the original label.
+ * @param {string} value - ISO week string in `YYYY-WW` format.
+ * @returns {string} The validated ISO week label.
+ * @throws {Error} If `value` is malformed or outside the year's ISO week range.
+ */
+function parseWeekOption(value) {
+  const match = /^(\d{4})-W(\d{2})$/.exec(value);
+  if (!match) {
+    throw new Error(`Expected --week YYYY-WW, got: ${value}`);
+  }
+  const year = Number(match[1]);
+  const week = Number(match[2]);
+  const maxWeek = isoWeeksInYear(year);
+  if (week < 1 || week > maxWeek) {
+    throw new Error(`Invalid --week value: ${value}`);
+  }
+  return value;
+}
+
+/**
  * Load and parse the project's biome.json file.
  * @returns {Object} The parsed JSON content of biome.json.
  */
@@ -928,16 +957,13 @@ function check() {
  * @param {string} [options.date] - Generation date as `YYYY-MM-DD`; when provided it is parsed as UTC.
  * @param {string} [options.week] - ISO week string in the form `YYYY-WW` to name the report (overrides computed week).
  * @param {string} [options.output] - Output file path (absolute or relative to repository root).
- * @throws {Error} If `options.week` is provided but does not match the expected `YYYY-WW` format.
+ * @throws {Error} If `options.week` is provided but is not a valid ISO week label.
  */
 function report(options) {
   const contract = loadContract();
   const generatedDate = options.date ? parseDateOption(options.date) : new Date();
   const generatedOn = isoDate(generatedDate);
-  const week = options.week ?? getIsoWeek(generatedDate);
-  if (!/^\d{4}-W\d{2}$/.test(week)) {
-    throw new Error(`Expected --week YYYY-WW, got: ${week}`);
-  }
+  const week = options.week ? parseWeekOption(options.week) : getIsoWeek(generatedDate);
   const output =
     options.output ?? path.join(DEFAULT_REPORT_DIR, `quality-debt-burndown-${week}.md`);
   const outputPath = path.isAbsolute(output) ? output : path.join(ROOT, output);

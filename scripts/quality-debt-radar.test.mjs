@@ -50,6 +50,10 @@ try {
   assert.equal(impossibleDate.status, 1, impossibleDate.stderr || impossibleDate.stdout);
   assert.match(impossibleDate.stderr, /Invalid --date value: 2026-02-31/);
 
+  const impossibleWeek = run(["report", "--week", "2026-W99", "--output", output]);
+  assert.equal(impossibleWeek.status, 1, impossibleWeek.stderr || impossibleWeek.stdout);
+  assert.match(impossibleWeek.stderr, /Invalid --week value: 2026-W99/);
+
   const report = run(["report", "--date", "2026-04-26", "--week", "2026-W17", "--output", output]);
   assert.equal(report.status, 0, report.stderr || report.stdout);
   const body = readFileSync(output, "utf8");
