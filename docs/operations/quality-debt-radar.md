@@ -1,7 +1,7 @@
 # Quality Debt Radar
 
 **Owner:** Platform Team (confirm)  
-**Last updated:** 2026-03-05  
+**Last updated:** 2026-04-26
 **Review cadence:** Weekly review, monthly rubric check
 
 ## Doc requirements
@@ -15,6 +15,7 @@
 - [Purpose](#purpose)
 - [Primary Audience](#primary-audience)
 - [Debt Categories (Canonical)](#debt-categories-canonical)
+- [Category Mapping Contract](#category-mapping-contract)
 - [Status and Freshness Semantics](#status-and-freshness-semantics)
 - [Warn-First Rollout Policy](#warn-first-rollout-policy)
 - [Weekly Burn-down Artifact Contract](#weekly-burn-down-artifact-contract)
@@ -46,6 +47,35 @@ Debt is tracked by category. Do not collapse to a single score.
 | Integration drift | Drift between upstream/contracts and local integration seams (Apps SDK, exports, wrappers) | `/scripts/test-drift.mjs`, `/docs/design-system/UPSTREAM_ALIGNMENT.md` |
 | Gate reliability debt | Known flaky/degraded quality signals that reduce confidence in passing CI | `/docs/work/work_outstanding.md`, `/docs/operations/QA_EVIDENCE_SCHEMA.md` |
 
+## Category Mapping Contract
+
+The executable category map lives in:
+
+- `/docs/operations/quality-debt-radar.categories.json`
+
+That file is the source of truth for:
+
+- category ids and labels,
+- owner handles,
+- source anchors,
+- source commands,
+- probe names,
+- green/amber/red status rules.
+
+Validate the mapping with:
+
+```bash
+pnpm quality-debt:check
+```
+
+Generate the current weekly report with:
+
+```bash
+pnpm quality-debt:report
+```
+
+The report generator is intentionally warn-first. Amber/red category posture is written into the burn-down report for release-owner review, but the report command exits successfully when the contract and sources are readable.
+
 ## Status and Freshness Semantics
 
 Each category has both a risk status and freshness status.
@@ -63,6 +93,21 @@ Each category has both a risk status and freshness status.
 - **Unavailable**: source command/check failed or did not produce data
 
 Freshness is mandatory. Never interpret stale/unavailable data as “no debt.”
+
+### Failure-state semantics
+
+Every category has two independent dimensions:
+
+- **Risk status** answers whether the category is green, amber, or red.
+- **Freshness status** answers whether the source data is current enough to trust.
+
+The radar must preserve this distinction:
+
+- A stale green source is not a release-ready clean bill of health.
+- An unavailable source is not zero debt.
+- A failed source probe raises the category to **Red** when the source cannot be read or parsed.
+- A stale source raises the category to at least **Amber** until fresh evidence is recorded.
+- Previous values may be cited as historical context only; they must not be used as current evidence.
 
 ## Warn-First Rollout Policy
 
@@ -88,6 +133,12 @@ Expected weekly report path pattern:
 
 - `/reports/qa/quality-debt-burndown-YYYY-WW.md`
 
+The generated current-cycle report is created by:
+
+```bash
+pnpm quality-debt:report -- --output reports/qa/quality-debt-burndown-YYYY-WW.md
+```
+
 ## CI and Release Touchpoints
 
 Radar inputs and parity surfaces:
@@ -99,6 +150,8 @@ Radar inputs and parity surfaces:
   - `/.github/workflows/release-guidance.yml`
 - Evidence contract:
   - `/docs/operations/QA_EVIDENCE_SCHEMA.md`
+
+CI and release workflows run the radar in warn-first mode. These steps generate or validate the report surface, but they use `continue-on-error: true` so radar launch does not create a new hard-fail gate before thresholds are explicitly approved.
 
 ## Failure-State Handling
 
@@ -124,6 +177,8 @@ pnpm test:policy
 pnpm test:drift
 pnpm ds:matrix:check
 pnpm lint
+pnpm quality-debt:check
+pnpm quality-debt:report
 ```
 
 For preflight before multi-step operations:

@@ -85,6 +85,7 @@ flowchart LR
 | Guidance package | Done | `@brainwav/design-system-guidance` now supports repo-scoped `error`/`warn`/`exempt` enforcement, path specificity, and exemption-ledger validation |
 | Agent design engine | Initial vertical slice done | `@brainwav/agent-design-engine` parses/lints/diffs/exports `DESIGN.md` and records rule-source provenance for agent UI work |
 | aStudio design CLI | Initial vertical slice done | `astudio design lint/diff/export/check-brand/init/migrate/doctor` is available with schema-backed JSON envelopes, one-line stdout fixtures, and write gates |
+| Quality debt radar | Warn-first baseline active | `pnpm quality-debt:check` validates the category/source contract, `pnpm quality-debt:report` generates weekly burn-down snapshots, and CI/release workflows run the radar as warn-first evidence |
 | Protected settings migration | In progress | The initial settings wave is migrated onto shared shell/composition patterns, with explicit state stories and jsdom exemplar tests for the protected settings slice; broader app/storybook warn backlog remains intentionally non-blocking |
 | Visual regression workflow | In progress | Root visual scripts now route through `scripts/run-playwright-suite.mjs` and `packages/ui build:visual`, and the exemplar gate now covers both the template browser shell and an isolated template-widget shell route |
 | Current dependency hygiene | In progress | This change-set pins `vitest-axe` back to `1.0.0-pre.3` for deterministic installs |
@@ -114,6 +115,9 @@ pnpm design-system-guidance:ratchet
 pnpm agent-design:boundaries
 pnpm agent-design:type-check
 pnpm agent-design:test
+pnpm quality-debt:check
+pnpm quality-debt:report
+pnpm quality-debt:test
 pnpm -C packages/design-system-guidance build
 pnpm -C packages/cli build
 pnpm -C packages/cli test
@@ -187,8 +191,13 @@ See also: `~/.codex/instructions/Learnings.md`
 - `astudio design check-brand --strict` now has non-tautological mismatch logic, but only `astudio-default@1` is currently supported. Add a second supported profile fixture before treating cross-profile mismatch behavior as fully proven.
 - `pnpm generated-source:check` intentionally rebuilds widget assets and may print Vite chunk-size warnings. Treat it as a correctness/freshness gate, not as the package performance budget.
 - `pnpm agent-design:boundaries` is the ownership tripwire for the Agent Design Engine: wrappers can call public package exports, but parser, lint, diff, export, and profile-comparison implementation must stay in `packages/agent-design-engine`.
+- `pnpm quality-debt:report` is warn-first by design. Amber/red radar posture is release-owner evidence, not a new hard-fail gate, until explicit thresholds are approved.
 
 ## Recent changes
+
+### 2026-04-26
+
+- **Quality-debt radar execution surface**: JSC-38 through JSC-41 now have an executable warn-first radar path. `docs/operations/quality-debt-radar.categories.json` defines the canonical category/source mapping, `scripts/quality-debt-radar.mjs` validates the contract and generates weekly reports, `reports/qa/quality-debt-burndown-2026-W17.md` records the first baseline snapshot, and CI/release workflows run radar checks in `continue-on-error` mode so release owners get debt visibility without a premature hard-fail gate.
 
 ### 2026-04-25
 

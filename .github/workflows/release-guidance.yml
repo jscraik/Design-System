@@ -38,6 +38,10 @@ jobs:
       - name: Install deps
         run: pnpm -C packages/design-system-guidance install --ignore-workspace --prod=false --lockfile=false
 
+      - name: Quality debt radar contract (warn-first)
+        continue-on-error: true
+        run: pnpm quality-debt:check
+
       - name: Validate package gates
         run: |
           pnpm -C packages/design-system-guidance type-check

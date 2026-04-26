@@ -1,0 +1,34 @@
+import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
+import { mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
+
+const ROOT = process.cwd();
+
+function run(args) {
+  return spawnSync("node", ["scripts/quality-debt-radar.mjs", ...args], {
+    cwd: ROOT,
+    encoding: "utf8",
+  });
+}
+
+const check = run(["check"]);
+assert.equal(check.status, 0, check.stderr || check.stdout);
+assert.match(check.stdout, /quality-debt: contract ok/);
+
+const tempDir = mkdtempSync(path.join(tmpdir(), "quality-debt-radar-"));
+try {
+  const output = path.join(tempDir, "quality-debt-burndown-2026-W17.md");
+  const report = run(["report", "--date", "2026-04-26", "--week", "2026-W17", "--output", output]);
+  assert.equal(report.status, 0, report.stderr || report.stdout);
+  const body = readFileSync(output, "utf8");
+  assert.match(body, /# Quality Debt Burn-down/);
+  assert.match(body, /Lint suppressions/);
+  assert.match(body, /Fresh|Stale|Unavailable/);
+  assert.match(body, /Warn-first mode/);
+} finally {
+  rmSync(tempDir, { recursive: true, force: true });
+}
+
+console.log("quality-debt-radar.test: ok");
