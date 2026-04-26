@@ -28,6 +28,10 @@ assert.match(noColorCheck.stdout, /quality-debt: contract ok/);
 const tempDir = mkdtempSync(path.join(tmpdir(), "quality-debt-radar-"));
 try {
   const output = path.join(tempDir, "quality-debt-burndown-2026-W17.md");
+  const impossibleDate = run(["report", "--date", "2026-02-31", "--output", output]);
+  assert.equal(impossibleDate.status, 1, impossibleDate.stderr || impossibleDate.stdout);
+  assert.match(impossibleDate.stderr, /Invalid --date value: 2026-02-31/);
+
   const report = run(["report", "--date", "2026-04-26", "--week", "2026-W17", "--output", output]);
   assert.equal(report.status, 0, report.stderr || report.stdout);
   const body = readFileSync(output, "utf8");

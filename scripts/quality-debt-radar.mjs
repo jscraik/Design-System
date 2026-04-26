@@ -203,8 +203,17 @@ function parseDateOption(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
     throw new Error(`Expected --date YYYY-MM-DD, got: ${value}`);
   }
+  const [yearText, monthText, dayText] = value.split("-");
+  const year = Number(yearText);
+  const month = Number(monthText);
+  const day = Number(dayText);
   const parsed = new Date(`${value}T00:00:00Z`);
-  if (Number.isNaN(parsed.getTime())) {
+  if (
+    Number.isNaN(parsed.getTime()) ||
+    parsed.getUTCFullYear() !== year ||
+    parsed.getUTCMonth() !== month - 1 ||
+    parsed.getUTCDate() !== day
+  ) {
     throw new Error(`Invalid --date value: ${value}`);
   }
   return parsed;
@@ -444,7 +453,9 @@ function daysBetween(dateString, generatedOn) {
 function probeUpstreamAlignmentStamp(category, contract, generatedOn) {
   try {
     const text = readText("docs/design-system/UPSTREAM_ALIGNMENT.md");
-    const verifiedAt = extractDate(text, /Last verified:\s+([0-9T:.-]+Z?)/i);
+    const verifiedAt =
+      extractDate(text, /Verified at:\s+([0-9T:.-]+Z?)/i) ??
+      extractDate(text, /Last verified:\s+([0-9T:.-]+Z?)/i);
     const ageDays = daysBetween(verifiedAt, generatedOn);
     const staleAfter = contract.freshness.alignment_stale_after_days;
     const stale = ageDays > staleAfter;
