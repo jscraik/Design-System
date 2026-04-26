@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 
 const PROFESSIONAL_FINISH_DOC = "docs/design-system/PROFESSIONAL_FINISH_REVIEW.md";
 const ENHANCED_CSS = "packages/tokens/src/enhanced.css";
+const SERVICE_LOG_TAG = 'service:"run-exemplar-evaluation"';
 
 const passthroughArgs = process.argv.slice(2);
 
@@ -62,7 +63,9 @@ const GOLD_STANDARD_REFERENCES = [
 
 function assertIncludes(content, needle, source) {
   if (!content.includes(needle)) {
-    throw new Error(`${source} is missing required professional-finish marker: ${needle}`);
+    throw new Error(
+      `${SERVICE_LOG_TAG} ${source} is missing required professional-finish marker: ${needle}`,
+    );
   }
 }
 
@@ -88,7 +91,18 @@ function checkProfessionalFinishContract() {
 
   if (/(^|[\s,{]):focus-visible\s*\{/.test(enhancedCss)) {
     throw new Error(
-      `${ENHANCED_CSS} must not reintroduce a bare global :focus-visible rule. Use .ds-focusable or [data-ds-focusable].`,
+      `${SERVICE_LOG_TAG} ${ENHANCED_CSS} must not reintroduce a bare global :focus-visible rule. Use .ds-focusable or [data-ds-focusable].`,
+    );
+  }
+
+  if (
+    /(^|[\s,{]):focus\s*:\s*not\s*\(\s*:focus-visible\s*\)\s*\{[^}]*outline\s*:\s*none/i.test(
+      enhancedCss,
+    ) ||
+    /(^|[\s,{]):focus\s*\{[^}]*outline\s*:\s*none/i.test(enhancedCss)
+  ) {
+    throw new Error(
+      `${SERVICE_LOG_TAG} ${ENHANCED_CSS} must not suppress native focus outlines with a bare global :focus rule. Scope outline suppression to .ds-focusable or [data-ds-focusable].`,
     );
   }
 
@@ -130,20 +144,22 @@ const checks = [
 let failed = false;
 
 for (const check of checks) {
-  console.log(`\n== ${check.label} ==`);
+  console.log(`\n${SERVICE_LOG_TAG} == ${check.label} ==`);
 
   let result = { status: 0 };
 
   if (check.run) {
-    console.log("$ professional-finish contract precheck");
+    console.log(`${SERVICE_LOG_TAG} $ professional-finish contract precheck`);
     try {
       check.run();
     } catch (error) {
       result = { status: 1 };
-      console.error(error instanceof Error ? error.message : error);
+      console.error(
+        error instanceof Error ? error.message : `${SERVICE_LOG_TAG} ${String(error)}`,
+      );
     }
   } else {
-    console.log(`$ ${check.command.join(" ")}`);
+    console.log(`${SERVICE_LOG_TAG} $ ${check.command.join(" ")}`);
     result = spawnSync(check.command[0], check.command.slice(1), {
       cwd: process.cwd(),
       env: {
@@ -156,11 +172,11 @@ for (const check of checks) {
 
   if (result.status !== 0) {
     failed = true;
-    console.error(`FAIL: ${check.label}`);
+    console.error(`${SERVICE_LOG_TAG} FAIL: ${check.label}`);
     break;
   }
 
-  console.log(`PASS: ${check.label}`);
+  console.log(`${SERVICE_LOG_TAG} PASS: ${check.label}`);
 }
 
 if (failed) {
