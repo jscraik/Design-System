@@ -3,12 +3,12 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
-    "types": ["node"],
-    "paths": {
-      "@design-studio/runtime": ["../runtime/dist/index.d.ts"],
-      "@design-studio/tokens": ["../tokens/dist/index.d.ts"]
-    }
+    "types": ["node"]
   },
+  "references": [
+    { "path": "../runtime/tsconfig.build.json" },
+    { "path": "../tokens/tsconfig.build.json" }
+  ],
   "include": ["src/**/*"],
   "exclude": [
     "**/*.stories.*",

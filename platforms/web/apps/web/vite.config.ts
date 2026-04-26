@@ -9,6 +9,58 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "@design-studio/json-render": path.resolve(__dirname, "../../../../packages/json-render/src"),
+      "@design-studio/runtime": path.resolve(__dirname, "../../../../packages/runtime/src"),
+      "@design-studio/tokens": path.resolve(__dirname, "../../../../packages/tokens/src"),
+      "@design-studio/ui/app": path.resolve(__dirname, "../../../../packages/ui/src/app"),
+      "@design-studio/ui/base": path.resolve(
+        __dirname,
+        "../../../../packages/ui/src/components/ui/base",
+      ),
+      "@design-studio/ui/chat": path.resolve(__dirname, "../../../../packages/ui/src/app/chat"),
+      "@design-studio/ui/data-display": path.resolve(
+        __dirname,
+        "../../../../packages/ui/src/components/ui/data-display",
+      ),
+      "@design-studio/ui/experimental": path.resolve(
+        __dirname,
+        "../../../../packages/ui/src/experimental.ts",
+      ),
+      "@design-studio/ui/feedback": path.resolve(
+        __dirname,
+        "../../../../packages/ui/src/components/ui/feedback",
+      ),
+      "@design-studio/ui/forms": path.resolve(
+        __dirname,
+        "../../../../packages/ui/src/components/ui/forms",
+      ),
+      "@design-studio/ui/icons": path.resolve(__dirname, "../../../../packages/ui/src/icons"),
+      "@design-studio/ui/layout": path.resolve(
+        __dirname,
+        "../../../../packages/ui/src/components/ui/layout",
+      ),
+      "@design-studio/ui/modals": path.resolve(__dirname, "../../../../packages/ui/src/app/modals"),
+      "@design-studio/ui/navigation": path.resolve(
+        __dirname,
+        "../../../../packages/ui/src/components/ui/navigation",
+      ),
+      "@design-studio/ui/overlays": path.resolve(
+        __dirname,
+        "../../../../packages/ui/src/components/ui/overlays",
+      ),
+      "@design-studio/ui/settings": path.resolve(
+        __dirname,
+        "../../../../packages/ui/src/app/settings",
+      ),
+      "@design-studio/ui/showcase": path.resolve(
+        __dirname,
+        "../../../../packages/ui/src/design-system/showcase",
+      ),
+      "@design-studio/ui/templates": path.resolve(
+        __dirname,
+        "../../../../packages/ui/src/templates",
+      ),
+      "@design-studio/ui": path.resolve(__dirname, "../../../../packages/ui/src"),
     },
   },
   server: {

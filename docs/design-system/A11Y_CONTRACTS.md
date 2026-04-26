@@ -2,6 +2,58 @@
 
 **Last updated:** 2026-02-14
 
+## Table of Contents
+
+- [Doc requirements](#doc-requirements)
+- [How to use this document](#how-to-use-this-document)
+- [Shared Focus Indicator](#shared-focus-indicator)
+- [Alert](#alert)
+- [Calendar](#calendar)
+- [Card](#card)
+- [CodeBlock](#codeblock)
+- [Carousel](#carousel)
+- [Chart](#chart)
+- [CollapsibleSection](#collapsiblesection)
+- [Combobox](#combobox)
+- [Command](#command)
+- [ContextTag](#contexttag)
+- [DatePicker](#datepicker)
+- [Drawer](#drawer)
+- [EmptyMessage](#emptymessage)
+- [ErrorBoundary](#errorboundary)
+- [forms](#forms)
+- [IconButton](#iconbutton)
+- [Image](#image)
+- [Indicator](#indicator)
+- [Input](#input)
+- [InputOTP](#inputotp)
+- [ListItem](#listitem)
+- [Markdown](#markdown)
+- [Menu](#menu)
+- [MessageActions](#messageactions)
+- [Modal](#modal)
+- [ModelBadge](#modelbadge)
+- [ModelSelector](#modelselector)
+- [ModeSelector](#modeselector)
+- [Pagination](#pagination)
+- [ProductComposition](#productcomposition)
+- [RangeSlider](#rangeslider)
+- [Resizable](#resizable)
+- [SectionHeader](#sectionheader)
+- [SegmentedControl](#segmentedcontrol)
+- [ShimmerText](#shimmertext)
+- [Skeleton](#skeleton)
+- [Sonner](#sonner)
+- [Table](#table)
+- [TagInput](#taginput)
+- [TextLink](#textlink)
+- [Textarea](#textarea)
+- [Toast](#toast)
+- [Toggle](#toggle)
+- [UseMobile](#usemobile)
+- [utils](#utils)
+- [ViewModeToggle](#viewmodetoggle)
+
 ## Doc requirements
 
 - Audience: Developers (intermediate)
@@ -26,6 +78,13 @@ Each local primitive component has an explicit accessibility contract below. Use
 - **Notes**: Any known constraints or implementation guidance.
 
 ---
+
+## Shared Focus Indicator
+
+- **Keyboard & focus**: The shared design-system ring is opt-in through `.ds-focusable:focus-visible`, `[data-ds-focusable]:focus-visible`, or component-local `focus-visible:ring-*` utilities that produce one visible ring.
+- **ARIA & semantics**: Focus indicators must not replace accessible names, roles, or state attributes.
+- **States & announcements**: Focus styling must remain visible in loading, busy, error, and disabled-adjacent states where controls remain reachable.
+- **Notes**: Shared CSS must not apply a bare global `:focus-visible` ring or remove native outlines from arbitrary elements. See `docs/design-system/PROFESSIONAL_FINISH_REVIEW.md` for the review rubric.
 
 ## Alert
 
