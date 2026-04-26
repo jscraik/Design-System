@@ -6,6 +6,7 @@ const ROOT = process.cwd();
 const CONTRACT_PATH = "docs/operations/quality-debt-radar.categories.json";
 const TEMPLATE_PATH = "reports/qa/quality-debt-burndown-template.md";
 const DEFAULT_REPORT_DIR = "reports/qa";
+const SERVICE_ID = 'service:"quality-debt-radar"';
 const REQUIRED_FRESHNESS_FIELDS = [
   "weekly_snapshot_days",
   "alignment_stale_after_days",
@@ -439,6 +440,7 @@ function daysBetween(dateString, generatedOn) {
  * @param {Object} contract - Parsed radar contract; expects `contract.freshness.alignment_stale_after_days` to define staleness threshold.
  * @param {string} generatedOn - ISO date string (YYYY-MM-DD) representing the report generation date used to compute stamp age.
  * @returns {Object} A normalized result object containing `category`, `status` ("Green" | "Amber" | "Red"), `freshness` ("Fresh" | "Stale" | "Unavailable"), `metric` (verification timestamp or a message), `trend`, `notes`, and `nextAction`.
+ */
 function probeUpstreamAlignmentStamp(category, contract, generatedOn) {
   try {
     const text = readText("docs/design-system/UPSTREAM_ALIGNMENT.md");
@@ -718,11 +720,14 @@ function parseArgs(argv) {
     } else if (arg === "--plain" || arg === "--no-color") {
       options.plain = true;
     } else if (arg === "--output") {
-      options.output = rest[++index];
+      options.output = readFlagValue(rest, index, arg);
+      index += 1;
     } else if (arg === "--date") {
-      options.date = rest[++index];
+      options.date = readFlagValue(rest, index, arg);
+      index += 1;
     } else if (arg === "--week") {
-      options.week = rest[++index];
+      options.week = readFlagValue(rest, index, arg);
+      index += 1;
     } else if (arg === "--help" || arg === "-h") {
       usage(0);
     } else {
@@ -730,6 +735,23 @@ function parseArgs(argv) {
     }
   }
   return { command, options };
+}
+
+/**
+ * Read the required value after a flag and reject missing or flag-looking values.
+ *
+ * @param {string[]} args - Parsed argument tail after the command.
+ * @param {number} index - Current flag index.
+ * @param {string} flag - Flag name that requires a following value.
+ * @returns {string} The next argument value for the flag.
+ * @throws {Error} If the next value is missing or starts with `-`.
+ */
+function readFlagValue(args, index, flag) {
+  const value = args[index + 1];
+  if (!value || value.startsWith("-")) {
+    throw new Error(`Missing value for ${flag}`);
+  }
+  return value;
 }
 
 /**
@@ -749,8 +771,8 @@ function check() {
     }
   }
   const reports = currentReports();
-  console.log(`quality-debt: contract ok (${contract.categories.length} categories)`);
-  console.log(`quality-debt: generated reports found ${reports.length}`);
+  console.log(`quality-debt: contract ok (${contract.categories.length} categories) ${SERVICE_ID}`);
+  console.log(`quality-debt: generated reports found ${reports.length} ${SERVICE_ID}`);
 }
 
 /**
@@ -784,8 +806,8 @@ function report(options) {
   const body = renderReport(contract, results, { generatedOn, week });
   mkdirSync(path.dirname(outputPath), { recursive: true });
   writeFileSync(outputPath, body);
-  console.log(`quality-debt: wrote ${output}`);
-  console.log(`quality-debt: posture ${overallPosture(results)} (warn-first)`);
+  console.log(`quality-debt: wrote ${output} ${SERVICE_ID}`);
+  console.log(`quality-debt: posture ${overallPosture(results)} (warn-first) ${SERVICE_ID}`);
 }
 
 try {
@@ -799,6 +821,6 @@ try {
     usage(1);
   }
 } catch (error) {
-  console.error(`quality-debt: ${error.message}`);
+  console.error(`quality-debt: ${SERVICE_ID} ${error.message}`);
   process.exitCode = 1;
 }

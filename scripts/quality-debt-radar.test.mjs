@@ -21,6 +21,10 @@ const plainCheck = run(["check", "--plain"]);
 assert.equal(plainCheck.status, 0, plainCheck.stderr || plainCheck.stdout);
 assert.match(plainCheck.stdout, /quality-debt: contract ok/);
 
+const noColorCheck = run(["check", "--no-color"]);
+assert.equal(noColorCheck.status, 0, noColorCheck.stderr || noColorCheck.stdout);
+assert.match(noColorCheck.stdout, /quality-debt: contract ok/);
+
 const tempDir = mkdtempSync(path.join(tmpdir(), "quality-debt-radar-"));
 try {
   const output = path.join(tempDir, "quality-debt-burndown-2026-W17.md");
