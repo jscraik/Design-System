@@ -18,6 +18,10 @@ const STATUS_RANK = new Map([
   ["Red", 2],
 ]);
 
+/**
+ * Print command-line usage instructions for the quality-debt-radar script and exit.
+ * @param {number} exitCode - Process exit code to use when exiting; defaults to 0 (success).
+ */
 function usage(exitCode = 0) {
   const text = [
     "Usage:",
@@ -30,14 +34,30 @@ function usage(exitCode = 0) {
   process.exit(exitCode);
 }
 
+/**
+ * Read and parse a JSON file located under the repository root.
+ * @param {string} relativePath - Path relative to the project root (ROOT) to the JSON file.
+ * @returns {*} The parsed JSON value.
+ */
 function readJson(relativePath) {
   return JSON.parse(readFileSync(path.join(ROOT, relativePath), "utf8"));
 }
 
+/**
+ * Read a UTF-8 text file located under the repository root.
+ * @param {string} relativePath - File path relative to the repository root (`process.cwd()`).
+ * @returns {string} The file contents decoded as UTF-8.
+ */
 function readText(relativePath) {
   return readFileSync(path.join(ROOT, relativePath), "utf8");
 }
 
+/**
+ * Ensure a file exists at the given path relative to the repository root and return its absolute path.
+ * @param {string} relativePath - Path relative to the repository root (ROOT) to verify.
+ * @returns {string} The absolute filesystem path to the required file.
+ * @throws {Error} If the file does not exist.
+ */
 function requireFile(relativePath) {
   const absolutePath = path.join(ROOT, relativePath);
   if (!existsSync(absolutePath)) {
@@ -46,12 +66,24 @@ function requireFile(relativePath) {
   return absolutePath;
 }
 
+/**
+ * Assert that a value is a plain object (non-null and not an array).
+ * @param {*} value - The value to verify.
+ * @param {string} label - Human-readable name included in the error message on failure.
+ * @throws {Error} If `value` is null/undefined, not an object, or is an array; the error message is "`<label> must be an object.`".
+ */
 function assertPlainObject(value, label) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     throw new Error(`${label} must be an object.`);
   }
 }
 
+/**
+ * Ensure the freshness configuration is a plain object and contains each required freshness field as a positive integer.
+ *
+ * @param {Object} freshness - Freshness configuration object. Must include the required numeric fields (e.g., alignment/work-outstanding stale thresholds) and each must be an integer greater than zero.
+ * @throws {Error} If `freshness` is not a plain object or any required freshness field is missing or not a positive integer.
+ */
 function validateFreshnessContract(freshness) {
   assertPlainObject(freshness, "Radar contract freshness");
   for (const field of REQUIRED_FRESHNESS_FIELDS) {
@@ -61,6 +93,15 @@ function validateFreshnessContract(freshness) {
   }
 }
 
+/**
+ * Validate that a category's `status_rules` object exists and contains non-empty string rules.
+ *
+ * Verifies `category.status_rules` is a plain object and that each required key (`green`, `amber`, `red`)
+ * is present and a non-empty string.
+ *
+ * @param {Object} category - Radar category object to validate; expected to have `id` and `status_rules` properties.
+ * @throws {Error} If `status_rules` is not a plain object or any required status field is missing or not a non-empty string.
+ */
 function validateStatusRules(category) {
   assertPlainObject(category.status_rules, `Radar category ${category.id} status_rules`);
   for (const field of REQUIRED_STATUS_FIELDS) {
@@ -73,6 +114,25 @@ function validateStatusRules(category) {
   }
 }
 
+/**
+ * Load and validate the radar contract JSON from the configured contract path.
+ *
+ * Validations performed include schema version check, freshness contract shape,
+ * presence of at least one category, required category fields (`id`, `label`,
+ * `owner`, `description`, `probe`), uniqueness of category `id`s, non-empty
+ * `source_anchors` and `source_commands`, valid `status_rules`, and existence
+ * of each referenced source file and the report template.
+ *
+ * @returns {Object} The parsed and validated contract object.
+ * @throws {Error} If the contract schema_version is unsupported.
+ * @throws {Error} If the freshness contract is invalid.
+ * @throws {Error} If no categories are defined.
+ * @throws {Error} If a category is missing a required field (`id`, `label`, `owner`, `description`, or `probe`).
+ * @throws {Error} If duplicate category `id`s are present.
+ * @throws {Error} If a category lacks `source_anchors` or `source_commands`.
+ * @throws {Error} If a category's `status_rules` are invalid.
+ * @throws {Error} If any referenced source file or the template file is missing.
+ */
 function loadContract() {
   const contract = readJson(CONTRACT_PATH);
   if (contract.schema_version !== 1) {
@@ -108,10 +168,21 @@ function loadContract() {
   return contract;
 }
 
+/**
+ * Format a Date as an ISO UTC date string in YYYY-MM-DD form.
+ * @param {Date} date - The date to format.
+ * @returns {string} The date formatted as `YYYY-MM-DD`.
+ */
 function isoDate(date) {
   return date.toISOString().slice(0, 10);
 }
 
+/**
+ * Compute the ISO-style year-week label for a given date using UTC.
+ *
+ * @param {Date} date - Date whose ISO week is computed; the date is interpreted in UTC (local time component is ignored).
+ * @returns {string} Year-week string in the format `YYYY-Www` with the week number padded to two digits (e.g., `2026-W04`).
+ */
 function getIsoWeek(date) {
   const utc = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
   const day = utc.getUTCDay() || 7;
@@ -121,6 +192,12 @@ function getIsoWeek(date) {
   return `${utc.getUTCFullYear()}-W${String(week).padStart(2, "0")}`;
 }
 
+/**
+ * Parse a `YYYY-MM-DD` date string and return a UTC Date set to midnight of that day.
+ * @param {string} value - Date string in `YYYY-MM-DD` format.
+ * @returns {Date} The corresponding `Date` at `T00:00:00Z` (UTC).
+ * @throws {Error} If `value` does not match `YYYY-MM-DD` or does not produce a valid date.
+ */
 function parseDateOption(value) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
     throw new Error(`Expected --date YYYY-MM-DD, got: ${value}`);
@@ -132,10 +209,19 @@ function parseDateOption(value) {
   return parsed;
 }
 
+/**
+ * Load and parse the project's biome.json file.
+ * @returns {Object} The parsed JSON content of biome.json.
+ */
 function parseBiome() {
   return readJson("biome.json");
 }
 
+/**
+ * Collects disabled linter rules from grouped rule settings.
+ * @param {Record<string, Record<string, string>>|undefined|null} ruleGroups - Mapping of rule group names to rule name→setting maps; falsy values are treated as empty.
+ * @returns {string[]} Array of disabled rule identifiers formatted as `group.rule`.
+ */
 function countDisabledRules(ruleGroups) {
   const disabled = [];
   for (const [groupName, rules] of Object.entries(ruleGroups ?? {})) {
@@ -148,11 +234,24 @@ function countDisabledRules(ruleGroups) {
   return disabled;
 }
 
+/**
+ * Determine a status label from an issue count, with an optional override for unavailable data.
+ * @param {number} count - Number of issues; treated as zero for no issues and greater than zero for issues present.
+ * @param {boolean} [redWhenUnavailable=false] - If true, treat the result as unavailable and return `"Red"` regardless of `count`.
+ * @returns {string} `"Green"` when `count` is 0 (and not overridden), `"Amber"` when `count` is greater than 0 (and not overridden), `"Red"` when `redWhenUnavailable` is true.
+ */
 function statusFromCount(count, redWhenUnavailable = false) {
   if (redWhenUnavailable) return "Red";
   return count === 0 ? "Green" : "Amber";
 }
 
+/**
+ * Checks two documents for unresolved accessibility coverage markers.
+ *
+ * @param {string} coverageText - The full text of the COVERAGE_MATRIX document.
+ * @param {string} a11yText - The full text of the A11Y_CONTRACTS (or related) document.
+ * @returns {{clear: boolean, unresolvedLines: string[]}} `clear` is `true` when no unresolved markers are found, `false` otherwise; `unresolvedLines` lists the trimmed lines that contain unresolved markers.
+ */
 function verifyCoverageCleared(coverageText, a11yText) {
   const unresolvedPattern = /\b(host-only|pending evidence|unresolved|requires host)\b/i;
   const unresolvedLines = [...coverageText.split("\n"), ...a11yText.split("\n")]
@@ -165,6 +264,17 @@ function verifyCoverageCleared(coverageText, a11yText) {
   };
 }
 
+/**
+ * Create a normalized result object representing a category probe outcome.
+ * @param {Object} category - The contract category object the result pertains to.
+ * @param {string} status - Human-readable status label for the category (e.g., "Green", "Amber", "Red").
+ * @param {string} freshness - Freshness indicator for the evidence source (e.g., "Fresh", "Stale", "Unavailable").
+ * @param {*} metric - Numeric or textual metric summarizing the probe result.
+ * @param {string} trend - Short trend indicator or description (e.g., "improving", "worse", "no-change").
+ * @param {string} notes - Additional contextual notes or diagnostic messages.
+ * @param {string} nextAction - Suggested next action owner-visible next step.
+ * @returns {{category: Object, status: string, freshness: string, metric: *, trend: string, owner: *, notes: string, nextAction: string}} The normalized result object, including `owner` copied from `category.owner`.
+ */
 function makeResult(category, status, freshness, metric, trend, notes, nextAction) {
   return {
     category,
@@ -178,6 +288,17 @@ function makeResult(category, status, freshness, metric, trend, notes, nextActio
   };
 }
 
+/**
+ * Probes Biome configuration for disabled linter rules for the given radar category.
+ *
+ * @param {object} category - The contract category object being evaluated.
+ * @returns {object} A normalized result object describing the category's linter-rule debt:
+ *                   `status` ("Green", "Amber", or "Red"), `freshness` ("Fresh" or "Unavailable"),
+ *                   `metric` (disabled rule count summary), `trend`, `notes`, and `nextAction`.
+ *                   If Biome cannot be read or parsed, returns a result with `status: "Red"`,
+ *                   `freshness: "Unavailable"`, `metric: "biome.json unreadable"`, and the
+ *                   underlying error message placed in `notes`.
+ */
 function probeBiomeDisabledRules(category) {
   try {
     const biome = parseBiome();
@@ -208,6 +329,12 @@ function probeBiomeDisabledRules(category) {
   }
 }
 
+/**
+ * Evaluates accessibility (a11y) evidence and Biome suppressions for a category and produces a normalized result.
+ *
+ * @param {Object} category - Category metadata from the contract used to populate result fields (expects at least `owner` and `label`).
+ * @returns {Object} Result object with keys: `category`, `status`, `freshness`, `metric`, `trend`, `owner`, `notes`, and `nextAction`. `status` is `"Green"` when no Biome a11y rules are disabled and no unresolved coverage markers are found, otherwise `"Amber"`. On read/parse failures the function returns a `"Red"` result with `freshness: "Unavailable"`, `metric: "a11y source unreadable"`, and `notes` containing the underlying error message.
+ */
 function probeA11yDisabledRules(category) {
   try {
     const biome = parseBiome();
@@ -244,6 +371,11 @@ function probeA11yDisabledRules(category) {
   }
 }
 
+/**
+ * Assess whether CSS files are included in Biome's lint surface for the given contract category.
+ * @param {Object} category - The contract category to evaluate.
+ * @returns {Object} A result object containing `category`, `status`, `freshness`, `metric`, `trend`, `notes`, and `nextAction`. `status` is `"Green"` when CSS is included, `"Amber"` when CSS is explicitly excluded, or `"Red"` with `freshness` `"Unavailable"` if evidence cannot be read.
+ */
 function probeCssLintCoverageGap(category) {
   try {
     const biome = parseBiome();
@@ -275,11 +407,24 @@ function probeCssLintCoverageGap(category) {
   }
 }
 
+/**
+ * Extracts the first capturing group's value from the given text using the provided regular expression.
+ * @param {string} text - The string to search.
+ * @param {RegExp} regex - A regular expression containing at least one capturing group.
+ * @returns {string|null} The substring matched by the first capturing group, or `null` if the regex does not match.
+ */
 function extractDate(text, regex) {
   const match = text.match(regex);
   return match?.[1] ?? null;
 }
 
+/**
+ * Compute the whole-day difference between a parsed date string and a reference date.
+ *
+ * @param {string|undefined|null} dateString - A date string parseable by `Date` (e.g., "YYYY-MM-DD"). If falsy or not a valid date, the function treats the date as unavailable.
+ * @param {Date} generatedOn - Reference date to compare against.
+ * @returns {number} The number of full days from the parsed date to `generatedOn` (floor of the difference). Returns `Infinity` when `dateString` is falsy or invalid.
+ */
 function daysBetween(dateString, generatedOn) {
   if (!dateString) return Number.POSITIVE_INFINITY;
   const date = new Date(dateString);
@@ -287,6 +432,13 @@ function daysBetween(dateString, generatedOn) {
   return Math.floor((generatedOn - date) / 86400000);
 }
 
+/**
+ * Checks the upstream alignment stamp file and reports category status based on its age.
+ *
+ * @param {Object} category - Radar category metadata used for result attribution.
+ * @param {Object} contract - Parsed radar contract; expects `contract.freshness.alignment_stale_after_days` to define staleness threshold.
+ * @param {string} generatedOn - ISO date string (YYYY-MM-DD) representing the report generation date used to compute stamp age.
+ * @returns {Object} A normalized result object containing `category`, `status` ("Green" | "Amber" | "Red"), `freshness` ("Fresh" | "Stale" | "Unavailable"), `metric` (verification timestamp or a message), `trend`, `notes`, and `nextAction`.
 function probeUpstreamAlignmentStamp(category, contract, generatedOn) {
   try {
     const text = readText("docs/design-system/UPSTREAM_ALIGNMENT.md");
@@ -320,6 +472,14 @@ function probeUpstreamAlignmentStamp(category, contract, generatedOn) {
   }
 }
 
+/**
+ * Assess work-outstanding reliability markers and determine the category's status, freshness, and remediation guidance.
+ *
+ * @param {Object} category - Contract category being evaluated; used to populate the result and owner.
+ * @param {Object} contract - Parsed radar contract, used for freshness thresholds.
+ * @param {string} generatedOn - Reference date in `YYYY-MM-DD` format used to compute ages for staleness checks.
+ * @returns {Object} A normalized result object containing `category`, `status`, `freshness`, `metric`, `trend`, `owner`, `notes`, and `nextAction`. `metric` reports the count of reliability markers; `freshness` is `"Fresh"`, `"Stale"`, or `"Unavailable"` and `status` reflects the evaluated posture (`"Green"`, `"Amber"`, or `"Red"`).
+ */
 function probeWorkOutstandingReliabilityMarkers(category, contract, generatedOn) {
   try {
     const text = readText("docs/work/work_outstanding.md");
@@ -358,6 +518,14 @@ function probeWorkOutstandingReliabilityMarkers(category, contract, generatedOn)
   }
 }
 
+/**
+ * Dispatches the category to its configured probe and returns the probe result.
+ *
+ * @param {Object} category - Contract category object describing the radar category and its probe.
+ * @param {Object} contract - Parsed radar contract used by probes that require contract-level freshness thresholds.
+ * @param {string} generatedOn - ISO date string (YYYY-MM-DD) representing the report generation date used for age/staleness checks.
+ * @returns {Object} A normalized result object with the keys: `category`, `status`, `freshness`, `metric`, `trend`, `owner`, `notes`, and `nextAction`. `status` will be one of `"Green"`, `"Amber"`, `"Red"`, or `"Unavailable"`.
+ */
 function evaluateCategory(category, contract, generatedOn) {
   switch (category.probe) {
     case "biome_disabled_rules":
@@ -383,6 +551,11 @@ function evaluateCategory(category, contract, generatedOn) {
   }
 }
 
+/**
+ * Determine the overall worst status among category results.
+ * @param {Array<Object>} results - Array of result objects; each must include a `status` string (e.g., `"Green"`, `"Amber"`, `"Red"`).
+ * @returns {string} The highest-severity status present (`"Green"`, `"Amber"`, or `"Red"`), falling back to `"Red"` if no known status is found.
+ */
 function overallPosture(results) {
   const worst = results.reduce(
     (current, result) => Math.max(current, STATUS_RANK.get(result.status) ?? 2),
@@ -391,6 +564,14 @@ function overallPosture(results) {
   return [...STATUS_RANK.entries()].find(([, rank]) => rank === worst)?.[0] ?? "Red";
 }
 
+/**
+ * List existing weekly quality-debt burndown report files.
+ *
+ * Scans the reports directory for files matching the pattern
+ * `quality-debt-burndown-YYYY-WWW.md` and returns their relative paths sorted
+ * lexically. If the reports directory does not exist, returns an empty array.
+ * @returns {string[]} Relative paths (under the reports directory) to matching report files, sorted.
+ */
 function currentReports() {
   const reportDir = path.join(ROOT, DEFAULT_REPORT_DIR);
   if (!existsSync(reportDir)) return [];
@@ -400,6 +581,16 @@ function currentReports() {
     .sort();
 }
 
+/**
+ * Build the weekly Quality Debt Burn-down Markdown report from contract data and probe results.
+ *
+ * @param {Object} contract - Parsed radar contract containing category definitions and source commands.
+ * @param {Array<Object>} results - Array of per-category result objects (status, freshness, metric, trend, owner, notes, nextAction, category).
+ * @param {Object} options - Report generation options.
+ * @param {string} options.generatedOn - ISO date string for when the report was generated (YYYY-MM-DD).
+ * @param {string} options.week - ISO week identifier used in the report filename (e.g., `2026-W17`).
+ * @return {string} The complete report body as a Markdown-formatted string.
+ */
 function renderReport(contract, results, options) {
   const posture = overallPosture(results);
   const nonGreen = results.filter((result) => result.status !== "Green");
@@ -504,6 +695,20 @@ ${contract.categories
 `;
 }
 
+/**
+ * Parse CLI positional command and recognized flags into a command string and an options object.
+ *
+ * Recognized flags:
+ * - `--plain` or `--no-color` sets `options.plain = true`
+ * - `--output <path>` sets `options.output`
+ * - `--date <YYYY-MM-DD>` sets `options.date`
+ * - `--week <YYYY-WW>` sets `options.week`
+ * - `--help` or `-h` triggers usage and exits
+ *
+ * @param {string[]} argv - Argument list where the first element is the command and the remainder are flags/values.
+ * @returns {{ command: string|undefined, options: { plain?: boolean, output?: string, date?: string, week?: string } }} Parsed command and options.
+ * @throws {Error} Throws `Unknown argument: <arg>` for unrecognized flags.
+ */
 function parseArgs(argv) {
   const [command, ...rest] = argv;
   const options = {};
@@ -527,6 +732,14 @@ function parseArgs(argv) {
   return { command, options };
 }
 
+/**
+ * Validate the radar contract against the Markdown template and report existing generated files.
+ *
+ * Throws if any contract category label is not present in the template.
+ * Also prints a brief confirmation and the number of generated reports to stdout.
+ *
+ * @throws {Error} If the template is missing a category label (message: "Template is missing category label: <label>").
+ */
 function check() {
   const contract = loadContract();
   const template = readText(TEMPLATE_PATH);
@@ -540,6 +753,20 @@ function check() {
   console.log(`quality-debt: generated reports found ${reports.length}`);
 }
 
+/**
+ * Generate and write the weekly quality-debt burndown Markdown report.
+ *
+ * Loads and validates the radar contract, evaluates each category probe for the
+ * provided generation date/week, renders the report Markdown, ensures the
+ * output directory exists, writes the file, and logs the written path and
+ * overall posture.
+ *
+ * @param {Object} options - Report generation options.
+ * @param {string} [options.date] - Generation date as `YYYY-MM-DD`; when provided it is parsed as UTC.
+ * @param {string} [options.week] - ISO week string in the form `YYYY-WW` to name the report (overrides computed week).
+ * @param {string} [options.output] - Output file path (absolute or relative to repository root).
+ * @throws {Error} If `options.week` is provided but does not match the expected `YYYY-WW` format.
+ */
 function report(options) {
   const contract = loadContract();
   const generatedDate = options.date ? parseDateOption(options.date) : new Date();
