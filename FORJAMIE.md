@@ -241,6 +241,7 @@ See also: `~/.codex/instructions/Learnings.md`
 ### 2026-04-13
 
 - **PnPM lockfile parser CI bump**: the repo and workflow pnpm pins moved from `10.28.0` to `10.33.0` across `package.json` and the GitHub Actions entrypoints. The change keeps the CI install parser on the current 10.x patch line after the Ubuntu `build (ubuntu-latest)` job reported a frozen-lockfile parse failure on PR `#145`.
+- **Cloudflare workers-types security bump**: PR #148 updates `@cloudflare/workers-types` in `packages/cloudflare-template` to `4.20260413.1` and refreshes the lockfile so Cloudflare template typing stays aligned with the current worker runtime package line.
 - **Storybook dispatcher export-path fix (macOS CI unblock)**: `platforms/web/apps/storybook/scripts/storybook-dev.mjs` now resolves Storybook via the exported package subpath `storybook/internal/bin/dispatcher` instead of the non-exported `storybook/dist/bin/dispatcher.js` path. This removes the `ERR_PACKAGE_PATH_NOT_EXPORTED` startup crash in the macOS exemplar lane and keeps the wrapper-based launch flow intact.
 
 ### 2026-04-12
