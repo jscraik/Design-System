@@ -468,7 +468,7 @@ function daysBetween(dateString, generatedOn) {
  *
  * @param {Object} category - Radar category metadata used for result attribution.
  * @param {Object} contract - Parsed radar contract; expects `contract.freshness.alignment_stale_after_days` to define staleness threshold.
- * @param {string} generatedOn - ISO date string (YYYY-MM-DD) representing the report generation date used to compute stamp age.
+ * @param {Date} generatedOn - Report generation date used to compute stamp age.
  * @returns {Object} A normalized result object containing `category`, `status` ("Green" | "Amber" | "Red"), `freshness` ("Fresh" | "Stale" | "Unavailable"), `metric` (verification timestamp or a message), `trend`, `notes`, and `nextAction`.
  */
 function probeUpstreamAlignmentStamp(category, contract, generatedOn) {
@@ -511,7 +511,7 @@ function probeUpstreamAlignmentStamp(category, contract, generatedOn) {
  *
  * @param {Object} category - Contract category being evaluated; used to populate the result and owner.
  * @param {Object} contract - Parsed radar contract, used for freshness thresholds.
- * @param {string} generatedOn - Reference date in `YYYY-MM-DD` format used to compute ages for staleness checks.
+ * @param {Date} generatedOn - Reference date used to compute ages for staleness checks.
  * @returns {Object} A normalized result object containing `category`, `status`, `freshness`, `metric`, `trend`, `owner`, `notes`, and `nextAction`. `metric` reports the count of reliability markers; `freshness` is `"Fresh"`, `"Stale"`, or `"Unavailable"` and `status` reflects the evaluated posture (`"Green"`, `"Amber"`, or `"Red"`).
  */
 function probeWorkOutstandingReliabilityMarkers(category, contract, generatedOn) {
@@ -557,7 +557,7 @@ function probeWorkOutstandingReliabilityMarkers(category, contract, generatedOn)
  *
  * @param {Object} category - Contract category object describing the radar category and its probe.
  * @param {Object} contract - Parsed radar contract used by probes that require contract-level freshness thresholds.
- * @param {string} generatedOn - ISO date string (YYYY-MM-DD) representing the report generation date used for age/staleness checks.
+ * @param {Date} generatedOn - Report generation date used for age/staleness checks.
  * @returns {Object} A normalized result object with the keys: `category`, `status`, `freshness`, `metric`, `trend`, `owner`, `notes`, and `nextAction`. `status` will be one of `"Green"`, `"Amber"`, `"Red"`, or `"Unavailable"`.
  */
 function evaluateCategory(category, contract, generatedOn) {
