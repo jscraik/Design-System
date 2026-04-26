@@ -719,7 +719,7 @@ function renderActionsList(results) {
  */
 function renderStaleSources(results) {
   const staleSources = results
-    .filter((result) => result.freshness !== "Fresh")
+    .filter((result) => result.freshness === "Stale")
     .map((result) => `  - ${result.category.label}: ${result.freshness} - ${result.metric}`)
     .join("\n");
   return staleSources || "  - None";
