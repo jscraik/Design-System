@@ -154,9 +154,9 @@
     },
     "overrides": {
       "storybook": "10.2.10",
-      "react": "19.2.3",
-      "react-dom": "19.2.3",
-      "@types/react": "19.2.7",
+      "react": "19.2.5",
+      "react-dom": "19.2.5",
+      "@types/react": "19.2.14",
       "@types/react-dom": "19.2.3",
       "@modelcontextprotocol/sdk@<1.24.0": ">=1.24.0",
       "@modelcontextprotocol/sdk@<1.26.0": ">=1.26.0",
