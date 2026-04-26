@@ -232,14 +232,34 @@ function parseBiome() {
  * @param {Record<string, Record<string, string>>|undefined|null} ruleGroups - Mapping of rule group names to rule name→setting maps; falsy values are treated as empty.
  * @returns {string[]} Array of disabled rule identifiers formatted as `group.rule`.
  */
-function countDisabledRules(ruleGroups) {
+function countDisabledRules(ruleGroups, prefix = "") {
   const disabled = [];
   for (const [groupName, rules] of Object.entries(ruleGroups ?? {})) {
     for (const [ruleName, value] of Object.entries(rules ?? {})) {
       if (value === "off") {
-        disabled.push(`${groupName}.${ruleName}`);
+        disabled.push(`${prefix}${groupName}.${ruleName}`);
       }
     }
+  }
+  return disabled;
+}
+
+/**
+ * Collects disabled Biome linter rules from top-level and override-scoped settings.
+ * @param {Object} biome - Parsed biome.json content.
+ * @param {string|null} [groupFilter=null] - Optional rule group name to restrict the count.
+ * @returns {string[]} Array of disabled rule identifiers, including override scope when applicable.
+ */
+function collectBiomeDisabledRules(biome, groupFilter = null) {
+  const topLevelRules = groupFilter
+    ? { [groupFilter]: biome.linter?.rules?.[groupFilter] ?? {} }
+    : biome.linter?.rules;
+  const disabled = countDisabledRules(topLevelRules);
+  for (const [index, override] of (biome.overrides ?? []).entries()) {
+    const overrideRules = groupFilter
+      ? { [groupFilter]: override.linter?.rules?.[groupFilter] ?? {} }
+      : override.linter?.rules;
+    disabled.push(...countDisabledRules(overrideRules, `overrides[${index}].`));
   }
   return disabled;
 }
@@ -312,7 +332,8 @@ function makeResult(category, status, freshness, metric, trend, notes, nextActio
 function probeBiomeDisabledRules(category) {
   try {
     const biome = parseBiome();
-    const disabled = countDisabledRules(biome.linter?.rules);
+    const disabled = collectBiomeDisabledRules(biome);
+    const overrideDisabled = disabled.filter((rule) => rule.startsWith("overrides["));
     return makeResult(
       category,
       statusFromCount(disabled.length),
@@ -320,7 +341,7 @@ function probeBiomeDisabledRules(category) {
       `${disabled.length} disabled linter rules`,
       "baseline",
       disabled.length
-        ? `Disabled groups include ${disabled.slice(0, 5).join(", ")}${disabled.length > 5 ? "..." : ""}.`
+        ? `Disabled groups include ${disabled.slice(0, 5).join(", ")}${disabled.length > 5 ? "..." : ""}.${overrideDisabled.length ? ` Includes ${overrideDisabled.length} override-scoped disable${overrideDisabled.length === 1 ? "" : "s"}.` : ""}`
         : "No disabled linter rules detected.",
       disabled.length
         ? "Review disabled Biome rules and promote one suppressing rule family per week."
@@ -348,7 +369,7 @@ function probeBiomeDisabledRules(category) {
 function probeA11yDisabledRules(category) {
   try {
     const biome = parseBiome();
-    const disabled = countDisabledRules({ a11y: biome.linter?.rules?.a11y ?? {} });
+    const disabled = collectBiomeDisabledRules(biome, "a11y");
     const a11yText = readText("docs/design-system/A11Y_CONTRACTS.md");
     const coverageText = readText("docs/design-system/COVERAGE_MATRIX.md");
     const coverage = verifyCoverageCleared(coverageText, a11yText);

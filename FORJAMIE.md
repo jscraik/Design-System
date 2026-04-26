@@ -199,7 +199,7 @@ See also: `~/.codex/instructions/Learnings.md`
 ### 2026-04-26
 
 - **Quality-debt radar review hardening**: PR #154 follow-up archives the CI-generated radar report, broadens `pnpm docs:lint` to Markdown, MDX, AsciiDoc, and reStructuredText, service-tags quality-debt CLI output, validates missing option values, and covers `--no-color` in the CLI test. The follow-up also restores a docstring boundary and splits report rendering helpers in `scripts/quality-debt-radar.mjs` so report generation stays readable while continuing to exercise the upstream-alignment probe.
-- **Quality-debt radar autofix closeout**: The radar CLI now rejects impossible `--date` calendar values instead of letting JavaScript normalize them, and the integration-drift probe prefers the CI-managed `Verified at` upstream-alignment stamp before falling back to `Last verified`.
+- **Quality-debt radar autofix closeout**: The radar CLI now rejects impossible `--date` calendar values instead of letting JavaScript normalize them, the integration-drift probe prefers the CI-managed `Verified at` upstream-alignment stamp before falling back to `Last verified`, and Biome suppression metrics include override-scoped rule disables.
 - **Quality-debt radar execution surface**: JSC-38 through JSC-41 now have an executable warn-first radar path. `docs/operations/quality-debt-radar.categories.json` defines the canonical category/source mapping, `scripts/quality-debt-radar.mjs` validates the contract and generates weekly reports, `reports/qa/quality-debt-burndown-2026-W17.md` records the first baseline snapshot, and CI/release workflows run radar checks in `continue-on-error` mode so release owners get debt visibility without a premature hard-fail gate.
 
 ### 2026-04-25

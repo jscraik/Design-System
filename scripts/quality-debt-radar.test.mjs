@@ -37,6 +37,8 @@ try {
   const body = readFileSync(output, "utf8");
   assert.match(body, /# Quality Debt Burn-down/);
   assert.match(body, /Lint suppressions/);
+  assert.match(body, /34 disabled linter rules/);
+  assert.match(body, /1 override-scoped disable/);
   assert.match(body, /Fresh|Stale|Unavailable/);
   assert.match(body, /Warn-first mode/);
 } finally {
