@@ -100,12 +100,15 @@ jobs:
         if: matrix.platform == 'web'
         run: pnpm ds:matrix:check
 
-      - name: Quality debt radar snapshot (warn-first, web platform only)
+      - name: Quality debt check (warn-first, web platform only)
         if: matrix.platform == 'web'
         continue-on-error: true
-        run: |
-          pnpm quality-debt:check
-          pnpm quality-debt:report -- --output reports/qa/quality-debt-burndown-ci.md
+        run: pnpm quality-debt:check
+
+      - name: Quality debt report (warn-first, web platform only)
+        if: matrix.platform == 'web'
+        continue-on-error: true
+        run: pnpm quality-debt:report -- --output reports/qa/quality-debt-burndown-ci.md
 
       - name: Format check (web platform only)
         if: matrix.platform == 'web'

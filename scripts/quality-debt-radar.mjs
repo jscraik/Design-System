@@ -6,6 +6,12 @@ const ROOT = process.cwd();
 const CONTRACT_PATH = "docs/operations/quality-debt-radar.categories.json";
 const TEMPLATE_PATH = "reports/qa/quality-debt-burndown-template.md";
 const DEFAULT_REPORT_DIR = "reports/qa";
+const REQUIRED_FRESHNESS_FIELDS = [
+  "weekly_snapshot_days",
+  "alignment_stale_after_days",
+  "work_outstanding_stale_after_days",
+];
+const REQUIRED_STATUS_FIELDS = ["green", "amber", "red"];
 const STATUS_RANK = new Map([
   ["Green", 0],
   ["Amber", 1],
@@ -15,8 +21,8 @@ const STATUS_RANK = new Map([
 function usage(exitCode = 0) {
   const text = [
     "Usage:",
-    "  node scripts/quality-debt-radar.mjs check",
-    "  node scripts/quality-debt-radar.mjs report [--output <path>] [--date YYYY-MM-DD] [--week YYYY-WW]",
+    "  node scripts/quality-debt-radar.mjs check [--plain|--no-color]",
+    "  node scripts/quality-debt-radar.mjs report [--output <path>] [--date YYYY-MM-DD] [--week YYYY-WW] [--plain|--no-color]",
     "",
     "The report command is warn-first: amber/red categories are reported, not process-failed.",
   ].join("\n");
@@ -40,11 +46,39 @@ function requireFile(relativePath) {
   return absolutePath;
 }
 
+function assertPlainObject(value, label) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new Error(`${label} must be an object.`);
+  }
+}
+
+function validateFreshnessContract(freshness) {
+  assertPlainObject(freshness, "Radar contract freshness");
+  for (const field of REQUIRED_FRESHNESS_FIELDS) {
+    if (!Number.isInteger(freshness[field]) || freshness[field] <= 0) {
+      throw new Error(`Radar contract freshness.${field} must be a positive integer.`);
+    }
+  }
+}
+
+function validateStatusRules(category) {
+  assertPlainObject(category.status_rules, `Radar category ${category.id} status_rules`);
+  for (const field of REQUIRED_STATUS_FIELDS) {
+    if (
+      typeof category.status_rules[field] !== "string" ||
+      category.status_rules[field].trim() === ""
+    ) {
+      throw new Error(`Radar category ${category.id} status_rules.${field} must be a string.`);
+    }
+  }
+}
+
 function loadContract() {
   const contract = readJson(CONTRACT_PATH);
   if (contract.schema_version !== 1) {
     throw new Error(`Unsupported radar contract schema_version: ${contract.schema_version}`);
   }
+  validateFreshnessContract(contract.freshness);
   if (!Array.isArray(contract.categories) || contract.categories.length === 0) {
     throw new Error("Radar contract must define at least one category.");
   }
@@ -65,6 +99,7 @@ function loadContract() {
     if (!Array.isArray(category.source_commands) || category.source_commands.length === 0) {
       throw new Error(`Radar category ${category.id} needs source_commands.`);
     }
+    validateStatusRules(category);
     for (const sourceAnchor of category.source_anchors) {
       requireFile(sourceAnchor);
     }
@@ -118,6 +153,18 @@ function statusFromCount(count, redWhenUnavailable = false) {
   return count === 0 ? "Green" : "Amber";
 }
 
+function verifyCoverageCleared(coverageText, a11yText) {
+  const unresolvedPattern = /\b(host-only|pending evidence|unresolved|requires host)\b/i;
+  const unresolvedLines = [...coverageText.split("\n"), ...a11yText.split("\n")]
+    .filter((line) => unresolvedPattern.test(line))
+    .map((line) => line.trim())
+    .filter(Boolean);
+  return {
+    clear: unresolvedLines.length === 0,
+    unresolvedLines,
+  };
+}
+
 function makeResult(category, status, freshness, metric, trend, notes, nextAction) {
   return {
     category,
@@ -165,18 +212,22 @@ function probeA11yDisabledRules(category) {
   try {
     const biome = parseBiome();
     const disabled = countDisabledRules({ a11y: biome.linter?.rules?.a11y ?? {} });
-    readText("docs/design-system/A11Y_CONTRACTS.md");
-    readText("docs/design-system/COVERAGE_MATRIX.md");
+    const a11yText = readText("docs/design-system/A11Y_CONTRACTS.md");
+    const coverageText = readText("docs/design-system/COVERAGE_MATRIX.md");
+    const coverage = verifyCoverageCleared(coverageText, a11yText);
+    const status = disabled.length === 0 && coverage.clear ? "Green" : "Amber";
     return makeResult(
       category,
-      statusFromCount(disabled.length),
+      status,
       "Fresh",
-      `${disabled.length} disabled a11y rules`,
+      `${disabled.length} disabled a11y rules; ${coverage.unresolvedLines.length} unresolved coverage markers`,
       "baseline",
       disabled.length
         ? `Biome a11y suppressions remain: ${disabled.join(", ")}.`
-        : "No disabled Biome a11y rules detected.",
-      disabled.length
+        : coverage.clear
+          ? "No disabled Biome a11y rules or unresolved coverage markers detected."
+          : `Coverage still has unresolved evidence markers: ${coverage.unresolvedLines.slice(0, 3).join("; ")}.`,
+      disabled.length || !coverage.clear
         ? "Retire or scope disabled a11y rules and keep host-only widget evidence explicit."
         : "Keep a11y suppressions at zero and refresh host-only evidence.",
     );
@@ -197,7 +248,7 @@ function probeCssLintCoverageGap(category) {
   try {
     const biome = parseBiome();
     const includes = biome.files?.includes ?? [];
-    const cssExcluded = includes.some((entry) => entry === "!**/*.css" || entry.endsWith("*.css"));
+    const cssExcluded = includes.some((entry) => entry.startsWith("!") && entry.endsWith(".css"));
     return makeResult(
       category,
       cssExcluded ? "Amber" : "Green",
@@ -459,6 +510,8 @@ function parseArgs(argv) {
   for (let index = 0; index < rest.length; index += 1) {
     const arg = rest[index];
     if (arg === "--") {
+    } else if (arg === "--plain" || arg === "--no-color") {
+      options.plain = true;
     } else if (arg === "--output") {
       options.output = rest[++index];
     } else if (arg === "--date") {

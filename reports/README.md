@@ -25,6 +25,8 @@ index to distinguish active evidence from historical snapshots.
 - `qa/quality-debt-burndown-template.md`
 - `qa/quality-debt-burndown-YYYY-WW.md` - generated weekly quality-debt radar snapshots. Generate with `pnpm quality-debt:report`; validate the contract with `pnpm quality-debt:check`.
 
+Markdown reports under `reports/**` are part of the Vale docs-lint surface; keep generated report prose concise enough for `pnpm docs:lint`.
+
 ## Archived Reports
 
 - `archive/2026-01-template-migration/` - January 2026 template-migration

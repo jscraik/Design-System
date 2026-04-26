@@ -32,11 +32,13 @@ jobs:
       - name: Install deps
         run: pnpm install --frozen-lockfile --prod=false
 
-      - name: Quality debt radar snapshot (warn-first)
+      - name: Quality debt check (warn-first)
         continue-on-error: true
-        run: |
-          pnpm quality-debt:check
-          pnpm quality-debt:report -- --output reports/qa/quality-debt-burndown-release.md
+        run: pnpm quality-debt:check
+
+      - name: Quality debt report (warn-first)
+        continue-on-error: true
+        run: pnpm quality-debt:report -- --output reports/qa/quality-debt-burndown-release.md
 
       - name: Validate public release gates
         run: |

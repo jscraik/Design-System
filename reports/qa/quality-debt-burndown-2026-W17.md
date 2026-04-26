@@ -28,7 +28,7 @@
 | Category | Current status | Freshness | Metric | Trend | Owner | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
 | Lint suppressions | Amber | Fresh | 33 disabled linter rules | baseline | `@platform` | Disabled groups include suspicious.noExplicitAny, suspicious.noAssignInExpressions, suspicious.noArrayIndexKey, suspicious.noShadowRestrictedNames, suspicious.noSuspiciousSemicolonInJsx.... |
-| A11y debt | Amber | Fresh | 11 disabled a11y rules | baseline | `@design-system` | Biome a11y suppressions remain: a11y.noSvgWithoutTitle, a11y.useButtonType, a11y.useAriaPropsSupportedByRole, a11y.noLabelWithoutControl, a11y.useSemanticElements, a11y.noStaticElementInteractions, a11y.useKeyWithClickEvents, a11y.useValidAnchor, a11y.useFocusableInteractive, a11y.useAriaPropsForRole, a11y.noRedundantAlt. |
+| A11y debt | Amber | Fresh | 11 disabled a11y rules; 0 unresolved coverage markers | baseline | `@design-system` | Biome a11y suppressions remain: a11y.noSvgWithoutTitle, a11y.useButtonType, a11y.useAriaPropsSupportedByRole, a11y.noLabelWithoutControl, a11y.useSemanticElements, a11y.noStaticElementInteractions, a11y.useKeyWithClickEvents, a11y.useValidAnchor, a11y.useFocusableInteractive, a11y.useAriaPropsForRole, a11y.noRedundantAlt. |
 | CSS lint coverage gap | Amber | Fresh | CSS excluded from Biome | baseline | `@platform` | Biome still excludes CSS from the lint surface, so CSS debt stays warn-first. |
 | Integration drift | Amber | Stale | last verified 2026-01-24T01:28:42Z | baseline | `@release` | Alignment stamp is 91 days old. |
 | Gate reliability debt | Amber | Stale | 22 reliability markers | baseline | `@qa` | Reliability source is 79 days old and still documents blocked/unstable gates. |
