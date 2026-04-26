@@ -584,6 +584,107 @@ function currentReports() {
 }
 
 /**
+ * Render the category status table rows for the weekly report.
+ *
+ * @param {Array<Object>} results - Normalized category probe results.
+ * @returns {string} Markdown table rows for category status.
+ */
+function renderCategoryTable(results) {
+  return results
+    .map(
+      (result) =>
+        `| ${result.category.label} | ${result.status} | ${result.freshness} | ${result.metric} | ${result.trend} | \`${result.owner}\` | ${result.notes} |`,
+    )
+    .join("\n");
+}
+
+/**
+ * Render action checklist items for non-green categories.
+ *
+ * @param {Array<Object>} results - Normalized category probe results.
+ * @returns {string} Markdown checklist items or the default green-state action.
+ */
+function renderActionsList(results) {
+  const actions = results
+    .filter((result) => result.status !== "Green")
+    .map((result) => `- [ ] ${result.category.label}: ${result.nextAction} (${result.owner})`)
+    .join("\n");
+  return actions || "- [ ] Keep all radar categories green and current. (@platform)";
+}
+
+/**
+ * Render stale evidence source rows for the freshness section.
+ *
+ * @param {Array<Object>} results - Normalized category probe results.
+ * @returns {string} Markdown list rows for stale or unavailable freshness, or `None`.
+ */
+function renderStaleSources(results) {
+  const staleSources = results
+    .filter((result) => result.freshness !== "Fresh")
+    .map((result) => `  - ${result.category.label}: ${result.freshness} - ${result.metric}`)
+    .join("\n");
+  return staleSources || "  - None";
+}
+
+/**
+ * Render unavailable evidence source rows for the freshness section.
+ *
+ * @param {Array<Object>} results - Normalized category probe results.
+ * @returns {string} Markdown list rows for unavailable evidence, or `None`.
+ */
+function renderUnavailableSources(results) {
+  const unavailableSources = results
+    .filter((result) => result.freshness === "Unavailable")
+    .map((result) => `  - ${result.category.label}: ${result.notes}`)
+    .join("\n");
+  return unavailableSources || "  - None";
+}
+
+/**
+ * Render follow-up owner rows for categories that need attention.
+ *
+ * @param {Array<Object>} results - Normalized category probe results.
+ * @returns {string} Markdown list rows for non-green follow-ups, or `None`.
+ */
+function renderFollowUpOwners(results) {
+  const followUps = results
+    .filter((result) => result.status !== "Green")
+    .map((result) => `  - ${result.owner} - next weekly radar review - ${result.nextAction}`)
+    .join("\n");
+  return followUps || "  - None";
+}
+
+/**
+ * Render report evidence command links.
+ *
+ * @returns {string} Markdown list of commands that produce source evidence.
+ */
+function renderEvidenceLinks() {
+  return [
+    "- Policy check output: `pnpm test:policy`",
+    "- Drift suite output: `pnpm test:drift`",
+    "- Coverage check output: `pnpm ds:matrix:check`",
+    "- Lint output: `pnpm lint`",
+    "- Radar check output: `pnpm quality-debt:check`",
+  ].join("\n");
+}
+
+/**
+ * Render source commands by quality-debt category.
+ *
+ * @param {Array<Object>} categories - Contract categories containing source commands.
+ * @returns {string} Markdown list of source commands per category.
+ */
+function renderSourceCommands(categories) {
+  return categories
+    .map(
+      (category) =>
+        `- ${category.label}: ${category.source_commands.map((command) => `\`${command}\``).join(", ")}`,
+    )
+    .join("\n");
+}
+
+/**
  * Build the weekly Quality Debt Burn-down Markdown report from contract data and probe results.
  *
  * @param {Object} contract - Parsed radar contract containing category definitions and source commands.
@@ -596,26 +697,6 @@ function currentReports() {
 function renderReport(contract, results, options) {
   const posture = overallPosture(results);
   const nonGreen = results.filter((result) => result.status !== "Green");
-  const staleOrUnavailable = results.filter((result) => result.freshness !== "Fresh");
-  const reportRows = results
-    .map(
-      (result) =>
-        `| ${result.category.label} | ${result.status} | ${result.freshness} | ${result.metric} | ${result.trend} | \`${result.owner}\` | ${result.notes} |`,
-    )
-    .join("\n");
-  const actions = nonGreen
-    .map((result) => `- [ ] ${result.category.label}: ${result.nextAction} (${result.owner})`)
-    .join("\n");
-  const staleSources = staleOrUnavailable
-    .map((result) => `  - ${result.category.label}: ${result.freshness} - ${result.metric}`)
-    .join("\n");
-  const evidenceLinks = [
-    "- Policy check output: `pnpm test:policy`",
-    "- Drift suite output: `pnpm test:drift`",
-    "- Coverage check output: `pnpm ds:matrix:check`",
-    "- Lint output: `pnpm lint`",
-    "- Radar check output: `pnpm quality-debt:check`",
-  ].join("\n");
 
   return `# Quality Debt Burn-down
 
@@ -646,7 +727,7 @@ function renderReport(contract, results, options) {
 
 | Category | Current status | Freshness | Metric | Trend | Owner | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-${reportRows}
+${renderCategoryTable(results)}
 
 ## Trend vs Previous Week
 
@@ -659,7 +740,7 @@ ${reportRows}
 
 ## Top Actions for Next Week
 
-${actions || "- [ ] Keep all radar categories green and current. (@platform)"}
+${renderActionsList(results)}
 
 ## Release Impact Notes
 
@@ -671,29 +752,19 @@ ${actions || "- [ ] Keep all radar categories green and current. (@platform)"}
 ## Data Freshness and Gaps
 
 - Stale sources:
-${staleSources || "  - None"}
+${renderStaleSources(results)}
 - Unavailable sources:
-${
-  results
-    .filter((result) => result.freshness === "Unavailable")
-    .map((result) => `  - ${result.category.label}: ${result.notes}`)
-    .join("\n") || "  - None"
-}
+${renderUnavailableSources(results)}
 - Follow-up owners and due dates:
-${nonGreen.map((result) => `  - ${result.owner} - next weekly radar review - ${result.nextAction}`).join("\n") || "  - None"}
+${renderFollowUpOwners(results)}
 
 ## Evidence Links
 
-${evidenceLinks}
+${renderEvidenceLinks()}
 
 ## Source Commands
 
-${contract.categories
-  .map(
-    (category) =>
-      `- ${category.label}: ${category.source_commands.map((command) => `\`${command}\``).join(", ")}`,
-  )
-  .join("\n")}
+${renderSourceCommands(contract.categories)}
 `;
 }
 
