@@ -94,13 +94,13 @@ export const PageShellWithSidebarAndFooter: Story = {
       sidebar={
         <ProductPanel title="Review lanes" density="compact" tone="muted">
           <nav aria-label="Review lanes" className="grid gap-2 text-body-small">
-            <a className="text-interactive" href="#active">
+            <a className="ds-focusable text-interactive" href="#active">
               Active
             </a>
-            <a className="text-muted-foreground" href="#blocked">
+            <a className="ds-focusable text-muted-foreground" href="#blocked">
               Blocked
             </a>
-            <a className="text-muted-foreground" href="#done">
+            <a className="ds-focusable text-muted-foreground" href="#done">
               Done
             </a>
           </nav>
