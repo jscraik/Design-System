@@ -1,7 +1,11 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
 import { readFile } from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
 import { test } from "node:test";
 import {
+  buildAbstractionProposalPreview,
   buildPreparePayload,
   diffDesignContracts,
   exportDesignContract,
@@ -14,12 +18,36 @@ import {
   resolveRouteForSurface,
   serializePreparePayload,
   validateAgentUiRoutingTable,
+  validateProposalGate,
 } from "../dist/index.js";
 
 const rootDir = new URL("../../..", import.meta.url).pathname;
 const valid = await readFile(new URL("fixtures/valid-design.md", import.meta.url), "utf8");
 const invalid = await readFile(new URL("fixtures/invalid-design.md", import.meta.url), "utf8");
 const rootDesign = await readFile(new URL("../../../DESIGN.md", import.meta.url), "utf8");
+
+function proposalFixtureRoot() {
+  const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), "agent-design-proposals-"));
+  fs.mkdirSync(path.join(fixtureRoot, "docs", "design-system", "proposals"), { recursive: true });
+  for (const relativePath of [
+    "docs/design-system/AGENT_UI_ROUTING.json",
+    "docs/design-system/COMPONENT_LIFECYCLE.json",
+    "docs/design-system/COVERAGE_MATRIX.json",
+    "docs/design-system/proposals/waivers.json",
+  ]) {
+    fs.mkdirSync(path.dirname(path.join(fixtureRoot, relativePath)), { recursive: true });
+    fs.copyFileSync(path.join(rootDir, relativePath), path.join(fixtureRoot, relativePath));
+  }
+  return fixtureRoot;
+}
+
+function readFixtureJson(fixtureRoot, relativePath) {
+  return JSON.parse(fs.readFileSync(path.join(fixtureRoot, relativePath), "utf8"));
+}
+
+function writeFixtureJson(fixtureRoot, relativePath, value) {
+  fs.writeFileSync(path.join(fixtureRoot, relativePath), `${JSON.stringify(value, null, 2)}\n`);
+}
 
 test("parses DESIGN.md frontmatter and provenance", async () => {
   const contract = await parseDesignContract(valid, { rootDir, filePath: "DESIGN.md" });
@@ -200,6 +228,104 @@ test("builds remediation context from route data", () => {
   assert.ok(
     context.replacementInstructions.some((instruction) => instruction.includes("ProductPanel")),
   );
+});
+
+test("proposal gate accepts current routes through typed grandfathering waivers", () => {
+  const result = validateProposalGate(rootDir, { today: "2026-04-28" });
+  assert.equal(result.ok, true);
+  assert.deepEqual(
+    result.diagnostics.filter((diagnostic) => diagnostic.severity === "error"),
+    [],
+  );
+});
+
+test("proposal gate rejects enforced routes without accepted proposal or waiver", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const waivers = readFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json");
+  waivers.waivers = waivers.waivers.filter(
+    (waiver) => waiver.id !== "grandfather-route-product-section-2026-04-28",
+  );
+  writeFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json", waivers);
+
+  const result = validateProposalGate(fixtureRoot, { today: "2026-04-28" });
+  assert.equal(result.ok, false);
+  assert.ok(
+    result.diagnostics.some(
+      (diagnostic) =>
+        diagnostic.code === "E_DESIGN_PROPOSAL_REQUIRED" && diagnostic.target === "product_section",
+    ),
+  );
+});
+
+test("proposal gate rejects canonical lifecycle promotion without coverage or waiver", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const waivers = readFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json");
+  waivers.waivers = waivers.waivers.filter(
+    (waiver) => waiver.id !== "grandfather-lifecycle-product-data-view-2026-04-28",
+  );
+  writeFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json", waivers);
+
+  const result = validateProposalGate(fixtureRoot, { today: "2026-04-28" });
+  assert.equal(result.ok, false);
+  assert.ok(
+    result.diagnostics.some(
+      (diagnostic) =>
+        diagnostic.code === "E_DESIGN_LIFECYCLE_COVERAGE_MISSING" &&
+        diagnostic.target === "ProductDataView",
+    ),
+  );
+});
+
+test("routing validation rejects route examples that do not exist", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  routing.routes[0].examples = ["docs/design-system/examples/missing-example.tsx"];
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const diagnostics = validateAgentUiRoutingTable(fixtureRoot);
+  assert.ok(diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_ROUTE_EXAMPLE_MISSING"));
+});
+
+test("proposal gate rejects free-form grandfathering without typed waiver fields", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const waivers = readFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json");
+  delete waivers.waivers[0].owner;
+  writeFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json", waivers);
+
+  const result = validateProposalGate(fixtureRoot, { today: "2026-04-28" });
+  assert.equal(result.ok, false);
+  assert.ok(
+    result.diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_PROPOSAL_WAIVER_SCHEMA"),
+  );
+});
+
+test("proposal gate audits near-expiry waivers and fails expired waivers", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const waivers = readFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json");
+  waivers.waivers[0].expiresAt = "2026-05-05";
+  waivers.waivers[1].expiresAt = "2026-04-27";
+  writeFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json", waivers);
+
+  const result = validateProposalGate(fixtureRoot, { today: "2026-04-28" });
+  assert.equal(result.ok, false);
+  assert.ok(
+    result.diagnostics.some(
+      (diagnostic) => diagnostic.code === "W_DESIGN_PROPOSAL_WAIVER_NEAR_EXPIRY",
+    ),
+  );
+  assert.ok(
+    result.diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_PROPOSAL_WAIVER_EXPIRED"),
+  );
+});
+
+test("proposal preview marks unknown needs as proposal-required without writing files", () => {
+  const preview = buildAbstractionProposalPreview("timeline editor", rootDir);
+  assert.equal(preview.kind, "astudio.design.proposeAbstraction.v1");
+  assert.equal(preview.proposalRequired, true);
+  assert.equal(preview.previewOnly, true);
+  assert.equal(preview.readOnly, true);
+  assert.ok(preview.requiredFields.includes("coverage impact"));
+  assert.equal(preview.remediation.route, null);
 });
 
 test("builds prepare payload for protected product page surfaces", async () => {

@@ -147,6 +147,7 @@ export interface AgentUiRouteSource {
   need: string;
   canonicalNeed: string;
   aliases: string[];
+  proposalRef?: string;
   preferredComponent: AgentUiRoutePreferredComponent;
   lifecycleStatus: "canonical" | "transitional";
   routeMaturity: RouteMaturity;
@@ -171,6 +172,7 @@ export interface ComponentLifecycleEntry {
   path: string;
   lifecycle: "canonical" | "transitional" | "deprecated";
   routing_tier: number;
+  proposalRef?: string;
   notes: string;
 }
 
@@ -220,6 +222,63 @@ export interface RemediationContext {
   replacementInstructions: string[];
   validationCommands: AgentUiRouteValidationCommand[];
   diagnostics: RouteDiagnostic[];
+}
+
+export type ProposalWaiverScope = "agent-ui-route" | "component-lifecycle";
+export type ProposalWaiverStatus = "active" | "retired";
+
+export interface ProposalWaiver {
+  id: string;
+  scope: ProposalWaiverScope;
+  target: string;
+  owner: string;
+  reason: string;
+  expiresAt: string;
+  cleanup: string;
+  status: ProposalWaiverStatus;
+}
+
+export interface ProposalWaiverRegistry {
+  schemaVersion: "agent-design.proposal-waivers.v1";
+  updatedAt: string;
+  waivers: ProposalWaiver[];
+}
+
+export interface ProposalGateDiagnostic {
+  code:
+    | "E_DESIGN_PROPOSAL_WAIVERS_MISSING"
+    | "E_DESIGN_PROPOSAL_WAIVER_SCHEMA"
+    | "E_DESIGN_PROPOSAL_WAIVER_EXPIRED"
+    | "W_DESIGN_PROPOSAL_WAIVER_NEAR_EXPIRY"
+    | "E_DESIGN_PROPOSAL_REQUIRED"
+    | "E_DESIGN_PROPOSAL_REF_MISSING"
+    | "E_DESIGN_PROPOSAL_REF_NOT_ACCEPTED"
+    | "E_DESIGN_LIFECYCLE_COVERAGE_MISSING";
+  severity: "error" | "warn";
+  message: string;
+  scope?: ProposalWaiverScope;
+  target?: string;
+  path?: string;
+  waiverId?: string;
+}
+
+export interface ProposalGateResult {
+  kind: "astudio.design.proposalGate.v1";
+  ok: boolean;
+  diagnostics: ProposalGateDiagnostic[];
+  waiverRegistryPath: string;
+}
+
+export interface AbstractionProposalPreview {
+  kind: "astudio.design.proposeAbstraction.v1";
+  need: string;
+  surface: string | null;
+  proposalRequired: boolean;
+  proposalTemplatePath: string;
+  requiredFields: string[];
+  previewOnly: true;
+  readOnly: true;
+  remediation: RemediationContext;
 }
 
 export type PrepareSurfaceScope = "protected" | "warn" | "exempt" | "unknown";

@@ -77,6 +77,7 @@ flowchart LR
 - `docs/specs/2026-04-28-agent-native-design-system-spec.md` is the deepened HE spec for turning the current agent-readable design-system contract into an agent-native preparation, routing, context-pack, remediation, example, and abstraction-proposal workflow.
 - `docs/plans/2026-04-28-agent-native-design-system-plan.md` is the execution plan for that spec, split into contract wiring, routing-table, prepare-payload, CLI, remediation, gold-example, and proposal-gate slices.
 - `docs/design-system/GOLD_EXAMPLES.json` is the machine-readable gold-example inventory for promoted agent examples, state coverage, validation commands, and explicitly deferred non-promotable categories.
+- `docs/design-system/proposals/` is the proposal-gate surface for new agent UI abstractions. It holds the proposal template, typed waiver registry, and docs for when enforced routes or uncovered canonical lifecycle promotions need accepted design evidence.
 - `scripts/` holds build, validation, drift-check, onboarding, and release tooling.
 - Consumer projects should import `@design-studio/ui/styles.css` as the public stylesheet entry; internal style subpaths are implementation details and raw `file:` installs of `packages/ui` are not a supported external adoption path.
 
@@ -116,7 +117,9 @@ pnpm test:policy
 pnpm test:exemplar-evaluation:list
 pnpm test:exemplar-evaluation:update
 cat docs/design-system/GOLD_EXAMPLES.json | jq .
+cat docs/design-system/proposals/waivers.json | jq .
 pnpm design-system-guidance:ratchet
+pnpm agent-design:proposals
 pnpm agent-design:boundaries
 pnpm agent-design:type-check
 pnpm agent-design:test
@@ -166,6 +169,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - Rollback metadata authentication is intentionally local-artifact bound rather than a remote signing service in this pre-GA slice. Treat the rollback artifact signing key, `metadataDigest`, `metadataSignature`, path-root checks, config checksums, and `DESIGN.md` checksums as one fail-closed contract: if any piece drifts, rollback/resume must exit `3` without mutation.
 - The `DESIGN.md` engine computes source digests from `docs/design-system/PROFESSIONAL_UI_CONTRACT.md`, `AGENT_UI_ROUTING.md`, `COMPONENT_LIFECYCLE.json`, and `COVERAGE_MATRIX.json`. If any of those files move or become unreadable, design lint/export should fail before semantic evaluation.
 - Gold examples are intentionally narrower than the full component catalog. `GOLD_EXAMPLES.json` should promote only existing source/story/test paths, and missing categories must stay `promotable: false` until a protected fixture and read-only validation command exist.
+- Proposal waivers are typed, expiring design debt records rather than comments. If `pnpm agent-design:proposals` fails, either backfill an accepted proposal under `docs/design-system/proposals/` or replace the waiver with real lifecycle coverage before promoting another route.
 - `DESIGN.md` schema versions are fail-closed. The v1 engine only accepts `schemaVersion: agent-design.v1`; future contract versions must add explicit parser/rule-pack support before `lint` or `export` can proceed.
 - `DESIGN.md` section line numbers must stay anchored to the original file, including YAML frontmatter. Lint findings use those lines as agent remediation evidence.
 - `astudio design init` validates the starter contract before writing, but it must still enforce the write gate first so a missing `--write` remains a policy error instead of a provenance error.
@@ -197,6 +201,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - `astudio design check-brand --strict` now has non-tautological mismatch logic, but only `astudio-default@1` is currently supported. Add a second supported profile fixture before treating cross-profile mismatch behavior as fully proven.
 - `pnpm generated-source:check` intentionally rebuilds widget assets and may print Vite chunk-size warnings. Treat it as a correctness/freshness gate, not as the package performance budget.
 - `pnpm agent-design:boundaries` is the ownership tripwire for the Agent Design Engine: wrappers can call public package exports, but parser, lint, diff, export, and profile-comparison implementation must stay in `packages/agent-design-engine`.
+- `pnpm agent-design:proposals` now blocks silent enforced-route and uncovered lifecycle promotion, but the first waiver registry intentionally grandfathered existing ProductComposition and ChatShell gaps. Those waivers should be replaced by accepted proposal records or per-export coverage before expiry.
 - `pnpm quality-debt:report` is warn-first by design. Amber/red radar posture is release-owner evidence, not a new hard-fail gate, until explicit thresholds are approved.
 - Quality-debt radar CLI output now includes `service:"quality-debt-radar"` on status/error lines, and flag parsing fails fast when `--output`, `--date`, or `--week` are missing values.
 - The next agent-native design-system hardening lane is specified in `docs/specs/2026-04-28-agent-native-design-system-spec.md` and planned in `docs/plans/2026-04-28-agent-native-design-system-plan.md`. The plan starts with DESIGN.md/guidance contract wiring, then adds the machine-readable routing table before `prepare` payload and CLI expansion.
@@ -217,6 +222,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - **JSC-242 Slice 4 read-only CLI commands**: added the first agent-native CLI transport layer for `astudio design prepare`, `components`, `coverage`, and `propose-abstraction`. These commands emit `astudio.command.v1` JSON envelopes, stay read-only, keep `context` out of the public v1 surface, and add the root `pnpm agent-design:prepare --surface <path>` alias for the happy path.
 - **JSC-243 Slice 5 actionable remediation**: `@brainwav/design-system-guidance` violations now include agent-readable remediation metadata where the fix is deterministic. `no-h-screen` routes through `@brainwav/agent-design-engine` remediation context, token/foundation findings point agents back to semantic token roles, and ambiguous findings explicitly mark proposal-required recovery instead of inventing a rewrite.
 - **JSC-244 Slice 6 gold-example inventory**: added `docs/design-system/GOLD_EXAMPLES.json` and companion Markdown guidance so agents can resolve promoted examples, covered states, read-only validation commands, and non-promotable deferred categories from one inventory. `AGENT_UI_ROUTING.json` now points routes back to the gold-example inventory, and `ProductComposition.stories.tsx` gives `ProductDataView` and `ProductPageShell` concrete Storybook fixtures for the first-wave example matrix.
+- **JSC-245 Slice 7 abstraction proposal gate**: added `docs/design-system/proposals/` with the proposal template and typed waiver registry, exported the proposal gate from `packages/agent-design-engine`, wired `pnpm agent-design:proposals` into root policy, and made `astudio design propose-abstraction` return the canonical proposal fields without writing files.
 
 ### 2026-04-26
 

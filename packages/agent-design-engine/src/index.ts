@@ -10,6 +10,12 @@ export {
 export { extractDesignBody, parseDesignContract } from "./parser.js";
 export { buildPreparePayload, serializePreparePayload } from "./prepare.js";
 export {
+  buildAbstractionProposalPreview,
+  proposalTemplatePath,
+  proposalWaiverRegistryPath,
+  validateProposalGate,
+} from "./proposals.js";
+export {
   loadAgentUiRoutingTable,
   resolveRemediationContext,
   resolveRouteForNeed,
@@ -17,6 +23,7 @@ export {
   validateAgentUiRoutingTable,
 } from "./routes.js";
 export type {
+  AbstractionProposalPreview,
   AgentUiRouteFallback,
   AgentUiRoutePreferredComponent,
   AgentUiRouteSource,
@@ -41,6 +48,12 @@ export type {
   PrepareSurfaceScope,
   PrepareTiming,
   ProfileSource,
+  ProposalGateDiagnostic,
+  ProposalGateResult,
+  ProposalWaiver,
+  ProposalWaiverRegistry,
+  ProposalWaiverScope,
+  ProposalWaiverStatus,
   RemediationContext,
   ResolvedAgentUiRoute,
   RouteDiagnostic,

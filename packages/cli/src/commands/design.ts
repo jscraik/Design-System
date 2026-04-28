@@ -1,6 +1,7 @@
 import { access, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import {
+  buildAbstractionProposalPreview,
   buildPreparePayload,
   type DesignContract,
   type DesignDiffResult,
@@ -11,7 +12,6 @@ import {
   lintDesignContract,
   lintDesignFile,
   parseDesignContract,
-  resolveRemediationContext,
   resolveRouteForNeed,
   resolveRouteForSurface,
 } from "@brainwav/agent-design-engine";
@@ -736,16 +736,12 @@ export function designCommand(yargs: Argv): Argv {
           const argv = raw as DesignArgs;
           assertDesignOutputMode(argv);
           const rootDir = await findProjectRoot(commandCwd(argv));
-          const remediation = resolveRemediationContext(String(argv.need), rootDir);
-          emitDesign(argv, "design propose-abstraction", "success", {
-            kind: "astudio.design.proposeAbstraction.v1",
-            need: argv.need,
-            surface: argv.surface ?? null,
-            proposalRequired: remediation.route === null,
-            previewOnly: true,
-            readOnly: true,
-            remediation,
-          });
+          const result = buildAbstractionProposalPreview(
+            String(argv.need),
+            rootDir,
+            argv.surface ? String(argv.surface) : null,
+          );
+          emitDesign(argv, "design propose-abstraction", "success", result);
           return EXIT_CODES.success;
         }),
     )
