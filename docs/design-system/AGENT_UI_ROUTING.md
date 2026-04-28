@@ -1,12 +1,13 @@
 # Agent UI Routing
 
-Last updated: 2026-04-25
+Last updated: 2026-04-28
 Owner: Jamie Scott Craik (@jscraik)
 Review cadence: Every release or monthly (whichever is sooner)
 
 ## Table of Contents
 
 - [Purpose](#purpose)
+- [Machine authority](#machine-authority)
 - [Routing order](#routing-order)
 - [Agent Composition Primitives](#agent-composition-primitives)
 - [Exemplar surface migration](#exemplar-surface-migration)
@@ -19,6 +20,15 @@ Review cadence: Every release or monthly (whichever is sooner)
 This guide tells agents and developers which component layer to reach for first when building or refactoring product UI in this repository.
 
 It should reduce unnecessary wrapper creation and keep routing decisions consistent with the design-system contract.
+
+## Machine authority
+
+`docs/design-system/AGENT_UI_ROUTING.json` is the machine-readable routing
+authority for agents and command code.
+
+This Markdown file explains the routing model for humans. Runtime command code
+must consume the authored JSON route source through
+`packages/agent-design-engine` facade APIs instead of parsing this prose.
 
 ## Routing order
 

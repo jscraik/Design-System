@@ -5,8 +5,13 @@ import {
   diffDesignContracts,
   exportDesignContract,
   lintDesignContract,
+  loadAgentUiRoutingTable,
   loadRuleManifest,
   parseDesignContract,
+  resolveRemediationContext,
+  resolveRouteForNeed,
+  resolveRouteForSurface,
+  validateAgentUiRoutingTable,
 } from "../dist/index.js";
 
 const rootDir = new URL("../../..", import.meta.url).pathname;
@@ -117,4 +122,69 @@ test("diff reports contract regressions and rule context", async () => {
   assert.equal(diff.kind, "astudio.design.diff.v1");
   assert.equal(diff.ruleContextDelta.before.rulePackVersion, "astudio-professional-ui@1");
   assert.equal(Array.isArray(diff.changes), true);
+});
+
+test("loads authored agent UI routing table in deterministic order", () => {
+  const table = loadAgentUiRoutingTable(rootDir);
+  assert.equal(table.schemaVersion, "agent-ui-routing.v1");
+  assert.deepEqual(
+    table.routes.map((route) => route.canonicalNeed),
+    [
+      "async_collection",
+      "destructive_confirmation",
+      "page_shell",
+      "product_panel",
+      "product_section",
+      "settings_panel",
+    ],
+  );
+  assert.ok(
+    table.routes.every((route) =>
+      route.validationCommands.every((command) => command.safetyClass === "read_only"),
+    ),
+  );
+});
+
+test("routing table has no lifecycle, coverage, source, or example drift", () => {
+  assert.deepEqual(validateAgentUiRoutingTable(rootDir), []);
+});
+
+test("resolves routes by canonical need and alias with lifecycle and coverage joins", () => {
+  const canonical = resolveRouteForNeed("page_shell", rootDir);
+  assert.equal(canonical.ok, true);
+  assert.equal(canonical.route?.preferredComponent.name, "ProductPageShell");
+  assert.equal(canonical.route?.lifecycleEntry.lifecycle, "canonical");
+  assert.equal(canonical.route?.coverageEntry.name, "ProductComposition");
+
+  const alias = resolveRouteForNeed("full page", rootDir);
+  assert.equal(alias.ok, true);
+  assert.equal(alias.route?.canonicalNeed, "page_shell");
+  assert.equal(alias.route?.matchedAlias, "full page");
+});
+
+test("resolves routes by known surface path", () => {
+  const page = resolveRouteForSurface("platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx", rootDir);
+  assert.equal(page.ok, true);
+  assert.equal(page.route?.canonicalNeed, "page_shell");
+
+  const settings = resolveRouteForSurface("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", rootDir);
+  assert.equal(settings.ok, true);
+  assert.equal(settings.route?.canonicalNeed, "settings_panel");
+});
+
+test("returns deterministic missing-route diagnostics for unknown needs and surfaces", () => {
+  const missingNeed = resolveRouteForNeed("timeline editor", rootDir);
+  assert.equal(missingNeed.ok, false);
+  assert.equal(missingNeed.diagnostics[0].code, "E_DESIGN_ROUTE_MISSING");
+
+  const missingSurface = resolveRouteForSurface("packages/ui/src/components/unknown/Thing.tsx", rootDir);
+  assert.equal(missingSurface.ok, false);
+  assert.equal(missingSurface.diagnostics[0].code, "E_DESIGN_ROUTE_MISSING");
+});
+
+test("builds remediation context from route data", () => {
+  const context = resolveRemediationContext("grouped panel", rootDir);
+  assert.equal(context.route?.canonicalNeed, "product_panel");
+  assert.ok(context.forbiddenPatterns.some((pattern) => pattern.includes("Nested cards")));
+  assert.ok(context.replacementInstructions.some((instruction) => instruction.includes("ProductPanel")));
 });

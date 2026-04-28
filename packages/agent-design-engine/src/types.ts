@@ -121,6 +121,107 @@ export interface BrandCheckResult {
   findings: DesignFinding[];
 }
 
+export type RouteMaturity = "canonical" | "transitional";
+export type RouteSafetyClass = "read_only" | "mutating" | "interactive" | "server_start";
+
+export interface AgentUiRouteValidationCommand {
+  command: string;
+  safetyClass: RouteSafetyClass;
+  reason: string;
+  blockedByDefault?: boolean;
+}
+
+export interface AgentUiRouteFallback {
+  component: string;
+  reason: string;
+}
+
+export interface AgentUiRoutePreferredComponent {
+  name: string;
+  importPath: string;
+  packageName: string;
+  coverageName?: string;
+}
+
+export interface AgentUiRouteSource {
+  need: string;
+  canonicalNeed: string;
+  aliases: string[];
+  preferredComponent: AgentUiRoutePreferredComponent;
+  lifecycleStatus: "canonical" | "transitional";
+  routeMaturity: RouteMaturity;
+  surfacePatterns: string[];
+  useWhen: string[];
+  requiredStates: string[];
+  examples: string[];
+  avoid: string[];
+  fallbacks: AgentUiRouteFallback[];
+  validationCommands: AgentUiRouteValidationCommand[];
+  sourceRefs: string[];
+}
+
+export interface AgentUiRoutingTable {
+  schemaVersion: "agent-ui-routing.v1";
+  updatedAt: string;
+  routes: AgentUiRouteSource[];
+}
+
+export interface ComponentLifecycleEntry {
+  name: string;
+  path: string;
+  lifecycle: "canonical" | "transitional" | "deprecated";
+  routing_tier: number;
+  notes: string;
+}
+
+export interface ComponentCoverageEntry {
+  name: string;
+  source: string;
+  upstream: string | null;
+  fallback: string | null;
+  status: string;
+  web_used: boolean;
+  tauri_used: boolean;
+  widget_used: boolean;
+}
+
+export interface ResolvedAgentUiRoute extends AgentUiRouteSource {
+  lifecycleEntry: ComponentLifecycleEntry;
+  coverageEntry: ComponentCoverageEntry;
+  matchedNeed: string;
+  matchedAlias: string | null;
+}
+
+export interface RouteDiagnostic {
+  code:
+    | "E_DESIGN_ROUTE_MISSING"
+    | "E_DESIGN_ROUTE_AMBIGUOUS"
+    | "E_DESIGN_ROUTE_LIFECYCLE_MISSING"
+    | "E_DESIGN_ROUTE_COVERAGE_MISSING"
+    | "E_DESIGN_ROUTE_SOURCE_REF_MISSING"
+    | "E_DESIGN_ROUTE_EXAMPLE_MISSING"
+    | "E_DESIGN_ROUTE_DEPRECATED";
+  message: string;
+  routeNeed?: string;
+  component?: string;
+  path?: string;
+}
+
+export interface RouteResolutionResult {
+  ok: boolean;
+  route: ResolvedAgentUiRoute | null;
+  diagnostics: RouteDiagnostic[];
+}
+
+export interface RemediationContext {
+  need: string;
+  route: ResolvedAgentUiRoute | null;
+  forbiddenPatterns: string[];
+  replacementInstructions: string[];
+  validationCommands: AgentUiRouteValidationCommand[];
+  diagnostics: RouteDiagnostic[];
+}
+
 export class DesignEngineError extends Error {
   code: string;
   exitCode: number;

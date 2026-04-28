@@ -8,8 +8,22 @@ export {
   manifestPath,
 } from "./manifest.js";
 export { extractDesignBody, parseDesignContract } from "./parser.js";
+export {
+  loadAgentUiRoutingTable,
+  resolveRemediationContext,
+  resolveRouteForNeed,
+  resolveRouteForSurface,
+  validateAgentUiRoutingTable,
+} from "./routes.js";
 export type {
+  AgentUiRouteFallback,
+  AgentUiRoutePreferredComponent,
+  AgentUiRouteSource,
+  AgentUiRouteValidationCommand,
+  AgentUiRoutingTable,
   BrandCheckResult,
+  ComponentCoverageEntry,
+  ComponentLifecycleEntry,
   DesignContract,
   DesignDiffResult,
   DesignFinding,
@@ -21,6 +35,12 @@ export type {
   LintResult,
   ParseOptions,
   ProfileSource,
+  RemediationContext,
+  ResolvedAgentUiRoute,
+  RouteDiagnostic,
+  RouteMaturity,
+  RouteResolutionResult,
+  RouteSafetyClass,
   RuleManifest,
   RuleManifestEntry,
   RuleProvenance,
