@@ -121,7 +121,7 @@ export interface BrandCheckResult {
   findings: DesignFinding[];
 }
 
-export type RouteMaturity = "canonical" | "transitional";
+export type RouteMaturity = "enforced" | "provisional";
 export type RouteSafetyClass = "read_only" | "mutating" | "interactive" | "server_start";
 
 export interface AgentUiRouteValidationCommand {
@@ -220,6 +220,49 @@ export interface RemediationContext {
   replacementInstructions: string[];
   validationCommands: AgentUiRouteValidationCommand[];
   diagnostics: RouteDiagnostic[];
+}
+
+export type PrepareSurfaceScope = "protected" | "warn" | "exempt" | "unknown";
+
+export interface PrepareSourceDigest {
+  path: string;
+  sha256: string;
+}
+
+export interface PrepareOpenDecision {
+  code: string;
+  message: string;
+  severity: "info" | "warn" | "error";
+}
+
+export interface PrepareTiming {
+  startedAt: string;
+  durationMs: number;
+}
+
+export interface PreparePayload {
+  kind: "astudio.design.prepare.v1";
+  ok: boolean;
+  safeForAutomaticImplementation: boolean;
+  resolvedDesignFile: string;
+  guidanceConfigPath: string;
+  designContractMode: string;
+  surfacePath: string;
+  surfaceScope: PrepareSurfaceScope;
+  surfaceKind: string;
+  recommendedRoutes: ResolvedAgentUiRoute[];
+  requiredStates: string[];
+  forbiddenPatterns: string[];
+  relevantExamples: string[];
+  validationCommands: AgentUiRouteValidationCommand[];
+  ruleManifestVersion: string;
+  rulePackVersion: string;
+  ruleSourceDigests: RuleSourceDigest[];
+  sourceDigests: PrepareSourceDigest[];
+  coverageMatrixDigest: PrepareSourceDigest;
+  componentLifecycleDigest: PrepareSourceDigest;
+  openDecisions: PrepareOpenDecision[];
+  timing: PrepareTiming;
 }
 
 export class DesignEngineError extends Error {

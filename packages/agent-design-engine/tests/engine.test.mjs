@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { test } from "node:test";
 import {
+  buildPreparePayload,
   diffDesignContracts,
   exportDesignContract,
   lintDesignContract,
@@ -11,6 +12,7 @@ import {
   resolveRemediationContext,
   resolveRouteForNeed,
   resolveRouteForSurface,
+  serializePreparePayload,
   validateAgentUiRoutingTable,
 } from "../dist/index.js";
 
@@ -187,4 +189,67 @@ test("builds remediation context from route data", () => {
   assert.equal(context.route?.canonicalNeed, "product_panel");
   assert.ok(context.forbiddenPatterns.some((pattern) => pattern.includes("Nested cards")));
   assert.ok(context.replacementInstructions.some((instruction) => instruction.includes("ProductPanel")));
+});
+
+test("builds prepare payload for protected product page surfaces", async () => {
+  const payload = await buildPreparePayload(
+    "platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx",
+    rootDir,
+  );
+  assert.equal(payload.kind, "astudio.design.prepare.v1");
+  assert.equal(payload.ok, true);
+  assert.equal(payload.safeForAutomaticImplementation, true);
+  assert.equal(payload.designContractMode, "design-md");
+  assert.equal(payload.surfaceScope, "protected");
+  assert.equal(payload.surfaceKind, "page_shell");
+  assert.equal(payload.recommendedRoutes[0].canonicalNeed, "page_shell");
+  assert.ok(payload.forbiddenPatterns.some((pattern) => pattern.includes("h-screen")));
+  assert.ok(payload.relevantExamples.includes("platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx"));
+  assert.ok(payload.validationCommands.every((command) => command.safetyClass === "read_only"));
+  assert.equal(payload.sourceDigests.length, 6);
+  assert.equal(payload.coverageMatrixDigest.path, "docs/design-system/COVERAGE_MATRIX.json");
+  assert.equal(payload.componentLifecycleDigest.path, "docs/design-system/COMPONENT_LIFECYCLE.json");
+  assert.equal(payload.ruleSourceDigests.length, 4);
+  assert.equal(typeof payload.timing.durationMs, "number");
+});
+
+test("builds prepare payload for settings panel surfaces", async () => {
+  const payload = await buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", rootDir);
+  assert.equal(payload.ok, true);
+  assert.equal(payload.surfaceScope, "protected");
+  assert.equal(payload.surfaceKind, "settings_panel");
+  assert.deepEqual(payload.requiredStates, ["empty", "error", "loading", "ready"]);
+  assert.ok(payload.relevantExamples.includes("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx"));
+});
+
+test("builds prepare diagnostics for warn, exempt, and unknown surfaces", async () => {
+  const warn = await buildPreparePayload(
+    "packages/ui/src/storybook/_holding/component-stories/AlertDialog.stories.tsx",
+    rootDir,
+  );
+  assert.equal(warn.surfaceScope, "warn");
+  assert.equal(warn.ok, false);
+  assert.equal(warn.openDecisions[0].code, "E_DESIGN_ROUTE_MISSING");
+
+  const exempt = await buildPreparePayload("docs/design-system/AGENT_UI_ROUTING.md", rootDir);
+  assert.equal(exempt.surfaceScope, "exempt");
+  assert.equal(exempt.ok, false);
+  assert.equal(exempt.safeForAutomaticImplementation, false);
+
+  const unknown = await buildPreparePayload("packages/example/UnknownSurface.tsx", rootDir);
+  assert.equal(unknown.surfaceScope, "unknown");
+  assert.equal(unknown.ok, false);
+  assert.ok(
+    unknown.openDecisions.some((decision) => decision.code === "E_DESIGN_SURFACE_SCOPE_UNKNOWN"),
+  );
+});
+
+test("serializes prepare payload with sorted keys and trailing newline", async () => {
+  const payload = await buildPreparePayload(
+    "platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx",
+    rootDir,
+  );
+  const serialized = serializePreparePayload(payload);
+  assert.equal(serialized.endsWith("\n"), true);
+  assert.match(serialized.split("\n")[1], /"componentLifecycleDigest"/);
 });

@@ -13,7 +13,7 @@
         "coverageName": "ProductComposition"
       },
       "lifecycleStatus": "canonical",
-      "routeMaturity": "canonical",
+      "routeMaturity": "enforced",
       "surfacePatterns": ["**/*Page.tsx", "**/*Panel.tsx", "**/*View.tsx"],
       "useWhen": [
         "A collection, table, list, or result region needs ready/loading/empty/error/busy state routing.",
@@ -54,7 +54,7 @@
         "coverageName": "AlertDialog"
       },
       "lifecycleStatus": "canonical",
-      "routeMaturity": "transitional",
+      "routeMaturity": "provisional",
       "surfacePatterns": ["**/*.tsx"],
       "useWhen": [
         "A destructive action needs a blocking confirmation before continuing.",
@@ -95,7 +95,7 @@
         "coverageName": "ProductComposition"
       },
       "lifecycleStatus": "canonical",
-      "routeMaturity": "canonical",
+      "routeMaturity": "enforced",
       "surfacePatterns": ["platforms/web/apps/web/src/pages/**/*.tsx"],
       "useWhen": [
         "A full product page or tool surface needs viewport-safe shell structure.",
@@ -139,7 +139,7 @@
         "coverageName": "ProductComposition"
       },
       "lifecycleStatus": "canonical",
-      "routeMaturity": "canonical",
+      "routeMaturity": "enforced",
       "surfacePatterns": ["**/*Page.tsx", "**/*Panel.tsx"],
       "useWhen": [
         "A product region needs semantic panel chrome with heading, actions, body, or footer.",
@@ -180,7 +180,7 @@
         "coverageName": "ProductComposition"
       },
       "lifecycleStatus": "canonical",
-      "routeMaturity": "canonical",
+      "routeMaturity": "enforced",
       "surfacePatterns": ["**/*Page.tsx", "**/*Panel.tsx"],
       "useWhen": [
         "Repeated content groups need section heading and vertical rhythm.",
@@ -224,7 +224,7 @@
         "coverageName": "ProductComposition"
       },
       "lifecycleStatus": "canonical",
-      "routeMaturity": "transitional",
+      "routeMaturity": "provisional",
       "surfacePatterns": ["packages/ui/src/app/settings/**/*.tsx"],
       "useWhen": [
         "A settings cluster needs grouped sections without a new settings-only shell.",

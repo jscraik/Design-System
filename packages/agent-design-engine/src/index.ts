@@ -8,6 +8,7 @@ export {
   manifestPath,
 } from "./manifest.js";
 export { extractDesignBody, parseDesignContract } from "./parser.js";
+export { buildPreparePayload, serializePreparePayload } from "./prepare.js";
 export {
   loadAgentUiRoutingTable,
   resolveRemediationContext,
@@ -34,6 +35,11 @@ export type {
   LintOptions,
   LintResult,
   ParseOptions,
+  PrepareOpenDecision,
+  PreparePayload,
+  PrepareSourceDigest,
+  PrepareSurfaceScope,
+  PrepareTiming,
   ProfileSource,
   RemediationContext,
   ResolvedAgentUiRoute,
