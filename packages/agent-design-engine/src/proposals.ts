@@ -147,6 +147,8 @@ function validateWaiverRegistryShape(
       "expiresAt",
       "cleanup",
       "status",
+      "linkedIssue",
+      "cleanupMilestone",
     ].filter(
       (field) => !String((waiver as unknown as Record<string, unknown>)[field] ?? "").trim(),
     );

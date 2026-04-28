@@ -306,17 +306,17 @@ export function resolveRouteForSurface(
     .join("/");
   const table = loadAgentUiRoutingTable(rootDir);
   const match = table.routes.find((route) => {
-    if (
-      route.canonicalNeed === "settings_panel" &&
-      normalizedSurface.startsWith("packages/ui/src/app/settings/")
-    ) {
-      return true;
-    }
-    if (
-      route.canonicalNeed === "page_shell" &&
-      normalizedSurface.startsWith("platforms/web/apps/web/src/pages/")
-    ) {
-      return true;
+    for (const pattern of route.surfacePatterns) {
+      const normalizedPattern = pattern.split(path.sep).join("/");
+      if (normalizedSurface.startsWith(normalizedPattern)) {
+        return true;
+      }
+      if (normalizedPattern.includes("*")) {
+        const regexPattern = normalizedPattern.replace(/\*/g, ".*");
+        if (new RegExp(`^${regexPattern}`).test(normalizedSurface)) {
+          return true;
+        }
+      }
     }
     return false;
   });

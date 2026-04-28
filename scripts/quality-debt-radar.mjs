@@ -707,7 +707,6 @@ function renderCategoryTable(results) {
     )
     .join("\n");
 }
-}
 
 /**
  * Render action checklist items for non-green categories.

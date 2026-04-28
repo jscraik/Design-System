@@ -237,6 +237,8 @@ export interface ProposalWaiver {
   expiresAt: string;
   cleanup: string;
   status: ProposalWaiverStatus;
+  linkedIssue: string;
+  cleanupMilestone: string;
 }
 
 export interface ProposalWaiverRegistry {

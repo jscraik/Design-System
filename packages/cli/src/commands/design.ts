@@ -707,6 +707,7 @@ function assertComponentsSelector(argv: DesignArgs): void {
           "--need",
           "page_shell",
           "--json",
+          "--agent",
         ]),
       },
     });
