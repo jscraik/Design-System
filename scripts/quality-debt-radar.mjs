@@ -686,10 +686,10 @@ function currentReports() {
  * Escape a value for safe inclusion in a Markdown table cell.
  *
  * @param {*} value - The value to stringify and escape for a table cell.
- * @returns {string} The escaped string suitable for a Markdown table cell; pipe characters (`|`) are escaped and line breaks are converted to `<br>`.
+ * @returns {string} The escaped string suitable for a Markdown table cell; backslashes and pipe characters are escaped and line breaks are converted to `<br>`.
  */
 function escapeTableCell(value) {
-  return String(value).replace(/\|/g, "\\|").replace(/\r?\n/g, "<br>");
+  return String(value).replace(/\\/g, "\\\\").replace(/\|/g, "\\|").replace(/\r?\n/g, "<br>");
 }
 
 /**
