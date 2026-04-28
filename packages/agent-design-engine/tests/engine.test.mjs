@@ -187,6 +187,49 @@ test("rejects malformed routing tables instead of coercing routes", () => {
   );
 });
 
+test("rejects malformed routing rows instead of coercing fields", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  routing.routes[0].aliases = ["async results", 42];
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  assert.throws(
+    () => loadAgentUiRoutingTable(fixtureRoot),
+    /Agent UI route async_collection\.aliases must be an array of strings/,
+  );
+
+  routing.routes[0].aliases = ["async results"];
+  routing.routes[0].validationCommands[0].safetyClass = "shell";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  assert.throws(
+    () => loadAgentUiRoutingTable(fixtureRoot),
+    /Agent UI route async_collection\.validationCommands\[0\]\.safetyClass must be one of/,
+  );
+});
+
+test("rejects malformed lifecycle and coverage rows instead of defaulting metadata", () => {
+  const lifecycleRoot = proposalFixtureRoot();
+  const lifecycle = readFixtureJson(lifecycleRoot, "docs/design-system/COMPONENT_LIFECYCLE.json");
+  lifecycle.components[0].routing_tier = "2";
+  writeFixtureJson(lifecycleRoot, "docs/design-system/COMPONENT_LIFECYCLE.json", lifecycle);
+
+  assert.throws(
+    () => validateAgentUiRoutingTable(lifecycleRoot),
+    /Component lifecycle Stack\.routing_tier must be an integer/,
+  );
+
+  const coverageRoot = proposalFixtureRoot();
+  const coverage = readFixtureJson(coverageRoot, "docs/design-system/COVERAGE_MATRIX.json");
+  coverage[0].web_used = "false";
+  writeFixtureJson(coverageRoot, "docs/design-system/COVERAGE_MATRIX.json", coverage);
+
+  assert.throws(
+    () => validateAgentUiRoutingTable(coverageRoot),
+    /Component coverage Accordion\.web_used must be a boolean/,
+  );
+});
+
 test("routing table has no lifecycle, coverage, source, or example drift", () => {
   assert.deepEqual(validateAgentUiRoutingTable(rootDir), []);
 });
@@ -218,6 +261,14 @@ test("resolves routes by known surface path", () => {
   );
   assert.equal(settings.ok, true);
   assert.equal(settings.route?.canonicalNeed, "settings_panel");
+});
+
+test("rejects surface paths that resolve outside the repo root", () => {
+  const outside = resolveRouteForSurface(path.join(os.tmpdir(), "OutsidePage.tsx"), rootDir);
+  assert.equal(outside.ok, false);
+  assert.equal(outside.route, null);
+  assert.equal(outside.diagnostics[0].code, "E_DESIGN_ROUTE_MISSING");
+  assert.match(outside.diagnostics[0].message, /resolves outside the repository root/);
 });
 
 test("returns deterministic missing-route diagnostics for unknown needs and surfaces", () => {

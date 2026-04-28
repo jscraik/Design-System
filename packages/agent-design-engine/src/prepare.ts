@@ -20,13 +20,16 @@ const professionalContractPath = "docs/design-system/PROFESSIONAL_UI_CONTRACT.md
 
 type GuidanceConfig = {
   designContract?: {
-    mode?: string;
+    mode?: GuidanceDesignMode;
   };
   scopes?: Partial<Record<"error" | "warn" | "exempt", string[]>>;
   scopePrecedence?: Array<"error" | "warn" | "exempt">;
 };
 
 const guidanceScopes = ["error", "warn", "exempt"] as const;
+type GuidanceScope = (typeof guidanceScopes)[number];
+type GuidanceDesignMode = "legacy" | "design-md";
+const designModes = new Set<GuidanceDesignMode>(["legacy", "design-md"]);
 
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -36,6 +39,20 @@ function isGuidanceScope(value: unknown): value is (typeof guidanceScopes)[numbe
   return (
     typeof value === "string" && guidanceScopes.includes(value as (typeof guidanceScopes)[number])
   );
+}
+
+function isGuidanceDesignMode(value: unknown): value is GuidanceDesignMode {
+  return typeof value === "string" && designModes.has(value as GuidanceDesignMode);
+}
+
+function normalizeScopePrecedence(scopes: GuidanceScope[]): GuidanceScope[] {
+  const deduped = Array.from(new Set(scopes));
+  for (const scope of guidanceScopes) {
+    if (!deduped.includes(scope)) {
+      deduped.push(scope);
+    }
+  }
+  return deduped;
 }
 
 function parseGuidanceConfig(value: unknown): GuidanceConfig {
@@ -48,8 +65,11 @@ function parseGuidanceConfig(value: unknown): GuidanceConfig {
     if (!isObject(value.designContract)) {
       throw new Error("Guidance config designContract must be an object when present.");
     }
-    if (value.designContract.mode !== undefined && typeof value.designContract.mode !== "string") {
-      throw new Error("Guidance config designContract.mode must be a string when present.");
+    if (
+      value.designContract.mode !== undefined &&
+      !isGuidanceDesignMode(value.designContract.mode)
+    ) {
+      throw new Error("Guidance config designContract.mode must be one of: legacy, design-md.");
     }
     config.designContract = { mode: value.designContract.mode };
   }
@@ -59,6 +79,11 @@ function parseGuidanceConfig(value: unknown): GuidanceConfig {
       throw new Error("Guidance config scopes must be an object when present.");
     }
     config.scopes = {};
+    for (const scope of Object.keys(value.scopes)) {
+      if (!isGuidanceScope(scope)) {
+        throw new Error(`Guidance config scopes.${scope} is not a known scope name.`);
+      }
+    }
     for (const scope of guidanceScopes) {
       const globs = value.scopes[scope];
       if (globs === undefined) continue;
@@ -73,7 +98,7 @@ function parseGuidanceConfig(value: unknown): GuidanceConfig {
     if (!Array.isArray(value.scopePrecedence) || !value.scopePrecedence.every(isGuidanceScope)) {
       throw new Error("Guidance config scopePrecedence must be an array of known scope names.");
     }
-    config.scopePrecedence = value.scopePrecedence;
+    config.scopePrecedence = normalizeScopePrecedence(value.scopePrecedence);
   }
 
   return config;

@@ -27,80 +27,199 @@ function readJson(rootDir: string, relativePath: string): unknown {
 }
 
 function isObject(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-function optionalString(value: unknown): string | undefined {
-  return typeof value === "string" ? value : undefined;
+function parseStringField(record: Record<string, unknown>, field: string, context: string): string {
+  const value = record[field];
+  if (typeof value !== "string") {
+    throw new Error(`${context}.${field} must be a string.`);
+  }
+  return value;
 }
 
-function stringArray(value: unknown): string[] {
-  return Array.isArray(value)
-    ? value.filter((entry): entry is string => typeof entry === "string")
-    : [];
+function parseOptionalStringField(
+  record: Record<string, unknown>,
+  field: string,
+  context: string,
+): string | undefined {
+  const value = record[field];
+  if (value === undefined) return undefined;
+  if (typeof value !== "string") {
+    throw new Error(`${context}.${field} must be a string when present.`);
+  }
+  return value;
 }
 
-function parsePreferredComponent(value: unknown): AgentUiRouteSource["preferredComponent"] {
-  const component = isObject(value) ? value : {};
+function parseNullableStringField(
+  record: Record<string, unknown>,
+  field: string,
+  context: string,
+): string | null {
+  const value = record[field];
+  if (value === null) return null;
+  if (typeof value !== "string") {
+    throw new Error(`${context}.${field} must be a string or null.`);
+  }
+  return value;
+}
+
+function parseBooleanField(
+  record: Record<string, unknown>,
+  field: string,
+  context: string,
+): boolean {
+  const value = record[field];
+  if (typeof value !== "boolean") {
+    throw new Error(`${context}.${field} must be a boolean.`);
+  }
+  return value;
+}
+
+function parseIntegerField(
+  record: Record<string, unknown>,
+  field: string,
+  context: string,
+): number {
+  const value = record[field];
+  if (typeof value !== "number" || !Number.isInteger(value)) {
+    throw new Error(`${context}.${field} must be an integer.`);
+  }
+  return value;
+}
+
+function parseStringArrayField(
+  record: Record<string, unknown>,
+  field: string,
+  context: string,
+): string[] {
+  const value = record[field];
+  if (!Array.isArray(value) || !value.every((entry) => typeof entry === "string")) {
+    throw new Error(`${context}.${field} must be an array of strings.`);
+  }
+  return value;
+}
+
+function parseObjectArrayField(
+  record: Record<string, unknown>,
+  field: string,
+  context: string,
+): Record<string, unknown>[] {
+  const value = record[field];
+  if (!Array.isArray(value) || !value.every(isObject)) {
+    throw new Error(`${context}.${field} must be an array of objects.`);
+  }
+  return value;
+}
+
+function parseEnumField<const T extends string>(
+  record: Record<string, unknown>,
+  field: string,
+  context: string,
+  allowed: readonly T[],
+): T {
+  const value = record[field];
+  if (typeof value !== "string" || !allowed.includes(value as T)) {
+    throw new Error(`${context}.${field} must be one of: ${allowed.join(", ")}.`);
+  }
+  return value as T;
+}
+
+function parseOptionalSchemaVersion(value: unknown): AgentUiRoutingTable["schemaVersion"] {
+  if (value !== "agent-ui-routing.v1") {
+    throw new Error("Agent UI routing table schemaVersion must be agent-ui-routing.v1.");
+  }
+  return value;
+}
+
+function parsePreferredComponent(
+  value: unknown,
+  context: string,
+): AgentUiRouteSource["preferredComponent"] {
+  if (!isObject(value)) {
+    throw new Error(`${context}.preferredComponent must be an object.`);
+  }
+  const component = value;
   return {
-    name: optionalString(component.name) ?? "",
-    importPath: optionalString(component.importPath) ?? "",
-    packageName: optionalString(component.packageName) ?? "",
-    coverageName: optionalString(component.coverageName),
+    name: parseStringField(component, "name", `${context}.preferredComponent`),
+    importPath: parseStringField(component, "importPath", `${context}.preferredComponent`),
+    packageName: parseStringField(component, "packageName", `${context}.preferredComponent`),
+    coverageName: parseOptionalStringField(
+      component,
+      "coverageName",
+      `${context}.preferredComponent`,
+    ),
   };
 }
 
-function parseFallback(value: unknown): AgentUiRouteSource["fallbacks"][number] {
-  const fallback = isObject(value) ? value : {};
+function parseFallback(value: unknown, context: string): AgentUiRouteSource["fallbacks"][number] {
+  if (!isObject(value)) {
+    throw new Error(`${context} must be an object.`);
+  }
+  const fallback = value;
   return {
-    component: optionalString(fallback.component) ?? "",
-    reason: optionalString(fallback.reason) ?? "",
+    component: parseStringField(fallback, "component", context),
+    reason: parseStringField(fallback, "reason", context),
   };
 }
 
-function parseValidationCommand(value: unknown): AgentUiRouteSource["validationCommands"][number] {
-  const command = isObject(value) ? value : {};
-  return {
-    command: optionalString(command.command) ?? "",
-    safetyClass:
-      command.safetyClass === "read_only" ||
-      command.safetyClass === "mutating" ||
-      command.safetyClass === "interactive" ||
-      command.safetyClass === "server_start"
-        ? command.safetyClass
-        : "read_only",
-    reason: optionalString(command.reason) ?? "",
-    blockedByDefault:
-      typeof command.blockedByDefault === "boolean" ? command.blockedByDefault : undefined,
+function parseValidationCommand(
+  value: unknown,
+  context: string,
+): AgentUiRouteSource["validationCommands"][number] {
+  if (!isObject(value)) {
+    throw new Error(`${context} must be an object.`);
+  }
+  const command = value;
+  const parsed: AgentUiRouteSource["validationCommands"][number] = {
+    command: parseStringField(command, "command", context),
+    safetyClass: parseEnumField(command, "safetyClass", context, [
+      "read_only",
+      "mutating",
+      "interactive",
+      "server_start",
+    ]),
+    reason: parseStringField(command, "reason", context),
   };
+  if (command.blockedByDefault !== undefined) {
+    parsed.blockedByDefault = parseBooleanField(command, "blockedByDefault", context);
+  }
+  return parsed;
 }
 
 function parseRouteSource(value: unknown): AgentUiRouteSource {
-  const route = isObject(value) ? value : {};
+  if (!isObject(value)) {
+    throw new Error("Agent UI routing table route must be an object.");
+  }
+  const route = value;
+  const context =
+    typeof route.canonicalNeed === "string"
+      ? `Agent UI route ${route.canonicalNeed}`
+      : "Agent UI route";
   return {
-    need: optionalString(route.need) ?? "",
-    canonicalNeed: optionalString(route.canonicalNeed) ?? "",
-    aliases: stringArray(route.aliases),
-    proposalRef: optionalString(route.proposalRef),
-    preferredComponent: parsePreferredComponent(route.preferredComponent),
-    lifecycleStatus:
-      route.lifecycleStatus === "canonical" || route.lifecycleStatus === "transitional"
-        ? route.lifecycleStatus
-        : "transitional",
-    routeMaturity:
-      route.routeMaturity === "enforced" || route.routeMaturity === "provisional"
-        ? route.routeMaturity
-        : "provisional",
-    surfacePatterns: stringArray(route.surfacePatterns),
-    useWhen: stringArray(route.useWhen),
-    requiredStates: stringArray(route.requiredStates),
-    examples: stringArray(route.examples),
-    avoid: stringArray(route.avoid),
-    fallbacks: Array.isArray(route.fallbacks) ? route.fallbacks.map(parseFallback) : [],
-    validationCommands: Array.isArray(route.validationCommands)
-      ? route.validationCommands.map(parseValidationCommand)
-      : [],
-    sourceRefs: stringArray(route.sourceRefs),
+    need: parseStringField(route, "need", context),
+    canonicalNeed: parseStringField(route, "canonicalNeed", context),
+    aliases: parseStringArrayField(route, "aliases", context),
+    proposalRef: parseOptionalStringField(route, "proposalRef", context),
+    preferredComponent: parsePreferredComponent(route.preferredComponent, context),
+    lifecycleStatus: parseEnumField(route, "lifecycleStatus", context, [
+      "canonical",
+      "transitional",
+    ]),
+    routeMaturity: parseEnumField(route, "routeMaturity", context, ["enforced", "provisional"]),
+    surfacePatterns: parseStringArrayField(route, "surfacePatterns", context),
+    useWhen: parseStringArrayField(route, "useWhen", context),
+    requiredStates: parseStringArrayField(route, "requiredStates", context),
+    examples: parseStringArrayField(route, "examples", context),
+    avoid: parseStringArrayField(route, "avoid", context),
+    fallbacks: parseObjectArrayField(route, "fallbacks", context).map((fallback, index) =>
+      parseFallback(fallback, `${context}.fallbacks[${index}]`),
+    ),
+    validationCommands: parseObjectArrayField(route, "validationCommands", context).map(
+      (command, index) =>
+        parseValidationCommand(command, `${context}.validationCommands[${index}]`),
+    ),
+    sourceRefs: parseStringArrayField(route, "sourceRefs", context),
   };
 }
 
@@ -112,43 +231,59 @@ function parseRoutingTable(value: unknown): AgentUiRoutingTable {
     throw new Error("Agent UI routing table must define a routes array.");
   }
   return {
-    schemaVersion: optionalString(value.schemaVersion) as AgentUiRoutingTable["schemaVersion"],
-    updatedAt: optionalString(value.updatedAt) ?? "",
+    schemaVersion: parseOptionalSchemaVersion(value.schemaVersion),
+    updatedAt: parseStringField(value, "updatedAt", "Agent UI routing table"),
     routes: value.routes.map(parseRouteSource),
   };
 }
 
 function parseLifecycleManifest(value: unknown): { components: ComponentLifecycleEntry[] } {
-  if (!isObject(value) || !Array.isArray(value.components)) return { components: [] };
+  if (!isObject(value)) {
+    throw new Error("Component lifecycle manifest must be a JSON object.");
+  }
+  if (!Array.isArray(value.components) || !value.components.every(isObject)) {
+    throw new Error("Component lifecycle manifest must define a components array of objects.");
+  }
   return {
-    components: value.components.filter(isObject).map((entry) => ({
-      name: optionalString(entry.name) ?? "",
-      path: optionalString(entry.path) ?? "",
-      lifecycle:
-        entry.lifecycle === "canonical" ||
-        entry.lifecycle === "transitional" ||
-        entry.lifecycle === "deprecated"
-          ? entry.lifecycle
-          : "transitional",
-      routing_tier: typeof entry.routing_tier === "number" ? entry.routing_tier : 0,
-      proposalRef: optionalString(entry.proposalRef),
-      notes: optionalString(entry.notes) ?? "",
-    })),
+    components: value.components.map((entry) => {
+      const context =
+        typeof entry.name === "string"
+          ? `Component lifecycle ${entry.name}`
+          : "Component lifecycle";
+      return {
+        name: parseStringField(entry, "name", context),
+        path: parseStringField(entry, "path", context),
+        lifecycle: parseEnumField(entry, "lifecycle", context, [
+          "canonical",
+          "transitional",
+          "deprecated",
+        ]),
+        routing_tier: parseIntegerField(entry, "routing_tier", context),
+        proposalRef: parseOptionalStringField(entry, "proposalRef", context),
+        notes: parseStringField(entry, "notes", context),
+      };
+    }),
   };
 }
 
 function parseCoverageEntries(value: unknown): ComponentCoverageEntry[] {
-  if (!Array.isArray(value)) return [];
-  return value.filter(isObject).map((entry) => ({
-    name: optionalString(entry.name) ?? "",
-    source: optionalString(entry.source) ?? "",
-    upstream: optionalString(entry.upstream) ?? null,
-    fallback: optionalString(entry.fallback) ?? null,
-    status: optionalString(entry.status) ?? "",
-    web_used: entry.web_used === true,
-    tauri_used: entry.tauri_used === true,
-    widget_used: entry.widget_used === true,
-  }));
+  if (!Array.isArray(value) || !value.every(isObject)) {
+    throw new Error("Component coverage matrix must be an array of objects.");
+  }
+  return value.map((entry) => {
+    const context =
+      typeof entry.name === "string" ? `Component coverage ${entry.name}` : "Component coverage";
+    return {
+      name: parseStringField(entry, "name", context),
+      source: parseStringField(entry, "source", context),
+      upstream: parseNullableStringField(entry, "upstream", context),
+      fallback: parseNullableStringField(entry, "fallback", context),
+      status: parseStringField(entry, "status", context),
+      web_used: parseBooleanField(entry, "web_used", context),
+      tauri_used: parseBooleanField(entry, "tauri_used", context),
+      widget_used: parseBooleanField(entry, "widget_used", context),
+    };
+  });
 }
 
 function toPosixPath(input: string): string {
@@ -193,8 +328,16 @@ function scoreSurfacePattern(pattern: string): { literalLength: number; wildcard
   };
 }
 
-function normalizeSurfacePath(rootDir: string, surfacePath: string): string {
-  return toPosixPath(path.relative(rootDir, path.resolve(rootDir, surfacePath)));
+function normalizeSurfacePath(rootDir: string, surfacePath: string): string | null {
+  const repoRoot = path.resolve(rootDir);
+  const resolved = path.isAbsolute(surfacePath)
+    ? path.resolve(surfacePath)
+    : path.resolve(repoRoot, surfacePath);
+  const relative = path.relative(repoRoot, resolved);
+  if (relative === "" || relative.startsWith("..") || path.isAbsolute(relative)) {
+    return null;
+  }
+  return toPosixPath(relative);
 }
 
 /**
@@ -491,6 +634,19 @@ export function resolveRouteForSurface(
   rootDir = process.cwd(),
 ): RouteResolutionResult {
   const normalizedSurface = normalizeSurfacePath(rootDir, surfacePath);
+  if (!normalizedSurface) {
+    return {
+      ok: false,
+      route: null,
+      diagnostics: [
+        {
+          code: "E_DESIGN_ROUTE_MISSING",
+          message: `Surface '${surfacePath}' resolves outside the repository root.`,
+          path: surfacePath,
+        },
+      ],
+    };
+  }
   const table = loadAgentUiRoutingTable(rootDir);
   const candidates = table.routes
     .flatMap((route) =>

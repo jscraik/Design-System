@@ -276,12 +276,18 @@ function remediationForViolation(ruleId: string, targetPath: string): Partial<Gu
       };
     }
     const route = remediation.route;
+    const readOnlyValidationCommands = route?.validationCommands.filter(
+      (command) => command.safetyClass === "read_only",
+    );
     return {
       replacementInstruction: route
         ? `Replace custom viewport shell wrappers with ${route.preferredComponent.name} from ${route.preferredComponent.packageName} (${route.preferredComponent.importPath}).`
         : undefined,
       examplePath: route?.examples[0],
-      validationCommands: route?.validationCommands,
+      validationCommands:
+        readOnlyValidationCommands && readOnlyValidationCommands.length > 0
+          ? readOnlyValidationCommands
+          : undefined,
       proposalRequired: route === null,
       recoveryUnavailableReason: route
         ? undefined
