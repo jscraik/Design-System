@@ -27,7 +27,7 @@
     "fast-glob": "^3.3.3",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
-    "wrangler": "^4.59.1"
+    "wrangler": "^4.85.0"
   },
   "cloudflare": {
     "bindings": {
