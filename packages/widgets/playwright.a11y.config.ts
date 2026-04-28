@@ -5,8 +5,9 @@ import { defineConfig } from "@playwright/test";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const defaultPort = 5174;
+const host = process.env.PLAYWRIGHT_WIDGETS_HOST ?? "127.0.0.1";
 const widgetsPort = Number(process.env.PLAYWRIGHT_WIDGETS_PORT ?? process.env.PORT ?? defaultPort);
-const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://localhost:${widgetsPort}`;
+const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://${host}:${widgetsPort}`;
 const webServerURL = new URL("/chat-view", baseURL).toString();
 const reuseExistingServer =
   process.env.PLAYWRIGHT_REUSE_SERVER === "1" ||
@@ -20,7 +21,7 @@ const webServer = process.env.PLAYWRIGHT_BASE_URL
       timeout: 120_000,
     }
   : {
-      command: `pnpm dev --port ${widgetsPort} --strictPort`,
+      command: `pnpm dev --host ${host} --port ${widgetsPort} --strictPort`,
       url: webServerURL,
       reuseExistingServer,
       timeout: 120_000,
