@@ -1,6 +1,6 @@
 # Plans Authority Index
 
-Last updated: 2026-04-24
+Last updated: 2026-04-28
 
 ## Table of Contents
 
@@ -23,6 +23,11 @@ historical evidence, but this file names the current canonical lane explicitly.
   plan unless a later dated plan explicitly replaces it.
 - `2026-04-24-agent-design-engine-baseline-inventory.md` - baseline inventory
   for the current Agent Design Engine branch and migration source boundaries.
+- `2026-04-28-agent-native-design-system-plan.md` - implementation plan for
+  the agent-native design-system command layer specified in
+  `docs/specs/2026-04-28-agent-native-design-system-spec.md`. It is the active
+  plan for the `prepare` command, routing-table, remediation, gold-example, and
+  new-abstraction proposal workflow.
 
 ## Current Cleanup Decisions
 
