@@ -671,7 +671,29 @@ function proposeAbstractionOptions(cmd: DesignOptionBuilder): DesignOptionBuilde
  */
 async function readCoverageEntry(rootDir: string, component: string): Promise<unknown> {
   const raw = await readFile(path.join(rootDir, "docs/design-system/COVERAGE_MATRIX.json"), "utf8");
-  const entries = JSON.parse(raw) as Array<{ name?: string }>;
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    throw new CliError("Coverage matrix contains invalid JSON.", {
+      code: "E_DESIGN_COVERAGE_JSON",
+      exitCode: EXIT_CODES.failure,
+      hint: "Fix docs/design-system/COVERAGE_MATRIX.json before retrying.",
+    });
+  }
+  if (!Array.isArray(parsed)) {
+    throw new CliError("Coverage matrix must be an array.", {
+      code: "E_DESIGN_COVERAGE_SCHEMA",
+      exitCode: EXIT_CODES.failure,
+      hint: "Fix docs/design-system/COVERAGE_MATRIX.json before retrying.",
+    });
+  }
+  const entries = parsed.filter(
+    (entry): entry is { name?: string } =>
+      typeof entry === "object" &&
+      entry !== null &&
+      (!("name" in entry) || typeof entry.name === "string"),
+  );
   return entries.find((entry) => entry.name === component) ?? null;
 }
 
