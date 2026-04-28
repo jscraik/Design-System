@@ -26,6 +26,10 @@ It should reduce unnecessary wrapper creation and keep routing decisions consist
 `docs/design-system/AGENT_UI_ROUTING.json` is the machine-readable routing
 authority for agents and command code.
 
+`docs/design-system/GOLD_EXAMPLES.json` is the machine-readable gold-example
+inventory for promoted examples, covered states, deferred categories, and
+read-only validation commands.
+
 This Markdown file explains the routing model for humans. Runtime command code
 must consume the authored JSON route source through
 `packages/agent-design-engine` facade APIs instead of parsing this prose.
@@ -42,6 +46,7 @@ Before creating a new abstraction, check:
 
 - `docs/design-system/COVERAGE_MATRIX.json`
 - `docs/design-system/COMPONENT_LIFECYCLE.json`
+- `docs/design-system/GOLD_EXAMPLES.json`
 - `docs/design-system/PROFESSIONAL_UI_CONTRACT.md`
 
 ## Agent Composition Primitives
@@ -80,8 +85,15 @@ Current migrated exemplars:
 
 - `platforms/web/apps/web/src/pages/HarnessPage.tsx`
 - `platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx`
+- `packages/ui/src/storybook/_holding/component-stories/ProductComposition.stories.tsx`
 - `packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx`
 - `packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.tsx`
+
+Deferred gold-example categories live in
+`docs/design-system/GOLD_EXAMPLES.json`. Do not route agents to
+permission-denied or unavailable states, dense operational dashboards, or
+accessible form-validation examples as promoted surfaces until that inventory
+marks them promotable.
 
 ## Lifecycle source of truth
 

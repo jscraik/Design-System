@@ -76,6 +76,7 @@ flowchart LR
 - `docs/` holds architecture, adoption, rollout, and governance guidance.
 - `docs/specs/2026-04-28-agent-native-design-system-spec.md` is the deepened HE spec for turning the current agent-readable design-system contract into an agent-native preparation, routing, context-pack, remediation, example, and abstraction-proposal workflow.
 - `docs/plans/2026-04-28-agent-native-design-system-plan.md` is the execution plan for that spec, split into contract wiring, routing-table, prepare-payload, CLI, remediation, gold-example, and proposal-gate slices.
+- `docs/design-system/GOLD_EXAMPLES.json` is the machine-readable gold-example inventory for promoted agent examples, state coverage, validation commands, and explicitly deferred non-promotable categories.
 - `scripts/` holds build, validation, drift-check, onboarding, and release tooling.
 - Consumer projects should import `@design-studio/ui/styles.css` as the public stylesheet entry; internal style subpaths are implementation details and raw `file:` installs of `packages/ui` are not a supported external adoption path.
 
@@ -114,6 +115,7 @@ pnpm build
 pnpm test:policy
 pnpm test:exemplar-evaluation:list
 pnpm test:exemplar-evaluation:update
+cat docs/design-system/GOLD_EXAMPLES.json | jq .
 pnpm design-system-guidance:ratchet
 pnpm agent-design:boundaries
 pnpm agent-design:type-check
@@ -163,6 +165,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - The migration transition table should run before rollback metadata lookup. That keeps invalid state/operation pairs as `E_DESIGN_MIGRATION_STATE_INVALID` no-op failures, while metadata readability tests must start from rollback-eligible states such as `design-md/active`, `partial`, or `failed`.
 - Rollback metadata authentication is intentionally local-artifact bound rather than a remote signing service in this pre-GA slice. Treat the rollback artifact signing key, `metadataDigest`, `metadataSignature`, path-root checks, config checksums, and `DESIGN.md` checksums as one fail-closed contract: if any piece drifts, rollback/resume must exit `3` without mutation.
 - The `DESIGN.md` engine computes source digests from `docs/design-system/PROFESSIONAL_UI_CONTRACT.md`, `AGENT_UI_ROUTING.md`, `COMPONENT_LIFECYCLE.json`, and `COVERAGE_MATRIX.json`. If any of those files move or become unreadable, design lint/export should fail before semantic evaluation.
+- Gold examples are intentionally narrower than the full component catalog. `GOLD_EXAMPLES.json` should promote only existing source/story/test paths, and missing categories must stay `promotable: false` until a protected fixture and read-only validation command exist.
 - `DESIGN.md` schema versions are fail-closed. The v1 engine only accepts `schemaVersion: agent-design.v1`; future contract versions must add explicit parser/rule-pack support before `lint` or `export` can proceed.
 - `DESIGN.md` section line numbers must stay anchored to the original file, including YAML frontmatter. Lint findings use those lines as agent remediation evidence.
 - `astudio design init` validates the starter contract before writing, but it must still enforce the write gate first so a missing `--write` remains a policy error instead of a provenance error.
@@ -213,6 +216,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - **JSC-241 Slice 3 prepare payload model**: started the prepare-model slice on `jscraik/feature/jsc-241-prepare-payload-model`. `packages/agent-design-engine` now builds a read-only `astudio.design.prepare.v1` payload with surface scope, surface kind, recommended routes, required states, forbidden patterns, examples, validation commands, rule provenance, source digests, and fail-closed open decisions before the CLI command is exposed.
 - **JSC-242 Slice 4 read-only CLI commands**: added the first agent-native CLI transport layer for `astudio design prepare`, `components`, `coverage`, and `propose-abstraction`. These commands emit `astudio.command.v1` JSON envelopes, stay read-only, keep `context` out of the public v1 surface, and add the root `pnpm agent-design:prepare --surface <path>` alias for the happy path.
 - **JSC-243 Slice 5 actionable remediation**: `@brainwav/design-system-guidance` violations now include agent-readable remediation metadata where the fix is deterministic. `no-h-screen` routes through `@brainwav/agent-design-engine` remediation context, token/foundation findings point agents back to semantic token roles, and ambiguous findings explicitly mark proposal-required recovery instead of inventing a rewrite.
+- **JSC-244 Slice 6 gold-example inventory**: added `docs/design-system/GOLD_EXAMPLES.json` and companion Markdown guidance so agents can resolve promoted examples, covered states, read-only validation commands, and non-promotable deferred categories from one inventory. `AGENT_UI_ROUTING.json` now points routes back to the gold-example inventory, and `ProductComposition.stories.tsx` gives `ProductDataView` and `ProductPageShell` concrete Storybook fixtures for the first-wave example matrix.
 
 ### 2026-04-26
 

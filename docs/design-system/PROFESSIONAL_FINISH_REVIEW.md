@@ -38,13 +38,13 @@ Mouse-only focus suppression must also stay scoped to `.ds-focusable` or `[data-
 
 Score each protected exemplar on a 0-2 scale per dimension:
 
-| Dimension | 0: Fails | 1: Acceptable | 2: Professional |
-| --- | --- | --- | --- |
-| Hierarchy | Competing titles, unclear primary action, or metadata over-emphasized. | One readable order, but local grouping or emphasis is uneven. | Clear title, section structure, singular primary action, and muted metadata. |
-| Spacing Rhythm | Ad hoc gaps, nested card clutter, or layout shifts between states. | Uses mostly consistent gaps with minor crowding or loose regions. | Rhythm follows composition primitives, state swaps preserve dimensions, and controls scan cleanly. |
-| Focus Quality | Missing, doubled, clipped, or color-only focus indication. | Visible keyboard focus, but offset or contrast needs polish. | One clear ring, visible in light/dark/high-contrast contexts, with logical tab order. |
-| State Quality | Loading, empty, error, busy, or permission states are absent or vague. | Required states exist with basic labels and recovery affordances. | States preserve context, separate cause from recovery, and keep layout stable. |
-| Motion Restraint | Decorative loops, slow feedback, or motion that hides state changes. | Motion is bounded but not clearly tied to meaning. | Motion communicates cause/state, respects reduced motion, and stays within duration caps. |
+| Dimension        | 0: Fails                                                               | 1: Acceptable                                                     | 2: Professional                                                                                    |
+| ---------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Hierarchy        | Competing titles, unclear primary action, or metadata over-emphasized. | One readable order, but local grouping or emphasis is uneven.     | Clear title, section structure, singular primary action, and muted metadata.                       |
+| Spacing Rhythm   | Ad hoc gaps, nested card clutter, or layout shifts between states.     | Uses mostly consistent gaps with minor crowding or loose regions. | Rhythm follows composition primitives, state swaps preserve dimensions, and controls scan cleanly. |
+| Focus Quality    | Missing, doubled, clipped, or color-only focus indication.             | Visible keyboard focus, but offset or contrast needs polish.      | One clear ring, visible in light/dark/high-contrast contexts, with logical tab order.              |
+| State Quality    | Loading, empty, error, busy, or permission states are absent or vague. | Required states exist with basic labels and recovery affordances. | States preserve context, separate cause from recovery, and keep layout stable.                     |
+| Motion Restraint | Decorative loops, slow feedback, or motion that hides state changes.   | Motion is bounded but not clearly tied to meaning.                | Motion communicates cause/state, respects reduced motion, and stays within duration caps.          |
 
 A protected exemplar passes professional-finish review when every dimension scores at least `1` and the combined score is at least `8` out of `10`. Any `0` in focus or state quality blocks release readiness.
 
@@ -52,18 +52,23 @@ A protected exemplar passes professional-finish review when every dimension scor
 
 Use these surfaces as structural references. They are not visual templates to copy literally; they define the expected finish bar for hierarchy, states, focus, and review coverage.
 
-| Reference | Surface | Why it is canonical | Required review dimensions |
-| --- | --- | --- | --- |
-| `components-settings-apps-panel--default` | Settings app management | Shows product composition with a stable panel, clear title, helper copy, and action grouping. | Hierarchy, spacing rhythm, focus quality |
-| `components-settings-apps-panel--loading` | Settings loading state | Preserves context while loading instead of replacing the whole surface with loose chrome. | State quality, spacing rhythm |
-| `components-settings-apps-panel--empty` | Settings empty state | Gives a neutral no-data state with a clear next action. | State quality, hierarchy |
-| `components-settings-apps-panel--error` | Settings error state | Separates failed cause from retry/recovery affordance. | State quality, focus quality |
-| `components-chat-chat-ui-root--default` | Chat product shell | Anchors complex app chrome with a stable shell and readable action priority. | Hierarchy, spacing rhythm, focus quality |
-| `components-chat-chat-ui-root--loading-overlay` | Chat loading overlay | Keeps the shell in place while presenting busy state. | State quality, motion restraint |
-| `components-chat-chat-ui-root--error-overlay` | Chat error overlay | Demonstrates recoverable page-level failure without flattening the shell. | State quality, hierarchy |
-| `chat page - default state` | Web app visual suite | Confirms the product shell works outside isolated Storybook rendering. | Hierarchy, spacing rhythm, focus quality |
-| `harness page` | Web app visual suite | Confirms a migrated exemplar page keeps product composition outside settings. | Hierarchy, spacing rhythm, state quality |
-| `template browser page` and `template widget page` | Web app visual suite | Confirms template discovery and preview surfaces keep stable structure and state handling. | Hierarchy, state quality |
+| Reference                                                                      | Surface                         | Why it is canonical                                                                           | Required review dimensions               |
+| ------------------------------------------------------------------------------ | ------------------------------- | --------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| `components-settings-apps-panel--default`                                      | Settings app management         | Shows product composition with a stable panel, clear title, helper copy, and action grouping. | Hierarchy, spacing rhythm, focus quality |
+| `components-settings-apps-panel--loading`                                      | Settings loading state          | Preserves context while loading instead of replacing the whole surface with loose chrome.     | State quality, spacing rhythm            |
+| `components-settings-apps-panel--empty`                                        | Settings empty state            | Gives a neutral no-data state with a clear next action.                                       | State quality, hierarchy                 |
+| `components-settings-apps-panel--error`                                        | Settings error state            | Separates failed cause from retry/recovery affordance.                                        | State quality, focus quality             |
+| `components-chat-chat-ui-root--default`                                        | Chat product shell              | Anchors complex app chrome with a stable shell and readable action priority.                  | Hierarchy, spacing rhythm, focus quality |
+| `components-chat-chat-ui-root--loading-overlay`                                | Chat loading overlay            | Keeps the shell in place while presenting busy state.                                         | State quality, motion restraint          |
+| `components-chat-chat-ui-root--error-overlay`                                  | Chat error overlay              | Demonstrates recoverable page-level failure without flattening the shell.                     | State quality, hierarchy                 |
+| `components-ui-layout-product-composition--data-view-ready`                    | Product data view               | Shows `ProductDataView` owning collection hierarchy and ready content.                        | Hierarchy, spacing rhythm                |
+| `components-ui-layout-product-composition--data-view-loading`                  | Product data view loading state | Preserves collection context while marking the state wrapper busy.                            | State quality, spacing rhythm            |
+| `components-ui-layout-product-composition--data-view-empty`                    | Product data view empty state   | Shows a neutral empty collection state under the same heading.                                | State quality, hierarchy                 |
+| `components-ui-layout-product-composition--data-view-error`                    | Product data view error state   | Keeps the collection section visible while exposing recovery action copy.                     | State quality, focus quality             |
+| `components-ui-layout-product-composition--page-shell-with-sidebar-and-footer` | Product page shell fixture      | Demonstrates sidebar, main, and footer slots without custom viewport wrappers.                | Hierarchy, spacing rhythm                |
+| `chat page - default state`                                                    | Web app visual suite            | Confirms the product shell works outside isolated Storybook rendering.                        | Hierarchy, spacing rhythm, focus quality |
+| `harness page`                                                                 | Web app visual suite            | Confirms a migrated exemplar page keeps product composition outside settings.                 | Hierarchy, spacing rhythm, state quality |
+| `template browser page` and `template widget page`                             | Web app visual suite            | Confirms template discovery and preview surfaces keep stable structure and state handling.    | Hierarchy, state quality                 |
 
 ## Visual QA Protocol
 

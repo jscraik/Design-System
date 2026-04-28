@@ -20,7 +20,10 @@
         "The surface owns the result-region heading and state transitions."
       ],
       "requiredStates": ["ready", "loading", "empty", "error"],
-      "examples": ["platforms/web/apps/web/src/pages/HarnessPage.tsx"],
+      "examples": [
+        "packages/ui/src/storybook/_holding/component-stories/ProductComposition.stories.tsx",
+        "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.test.tsx"
+      ],
       "avoid": [
         "Local loading/error/empty branches with unrelated markup.",
         "Hand-rolled async wrappers when ProductDataView can own state routing."
@@ -40,6 +43,7 @@
       ],
       "sourceRefs": [
         "docs/design-system/AGENT_UI_ROUTING.md#agent-composition-primitives",
+        "docs/design-system/GOLD_EXAMPLES.md#promoted-examples",
         "docs/design-system/PROFESSIONAL_UI_CONTRACT.md#state-and-feedback"
       ]
     },
@@ -80,6 +84,7 @@
         }
       ],
       "sourceRefs": [
+        "docs/design-system/GOLD_EXAMPLES.md#promoted-examples",
         "docs/design-system/PROFESSIONAL_UI_CONTRACT.md#state-and-feedback",
         "docs/TEST_PLAN.md"
       ]
@@ -104,7 +109,8 @@
       "requiredStates": [],
       "examples": [
         "platforms/web/apps/web/src/pages/HarnessPage.tsx",
-        "platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx"
+        "platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx",
+        "packages/ui/src/storybook/_holding/component-stories/ProductComposition.stories.tsx"
       ],
       "avoid": [
         "Custom h-screen or min-h-screen wrapper chains.",
@@ -125,6 +131,7 @@
       ],
       "sourceRefs": [
         "docs/design-system/AGENT_UI_ROUTING.md#agent-composition-primitives",
+        "docs/design-system/GOLD_EXAMPLES.md#promoted-examples",
         "docs/design-system/COMPONENT_LIFECYCLE.json"
       ]
     },
@@ -166,6 +173,7 @@
       ],
       "sourceRefs": [
         "docs/design-system/AGENT_UI_ROUTING.md#agent-composition-primitives",
+        "docs/design-system/GOLD_EXAMPLES.md#promoted-examples",
         "docs/design-system/COMPONENT_LIFECYCLE.json"
       ]
     },
@@ -210,6 +218,7 @@
       ],
       "sourceRefs": [
         "docs/design-system/AGENT_UI_ROUTING.md#agent-composition-primitives",
+        "docs/design-system/GOLD_EXAMPLES.md#promoted-examples",
         "docs/design-system/COMPONENT_LIFECYCLE.json"
       ]
     },
@@ -233,7 +242,9 @@
       "requiredStates": ["ready", "loading", "empty", "error"],
       "examples": [
         "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
-        "packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.tsx"
+        "packages/ui/src/app/settings/AppsPanel/AppsPanel.stories.tsx",
+        "packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.tsx",
+        "packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.stories.tsx"
       ],
       "avoid": [
         "A second settings shell primitive parallel to existing layout primitives.",
@@ -258,6 +269,7 @@
       ],
       "sourceRefs": [
         "docs/design-system/AGENT_UI_ROUTING.md#settings-cluster-defaults",
+        "docs/design-system/GOLD_EXAMPLES.md#promoted-examples",
         "docs/design-system/COMPONENT_LIFECYCLE.json"
       ]
     }
