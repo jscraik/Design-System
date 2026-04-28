@@ -8,6 +8,7 @@ Private guidance package for enforcing design-system usage in consumer projects.
 - [Check](#check)
 - [CI mode](#ci-mode)
 - [Scope-Aware Enforcement](#scope-aware-enforcement)
+- [Actionable remediation](#actionable-remediation)
 - [DESIGN.md migration](#designmd-migration)
 - [Included guidance](#included-guidance)
 
@@ -64,6 +65,21 @@ Behavior:
 - files matching `scopes.warn` emit `warn` level violations for pattern rules
 - files matching `scopes.exempt` skip pattern-rule evaluation
 - the exemption ledger can suppress a specific `ruleId` for a specific path glob when the entry includes ownership and expiry metadata
+
+## Actionable remediation
+
+Guidance findings may include agent-facing remediation metadata when a safe,
+deterministic replacement exists:
+
+- `replacementInstruction` names the replacement direction.
+- `examplePath` points to a copyable local example when the route table provides one.
+- `validationCommands[]` lists read-only checks the agent should run after editing.
+- `proposalRequired` is `true` when the finding needs a design-system proposal instead of an automatic edit.
+- `recoveryUnavailableReason` explains why guidance did not guess a fix.
+
+Route-backed remediation must use the exported `@brainwav/agent-design-engine`
+facade APIs instead of parsing `docs/design-system/AGENT_UI_ROUTING.json`
+directly.
 
 ## DESIGN.md migration
 

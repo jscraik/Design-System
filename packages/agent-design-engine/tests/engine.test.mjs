@@ -165,11 +165,17 @@ test("resolves routes by canonical need and alias with lifecycle and coverage jo
 });
 
 test("resolves routes by known surface path", () => {
-  const page = resolveRouteForSurface("platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx", rootDir);
+  const page = resolveRouteForSurface(
+    "platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx",
+    rootDir,
+  );
   assert.equal(page.ok, true);
   assert.equal(page.route?.canonicalNeed, "page_shell");
 
-  const settings = resolveRouteForSurface("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", rootDir);
+  const settings = resolveRouteForSurface(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    rootDir,
+  );
   assert.equal(settings.ok, true);
   assert.equal(settings.route?.canonicalNeed, "settings_panel");
 });
@@ -179,7 +185,10 @@ test("returns deterministic missing-route diagnostics for unknown needs and surf
   assert.equal(missingNeed.ok, false);
   assert.equal(missingNeed.diagnostics[0].code, "E_DESIGN_ROUTE_MISSING");
 
-  const missingSurface = resolveRouteForSurface("packages/ui/src/components/unknown/Thing.tsx", rootDir);
+  const missingSurface = resolveRouteForSurface(
+    "packages/ui/src/components/unknown/Thing.tsx",
+    rootDir,
+  );
   assert.equal(missingSurface.ok, false);
   assert.equal(missingSurface.diagnostics[0].code, "E_DESIGN_ROUTE_MISSING");
 });
@@ -188,7 +197,9 @@ test("builds remediation context from route data", () => {
   const context = resolveRemediationContext("grouped panel", rootDir);
   assert.equal(context.route?.canonicalNeed, "product_panel");
   assert.ok(context.forbiddenPatterns.some((pattern) => pattern.includes("Nested cards")));
-  assert.ok(context.replacementInstructions.some((instruction) => instruction.includes("ProductPanel")));
+  assert.ok(
+    context.replacementInstructions.some((instruction) => instruction.includes("ProductPanel")),
+  );
 });
 
 test("builds prepare payload for protected product page surfaces", async () => {
@@ -204,22 +215,32 @@ test("builds prepare payload for protected product page surfaces", async () => {
   assert.equal(payload.surfaceKind, "page_shell");
   assert.equal(payload.recommendedRoutes[0].canonicalNeed, "page_shell");
   assert.ok(payload.forbiddenPatterns.some((pattern) => pattern.includes("h-screen")));
-  assert.ok(payload.relevantExamples.includes("platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx"));
+  assert.ok(
+    payload.relevantExamples.includes("platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx"),
+  );
   assert.ok(payload.validationCommands.every((command) => command.safetyClass === "read_only"));
   assert.equal(payload.sourceDigests.length, 6);
   assert.equal(payload.coverageMatrixDigest.path, "docs/design-system/COVERAGE_MATRIX.json");
-  assert.equal(payload.componentLifecycleDigest.path, "docs/design-system/COMPONENT_LIFECYCLE.json");
+  assert.equal(
+    payload.componentLifecycleDigest.path,
+    "docs/design-system/COMPONENT_LIFECYCLE.json",
+  );
   assert.equal(payload.ruleSourceDigests.length, 4);
   assert.equal(typeof payload.timing.durationMs, "number");
 });
 
 test("builds prepare payload for settings panel surfaces", async () => {
-  const payload = await buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", rootDir);
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    rootDir,
+  );
   assert.equal(payload.ok, true);
   assert.equal(payload.surfaceScope, "protected");
   assert.equal(payload.surfaceKind, "settings_panel");
   assert.deepEqual(payload.requiredStates, ["empty", "error", "loading", "ready"]);
-  assert.ok(payload.relevantExamples.includes("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx"));
+  assert.ok(
+    payload.relevantExamples.includes("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx"),
+  );
 });
 
 test("builds prepare diagnostics for warn, exempt, and unknown surfaces", async () => {

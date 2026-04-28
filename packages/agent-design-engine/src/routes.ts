@@ -20,7 +20,10 @@ function readJson<T>(rootDir: string, relativePath: string): T {
 }
 
 function normalizeNeed(need: string): string {
-  return need.trim().toLowerCase().replace(/[\s-]+/g, "_");
+  return need
+    .trim()
+    .toLowerCase()
+    .replace(/[\s-]+/g, "_");
 }
 
 function toRouteDiagnostic(
@@ -95,7 +98,9 @@ function resolveRoute(
   const diagnostics: RouteDiagnostic[] = [];
   const lifecycleEntries = loadLifecycle(rootDir);
   const coverageEntries = loadCoverage(rootDir);
-  const lifecycleEntry = lifecycleEntries.find((entry) => entry.name === route.preferredComponent.name);
+  const lifecycleEntry = lifecycleEntries.find(
+    (entry) => entry.name === route.preferredComponent.name,
+  );
   const coverageName = route.preferredComponent.coverageName ?? route.preferredComponent.name;
   const coverageEntry = coverageEntries.find((entry) => entry.name === coverageName);
 
@@ -161,7 +166,10 @@ export function resolveRouteForNeed(need: string, rootDir = process.cwd()): Rout
   const normalizedNeed = normalizeNeed(need);
   const table = loadAgentUiRoutingTable(rootDir);
   const matches = table.routes.filter((route) => {
-    if (normalizeNeed(route.canonicalNeed) === normalizedNeed || normalizeNeed(route.need) === normalizedNeed) {
+    if (
+      normalizeNeed(route.canonicalNeed) === normalizedNeed ||
+      normalizeNeed(route.need) === normalizedNeed
+    ) {
       return true;
     }
     return route.aliases.some((alias) => normalizeNeed(alias) === normalizedNeed);
@@ -194,7 +202,8 @@ export function resolveRouteForNeed(need: string, rootDir = process.cwd()): Rout
   }
 
   const route = matches[0];
-  const matchedAlias = route.aliases.find((alias) => normalizeNeed(alias) === normalizedNeed) ?? null;
+  const matchedAlias =
+    route.aliases.find((alias) => normalizeNeed(alias) === normalizedNeed) ?? null;
   return resolveRoute(rootDir, route, normalizedNeed, matchedAlias);
 }
 
@@ -205,10 +214,16 @@ export function resolveRouteForSurface(
   const normalizedSurface = surfacePath.split(path.sep).join("/");
   const table = loadAgentUiRoutingTable(rootDir);
   const match = table.routes.find((route) => {
-    if (route.canonicalNeed === "settings_panel" && normalizedSurface.startsWith("packages/ui/src/app/settings/")) {
+    if (
+      route.canonicalNeed === "settings_panel" &&
+      normalizedSurface.startsWith("packages/ui/src/app/settings/")
+    ) {
       return true;
     }
-    if (route.canonicalNeed === "page_shell" && normalizedSurface.startsWith("platforms/web/apps/web/src/pages/")) {
+    if (
+      route.canonicalNeed === "page_shell" &&
+      normalizedSurface.startsWith("platforms/web/apps/web/src/pages/")
+    ) {
       return true;
     }
     return false;
@@ -253,7 +268,7 @@ export function resolveRemediationContext(
 
 export function validateAgentUiRoutingTable(rootDir = process.cwd()): RouteDiagnostic[] {
   const table = loadAgentUiRoutingTable(rootDir);
-  return table.routes.flatMap((route) =>
-    resolveRoute(rootDir, route, route.canonicalNeed, null).diagnostics,
+  return table.routes.flatMap(
+    (route) => resolveRoute(rootDir, route, route.canonicalNeed, null).diagnostics,
   );
 }

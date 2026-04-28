@@ -54,9 +54,13 @@ function escapeRegex(input: string): string {
 function expandBraceGroups(glob: string): string[] {
   const match = /\{([^{}]+)\}/.exec(glob);
   if (!match) return [glob];
-  return match[1].split(",").flatMap((part) =>
-    expandBraceGroups(`${glob.slice(0, match.index)}${part}${glob.slice(match.index + match[0].length)}`),
-  );
+  return match[1]
+    .split(",")
+    .flatMap((part) =>
+      expandBraceGroups(
+        `${glob.slice(0, match.index)}${part}${glob.slice(match.index + match[0].length)}`,
+      ),
+    );
 }
 
 function globToRegex(glob: string): RegExp {

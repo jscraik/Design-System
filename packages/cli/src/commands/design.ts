@@ -10,10 +10,10 @@ import {
   exportDesignContract,
   lintDesignContract,
   lintDesignFile,
+  parseDesignContract,
   resolveRemediationContext,
   resolveRouteForNeed,
   resolveRouteForSurface,
-  parseDesignContract,
 } from "@brainwav/agent-design-engine";
 import {
   assertDesignCommandSchemaSupported,
@@ -657,7 +657,13 @@ function assertComponentsSelector(argv: DesignArgs): void {
       hint: "Pass --need <need> or --surface <path>.",
       recovery: {
         fix_suggestion: "Retry with a read-only need selector.",
-        nextCommand: designCommandRecovery(argv, ["design", "components", "--need", "page_shell", "--json"]),
+        nextCommand: designCommandRecovery(argv, [
+          "design",
+          "components",
+          "--need",
+          "page_shell",
+          "--json",
+        ]),
       },
     });
   }

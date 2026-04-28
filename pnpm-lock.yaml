@@ -240,6 +240,10 @@ importers:
         version: 4.62.0(@cloudflare/workers-types@4.20260423.1)
 
   packages/design-system-guidance:
+    dependencies:
+      '@brainwav/agent-design-engine':
+        specifier: workspace:*
+        version: link:../agent-design-engine
     devDependencies:
       '@types/node':
         specifier: ^24.6.1

@@ -14,6 +14,7 @@ import {
 } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { resolveRemediationContext } from "@brainwav/agent-design-engine";
 import { DESIGN_COMPATIBILITY_MANIFEST } from "./compatibility.js";
 import type {
   CheckOptions,
@@ -228,6 +229,52 @@ function isObject(value: unknown): value is Record<string, unknown> {
 
 function normalizeLevel(level: string | undefined): RuleLevel {
   return level === "error" ? "error" : "warn";
+}
+
+function remediationForViolation(ruleId: string, targetPath: string): Partial<GuidanceViolation> {
+  if (ruleId === "no-h-screen") {
+    const remediation = resolveRemediationContext("page_shell", targetPath);
+    const route = remediation.route;
+    return {
+      replacementInstruction: route
+        ? `Replace custom viewport shell wrappers with ${route.preferredComponent.name} from ${route.preferredComponent.packageName} (${route.preferredComponent.importPath}).`
+        : undefined,
+      examplePath: route?.examples[0],
+      validationCommands: route?.validationCommands,
+      proposalRequired: route === null,
+      recoveryUnavailableReason: route
+        ? undefined
+        : "No deterministic page shell route is available for this repository.",
+    };
+  }
+
+  if (ruleId === "no-raw-hex-colors" || ruleId === "no-foundation-token-usage") {
+    return {
+      replacementInstruction:
+        "Replace literal or foundation color usage with mapped semantic color utilities or token roles from DESIGN.md.",
+      validationCommands: [
+        {
+          command: "pnpm design-system-guidance:check:ci",
+          safetyClass: "read_only",
+          reason: "Re-checks design-system guidance without mutating files.",
+        },
+      ],
+      proposalRequired: false,
+    };
+  }
+
+  if (ruleId === "no-global-focus-visible") {
+    return {
+      proposalRequired: true,
+      recoveryUnavailableReason:
+        "Focus remediation depends on component ownership; use a scoped component selector rather than an automatic global rewrite.",
+    };
+  }
+
+  return {
+    proposalRequired: true,
+    recoveryUnavailableReason: "No deterministic remediation route is available for this finding.",
+  };
 }
 
 function findRuleLevel(rules: RulesDocument, ruleId: string, fallback: RuleLevel): RuleLevel {
@@ -842,6 +889,7 @@ export async function runCheck(
             file: file.filePath,
             line: match.line,
             message: pattern.message,
+            ...remediationForViolation(rule.id, targetPath),
           });
         }
       }

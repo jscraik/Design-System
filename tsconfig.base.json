@@ -11,6 +11,7 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
+      "@brainwav/agent-design-engine": ["packages/agent-design-engine/dist/index.d.ts"],
       "@design-studio/runtime": ["packages/runtime/src/index.tsx"],
       "@design-studio/tokens": ["packages/tokens/src/index.ts"],
       "@design-studio/skill-ingestion": ["packages/skill-ingestion/dist/index.d.ts"]

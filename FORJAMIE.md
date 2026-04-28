@@ -57,6 +57,7 @@ flowchart LR
 - `packages/widgets` packages standalone widget bundles used by the web surface and MCP integration paths.
 - `platforms/mcp` contains the MCP integration harness and tool contract tests.
 - `packages/design-system-guidance` packages the policy and guidance checks used to keep downstream consumers aligned, including repo-scoped protected-surface enforcement and an exemption ledger.
+- `packages/design-system-guidance` findings now carry agent-facing remediation metadata when deterministic recovery is available: replacement instructions, copyable examples, read-only validation commands, and proposal-required reasons when the tool should not guess.
 - `packages/agent-design-engine` parses `DESIGN.md`, computes professional-UI rule provenance, lints semantic UI contract requirements, diffs design contracts, and exports agent-readable token/contract payloads.
 - `pnpm agent-design:lint` is the clean-checkout-safe root lint wrapper. It builds `packages/agent-design-engine` and `packages/cli` before invoking `packages/cli/dist/index.js`, so direct `dist` execution does not depend on tracked build artifacts.
 - `packages/cli` exposes the engine through `astudio design` commands while keeping the existing `astudio.command.v1` JSON envelope for agents.
@@ -211,6 +212,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - **JSC-240 Slice 2 routing table contract**: started the routing-table contract slice on `jscraik/feature/jsc-240-routing-table-contract`. `docs/design-system/AGENT_UI_ROUTING.json` is now the authored machine authority for the first canonical needs, `packages/agent-design-engine` exports route lookup/remediation facades, and engine tests verify deterministic route order plus lifecycle, coverage, source-reference, and example drift.
 - **JSC-241 Slice 3 prepare payload model**: started the prepare-model slice on `jscraik/feature/jsc-241-prepare-payload-model`. `packages/agent-design-engine` now builds a read-only `astudio.design.prepare.v1` payload with surface scope, surface kind, recommended routes, required states, forbidden patterns, examples, validation commands, rule provenance, source digests, and fail-closed open decisions before the CLI command is exposed.
 - **JSC-242 Slice 4 read-only CLI commands**: added the first agent-native CLI transport layer for `astudio design prepare`, `components`, `coverage`, and `propose-abstraction`. These commands emit `astudio.command.v1` JSON envelopes, stay read-only, keep `context` out of the public v1 surface, and add the root `pnpm agent-design:prepare --surface <path>` alias for the happy path.
+- **JSC-243 Slice 5 actionable remediation**: `@brainwav/design-system-guidance` violations now include agent-readable remediation metadata where the fix is deterministic. `no-h-screen` routes through `@brainwav/agent-design-engine` remediation context, token/foundation findings point agents back to semantic token roles, and ambiguous findings explicitly mark proposal-required recovery instead of inventing a rewrite.
 
 ### 2026-04-26
 
@@ -408,7 +410,7 @@ project: design-system
 repo: ~/dev/design-system
 status: IN_PROGRESS
 health: yellow
-last_updated: 2026-04-26
+last_updated: 2026-04-28
 open_prs: 1
 blockers: none
 next_milestone: ChatGPT widget integration
