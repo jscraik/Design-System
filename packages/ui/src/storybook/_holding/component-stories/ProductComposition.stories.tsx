@@ -79,7 +79,7 @@ export const DataViewError: Story = {
       state="error"
       errorTitle="Could not load runs"
       errorDescription="Retry after the current validation job finishes."
-      action={<Button size="sm">Retry</Button>}
+      action={<Button size="sm" aria-label="Retry loading agent runs">Retry</Button>}
     >
       <RunRows />
     </ProductDataView>
