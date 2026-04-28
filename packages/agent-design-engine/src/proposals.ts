@@ -167,8 +167,15 @@ function proposalRefStatus(
 ): "missing" | "accepted" | "not-accepted" {
   if (!proposalRef) return "missing";
   const proposalPath = proposalRef.split("#")[0];
-  const absolutePath = path.join(rootDir, proposalPath);
-  if (!proposalPath || !existsSync(absolutePath)) return "missing";
+  const repoRoot = path.resolve(rootDir);
+  const absolutePath = path.resolve(repoRoot, proposalPath);
+  if (
+    !proposalPath ||
+    (absolutePath !== repoRoot && !absolutePath.startsWith(`${repoRoot}${path.sep}`)) ||
+    !existsSync(absolutePath)
+  ) {
+    return "missing";
+  }
   const content = readFileSync(absolutePath, "utf8");
   if (/^status:\s*accepted\s*$/im.test(content) || /\bStatus:\s*Accepted\b/i.test(content)) {
     return "accepted";
