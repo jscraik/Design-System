@@ -37,6 +37,7 @@
     "generated-source:check": "node scripts/check-generated-sources.mjs",
     "agent-design:boundaries": "node scripts/check-agent-design-boundaries.mjs",
     "agent-design:boundaries:self-test": "node scripts/check-agent-design-boundaries.mjs --self-test",
+    "agent-design:prepare": "pnpm -C packages/cli build && node packages/cli/dist/index.js design prepare --json",
     "tracked-ignored:check": "node scripts/check-tracked-ignored-artifacts.mjs",
     "tracked-ignored:check:self-test": "node scripts/check-tracked-ignored-artifacts.mjs --self-test",
     "quality-debt:check": "node scripts/quality-debt-radar.mjs check",

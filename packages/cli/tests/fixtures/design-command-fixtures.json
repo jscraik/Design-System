@@ -60,6 +60,48 @@
       "args": ["design", "doctor", "--json"]
     },
     {
+      "name": "prepare-page-shell",
+      "kind": "astudio.design.prepare.v1",
+      "cwd": "$REPO_ROOT",
+      "args": [
+        "design",
+        "prepare",
+        "--surface",
+        "platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx",
+        "--json"
+      ]
+    },
+    {
+      "name": "components-by-need",
+      "kind": "astudio.design.components.v1",
+      "cwd": "$REPO_ROOT",
+      "args": ["design", "components", "--need", "page_shell", "--json"]
+    },
+    {
+      "name": "components-by-surface",
+      "kind": "astudio.design.components.v1",
+      "cwd": "$REPO_ROOT",
+      "args": [
+        "design",
+        "components",
+        "--surface",
+        "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+        "--json"
+      ]
+    },
+    {
+      "name": "coverage-component",
+      "kind": "astudio.design.coverage.v1",
+      "cwd": "$REPO_ROOT",
+      "args": ["design", "coverage", "--component", "ProductComposition", "--json"]
+    },
+    {
+      "name": "propose-abstraction-preview",
+      "kind": "astudio.design.proposeAbstraction.v1",
+      "cwd": "$REPO_ROOT",
+      "args": ["design", "propose-abstraction", "--need", "timeline editor", "--json"]
+    },
+    {
       "name": "doctor-linked-design-contract",
       "kind": "astudio.design.doctor.v1",
       "cwd": "$TEMP_LINKED_DESIGN_PROJECT",
@@ -138,6 +180,22 @@
       ],
       "expectedExitCode": 3,
       "expectedErrorCode": "E_DESIGN_PROFILE_OVERRIDE_FORBIDDEN",
+      "recovery": "unavailable"
+    },
+    {
+      "name": "components-selector-conflict",
+      "cwd": "$REPO_ROOT",
+      "args": [
+        "design",
+        "components",
+        "--need",
+        "page_shell",
+        "--surface",
+        "platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx",
+        "--json"
+      ],
+      "expectedExitCode": 2,
+      "expectedErrorCode": "E_DESIGN_SELECTOR_CONFLICT",
       "recovery": "unavailable"
     },
     {

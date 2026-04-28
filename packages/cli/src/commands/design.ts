@@ -1,6 +1,7 @@
 import { access, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import {
+  buildPreparePayload,
   type DesignContract,
   type DesignDiffResult,
   DesignEngineError,
@@ -9,6 +10,9 @@ import {
   exportDesignContract,
   lintDesignContract,
   lintDesignFile,
+  resolveRemediationContext,
+  resolveRouteForNeed,
+  resolveRouteForSurface,
   parseDesignContract,
 } from "@brainwav/agent-design-engine";
 import {
@@ -35,7 +39,11 @@ type DesignCommandKind =
   | "astudio.design.checkBrand.v1"
   | "astudio.design.init.v1"
   | "astudio.design.migrate.v1"
-  | "astudio.design.doctor.v1";
+  | "astudio.design.doctor.v1"
+  | "astudio.design.prepare.v1"
+  | "astudio.design.components.v1"
+  | "astudio.design.coverage.v1"
+  | "astudio.design.proposeAbstraction.v1";
 
 interface DesignArgs extends CliArgs {
   file?: string;
@@ -55,6 +63,9 @@ interface DesignArgs extends CliArgs {
   rollback?: boolean;
   resume?: boolean;
   active?: boolean;
+  surface?: string;
+  need?: string;
+  component?: string;
 }
 
 interface DesignDiscovery {
@@ -604,9 +615,134 @@ function doctorOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
     .option("active", { type: "boolean" });
 }
 
+function prepareOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
+  return cmd.option("surface", { type: "string", demandOption: true });
+}
+
+function componentsOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
+  return cmd.option("need", { type: "string" }).option("surface", { type: "string" });
+}
+
+function coverageOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
+  return cmd.option("component", { type: "string", demandOption: true });
+}
+
+function proposeAbstractionOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
+  return cmd.option("need", { type: "string", demandOption: true }).option("surface", {
+    type: "string",
+  });
+}
+
+async function readCoverageEntry(rootDir: string, component: string): Promise<unknown> {
+  const raw = await readFile(path.join(rootDir, "docs/design-system/COVERAGE_MATRIX.json"), "utf8");
+  const entries = JSON.parse(raw) as Array<{ name?: string }>;
+  return entries.find((entry) => entry.name === component) ?? null;
+}
+
+function assertComponentsSelector(argv: DesignArgs): void {
+  if (argv.need && argv.surface) {
+    throw new CliError("design components accepts either --need or --surface, not both.", {
+      code: "E_DESIGN_SELECTOR_CONFLICT",
+      exitCode: EXIT_CODES.usage,
+      hint: "Pass exactly one selector: --need or --surface.",
+      recovery: unavailableRecovery(
+        "The caller must choose one read-only selector before the command can retry safely.",
+      ),
+    });
+  }
+  if (!argv.need && !argv.surface) {
+    throw new CliError("design components requires --need or --surface.", {
+      code: "E_DESIGN_SELECTOR_REQUIRED",
+      exitCode: EXIT_CODES.usage,
+      hint: "Pass --need <need> or --surface <path>.",
+      recovery: {
+        fix_suggestion: "Retry with a read-only need selector.",
+        nextCommand: designCommandRecovery(argv, ["design", "components", "--need", "page_shell", "--json"]),
+      },
+    });
+  }
+}
+
 export function designCommand(yargs: Argv): Argv {
   const chain = yargs as unknown as DesignCommandChain;
   return chain
+    .command(
+      "prepare",
+      "Prepare an agent context pack for a UI surface",
+      prepareOptions,
+      async (raw: ArgumentsCamelCase<DesignArgs>) =>
+        runDesign("astudio.design.prepare.v1", async () => {
+          const argv = raw as DesignArgs;
+          assertDesignOutputMode(argv);
+          const rootDir = await findProjectRoot(commandCwd(argv));
+          const result = await buildPreparePayload(String(argv.surface), rootDir);
+          emitDesign(argv, "design prepare", result.ok ? "success" : "warn", result);
+          return result.ok ? EXIT_CODES.success : EXIT_CODES.failure;
+        }),
+    )
+    .command(
+      "components",
+      "Resolve read-only component routing",
+      componentsOptions,
+      async (raw: ArgumentsCamelCase<DesignArgs>) =>
+        runDesign("astudio.design.components.v1", async () => {
+          const argv = raw as DesignArgs;
+          assertDesignOutputMode(argv);
+          assertComponentsSelector(argv);
+          const rootDir = await findProjectRoot(commandCwd(argv));
+          const result = argv.need
+            ? resolveRouteForNeed(argv.need, rootDir)
+            : resolveRouteForSurface(String(argv.surface), rootDir);
+          emitDesign(argv, "design components", result.ok ? "success" : "warn", {
+            kind: "astudio.design.components.v1",
+            selector: argv.need ? { need: argv.need } : { surface: argv.surface },
+            ...result,
+            readOnly: true,
+          });
+          return result.ok ? EXIT_CODES.success : EXIT_CODES.failure;
+        }),
+    )
+    .command(
+      "coverage",
+      "Resolve read-only component coverage metadata",
+      coverageOptions,
+      async (raw: ArgumentsCamelCase<DesignArgs>) =>
+        runDesign("astudio.design.coverage.v1", async () => {
+          const argv = raw as DesignArgs;
+          assertDesignOutputMode(argv);
+          const rootDir = await findProjectRoot(commandCwd(argv));
+          const coverage = await readCoverageEntry(rootDir, String(argv.component));
+          emitDesign(argv, "design coverage", coverage ? "success" : "warn", {
+            kind: "astudio.design.coverage.v1",
+            component: argv.component,
+            coverage,
+            readOnly: true,
+          });
+          return coverage ? EXIT_CODES.success : EXIT_CODES.failure;
+        }),
+    )
+    .command(
+      "propose-abstraction",
+      "Preview a read-only abstraction proposal path",
+      proposeAbstractionOptions,
+      async (raw: ArgumentsCamelCase<DesignArgs>) =>
+        runDesign("astudio.design.proposeAbstraction.v1", async () => {
+          const argv = raw as DesignArgs;
+          assertDesignOutputMode(argv);
+          const rootDir = await findProjectRoot(commandCwd(argv));
+          const remediation = resolveRemediationContext(String(argv.need), rootDir);
+          emitDesign(argv, "design propose-abstraction", "success", {
+            kind: "astudio.design.proposeAbstraction.v1",
+            need: argv.need,
+            surface: argv.surface ?? null,
+            proposalRequired: remediation.route === null,
+            previewOnly: true,
+            readOnly: true,
+            remediation,
+          });
+          return EXIT_CODES.success;
+        }),
+    )
     .command("lint", "Lint DESIGN.md", lintOptions, async (raw: ArgumentsCamelCase<DesignArgs>) =>
       runDesign("astudio.design.lint.v1", async () => {
         const argv = raw as DesignArgs;
