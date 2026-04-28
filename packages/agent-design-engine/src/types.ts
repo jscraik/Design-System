@@ -233,6 +233,7 @@ export interface ProposalWaiver {
   target: string;
   owner: string;
   reason: string;
+  /** ISO 8601 date string (e.g., "2026-06-30") */
   expiresAt: string;
   cleanup: string;
   status: ProposalWaiverStatus;
