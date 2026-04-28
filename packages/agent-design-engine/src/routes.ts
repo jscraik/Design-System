@@ -312,8 +312,11 @@ export function resolveRouteForSurface(
         return true;
       }
       if (normalizedPattern.includes("*")) {
-        const regexPattern = normalizedPattern.replace(/\*/g, ".*");
-        if (new RegExp(`^${regexPattern}`).test(normalizedSurface)) {
+        const regexPattern = normalizedPattern
+          .split("*")
+          .map((segment) => segment.replace(/[.+?^${}()|[\]\\]/g, "\\$&"))
+          .join(".*");
+        if (new RegExp(`^${regexPattern}$`).test(normalizedSurface)) {
           return true;
         }
       }
