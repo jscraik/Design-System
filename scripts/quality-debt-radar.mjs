@@ -825,6 +825,7 @@ function renderReport(contract, results, options) {
 - [Release Impact Notes](#release-impact-notes)
 - [Data Freshness and Gaps](#data-freshness-and-gaps)
 - [Evidence Links](#evidence-links)
+- [Source Commands](#source-commands)
 
 ## Summary
 

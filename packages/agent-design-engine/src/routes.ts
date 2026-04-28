@@ -266,7 +266,24 @@ function validateRouteSourceRefs(
 ) {
   for (const sourceRef of route.sourceRefs) {
     const [filePath] = sourceRef.split("#");
-    if (!filePath || !existsSync(path.join(rootDir, filePath))) {
+    if (!filePath) {
+      diagnostics.push(
+        toRouteDiagnostic(
+          "E_DESIGN_ROUTE_SOURCE_REF_MISSING",
+          `Route ${route.canonicalNeed} references missing source ${sourceRef}.`,
+          route,
+          sourceRef,
+        ),
+      );
+      continue;
+    }
+
+    const resolvedPath = path.resolve(rootDir, filePath);
+    const resolvedRoot = path.resolve(rootDir);
+    const relativePath = path.relative(resolvedRoot, resolvedPath);
+
+    // Check if the resolvedPath is outside the repo root or missing
+    if (relativePath.startsWith("..") || !resolvedPath.startsWith(resolvedRoot) || !existsSync(resolvedPath)) {
       diagnostics.push(
         toRouteDiagnostic(
           "E_DESIGN_ROUTE_SOURCE_REF_MISSING",
@@ -292,7 +309,12 @@ function validateRouteExamples(
   diagnostics: RouteDiagnostic[],
 ) {
   for (const example of route.examples) {
-    if (!existsSync(path.join(rootDir, example))) {
+    const resolvedPath = path.resolve(rootDir, example);
+    const resolvedRoot = path.resolve(rootDir);
+    const relativePath = path.relative(resolvedRoot, resolvedPath);
+
+    // Check if the resolvedPath is outside the repo root or missing
+    if (relativePath.startsWith("..") || !resolvedPath.startsWith(resolvedRoot) || !existsSync(resolvedPath)) {
       diagnostics.push(
         toRouteDiagnostic(
           "E_DESIGN_ROUTE_EXAMPLE_MISSING",

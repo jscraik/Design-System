@@ -27,6 +27,71 @@ type GuidanceConfig = {
 };
 
 /**
+ * Parse and validate a value as a GuidanceConfig object.
+ *
+ * @param value - The value to validate (typically from JSON.parse)
+ * @returns The validated GuidanceConfig object
+ * @throws {Error} If the value does not conform to the GuidanceConfig schema
+ */
+function parseGuidanceConfig(value: unknown): GuidanceConfig {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new Error("Guidance config must be an object");
+  }
+
+  const config = value as Record<string, unknown>;
+
+  // Validate designContract if present
+  if (config.designContract !== undefined) {
+    if (
+      !config.designContract ||
+      typeof config.designContract !== "object" ||
+      Array.isArray(config.designContract)
+    ) {
+      throw new Error("designContract must be an object");
+    }
+    const designContract = config.designContract as Record<string, unknown>;
+    if (designContract.mode !== undefined && typeof designContract.mode !== "string") {
+      throw new Error("designContract.mode must be a string");
+    }
+  }
+
+  // Validate scopes if present
+  if (config.scopes !== undefined) {
+    if (!config.scopes || typeof config.scopes !== "object" || Array.isArray(config.scopes)) {
+      throw new Error("scopes must be an object");
+    }
+    const scopes = config.scopes as Record<string, unknown>;
+    for (const scopeKey of ["error", "warn", "exempt"]) {
+      if (scopes[scopeKey] !== undefined) {
+        if (!Array.isArray(scopes[scopeKey])) {
+          throw new Error(`scopes.${scopeKey} must be an array`);
+        }
+        const scopeArray = scopes[scopeKey] as unknown[];
+        for (const item of scopeArray) {
+          if (typeof item !== "string") {
+            throw new Error(`scopes.${scopeKey} must contain only strings`);
+          }
+        }
+      }
+    }
+  }
+
+  // Validate scopePrecedence if present
+  if (config.scopePrecedence !== undefined) {
+    if (!Array.isArray(config.scopePrecedence)) {
+      throw new Error("scopePrecedence must be an array");
+    }
+    for (const item of config.scopePrecedence) {
+      if (typeof item !== "string") {
+        throw new Error("scopePrecedence must contain only strings");
+      }
+    }
+  }
+
+  return config as GuidanceConfig;
+}
+
+/**
  * Read a UTF-8 text file resolved by joining `rootDir` and `relativePath` and return its contents.
  *
  * @param rootDir - Base directory used to resolve `relativePath`
@@ -273,7 +338,7 @@ export async function buildPreparePayload(
     readText(resolvedRoot, designPath),
     readText(resolvedRoot, guidancePath),
   ]);
-  const guidance = JSON.parse(guidanceSource) as GuidanceConfig;
+  const guidance = parseGuidanceConfig(JSON.parse(guidanceSource));
   const contract = await parseDesignContract(designSource, {
     rootDir: resolvedRoot,
     filePath: path.join(resolvedRoot, designPath),
