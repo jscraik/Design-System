@@ -100,6 +100,16 @@ jobs:
         if: matrix.platform == 'web'
         run: pnpm ds:matrix:check
 
+      - name: Quality debt check (warn-first, web platform only)
+        if: matrix.platform == 'web'
+        continue-on-error: true
+        run: pnpm quality-debt:check
+
+      - name: Quality debt report (warn-first, web platform only)
+        if: matrix.platform == 'web'
+        continue-on-error: true
+        run: pnpm quality-debt:report -- --output reports/qa/quality-debt-burndown-ci.md
+
       - name: Format check (web platform only)
         if: matrix.platform == 'web'
         run: pnpm format:check
@@ -173,6 +183,7 @@ jobs:
             swift/*/.build/
             swift/**/__Snapshots__/
             .build-cache/
+            reports/qa/quality-debt-burndown-ci.md
           retention-days: 7
 
   a11y:

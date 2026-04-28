@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "generated_report_pattern": "reports/qa/quality-debt-burndown-YYYY-WW.md",
+  "freshness": {
+    "weekly_snapshot_days": 7,
+    "alignment_stale_after_days": 30,
+    "work_outstanding_stale_after_days": 30
+  },
+  "categories": [
+    {
+      "id": "lint-suppressions",
+      "label": "Lint suppressions",
+      "owner": "@platform",
+      "description": "Biome rules intentionally disabled or broadly suppressed that can hide real issues.",
+      "source_anchors": ["biome.json", "FORJAMIE.md"],
+      "probe": "biome_disabled_rules",
+      "source_commands": ["pnpm lint"],
+      "status_rules": {
+        "green": "0 disabled linter rules",
+        "amber": "1 or more disabled linter rules",
+        "red": "biome.json unreadable or malformed"
+      }
+    },
+    {
+      "id": "a11y-debt",
+      "label": "A11y debt",
+      "owner": "@design-system",
+      "description": "Accessibility suppressions and uncovered accessibility contract gaps for local primitives.",
+      "source_anchors": [
+        "biome.json",
+        "docs/design-system/A11Y_CONTRACTS.md",
+        "docs/design-system/COVERAGE_MATRIX.md"
+      ],
+      "probe": "a11y_disabled_rules",
+      "source_commands": ["pnpm ds:matrix:check", "pnpm test:a11y:widgets"],
+      "status_rules": {
+        "green": "0 disabled a11y rules and current matrix",
+        "amber": "1 or more disabled a11y rules or host-only a11y evidence pending",
+        "red": "a11y contract source unreadable"
+      }
+    },
+    {
+      "id": "css-lint-coverage-gap",
+      "label": "CSS lint coverage gap",
+      "owner": "@platform",
+      "description": "CSS excluded from the current lint surface due parser/tooling constraints.",
+      "source_anchors": ["biome.json"],
+      "probe": "css_excluded_from_biome",
+      "source_commands": ["pnpm lint"],
+      "status_rules": {
+        "green": "CSS is included in the lint surface or covered by an equivalent explicit check",
+        "amber": "CSS is excluded from Biome and tracked as warn-first debt",
+        "red": "CSS exclusion state cannot be determined"
+      }
+    },
+    {
+      "id": "integration-drift",
+      "label": "Integration drift",
+      "owner": "@release",
+      "description": "Drift between upstream/contracts and local integration seams, including Apps SDK, exports, wrappers, and alignment stamps.",
+      "source_anchors": ["scripts/test-drift.mjs", "docs/design-system/UPSTREAM_ALIGNMENT.md"],
+      "probe": "upstream_alignment_stamp",
+      "source_commands": ["pnpm test:drift"],
+      "status_rules": {
+        "green": "alignment stamp is within the configured freshness window",
+        "amber": "alignment stamp is stale or only locally verified",
+        "red": "alignment source is unreadable or drift command fails"
+      }
+    },
+    {
+      "id": "gate-reliability-debt",
+      "label": "Gate reliability debt",
+      "owner": "@qa",
+      "description": "Known flaky, degraded, sandbox-blocked, or host-only quality signals that reduce confidence in passing CI.",
+      "source_anchors": ["docs/work/work_outstanding.md", "docs/operations/QA_EVIDENCE_SCHEMA.md"],
+      "probe": "work_outstanding_reliability_markers",
+      "source_commands": ["pnpm test:policy", "pnpm test:visual:web", "pnpm test:visual:storybook"],
+      "status_rules": {
+        "green": "no active reliability markers remain",
+        "amber": "host-only, flaky, blocked, or unstable gates remain documented",
+        "red": "gate reliability source is unreadable"
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # Reports Index
 
-Last updated: 2026-04-24
+Last updated: 2026-04-26
 
 ## Table of Contents
 
@@ -23,6 +23,9 @@ index to distinguish active evidence from historical snapshots.
 - `design-audit.html`
 - `playwright-*.png` - local visual evidence captures from the current branch.
 - `qa/quality-debt-burndown-template.md`
+- `qa/quality-debt-burndown-YYYY-WW.md` - generated weekly quality-debt radar snapshots. Generate with `pnpm quality-debt:report`; validate the contract with `pnpm quality-debt:check`.
+
+Markdown reports under `reports/**` are part of the Vale docs-lint surface; keep generated report prose concise enough for `pnpm docs:lint`.
 
 ## Archived Reports
 

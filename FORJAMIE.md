@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-04-25
+**Last updated:** 2026-04-26
 **Production status:** IN_PROGRESS
 **Overall health:** Yellow
 
@@ -25,7 +25,7 @@
 | Build / CI | Yellow | Focused policy, token, matrix, docs, guidance, whitespace, browser, widget a11y, and aggregate build gates pass for the Agent Design Engine slice |
 | Tests | Yellow | Agent-design and release-readiness gates pass (`agent-design-engine`, `cli`, `design-system-guidance`, web E2E, widget a11y, and root build), including fixture-backed CLI JSON/recovery/migration coverage |
 | Security | Clean | 13 CVEs patched; GitHub Actions SHA-pinned |
-| Open PRs | 0 | |
+| Open PRs | 1 | PR #154 carries the quality-debt radar execution slice |
 | Blockers | None | |
 <!-- STATUS_END -->
 
@@ -85,6 +85,7 @@ flowchart LR
 | Guidance package | Done | `@brainwav/design-system-guidance` now supports repo-scoped `error`/`warn`/`exempt` enforcement, path specificity, and exemption-ledger validation |
 | Agent design engine | Initial vertical slice done | `@brainwav/agent-design-engine` parses/lints/diffs/exports `DESIGN.md` and records rule-source provenance for agent UI work |
 | aStudio design CLI | Initial vertical slice done | `astudio design lint/diff/export/check-brand/init/migrate/doctor` is available with schema-backed JSON envelopes, one-line stdout fixtures, and write gates |
+| Quality debt radar | Warn-first baseline active | `pnpm quality-debt:check` validates the category/source contract, `pnpm quality-debt:report` generates weekly burn-down snapshots, and CI/release workflows run the radar as warn-first evidence |
 | Protected settings migration | In progress | The initial settings wave is migrated onto shared shell/composition patterns, with explicit state stories and jsdom exemplar tests for the protected settings slice; broader app/storybook warn backlog remains intentionally non-blocking |
 | Visual regression workflow | In progress | Root visual scripts now route through `scripts/run-playwright-suite.mjs` and `packages/ui build:visual`, and the exemplar gate now covers both the template browser shell and an isolated template-widget shell route |
 | Current dependency hygiene | In progress | This change-set pins `vitest-axe` back to `1.0.0-pre.3` for deterministic installs |
@@ -114,6 +115,9 @@ pnpm design-system-guidance:ratchet
 pnpm agent-design:boundaries
 pnpm agent-design:type-check
 pnpm agent-design:test
+pnpm quality-debt:check
+pnpm quality-debt:report
+pnpm quality-debt:test
 pnpm -C packages/design-system-guidance build
 pnpm -C packages/cli build
 pnpm -C packages/cli test
@@ -187,8 +191,19 @@ See also: `~/.codex/instructions/Learnings.md`
 - `astudio design check-brand --strict` now has non-tautological mismatch logic, but only `astudio-default@1` is currently supported. Add a second supported profile fixture before treating cross-profile mismatch behavior as fully proven.
 - `pnpm generated-source:check` intentionally rebuilds widget assets and may print Vite chunk-size warnings. Treat it as a correctness/freshness gate, not as the package performance budget.
 - `pnpm agent-design:boundaries` is the ownership tripwire for the Agent Design Engine: wrappers can call public package exports, but parser, lint, diff, export, and profile-comparison implementation must stay in `packages/agent-design-engine`.
+- `pnpm quality-debt:report` is warn-first by design. Amber/red radar posture is release-owner evidence, not a new hard-fail gate, until explicit thresholds are approved.
+- Quality-debt radar CLI output now includes `service:"quality-debt-radar"` on status/error lines, and flag parsing fails fast when `--output`, `--date`, or `--week` are missing values.
 
 ## Recent changes
+
+### 2026-04-26
+
+- **Quality-debt radar review hardening**: PR #154 follow-up archives the CI-generated radar report, broadens `pnpm docs:lint` to Markdown, MDX, AsciiDoc, and reStructuredText, service-tags quality-debt CLI output, validates missing option values, and covers `--no-color` in the CLI test. The follow-up also restores a docstring boundary and splits report rendering helpers in `scripts/quality-debt-radar.mjs` so report generation stays readable while continuing to exercise the upstream-alignment probe.
+- **Quality-debt radar autofix closeout**: The radar CLI now rejects impossible `--date` calendar values instead of letting JavaScript normalize them, the integration-drift probe prefers the CI-managed `Verified at` upstream-alignment stamp before falling back to `Last verified`, Biome suppression metrics include override-scoped rule disables, and the committed W17 baseline report was regenerated from the current radar logic.
+- **Quality-debt radar review-thread closeout**: The radar contract validator now rejects unsupported probe names during `pnpm quality-debt:check`, the CSS lint coverage probe recognizes an equivalent explicit CSS lint script before promoting the category to green, and the self-test no longer requires override-scoped suppressions to stay nonzero after future cleanup.
+- **Quality-debt radar week guard**: The radar report command now validates `--week` as a real ISO week for the requested year, so impossible labels such as `2026-W99` fail before writing a mislabeled burndown artifact.
+- **Quality-debt radar freshness buckets**: The stale-source section now only lists genuinely stale evidence, while unreadable probe evidence stays in the unavailable-source section so release triage does not double-count one freshness gap.
+- **Quality-debt radar execution surface**: JSC-38 through JSC-41 now have an executable warn-first radar path. `docs/operations/quality-debt-radar.categories.json` defines the canonical category/source mapping, `scripts/quality-debt-radar.mjs` validates the contract and generates weekly reports, `reports/qa/quality-debt-burndown-2026-W17.md` records the first baseline snapshot, and CI/release workflows run radar checks in `continue-on-error` mode so release owners get debt visibility without a premature hard-fail gate.
 
 ### 2026-04-25
 
@@ -377,8 +392,8 @@ project: design-system
 repo: ~/dev/design-system
 status: IN_PROGRESS
 health: yellow
-last_updated: 2026-04-25
-open_prs: 0
+last_updated: 2026-04-26
+open_prs: 1
 blockers: none
 next_milestone: ChatGPT widget integration
 next_milestone_date: 2026-04-01
