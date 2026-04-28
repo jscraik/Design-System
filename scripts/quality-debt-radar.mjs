@@ -688,13 +688,18 @@ function currentReports() {
  * @param {Array<Object>} results - Normalized category probe results.
  * @returns {string} Markdown table rows for category status.
  */
+function escapeTableCell(value) {
+  return String(value).replace(/\|/g, "\\|").replace(/\r?\n/g, "<br>");
+}
+
 function renderCategoryTable(results) {
   return results
     .map(
       (result) =>
-        `| ${result.category.label} | ${result.status} | ${result.freshness} | ${result.metric} | ${result.trend} | \`${result.owner}\` | ${result.notes} |`,
+        `| ${escapeTableCell(result.category.label)} | ${escapeTableCell(result.status)} | ${escapeTableCell(result.freshness)} | ${escapeTableCell(result.metric)} | ${escapeTableCell(result.trend)} | \`${escapeTableCell(result.owner)}\` | ${escapeTableCell(result.notes)} |`,
     )
     .join("\n");
+}
 }
 
 /**
