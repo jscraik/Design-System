@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-04-26
+**Last updated:** 2026-04-28
 **Production status:** IN_PROGRESS
 **Overall health:** Yellow
 
@@ -73,6 +73,8 @@ flowchart LR
 - `platforms/web/apps/storybook/` is the component documentation and visual verification surface.
 - `platforms/mcp/` contains the MCP server integration harness and contract tests.
 - `docs/` holds architecture, adoption, rollout, and governance guidance.
+- `docs/specs/2026-04-28-agent-native-design-system-spec.md` is the deepened HE spec for turning the current agent-readable design-system contract into an agent-native preparation, routing, context-pack, remediation, example, and abstraction-proposal workflow.
+- `docs/plans/2026-04-28-agent-native-design-system-plan.md` is the execution plan for that spec, split into contract wiring, routing-table, prepare-payload, CLI, remediation, gold-example, and proposal-gate slices.
 - `scripts/` holds build, validation, drift-check, onboarding, and release tooling.
 - Consumer projects should import `@design-studio/ui/styles.css` as the public stylesheet entry; internal style subpaths are implementation details and raw `file:` installs of `packages/ui` are not a supported external adoption path.
 
@@ -193,8 +195,19 @@ See also: `~/.codex/instructions/Learnings.md`
 - `pnpm agent-design:boundaries` is the ownership tripwire for the Agent Design Engine: wrappers can call public package exports, but parser, lint, diff, export, and profile-comparison implementation must stay in `packages/agent-design-engine`.
 - `pnpm quality-debt:report` is warn-first by design. Amber/red radar posture is release-owner evidence, not a new hard-fail gate, until explicit thresholds are approved.
 - Quality-debt radar CLI output now includes `service:"quality-debt-radar"` on status/error lines, and flag parsing fails fast when `--output`, `--date`, or `--week` are missing values.
+- The next agent-native design-system hardening lane is specified in `docs/specs/2026-04-28-agent-native-design-system-spec.md` and planned in `docs/plans/2026-04-28-agent-native-design-system-plan.md`. The plan starts with DESIGN.md/guidance contract wiring, then adds the machine-readable routing table before `prepare` payload and CLI expansion.
 
 ## Recent changes
+
+### 2026-04-28
+
+- **Agent-native design-system spec**: added and deepened `docs/specs/2026-04-28-agent-native-design-system-spec.md` to turn the design-system agent-usefulness recommendations into a Harness Engineering standard spec. The spec defines the desired `astudio design prepare/components/coverage/propose-abstraction` contract, chooses `prepare` as the single public full context-pack happy path, keeps any context-building helpers internal/debug-only behind `prepare`, separates read-only `astudio design components ...` from write-capable `astudio components new`, and adds acceptance coverage for lifecycle precedence, unknown-scope blocking, proposal-required recovery, gold examples, and hardening gates before implementation planning begins.
+- **Agent-native design-system plan**: added `docs/plans/2026-04-28-agent-native-design-system-plan.md` and indexed it from `docs/plans/README.md`. The plan chooses `docs/design-system/AGENT_UI_ROUTING.json` as the checked-in machine routing authority, keeps `packages/agent-design-engine` responsible for schema/digest/route resolution, keeps `packages/cli` responsible for read-only `astudio design ...` commands, and sequences implementation into seven validated slices before `he-work`.
+- **Agent-native design-system plan deepening**: strengthened `docs/plans/2026-04-28-agent-native-design-system-plan.md` with execution checkpoints, per-slice entry and exit gates, stop conditions, and the exact first `he-work` packet. The first implementation slice is now explicitly limited to DESIGN.md/guidance contract wiring and must pass focused guidance, agent-design, and diff checks before routing-table work begins.
+- **Agent-native design-system review hardening**: tightened the spec and plan after adversarial, architecture, and API-contract review. The public v1 contract now freezes `prepare` as the sole full context-pack entrypoint, keeps `context` internal/debug-only, makes `propose-abstraction` read-only, requires full `astudio.command.v1` envelope compatibility, adds canonical need normalization, route maturity, deterministic scope precedence, validation-command safety classes, typed proposal waivers, and splits gold examples into wave-1 versus explicitly non-promotable deferred categories.
+- **Agent-native design-system Linear sync**: synced the plan to Linear as parent JSC-238 with child slices JSC-239 through JSC-245. Linear now tracks execution state for the seven-slice plan while `docs/plans/2026-04-28-agent-native-design-system-plan.md` remains the technical source of truth.
+- **Agent-native design-system final review tightening**: round-3/round-4 document, architecture, adversarial, and API-contract review tightened the plan/spec around runtime routing authority, waiver-validator ownership, validation-command `blockedByDefault` evidence, legacy `astudio design` coexistence, missing-route versus proposal-required error taxonomy, need-only proposal previews, optional `packageScript` mapping, unsafe recovery-command allowlists, SA36/SA39/SA40 traceability, runtime-budget fixture protocol, and a Slice 5 remediation-interface checkpoint before broad rule expansion.
+- **JSC-239 Slice 1 contract wiring**: started the first implementation slice on `jscraik/feature/jsc-239-agent-native-contract-wiring`. Root `.design-system-guidance.json` now declares active `DESIGN.md` rollout state with `designContract.mode: design-md`, root `DESIGN.md` no longer contains the fake `--color-accent: #123456` token note, the design command fixture matrix asserts linked guidance state, and `docs/guides/DESIGN_MD_CONTRACT.md` explains the split between contract semantics and rollout state.
 
 ### 2026-04-26
 

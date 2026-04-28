@@ -60,6 +60,16 @@
       "args": ["design", "doctor", "--json"]
     },
     {
+      "name": "doctor-linked-design-contract",
+      "kind": "astudio.design.doctor.v1",
+      "cwd": "$TEMP_LINKED_DESIGN_PROJECT",
+      "args": ["design", "doctor", "--json"],
+      "expectedGuidanceState": {
+        "mode": "design-md",
+        "migrationState": "active"
+      }
+    },
+    {
       "name": "doctor-legacy-warnings",
       "kind": "astudio.design.doctor.v1",
       "cwd": "$TEMP_NO_DESIGN_PROJECT",

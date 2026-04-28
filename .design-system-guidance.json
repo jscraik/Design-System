@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "docs": [
     "docs/design-system/CONTRACT.md",
     "docs/design-system/PROFESSIONAL_UI_CONTRACT.md",
@@ -139,6 +139,10 @@
     ]
   },
   "exemptionLedger": "docs/design-system/ENFORCEMENT_EXEMPTIONS.json",
+  "designContract": {
+    "mode": "design-md",
+    "migrationState": "active"
+  },
   "scopePrecedence": [
     "error",
     "warn",
