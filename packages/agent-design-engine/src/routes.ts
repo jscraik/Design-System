@@ -76,30 +76,66 @@ function parseValidationCommand(value: unknown): AgentUiRouteSource["validationC
 }
 
 function parseRouteSource(value: unknown): AgentUiRouteSource {
-  const route = isObject(value) ? value : {};
+  if (!isObject(value)) {
+    throw new Error(`parseRouteSource: expected object, got ${typeof value}`);
+  }
+
+  const route = value;
+
+  // Validate required string fields
+  const need = optionalString(route.need);
+  const canonicalNeed = optionalString(route.canonicalNeed);
+  if (!need || need.trim() === "") {
+    throw new Error(`parseRouteSource: "need" must be a non-empty string, got ${JSON.stringify(route.need)}`);
+  }
+  if (!canonicalNeed || canonicalNeed.trim() === "") {
+    throw new Error(`parseRouteSource: "canonicalNeed" must be a non-empty string, got ${JSON.stringify(route.canonicalNeed)}`);
+  }
+
+  // Validate array fields
+  if (!Array.isArray(route.aliases) || !route.aliases.every((alias) => typeof alias === "string")) {
+    throw new Error(`parseRouteSource: "aliases" must be an array of strings, got ${JSON.stringify(route.aliases)}`);
+  }
+  if (!Array.isArray(route.surfacePatterns) || !route.surfacePatterns.every((pattern) => typeof pattern === "string")) {
+    throw new Error(`parseRouteSource: "surfacePatterns" must be an array of strings, got ${JSON.stringify(route.surfacePatterns)}`);
+  }
+  if (!Array.isArray(route.useWhen) || !route.useWhen.every((item) => typeof item === "string")) {
+    throw new Error(`parseRouteSource: "useWhen" must be an array of strings, got ${JSON.stringify(route.useWhen)}`);
+  }
+
+  // Validate enum fields
+  if (route.lifecycleStatus !== "canonical" && route.lifecycleStatus !== "transitional") {
+    throw new Error(`parseRouteSource: "lifecycleStatus" must be "canonical" or "transitional", got ${JSON.stringify(route.lifecycleStatus)}`);
+  }
+  if (route.routeMaturity !== "enforced" && route.routeMaturity !== "provisional") {
+    throw new Error(`parseRouteSource: "routeMaturity" must be "enforced" or "provisional", got ${JSON.stringify(route.routeMaturity)}`);
+  }
+
+  // Validate fallbacks array
+  if (!Array.isArray(route.fallbacks)) {
+    throw new Error(`parseRouteSource: "fallbacks" must be an array, got ${typeof route.fallbacks}`);
+  }
+
+  // Validate validationCommands array
+  if (!Array.isArray(route.validationCommands)) {
+    throw new Error(`parseRouteSource: "validationCommands" must be an array, got ${typeof route.validationCommands}`);
+  }
+
   return {
-    need: optionalString(route.need) ?? "",
-    canonicalNeed: optionalString(route.canonicalNeed) ?? "",
-    aliases: stringArray(route.aliases),
+    need,
+    canonicalNeed,
+    aliases: route.aliases,
     proposalRef: optionalString(route.proposalRef),
     preferredComponent: parsePreferredComponent(route.preferredComponent),
-    lifecycleStatus:
-      route.lifecycleStatus === "canonical" || route.lifecycleStatus === "transitional"
-        ? route.lifecycleStatus
-        : "transitional",
-    routeMaturity:
-      route.routeMaturity === "enforced" || route.routeMaturity === "provisional"
-        ? route.routeMaturity
-        : "provisional",
-    surfacePatterns: stringArray(route.surfacePatterns),
-    useWhen: stringArray(route.useWhen),
+    lifecycleStatus: route.lifecycleStatus,
+    routeMaturity: route.routeMaturity,
+    surfacePatterns: route.surfacePatterns,
+    useWhen: route.useWhen,
     requiredStates: stringArray(route.requiredStates),
     examples: stringArray(route.examples),
     avoid: stringArray(route.avoid),
-    fallbacks: Array.isArray(route.fallbacks) ? route.fallbacks.map(parseFallback) : [],
-    validationCommands: Array.isArray(route.validationCommands)
-      ? route.validationCommands.map(parseValidationCommand)
-      : [],
+    fallbacks: route.fallbacks.map(parseFallback),
+    validationCommands: route.validationCommands.map(parseValidationCommand),
     sourceRefs: stringArray(route.sourceRefs),
   };
 }
@@ -119,36 +155,96 @@ function parseRoutingTable(value: unknown): AgentUiRoutingTable {
 }
 
 function parseLifecycleManifest(value: unknown): { components: ComponentLifecycleEntry[] } {
-  if (!isObject(value) || !Array.isArray(value.components)) return { components: [] };
+  if (!isObject(value)) {
+    throw new Error(`parseLifecycleManifest: expected object, got ${typeof value}`);
+  }
+  if (!Array.isArray(value.components)) {
+    throw new Error(`parseLifecycleManifest: "components" must be an array, got ${typeof value.components}`);
+  }
+
   return {
-    components: value.components.filter(isObject).map((entry) => ({
-      name: optionalString(entry.name) ?? "",
-      path: optionalString(entry.path) ?? "",
-      lifecycle:
-        entry.lifecycle === "canonical" ||
-        entry.lifecycle === "transitional" ||
-        entry.lifecycle === "deprecated"
-          ? entry.lifecycle
-          : "transitional",
-      routing_tier: typeof entry.routing_tier === "number" ? entry.routing_tier : 0,
-      proposalRef: optionalString(entry.proposalRef),
-      notes: optionalString(entry.notes) ?? "",
-    })),
+    components: value.components.map((entry, index) => {
+      if (!isObject(entry)) {
+        throw new Error(`parseLifecycleManifest: component at index ${index} must be an object, got ${typeof entry}`);
+      }
+
+      const name = optionalString(entry.name);
+      const path = optionalString(entry.path);
+      if (!name || name.trim() === "") {
+        throw new Error(`parseLifecycleManifest: component at index ${index} must have a non-empty "name" string, got ${JSON.stringify(entry.name)}`);
+      }
+      if (!path || path.trim() === "") {
+        throw new Error(`parseLifecycleManifest: component at index ${index} must have a non-empty "path" string, got ${JSON.stringify(entry.path)}`);
+      }
+
+      if (entry.lifecycle !== "canonical" && entry.lifecycle !== "transitional" && entry.lifecycle !== "deprecated") {
+        throw new Error(`parseLifecycleManifest: component at index ${index} must have "lifecycle" as "canonical", "transitional", or "deprecated", got ${JSON.stringify(entry.lifecycle)}`);
+      }
+
+      if (typeof entry.routing_tier !== "number") {
+        throw new Error(`parseLifecycleManifest: component at index ${index} must have "routing_tier" as a number, got ${typeof entry.routing_tier}`);
+      }
+
+      return {
+        name,
+        path,
+        lifecycle: entry.lifecycle,
+        routing_tier: entry.routing_tier,
+        proposalRef: optionalString(entry.proposalRef),
+        notes: optionalString(entry.notes) ?? "",
+      };
+    }),
   };
 }
 
 function parseCoverageEntries(value: unknown): ComponentCoverageEntry[] {
-  if (!Array.isArray(value)) return [];
-  return value.filter(isObject).map((entry) => ({
-    name: optionalString(entry.name) ?? "",
-    source: optionalString(entry.source) ?? "",
-    upstream: optionalString(entry.upstream) ?? null,
-    fallback: optionalString(entry.fallback) ?? null,
-    status: optionalString(entry.status) ?? "",
-    web_used: entry.web_used === true,
-    tauri_used: entry.tauri_used === true,
-    widget_used: entry.widget_used === true,
-  }));
+  if (!Array.isArray(value)) {
+    throw new Error(`parseCoverageEntries: expected array, got ${typeof value}`);
+  }
+
+  return value.map((entry, index) => {
+    if (!isObject(entry)) {
+      throw new Error(`parseCoverageEntries: entry at index ${index} must be an object, got ${typeof entry}`);
+    }
+
+    const name = optionalString(entry.name);
+    const source = optionalString(entry.source);
+    const status = optionalString(entry.status);
+
+    if (!name || name.trim() === "") {
+      throw new Error(`parseCoverageEntries: entry at index ${index} must have a non-empty "name" string, got ${JSON.stringify(entry.name)}`);
+    }
+    if (!source || source.trim() === "") {
+      throw new Error(`parseCoverageEntries: entry at index ${index} must have a non-empty "source" string, got ${JSON.stringify(entry.source)}`);
+    }
+    if (!status || status.trim() === "") {
+      throw new Error(`parseCoverageEntries: entry at index ${index} must have a non-empty "status" string, got ${JSON.stringify(entry.status)}`);
+    }
+
+    const upstream = optionalString(entry.upstream) ?? null;
+    const fallback = optionalString(entry.fallback) ?? null;
+
+    if (typeof entry.web_used !== "boolean") {
+      throw new Error(`parseCoverageEntries: entry at index ${index} must have "web_used" as a boolean, got ${typeof entry.web_used}`);
+    }
+    if (typeof entry.tauri_used !== "boolean") {
+      throw new Error(`parseCoverageEntries: entry at index ${index} must have "tauri_used" as a boolean, got ${typeof entry.tauri_used}`);
+    }
+    if (typeof entry.widget_used !== "boolean") {
+      throw new Error(`parseCoverageEntries: entry at index ${index} must have "widget_used" as a boolean, got ${typeof entry.widget_used}`);
+    }
+
+    return {
+      name,
+      source,
+      upstream,
+      fallback,
+      status,
+      web_used: entry.web_used,
+      tauri_used: entry.tauri_used,
+      widget_used: entry.widget_used,
+    };
+  });
 }
 
 function toPosixPath(input: string): string {

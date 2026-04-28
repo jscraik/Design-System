@@ -276,12 +276,15 @@ function remediationForViolation(ruleId: string, targetPath: string): Partial<Gu
       };
     }
     const route = remediation.route;
+    // Filter to only read-only validation commands (same approach as prepare.ts)
+    const readOnlyCommands = route?.validationCommands.filter((cmd) => cmd.safetyClass === "read_only");
+    const validationCommands = readOnlyCommands && readOnlyCommands.length > 0 ? readOnlyCommands : undefined;
     return {
       replacementInstruction: route
         ? `Replace custom viewport shell wrappers with ${route.preferredComponent.name} from ${route.preferredComponent.packageName} (${route.preferredComponent.importPath}).`
         : undefined,
       examplePath: route?.examples[0],
-      validationCommands: route?.validationCommands,
+      validationCommands,
       proposalRequired: route === null,
       recoveryUnavailableReason: route
         ? undefined

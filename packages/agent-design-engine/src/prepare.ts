@@ -48,8 +48,14 @@ function parseGuidanceConfig(value: unknown): GuidanceConfig {
     if (!isObject(value.designContract)) {
       throw new Error("Guidance config designContract must be an object when present.");
     }
-    if (value.designContract.mode !== undefined && typeof value.designContract.mode !== "string") {
-      throw new Error("Guidance config designContract.mode must be a string when present.");
+    if (value.designContract.mode !== undefined) {
+      if (typeof value.designContract.mode !== "string") {
+        throw new Error("Guidance config designContract.mode must be a string when present.");
+      }
+      // Validate mode against allowed values (same as design-system-guidance/core.ts)
+      if (value.designContract.mode !== "legacy" && value.designContract.mode !== "design-md") {
+        throw new Error(`Guidance config designContract.mode must be "legacy" or "design-md", got "${value.designContract.mode}".`);
+      }
     }
     config.designContract = { mode: value.designContract.mode };
   }
@@ -73,7 +79,15 @@ function parseGuidanceConfig(value: unknown): GuidanceConfig {
     if (!Array.isArray(value.scopePrecedence) || !value.scopePrecedence.every(isGuidanceScope)) {
       throw new Error("Guidance config scopePrecedence must be an array of known scope names.");
     }
-    config.scopePrecedence = value.scopePrecedence;
+    // Normalize scopePrecedence: take provided known scopes in order, then append any missing guidanceScopes
+    const providedScopes = value.scopePrecedence.filter(isGuidanceScope);
+    const normalizedPrecedence: Array<typeof guidanceScopes[number]> = [...providedScopes];
+    for (const scope of guidanceScopes) {
+      if (!normalizedPrecedence.includes(scope)) {
+        normalizedPrecedence.push(scope);
+      }
+    }
+    config.scopePrecedence = normalizedPrecedence;
   }
 
   return config;
