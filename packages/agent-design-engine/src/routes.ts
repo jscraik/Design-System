@@ -211,7 +211,10 @@ export function resolveRouteForSurface(
   surfacePath: string,
   rootDir = process.cwd(),
 ): RouteResolutionResult {
-  const normalizedSurface = surfacePath.split(path.sep).join("/");
+  const normalizedSurface = path
+    .relative(rootDir, path.resolve(rootDir, surfacePath))
+    .split(path.sep)
+    .join("/");
   const table = loadAgentUiRoutingTable(rootDir);
   const match = table.routes.find((route) => {
     if (
