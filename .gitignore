@@ -131,4 +131,3 @@ packages/runtime/node_modules/.tmp/
 # `pnpm generated-source:check`.
 packages/widgets/src/sdk/generated/widget-manifest.ts
 .codex/config.toml
-.codex/config.toml
