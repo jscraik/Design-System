@@ -267,6 +267,14 @@ function remediationForViolation(ruleId: string, targetPath: string): Partial<Gu
           "No deterministic page shell route is available for this repository.",
       };
     }
+    if (remediation.diagnostics.length > 0) {
+      return {
+        proposalRequired: true,
+        recoveryUnavailableReason: remediation.route
+          ? "Page shell route resolution produced diagnostics; fix the routing table before using deterministic remediation."
+          : "No deterministic page shell route is available for this repository.",
+      };
+    }
     const route = remediation.route;
     return {
       replacementInstruction: route

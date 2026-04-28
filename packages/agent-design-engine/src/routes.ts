@@ -252,6 +252,16 @@ function loadCoverage(rootDir: string): ComponentCoverageEntry[] {
   return parseCoverageEntries(readJson(rootDir, coveragePath));
 }
 
+function resolveRepoPath(rootDir: string, relativePath: string): string | null {
+  const repoRoot = path.resolve(rootDir);
+  const resolved = path.resolve(repoRoot, relativePath);
+  const relative = path.relative(repoRoot, resolved);
+  if (relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative))) {
+    return resolved;
+  }
+  return null;
+}
+
 /**
  * Checks that each file referenced in a route's `sourceRefs` exists under `rootDir` and appends diagnostics for any missing references.
  *
@@ -266,7 +276,8 @@ function validateRouteSourceRefs(
 ) {
   for (const sourceRef of route.sourceRefs) {
     const [filePath] = sourceRef.split("#");
-    if (!filePath || !existsSync(path.join(rootDir, filePath))) {
+    const resolvedPath = filePath ? resolveRepoPath(rootDir, filePath) : null;
+    if (!resolvedPath || !existsSync(resolvedPath)) {
       diagnostics.push(
         toRouteDiagnostic(
           "E_DESIGN_ROUTE_SOURCE_REF_MISSING",
@@ -292,7 +303,8 @@ function validateRouteExamples(
   diagnostics: RouteDiagnostic[],
 ) {
   for (const example of route.examples) {
-    if (!existsSync(path.join(rootDir, example))) {
+    const resolvedPath = resolveRepoPath(rootDir, example);
+    if (!resolvedPath || !existsSync(resolvedPath)) {
       diagnostics.push(
         toRouteDiagnostic(
           "E_DESIGN_ROUTE_EXAMPLE_MISSING",

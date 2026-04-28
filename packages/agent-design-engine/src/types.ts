@@ -263,6 +263,7 @@ export interface ProposalGateDiagnostic {
     | "E_DESIGN_PROPOSAL_REF_MISSING"
     | "E_DESIGN_PROPOSAL_REF_NOT_ACCEPTED"
     | "E_DESIGN_LIFECYCLE_SCHEMA"
+    | "E_DESIGN_COVERAGE_SCHEMA"
     | "E_DESIGN_LIFECYCLE_COVERAGE_MISSING";
   severity: "error" | "warn";
   message: string;

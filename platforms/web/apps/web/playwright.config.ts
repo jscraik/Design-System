@@ -2,36 +2,26 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { defineConfig } from "@playwright/test";
+import { parsePlaywrightHost, parsePlaywrightPort } from "../../../../scripts/playwright-env";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const defaultPort = 5173;
 
-function parseHost(value: string | undefined, fallback: string): string {
-  const hostValue = (value ?? fallback).trim();
-  if (!/^[A-Za-z0-9.-]+$/.test(hostValue)) {
-    throw new Error(`Invalid Playwright web host: ${hostValue}`);
-  }
-  return hostValue;
-}
-
-function parsePort(value: string | undefined, fallback: number): number {
-  const rawValue = value ?? String(fallback);
-  const port = Number(rawValue);
-  if (!Number.isInteger(port) || port < 1 || port > 65_535) {
-    throw new Error(`Invalid Playwright web port: ${rawValue}`);
-  }
-  return port;
-}
-
-const host = parseHost(process.env.PLAYWRIGHT_WEB_HOST, "127.0.0.1");
-const webPort = parsePort(process.env.PLAYWRIGHT_WEB_PORT ?? process.env.PORT, defaultPort);
-const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://${host}:${webPort}`;
+const explicitBaseURL = process.env.PLAYWRIGHT_BASE_URL?.trim();
+const useExternalBaseURL = Boolean(explicitBaseURL);
+const host = useExternalBaseURL
+  ? "127.0.0.1"
+  : parsePlaywrightHost(process.env.PLAYWRIGHT_WEB_HOST, "127.0.0.1", "web");
+const webPort = useExternalBaseURL
+  ? defaultPort
+  : parsePlaywrightPort(process.env.PLAYWRIGHT_WEB_PORT ?? process.env.PORT, defaultPort, "web");
+const baseURL = explicitBaseURL ?? `http://${host}:${webPort}`;
 const reuseExistingServer =
   process.env.PLAYWRIGHT_REUSE_SERVER === "1" ||
   process.env.PLAYWRIGHT_REUSE_SERVER === "true" ||
   !process.env.CI;
 
-const webServer = process.env.PLAYWRIGHT_BASE_URL
+const webServer = useExternalBaseURL
   ? {
       url: baseURL,
       reuseExistingServer: true,

@@ -688,12 +688,20 @@ async function readCoverageEntry(rootDir: string, component: string): Promise<un
       hint: "Fix docs/design-system/COVERAGE_MATRIX.json before retrying.",
     });
   }
-  const entries = parsed.filter(
-    (entry): entry is { name?: string } =>
-      typeof entry === "object" &&
-      entry !== null &&
-      (!("name" in entry) || typeof entry.name === "string"),
-  );
+  const entries = parsed.map((entry, index): { name: string } => {
+    if (
+      typeof entry !== "object" ||
+      entry === null ||
+      typeof (entry as { name?: unknown }).name !== "string"
+    ) {
+      throw new CliError(`Coverage matrix entry ${index} must define a string name.`, {
+        code: "E_DESIGN_COVERAGE_SCHEMA",
+        exitCode: EXIT_CODES.failure,
+        hint: "Fix docs/design-system/COVERAGE_MATRIX.json before retrying.",
+      });
+    }
+    return entry as { name: string };
+  });
   return entries.find((entry) => entry.name === component) ?? null;
 }
 

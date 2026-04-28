@@ -40,8 +40,24 @@ const PROPOSAL_REQUIRED_FIELDS = [
  * @param relativePath - File path relative to `rootDir`
  * @returns The parsed JSON value as `unknown` so callers must validate it.
  */
-function readJson(rootDir: string, relativePath: string): unknown {
-  return JSON.parse(readFileSync(path.join(rootDir, relativePath), "utf8"));
+function readJson(
+  rootDir: string,
+  relativePath: string,
+  diagnostics: ProposalGateDiagnostic[],
+  code: ProposalGateDiagnostic["code"],
+): unknown {
+  try {
+    return JSON.parse(readFileSync(path.join(rootDir, relativePath), "utf8")) as unknown;
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : String(error);
+    pushDiagnostic(diagnostics, {
+      code,
+      severity: "error",
+      message: `Unable to read or parse ${relativePath}: ${reason}`,
+      path: relativePath,
+    });
+    return null;
+  }
 }
 
 /**
@@ -152,6 +168,17 @@ function parseWaiverRegistry(value: unknown): ProposalWaiverRegistry {
   };
 }
 
+function waiverRegistrySchemaDiagnostics(value: unknown): string[] {
+  const diagnostics: string[] = [];
+  if (!isObject(value)) {
+    return ["Proposal waiver registry must be a JSON object."];
+  }
+  if (!Array.isArray(value.waivers)) {
+    diagnostics.push("Proposal waiver registry must define a waivers array.");
+  }
+  return diagnostics;
+}
+
 function parseLifecycleManifest(value: unknown): { components: ComponentLifecycleEntry[] } {
   if (!isObject(value) || !Array.isArray(value.components)) return { components: [] };
   return {
@@ -170,7 +197,21 @@ function lifecycleManifestSchemaDiagnostics(value: unknown): string[] {
   if (!isObject(value)) return ["Lifecycle manifest must be a JSON object."];
   if (!Array.isArray(value.components))
     return ["Lifecycle manifest must define a components array."];
-  return [];
+  return value.components.flatMap((entry, index) => {
+    if (!isObject(entry)) {
+      return [`Lifecycle manifest component ${index} must be a JSON object.`];
+    }
+    const messages: string[] = [];
+    if (
+      !["canonical", "transitional", "deprecated"].includes(optionalString(entry.lifecycle) ?? "")
+    ) {
+      messages.push(`Lifecycle manifest component ${index} must define a valid lifecycle.`);
+    }
+    if (typeof entry.routing_tier !== "number" || !Number.isInteger(entry.routing_tier)) {
+      messages.push(`Lifecycle manifest component ${index} must define an integer routing_tier.`);
+    }
+    return messages;
+  });
 }
 
 function parseCoverageEntries(value: unknown): ComponentCoverageEntry[] {
@@ -480,10 +521,29 @@ export function validateProposalGate(
     };
   }
 
-  const registry = parseWaiverRegistry(readJson(rootDir, PROPOSAL_WAIVER_REGISTRY_PATH));
+  const registrySource = readJson(
+    rootDir,
+    PROPOSAL_WAIVER_REGISTRY_PATH,
+    diagnostics,
+    "E_DESIGN_PROPOSAL_WAIVER_SCHEMA",
+  );
+  for (const message of waiverRegistrySchemaDiagnostics(registrySource)) {
+    pushDiagnostic(diagnostics, {
+      code: "E_DESIGN_PROPOSAL_WAIVER_SCHEMA",
+      severity: "error",
+      message,
+      path: PROPOSAL_WAIVER_REGISTRY_PATH,
+    });
+  }
+  const registry = parseWaiverRegistry(registrySource);
   const waivers = validateWaiverRegistryShape(registry, diagnostics, today);
   const routingTable = loadAgentUiRoutingTable(rootDir);
-  const lifecycleManifest = readJson(rootDir, LIFECYCLE_PATH);
+  const lifecycleManifest = readJson(
+    rootDir,
+    LIFECYCLE_PATH,
+    diagnostics,
+    "E_DESIGN_LIFECYCLE_SCHEMA",
+  );
   for (const message of lifecycleManifestSchemaDiagnostics(lifecycleManifest)) {
     pushDiagnostic(diagnostics, {
       code: "E_DESIGN_LIFECYCLE_SCHEMA",
@@ -493,7 +553,9 @@ export function validateProposalGate(
     });
   }
   const lifecycleEntries = parseLifecycleManifest(lifecycleManifest).components;
-  const coverageEntries = parseCoverageEntries(readJson(rootDir, COVERAGE_PATH));
+  const coverageEntries = parseCoverageEntries(
+    readJson(rootDir, COVERAGE_PATH, diagnostics, "E_DESIGN_COVERAGE_SCHEMA"),
+  );
 
   for (const route of routingTable.routes) {
     validateRouteProposalGate(rootDir, route, waivers, diagnostics);

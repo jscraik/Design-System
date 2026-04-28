@@ -26,6 +26,59 @@ type GuidanceConfig = {
   scopePrecedence?: Array<"error" | "warn" | "exempt">;
 };
 
+const guidanceScopes = ["error", "warn", "exempt"] as const;
+
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function isGuidanceScope(value: unknown): value is (typeof guidanceScopes)[number] {
+  return (
+    typeof value === "string" && guidanceScopes.includes(value as (typeof guidanceScopes)[number])
+  );
+}
+
+function parseGuidanceConfig(value: unknown): GuidanceConfig {
+  if (!isObject(value)) {
+    throw new Error("Guidance config must be an object.");
+  }
+
+  const config: GuidanceConfig = {};
+  if (value.designContract !== undefined) {
+    if (!isObject(value.designContract)) {
+      throw new Error("Guidance config designContract must be an object when present.");
+    }
+    if (value.designContract.mode !== undefined && typeof value.designContract.mode !== "string") {
+      throw new Error("Guidance config designContract.mode must be a string when present.");
+    }
+    config.designContract = { mode: value.designContract.mode };
+  }
+
+  if (value.scopes !== undefined) {
+    if (!isObject(value.scopes)) {
+      throw new Error("Guidance config scopes must be an object when present.");
+    }
+    config.scopes = {};
+    for (const scope of guidanceScopes) {
+      const globs = value.scopes[scope];
+      if (globs === undefined) continue;
+      if (!Array.isArray(globs) || !globs.every((glob) => typeof glob === "string")) {
+        throw new Error(`Guidance config scopes.${scope} must be an array of strings.`);
+      }
+      config.scopes[scope] = globs;
+    }
+  }
+
+  if (value.scopePrecedence !== undefined) {
+    if (!Array.isArray(value.scopePrecedence) || !value.scopePrecedence.every(isGuidanceScope)) {
+      throw new Error("Guidance config scopePrecedence must be an array of known scope names.");
+    }
+    config.scopePrecedence = value.scopePrecedence;
+  }
+
+  return config;
+}
+
 /**
  * Read a UTF-8 text file resolved by joining `rootDir` and `relativePath` and return its contents.
  *
@@ -273,7 +326,13 @@ export async function buildPreparePayload(
     readText(resolvedRoot, designPath),
     readText(resolvedRoot, guidancePath),
   ]);
-  const guidance = JSON.parse(guidanceSource) as GuidanceConfig;
+  let parsedGuidance: unknown;
+  try {
+    parsedGuidance = JSON.parse(guidanceSource) as unknown;
+  } catch {
+    throw new Error("Guidance config contains invalid JSON.");
+  }
+  const guidance = parseGuidanceConfig(parsedGuidance);
   const contract = await parseDesignContract(designSource, {
     rootDir: resolvedRoot,
     filePath: path.join(resolvedRoot, designPath),

@@ -283,6 +283,20 @@ test("routing validation rejects route examples that do not exist", () => {
   assert.ok(diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_ROUTE_EXAMPLE_MISSING"));
 });
 
+test("routing validation rejects source and example paths outside the repo", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  routing.routes[0].sourceRefs = ["../outside.tsx"];
+  routing.routes[0].examples = ["../outside-example.tsx"];
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const diagnostics = validateAgentUiRoutingTable(fixtureRoot);
+  assert.ok(
+    diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_ROUTE_SOURCE_REF_MISSING"),
+  );
+  assert.ok(diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_ROUTE_EXAMPLE_MISSING"));
+});
+
 test("proposal gate rejects free-form grandfathering without typed waiver fields", () => {
   const fixtureRoot = proposalFixtureRoot();
   const waivers = readFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json");
@@ -310,6 +324,47 @@ test("proposal gate requires waiver issue linkage and cleanup milestones", () =>
   assert.equal(result.ok, false);
   assert.ok(
     result.diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_PROPOSAL_WAIVER_SCHEMA"),
+  );
+});
+
+test("proposal gate rejects malformed waiver registry shape", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const waivers = readFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json");
+  delete waivers.waivers;
+  writeFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json", waivers);
+
+  const result = validateProposalGate(fixtureRoot, { today: "2026-04-28" });
+  assert.equal(result.ok, false);
+  assert.ok(
+    result.diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_PROPOSAL_WAIVER_SCHEMA"),
+  );
+});
+
+test("proposal gate reports malformed waiver registry JSON as a diagnostic", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  fs.writeFileSync(
+    path.join(fixtureRoot, "docs/design-system/proposals/waivers.json"),
+    "{ invalid json",
+  );
+
+  const result = validateProposalGate(fixtureRoot, { today: "2026-04-28" });
+  assert.equal(result.ok, false);
+  assert.ok(
+    result.diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_PROPOSAL_WAIVER_SCHEMA"),
+  );
+});
+
+test("proposal gate rejects malformed lifecycle rows", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const lifecycle = readFixtureJson(fixtureRoot, "docs/design-system/COMPONENT_LIFECYCLE.json");
+  lifecycle.components[0].lifecycle = "canoncal";
+  lifecycle.components[0].routing_tier = "2";
+  writeFixtureJson(fixtureRoot, "docs/design-system/COMPONENT_LIFECYCLE.json", lifecycle);
+
+  const result = validateProposalGate(fixtureRoot, { today: "2026-04-28" });
+  assert.equal(result.ok, false);
+  assert.ok(
+    result.diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_LIFECYCLE_SCHEMA"),
   );
 });
 
