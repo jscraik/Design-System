@@ -228,6 +228,37 @@ function parseCoverageEntries(value: unknown): ComponentCoverageEntry[] {
   }));
 }
 
+function coverageMatrixSchemaDiagnostics(value: unknown): string[] {
+  if (!Array.isArray(value)) return ["Coverage matrix must be a JSON array."];
+  return value.flatMap((entry, index) => {
+    if (!isObject(entry)) {
+      return [`Coverage matrix entry ${index} must be a JSON object.`];
+    }
+    const messages: string[] = [];
+    if (!isString(entry.name) || entry.name.trim() === "") {
+      messages.push(`Coverage matrix entry ${index} must define a non-empty name.`);
+    }
+    if (!isString(entry.source) || entry.source.trim() === "") {
+      messages.push(`Coverage matrix entry ${index} must define a non-empty source.`);
+    }
+    if (!isString(entry.status) || entry.status.trim() === "") {
+      messages.push(`Coverage matrix entry ${index} must define a non-empty status.`);
+    }
+    if (entry.upstream !== null && !isString(entry.upstream)) {
+      messages.push(`Coverage matrix entry ${index} upstream must be a string or null.`);
+    }
+    if (entry.fallback !== null && !isString(entry.fallback)) {
+      messages.push(`Coverage matrix entry ${index} fallback must be a string or null.`);
+    }
+    for (const field of ["web_used", "tauri_used", "widget_used"] as const) {
+      if (typeof entry[field] !== "boolean") {
+        messages.push(`Coverage matrix entry ${index} must define boolean ${field}.`);
+      }
+    }
+    return messages;
+  });
+}
+
 function hasWaiverLinkage(waiver: ProposalWaiver): boolean {
   return Boolean(
     waiver.ticket?.trim() ||
@@ -553,9 +584,16 @@ export function validateProposalGate(
     });
   }
   const lifecycleEntries = parseLifecycleManifest(lifecycleManifest).components;
-  const coverageEntries = parseCoverageEntries(
-    readJson(rootDir, COVERAGE_PATH, diagnostics, "E_DESIGN_COVERAGE_SCHEMA"),
-  );
+  const coverageMatrix = readJson(rootDir, COVERAGE_PATH, diagnostics, "E_DESIGN_COVERAGE_SCHEMA");
+  for (const message of coverageMatrixSchemaDiagnostics(coverageMatrix)) {
+    pushDiagnostic(diagnostics, {
+      code: "E_DESIGN_COVERAGE_SCHEMA",
+      severity: "error",
+      message,
+      path: COVERAGE_PATH,
+    });
+  }
+  const coverageEntries = parseCoverageEntries(coverageMatrix);
 
   for (const route of routingTable.routes) {
     validateRouteProposalGate(rootDir, route, waivers, diagnostics);

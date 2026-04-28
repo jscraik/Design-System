@@ -431,6 +431,19 @@ test("proposal gate rejects malformed lifecycle rows", () => {
   );
 });
 
+test("proposal gate rejects malformed coverage matrix shape", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  writeFixtureJson(fixtureRoot, "docs/design-system/COVERAGE_MATRIX.json", {
+    entries: [],
+  });
+
+  const result = validateProposalGate(fixtureRoot, { today: "2026-04-28" });
+  assert.equal(result.ok, false);
+  assert.ok(
+    result.diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_COVERAGE_SCHEMA"),
+  );
+});
+
 test("proposal gate rejects duplicate active waivers", () => {
   const fixtureRoot = proposalFixtureRoot();
   const waivers = readFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json");
