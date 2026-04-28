@@ -16,14 +16,136 @@ const lifecyclePath = "docs/design-system/COMPONENT_LIFECYCLE.json";
 const coveragePath = "docs/design-system/COVERAGE_MATRIX.json";
 
 /**
- * Read a UTF-8 JSON file located at the given relative path and return its parsed contents.
+ * Read a UTF-8 JSON file located at the given relative path.
  *
  * @param rootDir - Base directory used to resolve `relativePath`
  * @param relativePath - Path to the JSON file, relative to `rootDir`
- * @returns The parsed JSON contents, typed as `T`
+ * @returns The parsed JSON value as unknown so callers must validate shape
  */
-function readJson<T>(rootDir: string, relativePath: string): T {
-  return JSON.parse(readFileSync(path.join(rootDir, relativePath), "utf8")) as T;
+function readJson(rootDir: string, relativePath: string): unknown {
+  return JSON.parse(readFileSync(path.join(rootDir, relativePath), "utf8")) as unknown;
+}
+
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function optionalString(value: unknown): string | undefined {
+  return typeof value === "string" ? value : undefined;
+}
+
+function stringArray(value: unknown): string[] {
+  return Array.isArray(value)
+    ? value.filter((entry): entry is string => typeof entry === "string")
+    : [];
+}
+
+function parsePreferredComponent(value: unknown): AgentUiRouteSource["preferredComponent"] {
+  const component = isObject(value) ? value : {};
+  return {
+    name: optionalString(component.name) ?? "",
+    importPath: optionalString(component.importPath) ?? "",
+    packageName: optionalString(component.packageName) ?? "",
+    coverageName: optionalString(component.coverageName),
+  };
+}
+
+function parseFallback(value: unknown): AgentUiRouteSource["fallbacks"][number] {
+  const fallback = isObject(value) ? value : {};
+  return {
+    component: optionalString(fallback.component) ?? "",
+    reason: optionalString(fallback.reason) ?? "",
+  };
+}
+
+function parseValidationCommand(value: unknown): AgentUiRouteSource["validationCommands"][number] {
+  const command = isObject(value) ? value : {};
+  return {
+    command: optionalString(command.command) ?? "",
+    safetyClass:
+      command.safetyClass === "read_only" ||
+      command.safetyClass === "mutating" ||
+      command.safetyClass === "interactive" ||
+      command.safetyClass === "server_start"
+        ? command.safetyClass
+        : "read_only",
+    reason: optionalString(command.reason) ?? "",
+    blockedByDefault:
+      typeof command.blockedByDefault === "boolean" ? command.blockedByDefault : undefined,
+  };
+}
+
+function parseRouteSource(value: unknown): AgentUiRouteSource {
+  const route = isObject(value) ? value : {};
+  return {
+    need: optionalString(route.need) ?? "",
+    canonicalNeed: optionalString(route.canonicalNeed) ?? "",
+    aliases: stringArray(route.aliases),
+    proposalRef: optionalString(route.proposalRef),
+    preferredComponent: parsePreferredComponent(route.preferredComponent),
+    lifecycleStatus:
+      route.lifecycleStatus === "canonical" || route.lifecycleStatus === "transitional"
+        ? route.lifecycleStatus
+        : "transitional",
+    routeMaturity:
+      route.routeMaturity === "enforced" || route.routeMaturity === "provisional"
+        ? route.routeMaturity
+        : "provisional",
+    surfacePatterns: stringArray(route.surfacePatterns),
+    useWhen: stringArray(route.useWhen),
+    requiredStates: stringArray(route.requiredStates),
+    examples: stringArray(route.examples),
+    avoid: stringArray(route.avoid),
+    fallbacks: Array.isArray(route.fallbacks) ? route.fallbacks.map(parseFallback) : [],
+    validationCommands: Array.isArray(route.validationCommands)
+      ? route.validationCommands.map(parseValidationCommand)
+      : [],
+    sourceRefs: stringArray(route.sourceRefs),
+  };
+}
+
+function parseRoutingTable(value: unknown): AgentUiRoutingTable {
+  if (!isObject(value)) {
+    return { schemaVersion: "agent-ui-routing.v1", updatedAt: "", routes: [] };
+  }
+  return {
+    schemaVersion: optionalString(value.schemaVersion) as AgentUiRoutingTable["schemaVersion"],
+    updatedAt: optionalString(value.updatedAt) ?? "",
+    routes: Array.isArray(value.routes) ? value.routes.map(parseRouteSource) : [],
+  };
+}
+
+function parseLifecycleManifest(value: unknown): { components: ComponentLifecycleEntry[] } {
+  if (!isObject(value) || !Array.isArray(value.components)) return { components: [] };
+  return {
+    components: value.components.filter(isObject).map((entry) => ({
+      name: optionalString(entry.name) ?? "",
+      path: optionalString(entry.path) ?? "",
+      lifecycle:
+        entry.lifecycle === "canonical" ||
+        entry.lifecycle === "transitional" ||
+        entry.lifecycle === "deprecated"
+          ? entry.lifecycle
+          : "transitional",
+      routing_tier: typeof entry.routing_tier === "number" ? entry.routing_tier : 0,
+      proposalRef: optionalString(entry.proposalRef),
+      notes: optionalString(entry.notes) ?? "",
+    })),
+  };
+}
+
+function parseCoverageEntries(value: unknown): ComponentCoverageEntry[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter(isObject).map((entry) => ({
+    name: optionalString(entry.name) ?? "",
+    source: optionalString(entry.source) ?? "",
+    upstream: optionalString(entry.upstream) ?? null,
+    fallback: optionalString(entry.fallback) ?? null,
+    status: optionalString(entry.status) ?? "",
+    web_used: entry.web_used === true,
+    tauri_used: entry.tauri_used === true,
+    widget_used: entry.widget_used === true,
+  }));
 }
 
 function toPosixPath(input: string): string {
@@ -116,7 +238,7 @@ function toRouteDiagnostic(
  * @returns The list of `ComponentLifecycleEntry` objects defined in the lifecycle manifest
  */
 function loadLifecycle(rootDir: string): ComponentLifecycleEntry[] {
-  const manifest = readJson<{ components: ComponentLifecycleEntry[] }>(rootDir, lifecyclePath);
+  const manifest = parseLifecycleManifest(readJson(rootDir, lifecyclePath));
   return manifest.components;
 }
 
@@ -127,7 +249,7 @@ function loadLifecycle(rootDir: string): ComponentLifecycleEntry[] {
  * @returns The array of ComponentCoverageEntry objects from the coverage manifest
  */
 function loadCoverage(rootDir: string): ComponentCoverageEntry[] {
-  return readJson<ComponentCoverageEntry[]>(rootDir, coveragePath);
+  return parseCoverageEntries(readJson(rootDir, coveragePath));
 }
 
 /**
@@ -200,10 +322,10 @@ function resolveRoute(
   route: AgentUiRouteSource,
   matchedNeed: string,
   matchedAlias: string | null,
+  lifecycleEntries: ComponentLifecycleEntry[],
+  coverageEntries: ComponentCoverageEntry[],
 ): RouteResolutionResult {
   const diagnostics: RouteDiagnostic[] = [];
-  const lifecycleEntries = loadLifecycle(rootDir);
-  const coverageEntries = loadCoverage(rootDir);
   const lifecycleEntry = lifecycleEntries.find(
     (entry) => entry.name === route.preferredComponent.name,
   );
@@ -263,7 +385,7 @@ function resolveRoute(
  * @throws If the manifest's `schemaVersion` is not `agent-ui-routing.v1`
  */
 export function loadAgentUiRoutingTable(rootDir = process.cwd()): AgentUiRoutingTable {
-  const table = readJson<AgentUiRoutingTable>(rootDir, routingPath);
+  const table = parseRoutingTable(readJson(rootDir, routingPath));
   if (table.schemaVersion !== "agent-ui-routing.v1") {
     throw new Error(`Unsupported routing schema version: ${table.schemaVersion}`);
   }
@@ -328,7 +450,14 @@ export function resolveRouteForNeed(need: string, rootDir = process.cwd()): Rout
   const route = matches[0];
   const matchedAlias =
     route.aliases.find((alias) => normalizeNeed(alias) === normalizedNeed) ?? null;
-  return resolveRoute(rootDir, route, normalizedNeed, matchedAlias);
+  return resolveRoute(
+    rootDir,
+    route,
+    normalizedNeed,
+    matchedAlias,
+    loadLifecycle(rootDir),
+    loadCoverage(rootDir),
+  );
 }
 
 /**
@@ -379,7 +508,14 @@ export function resolveRouteForSurface(
     };
   }
 
-  return resolveRoute(rootDir, match, match.canonicalNeed, null);
+  return resolveRoute(
+    rootDir,
+    match,
+    match.canonicalNeed,
+    null,
+    loadLifecycle(rootDir),
+    loadCoverage(rootDir),
+  );
 }
 
 /**
@@ -423,7 +559,11 @@ export function resolveRemediationContext(
  */
 export function validateAgentUiRoutingTable(rootDir = process.cwd()): RouteDiagnostic[] {
   const table = loadAgentUiRoutingTable(rootDir);
+  const lifecycleEntries = loadLifecycle(rootDir);
+  const coverageEntries = loadCoverage(rootDir);
   return table.routes.flatMap(
-    (route) => resolveRoute(rootDir, route, route.canonicalNeed, null).diagnostics,
+    (route) =>
+      resolveRoute(rootDir, route, route.canonicalNeed, null, lifecycleEntries, coverageEntries)
+        .diagnostics,
   );
 }

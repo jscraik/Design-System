@@ -130,3 +130,5 @@ packages/runtime/node_modules/.tmp/
 # JavaScript manifest is deterministic build output and is freshness-checked by
 # `pnpm generated-source:check`.
 packages/widgets/src/sdk/generated/widget-manifest.ts
+.codex/config.toml
+.codex/config.toml
