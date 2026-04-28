@@ -106,12 +106,15 @@ function parseRouteSource(value: unknown): AgentUiRouteSource {
 
 function parseRoutingTable(value: unknown): AgentUiRoutingTable {
   if (!isObject(value)) {
-    return { schemaVersion: "agent-ui-routing.v1", updatedAt: "", routes: [] };
+    throw new Error("Agent UI routing table must be a JSON object.");
+  }
+  if (!Array.isArray(value.routes)) {
+    throw new Error("Agent UI routing table must define a routes array.");
   }
   return {
     schemaVersion: optionalString(value.schemaVersion) as AgentUiRoutingTable["schemaVersion"],
     updatedAt: optionalString(value.updatedAt) ?? "",
-    routes: Array.isArray(value.routes) ? value.routes.map(parseRouteSource) : [],
+    routes: value.routes.map(parseRouteSource),
   };
 }
 

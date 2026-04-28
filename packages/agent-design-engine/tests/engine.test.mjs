@@ -175,6 +175,18 @@ test("loads authored agent UI routing table in deterministic order", () => {
   );
 });
 
+test("rejects malformed routing tables instead of coercing routes", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  routing.routes = {};
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  assert.throws(
+    () => loadAgentUiRoutingTable(fixtureRoot),
+    /Agent UI routing table must define a routes array/,
+  );
+});
+
 test("routing table has no lifecycle, coverage, source, or example drift", () => {
   assert.deepEqual(validateAgentUiRoutingTable(rootDir), []);
 });
