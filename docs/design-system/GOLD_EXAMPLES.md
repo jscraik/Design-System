@@ -30,10 +30,11 @@ They are deliberately narrower than the full component catalog. A gold example m
 | --------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------- |
 | `settings-panel-apps`                   | `settings_panel`           | `packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx`                                | ready, loading, empty, error | Shows grouped settings sections with the protected Storybook state matrix.      |
 | `settings-panel-manage-apps`            | `settings_panel`           | `packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.tsx`                    | ready, loading, empty, error | Shows connected and available app sections without a new settings shell.        |
-| `async-data-view-product-composition`   | `async_collection`         | `packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx`        | ready, loading, empty, error | Shows `ProductDataView` owning a collection heading and state routing.          |
+| `async-data-view-product-composition`   | `async_collection`         | `packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx`      | ready, loading, empty, error | Shows `ProductDataView` owning a collection heading and state routing.          |
 | `page-shell-template-browser`           | `page_shell`               | `platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx`                            | ready                        | Shows a real web app page using `ProductPageShell` for stable structure.        |
 | `page-shell-sidebar-footer`             | `page_shell`               | `packages/ui/src/storybook/_holding/component-stories/ProductComposition.stories.tsx` | ready                        | Shows `ProductPageShell` with sidebar, main, and footer slots.                  |
 | `destructive-confirmation-alert-dialog` | `destructive_confirmation` | `packages/ui/src/storybook/_holding/component-stories/AlertDialog.stories.tsx`        | ready, confirming            | Shows destructive trigger, cancel, confirm, focus, and blocked Escape behavior. |
+
 ## Deferred Categories
 
 These are intentionally non-promotable until a protected example exists:

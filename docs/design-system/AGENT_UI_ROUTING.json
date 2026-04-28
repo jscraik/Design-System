@@ -14,7 +14,12 @@
       },
       "lifecycleStatus": "canonical",
       "routeMaturity": "enforced",
-      "surfacePatterns": ["**/*Page.tsx", "**/*Panel.tsx", "**/*View.tsx"],
+      "surfacePatterns": [
+        "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+        "**/*Page.tsx",
+        "**/*Panel.tsx",
+        "**/*View.tsx"
+      ],
       "useWhen": [
         "A collection, table, list, or result region needs ready/loading/empty/error/busy state routing.",
         "The surface owns the result-region heading and state transitions."

@@ -117,7 +117,11 @@ function globToRegex(glob: string): RegExp {
   for (let index = 0; index < glob.length; index += 1) {
     const char = glob[index];
     const next = glob[index + 1];
-    if (char === "*" && next === "*") {
+    const afterNext = glob[index + 2];
+    if (char === "*" && next === "*" && afterNext === "/") {
+      pattern += "(?:.*/)?";
+      index += 2;
+    } else if (char === "*" && next === "*") {
       pattern += ".*";
       index += 1;
     } else if (char === "*") {
@@ -140,6 +144,14 @@ function matchesGlob(surfacePath: string, glob: string): boolean {
   return expandBraceGroups(glob).some((expanded) => globToRegex(expanded).test(surfacePath));
 }
 
+function scoreGlobSpecificity(glob: string): { literalLength: number; wildcardCount: number } {
+  const withoutBraceBodies = glob.replace(/\{[^}]*\}/g, "");
+  return {
+    literalLength: withoutBraceBodies.replace(/[*?]/g, "").length,
+    wildcardCount: (withoutBraceBodies.match(/[*?]/g) ?? []).length,
+  };
+}
+
 /**
  * Determine the guidance-based scope classification for a given surface path.
  *
@@ -155,12 +167,42 @@ function matchesGlob(surfacePath: string, glob: string): boolean {
  */
 function classifySurfaceScope(config: GuidanceConfig, surfacePath: string): PrepareSurfaceScope {
   const precedence = config.scopePrecedence ?? ["error", "warn", "exempt"];
-  for (const scope of precedence) {
+  let bestMatch: {
+    scope: "error" | "warn" | "exempt";
+    literalLength: number;
+    wildcardCount: number;
+    precedenceIndex: number;
+  } | null = null;
+
+  for (const scope of ["error", "warn", "exempt"] as const) {
     const globs = config.scopes?.[scope] ?? [];
-    if (globs.some((glob) => matchesGlob(surfacePath, glob))) {
-      return scope === "error" ? "protected" : scope;
+    for (const glob of globs) {
+      if (!matchesGlob(surfacePath, glob)) continue;
+      const { literalLength, wildcardCount } = scoreGlobSpecificity(glob);
+      const precedenceIndex = precedence.indexOf(scope);
+
+      if (
+        !bestMatch ||
+        wildcardCount < bestMatch.wildcardCount ||
+        (wildcardCount === bestMatch.wildcardCount && literalLength > bestMatch.literalLength) ||
+        (wildcardCount === bestMatch.wildcardCount &&
+          literalLength === bestMatch.literalLength &&
+          precedenceIndex < bestMatch.precedenceIndex)
+      ) {
+        bestMatch = {
+          scope,
+          literalLength,
+          wildcardCount,
+          precedenceIndex,
+        };
+      }
     }
   }
+
+  if (bestMatch) {
+    return bestMatch.scope === "error" ? "protected" : bestMatch.scope;
+  }
+
   return "unknown";
 }
 
@@ -197,7 +239,7 @@ function routeDecisions(
   const decisions: PrepareOpenDecision[] = routeResult.diagnostics.map((diagnostic) => ({
     code: diagnostic.code,
     message: diagnostic.message,
-    severity: "error" as const,
+    severity: diagnostic.code === "E_DESIGN_ROUTE_EXAMPLE_MISSING" ? "warn" : "error",
   }));
 
   if (surfaceScope === "unknown") {
@@ -214,18 +256,17 @@ function routeDecisions(
 /**
  * Builds a prepare payload for a given UI surface that aggregates routing, scope classification,
  * design contract provenance, computed source digests, route-derived recommendations, open decisions,
- * and timing metadata.
+ * and deterministic source metadata.
  *
  * @param surfacePath - Path to the UI surface to prepare; may be absolute or relative to `rootDir`
  * @param rootDir - Root directory against which to resolve `surfacePath` and locate design/guidance files (defaults to process.cwd())
- * @returns A PreparePayload object containing metadata, recommended routes, required/forbidden/example data, validation commands, provenance and source digests, open decisions, and timing information
+ * @returns A PreparePayload object containing metadata, recommended routes, required/forbidden/example data, validation commands, provenance and source digests, and open decisions
  * @throws Error if required source digests (coverage matrix or component lifecycle) cannot be found
  */
 export async function buildPreparePayload(
   surfacePath: string,
   rootDir = process.cwd(),
 ): Promise<PreparePayload> {
-  const started = Date.now();
   const resolvedRoot = path.resolve(rootDir);
   const normalizedSurfacePath = normalizeSurfacePath(resolvedRoot, surfacePath);
   const [designSource, guidanceSource] = await Promise.all([
@@ -288,10 +329,6 @@ export async function buildPreparePayload(
     coverageMatrixDigest,
     componentLifecycleDigest,
     openDecisions,
-    timing: {
-      startedAt: new Date(started).toISOString(),
-      durationMs: Date.now() - started,
-    },
   };
 }
 

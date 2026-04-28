@@ -26,6 +26,52 @@ function readJson<T>(rootDir: string, relativePath: string): T {
   return JSON.parse(readFileSync(path.join(rootDir, relativePath), "utf8")) as T;
 }
 
+function toPosixPath(input: string): string {
+  return input.split(path.sep).join("/");
+}
+
+function escapeRegex(input: string): string {
+  return input.replace(/[|\\{}()[\]^$+?.]/g, "\\$&");
+}
+
+function globToRegex(glob: string): RegExp {
+  let pattern = "";
+  for (let index = 0; index < glob.length; index += 1) {
+    const char = glob[index];
+    const next = glob[index + 1];
+    const afterNext = glob[index + 2];
+    if (char === "*" && next === "*" && afterNext === "/") {
+      pattern += "(?:.*/)?";
+      index += 2;
+    } else if (char === "*" && next === "*") {
+      pattern += ".*";
+      index += 1;
+    } else if (char === "*") {
+      pattern += "[^/]*";
+    } else {
+      pattern += escapeRegex(char);
+    }
+  }
+  return new RegExp(`^${pattern}$`);
+}
+
+function matchesSurfacePattern(surfacePath: string, pattern: string): boolean {
+  const normalized = toPosixPath(pattern);
+  return globToRegex(normalized).test(surfacePath);
+}
+
+function scoreSurfacePattern(pattern: string): { literalLength: number; wildcardCount: number } {
+  const normalized = toPosixPath(pattern);
+  return {
+    literalLength: normalized.replace(/[*?]/g, "").length,
+    wildcardCount: (normalized.match(/[*?]/g) ?? []).length,
+  };
+}
+
+function normalizeSurfacePath(rootDir: string, surfacePath: string): string {
+  return toPosixPath(path.relative(rootDir, path.resolve(rootDir, surfacePath)));
+}
+
 /**
  * Produce a canonical need identifier suitable for matching.
  *
@@ -259,8 +305,8 @@ export function resolveRouteForNeed(need: string, rootDir = process.cwd()): Rout
       route: null,
       diagnostics: [
         {
-          code: "E_DESIGN_ROUTE_MISSING",
-          message: `No agent UI route exists for need '${need}'.`,
+          code: "E_DESIGN_PROPOSAL_REQUIRED",
+          message: `No canonical agent UI route exists for need '${need}'; create an abstraction proposal before adding a route.`,
         },
       ],
     };
@@ -288,7 +334,7 @@ export function resolveRouteForNeed(need: string, rootDir = process.cwd()): Rout
 /**
  * Finds the agent UI route that corresponds to a given source surface path and resolves it.
  *
- * Resolves a matching route based on known surface-path prefixes and validates the matched
+ * Resolves a matching route based on authored surface patterns and validates the matched
  * route's lifecycle, coverage, source refs, and examples; returns diagnostics if no match or
  * if validation issues are found.
  *
@@ -300,26 +346,24 @@ export function resolveRouteForSurface(
   surfacePath: string,
   rootDir = process.cwd(),
 ): RouteResolutionResult {
-  const normalizedSurface = path
-    .relative(rootDir, path.resolve(rootDir, surfacePath))
-    .split(path.sep)
-    .join("/");
+  const normalizedSurface = normalizeSurfacePath(rootDir, surfacePath);
   const table = loadAgentUiRoutingTable(rootDir);
-  const match = table.routes.find((route) => {
-    if (
-      route.canonicalNeed === "settings_panel" &&
-      normalizedSurface.startsWith("packages/ui/src/app/settings/")
-    ) {
-      return true;
-    }
-    if (
-      route.canonicalNeed === "page_shell" &&
-      normalizedSurface.startsWith("platforms/web/apps/web/src/pages/")
-    ) {
-      return true;
-    }
-    return false;
-  });
+  const candidates = table.routes
+    .flatMap((route) =>
+      route.surfacePatterns
+        .filter((pattern) => matchesSurfacePattern(normalizedSurface, pattern))
+        .map((pattern) => ({ route, pattern, score: scoreSurfacePattern(pattern) })),
+    )
+    .sort((left, right) => {
+      if (left.score.wildcardCount !== right.score.wildcardCount) {
+        return left.score.wildcardCount - right.score.wildcardCount;
+      }
+      if (left.score.literalLength !== right.score.literalLength) {
+        return right.score.literalLength - left.score.literalLength;
+      }
+      return left.route.canonicalNeed.localeCompare(right.route.canonicalNeed);
+    });
+  const match = candidates[0]?.route;
 
   if (!match) {
     return {

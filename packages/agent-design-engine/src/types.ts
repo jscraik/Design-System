@@ -202,7 +202,8 @@ export interface RouteDiagnostic {
     | "E_DESIGN_ROUTE_COVERAGE_MISSING"
     | "E_DESIGN_ROUTE_SOURCE_REF_MISSING"
     | "E_DESIGN_ROUTE_EXAMPLE_MISSING"
-    | "E_DESIGN_ROUTE_DEPRECATED";
+    | "E_DESIGN_ROUTE_DEPRECATED"
+    | "E_DESIGN_PROPOSAL_REQUIRED";
   message: string;
   routeNeed?: string;
   component?: string;
@@ -229,12 +230,18 @@ export type ProposalWaiverStatus = "active" | "retired";
 
 export interface ProposalWaiver {
   id: string;
+  ruleId: string;
   scope: ProposalWaiverScope;
   target: string;
   owner: string;
+  ticket?: string;
+  issue?: string;
+  issueUrl?: string;
+  adrRef?: string;
   reason: string;
   /** ISO 8601 date string (e.g., "2026-06-30") */
   expiresAt: string;
+  cleanupMilestone: string;
   cleanup: string;
   status: ProposalWaiverStatus;
 }
@@ -250,6 +257,7 @@ export interface ProposalGateDiagnostic {
     | "E_DESIGN_PROPOSAL_WAIVERS_MISSING"
     | "E_DESIGN_PROPOSAL_WAIVER_SCHEMA"
     | "E_DESIGN_PROPOSAL_WAIVER_EXPIRED"
+    | "E_DESIGN_PROPOSAL_WAIVER_DUPLICATE"
     | "W_DESIGN_PROPOSAL_WAIVER_NEAR_EXPIRY"
     | "E_DESIGN_PROPOSAL_REQUIRED"
     | "E_DESIGN_PROPOSAL_REF_MISSING"
@@ -322,7 +330,6 @@ export interface PreparePayload {
   coverageMatrixDigest: PrepareSourceDigest;
   componentLifecycleDigest: PrepareSourceDigest;
   openDecisions: PrepareOpenDecision[];
-  timing: PrepareTiming;
 }
 
 export class DesignEngineError extends Error {

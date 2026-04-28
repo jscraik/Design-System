@@ -14,12 +14,12 @@ import type {
   RemediationContext,
 } from "./types.js";
 
-export const proposalTemplatePath = "docs/design-system/proposals/TEMPLATE.md";
-export const proposalWaiverRegistryPath = "docs/design-system/proposals/waivers.json";
+export const PROPOSAL_TEMPLATE_PATH = "docs/design-system/proposals/TEMPLATE.md";
+export const PROPOSAL_WAIVER_REGISTRY_PATH = "docs/design-system/proposals/waivers.json";
 
-const lifecyclePath = "docs/design-system/COMPONENT_LIFECYCLE.json";
-const coveragePath = "docs/design-system/COVERAGE_MATRIX.json";
-const proposalRequiredFields = [
+const LIFECYCLE_PATH = "docs/design-system/COMPONENT_LIFECYCLE.json";
+const COVERAGE_PATH = "docs/design-system/COVERAGE_MATRIX.json";
+const PROPOSAL_REQUIRED_FIELDS = [
   "proposal id",
   "status",
   "owner",
@@ -38,10 +38,10 @@ const proposalRequiredFields = [
  *
  * @param rootDir - The base directory used to resolve `relativePath`
  * @param relativePath - File path relative to `rootDir`
- * @returns The parsed JSON value cast to type `T`
+ * @returns The parsed JSON value as `unknown` so callers must validate it.
  */
-function readJson<T>(rootDir: string, relativePath: string): T {
-  return JSON.parse(readFileSync(path.join(rootDir, relativePath), "utf8")) as T;
+function readJson(rootDir: string, relativePath: string): unknown {
+  return JSON.parse(readFileSync(path.join(rootDir, relativePath), "utf8"));
 }
 
 /**
@@ -64,9 +64,19 @@ function pushDiagnostic(
  * @returns A Date set to `T00:00:00.000Z` for the given day, or `null` if the input is not a valid `YYYY-MM-DD` date.
  */
 function parseDateOnly(value: string): Date | null {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return null;
   const parsed = new Date(`${value}T00:00:00.000Z`);
-  return Number.isNaN(parsed.getTime()) ? null : parsed;
+  if (Number.isNaN(parsed.getTime())) return null;
+  const [, year, month, day] = match;
+  if (
+    parsed.getUTCFullYear() !== Number(year) ||
+    parsed.getUTCMonth() + 1 !== Number(month) ||
+    parsed.getUTCDate() !== Number(day)
+  ) {
+    return null;
+  }
+  return parsed;
 }
 
 /**
@@ -99,6 +109,86 @@ function isWaiverScope(value: unknown): value is ProposalWaiverScope {
   return value === "agent-ui-route" || value === "component-lifecycle";
 }
 
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function isString(value: unknown): value is string {
+  return typeof value === "string";
+}
+
+function optionalString(value: unknown): string | undefined {
+  return isString(value) ? value : undefined;
+}
+
+function parseWaiverRegistry(value: unknown): ProposalWaiverRegistry {
+  if (!isObject(value)) {
+    return { schemaVersion: "agent-design.proposal-waivers.v1", updatedAt: "", waivers: [] };
+  }
+
+  const waivers = Array.isArray(value.waivers)
+    ? value.waivers.filter(isObject).map((entry) => ({
+        id: optionalString(entry.id) ?? "",
+        ruleId: optionalString(entry.ruleId) ?? "",
+        scope: optionalString(entry.scope) as ProposalWaiverScope,
+        target: optionalString(entry.target) ?? "",
+        owner: optionalString(entry.owner) ?? "",
+        ticket: optionalString(entry.ticket),
+        issue: optionalString(entry.issue),
+        issueUrl: optionalString(entry.issueUrl),
+        adrRef: optionalString(entry.adrRef),
+        reason: optionalString(entry.reason) ?? "",
+        expiresAt: optionalString(entry.expiresAt) ?? "",
+        cleanupMilestone: optionalString(entry.cleanupMilestone) ?? "",
+        cleanup: optionalString(entry.cleanup) ?? "",
+        status: optionalString(entry.status) as ProposalWaiver["status"],
+      }))
+    : [];
+
+  return {
+    schemaVersion: optionalString(value.schemaVersion) as ProposalWaiverRegistry["schemaVersion"],
+    updatedAt: optionalString(value.updatedAt) ?? "",
+    waivers,
+  };
+}
+
+function parseLifecycleManifest(value: unknown): { components: ComponentLifecycleEntry[] } {
+  if (!isObject(value) || !Array.isArray(value.components)) return { components: [] };
+  return {
+    components: value.components.filter(isObject).map((entry) => ({
+      name: optionalString(entry.name) ?? "",
+      path: optionalString(entry.path) ?? "",
+      lifecycle: optionalString(entry.lifecycle) as ComponentLifecycleEntry["lifecycle"],
+      routing_tier: typeof entry.routing_tier === "number" ? entry.routing_tier : 0,
+      notes: optionalString(entry.notes) ?? "",
+      proposalRef: optionalString(entry.proposalRef),
+    })),
+  };
+}
+
+function parseCoverageEntries(value: unknown): ComponentCoverageEntry[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter(isObject).map((entry) => ({
+    name: optionalString(entry.name) ?? "",
+    source: optionalString(entry.source) ?? "",
+    upstream: isString(entry.upstream) ? entry.upstream : null,
+    fallback: isString(entry.fallback) ? entry.fallback : null,
+    status: optionalString(entry.status) ?? "",
+    web_used: entry.web_used === true,
+    tauri_used: entry.tauri_used === true,
+    widget_used: entry.widget_used === true,
+  }));
+}
+
+function hasWaiverLinkage(waiver: ProposalWaiver): boolean {
+  return Boolean(
+    waiver.ticket?.trim() ||
+      waiver.issue?.trim() ||
+      waiver.issueUrl?.trim() ||
+      waiver.adrRef?.trim(),
+  );
+}
+
 /**
  * Validates a proposal waiver registry and returns a map of currently active waivers keyed by scope and target.
  *
@@ -123,7 +213,7 @@ function validateWaiverRegistryShape(
       code: "E_DESIGN_PROPOSAL_WAIVER_SCHEMA",
       severity: "error",
       message: `Unsupported proposal waiver schema version: ${registry.schemaVersion}.`,
-      path: proposalWaiverRegistryPath,
+      path: PROPOSAL_WAIVER_REGISTRY_PATH,
     });
   }
 
@@ -132,7 +222,7 @@ function validateWaiverRegistryShape(
       code: "E_DESIGN_PROPOSAL_WAIVER_SCHEMA",
       severity: "error",
       message: "Proposal waiver registry must define a waivers array.",
-      path: proposalWaiverRegistryPath,
+      path: PROPOSAL_WAIVER_REGISTRY_PATH,
     });
     return activeWaivers;
   }
@@ -140,11 +230,13 @@ function validateWaiverRegistryShape(
   for (const waiver of registry.waivers) {
     const missingFields = [
       "id",
+      "ruleId",
       "scope",
       "target",
       "owner",
       "reason",
       "expiresAt",
+      "cleanupMilestone",
       "cleanup",
       "status",
     ].filter(
@@ -156,13 +248,14 @@ function validateWaiverRegistryShape(
       missingFields.length > 0 ||
       !isWaiverScope(waiver.scope) ||
       (waiver.status !== "active" && waiver.status !== "retired") ||
+      !hasWaiverLinkage(waiver) ||
       !expiresAt
     ) {
       pushDiagnostic(diagnostics, {
         code: "E_DESIGN_PROPOSAL_WAIVER_SCHEMA",
         severity: "error",
-        message: `Proposal waiver ${waiver.id || "(missing id)"} is missing typed fields: ${missingFields.join(", ") || "invalid scope/status/expiresAt"}.`,
-        path: proposalWaiverRegistryPath,
+        message: `Proposal waiver ${waiver.id || "(missing id)"} is missing typed fields: ${missingFields.join(", ") || "invalid scope/status/linkage/expiresAt"}.`,
+        path: PROPOSAL_WAIVER_REGISTRY_PATH,
         waiverId: waiver.id,
       });
       continue;
@@ -176,7 +269,7 @@ function validateWaiverRegistryShape(
         code: "E_DESIGN_PROPOSAL_WAIVER_EXPIRED",
         severity: "error",
         message: `Proposal waiver ${waiver.id} expired on ${waiver.expiresAt}.`,
-        path: proposalWaiverRegistryPath,
+        path: PROPOSAL_WAIVER_REGISTRY_PATH,
         scope: waiver.scope,
         target: waiver.target,
         waiverId: waiver.id,
@@ -189,14 +282,28 @@ function validateWaiverRegistryShape(
         code: "W_DESIGN_PROPOSAL_WAIVER_NEAR_EXPIRY",
         severity: "warn",
         message: `Proposal waiver ${waiver.id} expires in ${daysRemaining} day(s).`,
-        path: proposalWaiverRegistryPath,
+        path: PROPOSAL_WAIVER_REGISTRY_PATH,
         scope: waiver.scope,
         target: waiver.target,
         waiverId: waiver.id,
       });
     }
 
-    activeWaivers.set(waiverKey(waiver.scope, waiver.target), waiver);
+    const key = waiverKey(waiver.scope, waiver.target);
+    if (activeWaivers.has(key)) {
+      pushDiagnostic(diagnostics, {
+        code: "E_DESIGN_PROPOSAL_WAIVER_DUPLICATE",
+        severity: "error",
+        message: `Multiple active proposal waivers found for ${waiver.scope}:${waiver.target}.`,
+        path: PROPOSAL_WAIVER_REGISTRY_PATH,
+        scope: waiver.scope,
+        target: waiver.target,
+        waiverId: waiver.id,
+      });
+      continue;
+    }
+
+    activeWaivers.set(key, waiver);
   }
 
   return activeWaivers;
@@ -313,7 +420,7 @@ function validateLifecycleProposalGate(
     message: `Canonical lifecycle component ${lifecycle.name} must have coverage data, an accepted proposal, or a typed waiver.`,
     scope: "component-lifecycle",
     target: lifecycle.name,
-    path: lifecyclePath,
+    path: LIFECYCLE_PATH,
   });
 }
 
@@ -323,7 +430,7 @@ function validateLifecycleProposalGate(
  * Runs validation of the proposal waiver registry and enforces gates for agent UI routing and component lifecycle proposals, producing diagnostic entries for schema errors, missing or unaccepted proposal references, expired waivers, and related conditions.
  *
  * @param rootDir - Repository root to resolve registry, routing, lifecycle, and coverage files (defaults to process.cwd()).
- * @param options.today - Optional current date in `YYYY-MM-DD` format used for waiver expiry checks; when omitted the real current date is used.
+ * @param options.today - Current date in `YYYY-MM-DD` format used for waiver expiry checks.
  * @returns A `ProposalGateResult` containing:
  *  - `ok`: `true` when there are no diagnostics with severity `"error"`, `false` otherwise;
  *  - `diagnostics`: collected `ProposalGateDiagnostic` entries;
@@ -334,31 +441,43 @@ export function validateProposalGate(
   options: { today?: string } = {},
 ): ProposalGateResult {
   const diagnostics: ProposalGateDiagnostic[] = [];
-  const waiverRegistryFile = path.join(rootDir, proposalWaiverRegistryPath);
+  const waiverRegistryFile = path.join(rootDir, PROPOSAL_WAIVER_REGISTRY_PATH);
   if (!existsSync(waiverRegistryFile)) {
     pushDiagnostic(diagnostics, {
       code: "E_DESIGN_PROPOSAL_WAIVERS_MISSING",
       severity: "error",
-      message: `Proposal waiver registry is missing at ${proposalWaiverRegistryPath}.`,
-      path: proposalWaiverRegistryPath,
+      message: `Proposal waiver registry is missing at ${PROPOSAL_WAIVER_REGISTRY_PATH}.`,
+      path: PROPOSAL_WAIVER_REGISTRY_PATH,
     });
     return {
       kind: "astudio.design.proposalGate.v1",
       ok: false,
       diagnostics,
-      waiverRegistryPath: proposalWaiverRegistryPath,
+      waiverRegistryPath: PROPOSAL_WAIVER_REGISTRY_PATH,
     };
   }
 
-  const today = parseDateOnly(options.today ?? new Date().toISOString().slice(0, 10)) ?? new Date();
-  const registry = readJson<ProposalWaiverRegistry>(rootDir, proposalWaiverRegistryPath);
+  const today = options.today ? parseDateOnly(options.today) : null;
+  if (!today) {
+    pushDiagnostic(diagnostics, {
+      code: "E_DESIGN_PROPOSAL_WAIVER_SCHEMA",
+      severity: "error",
+      message: "Proposal gate requires an explicit valid today value in YYYY-MM-DD format.",
+      path: PROPOSAL_WAIVER_REGISTRY_PATH,
+    });
+    return {
+      kind: "astudio.design.proposalGate.v1",
+      ok: false,
+      diagnostics,
+      waiverRegistryPath: PROPOSAL_WAIVER_REGISTRY_PATH,
+    };
+  }
+
+  const registry = parseWaiverRegistry(readJson(rootDir, PROPOSAL_WAIVER_REGISTRY_PATH));
   const waivers = validateWaiverRegistryShape(registry, diagnostics, today);
   const routingTable = loadAgentUiRoutingTable(rootDir);
-  const lifecycleEntries = readJson<{ components: ComponentLifecycleEntry[] }>(
-    rootDir,
-    lifecyclePath,
-  ).components;
-  const coverageEntries = readJson<ComponentCoverageEntry[]>(rootDir, coveragePath);
+  const lifecycleEntries = parseLifecycleManifest(readJson(rootDir, LIFECYCLE_PATH)).components;
+  const coverageEntries = parseCoverageEntries(readJson(rootDir, COVERAGE_PATH));
 
   for (const route of routingTable.routes) {
     validateRouteProposalGate(rootDir, route, waivers, diagnostics);
@@ -372,7 +491,7 @@ export function validateProposalGate(
     kind: "astudio.design.proposalGate.v1",
     ok: diagnostics.every((diagnostic) => diagnostic.severity !== "error"),
     diagnostics,
-    waiverRegistryPath: proposalWaiverRegistryPath,
+    waiverRegistryPath: PROPOSAL_WAIVER_REGISTRY_PATH,
   };
 }
 
@@ -382,7 +501,7 @@ export function validateProposalGate(
  * @param need - The canonical need identifier the proposal targets.
  * @param rootDir - Repository root used to resolve remediation context; defaults to the current working directory.
  * @param surface - Optional surface/context string to include in the preview.
- * @returns An `AbstractionProposalPreview` populated with template path, required fields, remediation context, and flags; `proposalRequired` is `true` when no remediation route exists. 
+ * @returns An `AbstractionProposalPreview` populated with template path, required fields, remediation context, and flags; `proposalRequired` is `true` when no remediation route exists.
  */
 export function buildAbstractionProposalPreview(
   need: string,
@@ -395,8 +514,8 @@ export function buildAbstractionProposalPreview(
     need,
     surface,
     proposalRequired: remediation.route === null,
-    proposalTemplatePath,
-    requiredFields: proposalRequiredFields,
+    proposalTemplatePath: PROPOSAL_TEMPLATE_PATH,
+    requiredFields: PROPOSAL_REQUIRED_FIELDS,
     previewOnly: true,
     readOnly: true,
     remediation,

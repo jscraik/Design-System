@@ -34,16 +34,19 @@ lifecycle rows that predate this proposal gate. A waiver is valid only when it
 has:
 
 - `scope`
+- `ruleId`
 - `target`
 - `owner`
 - `reason`
+- `ticket`, `issue`, `issueUrl`, or `adrRef`
 - `expiresAt`
+- `cleanupMilestone`
 - `cleanup`
 - `status`
 
 Free-form comments are not accepted as grandfathering evidence. Expired waivers
-fail validation, and near-expiry waivers emit audit diagnostics so owners can
-replace them with accepted proposals or coverage.
+fail validation per repository waiver policy, and near-expiry waivers emit audit
+diagnostics so owners can replace them with accepted proposals or coverage.
 
 ## Validation
 

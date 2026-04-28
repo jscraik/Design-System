@@ -211,12 +211,9 @@ test("resolves routes by known surface path", () => {
 test("returns deterministic missing-route diagnostics for unknown needs and surfaces", () => {
   const missingNeed = resolveRouteForNeed("timeline editor", rootDir);
   assert.equal(missingNeed.ok, false);
-  assert.equal(missingNeed.diagnostics[0].code, "E_DESIGN_ROUTE_MISSING");
+  assert.equal(missingNeed.diagnostics[0].code, "E_DESIGN_PROPOSAL_REQUIRED");
 
-  const missingSurface = resolveRouteForSurface(
-    "packages/ui/src/components/unknown/Thing.tsx",
-    rootDir,
-  );
+  const missingSurface = resolveRouteForSurface("docs/design-system/unknown/Thing.md", rootDir);
   assert.equal(missingSurface.ok, false);
   assert.equal(missingSurface.diagnostics[0].code, "E_DESIGN_ROUTE_MISSING");
 });
@@ -299,6 +296,65 @@ test("proposal gate rejects free-form grandfathering without typed waiver fields
   );
 });
 
+test("proposal gate requires waiver issue linkage and cleanup milestones", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const waivers = readFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json");
+  delete waivers.waivers[0].ticket;
+  delete waivers.waivers[0].issue;
+  delete waivers.waivers[0].issueUrl;
+  delete waivers.waivers[0].adrRef;
+  delete waivers.waivers[0].cleanupMilestone;
+  writeFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json", waivers);
+
+  const result = validateProposalGate(fixtureRoot, { today: "2026-04-28" });
+  assert.equal(result.ok, false);
+  assert.ok(
+    result.diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_PROPOSAL_WAIVER_SCHEMA"),
+  );
+});
+
+test("proposal gate rejects duplicate active waivers", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const waivers = readFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json");
+  waivers.waivers.push({
+    ...waivers.waivers[0],
+    id: "duplicate-grandfather-route-2026-04-28",
+  });
+  writeFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json", waivers);
+
+  const result = validateProposalGate(fixtureRoot, { today: "2026-04-28" });
+  assert.equal(result.ok, false);
+  assert.ok(
+    result.diagnostics.some(
+      (diagnostic) => diagnostic.code === "E_DESIGN_PROPOSAL_WAIVER_DUPLICATE",
+    ),
+  );
+});
+
+test("proposal gate requires explicit valid dates from callers", () => {
+  const fixtureRoot = proposalFixtureRoot();
+
+  const missingDate = validateProposalGate(fixtureRoot);
+  assert.equal(missingDate.ok, false);
+  assert.ok(
+    missingDate.diagnostics.some(
+      (diagnostic) =>
+        diagnostic.message ===
+        "Proposal gate requires an explicit valid today value in YYYY-MM-DD format.",
+    ),
+  );
+
+  const impossibleDate = validateProposalGate(fixtureRoot, { today: "2026-02-31" });
+  assert.equal(impossibleDate.ok, false);
+  assert.ok(
+    impossibleDate.diagnostics.some(
+      (diagnostic) =>
+        diagnostic.message ===
+        "Proposal gate requires an explicit valid today value in YYYY-MM-DD format.",
+    ),
+  );
+});
+
 test("proposal gate audits near-expiry waivers and fails expired waivers", () => {
   const fixtureRoot = proposalFixtureRoot();
   const waivers = readFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json");
@@ -352,7 +408,7 @@ test("builds prepare payload for protected product page surfaces", async () => {
     "docs/design-system/COMPONENT_LIFECYCLE.json",
   );
   assert.equal(payload.ruleSourceDigests.length, 4);
-  assert.equal(typeof payload.timing.durationMs, "number");
+  assert.equal("timing" in payload, false);
 });
 
 test("builds prepare payload for settings panel surfaces", async () => {
@@ -369,14 +425,25 @@ test("builds prepare payload for settings panel surfaces", async () => {
   );
 });
 
+test("builds prepare payload for async composition surfaces from routing metadata", async () => {
+  const payload = await buildPreparePayload(
+    "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+    rootDir,
+  );
+  assert.equal(payload.ok, true);
+  assert.equal(payload.surfaceScope, "warn");
+  assert.equal(payload.surfaceKind, "async_collection");
+  assert.equal(payload.recommendedRoutes[0].canonicalNeed, "async_collection");
+});
+
 test("builds prepare diagnostics for warn, exempt, and unknown surfaces", async () => {
   const warn = await buildPreparePayload(
     "packages/ui/src/storybook/_holding/component-stories/AlertDialog.stories.tsx",
     rootDir,
   );
   assert.equal(warn.surfaceScope, "warn");
-  assert.equal(warn.ok, false);
-  assert.equal(warn.openDecisions[0].code, "E_DESIGN_ROUTE_MISSING");
+  assert.equal(warn.ok, true);
+  assert.equal(warn.surfaceKind, "destructive_confirmation");
 
   const exempt = await buildPreparePayload("docs/design-system/AGENT_UI_ROUTING.md", rootDir);
   assert.equal(exempt.surfaceScope, "exempt");
@@ -398,5 +465,6 @@ test("serializes prepare payload with sorted keys and trailing newline", async (
   );
   const serialized = serializePreparePayload(payload);
   assert.equal(serialized.endsWith("\n"), true);
+  assert.equal(serialized.includes('"timing"'), false);
   assert.match(serialized.split("\n")[1], /"componentLifecycleDigest"/);
 });

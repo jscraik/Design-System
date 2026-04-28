@@ -144,6 +144,9 @@ rollback metadata:
 }
 ```
 
+When `rollbackMetadata` is omitted, `design migrate --rollback` and resume flows
+are expected to fail with rollback-metadata errors until metadata is restored.
+
 Supported modes:
 
 - `legacy`: existing guidance checks remain authoritative.

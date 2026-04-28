@@ -7,8 +7,8 @@
 ## Table of Contents
 
 - [Preflight](#preflight)
-- [Source Signal Validation](#source-signal-validation)
 - [Executable Contract Validation](#executable-contract-validation)
+- [Source Signal Validation](#source-signal-validation)
 - [First Weekly Report](#first-weekly-report)
 - [Warn-First Governance Validation](#warn-first-governance-validation)
 - [Release Touchpoint Validation](#release-touchpoint-validation)

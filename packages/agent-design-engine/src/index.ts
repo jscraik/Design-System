@@ -11,8 +11,8 @@ export { extractDesignBody, parseDesignContract } from "./parser.js";
 export { buildPreparePayload, serializePreparePayload } from "./prepare.js";
 export {
   buildAbstractionProposalPreview,
-  proposalTemplatePath,
-  proposalWaiverRegistryPath,
+  PROPOSAL_TEMPLATE_PATH as proposalTemplatePath,
+  PROPOSAL_WAIVER_REGISTRY_PATH as proposalWaiverRegistryPath,
   validateProposalGate,
 } from "./proposals.js";
 export {
