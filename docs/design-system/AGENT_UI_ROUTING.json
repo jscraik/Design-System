@@ -64,7 +64,10 @@
       },
       "lifecycleStatus": "canonical",
       "routeMaturity": "provisional",
-      "surfacePatterns": ["**/*.tsx"],
+      "surfacePatterns": [
+        "packages/ui/src/components/ui/feedback/AlertDialog/**/*.tsx",
+        "packages/ui/src/storybook/_holding/component-stories/AlertDialog.stories.tsx"
+      ],
       "useWhen": [
         "A destructive action needs a blocking confirmation before continuing.",
         "The user must review action consequences before confirming."

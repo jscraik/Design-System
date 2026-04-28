@@ -257,7 +257,16 @@ function normalizeLevel(level: string | undefined): RuleLevel {
  */
 function remediationForViolation(ruleId: string, targetPath: string): Partial<GuidanceViolation> {
   if (ruleId === "no-h-screen") {
-    const remediation = resolveRemediationContext("page_shell", targetPath);
+    let remediation: ReturnType<typeof resolveRemediationContext>;
+    try {
+      remediation = resolveRemediationContext("page_shell", targetPath);
+    } catch {
+      return {
+        proposalRequired: true,
+        recoveryUnavailableReason:
+          "No deterministic page shell route is available for this repository.",
+      };
+    }
     const route = remediation.route;
     return {
       replacementInstruction: route

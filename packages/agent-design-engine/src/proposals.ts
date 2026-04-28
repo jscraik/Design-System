@@ -166,6 +166,13 @@ function parseLifecycleManifest(value: unknown): { components: ComponentLifecycl
   };
 }
 
+function lifecycleManifestSchemaDiagnostics(value: unknown): string[] {
+  if (!isObject(value)) return ["Lifecycle manifest must be a JSON object."];
+  if (!Array.isArray(value.components))
+    return ["Lifecycle manifest must define a components array."];
+  return [];
+}
+
 function parseCoverageEntries(value: unknown): ComponentCoverageEntry[] {
   if (!Array.isArray(value)) return [];
   return value.filter(isObject).map((entry) => ({
@@ -476,7 +483,16 @@ export function validateProposalGate(
   const registry = parseWaiverRegistry(readJson(rootDir, PROPOSAL_WAIVER_REGISTRY_PATH));
   const waivers = validateWaiverRegistryShape(registry, diagnostics, today);
   const routingTable = loadAgentUiRoutingTable(rootDir);
-  const lifecycleEntries = parseLifecycleManifest(readJson(rootDir, LIFECYCLE_PATH)).components;
+  const lifecycleManifest = readJson(rootDir, LIFECYCLE_PATH);
+  for (const message of lifecycleManifestSchemaDiagnostics(lifecycleManifest)) {
+    pushDiagnostic(diagnostics, {
+      code: "E_DESIGN_LIFECYCLE_SCHEMA",
+      severity: "error",
+      message,
+      path: LIFECYCLE_PATH,
+    });
+  }
+  const lifecycleEntries = parseLifecycleManifest(lifecycleManifest).components;
   const coverageEntries = parseCoverageEntries(readJson(rootDir, COVERAGE_PATH));
 
   for (const route of routingTable.routes) {
