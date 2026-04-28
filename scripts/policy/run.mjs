@@ -171,6 +171,11 @@ const DESIGN_SYSTEM_SUBCONTRACTS = [
   },
 ];
 
+/**
+ * Convert backslashes in a file path to forward slashes for consistent path matching.
+ * @param {string} filePath - The file path to normalize (may contain Windows backslashes).
+ * @returns {string} The normalized path with all `\` replaced by `/`.
+ */
 function normalize(filePath) {
   return filePath.replace(/\\/g, "/");
 }

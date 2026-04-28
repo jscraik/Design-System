@@ -227,10 +227,34 @@ function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }
 
+/**
+ * Normalize a rule level string to a supported RuleLevel.
+ *
+ * @param level - The input level value to normalize; may be `undefined` or any string.
+ * @returns `"error"` if `level` is exactly `"error"`, `"warn"` otherwise.
+ */
 function normalizeLevel(level: string | undefined): RuleLevel {
   return level === "error" ? "error" : "warn";
 }
 
+/**
+ * Produces remediation metadata for a guidance violation given its rule id and repository path.
+ *
+ * @param ruleId - The rule identifier for the detected violation (e.g., `"no-h-screen"`, `"no-raw-hex-colors"`)
+ * @param targetPath - The repository root path used to compute any repository-specific remediation context
+ * @returns A Partial<GuidanceViolation> containing remediation fields such as:
+ * - `replacementInstruction` — a suggested code or API replacement when available,
+ * - `examplePath` — a sample file or route illustrating the recommended change,
+ * - `validationCommands` — commands to re-run checks (may be CI-safe),
+ * - `proposalRequired` — `true` when an automated remediation cannot be deterministically generated,
+ * - `recoveryUnavailableReason` — a short human-readable reason when automatic recovery is not available.
+ *
+ * Specific behaviors:
+ * - For `no-h-screen`, returns repository-aware replacement guidance and validation commands when a deterministic page-shell route exists; otherwise sets `proposalRequired` to `true` and supplies a repo-specific unavailability reason.
+ * - For `no-raw-hex-colors` and `no-foundation-token-usage`, returns a static replacement instruction, CI-safe validation command(s), and `proposalRequired: false`.
+ * - For `no-global-focus-visible`, sets `proposalRequired: true` with a recovery reason that indicates remediation depends on component ownership.
+ * - For all other rule ids, sets `proposalRequired: true` and provides a generic recovery-unavailable reason.
+ */
 function remediationForViolation(ruleId: string, targetPath: string): Partial<GuidanceViolation> {
   if (ruleId === "no-h-screen") {
     const remediation = resolveRemediationContext("page_shell", targetPath);
@@ -277,6 +301,14 @@ function remediationForViolation(ruleId: string, targetPath: string): Partial<Gu
   };
 }
 
+/**
+ * Resolve the effective level for a rule by its id using the provided rules document.
+ *
+ * @param rules - The rules document to search
+ * @param ruleId - The id of the rule to look up
+ * @param fallback - Level to return when the rule isn't present in `rules`
+ * @returns The rule's normalized level (`"error"` or `"warn"`) if found, otherwise `fallback`
+ */
 function findRuleLevel(rules: RulesDocument, ruleId: string, fallback: RuleLevel): RuleLevel {
   const matched = rules.rules.find((rule: GuidanceRule) => rule.id === ruleId);
   return matched ? normalizeLevel(matched.level) : fallback;
@@ -747,6 +779,13 @@ export function isCiEnvironment(): boolean {
   return typeof value === "string" && value.length > 0 && value.toLowerCase() !== "false";
 }
 
+/**
+ * Scans a target repository for configured guidance rule violations and returns a summary of findings.
+ *
+ * @param targetPathInput - Path to the repository root to scan (defaults to the current working directory)
+ * @param options - Runtime options controlling the check (e.g., `ci` to force CI mode)
+ * @returns An object with `targetPath`, `ciMode`, an array of detected `violations`, and an `exitCode` (0 when no failing errors or not in CI, 1 when CI mode and errors were found)
+ */
 export async function runCheck(
   targetPathInput = ".",
   options: CheckOptions = {},

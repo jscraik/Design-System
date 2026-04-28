@@ -683,15 +683,22 @@ function currentReports() {
 }
 
 /**
- * Render the category status table rows for the weekly report.
+ * Escape a value for safe inclusion in a Markdown table cell.
  *
- * @param {Array<Object>} results - Normalized category probe results.
- * @returns {string} Markdown table rows for category status.
+ * @param {*} value - The value to stringify and escape for a table cell.
+ * @returns {string} The escaped string suitable for a Markdown table cell; pipe characters (`|`) are escaped and line breaks are converted to `<br>`.
  */
 function escapeTableCell(value) {
   return String(value).replace(/\|/g, "\\|").replace(/\r?\n/g, "<br>");
 }
 
+/**
+ * Render Markdown table rows for a list of category results.
+ *
+ * @param {Array<Object>} results - Array of result objects. Each object should include
+ *   `category.label`, `status`, `freshness`, `metric`, `trend`, `owner`, and `notes`.
+ * @returns {string} One or more Markdown table rows (without header), joined by newline characters.
+ */
 function renderCategoryTable(results) {
   return results
     .map(

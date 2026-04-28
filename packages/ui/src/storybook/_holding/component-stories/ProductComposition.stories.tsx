@@ -20,6 +20,11 @@ const runs = [
   { name: "Visual review", status: "Ready", owner: "Storybook" },
 ];
 
+/**
+ * Renders a vertical list of run entries displaying each run's name, owner, and status.
+ *
+ * @returns A React element containing a bordered, divided container with a row for each run.
+ */
 function RunRows() {
   return (
     <div className="divide-y divide-border rounded-md border border-border">
@@ -79,7 +84,7 @@ export const DataViewError: Story = {
       state="error"
       errorTitle="Could not load runs"
       errorDescription="Retry after the current validation job finishes."
-      action={<Button size="sm" aria-label="Retry loading agent runs">Retry</Button>}
+      action={<Button size="sm">Retry</Button>}
     >
       <RunRows />
     </ProductDataView>

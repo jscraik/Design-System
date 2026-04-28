@@ -608,6 +608,12 @@ function migrateOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
     .option("yes", { type: "boolean" });
 }
 
+/**
+ * Registers the CLI options used by the `design doctor` subcommand.
+ *
+ * @param cmd - Yargs option builder to extend with `file`, `scope`, and `active` options
+ * @returns The same option builder with `file`, `scope`, and `active` registered
+ */
 function doctorOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
   return cmd
     .option("file", { type: "string" })
@@ -615,30 +621,68 @@ function doctorOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
     .option("active", { type: "boolean" });
 }
 
+/**
+ * Adds a required `--surface` string option to the provided command option builder.
+ *
+ * @param cmd - The option builder to extend
+ * @returns The same builder instance with the `surface` option configured as a required string
+ */
 function prepareOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
   return cmd.option("surface", { type: "string", demandOption: true });
 }
 
+/**
+ * Adds CLI options `--need` and `--surface` to the provided design option builder.
+ *
+ * @param cmd - The option builder to extend with `need` and `surface` string options
+ * @returns The same builder instance with the added options
+ */
 function componentsOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
   return cmd.option("need", { type: "string" }).option("surface", { type: "string" });
 }
 
+/**
+ * Adds the required `--component` option to a design command builder.
+ *
+ * @param cmd - The option builder to extend
+ * @returns The builder enhanced with the `component` option (string, required)
+ */
 function coverageOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
   return cmd.option("component", { type: "string", demandOption: true });
 }
 
+/**
+ * Registers the `--need` (required) and `--surface` (optional) CLI options for the propose-abstraction command.
+ *
+ * @returns The option builder with `need` and `surface` options configured (`need` is required).
+ */
 function proposeAbstractionOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
   return cmd.option("need", { type: "string", demandOption: true }).option("surface", {
     type: "string",
   });
 }
 
+/**
+ * Looks up a component's coverage entry in docs/design-system/COVERAGE_MATRIX.json.
+ *
+ * @param rootDir - Project root directory containing the docs folder
+ * @param component - Component name to match against entry `name` fields
+ * @returns The matching coverage entry object, or `null` if no entry is found
+ */
 async function readCoverageEntry(rootDir: string, component: string): Promise<unknown> {
   const raw = await readFile(path.join(rootDir, "docs/design-system/COVERAGE_MATRIX.json"), "utf8");
   const entries = JSON.parse(raw) as Array<{ name?: string }>;
   return entries.find((entry) => entry.name === component) ?? null;
 }
 
+/**
+ * Validate that exactly one component selector is provided: either `--need` or `--surface`.
+ *
+ * @param argv - Parsed CLI arguments which may include `need` or `surface`
+ *
+ * @throws CliError when both `need` and `surface` are present (code `E_DESIGN_SELECTOR_CONFLICT`, usage exit)
+ * @throws CliError when neither `need` nor `surface` is present (code `E_DESIGN_SELECTOR_REQUIRED`, usage exit)
+ */
 function assertComponentsSelector(argv: DesignArgs): void {
   if (argv.need && argv.surface) {
     throw new CliError("design components accepts either --need or --surface, not both.", {
@@ -669,6 +713,17 @@ function assertComponentsSelector(argv: DesignArgs): void {
   }
 }
 
+/**
+ * Register the "astudio design" command and its subcommands on a yargs instance.
+ *
+ * Registers a suite of design-related subcommands (prepare, components, coverage,
+ * propose-abstraction, lint, diff, export, check-brand, init, migrate, doctor)
+ * and their options, handlers, and output conventions, then returns the augmented
+ * yargs instance.
+ *
+ * @param yargs - The yargs Argv instance to extend with the design command chain
+ * @returns The same Argv instance augmented with the registered design commands
+ */
 export function designCommand(yargs: Argv): Argv {
   const chain = yargs as unknown as DesignCommandChain;
   return chain
