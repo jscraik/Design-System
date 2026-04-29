@@ -199,7 +199,8 @@ function expandBraceGroups(glob: string): string[] {
  *
  * The returned RegExp is anchored to the start and end of the string. In the
  * glob pattern, `**` matches any sequence of characters (including `/`) and
- * `*` matches any sequence of characters except `/`.
+ * `*` matches any sequence of characters except `/`, while `?` matches a single
+ * character except `/`.
  *
  * @param glob - The glob pattern to convert
  * @returns A RegExp that matches strings according to the provided glob
@@ -218,6 +219,8 @@ function globToRegex(glob: string): RegExp {
       index += 1;
     } else if (char === "*") {
       pattern += "[^/]*";
+    } else if (char === "?") {
+      pattern += "[^/]";
     } else {
       pattern += escapeRegex(char);
     }
@@ -229,7 +232,7 @@ function globToRegex(glob: string): RegExp {
  * Determines whether a POSIX-style surface path matches a glob pattern.
  *
  * @param surfacePath - The POSIX-style path to test (use `/` separators).
- * @param glob - The glob pattern to match against; may include brace groups (`{a,b}`), `*` and `**` wildcards.
+ * @param glob - The glob pattern to match against; may include brace groups (`{a,b}`), `*`, `?`, and `**` wildcards.
  * @returns `true` if `surfacePath` matches `glob`, `false` otherwise.
  */
 function matchesGlob(surfacePath: string, glob: string): boolean {

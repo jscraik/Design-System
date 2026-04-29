@@ -379,6 +379,15 @@ function toRouteDiagnostic(
   };
 }
 
+function getErrorCode(error: unknown): string | null {
+  return typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    typeof (error as { code?: unknown }).code === "string"
+    ? (error as { code: string }).code
+    : null;
+}
+
 /**
  * Load component lifecycle entries from the lifecycle manifest.
  *
@@ -413,8 +422,13 @@ function resolveRepoPath(rootDir: string, relativePath: string): string | null {
 function isExistingFile(filePath: string): boolean {
   try {
     return statSync(filePath).isFile();
-  } catch {
-    return false;
+  } catch (error) {
+    const code = getErrorCode(error);
+    if (code === "ENOENT" || code === "ENOTDIR") {
+      return false;
+    }
+    const reason = error instanceof Error ? error.message : String(error);
+    throw new Error(`Failed to stat route reference '${filePath}': ${reason}`);
   }
 }
 
