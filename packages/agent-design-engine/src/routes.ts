@@ -1,4 +1,4 @@
-import { readFileSync, statSync } from "node:fs";
+import { readFileSync, realpathSync, statSync } from "node:fs";
 import path from "node:path";
 import type {
   AgentUiRouteSource,
@@ -433,10 +433,25 @@ function resolveRepoPath(rootDir: string, relativePath: string): string | null {
   const repoRoot = path.resolve(rootDir);
   const resolved = path.resolve(repoRoot, relativePath);
   const relative = path.relative(repoRoot, resolved);
-  if (relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative))) {
-    return resolved;
+  if (relative !== "" && (relative.startsWith("..") || path.isAbsolute(relative))) {
+    return null;
   }
-  return null;
+
+  try {
+    const realRoot = realpathSync(repoRoot);
+    const realResolved = realpathSync(resolved);
+    const realRelative = path.relative(realRoot, realResolved);
+    if (realRelative !== "" && (realRelative.startsWith("..") || path.isAbsolute(realRelative))) {
+      return null;
+    }
+    return realResolved;
+  } catch (error) {
+    const code = getErrorCode(error);
+    if (code === "ENOENT" || code === "ENOTDIR") {
+      return resolved;
+    }
+    throw error;
+  }
 }
 
 function isExistingFile(filePath: string): boolean {

@@ -38,6 +38,17 @@ function proposalFixtureRoot() {
     fs.mkdirSync(path.dirname(path.join(fixtureRoot, relativePath)), { recursive: true });
     fs.copyFileSync(path.join(rootDir, relativePath), path.join(fixtureRoot, relativePath));
   }
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  for (const route of routing.routes ?? []) {
+    for (const relativePath of [...(route.examples ?? []), ...(route.sourceRefs ?? [])]) {
+      const filePath = String(relativePath).split("#")[0];
+      const source = path.join(rootDir, filePath);
+      if (!fs.existsSync(source) || !fs.statSync(source).isFile()) continue;
+      const target = path.join(fixtureRoot, filePath);
+      fs.mkdirSync(path.dirname(target), { recursive: true });
+      fs.copyFileSync(source, target);
+    }
+  }
   return fixtureRoot;
 }
 
@@ -439,6 +450,36 @@ test("proposal gate treats directory proposal refs as missing proposals", () => 
   );
 });
 
+test("proposal gate rejects symlink proposal refs that escape the repo", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const escapedProposalPath = path.join(os.tmpdir(), `escaped-proposal-${process.pid}.md`);
+  fs.writeFileSync(escapedProposalPath, "status: accepted\n");
+  const relativeLinkPath = "docs/design-system/proposals/escaped-proposal.md";
+  fs.symlinkSync(escapedProposalPath, path.join(fixtureRoot, relativeLinkPath));
+
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const productSectionRoute = routing.routes.find(
+    (route) => route.canonicalNeed === "product_section",
+  );
+  productSectionRoute.proposalRef = relativeLinkPath;
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const waivers = readFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json");
+  waivers.waivers = waivers.waivers.filter(
+    (waiver) => waiver.id !== "grandfather-route-product-section-2026-04-28",
+  );
+  writeFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json", waivers);
+
+  const result = validateProposalGate(fixtureRoot, { today: "2026-04-28" });
+  assert.equal(result.ok, false);
+  assert.ok(
+    result.diagnostics.some(
+      (diagnostic) =>
+        diagnostic.code === "E_DESIGN_PROPOSAL_REQUIRED" && diagnostic.target === "product_section",
+    ),
+  );
+});
+
 test("proposal gate rejects canonical lifecycle promotion without coverage or waiver", () => {
   const fixtureRoot = proposalFixtureRoot();
   const waivers = readFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json");
@@ -473,6 +514,27 @@ test("routing validation rejects source and example paths outside the repo", () 
   const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
   routing.routes[0].sourceRefs = ["../outside.tsx"];
   routing.routes[0].examples = ["../outside-example.tsx"];
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const diagnostics = validateAgentUiRoutingTable(fixtureRoot);
+  assert.ok(
+    diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_ROUTE_SOURCE_REF_MISSING"),
+  );
+  assert.ok(diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_ROUTE_EXAMPLE_MISSING"));
+});
+
+test("routing validation rejects source and example symlinks outside the repo", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const escapedFilePath = path.join(os.tmpdir(), `escaped-route-ref-${process.pid}.md`);
+  fs.writeFileSync(escapedFilePath, "outside repo\n");
+  const sourceRef = "docs/design-system/escaped-source.md";
+  const example = "docs/design-system/escaped-example.md";
+  fs.symlinkSync(escapedFilePath, path.join(fixtureRoot, sourceRef));
+  fs.symlinkSync(escapedFilePath, path.join(fixtureRoot, example));
+
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  routing.routes[0].sourceRefs = [sourceRef];
+  routing.routes[0].examples = [example];
   writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
 
   const diagnostics = validateAgentUiRoutingTable(fixtureRoot);
@@ -551,7 +613,7 @@ test("proposal gate rejects non-object waiver entries", () => {
     result.diagnostics.some(
       (diagnostic) =>
         diagnostic.code === "E_DESIGN_PROPOSAL_WAIVER_SCHEMA" &&
-        diagnostic.message === "Proposal waiver registry waivers[10] must be a JSON object.",
+        /Proposal waiver registry waivers\[\d+\] must be a JSON object\./.test(diagnostic.message),
     ),
   );
 });

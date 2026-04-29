@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readFileSync, realpathSync, statSync } from "node:fs";
 import path from "node:path";
 import { loadAgentUiRoutingTable, resolveRemediationContext } from "./routes.js";
 import type {
@@ -463,9 +463,24 @@ function proposalRefStatus(rootDir: string, proposalRef?: string): ProposalRefSt
   if (!isExistingFile(absolutePath)) {
     return { status: "missing", proposalPath };
   }
+  let realPath: string;
+  try {
+    const realRoot = realpathSync(repoRoot);
+    realPath = realpathSync(absolutePath);
+    const relative = path.relative(realRoot, realPath);
+    if (relative !== "" && (relative.startsWith("..") || path.isAbsolute(relative))) {
+      return { status: "missing", proposalPath };
+    }
+  } catch (error) {
+    return {
+      status: "unreadable",
+      proposalPath,
+      reason: error instanceof Error ? error.message : String(error),
+    };
+  }
   let content: string;
   try {
-    content = readFileSync(absolutePath, "utf8");
+    content = readFileSync(realPath, "utf8");
   } catch (error) {
     return {
       status: "unreadable",
