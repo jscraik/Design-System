@@ -176,6 +176,12 @@ function waiverRegistrySchemaDiagnostics(value: unknown): string[] {
   }
   if (!Array.isArray(value.waivers)) {
     diagnostics.push("Proposal waiver registry must define a waivers array.");
+  } else {
+    for (const [index, entry] of value.waivers.entries()) {
+      if (!isObject(entry)) {
+        diagnostics.push(`Proposal waiver registry waivers[${index}] must be a JSON object.`);
+      }
+    }
   }
   return diagnostics;
 }
@@ -436,11 +442,14 @@ function isExistingFile(filePath: string): boolean {
  * @param proposalRef - Proposal reference (may include a `#` fragment). If omitted or if the resolved path does not exist or escapes `rootDir`, the proposal is considered missing.
  * @returns `"missing"` if the referenced file is absent, not a file, or escapes the repository root, `"accepted"` if the file contains an accepted status marker, `"not-accepted"` otherwise.
  */
-function proposalRefStatus(
-  rootDir: string,
-  proposalRef?: string,
-): "missing" | "accepted" | "not-accepted" {
-  if (!proposalRef) return "missing";
+type ProposalRefStatus = {
+  status: "missing" | "accepted" | "not-accepted" | "unreadable";
+  proposalPath?: string;
+  reason?: string;
+};
+
+function proposalRefStatus(rootDir: string, proposalRef?: string): ProposalRefStatus {
+  if (!proposalRef) return { status: "missing" };
   const proposalPath = proposalRef.split("#")[0];
   const repoRoot = path.resolve(rootDir);
   const absolutePath = path.resolve(repoRoot, proposalPath);
@@ -449,16 +458,25 @@ function proposalRefStatus(
     (absolutePath !== repoRoot && !absolutePath.startsWith(`${repoRoot}${path.sep}`)) ||
     !existsSync(absolutePath)
   ) {
-    return "missing";
+    return { status: "missing", proposalPath };
   }
   if (!isExistingFile(absolutePath)) {
-    return "missing";
+    return { status: "missing", proposalPath };
   }
-  const content = readFileSync(absolutePath, "utf8");
+  let content: string;
+  try {
+    content = readFileSync(absolutePath, "utf8");
+  } catch (error) {
+    return {
+      status: "unreadable",
+      proposalPath,
+      reason: error instanceof Error ? error.message : String(error),
+    };
+  }
   if (/^status:\s*accepted\s*$/im.test(content) || /\bStatus:\s*Accepted\b/i.test(content)) {
-    return "accepted";
+    return { status: "accepted", proposalPath };
   }
-  return "not-accepted";
+  return { status: "not-accepted", proposalPath };
 }
 
 /**
@@ -477,12 +495,26 @@ function validateRouteProposalGate(
 ): void {
   if (route.routeMaturity !== "enforced") return;
   const refStatus = proposalRefStatus(rootDir, route.proposalRef);
-  if (refStatus === "accepted") return;
+  if (refStatus.status === "accepted") return;
   if (hasActiveWaiver(waivers, "agent-ui-route", route.canonicalNeed)) return;
+
+  if (refStatus.status === "unreadable") {
+    pushDiagnostic(diagnostics, {
+      code: "E_DESIGN_PROPOSAL_REF_MISSING",
+      severity: "error",
+      message: `Unable to read proposal reference for enforced route ${route.canonicalNeed} at ${refStatus.proposalPath}: ${refStatus.reason}`,
+      scope: "agent-ui-route",
+      target: route.canonicalNeed,
+      path: refStatus.proposalPath,
+    });
+    return;
+  }
 
   pushDiagnostic(diagnostics, {
     code:
-      refStatus === "missing" ? "E_DESIGN_PROPOSAL_REQUIRED" : "E_DESIGN_PROPOSAL_REF_NOT_ACCEPTED",
+      refStatus.status === "missing"
+        ? "E_DESIGN_PROPOSAL_REQUIRED"
+        : "E_DESIGN_PROPOSAL_REF_NOT_ACCEPTED",
     severity: "error",
     message: `Enforced route ${route.canonicalNeed} must reference an accepted abstraction proposal or typed waiver.`,
     scope: "agent-ui-route",
@@ -516,8 +548,20 @@ function validateLifecycleProposalGate(
   if (hasCoverage) return;
 
   const refStatus = proposalRefStatus(rootDir, lifecycle.proposalRef);
-  if (refStatus === "accepted") return;
+  if (refStatus.status === "accepted") return;
   if (hasActiveWaiver(waivers, "component-lifecycle", lifecycle.name)) return;
+
+  if (refStatus.status === "unreadable") {
+    pushDiagnostic(diagnostics, {
+      code: "E_DESIGN_PROPOSAL_REF_MISSING",
+      severity: "error",
+      message: `Unable to read proposal reference for lifecycle component ${lifecycle.name} at ${refStatus.proposalPath}: ${refStatus.reason}`,
+      scope: "component-lifecycle",
+      target: lifecycle.name,
+      path: refStatus.proposalPath,
+    });
+    return;
+  }
 
   pushDiagnostic(diagnostics, {
     code: "E_DESIGN_LIFECYCLE_COVERAGE_MISSING",
@@ -670,7 +714,7 @@ export function buildAbstractionProposalPreview(
     surface,
     proposalRequired: remediation.route === null,
     proposalTemplatePath: PROPOSAL_TEMPLATE_PATH,
-    requiredFields: PROPOSAL_REQUIRED_FIELDS,
+    requiredFields: [...PROPOSAL_REQUIRED_FIELDS],
     previewOnly: true,
     readOnly: true,
     remediation,

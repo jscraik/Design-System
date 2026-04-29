@@ -35,7 +35,11 @@ function parseStringField(record: Record<string, unknown>, field: string, contex
   if (typeof value !== "string") {
     throw new Error(`${context}.${field} must be a string.`);
   }
-  return value;
+  const trimmed = value.trim();
+  if (!trimmed) {
+    throw new Error(`${context}.${field} must be a non-empty string.`);
+  }
+  return trimmed;
 }
 
 function parseOptionalStringField(
@@ -48,7 +52,11 @@ function parseOptionalStringField(
   if (typeof value !== "string") {
     throw new Error(`${context}.${field} must be a string when present.`);
   }
-  return value;
+  const trimmed = value.trim();
+  if (!trimmed) {
+    throw new Error(`${context}.${field} must be a non-empty string when present.`);
+  }
+  return trimmed;
 }
 
 function parseNullableStringField(
@@ -61,7 +69,11 @@ function parseNullableStringField(
   if (typeof value !== "string") {
     throw new Error(`${context}.${field} must be a string or null.`);
   }
-  return value;
+  const trimmed = value.trim();
+  if (!trimmed) {
+    throw new Error(`${context}.${field} must be a non-empty string or null.`);
+  }
+  return trimmed;
 }
 
 function parseBooleanField(
@@ -97,7 +109,13 @@ function parseStringArrayField(
   if (!Array.isArray(value) || !value.every((entry) => typeof entry === "string")) {
     throw new Error(`${context}.${field} must be an array of strings.`);
   }
-  return value;
+  return value.map((entry, index) => {
+    const trimmed = entry.trim();
+    if (!trimmed) {
+      throw new Error(`${context}.${field}[${index}] must be a non-empty string.`);
+    }
+    return trimmed;
+  });
 }
 
 function parseObjectArrayField(
@@ -193,8 +211,8 @@ function parseRouteSource(value: unknown): AgentUiRouteSource {
   }
   const route = value;
   const context =
-    typeof route.canonicalNeed === "string"
-      ? `Agent UI route ${route.canonicalNeed}`
+    typeof route.canonicalNeed === "string" && route.canonicalNeed.trim()
+      ? `Agent UI route ${route.canonicalNeed.trim()}`
       : "Agent UI route";
   return {
     need: parseStringField(route, "need", context),
@@ -247,8 +265,8 @@ function parseLifecycleManifest(value: unknown): { components: ComponentLifecycl
   return {
     components: value.components.map((entry) => {
       const context =
-        typeof entry.name === "string"
-          ? `Component lifecycle ${entry.name}`
+        typeof entry.name === "string" && entry.name.trim()
+          ? `Component lifecycle ${entry.name.trim()}`
           : "Component lifecycle";
       return {
         name: parseStringField(entry, "name", context),
@@ -272,7 +290,9 @@ function parseCoverageEntries(value: unknown): ComponentCoverageEntry[] {
   }
   return value.map((entry) => {
     const context =
-      typeof entry.name === "string" ? `Component coverage ${entry.name}` : "Component coverage";
+      typeof entry.name === "string" && entry.name.trim()
+        ? `Component coverage ${entry.name.trim()}`
+        : "Component coverage";
     return {
       name: parseStringField(entry, "name", context),
       source: parseStringField(entry, "source", context),
@@ -741,7 +761,9 @@ export function resolveRemediationContext(
           `Import from ${result.route.preferredComponent.packageName}; source path ${result.route.preferredComponent.importPath}.`,
         ]
       : [],
-    validationCommands: result.route?.validationCommands ?? [],
+    validationCommands:
+      result.route?.validationCommands.filter((command) => command.safetyClass === "read_only") ??
+      [],
     diagnostics: result.diagnostics,
   };
 }

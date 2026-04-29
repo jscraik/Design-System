@@ -208,10 +208,33 @@ test("rejects malformed routing rows instead of coercing fields", () => {
   );
 });
 
+test("rejects empty routing strings at parse time", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  routing.routes[0].canonicalNeed = "   ";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  assert.throws(
+    () => loadAgentUiRoutingTable(fixtureRoot),
+    /Agent UI route\.canonicalNeed must be a non-empty string/,
+  );
+
+  routing.routes[0].canonicalNeed = "async_collection";
+  routing.routes[0].sourceRefs = ["   "];
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  assert.throws(
+    () => loadAgentUiRoutingTable(fixtureRoot),
+    /Agent UI route async_collection\.sourceRefs\[0\] must be a non-empty string/,
+  );
+});
+
 test("rejects malformed lifecycle and coverage rows instead of defaulting metadata", () => {
   const lifecycleRoot = proposalFixtureRoot();
   const lifecycle = readFixtureJson(lifecycleRoot, "docs/design-system/COMPONENT_LIFECYCLE.json");
-  lifecycle.components[0].routing_tier = "2";
+  const stack = lifecycle.components.find((entry) => entry.name === "Stack");
+  assert.ok(stack);
+  stack.routing_tier = "2";
   writeFixtureJson(lifecycleRoot, "docs/design-system/COMPONENT_LIFECYCLE.json", lifecycle);
 
   assert.throws(
@@ -221,7 +244,9 @@ test("rejects malformed lifecycle and coverage rows instead of defaulting metada
 
   const coverageRoot = proposalFixtureRoot();
   const coverage = readFixtureJson(coverageRoot, "docs/design-system/COVERAGE_MATRIX.json");
-  coverage[0].web_used = "false";
+  const accordion = coverage.find((entry) => entry.name === "Accordion");
+  assert.ok(accordion);
+  accordion.web_used = "false";
   writeFixtureJson(coverageRoot, "docs/design-system/COVERAGE_MATRIX.json", coverage);
 
   assert.throws(
@@ -359,6 +384,7 @@ test("builds remediation context from route data", () => {
   assert.ok(
     context.replacementInstructions.some((instruction) => instruction.includes("ProductPanel")),
   );
+  assert.ok(context.validationCommands.every((command) => command.safetyClass === "read_only"));
 });
 
 test("proposal gate accepts current routes through typed grandfathering waivers", () => {
@@ -513,6 +539,23 @@ test("proposal gate rejects malformed waiver registry shape", () => {
   );
 });
 
+test("proposal gate rejects non-object waiver entries", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const waivers = readFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json");
+  waivers.waivers.push(42);
+  writeFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json", waivers);
+
+  const result = validateProposalGate(fixtureRoot, { today: "2026-04-28" });
+  assert.equal(result.ok, false);
+  assert.ok(
+    result.diagnostics.some(
+      (diagnostic) =>
+        diagnostic.code === "E_DESIGN_PROPOSAL_WAIVER_SCHEMA" &&
+        diagnostic.message === "Proposal waiver registry waivers[10] must be a JSON object.",
+    ),
+  );
+});
+
 test("proposal gate reports malformed waiver registry JSON as a diagnostic", () => {
   const fixtureRoot = proposalFixtureRoot();
   fs.writeFileSync(
@@ -634,6 +677,14 @@ test("proposal preview marks unknown needs as proposal-required without writing 
   assert.equal(preview.readOnly, true);
   assert.ok(preview.requiredFields.includes("coverage impact"));
   assert.equal(preview.remediation.route, null);
+});
+
+test("proposal preview returns fresh required-field arrays", () => {
+  const first = buildAbstractionProposalPreview("timeline editor", rootDir);
+  first.requiredFields.push("mutated by caller");
+
+  const second = buildAbstractionProposalPreview("timeline editor", rootDir);
+  assert.equal(second.requiredFields.includes("mutated by caller"), false);
 });
 
 test("builds prepare payload for protected product page surfaces", async () => {
