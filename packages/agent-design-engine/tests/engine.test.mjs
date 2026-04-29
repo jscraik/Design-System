@@ -370,6 +370,38 @@ test("does not match question-mark surface-pattern wildcards across slashes", ()
   assert.equal(result.route, null);
 });
 
+test("rejects missing surface files before matching broad route patterns", () => {
+  const result = resolveRouteForSurface(
+    "platforms/web/apps/web/src/pages/TemplteBrowserPage.tsx",
+    rootDir,
+  );
+  assert.equal(result.ok, false);
+  assert.equal(result.route, null);
+  assert.equal(result.diagnostics[0].code, "E_DESIGN_ROUTE_MISSING");
+  assert.match(result.diagnostics[0].message, /does not exist as a file/);
+});
+
+test("rejects tied surface route matches instead of choosing by sort order", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  routing.routes.push({
+    ...routing.routes.find((route) => route.canonicalNeed === "page_shell"),
+    need: "alternate page shell",
+    canonicalNeed: "alternate_page_shell",
+    aliases: [],
+  });
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const result = resolveRouteForSurface(
+    "platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx",
+    fixtureRoot,
+  );
+  assert.equal(result.ok, false);
+  assert.equal(result.route, null);
+  assert.equal(result.diagnostics[0].code, "E_DESIGN_ROUTE_AMBIGUOUS");
+  assert.match(result.diagnostics[0].message, /same specificity/);
+});
+
 test("rejects surface paths that resolve outside the repo root", () => {
   const outside = resolveRouteForSurface(path.join(os.tmpdir(), "OutsidePage.tsx"), rootDir);
   assert.equal(outside.ok, false);

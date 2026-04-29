@@ -706,6 +706,33 @@ export function resolveRouteForSurface(
       ],
     };
   }
+  const resolvedSurfacePath = resolveRepoPath(rootDir, surfacePath);
+  if (!resolvedSurfacePath) {
+    return {
+      ok: false,
+      route: null,
+      diagnostics: [
+        {
+          code: "E_DESIGN_ROUTE_MISSING",
+          message: `Surface '${surfacePath}' resolves outside the repository root.`,
+          path: surfacePath,
+        },
+      ],
+    };
+  }
+  if (!isExistingFile(resolvedSurfacePath)) {
+    return {
+      ok: false,
+      route: null,
+      diagnostics: [
+        {
+          code: "E_DESIGN_ROUTE_MISSING",
+          message: `Surface '${surfacePath}' does not exist as a file in the repository.`,
+          path: surfacePath,
+        },
+      ],
+    };
+  }
   const table = loadAgentUiRoutingTable(rootDir);
   const candidates = table.routes
     .flatMap((route) =>
@@ -722,7 +749,31 @@ export function resolveRouteForSurface(
       }
       return left.route.canonicalNeed.localeCompare(right.route.canonicalNeed);
     });
-  const match = candidates[0]?.route;
+  const best = candidates[0];
+  const conflicting = candidates.find(
+    (candidate, index) =>
+      index > 0 &&
+      best &&
+      candidate.route.canonicalNeed !== best.route.canonicalNeed &&
+      candidate.score.wildcardCount === best.score.wildcardCount &&
+      candidate.score.literalLength === best.score.literalLength,
+  );
+
+  if (best && conflicting) {
+    return {
+      ok: false,
+      route: null,
+      diagnostics: [
+        {
+          code: "E_DESIGN_ROUTE_AMBIGUOUS",
+          message: `Surface '${surfacePath}' matched multiple agent UI routes with the same specificity.`,
+          path: surfacePath,
+        },
+      ],
+    };
+  }
+
+  const match = best?.route;
 
   if (!match) {
     return {
