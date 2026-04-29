@@ -11,9 +11,9 @@ import type {
   RouteResolutionResult,
 } from "./types.js";
 
-const routingPath = "docs/design-system/AGENT_UI_ROUTING.json";
-const lifecyclePath = "docs/design-system/COMPONENT_LIFECYCLE.json";
-const coveragePath = "docs/design-system/COVERAGE_MATRIX.json";
+const ROUTING_PATH = "docs/design-system/AGENT_UI_ROUTING.json";
+const LIFECYCLE_PATH = "docs/design-system/COMPONENT_LIFECYCLE.json";
+const COVERAGE_PATH = "docs/design-system/COVERAGE_MATRIX.json";
 
 /**
  * Read a UTF-8 JSON file located at the given relative path.
@@ -308,6 +308,8 @@ function globToRegex(glob: string): RegExp {
       index += 1;
     } else if (char === "*") {
       pattern += "[^/]*";
+    } else if (char === "?") {
+      pattern += "[^/]";
     } else {
       pattern += escapeRegex(char);
     }
@@ -384,7 +386,7 @@ function toRouteDiagnostic(
  * @returns The list of `ComponentLifecycleEntry` objects defined in the lifecycle manifest
  */
 function loadLifecycle(rootDir: string): ComponentLifecycleEntry[] {
-  const manifest = parseLifecycleManifest(readJson(rootDir, lifecyclePath));
+  const manifest = parseLifecycleManifest(readJson(rootDir, LIFECYCLE_PATH));
   return manifest.components;
 }
 
@@ -395,7 +397,7 @@ function loadLifecycle(rootDir: string): ComponentLifecycleEntry[] {
  * @returns The array of ComponentCoverageEntry objects from the coverage manifest
  */
 function loadCoverage(rootDir: string): ComponentCoverageEntry[] {
-  return parseCoverageEntries(readJson(rootDir, coveragePath));
+  return parseCoverageEntries(readJson(rootDir, COVERAGE_PATH));
 }
 
 function resolveRepoPath(rootDir: string, relativePath: string): string | null {
@@ -551,7 +553,7 @@ function resolveRoute(
  * @throws If the manifest's `schemaVersion` is not `agent-ui-routing.v1`
  */
 export function loadAgentUiRoutingTable(rootDir = process.cwd()): AgentUiRoutingTable {
-  const table = parseRoutingTable(readJson(rootDir, routingPath));
+  const table = parseRoutingTable(readJson(rootDir, ROUTING_PATH));
   if (table.schemaVersion !== "agent-ui-routing.v1") {
     throw new Error(`Unsupported routing schema version: ${table.schemaVersion}`);
   }

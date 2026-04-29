@@ -263,6 +263,77 @@ test("resolves routes by known surface path", () => {
   assert.equal(settings.route?.canonicalNeed, "settings_panel");
 });
 
+test("resolves question-mark surface-pattern wildcards consistently", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  routing.routes.push({
+    need: "question_mark_panel",
+    canonicalNeed: "question_mark_panel",
+    aliases: [],
+    preferredComponent: {
+      name: "ProductPanel",
+      importPath: "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+      packageName: "@design-studio/ui",
+      coverageName: "ProductComposition",
+    },
+    lifecycleStatus: "canonical",
+    routeMaturity: "provisional",
+    surfacePatterns: ["packages/ui/src/app/settings/App?Panel/AppsPanel.tsx"],
+    useWhen: ["Testing single-character surface-pattern wildcard behavior."],
+    requiredStates: [],
+    examples: [],
+    avoid: [],
+    fallbacks: [],
+    validationCommands: [],
+    sourceRefs: [],
+  });
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const result = resolveRouteForSurface(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+  assert.equal(result.ok, true);
+  assert.equal(result.route?.canonicalNeed, "question_mark_panel");
+});
+
+test("does not match question-mark surface-pattern wildcards across slashes", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  routing.routes = [
+    {
+      need: "question_mark_panel",
+      canonicalNeed: "question_mark_panel",
+      aliases: [],
+      preferredComponent: {
+        name: "ProductPanel",
+        importPath:
+          "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+        packageName: "@design-studio/ui",
+        coverageName: "ProductComposition",
+      },
+      lifecycleStatus: "canonical",
+      routeMaturity: "provisional",
+      surfacePatterns: ["packages/ui/src/app/settings/App?Panel/AppsPanel.tsx"],
+      useWhen: ["Testing single-character surface-pattern wildcard behavior."],
+      requiredStates: [],
+      examples: [],
+      avoid: [],
+      fallbacks: [],
+      validationCommands: [],
+      sourceRefs: [],
+    },
+  ];
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const result = resolveRouteForSurface(
+    "packages/ui/src/app/settings/App/Panel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+  assert.equal(result.ok, false);
+  assert.equal(result.route, null);
+});
+
 test("rejects surface paths that resolve outside the repo root", () => {
   const outside = resolveRouteForSurface(path.join(os.tmpdir(), "OutsidePage.tsx"), rootDir);
   assert.equal(outside.ok, false);
@@ -454,6 +525,17 @@ test("proposal gate reports malformed waiver registry JSON as a diagnostic", () 
   assert.ok(
     result.diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_PROPOSAL_WAIVER_SCHEMA"),
   );
+});
+
+test("proposal gate reports malformed routing table shape as a diagnostic", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  routing.routes = "not-routes";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const result = validateProposalGate(fixtureRoot, { today: "2026-04-28" });
+  assert.equal(result.ok, false);
+  assert.ok(result.diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_ROUTING_SCHEMA"));
 });
 
 test("proposal gate rejects malformed lifecycle rows", () => {

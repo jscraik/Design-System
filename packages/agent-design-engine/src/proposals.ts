@@ -17,6 +17,7 @@ import type {
 export const PROPOSAL_TEMPLATE_PATH = "docs/design-system/proposals/TEMPLATE.md";
 export const PROPOSAL_WAIVER_REGISTRY_PATH = "docs/design-system/proposals/waivers.json";
 
+const ROUTING_PATH = "docs/design-system/AGENT_UI_ROUTING.json";
 const LIFECYCLE_PATH = "docs/design-system/COMPONENT_LIFECYCLE.json";
 const COVERAGE_PATH = "docs/design-system/COVERAGE_MATRIX.json";
 const PROPOSAL_REQUIRED_FIELDS = [
@@ -579,7 +580,18 @@ export function validateProposalGate(
   }
   const registry = parseWaiverRegistry(registrySource);
   const waivers = validateWaiverRegistryShape(registry, diagnostics, today);
-  const routingTable = loadAgentUiRoutingTable(rootDir);
+  let routingTable: ReturnType<typeof loadAgentUiRoutingTable> | null = null;
+  try {
+    routingTable = loadAgentUiRoutingTable(rootDir);
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : String(error);
+    pushDiagnostic(diagnostics, {
+      code: "E_DESIGN_ROUTING_SCHEMA",
+      severity: "error",
+      message: `Unable to read or parse ${ROUTING_PATH}: ${reason}`,
+      path: ROUTING_PATH,
+    });
+  }
   const lifecycleManifest = readJson(
     rootDir,
     LIFECYCLE_PATH,
@@ -606,8 +618,10 @@ export function validateProposalGate(
   }
   const coverageEntries = parseCoverageEntries(coverageMatrix);
 
-  for (const route of routingTable.routes) {
-    validateRouteProposalGate(rootDir, route, waivers, diagnostics);
+  if (routingTable) {
+    for (const route of routingTable.routes) {
+      validateRouteProposalGate(rootDir, route, waivers, diagnostics);
+    }
   }
 
   for (const lifecycle of lifecycleEntries) {
