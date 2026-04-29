@@ -203,6 +203,7 @@ export interface RouteDiagnostic {
     | "E_DESIGN_ROUTE_SOURCE_REF_MISSING"
     | "E_DESIGN_ROUTE_EXAMPLE_MISSING"
     | "E_DESIGN_ROUTE_DEPRECATED"
+    | "E_DESIGN_ROUTE_INVALID_INPUT"
     | "E_DESIGN_PROPOSAL_REQUIRED";
   message: string;
   routeNeed?: string;

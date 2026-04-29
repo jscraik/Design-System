@@ -359,6 +359,19 @@ function normalizeSurfacePath(rootDir: string, surfacePath: string): string | nu
   if (relative === "" || relative.startsWith("..") || path.isAbsolute(relative)) {
     return null;
   }
+  try {
+    const realRoot = realpathSync(repoRoot);
+    const realResolved = realpathSync(resolved);
+    const realRelative = path.relative(realRoot, realResolved);
+    if (realRelative === "" || realRelative.startsWith("..") || path.isAbsolute(realRelative)) {
+      return null;
+    }
+  } catch (error) {
+    const code = getErrorCode(error);
+    if (code !== "ENOENT" && code !== "ENOTDIR") {
+      throw error;
+    }
+  }
   return toPosixPath(relative);
 }
 
@@ -626,6 +639,18 @@ export function loadAgentUiRoutingTable(rootDir = process.cwd()): AgentUiRouting
  * @returns A RouteResolutionResult where `ok` is `true` if a single route was resolved with no diagnostics; `route` is the resolved route on success or `null` on failure; `diagnostics` contains any matching or validation errors (for example, missing/ambiguous route, missing lifecycle/coverage entries, or missing referenced files)
  */
 export function resolveRouteForNeed(need: string, rootDir = process.cwd()): RouteResolutionResult {
+  if (!need.trim()) {
+    return {
+      ok: false,
+      route: null,
+      diagnostics: [
+        {
+          code: "E_DESIGN_ROUTE_INVALID_INPUT",
+          message: "Need cannot be empty or whitespace.",
+        },
+      ],
+    };
+  }
   const normalizedNeed = normalizeNeed(need);
   const table = loadAgentUiRoutingTable(rootDir);
   const matches = table.routes.filter((route) => {

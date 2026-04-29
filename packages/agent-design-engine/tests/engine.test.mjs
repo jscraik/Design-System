@@ -381,6 +381,24 @@ test("rejects missing surface files before matching broad route patterns", () =>
   assert.match(result.diagnostics[0].message, /does not exist as a file/);
 });
 
+test("rejects surface symlinks that escape the repo before route matching", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const externalFile = path.join(os.tmpdir(), `escaped-surface-${process.pid}.tsx`);
+  const symlinkPath = path.join(fixtureRoot, "platforms/web/apps/web/src/pages/EscapedPage.tsx");
+  fs.writeFileSync(externalFile, "export default function EscapedPage() { return null; }\n");
+  fs.mkdirSync(path.dirname(symlinkPath), { recursive: true });
+  fs.symlinkSync(externalFile, symlinkPath);
+
+  const result = resolveRouteForSurface(
+    "platforms/web/apps/web/src/pages/EscapedPage.tsx",
+    fixtureRoot,
+  );
+  assert.equal(result.ok, false);
+  assert.equal(result.route, null);
+  assert.equal(result.diagnostics[0].code, "E_DESIGN_ROUTE_MISSING");
+  assert.match(result.diagnostics[0].message, /resolves outside the repository root/);
+});
+
 test("rejects tied surface route matches instead of choosing by sort order", () => {
   const fixtureRoot = proposalFixtureRoot();
   const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
@@ -414,6 +432,10 @@ test("returns deterministic missing-route diagnostics for unknown needs and surf
   const missingNeed = resolveRouteForNeed("timeline editor", rootDir);
   assert.equal(missingNeed.ok, false);
   assert.equal(missingNeed.diagnostics[0].code, "E_DESIGN_PROPOSAL_REQUIRED");
+
+  const blankNeed = resolveRouteForNeed("   ", rootDir);
+  assert.equal(blankNeed.ok, false);
+  assert.equal(blankNeed.diagnostics[0].code, "E_DESIGN_ROUTE_INVALID_INPUT");
 
   const missingSurface = resolveRouteForSurface("docs/design-system/unknown/Thing.md", rootDir);
   assert.equal(missingSurface.ok, false);
