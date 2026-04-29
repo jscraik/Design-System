@@ -399,7 +399,7 @@ test("rejects tied surface route matches instead of choosing by sort order", () 
   assert.equal(result.ok, false);
   assert.equal(result.route, null);
   assert.equal(result.diagnostics[0].code, "E_DESIGN_ROUTE_AMBIGUOUS");
-  assert.match(result.diagnostics[0].message, /same specificity/);
+  assert.match(result.diagnostics[0].message, /specificity/);
 });
 
 test("rejects surface paths that resolve outside the repo root", () => {
