@@ -1,0 +1,285 @@
+{
+  "schemaVersion": "agent-ui-routing.v1",
+  "updatedAt": "2026-04-28",
+  "routes": [
+    {
+      "need": "async_collection",
+      "canonicalNeed": "async_collection",
+      "aliases": ["async results", "collection state", "data view", "results list"],
+      "preferredComponent": {
+        "name": "ProductDataView",
+        "importPath": "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+        "packageName": "@design-studio/ui",
+        "coverageName": "ProductComposition"
+      },
+      "lifecycleStatus": "canonical",
+      "routeMaturity": "enforced",
+      "surfacePatterns": [
+        "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+        "**/*Page.tsx",
+        "**/*Panel.tsx",
+        "**/*View.tsx"
+      ],
+      "useWhen": [
+        "A collection, table, list, or result region needs ready/loading/empty/error/busy state routing.",
+        "The surface owns the result-region heading and state transitions."
+      ],
+      "requiredStates": ["ready", "loading", "empty", "error"],
+      "examples": [
+        "packages/ui/src/storybook/_holding/component-stories/ProductComposition.stories.tsx",
+        "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.test.tsx"
+      ],
+      "avoid": [
+        "Local loading/error/empty branches with unrelated markup.",
+        "Hand-rolled async wrappers when ProductDataView can own state routing."
+      ],
+      "fallbacks": [
+        {
+          "component": "ProductStateWrapper",
+          "reason": "Use inside an existing panel or section when the surrounding collection hierarchy already exists."
+        }
+      ],
+      "validationCommands": [
+        {
+          "command": "pnpm agent-design:lint",
+          "safetyClass": "read_only",
+          "reason": "Checks the current design contract without mutating files."
+        }
+      ],
+      "sourceRefs": [
+        "docs/design-system/AGENT_UI_ROUTING.md#agent-composition-primitives",
+        "docs/design-system/GOLD_EXAMPLES.md#promoted-examples",
+        "docs/design-system/PROFESSIONAL_UI_CONTRACT.md#state-and-feedback"
+      ]
+    },
+    {
+      "need": "destructive_confirmation",
+      "canonicalNeed": "destructive_confirmation",
+      "aliases": ["confirm destructive", "danger confirmation", "delete confirmation"],
+      "preferredComponent": {
+        "name": "AlertDialog",
+        "importPath": "packages/ui/src/components/ui/feedback/AlertDialog/AlertDialog.tsx",
+        "packageName": "@design-studio/ui",
+        "coverageName": "AlertDialog"
+      },
+      "lifecycleStatus": "canonical",
+      "routeMaturity": "provisional",
+      "surfacePatterns": [
+        "packages/ui/src/components/ui/feedback/AlertDialog/**/*.tsx",
+        "packages/ui/src/storybook/_holding/component-stories/AlertDialog.stories.tsx"
+      ],
+      "useWhen": [
+        "A destructive action needs a blocking confirmation before continuing.",
+        "The user must review action consequences before confirming."
+      ],
+      "requiredStates": ["ready", "confirming", "submitting", "error"],
+      "examples": ["packages/ui/src/storybook/_holding/component-stories/AlertDialog.stories.tsx"],
+      "avoid": [
+        "Inline destructive buttons that immediately mutate data.",
+        "Generic modal wrappers without focus trapping and cancel affordances."
+      ],
+      "fallbacks": [
+        {
+          "component": "ProductPanel",
+          "reason": "Use only for non-blocking danger-zone presentation before the confirmation affordance."
+        }
+      ],
+      "validationCommands": [
+        {
+          "command": "pnpm test:a11y:widgets",
+          "safetyClass": "read_only",
+          "reason": "Checks accessibility behavior for rendered widget surfaces."
+        }
+      ],
+      "sourceRefs": [
+        "docs/design-system/GOLD_EXAMPLES.md#promoted-examples",
+        "docs/design-system/PROFESSIONAL_UI_CONTRACT.md#state-and-feedback",
+        "docs/TEST_PLAN.md"
+      ]
+    },
+    {
+      "need": "page_shell",
+      "canonicalNeed": "page_shell",
+      "aliases": ["full page", "tool surface", "viewport shell", "page layout"],
+      "preferredComponent": {
+        "name": "ProductPageShell",
+        "importPath": "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+        "packageName": "@design-studio/ui",
+        "coverageName": "ProductComposition"
+      },
+      "lifecycleStatus": "canonical",
+      "routeMaturity": "enforced",
+      "surfacePatterns": ["platforms/web/apps/web/src/pages/**/*.tsx"],
+      "useWhen": [
+        "A full product page or tool surface needs viewport-safe shell structure.",
+        "The surface needs page heading, optional sidebar, main region, or footer slots."
+      ],
+      "requiredStates": [],
+      "examples": [
+        "platforms/web/apps/web/src/pages/HarnessPage.tsx",
+        "platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx",
+        "packages/ui/src/storybook/_holding/component-stories/ProductComposition.stories.tsx"
+      ],
+      "avoid": [
+        "Custom h-screen or min-h-screen wrapper chains.",
+        "Loose div shells that duplicate page heading and main-region structure."
+      ],
+      "fallbacks": [
+        {
+          "component": "Stack",
+          "reason": "Use only for local vertical rhythm inside the page shell."
+        }
+      ],
+      "validationCommands": [
+        {
+          "command": "pnpm agent-design:lint",
+          "safetyClass": "read_only",
+          "reason": "Checks the current design contract without mutating files."
+        }
+      ],
+      "sourceRefs": [
+        "docs/design-system/AGENT_UI_ROUTING.md#agent-composition-primitives",
+        "docs/design-system/GOLD_EXAMPLES.md#promoted-examples",
+        "docs/design-system/COMPONENT_LIFECYCLE.json"
+      ]
+    },
+    {
+      "need": "product_panel",
+      "canonicalNeed": "product_panel",
+      "aliases": ["grouped panel", "card-like region", "framed product region"],
+      "preferredComponent": {
+        "name": "ProductPanel",
+        "importPath": "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+        "packageName": "@design-studio/ui",
+        "coverageName": "ProductComposition"
+      },
+      "lifecycleStatus": "canonical",
+      "routeMaturity": "enforced",
+      "surfacePatterns": ["**/*Page.tsx", "**/*Panel.tsx"],
+      "useWhen": [
+        "A product region needs semantic panel chrome with heading, actions, body, or footer.",
+        "The UI is a repeated or grouped work area, not a full page shell."
+      ],
+      "requiredStates": [],
+      "examples": ["platforms/web/apps/web/src/pages/HarnessPage.tsx"],
+      "avoid": [
+        "Nested cards around product work areas.",
+        "Ad hoc border/background wrappers where ProductPanel already fits."
+      ],
+      "fallbacks": [
+        {
+          "component": "Stack",
+          "reason": "Use inside ProductPanel for local vertical spacing."
+        }
+      ],
+      "validationCommands": [
+        {
+          "command": "pnpm agent-design:lint",
+          "safetyClass": "read_only",
+          "reason": "Checks the current design contract without mutating files."
+        }
+      ],
+      "sourceRefs": [
+        "docs/design-system/AGENT_UI_ROUTING.md#agent-composition-primitives",
+        "docs/design-system/GOLD_EXAMPLES.md#promoted-examples",
+        "docs/design-system/COMPONENT_LIFECYCLE.json"
+      ]
+    },
+    {
+      "need": "product_section",
+      "canonicalNeed": "product_section",
+      "aliases": ["content group", "repeated section", "section rhythm"],
+      "preferredComponent": {
+        "name": "ProductSection",
+        "importPath": "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+        "packageName": "@design-studio/ui",
+        "coverageName": "ProductComposition"
+      },
+      "lifecycleStatus": "canonical",
+      "routeMaturity": "enforced",
+      "surfacePatterns": ["**/*Page.tsx", "**/*Panel.tsx"],
+      "useWhen": [
+        "Repeated content groups need section heading and vertical rhythm.",
+        "A settings or product panel has multiple named subsections."
+      ],
+      "requiredStates": [],
+      "examples": [
+        "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+        "packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.tsx"
+      ],
+      "avoid": [
+        "Loose heading plus Stack pairs for repeated product sections.",
+        "One-off section wrappers that duplicate ProductSection spacing."
+      ],
+      "fallbacks": [
+        {
+          "component": "SectionHeader",
+          "reason": "Use for heading-only settings recipes when ProductSection would over-frame the content."
+        }
+      ],
+      "validationCommands": [
+        {
+          "command": "pnpm agent-design:lint",
+          "safetyClass": "read_only",
+          "reason": "Checks the current design contract without mutating files."
+        }
+      ],
+      "sourceRefs": [
+        "docs/design-system/AGENT_UI_ROUTING.md#agent-composition-primitives",
+        "docs/design-system/GOLD_EXAMPLES.md#promoted-examples",
+        "docs/design-system/COMPONENT_LIFECYCLE.json"
+      ]
+    },
+    {
+      "need": "settings_panel",
+      "canonicalNeed": "settings_panel",
+      "aliases": ["settings cluster", "settings surface", "preferences panel"],
+      "preferredComponent": {
+        "name": "ProductSection",
+        "importPath": "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+        "packageName": "@design-studio/ui",
+        "coverageName": "ProductComposition"
+      },
+      "lifecycleStatus": "canonical",
+      "routeMaturity": "provisional",
+      "surfacePatterns": ["packages/ui/src/app/settings/**/*.tsx"],
+      "useWhen": [
+        "A settings cluster needs grouped sections without a new settings-only shell.",
+        "The surface is normalizing existing settings recipes before creating new exports."
+      ],
+      "requiredStates": ["ready", "loading", "empty", "error"],
+      "examples": [
+        "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+        "packages/ui/src/app/settings/AppsPanel/AppsPanel.stories.tsx",
+        "packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.tsx",
+        "packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.stories.tsx"
+      ],
+      "avoid": [
+        "A second settings shell primitive parallel to existing layout primitives.",
+        "Settings-only empty, loading, or error components that duplicate shared primitives."
+      ],
+      "fallbacks": [
+        {
+          "component": "SettingRow",
+          "reason": "Transitional recipe for existing row normalization before any new public export."
+        },
+        {
+          "component": "ProductStateWrapper",
+          "reason": "Use for local async state inside an existing settings panel."
+        }
+      ],
+      "validationCommands": [
+        {
+          "command": "pnpm agent-design:lint",
+          "safetyClass": "read_only",
+          "reason": "Checks the current design contract without mutating files."
+        }
+      ],
+      "sourceRefs": [
+        "docs/design-system/AGENT_UI_ROUTING.md#settings-cluster-defaults",
+        "docs/design-system/GOLD_EXAMPLES.md#promoted-examples",
+        "docs/design-system/COMPONENT_LIFECYCLE.json"
+      ]
+    }
+  ]
+}

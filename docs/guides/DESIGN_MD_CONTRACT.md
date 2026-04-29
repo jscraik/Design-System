@@ -23,10 +23,13 @@ before generating or changing UI.
 
 ## Source of Truth
 
-Contract metadata lives in `DESIGN.md`.
+Contract metadata and UI semantics live in `DESIGN.md`.
 
 Rollout state lives in `.design-system-guidance.json` under
 `designContract.mode` and `designContract.migrationState`.
+That config object is the machine-readable rollout link that tells guidance and
+CLI tooling whether this repository is still in legacy guidance mode or whether
+`DESIGN.md` is active as the design contract.
 
 The semantic engine lives in `packages/agent-design-engine`. The wrapper package
 `packages/design-system-guidance` owns rollout policy, supported profiles, and
@@ -126,6 +129,23 @@ recovery payload explaining why no retry command is safe.
   }
 }
 ```
+
+When the repository has already adopted `DESIGN.md`, the active state can omit
+rollback metadata:
+
+```json
+{
+  "schemaVersion": 2,
+  "docs": ["docs/design-system/CONTRACT.md"],
+  "designContract": {
+    "mode": "design-md",
+    "migrationState": "active"
+  }
+}
+```
+
+When `rollbackMetadata` is omitted, `design migrate --rollback` and resume flows
+are expected to fail with rollback-metadata errors until metadata is restored.
 
 Supported modes:
 

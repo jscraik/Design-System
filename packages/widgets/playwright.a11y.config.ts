@@ -2,25 +2,38 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { defineConfig } from "@playwright/test";
+import { parsePlaywrightHost, parsePlaywrightPort } from "../../scripts/playwright-env";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const defaultPort = 5174;
-const widgetsPort = Number(process.env.PLAYWRIGHT_WIDGETS_PORT ?? process.env.PORT ?? defaultPort);
-const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://localhost:${widgetsPort}`;
+
+const explicitBaseURL = process.env.PLAYWRIGHT_BASE_URL?.trim();
+const useExternalBaseURL = Boolean(explicitBaseURL);
+const host = useExternalBaseURL
+  ? "127.0.0.1"
+  : parsePlaywrightHost(process.env.PLAYWRIGHT_WIDGETS_HOST, "127.0.0.1", "widgets");
+const widgetsPort = useExternalBaseURL
+  ? defaultPort
+  : parsePlaywrightPort(
+      process.env.PLAYWRIGHT_WIDGETS_PORT ?? process.env.PORT,
+      defaultPort,
+      "widgets",
+    );
+const baseURL = explicitBaseURL ?? `http://${host}:${widgetsPort}`;
 const webServerURL = new URL("/chat-view", baseURL).toString();
 const reuseExistingServer =
   process.env.PLAYWRIGHT_REUSE_SERVER === "1" ||
   process.env.PLAYWRIGHT_REUSE_SERVER === "true" ||
   !process.env.CI;
 
-const webServer = process.env.PLAYWRIGHT_BASE_URL
+const webServer = useExternalBaseURL
   ? {
       url: webServerURL,
       reuseExistingServer: true,
       timeout: 120_000,
     }
   : {
-      command: `pnpm dev --port ${widgetsPort} --strictPort`,
+      command: `pnpm dev --host ${host} --port ${widgetsPort} --strictPort`,
       url: webServerURL,
       reuseExistingServer,
       timeout: 120_000,

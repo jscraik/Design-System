@@ -121,6 +121,221 @@ export interface BrandCheckResult {
   findings: DesignFinding[];
 }
 
+export type RouteMaturity = "enforced" | "provisional";
+export type RouteSafetyClass = "read_only" | "mutating" | "interactive" | "server_start";
+
+export interface AgentUiRouteValidationCommand {
+  command: string;
+  safetyClass: RouteSafetyClass;
+  reason: string;
+  blockedByDefault?: boolean;
+}
+
+export interface AgentUiRouteFallback {
+  component: string;
+  reason: string;
+}
+
+export interface AgentUiRoutePreferredComponent {
+  name: string;
+  importPath: string;
+  packageName: string;
+  coverageName?: string;
+}
+
+export interface AgentUiRouteSource {
+  need: string;
+  canonicalNeed: string;
+  aliases: string[];
+  proposalRef?: string;
+  preferredComponent: AgentUiRoutePreferredComponent;
+  lifecycleStatus: "canonical" | "transitional";
+  routeMaturity: RouteMaturity;
+  surfacePatterns: string[];
+  useWhen: string[];
+  requiredStates: string[];
+  examples: string[];
+  avoid: string[];
+  fallbacks: AgentUiRouteFallback[];
+  validationCommands: AgentUiRouteValidationCommand[];
+  sourceRefs: string[];
+}
+
+export interface AgentUiRoutingTable {
+  schemaVersion: "agent-ui-routing.v1";
+  updatedAt: string;
+  routes: AgentUiRouteSource[];
+}
+
+export interface ComponentLifecycleEntry {
+  name: string;
+  path: string;
+  lifecycle: "canonical" | "transitional" | "deprecated";
+  routing_tier: number;
+  proposalRef?: string;
+  notes: string;
+}
+
+export interface ComponentCoverageEntry {
+  name: string;
+  source: string;
+  upstream: string | null;
+  fallback: string | null;
+  status: string;
+  web_used: boolean;
+  tauri_used: boolean;
+  widget_used: boolean;
+}
+
+export interface ResolvedAgentUiRoute extends AgentUiRouteSource {
+  lifecycleEntry: ComponentLifecycleEntry;
+  coverageEntry: ComponentCoverageEntry;
+  matchedNeed: string;
+  matchedAlias: string | null;
+}
+
+export interface RouteDiagnostic {
+  code:
+    | "E_DESIGN_ROUTE_MISSING"
+    | "E_DESIGN_ROUTE_AMBIGUOUS"
+    | "E_DESIGN_ROUTE_LIFECYCLE_MISSING"
+    | "E_DESIGN_ROUTE_COVERAGE_MISSING"
+    | "E_DESIGN_ROUTE_SOURCE_REF_MISSING"
+    | "E_DESIGN_ROUTE_EXAMPLE_MISSING"
+    | "E_DESIGN_ROUTE_DEPRECATED"
+    | "E_DESIGN_ROUTE_INVALID_INPUT"
+    | "E_DESIGN_PROPOSAL_REQUIRED";
+  message: string;
+  routeNeed?: string;
+  component?: string;
+  path?: string;
+}
+
+export interface RouteResolutionResult {
+  ok: boolean;
+  route: ResolvedAgentUiRoute | null;
+  diagnostics: RouteDiagnostic[];
+}
+
+export interface RemediationContext {
+  need: string;
+  route: ResolvedAgentUiRoute | null;
+  forbiddenPatterns: string[];
+  replacementInstructions: string[];
+  validationCommands: AgentUiRouteValidationCommand[];
+  diagnostics: RouteDiagnostic[];
+}
+
+export type ProposalWaiverScope = "agent-ui-route" | "component-lifecycle";
+export type ProposalWaiverStatus = "active" | "retired";
+
+export interface ProposalWaiver {
+  id: string;
+  ruleId: string;
+  scope: ProposalWaiverScope;
+  target: string;
+  owner: string;
+  ticket?: string;
+  issue?: string;
+  issueUrl?: string;
+  adrRef?: string;
+  reason: string;
+  /** ISO 8601 date string (e.g., "2026-06-30") */
+  expiresAt: string;
+  cleanupMilestone: string;
+  cleanup: string;
+  status: ProposalWaiverStatus;
+}
+
+export interface ProposalWaiverRegistry {
+  schemaVersion: "agent-design.proposal-waivers.v1";
+  updatedAt: string;
+  waivers: ProposalWaiver[];
+}
+
+export interface ProposalGateDiagnostic {
+  code:
+    | "E_DESIGN_PROPOSAL_WAIVERS_MISSING"
+    | "E_DESIGN_PROPOSAL_WAIVER_SCHEMA"
+    | "E_DESIGN_PROPOSAL_WAIVER_EXPIRED"
+    | "E_DESIGN_PROPOSAL_WAIVER_DUPLICATE"
+    | "W_DESIGN_PROPOSAL_WAIVER_NEAR_EXPIRY"
+    | "E_DESIGN_PROPOSAL_REQUIRED"
+    | "E_DESIGN_PROPOSAL_REF_MISSING"
+    | "E_DESIGN_PROPOSAL_REF_NOT_ACCEPTED"
+    | "E_DESIGN_ROUTING_SCHEMA"
+    | "E_DESIGN_LIFECYCLE_SCHEMA"
+    | "E_DESIGN_COVERAGE_SCHEMA"
+    | "E_DESIGN_LIFECYCLE_COVERAGE_MISSING";
+  severity: "error" | "warn";
+  message: string;
+  scope?: ProposalWaiverScope;
+  target?: string;
+  path?: string;
+  waiverId?: string;
+}
+
+export interface ProposalGateResult {
+  kind: "astudio.design.proposalGate.v1";
+  ok: boolean;
+  diagnostics: ProposalGateDiagnostic[];
+  waiverRegistryPath: string;
+}
+
+export interface AbstractionProposalPreview {
+  kind: "astudio.design.proposeAbstraction.v1";
+  need: string;
+  surface: string | null;
+  proposalRequired: boolean;
+  proposalTemplatePath: string;
+  requiredFields: string[];
+  previewOnly: true;
+  readOnly: true;
+  remediation: RemediationContext;
+}
+
+export type PrepareSurfaceScope = "protected" | "warn" | "exempt" | "unknown";
+
+export interface PrepareSourceDigest {
+  path: string;
+  sha256: string;
+}
+
+export interface PrepareOpenDecision {
+  code: string;
+  message: string;
+  severity: "info" | "warn" | "error";
+}
+
+export interface PrepareTiming {
+  startedAt: string;
+  durationMs: number;
+}
+
+export interface PreparePayload {
+  kind: "astudio.design.prepare.v1";
+  ok: boolean;
+  safeForAutomaticImplementation: boolean;
+  resolvedDesignFile: string;
+  guidanceConfigPath: string;
+  designContractMode: string;
+  surfacePath: string;
+  surfaceScope: PrepareSurfaceScope;
+  surfaceKind: string;
+  recommendedRoutes: ResolvedAgentUiRoute[];
+  requiredStates: string[];
+  forbiddenPatterns: string[];
+  relevantExamples: string[];
+  validationCommands: AgentUiRouteValidationCommand[];
+  ruleManifestVersion: string;
+  rulePackVersion: string;
+  ruleSourceDigests: RuleSourceDigest[];
+  sourceDigests: PrepareSourceDigest[];
+  coverageMatrixDigest: PrepareSourceDigest;
+  componentLifecycleDigest: PrepareSourceDigest;
+  openDecisions: PrepareOpenDecision[];
+}
+
 export class DesignEngineError extends Error {
   code: string;
   exitCode: number;

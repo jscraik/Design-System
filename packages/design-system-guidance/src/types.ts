@@ -2,6 +2,13 @@ export type RuleLevel = "warn" | "error";
 export type GuidanceScopeName = "error" | "warn" | "exempt";
 export type ExemptionClassification = "temporary" | "transitional" | "deprecated";
 
+export interface GuidanceValidationCommand {
+  command: string;
+  safetyClass: "read_only" | "mutating" | "interactive" | "server_start";
+  reason: string;
+  blockedByDefault?: boolean;
+}
+
 export interface GuidanceRule {
   id: string;
   level: RuleLevel;
@@ -120,6 +127,11 @@ export interface GuidanceViolation {
   message: string;
   file?: string;
   line?: number;
+  replacementInstruction?: string;
+  examplePath?: string;
+  validationCommands?: GuidanceValidationCommand[];
+  proposalRequired?: boolean;
+  recoveryUnavailableReason?: string;
 }
 
 export interface CheckOptions {

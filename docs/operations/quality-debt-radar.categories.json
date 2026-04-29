@@ -43,7 +43,7 @@
       "id": "css-lint-coverage-gap",
       "label": "CSS lint coverage gap",
       "owner": "@platform",
-      "description": "CSS excluded from the current lint surface due parser/tooling constraints.",
+      "description": "CSS excluded from the current lint surface due to parser/tooling constraints.",
       "source_anchors": ["biome.json"],
       "probe": "css_excluded_from_biome",
       "source_commands": ["pnpm lint"],

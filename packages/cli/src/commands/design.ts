@@ -1,6 +1,8 @@
 import { access, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import {
+  buildAbstractionProposalPreview,
+  buildPreparePayload,
   type DesignContract,
   type DesignDiffResult,
   DesignEngineError,
@@ -10,6 +12,8 @@ import {
   lintDesignContract,
   lintDesignFile,
   parseDesignContract,
+  resolveRouteForNeed,
+  resolveRouteForSurface,
 } from "@brainwav/agent-design-engine";
 import {
   assertDesignCommandSchemaSupported,
@@ -35,7 +39,11 @@ type DesignCommandKind =
   | "astudio.design.checkBrand.v1"
   | "astudio.design.init.v1"
   | "astudio.design.migrate.v1"
-  | "astudio.design.doctor.v1";
+  | "astudio.design.doctor.v1"
+  | "astudio.design.prepare.v1"
+  | "astudio.design.components.v1"
+  | "astudio.design.coverage.v1"
+  | "astudio.design.proposeAbstraction.v1";
 
 interface DesignArgs extends CliArgs {
   file?: string;
@@ -55,6 +63,9 @@ interface DesignArgs extends CliArgs {
   rollback?: boolean;
   resume?: boolean;
   active?: boolean;
+  surface?: string;
+  need?: string;
+  component?: string;
 }
 
 interface DesignDiscovery {
@@ -597,6 +608,12 @@ function migrateOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
     .option("yes", { type: "boolean" });
 }
 
+/**
+ * Registers the CLI options used by the `design doctor` subcommand.
+ *
+ * @param cmd - Yargs option builder to extend with `file`, `scope`, and `active` options
+ * @returns The same option builder with `file`, `scope`, and `active` registered
+ */
 function doctorOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
   return cmd
     .option("file", { type: "string" })
@@ -604,9 +621,216 @@ function doctorOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
     .option("active", { type: "boolean" });
 }
 
+/**
+ * Adds a required `--surface` string option to the provided command option builder.
+ *
+ * @param cmd - The option builder to extend
+ * @returns The same builder instance with the `surface` option configured as a required string
+ */
+function prepareOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
+  return cmd.option("surface", { type: "string", demandOption: true });
+}
+
+/**
+ * Adds CLI options `--need` and `--surface` to the provided design option builder.
+ *
+ * @param cmd - The option builder to extend with `need` and `surface` string options
+ * @returns The same builder instance with the added options
+ */
+function componentsOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
+  return cmd.option("need", { type: "string" }).option("surface", { type: "string" });
+}
+
+/**
+ * Adds the required `--component` option to a design command builder.
+ *
+ * @param cmd - The option builder to extend
+ * @returns The builder enhanced with the `component` option (string, required)
+ */
+function coverageOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
+  return cmd.option("component", { type: "string", demandOption: true });
+}
+
+/**
+ * Registers the `--need` (required) and `--surface` (optional) CLI options for the propose-abstraction command.
+ *
+ * @returns The option builder with `need` and `surface` options configured (`need` is required).
+ */
+function proposeAbstractionOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
+  return cmd.option("need", { type: "string", demandOption: true }).option("surface", {
+    type: "string",
+  });
+}
+
+/**
+ * Looks up a component's coverage entry in docs/design-system/COVERAGE_MATRIX.json.
+ *
+ * @param rootDir - Project root directory containing the docs folder
+ * @param component - Component name to match against entry `name` fields
+ * @returns The matching coverage entry object, or `null` if no entry is found
+ */
+async function readCoverageEntry(rootDir: string, component: string): Promise<unknown> {
+  const raw = await readFile(path.join(rootDir, "docs/design-system/COVERAGE_MATRIX.json"), "utf8");
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    throw new CliError("Coverage matrix contains invalid JSON.", {
+      code: "E_DESIGN_COVERAGE_JSON",
+      exitCode: EXIT_CODES.failure,
+      hint: "Fix docs/design-system/COVERAGE_MATRIX.json before retrying.",
+    });
+  }
+  if (!Array.isArray(parsed)) {
+    throw new CliError("Coverage matrix must be an array.", {
+      code: "E_DESIGN_COVERAGE_SCHEMA",
+      exitCode: EXIT_CODES.failure,
+      hint: "Fix docs/design-system/COVERAGE_MATRIX.json before retrying.",
+    });
+  }
+  const entries = parsed.map((entry, index): { name: string } => {
+    if (
+      typeof entry !== "object" ||
+      entry === null ||
+      typeof (entry as { name?: unknown }).name !== "string"
+    ) {
+      throw new CliError(`Coverage matrix entry ${index} must define a string name.`, {
+        code: "E_DESIGN_COVERAGE_SCHEMA",
+        exitCode: EXIT_CODES.failure,
+        hint: "Fix docs/design-system/COVERAGE_MATRIX.json before retrying.",
+      });
+    }
+    return entry as { name: string };
+  });
+  return entries.find((entry) => entry.name === component) ?? null;
+}
+
+/**
+ * Validate that exactly one component selector is provided: either `--need` or `--surface`.
+ *
+ * @param argv - Parsed CLI arguments which may include `need` or `surface`
+ *
+ * @throws CliError when both `need` and `surface` are present (code `E_DESIGN_SELECTOR_CONFLICT`, usage exit)
+ * @throws CliError when neither `need` nor `surface` is present (code `E_DESIGN_SELECTOR_REQUIRED`, usage exit)
+ */
+function assertComponentsSelector(argv: DesignArgs): void {
+  if (argv.need && argv.surface) {
+    throw new CliError("design components accepts either --need or --surface, not both.", {
+      code: "E_DESIGN_SELECTOR_CONFLICT",
+      exitCode: EXIT_CODES.usage,
+      hint: "Pass exactly one selector: --need or --surface.",
+      recovery: unavailableRecovery(
+        "The caller must choose one read-only selector before the command can retry safely.",
+      ),
+    });
+  }
+  if (!argv.need && !argv.surface) {
+    throw new CliError("design components requires --need or --surface.", {
+      code: "E_DESIGN_SELECTOR_REQUIRED",
+      exitCode: EXIT_CODES.usage,
+      hint: "Pass --need <need> or --surface <path>.",
+      recovery: {
+        fix_suggestion: "Retry with a read-only need selector.",
+        nextCommand: designCommandRecovery(argv, [
+          "design",
+          "components",
+          "--need",
+          "page_shell",
+          "--json",
+          "--agent",
+        ]),
+      },
+    });
+  }
+}
+
+/**
+ * Register the "astudio design" command and its subcommands on a yargs instance.
+ *
+ * Registers a suite of design-related subcommands (prepare, components, coverage,
+ * propose-abstraction, lint, diff, export, check-brand, init, migrate, doctor)
+ * and their options, handlers, and output conventions, then returns the augmented
+ * yargs instance.
+ *
+ * @param yargs - The yargs Argv instance to extend with the design command chain
+ * @returns The same Argv instance augmented with the registered design commands
+ */
 export function designCommand(yargs: Argv): Argv {
   const chain = yargs as unknown as DesignCommandChain;
   return chain
+    .command(
+      "prepare",
+      "Prepare an agent context pack for a UI surface",
+      prepareOptions,
+      async (raw: ArgumentsCamelCase<DesignArgs>) =>
+        runDesign("astudio.design.prepare.v1", async () => {
+          const argv = raw as DesignArgs;
+          assertDesignOutputMode(argv);
+          const rootDir = await findProjectRoot(commandCwd(argv));
+          const result = await buildPreparePayload(String(argv.surface), rootDir);
+          emitDesign(argv, "design prepare", result.ok ? "success" : "warn", result);
+          return result.ok ? EXIT_CODES.success : EXIT_CODES.failure;
+        }),
+    )
+    .command(
+      "components",
+      "Resolve read-only component routing",
+      componentsOptions,
+      async (raw: ArgumentsCamelCase<DesignArgs>) =>
+        runDesign("astudio.design.components.v1", async () => {
+          const argv = raw as DesignArgs;
+          assertDesignOutputMode(argv);
+          assertComponentsSelector(argv);
+          const rootDir = await findProjectRoot(commandCwd(argv));
+          const result = argv.need
+            ? resolveRouteForNeed(argv.need, rootDir)
+            : resolveRouteForSurface(String(argv.surface), rootDir);
+          emitDesign(argv, "design components", result.ok ? "success" : "warn", {
+            kind: "astudio.design.components.v1",
+            selector: argv.need ? { need: argv.need } : { surface: argv.surface },
+            ...result,
+            readOnly: true,
+          });
+          return result.ok ? EXIT_CODES.success : EXIT_CODES.failure;
+        }),
+    )
+    .command(
+      "coverage",
+      "Resolve read-only component coverage metadata",
+      coverageOptions,
+      async (raw: ArgumentsCamelCase<DesignArgs>) =>
+        runDesign("astudio.design.coverage.v1", async () => {
+          const argv = raw as DesignArgs;
+          assertDesignOutputMode(argv);
+          const rootDir = await findProjectRoot(commandCwd(argv));
+          const coverage = await readCoverageEntry(rootDir, String(argv.component));
+          emitDesign(argv, "design coverage", coverage ? "success" : "warn", {
+            kind: "astudio.design.coverage.v1",
+            component: argv.component,
+            coverage,
+            readOnly: true,
+          });
+          return coverage ? EXIT_CODES.success : EXIT_CODES.failure;
+        }),
+    )
+    .command(
+      "propose-abstraction",
+      "Preview a read-only abstraction proposal path",
+      proposeAbstractionOptions,
+      async (raw: ArgumentsCamelCase<DesignArgs>) =>
+        runDesign("astudio.design.proposeAbstraction.v1", async () => {
+          const argv = raw as DesignArgs;
+          assertDesignOutputMode(argv);
+          const rootDir = await findProjectRoot(commandCwd(argv));
+          const result = buildAbstractionProposalPreview(
+            String(argv.need),
+            rootDir,
+            argv.surface ? String(argv.surface) : null,
+          );
+          emitDesign(argv, "design propose-abstraction", "success", result);
+          return EXIT_CODES.success;
+        }),
+    )
     .command("lint", "Lint DESIGN.md", lintOptions, async (raw: ArgumentsCamelCase<DesignArgs>) =>
       runDesign("astudio.design.lint.v1", async () => {
         const argv = raw as DesignArgs;

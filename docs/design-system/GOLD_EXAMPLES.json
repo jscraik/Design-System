@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "agent-ui-gold-examples.v1",
+  "updatedAt": "2026-04-28",
+  "examples": [
+    {
+      "id": "settings-panel-apps",
+      "routeNeed": "settings_panel",
+      "title": "Apps settings panel",
+      "purpose": "Canonical settings panel example with grouped ProductSection content and ready, loading, empty, and error states.",
+      "sourcePath": "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+      "storyPaths": ["packages/ui/src/app/settings/AppsPanel/AppsPanel.stories.tsx"],
+      "testPaths": ["packages/ui/src/app/settings/settings-panels.exemplar.test.tsx"],
+      "coveredStates": ["ready", "loading", "empty", "error"],
+      "validationCommands": [
+        {
+          "command": "pnpm test:exemplar-evaluation:list",
+          "safetyClass": "read_only",
+          "reason": "Lists the protected exemplar stories that include the AppsPanel state matrix."
+        },
+        {
+          "command": "pnpm test:exemplar-evaluation",
+          "safetyClass": "read_only",
+          "reason": "Runs the protected professional-finish exemplar suite."
+        }
+      ],
+      "promotable": true
+    },
+    {
+      "id": "settings-panel-manage-apps",
+      "routeNeed": "settings_panel",
+      "title": "Manage apps settings panel",
+      "purpose": "Companion settings panel example for connected and available app sections with the same async state matrix.",
+      "sourcePath": "packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.tsx",
+      "storyPaths": ["packages/ui/src/app/settings/ManageAppsPanel/ManageAppsPanel.stories.tsx"],
+      "testPaths": ["packages/ui/src/app/settings/settings-panels.exemplar.test.tsx"],
+      "coveredStates": ["ready", "loading", "empty", "error"],
+      "validationCommands": [
+        {
+          "command": "pnpm test:exemplar-evaluation:list",
+          "safetyClass": "read_only",
+          "reason": "Lists the protected exemplar stories that include the ManageAppsPanel state matrix."
+        },
+        {
+          "command": "pnpm test:exemplar-evaluation",
+          "safetyClass": "read_only",
+          "reason": "Runs the protected professional-finish exemplar suite."
+        }
+      ],
+      "promotable": true
+    },
+    {
+      "id": "async-data-view-product-composition",
+      "routeNeed": "async_collection",
+      "title": "ProductDataView async collection",
+      "purpose": "Canonical ProductDataView fixture for agents that need a heading-owned collection with ready, loading, empty, and error states.",
+      "sourcePath": "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+      "storyPaths": [
+        "packages/ui/src/storybook/_holding/component-stories/ProductComposition.stories.tsx"
+      ],
+      "testPaths": [
+        "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.test.tsx"
+      ],
+      "coveredStates": ["ready", "loading", "empty", "error"],
+      "validationCommands": [
+        {
+          "command": "pnpm -C packages/ui test ProductComposition",
+          "safetyClass": "read_only",
+          "reason": "Runs ProductComposition tests for ProductDataView state routing."
+        },
+        {
+          "command": "pnpm test:visual:storybook",
+          "safetyClass": "read_only",
+          "reason": "Exercises Storybook visual coverage when the storybook suite is selected."
+        }
+      ],
+      "promotable": true
+    },
+    {
+      "id": "page-shell-template-browser",
+      "routeNeed": "page_shell",
+      "title": "Template browser page shell",
+      "purpose": "Web app ProductPageShell example for a full page surface with stable heading and main region.",
+      "sourcePath": "platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx",
+      "storyPaths": [],
+      "testPaths": [],
+      "coveredStates": ["ready"],
+      "validationCommands": [
+        {
+          "command": "pnpm test:visual:web",
+          "safetyClass": "read_only",
+          "reason": "Runs web visual coverage for template browser and related app surfaces."
+        }
+      ],
+      "promotable": true
+    },
+    {
+      "id": "page-shell-sidebar-footer",
+      "routeNeed": "page_shell",
+      "title": "ProductPageShell with sidebar and footer",
+      "purpose": "Storybook fixture that demonstrates the shell's sidebar, main, and footer slots without hand-rolled viewport wrappers.",
+      "sourcePath": "packages/ui/src/storybook/_holding/component-stories/ProductComposition.stories.tsx",
+      "storyPaths": [
+        "packages/ui/src/storybook/_holding/component-stories/ProductComposition.stories.tsx"
+      ],
+      "testPaths": [
+        "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.test.tsx"
+      ],
+      "coveredStates": ["ready"],
+      "validationCommands": [
+        {
+          "command": "pnpm -C packages/ui test ProductComposition",
+          "safetyClass": "read_only",
+          "reason": "Runs ProductPageShell tests for sidebar and footer slots."
+        },
+        {
+          "command": "pnpm test:visual:storybook",
+          "safetyClass": "read_only",
+          "reason": "Exercises Storybook visual coverage when the storybook suite is selected."
+        }
+      ],
+      "promotable": true
+    },
+    {
+      "id": "destructive-confirmation-alert-dialog",
+      "routeNeed": "destructive_confirmation",
+      "title": "AlertDialog destructive confirmation",
+      "purpose": "Canonical destructive confirmation story set with trigger, cancel, confirm, focus, and blocked Escape behavior.",
+      "sourcePath": "packages/ui/src/storybook/_holding/component-stories/AlertDialog.stories.tsx",
+      "storyPaths": [
+        "packages/ui/src/storybook/_holding/component-stories/AlertDialog.stories.tsx"
+      ],
+      "testPaths": [],
+      "coveredStates": ["ready", "confirming"],
+      "deferredStates": ["submitting", "error"],
+      "validationCommands": [
+        {
+          "command": "pnpm test:a11y:widgets",
+          "safetyClass": "read_only",
+          "reason": "Runs widget accessibility coverage for rendered interactive surfaces."
+        },
+        {
+          "command": "pnpm test:visual:storybook",
+          "safetyClass": "read_only",
+          "reason": "Exercises Storybook visual coverage when the storybook suite is selected."
+        }
+      ],
+      "promotable": true
+    }
+  ],
+  "deferredCategories": [
+    {
+      "id": "permission-denied-unavailable",
+      "routeNeed": "permission_denied_unavailable",
+      "reason": "No protected canonical example currently demonstrates unavailable or permission-denied product state recovery.",
+      "requiredBeforePromotion": [
+        "Add a protected source or story fixture with accessible title, cause, and recovery affordance.",
+        "Connect the fixture to a route entry and validation command."
+      ],
+      "promotable": false
+    },
+    {
+      "id": "dense-operational-dashboard",
+      "routeNeed": "dense_operational_dashboard",
+      "reason": "No protected canonical example currently demonstrates dense dashboard scanning, comparison, and repeated actions.",
+      "requiredBeforePromotion": [
+        "Add a protected product or Storybook fixture that uses composition primitives for dense operational data.",
+        "Validate responsive layout and focus order before adding it to route recommendations."
+      ],
+      "promotable": false
+    },
+    {
+      "id": "form-validation-accessible-errors",
+      "routeNeed": "form_validation_accessible_errors",
+      "reason": "No protected canonical example currently demonstrates form validation with accessible field-level and summary errors.",
+      "requiredBeforePromotion": [
+        "Add a protected form fixture with labels, descriptions, invalid state, and recovery copy.",
+        "Validate keyboard, screen-reader, and visual coverage before making it a gold example."
+      ],
+      "promotable": false
+    }
+  ]
+}

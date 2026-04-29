@@ -160,6 +160,18 @@ function writeFailedMigrationProject(targetDir) {
   });
 }
 
+function writeLinkedDesignProject(targetDir) {
+  writeValidDesignProject(targetDir);
+  writeGuidanceConfig(targetDir, {
+    schemaVersion: 2,
+    docs: ["docs/design-system/CONTRACT.md"],
+    designContract: {
+      mode: "design-md",
+      migrationState: "active",
+    },
+  });
+}
+
 function makeFixtureContext(fixture) {
   const context = {
     $REPO_ROOT: repoRoot,
@@ -173,6 +185,11 @@ function makeFixtureContext(fixture) {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-design-fixture-"));
     writeValidDesignProject(tempDir);
     context.$TEMP_VALID_DESIGN_PROJECT = tempDir;
+  }
+  if (encodedFixture.includes("$TEMP_LINKED_DESIGN_PROJECT")) {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-linked-design-fixture-"));
+    writeLinkedDesignProject(tempDir);
+    context.$TEMP_LINKED_DESIGN_PROJECT = tempDir;
   }
   if (encodedFixture.includes("$TEMP_UNKNOWN_PROFILE_PROJECT")) {
     const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-profile-fixture-"));
@@ -483,6 +500,12 @@ test("design command JSON fixtures match the schema and byte contract", async (t
           ),
         );
       }
+      if (fixture.expectedGuidanceState) {
+        const guidanceCheck = payload.data.checks.find((check) => check.name === "guidance-config");
+        assert.ok(guidanceCheck, `${fixture.name} missing guidance-config check`);
+        assert.equal(guidanceCheck.mode, fixture.expectedGuidanceState.mode);
+        assert.equal(guidanceCheck.migrationState, fixture.expectedGuidanceState.migrationState);
+      }
     });
   }
 });
@@ -716,7 +739,7 @@ test("design diff rejects unsupported after schema in CI mode", async () => {
   assert.equal(payload.errors[0].code, "E_DESIGN_SCHEMA_INVALID");
 });
 
-test("design export accepts scope and preserves design tokens", async () => {
+test("design export accepts scope and omits placeholder token examples", async () => {
   const { code, stdout, stderr } = await runCli([
     "design",
     "export",
@@ -732,8 +755,8 @@ test("design export accepts scope and preserves design tokens", async () => {
   assert.equal(lines.length, 1);
   const payload = JSON.parse(lines[0]);
   assert.equal(payload.data.kind, "astudio.design.export.v1");
-  assert.equal(payload.data.contract.tokens["--color-accent"], "#123456");
-  assert.equal(payload.data.artifact.tokens["--color-accent"], "#123456");
+  assert.equal(Object.hasOwn(payload.data.contract.tokens, "--color-accent"), false);
+  assert.equal(Object.hasOwn(payload.data.artifact.tokens, "--color-accent"), false);
 });
 
 test("design export rejects semantically invalid contracts", async () => {
@@ -887,10 +910,13 @@ test("design init validates before writing", async () => {
 });
 
 test("design migrate requires explicit write when not dry-run", async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "astudio-guidance-"));
+  writeValidDesignProject(tempDir);
+
   const { code, stdout } = await runCli(
     ["design", "migrate", "--to", "design-md", "--json"],
     {},
-    { cwd: repoRoot },
+    { cwd: tempDir },
   );
   assert.equal(code, 3);
   const payload = JSON.parse(stdout);

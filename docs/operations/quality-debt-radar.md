@@ -1,7 +1,7 @@
 # Quality Debt Radar
 
 **Owner:** Platform Team (confirm)  
-**Last updated:** 2026-04-26
+**Last updated:** 2026-04-28
 **Review cadence:** Weekly review, monthly rubric check
 
 ## Doc requirements
@@ -39,13 +39,13 @@ This document is the canonical contract for how debt is counted, reported, and i
 
 Debt is tracked by category. Do not collapse to a single score.
 
-| Category | Description | Source Anchors |
-| --- | --- | --- |
-| Lint suppressions | Lint rules intentionally disabled or broadly suppressed that hide real issues | `/biome.json`, `/FORJAMIE.md` |
-| A11y debt | Accessibility-lint suppressions and uncovered contract gaps for local primitives | `/docs/design-system/A11Y_CONTRACTS.md`, `/docs/design-system/COVERAGE_MATRIX.md` |
-| CSS lint coverage gap | CSS excluded from current lint surface due parser/tooling constraints | `/biome.json` |
-| Integration drift | Drift between upstream/contracts and local integration seams (Apps SDK, exports, wrappers) | `/scripts/test-drift.mjs`, `/docs/design-system/UPSTREAM_ALIGNMENT.md` |
-| Gate reliability debt | Known flaky/degraded quality signals that reduce confidence in passing CI | `/docs/work/work_outstanding.md`, `/docs/operations/QA_EVIDENCE_SCHEMA.md` |
+| Category              | Description                                                                                | Source Anchors                                                                    |
+| --------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
+| Lint suppressions     | Lint rules intentionally disabled or broadly suppressed that hide real issues              | `/biome.json`, `/FORJAMIE.md`                                                     |
+| A11y debt             | Accessibility-lint suppressions and uncovered contract gaps for local primitives           | `/docs/design-system/A11Y_CONTRACTS.md`, `/docs/design-system/COVERAGE_MATRIX.md` |
+| CSS lint coverage gap | CSS excluded from current lint surface due parser/tooling constraints                      | `/biome.json`                                                                     |
+| Integration drift     | Drift between upstream/contracts and local integration seams (Apps SDK, exports, wrappers) | `/scripts/test-drift.mjs`, `/docs/design-system/UPSTREAM_ALIGNMENT.md`            |
+| Gate reliability debt | Known flaky/degraded quality signals that reduce confidence in passing CI                  | `/docs/work/work_outstanding.md`, `/docs/operations/QA_EVIDENCE_SCHEMA.md`        |
 
 ## Category Mapping Contract
 

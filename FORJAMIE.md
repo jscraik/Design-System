@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-04-26
+**Last updated:** 2026-04-29
 **Production status:** IN_PROGRESS
 **Overall health:** Yellow
 
@@ -25,7 +25,7 @@
 | Build / CI | Yellow | Focused policy, token, matrix, docs, guidance, whitespace, browser, widget a11y, and aggregate build gates pass for the Agent Design Engine slice |
 | Tests | Yellow | Agent-design and release-readiness gates pass (`agent-design-engine`, `cli`, `design-system-guidance`, web E2E, widget a11y, and root build), including fixture-backed CLI JSON/recovery/migration coverage |
 | Security | Clean | 13 CVEs patched; GitHub Actions SHA-pinned |
-| Open PRs | 1 | PR #154 carries the quality-debt radar execution slice |
+| Open PRs | 1 | PR #158 carries the agent-native design-system execution slice |
 | Blockers | None | |
 <!-- STATUS_END -->
 
@@ -57,6 +57,7 @@ flowchart LR
 - `packages/widgets` packages standalone widget bundles used by the web surface and MCP integration paths.
 - `platforms/mcp` contains the MCP integration harness and tool contract tests.
 - `packages/design-system-guidance` packages the policy and guidance checks used to keep downstream consumers aligned, including repo-scoped protected-surface enforcement and an exemption ledger.
+- `packages/design-system-guidance` findings now carry agent-facing remediation metadata when deterministic recovery is available: replacement instructions, copyable examples, read-only validation commands, and proposal-required reasons when the tool should not guess.
 - `packages/agent-design-engine` parses `DESIGN.md`, computes professional-UI rule provenance, lints semantic UI contract requirements, diffs design contracts, and exports agent-readable token/contract payloads.
 - `pnpm agent-design:lint` is the clean-checkout-safe root lint wrapper. It builds `packages/agent-design-engine` and `packages/cli` before invoking `packages/cli/dist/index.js`, so direct `dist` execution does not depend on tracked build artifacts.
 - `packages/cli` exposes the engine through `astudio design` commands while keeping the existing `astudio.command.v1` JSON envelope for agents.
@@ -73,6 +74,10 @@ flowchart LR
 - `platforms/web/apps/storybook/` is the component documentation and visual verification surface.
 - `platforms/mcp/` contains the MCP server integration harness and contract tests.
 - `docs/` holds architecture, adoption, rollout, and governance guidance.
+- `docs/specs/2026-04-28-agent-native-design-system-spec.md` is the deepened HE spec for turning the current agent-readable design-system contract into an agent-native preparation, routing, context-pack, remediation, example, and abstraction-proposal workflow.
+- `docs/plans/2026-04-28-agent-native-design-system-plan.md` is the execution plan for that spec, split into contract wiring, routing-table, prepare-payload, CLI, remediation, gold-example, and proposal-gate slices.
+- `docs/design-system/GOLD_EXAMPLES.json` is the machine-readable gold-example inventory for promoted agent examples, state coverage, validation commands, and explicitly deferred non-promotable categories.
+- `docs/design-system/proposals/` is the proposal-gate surface for new agent UI abstractions. It holds the proposal template, typed waiver registry, and docs for when enforced routes or uncovered canonical lifecycle promotions need accepted design evidence.
 - `scripts/` holds build, validation, drift-check, onboarding, and release tooling.
 - Consumer projects should import `@design-studio/ui/styles.css` as the public stylesheet entry; internal style subpaths are implementation details and raw `file:` installs of `packages/ui` are not a supported external adoption path.
 
@@ -111,7 +116,10 @@ pnpm build
 pnpm test:policy
 pnpm test:exemplar-evaluation:list
 pnpm test:exemplar-evaluation:update
+cat docs/design-system/GOLD_EXAMPLES.json | jq .
+cat docs/design-system/proposals/waivers.json | jq .
 pnpm design-system-guidance:ratchet
+pnpm agent-design:proposals
 pnpm agent-design:boundaries
 pnpm agent-design:type-check
 pnpm agent-design:test
@@ -127,6 +135,7 @@ bash scripts/check-environment.sh
 ```
 
 The visual suites now go through `scripts/run-playwright-suite.mjs`, which prebuilds `packages/ui` with `pnpm -C packages/ui build:visual` before handing the remaining args straight to Playwright. Use that path when you need reliable `--list`, `--grep`, or `--update-snapshots` behavior from the root scripts without leaving the package in a declaration-broken state.
+The web e2e and widget a11y Playwright configs bind dev servers to `127.0.0.1` by default via `PLAYWRIGHT_WEB_HOST` / `PLAYWRIGHT_WIDGETS_HOST`. Keep that explicit host when changing the suites; relying on Vite's default `localhost` resolution can drift to `::1` and fail in sandboxed Codex runs with `listen EPERM`.
 The policy-owned exemplar slice now has its own root entry points. Use `pnpm test:exemplar-evaluation:list` to inspect the exact protected Storybook checks, and `pnpm test:exemplar-evaluation:update` to refresh only those baselines instead of hand-copying long `PLAYWRIGHT_STORYBOOK_*` env strings. `TemplateBrowserPage` is now part of the always-on exemplar slice, but that browser-backed check runs as an explicit exemplar gate rather than as part of the browser-free `pnpm test:policy` contract.
 For template-family QA, use `/templates` for the searchable browser shell and `/template-widget/<template-id>` for the isolated single-template widget shell that mirrors widget-style rendering without needing `VITE_TEMPLATE_ID`.
 Committed visual baselines live under `tests/visual/__snapshots__`. Local Playwright HTML reports, nested Vite cache outputs under `node_modules/.vite`, nested `.tmp` build scratch files, Storybook screenshot captures, package/app `dist` outputs, and ad hoc `reports/audit-*` outputs are now gitignored so browser and build runs stop polluting the branch.
@@ -145,6 +154,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - Protected settings stories are inside the same repo-governed surface family as the app panels, so even Storybook-only scaffolding should avoid literal background hex values or other policy escapes that would add noisy guidance debt.
 - `TemplateBrowserPage` is now part of the default exemplar gate. If `pnpm test:exemplar-evaluation` fails on the template-browser slice, treat that as a real always-on page regression rather than an opt-in baseline workflow.
 - The root visual scripts are now the canonical entry point for listing or filtering Playwright coverage. They use the `packages/ui build:visual` path, which preserves declaration output while still avoiding the earlier visual-only typegen noise from internal Storybook demo code.
+- Web e2e and widget a11y Playwright web servers should bind `127.0.0.1` unless a caller explicitly overrides `PLAYWRIGHT_WEB_HOST` or `PLAYWRIGHT_WIDGETS_HOST`. In sandboxed Codex runs, Vite's default `localhost` can resolve to `::1` and fail before any browser assertion runs.
 - The guidance CLI now supports `--json` for policy tooling, and large guidance payloads must be flushed before exit. If a future automation sees truncated JSON around 64 KB, check the CLI output path before blaming the policy consumer.
 - If Storybook or web visual runs suddenly explode into dozens of identical Playwright launch failures, the likely problem is a missing local browser binary rather than dozens of broken stories. The suite wrapper now preflights Chromium for non-`--list` runs and prints the single remediation command.
 - If you need to refresh the protected settings exemplar baselines, do not paste the long `PLAYWRIGHT_STORYBOOK_STORY_IDS=...` command by hand. Use `pnpm test:exemplar-evaluation:update` so the update path stays aligned with the policy runner's canonical `components-settings-*` story IDs.
@@ -160,6 +170,11 @@ See also: `~/.codex/instructions/Learnings.md`
 - The migration transition table should run before rollback metadata lookup. That keeps invalid state/operation pairs as `E_DESIGN_MIGRATION_STATE_INVALID` no-op failures, while metadata readability tests must start from rollback-eligible states such as `design-md/active`, `partial`, or `failed`.
 - Rollback metadata authentication is intentionally local-artifact bound rather than a remote signing service in this pre-GA slice. Treat the rollback artifact signing key, `metadataDigest`, `metadataSignature`, path-root checks, config checksums, and `DESIGN.md` checksums as one fail-closed contract: if any piece drifts, rollback/resume must exit `3` without mutation.
 - The `DESIGN.md` engine computes source digests from `docs/design-system/PROFESSIONAL_UI_CONTRACT.md`, `AGENT_UI_ROUTING.md`, `COMPONENT_LIFECYCLE.json`, and `COVERAGE_MATRIX.json`. If any of those files move or become unreadable, design lint/export should fail before semantic evaluation.
+- Gold examples are intentionally narrower than the full component catalog. `GOLD_EXAMPLES.json` should promote only existing source/story/test paths, and missing categories must stay `promotable: false` until a protected fixture and read-only validation command exist.
+- Proposal waivers are typed, expiring design debt records rather than comments. If `pnpm agent-design:proposals` fails, either backfill an accepted proposal under `docs/design-system/proposals/` or replace the waiver with real lifecycle coverage before promoting another route.
+- Agent design manifest readers must treat repo JSON as untrusted input. Guidance config, route refs/examples, lifecycle rows, waiver registries, and coverage matrix rows now fail closed on malformed shape instead of silently falling back to empty data or lookup misses.
+- Agent design `prepare` payloads are deterministic by default. Do not add wall-clock timing fields to the normal context pack; if debugging needs timing, keep it behind a separate debug surface so repeated agent calls can diff cleanly.
+- Route surface matching is metadata-owned through `docs/design-system/AGENT_UI_ROUTING.json`. If a route starts resolving to the wrong primitive, fix the authored `surfacePatterns` or the glob specificity logic instead of adding another hard-coded surface branch.
 - `DESIGN.md` schema versions are fail-closed. The v1 engine only accepts `schemaVersion: agent-design.v1`; future contract versions must add explicit parser/rule-pack support before `lint` or `export` can proceed.
 - `DESIGN.md` section line numbers must stay anchored to the original file, including YAML frontmatter. Lint findings use those lines as agent remediation evidence.
 - `astudio design init` validates the starter contract before writing, but it must still enforce the write gate first so a missing `--write` remains a policy error instead of a provenance error.
@@ -191,10 +206,41 @@ See also: `~/.codex/instructions/Learnings.md`
 - `astudio design check-brand --strict` now has non-tautological mismatch logic, but only `astudio-default@1` is currently supported. Add a second supported profile fixture before treating cross-profile mismatch behavior as fully proven.
 - `pnpm generated-source:check` intentionally rebuilds widget assets and may print Vite chunk-size warnings. Treat it as a correctness/freshness gate, not as the package performance budget.
 - `pnpm agent-design:boundaries` is the ownership tripwire for the Agent Design Engine: wrappers can call public package exports, but parser, lint, diff, export, and profile-comparison implementation must stay in `packages/agent-design-engine`.
+- `pnpm agent-design:proposals` now blocks silent enforced-route and uncovered lifecycle promotion, but the first waiver registry intentionally grandfathered existing ProductComposition and ChatShell gaps. Those waivers should be replaced by accepted proposal records or per-export coverage before expiry.
+- `@brainwav/design-system-guidance` imports the public `@brainwav/agent-design-engine` package export, whose package types resolve through `dist`. Its build and type-check scripts must build the sibling engine package first, or clean CI installs can fail before the guidance checks run.
+- `pnpm agent-design:prepare` also depends on built `packages/agent-design-engine` artifacts because the CLI imports the engine package export through `dist`. Keep it aligned with `pnpm agent-design:lint` by building the engine before building the CLI; the root alias includes the protected Template Browser page as its default surface so the command works from a clean checkout while callers can still pass a different `--surface`.
 - `pnpm quality-debt:report` is warn-first by design. Amber/red radar posture is release-owner evidence, not a new hard-fail gate, until explicit thresholds are approved.
 - Quality-debt radar CLI output now includes `service:"quality-debt-radar"` on status/error lines, and flag parsing fails fast when `--output`, `--date`, or `--week` are missing values.
+- The next agent-native design-system hardening lane is specified in `docs/specs/2026-04-28-agent-native-design-system-spec.md` and planned in `docs/plans/2026-04-28-agent-native-design-system-plan.md`. The plan starts with DESIGN.md/guidance contract wiring, then adds the machine-readable routing table before `prepare` payload and CLI expansion.
 
 ## Recent changes
+
+### 2026-04-28
+
+- **PR #158 strict manifest parser follow-up**: tightened the remaining agent-design metadata readers so `.design-system-guidance.json`, `AGENT_UI_ROUTING.json`, `COMPONENT_LIFECYCLE.json`, and `COVERAGE_MATRIX.json` reject malformed enum, array, object, integer, and boolean fields instead of silently coercing them. Guidance remediation now only returns read-only route validation commands, so agent-facing recovery instructions cannot leak interactive or mutating commands.
+- **PR #158 autofix follow-up**: resolved the next CodeRabbit/Codex review batch by validating guidance, waiver, lifecycle, coverage, and route-path JSON boundaries; constraining route source/example paths to the repo root; sharing Playwright host/port parsing while skipping local env parsing for explicit `PLAYWRIGHT_BASE_URL`; fixing the quality-debt report TOC generator and rollout timestamp; and making `pnpm agent-design:prepare` clean-checkout-safe by building the engine before the CLI. The follow-up adds regression coverage for malformed waiver registries, malformed lifecycle rows, and route path traversal attempts.
+- **Agent-native design-system spec**: added and deepened `docs/specs/2026-04-28-agent-native-design-system-spec.md` to turn the design-system agent-usefulness recommendations into a Harness Engineering standard spec. The spec defines the desired `astudio design prepare/components/coverage/propose-abstraction` contract, chooses `prepare` as the single public full context-pack happy path, keeps any context-building helpers internal/debug-only behind `prepare`, separates read-only `astudio design components ...` from write-capable `astudio components new`, and adds acceptance coverage for lifecycle precedence, unknown-scope blocking, proposal-required recovery, gold examples, and hardening gates before implementation planning begins.
+- **Agent-native design-system plan**: added `docs/plans/2026-04-28-agent-native-design-system-plan.md` and indexed it from `docs/plans/README.md`. The plan chooses `docs/design-system/AGENT_UI_ROUTING.json` as the checked-in machine routing authority, keeps `packages/agent-design-engine` responsible for schema/digest/route resolution, keeps `packages/cli` responsible for read-only `astudio design ...` commands, and sequences implementation into seven validated slices before `he-work`.
+- **Agent-native design-system plan deepening**: strengthened `docs/plans/2026-04-28-agent-native-design-system-plan.md` with execution checkpoints, per-slice entry and exit gates, stop conditions, and the exact first `he-work` packet. The first implementation slice is now explicitly limited to DESIGN.md/guidance contract wiring and must pass focused guidance, agent-design, and diff checks before routing-table work begins.
+- **Agent-native design-system review hardening**: tightened the spec and plan after adversarial, architecture, and API-contract review. The public v1 contract now freezes `prepare` as the sole full context-pack entrypoint, keeps `context` internal/debug-only, makes `propose-abstraction` read-only, requires full `astudio.command.v1` envelope compatibility, adds canonical need normalization, route maturity, deterministic scope precedence, validation-command safety classes, typed proposal waivers, and splits gold examples into wave-1 versus explicitly non-promotable deferred categories.
+- **Agent-native design-system Linear sync**: synced the plan to Linear as parent JSC-238 with child slices JSC-239 through JSC-245. Linear now tracks execution state for the seven-slice plan while `docs/plans/2026-04-28-agent-native-design-system-plan.md` remains the technical source of truth.
+- **Agent-native design-system final review tightening**: round-3/round-4 document, architecture, adversarial, and API-contract review tightened the plan/spec around runtime routing authority, waiver-validator ownership, validation-command `blockedByDefault` evidence, legacy `astudio design` coexistence, missing-route versus proposal-required error taxonomy, need-only proposal previews, optional `packageScript` mapping, unsafe recovery-command allowlists, SA36/SA39/SA40 traceability, runtime-budget fixture protocol, and a Slice 5 remediation-interface checkpoint before broad rule expansion.
+- **JSC-239 Slice 1 contract wiring**: started the first implementation slice on `jscraik/feature/jsc-239-agent-native-contract-wiring`. Root `.design-system-guidance.json` now declares active `DESIGN.md` rollout state with `designContract.mode: design-md`, root `DESIGN.md` no longer contains the fake `--color-accent: #123456` token note, the design command fixture matrix asserts linked guidance state, and `docs/guides/DESIGN_MD_CONTRACT.md` explains the split between contract semantics and rollout state.
+- **JSC-240 Slice 2 routing table contract**: started the routing-table contract slice on `jscraik/feature/jsc-240-routing-table-contract`. `docs/design-system/AGENT_UI_ROUTING.json` is now the authored machine authority for the first canonical needs, `packages/agent-design-engine` exports route lookup/remediation facades, and engine tests verify deterministic route order plus lifecycle, coverage, source-reference, and example drift.
+- **JSC-241 Slice 3 prepare payload model**: started the prepare-model slice on `jscraik/feature/jsc-241-prepare-payload-model`. `packages/agent-design-engine` now builds a read-only `astudio.design.prepare.v1` payload with surface scope, surface kind, recommended routes, required states, forbidden patterns, examples, validation commands, rule provenance, source digests, and fail-closed open decisions before the CLI command is exposed.
+- **JSC-242 Slice 4 read-only CLI commands**: added the first agent-native CLI transport layer for `astudio design prepare`, `components`, `coverage`, and `propose-abstraction`. These commands emit `astudio.command.v1` JSON envelopes, stay read-only, keep `context` out of the public v1 surface, and add the root `pnpm agent-design:prepare --surface <path>` alias for the happy path.
+- **JSC-243 Slice 5 actionable remediation**: `@brainwav/design-system-guidance` violations now include agent-readable remediation metadata where the fix is deterministic. `no-h-screen` routes through `@brainwav/agent-design-engine` remediation context, token/foundation findings point agents back to semantic token roles, and ambiguous findings explicitly mark proposal-required recovery instead of inventing a rewrite.
+- **JSC-244 Slice 6 gold-example inventory**: added `docs/design-system/GOLD_EXAMPLES.json` and companion Markdown guidance so agents can resolve promoted examples, covered states, read-only validation commands, and non-promotable deferred categories from one inventory. `AGENT_UI_ROUTING.json` now points routes back to the gold-example inventory, and `ProductComposition.stories.tsx` gives `ProductDataView` and `ProductPageShell` concrete Storybook fixtures for the first-wave example matrix.
+- **JSC-245 Slice 7 abstraction proposal gate**: added `docs/design-system/proposals/` with the proposal template and typed waiver registry, exported the proposal gate from `packages/agent-design-engine`, wired `pnpm agent-design:proposals` into root policy, and made `astudio design propose-abstraction` return the canonical proposal fields without writing files.
+- **PR #158 review-thread autofix**: resolved the open CodeRabbit/Codex review findings on the agent-native design-system slice. The proposal gate now validates unknown JSON through typed parsers, requires explicit caller dates, enforces waiver `ruleId` plus issue/ADR linkage and cleanup milestones, rejects duplicate active waivers, and reports script exceptions with context. The prepare payload no longer emits wall-clock timing by default, route resolution now uses authored `surfacePatterns` with proper `**/` specificity, Playwright web/widget configs validate host/port env overrides before composing server commands, the quality-debt radar parse bug is fixed, and docs/reports/lifecycle metadata were refreshed for the current PR.
+- **PR #158 CLI boundary follow-up**: closed the remaining CodeRabbit CLI coverage-thread by making `astudio design coverage` parse `docs/design-system/COVERAGE_MATRIX.json` as unknown data, validate the array/object boundary, and return deterministic `E_DESIGN_COVERAGE_JSON` / `E_DESIGN_COVERAGE_SCHEMA` errors instead of trusting an unchecked cast.
+- **PR #158 route-loader follow-up**: moved the route, lifecycle, and coverage manifest loaders away from unchecked `JSON.parse() as T` casts and into parse-to-unknown narrowing. Route-table validation now also reuses preloaded lifecycle and coverage manifests instead of rereading them for every route, and the local projected `.codex/config.toml` symlink stays ignored instead of being committed.
+- **PR #158 final review-thread follow-up**: guidance remediation for `no-h-screen` now fails soft when a downstream repo lacks agent routing manifests, the destructive-confirmation route only matches AlertDialog-owned surfaces instead of every TSX file, and proposal-gate validation emits `E_DESIGN_LIFECYCLE_SCHEMA` for malformed lifecycle manifests instead of silently skipping lifecycle checks.
+- **PR #158 edge-case hardening follow-up**: agent-design `prepare` now accepts an optional `AbortSignal` and checks cancellation around repository reads, route validation rejects directory paths for source/example references, proposal refs treat directories as missing proposals instead of throwing, and guidance remediation only falls back for absent routing manifests while malformed route data still fails loudly.
+- **PR #158 routing-schema follow-up**: proposal-gate validation now reports malformed `AGENT_UI_ROUTING.json` as `E_DESIGN_ROUTING_SCHEMA` instead of throwing, route metadata constants follow the repo's uppercase module-constant convention, and surface-pattern `?` wildcards now match one non-slash character consistently with route specificity scoring.
+- **PR #158 final review-thread hardening**: closed the latest CodeRabbit/Codex comments by rejecting empty routing manifest strings, reporting non-object waiver entries, converting unreadable and symlink-escaped proposal refs into structured proposal diagnostics, rejecting symlink-escaped route source/example refs, rejecting missing or symlink-escaped surface files before broad route matching, failing tied surface-pattern matches as ambiguous route drift, rejecting blank design needs before proposal fallback, keeping remediation validation commands read-only, returning fresh proposal-preview field arrays, stabilizing fixture mutations by component name, completing fixture repos with referenced files, and making the root `pnpm agent-design:prepare` alias runnable without extra arguments.
+- **Playwright localhost hardening**: web e2e and widget a11y Playwright configs now bind generated dev servers to `127.0.0.1` by default, while still allowing `PLAYWRIGHT_WEB_HOST` / `PLAYWRIGHT_WIDGETS_HOST` overrides. This keeps the pre-push browser gates from drifting onto IPv6 loopback in sandboxed Codex runs.
+- **Guidance clean-CI build ordering**: `@brainwav/design-system-guidance` now builds `@brainwav/agent-design-engine` before its own build/type-check scripts. This keeps root policy guidance checks from failing on a clean runner when the public engine package export has not emitted `dist` yet.
 
 ### 2026-04-26
 
@@ -392,7 +438,7 @@ project: design-system
 repo: ~/dev/design-system
 status: IN_PROGRESS
 health: yellow
-last_updated: 2026-04-26
+last_updated: 2026-04-29
 open_prs: 1
 blockers: none
 next_milestone: ChatGPT widget integration

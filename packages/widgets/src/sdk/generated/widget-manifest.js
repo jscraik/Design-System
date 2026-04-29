@@ -5,8 +5,8 @@
 export const widgetManifest = {
   "auth-demo": {
     "name": "auth-demo",
-    "uri": "auth-demo.1612c4c0",
-    "hash": "1612c4c0",
+    "uri": "auth-demo.60e60d5a",
+    "hash": "60e60d5a",
     "originalPath": "src/widgets/auth/auth-demo/index.html"
   },
   "past-orders": {
@@ -65,14 +65,14 @@ export const widgetManifest = {
   },
   "shopping-cart": {
     "name": "shopping-cart",
-    "uri": "shopping-cart.fdc41e91",
-    "hash": "fdc41e91",
+    "uri": "shopping-cart.a76f2c74",
+    "hash": "a76f2c74",
     "originalPath": "src/widgets/commerce/shopping-cart/index.html"
   },
   "dashboard-widget": {
     "name": "dashboard-widget",
-    "uri": "dashboard-widget.c70f1cf3",
-    "hash": "c70f1cf3",
+    "uri": "dashboard-widget.be7d2e76",
+    "hash": "be7d2e76",
     "originalPath": "src/widgets/dashboard/dashboard-widget/index.html"
   },
   "json-render-demo": {
@@ -83,20 +83,20 @@ export const widgetManifest = {
   },
   "kitchen-sink-lite": {
     "name": "kitchen-sink-lite",
-    "uri": "kitchen-sink-lite.2c150d10",
-    "hash": "2c150d10",
+    "uri": "kitchen-sink-lite.575c3f0c",
+    "hash": "575c3f0c",
     "originalPath": "src/widgets/demo/kitchen-sink-lite/index.html"
   },
   "pizzaz-carousel": {
     "name": "pizzaz-carousel",
-    "uri": "pizzaz-carousel.cfc709cf",
-    "hash": "cfc709cf",
+    "uri": "pizzaz-carousel.eae3e533",
+    "hash": "eae3e533",
     "originalPath": "src/widgets/pizzaz/pizzaz-carousel/index.html"
   },
   "pizzaz-gallery": {
     "name": "pizzaz-gallery",
-    "uri": "pizzaz-gallery.176b0822",
-    "hash": "176b0822",
+    "uri": "pizzaz-gallery.acfbc459",
+    "hash": "acfbc459",
     "originalPath": "src/widgets/pizzaz/pizzaz-gallery/index.html"
   },
   "pizzaz-map": {
@@ -107,14 +107,14 @@ export const widgetManifest = {
   },
   "pizzaz-markdown": {
     "name": "pizzaz-markdown",
-    "uri": "pizzaz-markdown.9159c817",
-    "hash": "9159c817",
+    "uri": "pizzaz-markdown.3c22f9f5",
+    "hash": "3c22f9f5",
     "originalPath": "src/widgets/pizzaz/pizzaz-markdown/index.html"
   },
   "pizzaz-shop": {
     "name": "pizzaz-shop",
-    "uri": "pizzaz-shop.ba1892c0",
-    "hash": "ba1892c0",
+    "uri": "pizzaz-shop.035477fd",
+    "hash": "035477fd",
     "originalPath": "src/widgets/pizzaz/pizzaz-shop/index.html"
   },
   "pizzaz-table": {
@@ -125,8 +125,8 @@ export const widgetManifest = {
   },
   "solar-system": {
     "name": "solar-system",
-    "uri": "solar-system.c4650386",
-    "hash": "c4650386",
+    "uri": "solar-system.950bcdce",
+    "hash": "950bcdce",
     "originalPath": "src/widgets/science/solar-system/index.html"
   },
   "search-results": {

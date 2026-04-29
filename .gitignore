@@ -61,6 +61,7 @@ platforms/apple/apps/macos/ChatUIPlayground/
 .changeset/
 .ralph/
 .vale/
+.codex/config.toml
 
 # Swift/SwiftPM
 .build/

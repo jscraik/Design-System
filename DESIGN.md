@@ -44,4 +44,6 @@ Before creating a new abstraction, agents must check `docs/design-system/COMPONE
 
 ## Token Notes
 
-`--color-accent: #123456`
+Use semantic token roles from the token package and active profile. Do not add
+placeholder raw values as contract examples; accents should be referenced by
+role and component responsibility rather than by ad hoc hex literals.

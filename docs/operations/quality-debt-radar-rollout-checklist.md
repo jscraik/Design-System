@@ -1,14 +1,14 @@
 # Quality Debt Radar Rollout Checklist
 
 **Owner:** Platform Team (confirm)  
-**Last updated:** 2026-04-26
+**Last updated:** 2026-04-28
 **Related plan:** `/docs/plans/2026-03-05-feat-quality-debt-radar-burn-down-engine-plan.md`
 
 ## Table of Contents
 
 - [Preflight](#preflight)
-- [Source Signal Validation](#source-signal-validation)
 - [Executable Contract Validation](#executable-contract-validation)
+- [Source Signal Validation](#source-signal-validation)
 - [First Weekly Report](#first-weekly-report)
 - [Warn-First Governance Validation](#warn-first-governance-validation)
 - [Release Touchpoint Validation](#release-touchpoint-validation)

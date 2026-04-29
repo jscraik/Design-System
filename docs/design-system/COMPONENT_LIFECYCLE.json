@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-03-23",
+  "updated_at": "2026-04-28",
   "components": [
     {
       "name": "Stack",
@@ -92,6 +92,13 @@
       "lifecycle": "canonical",
       "routing_tier": 2,
       "notes": "Preferred shared error boundary primitive."
+    },
+    {
+      "name": "AlertDialog",
+      "path": "packages/ui/src/components/ui/feedback/AlertDialog/AlertDialog.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Preferred destructive confirmation primitive while Apps SDK UI lacks matching API parity."
     },
     {
       "name": "DataTable",

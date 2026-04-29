@@ -2,24 +2,33 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { defineConfig } from "@playwright/test";
+import { parsePlaywrightHost, parsePlaywrightPort } from "../../../../scripts/playwright-env";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const defaultPort = 5173;
-const webPort = Number(process.env.PLAYWRIGHT_WEB_PORT ?? process.env.PORT ?? defaultPort);
-const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://localhost:${webPort}`;
+
+const explicitBaseURL = process.env.PLAYWRIGHT_BASE_URL?.trim();
+const useExternalBaseURL = Boolean(explicitBaseURL);
+const host = useExternalBaseURL
+  ? "127.0.0.1"
+  : parsePlaywrightHost(process.env.PLAYWRIGHT_WEB_HOST, "127.0.0.1", "web");
+const webPort = useExternalBaseURL
+  ? defaultPort
+  : parsePlaywrightPort(process.env.PLAYWRIGHT_WEB_PORT ?? process.env.PORT, defaultPort, "web");
+const baseURL = explicitBaseURL ?? `http://${host}:${webPort}`;
 const reuseExistingServer =
   process.env.PLAYWRIGHT_REUSE_SERVER === "1" ||
   process.env.PLAYWRIGHT_REUSE_SERVER === "true" ||
   !process.env.CI;
 
-const webServer = process.env.PLAYWRIGHT_BASE_URL
+const webServer = useExternalBaseURL
   ? {
       url: baseURL,
       reuseExistingServer: true,
       timeout: 180_000,
     }
   : {
-      command: `pnpm dev --port ${webPort} --strictPort`,
+      command: `pnpm dev --host ${host} --port ${webPort} --strictPort`,
       url: baseURL,
       reuseExistingServer,
       timeout: 180_000,

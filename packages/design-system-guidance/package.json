@@ -30,11 +30,14 @@
     "access": "restricted"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "type-check": "tsc -p tsconfig.json --noEmit",
+    "build": "pnpm -C ../agent-design-engine run build && tsc -p tsconfig.build.json",
+    "type-check": "pnpm -C ../agent-design-engine run build && tsc -p tsconfig.json --noEmit",
     "check": "pnpm run build && node dist/cli.js check .",
     "check:ci": "pnpm run build && node dist/cli.js check . --ci",
     "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@brainwav/agent-design-engine": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^24.6.1",

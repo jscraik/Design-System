@@ -161,8 +161,21 @@ const DESIGN_SYSTEM_SUBCONTRACTS = [
     description:
       "Prevents wrapper code from deep-importing engine source or reimplementing DESIGN.md semantic ownership.",
   },
+  {
+    id: "agent-design-proposal-gate",
+    label: "Agent Design Proposal Gate",
+    command: ["pnpm", "agent-design:proposals"],
+    remediation: "pnpm agent-design:proposals",
+    description:
+      "Requires enforced routes and uncovered canonical lifecycle promotions to carry accepted proposal evidence or typed waivers.",
+  },
 ];
 
+/**
+ * Convert backslashes in a file path to forward slashes for consistent path matching.
+ * @param {string} filePath - The file path to normalize (may contain Windows backslashes).
+ * @returns {string} The normalized path with all `\` replaced by `/`.
+ */
 function normalize(filePath) {
   return filePath.replace(/\\/g, "/");
 }
