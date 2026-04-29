@@ -722,9 +722,8 @@ export function resolveRouteForSurface(
       }
       return left.route.canonicalNeed.localeCompare(right.route.canonicalNeed);
     });
-  const match = candidates[0]?.route;
 
-  if (!match) {
+  if (candidates.length === 0) {
     return {
       ok: false,
       route: null,
@@ -737,6 +736,31 @@ export function resolveRouteForSurface(
       ],
     };
   }
+
+  // Detect ties: if multiple distinct routes share the top score, report ambiguity
+  const topScore = candidates[0].score;
+  const topCandidates = candidates.filter(
+    (candidate) =>
+      candidate.score.wildcardCount === topScore.wildcardCount &&
+      candidate.score.literalLength === topScore.literalLength,
+  );
+  const uniqueRoutes = new Set(topCandidates.map((candidate) => candidate.route.canonicalNeed));
+
+  if (uniqueRoutes.size > 1) {
+    return {
+      ok: false,
+      route: null,
+      diagnostics: [
+        {
+          code: "E_DESIGN_ROUTE_AMBIGUOUS",
+          message: `Surface '${surfacePath}' matched multiple agent UI routes with identical specificity.`,
+          path: surfacePath,
+        },
+      ],
+    };
+  }
+
+  const match = candidates[0].route;
 
   return resolveRoute(
     rootDir,
