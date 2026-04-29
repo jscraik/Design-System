@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { loadAgentUiRoutingTable, resolveRemediationContext } from "./routes.js";
 import type {
@@ -404,6 +404,14 @@ function hasActiveWaiver(
   return waivers.has(waiverKey(scope, target));
 }
 
+function isExistingFile(filePath: string): boolean {
+  try {
+    return statSync(filePath).isFile();
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Determines whether a referenced proposal file is missing, accepted, or not accepted.
  *
@@ -411,7 +419,7 @@ function hasActiveWaiver(
  *
  * @param rootDir - Repository root used to resolve the proposal path
  * @param proposalRef - Proposal reference (may include a `#` fragment). If omitted or if the resolved path does not exist or escapes `rootDir`, the proposal is considered missing.
- * @returns `"missing"` if the referenced file is absent or escapes the repository root, `"accepted"` if the file contains an accepted status marker, `"not-accepted"` otherwise.
+ * @returns `"missing"` if the referenced file is absent, not a file, or escapes the repository root, `"accepted"` if the file contains an accepted status marker, `"not-accepted"` otherwise.
  */
 function proposalRefStatus(
   rootDir: string,
@@ -426,6 +434,9 @@ function proposalRefStatus(
     (absolutePath !== repoRoot && !absolutePath.startsWith(`${repoRoot}${path.sep}`)) ||
     !existsSync(absolutePath)
   ) {
+    return "missing";
+  }
+  if (!isExistingFile(absolutePath)) {
     return "missing";
   }
   const content = readFileSync(absolutePath, "utf8");

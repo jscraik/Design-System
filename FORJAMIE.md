@@ -236,6 +236,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - **PR #158 CLI boundary follow-up**: closed the remaining CodeRabbit CLI coverage-thread by making `astudio design coverage` parse `docs/design-system/COVERAGE_MATRIX.json` as unknown data, validate the array/object boundary, and return deterministic `E_DESIGN_COVERAGE_JSON` / `E_DESIGN_COVERAGE_SCHEMA` errors instead of trusting an unchecked cast.
 - **PR #158 route-loader follow-up**: moved the route, lifecycle, and coverage manifest loaders away from unchecked `JSON.parse() as T` casts and into parse-to-unknown narrowing. Route-table validation now also reuses preloaded lifecycle and coverage manifests instead of rereading them for every route, and the local projected `.codex/config.toml` symlink stays ignored instead of being committed.
 - **PR #158 final review-thread follow-up**: guidance remediation for `no-h-screen` now fails soft when a downstream repo lacks agent routing manifests, the destructive-confirmation route only matches AlertDialog-owned surfaces instead of every TSX file, and proposal-gate validation emits `E_DESIGN_LIFECYCLE_SCHEMA` for malformed lifecycle manifests instead of silently skipping lifecycle checks.
+- **PR #158 edge-case hardening follow-up**: agent-design `prepare` now accepts an optional `AbortSignal` and checks cancellation around repository reads, route validation rejects directory paths for source/example references, proposal refs treat directories as missing proposals instead of throwing, and guidance remediation only falls back for absent routing manifests while malformed route data still fails loudly.
 - **Playwright localhost hardening**: web e2e and widget a11y Playwright configs now bind generated dev servers to `127.0.0.1` by default, while still allowing `PLAYWRIGHT_WEB_HOST` / `PLAYWRIGHT_WIDGETS_HOST` overrides. This keeps the pre-push browser gates from drifting onto IPv6 loopback in sandboxed Codex runs.
 - **Guidance clean-CI build ordering**: `@brainwav/design-system-guidance` now builds `@brainwav/agent-design-engine` before its own build/type-check scripts. This keeps root policy guidance checks from failing on a clean runner when the public engine package export has not emitted `dist` yet.
 
@@ -435,7 +436,7 @@ project: design-system
 repo: ~/dev/design-system
 status: IN_PROGRESS
 health: yellow
-last_updated: 2026-04-28
+last_updated: 2026-04-29
 open_prs: 1
 blockers: none
 next_milestone: ChatGPT widget integration

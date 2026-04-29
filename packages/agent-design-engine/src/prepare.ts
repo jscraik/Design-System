@@ -109,10 +109,18 @@ function parseGuidanceConfig(value: unknown): GuidanceConfig {
  *
  * @param rootDir - Base directory used to resolve `relativePath`
  * @param relativePath - Path to the file, resolved relative to `rootDir`
+ * @param signal - Optional cancellation signal checked before and after the file read
  * @returns The file contents as a string
  */
-async function readText(rootDir: string, relativePath: string): Promise<string> {
-  return readFile(path.join(rootDir, relativePath), "utf8");
+async function readText(
+  rootDir: string,
+  relativePath: string,
+  signal?: AbortSignal,
+): Promise<string> {
+  signal?.throwIfAborted();
+  const content = await readFile(path.join(rootDir, relativePath), "utf8");
+  signal?.throwIfAborted();
+  return content;
 }
 
 /**
@@ -120,10 +128,16 @@ async function readText(rootDir: string, relativePath: string): Promise<string> 
  *
  * @param rootDir - The base directory against which `relativePath` is resolved
  * @param relativePath - The file path relative to `rootDir` to read and digest
+ * @param signal - Optional cancellation signal checked before and after the digest read
  * @returns An object with `path` equal to `relativePath` and `sha256` set to the file's SHA-256 hex digest
  */
-async function digestFile(rootDir: string, relativePath: string): Promise<PrepareSourceDigest> {
-  const content = await readText(rootDir, relativePath);
+async function digestFile(
+  rootDir: string,
+  relativePath: string,
+  signal?: AbortSignal,
+): Promise<PrepareSourceDigest> {
+  const content = await readText(rootDir, relativePath, signal);
+  signal?.throwIfAborted();
   return {
     path: relativePath,
     sha256: createHash("sha256").update(content).digest("hex"),
@@ -338,19 +352,23 @@ function routeDecisions(
  *
  * @param surfacePath - Path to the UI surface to prepare; may be absolute or relative to `rootDir`
  * @param rootDir - Root directory against which to resolve `surfacePath` and locate design/guidance files (defaults to process.cwd())
+ * @param signal - Optional cancellation signal for callers that need to abort repository I/O
  * @returns A PreparePayload object containing metadata, recommended routes, required/forbidden/example data, validation commands, provenance and source digests, and open decisions
  * @throws Error if required source digests (coverage matrix or component lifecycle) cannot be found
  */
 export async function buildPreparePayload(
   surfacePath: string,
   rootDir = process.cwd(),
+  signal?: AbortSignal,
 ): Promise<PreparePayload> {
+  signal?.throwIfAborted();
   const resolvedRoot = path.resolve(rootDir);
   const normalizedSurfacePath = normalizeSurfacePath(resolvedRoot, surfacePath);
   const [designSource, guidanceSource] = await Promise.all([
-    readText(resolvedRoot, designPath),
-    readText(resolvedRoot, guidancePath),
+    readText(resolvedRoot, designPath, signal),
+    readText(resolvedRoot, guidancePath, signal),
   ]);
+  signal?.throwIfAborted();
   let parsedGuidance: unknown;
   try {
     parsedGuidance = JSON.parse(guidanceSource) as unknown;
@@ -362,6 +380,7 @@ export async function buildPreparePayload(
     rootDir: resolvedRoot,
     filePath: path.join(resolvedRoot, designPath),
   });
+  signal?.throwIfAborted();
   const routeResult = resolveRouteForSurface(normalizedSurfacePath, resolvedRoot);
   const route = routeResult.route;
   const surfaceScope = classifySurfaceScope(guidance, normalizedSurfacePath);
@@ -373,8 +392,9 @@ export async function buildPreparePayload(
       lifecyclePath,
       coveragePath,
       professionalContractPath,
-    ].map((sourcePath) => digestFile(resolvedRoot, sourcePath)),
+    ].map((sourcePath) => digestFile(resolvedRoot, sourcePath, signal)),
   );
+  signal?.throwIfAborted();
   const coverageMatrixDigest = sourceDigests.find((digest) => digest.path === coveragePath);
   const componentLifecycleDigest = sourceDigests.find((digest) => digest.path === lifecyclePath);
   if (!coverageMatrixDigest || !componentLifecycleDigest) {

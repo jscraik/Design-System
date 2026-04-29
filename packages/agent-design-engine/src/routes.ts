@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import type {
   AgentUiRouteSource,
@@ -408,6 +408,14 @@ function resolveRepoPath(rootDir: string, relativePath: string): string | null {
   return null;
 }
 
+function isExistingFile(filePath: string): boolean {
+  try {
+    return statSync(filePath).isFile();
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Checks that each file referenced in a route's `sourceRefs` exists under `rootDir` and appends diagnostics for any missing references.
  *
@@ -423,7 +431,7 @@ function validateRouteSourceRefs(
   for (const sourceRef of route.sourceRefs) {
     const [filePath] = sourceRef.split("#");
     const resolvedPath = filePath ? resolveRepoPath(rootDir, filePath) : null;
-    if (!resolvedPath || !existsSync(resolvedPath)) {
+    if (!resolvedPath || !isExistingFile(resolvedPath)) {
       diagnostics.push(
         toRouteDiagnostic(
           "E_DESIGN_ROUTE_SOURCE_REF_MISSING",
@@ -450,7 +458,7 @@ function validateRouteExamples(
 ) {
   for (const example of route.examples) {
     const resolvedPath = resolveRepoPath(rootDir, example);
-    if (!resolvedPath || !existsSync(resolvedPath)) {
+    if (!resolvedPath || !isExistingFile(resolvedPath)) {
       diagnostics.push(
         toRouteDiagnostic(
           "E_DESIGN_ROUTE_EXAMPLE_MISSING",

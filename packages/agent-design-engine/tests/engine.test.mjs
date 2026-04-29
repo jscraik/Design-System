@@ -317,6 +317,31 @@ test("proposal gate rejects enforced routes without accepted proposal or waiver"
   );
 });
 
+test("proposal gate treats directory proposal refs as missing proposals", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const productSectionRoute = routing.routes.find(
+    (route) => route.canonicalNeed === "product_section",
+  );
+  productSectionRoute.proposalRef = "docs/design-system/proposals";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const waivers = readFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json");
+  waivers.waivers = waivers.waivers.filter(
+    (waiver) => waiver.id !== "grandfather-route-product-section-2026-04-28",
+  );
+  writeFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json", waivers);
+
+  const result = validateProposalGate(fixtureRoot, { today: "2026-04-28" });
+  assert.equal(result.ok, false);
+  assert.ok(
+    result.diagnostics.some(
+      (diagnostic) =>
+        diagnostic.code === "E_DESIGN_PROPOSAL_REQUIRED" && diagnostic.target === "product_section",
+    ),
+  );
+});
+
 test("proposal gate rejects canonical lifecycle promotion without coverage or waiver", () => {
   const fixtureRoot = proposalFixtureRoot();
   const waivers = readFixtureJson(fixtureRoot, "docs/design-system/proposals/waivers.json");
@@ -351,6 +376,20 @@ test("routing validation rejects source and example paths outside the repo", () 
   const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
   routing.routes[0].sourceRefs = ["../outside.tsx"];
   routing.routes[0].examples = ["../outside-example.tsx"];
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const diagnostics = validateAgentUiRoutingTable(fixtureRoot);
+  assert.ok(
+    diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_ROUTE_SOURCE_REF_MISSING"),
+  );
+  assert.ok(diagnostics.some((diagnostic) => diagnostic.code === "E_DESIGN_ROUTE_EXAMPLE_MISSING"));
+});
+
+test("routing validation rejects directory refs for sources and examples", () => {
+  const fixtureRoot = proposalFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  routing.routes[0].sourceRefs = ["docs/design-system/proposals"];
+  routing.routes[0].examples = ["docs/design-system/proposals"];
   writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
 
   const diagnostics = validateAgentUiRoutingTable(fixtureRoot);
@@ -540,6 +579,21 @@ test("builds prepare payload for protected product page surfaces", async () => {
   );
   assert.equal(payload.ruleSourceDigests.length, 4);
   assert.equal("timing" in payload, false);
+});
+
+test("build prepare payload honors aborted signals", async () => {
+  const controller = new AbortController();
+  controller.abort();
+
+  await assert.rejects(
+    () =>
+      buildPreparePayload(
+        "platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx",
+        rootDir,
+        controller.signal,
+      ),
+    { name: "AbortError" },
+  );
 });
 
 test("builds prepare payload for settings panel surfaces", async () => {

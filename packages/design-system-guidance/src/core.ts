@@ -52,6 +52,15 @@ const SCAN_EXTENSIONS = new Set([
 ]);
 const ISO_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const DEFAULT_SCOPE_PRECEDENCE: GuidanceScopeName[] = ["error", "warn", "exempt"];
+
+function getErrorCode(error: unknown): string | undefined {
+  return typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    typeof (error as { code?: unknown }).code === "string"
+    ? (error as { code: string }).code
+    : undefined;
+}
 const EXEMPTION_CLASSIFICATIONS = new Set(["temporary", "transitional", "deprecated"]);
 const DESIGN_MODES = new Set<GuidanceDesignMode>(["legacy", "design-md"]);
 const MIGRATION_STATES = new Set<GuidanceMigrationState>([
@@ -260,7 +269,14 @@ function remediationForViolation(ruleId: string, targetPath: string): Partial<Gu
     let remediation: ReturnType<typeof resolveRemediationContext>;
     try {
       remediation = resolveRemediationContext("page_shell", targetPath);
-    } catch {
+    } catch (error) {
+      if (getErrorCode(error) !== "ENOENT") {
+        const reason = error instanceof Error ? error.message : String(error);
+        throw new Error(
+          `Failed to resolve page shell remediation context for ${targetPath}: ${reason}`,
+          { cause: error },
+        );
+      }
       return {
         proposalRequired: true,
         recoveryUnavailableReason:
