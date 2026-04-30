@@ -1618,7 +1618,14 @@ export async function migrateGuidanceConfig(
   const rules = await readRules();
   const configPath = path.join(targetPath, rules.configFile);
   return withMigrationLock(configPath, Boolean(options.write && !options.dryRun), async () => {
+    const lockPath = `${configPath}.migration.lock`;
+    if (options.dryRun && !options.write && (await exists(lockPath))) {
+      throw migrationLockedError();
+    }
     const { raw, config } = await readGuidanceConfig(targetPath, configPath);
+    if (options.dryRun && !options.write && (await exists(lockPath))) {
+      throw migrationLockedError();
+    }
     return migrateGuidanceConfigUnlocked(options, targetPath, configPath, raw, config);
   });
 }

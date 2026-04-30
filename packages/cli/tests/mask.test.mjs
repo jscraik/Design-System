@@ -50,6 +50,41 @@ test("maskObject masks nested sensitive fields", async () => {
   assert.equal(masked.public_field, "visible");
 });
 
+test("maskObject preserves public design token contracts", async () => {
+  const { maskObject } = await import("../src/utils/mask.ts");
+
+  const input = {
+    designTokenContract: {
+      mode: "semantic-only",
+      allowedRoles: [
+        {
+          role: "text.primary",
+          useFor: ["Primary text"],
+          token: "role-secret",
+        },
+      ],
+      forbiddenTokenPatterns: ["foundation tokens are forbidden"],
+      sourceRefs: ["packages/ui/src/styles/theme.css"],
+      token: "contract-secret",
+    },
+    config: {
+      token: "jwt-token-here",
+    },
+  };
+
+  const masked = maskObject(input);
+
+  assert.equal(masked.designTokenContract.mode, input.designTokenContract.mode);
+  assert.deepEqual(
+    masked.designTokenContract.forbiddenTokenPatterns,
+    input.designTokenContract.forbiddenTokenPatterns,
+  );
+  assert.equal(masked.designTokenContract.token, "[REDACTED]");
+  assert.equal(masked.designTokenContract.allowedRoles[0].role, "text.primary");
+  assert.equal(masked.designTokenContract.allowedRoles[0].token, "[REDACTED]");
+  assert.equal(masked.config.token, "[REDACTED]");
+});
+
 test("maskObject bypasses in debug mode", async () => {
   const { maskObject } = await import("../src/utils/mask.ts");
 

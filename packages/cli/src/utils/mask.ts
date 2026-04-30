@@ -41,11 +41,7 @@ export function maskValue(value: string, mask: MaskType): string {
 }
 
 function shouldMaskField(key: string, masks: FieldMask[]): FieldMask | undefined {
-  const keySegments = key
-    .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
-    .toLowerCase()
-    .split(/[^a-z0-9]+/)
-    .filter(Boolean);
+  const keySegments = getKeySegments(key);
   const lowerKey = key.toLowerCase();
   return masks.find((mask) => {
     const field = mask.field.toLowerCase();
@@ -54,6 +50,80 @@ function shouldMaskField(key: string, masks: FieldMask[]): FieldMask | undefined
     }
     return lowerKey.includes(field);
   });
+}
+
+function getKeySegments(key: string): string[] {
+  return key
+    .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter(Boolean);
+}
+
+function isPublicDesignTokenContractKey(key: string): boolean {
+  return getKeySegments(key).join("_") === "design_token_contract";
+}
+
+function maskFieldValue(
+  key: string,
+  val: unknown,
+  masks: FieldMask[],
+  inDebugMode: boolean,
+): unknown {
+  const mask = shouldMaskField(key, masks);
+  if (mask) {
+    return typeof val === "string" ? maskValue(val, mask.mask ?? "redact") : "[REDACTED]";
+  }
+  return maskValueRecursive(val, masks, inDebugMode);
+}
+
+const publicDesignTokenContractKeys = new Set([
+  "mode",
+  "allowedRoles",
+  "forbiddenTokenPatterns",
+  "sourceRefs",
+]);
+
+const publicDesignTokenRoleKeys = new Set(["role", "cssVariable", "useFor", "avoidFor"]);
+
+function maskPublicDesignTokenRole(
+  value: unknown,
+  masks: FieldMask[],
+  inDebugMode: boolean,
+): unknown {
+  if (value === null || typeof value !== "object" || Array.isArray(value)) {
+    return value;
+  }
+
+  const result: Record<string, unknown> = {};
+  for (const [key, val] of Object.entries(value)) {
+    result[key] = publicDesignTokenRoleKeys.has(key)
+      ? val
+      : maskFieldValue(key, val, masks, inDebugMode);
+  }
+  return result;
+}
+
+function maskPublicDesignTokenContract(
+  value: unknown,
+  masks: FieldMask[],
+  inDebugMode: boolean,
+): unknown {
+  if (value === null || typeof value !== "object" || Array.isArray(value)) {
+    return value;
+  }
+
+  const result: Record<string, unknown> = {};
+  for (const [key, val] of Object.entries(value)) {
+    if (key === "allowedRoles" && Array.isArray(val)) {
+      result[key] = val.map((role) => maskPublicDesignTokenRole(role, masks, inDebugMode));
+    } else if (publicDesignTokenContractKeys.has(key)) {
+      result[key] = val;
+    } else {
+      result[key] = maskFieldValue(key, val, masks, inDebugMode);
+    }
+  }
+  return result;
 }
 
 function maskValueRecursive(value: unknown, masks: FieldMask[], inDebugMode: boolean): unknown {
@@ -71,14 +141,11 @@ function maskValueRecursive(value: unknown, masks: FieldMask[], inDebugMode: boo
   if (value !== null && typeof value === "object") {
     const result: Record<string, unknown> = {};
     for (const [key, val] of Object.entries(value)) {
-      const mask = shouldMaskField(key, masks);
-      if (mask) {
-        // Mask any value type, not just strings
-        result[key] =
-          typeof val === "string" ? maskValue(val, mask.mask ?? "redact") : "[REDACTED]";
-      } else {
-        result[key] = maskValueRecursive(val, masks, inDebugMode);
+      if (isPublicDesignTokenContractKey(key)) {
+        result[key] = maskPublicDesignTokenContract(val, masks, inDebugMode);
+        continue;
       }
+      result[key] = maskFieldValue(key, val, masks, inDebugMode);
     }
     return result;
   }

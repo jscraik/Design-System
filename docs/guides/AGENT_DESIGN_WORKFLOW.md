@@ -10,31 +10,37 @@
 
 ## Purpose
 
-This guide explains how coding agents should use `DESIGN.md` and `astudio design` before creating or refactoring UI in this repository.
+This guide explains the required pre-edit design-system step for coding agents creating or refactoring UI in this repository.
 
 ## When To Use
 
-Use this workflow when an agent is asked to design, redesign, restyle, or review UI. The workflow is not a replacement for component tests or visual checks; it is the semantic contract step that tells an agent which brand, hierarchy, state, motion, focus, viewport, and component-routing expectations apply.
+Use this workflow when an agent is asked to design, redesign, restyle, or review UI. The workflow is not a replacement for component tests or visual checks; it is the semantic contract step that tells an agent which components, token roles, states, examples, forbidden patterns, validation commands, and proposal-required stops apply.
 
 ## Agent Flow
 
-1. Read `DESIGN.md` at the repo root.
-2. Run `pnpm agent-design:lint` or `pnpm -C packages/cli run start -- design lint --file DESIGN.md --json`.
-3. If lint fails, fix `DESIGN.md` or the rule sources before generating UI.
-4. Export the contract for downstream tooling when needed:
+1. Run the prepare command for the exact surface before editing UI:
 
 ```bash
-pnpm -C packages/cli run start -- design export --file DESIGN.md --format json@agent-design.v1 --json
+astudio design prepare --surface <path> --json
 ```
 
-5. Build UI using the contract plus the existing design-system docs:
+2. In this repo, the clean-checkout convenience wrapper is:
 
-```text
-docs/design-system/PROFESSIONAL_UI_CONTRACT.md
-docs/design-system/AGENT_UI_ROUTING.md
-docs/design-system/COMPONENT_LIFECYCLE.json
-docs/design-system/COVERAGE_MATRIX.json
+```bash
+pnpm --silent agent-design:prepare --surface <path>
 ```
+
+The wrapper is build-backed setup. It may build `packages/agent-design-engine`, `packages/design-system-guidance`, `packages/skill-ingestion`, and `packages/cli` before invoking the CLI. The read-only operation contract belongs to `astudio design prepare` itself once the CLI is available. Use `pnpm --silent` for JSON capture, because plain `pnpm` prints lifecycle banners before script output.
+
+3. If `safeForAutomaticImplementation` is `false`, stop and follow `openDecisions`. Do not invent components, token roles, states, examples, or proposal outcomes.
+4. If implementation is safe, use the returned `recommendedRoutes`, `designTokenContract`, `requiredStates`, `relevantExamples`, `forbiddenPatterns`, and `validationCommands` as the implementation brief.
+5. Edit the UI.
+6. Run the returned read-only validation commands that apply to the changed surface.
+7. Before PR handoff, run `pnpm agent-design:prepare:changed`. It builds the local CLI dependencies, checks changed `.tsx`/`.jsx` UI surfaces with the read-only prepare command, and fails if any surface is unsafe or missing prepare evidence. Use `pnpm agent-design:prepare:changed -- --surface <path>` for a single surface.
+8. CI reruns the changed-surface gate on pull requests in the web platform lane. If it fails, treat that as a missing/unsafe prepare contract, not as a generic CI failure.
+9. If validation fails or a proposal-required stop appears, fix the underlying design-system evidence or open the proposal/manual decision path.
+
+Supporting commands such as `astudio design lint`, `astudio design export`, `astudio design components`, `astudio design coverage`, and `astudio design propose-abstraction` are diagnostics. They are not the normal happy path before UI edits.
 
 ## Migration Flow
 

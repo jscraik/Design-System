@@ -47,6 +47,7 @@ Note: `apps/` is a navigation index only; canonical app paths remain under `plat
 - [Compatibility matrix](#compatibility-matrix)
 - [Quick Start](#quick-start)
 - [Onboarding Command Center](#onboarding-command-center)
+- [Agent UI Preparation](#agent-ui-preparation)
 - [Verify](#verify)
 - [Common tasks](#common-tasks)
 - [Widget Gallery & Development](#widget-gallery--development)
@@ -108,7 +109,39 @@ Task-first routes:
 - Test MCP integration
 - Full integration path (token + widget + MCP)
 
-### Verify
+## Agent UI Preparation
+
+Before an AI coding agent edits a protected UI surface, run:
+
+```bash
+astudio design prepare --surface <path> --json
+```
+
+The prepare payload is the implementation brief: canonical components, semantic token roles, required states, examples, forbidden patterns, read-only validation commands, source evidence, and proposal-required stops. A protected UI change is not ready until `safeForAutomaticImplementation` is `true`, or the PR explains the manual/proposal decision returned by `openDecisions`.
+
+For local repo work, use the build-backed convenience wrapper in silent mode so stdout remains parseable JSON:
+
+```bash
+pnpm --silent agent-design:prepare --surface <path>
+```
+
+That wrapper may build local workspace packages before invoking the CLI. The read-only operation contract belongs to `astudio design prepare` itself once the CLI is available. Use `pnpm --silent` when a script or agent needs to capture the JSON payload, because plain `pnpm` adds lifecycle banners to stdout. Supporting commands such as `astudio design lint`, `export`, `components`, `coverage`, and `propose-abstraction` are diagnostics rather than the normal pre-edit happy path.
+
+For PR or local handoff evidence across changed UI surfaces, run:
+
+```bash
+pnpm agent-design:prepare:changed
+```
+
+That gate builds the same workspace dependencies, finds changed `.tsx`/`.jsx` UI surfaces, runs the read-only prepare command for each one, and fails if any payload is unsafe or incomplete. To check one surface explicitly, run:
+
+```bash
+pnpm agent-design:prepare:changed -- --surface <path>
+```
+
+CI runs the changed-surface gate on pull requests in the web platform lane, using the PR base ref as the comparison point. That makes the prepare evidence rule automatic for UI changes while keeping the direct `astudio design prepare` operation read-only.
+
+## Verify
 
 - Widget Gallery: open <http://localhost:5173/>
 - Storybook: open <http://localhost:6006/>
