@@ -368,6 +368,22 @@ async function exists(filePath: string): Promise<boolean> {
   }
 }
 
+async function migrationLockExists(lockPath: string): Promise<boolean> {
+  try {
+    await access(lockPath);
+    return true;
+  } catch (error) {
+    if (getErrorCode(error) === "ENOENT") {
+      return false;
+    }
+    throw new GuidanceError("Unable to check guidance migration lock state.", {
+      code: "E_DESIGN_MIGRATION_LOCK_CHECK",
+      exitCode: 3,
+      hint: `Check filesystem permissions for ${lockPath} before retrying the migration.`,
+    });
+  }
+}
+
 function parseStringArray(value: unknown): string[] | null {
   if (!Array.isArray(value)) return null;
   const items = value.filter(
@@ -1619,11 +1635,11 @@ export async function migrateGuidanceConfig(
   const configPath = path.join(targetPath, rules.configFile);
   return withMigrationLock(configPath, Boolean(options.write && !options.dryRun), async () => {
     const lockPath = `${configPath}.migration.lock`;
-    if (options.dryRun && !options.write && (await exists(lockPath))) {
+    if (options.dryRun && !options.write && (await migrationLockExists(lockPath))) {
       throw migrationLockedError();
     }
     const { raw, config } = await readGuidanceConfig(targetPath, configPath);
-    if (options.dryRun && !options.write && (await exists(lockPath))) {
+    if (options.dryRun && !options.write && (await migrationLockExists(lockPath))) {
       throw migrationLockedError();
     }
     return migrateGuidanceConfigUnlocked(options, targetPath, configPath, raw, config);

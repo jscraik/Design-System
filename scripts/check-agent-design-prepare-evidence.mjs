@@ -4,6 +4,15 @@ import path from "node:path";
 
 const repoRoot = process.cwd();
 const args = process.argv.slice(2);
+const serviceTag = 'service:"agent-design"';
+
+function log(message) {
+  console.log(`${message} ${serviceTag}`);
+}
+
+function error(message) {
+  console.error(`${message} ${serviceTag}`);
+}
 
 function readArgValues(name) {
   const values = [];
@@ -39,7 +48,13 @@ function gitChangedFiles() {
   const files = new Set();
   for (const commandArgs of commands) {
     const result = run("git", commandArgs);
-    if (result.status !== 0) continue;
+    if (result.status !== 0) {
+      const detail = (result.stderr || result.stdout).trim();
+      error(
+        `agent-design: failed to run git ${commandArgs.join(" ")}${detail ? `: ${detail}` : ""}`,
+      );
+      process.exit(result.status ?? 1);
+    }
     for (const file of result.stdout.split(/\r?\n/)) {
       if (file.trim()) files.add(file.trim());
     }
@@ -61,10 +76,40 @@ function isUiSurface(file) {
 function toRepoRelative(file) {
   const relative = path.relative(repoRoot, path.resolve(repoRoot, file));
   if (relative.startsWith("..") || path.isAbsolute(relative)) {
-    console.error(`agent-design: surface is outside the repository: ${file}`);
+    error(`agent-design: surface is outside the repository: ${file}`);
     process.exit(2);
   }
   return relative;
+}
+
+function isObject(value) {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+
+function validatePreparePayload(payload) {
+  if (!isObject(payload)) {
+    return "prepare envelope must be an object";
+  }
+  if (payload.status !== "success" && payload.status !== "warn" && payload.status !== "error") {
+    return "prepare envelope is missing a valid status";
+  }
+  if (!isObject(payload.data)) {
+    return "prepare envelope is missing object data";
+  }
+  const data = payload.data;
+  if (data.kind !== "astudio.design.prepare.v1") {
+    return "prepare data.kind must be astudio.design.prepare.v1";
+  }
+  if (typeof data.safeForAutomaticImplementation !== "boolean") {
+    return "prepare data.safeForAutomaticImplementation must be boolean";
+  }
+  if (!Array.isArray(data.validationCommands)) {
+    return "prepare data.validationCommands must be an array";
+  }
+  if (!Array.isArray(data.openDecisions)) {
+    return "prepare data.openDecisions must be an array";
+  }
+  return "";
 }
 
 function prepare(surface) {
@@ -84,6 +129,16 @@ function prepare(surface) {
       ok: false,
       surface,
       reason: "prepare did not emit parseable JSON",
+      stderr: result.stderr.trim(),
+      stdout: result.stdout.trim().slice(0, 500),
+    };
+  }
+  const validationError = validatePreparePayload(payload);
+  if (validationError) {
+    return {
+      ok: false,
+      surface,
+      reason: validationError,
       stderr: result.stderr.trim(),
       stdout: result.stdout.trim().slice(0, 500),
     };
@@ -114,43 +169,57 @@ const surfaces = (
 )
   .map(toRepoRelative)
   .filter((file, index, files) => files.indexOf(file) === index)
-  .filter((file) => fs.existsSync(path.join(repoRoot, file)))
   .sort();
 
-console.log("agent-design: prepare evidence gate");
+if (explicitSurfaces.length > 0) {
+  const missing = surfaces.filter((file) => !fs.existsSync(path.join(repoRoot, file)));
+  if (missing.length > 0) {
+    for (const file of missing) {
+      error(`agent-design: explicit surface does not exist: ${file}`);
+    }
+    process.exit(2);
+  }
+}
 
-if (surfaces.length === 0) {
-  console.log("  no changed UI surfaces require prepare evidence");
+const existingSurfaces =
+  explicitSurfaces.length > 0
+    ? surfaces
+    : surfaces.filter((file) => fs.existsSync(path.join(repoRoot, file)));
+
+log("agent-design: prepare evidence gate");
+
+if (existingSurfaces.length === 0) {
+  log("  no changed UI surfaces require prepare evidence");
   process.exit(0);
 }
 
 let failed = false;
-for (const surface of surfaces) {
+for (const surface of existingSurfaces) {
   const result = prepare(surface);
   const label = result.ok ? "OK" : "ERROR";
-  console.log(
+  log(
     `  [${label}] ${surface}: kind=${result.surfaceKind ?? "unknown"} scope=${
       result.surfaceScope ?? "unknown"
     } safe=${String(result.safeForAutomaticImplementation)}`,
   );
   if (!result.ok) {
     failed = true;
-    console.log(`    reason: ${result.reason}`);
+    log(`    reason: ${result.reason}`);
     if (result.openDecisions.length > 0) {
       for (const decision of result.openDecisions) {
-        console.log(`    openDecision: ${decision.code} ${decision.message}`);
+        log(`    openDecision: ${decision.code} ${decision.message}`);
       }
     }
-    if (result.stderr) console.log(`    stderr: ${result.stderr}`);
-    if (result.stdout) console.log(`    stdout: ${result.stdout}`);
+    if (result.stderr) log(`    stderr: ${result.stderr}`);
+    if (result.stdout) log(`    stdout: ${result.stdout}`);
   }
 }
 
 if (failed) {
-  console.log(
+  log(
     "agent-design: prepare evidence gate failed; run prepare manually and document the returned open decision before editing protected UI.",
   );
   process.exit(1);
 }
 
-console.log("agent-design: prepare evidence gate ok");
+log("agent-design: prepare evidence gate ok");

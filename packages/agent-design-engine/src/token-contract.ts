@@ -115,15 +115,30 @@ function tokenContractAmbiguous(sourcePath: string, expectation: string): Design
   });
 }
 
+function assertSemanticRoleThemeTokens(content: string): void {
+  for (const role of semanticRoles) {
+    if (!role.cssVariable) {
+      throw tokenContractAmbiguous(themeSourcePath, `${role.role} CSS variable reference`);
+    }
+    if (!content.includes(`${role.cssVariable}:`)) {
+      throw tokenContractAmbiguous(
+        themeSourcePath,
+        `${role.role} backing token ${role.cssVariable}`,
+      );
+    }
+  }
+}
+
 async function assertThemeSource(rootDir: string, signal?: AbortSignal): Promise<void> {
   const content = await readTokenSource(rootDir, themeSourcePath, signal);
   signal?.throwIfAborted();
 
   for (const cssVariable of ["--background", "--foreground", "--ring"]) {
-    if (!new RegExp(`${cssVariable}\\s*:`).test(content)) {
+    if (!content.includes(`${cssVariable}:`)) {
       throw tokenContractAmbiguous(themeSourcePath, `${cssVariable} CSS variable`);
     }
   }
+  assertSemanticRoleThemeTokens(content);
 }
 
 async function assertAliasMapSource(rootDir: string, signal?: AbortSignal): Promise<void> {
@@ -135,7 +150,7 @@ async function assertAliasMapSource(rootDir: string, signal?: AbortSignal): Prom
   }
 
   for (const category of ["background", "text", "border", "accent", "interactive"]) {
-    if (!new RegExp(`\\b${category}\\s*:\\s*buildModeMap\\("${category}"\\)`).test(content)) {
+    if (!content.includes(`${category}: buildModeMap("${category}")`)) {
       throw tokenContractAmbiguous(aliasMapSourcePath, `${category} color alias mapping`);
     }
   }
@@ -176,6 +191,11 @@ export async function buildDesignTokenContract(
     assertAliasMapSource(rootDir, signal),
     assertDtcgSource(rootDir, signal),
   ]);
+  for (const sourceRef of tokenSourceRefs) {
+    if (!sourceRef) {
+      throw tokenContractAmbiguous("designTokenContract.sourceRefs", "non-empty source reference");
+    }
+  }
 
   return {
     mode: "semantic-only",

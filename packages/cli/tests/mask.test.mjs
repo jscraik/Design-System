@@ -85,6 +85,32 @@ test("maskObject preserves public design token contracts", async () => {
   assert.equal(masked.config.token, "[REDACTED]");
 });
 
+test("maskObject masks malformed design token contract public branches", async () => {
+  const { maskObject } = await import("../src/utils/mask.ts");
+
+  const input = {
+    designTokenContract: {
+      mode: { token: "mode-secret" },
+      allowedRoles: [
+        {
+          role: { token: "role-secret" },
+          useFor: [{ token: "use-secret" }],
+          secret: "role-extra-secret",
+        },
+      ],
+      sourceRefs: [{ token: "source-secret" }],
+    },
+  };
+
+  const masked = maskObject(input);
+
+  assert.equal(masked.designTokenContract.mode.token, "[REDACTED]");
+  assert.equal(masked.designTokenContract.allowedRoles[0].role.token, "[REDACTED]");
+  assert.equal(masked.designTokenContract.allowedRoles[0].useFor[0].token, "[REDACTED]");
+  assert.equal(masked.designTokenContract.allowedRoles[0].secret, "[REDACTED]");
+  assert.equal(masked.designTokenContract.sourceRefs[0].token, "[REDACTED]");
+});
+
 test("maskObject bypasses in debug mode", async () => {
   const { maskObject } = await import("../src/utils/mask.ts");
 

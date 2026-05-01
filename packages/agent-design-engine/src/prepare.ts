@@ -137,6 +137,25 @@ async function readText(
   return content;
 }
 
+async function readPrepareSource(
+  rootDir: string,
+  relativePath: string,
+  code: "E_DESIGN_SOURCE_IO" | "E_DESIGN_GUIDANCE_IO",
+  signal?: AbortSignal,
+): Promise<string> {
+  try {
+    return await readText(rootDir, relativePath, signal);
+  } catch (error) {
+    if (error instanceof Error && error.name === "AbortError") {
+      throw error;
+    }
+    throw new DesignEngineError(`Prepare source is missing or unreadable: ${relativePath}`, {
+      code,
+      exitCode: 2,
+    });
+  }
+}
+
 /**
  * Compute a SHA-256 digest for a file located under a project root.
  *
@@ -349,6 +368,36 @@ function commandTokens(command: string): string[] {
   return command.trim().split(/\s+/).filter(Boolean);
 }
 
+const pnpmSubcommands = new Set([
+  "add",
+  "approve-builds",
+  "audit",
+  "config",
+  "deploy",
+  "dlx",
+  "env",
+  "exec",
+  "fetch",
+  "help",
+  "import",
+  "init",
+  "install",
+  "licenses",
+  "link",
+  "list",
+  "outdated",
+  "patch",
+  "publish",
+  "rebuild",
+  "remove",
+  "root",
+  "setup",
+  "store",
+  "unlink",
+  "update",
+  "why",
+]);
+
 function inferPackageScript(command: string): string | undefined {
   const tokens = commandTokens(command);
   if (tokens[0] !== "pnpm") {
@@ -360,12 +409,10 @@ function inferPackageScript(command: string): string | undefined {
     if (token === "run") {
       return tokens[index + 1];
     }
-    if (
-      token === "-C" ||
-      token === "--dir" ||
-      token === "--filter" ||
-      token === "--workspace-root"
-    ) {
+    if (token === "--workspace-root") {
+      continue;
+    }
+    if (token === "-C" || token === "--dir" || token === "--filter") {
       index += 1;
       continue;
     }
@@ -374,6 +421,9 @@ function inferPackageScript(command: string): string | undefined {
     }
     if (token.startsWith("-")) {
       continue;
+    }
+    if (pnpmSubcommands.has(token)) {
+      return undefined;
     }
     return token;
   }
@@ -496,8 +546,8 @@ export async function buildPreparePayload(
   const resolvedRoot = path.resolve(rootDir);
   const normalizedSurfacePath = normalizeSurfacePath(resolvedRoot, surfacePath);
   const [designSource, guidanceSource] = await Promise.all([
-    readText(resolvedRoot, designPath, signal),
-    readText(resolvedRoot, guidancePath, signal),
+    readPrepareSource(resolvedRoot, designPath, "E_DESIGN_SOURCE_IO", signal),
+    readPrepareSource(resolvedRoot, guidancePath, "E_DESIGN_GUIDANCE_IO", signal),
   ]);
   signal?.throwIfAborted();
   let parsedGuidance: unknown;

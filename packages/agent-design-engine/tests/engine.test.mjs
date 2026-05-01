@@ -902,6 +902,16 @@ test("build prepare payload reports missing token contract sources deterministic
   );
 });
 
+test("build prepare payload reports missing prepare sources deterministically", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  fs.rmSync(path.join(fixtureRoot, "DESIGN.md"));
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_SOURCE_IO", exitCode: 2 },
+  );
+});
+
 test("build prepare payload reports ambiguous token contract sources deterministically", async () => {
   const fixtureRoot = prepareFixtureRoot();
   fs.writeFileSync(path.join(fixtureRoot, "packages/ui/src/styles/theme.css"), ":root {}\n");
@@ -909,6 +919,20 @@ test("build prepare payload reports ambiguous token contract sources determinist
   await assert.rejects(
     () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
     { code: "E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects advertised token roles without backing theme tokens", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const themePath = path.join(fixtureRoot, "packages/ui/src/styles/theme.css");
+  const theme = fs.readFileSync(themePath, "utf8");
+  fs.writeFileSync(themePath, theme.replace(/^ {2}--text-secondary:.*\n/m, ""));
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    (error) =>
+      error?.code === "E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS" &&
+      String(error.message).includes("text.secondary backing token --text-secondary"),
   );
 });
 
@@ -948,6 +972,57 @@ test("build prepare payload rejects pnpm validation command script drift", async
     () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
     { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
   );
+});
+
+test("build prepare payload infers pnpm workspace-root run scripts", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm --workspace-root run lint";
+  delete route.validationCommands[0].packageScript;
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+
+  assert.equal(payload.validationCommands[0].packageScript, "lint");
+});
+
+test("build prepare payload still infers pnpm script shortcuts", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm build";
+  delete route.validationCommands[0].packageScript;
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+
+  assert.equal(payload.validationCommands[0].packageScript, "build");
+});
+
+test("build prepare payload does not infer pnpm subcommands as package scripts", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm dlx @biomejs/biome check .";
+  delete route.validationCommands[0].packageScript;
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+
+  assert.equal(payload.validationCommands[0].packageScript, undefined);
 });
 
 test("build prepare payload reports invalid package metadata deterministically", async () => {

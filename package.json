@@ -39,8 +39,9 @@
     "agent-design:boundaries": "node scripts/check-agent-design-boundaries.mjs",
     "agent-design:boundaries:self-test": "node scripts/check-agent-design-boundaries.mjs --self-test",
     "agent-design:proposals": "pnpm agent-design:build && node scripts/check-agent-design-proposals.mjs",
-    "agent-design:prepare": "pnpm agent-design:build && pnpm design-system-guidance:build && pnpm skill-ingestion:build && pnpm -C packages/cli build && node packages/cli/dist/index.js design prepare --json",
-    "agent-design:prepare:changed": "pnpm agent-design:build && pnpm design-system-guidance:build && pnpm skill-ingestion:build && pnpm -C packages/cli build && node scripts/check-agent-design-prepare-evidence.mjs",
+    "agent-design:cli:prebuild": "pnpm agent-design:build && pnpm design-system-guidance:build && pnpm skill-ingestion:build && pnpm -C packages/cli build",
+    "agent-design:prepare": "pnpm agent-design:cli:prebuild && node packages/cli/dist/index.js design prepare --json",
+    "agent-design:prepare:changed": "pnpm agent-design:cli:prebuild && node scripts/check-agent-design-prepare-evidence.mjs",
     "agent-design:prepare:smoke": "pnpm --silent agent-design:prepare --surface packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
     "tracked-ignored:check": "node scripts/check-tracked-ignored-artifacts.mjs",
     "tracked-ignored:check:self-test": "node scripts/check-tracked-ignored-artifacts.mjs --self-test",
@@ -129,7 +130,7 @@
     "agent-design:build": "pnpm -C packages/agent-design-engine build",
     "agent-design:type-check": "pnpm -C packages/agent-design-engine type-check",
     "agent-design:test": "pnpm -C packages/agent-design-engine test",
-    "agent-design:lint": "pnpm agent-design:build && pnpm design-system-guidance:build && pnpm skill-ingestion:build && pnpm -C packages/cli build && node packages/cli/dist/index.js design lint --file DESIGN.md --json"
+    "agent-design:lint": "pnpm agent-design:cli:prebuild && node packages/cli/dist/index.js design lint --file DESIGN.md --json"
   },
   "devDependencies": {
     "@argos-ci/cli": "^3.0.6",

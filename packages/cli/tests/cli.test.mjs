@@ -581,21 +581,33 @@ test("prepare command schema rejects missing north-star payload fields", async (
 test("root prepare wrapper builds CLI dependencies before prepare", () => {
   const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"));
   const prepareScript = packageJson.scripts["agent-design:prepare"];
+  const prebuildScript = packageJson.scripts["agent-design:cli:prebuild"];
   assert.equal(typeof prepareScript, "string");
+  assert.equal(typeof prebuildScript, "string");
   assert.equal(
     prepareScript.includes("--surface"),
     false,
     "root prepare wrapper must not bake in a default surface",
   );
 
-  const expectedSegments = [
+  const expectedPrebuildSegments = [
     "pnpm agent-design:build",
     "pnpm design-system-guidance:build",
     "pnpm skill-ingestion:build",
     "pnpm -C packages/cli build",
-    "node packages/cli/dist/index.js design prepare --json",
   ];
   let previousIndex = -1;
+  for (const segment of expectedPrebuildSegments) {
+    const index = prebuildScript.indexOf(segment);
+    assert.ok(index > previousIndex, `${segment} must appear after the prior prebuild step`);
+    previousIndex = index;
+  }
+
+  const expectedSegments = [
+    "pnpm agent-design:cli:prebuild",
+    "node packages/cli/dist/index.js design prepare --json",
+  ];
+  previousIndex = -1;
   for (const segment of expectedSegments) {
     const index = prepareScript.indexOf(segment);
     assert.ok(index > previousIndex, `${segment} must appear after the prior wrapper step`);
@@ -611,16 +623,28 @@ test("root prepare wrapper builds CLI dependencies before prepare", () => {
 test("root changed-surface prepare gate builds dependencies before evidence check", () => {
   const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"));
   const prepareChangedScript = packageJson.scripts["agent-design:prepare:changed"];
+  const prebuildScript = packageJson.scripts["agent-design:cli:prebuild"];
   assert.equal(typeof prepareChangedScript, "string");
+  assert.equal(typeof prebuildScript, "string");
 
-  const expectedSegments = [
+  const expectedPrebuildSegments = [
     "pnpm agent-design:build",
     "pnpm design-system-guidance:build",
     "pnpm skill-ingestion:build",
     "pnpm -C packages/cli build",
-    "node scripts/check-agent-design-prepare-evidence.mjs",
   ];
   let previousIndex = -1;
+  for (const segment of expectedPrebuildSegments) {
+    const index = prebuildScript.indexOf(segment);
+    assert.ok(index > previousIndex, `${segment} must appear after the prior prebuild step`);
+    previousIndex = index;
+  }
+
+  const expectedSegments = [
+    "pnpm agent-design:cli:prebuild",
+    "node scripts/check-agent-design-prepare-evidence.mjs",
+  ];
+  previousIndex = -1;
   for (const segment of expectedSegments) {
     const index = prepareChangedScript.indexOf(segment);
     assert.ok(
