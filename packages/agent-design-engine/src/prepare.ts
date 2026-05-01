@@ -388,6 +388,7 @@ const pnpmSubcommands = new Set([
   "dlx",
   "env",
   "exec",
+  "export",
   "fetch",
   "help",
   "import",
@@ -396,14 +397,17 @@ const pnpmSubcommands = new Set([
   "licenses",
   "link",
   "list",
+  "ls",
   "outdated",
   "patch",
   "publish",
   "rebuild",
   "remove",
+  "rm",
   "root",
   "setup",
   "store",
+  "uninstall",
   "unlink",
   "update",
   "why",
@@ -411,6 +415,7 @@ const pnpmSubcommands = new Set([
 
 const pnpmRunOptionsWithValues = new Set([
   "--changed-files-ignore-pattern",
+  "--filter-omit-pkg-dep",
   "--loglevel",
   "--resume-from",
   "--test-pattern",
@@ -615,7 +620,13 @@ async function loadPackageScripts(
       exitCode: 2,
     });
   }
-  if (!isObject(parsed.scripts)) {
+  if (parsed.scripts !== undefined && !isObject(parsed.scripts)) {
+    throw new DesignEngineError(`package.json scripts must be an object when present: ${packageDir}`, {
+      code: "E_DESIGN_PACKAGE_JSON",
+      exitCode: 2,
+    });
+  }
+  if (!parsed.scripts) {
     return new Set();
   }
   const scripts = new Set<string>();

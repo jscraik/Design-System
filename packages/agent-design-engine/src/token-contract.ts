@@ -128,12 +128,20 @@ async function assertThemeSource(rootDir: string, signal?: AbortSignal): Promise
   const content = await readTokenSource(rootDir, themeSourcePath, signal);
   signal?.throwIfAborted();
 
+  // Strip CSS comments (both block and line comments)
+  const uncommented = content
+    .replace(/\/\*[\s\S]*?\*\//g, '') // Remove block comments /* ... */
+    .replace(/\/\/.*/g, ''); // Remove line comments
+
   for (const role of semanticRoles) {
-    if (role.cssVariable && !content.includes(`${role.cssVariable}:`)) {
-      throw tokenContractAmbiguous(
-        themeSourcePath,
-        `${role.role} runtime CSS variable ${role.cssVariable}`,
-      );
+    if (role.cssVariable) {
+      const declarationPattern = new RegExp(`${role.cssVariable.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')}\\s*:`);
+      if (!declarationPattern.test(uncommented)) {
+        throw tokenContractAmbiguous(
+          themeSourcePath,
+          `${role.role} runtime CSS variable ${role.cssVariable}`,
+        );
+      }
     }
   }
 }
