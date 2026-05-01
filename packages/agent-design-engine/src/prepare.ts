@@ -464,6 +464,7 @@ const pnpmRunOptionsWithValues = new Set([
   "--changed-files-ignore-pattern",
   "--filter-omit-pkg-dep",
   "--loglevel",
+  "--reporter",
   "--resume-from",
   "--test-pattern",
   "--workspace-concurrency",
@@ -722,7 +723,16 @@ async function normalizeValidationCommands(
 
   for (const command of commands) {
     const inferred = inferPackageScript(command.command);
-    if (command.packageScript && inferred && command.packageScript !== inferred.script) {
+    if (!inferred) {
+      throw new DesignEngineError(
+        `Validation command must be a pnpm package-script invocation: ${command.command}`,
+        {
+          code: "E_DESIGN_VALIDATION_COMMAND_INVALID",
+          exitCode: 2,
+        },
+      );
+    }
+    if (command.packageScript && command.packageScript !== inferred.script) {
       throw new DesignEngineError(
         `Validation command packageScript does not match command text: ${command.packageScript} != ${inferred.script}`,
         {
@@ -732,11 +742,8 @@ async function normalizeValidationCommands(
       );
     }
 
-    const packageScript = command.packageScript ?? inferred?.script;
-    if (
-      packageScript &&
-      !(await getPackageScripts(inferred?.packageDir ?? ".")).has(packageScript)
-    ) {
+    const packageScript = command.packageScript ?? inferred.script;
+    if (!(await getPackageScripts(inferred.packageDir)).has(packageScript)) {
       throw new DesignEngineError(
         `Validation command references missing package script: ${packageScript}`,
         {
@@ -847,10 +854,18 @@ export async function buildPreparePayload(
   signal?.throwIfAborted();
   const resolvedRoot = path.resolve(rootDir);
   const normalizedSurfacePath = normalizeSurfacePath(resolvedRoot, surfacePath);
-  const [designSource, guidanceSource] = await Promise.all([
-    readPrepareSource(resolvedRoot, designPath, "E_DESIGN_CONTRACT_SOURCE_MISSING", signal),
-    readPrepareSource(resolvedRoot, guidancePath, "E_DESIGN_GUIDANCE_SOURCE_MISSING", signal),
-  ]);
+  const designSource = await readPrepareSource(
+    resolvedRoot,
+    designPath,
+    "E_DESIGN_CONTRACT_SOURCE_MISSING",
+    signal,
+  );
+  const guidanceSource = await readPrepareSource(
+    resolvedRoot,
+    guidancePath,
+    "E_DESIGN_GUIDANCE_SOURCE_MISSING",
+    signal,
+  );
   signal?.throwIfAborted();
   let parsedGuidance: unknown;
   try {

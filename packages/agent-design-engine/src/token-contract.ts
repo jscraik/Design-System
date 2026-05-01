@@ -16,6 +16,7 @@ const tokenSourceRefs = [
   professionalContractSourcePath,
 ];
 const requiredAliasCategories = ["background", "text", "border", "accent", "interactive"] as const;
+const requiredColorModes = ["light", "dark", "highContrast"] as const;
 
 const semanticRoles: DesignTokenRole[] = [
   {
@@ -128,6 +129,59 @@ function stripCssComments(content: string): string {
   return content.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|\s)\/\/.*$/gm, "$1");
 }
 
+function stripJsTsComments(content: string): string {
+  let result = "";
+  let quote: "'" | '"' | "`" | undefined;
+  let escaped = false;
+
+  for (let index = 0; index < content.length; index += 1) {
+    const character = content[index];
+    const next = content[index + 1];
+
+    if (escaped) {
+      result += character;
+      escaped = false;
+      continue;
+    }
+    if (quote) {
+      result += character;
+      if (character === "\\") {
+        escaped = true;
+      } else if (character === quote) {
+        quote = undefined;
+      }
+      continue;
+    }
+    if (character === "'" || character === '"' || character === "`") {
+      quote = character;
+      result += character;
+      continue;
+    }
+    if (character === "/" && next === "/") {
+      while (index < content.length && content[index] !== "\n") {
+        index += 1;
+      }
+      result += "\n";
+      continue;
+    }
+    if (character === "/" && next === "*") {
+      index += 2;
+      while (index < content.length && !(content[index] === "*" && content[index + 1] === "/")) {
+        if (content[index] === "\n") {
+          result += "\n";
+        }
+        index += 1;
+      }
+      index += 1;
+      continue;
+    }
+
+    result += character;
+  }
+
+  return result;
+}
+
 async function assertThemeSource(rootDir: string, signal?: AbortSignal): Promise<void> {
   const content = stripCssComments(await readTokenSource(rootDir, themeSourcePath, signal));
   signal?.throwIfAborted();
@@ -143,7 +197,7 @@ async function assertThemeSource(rootDir: string, signal?: AbortSignal): Promise
 }
 
 async function assertAliasMapSource(rootDir: string, signal?: AbortSignal): Promise<void> {
-  const content = await readTokenSource(rootDir, aliasMapSourcePath, signal);
+  const content = stripJsTsComments(await readTokenSource(rootDir, aliasMapSourcePath, signal));
   signal?.throwIfAborted();
 
   if (!/\bexport\s+const\s+tokenAliasMap\b/.test(content)) {
@@ -181,6 +235,17 @@ async function assertDtcgSource(rootDir: string, signal?: AbortSignal): Promise<
     const group = (color as Record<string, unknown>)[category];
     if (!group || typeof group !== "object" || Array.isArray(group)) {
       throw tokenContractAmbiguous(dtcgSourcePath, `${category} token group`);
+    }
+    for (const mode of requiredColorModes) {
+      const modeGroup = (group as Record<string, unknown>)[mode];
+      if (
+        !modeGroup ||
+        typeof modeGroup !== "object" ||
+        Array.isArray(modeGroup) ||
+        Object.keys(modeGroup).length === 0
+      ) {
+        throw tokenContractAmbiguous(dtcgSourcePath, `${category} ${mode} token group`);
+      }
     }
   }
 }
