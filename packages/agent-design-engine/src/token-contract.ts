@@ -5,8 +5,16 @@ import { DesignEngineError, type DesignTokenContract, type DesignTokenRole } fro
 const themeSourcePath = "packages/ui/src/styles/theme.css";
 const aliasMapSourcePath = "packages/tokens/src/alias-map.ts";
 const dtcgSourcePath = "packages/tokens/src/tokens/index.dtcg.json";
+const designSourcePath = "DESIGN.md";
+const professionalContractSourcePath = "docs/design-system/PROFESSIONAL_UI_CONTRACT.md";
 
-const tokenSourceRefs = [themeSourcePath, aliasMapSourcePath, dtcgSourcePath];
+const tokenSourceRefs = [
+  themeSourcePath,
+  aliasMapSourcePath,
+  dtcgSourcePath,
+  designSourcePath,
+  professionalContractSourcePath,
+];
 const requiredAliasCategories = ["background", "text", "border", "accent", "interactive"] as const;
 
 const semanticRoles: DesignTokenRole[] = [
@@ -173,6 +181,22 @@ async function assertDtcgSource(rootDir: string, signal?: AbortSignal): Promise<
   }
 }
 
+async function assertPolicySources(rootDir: string, signal?: AbortSignal): Promise<void> {
+  const [designSource, professionalContractSource] = await Promise.all([
+    readTokenSource(rootDir, designSourcePath, signal),
+    readTokenSource(rootDir, professionalContractSourcePath, signal),
+  ]);
+  signal?.throwIfAborted();
+
+  if (!designSource.includes("Token Notes")) {
+    throw tokenContractAmbiguous(designSourcePath, "token policy section");
+  }
+
+  if (!professionalContractSource.includes("Token discipline")) {
+    throw tokenContractAmbiguous(professionalContractSourcePath, "token discipline policy");
+  }
+}
+
 export async function buildDesignTokenContract(
   rootDir: string,
   signal?: AbortSignal,
@@ -181,6 +205,7 @@ export async function buildDesignTokenContract(
     assertThemeSource(rootDir, signal),
     assertAliasMapSource(rootDir, signal),
     assertDtcgSource(rootDir, signal),
+    assertPolicySources(rootDir, signal),
   ]);
 
   return {

@@ -873,6 +873,12 @@ test("builds prepare payload for protected product page surfaces", async () => {
     ),
   );
   assert.ok(payload.designTokenContract.sourceRefs.includes("packages/ui/src/styles/theme.css"));
+  assert.ok(payload.designTokenContract.sourceRefs.includes("DESIGN.md"));
+  assert.ok(
+    payload.designTokenContract.sourceRefs.includes(
+      "docs/design-system/PROFESSIONAL_UI_CONTRACT.md",
+    ),
+  );
   assert.equal(typeof payload.timing.durationMs, "number");
   assert.ok(payload.timing.durationMs >= 0);
 });
@@ -931,6 +937,38 @@ test("build prepare payload rejects malformed DTCG token authority", async () =>
   await assert.rejects(
     () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
     { code: "E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects missing design source deterministically", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  fs.rmSync(path.join(fixtureRoot, "DESIGN.md"));
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_CONTRACT_SOURCE_MISSING", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects missing guidance source deterministically", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  fs.rmSync(path.join(fixtureRoot, ".design-system-guidance.json"));
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_GUIDANCE_SOURCE_MISSING", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects guidance contract mode drift", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const guidance = readFixtureJson(fixtureRoot, ".design-system-guidance.json");
+  guidance.designContract.mode = "legacy";
+  writeFixtureJson(fixtureRoot, ".design-system-guidance.json", guidance);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_CONTRACT_MODE_MISMATCH", exitCode: 2 },
   );
 });
 
@@ -1103,6 +1141,30 @@ test("build prepare payload rejects pnpm dir commands without a script name", as
 test("build prepare payload reports invalid package metadata deterministically", async () => {
   const fixtureRoot = prepareFixtureRoot();
   fs.writeFileSync(path.join(fixtureRoot, "package.json"), "{\n");
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_PACKAGE_JSON", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects non-string package scripts deterministically", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const packageJson = readFixtureJson(fixtureRoot, "package.json");
+  packageJson.scripts["agent-design:lint"] = false;
+  writeFixtureJson(fixtureRoot, "package.json", packageJson);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_PACKAGE_JSON", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects empty package scripts deterministically", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const packageJson = readFixtureJson(fixtureRoot, "package.json");
+  packageJson.scripts["agent-design:lint"] = "";
+  writeFixtureJson(fixtureRoot, "package.json", packageJson);
 
   await assert.rejects(
     () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),

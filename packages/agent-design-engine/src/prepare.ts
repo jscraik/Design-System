@@ -169,6 +169,29 @@ async function digestFile(
   };
 }
 
+async function readPrepareSource(
+  rootDir: string,
+  relativePath: string,
+  code: string,
+  signal?: AbortSignal,
+): Promise<string> {
+  try {
+    return await readText(rootDir, relativePath, signal);
+  } catch (error) {
+    if (error instanceof Error && error.name === "AbortError") {
+      throw error;
+    }
+    const detail = error instanceof Error ? ` ${error.message}` : "";
+    throw new DesignEngineError(
+      `Prepare payload source is missing or unreadable: ${relativePath}.${detail}`,
+      {
+        code,
+        exitCode: 2,
+      },
+    );
+  }
+}
+
 /**
  * Convert a filesystem path to use POSIX-style forward slashes.
  *
@@ -595,7 +618,20 @@ async function loadPackageScripts(
   if (!isObject(parsed.scripts)) {
     return new Set();
   }
-  return new Set(Object.keys(parsed.scripts));
+  const scripts = new Set<string>();
+  for (const [scriptName, scriptValue] of Object.entries(parsed.scripts)) {
+    if (typeof scriptValue !== "string" || scriptValue.trim().length === 0) {
+      throw new DesignEngineError(
+        `package.json script must be a non-empty string: ${packageDir}#${scriptName}`,
+        {
+          code: "E_DESIGN_PACKAGE_JSON",
+          exitCode: 2,
+        },
+      );
+    }
+    scripts.add(scriptName);
+  }
+  return scripts;
 }
 
 async function normalizeValidationCommands(
@@ -698,6 +734,31 @@ function nextActionForOpenDecision(code: string): PrepareOpenDecision["nextActio
   return "diagnose";
 }
 
+function designContractModeFromSchema(schemaVersion: string): GuidanceDesignMode {
+  if (schemaVersion === "agent-design.v1") {
+    return "design-md";
+  }
+  return "legacy";
+}
+
+function assertGuidanceContractMode(
+  guidance: GuidanceConfig,
+  schemaVersion: string,
+): GuidanceDesignMode {
+  const actualMode = designContractModeFromSchema(schemaVersion);
+  const declaredMode = guidance.designContract?.mode ?? "legacy";
+  if (declaredMode !== actualMode) {
+    throw new DesignEngineError(
+      `Guidance config designContract.mode (${declaredMode}) does not match DESIGN.md schemaVersion ${schemaVersion} (${actualMode}).`,
+      {
+        code: "E_DESIGN_CONTRACT_MODE_MISMATCH",
+        exitCode: 2,
+      },
+    );
+  }
+  return actualMode;
+}
+
 /**
  * Builds a prepare payload for a given UI surface that aggregates routing, scope classification,
  * design contract provenance, computed source digests, route-derived recommendations, open decisions,
@@ -720,8 +781,8 @@ export async function buildPreparePayload(
   const resolvedRoot = path.resolve(rootDir);
   const normalizedSurfacePath = normalizeSurfacePath(resolvedRoot, surfacePath);
   const [designSource, guidanceSource] = await Promise.all([
-    readText(resolvedRoot, designPath, signal),
-    readText(resolvedRoot, guidancePath, signal),
+    readPrepareSource(resolvedRoot, designPath, "E_DESIGN_CONTRACT_SOURCE_MISSING", signal),
+    readPrepareSource(resolvedRoot, guidancePath, "E_DESIGN_GUIDANCE_SOURCE_MISSING", signal),
   ]);
   signal?.throwIfAborted();
   let parsedGuidance: unknown;
@@ -749,6 +810,7 @@ export async function buildPreparePayload(
     rootDir: resolvedRoot,
     filePath: path.join(resolvedRoot, designPath),
   });
+  const designContractMode = assertGuidanceContractMode(guidance, contract.schemaVersion);
   const designTokenContract = await buildDesignTokenContract(resolvedRoot, signal);
   signal?.throwIfAborted();
   const routeResult = resolveRouteForSurface(normalizedSurfacePath, resolvedRoot);
@@ -788,7 +850,7 @@ export async function buildPreparePayload(
     safeForAutomaticImplementation: ok && surfaceScope !== "unknown",
     resolvedDesignFile: designPath,
     guidanceConfigPath: guidancePath,
-    designContractMode: guidance.designContract?.mode ?? "legacy",
+    designContractMode,
     surfacePath: normalizedSurfacePath,
     surfaceScope,
     surfaceKind: route?.canonicalNeed ?? "unknown",

@@ -26,7 +26,7 @@
 | Tests | Yellow | Agent-design and release-readiness gates pass (`agent-design-engine`, `cli`, `design-system-guidance`, web E2E, widget a11y, and root build), including fixture-backed CLI JSON/recovery/migration coverage |
 | Agent Design Prepare plan | Green | Reviewer loop is green after wrapper/read-only classification, JSON-safe wrapper, matrix evidence, machine locators, and resolved-vs-deferred spec decisions were tightened |
 | Security | Clean | 13 CVEs patched; GitHub Actions SHA-pinned |
-| Open PRs | 1 | PR #158 carries the agent-native design-system execution slice |
+| Open PRs | 1 | PR #160 carries the agent-design prepare contract hardening slice |
 | Blockers | None | |
 <!-- STATUS_END -->
 

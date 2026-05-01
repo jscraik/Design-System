@@ -28,7 +28,7 @@ astudio design prepare --surface <path> --json
 1. In this repo, the clean-checkout convenience wrapper is:
 
 ```bash
-pnpm --silent agent-design:prepare --surface <path>
+pnpm --silent agent-design:prepare --surface <path> --json
 ```
 
 The wrapper is build-backed setup. It may build `packages/agent-design-engine`, `packages/design-system-guidance`, `packages/skill-ingestion`, and `packages/cli` before invoking the CLI. The read-only operation contract belongs to `astudio design prepare` itself once the CLI is available. Use `pnpm --silent` for JSON capture, because plain `pnpm` prints lifecycle banners before script output.
