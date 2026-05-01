@@ -124,8 +124,12 @@ function tokenContractAmbiguous(sourcePath: string, expectation: string): Design
   });
 }
 
+function stripCssComments(content: string): string {
+  return content.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|\s)\/\/.*$/gm, "$1");
+}
+
 async function assertThemeSource(rootDir: string, signal?: AbortSignal): Promise<void> {
-  const content = await readTokenSource(rootDir, themeSourcePath, signal);
+  const content = stripCssComments(await readTokenSource(rootDir, themeSourcePath, signal));
   signal?.throwIfAborted();
 
   for (const role of semanticRoles) {

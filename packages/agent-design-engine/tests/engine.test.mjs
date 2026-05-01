@@ -930,6 +930,21 @@ test("build prepare payload rejects missing advertised semantic token roles", as
   );
 });
 
+test("build prepare payload ignores commented semantic token roles", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const themePath = path.join(fixtureRoot, "packages/ui/src/styles/theme.css");
+  const theme = fs.readFileSync(themePath, "utf8");
+  fs.writeFileSync(
+    themePath,
+    theme.replace("  --card: var(--ds-bg-card);\n", "  /* --card: var(--ds-bg-card); */\n"),
+  );
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS", exitCode: 2 },
+  );
+});
+
 test("build prepare payload rejects malformed DTCG token authority", async () => {
   const fixtureRoot = prepareFixtureRoot();
   fs.writeFileSync(path.join(fixtureRoot, "packages/tokens/src/tokens/index.dtcg.json"), "{\n");
@@ -1106,6 +1121,40 @@ test("build prepare payload rejects filtered pnpm run validation commands", asyn
   );
 });
 
+test("build prepare payload rejects filter-omit pnpm run validation commands", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command =
+    "pnpm --filter-omit-pkg-dep ./packages/ui run agent-design:lint";
+  route.validationCommands[0].packageScript = "agent-design:lint";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects pnpm subcommands as validation scripts", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const packageJson = readFixtureJson(fixtureRoot, "package.json");
+  packageJson.scripts.export = "node --version";
+  writeFixtureJson(fixtureRoot, "package.json", packageJson);
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm export";
+  route.validationCommands[0].packageScript = "export";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
+  );
+});
+
 test("build prepare payload rejects missing pnpm dir target package scripts", async () => {
   const fixtureRoot = prepareFixtureRoot();
   copyRootFile(fixtureRoot, "packages/ui/package.json");
@@ -1152,6 +1201,18 @@ test("build prepare payload rejects non-string package scripts deterministically
   const fixtureRoot = prepareFixtureRoot();
   const packageJson = readFixtureJson(fixtureRoot, "package.json");
   packageJson.scripts["agent-design:lint"] = false;
+  writeFixtureJson(fixtureRoot, "package.json", packageJson);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_PACKAGE_JSON", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects non-object package scripts deterministically", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const packageJson = readFixtureJson(fixtureRoot, "package.json");
+  packageJson.scripts = ["agent-design:lint"];
   writeFixtureJson(fixtureRoot, "package.json", packageJson);
 
   await assert.rejects(

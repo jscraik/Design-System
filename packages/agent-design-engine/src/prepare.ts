@@ -387,6 +387,7 @@ const pnpmSubcommands = new Set([
   "deploy",
   "dlx",
   "env",
+  "export",
   "exec",
   "fetch",
   "help",
@@ -396,15 +397,18 @@ const pnpmSubcommands = new Set([
   "licenses",
   "link",
   "list",
+  "ls",
   "outdated",
   "patch",
   "publish",
   "rebuild",
   "remove",
   "root",
+  "rm",
   "setup",
   "store",
   "unlink",
+  "uninstall",
   "update",
   "why",
 ]);
@@ -466,8 +470,10 @@ function readPnpmRunScript(
       token === "--filter" ||
       token === "-F" ||
       token === "--filter-prod" ||
+      token === "--filter-omit-pkg-dep" ||
       token.startsWith("--filter=") ||
-      token.startsWith("--filter-prod=")
+      token.startsWith("--filter-prod=") ||
+      token.startsWith("--filter-omit-pkg-dep=")
     ) {
       throw unsupportedPnpmFilter(command);
     }
@@ -517,8 +523,10 @@ function inferPackageScript(command: string): InferredPackageScript | undefined 
       token === "--filter" ||
       token === "-F" ||
       token === "--filter-prod" ||
+      token === "--filter-omit-pkg-dep" ||
       token.startsWith("--filter=") ||
-      token.startsWith("--filter-prod=")
+      token.startsWith("--filter-prod=") ||
+      token.startsWith("--filter-omit-pkg-dep=")
     ) {
       throw unsupportedPnpmFilter(command);
     }
@@ -526,7 +534,10 @@ function inferPackageScript(command: string): InferredPackageScript | undefined 
       continue;
     }
     if (pnpmSubcommands.has(token)) {
-      return undefined;
+      throw invalidValidationCommand(
+        command,
+        "Validation command uses unsupported pnpm subcommand",
+      );
     }
     return {
       packageDir,
@@ -615,8 +626,14 @@ async function loadPackageScripts(
       exitCode: 2,
     });
   }
-  if (!isObject(parsed.scripts)) {
+  if (parsed.scripts === undefined) {
     return new Set();
+  }
+  if (!isObject(parsed.scripts)) {
+    throw new DesignEngineError(`package.json scripts must be an object: ${packageDir}`, {
+      code: "E_DESIGN_PACKAGE_JSON",
+      exitCode: 2,
+    });
   }
   const scripts = new Set<string>();
   for (const [scriptName, scriptValue] of Object.entries(parsed.scripts)) {
