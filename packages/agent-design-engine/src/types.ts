@@ -128,6 +128,9 @@ export interface AgentUiRouteValidationCommand {
   command: string;
   safetyClass: RouteSafetyClass;
   reason: string;
+  packageScript?: string;
+  expectedOutcome?: string;
+  timeoutClass?: "short" | "medium" | "long";
   blockedByDefault?: boolean;
 }
 
@@ -312,6 +315,20 @@ export interface PrepareTiming {
   durationMs: number;
 }
 
+export interface DesignTokenRole {
+  role: string;
+  cssVariable?: string;
+  useFor: string[];
+  avoidFor?: string[];
+}
+
+export interface DesignTokenContract {
+  mode: "semantic-only";
+  allowedRoles: DesignTokenRole[];
+  forbiddenTokenPatterns: string[];
+  sourceRefs: string[];
+}
+
 export interface PreparePayload {
   kind: "astudio.design.prepare.v1";
   ok: boolean;
@@ -323,6 +340,7 @@ export interface PreparePayload {
   surfaceScope: PrepareSurfaceScope;
   surfaceKind: string;
   recommendedRoutes: ResolvedAgentUiRoute[];
+  designTokenContract: DesignTokenContract;
   requiredStates: string[];
   forbiddenPatterns: string[];
   relevantExamples: string[];
@@ -334,6 +352,7 @@ export interface PreparePayload {
   coverageMatrixDigest: PrepareSourceDigest;
   componentLifecycleDigest: PrepareSourceDigest;
   openDecisions: PrepareOpenDecision[];
+  timing: PrepareTiming;
 }
 
 export class DesignEngineError extends Error {

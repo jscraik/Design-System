@@ -52,6 +52,27 @@ function proposalFixtureRoot() {
   return fixtureRoot;
 }
 
+function copyRootFile(fixtureRoot, relativePath) {
+  fs.mkdirSync(path.dirname(path.join(fixtureRoot, relativePath)), { recursive: true });
+  fs.copyFileSync(path.join(rootDir, relativePath), path.join(fixtureRoot, relativePath));
+}
+
+function prepareFixtureRoot() {
+  const fixtureRoot = proposalFixtureRoot();
+  for (const relativePath of [
+    ".design-system-guidance.json",
+    "DESIGN.md",
+    "package.json",
+    "docs/design-system/PROFESSIONAL_UI_CONTRACT.md",
+    "packages/tokens/src/alias-map.ts",
+    "packages/tokens/src/tokens/index.dtcg.json",
+    "packages/ui/src/styles/theme.css",
+  ]) {
+    copyRootFile(fixtureRoot, relativePath);
+  }
+  return fixtureRoot;
+}
+
 function readFixtureJson(fixtureRoot, relativePath) {
   return JSON.parse(fs.readFileSync(path.join(fixtureRoot, relativePath), "utf8"));
 }
@@ -820,6 +841,23 @@ test("builds prepare payload for protected product page surfaces", async () => {
     payload.relevantExamples.includes("platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx"),
   );
   assert.ok(payload.validationCommands.every((command) => command.safetyClass === "read_only"));
+  assert.ok(
+    payload.recommendedRoutes.every((route) =>
+      route.validationCommands.every((command) => command.safetyClass === "read_only"),
+    ),
+  );
+  assert.ok(payload.validationCommands.every((command) => command.packageScript));
+  assert.ok(
+    payload.recommendedRoutes.every((route) =>
+      route.validationCommands.every((command) => command.packageScript),
+    ),
+  );
+  assert.ok(payload.validationCommands.every((command) => command.expectedOutcome));
+  assert.ok(payload.validationCommands.every((command) => command.timeoutClass));
+  const packageJson = JSON.parse(fs.readFileSync(path.join(rootDir, "package.json"), "utf8"));
+  assert.ok(
+    payload.validationCommands.every((command) => packageJson.scripts[command.packageScript]),
+  );
   assert.equal(payload.sourceDigests.length, 6);
   assert.equal(payload.coverageMatrixDigest.path, "docs/design-system/COVERAGE_MATRIX.json");
   assert.equal(
@@ -827,7 +865,16 @@ test("builds prepare payload for protected product page surfaces", async () => {
     "docs/design-system/COMPONENT_LIFECYCLE.json",
   );
   assert.equal(payload.ruleSourceDigests.length, 4);
-  assert.equal("timing" in payload, false);
+  assert.equal(payload.designTokenContract.mode, "semantic-only");
+  assert.ok(payload.designTokenContract.allowedRoles.some((role) => role.role === "text.primary"));
+  assert.ok(
+    payload.designTokenContract.forbiddenTokenPatterns.some((pattern) =>
+      pattern.includes("foundation"),
+    ),
+  );
+  assert.ok(payload.designTokenContract.sourceRefs.includes("packages/ui/src/styles/theme.css"));
+  assert.equal(typeof payload.timing.durationMs, "number");
+  assert.ok(payload.timing.durationMs >= 0);
 });
 
 test("build prepare payload honors aborted signals", async () => {
@@ -842,6 +889,279 @@ test("build prepare payload honors aborted signals", async () => {
         controller.signal,
       ),
     { name: "AbortError" },
+  );
+});
+
+test("build prepare payload reports missing token contract sources deterministically", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  fs.rmSync(path.join(fixtureRoot, "packages/ui/src/styles/theme.css"));
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_TOKEN_CONTRACT_MISSING", exitCode: 2 },
+  );
+});
+
+test("build prepare payload reports ambiguous token contract sources deterministically", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  fs.writeFileSync(path.join(fixtureRoot, "packages/ui/src/styles/theme.css"), ":root {}\n");
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects malformed DTCG token authority", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  fs.writeFileSync(path.join(fixtureRoot, "packages/tokens/src/tokens/index.dtcg.json"), "{\n");
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects validation commands with missing package scripts", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].packageScript = "missing:script";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects pnpm validation command script drift", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm --silent run missing:script";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
+  );
+});
+
+test("build prepare payload accepts pnpm run flags before script names", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm run --silent agent-design:lint";
+  route.validationCommands[0].packageScript = "agent-design:lint";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+
+  assert.equal(payload.validationCommands[0].packageScript, "agent-design:lint");
+});
+
+test("build prepare payload rejects pnpm run commands without a script name", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm run";
+  delete route.validationCommands[0].packageScript;
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
+  );
+});
+
+test("build prepare payload validates pnpm dir scripts against target package", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  copyRootFile(fixtureRoot, "packages/ui/package.json");
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm -C packages/ui run type-check";
+  route.validationCommands[0].packageScript = "type-check";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+
+  assert.equal(payload.validationCommands[0].packageScript, "type-check");
+});
+
+test("build prepare payload validates post-run pnpm dir scripts against target package", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  copyRootFile(fixtureRoot, "packages/ui/package.json");
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm run -C packages/ui type-check";
+  route.validationCommands[0].packageScript = "type-check";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+
+  assert.equal(payload.validationCommands[0].packageScript, "type-check");
+});
+
+test("build prepare payload rejects pnpm dir package symlinks that escape the repo", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const externalPackageDir = fs.mkdtempSync(path.join(os.tmpdir(), "agent-design-package-"));
+  fs.writeFileSync(
+    path.join(externalPackageDir, "package.json"),
+    JSON.stringify({ scripts: { "type-check": "node --version" } }),
+  );
+  fs.mkdirSync(path.join(fixtureRoot, "packages"), { recursive: true });
+  fs.symlinkSync(externalPackageDir, path.join(fixtureRoot, "packages/ui-link"), "dir");
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm -C packages/ui-link run type-check";
+  route.validationCommands[0].packageScript = "type-check";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects filtered pnpm run validation commands", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  copyRootFile(fixtureRoot, "packages/ui/package.json");
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm --filter ./packages/ui run type-check";
+  route.validationCommands[0].packageScript = "type-check";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects missing pnpm dir target package scripts", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  copyRootFile(fixtureRoot, "packages/ui/package.json");
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm -C packages/ui run missing:script";
+  route.validationCommands[0].packageScript = "missing:script";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects pnpm dir commands without a script name", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  copyRootFile(fixtureRoot, "packages/ui/package.json");
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm -C packages/ui";
+  delete route.validationCommands[0].packageScript;
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
+  );
+});
+
+test("build prepare payload reports invalid package metadata deterministically", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  fs.writeFileSync(path.join(fixtureRoot, "package.json"), "{\n");
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_PACKAGE_JSON", exitCode: 2 },
+  );
+});
+
+test("build prepare payload reports invalid guidance JSON deterministically", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  fs.writeFileSync(path.join(fixtureRoot, ".design-system-guidance.json"), "{\n");
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_GUIDANCE_JSON", exitCode: 2 },
+  );
+});
+
+test("build prepare payload reports invalid guidance schema deterministically", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  writeFixtureJson(fixtureRoot, ".design-system-guidance.json", { scopes: [] });
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_GUIDANCE_SCHEMA", exitCode: 2 },
+  );
+});
+
+test("build prepare payload reports invalid routing schema deterministically", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", {
+    schemaVersion: "agent-ui-routing.v2",
+    routes: [],
+  });
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_ROUTING_SCHEMA", exitCode: 2 },
+  );
+});
+
+test("build prepare payload reports invalid lifecycle schema deterministically", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  writeFixtureJson(fixtureRoot, "docs/design-system/COMPONENT_LIFECYCLE.json", {
+    components: "bad",
+  });
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_LIFECYCLE_SCHEMA", exitCode: 2 },
+  );
+});
+
+test("build prepare payload reports invalid coverage schema deterministically", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  writeFixtureJson(fixtureRoot, "docs/design-system/COVERAGE_MATRIX.json", {
+    components: [],
+  });
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_COVERAGE_SCHEMA", exitCode: 2 },
+  );
+});
+
+test("build prepare payload reports missing source digests deterministically", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  fs.rmSync(path.join(fixtureRoot, "docs/design-system/PROFESSIONAL_UI_CONTRACT.md"));
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_SOURCE_DIGEST_MISSING", exitCode: 2 },
   );
 });
 
@@ -899,6 +1219,6 @@ test("serializes prepare payload with sorted keys and trailing newline", async (
   );
   const serialized = serializePreparePayload(payload);
   assert.equal(serialized.endsWith("\n"), true);
-  assert.equal(serialized.includes('"timing"'), false);
+  assert.equal(serialized.includes('"timing"'), true);
   assert.match(serialized.split("\n")[1], /"componentLifecycleDigest"/);
 });

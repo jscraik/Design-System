@@ -10,20 +10,41 @@ import type {
   RouteDiagnostic,
   RouteResolutionResult,
 } from "./types.js";
+import { DesignEngineError } from "./types.js";
 
 const ROUTING_PATH = "docs/design-system/AGENT_UI_ROUTING.json";
 const LIFECYCLE_PATH = "docs/design-system/COMPONENT_LIFECYCLE.json";
 const COVERAGE_PATH = "docs/design-system/COVERAGE_MATRIX.json";
+
+function asDesignEngineError(
+  error: unknown,
+  code: string,
+  relativePath: string,
+): DesignEngineError {
+  if (error instanceof DesignEngineError) {
+    return error;
+  }
+  const reason = error instanceof Error ? error.message : String(error);
+  return new DesignEngineError(`${relativePath} is invalid: ${reason}`, {
+    code,
+    exitCode: 2,
+  });
+}
 
 /**
  * Read a UTF-8 JSON file located at the given relative path.
  *
  * @param rootDir - Base directory used to resolve `relativePath`
  * @param relativePath - Path to the JSON file, relative to `rootDir`
+ * @param code - Deterministic error code to use when the file cannot be parsed
  * @returns The parsed JSON value as unknown so callers must validate shape
  */
-function readJson(rootDir: string, relativePath: string): unknown {
-  return JSON.parse(readFileSync(path.join(rootDir, relativePath), "utf8")) as unknown;
+function readJson(rootDir: string, relativePath: string, code: string): unknown {
+  try {
+    return JSON.parse(readFileSync(path.join(rootDir, relativePath), "utf8")) as unknown;
+  } catch (error) {
+    throw asDesignEngineError(error, code, relativePath);
+  }
 }
 
 function isObject(value: unknown): value is Record<string, unknown> {
@@ -199,6 +220,19 @@ function parseValidationCommand(
     ]),
     reason: parseStringField(command, "reason", context),
   };
+  if (command.packageScript !== undefined) {
+    parsed.packageScript = parseStringField(command, "packageScript", context);
+  }
+  if (command.expectedOutcome !== undefined) {
+    parsed.expectedOutcome = parseStringField(command, "expectedOutcome", context);
+  }
+  if (command.timeoutClass !== undefined) {
+    parsed.timeoutClass = parseEnumField(command, "timeoutClass", context, [
+      "short",
+      "medium",
+      "long",
+    ]);
+  }
   if (command.blockedByDefault !== undefined) {
     parsed.blockedByDefault = parseBooleanField(command, "blockedByDefault", context);
   }
@@ -428,8 +462,14 @@ function getErrorCode(error: unknown): string | null {
  * @returns The list of `ComponentLifecycleEntry` objects defined in the lifecycle manifest
  */
 function loadLifecycle(rootDir: string): ComponentLifecycleEntry[] {
-  const manifest = parseLifecycleManifest(readJson(rootDir, LIFECYCLE_PATH));
-  return manifest.components;
+  try {
+    const manifest = parseLifecycleManifest(
+      readJson(rootDir, LIFECYCLE_PATH, "E_DESIGN_LIFECYCLE_SCHEMA"),
+    );
+    return manifest.components;
+  } catch (error) {
+    throw asDesignEngineError(error, "E_DESIGN_LIFECYCLE_SCHEMA", LIFECYCLE_PATH);
+  }
 }
 
 /**
@@ -439,7 +479,11 @@ function loadLifecycle(rootDir: string): ComponentLifecycleEntry[] {
  * @returns The array of ComponentCoverageEntry objects from the coverage manifest
  */
 function loadCoverage(rootDir: string): ComponentCoverageEntry[] {
-  return parseCoverageEntries(readJson(rootDir, COVERAGE_PATH));
+  try {
+    return parseCoverageEntries(readJson(rootDir, COVERAGE_PATH, "E_DESIGN_COVERAGE_SCHEMA"));
+  } catch (error) {
+    throw asDesignEngineError(error, "E_DESIGN_COVERAGE_SCHEMA", COVERAGE_PATH);
+  }
 }
 
 function resolveRepoPath(rootDir: string, relativePath: string): string | null {
@@ -615,9 +659,14 @@ function resolveRoute(
  * @throws If the manifest's `schemaVersion` is not `agent-ui-routing.v1`
  */
 export function loadAgentUiRoutingTable(rootDir = process.cwd()): AgentUiRoutingTable {
-  const table = parseRoutingTable(readJson(rootDir, ROUTING_PATH));
-  if (table.schemaVersion !== "agent-ui-routing.v1") {
-    throw new Error(`Unsupported routing schema version: ${table.schemaVersion}`);
+  let table: AgentUiRoutingTable;
+  try {
+    table = parseRoutingTable(readJson(rootDir, ROUTING_PATH, "E_DESIGN_ROUTING_SCHEMA"));
+    if (table.schemaVersion !== "agent-ui-routing.v1") {
+      throw new Error(`Unsupported routing schema version: ${table.schemaVersion}`);
+    }
+  } catch (error) {
+    throw asDesignEngineError(error, "E_DESIGN_ROUTING_SCHEMA", ROUTING_PATH);
   }
   return {
     ...table,
