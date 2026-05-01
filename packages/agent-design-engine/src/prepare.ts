@@ -572,6 +572,15 @@ async function normalizeValidationCommands(
 
   for (const command of commands) {
     const inferred = inferPackageScript(command.command);
+    if (command.packageScript && !inferred) {
+      throw new DesignEngineError(
+        `Validation command packageScript is not backed by command text: ${command.command}`,
+        {
+          code: "E_DESIGN_VALIDATION_COMMAND_INVALID",
+          exitCode: 2,
+        },
+      );
+    }
     if (command.packageScript && inferred && command.packageScript !== inferred.script) {
       throw new DesignEngineError(
         `Validation command packageScript does not match command text: ${command.packageScript} != ${inferred.script}`,
