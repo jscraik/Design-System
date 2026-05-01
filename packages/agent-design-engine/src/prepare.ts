@@ -368,6 +368,13 @@ function commandTokens(command: string): string[] {
   return command.trim().split(/\s+/).filter(Boolean);
 }
 
+function invalidValidationCommand(command: string, message: string): DesignEngineError {
+  return new DesignEngineError(`${message}: ${command}`, {
+    code: "E_DESIGN_VALIDATION_COMMAND_INVALID",
+    exitCode: 2,
+  });
+}
+
 const pnpmSubcommands = new Set([
   "add",
   "approve-builds",
@@ -398,21 +405,27 @@ const pnpmSubcommands = new Set([
   "why",
 ]);
 
-function inferPackageScript(command: string): string | undefined {
-  const tokens = commandTokens(command);
-  if (tokens[0] !== "pnpm") {
-    return undefined;
-  }
+const pnpmRunOptionsWithValues = new Set(["--dir", "--filter", "--workspace-concurrency", "-C"]);
 
-  for (let index = 1; index < tokens.length; index += 1) {
+interface InferredPackageScript {
+  packageDir: string;
+  script: string;
+}
+
+function normalizePackageDir(command: string, packageDir: string | undefined): string {
+  if (!packageDir || packageDir.startsWith("-")) {
+    throw invalidValidationCommand(
+      command,
+      "Validation command has an invalid pnpm package directory",
+    );
+  }
+  return packageDir;
+}
+
+function readPnpmRunScript(command: string, tokens: string[], startIndex: number): string {
+  for (let index = startIndex; index < tokens.length; index += 1) {
     const token = tokens[index];
-    if (token === "run") {
-      return tokens[index + 1];
-    }
-    if (token === "--workspace-root") {
-      continue;
-    }
-    if (token === "-C" || token === "--dir" || token === "--filter") {
+    if (pnpmRunOptionsWithValues.has(token)) {
       index += 1;
       continue;
     }
@@ -423,20 +436,89 @@ function inferPackageScript(command: string): string | undefined {
       continue;
     }
     if (pnpmSubcommands.has(token)) {
-      return undefined;
+      throw invalidValidationCommand(command, "Validation command does not name a package script");
     }
     return token;
   }
 
-  throw new DesignEngineError(`Validation command does not name a package script: ${command}`, {
-    code: "E_DESIGN_VALIDATION_COMMAND_INVALID",
-    exitCode: 2,
-  });
+  throw invalidValidationCommand(command, "Validation command does not name a package script");
 }
 
-async function loadPackageScripts(rootDir: string, signal?: AbortSignal): Promise<Set<string>> {
+function inferPackageScript(command: string): InferredPackageScript | undefined {
+  const tokens = commandTokens(command);
+  if (tokens[0] !== "pnpm") {
+    return undefined;
+  }
+
+  let packageDir = ".";
+  for (let index = 1; index < tokens.length; index += 1) {
+    const token = tokens[index];
+    if (token === "run") {
+      return {
+        packageDir,
+        script: readPnpmRunScript(command, tokens, index + 1),
+      };
+    }
+    if (token === "--workspace-root") {
+      packageDir = ".";
+      continue;
+    }
+    if (token === "-C" || token === "--dir") {
+      const value = tokens[index + 1];
+      packageDir = normalizePackageDir(command, value);
+      index += 1;
+      continue;
+    }
+    if (token.startsWith("--dir=")) {
+      packageDir = normalizePackageDir(command, token.slice("--dir=".length));
+      continue;
+    }
+    if (token === "--filter" || token.startsWith("--filter=")) {
+      if (token === "--filter") {
+        index += 1;
+      }
+      continue;
+    }
+    if (token.startsWith("-")) {
+      continue;
+    }
+    if (pnpmSubcommands.has(token)) {
+      return undefined;
+    }
+    return {
+      packageDir,
+      script: token,
+    };
+  }
+
+  throw invalidValidationCommand(command, "Validation command does not name a package script");
+}
+
+function resolvePackageJsonPath(rootDir: string, packageDir: string): string {
+  const resolvedRoot = path.resolve(rootDir);
+  const resolvedPackageDir = path.resolve(resolvedRoot, packageDir);
+  if (
+    resolvedPackageDir !== resolvedRoot &&
+    !resolvedPackageDir.startsWith(`${resolvedRoot}${path.sep}`)
+  ) {
+    throw new DesignEngineError(
+      `Validation command package directory must stay inside the workspace: ${packageDir}`,
+      {
+        code: "E_DESIGN_VALIDATION_COMMAND_INVALID",
+        exitCode: 2,
+      },
+    );
+  }
+  return path.join(resolvedPackageDir, "package.json");
+}
+
+async function loadPackageScripts(
+  rootDir: string,
+  packageDir = ".",
+  signal?: AbortSignal,
+): Promise<Set<string>> {
   signal?.throwIfAborted();
-  const packageJsonPath = path.join(rootDir, "package.json");
+  const packageJsonPath = resolvePackageJsonPath(rootDir, packageDir);
   let raw = "";
   try {
     raw = await readFile(packageJsonPath, { encoding: "utf8", signal });
@@ -444,7 +526,7 @@ async function loadPackageScripts(rootDir: string, signal?: AbortSignal): Promis
     if (error instanceof Error && error.name === "AbortError") {
       throw error;
     }
-    throw new DesignEngineError("Root package.json is missing or unreadable.", {
+    throw new DesignEngineError(`package.json is missing or unreadable: ${packageDir}`, {
       code: "E_DESIGN_PACKAGE_JSON",
       exitCode: 2,
     });
@@ -454,13 +536,13 @@ async function loadPackageScripts(rootDir: string, signal?: AbortSignal): Promis
   try {
     parsed = JSON.parse(raw) as unknown;
   } catch {
-    throw new DesignEngineError("Root package.json contains invalid JSON.", {
+    throw new DesignEngineError(`package.json contains invalid JSON: ${packageDir}`, {
       code: "E_DESIGN_PACKAGE_JSON",
       exitCode: 2,
     });
   }
   if (!isObject(parsed)) {
-    throw new DesignEngineError("Root package.json must be an object.", {
+    throw new DesignEngineError(`package.json must be an object: ${packageDir}`, {
       code: "E_DESIGN_PACKAGE_JSON",
       exitCode: 2,
     });
@@ -471,13 +553,40 @@ async function loadPackageScripts(rootDir: string, signal?: AbortSignal): Promis
   return new Set(Object.keys(parsed.scripts));
 }
 
-function normalizeValidationCommands(
+async function normalizeValidationCommands(
   commands: AgentUiRouteValidationCommand[],
-  packageScripts: Set<string>,
-): AgentUiRouteValidationCommand[] {
-  return commands.map((command) => {
-    const packageScript = command.packageScript ?? inferPackageScript(command.command);
-    if (packageScript && !packageScripts.has(packageScript)) {
+  rootDir: string,
+  signal?: AbortSignal,
+): Promise<AgentUiRouteValidationCommand[]> {
+  const packageScriptCache = new Map<string, Set<string>>();
+  const getPackageScripts = async (packageDir: string): Promise<Set<string>> => {
+    const cached = packageScriptCache.get(packageDir);
+    if (cached) {
+      return cached;
+    }
+    const scripts = await loadPackageScripts(rootDir, packageDir, signal);
+    packageScriptCache.set(packageDir, scripts);
+    return scripts;
+  };
+  const normalized: AgentUiRouteValidationCommand[] = [];
+
+  for (const command of commands) {
+    const inferred = inferPackageScript(command.command);
+    if (command.packageScript && inferred && command.packageScript !== inferred.script) {
+      throw new DesignEngineError(
+        `Validation command packageScript does not match command text: ${command.packageScript} != ${inferred.script}`,
+        {
+          code: "E_DESIGN_VALIDATION_COMMAND_INVALID",
+          exitCode: 2,
+        },
+      );
+    }
+
+    const packageScript = command.packageScript ?? inferred?.script;
+    if (
+      packageScript &&
+      !(await getPackageScripts(inferred?.packageDir ?? ".")).has(packageScript)
+    ) {
       throw new DesignEngineError(
         `Validation command references missing package script: ${packageScript}`,
         {
@@ -487,13 +596,15 @@ function normalizeValidationCommands(
       );
     }
 
-    return {
+    normalized.push({
       ...command,
       ...(packageScript ? { packageScript } : {}),
       expectedOutcome: command.expectedOutcome ?? "Command exits 0 without mutating source files.",
       timeoutClass: command.timeoutClass ?? "medium",
-    };
-  });
+    });
+  }
+
+  return normalized;
 }
 
 /**
@@ -579,7 +690,6 @@ export async function buildPreparePayload(
   signal?.throwIfAborted();
   const routeResult = resolveRouteForSurface(normalizedSurfacePath, resolvedRoot);
   const route = routeResult.route;
-  const packageScripts = await loadPackageScripts(resolvedRoot, signal);
   const surfaceScope = classifySurfaceScope(guidance, normalizedSurfacePath);
   const coverageMatrixDigest = sourceDigests.find((digest) => digest.path === coveragePath);
   const componentLifecycleDigest = sourceDigests.find((digest) => digest.path === lifecyclePath);
@@ -590,14 +700,18 @@ export async function buildPreparePayload(
     });
   }
 
+  const routeValidationCommands = route
+    ? await normalizeValidationCommands(
+        onlyReadOnly(route.validationCommands),
+        resolvedRoot,
+        signal,
+      )
+    : [];
   const recommendedRoutes = route
     ? [
         {
           ...route,
-          validationCommands: normalizeValidationCommands(
-            onlyReadOnly(route.validationCommands),
-            packageScripts,
-          ),
+          validationCommands: routeValidationCommands,
         },
       ]
     : [];

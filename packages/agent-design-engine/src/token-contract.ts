@@ -2,13 +2,13 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { DesignEngineError, type DesignTokenContract, type DesignTokenRole } from "./types.js";
 
-const themeSourcePath = "packages/ui/src/styles/theme.css";
-const aliasMapSourcePath = "packages/tokens/src/alias-map.ts";
-const dtcgSourcePath = "packages/tokens/src/tokens/index.dtcg.json";
+const THEME_SOURCE_PATH = "packages/ui/src/styles/theme.css";
+const ALIAS_MAP_SOURCE_PATH = "packages/tokens/src/alias-map.ts";
+const DTCG_SOURCE_PATH = "packages/tokens/src/tokens/index.dtcg.json";
 
-const tokenSourceRefs = [themeSourcePath, aliasMapSourcePath, dtcgSourcePath];
+const TOKEN_SOURCE_REFS = [THEME_SOURCE_PATH, ALIAS_MAP_SOURCE_PATH, DTCG_SOURCE_PATH];
 
-const semanticRoles: DesignTokenRole[] = [
+const SEMANTIC_ROLES: DesignTokenRole[] = [
   {
     role: "surface.background",
     cssVariable: "--background",
@@ -116,13 +116,13 @@ function tokenContractAmbiguous(sourcePath: string, expectation: string): Design
 }
 
 function assertSemanticRoleThemeTokens(content: string): void {
-  for (const role of semanticRoles) {
+  for (const role of SEMANTIC_ROLES) {
     if (!role.cssVariable) {
-      throw tokenContractAmbiguous(themeSourcePath, `${role.role} CSS variable reference`);
+      throw tokenContractAmbiguous(THEME_SOURCE_PATH, `${role.role} CSS variable reference`);
     }
     if (!content.includes(`${role.cssVariable}:`)) {
       throw tokenContractAmbiguous(
-        themeSourcePath,
+        THEME_SOURCE_PATH,
         `${role.role} backing token ${role.cssVariable}`,
       );
     }
@@ -130,55 +130,55 @@ function assertSemanticRoleThemeTokens(content: string): void {
 }
 
 async function assertThemeSource(rootDir: string, signal?: AbortSignal): Promise<void> {
-  const content = await readTokenSource(rootDir, themeSourcePath, signal);
+  const content = await readTokenSource(rootDir, THEME_SOURCE_PATH, signal);
   signal?.throwIfAborted();
 
   for (const cssVariable of ["--background", "--foreground", "--ring"]) {
     if (!content.includes(`${cssVariable}:`)) {
-      throw tokenContractAmbiguous(themeSourcePath, `${cssVariable} CSS variable`);
+      throw tokenContractAmbiguous(THEME_SOURCE_PATH, `${cssVariable} CSS variable`);
     }
   }
   assertSemanticRoleThemeTokens(content);
 }
 
 async function assertAliasMapSource(rootDir: string, signal?: AbortSignal): Promise<void> {
-  const content = await readTokenSource(rootDir, aliasMapSourcePath, signal);
+  const content = await readTokenSource(rootDir, ALIAS_MAP_SOURCE_PATH, signal);
   signal?.throwIfAborted();
 
   if (!/\bexport\s+const\s+tokenAliasMap\b/.test(content)) {
-    throw tokenContractAmbiguous(aliasMapSourcePath, "exported tokenAliasMap");
+    throw tokenContractAmbiguous(ALIAS_MAP_SOURCE_PATH, "exported tokenAliasMap");
   }
 
   for (const category of ["background", "text", "border", "accent", "interactive"]) {
     if (!content.includes(`${category}: buildModeMap("${category}")`)) {
-      throw tokenContractAmbiguous(aliasMapSourcePath, `${category} color alias mapping`);
+      throw tokenContractAmbiguous(ALIAS_MAP_SOURCE_PATH, `${category} color alias mapping`);
     }
   }
 }
 
 async function assertDtcgSource(rootDir: string, signal?: AbortSignal): Promise<void> {
-  const content = await readTokenSource(rootDir, dtcgSourcePath, signal);
+  const content = await readTokenSource(rootDir, DTCG_SOURCE_PATH, signal);
   signal?.throwIfAborted();
 
   let parsed: unknown;
   try {
     parsed = JSON.parse(content) as unknown;
   } catch {
-    throw tokenContractAmbiguous(dtcgSourcePath, "parseable DTCG JSON");
+    throw tokenContractAmbiguous(DTCG_SOURCE_PATH, "parseable DTCG JSON");
   }
 
   if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-    throw tokenContractAmbiguous(dtcgSourcePath, "DTCG token object");
+    throw tokenContractAmbiguous(DTCG_SOURCE_PATH, "DTCG token object");
   }
 
   const color = (parsed as { color?: unknown }).color;
   if (!color || typeof color !== "object" || Array.isArray(color)) {
-    throw tokenContractAmbiguous(dtcgSourcePath, "color token group");
+    throw tokenContractAmbiguous(DTCG_SOURCE_PATH, "color token group");
   }
 
   const background = (color as { background?: unknown }).background;
   if (!background || typeof background !== "object" || Array.isArray(background)) {
-    throw tokenContractAmbiguous(dtcgSourcePath, "background token group");
+    throw tokenContractAmbiguous(DTCG_SOURCE_PATH, "background token group");
   }
 }
 
@@ -191,7 +191,7 @@ export async function buildDesignTokenContract(
     assertAliasMapSource(rootDir, signal),
     assertDtcgSource(rootDir, signal),
   ]);
-  for (const sourceRef of tokenSourceRefs) {
+  for (const sourceRef of TOKEN_SOURCE_REFS) {
     if (!sourceRef) {
       throw tokenContractAmbiguous("designTokenContract.sourceRefs", "non-empty source reference");
     }
@@ -199,7 +199,7 @@ export async function buildDesignTokenContract(
 
   return {
     mode: "semantic-only",
-    allowedRoles: semanticRoles.map((role) => ({
+    allowedRoles: SEMANTIC_ROLES.map((role) => ({
       ...role,
       useFor: [...role.useFor],
       avoidFor: role.avoidFor ? [...role.avoidFor] : undefined,
@@ -210,6 +210,6 @@ export async function buildDesignTokenContract(
       "Tailwind arbitrary color literals in protected UI, for example bg-[#123456]",
       "one-off rgb(), rgba(), hsl(), or hsla() color literals in protected UI",
     ],
-    sourceRefs: [...tokenSourceRefs],
+    sourceRefs: [...TOKEN_SOURCE_REFS],
   };
 }

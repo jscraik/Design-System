@@ -122,26 +122,27 @@ function prepare(surface) {
     "--json",
   ]);
   let payload;
+  const failure = (reason) => ({
+    ok: false,
+    surface,
+    reason,
+    surfaceKind: undefined,
+    surfaceScope: undefined,
+    safeForAutomaticImplementation: false,
+    openDecisions: [],
+    validationCommands: [],
+    stderr: result.stderr.trim(),
+    stdout: result.stdout.trim().slice(0, 500),
+  });
+
   try {
     payload = JSON.parse(result.stdout);
   } catch {
-    return {
-      ok: false,
-      surface,
-      reason: "prepare did not emit parseable JSON",
-      stderr: result.stderr.trim(),
-      stdout: result.stdout.trim().slice(0, 500),
-    };
+    return failure("prepare did not emit parseable JSON");
   }
   const validationError = validatePreparePayload(payload);
   if (validationError) {
-    return {
-      ok: false,
-      surface,
-      reason: validationError,
-      stderr: result.stderr.trim(),
-      stdout: result.stdout.trim().slice(0, 500),
-    };
+    return failure(validationError);
   }
   const data = payload.data ?? {};
   return {
