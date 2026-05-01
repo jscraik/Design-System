@@ -666,7 +666,8 @@ function routeDecisions(
   const decisions: PrepareOpenDecision[] = routeResult.diagnostics.map((diagnostic) => ({
     code: diagnostic.code,
     message: diagnostic.message,
-    severity: diagnostic.code === "E_DESIGN_ROUTE_EXAMPLE_MISSING" ? "warn" : "error",
+    severity: "error",
+    nextAction: nextActionForOpenDecision(diagnostic.code),
   }));
 
   if (surfaceScope === "unknown") {
@@ -674,10 +675,27 @@ function routeDecisions(
       code: "E_DESIGN_SURFACE_SCOPE_UNKNOWN",
       message: "Surface is outside configured protected, warn, and exempt guidance scopes.",
       severity: "error",
+      nextAction: "escalate",
     });
   }
 
   return decisions;
+}
+
+function nextActionForOpenDecision(code: string): PrepareOpenDecision["nextAction"] {
+  if (code === "E_DESIGN_ROUTE_AMBIGUOUS" || code === "E_DESIGN_SURFACE_SCOPE_UNKNOWN") {
+    return "escalate";
+  }
+
+  if (
+    code === "E_DESIGN_ROUTE_MISSING" ||
+    code === "E_DESIGN_ROUTE_EXAMPLE_MISSING" ||
+    code === "E_DESIGN_ROUTE_DEPRECATED"
+  ) {
+    return "stop";
+  }
+
+  return "diagnose";
 }
 
 /**

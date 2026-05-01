@@ -183,6 +183,7 @@ Extended command shape:
 ### Open Decision
 
 A machine-readable stop, warning, or info item. Error-severity open decisions make `safeForAutomaticImplementation` false.
+Each decision includes a stable `code`, human `message`, `severity`, and machine `nextAction` category of `stop`, `escalate`, or `diagnose`.
 
 ### Proposal-Required Stop
 
@@ -438,7 +439,7 @@ Minimum required `data` fields:
   safeForAutomaticImplementation: boolean;
   resolvedDesignFile: string;
   guidanceConfigPath: string;
-  designContractMode: string;
+  designContractMode: "legacy" | "design-md";
   surfacePath: string;
   surfaceScope: "protected" | "warn" | "exempt" | "unknown";
   surfaceKind: string;
@@ -606,7 +607,7 @@ If any required source is missing or malformed, `prepare` must return a determin
 | Token contract unavailable       | `E_DESIGN_TOKEN_CONTRACT_MISSING`                            | Return token source refs checked; agent must stop or use proposal/manual decision.                             |
 | Route missing                    | `E_DESIGN_ROUTE_MISSING`                                     | Return checked alternatives; recommend read-only `propose-abstraction`.                                        |
 | Route ambiguous                  | `E_DESIGN_ROUTE_AMBIGUOUS`                                   | Return candidate routes and tie-break data; agent must ask for a narrower surface or need.                     |
-| Example missing                  | `E_DESIGN_ROUTE_EXAMPLE_MISSING`                             | Warn for lookup, block route promotion/hardening until example is added.                                       |
+| Example missing                  | `E_DESIGN_ROUTE_EXAMPLE_MISSING`                             | Stop automatic implementation until the missing example evidence is added.                                     |
 | Proposal required                | `E_DESIGN_PROPOSAL_REQUIRED`                                 | Return proposal template path, need, surface when known, and missing decision.                                 |
 | Selector misuse                  | `E_DESIGN_SELECTOR_CONFLICT` or `E_DESIGN_SELECTOR_REQUIRED` | Return retry-safe read-only command shape.                                                                     |
 | Schema drift                     | `E_DESIGN_SCHEMA_DRIFT`                                      | Fail fixture validation when `data.kind` payload fields drift; update schema and fixtures intentionally.       |
@@ -662,6 +663,7 @@ Minimum telemetry fields:
 - `data.sourceDigests[].sha256`
 - `data.openDecisions[].code`
 - `data.openDecisions[].severity`
+- `data.openDecisions[].nextAction`
 - `data.timing.durationMs`
 
 The CLI envelope timestamp may remain wall-clock based. Engine payload timing must be isolated under `data.timing` so schema fixtures can normalize it without weakening the rest of the contract.
@@ -703,6 +705,8 @@ Resolved for this v1 machine-contract slice:
 - `designTokenContract.allowedRoles` starts from mapped semantic slots and token aliases only; generated token package metadata may enrich a later inspector or export surface, but it is not the first-slice authority.
 - `timing` is included by default in every `astudio.design.prepare.v1` payload. Fixture tests normalize wall-clock fields instead of making timing debug-only.
 - `prepare` may include read-only guidance diagnostics when they are already available, but remediation composition is not required for the first slice. Remediation enrichment is a follow-up after the token, schema, and stop-code contract is stable.
+
+## Open Questions
 
 Deferred follow-up questions:
 

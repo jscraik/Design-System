@@ -373,7 +373,7 @@
     "openDecision": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["code", "message", "severity"],
+      "required": ["code", "message", "severity", "nextAction"],
       "properties": {
         "code": {
           "type": "string",
@@ -385,6 +385,9 @@
         },
         "severity": {
           "enum": ["info", "warn", "error"]
+        },
+        "nextAction": {
+          "enum": ["stop", "escalate", "diagnose"]
         }
       }
     },
@@ -435,8 +438,7 @@
           "minLength": 1
         },
         "designContractMode": {
-          "type": "string",
-          "minLength": 1
+          "enum": ["legacy", "design-md"]
         },
         "surfacePath": {
           "type": "string",

@@ -308,6 +308,7 @@ export interface PrepareOpenDecision {
   code: string;
   message: string;
   severity: "info" | "warn" | "error";
+  nextAction: "stop" | "escalate" | "diagnose";
 }
 
 export interface PrepareTiming {
@@ -335,7 +336,7 @@ export interface PreparePayload {
   safeForAutomaticImplementation: boolean;
   resolvedDesignFile: string;
   guidanceConfigPath: string;
-  designContractMode: string;
+  designContractMode: "legacy" | "design-md";
   surfacePath: string;
   surfaceScope: PrepareSurfaceScope;
   surfaceKind: string;

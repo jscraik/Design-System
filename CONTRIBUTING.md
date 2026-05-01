@@ -14,6 +14,7 @@
 - [Review artifacts requirement](#review-artifacts-requirement)
 - [Credential-safe evidence snippets](#credential-safe-evidence-snippets)
 - [Branch protection recommendation](#branch-protection-recommendation)
+- [Link Policy](#link-policy)
 
 ## Minimum workflow contract
 

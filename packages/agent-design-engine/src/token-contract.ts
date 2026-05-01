@@ -7,6 +7,7 @@ const aliasMapSourcePath = "packages/tokens/src/alias-map.ts";
 const dtcgSourcePath = "packages/tokens/src/tokens/index.dtcg.json";
 
 const tokenSourceRefs = [themeSourcePath, aliasMapSourcePath, dtcgSourcePath];
+const requiredAliasCategories = ["background", "text", "border", "accent", "interactive"] as const;
 
 const semanticRoles: DesignTokenRole[] = [
   {
@@ -119,9 +120,12 @@ async function assertThemeSource(rootDir: string, signal?: AbortSignal): Promise
   const content = await readTokenSource(rootDir, themeSourcePath, signal);
   signal?.throwIfAborted();
 
-  for (const cssVariable of ["--background", "--foreground", "--ring"]) {
-    if (!new RegExp(`${cssVariable}\\s*:`).test(content)) {
-      throw tokenContractAmbiguous(themeSourcePath, `${cssVariable} CSS variable`);
+  for (const role of semanticRoles) {
+    if (role.cssVariable && !content.includes(`${role.cssVariable}:`)) {
+      throw tokenContractAmbiguous(
+        themeSourcePath,
+        `${role.role} runtime CSS variable ${role.cssVariable}`,
+      );
     }
   }
 }
@@ -134,8 +138,8 @@ async function assertAliasMapSource(rootDir: string, signal?: AbortSignal): Prom
     throw tokenContractAmbiguous(aliasMapSourcePath, "exported tokenAliasMap");
   }
 
-  for (const category of ["background", "text", "border", "accent", "interactive"]) {
-    if (!new RegExp(`\\b${category}\\s*:\\s*buildModeMap\\("${category}"\\)`).test(content)) {
+  for (const category of requiredAliasCategories) {
+    if (!content.includes(`${category}: buildModeMap("${category}")`)) {
       throw tokenContractAmbiguous(aliasMapSourcePath, `${category} color alias mapping`);
     }
   }
@@ -161,9 +165,11 @@ async function assertDtcgSource(rootDir: string, signal?: AbortSignal): Promise<
     throw tokenContractAmbiguous(dtcgSourcePath, "color token group");
   }
 
-  const background = (color as { background?: unknown }).background;
-  if (!background || typeof background !== "object" || Array.isArray(background)) {
-    throw tokenContractAmbiguous(dtcgSourcePath, "background token group");
+  for (const category of requiredAliasCategories) {
+    const group = (color as Record<string, unknown>)[category];
+    if (!group || typeof group !== "object" || Array.isArray(group)) {
+      throw tokenContractAmbiguous(dtcgSourcePath, `${category} token group`);
+    }
   }
 }
 

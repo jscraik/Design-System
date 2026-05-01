@@ -912,6 +912,18 @@ test("build prepare payload reports ambiguous token contract sources determinist
   );
 });
 
+test("build prepare payload rejects missing advertised semantic token roles", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const themePath = path.join(fixtureRoot, "packages/ui/src/styles/theme.css");
+  const theme = fs.readFileSync(themePath, "utf8");
+  fs.writeFileSync(themePath, theme.replace("  --status-warning: var(--accent-orange);\n", ""));
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS", exitCode: 2 },
+  );
+});
+
 test("build prepare payload rejects malformed DTCG token authority", async () => {
   const fixtureRoot = prepareFixtureRoot();
   fs.writeFileSync(path.join(fixtureRoot, "packages/tokens/src/tokens/index.dtcg.json"), "{\n");
@@ -1190,6 +1202,34 @@ test("builds prepare payload for async composition surfaces from routing metadat
   assert.equal(payload.recommendedRoutes[0].canonicalNeed, "async_collection");
 });
 
+test("build prepare payload fails closed when route examples are missing", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  copyRootFile(
+    fixtureRoot,
+    "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+  );
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  routing.routes[0].examples = ["docs/design-system/examples/missing-example.tsx"];
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
+    fixtureRoot,
+  );
+  assert.equal(payload.ok, false);
+  assert.equal(payload.safeForAutomaticImplementation, false);
+  assert.deepEqual(
+    payload.openDecisions.find((decision) => decision.code === "E_DESIGN_ROUTE_EXAMPLE_MISSING"),
+    {
+      code: "E_DESIGN_ROUTE_EXAMPLE_MISSING",
+      message:
+        "Route async_collection references missing example docs/design-system/examples/missing-example.tsx.",
+      severity: "error",
+      nextAction: "stop",
+    },
+  );
+});
+
 test("builds prepare diagnostics for warn, exempt, and unknown surfaces", async () => {
   const warn = await buildPreparePayload(
     "packages/ui/src/storybook/_holding/component-stories/AlertDialog.stories.tsx",
@@ -1209,6 +1249,14 @@ test("builds prepare diagnostics for warn, exempt, and unknown surfaces", async 
   assert.equal(unknown.ok, false);
   assert.ok(
     unknown.openDecisions.some((decision) => decision.code === "E_DESIGN_SURFACE_SCOPE_UNKNOWN"),
+  );
+  assert.ok(
+    unknown.openDecisions.some(
+      (decision) =>
+        decision.code === "E_DESIGN_SURFACE_SCOPE_UNKNOWN" &&
+        decision.severity === "error" &&
+        decision.nextAction === "escalate",
+    ),
   );
 });
 
