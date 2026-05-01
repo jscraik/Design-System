@@ -403,18 +403,19 @@ const pnpmSubcommands = new Set([
   "publish",
   "rebuild",
   "remove",
-  "root",
   "rm",
+  "root",
   "setup",
   "store",
-  "unlink",
   "uninstall",
+  "unlink",
   "update",
   "why",
 ]);
 
 const pnpmRunOptionsWithValues = new Set([
   "--changed-files-ignore-pattern",
+  "--filter-omit-pkg-dep",
   "--loglevel",
   "--resume-from",
   "--test-pattern",
