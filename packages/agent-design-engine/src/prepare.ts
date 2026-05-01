@@ -531,6 +531,10 @@ function inferPackageScript(command: string): InferredPackageScript | undefined 
     ) {
       throw unsupportedPnpmFilter(command);
     }
+    if (pnpmRunOptionsWithValues.has(token)) {
+      index += 1;
+      continue;
+    }
     if (token.startsWith("-")) {
       continue;
     }

@@ -1032,6 +1032,23 @@ test("build prepare payload accepts pnpm run flags before script names", async (
   assert.equal(payload.validationCommands[0].packageScript, "agent-design:lint");
 });
 
+test("build prepare payload accepts pnpm value flags before run", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm --resume-from ui run agent-design:lint";
+  route.validationCommands[0].packageScript = "agent-design:lint";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+
+  assert.equal(payload.validationCommands[0].packageScript, "agent-design:lint");
+});
+
 test("build prepare payload rejects pnpm run commands without a script name", async () => {
   const fixtureRoot = prepareFixtureRoot();
   const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
