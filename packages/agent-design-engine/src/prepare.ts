@@ -1,7 +1,6 @@
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import { performance } from "node:perf_hooks";
 import { parseDesignContract } from "./parser.js";
 import { resolveRouteForSurface } from "./routes.js";
 import { buildDesignTokenContract } from "./token-contract.js";
@@ -660,8 +659,6 @@ export async function buildPreparePayload(
   rootDir = process.cwd(),
   signal?: AbortSignal,
 ): Promise<PreparePayload> {
-  const startedAt = new Date();
-  const startedMs = performance.now();
   signal?.throwIfAborted();
   const resolvedRoot = path.resolve(rootDir);
   const normalizedSurfacePath = normalizeSurfacePath(resolvedRoot, surfacePath);
@@ -754,10 +751,6 @@ export async function buildPreparePayload(
     coverageMatrixDigest,
     componentLifecycleDigest,
     openDecisions,
-    timing: {
-      startedAt: startedAt.toISOString(),
-      durationMs: Math.round(performance.now() - startedMs),
-    },
   };
 }
 

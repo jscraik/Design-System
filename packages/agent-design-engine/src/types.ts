@@ -310,11 +310,6 @@ export interface PrepareOpenDecision {
   severity: "info" | "warn" | "error";
 }
 
-export interface PrepareTiming {
-  startedAt: string;
-  durationMs: number;
-}
-
 export interface DesignTokenRole {
   role: string;
   cssVariable?: string;
@@ -352,7 +347,6 @@ export interface PreparePayload {
   coverageMatrixDigest: PrepareSourceDigest;
   componentLifecycleDigest: PrepareSourceDigest;
   openDecisions: PrepareOpenDecision[];
-  timing: PrepareTiming;
 }
 
 export class DesignEngineError extends Error {

@@ -115,12 +115,20 @@ function tokenContractAmbiguous(sourcePath: string, expectation: string): Design
   });
 }
 
+function hasCssDeclaration(content: string, property: string): boolean {
+  const stripped = content
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/\/\/.*/g, "");
+  const escaped = property.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`(?:^|[{;])\\s*${escaped}\\s*:`, "m").test(stripped);
+}
+
 function assertSemanticRoleThemeTokens(content: string): void {
   for (const role of SEMANTIC_ROLES) {
     if (!role.cssVariable) {
       throw tokenContractAmbiguous(THEME_SOURCE_PATH, `${role.role} CSS variable reference`);
     }
-    if (!content.includes(`${role.cssVariable}:`)) {
+    if (!hasCssDeclaration(content, role.cssVariable)) {
       throw tokenContractAmbiguous(
         THEME_SOURCE_PATH,
         `${role.role} backing token ${role.cssVariable}`,
@@ -134,7 +142,7 @@ async function assertThemeSource(rootDir: string, signal?: AbortSignal): Promise
   signal?.throwIfAborted();
 
   for (const cssVariable of ["--background", "--foreground", "--ring"]) {
-    if (!content.includes(`${cssVariable}:`)) {
+    if (!hasCssDeclaration(content, cssVariable)) {
       throw tokenContractAmbiguous(THEME_SOURCE_PATH, `${cssVariable} CSS variable`);
     }
   }

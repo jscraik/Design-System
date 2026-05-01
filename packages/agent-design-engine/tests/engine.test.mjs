@@ -873,8 +873,6 @@ test("builds prepare payload for protected product page surfaces", async () => {
     ),
   );
   assert.ok(payload.designTokenContract.sourceRefs.includes("packages/ui/src/styles/theme.css"));
-  assert.equal(typeof payload.timing.durationMs, "number");
-  assert.ok(payload.timing.durationMs >= 0);
 });
 
 test("build prepare payload honors aborted signals", async () => {
@@ -1257,6 +1255,5 @@ test("serializes prepare payload with sorted keys and trailing newline", async (
   );
   const serialized = serializePreparePayload(payload);
   assert.equal(serialized.endsWith("\n"), true);
-  assert.equal(serialized.includes('"timing"'), true);
   assert.match(serialized.split("\n")[1], /"componentLifecycleDigest"/);
 });
