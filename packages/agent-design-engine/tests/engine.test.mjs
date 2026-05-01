@@ -1170,6 +1170,24 @@ test("build prepare payload validates pnpm dir scripts against target package", 
   assert.equal(payload.validationCommands[0].packageScript, "type-check");
 });
 
+test("build prepare payload validates pnpm -C equals scripts against target package", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  copyRootFile(fixtureRoot, "packages/ui/package.json");
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm -C=packages/ui run type-check";
+  route.validationCommands[0].packageScript = "type-check";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+
+  assert.equal(payload.validationCommands[0].packageScript, "type-check");
+});
+
 test("build prepare payload validates post-run pnpm dir scripts against target package", async () => {
   const fixtureRoot = prepareFixtureRoot();
   copyRootFile(fixtureRoot, "packages/ui/package.json");
@@ -1186,6 +1204,25 @@ test("build prepare payload validates post-run pnpm dir scripts against target p
   );
 
   assert.equal(payload.validationCommands[0].packageScript, "type-check");
+});
+
+test("build prepare payload accepts pnpm recursive run aliases", async () => {
+  for (const alias of ["recursive", "multi", "m"]) {
+    const fixtureRoot = prepareFixtureRoot();
+    const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+    const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+    assert.ok(route, "missing settings_panel route fixture");
+    route.validationCommands[0].command = `pnpm ${alias} run agent-design:lint`;
+    route.validationCommands[0].packageScript = "agent-design:lint";
+    writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+    const payload = await buildPreparePayload(
+      "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+      fixtureRoot,
+    );
+
+    assert.equal(payload.validationCommands[0].packageScript, "agent-design:lint");
+  }
 });
 
 test("build prepare payload parses quoted pnpm package dirs", async () => {

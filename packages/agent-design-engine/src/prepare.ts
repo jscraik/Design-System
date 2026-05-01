@@ -507,6 +507,10 @@ function readPnpmRunScript(
       index += 1;
       continue;
     }
+    if (token.startsWith("-C=")) {
+      packageDir = normalizePackageDir(command, token.slice("-C=".length));
+      continue;
+    }
     if (token.startsWith("--dir=")) {
       packageDir = normalizePackageDir(command, token.slice("--dir=".length));
       continue;
@@ -551,6 +555,16 @@ function inferPackageScript(command: string): InferredPackageScript | undefined 
     if (token === "run" || token === "run-script") {
       return readPnpmRunScript(command, tokens, index + 1, packageDir);
     }
+    if (token === "recursive" || token === "multi" || token === "m") {
+      const nextToken = tokens[index + 1];
+      if (nextToken === "run" || nextToken === "run-script") {
+        return readPnpmRunScript(command, tokens, index + 2, packageDir);
+      }
+      throw invalidValidationCommand(
+        command,
+        "Validation command uses unsupported pnpm recursive subcommand",
+      );
+    }
     if (token === "--workspace-root" || token === "-w") {
       packageDir = ".";
       continue;
@@ -559,6 +573,10 @@ function inferPackageScript(command: string): InferredPackageScript | undefined 
       const value = tokens[index + 1];
       packageDir = normalizePackageDir(command, value);
       index += 1;
+      continue;
+    }
+    if (token.startsWith("-C=")) {
+      packageDir = normalizePackageDir(command, token.slice("-C=".length));
       continue;
     }
     if (token.startsWith("--dir=")) {
