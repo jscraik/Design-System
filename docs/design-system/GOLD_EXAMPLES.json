@@ -153,8 +153,12 @@
       "routeNeed": "permission_denied_unavailable",
       "reason": "No protected canonical example currently demonstrates unavailable or permission-denied product state recovery.",
       "requiredBeforePromotion": [
-        "Add a protected source or story fixture with accessible title, cause, and recovery affordance.",
-        "Connect the fixture to a route entry and validation command."
+        "Add a protected sourcePath that renders permission_denied and unavailable recovery states.",
+        "Add storyPaths that expose accessible title, cause, recovery affordance, and unavailable fallback variants.",
+        "Add testPaths covering keyboard access, screen-reader naming, visual state, and recovery action behavior.",
+        "List coveredStates including permission_denied and unavailable.",
+        "Attach read-only validationCommands that exercise the protected fixture.",
+        "Link the routeNeed from docs/design-system/AGENT_UI_ROUTING.json before adding it to prepare recommendations."
       ],
       "promotable": false
     },
@@ -163,8 +167,12 @@
       "routeNeed": "dense_operational_dashboard",
       "reason": "No protected canonical example currently demonstrates dense dashboard scanning, comparison, and repeated actions.",
       "requiredBeforePromotion": [
-        "Add a protected product or Storybook fixture that uses composition primitives for dense operational data.",
-        "Validate responsive layout and focus order before adding it to route recommendations."
+        "Add a protected sourcePath that uses composition primitives for dense operational data.",
+        "Add storyPaths that show scanning, comparison, filtering, and repeated action workflows.",
+        "Add testPaths covering responsive layout, focus order, table or grid semantics, and repeated actions.",
+        "List coveredStates for ready, loading, empty, error, and any busy or filtered variants.",
+        "Attach read-only validationCommands that prove the dashboard fixture is covered.",
+        "Link the routeNeed from docs/design-system/AGENT_UI_ROUTING.json before adding it to prepare recommendations."
       ],
       "promotable": false
     },
@@ -173,8 +181,12 @@
       "routeNeed": "form_validation_accessible_errors",
       "reason": "No protected canonical example currently demonstrates form validation with accessible field-level and summary errors.",
       "requiredBeforePromotion": [
-        "Add a protected form fixture with labels, descriptions, invalid state, and recovery copy.",
-        "Validate keyboard, screen-reader, and visual coverage before making it a gold example."
+        "Add a protected sourcePath for a form with labels, descriptions, invalid state, field errors, summary errors, and recovery copy.",
+        "Add storyPaths for valid, invalid, submitting, and corrected form states.",
+        "Add testPaths covering keyboard flow, screen-reader relationships, focus management, visual error treatment, and successful recovery.",
+        "List coveredStates including ready, submitting, error, invalid, and corrected.",
+        "Attach read-only validationCommands that exercise the protected form fixture.",
+        "Link the routeNeed from docs/design-system/AGENT_UI_ROUTING.json before adding it to prepare recommendations."
       ],
       "promotable": false
     }
