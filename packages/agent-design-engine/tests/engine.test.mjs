@@ -1105,6 +1105,23 @@ test("build prepare payload accepts pnpm reporter flag before run", async () => 
   assert.equal(payload.validationCommands[0].packageScript, "agent-design:lint");
 });
 
+test("build prepare payload accepts pnpm run-script alias", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm run-script agent-design:lint";
+  route.validationCommands[0].packageScript = "agent-design:lint";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+
+  assert.equal(payload.validationCommands[0].packageScript, "agent-design:lint");
+});
+
 test("build prepare payload rejects pnpm run commands without a script name", async () => {
   const fixtureRoot = prepareFixtureRoot();
   const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
@@ -1193,6 +1210,26 @@ test("build prepare payload parses quoted pnpm package dirs", async () => {
   assert.equal(payload.validationCommands[0].packageScript, "type-check");
 });
 
+test("build prepare payload accepts pnpm run scripts named like pnpm commands", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const packageJson = readFixtureJson(fixtureRoot, "package.json");
+  packageJson.scripts.export = "node --version";
+  writeFixtureJson(fixtureRoot, "package.json", packageJson);
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm run export";
+  route.validationCommands[0].packageScript = "export";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+
+  assert.equal(payload.validationCommands[0].packageScript, "export");
+});
+
 test("build prepare payload rejects pnpm dir package symlinks that escape the repo", async () => {
   const fixtureRoot = prepareFixtureRoot();
   const externalPackageDir = fs.mkdtempSync(path.join(os.tmpdir(), "agent-design-package-"));
@@ -1202,6 +1239,29 @@ test("build prepare payload rejects pnpm dir package symlinks that escape the re
   );
   fs.mkdirSync(path.join(fixtureRoot, "packages"), { recursive: true });
   fs.symlinkSync(externalPackageDir, path.join(fixtureRoot, "packages/ui-link"), "dir");
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm -C packages/ui-link run type-check";
+  route.validationCommands[0].packageScript = "type-check";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects package.json symlinks that escape the repo", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const externalPackageDir = fs.mkdtempSync(path.join(os.tmpdir(), "agent-design-package-json-"));
+  const externalPackageJson = path.join(externalPackageDir, "package.json");
+  fs.writeFileSync(
+    externalPackageJson,
+    JSON.stringify({ scripts: { "type-check": "node --version" } }),
+  );
+  fs.mkdirSync(path.join(fixtureRoot, "packages/ui-link"), { recursive: true });
+  fs.symlinkSync(externalPackageJson, path.join(fixtureRoot, "packages/ui-link/package.json"));
   const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
   const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
   assert.ok(route, "missing settings_panel route fixture");

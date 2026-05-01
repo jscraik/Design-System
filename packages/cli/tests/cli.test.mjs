@@ -575,6 +575,24 @@ test("prepare command schema rejects missing north-star payload fields", async (
     false,
     "prepare payload with incomplete open decisions should fail schema validation",
   );
+
+  for (const field of ["packageScript", "expectedOutcome", "timeoutClass"]) {
+    const invalidTopLevelCommand = cloneJson(payload);
+    delete invalidTopLevelCommand.data.validationCommands[0][field];
+    assert.equal(
+      validateDesignCommandEnvelope(invalidTopLevelCommand),
+      false,
+      `prepare payload command without ${field} should fail schema validation`,
+    );
+
+    const invalidRouteCommand = cloneJson(payload);
+    delete invalidRouteCommand.data.recommendedRoutes[0].validationCommands[0][field];
+    assert.equal(
+      validateDesignCommandEnvelope(invalidRouteCommand),
+      false,
+      `prepare route command without ${field} should fail schema validation`,
+    );
+  }
 });
 
 test("root prepare wrapper builds CLI dependencies before prepare", () => {

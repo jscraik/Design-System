@@ -131,6 +131,45 @@
         }
       }
     },
+    "prepareValidationCommand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command",
+        "safetyClass",
+        "reason",
+        "packageScript",
+        "expectedOutcome",
+        "timeoutClass"
+      ],
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "safetyClass": {
+          "const": "read_only"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "packageScript": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expectedOutcome": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timeoutClass": {
+          "enum": ["short", "medium", "long"]
+        },
+        "blockedByDefault": {
+          "type": "boolean"
+        }
+      }
+    },
     "routeFallback": {
       "type": "object",
       "additionalProperties": false,
@@ -331,7 +370,7 @@
         "validationCommands": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/validationCommand"
+            "$ref": "#/definitions/prepareValidationCommand"
           }
         },
         "sourceRefs": {
@@ -465,7 +504,7 @@
         "validationCommands": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/validationCommand"
+            "$ref": "#/definitions/prepareValidationCommand"
           }
         },
         "ruleManifestVersion": {

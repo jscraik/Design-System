@@ -533,9 +533,6 @@ function readPnpmRunScript(
     if (token.startsWith("-")) {
       continue;
     }
-    if (pnpmSubcommands.has(token)) {
-      throw invalidValidationCommand(command, "Validation command does not name a package script");
-    }
     return { packageDir, script: token };
   }
 
@@ -551,7 +548,7 @@ function inferPackageScript(command: string): InferredPackageScript | undefined 
   let packageDir = ".";
   for (let index = 1; index < tokens.length; index += 1) {
     const token = tokens[index];
-    if (token === "run") {
+    if (token === "run" || token === "run-script") {
       return readPnpmRunScript(command, tokens, index + 1, packageDir);
     }
     if (token === "--workspace-root" || token === "-w") {
@@ -641,7 +638,26 @@ async function resolvePackageJsonPath(rootDir: string, packageDir: string): Prom
       },
     );
   }
-  return path.join(resolvedPackageDir, "package.json");
+  const packageJsonPath = path.join(resolvedPackageDir, "package.json");
+  let realPackageJsonPath = "";
+  try {
+    realPackageJsonPath = await realpath(packageJsonPath);
+  } catch {
+    throw new DesignEngineError(`package.json is missing or unreadable: ${packageDir}`, {
+      code: "E_DESIGN_PACKAGE_JSON",
+      exitCode: 2,
+    });
+  }
+  if (!isWithinDirectory(realRoot, realPackageJsonPath)) {
+    throw new DesignEngineError(
+      `Validation command package.json must stay inside the workspace: ${packageDir}`,
+      {
+        code: "E_DESIGN_VALIDATION_COMMAND_INVALID",
+        exitCode: 2,
+      },
+    );
+  }
+  return realPackageJsonPath;
 }
 
 async function loadPackageScripts(
