@@ -533,7 +533,6 @@ test("prepare command schema rejects missing north-star payload fields", async (
     "safeForAutomaticImplementation",
     "recommendedRoutes",
     "designTokenContract",
-    "timing",
     "sourceDigests",
     "ruleSourceDigests",
     "coverageMatrixDigest",

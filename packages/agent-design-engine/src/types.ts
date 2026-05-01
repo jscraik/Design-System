@@ -311,11 +311,6 @@ export interface PrepareOpenDecision {
   nextAction: "stop" | "escalate" | "diagnose";
 }
 
-export interface PrepareTiming {
-  startedAt: string;
-  durationMs: number;
-}
-
 export interface DesignTokenRole {
   role: string;
   cssVariable?: string;
@@ -353,7 +348,6 @@ export interface PreparePayload {
   coverageMatrixDigest: PrepareSourceDigest;
   componentLifecycleDigest: PrepareSourceDigest;
   openDecisions: PrepareOpenDecision[];
-  timing: PrepareTiming;
 }
 
 export class DesignEngineError extends Error {

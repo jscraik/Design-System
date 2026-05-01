@@ -879,8 +879,6 @@ test("builds prepare payload for protected product page surfaces", async () => {
       "docs/design-system/PROFESSIONAL_UI_CONTRACT.md",
     ),
   );
-  assert.equal(typeof payload.timing.durationMs, "number");
-  assert.ok(payload.timing.durationMs >= 0);
 });
 
 test("build prepare payload honors aborted signals", async () => {
@@ -1089,6 +1087,28 @@ test("build prepare payload validates post-run pnpm dir scripts against target p
   const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
   assert.ok(route, "missing settings_panel route fixture");
   route.validationCommands[0].command = "pnpm run -C packages/ui type-check";
+  route.validationCommands[0].packageScript = "type-check";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+
+  assert.equal(payload.validationCommands[0].packageScript, "type-check");
+});
+
+test("build prepare payload parses quoted pnpm package dirs", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  fs.mkdirSync(path.join(fixtureRoot, "packages/ui shell"), { recursive: true });
+  fs.writeFileSync(
+    path.join(fixtureRoot, "packages/ui shell/package.json"),
+    JSON.stringify({ scripts: { "type-check": "node --version" } }),
+  );
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = 'pnpm --dir "packages/ui shell" run type-check';
   route.validationCommands[0].packageScript = "type-check";
   writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
 
@@ -1407,6 +1427,12 @@ test("serializes prepare payload with sorted keys and trailing newline", async (
   );
   const serialized = serializePreparePayload(payload);
   assert.equal(serialized.endsWith("\n"), true);
-  assert.equal(serialized.includes('"timing"'), true);
+  assert.equal(serialized.includes('"timing"'), false);
   assert.match(serialized.split("\n")[1], /"componentLifecycleDigest"/);
+
+  const secondPayload = await buildPreparePayload(
+    "platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx",
+    rootDir,
+  );
+  assert.equal(serializePreparePayload(secondPayload), serialized);
 });

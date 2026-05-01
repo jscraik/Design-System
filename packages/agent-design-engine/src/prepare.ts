@@ -369,7 +369,54 @@ function onlyReadOnly(commands: AgentUiRouteValidationCommand[]): AgentUiRouteVa
 }
 
 function commandTokens(command: string): string[] {
-  return command.trim().split(/\s+/).filter(Boolean);
+  const tokens: string[] = [];
+  let current = "";
+  let quote: "'" | '"' | undefined;
+  let escaped = false;
+
+  for (const character of command.trim()) {
+    if (escaped) {
+      current += character;
+      escaped = false;
+      continue;
+    }
+    if (character === "\\" && quote !== "'") {
+      escaped = true;
+      continue;
+    }
+    if (quote) {
+      if (character === quote) {
+        quote = undefined;
+      } else {
+        current += character;
+      }
+      continue;
+    }
+    if (character === "'" || character === '"') {
+      quote = character;
+      continue;
+    }
+    if (/\s/.test(character)) {
+      if (current) {
+        tokens.push(current);
+        current = "";
+      }
+      continue;
+    }
+    current += character;
+  }
+
+  if (escaped) {
+    current += "\\";
+  }
+  if (quote) {
+    throw invalidValidationCommand(command, "Validation command has unterminated shell quote");
+  }
+  if (current) {
+    tokens.push(current);
+  }
+
+  return tokens;
 }
 
 function invalidValidationCommand(command: string, message: string): DesignEngineError {
@@ -797,8 +844,6 @@ export async function buildPreparePayload(
   rootDir = process.cwd(),
   signal?: AbortSignal,
 ): Promise<PreparePayload> {
-  const startedAt = new Date();
-  const startedMs = performance.now();
   signal?.throwIfAborted();
   const resolvedRoot = path.resolve(rootDir);
   const normalizedSurfacePath = normalizeSurfacePath(resolvedRoot, surfacePath);
@@ -889,10 +934,6 @@ export async function buildPreparePayload(
     coverageMatrixDigest,
     componentLifecycleDigest,
     openDecisions,
-    timing: {
-      startedAt: startedAt.toISOString(),
-      durationMs: Math.round(performance.now() - startedMs),
-    },
   };
 }
 
