@@ -124,8 +124,10 @@ function maskPublicDesignTokenContract(
 
   const result: Record<string, unknown> = {};
   for (const [key, val] of Object.entries(value)) {
-    if (key === "allowedRoles" && Array.isArray(val)) {
-      result[key] = val.map((role) => maskPublicDesignTokenRole(role, masks, inDebugMode));
+    if (key === "allowedRoles") {
+      result[key] = Array.isArray(val)
+        ? val.map((role) => maskPublicDesignTokenRole(role, masks, inDebugMode))
+        : maskMalformedPublicValue(val, masks, inDebugMode);
     } else if (key === "mode") {
       result[key] =
         typeof val === "string" ? val : maskMalformedPublicValue(val, masks, inDebugMode);

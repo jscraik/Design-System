@@ -1206,6 +1206,27 @@ test("build prepare payload validates compact pnpm -C scripts against target pac
   assert.equal(payload.validationCommands[0].packageScript, "type-check");
 });
 
+test("build prepare payload normalizes absolute pnpm package dirs for read-only trust", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  copyRootFile(fixtureRoot, "packages/ui/package.json");
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = `pnpm -C ${path.join(
+    fixtureRoot,
+    "packages/ui",
+  )} run type-check`;
+  route.validationCommands[0].packageScript = "type-check";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+
+  assert.equal(payload.validationCommands[0].packageScript, "type-check");
+});
+
 test("build prepare payload validates post-run pnpm dir scripts against target package", async () => {
   const fixtureRoot = prepareFixtureRoot();
   copyRootFile(fixtureRoot, "packages/ui/package.json");

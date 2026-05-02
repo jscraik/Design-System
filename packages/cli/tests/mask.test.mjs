@@ -119,6 +119,13 @@ test("maskObject redacts malformed design token contract payloads", async () => 
     },
   });
   assert.equal(malformedRole.designTokenContract.allowedRoles[0], "[REDACTED]");
+
+  const malformedRoles = maskObject({
+    designTokenContract: {
+      allowedRoles: "secret-token-123",
+    },
+  });
+  assert.equal(malformedRoles.designTokenContract.allowedRoles, "[REDACTED]");
 });
 
 test("maskObject bypasses in debug mode", async () => {

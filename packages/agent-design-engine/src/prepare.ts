@@ -514,13 +514,28 @@ function unsupportedPnpmFilter(command: string): DesignEngineError {
   );
 }
 
-function canonicalPackageDir(packageDir: string): string {
-  const normalized = packageDir.replace(/\\/g, "/").replace(/\/+$/, "").replace(/^\.\//, "");
-  return normalized.length > 0 ? normalized : ".";
+async function canonicalPackageDir(rootDir: string, packageDir: string): Promise<string> {
+  const realRoot = await realpath(path.resolve(rootDir));
+  const realPackageDir = await realpath(path.resolve(realRoot, packageDir));
+  if (!isWithinDirectory(realRoot, realPackageDir)) {
+    throw new DesignEngineError(
+      `Validation command package directory must stay inside the workspace: ${packageDir}`,
+      {
+        code: "E_DESIGN_VALIDATION_COMMAND_INVALID",
+        exitCode: 2,
+      },
+    );
+  }
+  const relativePackageDir = path.relative(realRoot, realPackageDir).replace(/\\/g, "/");
+  return relativePackageDir.length > 0 ? relativePackageDir : ".";
 }
 
-function packageScriptTrustKey(packageDir: string, packageScript: string): string {
-  return `${canonicalPackageDir(packageDir)}#${packageScript}`;
+async function packageScriptTrustKey(
+  rootDir: string,
+  packageDir: string,
+  packageScript: string,
+): Promise<string> {
+  return `${await canonicalPackageDir(rootDir, packageDir)}#${packageScript}`;
 }
 
 function readPnpmRunScript(
@@ -845,7 +860,7 @@ async function normalizeValidationCommands(
         },
       );
     }
-    const trustKey = packageScriptTrustKey(inferred.packageDir, packageScript);
+    const trustKey = await packageScriptTrustKey(rootDir, inferred.packageDir, packageScript);
     if (!trustedReadOnlyPackageScriptKeys.has(trustKey)) {
       throw new DesignEngineError(
         `Validation command package script is not trusted read-only: ${trustKey}`,
