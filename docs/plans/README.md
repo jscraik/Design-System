@@ -6,6 +6,7 @@ Last updated: 2026-04-28
 
 - [Purpose](#purpose)
 - [Current Canonical Plan](#current-canonical-plan)
+- [Proposed Plans](#proposed-plans)
 - [Current Cleanup Decisions](#current-cleanup-decisions)
 - [Historical Plans](#historical-plans)
 - [Superseded Or Reference Plans](#superseded-or-reference-plans)
@@ -28,6 +29,17 @@ historical evidence, but this file names the current canonical lane explicitly.
   `docs/specs/2026-04-28-agent-native-design-system-spec.md`. It is the active
   plan for the `prepare` command, routing-table, remediation, gold-example, and
   new-abstraction proposal workflow.
+
+## Proposed Plans
+
+These plans are not canonical execution authority until they are approved,
+tracked when required, and explicitly promoted into the current canonical lane:
+
+- `2026-05-02-agent-first-design-system-simplification-plan.md` - proposed
+  simplification plan for the agent-first design-system lane. It starts with
+  authority mapping and reference audits before payload ergonomics, output
+  formats, responsibility splits, package taxonomy, script cleanup, and
+  `FORJAMIE.md` compression.
 
 ## Current Cleanup Decisions
 
