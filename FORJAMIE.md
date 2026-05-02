@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-04-30
+**Last updated:** 2026-05-02
 **Production status:** IN_PROGRESS
 **Overall health:** Yellow
 
@@ -222,6 +222,7 @@ See also: `~/.codex/instructions/Learnings.md`
 
 - **PR #159 CI follow-up**: hardened `pnpm agent-design:prepare:changed` for shallow or moved CI base refs. The changed-surface evidence gate still prefers `base...HEAD`, but when Git reports the specific no-merge-base case it falls back to direct `base HEAD` diff and continues to fail closed on other git errors. The prepare schema also no longer requires or models the removed runtime `timing` payload field, keeping the JSON contract aligned with deterministic engine output.
 - **PR #159 parser follow-up**: made design token contract source checks run in a fixed theme, alias-map, DTCG order so malformed checkouts fail deterministically. Prepare validation-command parsing now treats `-F` as pnpm's short filter selector and consumes `--resume-from` values before inferring a package script, preventing valid filtered/resumed pnpm run commands from being rejected as bogus script names.
+- **PR #159 review cleanup**: bounded the changed-surface prepare evidence gate with a configurable child-process timeout and spawn-safe output handling so CI cannot hang indefinitely or mask spawn failures. Prepare validation-command parsing now also consumes pnpm `--loglevel` values before inferring scripts, and CLI schema tests fail with clearer fixture diagnostics when required route examples disappear.
 
 ### 2026-04-30
 
@@ -460,7 +461,7 @@ project: design-system
 repo: ~/dev/design-system
 status: IN_PROGRESS
 health: yellow
-last_updated: 2026-04-30
+last_updated: 2026-05-02
 open_prs: 1
 blockers: none
 next_milestone: ChatGPT widget integration

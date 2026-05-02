@@ -407,6 +407,7 @@ const pnpmSubcommands = new Set([
 const pnpmRunOptionsWithValues = new Set([
   "--dir",
   "--filter",
+  "--loglevel",
   "--resume-from",
   "--workspace-concurrency",
   "-C",
@@ -415,6 +416,7 @@ const pnpmRunOptionsWithValues = new Set([
 const pnpmRunOptionsWithInlineValues = new Set([
   "--dir",
   "--filter",
+  "--loglevel",
   "--resume-from",
   "--workspace-concurrency",
 ]);

@@ -1091,6 +1091,25 @@ test("build prepare payload skips pnpm run resume-from before scripts", async ()
   assert.equal(payload.validationCommands[0].packageScript, "lint");
 });
 
+test("build prepare payload skips pnpm run loglevel before scripts", async () => {
+  for (const command of ["pnpm run --loglevel warn lint", "pnpm run --loglevel=warn lint"]) {
+    const fixtureRoot = prepareFixtureRoot();
+    const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+    const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+    assert.ok(route, "missing settings_panel route fixture");
+    route.validationCommands[0].command = command;
+    delete route.validationCommands[0].packageScript;
+    writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+    const payload = await buildPreparePayload(
+      "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+      fixtureRoot,
+    );
+
+    assert.equal(payload.validationCommands[0].packageScript, "lint");
+  }
+});
+
 test("build prepare payload validates pnpm -C scripts against target package", async () => {
   const fixtureRoot = prepareFixtureRoot();
   copyRootFile(fixtureRoot, "packages/ui/package.json");

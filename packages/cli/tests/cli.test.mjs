@@ -561,6 +561,11 @@ test("prepare command schema rejects missing north-star payload fields", async (
   );
 
   const invalidRoute = cloneJson(payload);
+  assert.ok(
+    Array.isArray(invalidRoute.data.recommendedRoutes) &&
+      invalidRoute.data.recommendedRoutes.length > 0,
+    "prepare fixture must include at least one recommended route",
+  );
   invalidRoute.data.recommendedRoutes[0].unexpectedFutureDrift = { bad: true };
   assert.equal(
     validateDesignCommandEnvelope(invalidRoute),

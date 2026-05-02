@@ -5,6 +5,14 @@ import path from "node:path";
 const repoRoot = process.cwd();
 const args = process.argv.slice(2);
 const serviceTag = 'service:"agent-design"';
+const DEFAULT_COMMAND_TIMEOUT_MS = 120000;
+const configuredCommandTimeoutMs = Number(
+  process.env.AGENT_DESIGN_PREPARE_TIMEOUT_MS ?? DEFAULT_COMMAND_TIMEOUT_MS,
+);
+const COMMAND_TIMEOUT_MS =
+  Number.isFinite(configuredCommandTimeoutMs) && configuredCommandTimeoutMs > 0
+    ? configuredCommandTimeoutMs
+    : DEFAULT_COMMAND_TIMEOUT_MS;
 
 function log(message) {
   console.log(`${message} ${serviceTag}`);
@@ -33,6 +41,8 @@ function run(command, commandArgs) {
     cwd: repoRoot,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
+    timeout: COMMAND_TIMEOUT_MS,
+    killSignal: "SIGTERM",
   });
 }
 
@@ -40,8 +50,16 @@ function commandText(commandArgs) {
   return `git ${commandArgs.join(" ")}`;
 }
 
+function text(value) {
+  return typeof value === "string" ? value : "";
+}
+
+function resultErrorMessage(result) {
+  return result.error instanceof Error ? result.error.message : "";
+}
+
 function resultDetail(result) {
-  return (result.stderr || result.stdout).trim();
+  return (text(result.stderr) || text(result.stdout) || resultErrorMessage(result)).trim();
 }
 
 function addChangedFiles(files, stdout) {
@@ -168,8 +186,8 @@ function prepare(surface) {
     safeForAutomaticImplementation: false,
     openDecisions: [],
     validationCommands: [],
-    stderr: result.stderr.trim(),
-    stdout: result.stdout.trim().slice(0, 500),
+    stderr: text(result.stderr).trim() || resultErrorMessage(result),
+    stdout: text(result.stdout).trim().slice(0, 500),
   });
 
   try {
