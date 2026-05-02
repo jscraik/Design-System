@@ -470,6 +470,19 @@ const pnpmRunOptionsWithValues = new Set([
   "--workspace-concurrency",
 ]);
 
+const trustedReadOnlyPackageScripts = new Set([
+  "agent-design:lint",
+  "docs:lint",
+  "list",
+  "test:a11y:widgets",
+  "type-check",
+]);
+
+const wrapperEvidenceLocator =
+  "docs/plans/2026-04-30-agent-design-prepare-north-star-plan.md#machine-evidence-contract";
+const finalPlanEvidenceLocator =
+  "docs/plans/2026-04-30-agent-design-prepare-north-star-plan.md#execution-ledger";
+
 interface InferredPackageScript {
   packageDir: string;
   script: string;
@@ -509,6 +522,10 @@ function readPnpmRunScript(
     }
     if (token.startsWith("-C=")) {
       packageDir = normalizePackageDir(command, token.slice("-C=".length));
+      continue;
+    }
+    if (token.startsWith("-C") && token.length > 2) {
+      packageDir = normalizePackageDir(command, token.slice(2));
       continue;
     }
     if (token.startsWith("--dir=")) {
@@ -577,6 +594,10 @@ function inferPackageScript(command: string): InferredPackageScript | undefined 
     }
     if (token.startsWith("-C=")) {
       packageDir = normalizePackageDir(command, token.slice("-C=".length));
+      continue;
+    }
+    if (token.startsWith("-C") && token.length > 2) {
+      packageDir = normalizePackageDir(command, token.slice(2));
       continue;
     }
     if (token.startsWith("--dir=")) {
@@ -786,6 +807,15 @@ async function normalizeValidationCommands(
         },
       );
     }
+    if (!trustedReadOnlyPackageScripts.has(packageScript)) {
+      throw new DesignEngineError(
+        `Validation command package script is not trusted read-only: ${inferred.packageDir}#${packageScript}`,
+        {
+          code: "E_DESIGN_VALIDATION_COMMAND_INVALID",
+          exitCode: 2,
+        },
+      );
+    }
 
     normalized.push({
       ...command,
@@ -982,6 +1012,8 @@ export async function buildPreparePayload(
     sourceDigests: sourceDigests.sort((left, right) => left.path.localeCompare(right.path)),
     coverageMatrixDigest,
     componentLifecycleDigest,
+    "wrapper-evidence": wrapperEvidenceLocator,
+    "final-plan-evidence": finalPlanEvidenceLocator,
     openDecisions,
   };
 }

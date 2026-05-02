@@ -347,6 +347,8 @@ export interface PreparePayload {
   sourceDigests: PrepareSourceDigest[];
   coverageMatrixDigest: PrepareSourceDigest;
   componentLifecycleDigest: PrepareSourceDigest;
+  "wrapper-evidence": string;
+  "final-plan-evidence": string;
   openDecisions: PrepareOpenDecision[];
 }
 

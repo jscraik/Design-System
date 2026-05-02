@@ -1188,6 +1188,24 @@ test("build prepare payload validates pnpm -C equals scripts against target pack
   assert.equal(payload.validationCommands[0].packageScript, "type-check");
 });
 
+test("build prepare payload validates compact pnpm -C scripts against target package", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  copyRootFile(fixtureRoot, "packages/ui/package.json");
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm -Cpackages/ui run type-check";
+  route.validationCommands[0].packageScript = "type-check";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+
+  assert.equal(payload.validationCommands[0].packageScript, "type-check");
+});
+
 test("build prepare payload validates post-run pnpm dir scripts against target package", async () => {
   const fixtureRoot = prepareFixtureRoot();
   copyRootFile(fixtureRoot, "packages/ui/package.json");
@@ -1250,13 +1268,13 @@ test("build prepare payload parses quoted pnpm package dirs", async () => {
 test("build prepare payload accepts pnpm run scripts named like pnpm commands", async () => {
   const fixtureRoot = prepareFixtureRoot();
   const packageJson = readFixtureJson(fixtureRoot, "package.json");
-  packageJson.scripts.export = "node --version";
+  packageJson.scripts.list = "node --version";
   writeFixtureJson(fixtureRoot, "package.json", packageJson);
   const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
   const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
   assert.ok(route, "missing settings_panel route fixture");
-  route.validationCommands[0].command = "pnpm run export";
-  route.validationCommands[0].packageScript = "export";
+  route.validationCommands[0].command = "pnpm run list";
+  route.validationCommands[0].packageScript = "list";
   writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
 
   const payload = await buildPreparePayload(
@@ -1264,7 +1282,25 @@ test("build prepare payload accepts pnpm run scripts named like pnpm commands", 
     fixtureRoot,
   );
 
-  assert.equal(payload.validationCommands[0].packageScript, "export");
+  assert.equal(payload.validationCommands[0].packageScript, "list");
+});
+
+test("build prepare payload rejects package scripts outside the read-only allowlist", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const packageJson = readFixtureJson(fixtureRoot, "package.json");
+  packageJson.scripts["unsafe:write"] = "node --version";
+  writeFixtureJson(fixtureRoot, "package.json", packageJson);
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm run unsafe:write";
+  route.validationCommands[0].packageScript = "unsafe:write";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
+  );
 });
 
 test("build prepare payload rejects pnpm dir package symlinks that escape the repo", async () => {
