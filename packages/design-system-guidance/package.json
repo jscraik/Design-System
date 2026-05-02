@@ -32,8 +32,8 @@
   "scripts": {
     "build": "pnpm -C ../agent-design-engine run build && tsc -p tsconfig.build.json",
     "type-check": "pnpm -C ../agent-design-engine run build && tsc -p tsconfig.json --noEmit",
-    "check": "pnpm run build && node dist/cli.js check .",
-    "check:ci": "pnpm run build && node dist/cli.js check . --ci",
+    "check": "pnpm run build && node dist/cli.js check ../..",
+    "check:ci": "pnpm run build && node dist/cli.js check ../.. --ci",
     "clean": "rm -rf dist"
   },
   "dependencies": {

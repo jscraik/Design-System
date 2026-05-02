@@ -726,6 +726,50 @@ Reviewer status:
 
 `FORJAMIE.md` update status: complete; Recent Changes includes the P2 derived-format entry.
 
+### P3 Responsibility Split
+
+Working-tree diff identifier: P3 prepare-renderer responsibility split, before the P3 phase commit.
+
+Files changed so far:
+
+- `packages/agent-design-engine/src/prepare.ts`
+- `packages/agent-design-engine/src/index.ts`
+- `packages/agent-design-engine/src/prepare/brief.ts`
+- `packages/agent-design-engine/src/prepare/pr-evidence.ts`
+- `packages/agent-design-engine/src/prepare/text.ts`
+- `packages/design-system-guidance/package.json`
+- `FORJAMIE.md`
+- `docs/plans/2026-05-02-agent-first-design-system-simplification-plan.md`
+
+Source acceptance IDs targeted: SA12, SA18, AC8, AC12.
+
+Responsibility split changes:
+
+- Moved derived prepare brief rendering from `prepare.ts` to `prepare/brief.ts`.
+- Moved derived PR-evidence rendering from `prepare.ts` to `prepare/pr-evidence.ts`.
+- Added `prepare/text.ts` for shared text-list/status helpers used by the two renderers.
+- Preserved public engine exports for `renderPrepareBrief`, `renderPreparePrEvidence`, `buildPreparePayload`, and `serializePreparePayload`.
+- Kept the JSON payload construction and CLI format contract unchanged.
+- Fixed the package-local `packages/design-system-guidance` `check` and `check:ci` scripts to scan the repository root (`../..`) when invoked with `pnpm -C packages/design-system-guidance ...`; the first P3 run proved the old package-local target could not resolve repo-root routing metadata.
+
+Validation commands:
+
+- `pnpm agent-design:test` -> pass.
+- `pnpm -C packages/cli test` -> pass.
+- `pnpm -C packages/design-system-guidance check:ci` -> fail before the package-script root fix, then pass after the script scanned `../..`; remaining guidance findings are existing warn-level findings and the command exits 0.
+- `pnpm test:policy` -> pass.
+- `pnpm docs:lint` -> pass.
+- `pnpm lint` -> pass.
+- `git diff --check` -> pass.
+
+Reviewer status:
+
+- Simplify pass -> pass; limited P3 to the renderer extraction and the package-script target correction found by the required validation gate.
+- HE code-review readiness pass -> pass; public exports remain stable, JSON payload code is untouched, and the required package-local guidance gate now runs from a correct repository root.
+- HE fix-bugs pass -> pass; reproduced the `check:ci` root-resolution failure, fixed the package script, and reran the failing command plus policy validation.
+
+`FORJAMIE.md` update status: complete; Recent Changes includes the P3 prepare-renderer split entry.
+
 ## Linear Traceability
 
 No Linear issue was supplied with this request.
