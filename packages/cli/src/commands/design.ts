@@ -641,11 +641,11 @@ function prepareFormat(argv: DesignArgs): PrepareFormat {
 }
 
 function assertPrepareFormatMode(argv: DesignArgs, format: PrepareFormat): void {
-  if (format !== "json" && (argv.json || argv.agent)) {
+  if (format !== "json" && (argv.json || argv.agent || isCiEnvironment())) {
     throw new CliError("design prepare text formats cannot be combined with JSON output modes.", {
       code: ERROR_CODES.usage,
       exitCode: EXIT_CODES.usage,
-      hint: "Use --format json with --json/--agent, or omit --json/--agent for --format brief and --format pr-evidence.",
+      hint: "Use --format json with --json/--agent/CI, or omit --json/--agent outside CI for --format brief and --format pr-evidence.",
       recovery: unavailableRecovery(
         "The caller must choose either the canonical JSON contract or a derived text format.",
       ),

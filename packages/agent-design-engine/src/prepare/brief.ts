@@ -3,7 +3,7 @@ import { renderList, renderPrepareStatus } from "./text.js";
 
 function renderRouteSummary(route: PrepareRouteRecommendation | undefined): string {
   if (!route) return "None";
-  return `${route.canonicalNeed} -> ${route.preferredComponent.name} (${route.preferredComponent.importPath})`;
+  return `${route.canonicalNeed} -> ${route.preferredComponent.name} (${route.preferredComponent.importPath}); confidence: ${route.confidence.level}`;
 }
 
 /**
@@ -40,6 +40,9 @@ export function renderPrepareBrief(payload: PreparePayload): string {
     ...renderList(payload.relevantExamples, "No relevant examples returned.").map((example) =>
       example.startsWith("- ") ? example : `- ${example}`,
     ),
+    "",
+    "Forbidden Patterns:",
+    ...renderList(payload.forbiddenPatterns, "No forbidden patterns returned."),
     "",
     "Do Not Invent:",
     ...payload.doNotInvent.map((guidance) => `- ${guidance.thing}: ${guidance.instead}`),

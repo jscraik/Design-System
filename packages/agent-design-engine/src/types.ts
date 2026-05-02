@@ -135,6 +135,13 @@ export interface AgentUiRouteValidationCommand {
   ifFails?: string;
 }
 
+export interface PrepareValidationCommand extends AgentUiRouteValidationCommand {
+  packageScript: string;
+  expectedOutcome: string;
+  timeoutClass: "short" | "medium" | "long";
+  ifFails: string;
+}
+
 export interface AgentUiRouteFallback {
   component: string;
   reason: string;
@@ -211,6 +218,7 @@ export interface PrepareExampleUsageGuidance {
 }
 
 export interface PrepareRouteRecommendation extends ResolvedAgentUiRoute {
+  validationCommands: PrepareValidationCommand[];
   confidence: PrepareRouteConfidence;
   usageGuidance: PrepareExampleUsageGuidance;
 }
@@ -378,7 +386,7 @@ export interface PreparePayload {
   requiredStates: string[];
   forbiddenPatterns: string[];
   relevantExamples: string[];
-  validationCommands: AgentUiRouteValidationCommand[];
+  validationCommands: PrepareValidationCommand[];
   ruleManifestVersion: string;
   rulePackVersion: string;
   ruleSourceDigests: RuleSourceDigest[];

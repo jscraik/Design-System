@@ -214,7 +214,7 @@ only when historical context is needed.
 - **Guidance scope rollout**: the root `.design-system-guidance.json` now uses an explicit product-surface allowlist for the protected settings wave plus `TemplateBrowserPage`, while broader app, storybook, and showcase surfaces stay in `warn`. This keeps the policy credible without pretending the rest of the repo is already clean.
 - **Agent-facing design-system audit**: added `docs/audits/AGENT_UI_MARCH_2026_AUDIT.md` and indexed it in `docs/audits/README.md`. The audit captures March 2026 gaps that affect whether agents can consistently produce professional UI, including broken token validation, stale coverage checks, semantic-token bypasses, thin guidance rules, and missing component-routing guardrails.
 
-### 2026-04-13
+### 2026-04-13 Dependency Alignment
 
 - Synced the React security bump branch notes with the updated root overrides and lockfile inputs so the repo map reflects the current source-of-truth versions for `react` and `@types/react`.
 - Aligned `react-dom` back to the exact `react` patch version after CI surfaced a runtime mismatch, then regenerated the lockfile so the build lane and the documented source of truth stay in lockstep.

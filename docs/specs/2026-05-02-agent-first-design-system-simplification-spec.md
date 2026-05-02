@@ -809,4 +809,17 @@ Start with the authority and simplification lane, not payload expansion:
 
 ## Linear Traceability
 
-No Linear work item was supplied with this spec request. This specification is untracked until a future plan links it to a Linear issue or creates one.
+This simplification spec is a follow-on to the completed agent-native design-system delivery lane rather than a new Linear-owned implementation slice.
+
+Related completed Linear issues:
+
+| Linear  | Relationship | Scope                                    |
+| ------- | ------------ | ---------------------------------------- |
+| JSC-238 | Parent       | Agent-native design-system command layer |
+| JSC-239 | Prior slice  | Contract wiring                          |
+| JSC-240 | Prior slice  | Routing table contract                   |
+| JSC-241 | Prior slice  | Prepare payload model                    |
+| JSC-243 | Prior slice  | Actionable remediation output            |
+| JSC-244 | Prior slice  | Gold example inventory wave 1            |
+
+The active simplification plan remains the source of truth for this PR's archive, taxonomy, output-ergonomics, and command-surface cleanup work.

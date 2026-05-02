@@ -38,4 +38,15 @@ describe("HoloCard tilt", () => {
       [-2.5, 2.5],
     ]);
   });
+
+  it("clamps tiltIntensity to the documented 0-1 range", () => {
+    transformCalls.length = 0;
+
+    render(<HoloCard tiltIntensity={2}>Tilted</HoloCard>);
+
+    expect(transformCalls.map(([, , output]) => output)).toEqual([
+      [10, -10],
+      [-10, 10],
+    ]);
+  });
 });

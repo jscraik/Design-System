@@ -28,6 +28,11 @@ export interface ScrollProgressProps extends HTMLAttributes<HTMLDivElement> {
   target?: "document" | "parent" | string;
 }
 
+function clampProgress(value: number): number {
+  if (!Number.isFinite(value)) return 0;
+  return Math.min(100, Math.max(0, value));
+}
+
 /**
  * A scroll progress indicator that can use native CSS scroll-driven animations.
  *
@@ -57,22 +62,29 @@ export const ScrollProgress = forwardRef<HTMLDivElement, ScrollProgressProps>(
     useEffect(() => {
       if (native) return;
 
-      const getScrollTarget = () =>
-        target === "document"
-          ? document.documentElement
-          : target === "parent"
-            ? localRef.current?.parentElement
-            : document.querySelector(target);
+      const getScrollTarget = () => {
+        if (target === "document") return document.documentElement;
+        if (target === "parent") return localRef.current?.parentElement ?? null;
+        try {
+          return document.querySelector(target);
+        } catch (error) {
+          console.warn("[ScrollProgress] Invalid target selector.", { target, error });
+          return null;
+        }
+      };
 
       const handleScroll = () => {
         const scrollTarget = getScrollTarget();
 
-        if (!scrollTarget) return;
+        if (!scrollTarget) {
+          setProgress(0);
+          return;
+        }
 
         const scrollTop = scrollTarget.scrollTop;
         const scrollHeight = scrollTarget.scrollHeight - scrollTarget.clientHeight;
         const percentage = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-        setProgress(percentage);
+        setProgress(clampProgress(percentage));
       };
 
       const scrollEventTarget = target === "document" ? window : getScrollTarget();

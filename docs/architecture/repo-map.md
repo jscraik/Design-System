@@ -12,6 +12,13 @@ Last updated: 2026-01-09
 
 This document provides a quick, task-oriented map of the repository so contributors can find the right surface fast.
 
+## Table of Contents
+
+- [Top-level](#top-level)
+- [Platform surface](#platform-surface)
+- [JS/TS packages](#jsts-packages)
+- [Key docs](#key-docs)
+
 ## Top-level
 
 - `apps/`: Navigation index (pointers to canonical app locations).

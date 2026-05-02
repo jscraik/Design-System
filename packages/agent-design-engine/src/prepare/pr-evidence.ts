@@ -12,6 +12,7 @@ export function renderPreparePrEvidence(payload: PreparePayload): string {
     `- Surface: \`${payload.surfacePath}\``,
     `- Status: ${payload.safeForAutomaticImplementation ? "safe to implement" : "blocked"}`,
     `- Next action: \`${payload.nextAction.kind}\` - ${payload.nextAction.instruction}`,
+    `- Next action reason code: \`${payload.nextAction.reasonCode ?? "none"}\``,
     `- Route: ${primaryRoute ? `\`${primaryRoute.canonicalNeed}\`` : "none"}`,
     `- Route confidence: ${primaryRoute ? `\`${primaryRoute.confidence.level}\`` : "none"}`,
     "",

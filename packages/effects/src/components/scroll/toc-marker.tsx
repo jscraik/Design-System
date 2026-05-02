@@ -57,6 +57,15 @@ export const TocMarker = forwardRef<HTMLDivElement, TocMarkerProps>(
     },
     ref,
   ) => {
+    const markerStyle: CSSProperties &
+      Record<"--marker-size" | "--marker-color" | "positionAnchor", string> = {
+      ...style,
+      "--marker-size": size,
+      "--marker-color": color,
+      backgroundColor: "var(--marker-color)",
+      positionAnchor: "--active",
+    };
+
     return (
       <div
         ref={ref}
@@ -71,15 +80,7 @@ export const TocMarker = forwardRef<HTMLDivElement, TocMarkerProps>(
           !animate && "duration-0",
           className,
         )}
-        style={
-          {
-            "--marker-size": size,
-            "--marker-color": color,
-            backgroundColor: "var(--marker-color)",
-            positionAnchor: "--active",
-            ...style,
-          } as CSSProperties & Record<"--marker-size" | "--marker-color" | "positionAnchor", string>
-        }
+        style={markerStyle}
         {...props}
       />
     );

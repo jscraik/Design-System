@@ -579,6 +579,18 @@ test("prepare command schema rejects missing north-star payload fields", async (
     "prepare payload with incomplete open decisions should fail schema validation",
   );
 
+  const invalidStopAction = cloneJson(payload);
+  invalidStopAction.data.nextAction = {
+    kind: "stop_for_missing_route",
+    instruction: "Stop before editing UI.",
+    evidenceRefs: ["docs/design-system/AGENT_UI_ROUTING.json"],
+  };
+  assert.equal(
+    validateDesignCommandEnvelope(invalidStopAction),
+    false,
+    "prepare stop actions without reasonCode should fail schema validation",
+  );
+
   for (const field of ["packageScript", "expectedOutcome", "timeoutClass", "ifFails"]) {
     const invalidTopLevelCommand = cloneJson(payload);
     delete invalidTopLevelCommand.data.validationCommands[0][field];
@@ -655,6 +667,26 @@ test("prepare derived text formats reject JSON output modes", async () => {
   );
   assert.equal(result.code, 2);
   assertJsonByteContract(result, "prepare-brief-json-conflict");
+  const payload = JSON.parse(result.stdout);
+  assert.equal(payload.status, "error");
+  assert.equal(payload.errors[0].code, "E_USAGE");
+});
+
+test("prepare derived text formats reject CI output mode", async () => {
+  const result = await runCli(
+    [
+      "design",
+      "prepare",
+      "--surface",
+      "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+      "--format",
+      "brief",
+    ],
+    { CI: "true" },
+    { cwd: repoRoot },
+  );
+  assert.equal(result.code, 2);
+  assertJsonByteContract(result, "prepare-brief-ci-conflict");
   const payload = JSON.parse(result.stdout);
   assert.equal(payload.status, "error");
   assert.equal(payload.errors[0].code, "E_USAGE");

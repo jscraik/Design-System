@@ -138,6 +138,36 @@ describe("ScrollProgress", () => {
     expect(indicator).toHaveStyle({ width: "25%" });
   });
 
+  it("resets and warns for invalid selector targets in JavaScript fallback mode", () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const { container } = render(<ScrollProgress native={false} target="[" />);
+
+    const indicator = container.querySelector(".bg-foreground");
+    expect(indicator).toHaveStyle({ width: "0%" });
+    expect(warn).toHaveBeenCalledWith(
+      "[ScrollProgress] Invalid target selector.",
+      expect.objectContaining({ target: "[" }),
+    );
+
+    warn.mockRestore();
+  });
+
+  it("clamps selector target progress in JavaScript fallback mode", () => {
+    const { container } = render(
+      <>
+        <div data-testid="custom-scroll-target" className="scroll-source" />
+        <ScrollProgress native={false} target=".scroll-source" />
+      </>,
+    );
+    const scrollTarget = screen.getByTestId("custom-scroll-target");
+    setScrollMetrics(scrollTarget, { scrollTop: 150, scrollHeight: 125, clientHeight: 25 });
+
+    fireEvent.scroll(scrollTarget);
+
+    const indicator = container.querySelector(".bg-foreground");
+    expect(indicator).toHaveStyle({ width: "100%" });
+  });
+
   it("supports object refs and function refs", () => {
     const objectRef = createRef<HTMLDivElement>();
     const functionRef = vi.fn();

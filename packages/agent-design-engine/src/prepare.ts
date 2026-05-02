@@ -17,6 +17,7 @@ import type {
   PrepareRouteRecommendation,
   PrepareSourceDigest,
   PrepareSurfaceScope,
+  PrepareValidationCommand,
   ResolvedAgentUiRoute,
 } from "./types.js";
 import { DesignEngineError } from "./types.js";
@@ -1058,7 +1059,7 @@ async function normalizeValidationCommands(
   commands: AgentUiRouteValidationCommand[],
   rootDir: string,
   signal?: AbortSignal,
-): Promise<AgentUiRouteValidationCommand[]> {
+): Promise<PrepareValidationCommand[]> {
   const packageScriptCache = new Map<string, Set<string>>();
   const getPackageScripts = async (packageDir: string): Promise<Set<string>> => {
     const cached = packageScriptCache.get(packageDir);
@@ -1069,7 +1070,7 @@ async function normalizeValidationCommands(
     packageScriptCache.set(packageDir, scripts);
     return scripts;
   };
-  const normalized: AgentUiRouteValidationCommand[] = [];
+  const normalized: PrepareValidationCommand[] = [];
 
   for (const command of commands) {
     const inferred = inferPackageScript(command.command);
@@ -1115,7 +1116,7 @@ async function normalizeValidationCommands(
 
     normalized.push({
       ...command,
-      ...(packageScript ? { packageScript } : {}),
+      packageScript,
       expectedOutcome: command.expectedOutcome ?? "Command exits 0 without mutating source files.",
       timeoutClass: command.timeoutClass ?? "medium",
       ifFails:
@@ -1135,7 +1136,7 @@ async function normalizeValidationCommands(
  * @throws DesignEngineError with code `E_DESIGN_VALIDATION_COMMAND_INVALID` when `validationCommands` is empty
  */
 function requireValidationCommands(
-  validationCommands: AgentUiRouteValidationCommand[],
+  validationCommands: PrepareValidationCommand[],
   context: string,
 ): void {
   if (validationCommands.length > 0) {
@@ -1301,7 +1302,10 @@ function buildDoNotInventGuidance(
   return guidance;
 }
 
-function buildRouteConfidence(route: PrepareRouteRecommendation): PrepareRouteConfidence {
+function buildRouteConfidence(
+  route: PrepareRouteRecommendation,
+  resolvedExampleCount: number,
+): PrepareRouteConfidence {
   const because: string[] = [
     `Matched ${route.matchedNeed} to canonical route ${route.canonicalNeed}.`,
     `Resolved canonical component ${route.preferredComponent.name}.`,
@@ -1312,15 +1316,22 @@ function buildRouteConfidence(route: PrepareRouteRecommendation): PrepareRouteCo
   if (route.coverageEntry.status.length > 0) {
     because.push(`Coverage matrix status is ${route.coverageEntry.status}.`);
   }
-  if (route.examples.length > 0) {
-    because.push("Route includes at least one relevant example.");
+  if (resolvedExampleCount > 0) {
+    because.push("Route includes at least one registered relevant example.");
+  }
+  const hasUnregisteredExamples = resolvedExampleCount < route.examples.length;
+  if (hasUnregisteredExamples) {
+    because.push("Some route examples are not registered relevant examples.");
   }
 
   let level: PrepareRouteConfidence["level"] = "high";
   if (route.routeMaturity === "provisional" || route.lifecycleEntry.lifecycle === "transitional") {
     level = "medium";
   }
-  if (route.examples.length === 0 || route.lifecycleEntry.lifecycle === "deprecated") {
+  if (hasUnregisteredExamples && level === "high") {
+    level = "medium";
+  }
+  if (resolvedExampleCount === 0 || route.lifecycleEntry.lifecycle === "deprecated") {
     level = "low";
   }
 
@@ -1334,12 +1345,15 @@ function buildExampleUsageGuidance(
   const matchedExamples = route.examples
     .map((examplePath) => goldExamples.get(examplePath))
     .filter((example): example is GoldExample => Boolean(example));
+  const hasUnregisteredExamples = matchedExamples.length < route.examples.length;
   const coveredStates = uniqueSorted(matchedExamples.flatMap((example) => example.coveredStates));
   const deferredStates = uniqueSorted(
     matchedExamples.flatMap((example) => example.deferredStates ?? []),
   );
   const maturity: PrepareExampleUsageGuidance["maturity"] =
-    matchedExamples.length > 0 && matchedExamples.every((example) => example.promotable !== false)
+    matchedExamples.length > 0 &&
+    !hasUnregisteredExamples &&
+    matchedExamples.every((example) => example.promotable !== false)
       ? "gold"
       : route.routeMaturity === "provisional"
         ? "legacy"
@@ -1365,14 +1379,24 @@ function buildExampleUsageGuidance(
 
 function withPrepareRouteGuidance(
   route: ResolvedAgentUiRoute,
-  validationCommands: AgentUiRouteValidationCommand[],
+  validationCommands: PrepareValidationCommand[],
   goldExamples: GoldExampleRegistry,
 ): PrepareRouteRecommendation {
-  const recommendedRoute = {
+  const recommendedRoute: PrepareRouteRecommendation = {
     ...route,
     validationCommands,
-  } as PrepareRouteRecommendation;
-  recommendedRoute.confidence = buildRouteConfidence(recommendedRoute);
+    confidence: { level: "low", because: [] },
+    usageGuidance: {
+      copy: [],
+      doNotCopy: [],
+      proves: [],
+      maturity: "acceptable",
+    },
+  };
+  const resolvedExampleCount = route.examples.filter((examplePath) =>
+    Boolean(goldExamples.get(examplePath)),
+  ).length;
+  recommendedRoute.confidence = buildRouteConfidence(recommendedRoute, resolvedExampleCount);
   recommendedRoute.usageGuidance = buildExampleUsageGuidance(recommendedRoute, goldExamples);
   return recommendedRoute;
 }

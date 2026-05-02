@@ -841,9 +841,9 @@ test("builds prepare payload for protected product page surfaces", async () => {
   assert.equal(payload.surfaceScope, "protected");
   assert.equal(payload.surfaceKind, "page_shell");
   assert.equal(payload.recommendedRoutes[0].canonicalNeed, "page_shell");
-  assert.equal(payload.recommendedRoutes[0].confidence.level, "high");
+  assert.equal(payload.recommendedRoutes[0].confidence.level, "medium");
   assert.ok(payload.recommendedRoutes[0].confidence.because.length > 0);
-  assert.equal(payload.recommendedRoutes[0].usageGuidance.maturity, "gold");
+  assert.equal(payload.recommendedRoutes[0].usageGuidance.maturity, "acceptable");
   assert.ok(payload.recommendedRoutes[0].usageGuidance.copy.length > 0);
   assert.ok(payload.doNotInvent.some((guidance) => guidance.thing.includes("component")));
   assert.ok(payload.forbiddenPatterns.some((pattern) => pattern.includes("h-screen")));
@@ -1748,12 +1748,15 @@ test("renders prepare brief and PR evidence from the typed payload", async () =>
   assert.match(brief, /Agent Design Prepare Brief/);
   assert.match(brief, /Status: SAFE_TO_IMPLEMENT/);
   assert.match(brief, /Next action: implement/);
+  assert.match(brief, /confidence: medium/);
+  assert.match(brief, /Forbidden Patterns:/);
   assert.match(brief, /Do Not Invent:/);
   assert.match(brief, /Validate:/);
 
   const evidence = renderPreparePrEvidence(payload);
   assert.match(evidence, /### Agent Design Prepare Evidence/);
   assert.match(evidence, /Status: safe to implement/);
+  assert.match(evidence, /Next action reason code: `none`/);
   assert.match(evidence, /Route confidence: `medium`/);
   assert.match(evidence, /Validation commands:/);
   assert.match(evidence, /Source evidence:/);
@@ -1768,6 +1771,7 @@ test("renders blocked prepare outputs without safe-to-implement prose", async ()
 
   const evidence = renderPreparePrEvidence(payload);
   assert.match(evidence, /Status: blocked/);
+  assert.match(evidence, /Next action reason code: `E_DESIGN_ROUTE_MISSING`/);
   assert.match(evidence, /Open decisions:/);
   assert.doesNotMatch(evidence, /Status: safe to implement/);
 });
@@ -1941,7 +1945,12 @@ test("renderPrepareBrief shows primary route summary when route present", () => 
           packageName: "@design-studio/ui",
         },
         confidence: { level: "high", because: ["enforced route"] },
-        usageGuidance: { copy: ["Use SettingsPanelShell"], doNotCopy: [], proves: [], maturity: "gold" },
+        usageGuidance: {
+          copy: ["Use SettingsPanelShell"],
+          doNotCopy: [],
+          proves: [],
+          maturity: "gold",
+        },
         lifecycleEntry: {},
         coverageEntry: {},
         matchedNeed: "settings_panel",
@@ -1999,7 +2008,16 @@ test("renderPrepareBrief caps token roles at 8", () => {
     role: `token-role-${i}`,
     useFor: [`use for ${i}`],
   }));
-  const brief = renderPrepareBrief(minimalPayload({ designTokenContract: { mode: "semantic-only", allowedRoles: roles, forbiddenTokenPatterns: [], sourceRefs: [] } }));
+  const brief = renderPrepareBrief(
+    minimalPayload({
+      designTokenContract: {
+        mode: "semantic-only",
+        allowedRoles: roles,
+        forbiddenTokenPatterns: [],
+        sourceRefs: [],
+      },
+    }),
+  );
   // Only first 8 should appear
   assert.match(brief, /token-role-7/);
   assert.doesNotMatch(brief, /token-role-8/);
@@ -2011,7 +2029,9 @@ test("renderPrepareBrief ends with trailing newline", () => {
 });
 
 test("renderPreparePrEvidence renders safe status", () => {
-  const evidence = renderPreparePrEvidence(minimalPayload({ safeForAutomaticImplementation: true }));
+  const evidence = renderPreparePrEvidence(
+    minimalPayload({ safeForAutomaticImplementation: true }),
+  );
   assert.match(evidence, /Status: safe to implement/);
   assert.doesNotMatch(evidence, /Status: blocked/);
 });
@@ -2105,9 +2125,7 @@ test("renderPreparePrEvidence includes empty source evidence section when no dig
 
 test("renderPreparePrEvidence renders do-not-invent guidance", () => {
   const payload = minimalPayload({
-    doNotInvent: [
-      { thing: "custom token variable", instead: "use bg-background", sourceRefs: [] },
-    ],
+    doNotInvent: [{ thing: "custom token variable", instead: "use bg-background", sourceRefs: [] }],
   });
   const evidence = renderPreparePrEvidence(payload);
   assert.match(evidence, /Do not invent:/);
@@ -2121,9 +2139,7 @@ test("renderPreparePrEvidence ends with trailing newline", () => {
 
 test("renderPrepareBrief includes doNotInvent items", () => {
   const payload = minimalPayload({
-    doNotInvent: [
-      { thing: "raw CSS color", instead: "use text-foreground token", sourceRefs: [] },
-    ],
+    doNotInvent: [{ thing: "raw CSS color", instead: "use text-foreground token", sourceRefs: [] }],
   });
   const brief = renderPrepareBrief(payload);
   assert.match(brief, /raw CSS color: use text-foreground token/);
@@ -2136,7 +2152,12 @@ test("renderPrepareBrief includes route example usage guidance", () => {
         canonicalNeed: "settings_panel",
         preferredComponent: { name: "S", importPath: "@ui/s", packageName: "@ui" },
         confidence: { level: "medium", because: [] },
-        usageGuidance: { copy: ["Import from @ui/s"], doNotCopy: [], proves: [], maturity: "acceptable" },
+        usageGuidance: {
+          copy: ["Import from @ui/s"],
+          doNotCopy: [],
+          proves: [],
+          maturity: "acceptable",
+        },
         lifecycleEntry: {},
         coverageEntry: {},
         matchedNeed: "settings_panel",

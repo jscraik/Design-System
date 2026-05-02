@@ -33,6 +33,8 @@ excluding any workspace package.
 | ------------------- | ------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
 | Product library     | Reusable package consumed by apps, widgets, templates, or external package consumers. | Treat as first-class source and keep root validation green.                 |
 | Template package    | Workspace package that exists to ship a deployable or generated starter surface.      | Keep under package validation, but do not treat as a shared UI abstraction. |
+| App surface         | Runnable application surface owned by a platform subtree.                             | Edit through the platform app workflow and validate with app-level gates.   |
+| Platform service    | Non-UI platform runtime or integration service.                                       | Keep service contracts explicit and avoid treating it as a UI package.      |
 | Validation fixture  | Workspace-owned proof harness used by scripts or reports.                             | Keep scripts explicit and avoid importing it from product code.             |
 | Navigation index    | README-only pointer surface.                                                          | Do not place implementation source here.                                    |
 | Historical proposal | Old reorganization or audit material.                                                 | Do not execute from it unless a current plan promotes it.                   |

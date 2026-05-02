@@ -183,6 +183,29 @@
       "type": "object",
       "additionalProperties": false,
       "required": ["kind", "instruction", "evidenceRefs"],
+      "allOf": [
+        {
+          "if": {
+            "required": ["kind"],
+            "properties": {
+              "kind": {
+                "not": {
+                  "const": "implement"
+                }
+              }
+            }
+          },
+          "then": {
+            "required": ["reasonCode"],
+            "properties": {
+              "reasonCode": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ],
       "properties": {
         "kind": {
           "enum": [
