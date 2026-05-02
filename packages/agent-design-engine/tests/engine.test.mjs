@@ -13,6 +13,8 @@ import {
   loadAgentUiRoutingTable,
   loadRuleManifest,
   parseDesignContract,
+  renderPrepareBrief,
+  renderPreparePrEvidence,
   resolveRemediationContext,
   resolveRouteForNeed,
   resolveRouteForSurface,
@@ -1735,6 +1737,39 @@ test("build prepare payload fails closed when route examples are missing", async
       nextAction: "stop",
     },
   );
+});
+
+test("renders prepare brief and PR evidence from the typed payload", async () => {
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    rootDir,
+  );
+  const brief = renderPrepareBrief(payload);
+  assert.match(brief, /Agent Design Prepare Brief/);
+  assert.match(brief, /Status: SAFE_TO_IMPLEMENT/);
+  assert.match(brief, /Next action: implement/);
+  assert.match(brief, /Do Not Invent:/);
+  assert.match(brief, /Validate:/);
+
+  const evidence = renderPreparePrEvidence(payload);
+  assert.match(evidence, /### Agent Design Prepare Evidence/);
+  assert.match(evidence, /Status: safe to implement/);
+  assert.match(evidence, /Route confidence: `medium`/);
+  assert.match(evidence, /Validation commands:/);
+  assert.match(evidence, /Source evidence:/);
+});
+
+test("renders blocked prepare outputs without safe-to-implement prose", async () => {
+  const payload = await buildPreparePayload("packages/example/UnknownSurface.tsx", rootDir);
+  const brief = renderPrepareBrief(payload);
+  assert.match(brief, /Status: STOP/);
+  assert.match(brief, /Stop: do not edit UI/);
+  assert.doesNotMatch(brief, /Status: SAFE_TO_IMPLEMENT/);
+
+  const evidence = renderPreparePrEvidence(payload);
+  assert.match(evidence, /Status: blocked/);
+  assert.match(evidence, /Open decisions:/);
+  assert.doesNotMatch(evidence, /Status: safe to implement/);
 });
 
 test("builds prepare diagnostics for warn, exempt, and unknown surfaces", async () => {

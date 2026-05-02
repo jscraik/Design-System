@@ -59,8 +59,15 @@ pnpm --silent agent-design:prepare --surface <path>
 
 The wrapper is build-backed setup. It may build `packages/agent-design-engine`, `packages/design-system-guidance`, `packages/skill-ingestion`, and `packages/cli` before invoking the CLI. The read-only operation contract belongs to `astudio design prepare` itself once the CLI is available. Use `pnpm --silent` for JSON capture, because plain `pnpm` prints lifecycle banners before script output.
 
+JSON remains the canonical machine contract. When a human-readable handoff is useful, derive it from the same typed payload instead of writing a second summary path:
+
+```bash
+astudio design prepare --surface <path> --format brief
+astudio design prepare --surface <path> --format pr-evidence
+```
+
 1. If `safeForAutomaticImplementation` is `false`, stop and follow `openDecisions`. Do not invent components, token roles, states, examples, or proposal outcomes.
-1. If implementation is safe, use the returned `recommendedRoutes`, `designTokenContract`, `requiredStates`, `relevantExamples`, `forbiddenPatterns`, and `validationCommands` as the implementation brief.
+1. If implementation is safe, use the returned `nextAction`, `recommendedRoutes`, `designTokenContract`, `doNotInvent`, `requiredStates`, `relevantExamples`, `forbiddenPatterns`, and `validationCommands` as the implementation brief.
 1. Edit the UI.
 1. Run the returned read-only validation commands that apply to the changed surface.
 1. Before PR handoff, run `pnpm agent-design:prepare:changed`. It builds the local CLI dependencies, checks changed `.tsx`/`.jsx` UI surfaces with the read-only prepare command, and fails if any surface is unsafe or missing prepare evidence. Use `pnpm agent-design:prepare:changed -- --surface <path>` for a single surface.

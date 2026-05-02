@@ -120,6 +120,13 @@ astudio design prepare --surface <path> --json
 
 The detailed workflow authority is [`docs/guides/AGENT_DESIGN_WORKFLOW.md`](docs/guides/AGENT_DESIGN_WORKFLOW.md). Keep this README as the short front door: `prepare` is the implementation brief, and a protected UI change is not ready until `safeForAutomaticImplementation` is `true` or the PR explains the manual/proposal decision returned by `openDecisions`.
 
+JSON is the canonical machine contract. For human review or PR handoff after the JSON path is understood, the same typed payload can render derived text:
+
+```bash
+astudio design prepare --surface <path> --format brief
+astudio design prepare --surface <path> --format pr-evidence
+```
+
 For local repo work, use the build-backed convenience wrapper in silent mode so stdout remains parseable JSON:
 
 ```bash

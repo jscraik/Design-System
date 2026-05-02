@@ -598,6 +598,68 @@ test("prepare command schema rejects missing north-star payload fields", async (
   }
 });
 
+test("prepare derived text formats render from payload status", async () => {
+  const safeArgs = [
+    "design",
+    "prepare",
+    "--surface",
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+  ];
+  const brief = await runCli(
+    [...safeArgs, "--format", "brief"],
+    { CI: "false" },
+    { cwd: repoRoot },
+  );
+  assert.equal(brief.code, 0, `${brief.stdout}${brief.stderr}`);
+  assert.match(brief.stdout, /Agent Design Prepare Brief/);
+  assert.match(brief.stdout, /Status: SAFE_TO_IMPLEMENT/);
+  assert.match(brief.stdout, /Next action: implement/);
+  assert.throws(() => JSON.parse(brief.stdout));
+
+  const evidence = await runCli(
+    [...safeArgs, "--format", "pr-evidence"],
+    { CI: "false" },
+    {
+      cwd: repoRoot,
+    },
+  );
+  assert.equal(evidence.code, 0, `${evidence.stdout}${evidence.stderr}`);
+  assert.match(evidence.stdout, /### Agent Design Prepare Evidence/);
+  assert.match(evidence.stdout, /Status: safe to implement/);
+  assert.match(evidence.stdout, /Validation commands:/);
+
+  const blocked = await runCli(
+    ["design", "prepare", "--surface", "packages/example/UnknownSurface.tsx", "--format", "brief"],
+    { CI: "false" },
+    { cwd: repoRoot },
+  );
+  assert.equal(blocked.code, 1, `${blocked.stdout}${blocked.stderr}`);
+  assert.match(blocked.stdout, /Status: STOP/);
+  assert.match(blocked.stdout, /Stop: do not edit UI/);
+  assert.doesNotMatch(blocked.stdout, /Status: SAFE_TO_IMPLEMENT/);
+});
+
+test("prepare derived text formats reject JSON output modes", async () => {
+  const result = await runCli(
+    [
+      "design",
+      "prepare",
+      "--surface",
+      "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+      "--format",
+      "brief",
+      "--json",
+    ],
+    { CI: "false" },
+    { cwd: repoRoot },
+  );
+  assert.equal(result.code, 2);
+  assertJsonByteContract(result, "prepare-brief-json-conflict");
+  const payload = JSON.parse(result.stdout);
+  assert.equal(payload.status, "error");
+  assert.equal(payload.errors[0].code, "E_USAGE");
+});
+
 test("root prepare wrapper builds CLI dependencies before prepare", () => {
   const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"));
   const prepareScript = packageJson.scripts["agent-design:prepare"];

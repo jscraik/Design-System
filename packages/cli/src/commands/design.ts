@@ -12,6 +12,8 @@ import {
   lintDesignContract,
   lintDesignFile,
   parseDesignContract,
+  renderPrepareBrief,
+  renderPreparePrEvidence,
   resolveRouteForNeed,
   resolveRouteForSurface,
 } from "@brainwav/agent-design-engine";
@@ -32,6 +34,7 @@ import { runPnpm } from "../utils/exec.js";
 import { createEnvelope, outputJson, outputPlain } from "../utils/output.js";
 
 const DEFAULT_DESIGN_FILE = "DESIGN.md";
+type PrepareFormat = "json" | "brief" | "pr-evidence";
 type DesignCommandKind =
   | "astudio.design.lint.v1"
   | "astudio.design.diff.v1"
@@ -50,7 +53,7 @@ interface DesignArgs extends CliArgs {
   scope?: "root" | "nearest";
   before?: string;
   after?: string;
-  format?: ExportFormat;
+  format?: ExportFormat | PrepareFormat;
   out?: string;
   warningsAsErrors?: boolean;
   failOnRegression?: boolean;
@@ -628,7 +631,36 @@ function doctorOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
  * @returns The same builder instance with the `surface` option configured as a required string
  */
 function prepareOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
-  return cmd.option("surface", { type: "string", demandOption: true });
+  return cmd
+    .option("surface", { type: "string", demandOption: true })
+    .option("format", { choices: ["json", "brief", "pr-evidence"] as const });
+}
+
+function prepareFormat(argv: DesignArgs): PrepareFormat {
+  return (argv.format ?? "json") as PrepareFormat;
+}
+
+function assertPrepareFormatMode(argv: DesignArgs, format: PrepareFormat): void {
+  if (format !== "json" && (argv.json || argv.agent)) {
+    throw new CliError("design prepare text formats cannot be combined with JSON output modes.", {
+      code: ERROR_CODES.usage,
+      exitCode: EXIT_CODES.usage,
+      hint: "Use --format json with --json/--agent, or omit --json/--agent for --format brief and --format pr-evidence.",
+      recovery: unavailableRecovery(
+        "The caller must choose either the canonical JSON contract or a derived text format.",
+      ),
+    });
+  }
+  if (format !== "json" && argv.plain) {
+    throw new CliError("design prepare text formats already emit plain text.", {
+      code: ERROR_CODES.usage,
+      exitCode: EXIT_CODES.usage,
+      hint: "Remove --plain when using --format brief or --format pr-evidence.",
+      recovery: unavailableRecovery(
+        "The caller must remove the redundant plain output flag before retrying.",
+      ),
+    });
+  }
 }
 
 /**
@@ -765,10 +797,20 @@ export function designCommand(yargs: Argv): Argv {
       async (raw: ArgumentsCamelCase<DesignArgs>) =>
         runDesign("astudio.design.prepare.v1", async () => {
           const argv = raw as DesignArgs;
-          assertDesignOutputMode(argv);
+          const format = prepareFormat(argv);
+          assertPrepareFormatMode(argv, format);
+          if (format === "json") {
+            assertDesignOutputMode(argv);
+          }
           const rootDir = await findProjectRoot(commandCwd(argv));
           const result = await buildPreparePayload(String(argv.surface), rootDir);
-          emitDesign(argv, "design prepare", result.ok ? "success" : "warn", result);
+          if (format === "brief") {
+            outputPlain([renderPrepareBrief(result).trimEnd()]);
+          } else if (format === "pr-evidence") {
+            outputPlain([renderPreparePrEvidence(result).trimEnd()]);
+          } else {
+            emitDesign(argv, "design prepare", result.ok ? "success" : "warn", result);
+          }
           return result.ok ? EXIT_CODES.success : EXIT_CODES.failure;
         }),
     )
@@ -904,7 +946,7 @@ export function designCommand(yargs: Argv): Argv {
           }
           const result = exportDesignContract(
             lintResult.contract,
-            argv.format ?? "json@agent-design.v1",
+            (argv.format ?? "json@agent-design.v1") as ExportFormat,
           );
           if (argv.out) {
             requireWrite(argv, "design export --out");

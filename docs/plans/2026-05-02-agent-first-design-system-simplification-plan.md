@@ -678,6 +678,54 @@ Reviewer status:
 
 `FORJAMIE.md` update status: complete; Recent Changes includes the P1 prepare-ergonomics entry.
 
+### P2 Derived Brief and PR Evidence Formats
+
+Working-tree diff identifier: P2 prepare-derived-formats slice, before the P2 phase commit.
+
+Files changed so far:
+
+- `packages/agent-design-engine/src/prepare.ts`
+- `packages/agent-design-engine/src/index.ts`
+- `packages/agent-design-engine/tests/engine.test.mjs`
+- `packages/cli/src/commands/design.ts`
+- `packages/cli/tests/cli.test.mjs`
+- `README.md`
+- `docs/guides/AGENT_DESIGN_WORKFLOW.md`
+- `FORJAMIE.md`
+- `docs/plans/2026-05-02-agent-first-design-system-simplification-plan.md`
+
+Source acceptance IDs targeted: SA10, SA11, SA12, AC6, AC7, AC12.
+
+Format contract changes:
+
+- Added `renderPrepareBrief(payload)` and `renderPreparePrEvidence(payload)` in the agent design engine so both text outputs are derived from `PreparePayload`.
+- Exported the renderers from `@brainwav/agent-design-engine`.
+- Added `astudio design prepare --surface <path> --format brief`.
+- Added `astudio design prepare --surface <path> --format pr-evidence`.
+- Kept `--json` as the canonical machine contract and reject `--format brief` / `--format pr-evidence` when combined with `--json` or `--agent`.
+- Documented the formats as human-review and PR-handoff helpers, not replacements for JSON.
+
+Validation commands:
+
+- `pnpm agent-design:test` -> fail on first run because renderers used `payload.surface`; fixed to use `payload.surfacePath`; rerun -> pass.
+- `pnpm -C packages/cli test` -> pass.
+- `pnpm -C packages/cli build` -> pass.
+- `node packages/cli/dist/index.js design prepare --surface packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx --format brief > /tmp/prepare-p2-brief.txt` -> pass.
+- `rg -n "Status: SAFE_TO_IMPLEMENT|Next action: implement|Do Not Invent:|Validate:" /tmp/prepare-p2-brief.txt` -> pass.
+- `node packages/cli/dist/index.js design prepare --surface packages/example/UnknownSurface.tsx --format pr-evidence > /tmp/prepare-p2-pr-evidence.md` -> expected exit 1 for blocked surface; output was written for review.
+- `rg -n "Status: blocked|Open decisions:|stop_for_missing_route" /tmp/prepare-p2-pr-evidence.md` -> pass; found blocked/open-decision text.
+- `rg -n "Status: safe to implement" /tmp/prepare-p2-pr-evidence.md` -> expected exit 1; confirmed blocked output does not render safe-status prose.
+- `pnpm docs:lint` -> pass.
+- `git diff --check` -> pass.
+
+Reviewer status:
+
+- Simplify pass -> pass; P2 keeps rendering in the engine and uses the existing prepare command instead of adding new CLI commands or a second payload path.
+- HE code-review readiness pass -> pass; tests cover safe and blocked text outputs plus JSON-mode conflicts.
+- HE fix-bugs pass -> pass; the initial `surface`/`surfacePath` renderer bug was reproduced by `pnpm agent-design:test`, fixed, and rerun.
+
+`FORJAMIE.md` update status: complete; Recent Changes includes the P2 derived-format entry.
+
 ## Linear Traceability
 
 No Linear issue was supplied with this request.
