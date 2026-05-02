@@ -128,6 +128,9 @@ export interface AgentUiRouteValidationCommand {
   command: string;
   safetyClass: RouteSafetyClass;
   reason: string;
+  packageScript?: string;
+  expectedOutcome?: string;
+  timeoutClass?: "short" | "medium" | "long";
   blockedByDefault?: boolean;
 }
 
@@ -305,11 +308,21 @@ export interface PrepareOpenDecision {
   code: string;
   message: string;
   severity: "info" | "warn" | "error";
+  nextAction: "stop" | "escalate" | "diagnose";
 }
 
-export interface PrepareTiming {
-  startedAt: string;
-  durationMs: number;
+export interface DesignTokenRole {
+  role: string;
+  cssVariable?: string;
+  useFor: string[];
+  avoidFor?: string[];
+}
+
+export interface DesignTokenContract {
+  mode: "semantic-only";
+  allowedRoles: DesignTokenRole[];
+  forbiddenTokenPatterns: string[];
+  sourceRefs: string[];
 }
 
 export interface PreparePayload {
@@ -318,11 +331,12 @@ export interface PreparePayload {
   safeForAutomaticImplementation: boolean;
   resolvedDesignFile: string;
   guidanceConfigPath: string;
-  designContractMode: string;
+  designContractMode: "legacy" | "design-md";
   surfacePath: string;
   surfaceScope: PrepareSurfaceScope;
   surfaceKind: string;
   recommendedRoutes: ResolvedAgentUiRoute[];
+  designTokenContract: DesignTokenContract;
   requiredStates: string[];
   forbiddenPatterns: string[];
   relevantExamples: string[];
@@ -333,6 +347,8 @@ export interface PreparePayload {
   sourceDigests: PrepareSourceDigest[];
   coverageMatrixDigest: PrepareSourceDigest;
   componentLifecycleDigest: PrepareSourceDigest;
+  "wrapper-evidence": string;
+  "final-plan-evidence": string;
   openDecisions: PrepareOpenDecision[];
 }
 

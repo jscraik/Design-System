@@ -47,6 +47,7 @@ Note: `apps/` is a navigation index only; canonical app paths remain under `plat
 - [Compatibility matrix](#compatibility-matrix)
 - [Quick Start](#quick-start)
 - [Onboarding Command Center](#onboarding-command-center)
+- [Agent UI Preparation](#agent-ui-preparation)
 - [Verify](#verify)
 - [Common tasks](#common-tasks)
 - [Widget Gallery & Development](#widget-gallery--development)
@@ -103,12 +104,31 @@ For the canonical first-week onboarding path (humans + AI coding agents), use:
 - [`/docs/guides/ONBOARDING_COMMAND_CENTER.md`](/docs/guides/ONBOARDING_COMMAND_CENTER.md)
 
 Task-first routes:
+
 - Add a token safely
 - Ship/update a widget
 - Test MCP integration
 - Full integration path (token + widget + MCP)
 
-### Verify
+## Agent UI Preparation
+
+Before an AI coding agent edits a protected UI surface, run:
+
+```bash
+astudio design prepare --surface <path> --json
+```
+
+The prepare payload is the implementation brief: canonical components, semantic token roles, required states, examples, forbidden patterns, read-only validation commands, source evidence, and proposal-required stops. A protected UI change is not ready until `safeForAutomaticImplementation` is `true`, or the PR explains the manual/proposal decision returned by `openDecisions`.
+
+For local repo work, use the build-backed convenience wrapper in silent mode so stdout remains parseable JSON:
+
+```bash
+pnpm --silent agent-design:prepare --surface <path>
+```
+
+That wrapper may build local workspace packages before invoking the CLI. The read-only operation contract belongs to `astudio design prepare` itself once the CLI is available. Use `pnpm --silent` when a script or agent needs to capture the JSON payload, because plain `pnpm` adds lifecycle banners to stdout. Supporting commands such as `astudio design lint`, `export`, `components`, `coverage`, and `propose-abstraction` are diagnostics rather than the normal pre-edit happy path.
+
+## Verify
 
 - Widget Gallery: open <http://localhost:5173/>
 - Storybook: open <http://localhost:6006/>
@@ -203,22 +223,22 @@ If you're building a custom application with page routing, see [PAGES_QUICK_STAR
 Use this table to jump to the canonical doc surface. For more detail, see
 [`docs/README.md`](./docs/README.md).
 
-| Area                    | Doc                                                      |
-| ----------------------- | -------------------------------------------------------- |
-| Project overview        | `README.md`                                              |
-| Docs index              | `docs/README.md`                                         |
-| Guides index            | `docs/guides/README.md`                                  |
-| Architecture            | `docs/architecture/README.md`                            |
-| Repo map                | `docs/architecture/repo-map.md`                          |
-| Build pipeline          | `docs/BUILD_PIPELINE.md`                                 |
-| Restructure migration   | `docs/guides/repo-structure-migration.md`                |
-| Web Widget Gallery      | `platforms/web/apps/web/README.md`                       |
-| Storybook               | `platforms/web/apps/storybook/README.md`                 |
-| MCP server              | `platforms/mcp/README.md`                                |
-| Tokens                  | `packages/tokens/README.md`                              |
-| UI components (React)   | `packages/ui/README.md`                                  |
-| Runtime host            | `packages/runtime/README.md`                             |
-| Widgets                 | `packages/widgets/README.md`                             |
+| Area                  | Doc                                       |
+| --------------------- | ----------------------------------------- |
+| Project overview      | `README.md`                               |
+| Docs index            | `docs/README.md`                          |
+| Guides index          | `docs/guides/README.md`                   |
+| Architecture          | `docs/architecture/README.md`             |
+| Repo map              | `docs/architecture/repo-map.md`           |
+| Build pipeline        | `docs/BUILD_PIPELINE.md`                  |
+| Restructure migration | `docs/guides/repo-structure-migration.md` |
+| Web Widget Gallery    | `platforms/web/apps/web/README.md`        |
+| Storybook             | `platforms/web/apps/storybook/README.md`  |
+| MCP server            | `platforms/mcp/README.md`                 |
+| Tokens                | `packages/tokens/README.md`               |
+| UI components (React) | `packages/ui/README.md`                   |
+| Runtime host          | `packages/runtime/README.md`              |
+| Widgets               | `packages/widgets/README.md`              |
 
 ### Design system
 
@@ -373,7 +393,7 @@ import { ChatFullWidthTemplate } from "@design-studio/ui/experimental";
 | Chat UI components | ChatUIRoot, ChatHeader, ChatSidebar, ChatMessages, ChatInput, ComposeView    |
 | UI primitives      | Button, Dialog, Tabs, Tooltip, and more                                      |
 | Icons              | Icons adapter, ChatGPTIcons                                                  |
-| Pages              | DesignSystemPage, TypographyPage, SpacingPage (via `@design-studio/ui/dev`)        |
+| Pages              | DesignSystemPage, TypographyPage, SpacingPage (via `@design-studio/ui/dev`)  |
 | Templates          | ChatFullWidthTemplate, ChatTwoPaneTemplate, DashboardTemplate (experimental) |
 | Utilities          | useControllableState                                                         |
 
@@ -566,3 +586,9 @@ The repository supports **React** implementations across web, widgets, and Tauri
 
 **brAInwav**  
 _from demo to duty_
+
+## Distribution
+
+Official installation instructions are maintained in this repository only.
+
+Third-party indexes or mirrors may list this project, but they are not affiliated with, endorsed by, or maintained by this project unless explicitly stated here.

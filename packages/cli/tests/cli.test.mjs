@@ -423,6 +423,10 @@ function assertDesignCommandEnvelope(payload, fixtureName) {
   );
 }
 
+function cloneJson(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
 function assertJsonByteContract(result, fixtureName) {
   const expected = designCommandFixtures.stdout;
   assert.equal(result.stderr, expected.stderr, `${fixtureName} wrote unexpected stderr`);
@@ -508,6 +512,117 @@ test("design command JSON fixtures match the schema and byte contract", async (t
       }
     });
   }
+});
+
+test("prepare command schema rejects missing north-star payload fields", async () => {
+  const fixture = designCommandFixtures.success.find(
+    (entry) => entry.name === "prepare-page-shell",
+  );
+  assert.ok(fixture, "missing prepare-page-shell fixture");
+  const context = makeFixtureContext(fixture);
+  const result = await runCli(
+    resolveFixtureValue(fixture.args, context),
+    resolveFixtureValue(fixture.env ?? {}, context),
+    { cwd: resolveFixtureValue(fixture.cwd, context) },
+  );
+  assert.equal(result.code, 0, `${result.stdout}${result.stderr}`);
+  const payload = JSON.parse(result.stdout);
+  assertDesignCommandEnvelope(payload, fixture.name);
+
+  for (const field of [
+    "safeForAutomaticImplementation",
+    "recommendedRoutes",
+    "designTokenContract",
+    "sourceDigests",
+    "ruleSourceDigests",
+    "coverageMatrixDigest",
+    "componentLifecycleDigest",
+    "openDecisions",
+  ]) {
+    const invalid = cloneJson(payload);
+    delete invalid.data[field];
+    assert.equal(
+      validateDesignCommandEnvelope(invalid),
+      false,
+      `prepare payload without ${field} should fail schema validation`,
+    );
+    assert.match(
+      ajv.errorsText(validateDesignCommandEnvelope.errors),
+      new RegExp(`must have required property '${field}'`),
+    );
+  }
+
+  const unexpected = cloneJson(payload);
+  unexpected.data.unexpectedFutureDrift = { bad: true };
+  assert.equal(
+    validateDesignCommandEnvelope(unexpected),
+    false,
+    "prepare payload with unexpected top-level fields should fail schema validation",
+  );
+
+  const invalidRoute = cloneJson(payload);
+  invalidRoute.data.recommendedRoutes[0].unexpectedFutureDrift = { bad: true };
+  assert.equal(
+    validateDesignCommandEnvelope(invalidRoute),
+    false,
+    "prepare payload with unexpected route fields should fail schema validation",
+  );
+
+  const invalidDecision = cloneJson(payload);
+  invalidDecision.data.openDecisions = [{ code: "E_TEST", severity: "warn" }];
+  assert.equal(
+    validateDesignCommandEnvelope(invalidDecision),
+    false,
+    "prepare payload with incomplete open decisions should fail schema validation",
+  );
+
+  for (const field of ["packageScript", "expectedOutcome", "timeoutClass"]) {
+    const invalidTopLevelCommand = cloneJson(payload);
+    delete invalidTopLevelCommand.data.validationCommands[0][field];
+    assert.equal(
+      validateDesignCommandEnvelope(invalidTopLevelCommand),
+      false,
+      `prepare payload command without ${field} should fail schema validation`,
+    );
+
+    const invalidRouteCommand = cloneJson(payload);
+    delete invalidRouteCommand.data.recommendedRoutes[0].validationCommands[0][field];
+    assert.equal(
+      validateDesignCommandEnvelope(invalidRouteCommand),
+      false,
+      `prepare route command without ${field} should fail schema validation`,
+    );
+  }
+});
+
+test("root prepare wrapper builds CLI dependencies before prepare", () => {
+  const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"));
+  const prepareScript = packageJson.scripts["agent-design:prepare"];
+  assert.equal(typeof prepareScript, "string");
+  assert.equal(
+    prepareScript.includes("--surface"),
+    false,
+    "root prepare wrapper must not bake in a default surface",
+  );
+
+  const expectedSegments = [
+    "pnpm agent-design:build",
+    "pnpm design-system-guidance:build",
+    "pnpm skill-ingestion:build",
+    "pnpm -C packages/cli build",
+    "node packages/cli/dist/index.js design prepare --json",
+  ];
+  let previousIndex = -1;
+  for (const segment of expectedSegments) {
+    const index = prepareScript.indexOf(segment);
+    assert.ok(index > previousIndex, `${segment} must appear after the prior wrapper step`);
+    previousIndex = index;
+  }
+
+  assert.equal(
+    packageJson.scripts["agent-design:prepare:smoke"],
+    "pnpm --silent agent-design:prepare --surface packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+  );
 });
 
 test("design command error fixtures expose stable recovery payloads", async (t) => {

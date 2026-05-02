@@ -1610,6 +1610,17 @@ async function withMigrationLock<T>(
   }
 }
 
+/**
+ * Performs a guidance configuration migration for a repository and returns the resulting migration summary.
+ *
+ * This function resolves the target repository, enforces a single migration operation, acquires a per-config
+ * migration lock when writes are requested, validates lock state for dry-run checks, reads the existing guidance
+ * config, and delegates the migration logic to the unlocked migration routine.
+ *
+ * @param options - Migration behavior and intent (e.g., targetPath, dryRun, write, and migration-specific flags like `to`, `rollback`, or `resume`)
+ * @returns MigrationResult containing before/after modes and migrationState, whether the config changed, dry-run status, the rollback metadata path, and an optional quarantinePath
+ * @throws GuidanceError when the requested migration operation is invalid, the migration is locked, or when underlying I/O/validation fails
+ */
 export async function migrateGuidanceConfig(
   options: MigrationOptions = {},
 ): Promise<MigrationResult> {
@@ -1618,7 +1629,14 @@ export async function migrateGuidanceConfig(
   const rules = await readRules();
   const configPath = path.join(targetPath, rules.configFile);
   return withMigrationLock(configPath, Boolean(options.write && !options.dryRun), async () => {
+    const lockPath = `${configPath}.migration.lock`;
+    if (options.dryRun && !options.write && (await exists(lockPath))) {
+      throw migrationLockedError();
+    }
     const { raw, config } = await readGuidanceConfig(targetPath, configPath);
+    if (options.dryRun && !options.write && (await exists(lockPath))) {
+      throw migrationLockedError();
+    }
     return migrateGuidanceConfigUnlocked(options, targetPath, configPath, raw, config);
   });
 }

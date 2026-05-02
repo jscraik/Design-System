@@ -19,6 +19,541 @@
         "astudio.design.coverage.v1",
         "astudio.design.proposeAbstraction.v1"
       ]
+    },
+    "prepareDigest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "designTokenRole": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "useFor"],
+      "properties": {
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cssVariable": {
+          "type": "string",
+          "pattern": "^--[A-Za-z0-9_-]+$"
+        },
+        "useFor": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "avoidFor": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "designTokenContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "allowedRoles", "forbiddenTokenPatterns", "sourceRefs"],
+      "properties": {
+        "mode": {
+          "const": "semantic-only"
+        },
+        "allowedRoles": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/designTokenRole"
+          }
+        },
+        "forbiddenTokenPatterns": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "sourceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "validationCommand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "safetyClass", "reason"],
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "safetyClass": {
+          "const": "read_only"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "packageScript": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expectedOutcome": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timeoutClass": {
+          "enum": ["short", "medium", "long"]
+        },
+        "blockedByDefault": {
+          "type": "boolean"
+        }
+      }
+    },
+    "prepareValidationCommand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command",
+        "safetyClass",
+        "reason",
+        "packageScript",
+        "expectedOutcome",
+        "timeoutClass"
+      ],
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "safetyClass": {
+          "const": "read_only"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "packageScript": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expectedOutcome": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timeoutClass": {
+          "enum": ["short", "medium", "long"]
+        },
+        "blockedByDefault": {
+          "type": "boolean"
+        }
+      }
+    },
+    "routeFallback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["component", "reason"],
+      "properties": {
+        "component": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "routePreferredComponent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "importPath", "packageName"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "importPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "packageName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "coverageName": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "componentLifecycleEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "path", "lifecycle", "routing_tier", "notes"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lifecycle": {
+          "enum": ["canonical", "transitional", "deprecated"]
+        },
+        "routing_tier": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "proposalRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "componentCoverageEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "source",
+        "upstream",
+        "fallback",
+        "status",
+        "web_used",
+        "tauri_used",
+        "widget_used"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "upstream": {
+          "type": ["string", "null"]
+        },
+        "fallback": {
+          "type": ["string", "null"]
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "web_used": {
+          "type": "boolean"
+        },
+        "tauri_used": {
+          "type": "boolean"
+        },
+        "widget_used": {
+          "type": "boolean"
+        }
+      }
+    },
+    "recommendedRoute": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "need",
+        "canonicalNeed",
+        "aliases",
+        "preferredComponent",
+        "lifecycleStatus",
+        "routeMaturity",
+        "surfacePatterns",
+        "useWhen",
+        "requiredStates",
+        "examples",
+        "avoid",
+        "fallbacks",
+        "validationCommands",
+        "sourceRefs",
+        "lifecycleEntry",
+        "coverageEntry",
+        "matchedNeed",
+        "matchedAlias"
+      ],
+      "properties": {
+        "need": {
+          "type": "string",
+          "minLength": 1
+        },
+        "canonicalNeed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "proposalRef": {
+          "type": "string",
+          "minLength": 1
+        },
+        "preferredComponent": {
+          "$ref": "#/definitions/routePreferredComponent"
+        },
+        "lifecycleStatus": {
+          "enum": ["canonical", "transitional"]
+        },
+        "routeMaturity": {
+          "enum": ["enforced", "provisional"]
+        },
+        "surfacePatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "useWhen": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredStates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "avoid": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fallbacks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/routeFallback"
+          }
+        },
+        "validationCommands": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/prepareValidationCommand"
+          }
+        },
+        "sourceRefs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "lifecycleEntry": {
+          "$ref": "#/definitions/componentLifecycleEntry"
+        },
+        "coverageEntry": {
+          "$ref": "#/definitions/componentCoverageEntry"
+        },
+        "matchedNeed": {
+          "type": "string",
+          "minLength": 1
+        },
+        "matchedAlias": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "openDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message", "severity", "nextAction"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "enum": ["info", "warn", "error"]
+        },
+        "nextAction": {
+          "enum": ["stop", "escalate", "diagnose"]
+        }
+      }
+    },
+    "preparePayload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "ok",
+        "safeForAutomaticImplementation",
+        "resolvedDesignFile",
+        "guidanceConfigPath",
+        "designContractMode",
+        "surfacePath",
+        "surfaceScope",
+        "surfaceKind",
+        "recommendedRoutes",
+        "designTokenContract",
+        "requiredStates",
+        "forbiddenPatterns",
+        "relevantExamples",
+        "validationCommands",
+        "ruleManifestVersion",
+        "rulePackVersion",
+        "ruleSourceDigests",
+        "sourceDigests",
+        "coverageMatrixDigest",
+        "componentLifecycleDigest",
+        "wrapper-evidence",
+        "final-plan-evidence",
+        "openDecisions"
+      ],
+      "properties": {
+        "kind": {
+          "const": "astudio.design.prepare.v1"
+        },
+        "ok": {
+          "type": "boolean"
+        },
+        "safeForAutomaticImplementation": {
+          "type": "boolean"
+        },
+        "resolvedDesignFile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "guidanceConfigPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "designContractMode": {
+          "enum": ["legacy", "design-md"]
+        },
+        "surfacePath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "surfaceScope": {
+          "enum": ["protected", "warn", "exempt", "unknown"]
+        },
+        "surfaceKind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recommendedRoutes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/recommendedRoute"
+          }
+        },
+        "designTokenContract": {
+          "$ref": "#/definitions/designTokenContract"
+        },
+        "requiredStates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "forbiddenPatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "relevantExamples": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "validationCommands": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/prepareValidationCommand"
+          }
+        },
+        "ruleManifestVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rulePackVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ruleSourceDigests": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/prepareDigest"
+          }
+        },
+        "sourceDigests": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/prepareDigest"
+          }
+        },
+        "coverageMatrixDigest": {
+          "$ref": "#/definitions/prepareDigest"
+        },
+        "componentLifecycleDigest": {
+          "$ref": "#/definitions/prepareDigest"
+        },
+        "wrapper-evidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "final-plan-evidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "openDecisions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/openDecision"
+          }
+        }
+      }
     }
   },
   "required": ["schema", "meta", "summary", "status", "data", "errors"],
@@ -193,6 +728,30 @@
           "errors": {
             "type": "array",
             "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "const": "astudio.design.prepare.v1"
+              }
+            },
+            "required": ["kind"]
+          }
+        },
+        "required": ["data"]
+      },
+      "then": {
+        "properties": {
+          "data": {
+            "$ref": "#/definitions/preparePayload"
           }
         }
       }

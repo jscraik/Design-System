@@ -37,13 +37,13 @@ They are deliberately narrower than the full component catalog. A gold example m
 
 ## Deferred Categories
 
-These are intentionally non-promotable until a protected example exists:
+These are intentionally non-promotable until each category has a protected source path, story path, test path, covered-state list, read-only validation command, and route linkage in `docs/design-system/AGENT_UI_ROUTING.json`:
 
-| Category                            | Missing proof                                                                                             |
-| ----------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| `permission_denied_unavailable`     | Needs a protected unavailable or permission-denied state with cause and recovery affordance.              |
-| `dense_operational_dashboard`       | Needs a protected dense dashboard fixture that proves scanning, comparison, and repeated action behavior. |
-| `form_validation_accessible_errors` | Needs a protected form fixture with labels, invalid state, field errors, and recovery copy.               |
+| Category                            | Missing proof                                                                                                                                                     |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `permission_denied_unavailable`     | Needs protected permission-denied and unavailable variants with accessible cause, recovery, tests, validation, and routing evidence.                              |
+| `dense_operational_dashboard`       | Needs a protected dense dashboard fixture that proves scanning, comparison, repeated actions, responsive/focus behavior, tests, validation, and routing evidence. |
+| `form_validation_accessible_errors` | Needs a protected form fixture with labels, descriptions, invalid state, field errors, summary errors, recovery copy, tests, validation, and routing evidence.    |
 
 ## Promotion Rules
 
