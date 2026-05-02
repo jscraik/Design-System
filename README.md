@@ -150,6 +150,8 @@ pnpm agent-design:prepare:changed -- --surface <path>
 
 Supporting commands such as `astudio design lint`, `export`, `components`, `coverage`, and `propose-abstraction` are diagnostics rather than the normal pre-edit path.
 
+For broader command routing, see [`docs/architecture/COMMAND_SURFACE.md`](docs/architecture/COMMAND_SURFACE.md). That page groups the canonical agent-design, repo health, product-surface, and compatibility commands so this README stays a short front door.
+
 ## Verify
 
 - Widget Gallery: open <http://localhost:5173/>

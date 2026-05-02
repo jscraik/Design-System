@@ -819,6 +819,49 @@ Reviewer status:
 
 `FORJAMIE.md` update status: complete; Recent Changes includes the P4 package-taxonomy entry.
 
+### P5 Execution: Script Surface and FORJAMIE Compression
+
+Status: completed.
+
+Files changed:
+
+- `docs/architecture/COMMAND_SURFACE.md`
+- `docs/architecture/README.md`
+- `docs/architecture/repo-map.md`
+- `docs/guides/AGENT_DESIGN_WORKFLOW.md`
+- `docs/changelog/FORJAMIE_HISTORY.md`
+- `README.md`
+- `FORJAMIE.md`
+- `docs/plans/2026-05-02-agent-first-design-system-simplification-plan.md`
+
+Source acceptance IDs targeted: SA16, SA17, AC11, AC12.
+
+Command surface decisions:
+
+- Added `docs/architecture/COMMAND_SURFACE.md` as the root command-routing authority for agents and humans.
+- Kept the canonical agent-design commands prominent: `pnpm --silent agent-design:prepare --surface <path>`, `pnpm agent-design:prepare:changed`, `pnpm agent-design:lint`, and `pnpm agent-design:test`.
+- Classified `pnpm doc:lint` and `pnpm tokens:validate` as compatibility aliases instead of deleting them, because reference audit still finds active historical or compatibility references.
+- Shortened `FORJAMIE.md` into a current project map by moving older detailed recent-change entries to `docs/changelog/FORJAMIE_HISTORY.md`.
+- Kept README and the agent workflow guide as front doors that point to the command surface instead of growing another complete script inventory.
+
+Reference audit:
+
+- `rg -n "pnpm doc:lint|doc:lint|tokens:validate|pnpm --silent agent-design:prepare|agent-design:prepare:changed|COMMAND_SURFACE" README.md FORJAMIE.md docs .github package.json` -> pass; confirmed compatibility aliases still have active references and canonical agent-design commands are present in front-door docs.
+
+Validation commands:
+
+- `pnpm docs:lint` -> pass; 0 errors, 0 warnings, 0 suggestions in 347 files, and all markdown links resolved.
+- `pnpm test:policy` -> pass; existing design-system guidance warnings remain non-blocking and policy exits green.
+- `git diff --check` -> pass.
+
+Reviewer status:
+
+- Simplify pass -> pass; no P0/P1/P2 simplification finding after centralizing command routing and archiving older FORJAMIE history.
+- HE code-review readiness pass -> pass; command guidance, archive link paths, plan alignment, and FORJAMIE update requirements are satisfied.
+- HE fix-bugs pass -> pass; no broken link, stale command, misleading wrapper/read-only guidance, or archive-reference issue found after validation.
+
+`FORJAMIE.md` update status: complete; Recent Changes includes the P5 command-surface and FORJAMIE-compression entry.
+
 ## Linear Traceability
 
 No Linear issue was supplied with this request.

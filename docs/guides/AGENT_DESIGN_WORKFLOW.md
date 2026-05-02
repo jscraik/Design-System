@@ -22,6 +22,8 @@ Use this workflow when an agent is asked to design, redesign, restyle, or review
 
 This file is the detailed workflow authority for agent UI work. README and `FORJAMIE.md` should point here instead of restating the whole workflow.
 
+For root command routing beyond the UI prepare workflow, use `docs/architecture/COMMAND_SURFACE.md`.
+
 | surface                                                                               | status             | reason                                                                                                                          | replacement                                                                       | allowedUse                                                                        | lastReviewed |
 | ------------------------------------------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------ |
 | `docs/guides/AGENT_DESIGN_WORKFLOW.md`                                                | active             | Detailed pre-edit workflow for protected UI changes.                                                                            | n/a                                                                               | Agent and human workflow authority before UI edits.                               | 2026-05-02   |
