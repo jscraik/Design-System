@@ -1822,3 +1822,328 @@ test("serializes prepare payload with sorted keys and trailing newline", async (
   );
   assert.equal(serializePreparePayload(secondPayload), serialized);
 });
+
+// ── Unit tests for derived text renderers (renderPrepareBrief / renderPreparePrEvidence) ──
+// These use minimal synthetic PreparePayload objects so they run without repo file I/O.
+
+function minimalPayload(overrides = {}) {
+  return {
+    kind: "astudio.design.prepare.v1",
+    ok: true,
+    safeForAutomaticImplementation: true,
+    nextAction: {
+      kind: "implement",
+      instruction: "Use the recommended route.",
+      evidenceRefs: [],
+    },
+    resolvedDesignFile: "DESIGN.md",
+    guidanceConfigPath: ".design-system-guidance.json",
+    designContractMode: "design-md",
+    surfacePath: "packages/ui/src/app/Example.tsx",
+    surfaceScope: "protected",
+    surfaceKind: "settings_panel",
+    recommendedRoutes: [],
+    designTokenContract: {
+      mode: "semantic-only",
+      allowedRoles: [],
+      forbiddenTokenPatterns: [],
+      sourceRefs: [],
+    },
+    doNotInvent: [],
+    requiredStates: [],
+    forbiddenPatterns: [],
+    relevantExamples: [],
+    validationCommands: [],
+    ruleManifestVersion: "1.0.0",
+    rulePackVersion: "1.0.0",
+    ruleSourceDigests: [],
+    sourceDigests: [],
+    coverageMatrixDigest: { path: "docs/design-system/COVERAGE_MATRIX.json", sha256: "abc" },
+    componentLifecycleDigest: {
+      path: "docs/design-system/COMPONENT_LIFECYCLE.json",
+      sha256: "def",
+    },
+    "wrapper-evidence": "",
+    "final-plan-evidence": "",
+    openDecisions: [],
+    ...overrides,
+  };
+}
+
+test("renderPrepareStatus renders SAFE_TO_IMPLEMENT for safe payloads", () => {
+  const brief = renderPrepareBrief(minimalPayload({ safeForAutomaticImplementation: true }));
+  assert.match(brief, /Status: SAFE_TO_IMPLEMENT/);
+});
+
+test("renderPrepareStatus renders STOP for unsafe payloads", () => {
+  const brief = renderPrepareBrief(
+    minimalPayload({
+      safeForAutomaticImplementation: false,
+      nextAction: {
+        kind: "stop_for_missing_route",
+        instruction: "No route found.",
+        evidenceRefs: [],
+      },
+    }),
+  );
+  assert.match(brief, /Status: STOP/);
+});
+
+test("renderList renders items with bullet prefix", () => {
+  const brief = renderPrepareBrief(
+    minimalPayload({ requiredStates: ["loading", "error", "empty"] }),
+  );
+  assert.match(brief, /Required state: loading/);
+  assert.match(brief, /Required state: error/);
+  assert.match(brief, /Required state: empty/);
+});
+
+test("renderList falls back to empty text when items array is empty", () => {
+  const brief = renderPrepareBrief(
+    minimalPayload({ requiredStates: [], relevantExamples: [], doNotInvent: [] }),
+  );
+  assert.match(brief, /No required states returned\./);
+  assert.match(brief, /No relevant examples returned\./);
+  assert.match(brief, /Do Not Invent:/);
+});
+
+test("renderPrepareBrief inserts stop line after instruction for unsafe payload", () => {
+  const payload = minimalPayload({
+    safeForAutomaticImplementation: false,
+    nextAction: {
+      kind: "stop_for_proposal",
+      instruction: "Open a proposal before editing.",
+      evidenceRefs: [],
+    },
+  });
+  const brief = renderPrepareBrief(payload);
+  const lines = brief.split("\n");
+  const stopIdx = lines.findIndex((line) => line.includes("Stop: do not edit UI"));
+  const instructionIdx = lines.findIndex((line) => line.includes("Instruction:"));
+  assert.ok(stopIdx > instructionIdx, "Stop line must come after Instruction line");
+  // Stop line is at index 5 (0-based) in the resulting array
+  assert.equal(lines[5], "Stop: do not edit UI until the next action is resolved.");
+});
+
+test("renderPrepareBrief does not insert stop line for safe payloads", () => {
+  const brief = renderPrepareBrief(minimalPayload({ safeForAutomaticImplementation: true }));
+  assert.doesNotMatch(brief, /Stop: do not edit UI/);
+});
+
+test("renderPrepareBrief shows primary route summary when route present", () => {
+  const payload = minimalPayload({
+    recommendedRoutes: [
+      {
+        canonicalNeed: "settings_panel",
+        preferredComponent: {
+          name: "SettingsPanelShell",
+          importPath: "@design-studio/ui/settings",
+          packageName: "@design-studio/ui",
+        },
+        confidence: { level: "high", because: ["enforced route"] },
+        usageGuidance: { copy: ["Use SettingsPanelShell"], doNotCopy: [], proves: [], maturity: "gold" },
+        lifecycleEntry: {},
+        coverageEntry: {},
+        matchedNeed: "settings_panel",
+        matchedAlias: null,
+      },
+    ],
+  });
+  const brief = renderPrepareBrief(payload);
+  assert.match(brief, /settings_panel -> SettingsPanelShell/);
+  assert.match(brief, /@design-studio\/ui\/settings/);
+});
+
+test("renderPrepareBrief shows None as route when recommendedRoutes is empty", () => {
+  const brief = renderPrepareBrief(minimalPayload({ recommendedRoutes: [] }));
+  assert.match(brief, /Route: None/);
+});
+
+test("renderPrepareBrief includes token roles from designTokenContract", () => {
+  const payload = minimalPayload({
+    designTokenContract: {
+      mode: "semantic-only",
+      allowedRoles: [
+        { role: "bg-background", cssVariable: "--background", useFor: ["page background"] },
+        { role: "text-foreground", cssVariable: "--foreground", useFor: ["body text"] },
+      ],
+      forbiddenTokenPatterns: [],
+      sourceRefs: [],
+    },
+  });
+  const brief = renderPrepareBrief(payload);
+  assert.match(brief, /bg-background: page background/);
+  assert.match(brief, /text-foreground: body text/);
+});
+
+test("renderPrepareBrief includes validation command details", () => {
+  const payload = minimalPayload({
+    validationCommands: [
+      {
+        command: "pnpm agent-design:lint",
+        safetyClass: "read_only",
+        reason: "Runs design lint.",
+        expectedOutcome: "No errors",
+        ifFails: "Fix lint errors before proceeding.",
+      },
+    ],
+  });
+  const brief = renderPrepareBrief(payload);
+  assert.match(brief, /pnpm agent-design:lint/);
+  assert.match(brief, /expected: No errors/);
+  assert.match(brief, /if fails: Fix lint errors before proceeding\./);
+});
+
+test("renderPrepareBrief caps token roles at 8", () => {
+  const roles = Array.from({ length: 12 }, (_, i) => ({
+    role: `token-role-${i}`,
+    useFor: [`use for ${i}`],
+  }));
+  const brief = renderPrepareBrief(minimalPayload({ designTokenContract: { mode: "semantic-only", allowedRoles: roles, forbiddenTokenPatterns: [], sourceRefs: [] } }));
+  // Only first 8 should appear
+  assert.match(brief, /token-role-7/);
+  assert.doesNotMatch(brief, /token-role-8/);
+});
+
+test("renderPrepareBrief ends with trailing newline", () => {
+  const brief = renderPrepareBrief(minimalPayload());
+  assert.equal(brief.endsWith("\n"), true);
+});
+
+test("renderPreparePrEvidence renders safe status", () => {
+  const evidence = renderPreparePrEvidence(minimalPayload({ safeForAutomaticImplementation: true }));
+  assert.match(evidence, /Status: safe to implement/);
+  assert.doesNotMatch(evidence, /Status: blocked/);
+});
+
+test("renderPreparePrEvidence renders blocked status", () => {
+  const evidence = renderPreparePrEvidence(
+    minimalPayload({
+      safeForAutomaticImplementation: false,
+      nextAction: { kind: "stop_for_missing_route", instruction: "No route.", evidenceRefs: [] },
+    }),
+  );
+  assert.match(evidence, /Status: blocked/);
+  assert.doesNotMatch(evidence, /Status: safe to implement/);
+});
+
+test("renderPreparePrEvidence includes next action kind and instruction", () => {
+  const evidence = renderPreparePrEvidence(
+    minimalPayload({
+      nextAction: { kind: "implement", instruction: "Use the route.", evidenceRefs: [] },
+    }),
+  );
+  assert.match(evidence, /`implement` - Use the route\./);
+});
+
+test("renderPreparePrEvidence shows none for route when empty", () => {
+  const evidence = renderPreparePrEvidence(minimalPayload({ recommendedRoutes: [] }));
+  assert.match(evidence, /Route: none/);
+  assert.match(evidence, /Route confidence: none/);
+});
+
+test("renderPreparePrEvidence shows route canonical need and confidence when present", () => {
+  const payload = minimalPayload({
+    recommendedRoutes: [
+      {
+        canonicalNeed: "async_collection",
+        preferredComponent: { name: "ProductDataView", importPath: "@ui/data", packageName: "@ui" },
+        confidence: { level: "high", because: ["enforced"] },
+        usageGuidance: { copy: [], doNotCopy: [], proves: [], maturity: "gold" },
+        lifecycleEntry: {},
+        coverageEntry: {},
+        matchedNeed: "async_collection",
+        matchedAlias: null,
+      },
+    ],
+  });
+  const evidence = renderPreparePrEvidence(payload);
+  assert.match(evidence, /`async_collection`/);
+  assert.match(evidence, /`high`/);
+});
+
+test("renderPreparePrEvidence renders open decisions section when openDecisions not empty", () => {
+  const payload = minimalPayload({
+    openDecisions: [
+      {
+        code: "E_DESIGN_ROUTE_MISSING",
+        message: "No route for this need.",
+        severity: "error",
+        nextAction: "stop",
+      },
+    ],
+  });
+  const evidence = renderPreparePrEvidence(payload);
+  assert.match(evidence, /Open decisions:/);
+  assert.match(evidence, /error: E_DESIGN_ROUTE_MISSING - No route for this need\./);
+});
+
+test("renderPreparePrEvidence skips open decisions section when empty", () => {
+  const evidence = renderPreparePrEvidence(minimalPayload({ openDecisions: [] }));
+  assert.doesNotMatch(evidence, /Open decisions:/);
+});
+
+test("renderPreparePrEvidence includes source evidence digests", () => {
+  const payload = minimalPayload({
+    sourceDigests: [
+      { path: "docs/design-system/AGENT_UI_ROUTING.json", sha256: "abc123" },
+      { path: "docs/design-system/COVERAGE_MATRIX.json", sha256: "def456" },
+    ],
+  });
+  const evidence = renderPreparePrEvidence(payload);
+  assert.match(evidence, /Source evidence:/);
+  assert.match(evidence, /`docs\/design-system\/AGENT_UI_ROUTING.json` \(abc123\)/);
+  assert.match(evidence, /`docs\/design-system\/COVERAGE_MATRIX.json` \(def456\)/);
+});
+
+test("renderPreparePrEvidence includes empty source evidence section when no digests", () => {
+  const evidence = renderPreparePrEvidence(minimalPayload({ sourceDigests: [] }));
+  assert.match(evidence, /Source evidence:/);
+  // Section header present but no digest lines
+  assert.doesNotMatch(evidence, /`.*\(.*\)/);
+});
+
+test("renderPreparePrEvidence renders do-not-invent guidance", () => {
+  const payload = minimalPayload({
+    doNotInvent: [
+      { thing: "custom token variable", instead: "use bg-background", sourceRefs: [] },
+    ],
+  });
+  const evidence = renderPreparePrEvidence(payload);
+  assert.match(evidence, /Do not invent:/);
+  assert.match(evidence, /custom token variable; instead use bg-background/);
+});
+
+test("renderPreparePrEvidence ends with trailing newline", () => {
+  const evidence = renderPreparePrEvidence(minimalPayload());
+  assert.equal(evidence.endsWith("\n"), true);
+});
+
+test("renderPrepareBrief includes doNotInvent items", () => {
+  const payload = minimalPayload({
+    doNotInvent: [
+      { thing: "raw CSS color", instead: "use text-foreground token", sourceRefs: [] },
+    ],
+  });
+  const brief = renderPrepareBrief(payload);
+  assert.match(brief, /raw CSS color: use text-foreground token/);
+});
+
+test("renderPrepareBrief includes route example usage guidance", () => {
+  const payload = minimalPayload({
+    recommendedRoutes: [
+      {
+        canonicalNeed: "settings_panel",
+        preferredComponent: { name: "S", importPath: "@ui/s", packageName: "@ui" },
+        confidence: { level: "medium", because: [] },
+        usageGuidance: { copy: ["Import from @ui/s"], doNotCopy: [], proves: [], maturity: "acceptable" },
+        lifecycleEntry: {},
+        coverageEntry: {},
+        matchedNeed: "settings_panel",
+        matchedAlias: null,
+      },
+    ],
+  });
+  const brief = renderPrepareBrief(payload);
+  assert.match(brief, /Import from @ui\/s/);
+});
