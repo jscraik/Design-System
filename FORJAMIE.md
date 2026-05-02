@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-05-01
+**Last updated:** 2026-05-02
 **Production status:** IN_PROGRESS overall; Agent Design Prepare north-star plan is REVIEW_GREEN
 **Overall health:** Yellow overall; Green for the Agent Design Prepare plan lane
 
@@ -230,6 +230,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - **Agent Design Prepare PR review fixes**: closed the PR review gaps around the prepare contract. Missing route examples now produce error-severity open decisions so `safeForAutomaticImplementation` fails closed, every open decision carries a machine `nextAction`, the CLI schema only accepts `legacy` or `design-md` contract modes, and token-contract authority checks now prove every advertised semantic role has a matching runtime CSS variable before returning it to agents. Agent workflow docs and contribution docs were also lint-tightened so the north-star path remains copy/paste safe.
 - **Agent Design Prepare review-thread hardening**: tightened the latest PR #160 review findings around validation-command provenance. `pnpm run-script` now parses as the `run` alias, script names after `pnpm run` are validated as package scripts even when they match pnpm subcommand names, symlinked `package.json` files must realpath inside the workspace before scripts are trusted, and the prepare schema now requires normalized validation-command metadata (`packageScript`, `expectedOutcome`, and `timeoutClass`) on both top-level and route commands.
 - **Agent Design Prepare pnpm parser follow-up**: closed the remaining PR #160 Codex connector parser blockers by accepting `-C=<dir>` anywhere the prepare parser already accepts `-C <dir>` and by parsing `pnpm recursive run`, `pnpm multi run`, and `pnpm m run` as script-bearing validation commands instead of treating their alias token as a package script name.
+- **Agent Design Prepare final PR tightening**: bound trusted read-only validation commands to the resolved workspace package plus script name instead of the bare script name, added a deterministic fallback lint guard for prepare payloads that stop before route selection, rejected routes whose read-only filtering leaves no validation command, and made CLI masking redact malformed non-object `designTokenContract` payloads instead of returning them unchanged.
 - **Agent Design Prepare P5 docs front door**: flipped the high-traffic agent workflow docs from the old read/lint/export/manual-docs path to the single pre-edit `astudio design prepare --surface <path> --json` path. `docs/guides/AGENT_DESIGN_WORKFLOW.md` and `README.md` now explain that agents stop on `safeForAutomaticImplementation: false`, use the returned routes/token contract/states/examples/forbidden patterns/validation commands as the implementation brief, and treat lint/export/components/coverage/propose-abstraction as diagnostics. Both docs also preserve the wrapper/read-only distinction: `pnpm --silent agent-design:prepare --surface <path> --json` is build-backed local setup for JSON capture, while `astudio design prepare` is the read-only operation contract.
 - **Agent Design Prepare P6 deferred guardrails**: tightened the gold-example follow-up guardrail without expanding scope. `permission_denied_unavailable`, `dense_operational_dashboard`, and `form_validation_accessible_errors` remain explicitly non-promotable until each category has protected source, story, test, covered-state, read-only validation, and route-linkage evidence. The human Design Prepare Inspector is still deferred product scope, not part of the CLI contract slice.
 - **Generated widget manifest freshness**: reran the repo-owned generated-source freshness gate during a whole-repo cleanup pass. `node scripts/check-generated-sources.mjs` regenerated the tracked widget JavaScript manifest and Cloudflare worker manifest, then passed on rerun. The changed files are `packages/widgets/src/sdk/generated/widget-manifest.js` and `packages/cloudflare-template/src/worker/widget-manifest.generated.ts`; both remain deterministic runtime inputs owned by `pnpm generated-source:check`.
@@ -457,7 +458,7 @@ project: design-system
 repo: ~/dev/design-system
 status: IN_PROGRESS
 health: yellow
-last_updated: 2026-05-01
+last_updated: 2026-05-02
 open_prs: 1
 blockers: none
 next_milestone: Agent Design Prepare PR review and merge

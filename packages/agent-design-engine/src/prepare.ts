@@ -11,6 +11,7 @@ import type {
   PreparePayload,
   PrepareSourceDigest,
   PrepareSurfaceScope,
+  ResolvedAgentUiRoute,
 } from "./types.js";
 import { DesignEngineError } from "./types.js";
 
@@ -470,18 +471,26 @@ const pnpmRunOptionsWithValues = new Set([
   "--workspace-concurrency",
 ]);
 
-const trustedReadOnlyPackageScripts = new Set([
-  "agent-design:lint",
-  "docs:lint",
-  "list",
-  "test:a11y:widgets",
-  "type-check",
+const trustedReadOnlyPackageScriptKeys = new Set([
+  ".#agent-design:lint",
+  ".#docs:lint",
+  ".#list",
+  ".#test:a11y:widgets",
+  "packages/ui#type-check",
 ]);
 
 const wrapperEvidenceLocator =
   "docs/plans/2026-04-30-agent-design-prepare-north-star-plan.md#machine-evidence-contract";
 const finalPlanEvidenceLocator =
   "docs/plans/2026-04-30-agent-design-prepare-north-star-plan.md#execution-ledger";
+const fallbackPrepareValidationCommands: AgentUiRouteValidationCommand[] = [
+  {
+    command: "pnpm run agent-design:lint",
+    safetyClass: "read_only",
+    reason: "Validate the agent design contract when no route-specific guardrail is available.",
+    packageScript: "agent-design:lint",
+  },
+];
 
 interface InferredPackageScript {
   packageDir: string;
@@ -503,6 +512,15 @@ function unsupportedPnpmFilter(command: string): DesignEngineError {
     command,
     "Validation command uses unsupported pnpm filter selectors",
   );
+}
+
+function canonicalPackageDir(packageDir: string): string {
+  const normalized = packageDir.replace(/\\/g, "/").replace(/\/+$/, "").replace(/^\.\//, "");
+  return normalized.length > 0 ? normalized : ".";
+}
+
+function packageScriptTrustKey(packageDir: string, packageScript: string): string {
+  return `${canonicalPackageDir(packageDir)}#${packageScript}`;
 }
 
 function readPnpmRunScript(
@@ -807,9 +825,10 @@ async function normalizeValidationCommands(
         },
       );
     }
-    if (!trustedReadOnlyPackageScripts.has(packageScript)) {
+    const trustKey = packageScriptTrustKey(inferred.packageDir, packageScript);
+    if (!trustedReadOnlyPackageScriptKeys.has(trustKey)) {
       throw new DesignEngineError(
-        `Validation command package script is not trusted read-only: ${inferred.packageDir}#${packageScript}`,
+        `Validation command package script is not trusted read-only: ${trustKey}`,
         {
           code: "E_DESIGN_VALIDATION_COMMAND_INVALID",
           exitCode: 2,
@@ -826,6 +845,22 @@ async function normalizeValidationCommands(
   }
 
   return normalized;
+}
+
+function requireValidationCommands(
+  validationCommands: AgentUiRouteValidationCommand[],
+  context: string,
+): void {
+  if (validationCommands.length > 0) {
+    return;
+  }
+  throw new DesignEngineError(
+    `Prepare payload has no trusted read-only validation commands: ${context}`,
+    {
+      code: "E_DESIGN_VALIDATION_COMMAND_INVALID",
+      exitCode: 2,
+    },
+  );
 }
 
 /**
@@ -971,22 +1006,32 @@ export async function buildPreparePayload(
     });
   }
 
-  const recommendedRoutes = route
-    ? [
-        {
-          ...route,
-          validationCommands: await normalizeValidationCommands(
-            onlyReadOnly(route.validationCommands),
-            resolvedRoot,
-            signal,
-          ),
-        },
-      ]
-    : [];
+  const fallbackValidationCommands = await normalizeValidationCommands(
+    fallbackPrepareValidationCommands,
+    resolvedRoot,
+    signal,
+  );
+  const recommendedRoutes: ResolvedAgentUiRoute[] = [];
+  if (route) {
+    const routeValidationCommands = await normalizeValidationCommands(
+      onlyReadOnly(route.validationCommands),
+      resolvedRoot,
+      signal,
+    );
+    requireValidationCommands(routeValidationCommands, route.canonicalNeed);
+    recommendedRoutes.push({
+      ...route,
+      validationCommands: routeValidationCommands,
+    });
+  }
   const requiredStates = uniqueSorted(recommendedRoutes.flatMap((entry) => entry.requiredStates));
   const forbiddenPatterns = uniqueSorted(recommendedRoutes.flatMap((entry) => entry.avoid));
   const relevantExamples = uniqueSorted(recommendedRoutes.flatMap((entry) => entry.examples));
   const validationCommands = recommendedRoutes.flatMap((entry) => entry.validationCommands);
+  if (validationCommands.length === 0) {
+    validationCommands.push(...fallbackValidationCommands);
+  }
+  requireValidationCommands(validationCommands, normalizedSurfacePath);
   const openDecisions = routeDecisions(routeResult, surfaceScope);
   const ok = openDecisions.every((decision) => decision.severity !== "error");
 

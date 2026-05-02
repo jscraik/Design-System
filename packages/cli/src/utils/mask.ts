@@ -110,7 +110,7 @@ function maskPublicDesignTokenContract(
   inDebugMode: boolean,
 ): unknown {
   if (value === null || typeof value !== "object" || Array.isArray(value)) {
-    return value;
+    return maskFieldValue("designTokenContract", value, masks, inDebugMode);
   }
 
   const result: Record<string, unknown> = {};

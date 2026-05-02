@@ -1245,15 +1245,11 @@ test("build prepare payload accepts pnpm recursive run aliases", async () => {
 
 test("build prepare payload parses quoted pnpm package dirs", async () => {
   const fixtureRoot = prepareFixtureRoot();
-  fs.mkdirSync(path.join(fixtureRoot, "packages/ui shell"), { recursive: true });
-  fs.writeFileSync(
-    path.join(fixtureRoot, "packages/ui shell/package.json"),
-    JSON.stringify({ scripts: { "type-check": "node --version" } }),
-  );
+  copyRootFile(fixtureRoot, "packages/ui/package.json");
   const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
   const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
   assert.ok(route, "missing settings_panel route fixture");
-  route.validationCommands[0].command = 'pnpm --dir "packages/ui shell" run type-check';
+  route.validationCommands[0].command = 'pnpm --dir "./packages/ui" run type-check';
   route.validationCommands[0].packageScript = "type-check";
   writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
 
@@ -1295,6 +1291,26 @@ test("build prepare payload rejects package scripts outside the read-only allowl
   assert.ok(route, "missing settings_panel route fixture");
   route.validationCommands[0].command = "pnpm run unsafe:write";
   route.validationCommands[0].packageScript = "unsafe:write";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
+  );
+});
+
+test("build prepare payload binds read-only script trust to the package directory", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  fs.mkdirSync(path.join(fixtureRoot, "packages/spoof"), { recursive: true });
+  fs.writeFileSync(
+    path.join(fixtureRoot, "packages/spoof/package.json"),
+    JSON.stringify({ scripts: { "docs:lint": "node --version" } }),
+  );
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm -C packages/spoof run docs:lint";
+  route.validationCommands[0].packageScript = "docs:lint";
   writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
 
   await assert.rejects(
@@ -1422,6 +1438,23 @@ test("build prepare payload rejects pnpm dir commands without a script name", as
   assert.ok(route, "missing settings_panel route fixture");
   route.validationCommands[0].command = "pnpm -C packages/ui";
   delete route.validationCommands[0].packageScript;
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
+  );
+});
+
+test("build prepare payload rejects routes with no read-only validation commands", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands = route.validationCommands.map((command) => ({
+    ...command,
+    safetyClass: "mutating",
+  }));
   writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
 
   await assert.rejects(
@@ -1609,10 +1642,12 @@ test("builds prepare diagnostics for warn, exempt, and unknown surfaces", async 
   assert.equal(exempt.surfaceScope, "exempt");
   assert.equal(exempt.ok, false);
   assert.equal(exempt.safeForAutomaticImplementation, false);
+  assert.ok(exempt.validationCommands.length > 0);
 
   const unknown = await buildPreparePayload("packages/example/UnknownSurface.tsx", rootDir);
   assert.equal(unknown.surfaceScope, "unknown");
   assert.equal(unknown.ok, false);
+  assert.ok(unknown.validationCommands.length > 0);
   assert.ok(
     unknown.openDecisions.some((decision) => decision.code === "E_DESIGN_SURFACE_SCOPE_UNKNOWN"),
   );
