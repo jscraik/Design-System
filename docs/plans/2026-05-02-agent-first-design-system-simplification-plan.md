@@ -8,7 +8,7 @@ source_spec: docs/specs/2026-05-02-agent-first-design-system-simplification-spec
 plan_route: fresh
 plan_depth: deep
 next_stage: he-work
-linear_status: untracked
+linear_status: linked-completed
 ---
 
 # Agent-First Design System Simplification Plan
@@ -57,7 +57,7 @@ No phase may introduce a competing happy-path command.
 | Source authority    | Ready     | `docs/specs/2026-05-02-agent-first-design-system-simplification-spec.md` defines the product spine, interface alternatives, selected Shape A, SA1-SA22, phase gates, and first planning slice.                   |
 | Domain readiness    | Ready     | No repo `CONTEXT.md` or `CONTEXT-MAP.md` exists. The source spec defines canonical terms for active authority, historical evidence, archive, obsolete/deletion candidate, agent brief, PR evidence, and prepare. |
 | Interface readiness | Ready     | Shape A is selected: `prepare` remains the command family, while `--format brief` and `--format pr-evidence` are derived from the typed prepare payload.                                                         |
-| Linear readiness    | Untracked | No Linear issue was supplied. Jamie approved local HE heartbeat execution for this plan on 2026-05-02. Tracked project delivery should still create or link a Linear issue before external tracker closure.      |
+| Linear readiness    | Linked    | JSC-238 is the completed Linear tracker for the agent-native design-system command layer that this simplification plan builds on. Jamie approved local HE heartbeat execution for this plan on 2026-05-02.       |
 
 ## Requirements Trace
 
@@ -459,7 +459,7 @@ Before each phase:
 
 - Re-read `docs/specs/2026-05-02-agent-first-design-system-simplification-spec.md`.
 - Check `git status --short --branch`.
-- Confirm whether a Linear issue has been linked since plan creation.
+- Confirm the Linear linkage remains accurate; JSC-238 is the completed tracker for the underlying agent-native design-system command layer.
 - Confirm no unrelated user changes are being overwritten.
 
 Between phases:
@@ -485,7 +485,7 @@ After each phase:
 | File split changes behavior.                               | Prepare/CLI/guidance regressions.           | Pin fixtures before split and keep public exports stable.                               | Revert split commit.                                                |
 | Package move breaks workspace references.                  | Build/typecheck/CI failures.                | Audit imports/scripts/docs/workspace config before and after move.                      | Revert move or add compatibility wrapper with explicit deprecation. |
 | Script cleanup removes used aliases.                       | CI or developer workflow breakage.          | Reference audit before removal.                                                         | Restore alias and document deprecation.                             |
-| Plan proceeds without tracker when project expects Linear. | Work loses external traceability.           | Keep `linear_status: untracked` visible and link/create issue before tracked execution. | Pause after P0 and create/link Linear issue.                        |
+| Plan proceeds with stale tracker evidence.                 | Work loses external traceability.           | Keep `linear_status: linked-completed` aligned with JSC-238 and update this section if a newer simplification-specific issue replaces it. | Pause and correct the Linear linkage before external tracker closure. |
 
 ## Validation Ladder
 
@@ -864,13 +864,13 @@ Reviewer status:
 
 ## Linear Traceability
 
-No Linear issue was supplied with this request.
+No simplification-specific Linear issue was supplied with this request. The active tracker evidence is the completed upstream command-layer issue that this plan builds on.
 
 Current status:
 
-- `linear_status: untracked`
-- No Linear acceptance traceability table is available.
-- If this plan becomes tracked delivery work, create or link a Linear issue before starting `he-work` and update this section with the issue key, title, URL, and acceptance mapping.
+- `linear_status: linked-completed`
+- `JSC-238` / `Agent-native design-system command layer` is Done and tracks the completed command-layer work that made this simplification lane possible: <https://linear.app/jscraik/issue/JSC-238/agent-native-design-system-command-layer>.
+- No simplification-specific Linear acceptance traceability table was supplied. If a newer issue replaces JSC-238 for this cleanup lane, update this section with the issue key, title, URL, and acceptance mapping before external tracker closure.
 
 Ready-to-create issue payload:
 
