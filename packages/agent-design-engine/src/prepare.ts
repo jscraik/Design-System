@@ -404,7 +404,20 @@ const pnpmSubcommands = new Set([
   "why",
 ]);
 
-const pnpmRunOptionsWithValues = new Set(["--dir", "--filter", "--workspace-concurrency", "-C"]);
+const pnpmRunOptionsWithValues = new Set([
+  "--dir",
+  "--filter",
+  "--resume-from",
+  "--workspace-concurrency",
+  "-C",
+  "-F",
+]);
+const pnpmRunOptionsWithInlineValues = new Set([
+  "--dir",
+  "--filter",
+  "--resume-from",
+  "--workspace-concurrency",
+]);
 
 interface InferredPackageScript {
   packageDir: string;
@@ -421,28 +434,29 @@ function normalizePackageDir(command: string, packageDir: string | undefined): s
   return packageDir;
 }
 
+function validatePnpmOptionValue(command: string, option: string, value: string | undefined): void {
+  if (!value || value.startsWith("-") || pnpmSubcommands.has(value)) {
+    throw invalidValidationCommand(
+      command,
+      `Validation command option ${option} is missing a value`,
+    );
+  }
+}
+
 function readPnpmRunScript(command: string, tokens: string[], startIndex: number): string {
   for (let index = startIndex; index < tokens.length; index += 1) {
     const token = tokens[index];
     if (pnpmRunOptionsWithValues.has(token)) {
       const nextIndex = index + 1;
-      if (nextIndex >= tokens.length) {
-        throw invalidValidationCommand(
-          command,
-          "Validation command does not name a package script",
-        );
-      }
-      const nextToken = tokens[nextIndex];
-      if (!nextToken || nextToken.startsWith("-") || pnpmSubcommands.has(nextToken)) {
-        throw invalidValidationCommand(
-          command,
-          "Validation command does not name a package script",
-        );
-      }
+      validatePnpmOptionValue(command, token, tokens[nextIndex]);
       index += 1;
       continue;
     }
-    if (token.startsWith("--dir=") || token.startsWith("--filter=")) {
+    const inlineOption = [...pnpmRunOptionsWithInlineValues].find((option) =>
+      token.startsWith(`${option}=`),
+    );
+    if (inlineOption) {
+      validatePnpmOptionValue(command, inlineOption, token.slice(inlineOption.length + 1));
       continue;
     }
     if (token.startsWith("-")) {
@@ -486,10 +500,35 @@ function inferPackageScript(command: string): InferredPackageScript | undefined 
       packageDir = normalizePackageDir(command, token.slice("--dir=".length));
       continue;
     }
-    if (token === "--filter" || token.startsWith("--filter=")) {
-      if (token === "--filter") {
-        index += 1;
-      }
+    if (token === "--filter" || token === "-F") {
+      validatePnpmOptionValue(command, token, tokens[index + 1]);
+      index += 1;
+      continue;
+    }
+    if (token.startsWith("--filter=")) {
+      validatePnpmOptionValue(command, "--filter", token.slice("--filter=".length));
+      continue;
+    }
+    if (token.startsWith("--resume-from=")) {
+      validatePnpmOptionValue(command, "--resume-from", token.slice("--resume-from=".length));
+      continue;
+    }
+    if (token === "--resume-from") {
+      validatePnpmOptionValue(command, token, tokens[index + 1]);
+      index += 1;
+      continue;
+    }
+    if (token === "--workspace-concurrency") {
+      validatePnpmOptionValue(command, token, tokens[index + 1]);
+      index += 1;
+      continue;
+    }
+    if (token.startsWith("--workspace-concurrency=")) {
+      validatePnpmOptionValue(
+        command,
+        "--workspace-concurrency",
+        token.slice("--workspace-concurrency=".length),
+      );
       continue;
     }
     if (token.startsWith("-")) {

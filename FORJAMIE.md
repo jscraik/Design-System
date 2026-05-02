@@ -221,6 +221,7 @@ See also: `~/.codex/instructions/Learnings.md`
 ### 2026-05-02
 
 - **PR #159 CI follow-up**: hardened `pnpm agent-design:prepare:changed` for shallow or moved CI base refs. The changed-surface evidence gate still prefers `base...HEAD`, but when Git reports the specific no-merge-base case it falls back to direct `base HEAD` diff and continues to fail closed on other git errors. The prepare schema also no longer requires or models the removed runtime `timing` payload field, keeping the JSON contract aligned with deterministic engine output.
+- **PR #159 parser follow-up**: made design token contract source checks run in a fixed theme, alias-map, DTCG order so malformed checkouts fail deterministically. Prepare validation-command parsing now treats `-F` as pnpm's short filter selector and consumes `--resume-from` values before inferring a package script, preventing valid filtered/resumed pnpm run commands from being rejected as bogus script names.
 
 ### 2026-04-30
 

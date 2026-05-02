@@ -192,11 +192,9 @@ export async function buildDesignTokenContract(
   rootDir: string,
   signal?: AbortSignal,
 ): Promise<DesignTokenContract> {
-  await Promise.all([
-    assertThemeSource(rootDir, signal),
-    assertAliasMapSource(rootDir, signal),
-    assertDtcgSource(rootDir, signal),
-  ]);
+  await assertThemeSource(rootDir, signal);
+  await assertAliasMapSource(rootDir, signal);
+  await assertDtcgSource(rootDir, signal);
   for (const sourceRef of TOKEN_SOURCE_REFS) {
     if (!sourceRef) {
       throw tokenContractAmbiguous("designTokenContract.sourceRefs", "non-empty source reference");
