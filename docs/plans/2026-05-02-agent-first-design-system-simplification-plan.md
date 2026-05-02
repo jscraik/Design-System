@@ -50,14 +50,14 @@ No phase may introduce a competing happy-path command.
 
 ## Planning Readiness
 
-| Check               | Result    | Evidence                                                                                                                                                                                                         |
-| ------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Plan route          | `fresh`   | No existing `2026-05-02` simplification plan exists under `docs/plans/`.                                                                                                                                         |
-| Plan depth          | `deep`    | The work touches docs authority, archive/reference rules, public CLI output formats, engine payload fields, package taxonomy, scripts, and large-file refactors.                                                 |
-| Source authority    | Ready     | `docs/specs/2026-05-02-agent-first-design-system-simplification-spec.md` defines the product spine, interface alternatives, selected Shape A, SA1-SA22, phase gates, and first planning slice.                   |
-| Domain readiness    | Ready     | No repo `CONTEXT.md` or `CONTEXT-MAP.md` exists. The source spec defines canonical terms for active authority, historical evidence, archive, obsolete/deletion candidate, agent brief, PR evidence, and prepare. |
-| Interface readiness | Ready     | Shape A is selected: `prepare` remains the command family, while `--format brief` and `--format pr-evidence` are derived from the typed prepare payload.                                                         |
-| Linear readiness    | Linked    | JSC-238 is the completed Linear tracker for the agent-native design-system command layer that this simplification plan builds on. Jamie approved local HE heartbeat execution for this plan on 2026-05-02.       |
+| Check               | Result  | Evidence                                                                                                                                                                                                         |
+| ------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Plan route          | `fresh` | No existing `2026-05-02` simplification plan exists under `docs/plans/`.                                                                                                                                         |
+| Plan depth          | `deep`  | The work touches docs authority, archive/reference rules, public CLI output formats, engine payload fields, package taxonomy, scripts, and large-file refactors.                                                 |
+| Source authority    | Ready   | `docs/specs/2026-05-02-agent-first-design-system-simplification-spec.md` defines the product spine, interface alternatives, selected Shape A, SA1-SA22, phase gates, and first planning slice.                   |
+| Domain readiness    | Ready   | No repo `CONTEXT.md` or `CONTEXT-MAP.md` exists. The source spec defines canonical terms for active authority, historical evidence, archive, obsolete/deletion candidate, agent brief, PR evidence, and prepare. |
+| Interface readiness | Ready   | Shape A is selected: `prepare` remains the command family, while `--format brief` and `--format pr-evidence` are derived from the typed prepare payload.                                                         |
+| Linear readiness    | Linked  | JSC-238 is the completed Linear tracker for the agent-native design-system command layer that this simplification plan builds on. Jamie approved local HE heartbeat execution for this plan on 2026-05-02.       |
 
 ## Requirements Trace
 
@@ -478,14 +478,14 @@ After each phase:
 
 ## Risks and Rollback
 
-| Risk                                                       | Impact                                      | Mitigation                                                                              | Rollback                                                            |
-| ---------------------------------------------------------- | ------------------------------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| Authority cleanup deletes useful historical context.       | Agents or humans lose decision evidence.    | Require indexed classification and reference audits before moves/deletes.               | Restore from git and reclassify as historical.                      |
-| Brief/PR evidence becomes a second truth.                  | Agents follow stale or contradictory prose. | Generate only from typed prepare payload and compare tests against JSON.                | Remove format output and keep JSON only.                            |
-| File split changes behavior.                               | Prepare/CLI/guidance regressions.           | Pin fixtures before split and keep public exports stable.                               | Revert split commit.                                                |
-| Package move breaks workspace references.                  | Build/typecheck/CI failures.                | Audit imports/scripts/docs/workspace config before and after move.                      | Revert move or add compatibility wrapper with explicit deprecation. |
-| Script cleanup removes used aliases.                       | CI or developer workflow breakage.          | Reference audit before removal.                                                         | Restore alias and document deprecation.                             |
-| Plan proceeds with stale tracker evidence.                 | Work loses external traceability.           | Keep `linear_status: linked-completed` aligned with JSC-238 and update this section if a newer simplification-specific issue replaces it. | Pause and correct the Linear linkage before external tracker closure. |
+| Risk                                                 | Impact                                      | Mitigation                                                                                                                                | Rollback                                                              |
+| ---------------------------------------------------- | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| Authority cleanup deletes useful historical context. | Agents or humans lose decision evidence.    | Require indexed classification and reference audits before moves/deletes.                                                                 | Restore from git and reclassify as historical.                        |
+| Brief/PR evidence becomes a second truth.            | Agents follow stale or contradictory prose. | Generate only from typed prepare payload and compare tests against JSON.                                                                  | Remove format output and keep JSON only.                              |
+| File split changes behavior.                         | Prepare/CLI/guidance regressions.           | Pin fixtures before split and keep public exports stable.                                                                                 | Revert split commit.                                                  |
+| Package move breaks workspace references.            | Build/typecheck/CI failures.                | Audit imports/scripts/docs/workspace config before and after move.                                                                        | Revert move or add compatibility wrapper with explicit deprecation.   |
+| Script cleanup removes used aliases.                 | CI or developer workflow breakage.          | Reference audit before removal.                                                                                                           | Restore alias and document deprecation.                               |
+| Plan proceeds with stale tracker evidence.           | Work loses external traceability.           | Keep `linear_status: linked-completed` aligned with JSC-238 and update this section if a newer simplification-specific issue replaces it. | Pause and correct the Linear linkage before external tracker closure. |
 
 ## Validation Ladder
 
