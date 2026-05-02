@@ -1130,8 +1130,9 @@ async function normalizeValidationCommands(
       expectedOutcome: command.expectedOutcome ?? "Command exits 0 without mutating source files.",
       timeoutClass: command.timeoutClass ?? "medium",
       ifFails:
-        command.ifFails ??
-        "Stop UI edits, inspect this command's failure output, and fix the design-system contract or implementation evidence before continuing.",
+        typeof command.ifFails === "string" && command.ifFails.trim().length > 0
+          ? command.ifFails.trim()
+          : "Stop UI edits, inspect this command's failure output, and fix the design-system contract or implementation evidence before continuing.",
     });
   }
 

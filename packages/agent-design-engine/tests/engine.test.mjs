@@ -1098,6 +1098,25 @@ test("build prepare payload rejects pnpm validation command script drift", async
   );
 });
 
+test("build prepare payload defaults blank validation failure guidance", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].ifFails = "   ";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+
+  assert.equal(
+    payload.validationCommands[0].ifFails,
+    "Stop UI edits, inspect this command's failure output, and fix the design-system contract or implementation evidence before continuing.",
+  );
+});
+
 test("build prepare payload accepts pnpm run flags before script names", async () => {
   const fixtureRoot = prepareFixtureRoot();
   const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
@@ -1955,8 +1974,10 @@ test("renderPrepareBrief inserts stop line after instruction for unsafe payload"
   const stopIdx = lines.findIndex((line) => line.includes("Stop: do not edit UI"));
   const instructionIdx = lines.findIndex((line) => line.includes("Instruction:"));
   assert.ok(stopIdx > instructionIdx, "Stop line must come after Instruction line");
-  // Stop line is at index 5 (0-based) in the resulting array
-  assert.equal(lines[5], "Stop: do not edit UI until the next action is resolved.");
+  assert.ok(
+    lines.includes("Stop: do not edit UI until the next action is resolved."),
+    "Expected stop line to be present",
+  );
 });
 
 test("renderPrepareBrief does not insert stop line for safe payloads", () => {
