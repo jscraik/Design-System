@@ -425,6 +425,14 @@ function readPnpmRunScript(command: string, tokens: string[], startIndex: number
   for (let index = startIndex; index < tokens.length; index += 1) {
     const token = tokens[index];
     if (pnpmRunOptionsWithValues.has(token)) {
+      const nextIndex = index + 1;
+      if (nextIndex >= tokens.length) {
+        throw invalidValidationCommand(command, "Validation command does not name a package script");
+      }
+      const nextToken = tokens[nextIndex];
+      if (!nextToken || nextToken.startsWith("-") || pnpmSubcommands.has(nextToken)) {
+        throw invalidValidationCommand(command, "Validation command does not name a package script");
+      }
       index += 1;
       continue;
     }

@@ -9,7 +9,6 @@
     "skipLibCheck": true,
     "noEmit": true,
     "types": ["vite/client"],
-    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@brainwav/agent-design-engine": ["packages/agent-design-engine/dist/index.d.ts"],
