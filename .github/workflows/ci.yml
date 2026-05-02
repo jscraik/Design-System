@@ -76,6 +76,12 @@ jobs:
         id: apps-sdk-change
         run: node scripts/check-apps-sdk-ui-version.mjs
 
+      - name: Agent design prepare evidence (web platform PR only)
+        if: github.event_name == 'pull_request' && matrix.platform == 'web'
+        env:
+          AGENT_DESIGN_PREPARE_BASE: origin/${{ github.base_ref }}
+        run: pnpm agent-design:prepare:changed
+
       - name: Run Apps SDK UI drift tests
         if: steps.apps-sdk-change.outputs.changed == 'true'
         run: pnpm test:drift

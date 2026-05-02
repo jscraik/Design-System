@@ -11,6 +11,7 @@
 - [ ] I did not push directly to `main`; this PR is from a dedicated branch.
 - [ ] Branch name follows policy (`codex/*` for agent-created branches).
 - [ ] Required local gates run: `bash scripts/validate-codestyle.sh`, `pnpm check`, `test -f memory.json && jq -e '.meta.version == "1.0" and (.preamble.bootstrap | type == "boolean") and (.preamble.search | type == "boolean") and (.entries | type == "array")' memory.json >/dev/null`.
+- [ ] Agent-first UI gate run when UI surfaces changed: `pnpm agent-design:prepare:changed` locally and/or via CI.
 - [ ] CodeRabbit review completed and findings handled (or explicitly waived).
 - [ ] CodeRabbit review was performed by an independent reviewer (not the coding agent).
 - [ ] Codex review completed and findings handled (or explicitly waived).
@@ -26,6 +27,7 @@
 - Command: `bash scripts/validate-codestyle.sh` -> pass/fail
 - Command: `pnpm check` -> pass/fail
 - Command: `test -f memory.json && jq -e '.meta.version == "1.0" and (.preamble.bootstrap | type == "boolean") and (.preamble.search | type == "boolean") and (.entries | type == "array")' memory.json >/dev/null` -> pass/fail
+- Command: `pnpm agent-design:prepare:changed` -> pass/fail/n.a. (required locally or via CI when UI surfaces changed)
 - Any other command(s):
 
 ## Review artifacts

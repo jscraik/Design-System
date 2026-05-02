@@ -24,9 +24,9 @@
 | --- | --- | --- |
 | Build / CI | Yellow | Focused policy, token, matrix, docs, guidance, whitespace, browser, widget a11y, and aggregate build gates pass for the Agent Design Engine slice |
 | Tests | Yellow | Agent-design and release-readiness gates pass (`agent-design-engine`, `cli`, `design-system-guidance`, web E2E, widget a11y, and root build), including fixture-backed CLI JSON/recovery/migration coverage |
-| Agent Design Prepare plan | Review green; merge-blocked pending required checks | Reviewer loop is green after wrapper/read-only classification, JSON-safe wrapper, matrix evidence, machine locators, and resolved-vs-deferred spec decisions were tightened; PR #160 remains under heartbeat monitoring until required checks pass |
+| Agent Design Prepare plan | Review green; merge-blocked pending required checks | Reviewer loop is green after wrapper/read-only classification, JSON-safe wrapper, matrix evidence, machine locators, and resolved-vs-deferred spec decisions were tightened; PR #159 now carries the prepare contract plus changed-surface evidence gate |
 | Security | Clean | 13 CVEs patched; GitHub Actions SHA-pinned |
-| Open PRs | 1 | PR #160 carries the agent-design prepare contract hardening slice |
+| Open PRs | 1 | PR #159 carries the agent-design prepare north-star and changed-surface gate slice |
 | Blockers | None | |
 <!-- STATUS_END -->
 
@@ -212,11 +212,16 @@ See also: `~/.codex/instructions/Learnings.md`
 - `pnpm agent-design:proposals` now blocks silent enforced-route and uncovered lifecycle promotion, but the first waiver registry intentionally grandfathered existing ProductComposition and ChatShell gaps. Those waivers should be replaced by accepted proposal records or per-export coverage before expiry.
 - `@brainwav/design-system-guidance` imports the public `@brainwav/agent-design-engine` package export, whose package types resolve through `dist`. Its build and type-check scripts must build the sibling engine package first, or clean CI installs can fail before the guidance checks run.
 - `pnpm --silent agent-design:prepare --surface <path>` depends on built `packages/agent-design-engine`, `packages/design-system-guidance`, and `packages/skill-ingestion` artifacts because the CLI imports those workspace packages through package exports. Keep it aligned with `pnpm agent-design:lint` by building those packages before building the CLI. The wrapper appends `--json` itself and does not include a default surface; callers provide `--surface` explicitly. The wrapper is build-backed convenience; the read-only contract belongs to the underlying `astudio design prepare` operation once the CLI is available. Use `--silent` whenever an agent or script captures JSON, because plain `pnpm` writes lifecycle banners to stdout.
+- `pnpm agent-design:prepare:changed` is the agent-first PR/local evidence gate. It builds the prepare dependencies, discovers changed `.tsx`/`.jsx` UI surfaces under the protected app/widget trees, runs the read-only CLI prepare operation for each surface, and fails closed when a payload is unsafe, incomplete, unparseable, or points outside the repository. Use `-- --surface <path>` to force a single-surface check. GitHub Actions also runs this gate on pull requests in the web platform lane with `AGENT_DESIGN_PREPARE_BASE` pointed at the PR base ref.
 - `pnpm quality-debt:report` is warn-first by design. Amber/red radar posture is release-owner evidence, not a new hard-fail gate, until explicit thresholds are approved.
 - Quality-debt radar CLI output now includes `service:"quality-debt-radar"` on status/error lines, and flag parsing fails fast when `--output`, `--date`, or `--week` are missing values.
 - The next agent-native design-system hardening lane is specified broadly in `docs/specs/2026-04-28-agent-native-design-system-spec.md` and narrowed by `docs/specs/2026-04-30-agent-design-prepare-north-star-spec.md`. The north-star rule is that no protected UI change is ready until `astudio design prepare --surface <path> --json` returns `safeForAutomaticImplementation: true`, or the PR explains the proposal/manual decision required. The focused execution source for this lane is now `docs/plans/2026-04-30-agent-design-prepare-north-star-plan.md`; use the older `docs/plans/2026-04-28-agent-native-design-system-plan.md` only for broader historical context and adjacent non-prepare slices.
 
 ## Recent changes
+
+### 2026-05-02
+
+- **PR #159 merge conflict resolution**: rebased the changed-surface evidence gate onto the merged Agent Design Prepare hardening from `main`. The branch now keeps the newer prepare parser/schema/token-contract behavior from `main`, while preserving `pnpm agent-design:cli:prebuild`, `pnpm agent-design:prepare:changed`, the web CI evidence step, PR template checklist, README/workflow docs, and CLI tests that prove the gate builds the prepare stack before checking changed protected UI surfaces.
 
 ### 2026-04-30
 

@@ -128,6 +128,20 @@ pnpm --silent agent-design:prepare --surface <path>
 
 That wrapper may build local workspace packages before invoking the CLI. The read-only operation contract belongs to `astudio design prepare` itself once the CLI is available. Use `pnpm --silent` when a script or agent needs to capture the JSON payload, because plain `pnpm` adds lifecycle banners to stdout. Supporting commands such as `astudio design lint`, `export`, `components`, `coverage`, and `propose-abstraction` are diagnostics rather than the normal pre-edit happy path.
 
+Before PR handoff for protected UI changes, run the changed-surface evidence gate:
+
+```bash
+pnpm agent-design:prepare:changed
+```
+
+For a targeted local check, pass one or more explicit surfaces through the gate:
+
+```bash
+pnpm agent-design:prepare:changed -- --surface <path>
+```
+
+CI runs the changed-surface gate on pull requests in the web platform lane, using the PR base ref as the comparison point. That makes the prepare evidence rule automatic for UI changes while keeping the direct `astudio design prepare` operation read-only.
+
 ## Verify
 
 - Widget Gallery: open <http://localhost:5173/>

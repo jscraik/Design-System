@@ -158,11 +158,11 @@ function stripCssComments(content: string): string {
  * Preserves newlines from removed comments so original line positions remain aligned and keeps escaped quotes inside string/template literals intact.
  *
  * @param content - Source JavaScript/TypeScript text to strip comments from
- * @returns The input text with `//` and `/* */` comments removed while leaving quoted and template-literal content unchanged
+ * @returns The input text with line and block comments removed while leaving quoted and template-literal content unchanged
  */
 function stripJsTsComments(content: string): string {
   let result = "";
-  let quote: "'" | '"' | "`" | undefined;
+  let quote: string | undefined;
   let escaped = false;
 
   for (let index = 0; index < content.length; index += 1) {
@@ -183,7 +183,7 @@ function stripJsTsComments(content: string): string {
       }
       continue;
     }
-    if (character === "'" || character === '"' || character === "`") {
+    if (character === "'" || character === '"' || character.charCodeAt(0) === 96) {
       quote = character;
       result += character;
       continue;
