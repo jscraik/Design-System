@@ -36,28 +36,65 @@ function run(command, commandArgs) {
   });
 }
 
+function commandText(commandArgs) {
+  return `git ${commandArgs.join(" ")}`;
+}
+
+function resultDetail(result) {
+  return (result.stderr || result.stdout).trim();
+}
+
+function addChangedFiles(files, stdout) {
+  for (const file of stdout.split(/\r?\n/)) {
+    if (file.trim()) files.add(file.trim());
+  }
+}
+
+function failGitCommand(commandArgs, result) {
+  const detail = resultDetail(result);
+  error(`agent-design: failed to run ${commandText(commandArgs)}${detail ? `: ${detail}` : ""}`);
+  process.exit(result.status ?? 1);
+}
+
+function isNoMergeBase(result) {
+  return /\bno merge base\b/i.test(resultDetail(result));
+}
+
 function gitChangedFiles() {
   const base = readArgValues("--base")[0] ?? process.env.AGENT_DESIGN_PREPARE_BASE;
-  const commands = [];
-  if (base) {
-    commands.push(["diff", "--name-only", "--diff-filter=ACMRT", `${base}...HEAD`]);
-  }
-  commands.push(["diff", "--name-only", "--diff-filter=ACMRT", "--cached", "HEAD"]);
-  commands.push(["diff", "--name-only", "--diff-filter=ACMRT", "HEAD"]);
-
   const files = new Set();
+  if (base) {
+    const commandArgs = ["diff", "--name-only", "--diff-filter=ACMRT", `${base}...HEAD`];
+    const result = run("git", commandArgs);
+    if (result.status === 0) {
+      addChangedFiles(files, result.stdout);
+    } else if (isNoMergeBase(result)) {
+      const fallbackArgs = ["diff", "--name-only", "--diff-filter=ACMRT", base, "HEAD"];
+      const fallback = run("git", fallbackArgs);
+      if (fallback.status !== 0) {
+        failGitCommand(fallbackArgs, fallback);
+      }
+      log(
+        `agent-design: ${commandText(commandArgs)} has no merge base; used ${commandText(
+          fallbackArgs,
+        )}`,
+      );
+      addChangedFiles(files, fallback.stdout);
+    } else {
+      failGitCommand(commandArgs, result);
+    }
+  }
+
+  const commands = [
+    ["diff", "--name-only", "--diff-filter=ACMRT", "--cached", "HEAD"],
+    ["diff", "--name-only", "--diff-filter=ACMRT", "HEAD"],
+  ];
   for (const commandArgs of commands) {
     const result = run("git", commandArgs);
     if (result.status !== 0) {
-      const detail = (result.stderr || result.stdout).trim();
-      error(
-        `agent-design: failed to run git ${commandArgs.join(" ")}${detail ? `: ${detail}` : ""}`,
-      );
-      process.exit(result.status ?? 1);
+      failGitCommand(commandArgs, result);
     }
-    for (const file of result.stdout.split(/\r?\n/)) {
-      if (file.trim()) files.add(file.trim());
-    }
+    addChangedFiles(files, result.stdout);
   }
   return [...files].sort();
 }
