@@ -16,6 +16,14 @@ const ROUTING_PATH = "docs/design-system/AGENT_UI_ROUTING.json";
 const LIFECYCLE_PATH = "docs/design-system/COMPONENT_LIFECYCLE.json";
 const COVERAGE_PATH = "docs/design-system/COVERAGE_MATRIX.json";
 
+/**
+ * Ensure an error is a DesignEngineError, wrapping non-DesignEngineError values with a deterministic code and exitCode 2 and annotating the provided relative path.
+ *
+ * @param error - The original error to normalize
+ * @param code - Deterministic error code to use when creating a wrapped DesignEngineError
+ * @param relativePath - Relative path of the manifest or file that caused the error; included in the wrapped error message
+ * @returns The original `DesignEngineError` if `error` is already one, otherwise a new `DesignEngineError` containing the `relativePath`, the original error message, `code`, and `exitCode: 2`
+ */
 function asDesignEngineError(
   error: unknown,
   code: string,
@@ -32,12 +40,15 @@ function asDesignEngineError(
 }
 
 /**
- * Read a UTF-8 JSON file located at the given relative path.
+ * Load and parse a JSON file resolved against the given base directory.
+ *
+ * On any file read or parse failure, throws a DesignEngineError produced by
+ * `asDesignEngineError` using the provided `code` and `relativePath`.
  *
  * @param rootDir - Base directory used to resolve `relativePath`
  * @param relativePath - Path to the JSON file, relative to `rootDir`
- * @param code - Deterministic error code to use when the file cannot be parsed
- * @returns The parsed JSON value as unknown so callers must validate shape
+ * @param code - Deterministic error code to use when the file cannot be read or parsed
+ * @returns The parsed JSON value as `unknown`; callers must validate the resulting shape
  */
 function readJson(rootDir: string, relativePath: string, code: string): unknown {
   try {
@@ -47,6 +58,12 @@ function readJson(rootDir: string, relativePath: string, code: string): unknown 
   }
 }
 
+/**
+ * Determines whether a value is a plain object (i.e., an object that is not `null` and not an array).
+ *
+ * @param value - The value to test
+ * @returns `true` if `value` is an object other than `null` or an array, `false` otherwise.
+ */
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
@@ -202,6 +219,14 @@ function parseFallback(value: unknown, context: string): AgentUiRouteSource["fal
   };
 }
 
+/**
+ * Parses and validates a validation command object from an untyped value.
+ *
+ * @param value - The raw value to parse as a validation command.
+ * @param context - Context string used to prefix error messages for easier identification.
+ * @returns The validated validation command with required fields `command`, `safetyClass`, and `reason`, and optional fields `packageScript`, `expectedOutcome`, `timeoutClass`, and `blockedByDefault`.
+ * @throws Error if `value` is not an object or if any required or optional field fails validation.
+ */
 function parseValidationCommand(
   value: unknown,
   context: string,
@@ -473,10 +498,10 @@ function loadLifecycle(rootDir: string): ComponentLifecycleEntry[] {
 }
 
 /**
- * Loads the component coverage manifest from the project and returns its entries.
+ * Load the component coverage manifest for the project.
  *
  * @param rootDir - Project root directory used to resolve the coverage manifest path
- * @returns The array of ComponentCoverageEntry objects from the coverage manifest
+ * @returns The parsed array of ComponentCoverageEntry objects from the coverage manifest
  */
 function loadCoverage(rootDir: string): ComponentCoverageEntry[] {
   try {
@@ -486,6 +511,14 @@ function loadCoverage(rootDir: string): ComponentCoverageEntry[] {
   }
 }
 
+/**
+ * Resolve a repository-local path for a given root and relative input, ensuring it does not escape the repo.
+ *
+ * @param rootDir - The repository root directory against which `relativePath` is resolved
+ * @param relativePath - The path to resolve; may be absolute or relative
+ * @returns The resolved filesystem path. If the target exists, the returned path is the real (symlink-resolved) path; if the target does not exist, returns the computed resolved path. Returns `null` when the resolved location would lie outside `rootDir`.
+ * @throws Rethrows unexpected filesystem errors (errors other than `ENOENT` or `ENOTDIR`) encountered while resolving real paths.
+ */
 function resolveRepoPath(rootDir: string, relativePath: string): string | null {
   const repoRoot = path.resolve(rootDir);
   const resolved = path.resolve(repoRoot, relativePath);

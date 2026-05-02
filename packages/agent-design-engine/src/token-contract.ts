@@ -99,6 +99,16 @@ const semanticRoles: DesignTokenRole[] = [
   },
 ];
 
+/**
+ * Reads the token source file at the given path and returns its UTF-8 contents.
+ *
+ * @param rootDir - Root directory used to resolve `sourcePath`.
+ * @param sourcePath - Relative path to the token source file.
+ * @param signal - Optional AbortSignal that, when aborted, causes an `AbortError` to be thrown.
+ * @returns The file contents as a UTF-8 string.
+ * @throws AbortError if `signal` is aborted during the read.
+ * @throws DesignEngineError with code `E_DESIGN_TOKEN_CONTRACT_MISSING` and exit code `2` when the file is missing or unreadable.
+ */
 async function readTokenSource(
   rootDir: string,
   sourcePath: string,
@@ -118,6 +128,13 @@ async function readTokenSource(
   }
 }
 
+/**
+ * Create a DesignEngineError indicating a token contract source is missing an expected element.
+ *
+ * @param sourcePath - The relative path to the source file that is missing the expectation
+ * @param expectation - A short description of the expected element or content that is missing
+ * @returns A DesignEngineError with code `E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS` and exitCode `2`
+ */
 function tokenContractAmbiguous(sourcePath: string, expectation: string): DesignEngineError {
   return new DesignEngineError(`Token contract source ${sourcePath} is missing ${expectation}.`, {
     code: "E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS",
@@ -125,10 +142,24 @@ function tokenContractAmbiguous(sourcePath: string, expectation: string): Design
   });
 }
 
+/**
+ * Removes CSS block comments and strips `//` line comments while preserving leading whitespace.
+ *
+ * @param content - The CSS (or CSS-like) text to clean
+ * @returns The input text with `/* ... *\/` block comments removed and `//` line comments stripped, preserving leading whitespace and non-comment content
+ */
 function stripCssComments(content: string): string {
   return content.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|\s)\/\/.*$/gm, "$1");
 }
 
+/**
+ * Remove JavaScript/TypeScript line (`// ...`) and block (`/* ... *\/`) comments while preserving quoted and template-literal content.
+ *
+ * Preserves newlines from removed comments so original line positions remain aligned and keeps escaped quotes inside string/template literals intact.
+ *
+ * @param content - Source JavaScript/TypeScript text to strip comments from
+ * @returns The input text with `//` and `/* */` comments removed while leaving quoted and template-literal content unchanged
+ */
 function stripJsTsComments(content: string): string {
   let result = "";
   let quote: "'" | '"' | "`" | undefined;
@@ -182,6 +213,13 @@ function stripJsTsComments(content: string): string {
   return result;
 }
 
+/**
+ * Verifies the theme CSS file declares the expected runtime CSS variables for all semantic roles.
+ *
+ * @param rootDir - Root directory containing the theme CSS source
+ * @param signal - Optional AbortSignal to cancel the check
+ * @throws DesignEngineError with code `E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS` if a required runtime CSS variable is missing
+ */
 async function assertThemeSource(rootDir: string, signal?: AbortSignal): Promise<void> {
   const content = stripCssComments(await readTokenSource(rootDir, themeSourcePath, signal));
   signal?.throwIfAborted();
@@ -196,6 +234,14 @@ async function assertThemeSource(rootDir: string, signal?: AbortSignal): Promise
   }
 }
 
+/**
+ * Validates the alias-map source contains an exported `tokenAliasMap` and per-category `buildModeMap` entries.
+ *
+ * @param rootDir - Project root directory containing the alias map source
+ * @param signal - Optional AbortSignal to cancel the validation
+ * @throws DesignEngineError with code `E_DESIGN_TOKEN_CONTRACT_MISSING` if the alias-map file is missing or unreadable
+ * @throws DesignEngineError with code `E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS` if the file is missing the expected `tokenAliasMap` export or required category `buildModeMap` entries
+ */
 async function assertAliasMapSource(rootDir: string, signal?: AbortSignal): Promise<void> {
   const content = stripJsTsComments(await readTokenSource(rootDir, aliasMapSourcePath, signal));
   signal?.throwIfAborted();
@@ -211,6 +257,17 @@ async function assertAliasMapSource(rootDir: string, signal?: AbortSignal): Prom
   }
 }
 
+/**
+ * Validates that the DTCG JSON source contains the expected `color` token groups and required modes.
+ *
+ * Reads and parses the DTCG JSON file and verifies it is an object with a `color` group containing each
+ * required alias category, and for each category a non-empty object for each required color mode.
+ *
+ * @param rootDir - Project root directory containing the DTCG source
+ * @param signal - Optional AbortSignal to cancel the operation
+ * @throws DesignEngineError with code `E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS` if the file is missing required structure or groups
+ * @throws DesignEngineError with code `E_DESIGN_TOKEN_CONTRACT_MISSING` if the source cannot be read
+ */
 async function assertDtcgSource(rootDir: string, signal?: AbortSignal): Promise<void> {
   const content = await readTokenSource(rootDir, dtcgSourcePath, signal);
   signal?.throwIfAborted();
@@ -250,6 +307,13 @@ async function assertDtcgSource(rootDir: string, signal?: AbortSignal): Promise<
   }
 }
 
+/**
+ * Validates that the two policy markdown files contain required token policy sections.
+ *
+ * @param rootDir - Path to the repository root containing the policy files
+ * @param signal - Optional AbortSignal used to abort the validation
+ * @throws DesignEngineError with code `E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS` if a required policy section is missing
+ */
 async function assertPolicySources(rootDir: string, signal?: AbortSignal): Promise<void> {
   const [designSource, professionalContractSource] = await Promise.all([
     readTokenSource(rootDir, designSourcePath, signal),
@@ -266,6 +330,15 @@ async function assertPolicySources(rootDir: string, signal?: AbortSignal): Promi
   }
 }
 
+/**
+ * Builds a design token contract by validating required token sources found under the given root directory.
+ *
+ * @param rootDir - Base directory used to resolve and read the expected token source files
+ * @returns A DesignTokenContract configured with mode `"semantic-only"`, derived `allowedRoles`, static `forbiddenTokenPatterns`, and the validated `sourceRefs`
+ * @throws DesignEngineError with code `E_DESIGN_TOKEN_CONTRACT_MISSING` if a required source file is missing or unreadable
+ * @throws DesignEngineError with code `E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS` if a source file is present but fails required structural or content checks
+ * @throws AbortError if the provided `signal` is aborted before or during validation
+ */
 export async function buildDesignTokenContract(
   rootDir: string,
   signal?: AbortSignal,
