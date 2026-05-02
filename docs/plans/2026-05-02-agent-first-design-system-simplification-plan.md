@@ -770,6 +770,55 @@ Reviewer status:
 
 `FORJAMIE.md` update status: complete; Recent Changes includes the P3 prepare-renderer split entry.
 
+### P4 Package Taxonomy Decisions
+
+Working-tree diff identifier: P4 package-taxonomy decision slice, before the P4 phase commit.
+
+Files changed so far:
+
+- `package.json`
+- `README.md`
+- `docs/architecture/PACKAGE_TAXONOMY.md`
+- `docs/architecture/README.md`
+- `docs/architecture/repo-map.md`
+- `packages/effects/src/components/card/holo-card.tsx`
+- `packages/effects/src/components/scroll/scroll-progress.tsx`
+- `packages/effects/src/components/scroll/toc-marker.tsx`
+- `packages/effects/tests/card-tilt.test.tsx`
+- `packages/effects/tests/scroll.test.tsx`
+- `FORJAMIE.md`
+- `docs/plans/2026-05-02-agent-first-design-system-simplification-plan.md`
+
+Source acceptance IDs targeted: SA13, SA14, SA15, SA16, SA22, AC9, AC10, AC12.
+
+Taxonomy decisions:
+
+- `packages/effects` is a first-class product library. The phase fixed its focused TypeScript failures and removed the root typecheck exclusion so `pnpm typecheck` now includes it.
+- `packages/cloudflare-template` remains a template package under `packages/` because generated-source freshness, version-sync, deployment docs, and Cloudflare validation scripts target that path.
+- `packages/astudio-make-template` remains a template package under `packages/` because it is a workspace-packaged starter template with explicit guideline and dependency inputs.
+- `packages/validation-prototype` remains a validation fixture behind `pnpm validation-prototype:build` and `pnpm validation-prototype:analyze`; production source must not import it.
+- `apps/` remains a README-only navigation index. Canonical app implementation stays under `platforms/**`.
+- The HE fix-bugs pass found missing direct coverage for `ScrollProgress`, `HoloCard` tilt intensity, and `TocMarker`; this phase added focused regression tests and fixed selector-target scroll handling before closing P4.
+
+Validation commands:
+
+- `pnpm -C packages/effects type-check` -> fail before the effects fixes, then pass.
+- `pnpm -C packages/effects test` -> pass; 6 files, 40 tests.
+- `pnpm typecheck` -> pass; proved the root typecheck filter can be removed.
+- `pnpm validation-prototype:build` -> pass.
+- `pnpm test:policy` -> pass; existing guidance warnings remain non-blocking.
+- `pnpm docs:lint` -> pass.
+- `git diff --check` -> pass.
+- `pnpm build` -> pass; 10 successful pipeline steps, 0 failed, 0 skipped.
+
+Reviewer status:
+
+- Simplify pass -> pass; no behavior-preserving simplification required beyond keeping the taxonomy decision slice scoped.
+- HE code-review readiness pass -> pass; residual effects coverage risk was handed to the fix-bugs pass and corrected with focused tests.
+- HE fix-bugs pass -> pass after fixes; reproduced the missing coverage risk, corrected selector-target scroll behavior, and added focused effects tests.
+
+`FORJAMIE.md` update status: complete; Recent Changes includes the P4 package-taxonomy entry.
+
 ## Linear Traceability
 
 No Linear issue was supplied with this request.

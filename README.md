@@ -32,6 +32,9 @@ A cross-platform UI workbench for building ChatGPT-style interfaces across multi
 - `packages/widgets` - Standalone widget bundles for ChatGPT
 - `packages/cloudflare-template` - Cloudflare Workers deployment template for MCP
 
+See `docs/architecture/PACKAGE_TAXONOMY.md` before moving or reclassifying
+template packages, validation fixtures, or app-pointer folders.
+
 ## Development Surfaces
 
 - `platforms/web/apps/web` - Widget Gallery for visual testing and MCP widget builds

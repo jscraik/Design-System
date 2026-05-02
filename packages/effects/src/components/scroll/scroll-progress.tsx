@@ -5,7 +5,7 @@
  * Reference: https://x.com/jh3yy/status/2016903936658030967
  */
 
-import { forwardRef, type HTMLAttributes, useEffect, useState } from "react";
+import { forwardRef, type HTMLAttributes, useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "../../utils/cn";
 
 export interface ScrollProgressProps extends HTMLAttributes<HTMLDivElement> {
@@ -39,40 +39,54 @@ export const ScrollProgress = forwardRef<HTMLDivElement, ScrollProgressProps>(
     { orientation = "horizontal", native = true, target = "document", className, ...props },
     ref,
   ) => {
+    const localRef = useRef<HTMLDivElement>(null);
     const [progress, setProgress] = useState(0);
+    const setRefs = useCallback(
+      (node: HTMLDivElement | null) => {
+        localRef.current = node;
+        if (typeof ref === "function") {
+          ref(node);
+        } else if (ref) {
+          ref.current = node;
+        }
+      },
+      [ref],
+    );
 
     // Fallback JavaScript-based scroll tracking
     useEffect(() => {
       if (native) return;
 
+      const getScrollTarget = () =>
+        target === "document"
+          ? document.documentElement
+          : target === "parent"
+            ? localRef.current?.parentElement
+            : document.querySelector(target);
+
       const handleScroll = () => {
-        const scrollTarget =
-          target === "document"
-            ? document.documentElement
-            : target === "parent"
-              ? ref?.current?.parentElement
-              : document.querySelector(target);
+        const scrollTarget = getScrollTarget();
 
         if (!scrollTarget) return;
 
         const scrollTop = scrollTarget.scrollTop;
         const scrollHeight = scrollTarget.scrollHeight - scrollTarget.clientHeight;
-        const percentage = (scrollTop / scrollHeight) * 100;
+        const percentage = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
         setProgress(percentage);
       };
 
-      const scrollTarget = target === "document" ? window : ref?.current?.parentElement;
-      scrollTarget?.addEventListener("scroll", handleScroll);
+      const scrollEventTarget = target === "document" ? window : getScrollTarget();
+      scrollEventTarget?.addEventListener("scroll", handleScroll);
       handleScroll();
 
       return () => {
-        scrollTarget?.removeEventListener("scroll", handleScroll);
+        scrollEventTarget?.removeEventListener("scroll", handleScroll);
       };
-    }, [native, target, ref]);
+    }, [native, target]);
 
     return (
       <div
-        ref={ref}
+        ref={setRefs}
         className={cn(
           "ds-scroll-progress",
           "relative overflow-hidden rounded-full bg-muted",

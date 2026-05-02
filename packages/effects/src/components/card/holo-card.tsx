@@ -119,7 +119,7 @@ export function HoloCard({
   size = "default",
   colors = "neon",
   customColors,
-  _tiltIntensity = 0.15,
+  tiltIntensity = 0.15,
   hoverScale = 1.02,
   disableTilt = false,
   disableShimmer = false,
@@ -137,8 +137,8 @@ export function HoloCard({
   const mouseY = useMotionValue(0);
 
   // Transform mouse position to rotation values
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], [10 * tiltIntensity, -10 * tiltIntensity]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10 * tiltIntensity, 10 * tiltIntensity]);
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     if (disableTilt || prefersReducedMotion || !ref.current) return;

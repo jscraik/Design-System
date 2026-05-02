@@ -1,7 +1,19 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { createRef } from "react";
 import { describe, expect, it, vi } from "vitest";
 
-import { StickyReveal } from "../src/components/scroll";
+import { ScrollProgress, StickyReveal, TocMarker } from "../src/components/scroll";
+
+function setScrollMetrics(
+  element: Element,
+  metrics: { scrollTop: number; scrollHeight: number; clientHeight: number },
+) {
+  Object.defineProperties(element, {
+    scrollTop: { configurable: true, value: metrics.scrollTop },
+    scrollHeight: { configurable: true, value: metrics.scrollHeight },
+    clientHeight: { configurable: true, value: metrics.clientHeight },
+  });
+}
 
 describe("StickyReveal", () => {
   it("should render children", () => {
@@ -91,5 +103,62 @@ describe("StickyReveal", () => {
     );
     const container = screen.getByText("Content").closest("div");
     expect(container).toHaveClass("transition-all");
+  });
+});
+
+describe("ScrollProgress", () => {
+  it("tracks parent scroll progress in JavaScript fallback mode", () => {
+    const { container } = render(
+      <div data-testid="scroll-parent">
+        <ScrollProgress native={false} target="parent" />
+      </div>,
+    );
+    const parent = screen.getByTestId("scroll-parent");
+    setScrollMetrics(parent, { scrollTop: 50, scrollHeight: 200, clientHeight: 100 });
+
+    fireEvent.scroll(parent);
+
+    const indicator = container.querySelector(".bg-foreground");
+    expect(indicator).toHaveStyle({ width: "50%" });
+  });
+
+  it("tracks selector targets in JavaScript fallback mode", () => {
+    const { container } = render(
+      <>
+        <div data-testid="custom-scroll-target" className="scroll-source" />
+        <ScrollProgress native={false} target=".scroll-source" />
+      </>,
+    );
+    const scrollTarget = screen.getByTestId("custom-scroll-target");
+    setScrollMetrics(scrollTarget, { scrollTop: 25, scrollHeight: 125, clientHeight: 25 });
+
+    fireEvent.scroll(scrollTarget);
+
+    const indicator = container.querySelector(".bg-foreground");
+    expect(indicator).toHaveStyle({ width: "25%" });
+  });
+
+  it("supports object refs and function refs", () => {
+    const objectRef = createRef<HTMLDivElement>();
+    const functionRef = vi.fn();
+    const { rerender } = render(<ScrollProgress ref={objectRef} />);
+
+    expect(objectRef.current).toHaveClass("ds-scroll-progress");
+
+    rerender(<ScrollProgress ref={functionRef} />);
+    expect(functionRef).toHaveBeenCalledWith(expect.any(HTMLDivElement));
+  });
+});
+
+describe("TocMarker", () => {
+  it("applies marker style variables and position classes", () => {
+    const { container } = render(<TocMarker color="red" position="right" size="4px" />);
+    const marker = container.firstElementChild;
+
+    expect(marker).toHaveClass("right-0");
+    expect(marker).toHaveStyle({
+      "--marker-size": "4px",
+      "--marker-color": "red",
+    });
   });
 });
