@@ -25,7 +25,7 @@ Use this workflow when an agent is asked to design, redesign, restyle, or review
 astudio design prepare --surface <path> --json
 ```
 
-2. In this repo, the clean-checkout convenience wrapper is:
+1. In this repo, the clean-checkout convenience wrapper is:
 
 ```bash
 pnpm --silent agent-design:prepare --surface <path>
@@ -33,11 +33,13 @@ pnpm --silent agent-design:prepare --surface <path>
 
 The wrapper is build-backed setup. It may build `packages/agent-design-engine`, `packages/design-system-guidance`, `packages/skill-ingestion`, and `packages/cli` before invoking the CLI. The read-only operation contract belongs to `astudio design prepare` itself once the CLI is available. Use `pnpm --silent` for JSON capture, because plain `pnpm` prints lifecycle banners before script output.
 
-3. If `safeForAutomaticImplementation` is `false`, stop and follow `openDecisions`. Do not invent components, token roles, states, examples, or proposal outcomes.
-4. If implementation is safe, use the returned `recommendedRoutes`, `designTokenContract`, `requiredStates`, `relevantExamples`, `forbiddenPatterns`, and `validationCommands` as the implementation brief.
-5. Edit the UI.
-6. Run the returned read-only validation commands that apply to the changed surface.
-7. If validation fails or a proposal-required stop appears, fix the underlying design-system evidence or open the proposal/manual decision path.
+1. If `safeForAutomaticImplementation` is `false`, stop and follow `openDecisions`. Do not invent components, token roles, states, examples, or proposal outcomes.
+1. If implementation is safe, use the returned `recommendedRoutes`, `designTokenContract`, `requiredStates`, `relevantExamples`, `forbiddenPatterns`, and `validationCommands` as the implementation brief.
+1. Edit the UI.
+1. Run the returned read-only validation commands that apply to the changed surface.
+1. Before PR handoff, run `pnpm agent-design:prepare:changed`. It builds the local CLI dependencies, checks changed `.tsx`/`.jsx` UI surfaces with the read-only prepare command, and fails if any surface is unsafe or missing prepare evidence. Use `pnpm agent-design:prepare:changed -- --surface <path>` for a single surface.
+1. CI reruns the changed-surface gate on pull requests in the web platform lane. If it fails, treat that as a missing or unsafe prepare contract, not as a generic CI failure.
+1. If validation fails or a proposal-required stop appears, fix the underlying design-system evidence or open the proposal/manual decision path.
 
 Supporting commands such as `astudio design lint`, `astudio design export`, `astudio design components`, `astudio design coverage`, and `astudio design propose-abstraction` are diagnostics. They are not the normal happy path before UI edits.
 

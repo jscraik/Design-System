@@ -46,7 +46,6 @@ export type {
   PreparePayload,
   PrepareSourceDigest,
   PrepareSurfaceScope,
-  PrepareTiming,
   ProfileSource,
   ProposalGateDiagnostic,
   ProposalGateResult,

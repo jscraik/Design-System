@@ -533,7 +533,6 @@ test("prepare command schema rejects missing north-star payload fields", async (
     "safeForAutomaticImplementation",
     "recommendedRoutes",
     "designTokenContract",
-    "timing",
     "sourceDigests",
     "ruleSourceDigests",
     "coverageMatrixDigest",
@@ -562,6 +561,7 @@ test("prepare command schema rejects missing north-star payload fields", async (
   );
 
   const invalidRoute = cloneJson(payload);
+  assert.ok(invalidRoute.data.recommendedRoutes[0], "prepare fixture should include a route");
   invalidRoute.data.recommendedRoutes[0].unexpectedFutureDrift = { bad: true };
   assert.equal(
     validateDesignCommandEnvelope(invalidRoute),
@@ -576,26 +576,56 @@ test("prepare command schema rejects missing north-star payload fields", async (
     false,
     "prepare payload with incomplete open decisions should fail schema validation",
   );
+
+  for (const field of ["packageScript", "expectedOutcome", "timeoutClass"]) {
+    const invalidTopLevelCommand = cloneJson(payload);
+    delete invalidTopLevelCommand.data.validationCommands[0][field];
+    assert.equal(
+      validateDesignCommandEnvelope(invalidTopLevelCommand),
+      false,
+      `prepare payload command without ${field} should fail schema validation`,
+    );
+
+    const invalidRouteCommand = cloneJson(payload);
+    delete invalidRouteCommand.data.recommendedRoutes[0].validationCommands[0][field];
+    assert.equal(
+      validateDesignCommandEnvelope(invalidRouteCommand),
+      false,
+      `prepare route command without ${field} should fail schema validation`,
+    );
+  }
 });
 
 test("root prepare wrapper builds CLI dependencies before prepare", () => {
   const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"));
   const prepareScript = packageJson.scripts["agent-design:prepare"];
+  const prebuildScript = packageJson.scripts["agent-design:cli:prebuild"];
   assert.equal(typeof prepareScript, "string");
+  assert.equal(typeof prebuildScript, "string");
   assert.equal(
     prepareScript.includes("--surface"),
     false,
     "root prepare wrapper must not bake in a default surface",
   );
 
-  const expectedSegments = [
+  const expectedPrebuildSegments = [
     "pnpm agent-design:build",
     "pnpm design-system-guidance:build",
     "pnpm skill-ingestion:build",
     "pnpm -C packages/cli build",
-    "node packages/cli/dist/index.js design prepare --json",
   ];
   let previousIndex = -1;
+  for (const segment of expectedPrebuildSegments) {
+    const index = prebuildScript.indexOf(segment);
+    assert.ok(index > previousIndex, `${segment} must appear after the prior prebuild step`);
+    previousIndex = index;
+  }
+
+  const expectedSegments = [
+    "pnpm agent-design:cli:prebuild",
+    "node packages/cli/dist/index.js design prepare --json",
+  ];
+  previousIndex = -1;
   for (const segment of expectedSegments) {
     const index = prepareScript.indexOf(segment);
     assert.ok(index > previousIndex, `${segment} must appear after the prior wrapper step`);
@@ -606,6 +636,55 @@ test("root prepare wrapper builds CLI dependencies before prepare", () => {
     packageJson.scripts["agent-design:prepare:smoke"],
     "pnpm --silent agent-design:prepare --surface packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
   );
+});
+
+test("root changed-surface prepare gate builds dependencies before evidence check", () => {
+  const packageJson = JSON.parse(fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"));
+  const prepareChangedScript = packageJson.scripts["agent-design:prepare:changed"];
+  const prebuildScript = packageJson.scripts["agent-design:cli:prebuild"];
+  assert.equal(typeof prepareChangedScript, "string");
+  assert.equal(typeof prebuildScript, "string");
+
+  const expectedPrebuildSegments = [
+    "pnpm agent-design:build",
+    "pnpm design-system-guidance:build",
+    "pnpm skill-ingestion:build",
+    "pnpm -C packages/cli build",
+  ];
+  let previousIndex = -1;
+  for (const segment of expectedPrebuildSegments) {
+    const index = prebuildScript.indexOf(segment);
+    assert.ok(index > previousIndex, `${segment} must appear after the prior prebuild step`);
+    previousIndex = index;
+  }
+
+  const expectedSegments = [
+    "pnpm agent-design:cli:prebuild",
+    "node scripts/check-agent-design-prepare-evidence.mjs",
+  ];
+  previousIndex = -1;
+  for (const segment of expectedSegments) {
+    const index = prepareChangedScript.indexOf(segment);
+    assert.ok(
+      index > previousIndex,
+      `${segment} must appear after the prior prepare evidence step`,
+    );
+    previousIndex = index;
+  }
+
+  const gateSource = fs.readFileSync(
+    path.join(repoRoot, "scripts", "check-agent-design-prepare-evidence.mjs"),
+    "utf8",
+  );
+  assert.match(gateSource, /packages\/ui\/src\//);
+  assert.match(gateSource, /platforms\/web\/apps\/web\/src\//);
+  assert.match(gateSource, /safeForAutomaticImplementation === true/);
+  assert.match(gateSource, /surface is outside the repository/);
+
+  const ciWorkflow = fs.readFileSync(path.join(repoRoot, ".github", "workflows", "ci.yml"), "utf8");
+  assert.match(ciWorkflow, /Agent design prepare evidence \(web platform PR only\)/);
+  assert.match(ciWorkflow, /AGENT_DESIGN_PREPARE_BASE: origin\/\$\{\{ github\.base_ref \}\}/);
+  assert.match(ciWorkflow, /pnpm agent-design:prepare:changed/);
 });
 
 test("design command error fixtures expose stable recovery payloads", async (t) => {
