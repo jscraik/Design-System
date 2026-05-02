@@ -66,6 +66,7 @@ pnpm typecheck
 pnpm build
 pnpm test:policy
 pnpm docs:lint
+pnpm validation-prototype:ban-check
 git diff --check
 ```
 

@@ -337,17 +337,23 @@ export interface PrepareOpenDecision {
   nextAction: "stop" | "escalate" | "diagnose";
 }
 
-export interface PrepareNextAction {
-  kind:
-    | "implement"
-    | "stop_for_proposal"
-    | "stop_for_manual_decision"
-    | "stop_for_missing_route"
-    | "stop_for_validation_setup";
-  reasonCode?: string;
-  instruction: string;
-  evidenceRefs: string[];
-}
+export type PrepareNextAction =
+  | {
+      kind: "implement";
+      instruction: string;
+      evidenceRefs: string[];
+      reasonCode?: never;
+    }
+  | {
+      kind:
+        | "stop_for_proposal"
+        | "stop_for_manual_decision"
+        | "stop_for_missing_route"
+        | "stop_for_validation_setup";
+      reasonCode: string;
+      instruction: string;
+      evidenceRefs: string[];
+    };
 
 export interface PrepareDoNotInventGuidance {
   thing: string;

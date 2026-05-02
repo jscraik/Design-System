@@ -59,11 +59,11 @@ export const TocMarker = forwardRef<HTMLDivElement, TocMarkerProps>(
   ) => {
     const markerStyle: CSSProperties &
       Record<"--marker-size" | "--marker-color" | "positionAnchor", string> = {
-      ...style,
       "--marker-size": size,
       "--marker-color": color,
       backgroundColor: "var(--marker-color)",
       positionAnchor: "--active",
+      ...style,
     };
 
     return (

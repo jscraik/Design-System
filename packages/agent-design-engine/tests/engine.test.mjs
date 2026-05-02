@@ -843,7 +843,7 @@ test("builds prepare payload for protected product page surfaces", async () => {
   assert.equal(payload.recommendedRoutes[0].canonicalNeed, "page_shell");
   assert.equal(payload.recommendedRoutes[0].confidence.level, "medium");
   assert.ok(payload.recommendedRoutes[0].confidence.because.length > 0);
-  assert.equal(payload.recommendedRoutes[0].usageGuidance.maturity, "acceptable");
+  assert.equal(payload.recommendedRoutes[0].usageGuidance.maturity, "legacy");
   assert.ok(payload.recommendedRoutes[0].usageGuidance.copy.length > 0);
   assert.ok(payload.doNotInvent.some((guidance) => guidance.thing.includes("component")));
   assert.ok(payload.forbiddenPatterns.some((pattern) => pattern.includes("h-screen")));
@@ -892,6 +892,21 @@ test("builds prepare payload for protected product page surfaces", async () => {
     payload.designTokenContract.sourceRefs.includes(
       "docs/design-system/PROFESSIONAL_UI_CONTRACT.md",
     ),
+  );
+});
+
+test("build prepare payload rejects duplicate gold example source paths", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const registry = readFixtureJson(fixtureRoot, "docs/design-system/GOLD_EXAMPLES.json");
+  registry.examples.push({ ...registry.examples[0] });
+  writeFixtureJson(fixtureRoot, "docs/design-system/GOLD_EXAMPLES.json", registry);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    {
+      code: "E_DESIGN_GOLD_EXAMPLES_SCHEMA",
+      exitCode: 2,
+    },
   );
 });
 

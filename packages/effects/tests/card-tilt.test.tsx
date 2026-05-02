@@ -2,6 +2,7 @@ import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 const transformCalls = vi.hoisted(() => [] as Array<[unknown, number[], number[]]>);
+const hoverCalls = vi.hoisted(() => [] as unknown[]);
 
 vi.mock("motion/react", async () => {
   const React = await vi.importActual<typeof import("react")>("react");
@@ -11,11 +12,14 @@ vi.mock("motion/react", async () => {
       div: React.forwardRef<
         HTMLDivElement,
         React.HTMLAttributes<HTMLDivElement> & { whileHover?: unknown }
-      >(({ children, whileHover: _whileHover, ...props }, ref) => (
-        <div ref={ref} {...props}>
-          {children}
-        </div>
-      )),
+      >(({ children, whileHover, ...props }, ref) => {
+        hoverCalls.push(whileHover);
+        return (
+          <div ref={ref} {...props}>
+            {children}
+          </div>
+        );
+      }),
     },
     useMotionValue: () => ({ set: vi.fn() }),
     useTransform: (value: unknown, input: number[], output: number[]) => {
@@ -49,4 +53,16 @@ describe("HoloCard tilt", () => {
       [-10, 10],
     ]);
   });
+
+  it("falls back to the default hover scale for invalid values", () => {
+    hoverCalls.length = 0;
+
+    render(<HoloCard hoverScale={Number.POSITIVE_INFINITY}>Hover</HoloCard>);
+
+    assertHoverScale(hoverCalls.at(-1), 1.02);
+  });
 });
+
+function assertHoverScale(value: unknown, expected: number): void {
+  expect(value).toMatchObject({ scale: expected });
+}

@@ -197,6 +197,11 @@ function parseGoldExamples(value: unknown): GoldExampleRegistry {
     if (typeof entry.sourcePath !== "string" || entry.sourcePath.length === 0) {
       throw goldExampleSchemaError(`Gold examples entry ${index}.sourcePath must be a string.`);
     }
+    if (examples.has(entry.sourcePath)) {
+      throw goldExampleSchemaError(
+        `Gold examples entry ${index}.sourcePath duplicates ${entry.sourcePath}.`,
+      );
+    }
     if (typeof entry.purpose !== "string" || entry.purpose.length === 0) {
       throw goldExampleSchemaError(`Gold examples entry ${index}.purpose must be a string.`);
     }
@@ -1351,13 +1356,13 @@ function buildExampleUsageGuidance(
     matchedExamples.flatMap((example) => example.deferredStates ?? []),
   );
   const maturity: PrepareExampleUsageGuidance["maturity"] =
-    matchedExamples.length > 0 &&
-    !hasUnregisteredExamples &&
-    matchedExamples.every((example) => example.promotable !== false)
-      ? "gold"
-      : route.routeMaturity === "provisional"
-        ? "legacy"
-        : "acceptable";
+    matchedExamples.length === 0
+      ? "legacy"
+      : !hasUnregisteredExamples && matchedExamples.every((example) => example.promotable !== false)
+        ? "gold"
+        : route.routeMaturity === "provisional" || hasUnregisteredExamples
+          ? "legacy"
+          : "acceptable";
 
   return {
     copy: [

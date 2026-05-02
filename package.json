@@ -51,6 +51,7 @@
     "harness:pr-pipeline": "python3 scripts/harness_pr_pipeline.py",
     "validation-prototype:build": "pnpm -C packages/validation-prototype build",
     "validation-prototype:analyze": "pnpm -C packages/validation-prototype analyze",
+    "validation-prototype:ban-check": "node scripts/check-validation-prototype-imports.mjs",
     "validate:tokens": "pnpm -C packages/tokens validate",
     "tokens:validate": "pnpm validate:tokens",
     "mcp:dev": "pnpm -C platforms/mcp dev",

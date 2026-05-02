@@ -34,7 +34,11 @@ import { runPnpm } from "../utils/exec.js";
 import { createEnvelope, outputJson, outputPlain } from "../utils/output.js";
 
 const DEFAULT_DESIGN_FILE = "DESIGN.md";
+const prepareFormats = ["json", "brief", "pr-evidence"] as const;
 type PrepareFormat = "json" | "brief" | "pr-evidence";
+const exportFormats = ["tailwind@4", "dtcg@2025", "json@agent-design.v1"] as const;
+const prepareFormatSet = new Set<string>(prepareFormats);
+const exportFormatSet = new Set<string>(exportFormats);
 type DesignCommandKind =
   | "astudio.design.lint.v1"
   | "astudio.design.diff.v1"
@@ -574,7 +578,7 @@ function exportOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
   return cmd
     .option("file", { type: "string" })
     .option("format", {
-      choices: ["tailwind@4", "dtcg@2025", "json@agent-design.v1"] as const,
+      choices: exportFormats,
       demandOption: true,
     })
     .option("scope", { choices: ["root", "nearest"] as const })
@@ -633,11 +637,35 @@ function doctorOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
 function prepareOptions(cmd: DesignOptionBuilder): DesignOptionBuilder {
   return cmd
     .option("surface", { type: "string", demandOption: true })
-    .option("format", { choices: ["json", "brief", "pr-evidence"] as const });
+    .option("format", { choices: prepareFormats });
+}
+
+function isPrepareFormat(value: unknown): value is PrepareFormat {
+  return typeof value === "string" && prepareFormatSet.has(value);
+}
+
+function isExportFormat(value: unknown): value is ExportFormat {
+  return typeof value === "string" && exportFormatSet.has(value);
 }
 
 function prepareFormat(argv: DesignArgs): PrepareFormat {
-  return (argv.format ?? "json") as PrepareFormat;
+  const format = argv.format ?? "json";
+  if (isPrepareFormat(format)) return format;
+  throw new CliError(`Unsupported design prepare format: ${String(format)}.`, {
+    code: ERROR_CODES.usage,
+    exitCode: EXIT_CODES.usage,
+    hint: `Use one of: ${prepareFormats.join(", ")}.`,
+  });
+}
+
+function exportFormat(argv: DesignArgs): ExportFormat {
+  const format = argv.format;
+  if (isExportFormat(format)) return format;
+  throw new CliError(`Unsupported design export format: ${String(format)}.`, {
+    code: ERROR_CODES.usage,
+    exitCode: EXIT_CODES.usage,
+    hint: `Use one of: ${exportFormats.join(", ")}.`,
+  });
 }
 
 function assertPrepareFormatMode(argv: DesignArgs, format: PrepareFormat): void {
@@ -944,10 +972,7 @@ export function designCommand(yargs: Argv): Argv {
               hint: "Run astudio design lint --file DESIGN.md --json and fix error findings.",
             });
           }
-          const result = exportDesignContract(
-            lintResult.contract,
-            (argv.format ?? "json@agent-design.v1") as ExportFormat,
-          );
+          const result = exportDesignContract(lintResult.contract, exportFormat(argv));
           if (argv.out) {
             requireWrite(argv, "design export --out");
             await writeFile(
