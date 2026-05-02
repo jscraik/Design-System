@@ -73,7 +73,8 @@ git diff --check
 Focused package changes should also run the package-local command that proves the
 decision. For example, changes to `packages/effects` should run
 `pnpm -C packages/effects type-check`, and changes to the tree-shaking fixture
-should run `pnpm validation-prototype:build`.
+should run `pnpm validation-prototype:build` and
+`pnpm validation-prototype:analyze`.
 
 ## Change Rules
 

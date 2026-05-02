@@ -18,6 +18,48 @@ const ignoredDirectories = new Set([
 ]);
 const scannedExtensions = new Set([".js", ".jsx", ".mjs", ".cjs", ".ts", ".tsx", ".json"]);
 const forbiddenPatterns = ["packages/validation-prototype", "design-studio-tree-shaking-prototype"];
+const dependencyFields = [
+  "dependencies",
+  "devDependencies",
+  "peerDependencies",
+  "optionalDependencies",
+];
+
+function extractModuleSpecifiers(content) {
+  const specifiers = [];
+  const patterns = [
+    /\bimport\s+(?:[^"']*?\s+from\s+)?["']([^"']+)["']/gs,
+    /\bexport\s+(?:[^"']*?\s+from\s+)["']([^"']+)["']/gs,
+    /\bimport\s*\(\s*["']([^"']+)["']\s*\)/gs,
+    /\brequire\s*\(\s*["']([^"']+)["']\s*\)/gs,
+  ];
+  for (const pattern of patterns) {
+    for (const match of content.matchAll(pattern)) {
+      specifiers.push(match[1]);
+    }
+  }
+  return specifiers;
+}
+
+function extractManifestDependencySpecifiers(content, relativePath) {
+  if (path.basename(relativePath) !== "package.json") {
+    return [];
+  }
+  const manifest = JSON.parse(content);
+  const specifiers = [];
+  for (const field of dependencyFields) {
+    const dependencies = manifest[field];
+    if (!dependencies || typeof dependencies !== "object" || Array.isArray(dependencies)) {
+      continue;
+    }
+    specifiers.push(...Object.keys(dependencies));
+  }
+  return specifiers;
+}
+
+function isForbiddenSpecifier(specifier) {
+  return forbiddenPatterns.some((pattern) => specifier.includes(pattern));
+}
 
 async function* walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -40,10 +82,14 @@ for (const root of productRoots) {
   for await (const filePath of walk(rootPath)) {
     const relativePath = path.relative(repoRoot, filePath);
     const content = await readFile(filePath, "utf8");
-    for (const pattern of forbiddenPatterns) {
-      if (content.includes(pattern)) {
+    const specifiers = [
+      ...extractModuleSpecifiers(content),
+      ...extractManifestDependencySpecifiers(content, relativePath),
+    ];
+    for (const specifier of specifiers) {
+      if (isForbiddenSpecifier(specifier)) {
         violations.push(
-          `${relativePath}: contains forbidden validation fixture reference ${pattern}`,
+          `${relativePath}: contains forbidden validation fixture import ${specifier}`,
         );
       }
     }

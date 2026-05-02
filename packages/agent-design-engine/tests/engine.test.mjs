@@ -910,6 +910,21 @@ test("build prepare payload rejects duplicate gold example source paths", async 
   );
 });
 
+test("build prepare payload rejects blank gold example strings", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const registry = readFixtureJson(fixtureRoot, "docs/design-system/GOLD_EXAMPLES.json");
+  registry.examples[0].sourcePath = "   ";
+  writeFixtureJson(fixtureRoot, "docs/design-system/GOLD_EXAMPLES.json", registry);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    {
+      code: "E_DESIGN_GOLD_EXAMPLES_SCHEMA",
+      exitCode: 2,
+    },
+  );
+});
+
 test("build prepare payload honors aborted signals", async () => {
   const controller = new AbortController();
   controller.abort();

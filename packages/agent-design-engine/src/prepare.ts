@@ -175,10 +175,13 @@ function goldExampleSchemaError(message: string): DesignEngineError {
 }
 
 function parseStringArray(value: unknown, fieldPath: string): string[] {
-  if (!Array.isArray(value) || !value.every((entry) => typeof entry === "string")) {
-    throw goldExampleSchemaError(`${fieldPath} must be an array of strings.`);
+  if (
+    !Array.isArray(value) ||
+    !value.every((entry) => typeof entry === "string" && entry.trim().length > 0)
+  ) {
+    throw goldExampleSchemaError(`${fieldPath} must be an array of non-empty strings.`);
   }
-  return value;
+  return value.map((entry) => entry.trim());
 }
 
 function parseGoldExamples(value: unknown): GoldExampleRegistry {
@@ -194,15 +197,17 @@ function parseGoldExamples(value: unknown): GoldExampleRegistry {
     if (!isObject(entry)) {
       throw goldExampleSchemaError(`Gold examples entry ${index} must be an object.`);
     }
-    if (typeof entry.sourcePath !== "string" || entry.sourcePath.length === 0) {
+    const sourcePath = typeof entry.sourcePath === "string" ? entry.sourcePath.trim() : "";
+    if (sourcePath.length === 0) {
       throw goldExampleSchemaError(`Gold examples entry ${index}.sourcePath must be a string.`);
     }
-    if (examples.has(entry.sourcePath)) {
+    if (examples.has(sourcePath)) {
       throw goldExampleSchemaError(
-        `Gold examples entry ${index}.sourcePath duplicates ${entry.sourcePath}.`,
+        `Gold examples entry ${index}.sourcePath duplicates ${sourcePath}.`,
       );
     }
-    if (typeof entry.purpose !== "string" || entry.purpose.length === 0) {
+    const purpose = typeof entry.purpose === "string" ? entry.purpose.trim() : "";
+    if (purpose.length === 0) {
       throw goldExampleSchemaError(`Gold examples entry ${index}.purpose must be a string.`);
     }
     const coveredStates = parseStringArray(entry.coveredStates, `examples[${index}].coveredStates`);
@@ -214,9 +219,9 @@ function parseGoldExamples(value: unknown): GoldExampleRegistry {
       throw goldExampleSchemaError(`Gold examples entry ${index}.promotable must be a boolean.`);
     }
 
-    examples.set(entry.sourcePath, {
-      sourcePath: entry.sourcePath,
-      purpose: entry.purpose,
+    examples.set(sourcePath, {
+      sourcePath,
+      purpose,
       coveredStates,
       ...(deferredStates ? { deferredStates } : {}),
       ...(typeof entry.promotable === "boolean" ? { promotable: entry.promotable } : {}),
