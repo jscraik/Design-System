@@ -128,6 +128,10 @@
         },
         "blockedByDefault": {
           "type": "boolean"
+        },
+        "ifFails": {
+          "type": "string",
+          "minLength": 1
         }
       }
     },
@@ -140,7 +144,8 @@
         "reason",
         "packageScript",
         "expectedOutcome",
-        "timeoutClass"
+        "timeoutClass",
+        "ifFails"
       ],
       "properties": {
         "command": {
@@ -167,6 +172,117 @@
         },
         "blockedByDefault": {
           "type": "boolean"
+        },
+        "ifFails": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "prepareNextAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "instruction", "evidenceRefs"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "implement",
+            "stop_for_proposal",
+            "stop_for_manual_decision",
+            "stop_for_missing_route",
+            "stop_for_validation_setup"
+          ]
+        },
+        "reasonCode": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instruction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "prepareDoNotInvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["thing", "instead", "sourceRefs"],
+      "properties": {
+        "thing": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instead": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sourceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "routeConfidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "because"],
+      "properties": {
+        "level": {
+          "enum": ["high", "medium", "low"]
+        },
+        "because": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "exampleUsageGuidance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["copy", "doNotCopy", "proves", "maturity"],
+      "properties": {
+        "copy": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "doNotCopy": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "proves": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "maturity": {
+          "enum": ["gold", "acceptable", "legacy", "deferred"]
         }
       }
     },
@@ -301,7 +417,9 @@
         "lifecycleEntry",
         "coverageEntry",
         "matchedNeed",
-        "matchedAlias"
+        "matchedAlias",
+        "confidence",
+        "usageGuidance"
       ],
       "properties": {
         "need": {
@@ -392,6 +510,12 @@
         },
         "matchedAlias": {
           "type": ["string", "null"]
+        },
+        "confidence": {
+          "$ref": "#/definitions/routeConfidence"
+        },
+        "usageGuidance": {
+          "$ref": "#/definitions/exampleUsageGuidance"
         }
       }
     },
@@ -423,6 +547,7 @@
         "kind",
         "ok",
         "safeForAutomaticImplementation",
+        "nextAction",
         "resolvedDesignFile",
         "guidanceConfigPath",
         "designContractMode",
@@ -431,6 +556,7 @@
         "surfaceKind",
         "recommendedRoutes",
         "designTokenContract",
+        "doNotInvent",
         "requiredStates",
         "forbiddenPatterns",
         "relevantExamples",
@@ -454,6 +580,9 @@
         },
         "safeForAutomaticImplementation": {
           "type": "boolean"
+        },
+        "nextAction": {
+          "$ref": "#/definitions/prepareNextAction"
         },
         "resolvedDesignFile": {
           "type": "string",
@@ -485,6 +614,13 @@
         },
         "designTokenContract": {
           "$ref": "#/definitions/designTokenContract"
+        },
+        "doNotInvent": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/prepareDoNotInvent"
+          }
         },
         "requiredStates": {
           "type": "array",

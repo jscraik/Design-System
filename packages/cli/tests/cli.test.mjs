@@ -531,8 +531,10 @@ test("prepare command schema rejects missing north-star payload fields", async (
 
   for (const field of [
     "safeForAutomaticImplementation",
+    "nextAction",
     "recommendedRoutes",
     "designTokenContract",
+    "doNotInvent",
     "sourceDigests",
     "ruleSourceDigests",
     "coverageMatrixDigest",
@@ -577,7 +579,7 @@ test("prepare command schema rejects missing north-star payload fields", async (
     "prepare payload with incomplete open decisions should fail schema validation",
   );
 
-  for (const field of ["packageScript", "expectedOutcome", "timeoutClass"]) {
+  for (const field of ["packageScript", "expectedOutcome", "timeoutClass", "ifFails"]) {
     const invalidTopLevelCommand = cloneJson(payload);
     delete invalidTopLevelCommand.data.validationCommands[0][field];
     assert.equal(

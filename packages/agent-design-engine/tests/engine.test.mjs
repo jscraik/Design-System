@@ -63,6 +63,7 @@ function prepareFixtureRoot() {
     ".design-system-guidance.json",
     "DESIGN.md",
     "package.json",
+    "docs/design-system/GOLD_EXAMPLES.json",
     "docs/design-system/PROFESSIONAL_UI_CONTRACT.md",
     "packages/tokens/src/alias-map.ts",
     "packages/tokens/src/tokens/index.dtcg.json",
@@ -832,10 +833,17 @@ test("builds prepare payload for protected product page surfaces", async () => {
   assert.equal(payload.kind, "astudio.design.prepare.v1");
   assert.equal(payload.ok, true);
   assert.equal(payload.safeForAutomaticImplementation, true);
+  assert.equal(payload.nextAction.kind, "implement");
+  assert.match(payload.nextAction.instruction, /page_shell/);
   assert.equal(payload.designContractMode, "design-md");
   assert.equal(payload.surfaceScope, "protected");
   assert.equal(payload.surfaceKind, "page_shell");
   assert.equal(payload.recommendedRoutes[0].canonicalNeed, "page_shell");
+  assert.equal(payload.recommendedRoutes[0].confidence.level, "high");
+  assert.ok(payload.recommendedRoutes[0].confidence.because.length > 0);
+  assert.equal(payload.recommendedRoutes[0].usageGuidance.maturity, "gold");
+  assert.ok(payload.recommendedRoutes[0].usageGuidance.copy.length > 0);
+  assert.ok(payload.doNotInvent.some((guidance) => guidance.thing.includes("component")));
   assert.ok(payload.forbiddenPatterns.some((pattern) => pattern.includes("h-screen")));
   assert.ok(
     payload.relevantExamples.includes("platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx"),
@@ -854,11 +862,15 @@ test("builds prepare payload for protected product page surfaces", async () => {
   );
   assert.ok(payload.validationCommands.every((command) => command.expectedOutcome));
   assert.ok(payload.validationCommands.every((command) => command.timeoutClass));
+  assert.ok(payload.validationCommands.every((command) => command.ifFails));
   const packageJson = JSON.parse(fs.readFileSync(path.join(rootDir, "package.json"), "utf8"));
   assert.ok(
     payload.validationCommands.every((command) => packageJson.scripts[command.packageScript]),
   );
-  assert.equal(payload.sourceDigests.length, 6);
+  assert.equal(payload.sourceDigests.length, 7);
+  assert.ok(
+    payload.sourceDigests.some((digest) => digest.path === "docs/design-system/GOLD_EXAMPLES.json"),
+  );
   assert.equal(payload.coverageMatrixDigest.path, "docs/design-system/COVERAGE_MATRIX.json");
   assert.equal(
     payload.componentLifecycleDigest.path,
@@ -1711,6 +1723,8 @@ test("build prepare payload fails closed when route examples are missing", async
   );
   assert.equal(payload.ok, false);
   assert.equal(payload.safeForAutomaticImplementation, false);
+  assert.equal(payload.nextAction.kind, "stop_for_validation_setup");
+  assert.equal(payload.nextAction.reasonCode, "E_DESIGN_ROUTE_EXAMPLE_MISSING");
   assert.deepEqual(
     payload.openDecisions.find((decision) => decision.code === "E_DESIGN_ROUTE_EXAMPLE_MISSING"),
     {
@@ -1741,6 +1755,8 @@ test("builds prepare diagnostics for warn, exempt, and unknown surfaces", async 
   const unknown = await buildPreparePayload("packages/example/UnknownSurface.tsx", rootDir);
   assert.equal(unknown.surfaceScope, "unknown");
   assert.equal(unknown.ok, false);
+  assert.equal(unknown.nextAction.kind, "stop_for_missing_route");
+  assert.equal(unknown.nextAction.reasonCode, "E_DESIGN_ROUTE_MISSING");
   assert.ok(unknown.validationCommands.length > 0);
   assert.ok(
     unknown.openDecisions.some((decision) => decision.code === "E_DESIGN_SURFACE_SCOPE_UNKNOWN"),

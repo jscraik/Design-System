@@ -636,6 +636,48 @@ Reviewer status:
 
 `FORJAMIE.md` update status: complete; Recent Changes includes the P0 authority-map entry.
 
+### P1 Prepare Ergonomics Payload
+
+Working-tree diff identifier: P1 prepare-ergonomics payload slice, before the P1 phase commit.
+
+Files changed so far:
+
+- `packages/agent-design-engine/src/types.ts`
+- `packages/agent-design-engine/src/prepare.ts`
+- `packages/agent-design-engine/tests/engine.test.mjs`
+- `packages/cli/tests/cli.test.mjs`
+- `packages/cli/tests/fixtures/design-schemas/astudio-design-command.v1.schema.json`
+- `FORJAMIE.md`
+- `docs/plans/2026-05-02-agent-first-design-system-simplification-plan.md`
+
+Source acceptance IDs targeted: SA5, SA6, SA7, SA8, SA9, AC5, AC12.
+
+Payload contract changes:
+
+- Added top-level `nextAction` with stable `kind`, optional `reasonCode`, implementation/stop instruction, and evidence refs.
+- Added top-level `doNotInvent` guidance that maps common agent invention risks to approved route, token, and state alternatives.
+- Added `recommendedRoutes[].confidence` with level and evidence reasons.
+- Added `recommendedRoutes[].usageGuidance` with `copy`, `doNotCopy`, `proves`, and `maturity`.
+- Added normalized validation-command `ifFails` guidance without changing the read-only package-script trust model.
+- Preserved the existing `relevantExamples: string[]` contract; example ergonomics live on the recommended route to avoid a breaking shape change.
+- Added `docs/design-system/GOLD_EXAMPLES.json` to `sourceDigests` so example guidance has explicit source evidence.
+
+Validation commands:
+
+- `pnpm agent-design:test` -> fail, then pass after the temporary prepare fixture copied `docs/design-system/GOLD_EXAMPLES.json`; rerun after source-digest coverage -> pass.
+- `pnpm -C packages/cli test` -> pass; rerun after schema/source-digest coverage -> pass.
+- `git diff --check` -> pass; rerun after source-digest coverage -> pass.
+- `pnpm docs:lint` -> pass after phase-ledger and `FORJAMIE.md` updates.
+- `pnpm --silent agent-design:prepare --surface packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx > /tmp/prepare-p1.json && jq '{kind:.data.kind,nextAction:.data.nextAction,doNotInvent:(.data.doNotInvent|length),routeConfidence:.data.recommendedRoutes[0].confidence,usageGuidance:.data.recommendedRoutes[0].usageGuidance,ifFails:.data.validationCommands[0].ifFails,hasGoldDigest:(.data.sourceDigests|map(.path)|index("docs/design-system/GOLD_EXAMPLES.json") != null)}' /tmp/prepare-p1.json` -> pass; verified the wrapper emits the new fields inside the JSON envelope `data` payload and includes the gold examples digest.
+
+Reviewer status:
+
+- Simplify pass -> pass; kept the slice inside existing prepare/schema/test files and only added helper functions where repeated payload construction needed named contracts.
+- HE code-review readiness pass -> pass after preserving `relevantExamples` as the compatibility field, schema-covering the new fields, and adding `GOLD_EXAMPLES.json` to source digests.
+- HE fix-bugs pass -> pass; reproduced fixture failure was corrected by copying the gold examples registry into prepare fixtures and rerunning focused tests.
+
+`FORJAMIE.md` update status: complete; Recent Changes includes the P1 prepare-ergonomics entry.
+
 ## Linear Traceability
 
 No Linear issue was supplied with this request.

@@ -7,8 +7,14 @@ import { resolveRouteForSurface } from "./routes.js";
 import { buildDesignTokenContract } from "./token-contract.js";
 import type {
   AgentUiRouteValidationCommand,
+  DesignTokenContract,
+  PrepareDoNotInventGuidance,
+  PrepareExampleUsageGuidance,
+  PrepareNextAction,
   PrepareOpenDecision,
   PreparePayload,
+  PrepareRouteConfidence,
+  PrepareRouteRecommendation,
   PrepareSourceDigest,
   PrepareSurfaceScope,
   ResolvedAgentUiRoute,
@@ -18,6 +24,7 @@ import { DesignEngineError } from "./types.js";
 const designPath = "DESIGN.md";
 const guidancePath = ".design-system-guidance.json";
 const routingPath = "docs/design-system/AGENT_UI_ROUTING.json";
+const goldExamplesPath = "docs/design-system/GOLD_EXAMPLES.json";
 const lifecyclePath = "docs/design-system/COMPONENT_LIFECYCLE.json";
 const coveragePath = "docs/design-system/COVERAGE_MATRIX.json";
 const professionalContractPath = "docs/design-system/PROFESSIONAL_UI_CONTRACT.md";
@@ -29,6 +36,16 @@ type GuidanceConfig = {
   scopes?: Partial<Record<"error" | "warn" | "exempt", string[]>>;
   scopePrecedence?: Array<"error" | "warn" | "exempt">;
 };
+
+type GoldExample = {
+  sourcePath: string;
+  purpose: string;
+  coveredStates: string[];
+  deferredStates?: string[];
+  promotable?: boolean;
+};
+
+type GoldExampleRegistry = Map<string, GoldExample>;
 
 const guidanceScopes = ["error", "warn", "exempt"] as const;
 type GuidanceScope = (typeof guidanceScopes)[number];
@@ -147,6 +164,59 @@ function parseGuidanceConfig(value: unknown): GuidanceConfig {
   }
 
   return config;
+}
+
+function goldExampleSchemaError(message: string): DesignEngineError {
+  return new DesignEngineError(message, {
+    code: "E_DESIGN_GOLD_EXAMPLES_SCHEMA",
+    exitCode: 2,
+  });
+}
+
+function parseStringArray(value: unknown, fieldPath: string): string[] {
+  if (!Array.isArray(value) || !value.every((entry) => typeof entry === "string")) {
+    throw goldExampleSchemaError(`${fieldPath} must be an array of strings.`);
+  }
+  return value;
+}
+
+function parseGoldExamples(value: unknown): GoldExampleRegistry {
+  if (!isObject(value)) {
+    throw goldExampleSchemaError("Gold examples registry must be an object.");
+  }
+  if (!Array.isArray(value.examples)) {
+    throw goldExampleSchemaError("Gold examples registry examples must be an array.");
+  }
+
+  const examples: GoldExampleRegistry = new Map();
+  for (const [index, entry] of value.examples.entries()) {
+    if (!isObject(entry)) {
+      throw goldExampleSchemaError(`Gold examples entry ${index} must be an object.`);
+    }
+    if (typeof entry.sourcePath !== "string" || entry.sourcePath.length === 0) {
+      throw goldExampleSchemaError(`Gold examples entry ${index}.sourcePath must be a string.`);
+    }
+    if (typeof entry.purpose !== "string" || entry.purpose.length === 0) {
+      throw goldExampleSchemaError(`Gold examples entry ${index}.purpose must be a string.`);
+    }
+    const coveredStates = parseStringArray(entry.coveredStates, `examples[${index}].coveredStates`);
+    const deferredStates =
+      entry.deferredStates === undefined
+        ? undefined
+        : parseStringArray(entry.deferredStates, `examples[${index}].deferredStates`);
+    if (entry.promotable !== undefined && typeof entry.promotable !== "boolean") {
+      throw goldExampleSchemaError(`Gold examples entry ${index}.promotable must be a boolean.`);
+    }
+
+    examples.set(entry.sourcePath, {
+      sourcePath: entry.sourcePath,
+      purpose: entry.purpose,
+      coveredStates,
+      ...(deferredStates ? { deferredStates } : {}),
+      ...(typeof entry.promotable === "boolean" ? { promotable: entry.promotable } : {}),
+    });
+  }
+  return examples;
 }
 
 /**
@@ -1048,6 +1118,9 @@ async function normalizeValidationCommands(
       ...(packageScript ? { packageScript } : {}),
       expectedOutcome: command.expectedOutcome ?? "Command exits 0 without mutating source files.",
       timeoutClass: command.timeoutClass ?? "medium",
+      ifFails:
+        command.ifFails ??
+        "Stop UI edits, inspect this command's failure output, and fix the design-system contract or implementation evidence before continuing.",
     });
   }
 
@@ -1129,6 +1202,181 @@ function nextActionForOpenDecision(code: string): PrepareOpenDecision["nextActio
   return "diagnose";
 }
 
+function buildPrepareNextAction(
+  safeForAutomaticImplementation: boolean,
+  surfaceKind: string,
+  openDecisions: PrepareOpenDecision[],
+): PrepareNextAction {
+  const evidenceRefs = [designPath, guidancePath, routingPath];
+  const blockingDecision = openDecisions.find((decision) => decision.severity === "error");
+  if (!blockingDecision && safeForAutomaticImplementation) {
+    return {
+      kind: "implement",
+      instruction: `Implement the UI surface with the ${surfaceKind} route, returned token roles, required states, examples, and validation commands.`,
+      evidenceRefs,
+    };
+  }
+
+  const reasonCode = blockingDecision?.code ?? "E_DESIGN_VALIDATION_COMMAND_INVALID";
+  if (reasonCode === "E_DESIGN_PROPOSAL_REQUIRED") {
+    return {
+      kind: "stop_for_proposal",
+      reasonCode,
+      instruction:
+        "Stop before editing UI and draft or link the required design proposal for this surface.",
+      evidenceRefs,
+    };
+  }
+  if (reasonCode === "E_DESIGN_ROUTE_MISSING") {
+    return {
+      kind: "stop_for_missing_route",
+      reasonCode,
+      instruction:
+        "Stop before editing UI because no canonical agent UI route matches this surface.",
+      evidenceRefs,
+    };
+  }
+  if (
+    reasonCode === "E_DESIGN_ROUTE_EXAMPLE_MISSING" ||
+    reasonCode === "E_DESIGN_ROUTE_LIFECYCLE_MISSING" ||
+    reasonCode === "E_DESIGN_ROUTE_COVERAGE_MISSING" ||
+    reasonCode === "E_DESIGN_ROUTE_SOURCE_REF_MISSING" ||
+    reasonCode === "E_DESIGN_VALIDATION_COMMAND_INVALID"
+  ) {
+    return {
+      kind: "stop_for_validation_setup",
+      reasonCode,
+      instruction:
+        "Stop before editing UI because the design route evidence or validation setup is incomplete.",
+      evidenceRefs,
+    };
+  }
+
+  return {
+    kind: "stop_for_manual_decision",
+    reasonCode,
+    instruction:
+      "Stop before editing UI and ask for a manual design-system decision for this surface.",
+    evidenceRefs,
+  };
+}
+
+function buildDoNotInventGuidance(
+  recommendedRoutes: PrepareRouteRecommendation[],
+  designTokenContract: DesignTokenContract,
+  sourceRefs: string[],
+): PrepareDoNotInventGuidance[] {
+  const primaryRoute = recommendedRoutes[0];
+  const guidance: PrepareDoNotInventGuidance[] = [
+    {
+      thing: "new token role, raw color, or arbitrary spacing convention",
+      instead: `Use semantic token roles from designTokenContract, especially ${designTokenContract.allowedRoles
+        .slice(0, 4)
+        .map((role) => role.role)
+        .join(", ")}.`,
+      sourceRefs: designTokenContract.sourceRefs,
+    },
+    {
+      thing: "one-off loading, empty, error, or ready state treatment",
+      instead:
+        "Use the requiredStates returned by prepare and copy state structure only from the relevant examples.",
+      sourceRefs,
+    },
+  ];
+
+  if (primaryRoute) {
+    guidance.unshift({
+      thing: "new component abstraction or local wrapper for this surface",
+      instead: `Use ${primaryRoute.preferredComponent.name} from ${primaryRoute.preferredComponent.importPath} for ${primaryRoute.canonicalNeed}.`,
+      sourceRefs: primaryRoute.sourceRefs,
+    });
+  } else {
+    guidance.unshift({
+      thing: "new component abstraction or local wrapper for an unrouted surface",
+      instead: "Stop for a missing-route or proposal decision before creating a new abstraction.",
+      sourceRefs,
+    });
+  }
+
+  return guidance;
+}
+
+function buildRouteConfidence(route: PrepareRouteRecommendation): PrepareRouteConfidence {
+  const because: string[] = [
+    `Matched ${route.matchedNeed} to canonical route ${route.canonicalNeed}.`,
+    `Resolved canonical component ${route.preferredComponent.name}.`,
+  ];
+  if (route.lifecycleEntry.lifecycle === "canonical") {
+    because.push("Component lifecycle is canonical.");
+  }
+  if (route.coverageEntry.status.length > 0) {
+    because.push(`Coverage matrix status is ${route.coverageEntry.status}.`);
+  }
+  if (route.examples.length > 0) {
+    because.push("Route includes at least one relevant example.");
+  }
+
+  let level: PrepareRouteConfidence["level"] = "high";
+  if (route.routeMaturity === "provisional" || route.lifecycleEntry.lifecycle === "transitional") {
+    level = "medium";
+  }
+  if (route.examples.length === 0 || route.lifecycleEntry.lifecycle === "deprecated") {
+    level = "low";
+  }
+
+  return { level, because };
+}
+
+function buildExampleUsageGuidance(
+  route: PrepareRouteRecommendation,
+  goldExamples: GoldExampleRegistry,
+): PrepareExampleUsageGuidance {
+  const matchedExamples = route.examples
+    .map((examplePath) => goldExamples.get(examplePath))
+    .filter((example): example is GoldExample => Boolean(example));
+  const coveredStates = uniqueSorted(matchedExamples.flatMap((example) => example.coveredStates));
+  const deferredStates = uniqueSorted(
+    matchedExamples.flatMap((example) => example.deferredStates ?? []),
+  );
+  const maturity: PrepareExampleUsageGuidance["maturity"] =
+    matchedExamples.length > 0 && matchedExamples.every((example) => example.promotable !== false)
+      ? "gold"
+      : route.routeMaturity === "provisional"
+        ? "legacy"
+        : "acceptable";
+
+  return {
+    copy: [
+      `Copy the ${route.preferredComponent.name} composition pattern and state coverage shape.`,
+      "Reuse semantic token roles and layout structure, not local styling shortcuts.",
+    ],
+    doNotCopy: [
+      "Do not copy fixture data, demo copy, viewport wrappers, or story-only scaffolding.",
+      "Do not introduce new tokens, state names, or component abstractions from the example.",
+    ],
+    proves: uniqueSorted([
+      `Canonical route: ${route.canonicalNeed}`,
+      ...coveredStates.map((state) => `Covered state: ${state}`),
+      ...deferredStates.map((state) => `Deferred state: ${state}`),
+    ]),
+    maturity,
+  };
+}
+
+function withPrepareRouteGuidance(
+  route: ResolvedAgentUiRoute,
+  validationCommands: AgentUiRouteValidationCommand[],
+  goldExamples: GoldExampleRegistry,
+): PrepareRouteRecommendation {
+  const recommendedRoute = {
+    ...route,
+    validationCommands,
+  } as PrepareRouteRecommendation;
+  recommendedRoute.confidence = buildRouteConfidence(recommendedRoute);
+  recommendedRoute.usageGuidance = buildExampleUsageGuidance(recommendedRoute, goldExamples);
+  return recommendedRoute;
+}
+
 /**
  * Determine the guidance design mode implied by a design contract schema version.
  *
@@ -1203,6 +1451,12 @@ export async function buildPreparePayload(
     "E_DESIGN_GUIDANCE_SOURCE_MISSING",
     signal,
   );
+  const goldExamplesSource = await readPrepareSource(
+    resolvedRoot,
+    goldExamplesPath,
+    "E_DESIGN_GOLD_EXAMPLES_SOURCE_MISSING",
+    signal,
+  );
   signal?.throwIfAborted();
   let parsedGuidance: unknown;
   try {
@@ -1214,6 +1468,16 @@ export async function buildPreparePayload(
     });
   }
   const guidance = parseGuidanceConfig(parsedGuidance);
+  let parsedGoldExamples: unknown;
+  try {
+    parsedGoldExamples = JSON.parse(goldExamplesSource) as unknown;
+  } catch {
+    throw new DesignEngineError("Gold examples registry contains invalid JSON.", {
+      code: "E_DESIGN_GOLD_EXAMPLES_JSON",
+      exitCode: 2,
+    });
+  }
+  const goldExamples = parseGoldExamples(parsedGoldExamples);
   const sourceDigests = await Promise.all(
     [
       designPath,
@@ -1221,6 +1485,7 @@ export async function buildPreparePayload(
       routingPath,
       lifecyclePath,
       coveragePath,
+      goldExamplesPath,
       professionalContractPath,
     ].map((sourcePath) => digestFile(resolvedRoot, sourcePath, signal)),
   );
@@ -1244,7 +1509,7 @@ export async function buildPreparePayload(
     });
   }
 
-  const recommendedRoutes: ResolvedAgentUiRoute[] = [];
+  const recommendedRoutes: PrepareRouteRecommendation[] = [];
   if (route) {
     const routeValidationCommands = await normalizeValidationCommands(
       onlyReadOnly(route.validationCommands),
@@ -1252,10 +1517,7 @@ export async function buildPreparePayload(
       signal,
     );
     requireValidationCommands(routeValidationCommands, route.canonicalNeed);
-    recommendedRoutes.push({
-      ...route,
-      validationCommands: routeValidationCommands,
-    });
+    recommendedRoutes.push(withPrepareRouteGuidance(route, routeValidationCommands, goldExamples));
   }
   const requiredStates = uniqueSorted(recommendedRoutes.flatMap((entry) => entry.requiredStates));
   const forbiddenPatterns = uniqueSorted(recommendedRoutes.flatMap((entry) => entry.avoid));
@@ -1273,11 +1535,23 @@ export async function buildPreparePayload(
   requireValidationCommands(validationCommands, normalizedSurfacePath);
   const openDecisions = routeDecisions(routeResult, surfaceScope);
   const ok = openDecisions.every((decision) => decision.severity !== "error");
+  const safeForAutomaticImplementation = ok && surfaceScope !== "unknown";
+  const nextAction = buildPrepareNextAction(
+    safeForAutomaticImplementation,
+    route?.canonicalNeed ?? "unknown",
+    openDecisions,
+  );
+  const doNotInvent = buildDoNotInventGuidance(recommendedRoutes, designTokenContract, [
+    designPath,
+    routingPath,
+    goldExamplesPath,
+  ]);
 
   return {
     kind: "astudio.design.prepare.v1",
     ok,
-    safeForAutomaticImplementation: ok && surfaceScope !== "unknown",
+    safeForAutomaticImplementation,
+    nextAction,
     resolvedDesignFile: designPath,
     guidanceConfigPath: guidancePath,
     designContractMode,
@@ -1286,6 +1560,7 @@ export async function buildPreparePayload(
     surfaceKind: route?.canonicalNeed ?? "unknown",
     recommendedRoutes,
     designTokenContract,
+    doNotInvent,
     requiredStates,
     forbiddenPatterns,
     relevantExamples,
