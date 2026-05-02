@@ -77,14 +77,15 @@ function maskFieldValue(
   return maskValueRecursive(val, masks, inDebugMode);
 }
 
-const publicDesignTokenContractKeys = new Set([
-  "mode",
-  "allowedRoles",
-  "forbiddenTokenPatterns",
-  "sourceRefs",
-]);
-
-const publicDesignTokenRoleKeys = new Set(["role", "cssVariable", "useFor", "avoidFor"]);
+function maskMalformedPublicValue(
+  value: unknown,
+  masks: FieldMask[],
+  inDebugMode: boolean,
+): unknown {
+  return typeof value === "string"
+    ? maskValue(value, "redact")
+    : maskValueRecursive(value, masks, inDebugMode);
+}
 
 function maskPublicDesignTokenRole(
   value: unknown,
@@ -92,14 +93,22 @@ function maskPublicDesignTokenRole(
   inDebugMode: boolean,
 ): unknown {
   if (value === null || typeof value !== "object" || Array.isArray(value)) {
-    return value;
+    return maskMalformedPublicValue(value, masks, inDebugMode);
   }
 
   const result: Record<string, unknown> = {};
   for (const [key, val] of Object.entries(value)) {
-    result[key] = publicDesignTokenRoleKeys.has(key)
-      ? val
-      : maskFieldValue(key, val, masks, inDebugMode);
+    if (key === "role" || key === "cssVariable") {
+      result[key] =
+        typeof val === "string" ? val : maskMalformedPublicValue(val, masks, inDebugMode);
+    } else if (key === "useFor" || key === "avoidFor") {
+      result[key] =
+        Array.isArray(val) && val.every((entry) => typeof entry === "string")
+          ? val
+          : maskMalformedPublicValue(val, masks, inDebugMode);
+    } else {
+      result[key] = maskFieldValue(key, val, masks, inDebugMode);
+    }
   }
   return result;
 }
@@ -117,8 +126,14 @@ function maskPublicDesignTokenContract(
   for (const [key, val] of Object.entries(value)) {
     if (key === "allowedRoles" && Array.isArray(val)) {
       result[key] = val.map((role) => maskPublicDesignTokenRole(role, masks, inDebugMode));
-    } else if (publicDesignTokenContractKeys.has(key)) {
-      result[key] = val;
+    } else if (key === "mode") {
+      result[key] =
+        typeof val === "string" ? val : maskMalformedPublicValue(val, masks, inDebugMode);
+    } else if (key === "forbiddenTokenPatterns" || key === "sourceRefs") {
+      result[key] =
+        Array.isArray(val) && val.every((entry) => typeof entry === "string")
+          ? val
+          : maskMalformedPublicValue(val, masks, inDebugMode);
     } else {
       result[key] = maskFieldValue(key, val, masks, inDebugMode);
     }

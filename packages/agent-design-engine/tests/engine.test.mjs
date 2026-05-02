@@ -1224,8 +1224,8 @@ test("build prepare payload validates post-run pnpm dir scripts against target p
   assert.equal(payload.validationCommands[0].packageScript, "type-check");
 });
 
-test("build prepare payload accepts pnpm recursive run aliases", async () => {
-  for (const alias of ["recursive", "multi", "m"]) {
+test("build prepare payload rejects pnpm recursive run aliases", async () => {
+  for (const alias of ["recursive", "multi", "m", "-r", "--recursive"]) {
     const fixtureRoot = prepareFixtureRoot();
     const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
     const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
@@ -1234,13 +1234,27 @@ test("build prepare payload accepts pnpm recursive run aliases", async () => {
     route.validationCommands[0].packageScript = "agent-design:lint";
     writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
 
-    const payload = await buildPreparePayload(
-      "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
-      fixtureRoot,
+    await assert.rejects(
+      () =>
+        buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+      { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
     );
-
-    assert.equal(payload.validationCommands[0].packageScript, "agent-design:lint");
   }
+});
+
+test("build prepare payload rejects pnpm run scripts with trailing arguments", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm run agent-design:lint -- --fix";
+  route.validationCommands[0].packageScript = "agent-design:lint";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    { code: "E_DESIGN_VALIDATION_COMMAND_INVALID", exitCode: 2 },
+  );
 });
 
 test("build prepare payload parses quoted pnpm package dirs", async () => {
@@ -1250,6 +1264,27 @@ test("build prepare payload parses quoted pnpm package dirs", async () => {
   const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
   assert.ok(route, "missing settings_panel route fixture");
   route.validationCommands[0].command = 'pnpm --dir "./packages/ui" run type-check';
+  route.validationCommands[0].packageScript = "type-check";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  const payload = await buildPreparePayload(
+    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
+    fixtureRoot,
+  );
+
+  assert.equal(payload.validationCommands[0].packageScript, "type-check");
+});
+
+test("build prepare payload normalizes fallback validation lazily", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  copyRootFile(fixtureRoot, "packages/ui/package.json");
+  const packageJson = readFixtureJson(fixtureRoot, "package.json");
+  delete packageJson.scripts["agent-design:lint"];
+  writeFixtureJson(fixtureRoot, "package.json", packageJson);
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm -C packages/ui run type-check";
   route.validationCommands[0].packageScript = "type-check";
   writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
 

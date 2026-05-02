@@ -82,6 +82,7 @@ test("maskObject preserves public design token contracts", async () => {
   assert.equal(masked.designTokenContract.token, "[REDACTED]");
   assert.equal(masked.designTokenContract.allowedRoles[0].role, "text.primary");
   assert.equal(masked.designTokenContract.allowedRoles[0].token, "[REDACTED]");
+  assert.deepEqual(masked.designTokenContract.sourceRefs, input.designTokenContract.sourceRefs);
   assert.equal(masked.config.token, "[REDACTED]");
 });
 
@@ -97,6 +98,27 @@ test("maskObject redacts malformed design token contract payloads", async () => 
     designTokenContract: ["secret-token-123"],
   });
   assert.equal(array.designTokenContract, "[REDACTED]");
+
+  const nestedMode = maskObject({
+    designTokenContract: {
+      mode: { token: "secret-token-123" },
+    },
+  });
+  assert.deepEqual(nestedMode.designTokenContract.mode, { token: "[REDACTED]" });
+
+  const nestedSourceRefs = maskObject({
+    designTokenContract: {
+      sourceRefs: [{ token: "secret-token-123" }],
+    },
+  });
+  assert.deepEqual(nestedSourceRefs.designTokenContract.sourceRefs, [{ token: "[REDACTED]" }]);
+
+  const malformedRole = maskObject({
+    designTokenContract: {
+      allowedRoles: ["secret-token-123"],
+    },
+  });
+  assert.equal(malformedRole.designTokenContract.allowedRoles[0], "[REDACTED]");
 });
 
 test("maskObject bypasses in debug mode", async () => {

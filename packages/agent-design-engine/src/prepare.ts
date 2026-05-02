@@ -532,6 +532,18 @@ function readPnpmRunScript(
   let packageDir = initialPackageDir;
   for (let index = startIndex; index < tokens.length; index += 1) {
     const token = tokens[index];
+    if (
+      token === "-r" ||
+      token === "--recursive" ||
+      token === "recursive" ||
+      token === "multi" ||
+      token === "m"
+    ) {
+      throw invalidValidationCommand(
+        command,
+        "Validation command uses unsupported pnpm recursive execution",
+      );
+    }
     if (token === "-C" || token === "--dir") {
       const value = tokens[index + 1];
       packageDir = normalizePackageDir(command, value);
@@ -572,6 +584,12 @@ function readPnpmRunScript(
     if (token.startsWith("-")) {
       continue;
     }
+    if (index !== tokens.length - 1) {
+      throw invalidValidationCommand(
+        command,
+        "Validation command must not pass extra arguments to a trusted package script",
+      );
+    }
     return { packageDir, script: token };
   }
 
@@ -590,14 +608,16 @@ function inferPackageScript(command: string): InferredPackageScript | undefined 
     if (token === "run" || token === "run-script") {
       return readPnpmRunScript(command, tokens, index + 1, packageDir);
     }
-    if (token === "recursive" || token === "multi" || token === "m") {
-      const nextToken = tokens[index + 1];
-      if (nextToken === "run" || nextToken === "run-script") {
-        return readPnpmRunScript(command, tokens, index + 2, packageDir);
-      }
+    if (
+      token === "-r" ||
+      token === "--recursive" ||
+      token === "recursive" ||
+      token === "multi" ||
+      token === "m"
+    ) {
       throw invalidValidationCommand(
         command,
-        "Validation command uses unsupported pnpm recursive subcommand",
+        "Validation command uses unsupported pnpm recursive execution",
       );
     }
     if (token === "--workspace-root" || token === "-w") {
@@ -1006,11 +1026,6 @@ export async function buildPreparePayload(
     });
   }
 
-  const fallbackValidationCommands = await normalizeValidationCommands(
-    fallbackPrepareValidationCommands,
-    resolvedRoot,
-    signal,
-  );
   const recommendedRoutes: ResolvedAgentUiRoute[] = [];
   if (route) {
     const routeValidationCommands = await normalizeValidationCommands(
@@ -1029,7 +1044,13 @@ export async function buildPreparePayload(
   const relevantExamples = uniqueSorted(recommendedRoutes.flatMap((entry) => entry.examples));
   const validationCommands = recommendedRoutes.flatMap((entry) => entry.validationCommands);
   if (validationCommands.length === 0) {
-    validationCommands.push(...fallbackValidationCommands);
+    validationCommands.push(
+      ...(await normalizeValidationCommands(
+        fallbackPrepareValidationCommands,
+        resolvedRoot,
+        signal,
+      )),
+    );
   }
   requireValidationCommands(validationCommands, normalizedSurfacePath);
   const openDecisions = routeDecisions(routeResult, surfaceScope);
