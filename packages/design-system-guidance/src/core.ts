@@ -368,22 +368,6 @@ async function exists(filePath: string): Promise<boolean> {
   }
 }
 
-async function migrationLockExists(lockPath: string): Promise<boolean> {
-  try {
-    await access(lockPath);
-    return true;
-  } catch (error) {
-    if (getErrorCode(error) === "ENOENT") {
-      return false;
-    }
-    throw new GuidanceError("Unable to check guidance migration lock state.", {
-      code: "E_DESIGN_MIGRATION_LOCK_CHECK",
-      exitCode: 3,
-      hint: `Check filesystem permissions for ${lockPath} before retrying the migration.`,
-    });
-  }
-}
-
 function parseStringArray(value: unknown): string[] | null {
   if (!Array.isArray(value)) return null;
   const items = value.filter(
@@ -1626,6 +1610,17 @@ async function withMigrationLock<T>(
   }
 }
 
+/**
+ * Performs a guidance configuration migration for a repository and returns the resulting migration summary.
+ *
+ * This function resolves the target repository, enforces a single migration operation, acquires a per-config
+ * migration lock when writes are requested, validates lock state for dry-run checks, reads the existing guidance
+ * config, and delegates the migration logic to the unlocked migration routine.
+ *
+ * @param options - Migration behavior and intent (e.g., targetPath, dryRun, write, and migration-specific flags like `to`, `rollback`, or `resume`)
+ * @returns MigrationResult containing before/after modes and migrationState, whether the config changed, dry-run status, the rollback metadata path, and an optional quarantinePath
+ * @throws GuidanceError when the requested migration operation is invalid, the migration is locked, or when underlying I/O/validation fails
+ */
 export async function migrateGuidanceConfig(
   options: MigrationOptions = {},
 ): Promise<MigrationResult> {
@@ -1635,11 +1630,11 @@ export async function migrateGuidanceConfig(
   const configPath = path.join(targetPath, rules.configFile);
   return withMigrationLock(configPath, Boolean(options.write && !options.dryRun), async () => {
     const lockPath = `${configPath}.migration.lock`;
-    if (options.dryRun && !options.write && (await migrationLockExists(lockPath))) {
+    if (options.dryRun && !options.write && (await exists(lockPath))) {
       throw migrationLockedError();
     }
     const { raw, config } = await readGuidanceConfig(targetPath, configPath);
-    if (options.dryRun && !options.write && (await migrationLockExists(lockPath))) {
+    if (options.dryRun && !options.write && (await exists(lockPath))) {
       throw migrationLockedError();
     }
     return migrateGuidanceConfigUnlocked(options, targetPath, configPath, raw, config);

@@ -14,6 +14,7 @@
 - [Review artifacts requirement](#review-artifacts-requirement)
 - [Credential-safe evidence snippets](#credential-safe-evidence-snippets)
 - [Branch protection recommendation](#branch-protection-recommendation)
+- [Link Policy](#link-policy)
 
 ## Minimum workflow contract
 
@@ -194,3 +195,7 @@ Configure GitHub branch protection (or rulesets) on `main`:
 - Require workflows to pin third-party actions to full commit SHAs.
 - Configure required checks workflows to run on both `pull_request` and `merge_group` when using merge queue.
 - Block direct pushes to `main`.
+
+## Link Policy
+
+No third-party directory, marketplace, mirror, sponsorship, or promotional links without maintainer approval.

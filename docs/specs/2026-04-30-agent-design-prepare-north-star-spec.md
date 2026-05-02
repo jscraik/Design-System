@@ -2,7 +2,7 @@
 schema_version: 1
 title: Agent Design Prepare North Star Specification
 type: feat
-status: draft
+status: approved
 date: 2026-04-30
 origin: "North-star synthesis from architecture, API-contract, and agent-native review: astudio design prepare as the required pre-edit UI contract"
 risk: high
@@ -183,6 +183,7 @@ Extended command shape:
 ### Open Decision
 
 A machine-readable stop, warning, or info item. Error-severity open decisions make `safeForAutomaticImplementation` false.
+Each decision includes a stable `code`, human `message`, `severity`, and machine `nextAction` category of `stop`, `escalate`, or `diagnose`.
 
 ### Proposal-Required Stop
 
@@ -302,7 +303,7 @@ astudio design prepare --surface <path> --json
 Usage example:
 
 ```bash
-pnpm --silent agent-design:prepare --surface platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx
+pnpm --silent agent-design:prepare --surface platforms/web/apps/web/src/pages/TemplateBrowserPage.tsx --json
 ```
 
 Hidden complexity:
@@ -420,7 +421,7 @@ astudio design prepare --surface <repo-relative-or-absolute-path> --json
 The root alias may wrap it for clean-checkout ergonomics:
 
 ```bash
-pnpm --silent agent-design:prepare --surface <path>
+pnpm --silent agent-design:prepare --surface <path> --json
 ```
 
 The CLI must normalize the surface path and delegate semantic work to `packages/agent-design-engine`.
@@ -438,7 +439,7 @@ Minimum required `data` fields:
   safeForAutomaticImplementation: boolean;
   resolvedDesignFile: string;
   guidanceConfigPath: string;
-  designContractMode: string;
+  designContractMode: "legacy" | "design-md";
   surfacePath: string;
   surfaceScope: "protected" | "warn" | "exempt" | "unknown";
   surfaceKind: string;
@@ -501,7 +502,7 @@ astudio design prepare --surface <path> --json
 Build-backed root convenience wrapper:
 
 ```bash
-pnpm --silent agent-design:prepare --surface <path>
+pnpm --silent agent-design:prepare --surface <path> --json
 ```
 
 The wrapper is allowed to build local workspace packages needed by the CLI before invoking `astudio design prepare`. It must build every workspace package imported by the CLI, including `packages/agent-design-engine`, `packages/design-system-guidance`, and `packages/skill-ingestion`, so the command works after dependencies are installed. The wrapper must not bake in a default surface that collides with caller-provided `--surface`; callers provide the surface explicitly. Documentation must not describe the wrapper as the read-only contract itself; the read-only contract belongs to the underlying `astudio design prepare` operation after the CLI is available.
@@ -580,7 +581,7 @@ If any required source is missing or malformed, `prepare` must return a determin
 - `astudio design prepare` is read-only once the CLI is available.
 - `astudio design prepare` must never edit files, refresh generated artifacts, start servers, open browsers, install dependencies, call networks, or run validation commands itself.
 - `pnpm agent-design:prepare` is a repo convenience wrapper and may build local workspace packages before invoking the CLI. It must not be used as evidence that the underlying `prepare` operation mutates files.
-- JSON consumers must invoke the wrapper through `pnpm --silent agent-design:prepare --surface <path>` because plain `pnpm` prints lifecycle banners to stdout before script output.
+- JSON consumers must invoke the wrapper through `pnpm --silent agent-design:prepare --surface <path> --json` because plain `pnpm` prints lifecycle banners to stdout before script output.
 - Default `validationCommands` must include only `safetyClass: "read_only"`.
 - `safeForAutomaticImplementation` must be false when the surface scope is `unknown`, route resolution is missing or ambiguous, a required source is malformed, token guidance cannot be produced, or a proposal-required stop exists.
 - Missing route examples may be warning-severity for lookup, but they must block route promotion and hard-gate maturity.
@@ -594,26 +595,26 @@ If any required source is missing or malformed, `prepare` must return a determin
 
 ## Failure Model and Recovery
 
-| Failure Class | Code | Recovery Contract |
-| --- | --- | --- |
-| Invalid guidance JSON | `E_DESIGN_GUIDANCE_JSON` | Return structured error with `guidanceConfigPath`; agent must stop until JSON is fixed. |
-| Invalid guidance schema | `E_DESIGN_GUIDANCE_SCHEMA` | Return field-level detail when available; agent must stop. |
-| Invalid routing schema | `E_DESIGN_ROUTING_SCHEMA` | Return route source path and failing field; agent must stop. |
-| Invalid lifecycle schema | `E_DESIGN_LIFECYCLE_SCHEMA` | Return lifecycle path and failing component when available; agent must stop. |
-| Invalid coverage schema | `E_DESIGN_COVERAGE_SCHEMA` | Return coverage path and failing row when available; agent must stop. |
-| Invalid root package metadata | `E_DESIGN_PACKAGE_JSON` | Return root `package.json` path; agent must stop because validation-command package scripts cannot be trusted. |
-| Missing source digest | `E_DESIGN_SOURCE_DIGEST_MISSING` | Return missing source path; agent must stop because provenance is incomplete. |
-| Token contract unavailable | `E_DESIGN_TOKEN_CONTRACT_MISSING` | Return token source refs checked; agent must stop or use proposal/manual decision. |
-| Route missing | `E_DESIGN_ROUTE_MISSING` | Return checked alternatives; recommend read-only `propose-abstraction`. |
-| Route ambiguous | `E_DESIGN_ROUTE_AMBIGUOUS` | Return candidate routes and tie-break data; agent must ask for a narrower surface or need. |
-| Example missing | `E_DESIGN_ROUTE_EXAMPLE_MISSING` | Warn for lookup, block route promotion/hardening until example is added. |
-| Proposal required | `E_DESIGN_PROPOSAL_REQUIRED` | Return proposal template path, need, surface when known, and missing decision. |
-| Selector misuse | `E_DESIGN_SELECTOR_CONFLICT` or `E_DESIGN_SELECTOR_REQUIRED` | Return retry-safe read-only command shape. |
-| Schema drift | `E_DESIGN_SCHEMA_DRIFT` | Fail fixture validation when `data.kind` payload fields drift; update schema and fixtures intentionally. |
-| Clean-checkout build unavailable | `E_DESIGN_PREPARE_BUILD_UNAVAILABLE` | Return setup/build guidance when root alias cannot reach a built CLI or engine artifact. |
-| Invalid validation command | `E_DESIGN_VALIDATION_COMMAND_INVALID` | Return route id, command, and missing package script; exclude unsafe commands from payload. |
-| Ambiguous token contract | `E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS` | Return conflicting token sources and keep automatic implementation unsafe. |
-| Remediation unavailable | `E_DESIGN_REMEDIATION_UNAVAILABLE` | Return guidance finding and proposal/manual-decision requirement instead of guessing a fix. |
+| Failure Class                    | Code                                                         | Recovery Contract                                                                                              |
+| -------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| Invalid guidance JSON            | `E_DESIGN_GUIDANCE_JSON`                                     | Return structured error with `guidanceConfigPath`; agent must stop until JSON is fixed.                        |
+| Invalid guidance schema          | `E_DESIGN_GUIDANCE_SCHEMA`                                   | Return field-level detail when available; agent must stop.                                                     |
+| Invalid routing schema           | `E_DESIGN_ROUTING_SCHEMA`                                    | Return route source path and failing field; agent must stop.                                                   |
+| Invalid lifecycle schema         | `E_DESIGN_LIFECYCLE_SCHEMA`                                  | Return lifecycle path and failing component when available; agent must stop.                                   |
+| Invalid coverage schema          | `E_DESIGN_COVERAGE_SCHEMA`                                   | Return coverage path and failing row when available; agent must stop.                                          |
+| Invalid root package metadata    | `E_DESIGN_PACKAGE_JSON`                                      | Return root `package.json` path; agent must stop because validation-command package scripts cannot be trusted. |
+| Missing source digest            | `E_DESIGN_SOURCE_DIGEST_MISSING`                             | Return missing source path; agent must stop because provenance is incomplete.                                  |
+| Token contract unavailable       | `E_DESIGN_TOKEN_CONTRACT_MISSING`                            | Return token source refs checked; agent must stop or use proposal/manual decision.                             |
+| Route missing                    | `E_DESIGN_ROUTE_MISSING`                                     | Return checked alternatives; recommend read-only `propose-abstraction`.                                        |
+| Route ambiguous                  | `E_DESIGN_ROUTE_AMBIGUOUS`                                   | Return candidate routes and tie-break data; agent must ask for a narrower surface or need.                     |
+| Example missing                  | `E_DESIGN_ROUTE_EXAMPLE_MISSING`                             | Stop automatic implementation until the missing example evidence is added.                                     |
+| Proposal required                | `E_DESIGN_PROPOSAL_REQUIRED`                                 | Return proposal template path, need, surface when known, and missing decision.                                 |
+| Selector misuse                  | `E_DESIGN_SELECTOR_CONFLICT` or `E_DESIGN_SELECTOR_REQUIRED` | Return retry-safe read-only command shape.                                                                     |
+| Schema drift                     | `E_DESIGN_SCHEMA_DRIFT`                                      | Fail fixture validation when `data.kind` payload fields drift; update schema and fixtures intentionally.       |
+| Clean-checkout build unavailable | `E_DESIGN_PREPARE_BUILD_UNAVAILABLE`                         | Return setup/build guidance when root alias cannot reach a built CLI or engine artifact.                       |
+| Invalid validation command       | `E_DESIGN_VALIDATION_COMMAND_INVALID`                        | Return route id, command, and missing package script; exclude unsafe commands from payload.                    |
+| Ambiguous token contract         | `E_DESIGN_TOKEN_CONTRACT_AMBIGUOUS`                          | Return conflicting token sources and keep automatic implementation unsafe.                                     |
+| Remediation unavailable          | `E_DESIGN_REMEDIATION_UNAVAILABLE`                           | Return guidance finding and proposal/manual-decision requirement instead of guessing a fix.                    |
 
 Raw `Error` escapes from engine prepare/routing/guidance paths are not acceptable for known design contract failures.
 
@@ -662,42 +663,53 @@ Minimum telemetry fields:
 - `data.sourceDigests[].sha256`
 - `data.openDecisions[].code`
 - `data.openDecisions[].severity`
+- `data.openDecisions[].nextAction`
 - `data.timing.durationMs`
 
 The CLI envelope timestamp may remain wall-clock based. Engine payload timing must be isolated under `data.timing` so schema fixtures can normalize it without weakening the rest of the contract.
 
 ## Acceptance and Test Matrix
 
-| ID | Acceptance Criteria | Verification |
-| --- | --- | --- |
-| SA1 | `astudio design prepare --surface <path> --json` is documented as the required pre-edit command for protected UI work. | README, `FORJAMIE.md`, `docs/guides/AGENT_DESIGN_WORKFLOW.md`, and CLI docs all lead with `prepare`. |
-| SA2 | `astudio.design.prepare.v1` includes `designTokenContract` with semantic roles, forbidden token patterns, and source refs. | Engine unit test and schema fixture assert the field exists and rejects missing token contract. |
-| SA3 | `prepare` payload includes canonical components/routes, required states, relevant examples, forbidden patterns, validation commands, source digests, open decisions, and `safeForAutomaticImplementation`. | CLI fixture test for at least one page shell and one settings panel. |
-| SA4 | Default `validationCommands` returned by `prepare` include only `safetyClass: "read_only"`. | Engine unit test with mixed safety classes proves non-read-only commands are excluded. |
-| SA5 | Every returned validation command with `packageScript` maps to a real root `package.json` script. | Test compares `packageScript` values against root package scripts. |
-| SA6 | Known malformed guidance/routing/lifecycle/coverage/token inputs return deterministic design error codes instead of generic internal errors. | Error fixture matrix covers `E_DESIGN_GUIDANCE_JSON`, `E_DESIGN_GUIDANCE_SCHEMA`, `E_DESIGN_ROUTING_SCHEMA`, `E_DESIGN_LIFECYCLE_SCHEMA`, `E_DESIGN_COVERAGE_SCHEMA`, and `E_DESIGN_TOKEN_CONTRACT_MISSING`. |
-| SA7 | `astudio.command.v1` schema discriminates by `data.kind` and enforces required fields for `astudio.design.prepare.v1`. | Schema fixture fails when required prepare fields are removed or renamed. |
-| SA8 | `prepare` marks unknown, missing-route, ambiguous-route, missing-token-contract, and proposal-required cases unsafe for automatic implementation. | Engine/CLI fixtures assert `safeForAutomaticImplementation: false` and specific open decision codes. |
-| SA9 | Lower-level commands remain available but docs present them as support/diagnostic paths, not the main pre-edit flow. | Docs assertion or review check over workflow/README/CLI docs. |
-| SA10 | `propose-abstraction` remains read-only in v1 and does not scaffold files. | CLI write-safety fixture verifies no working-tree changes. |
-| SA11 | The three currently deferred gold-example categories are tracked as explicit product milestones before hard-gating those route families. | `GOLD_EXAMPLES.json` keeps non-promotable categories or promotes them only with source/story/test paths and validation commands. |
-| SA12 | The payload contains `timing.durationMs` without destabilizing deterministic fixture comparison. | Fixture normalizes timing and asserts field shape. |
-| SA13 | `safeForAutomaticImplementation: true` is required or a proposal/manual-decision explanation is recorded before protected UI work is considered ready. | PR template, workflow docs, or policy docs include the operating rule. |
-| SA14 | A companion human inspector is specified but not required for the first machine-contract implementation slice. | Planning readiness names the inspector as deferred UI scope and recommends a dedicated UI spec before implementation. |
-| SA15 | The command can run from a clean checkout through the documented root alias or returns a deterministic setup/build precondition error. | CLI/root script smoke test covers `pnpm --silent agent-design:prepare --surface <path>`. |
-| SA16 | The spec records interface alternatives and selects the existing `prepare` command as the public contract. | Spec review confirms Shape A is selected and Shapes B-D are rejected/deferred with tradeoffs. |
-| SA17 | Token contract source priority is deterministic and source-ref backed. | Unit test proves roles are produced from mapped theme slots/aliases and include source refs. |
-| SA18 | Foundation tokens and raw color values are forbidden for new protected UI work unless explicitly exempted. | Token-contract fixture includes forbidden token patterns and protected-surface test rejects missing patterns. |
-| SA19 | Schema validation rejects a prepare payload missing `designTokenContract`, `timing`, `safeForAutomaticImplementation`, or source digests. | `astudio-design-command.v1.schema.json` fixture has a prepare-specific branch and negative fixtures. |
-| SA20 | Known raw prepare/routing/guidance failures are mapped to `DesignEngineError` codes. | Error tests cover invalid JSON, invalid schemas, missing digests, missing token contract, and invalid validation command script references. |
-| SA21 | A static/generated context artifact is not treated as authority in v1. | Docs and tests keep the live `prepare` command as the required front door; any artifact output is deferred or freshness-gated. |
-| SA22 | Docs do not describe primitive command composition as the required pre-edit happy path. | Docs check or review confirms `lint`, `components`, `coverage`, and `export` are support commands after `prepare`. |
+| ID   | Acceptance Criteria                                                                                                                                                                                                        | Verification                                                                                                                                                                                                 |
+| ---- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| SA1  | `astudio design prepare --surface <path> --json` is documented as the required pre-edit command for protected UI work.                                                                                                     | README, `FORJAMIE.md`, `docs/guides/AGENT_DESIGN_WORKFLOW.md`, and CLI docs all lead with `prepare`.                                                                                                         |
+| SA2  | `astudio.design.prepare.v1` includes `designTokenContract` with semantic roles, forbidden token patterns, and source refs.                                                                                                 | Engine unit test and schema fixture assert the field exists and rejects missing token contract.                                                                                                              |
+| SA3  | `prepare` payload includes canonical components/routes, required states, relevant examples, forbidden patterns, validation commands, source digests, open decisions, and `safeForAutomaticImplementation`.                 | CLI fixture test for at least one page shell and one settings panel.                                                                                                                                         |
+| SA4  | Default `validationCommands` returned by `prepare` include only `safetyClass: "read_only"`.                                                                                                                                | Engine unit test with mixed safety classes proves non-read-only commands are excluded.                                                                                                                       |
+| SA5  | Every returned validation command with `packageScript` maps to a real script in the command's targeted workspace package manifest, after the target package directory is proven to stay inside the workspace by real path. | Tests compare `packageScript` values against the targeted package manifest, cover root scripts, package-scoped scripts, and reject symlink-escaped package directories.                                      |
+| SA6  | Known malformed guidance/routing/lifecycle/coverage/token inputs return deterministic design error codes instead of generic internal errors.                                                                               | Error fixture matrix covers `E_DESIGN_GUIDANCE_JSON`, `E_DESIGN_GUIDANCE_SCHEMA`, `E_DESIGN_ROUTING_SCHEMA`, `E_DESIGN_LIFECYCLE_SCHEMA`, `E_DESIGN_COVERAGE_SCHEMA`, and `E_DESIGN_TOKEN_CONTRACT_MISSING`. |
+| SA7  | `astudio.command.v1` schema discriminates by `data.kind` and enforces required fields for `astudio.design.prepare.v1`.                                                                                                     | Schema fixture fails when required prepare fields are removed or renamed.                                                                                                                                    |
+| SA8  | `prepare` marks unknown, missing-route, ambiguous-route, missing-token-contract, and proposal-required cases unsafe for automatic implementation.                                                                          | Engine/CLI fixtures assert `safeForAutomaticImplementation: false` and specific open decision codes.                                                                                                         |
+| SA9  | Lower-level commands remain available but docs present them as support/diagnostic paths, not the main pre-edit flow.                                                                                                       | Docs assertion or review check over workflow/README/CLI docs.                                                                                                                                                |
+| SA10 | `propose-abstraction` remains read-only in v1 and does not scaffold files.                                                                                                                                                 | CLI write-safety fixture verifies no working-tree changes.                                                                                                                                                   |
+| SA11 | The three currently deferred gold-example categories are tracked as explicit product milestones before hard-gating those route families.                                                                                   | `GOLD_EXAMPLES.json` keeps non-promotable categories or promotes them only with source/story/test paths and validation commands.                                                                             |
+| SA12 | The payload contains `timing.durationMs` without destabilizing deterministic fixture comparison.                                                                                                                           | Fixture normalizes timing and asserts field shape.                                                                                                                                                           |
+| SA13 | `safeForAutomaticImplementation: true` is required or a proposal/manual-decision explanation is recorded before protected UI work is considered ready.                                                                     | PR template, workflow docs, or policy docs include the operating rule.                                                                                                                                       |
+| SA14 | A companion human inspector is specified but not required for the first machine-contract implementation slice.                                                                                                             | Planning readiness names the inspector as deferred UI scope and recommends a dedicated UI spec before implementation.                                                                                        |
+| SA15 | The command can run from a clean checkout through the documented root alias or returns a deterministic setup/build precondition error.                                                                                     | CLI/root script smoke test covers `pnpm --silent agent-design:prepare --surface <path> --json`.                                                                                                              |
+| SA16 | The spec records interface alternatives and selects the existing `prepare` command as the public contract.                                                                                                                 | Spec review confirms Shape A is selected and Shapes B-D are rejected/deferred with tradeoffs.                                                                                                                |
+| SA17 | Token contract source priority is deterministic and source-ref backed.                                                                                                                                                     | Unit test proves roles are produced from mapped theme slots/aliases and include source refs.                                                                                                                 |
+| SA18 | Foundation tokens and raw color values are forbidden for new protected UI work unless explicitly exempted.                                                                                                                 | Token-contract fixture includes forbidden token patterns and protected-surface test rejects missing patterns.                                                                                                |
+| SA19 | Schema validation rejects a prepare payload missing `designTokenContract`, `timing`, `safeForAutomaticImplementation`, or source digests.                                                                                  | `astudio-design-command.v1.schema.json` fixture has a prepare-specific branch and negative fixtures.                                                                                                         |
+| SA20 | Known raw prepare/routing/guidance failures are mapped to `DesignEngineError` codes.                                                                                                                                       | Error tests cover invalid JSON, invalid schemas, missing digests, missing token contract, and invalid validation command script references.                                                                  |
+| SA21 | A static/generated context artifact is not treated as authority in v1.                                                                                                                                                     | Docs and tests keep the live `prepare` command as the required front door; any artifact output is deferred or freshness-gated.                                                                               |
+| SA22 | Docs do not describe primitive command composition as the required pre-edit happy path.                                                                                                                                    | Docs check or review confirms `lint`, `components`, `coverage`, and `export` are support commands after `prepare`.                                                                                           |
+| SA23 | Completed plan phases have machine-verifiable evidence locators.                                                                                                                                                           | Each completed phase records command, exit code, surface or failure class, commit SHA when available, and artifact/log path or transcript anchor.                                                            |
+| SA24 | Wrapper reliability is proven across success, warn/exempt, and unknown/missing-route prepare outcomes; proposal-required behavior is proven through a read-only proposal preview.                                          | Wrapper matrix covers one successful protected surface plus deterministic unsafe/failure examples for non-happy prepare paths; proposal preview covers `E_DESIGN_PROPOSAL_REQUIRED`.                         |
+| SA25 | Proposal and unsafe stops use stable decision codes with prescribed next-action categories.                                                                                                                                | Engine/CLI fixtures assert `openDecisions[].code`, severity, and next-action mapping for unknown, ambiguous, missing-example, and proposal-required stops.                                                   |
+
+## Resolved Decisions and Follow-Ups
+
+Resolved for this v1 machine-contract slice:
+
+- `designTokenContract.allowedRoles` starts from mapped semantic slots and token aliases only; generated token package metadata may enrich a later inspector or export surface, but it is not the first-slice authority.
+- `timing` is included by default in every `astudio.design.prepare.v1` payload. Fixture tests normalize wall-clock fields instead of making timing debug-only.
+- `prepare` may include read-only guidance diagnostics when they are already available, but remediation composition is not required for the first slice. Remediation enrichment is a follow-up after the token, schema, and stop-code contract is stable.
 
 ## Open Questions
 
-- Should `designTokenContract.allowedRoles` initially be curated from mapped semantic slots only, or should it include generated token package metadata in the first slice?
-- Should `timing` be included by default in every payload or only when `--agent` / `--debug` is passed? The spec requires timing evidence, but fixture stability needs a clear rule.
-- Should `prepare` include guidance remediation findings for the target surface in the first slice, or should that be a second slice after token-contract hardening?
+Deferred follow-up questions:
+
 - Which UI surface should become the first human Design Prepare Inspector: web app page, Storybook page, or CLI-rendered markdown artifact?
 - Should proposal scaffolding get a separate future command such as `astudio design propose-abstraction --write`, or should write-gated proposal creation live outside `astudio design`?
 
@@ -723,10 +735,10 @@ UI companion: required. The machine-contract slice can proceed first, but the hu
 
 First recommended `he-plan` slice:
 
-1. Prove wrapper reliability and classification: verify `pnpm --silent agent-design:prepare --surface <path>` builds every CLI workspace dependency before invoking prepare and emits parseable JSON, or remove it from canonical docs; classify it as build-backed setup while keeping `astudio design prepare` as the read-only operation contract.
+1. Prove wrapper reliability and classification: verify `pnpm --silent agent-design:prepare --surface <path> --json` builds every CLI workspace dependency before invoking prepare and emits parseable JSON, or returns a deterministic setup/build precondition error such as `E_DESIGN_PREPARE_BUILD_UNAVAILABLE`; classify it as build-backed setup while keeping `astudio design prepare` as the read-only operation contract.
 2. Harden schema and error contracts: add prepare-specific schema enforcement, negative fixtures, and deterministic `DesignEngineError` wrapping for known prepare/routing/guidance failures.
 3. Add token contract loading: produce `designTokenContract` from mapped semantic theme slots and token aliases, include source refs, and forbid foundation/raw-token patterns for protected UI.
-4. Wire payload fixtures and root alias smoke: assert `timing`, token contract, read-only validation commands, source digests, and clean-checkout behavior through `pnpm --silent agent-design:prepare --surface <path>`.
+4. Wire payload fixtures and root alias smoke: assert `timing`, token contract, read-only validation commands, source digests, and clean-checkout behavior through `pnpm --silent agent-design:prepare --surface <path> --json`.
 5. Flip high-traffic docs: make `prepare` the first happy-path step in README, `FORJAMIE.md`, workflow docs, and CLI docs while demoting primitive commands to diagnostics.
 
 Deferred scope for the first plan:

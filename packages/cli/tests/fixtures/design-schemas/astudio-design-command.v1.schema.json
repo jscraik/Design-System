@@ -131,6 +131,45 @@
         }
       }
     },
+    "prepareValidationCommand": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command",
+        "safetyClass",
+        "reason",
+        "packageScript",
+        "expectedOutcome",
+        "timeoutClass"
+      ],
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1
+        },
+        "safetyClass": {
+          "const": "read_only"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "packageScript": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expectedOutcome": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timeoutClass": {
+          "enum": ["short", "medium", "long"]
+        },
+        "blockedByDefault": {
+          "type": "boolean"
+        }
+      }
+    },
     "routeFallback": {
       "type": "object",
       "additionalProperties": false,
@@ -330,8 +369,9 @@
         },
         "validationCommands": {
           "type": "array",
+          "minItems": 1,
           "items": {
-            "$ref": "#/definitions/validationCommand"
+            "$ref": "#/definitions/prepareValidationCommand"
           }
         },
         "sourceRefs": {
@@ -358,7 +398,7 @@
     "openDecision": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["code", "message", "severity"],
+      "required": ["code", "message", "severity", "nextAction"],
       "properties": {
         "code": {
           "type": "string",
@@ -370,6 +410,9 @@
         },
         "severity": {
           "enum": ["info", "warn", "error"]
+        },
+        "nextAction": {
+          "enum": ["stop", "escalate", "diagnose"]
         }
       }
     },
@@ -398,6 +441,8 @@
         "sourceDigests",
         "coverageMatrixDigest",
         "componentLifecycleDigest",
+        "wrapper-evidence",
+        "final-plan-evidence",
         "openDecisions"
       ],
       "properties": {
@@ -419,8 +464,7 @@
           "minLength": 1
         },
         "designContractMode": {
-          "type": "string",
-          "minLength": 1
+          "enum": ["legacy", "design-md"]
         },
         "surfacePath": {
           "type": "string",
@@ -462,8 +506,9 @@
         },
         "validationCommands": {
           "type": "array",
+          "minItems": 1,
           "items": {
-            "$ref": "#/definitions/validationCommand"
+            "$ref": "#/definitions/prepareValidationCommand"
           }
         },
         "ruleManifestVersion": {
@@ -493,6 +538,14 @@
         },
         "componentLifecycleDigest": {
           "$ref": "#/definitions/prepareDigest"
+        },
+        "wrapper-evidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "final-plan-evidence": {
+          "type": "string",
+          "minLength": 1
         },
         "openDecisions": {
           "type": "array",
