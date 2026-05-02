@@ -118,7 +118,7 @@ function maskPublicDesignTokenContract(
   inDebugMode: boolean,
 ): unknown {
   if (value === null || typeof value !== "object" || Array.isArray(value)) {
-    return maskFieldValue("designTokenContract", value, masks, inDebugMode);
+    return maskMalformedPublicValue(value, masks, inDebugMode);
   }
 
   const result: Record<string, unknown> = {};

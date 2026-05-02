@@ -1296,6 +1296,26 @@ test("build prepare payload parses quoted pnpm package dirs", async () => {
   assert.equal(payload.validationCommands[0].packageScript, "type-check");
 });
 
+test("build prepare payload preserves backslashes while tokenizing pnpm package dirs", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  const routing = readFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json");
+  const route = routing.routes.find((entry) => entry.canonicalNeed === "settings_panel");
+  assert.ok(route, "missing settings_panel route fixture");
+  route.validationCommands[0].command = "pnpm -C packages\\ui run type-check";
+  route.validationCommands[0].packageScript = "type-check";
+  writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    (error) => {
+      assert.equal(error.code, "E_DESIGN_PACKAGE_JSON");
+      assert.match(error.message, /packages\\ui/);
+      assert.doesNotMatch(error.message, /packagesui/);
+      return true;
+    },
+  );
+});
+
 test("build prepare payload normalizes fallback validation lazily", async () => {
   const fixtureRoot = prepareFixtureRoot();
   copyRootFile(fixtureRoot, "packages/ui/package.json");
@@ -1317,7 +1337,7 @@ test("build prepare payload normalizes fallback validation lazily", async () => 
   assert.equal(payload.validationCommands[0].packageScript, "type-check");
 });
 
-test("build prepare payload accepts pnpm run scripts named like pnpm commands", async () => {
+test("build prepare payload rejects untrusted scripts named like pnpm commands", async () => {
   const fixtureRoot = prepareFixtureRoot();
   const packageJson = readFixtureJson(fixtureRoot, "package.json");
   packageJson.scripts.list = "node --version";
@@ -1329,12 +1349,14 @@ test("build prepare payload accepts pnpm run scripts named like pnpm commands", 
   route.validationCommands[0].packageScript = "list";
   writeFixtureJson(fixtureRoot, "docs/design-system/AGENT_UI_ROUTING.json", routing);
 
-  const payload = await buildPreparePayload(
-    "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",
-    fixtureRoot,
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    (error) => {
+      assert.equal(error.code, "E_DESIGN_VALIDATION_COMMAND_INVALID");
+      assert.match(error.message, /\.#list/);
+      return true;
+    },
   );
-
-  assert.equal(payload.validationCommands[0].packageScript, "list");
 });
 
 test("build prepare payload rejects package scripts outside the read-only allowlist", async () => {

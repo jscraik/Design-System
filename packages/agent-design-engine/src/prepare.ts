@@ -372,16 +372,31 @@ function commandTokens(command: string): string[] {
   const tokens: string[] = [];
   let current = "";
   let quote: "'" | '"' | undefined;
-  let escaped = false;
 
-  for (const character of command.trim()) {
-    if (escaped) {
-      current += character;
-      escaped = false;
-      continue;
-    }
+  const trimmed = command.trim();
+  for (let index = 0; index < trimmed.length; index += 1) {
+    const character = trimmed[index];
     if (character === "\\" && quote !== "'") {
-      escaped = true;
+      const nextCharacter = trimmed[index + 1];
+      const escapeableOutsideQuotes = nextCharacter
+        ? /\s/.test(nextCharacter) ||
+          nextCharacter === "'" ||
+          nextCharacter === '"' ||
+          nextCharacter === "\\"
+        : false;
+      const escapeableInsideDoubleQuotes = nextCharacter
+        ? nextCharacter === '"' ||
+          nextCharacter === "\\" ||
+          nextCharacter === "$" ||
+          nextCharacter === "`" ||
+          /\s/.test(nextCharacter)
+        : false;
+      if ((quote === '"' && escapeableInsideDoubleQuotes) || (!quote && escapeableOutsideQuotes)) {
+        current += nextCharacter;
+        index += 1;
+      } else {
+        current += "\\";
+      }
       continue;
     }
     if (quote) {
@@ -406,9 +421,6 @@ function commandTokens(command: string): string[] {
     current += character;
   }
 
-  if (escaped) {
-    current += "\\";
-  }
   if (quote) {
     throw invalidValidationCommand(command, "Validation command has unterminated shell quote");
   }
@@ -473,7 +485,6 @@ const pnpmRunOptionsWithValues = new Set([
 const trustedReadOnlyPackageScriptKeys = new Set([
   ".#agent-design:lint",
   ".#docs:lint",
-  ".#list",
   ".#test:a11y:widgets",
   "packages/ui#type-check",
 ]);

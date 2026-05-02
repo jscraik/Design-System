@@ -24,7 +24,7 @@
 | --- | --- | --- |
 | Build / CI | Yellow | Focused policy, token, matrix, docs, guidance, whitespace, browser, widget a11y, and aggregate build gates pass for the Agent Design Engine slice |
 | Tests | Yellow | Agent-design and release-readiness gates pass (`agent-design-engine`, `cli`, `design-system-guidance`, web E2E, widget a11y, and root build), including fixture-backed CLI JSON/recovery/migration coverage |
-| Agent Design Prepare plan | Green | Reviewer loop and required checks are green after wrapper/read-only classification, JSON-safe wrapper, matrix evidence, machine locators, and resolved-vs-deferred spec decisions were tightened |
+| Agent Design Prepare plan | Review green; merge-blocked pending required checks | Reviewer loop is green after wrapper/read-only classification, JSON-safe wrapper, matrix evidence, machine locators, and resolved-vs-deferred spec decisions were tightened; PR #160 remains under heartbeat monitoring until required checks pass |
 | Security | Clean | 13 CVEs patched; GitHub Actions SHA-pinned |
 | Open PRs | 1 | PR #160 carries the agent-design prepare contract hardening slice |
 | Blockers | None | |
