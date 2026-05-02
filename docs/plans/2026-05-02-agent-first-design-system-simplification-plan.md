@@ -2,7 +2,7 @@
 schema_version: 1
 title: Agent-First Design System Simplification Plan
 type: refactor
-status: proposed
+status: active
 date: 2026-05-02
 source_spec: docs/specs/2026-05-02-agent-first-design-system-simplification-spec.md
 plan_route: fresh
@@ -28,6 +28,7 @@ linear_status: untracked
 - [Validation Ladder](#validation-ladder)
 - [Machine Evidence Contract](#machine-evidence-contract)
 - [First Work Packet](#first-work-packet)
+- [Execution Ledger](#execution-ledger)
 - [Linear Traceability](#linear-traceability)
 - [References](#references)
 
@@ -56,7 +57,7 @@ No phase may introduce a competing happy-path command.
 | Source authority    | Ready     | `docs/specs/2026-05-02-agent-first-design-system-simplification-spec.md` defines the product spine, interface alternatives, selected Shape A, SA1-SA22, phase gates, and first planning slice.                   |
 | Domain readiness    | Ready     | No repo `CONTEXT.md` or `CONTEXT-MAP.md` exists. The source spec defines canonical terms for active authority, historical evidence, archive, obsolete/deletion candidate, agent brief, PR evidence, and prepare. |
 | Interface readiness | Ready     | Shape A is selected: `prepare` remains the command family, while `--format brief` and `--format pr-evidence` are derived from the typed prepare payload.                                                         |
-| Linear readiness    | Untracked | No Linear issue was supplied. This plan can guide local execution, but tracked project delivery should create or link a Linear issue before `he-work` starts.                                                    |
+| Linear readiness    | Untracked | No Linear issue was supplied. Jamie approved local HE heartbeat execution for this plan on 2026-05-02. Tracked project delivery should still create or link a Linear issue before external tracker closure.      |
 
 ## Requirements Trace
 
@@ -593,6 +594,47 @@ Stop conditions:
 - Active authority cannot be reduced to a clear front door without a product decision.
 - A Linear issue becomes required by project governance before execution continues.
 - Docs lint fails for reasons outside the phase scope and cannot be isolated.
+
+## Execution Ledger
+
+### P0 Reference Audit
+
+Working-tree diff identifier: P0 authority-map/reference-audit slice, before the P0 phase commit.
+
+Files changed so far:
+
+- `README.md`
+- `FORJAMIE.md`
+- `docs/guides/AGENT_DESIGN_WORKFLOW.md`
+- `docs/plans/README.md`
+- `reports/README.md`
+- `artifacts/reviews/README.md`
+- `docs/plans/2026-05-02-agent-first-design-system-simplification-plan.md`
+
+Source acceptance IDs targeted: SA1, SA2, SA3, SA20, SA21.
+
+Reference audits:
+
+| surface                                                                    | command                                                                                                                                                                                                                    | outcome                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.spec/**`                                                                 | `rg --hidden -n "\\.spec" README.md FORJAMIE.md docs packages platforms apps scripts reports artifacts .spec .kiro ai package.json pnpm-workspace.yaml`                                                                    | Active references still exist in `docs/validation/README.md`, `docs/guides/StatefulComponentProps.md`, `docs/architecture/001-package-structure.md`, `docs/architecture/TOP_LEVEL_INDEX.md`, `docs/operations/SLOS.md`, scripts, and `.spec/**` itself, so P0 classifies `.spec/**` as historical evidence and performs no move/delete. `.spec/archive/diagrams/*.png` remains an obsolete-candidate cluster only; deletion is deferred until exact reference evidence is recorded. |
+| `.kiro/**`                                                                 | `rg --hidden -n "\\.kiro" README.md FORJAMIE.md docs packages platforms apps scripts reports artifacts .spec .kiro ai package.json pnpm-workspace.yaml`                                                                    | Active links still point at `.kiro/steering/page-development.md` from guide and architecture docs, and link/check scripts intentionally allow `.kiro`, so P0 classifies `.kiro/**` as historical/reference material and performs no move/delete.                                                                                                                                                                                                                                    |
+| `ai/prompts/**` and `ai/sessions/**`                                       | `rg --hidden -n "ai/(prompts\|sessions)\|ai/" README.md FORJAMIE.md docs packages platforms apps scripts reports artifacts .spec .kiro ai package.json pnpm-workspace.yaml`                                                | `ai/README.md` owns prompt/session provenance and the current simplification plan/spec references the cluster as historical/noisy evidence. P0 classifies it as historical provenance and performs no move/delete.                                                                                                                                                                                                                                                                  |
+| `docs/plans/**`, `docs/specs/**`, `reports/**`, and `artifacts/reviews/**` | `rg --hidden -n "artifacts/reviews\|reports/\|docs/plans\|docs/specs\|AGENT_DESIGN_WORKFLOW" README.md FORJAMIE.md docs packages platforms apps scripts reports artifacts .spec .kiro ai package.json pnpm-workspace.yaml` | Existing indexes already govern plans, reports, and review artifacts; P0 updates those indexes and the agent workflow authority map instead of moving/deleting files.                                                                                                                                                                                                                                                                                                               |
+
+Validation commands:
+
+- `pnpm docs:lint` -> pass.
+- `pnpm test:policy` -> pass; existing design-system guidance warnings remained non-blocking and policy ended `policy: ok`.
+- `git diff --check` -> pass.
+
+Reviewer status:
+
+- Simplify pass -> pass; no behavior-changing simplification applied.
+- HE code-review readiness pass -> pass after adding the execution-ledger table-of-contents entry and aligning Linear readiness with approved local execution.
+- HE fix-bugs pass -> pass; no reproduced validation or review bug remained after the readiness wording and TOC fixes.
+
+`FORJAMIE.md` update status: complete; Recent Changes includes the P0 authority-map entry.
 
 ## Linear Traceability
 

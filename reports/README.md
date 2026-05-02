@@ -1,6 +1,6 @@
 # Reports Index
 
-Last updated: 2026-04-26
+Last updated: 2026-05-02
 
 ## Table of Contents
 
@@ -13,6 +13,10 @@ Last updated: 2026-04-26
 `reports/**` stores generated or investigation-specific evidence. Reports are
 not automatically current just because they remain in the repository. Use this
 index to distinguish active evidence from historical snapshots.
+
+Reports are not agent workflow authority. For protected UI work, use
+`docs/guides/AGENT_DESIGN_WORKFLOW.md`; use this index only to choose report
+evidence.
 
 ## Current Reports
 

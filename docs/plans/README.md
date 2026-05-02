@@ -1,6 +1,6 @@
 # Plans Authority Index
 
-Last updated: 2026-04-28
+Last updated: 2026-05-02
 
 ## Table of Contents
 
@@ -29,17 +29,18 @@ historical evidence, but this file names the current canonical lane explicitly.
   `docs/specs/2026-04-28-agent-native-design-system-spec.md`. It is the active
   plan for the `prepare` command, routing-table, remediation, gold-example, and
   new-abstraction proposal workflow.
+- `2026-05-02-agent-first-design-system-simplification-plan.md` - active
+  simplification execution plan approved for the HE work loop. It starts with
+  authority mapping and reference audits before payload ergonomics, output
+  formats, responsibility splits, package taxonomy, script cleanup, and
+  `FORJAMIE.md` compression.
 
 ## Proposed Plans
 
 These plans are not canonical execution authority until they are approved,
 tracked when required, and explicitly promoted into the current canonical lane:
 
-- `2026-05-02-agent-first-design-system-simplification-plan.md` - proposed
-  simplification plan for the agent-first design-system lane. It starts with
-  authority mapping and reference audits before payload ergonomics, output
-  formats, responsibility splits, package taxonomy, script cleanup, and
-  `FORJAMIE.md` compression.
+- None currently.
 
 ## Current Cleanup Decisions
 

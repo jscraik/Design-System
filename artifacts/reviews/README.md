@@ -1,6 +1,6 @@
 # Review Artifacts Index
 
-Last updated: 2026-04-24
+Last updated: 2026-05-02
 
 ## Table of Contents
 
@@ -13,6 +13,10 @@ Last updated: 2026-04-24
 `artifacts/reviews/**` stores review evidence from agent and human-assisted
 passes. Use this index to find the current synthesis for a review family before
 reading older round files.
+
+Review artifacts are evidence, not active workflow authority. For protected UI
+work, use `docs/guides/AGENT_DESIGN_WORKFLOW.md`; use this index only to choose
+the most current review evidence.
 
 ## Current Review Authority
 
