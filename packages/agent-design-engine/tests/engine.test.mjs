@@ -1632,6 +1632,22 @@ test("build prepare payload reports missing source digests deterministically", a
   );
 });
 
+test("build prepare payload reports missing prepare sources without absolute paths", async () => {
+  const fixtureRoot = prepareFixtureRoot();
+  fs.rmSync(path.join(fixtureRoot, "DESIGN.md"));
+
+  await assert.rejects(
+    () => buildPreparePayload("packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx", fixtureRoot),
+    (error) => {
+      assert.equal(error.code, "E_DESIGN_CONTRACT_SOURCE_MISSING");
+      assert.equal(error.exitCode, 2);
+      assert.equal(error.message, "Prepare payload source is missing or unreadable: DESIGN.md");
+      assert.ok(!error.message.includes(fixtureRoot));
+      return true;
+    },
+  );
+});
+
 test("builds prepare payload for settings panel surfaces", async () => {
   const payload = await buildPreparePayload(
     "packages/ui/src/app/settings/AppsPanel/AppsPanel.tsx",

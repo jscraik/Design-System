@@ -182,9 +182,8 @@ async function readPrepareSource(
     if (error instanceof Error && error.name === "AbortError") {
       throw error;
     }
-    const detail = error instanceof Error ? ` ${error.message}` : "";
     throw new DesignEngineError(
-      `Prepare payload source is missing or unreadable: ${relativePath}.${detail}`,
+      `Prepare payload source is missing or unreadable: ${relativePath}`,
       {
         code,
         exitCode: 2,
@@ -497,6 +496,17 @@ interface InferredPackageScript {
   script: string;
 }
 
+type ConsumedPnpmOption = {
+  consumed: true;
+  index: number;
+  packageDir: string;
+};
+
+type UnconsumedPnpmOption = {
+  consumed: false;
+  packageDir: string;
+};
+
 function normalizePackageDir(command: string, packageDir: string | undefined): string {
   if (!packageDir || packageDir.startsWith("-")) {
     throw invalidValidationCommand(
@@ -512,6 +522,76 @@ function unsupportedPnpmFilter(command: string): DesignEngineError {
     command,
     "Validation command uses unsupported pnpm filter selectors",
   );
+}
+
+function consumePnpmOption(
+  command: string,
+  tokens: string[],
+  index: number,
+  packageDir: string,
+): ConsumedPnpmOption | UnconsumedPnpmOption {
+  const token = tokens[index];
+  if (
+    token === "-r" ||
+    token === "--recursive" ||
+    token === "recursive" ||
+    token === "multi" ||
+    token === "m"
+  ) {
+    throw invalidValidationCommand(
+      command,
+      "Validation command uses unsupported pnpm recursive execution",
+    );
+  }
+  if (token === "-C" || token === "--dir") {
+    return {
+      consumed: true,
+      index: index + 1,
+      packageDir: normalizePackageDir(command, tokens[index + 1]),
+    };
+  }
+  if (token.startsWith("-C=")) {
+    return {
+      consumed: true,
+      index,
+      packageDir: normalizePackageDir(command, token.slice("-C=".length)),
+    };
+  }
+  if (token.startsWith("-C") && token.length > 2) {
+    return {
+      consumed: true,
+      index,
+      packageDir: normalizePackageDir(command, token.slice(2)),
+    };
+  }
+  if (token.startsWith("--dir=")) {
+    return {
+      consumed: true,
+      index,
+      packageDir: normalizePackageDir(command, token.slice("--dir=".length)),
+    };
+  }
+  if (token === "--workspace-root" || token === "-w") {
+    return { consumed: true, index, packageDir: "." };
+  }
+  if (
+    token === "--filter" ||
+    token === "-F" ||
+    token === "--filter-prod" ||
+    token === "--filter-omit-pkg-dep" ||
+    token.startsWith("--filter=") ||
+    token.startsWith("--filter-prod=") ||
+    token.startsWith("--filter-omit-pkg-dep=")
+  ) {
+    throw unsupportedPnpmFilter(command);
+  }
+  if (pnpmRunOptionsWithValues.has(token)) {
+    return { consumed: true, index: index + 1, packageDir };
+  }
+  if (token.startsWith("-")) {
+    return { consumed: true, index, packageDir };
+  }
+  return { consumed: false, packageDir };
 }
 
 async function canonicalPackageDir(rootDir: string, packageDir: string): Promise<string> {
@@ -547,56 +627,10 @@ function readPnpmRunScript(
   let packageDir = initialPackageDir;
   for (let index = startIndex; index < tokens.length; index += 1) {
     const token = tokens[index];
-    if (
-      token === "-r" ||
-      token === "--recursive" ||
-      token === "recursive" ||
-      token === "multi" ||
-      token === "m"
-    ) {
-      throw invalidValidationCommand(
-        command,
-        "Validation command uses unsupported pnpm recursive execution",
-      );
-    }
-    if (token === "-C" || token === "--dir") {
-      const value = tokens[index + 1];
-      packageDir = normalizePackageDir(command, value);
-      index += 1;
-      continue;
-    }
-    if (token.startsWith("-C=")) {
-      packageDir = normalizePackageDir(command, token.slice("-C=".length));
-      continue;
-    }
-    if (token.startsWith("-C") && token.length > 2) {
-      packageDir = normalizePackageDir(command, token.slice(2));
-      continue;
-    }
-    if (token.startsWith("--dir=")) {
-      packageDir = normalizePackageDir(command, token.slice("--dir=".length));
-      continue;
-    }
-    if (token === "--workspace-root" || token === "-w") {
-      packageDir = ".";
-      continue;
-    }
-    if (
-      token === "--filter" ||
-      token === "-F" ||
-      token === "--filter-prod" ||
-      token === "--filter-omit-pkg-dep" ||
-      token.startsWith("--filter=") ||
-      token.startsWith("--filter-prod=") ||
-      token.startsWith("--filter-omit-pkg-dep=")
-    ) {
-      throw unsupportedPnpmFilter(command);
-    }
-    if (pnpmRunOptionsWithValues.has(token)) {
-      index += 1;
-      continue;
-    }
-    if (token.startsWith("-")) {
+    const consumed = consumePnpmOption(command, tokens, index, packageDir);
+    if (consumed.consumed) {
+      packageDir = consumed.packageDir;
+      index = consumed.index;
       continue;
     }
     if (index !== tokens.length - 1) {
@@ -623,56 +657,10 @@ function inferPackageScript(command: string): InferredPackageScript | undefined 
     if (token === "run" || token === "run-script") {
       return readPnpmRunScript(command, tokens, index + 1, packageDir);
     }
-    if (
-      token === "-r" ||
-      token === "--recursive" ||
-      token === "recursive" ||
-      token === "multi" ||
-      token === "m"
-    ) {
-      throw invalidValidationCommand(
-        command,
-        "Validation command uses unsupported pnpm recursive execution",
-      );
-    }
-    if (token === "--workspace-root" || token === "-w") {
-      packageDir = ".";
-      continue;
-    }
-    if (token === "-C" || token === "--dir") {
-      const value = tokens[index + 1];
-      packageDir = normalizePackageDir(command, value);
-      index += 1;
-      continue;
-    }
-    if (token.startsWith("-C=")) {
-      packageDir = normalizePackageDir(command, token.slice("-C=".length));
-      continue;
-    }
-    if (token.startsWith("-C") && token.length > 2) {
-      packageDir = normalizePackageDir(command, token.slice(2));
-      continue;
-    }
-    if (token.startsWith("--dir=")) {
-      packageDir = normalizePackageDir(command, token.slice("--dir=".length));
-      continue;
-    }
-    if (
-      token === "--filter" ||
-      token === "-F" ||
-      token === "--filter-prod" ||
-      token === "--filter-omit-pkg-dep" ||
-      token.startsWith("--filter=") ||
-      token.startsWith("--filter-prod=") ||
-      token.startsWith("--filter-omit-pkg-dep=")
-    ) {
-      throw unsupportedPnpmFilter(command);
-    }
-    if (pnpmRunOptionsWithValues.has(token)) {
-      index += 1;
-      continue;
-    }
-    if (token.startsWith("-")) {
+    const consumed = consumePnpmOption(command, tokens, index, packageDir);
+    if (consumed.consumed) {
+      packageDir = consumed.packageDir;
+      index = consumed.index;
       continue;
     }
     if (pnpmSubcommands.has(token)) {

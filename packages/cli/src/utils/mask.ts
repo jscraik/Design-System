@@ -79,12 +79,11 @@ function maskFieldValue(
 
 function maskMalformedPublicValue(
   value: unknown,
-  masks: FieldMask[],
+  _masks: FieldMask[],
   inDebugMode: boolean,
 ): unknown {
-  return typeof value === "string"
-    ? maskValue(value, "redact")
-    : maskValueRecursive(value, masks, inDebugMode);
+  if (inDebugMode) return value;
+  return "[REDACTED]";
 }
 
 function maskPublicDesignTokenRole(
@@ -107,7 +106,7 @@ function maskPublicDesignTokenRole(
           ? val
           : maskMalformedPublicValue(val, masks, inDebugMode);
     } else {
-      result[key] = maskFieldValue(key, val, masks, inDebugMode);
+      result[key] = maskMalformedPublicValue(val, masks, inDebugMode);
     }
   }
   return result;
@@ -137,7 +136,7 @@ function maskPublicDesignTokenContract(
           ? val
           : maskMalformedPublicValue(val, masks, inDebugMode);
     } else {
-      result[key] = maskFieldValue(key, val, masks, inDebugMode);
+      result[key] = maskMalformedPublicValue(val, masks, inDebugMode);
     }
   }
   return result;

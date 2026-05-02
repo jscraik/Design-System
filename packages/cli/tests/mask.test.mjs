@@ -104,14 +104,28 @@ test("maskObject redacts malformed design token contract payloads", async () => 
       mode: { token: "secret-token-123" },
     },
   });
-  assert.deepEqual(nestedMode.designTokenContract.mode, { token: "[REDACTED]" });
+  assert.equal(nestedMode.designTokenContract.mode, "[REDACTED]");
 
   const nestedSourceRefs = maskObject({
     designTokenContract: {
       sourceRefs: [{ token: "secret-token-123" }],
     },
   });
-  assert.deepEqual(nestedSourceRefs.designTokenContract.sourceRefs, [{ token: "[REDACTED]" }]);
+  assert.equal(nestedSourceRefs.designTokenContract.sourceRefs, "[REDACTED]");
+
+  const unknownContractField = maskObject({
+    designTokenContract: {
+      note: "secret-token-123",
+    },
+  });
+  assert.equal(unknownContractField.designTokenContract.note, "[REDACTED]");
+
+  const unknownRoleField = maskObject({
+    designTokenContract: {
+      allowedRoles: [{ role: "text.primary", useFor: ["Primary text"], note: "secret-token-123" }],
+    },
+  });
+  assert.equal(unknownRoleField.designTokenContract.allowedRoles[0].note, "[REDACTED]");
 
   const malformedRole = maskObject({
     designTokenContract: {
