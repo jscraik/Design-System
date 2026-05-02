@@ -116,9 +116,7 @@ function tokenContractAmbiguous(sourcePath: string, expectation: string): Design
 }
 
 function hasCssDeclaration(content: string, property: string): boolean {
-  const stripped = content
-    .replace(/\/\*[\s\S]*?\*\//g, "")
-    .replace(/\/\/.*/g, "");
+  const stripped = content.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*/g, "");
   const escaped = property.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   return new RegExp(`(?:^|[{;])\\s*${escaped}\\s*:`, "m").test(stripped);
 }
