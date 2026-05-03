@@ -12,6 +12,13 @@ Last updated: 2026-01-09
 
 This document provides a quick, task-oriented map of the repository so contributors can find the right surface fast.
 
+## Table of Contents
+
+- [Top-level](#top-level)
+- [Platform surface](#platform-surface)
+- [JS/TS packages](#jsts-packages)
+- [Key docs](#key-docs)
+
 ## Top-level
 
 - `apps/`: Navigation index (pointers to canonical app locations).
@@ -70,5 +77,7 @@ This document provides a quick, task-oriented map of the repository so contribut
 
 - `docs/BUILD_PIPELINE.md`: End-to-end build pipeline
 - `docs/architecture/`: Architecture + cross-platform design
+- `docs/architecture/COMMAND_SURFACE.md`: Canonical root command routing for agents and humans
+- `docs/architecture/PACKAGE_TAXONOMY.md`: Current package/template/fixture lifecycle decisions
 - `docs/guides/`: How-tos and integration guides
 - `docs/work/`: Work logs and validation notes

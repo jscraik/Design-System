@@ -132,6 +132,14 @@ export interface AgentUiRouteValidationCommand {
   expectedOutcome?: string;
   timeoutClass?: "short" | "medium" | "long";
   blockedByDefault?: boolean;
+  ifFails?: string;
+}
+
+export interface PrepareValidationCommand extends AgentUiRouteValidationCommand {
+  packageScript: string;
+  expectedOutcome: string;
+  timeoutClass: "short" | "medium" | "long";
+  ifFails: string;
 }
 
 export interface AgentUiRouteFallback {
@@ -195,6 +203,24 @@ export interface ResolvedAgentUiRoute extends AgentUiRouteSource {
   coverageEntry: ComponentCoverageEntry;
   matchedNeed: string;
   matchedAlias: string | null;
+}
+
+export interface PrepareRouteConfidence {
+  level: "high" | "medium" | "low";
+  because: string[];
+}
+
+export interface PrepareExampleUsageGuidance {
+  copy: string[];
+  doNotCopy: string[];
+  proves: string[];
+  maturity: "gold" | "acceptable" | "legacy" | "deferred";
+}
+
+export interface PrepareRouteRecommendation extends ResolvedAgentUiRoute {
+  validationCommands: PrepareValidationCommand[];
+  confidence: PrepareRouteConfidence;
+  usageGuidance: PrepareExampleUsageGuidance;
 }
 
 export interface RouteDiagnostic {
@@ -311,6 +337,30 @@ export interface PrepareOpenDecision {
   nextAction: "stop" | "escalate" | "diagnose";
 }
 
+export type PrepareNextAction =
+  | {
+      kind: "implement";
+      instruction: string;
+      evidenceRefs: string[];
+      reasonCode?: never;
+    }
+  | {
+      kind:
+        | "stop_for_proposal"
+        | "stop_for_manual_decision"
+        | "stop_for_missing_route"
+        | "stop_for_validation_setup";
+      reasonCode: string;
+      instruction: string;
+      evidenceRefs: string[];
+    };
+
+export interface PrepareDoNotInventGuidance {
+  thing: string;
+  instead: string;
+  sourceRefs: string[];
+}
+
 export interface DesignTokenRole {
   role: string;
   cssVariable?: string;
@@ -329,18 +379,20 @@ export interface PreparePayload {
   kind: "astudio.design.prepare.v1";
   ok: boolean;
   safeForAutomaticImplementation: boolean;
+  nextAction: PrepareNextAction;
   resolvedDesignFile: string;
   guidanceConfigPath: string;
   designContractMode: "legacy" | "design-md";
   surfacePath: string;
   surfaceScope: PrepareSurfaceScope;
   surfaceKind: string;
-  recommendedRoutes: ResolvedAgentUiRoute[];
+  recommendedRoutes: PrepareRouteRecommendation[];
   designTokenContract: DesignTokenContract;
+  doNotInvent: PrepareDoNotInventGuidance[];
   requiredStates: string[];
   forbiddenPatterns: string[];
   relevantExamples: string[];
-  validationCommands: AgentUiRouteValidationCommand[];
+  validationCommands: PrepareValidationCommand[];
   ruleManifestVersion: string;
   rulePackVersion: string;
   ruleSourceDigests: RuleSourceDigest[];

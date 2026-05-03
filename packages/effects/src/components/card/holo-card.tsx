@@ -4,6 +4,9 @@ import { useRef, useState } from "react";
 import { useReducedMotion } from "../../hooks";
 import { cn } from "../../utils";
 
+const DEFAULT_TILT_INTENSITY = 0.15;
+const DEFAULT_HOVER_SCALE = 1.02;
+
 /**
  * Holographic card variants
  */
@@ -119,8 +122,8 @@ export function HoloCard({
   size = "default",
   colors = "neon",
   customColors,
-  _tiltIntensity = 0.15,
-  hoverScale = 1.02,
+  tiltIntensity = DEFAULT_TILT_INTENSITY,
+  hoverScale = DEFAULT_HOVER_SCALE,
   disableTilt = false,
   disableShimmer = false,
   className,
@@ -135,10 +138,23 @@ export function HoloCard({
   // Mouse position for 3D tilt
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const safeTiltIntensity = Number.isFinite(tiltIntensity)
+    ? Math.min(1, Math.max(0, tiltIntensity))
+    : DEFAULT_TILT_INTENSITY;
+  const safeHoverScale =
+    Number.isFinite(hoverScale) && hoverScale > 0 ? hoverScale : DEFAULT_HOVER_SCALE;
 
   // Transform mouse position to rotation values
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
+  const rotateX = useTransform(
+    mouseY,
+    [-0.5, 0.5],
+    [10 * safeTiltIntensity, -10 * safeTiltIntensity],
+  );
+  const rotateY = useTransform(
+    mouseX,
+    [-0.5, 0.5],
+    [-10 * safeTiltIntensity, 10 * safeTiltIntensity],
+  );
 
   const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
     if (disableTilt || prefersReducedMotion || !ref.current) return;
@@ -199,7 +215,7 @@ export function HoloCard({
         prefersReducedMotion
           ? undefined
           : {
-              scale: hoverScale,
+              scale: safeHoverScale,
               transition: { type: "spring", stiffness: 300, damping: 20 },
             }
       }

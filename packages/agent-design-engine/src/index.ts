@@ -8,6 +8,8 @@ export {
   manifestPath,
 } from "./manifest.js";
 export { extractDesignBody, parseDesignContract } from "./parser.js";
+export { renderPrepareBrief } from "./prepare/brief.js";
+export { renderPreparePrEvidence } from "./prepare/pr-evidence.js";
 export { buildPreparePayload, serializePreparePayload } from "./prepare.js";
 export {
   buildAbstractionProposalPreview,

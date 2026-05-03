@@ -154,6 +154,14 @@ const DESIGN_SYSTEM_SUBCONTRACTS = [
       "Fails when ignored runtime, cache, test, build, or audit outputs are tracked again.",
   },
   {
+    id: "validation-prototype-import-ban",
+    label: "Validation Prototype Import Ban",
+    command: ["pnpm", "validation-prototype:ban-check"],
+    remediation: "pnpm validation-prototype:ban-check",
+    description:
+      "Prevents product code from importing the validation-prototype proof harness.",
+  },
+  {
     id: "agent-design-boundaries",
     label: "Agent Design Boundary Guard",
     command: ["pnpm", "agent-design:boundaries"],

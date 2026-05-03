@@ -9,7 +9,7 @@
  * Reference: https://x.com/jh3yy/status/2002945849509494936
  */
 
-import { forwardRef, type HTMLAttributes } from "react";
+import { type CSSProperties, forwardRef, type HTMLAttributes } from "react";
 import { cn } from "../../utils/cn";
 
 export interface TocMarkerProps extends HTMLAttributes<HTMLElement> {
@@ -57,6 +57,15 @@ export const TocMarker = forwardRef<HTMLDivElement, TocMarkerProps>(
     },
     ref,
   ) => {
+    const markerStyle: CSSProperties &
+      Record<"--marker-size" | "--marker-color" | "positionAnchor", string> = {
+      "--marker-size": size,
+      "--marker-color": color,
+      backgroundColor: "var(--marker-color)",
+      positionAnchor: "--active",
+      ...style,
+    };
+
     return (
       <div
         ref={ref}
@@ -71,13 +80,7 @@ export const TocMarker = forwardRef<HTMLDivElement, TocMarkerProps>(
           !animate && "duration-0",
           className,
         )}
-        style={{
-          "--marker-size": size,
-          "--marker-color": color,
-          backgroundColor: "var(--marker-color)",
-          positionAnchor: "--active",
-          ...style,
-        }}
+        style={markerStyle}
         {...props}
       />
     );
