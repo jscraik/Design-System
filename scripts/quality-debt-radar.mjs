@@ -388,7 +388,7 @@ function probeBiomeDisabledRules(category) {
         ? `Disabled groups include ${disabled.slice(0, 5).join(", ")}${disabled.length > 5 ? "..." : ""}.${overrideDisabled.length ? ` Includes ${overrideDisabled.length} override-scoped disable${overrideDisabled.length === 1 ? "" : "s"}.` : ""}`
         : "No disabled linter rules detected.",
       disabled.length
-        ? "Review disabled Biome rules and promote one suppressing rule family per week."
+        ? "Review disabled Biome rules and promote one disabled rule family per week."
         : "Keep Biome rule suppressions at zero.",
     );
   } catch (error) {

@@ -4,7 +4,12 @@ import "../../../styles/widget.css";
 
 import { ShoppingCart } from "./shopping-cart";
 
-createRoot(document.getElementById("root")!).render(
+const root = document.getElementById("root");
+if (!root) {
+  throw new Error('service:"widgets-commerce-shopping-cart" Root element "#root" not found');
+}
+
+createRoot(root).render(
   <StrictMode>
     <ShoppingCart />
   </StrictMode>,

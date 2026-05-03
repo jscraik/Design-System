@@ -35,6 +35,10 @@ const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
+type CookieStoreLike = {
+  set: (details: { name: string; value: string; path?: string; expires?: number }) => Promise<void>;
+};
+
 type SidebarContextProps = {
   state: "expanded" | "collapsed";
   open: boolean;
@@ -62,6 +66,43 @@ function useSidebar() {
   }
 
   return context;
+}
+
+/**
+ * Persists the sidebar open state using Cookie Store when available, with a
+ * document cookie fallback for browsers that have not shipped the API yet.
+ *
+ * @param openState - Whether the sidebar should reopen expanded.
+ */
+function persistSidebarState(openState: boolean) {
+  const value = String(openState);
+  const cookieStore = (window as Window & { cookieStore?: CookieStoreLike }).cookieStore;
+  const writeDocumentCookie = () =>
+    Reflect.set(
+      document,
+      "cookie",
+      `${SIDEBAR_COOKIE_NAME}=${value}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`,
+    );
+
+  if (cookieStore) {
+    void cookieStore
+      .set({
+        name: SIDEBAR_COOKIE_NAME,
+        value,
+        path: "/",
+        expires: Date.now() + SIDEBAR_COOKIE_MAX_AGE * 1000,
+      })
+      .catch((error: unknown) => {
+        console.warn(
+          'service:"ui-sidebar" Cookie Store write failed; using document cookie fallback.',
+          error,
+        );
+        writeDocumentCookie();
+      });
+    return;
+  }
+
+  writeDocumentCookie();
 }
 
 /**
@@ -123,8 +164,7 @@ function SidebarProvider({
         _setOpen(openState);
       }
 
-      // This sets the cookie to keep the sidebar state.
-      document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+      persistSidebarState(openState);
     },
     [setOpenProp, open],
   );

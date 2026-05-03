@@ -16,7 +16,12 @@ initThemePreference();
 
 const host = createStandaloneHost(import.meta.env.VITE_API_BASE ?? "http://localhost:8787");
 
-createRoot(document.getElementById("root")!).render(
+const root = document.getElementById("root");
+if (!root) {
+  throw new Error('service:"web-app" Root element not found');
+}
+
+createRoot(root).render(
   <StrictMode>
     <HostProvider host={host}>
       <AppsSDKUIProvider linkComponent="a">

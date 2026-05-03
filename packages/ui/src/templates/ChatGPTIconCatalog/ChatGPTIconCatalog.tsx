@@ -9,7 +9,7 @@ export function ChatGPTIconCatalog() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   const iconEntries = Object.entries(Icons).filter(
-    ([name]) => name.startsWith("Icon") && typeof Icons[name as keyof typeof Icons] === "function",
+    ([name, Icon]) => name.startsWith("Icon") && typeof Icon === "function",
   );
 
   const filteredIcons = iconEntries.filter(([name]) =>
@@ -305,7 +305,7 @@ export function ChatGPTIconCatalog() {
           <div className="space-y-2 text-sm font-mono text-text-secondary">
             <p>
               <span className="text-accent-green">import</span> {`{ IconCheckmark }`}{" "}
-              <span className="text-accent-green">from</span> {'"@design-studio/ui/icons"'};
+              <span className="text-accent-green">from</span> {'"@design-studio/ui/icons";'}
             </p>
             <p className="mt-4 text-muted-foreground">{`// Use in your components`}</p>
             <p>{'<IconCheckmark className="size-6" />'}</p>

@@ -72,8 +72,11 @@ function FileUpload({
     }
     if (valid.length > 0) {
       onFiles?.(valid);
+      const [firstValidFile] = valid;
       setStatusMessage(
-        valid.length === 1 ? `${valid[0]!.name} selected` : `${valid.length} files selected`,
+        valid.length === 1 && firstValidFile
+          ? `${firstValidFile.name} selected`
+          : `${valid.length} files selected`,
       );
     }
     if (rejected.length > 0) {
@@ -149,7 +152,6 @@ function FileUpload({
           multiple={multiple}
           disabled={disabled}
           className="sr-only"
-          aria-hidden="true"
           tabIndex={-1}
           onChange={handleChange}
         />

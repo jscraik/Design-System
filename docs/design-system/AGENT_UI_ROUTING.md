@@ -60,6 +60,7 @@ For new product surfaces, start with the smallest local composition primitive th
 | Repeated content group             | `ProductSection`      | Owns section heading and vertical rhythm.                                               |
 | Async collection or results region | `ProductDataView`     | Combines section hierarchy with ready/loading/empty/error/busy state routing.           |
 | Local async state inside a panel   | `ProductStateWrapper` | Swaps between ready content and accessible loading, empty, error, or busy presentation. |
+| Collapsible sidebar navigation     | `Sidebar`             | Transitional fallback for shell sidebar navigation until Apps SDK UI has API parity.    |
 
 Use `Stack`, `Flex`, and `Grid` inside these primitives for local rhythm and alignment. Do not rebuild page shells from loose `div` chains when one of these primitives fits.
 

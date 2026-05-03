@@ -68,11 +68,13 @@ export class RemoteSkillClient {
     }>(url, signal);
 
     return data.results
-      .filter((r) => r.slug && r.displayName)
+      .filter((r): r is typeof r & { slug: string; displayName: string } =>
+        Boolean(r.slug && r.displayName),
+      )
       .map((r) => ({
-        id: r.slug!,
-        slug: r.slug!,
-        displayName: r.displayName!,
+        id: r.slug,
+        slug: r.slug,
+        displayName: r.displayName,
         summary: r.summary,
         latestVersion: r.version,
         updatedAt: r.updatedAt ? new Date(r.updatedAt / 1000) : undefined,

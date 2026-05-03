@@ -45,7 +45,12 @@ function ChatHeaderWidget() {
   );
 }
 
-createRoot(document.getElementById("root")!).render(
+const root = document.getElementById("root");
+if (!root) {
+  throw new Error('service:"widgets" surface:"chat-header" Root element not found');
+}
+
+createRoot(root).render(
   <StrictMode>
     <ChatHeaderWidget />
   </StrictMode>,

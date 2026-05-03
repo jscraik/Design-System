@@ -183,7 +183,7 @@ import Category from "./react/platform/Category";
 import Checkbox from "./react/platform/Checkbox";
 import CheckboxChecked from "./react/platform/CheckboxChecked";
 import CheckboxIndeterminate from "./react/platform/CheckboxIndeterminate";
-import Function from "./react/platform/Function";
+import FunctionIcon from "./react/platform/Function";
 import GptPlaceholder from "./react/platform/GptPlaceholder";
 import KeyAmpersand from "./react/platform/KeyAmpersand";
 import KeyArrowDown from "./react/platform/KeyArrowDown";
@@ -274,7 +274,7 @@ import ToggleOn from "./react/platform/ToggleOn";
 import Wifi from "./react/platform/Wifi";
 import CheckCircle from "./react/settings/CheckCircle";
 import Checkmark from "./react/settings/Checkmark";
-import Error from "./react/settings/Error";
+import ErrorIcon from "./react/settings/Error";
 import Info from "./react/settings/Info";
 import LightBulb from "./react/settings/LightBulb";
 import Moon from "./react/settings/Moon";
@@ -372,7 +372,7 @@ export const iconRegistry = {
   "dropbox-icon": DropboxIcon,
   edit: Edit,
   email: Email,
-  error: Error,
+  error: ErrorIcon,
   "expand-lg": ExpandLg,
   "expand-md": ExpandMd,
   "expand-sm": ExpandSm,
@@ -383,7 +383,7 @@ export const iconRegistry = {
   flask: Flask,
   folder: Folder,
   "folder-open": FolderOpen,
-  function: Function,
+  function: FunctionIcon,
   "git-hub-icon": GitHubIcon,
   globe: Globe,
   go: Go,

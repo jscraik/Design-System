@@ -108,11 +108,16 @@ async function loadUpstreamExports() {
       .map((entry) => entry.name);
 
     const upstreamExports = new Set(componentNames);
-    loadIconExports().forEach((name) => upstreamExports.add(name));
+    loadIconExports().forEach((name) => {
+      upstreamExports.add(name);
+    });
 
     return upstreamExports;
   } catch (error) {
-    console.error("Failed to enumerate @openai/apps-sdk-ui components:", error);
+    console.error(
+      'service:"test-drift" Failed to enumerate @openai/apps-sdk-ui components:',
+      error,
+    );
     process.exit(1);
   }
 }
@@ -133,22 +138,32 @@ async function main() {
   );
 
   if (missing.length > 0) {
-    console.error("Apps SDK UI drift detected: local re-exports missing upstream components:");
-    missing.forEach((name) => console.error(`- ${name}`));
+    console.error(
+      'service:"test-drift" Apps SDK UI drift detected: local re-exports missing upstream components:',
+    );
+    missing.forEach((name) => {
+      console.error(`service:"test-drift" - ${name}`);
+    });
     process.exit(1);
   }
 
   if (missingUpstream.length > 0) {
     console.error(
-      "Apps SDK UI drift detected: coverage matrix references missing upstream exports:",
+      'service:"test-drift" Apps SDK UI drift detected: coverage matrix references missing upstream exports:',
     );
-    missingUpstream.forEach((row) => console.error(`- ${row.name} → ${row.upstream}`));
+    missingUpstream.forEach((row) => {
+      console.error(`service:"test-drift" - ${row.name} → ${row.upstream}`);
+    });
     process.exit(1);
   }
 
   if (extra.length > 0) {
-    console.warn("Apps SDK UI has additional components not re-exported locally:");
-    extra.forEach((name) => console.warn(`- ${name}`));
+    console.warn(
+      'service:"test-drift" Apps SDK UI has additional components not re-exported locally:',
+    );
+    extra.forEach((name) => {
+      console.warn(`service:"test-drift" - ${name}`);
+    });
   }
 
   const replacementCandidates = coverage.filter(
@@ -156,13 +171,15 @@ async function main() {
   );
 
   if (replacementCandidates.length > 0) {
-    console.warn("Potential Apps SDK UI replacements for Radix fallbacks detected:");
+    console.warn(
+      'service:"test-drift" Potential Apps SDK UI replacements for Radix fallbacks detected:',
+    );
     replacementCandidates.forEach((row) => {
-      console.warn(`- ${row.name} (fallback: ${row.fallback ?? "radix"})`);
+      console.warn(`service:"test-drift" - ${row.name} (fallback: ${row.fallback ?? "radix"})`);
     });
   }
 
-  console.log("Apps SDK UI drift check passed.");
+  console.log('service:"test-drift" Apps SDK UI drift check passed.');
 }
 
 await main();

@@ -123,7 +123,7 @@ export function AuthDemo() {
     try {
       await window.openai?.callTool?.("auth_logout", {});
       setWidgetState((prev: AuthWidgetState | null) => ({
-        ...prev!,
+        ...(prev ?? { lastAuthCheck: new Date().toISOString() }),
         cachedUser: undefined,
         lastAuthCheck: new Date().toISOString(),
       }));
@@ -137,7 +137,7 @@ export function AuthDemo() {
     try {
       await window.openai?.callTool?.("auth_refresh", {});
       setWidgetState((prev: AuthWidgetState | null) => ({
-        ...prev!,
+        ...(prev ?? { lastAuthCheck: new Date().toISOString() }),
         lastAuthCheck: new Date().toISOString(),
       }));
     } finally {

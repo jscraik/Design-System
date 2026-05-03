@@ -346,14 +346,17 @@ function PizzazMapWidget() {
   // Add markers to map
   const addAllMarkers = useCallback(
     (placesList: Place[]) => {
-      if (!mapObj.current) return;
-      markerObjs.current.forEach((m) => m.remove());
+      const map = mapObj.current;
+      if (!map) return;
+      markerObjs.current.forEach((m) => {
+        m.remove();
+      });
       markerObjs.current = [];
 
       placesList.forEach((place) => {
         const marker = new mapboxgl.Marker({ color: markerColor })
           .setLngLat(place.coords)
-          .addTo(mapObj.current!);
+          .addTo(map);
 
         const el = marker.getElement();
         if (el) {
@@ -382,7 +385,11 @@ function PizzazMapWidget() {
     });
 
     addAllMarkers(places);
-    setTimeout(() => fitMapToMarkers(mapObj.current!, markerCoords), 0);
+    setTimeout(() => {
+      if (mapObj.current) {
+        fitMapToMarkers(mapObj.current, markerCoords);
+      }
+    }, 0);
     requestAnimationFrame(() => mapObj.current?.resize());
 
     const handleResize = () => mapObj.current?.resize();

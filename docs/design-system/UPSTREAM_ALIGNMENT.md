@@ -1,6 +1,14 @@
 # Apps SDK UI Upstream Alignment Log
 
-Last updated: 2026-01-08
+Last updated: 2026-05-03
+
+## Table of Contents
+
+- [Pinned Version](#pinned-version)
+- [Last Verified](#last-verified)
+- [Drift Test Suite](#drift-test-suite)
+- [Delta Register Template](#delta-register-template)
+- [Alignment Stamp (CI-Managed)](#alignment-stamp-ci-managed)
 
 ## Pinned Version
 
@@ -9,7 +17,7 @@ Last updated: 2026-01-08
 
 ## Last Verified
 
-- Last verified: 2026-01-24T01:28:42Z (drift suite run locally; warnings logged for non-reexported upstream components).
+- Last verified: 2026-05-03T11:35:12Z (drift suite run locally; warnings logged for non-reexported upstream components).
 
 ## Drift Test Suite
 
@@ -33,6 +41,6 @@ Use this template for any deviation from upstream:
 
 This section is updated by CI when drift tests pass:
 
-- Verified at: 2026-01-24T01:28:42Z (local run; CI stamp pending)
+- Verified at: 2026-05-03T11:35:12Z (local run; CI stamp pending)
 - apps-sdk-ui version: ^0.2.1
-- Drift suite commit: b85fe78bd5caa86a7bb89a5962c218832316c2ab (working tree)
+- Drift suite commit: 2e5423f184964e1a2b39f9da1714870bfeb8343a (working tree)

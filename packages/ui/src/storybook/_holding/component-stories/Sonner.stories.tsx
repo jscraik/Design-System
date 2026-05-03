@@ -34,7 +34,7 @@ export const Success: Story = {
   ),
 };
 
-export const Error: Story = {
+export const ErrorToast: Story = {
   render: () => (
     <div className="flex flex-col items-center gap-3">
       <Button onClick={() => toast.error("Something went wrong")}>Error toast</Button>

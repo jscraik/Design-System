@@ -1,7 +1,7 @@
 import type { SVGProps } from "react";
 import * as React from "react";
 
-const Function = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+const FunctionIcon = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -15,5 +15,5 @@ const Function = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props
     </g>
   </svg>
 ));
-Function.displayName = "Function";
-export default Function;
+FunctionIcon.displayName = "Function";
+export default FunctionIcon;

@@ -78,7 +78,7 @@ function EnhancedExampleCore() {
 
       // Update widget state with interaction
       setWidgetState((prev) => ({
-        ...prev!,
+        ...(prev ?? currentState),
         interactions: [
           ...(prev?.interactions || []),
           `Tool called at ${new Date().toLocaleTimeString()}`,
@@ -109,9 +109,9 @@ function EnhancedExampleCore() {
     value: WidgetState["preferences"][K],
   ) => {
     setWidgetState((prev) => ({
-      ...prev!,
+      ...(prev ?? currentState),
       preferences: {
-        ...prev!.preferences,
+        ...(prev ?? currentState).preferences,
         [key]: value,
       },
     }));
