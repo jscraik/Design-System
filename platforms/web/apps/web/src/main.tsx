@@ -18,7 +18,7 @@ const host = createStandaloneHost(import.meta.env.VITE_API_BASE ?? "http://local
 
 const root = document.getElementById("root");
 if (!root) {
-  throw new Error("Root element not found");
+  throw new Error('service:"web-app" Root element not found');
 }
 
 createRoot(root).render(

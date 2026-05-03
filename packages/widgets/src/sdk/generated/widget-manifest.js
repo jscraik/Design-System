@@ -23,8 +23,8 @@ export const widgetManifest = {
   },
   "chat-header": {
     "name": "chat-header",
-    "uri": "chat-header.ef376880",
-    "hash": "ef376880",
+    "uri": "chat-header.2b29559d",
+    "hash": "2b29559d",
     "originalPath": "src/widgets/chat/chat-header/index.html"
   },
   "chat-input": {
@@ -65,8 +65,8 @@ export const widgetManifest = {
   },
   "shopping-cart": {
     "name": "shopping-cart",
-    "uri": "shopping-cart.46c1b278",
-    "hash": "46c1b278",
+    "uri": "shopping-cart.3c9bcde4",
+    "hash": "3c9bcde4",
     "originalPath": "src/widgets/commerce/shopping-cart/index.html"
   },
   "dashboard-widget": {
@@ -113,8 +113,8 @@ export const widgetManifest = {
   },
   "pizzaz-shop": {
     "name": "pizzaz-shop",
-    "uri": "pizzaz-shop.6db26233",
-    "hash": "6db26233",
+    "uri": "pizzaz-shop.4dae698d",
+    "hash": "4dae698d",
     "originalPath": "src/widgets/pizzaz/pizzaz-shop/index.html"
   },
   "pizzaz-table": {

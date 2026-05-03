@@ -345,7 +345,7 @@ export class TokenWatcher {
     console.log("👀 Token watcher started");
     console.log("   Watching:");
     tokenFiles.forEach((file) => {
-      console.log(`   - ${file}`);
+      console.log(`service:"tokens" watched_file:"${file}"`);
     });
     console.log("\n💡 Edit token files to see instant updates in web previews\n");
 

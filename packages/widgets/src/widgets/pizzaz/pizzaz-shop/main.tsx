@@ -6,7 +6,7 @@ import { PizzazShop } from "./pizzaz-shop";
 
 const root = document.getElementById("root");
 if (!root) {
-  throw new Error("Root element not found");
+  throw new Error('service:"widgets/pizzaz-shop" Root element not found');
 }
 
 createRoot(root).render(

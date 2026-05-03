@@ -258,7 +258,13 @@ const explicitSurfaces = readArgValues("--surface");
 function isNonBlockingWarnSurface(result) {
   if (explicitSurfaces.length > 0) return false;
   if (result.surfaceScope !== "warn" && result.surfaceScope !== "exempt") return false;
-  return result.openDecisions.some((decision) => decision.code === "E_DESIGN_ROUTE_MISSING");
+  if (result.status !== "warn") return false;
+  const decisionCodes = result.openDecisions
+    .map((decision) => (decision && typeof decision === "object" ? decision.code : undefined))
+    .filter((code) => typeof code === "string");
+  return (
+    decisionCodes.length > 0 && decisionCodes.every((code) => code === "E_DESIGN_ROUTE_MISSING")
+  );
 }
 
 const surfaces = (

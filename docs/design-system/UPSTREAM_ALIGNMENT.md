@@ -2,6 +2,14 @@
 
 Last updated: 2026-05-03
 
+## Table of Contents
+
+- [Pinned Version](#pinned-version)
+- [Last Verified](#last-verified)
+- [Drift Test Suite](#drift-test-suite)
+- [Delta Register Template](#delta-register-template)
+- [Alignment Stamp (CI-Managed)](#alignment-stamp-ci-managed)
+
 ## Pinned Version
 
 - Package: `@openai/apps-sdk-ui`

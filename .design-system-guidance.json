@@ -7,11 +7,15 @@
   ],
   "include": [
     "packages/ui/src/app",
+    "platforms/web/apps/web/src",
     "platforms/web/apps/web/src/pages",
     "packages/ui/src/components/ui",
     "packages/ui/src/design-system/showcase",
+    "packages/ui/src/icons",
     "packages/ui/src/storybook",
-    "packages/ui/src/styles"
+    "packages/ui/src/styles",
+    "packages/ui/src/templates",
+    "packages/widgets/src"
   ],
   "ignore": [
     "node_modules",

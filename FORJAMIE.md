@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-05-02
+**Last updated:** 2026-05-03
 **Production status:** IN_PROGRESS overall; Agent Design Prepare north-star plan is REVIEW_GREEN
 **Overall health:** Yellow overall; Green for the Agent Design Prepare plan lane
 
@@ -218,7 +218,7 @@ See also: `~/.codex/instructions/Learnings.md`
 ### 2026-05-03
 
 - **Unslopify quality evidence refresh**: ran the `unslopify` cleanup audit path across the current repo-owned cleanup gates, refreshed the Apps SDK upstream alignment stamp from a passing `pnpm test:drift` run, and generated the current weekly quality-debt report. The report remains warn-first: it is release-owner evidence, not a new hard-fail gate.
-- **Disabled Biome rule ratchet**: renamed the quality-debt radar category from ambiguous “lint suppressions” language to `Disabled Biome rules`, promoted 15 previously disabled Biome rules back into active lint coverage, and fixed the resulting lint errors/warnings in chart styles, sidebar cookie persistence, story exports, generated icon locals, widget entrypoints, widget state fallbacks, icon catalog filtering, map refs, migration/drift scripts, token watcher logging, and remote skill ingestion. The generated weekly report now shows 19 disabled linter rules remaining, down from 34.
+- **Disabled Biome rule ratchet**: renamed the quality-debt radar category from ambiguous “lint suppressions” language to `Disabled Biome rules`, promoted 15 previously disabled Biome rules back into active lint coverage, and fixed the resulting lint errors/warnings in chart styles, sidebar cookie persistence, story exports, generated icon locals, widget entrypoints, widget state fallbacks, icon catalog filtering, map refs, migration/drift scripts, token watcher logging, and remote skill ingestion. The generated weekly report now shows 18 disabled linter rules remaining, down from 34.
 - **Agent-design changed-surface CLI cleanup**: aligned `pnpm agent-design:prepare:changed` with the PR evidence contract by keeping protected surfaces fail-closed, treating warn-scope unrouted catalog/widget/story surfaces as visible warnings, and adding a provisional `navigation_sidebar` route for the protected Sidebar fallback. `.design-system-guidance.json` now classifies icon, template, widget, and web-app entrypoint surfaces as warn-scope instead of leaving them as unknown CLI drift.
 
 ### 2026-05-02

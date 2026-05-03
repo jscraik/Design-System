@@ -77,22 +77,32 @@ function useSidebar() {
 function persistSidebarState(openState: boolean) {
   const value = String(openState);
   const cookieStore = (window as Window & { cookieStore?: CookieStoreLike }).cookieStore;
+  const writeDocumentCookie = () =>
+    Reflect.set(
+      document,
+      "cookie",
+      `${SIDEBAR_COOKIE_NAME}=${value}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`,
+    );
 
   if (cookieStore) {
-    void cookieStore.set({
-      name: SIDEBAR_COOKIE_NAME,
-      value,
-      path: "/",
-      expires: Date.now() + SIDEBAR_COOKIE_MAX_AGE * 1000,
-    });
+    void cookieStore
+      .set({
+        name: SIDEBAR_COOKIE_NAME,
+        value,
+        path: "/",
+        expires: Date.now() + SIDEBAR_COOKIE_MAX_AGE * 1000,
+      })
+      .catch((error: unknown) => {
+        console.warn(
+          'service:"ui-sidebar" Cookie Store write failed; using document cookie fallback.',
+          error,
+        );
+        writeDocumentCookie();
+      });
     return;
   }
 
-  Reflect.set(
-    document,
-    "cookie",
-    `${SIDEBAR_COOKIE_NAME}=${value}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`,
-  );
+  writeDocumentCookie();
 }
 
 /**
