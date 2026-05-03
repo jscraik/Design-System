@@ -62,6 +62,12 @@ function resultDetail(result) {
   return (text(result.stderr) || text(result.stdout) || resultErrorMessage(result)).trim();
 }
 
+/**
+ * Add newline-delimited git output paths to a changed-file set.
+ *
+ * @param {Set<string>} files - Mutable set of repository-relative changed files.
+ * @param {string} stdout - Newline-delimited output from a git file-list command.
+ */
 function addChangedFiles(files, stdout) {
   for (const file of stdout.split(/\r?\n/)) {
     if (file.trim()) files.add(file.trim());
@@ -78,6 +84,12 @@ function isNoMergeBase(result) {
   return /\bno merge base\b/i.test(resultDetail(result));
 }
 
+/**
+ * Discover changed files from the configured PR base plus local staged and
+ * unstaged changes.
+ *
+ * @returns {string[]} Sorted repository-relative changed file paths.
+ */
 function gitChangedFiles() {
   const base = readArgValues("--base")[0] ?? process.env.AGENT_DESIGN_PREPARE_BASE;
   const files = new Set();
@@ -141,6 +153,12 @@ function isObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
 
+/**
+ * Validate the design prepare envelope shape before the evidence gate trusts it.
+ *
+ * @param {unknown} payload - Parsed JSON payload emitted by the CLI prepare command.
+ * @returns {string} Empty string when valid; otherwise a human-readable failure reason.
+ */
 function validatePreparePayload(payload) {
   if (!isObject(payload)) {
     return "prepare envelope must be an object";
@@ -167,6 +185,12 @@ function validatePreparePayload(payload) {
   return "";
 }
 
+/**
+ * Run read-only prepare for one surface and normalize the result for gate output.
+ *
+ * @param {string} surface - Repository-relative UI surface path.
+ * @returns {object} Normalized prepare result used by the changed-surface gate.
+ */
 function prepare(surface) {
   const result = run("node", [
     "packages/cli/dist/index.js",
@@ -220,6 +244,23 @@ function prepare(surface) {
 }
 
 const explicitSurfaces = readArgValues("--surface");
+
+/**
+ * Decide whether a failed prepare result should warn instead of fail.
+ *
+ * Warn-scope changed surfaces may be tracked before they have full route
+ * promotion. Explicit single-surface checks and protected surfaces still fail
+ * closed so humans cannot accidentally bypass missing-route decisions.
+ *
+ * @param {ReturnType<typeof prepare>} result - Normalized prepare result.
+ * @returns {boolean} True when the failure is non-blocking for this changed-file gate.
+ */
+function isNonBlockingWarnSurface(result) {
+  if (explicitSurfaces.length > 0) return false;
+  if (result.surfaceScope !== "warn" && result.surfaceScope !== "exempt") return false;
+  return result.openDecisions.some((decision) => decision.code === "E_DESIGN_ROUTE_MISSING");
+}
+
 const surfaces = (
   explicitSurfaces.length > 0 ? explicitSurfaces : gitChangedFiles().filter(isUiSurface)
 )
@@ -252,14 +293,14 @@ if (existingSurfaces.length === 0) {
 let failed = false;
 for (const surface of existingSurfaces) {
   const result = prepare(surface);
-  const label = result.ok ? "OK" : "ERROR";
+  const nonBlockingWarnSurface = !result.ok && isNonBlockingWarnSurface(result);
+  const label = result.ok ? "OK" : nonBlockingWarnSurface ? "WARN" : "ERROR";
   log(
     `  [${label}] ${surface}: kind=${result.surfaceKind ?? "unknown"} scope=${
       result.surfaceScope ?? "unknown"
     } safe=${String(result.safeForAutomaticImplementation)}`,
   );
   if (!result.ok) {
-    failed = true;
     log(`    reason: ${result.reason}`);
     if (result.openDecisions.length > 0) {
       for (const decision of result.openDecisions) {
@@ -268,6 +309,9 @@ for (const surface of existingSurfaces) {
     }
     if (result.stderr) log(`    stderr: ${result.stderr}`);
     if (result.stdout) log(`    stdout: ${result.stdout}`);
+  }
+  if (!result.ok && !nonBlockingWarnSurface) {
+    failed = true;
   }
 }
 

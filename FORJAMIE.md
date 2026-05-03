@@ -207,7 +207,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - `pnpm agent-design:proposals` now blocks silent enforced-route and uncovered lifecycle promotion, but the first waiver registry intentionally grandfathered existing ProductComposition and ChatShell gaps. Those waivers should be replaced by accepted proposal records or per-export coverage before expiry.
 - `@brainwav/design-system-guidance` imports the public `@brainwav/agent-design-engine` package export, whose package types resolve through `dist`. Its build and type-check scripts must build the sibling engine package first, or clean CI installs can fail before the guidance checks run.
 - `pnpm --silent agent-design:prepare --surface <path>` depends on built `packages/agent-design-engine`, `packages/design-system-guidance`, and `packages/skill-ingestion` artifacts because the CLI imports those workspace packages through package exports. Keep it aligned with `pnpm agent-design:lint` by building those packages before building the CLI. The wrapper appends `--json` itself and does not include a default surface; callers provide `--surface` explicitly. The wrapper is build-backed convenience; the read-only contract belongs to the underlying `astudio design prepare` operation once the CLI is available. Use `--silent` whenever an agent or script captures JSON, because plain `pnpm` writes lifecycle banners to stdout.
-- `pnpm agent-design:prepare:changed` is the agent-first PR/local evidence gate. It builds the prepare dependencies, discovers changed `.tsx`/`.jsx` UI surfaces under the protected app/widget trees, runs the read-only CLI prepare operation for each surface, and fails closed when a payload is unsafe, incomplete, unparseable, or points outside the repository. Use `-- --surface <path>` to force a single-surface check. GitHub Actions also runs this gate on pull requests in the web platform lane with `AGENT_DESIGN_PREPARE_BASE` pointed at the PR base ref.
+- `pnpm agent-design:prepare:changed` is the agent-first PR/local evidence gate. It builds the prepare dependencies, discovers changed `.tsx`/`.jsx` UI surfaces under the app/widget/UI catalog trees, runs the read-only CLI prepare operation for each surface, and fails closed for protected surfaces when a payload is unsafe, incomplete, unparseable, or points outside the repository. Warn-scope surfaces can report missing route coverage without blocking a non-design cleanup, while `-- --surface <path>` remains a fail-closed targeted check. GitHub Actions also runs this gate on pull requests in the web platform lane with `AGENT_DESIGN_PREPARE_BASE` pointed at the PR base ref.
 - `docs/guides/AGENT_DESIGN_WORKFLOW.md` is the detailed workflow authority for protected UI edits. `README.md` is the short repo front door, and this file is the durable project map; avoid restating the whole workflow in all three places.
 - `pnpm quality-debt:report` is warn-first by design. Amber/red radar posture is release-owner evidence, not a new hard-fail gate, until explicit thresholds are approved.
 - Quality-debt radar CLI output now includes `service:"quality-debt-radar"` on status/error lines, and flag parsing fails fast when `--output`, `--date`, or `--week` are missing values.
@@ -219,6 +219,7 @@ See also: `~/.codex/instructions/Learnings.md`
 
 - **Unslopify quality evidence refresh**: ran the `unslopify` cleanup audit path across the current repo-owned cleanup gates, refreshed the Apps SDK upstream alignment stamp from a passing `pnpm test:drift` run, and generated the current weekly quality-debt report. The report remains warn-first: it is release-owner evidence, not a new hard-fail gate.
 - **Disabled Biome rule ratchet**: renamed the quality-debt radar category from ambiguous “lint suppressions” language to `Disabled Biome rules`, promoted 15 previously disabled Biome rules back into active lint coverage, and fixed the resulting lint errors/warnings in chart styles, sidebar cookie persistence, story exports, generated icon locals, widget entrypoints, widget state fallbacks, icon catalog filtering, map refs, migration/drift scripts, token watcher logging, and remote skill ingestion. The generated weekly report now shows 19 disabled linter rules remaining, down from 34.
+- **Agent-design changed-surface CLI cleanup**: aligned `pnpm agent-design:prepare:changed` with the PR evidence contract by keeping protected surfaces fail-closed, treating warn-scope unrouted catalog/widget/story surfaces as visible warnings, and adding a provisional `navigation_sidebar` route for the protected Sidebar fallback. `.design-system-guidance.json` now classifies icon, template, widget, and web-app entrypoint surfaces as warn-scope instead of leaving them as unknown CLI drift.
 
 ### 2026-05-02
 
@@ -242,7 +243,7 @@ project: design-system
 repo: ~/dev/design-system
 status: IN_PROGRESS
 health: yellow
-last_updated: 2026-05-02
+last_updated: 2026-05-03
 open_prs: 1
 blockers: none
 next_milestone: Agent Design Prepare PR review and merge

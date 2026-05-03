@@ -124,7 +124,11 @@
       "platforms/web/apps/web/src/pages/**/*.{ts,tsx,js,jsx,css}",
       "packages/ui/src/components/ui/**/*.{ts,tsx,js,jsx,css}",
       "packages/ui/src/design-system/showcase/**/*.{ts,tsx,js,jsx,css}",
+      "packages/ui/src/icons/**/*.tsx",
       "packages/ui/src/storybook/**/*.{ts,tsx,js,jsx,css}",
+      "packages/ui/src/templates/**/*.tsx",
+      "packages/widgets/src/**/*.tsx",
+      "platforms/web/apps/web/src/**/*.{ts,tsx,js,jsx,css}",
       "**/*.stories.tsx"
     ],
     "exempt": [

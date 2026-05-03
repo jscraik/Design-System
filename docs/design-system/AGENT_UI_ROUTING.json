@@ -144,6 +144,51 @@
       ]
     },
     {
+      "need": "navigation_sidebar",
+      "canonicalNeed": "navigation_sidebar",
+      "aliases": ["sidebar navigation", "app sidebar", "collapsible sidebar"],
+      "preferredComponent": {
+        "name": "Sidebar",
+        "importPath": "packages/ui/src/components/ui/navigation/sidebar/fallback/Sidebar.tsx",
+        "packageName": "@design-studio/ui",
+        "coverageName": "Sidebar"
+      },
+      "lifecycleStatus": "transitional",
+      "routeMaturity": "provisional",
+      "surfacePatterns": ["packages/ui/src/components/ui/navigation/sidebar/fallback/Sidebar.tsx"],
+      "useWhen": [
+        "A page shell needs collapsible sidebar navigation while Apps SDK UI lacks matching API parity.",
+        "The surface is maintaining the existing fallback sidebar primitive rather than creating a new navigation abstraction."
+      ],
+      "requiredStates": ["ready", "collapsed", "expanded", "mobile"],
+      "examples": [
+        "packages/ui/src/app/chat/ChatSidebar/ChatSidebar.stories.tsx",
+        "packages/ui/src/app/chat/ChatSidebar/ChatSidebar.test.tsx"
+      ],
+      "avoid": [
+        "A second sidebar primitive parallel to the existing fallback.",
+        "New product page shells that hand-roll sidebar state instead of using ProductPageShell slots."
+      ],
+      "fallbacks": [
+        {
+          "component": "ProductPageShell",
+          "reason": "Use for page-level shell composition and only reach for Sidebar when shell slots need the existing fallback behavior."
+        }
+      ],
+      "validationCommands": [
+        {
+          "command": "pnpm agent-design:lint",
+          "safetyClass": "read_only",
+          "reason": "Checks the current design contract without mutating files."
+        }
+      ],
+      "sourceRefs": [
+        "docs/design-system/AGENT_UI_ROUTING.md#agent-composition-primitives",
+        "docs/design-system/COMPONENT_LIFECYCLE.json",
+        "docs/KEYBOARD_NAVIGATION_TESTS.md"
+      ]
+    },
+    {
       "need": "product_panel",
       "canonicalNeed": "product_panel",
       "aliases": ["grouped panel", "card-like region", "framed product region"],

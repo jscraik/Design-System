@@ -68,6 +68,12 @@ function useSidebar() {
   return context;
 }
 
+/**
+ * Persists the sidebar open state using Cookie Store when available, with a
+ * document cookie fallback for browsers that have not shipped the API yet.
+ *
+ * @param openState - Whether the sidebar should reopen expanded.
+ */
 function persistSidebarState(openState: boolean) {
   const value = String(openState);
   const cookieStore = (window as Window & { cookieStore?: CookieStoreLike }).cookieStore;

@@ -101,6 +101,13 @@
       "notes": "Preferred destructive confirmation primitive while Apps SDK UI lacks matching API parity."
     },
     {
+      "name": "Sidebar",
+      "path": "packages/ui/src/components/ui/navigation/sidebar/fallback/Sidebar.tsx",
+      "lifecycle": "transitional",
+      "routing_tier": 2,
+      "notes": "Fallback navigation sidebar primitive for page shells until Apps SDK UI exposes matching API parity."
+    },
+    {
       "name": "DataTable",
       "path": "packages/ui/src/components/ui/data-display/DataTable/DataTable.tsx",
       "lifecycle": "canonical",
