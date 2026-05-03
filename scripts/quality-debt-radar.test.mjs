@@ -78,7 +78,7 @@ try {
         categories: [
           {
             id: "lint-suppressions",
-            label: "Lint suppressions",
+            label: "Disabled Biome rules",
             owner: "@platform",
             description: "Invalid biome fixture should render as unavailable only.",
             source_anchors: ["biome.json", "FORJAMIE.md"],
@@ -98,7 +98,7 @@ try {
   );
   writeFileSync(
     path.join(unavailableRoot, "reports/qa/quality-debt-burndown-template.md"),
-    "# Quality Debt Burn-down\n\n| Lint suppressions |\n",
+    "# Quality Debt Burn-down\n\n| Disabled Biome rules |\n",
   );
 
   const unavailableReport = runInCwd(unavailableRoot, [
@@ -114,14 +114,14 @@ try {
   const unavailableBody = readFileSync(unavailableOutput, "utf8");
   assert.match(
     unavailableBody,
-    /- Stale sources:\n {2}- None\n- Unavailable sources:\n {2}- Lint suppressions:/,
+    /- Stale sources:\n {2}- None\n- Unavailable sources:\n {2}- Disabled Biome rules:/,
   );
 
   const report = run(["report", "--date", "2026-04-26", "--week", "2026-W17", "--output", output]);
   assert.equal(report.status, 0, report.stderr || report.stdout);
   const body = readFileSync(output, "utf8");
   assert.match(body, /# Quality Debt Burn-down/);
-  assert.match(body, /Lint suppressions/);
+  assert.match(body, /Disabled Biome rules/);
   assert.match(body, /\d+ disabled linter rules/);
   if (body.includes("override-scoped")) {
     assert.match(body, /\d+ override-scoped disable/);

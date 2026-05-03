@@ -21,7 +21,7 @@
       "!docs/examples",
       "!docs/validation",
       "!**/generated",
-      "!worker-configuration.d.ts",
+      "!**/worker-configuration.d.ts",
       "!packages/astudio-icons/src/react/**/*.tsx",
       "!pnpm-lock.yaml",
       "!scripts/policy",
@@ -41,17 +41,14 @@
         "noExplicitAny": "off",
         "noAssignInExpressions": "off",
         "noArrayIndexKey": "off",
-        "noShadowRestrictedNames": "off",
-        "noSuspiciousSemicolonInJsx": "off",
-        "noGlobalAssign": "off",
-        "noRedeclare": "off",
-        "noDuplicateObjectKeys": "off",
-        "noDocumentCookie": "off",
-        "useIterableCallbackReturn": "off",
-        "noCommentText": "off"
-      },
-      "style": {
-        "noNonNullAssertion": "off"
+        "noShadowRestrictedNames": "error",
+        "noSuspiciousSemicolonInJsx": "error",
+        "useIterableCallbackReturn": "error",
+        "noGlobalAssign": "error",
+        "noRedeclare": "error",
+        "noDuplicateObjectKeys": "error",
+        "noDocumentCookie": "warn",
+        "noCommentText": "warn"
       },
       "a11y": {
         "noSvgWithoutTitle": "off",
@@ -64,25 +61,24 @@
         "useValidAnchor": "off",
         "useFocusableInteractive": "off",
         "useAriaPropsForRole": "off",
-        "noRedundantAlt": "off"
+        "noRedundantAlt": "error"
       },
       "correctness": {
         "useHookAtTopLevel": "off",
         "noUnusedFunctionParameters": "off",
         "noUnusedVariables": "off",
-        "noInvalidPositionAtImportRule": "off",
         "useExhaustiveDependencies": "off",
         "noUnusedImports": "off"
       },
       "complexity": {
-        "noBannedTypes": "off",
-        "noStaticOnlyClass": "off"
+        "noBannedTypes": "error",
+        "noStaticOnlyClass": "warn"
       },
       "performance": {
-        "noDynamicNamespaceImportAccess": "off"
+        "noDynamicNamespaceImportAccess": "warn"
       },
       "security": {
-        "noDangerouslySetInnerHtml": "off"
+        "noDangerouslySetInnerHtml": "error"
       }
     }
   },

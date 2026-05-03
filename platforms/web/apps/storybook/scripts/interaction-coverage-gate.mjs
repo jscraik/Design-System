@@ -82,7 +82,9 @@ console.log(
 
 if (missing.length > 0 && pct < WARN_THRESHOLD) {
   console.log(`\nFiles without interaction tests (${missing.length}):`);
-  missing.slice(0, 20).forEach((f) => console.log(`  ${f}`));
+  missing.slice(0, 20).forEach((f) => {
+    console.log(`  ${f}`);
+  });
   if (missing.length > 20) console.log(`  ... and ${missing.length - 20} more`);
 }
 

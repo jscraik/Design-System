@@ -254,7 +254,7 @@ function Combobox({
                   aria-controls={listboxId}
                   aria-activedescendant={
                     highlightedIndex >= 0 && filteredOptions[highlightedIndex]
-                      ? `${listboxId}-option-${filteredOptions[highlightedIndex]!.value}`
+                      ? `${listboxId}-option-${filteredOptions[highlightedIndex]?.value}`
                       : undefined
                   }
                   aria-disabled={isDisabled || undefined}

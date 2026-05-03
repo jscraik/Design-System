@@ -560,7 +560,7 @@ export const BestPractices: Story = {
               </p>
               <div className="mt-3 p-3 rounded bg-muted">
                 <code className="text-xs text-status-error">
-                  /* Avoid this: */ width: 200px; left: 50px;
+                  {"/* Avoid this: */ width: 200px; left: 50px;"}
                 </code>
               </div>
             </div>

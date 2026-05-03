@@ -112,7 +112,7 @@ export const FlowAnimation: StoryObj<typeof GradientText> = {
   ),
 };
 
-export const CustomColors: StoryObj<typeof GradientText> = {
+export const GradientCustomColors: StoryObj<typeof GradientText> = {
   render: () => (
     <GradientText colors={["#ff0080", "#7928ca", "#ff0080"]}>Custom Gradient</GradientText>
   ),

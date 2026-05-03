@@ -203,7 +203,7 @@ export async function mockIntersectionObserver(page: Page): Promise<void> {
   await page.addInitScript(() => {
     const ORIGINAL = IntersectionObserver;
 
-    IntersectionObserver = class MockIntersectionObserver extends ORIGINAL {
+    window.IntersectionObserver = class MockIntersectionObserver extends ORIGINAL {
       constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverInit) {
         super(callback, options);
         // Immediately trigger callback with "intersecting" entries
@@ -245,7 +245,7 @@ export async function mockResizeObserver(page: Page): Promise<void> {
   await page.addInitScript(() => {
     const ORIGINAL = ResizeObserver;
 
-    ResizeObserver = class MockResizeObserver extends ORIGINAL {
+    window.ResizeObserver = class MockResizeObserver extends ORIGINAL {
       constructor(callback: ResizeObserverCallback) {
         super(callback);
         // Trigger with default size

@@ -1,7 +1,7 @@
 import type { SVGProps } from "react";
 import * as React from "react";
 
-const Error = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
+const ErrorIcon = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, ref) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -16,5 +16,5 @@ const Error = React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>((props, r
     />
   </svg>
 ));
-Error.displayName = "Error";
-export default Error;
+ErrorIcon.displayName = "Error";
+export default ErrorIcon;

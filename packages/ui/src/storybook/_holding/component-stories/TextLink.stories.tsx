@@ -190,7 +190,7 @@ export const Loading: Story = {
   },
 };
 
-export const Error: Story = {
+export const ErrorState: Story = {
   args: {
     href: "/error-link",
     error: true,

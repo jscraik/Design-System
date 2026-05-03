@@ -48,7 +48,7 @@ export const Empty: Story = {
   },
 };
 
-export const Error: Story = {
+export const ErrorState: Story = {
   args: {
     state: "error",
   },

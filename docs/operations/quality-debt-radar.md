@@ -41,7 +41,7 @@ Debt is tracked by category. Do not collapse to a single score.
 
 | Category              | Description                                                                                | Source Anchors                                                                    |
 | --------------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- |
-| Lint suppressions     | Lint rules intentionally disabled or broadly suppressed that hide real issues              | `/biome.json`, `/FORJAMIE.md`                                                     |
+| Disabled Biome rules  | Biome lint rules intentionally disabled in repo config that hide real issues               | `/biome.json`, `/FORJAMIE.md`                                                     |
 | A11y debt             | Accessibility-lint suppressions and uncovered contract gaps for local primitives           | `/docs/design-system/A11Y_CONTRACTS.md`, `/docs/design-system/COVERAGE_MATRIX.md` |
 | CSS lint coverage gap | CSS excluded from current lint surface due parser/tooling constraints                      | `/biome.json`                                                                     |
 | Integration drift     | Drift between upstream/contracts and local integration seams (Apps SDK, exports, wrappers) | `/scripts/test-drift.mjs`, `/docs/design-system/UPSTREAM_ALIGNMENT.md`            |

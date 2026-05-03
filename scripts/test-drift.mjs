@@ -108,7 +108,9 @@ async function loadUpstreamExports() {
       .map((entry) => entry.name);
 
     const upstreamExports = new Set(componentNames);
-    loadIconExports().forEach((name) => upstreamExports.add(name));
+    loadIconExports().forEach((name) => {
+      upstreamExports.add(name);
+    });
 
     return upstreamExports;
   } catch (error) {
@@ -134,7 +136,9 @@ async function main() {
 
   if (missing.length > 0) {
     console.error("Apps SDK UI drift detected: local re-exports missing upstream components:");
-    missing.forEach((name) => console.error(`- ${name}`));
+    missing.forEach((name) => {
+      console.error(`- ${name}`);
+    });
     process.exit(1);
   }
 
@@ -142,13 +146,17 @@ async function main() {
     console.error(
       "Apps SDK UI drift detected: coverage matrix references missing upstream exports:",
     );
-    missingUpstream.forEach((row) => console.error(`- ${row.name} → ${row.upstream}`));
+    missingUpstream.forEach((row) => {
+      console.error(`- ${row.name} → ${row.upstream}`);
+    });
     process.exit(1);
   }
 
   if (extra.length > 0) {
     console.warn("Apps SDK UI has additional components not re-exported locally:");
-    extra.forEach((name) => console.warn(`- ${name}`));
+    extra.forEach((name) => {
+      console.warn(`- ${name}`);
+    });
   }
 
   const replacementCandidates = coverage.filter(

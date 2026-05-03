@@ -178,7 +178,11 @@ export function widgetManifest(): Plugin {
           const urlToCheck = req.originalUrl || req.url;
 
           if (urlToCheck && redirectMap.has(urlToCheck)) {
-            const redirectTo = redirectMap.get(urlToCheck)!;
+            const redirectTo = redirectMap.get(urlToCheck);
+            if (!redirectTo) {
+              next();
+              return;
+            }
 
             server.config.logger?.info(
               `[widget-manifest] Redirecting dev server URL: ${req.url} -> ${redirectTo}`,

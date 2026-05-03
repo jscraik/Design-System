@@ -119,7 +119,7 @@ export function PizzazShop() {
   const handleQuantityChange = useCallback(
     (itemId: string, delta: number) => {
       setWidgetState((prev: ShopWidgetState | null) => ({
-        ...prev!,
+        ...(prev ?? createDefaultState()),
         items: (prev?.items ?? [])
           .map((item) =>
             item.id === itemId ? { ...item, quantity: Math.max(0, item.quantity + delta) } : item,
@@ -132,21 +132,30 @@ export function PizzazShop() {
 
   const handleSetView = useCallback(
     (newView: ShopView) => {
-      setWidgetState((prev: ShopWidgetState | null) => ({ ...prev!, view: newView }));
+      setWidgetState((prev: ShopWidgetState | null) => ({
+        ...(prev ?? createDefaultState()),
+        view: newView,
+      }));
     },
     [setWidgetState],
   );
 
   const handleSetDelivery = useCallback(
     (option: "standard" | "express") => {
-      setWidgetState((prev: ShopWidgetState | null) => ({ ...prev!, deliveryOption: option }));
+      setWidgetState((prev: ShopWidgetState | null) => ({
+        ...(prev ?? createDefaultState()),
+        deliveryOption: option,
+      }));
     },
     [setWidgetState],
   );
 
   const handleSetTip = useCallback(
     (percent: number) => {
-      setWidgetState((prev: ShopWidgetState | null) => ({ ...prev!, tipPercent: percent }));
+      setWidgetState((prev: ShopWidgetState | null) => ({
+        ...(prev ?? createDefaultState()),
+        tipPercent: percent,
+      }));
     },
     [setWidgetState],
   );
@@ -154,7 +163,7 @@ export function PizzazShop() {
   const handlePlaceOrder = useCallback(() => {
     const orderId = `PZ-${Date.now().toString(36).toUpperCase()}`;
     setWidgetState((prev: ShopWidgetState | null) => ({
-      ...prev!,
+      ...(prev ?? createDefaultState()),
       view: "confirmation",
       orderId,
     }));

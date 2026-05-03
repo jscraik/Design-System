@@ -9,9 +9,9 @@
   "categories": [
     {
       "id": "lint-suppressions",
-      "label": "Lint suppressions",
+      "label": "Disabled Biome rules",
       "owner": "@platform",
-      "description": "Biome rules intentionally disabled or broadly suppressed that can hide real issues.",
+      "description": "Biome lint rules intentionally disabled in the repository configuration that can hide real issues.",
       "source_anchors": ["biome.json", "FORJAMIE.md"],
       "probe": "biome_disabled_rules",
       "source_commands": ["pnpm lint"],

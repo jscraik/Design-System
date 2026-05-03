@@ -120,7 +120,9 @@ function main() {
       console.log(`✓ ${relativePath}`);
 
       if (options.verbose && result.changes.length > 0) {
-        result.changes.forEach((change) => console.log(change));
+        result.changes.forEach((change) => {
+          console.log(change);
+        });
       }
 
       if (options.apply) {
