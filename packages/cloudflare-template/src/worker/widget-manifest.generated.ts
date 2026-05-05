@@ -114,8 +114,8 @@ export const widgetManifest = {
   },
   "pizzaz-shop": {
     name: "pizzaz-shop",
-    uri: "pizzaz-shop.4dae698d",
-    hash: "4dae698d",
+    uri: "pizzaz-shop.66b086d8",
+    hash: "66b086d8",
     originalPath: "src/widgets/pizzaz/pizzaz-shop/index.html",
   },
   "pizzaz-table": {
@@ -126,8 +126,8 @@ export const widgetManifest = {
   },
   "solar-system": {
     name: "solar-system",
-    uri: "solar-system.950bcdce",
-    hash: "950bcdce",
+    uri: "solar-system.4a7e7872",
+    hash: "4a7e7872",
     originalPath: "src/widgets/science/solar-system/index.html",
   },
   "search-results": {

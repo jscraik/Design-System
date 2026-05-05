@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-05-03
+**Last updated:** 2026-05-05
 **Production status:** IN_PROGRESS overall; Agent Design Prepare north-star plan is REVIEW_GREEN
 **Overall health:** Yellow overall; Green for the Agent Design Prepare plan lane
 
@@ -214,6 +214,10 @@ See also: `~/.codex/instructions/Learnings.md`
 - The next agent-native design-system hardening lane is specified broadly in `docs/specs/2026-04-28-agent-native-design-system-spec.md` and narrowed by `docs/specs/2026-04-30-agent-design-prepare-north-star-spec.md`. The north-star rule is that no protected UI change is ready until `astudio design prepare --surface <path> --json` returns `safeForAutomaticImplementation: true`, or the PR explains the proposal/manual decision required. The focused execution source for this lane is now `docs/plans/2026-04-30-agent-design-prepare-north-star-plan.md`; use the older `docs/plans/2026-04-28-agent-native-design-system-plan.md` only for broader historical context and adjacent non-prepare slices.
 
 ## Recent changes
+
+### 2026-05-05
+
+- **Framer Motion widget manifest refresh**: refreshed the tracked widget runtime manifests on the Dependabot `framer-motion` update branch after installing from the branch lockfile. The dependency update changes the built `pizzaz-shop` and `solar-system` widget bundle hashes, so `packages/widgets/src/sdk/generated/widget-manifest.js` and `packages/cloudflare-template/src/worker/widget-manifest.generated.ts` now match the generated-source freshness gate used by CI.
 
 ### 2026-05-03
 
