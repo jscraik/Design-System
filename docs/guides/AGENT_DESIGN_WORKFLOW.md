@@ -12,7 +12,7 @@
 
 ## Purpose
 
-This guide explains the required pre-edit design-system step for coding agents creating or refactoring UI in this repository.
+This guide explains the required pre-edit design-system step for coding agents creating or refactoring UI in this repository. The product shape is an agent-first UI contract system: compile the design brief before editing, then validate the changed surfaces before handoff.
 
 ## When To Use
 
@@ -47,6 +47,17 @@ For root command routing beyond the UI prepare workflow, use `docs/architecture/
 
 ## Agent Flow
 
+Compact first-run card:
+
+| Goal                                            | Command                                                                      | Result                                                                                                                  |
+| ----------------------------------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Start or validate a downstream design contract. | `astudio design init`                                                        | Project has the expected design contract files.                                                                         |
+| Edit one protected UI file.                     | `astudio design prepare --surface <path> --json`                             | Agent receives routes, token roles, states, examples, forbidden patterns, stop classification, and validation commands. |
+| Check changed UI before handoff.                | `astudio design check --changed --json`                                      | Downstream changed-surface gate; proposed alias for the existing local gate.                                            |
+| Escalate a missing abstraction.                 | `astudio design propose-abstraction --need "<need>" --surface <path> --json` | Proposal path instead of inventing UI outside the contract.                                                             |
+
+In this monorepo, the changed-surface command is still `pnpm agent-design:prepare:changed`, and proposed downstream aliases must not be treated as implemented until CLI support exists.
+
 1. Run the prepare command for the exact surface before editing UI:
 
 ```bash
@@ -73,11 +84,11 @@ astudio design prepare --surface <path> --format pr-evidence
 1. If implementation is safe, use the returned `nextAction`, `recommendedRoutes`, `designTokenContract`, `doNotInvent`, `requiredStates`, `relevantExamples`, `forbiddenPatterns`, and `validationCommands` as the implementation brief.
 1. Edit the UI.
 1. Run the returned read-only validation commands that apply to the changed surface.
-1. Before PR handoff, run `pnpm agent-design:prepare:changed`. It builds the local CLI dependencies, checks changed `.tsx`/`.jsx` UI surfaces with the read-only prepare command, and fails if any surface is unsafe or missing prepare evidence. Use `pnpm agent-design:prepare:changed -- --surface <path>` for a single surface.
+1. Before PR handoff, run `pnpm agent-design:prepare:changed`. It builds the local CLI dependencies, checks changed `.tsx`/`.jsx` UI surfaces with the read-only prepare command, and fails if any surface is unsafe or missing prepare evidence. Use `pnpm agent-design:prepare:changed -- --surface <path>` for a single surface. Downstream docs may call this `astudio design check --changed --json` only after the alias exists.
 1. CI reruns the changed-surface gate on pull requests in the web platform lane. If it fails, treat that as a missing or unsafe prepare contract, not as a generic CI failure.
 1. If validation fails or a proposal-required stop appears, fix the underlying design-system evidence or open the proposal/manual decision path.
 
-Supporting commands such as `astudio design lint`, `astudio design export`, `astudio design components`, `astudio design coverage`, and `astudio design propose-abstraction` are diagnostics. They are not the normal happy path before UI edits.
+Supporting commands such as `astudio design lint`, `astudio design export`, `astudio design components`, and `astudio design coverage` are diagnostics. They are not the normal happy path before UI edits. Proposal escalation is separate from diagnostics: when `prepare` says a new abstraction is required, use the proposal path instead of inventing one in implementation.
 
 ## Migration Flow
 

@@ -23,7 +23,16 @@ This page names the commands agents and humans should reach for first. Keep it a
 
 ## Agent UI Preparation
 
-Use these before or during protected UI work.
+Use these before or during protected UI work. Keep the downstream product contract small; the root `pnpm` scripts are monorepo wrappers and validation helpers, not the public command pitch.
+
+| Downstream command                                                           | Use                                                                 | Status                                                                                          |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `astudio design init`                                                        | Initialize or validate a downstream design contract.                | Existing CLI command.                                                                           |
+| `astudio design prepare --surface <path> --json`                             | Compile a file-specific agent implementation contract before edits. | Canonical machine contract.                                                                     |
+| `astudio design check --changed --json`                                      | Check changed UI surfaces in downstream projects.                   | Proposed downstream alias over the existing changed-surface evidence behavior; not implemented. |
+| `astudio design propose-abstraction --need "<need>" --surface <path> --json` | Escalate when a new UI abstraction is required.                     | Existing read-only preview command; current proposal surfaces live under `docs/design-system`.  |
+
+Local repo wrappers:
 
 | Command                                                 | Use                                                       | Notes                                                                                                                  |
 | ------------------------------------------------------- | --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
@@ -33,7 +42,7 @@ Use these before or during protected UI work.
 | `pnpm agent-design:lint`                                | Design contract diagnostics.                              | Supporting diagnostic, not the normal pre-edit path.                                                                   |
 | `pnpm agent-design:test`                                | Agent-design engine tests.                                | Focused validation for prepare/routing/contract behavior.                                                              |
 
-The underlying read-only operation contract is `astudio design prepare`. The root `pnpm` wrapper may build workspace packages before invoking the CLI.
+The underlying read-only operation contract is `astudio design prepare`. The root `pnpm` wrapper may build workspace packages before invoking the CLI. Derived brief and PR-evidence text must come from the typed prepare payload; they are handoff views, not replacement machine contracts.
 
 ## Core Repo Gates
 

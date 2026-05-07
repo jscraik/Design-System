@@ -567,7 +567,7 @@ Files:
 
 Tasks:
 
-- Document the downstream command family as `astudio design init`, `astudio design prepare --surface <path> --json`, `astudio design check --changed --json`, and `astudio design propose-abstraction --surface <path> --json`.
+- Document the downstream command family as `astudio design init`, `astudio design prepare --surface <path> --json`, `astudio design check --changed --json`, and `astudio design propose-abstraction --need "<need>" --surface <path> --json`.
 - If command aliases do not yet exist, mark them as proposed downstream aliases and keep local wrappers explicit.
 - Reword front-door docs so the agent-design lane is described as an agent-first UI contract system, not a generic design-system workbench.
 - Keep internal root scripts available through `docs/architecture/COMMAND_SURFACE.md` without making them the product pitch.
@@ -1214,6 +1214,41 @@ Reviewer status:
 - Technical review coverage -> partial pending broader validation; focused engine and CLI schema coverage passed, and docs/changed-surface updates are in place for the follow-up validation gate.
 
 `FORJAMIE.md` update status: complete; Recent Changes includes the P7 stop-classification entry.
+
+### P8 Downstream Command Contract and Product Positioning
+
+Working-tree diff identifier: P8 downstream-command-contract docs slice, before the P8 follow-up commit on PR #167.
+
+Files changed so far:
+
+- `README.md`
+- `docs/architecture/COMMAND_SURFACE.md`
+- `docs/guides/AGENT_DESIGN_WORKFLOW.md`
+- `docs/specs/2026-05-02-agent-first-design-system-simplification-spec.md`
+- `FORJAMIE.md`
+- `docs/plans/2026-05-02-agent-first-design-system-simplification-plan.md`
+
+Source acceptance IDs targeted: SA28, SA29, AC17, AC18.
+
+Contract changes:
+
+- Reframed the front-door docs around an agent-first UI contract system instead of a generic design-system workbench.
+- Documented the small downstream command family as `astudio design init`, `astudio design prepare --surface <path> --json`, proposed `astudio design check --changed --json`, and `astudio design propose-abstraction --need "<need>" --surface <path> --json`.
+- Kept local `pnpm agent-design:*` commands described as monorepo wrappers and validation helpers.
+- Reconfirmed that brief and PR-evidence formats are derived handoff views from the typed prepare payload, not replacements for JSON.
+- Resolved the open downstream-check question in the source spec: `astudio design check --changed --json` is the desired downstream alias, while current docs must keep `pnpm agent-design:prepare:changed` explicit until CLI support exists.
+
+Validation commands:
+
+- `pnpm docs:lint` -> pass; 0 errors, 0 warnings, 0 suggestions, and all markdown links resolved.
+- `git diff --check` -> pass.
+
+Reviewer status:
+
+- HE implementation pass -> pass; downstream command-contract wording is now small, product-positioned, and separated from monorepo wrappers.
+- Technical review coverage -> pass; docs lint and whitespace checks passed, and proposed downstream aliases are labeled rather than described as implemented.
+
+`FORJAMIE.md` update status: complete; Recent Changes includes the P8 downstream-command-contract entry.
 
 ## Linear Traceability
 
