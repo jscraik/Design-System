@@ -48,15 +48,16 @@ The underlying read-only operation contract is `astudio design prepare`. The roo
 
 Use these for ordinary repo health and handoff evidence.
 
-| Command            | Use                                                         |
-| ------------------ | ----------------------------------------------------------- |
-| `pnpm lint`        | Biome check for code style and formatting-sensitive issues. |
-| `pnpm docs:lint`   | Canonical docs quality and link check.                      |
-| `pnpm typecheck`   | Workspace TypeScript check.                                 |
-| `pnpm test`        | Default UI unit test suite.                                 |
-| `pnpm test:policy` | Browser-free policy and design-system integrity checks.     |
-| `pnpm build`       | Aggregate build pipeline.                                   |
-| `git diff --check` | Whitespace and patch hygiene.                               |
+| Command               | Use                                                                                                                      |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `pnpm lint`           | Biome check for code style and formatting-sensitive issues.                                                              |
+| `pnpm docs:lint`      | Canonical docs quality and link check.                                                                                   |
+| `pnpm typecheck`      | Workspace TypeScript check.                                                                                              |
+| `pnpm test`           | Default UI unit test suite.                                                                                              |
+| `pnpm test:policy`    | Browser-free policy and design-system integrity checks.                                                                  |
+| `pnpm build`          | Aggregate build pipeline.                                                                                                |
+| `make hooks-pre-push` | Local push governance; runs docs/env/Semgrep/codestyle plus `pnpm build -- --skip-tests` so browser gates stay explicit. |
+| `git diff --check`    | Whitespace and patch hygiene.                                                                                            |
 
 ## Product Surfaces
 
