@@ -1250,6 +1250,57 @@ Reviewer status:
 
 `FORJAMIE.md` update status: complete; Recent Changes includes the P8 downstream-command-contract entry.
 
+### P9 Session Evidence Traceability
+
+Working-tree diff identifier: P9 session-evidence traceability slice, before the P9 follow-up commit on PR #167.
+
+Files changed so far:
+
+- `reports/session-evidence-agent-first-simplification-2026-05-07.json`
+- `docs/specs/2026-05-02-agent-first-design-system-simplification-spec.md`
+- `docs/plans/2026-05-02-agent-first-design-system-simplification-plan.md`
+- `FORJAMIE.md`
+
+Source acceptance IDs targeted: SA30, SA34, SA37, AC19.
+
+Collector command:
+
+```bash
+UV_CACHE_DIR=/tmp/session-collector-uv-cache uv run --python 3.12 python main.py --days 30 --verbose --output /Users/jamiecraik/dev/design-system/reports/session-collector-agent-first-simplification-2026-05-07.json --bundle-dir /Users/jamiecraik/dev/design-system/reports/session-collector-agent-first-simplification-2026-05-07
+```
+
+Collector evidence summary:
+
+- Durable summary path: `reports/session-evidence-agent-first-simplification-2026-05-07.json`.
+- Raw collector bundle committed: no; the raw bundle was extracted into the durable summary and removed from the working tree to avoid carrying bulky transcript-adjacent session detail in this PR.
+- Window: requested 30 days, cutoff `2026-04-07T17:46:04.350179Z`, observed sessions from `2026-05-02T03:40:16.070000Z` through `2026-05-07T17:46:03.842000Z`.
+- Sources: 10 `codex_conversation` sessions, 490 `codex_rollout` sessions, 1818 files seen, 644103 of 654868 lines kept.
+- Confidence: `medium`.
+- Collector health: no parse warnings.
+- Redaction: applied; aggregate path and sensitive-keyword counts are recorded in the durable summary.
+- Aggregate blockers observed: timeout, network, approval-required, missing-file, lint-failure, permission, git-state, and test-failure categories.
+
+Requirement impact:
+
+- Changed: future session-derived spec/plan updates must keep a durable aggregate evidence summary.
+- Changed: session-evidence records must classify impacted requirements as changed, confirmed, or reprioritized.
+- Changed: session-evidence records must include confidence, redaction, parse-warning, source-count, and artifact-disposition fields.
+- Confirmed: specs and plans must not depend on raw transcript content.
+- Confirmed: environment and validation recovery hints should remain visible in agent-facing contracts.
+
+Validation commands:
+
+- `jq . reports/session-evidence-agent-first-simplification-2026-05-07.json >/dev/null` -> pass.
+- `pnpm docs:lint` -> pass; 0 errors, 0 warnings, 0 suggestions, and all markdown links resolved.
+- `git diff --check` -> pass.
+
+Reviewer status:
+
+- HE implementation pass -> pass; session-derived requirements now have a durable aggregate evidence trail without raw transcript dependence.
+- Technical review coverage -> pass; JSON syntax, docs lint, and whitespace checks passed.
+
+`FORJAMIE.md` update status: complete; Recent Changes includes the P9 session-evidence traceability entry.
+
 ## Linear Traceability
 
 No simplification-specific Linear issue was supplied with this request. The active tracker evidence is the completed upstream command-layer issue that this plan builds on.

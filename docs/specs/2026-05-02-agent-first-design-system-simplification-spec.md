@@ -1067,6 +1067,17 @@ Session-evidence observability should record:
 - aggregate blocker categories,
 - whether session evidence changed requirements, prioritization, or only confirmed existing direction.
 
+Current P9 collector baseline:
+
+- Durable summary: `reports/session-evidence-agent-first-simplification-2026-05-07.json`.
+- Collector command: `UV_CACHE_DIR=/tmp/session-collector-uv-cache uv run --python 3.12 python main.py --days 30 --verbose --output /Users/jamiecraik/dev/design-system/reports/session-collector-agent-first-simplification-2026-05-07.json --bundle-dir /Users/jamiecraik/dev/design-system/reports/session-collector-agent-first-simplification-2026-05-07`.
+- Window: requested 30 days, cutoff `2026-04-07T17:46:04.350179Z`, observed sessions from `2026-05-02T03:40:16.070000Z` through `2026-05-07T17:46:03.842000Z`.
+- Sources: 10 `codex_conversation` sessions and 490 `codex_rollout` sessions; 644103 of 654868 lines kept; 1818 files seen.
+- Confidence: `medium`; parse warnings: none.
+- Redaction: applied, with aggregate `absolute_path` and `sensitive_keyword` counts recorded in the durable summary.
+- Requirements changed by this evidence: future session-derived spec/plan updates must keep a durable aggregate evidence summary, classify requirement impact as changed/confirmed/reprioritized, and record confidence, redaction, parse-warning, source-count, and artifact-disposition fields.
+- Requirements confirmed by this evidence: raw transcript content must stay out of specs and plans, and environment/validation recovery hints should remain first-class because aggregate blockers include timeout, network, approval, missing-file, lint, permission, git-state, and test-failure categories.
+
 ## Acceptance and Test Matrix
 
 | ID   | Acceptance                                                                                                                                                                                                                                                                                                    | Evidence                                                                            |
@@ -1107,6 +1118,7 @@ Session-evidence observability should record:
 | SA34 | Session collector evidence is consumed only in aggregate/redacted form for spec requirements.                                                                                                                                                                                                                 | Redaction report plus spec review.                                                  |
 | SA35 | Brief and PR-evidence output include the same stop classification as JSON when blocked.                                                                                                                                                                                                                       | CLI output fixture comparing JSON-derived stop fields.                              |
 | SA36 | New prepare payload fields and `nextAction.kind` values are introduced through TypeScript types, CLI schema fixtures, JSON fixtures, brief rendering, PR-evidence rendering, and changed-surface gate updates in the same implementation slice.                                                               | Typecheck, schema fixture diff, engine/CLI fixture tests.                           |
+| SA37 | Session-derived requirement changes classify each affected requirement as changed, confirmed, or reprioritized so later agents do not treat telemetry as vague inspiration.                                                                                                                                   | P9 durable evidence summary and plan ledger.                                        |
 
 ## Open Questions
 
