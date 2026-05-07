@@ -1818,6 +1818,14 @@ test("build prepare payload fails closed when route examples are missing", async
   assert.equal(payload.safeForAutomaticImplementation, false);
   assert.equal(payload.nextAction.kind, "stop_for_validation_setup");
   assert.equal(payload.nextAction.reasonCode, "E_DESIGN_ROUTE_EXAMPLE_MISSING");
+  assert.equal(payload.nextAction.category, "design");
+  assert.deepEqual(payload.stopClassification, {
+    category: "design",
+    reasonCode: "E_DESIGN_ROUTE_EXAMPLE_MISSING",
+    instruction: payload.nextAction.instruction,
+    recoveryHints: payload.nextAction.recoveryHints,
+    evidenceRefs: payload.nextAction.evidenceRefs,
+  });
   assert.deepEqual(
     payload.openDecisions.find((decision) => decision.code === "E_DESIGN_ROUTE_EXAMPLE_MISSING"),
     {
@@ -1858,11 +1866,15 @@ test("renders blocked prepare outputs without safe-to-implement prose", async ()
   const brief = renderPrepareBrief(payload);
   assert.match(brief, /Status: STOP/);
   assert.match(brief, /Stop: do not edit UI/);
+  assert.match(brief, /Stop category: route/);
+  assert.match(brief, /Recovery Hints:/);
   assert.doesNotMatch(brief, /Status: SAFE_TO_IMPLEMENT/);
 
   const evidence = renderPreparePrEvidence(payload);
   assert.match(evidence, /Status: blocked/);
   assert.match(evidence, /Next action reason code: `E_DESIGN_ROUTE_MISSING`/);
+  assert.match(evidence, /Stop category: `route`/);
+  assert.match(evidence, /Recovery hints:/);
   assert.match(evidence, /Open decisions:/);
   assert.doesNotMatch(evidence, /Status: safe to implement/);
 });
@@ -1887,7 +1899,15 @@ test("builds prepare diagnostics for warn, exempt, and unknown surfaces", async 
   assert.equal(unknown.ok, false);
   assert.equal(unknown.nextAction.kind, "stop_for_missing_route");
   assert.equal(unknown.nextAction.reasonCode, "E_DESIGN_ROUTE_MISSING");
+  assert.equal(unknown.nextAction.category, "route");
   assert.equal(unknown.nextAction.recoveryAction, "create_route_candidate");
+  assert.deepEqual(unknown.stopClassification, {
+    category: "route",
+    reasonCode: "E_DESIGN_ROUTE_MISSING",
+    instruction: unknown.nextAction.instruction,
+    recoveryHints: unknown.nextAction.recoveryHints,
+    evidenceRefs: unknown.nextAction.evidenceRefs,
+  });
   assert.equal(unknown.nextAction.routeDiagnostics.protectedScopeMatched, false);
   assert.ok(
     unknown.nextAction.routeDiagnostics.candidateFilesToUpdate.includes(

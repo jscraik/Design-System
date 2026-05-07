@@ -42,7 +42,7 @@ The product spine is already good: `DESIGN.md`, `docs/design-system/*.json`, `pa
 
 The work here is to make the repo look and behave as focused as that spine already is. The plan reduces agent confusion by clarifying active authority, quieting historical evidence, adding agent-ergonomic prepare affordances, and deciding ambiguous package/script/doc lifecycles without weakening the existing `prepare` contract.
 
-The 2026-05-07 refresh extends this active plan for the deepened spec requirements. P0-P5 are already recorded in the execution ledger. The next implementation work is follow-on scope: route coverage parity, gold-example promotion, productive missing-route recovery, operational stop classification, session-evidence traceability, and a small downstream command contract.
+The 2026-05-07 refresh extends this active plan for the deepened spec requirements. P0-P7 are already recorded in the execution ledger. The next implementation work is follow-on scope: downstream command-contract positioning, session-evidence traceability, and additional route-family expansion after the first protected route-parity slice.
 
 The canonical agent command remains:
 
@@ -827,46 +827,37 @@ Hand this packet to `he-work` next.
 
 Objective:
 
-- Complete P7: stop classification and validation/environment recovery hints.
+- Complete P8: downstream command-contract wording and compact first-run guidance.
 
 Starting files:
 
-- `packages/agent-design-engine/src/types.ts`
-- `packages/agent-design-engine/src/prepare.ts`
-- `packages/agent-design-engine/src/prepare/**`
-- `packages/agent-design-engine/tests/**`
-- `packages/cli/src/commands/design.ts`
-- `packages/cli/tests/**`
-- `packages/cli/tests/fixtures/design-schemas/astudio-design-command.v1.schema.json`
-- changed-surface gate code and tests
+- `README.md`
 - `docs/guides/AGENT_DESIGN_WORKFLOW.md`
+- `docs/architecture/COMMAND_SURFACE.md`
+- `docs/specs/2026-05-02-agent-first-design-system-simplification-spec.md`
+- `docs/plans/2026-05-02-agent-first-design-system-simplification-plan.md`
 - `FORJAMIE.md`
 - this plan
 
 Required actions:
 
-1. Add schema-backed stop classification fields for design, route, proposal, validation, and environment categories.
-2. Keep `nextAction.category` and any top-level stop-classification payload consistent.
-3. Add environment recovery hints only for concrete observed blockers; do not turn design decisions into environment failures.
-4. Thread classification through JSON payloads, brief rendering, PR-evidence rendering, CLI schema fixtures, and changed-surface aggregation.
-5. Add tests proving existing consumers can still branch on `safeForAutomaticImplementation`.
-6. Update `FORJAMIE.md` Recent Changes and the execution ledger.
+1. Make the downstream command contract read as a tiny stable product surface: `init`, `prepare`, `check --changed`, and `propose-abstraction`.
+2. Keep `astudio design prepare --surface <path> --json` as the dominant first-run path.
+3. Document brief and PR-evidence as derived human handoff formats, not machine contracts.
+4. Keep internal root scripts in command-surface docs without making them the downstream product pitch.
+5. Update `FORJAMIE.md` Recent Changes and the execution ledger.
 
 Required validation:
 
 ```bash
-pnpm agent-design:test
-pnpm -C packages/cli test
-pnpm agent-design:prepare:changed
 pnpm docs:lint
 git diff --check
 ```
 
 Stop conditions:
 
-- The classification shape would break the existing `safeForAutomaticImplementation` contract.
-- Environment blockers cannot be named with concrete recovery hints.
-- Changed-surface aggregation would hide per-surface blocked detail.
+- Command wording suggests downstream users should learn the full internal monorepo script surface.
+- Text formats are described as replacements for JSON instead of derived handoff output.
 - Follow-on Linear governance requires a new issue before implementation closure.
 
 ## Execution Ledger
@@ -1180,6 +1171,49 @@ Reviewer status:
 - Technical review coverage -> pass through focused engine and CLI fixtures; remaining route-family expansion is intentionally deferred to later protected families.
 
 `FORJAMIE.md` update status: complete; Recent Changes includes the P6 route-parity entry.
+
+### P7 Stop Classification and Environment Recovery Hints
+
+Working-tree diff identifier: P7 stop-classification slice, before the P7 follow-up commit on PR #167.
+
+Files changed so far:
+
+- `packages/agent-design-engine/src/types.ts`
+- `packages/agent-design-engine/src/prepare.ts`
+- `packages/agent-design-engine/src/prepare/brief.ts`
+- `packages/agent-design-engine/src/prepare/pr-evidence.ts`
+- `packages/agent-design-engine/tests/engine.test.mjs`
+- `packages/cli/tests/fixtures/design-schemas/astudio-design-command.v1.schema.json`
+- `scripts/check-agent-design-prepare-evidence.mjs`
+- `docs/guides/AGENT_DESIGN_WORKFLOW.md`
+- `FORJAMIE.md`
+- `docs/plans/2026-05-02-agent-first-design-system-simplification-plan.md`
+
+Source acceptance IDs targeted: SA31, SA32, SA33, SA35, SA36, AC20, AC21, AC22.
+
+Contract changes:
+
+- Added schema-backed `PrepareStopCategory` and `PrepareStopClassification` types with categories for `design`, `route`, `proposal`, `validation`, and concrete `environment` stops.
+- Added `nextAction.category` and `nextAction.recoveryHints` for blocked prepare payloads while leaving `safeForAutomaticImplementation` as the stable branch point.
+- Added top-level `stopClassification` for unsafe payloads and kept it derived from `nextAction` so category, reason code, instruction, recovery hints, and evidence refs stay consistent.
+- Threaded stop classification through derived brief output, PR-evidence output, the CLI schema fixture, and the changed-surface gate's normalized per-surface result.
+- Kept environment stops as a declared category only; this slice does not add `stop_for_environment` because no read-only prepare path currently observes a concrete environment blocker that it can classify without executing validation.
+
+Validation commands:
+
+- `pnpm agent-design:test` -> fail first on renderer fixtures without `recoveryHints`, then pass after the renderers tolerated older minimal test payloads while real unsafe prepare/schema output still requires recovery hints; 137 tests passed.
+- `pnpm -C packages/cli test` -> fail first on AJV strict schema placement for conditional `stopClassification`, then pass after defining the conditional property in the same branch; 121 tests passed.
+- `pnpm --silent agent-design:prepare --surface packages/example/UnknownSurface.tsx | jq ".data | {safeForAutomaticImplementation,nextAction,stopClassification}"` -> pass; verified `nextAction.category` and `stopClassification.category` both classify the blocked missing-route payload as `route`.
+- `pnpm agent-design:prepare:changed` -> pass; no changed UI surfaces required prepare evidence.
+- `pnpm docs:lint` -> pass; 0 errors, 0 warnings, 0 suggestions and all markdown links resolved.
+- `jq . packages/cli/tests/fixtures/design-schemas/astudio-design-command.v1.schema.json >/dev/null && git diff --check` -> pass.
+
+Reviewer status:
+
+- HE implementation pass -> pass; blocked prepare payloads now expose a machine-readable stop taxonomy without breaking consumers that branch on `safeForAutomaticImplementation`.
+- Technical review coverage -> partial pending broader validation; focused engine and CLI schema coverage passed, and docs/changed-surface updates are in place for the follow-up validation gate.
+
+`FORJAMIE.md` update status: complete; Recent Changes includes the P7 stop-classification entry.
 
 ## Linear Traceability
 

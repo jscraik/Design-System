@@ -18,6 +18,8 @@ import type {
   PrepareRouteParityReport,
   PrepareRouteRecommendation,
   PrepareSourceDigest,
+  PrepareStopCategory,
+  PrepareStopClassification,
   PrepareSurfaceScope,
   PrepareValidationCommand,
   ResolvedAgentUiRoute,
@@ -1403,18 +1405,29 @@ function buildPrepareNextAction(
     return {
       kind: "stop_for_proposal",
       reasonCode,
+      category: "proposal",
       instruction:
         "Stop before editing UI and draft or link the required design proposal for this surface.",
       evidenceRefs,
+      recoveryHints: [
+        "Open or create the proposal referenced by the route decision.",
+        "Do not add a new component abstraction until the proposal exists and is approved.",
+      ],
     };
   }
   if (reasonCode === "E_DESIGN_ROUTE_MISSING") {
     return {
       kind: "stop_for_missing_route",
       reasonCode,
+      category: "route",
       instruction:
         "Stop before editing UI because no canonical agent UI route matches this surface.",
       evidenceRefs,
+      recoveryHints: [
+        "Use routeDiagnostics.candidateFilesToUpdate to update the routing map or lifecycle metadata.",
+        "Prefer an existing close route when routeDiagnostics.closestRoutes has a medium-confidence match.",
+        "Only mark the surface exempt when the protected-scope rule is intentionally too broad.",
+      ],
       recoveryAction: "create_route_candidate",
       ...(routeDiagnostics ? { routeDiagnostics } : {}),
     };
@@ -1426,21 +1439,52 @@ function buildPrepareNextAction(
     reasonCode === "E_DESIGN_ROUTE_SOURCE_REF_MISSING" ||
     reasonCode === "E_DESIGN_VALIDATION_COMMAND_INVALID"
   ) {
+    const category: PrepareStopCategory =
+      reasonCode === "E_DESIGN_VALIDATION_COMMAND_INVALID" ? "validation" : "design";
     return {
       kind: "stop_for_validation_setup",
       reasonCode,
+      category,
       instruction:
         "Stop before editing UI because the design route evidence or validation setup is incomplete.",
       evidenceRefs,
+      recoveryHints:
+        category === "validation"
+          ? [
+              "Run the returned validation command manually to identify the missing executable or invalid command text.",
+              "Fix the route validation command source before editing the UI surface.",
+            ]
+          : [
+              "Complete the route evidence source referenced by reasonCode before editing the UI surface.",
+              "Keep lifecycle, coverage, source refs, and examples aligned for the matched route.",
+            ],
     };
   }
 
   return {
     kind: "stop_for_manual_decision",
     reasonCode,
+    category: "design",
     instruction:
       "Stop before editing UI and ask for a manual design-system decision for this surface.",
     evidenceRefs,
+    recoveryHints: [
+      "Ask for the smallest design-system decision that unblocks this surface.",
+      "Record the decision in the relevant design-system source before editing UI.",
+    ],
+  };
+}
+
+function buildStopClassification(
+  nextAction: PrepareNextAction,
+): PrepareStopClassification | undefined {
+  if (nextAction.kind === "implement") return undefined;
+  return {
+    category: nextAction.category,
+    reasonCode: nextAction.reasonCode,
+    instruction: nextAction.instruction,
+    recoveryHints: nextAction.recoveryHints,
+    evidenceRefs: nextAction.evidenceRefs,
   };
 }
 
@@ -1753,6 +1797,7 @@ export async function buildPreparePayload(
     openDecisions,
     routeDiagnostics,
   );
+  const stopClassification = buildStopClassification(nextAction);
   const doNotInvent = buildDoNotInventGuidance(recommendedRoutes, designTokenContract, [
     designPath,
     routingPath,
@@ -1764,6 +1809,7 @@ export async function buildPreparePayload(
     ok,
     safeForAutomaticImplementation,
     nextAction,
+    ...(stopClassification ? { stopClassification } : {}),
     resolvedDesignFile: designPath,
     guidanceConfigPath: guidancePath,
     designContractMode,

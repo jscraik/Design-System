@@ -355,6 +355,16 @@ export interface PrepareOpenDecision {
   nextAction: "stop" | "escalate" | "diagnose";
 }
 
+export type PrepareStopCategory = "design" | "route" | "proposal" | "validation" | "environment";
+
+export interface PrepareStopClassification {
+  category: PrepareStopCategory;
+  reasonCode: string;
+  instruction: string;
+  recoveryHints: string[];
+  evidenceRefs: string[];
+}
+
 export type PrepareNextAction =
   | {
       kind: "implement";
@@ -369,8 +379,10 @@ export type PrepareNextAction =
         | "stop_for_missing_route"
         | "stop_for_validation_setup";
       reasonCode: string;
+      category: PrepareStopCategory;
       instruction: string;
       evidenceRefs: string[];
+      recoveryHints: string[];
       recoveryAction?: PrepareMissingRouteRecoveryAction;
       routeDiagnostics?: PrepareRouteDiagnostics;
     };
@@ -400,6 +412,7 @@ export interface PreparePayload {
   ok: boolean;
   safeForAutomaticImplementation: boolean;
   nextAction: PrepareNextAction;
+  stopClassification?: PrepareStopClassification;
   resolvedDesignFile: string;
   guidanceConfigPath: string;
   designContractMode: "legacy" | "design-md";

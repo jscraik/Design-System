@@ -68,7 +68,8 @@ astudio design prepare --surface <path> --format brief
 astudio design prepare --surface <path> --format pr-evidence
 ```
 
-1. If `safeForAutomaticImplementation` is `false`, stop and follow `openDecisions`. Do not invent components, token roles, states, examples, or proposal outcomes.
+1. If `safeForAutomaticImplementation` is `false`, stop and follow `nextAction`, `stopClassification`, `recoveryHints`, and `openDecisions`. Do not invent components, token roles, states, examples, or proposal outcomes.
+   Blocked payloads classify the stop as `design`, `route`, `proposal`, `validation`, or `environment`. Treat `environment` as valid only when the command names a concrete runtime blocker and recovery hint; design decisions must stay design/proposal/route stops.
 1. If implementation is safe, use the returned `nextAction`, `recommendedRoutes`, `designTokenContract`, `doNotInvent`, `requiredStates`, `relevantExamples`, `forbiddenPatterns`, and `validationCommands` as the implementation brief.
 1. Edit the UI.
 1. Run the returned read-only validation commands that apply to the changed surface.
