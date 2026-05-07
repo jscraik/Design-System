@@ -330,6 +330,24 @@ export interface PrepareSourceDigest {
   sha256: string;
 }
 
+export type PrepareMissingRouteRecoveryAction =
+  | "create_route_candidate"
+  | "use_existing_route"
+  | "mark_exempt_with_reason"
+  | "open_proposal";
+
+export interface PrepareRouteDiagnostics {
+  protectedScopeMatched: boolean;
+  scopeSource: string;
+  unmatchedSurfacePattern: string;
+  closestRoutes: Array<{
+    routeId: string;
+    because: string[];
+    confidence: "low" | "medium";
+  }>;
+  candidateFilesToUpdate: string[];
+}
+
 export interface PrepareOpenDecision {
   code: string;
   message: string;
@@ -353,6 +371,8 @@ export type PrepareNextAction =
       reasonCode: string;
       instruction: string;
       evidenceRefs: string[];
+      recoveryAction?: PrepareMissingRouteRecoveryAction;
+      routeDiagnostics?: PrepareRouteDiagnostics;
     };
 
 export interface PrepareDoNotInventGuidance {
@@ -402,6 +422,27 @@ export interface PreparePayload {
   "wrapper-evidence": string;
   "final-plan-evidence": string;
   openDecisions: PrepareOpenDecision[];
+}
+
+export interface PrepareRouteParitySurfaceFamily {
+  surfaceFamily: string;
+  guidanceScope: "error" | "warn" | "exempt";
+  guidancePatterns: string[];
+  matchedRouteIds: string[];
+  status: "routed" | "proposal_only" | "manual_only" | "exempt" | "uncovered";
+  statusReason: string;
+  intentionalStopSourceRefs: string[];
+  topExampleRefs: string[];
+  validationCommands: string[];
+}
+
+export interface PrepareRouteParityReport {
+  kind: "astudio.design.routeParity.v1";
+  guidanceConfigPath: string;
+  routingConfigPath: string;
+  scopePrecedence: Array<"error" | "warn" | "exempt">;
+  surfaces: PrepareRouteParitySurfaceFamily[];
+  uncoveredProtectedCount: number;
 }
 
 export class DesignEngineError extends Error {

@@ -4,6 +4,7 @@ title: Agent-First Design System Simplification Plan
 type: refactor
 status: active
 date: 2026-05-02
+last_updated: 2026-05-07
 source_spec: docs/specs/2026-05-02-agent-first-design-system-simplification-spec.md
 plan_route: fresh
 plan_depth: deep
@@ -28,6 +29,7 @@ linear_status: linked-completed
 - [Validation Ladder](#validation-ladder)
 - [Machine Evidence Contract](#machine-evidence-contract)
 - [First Work Packet](#first-work-packet)
+- [Next Work Packet](#next-work-packet)
 - [Execution Ledger](#execution-ledger)
 - [Linear Traceability](#linear-traceability)
 - [References](#references)
@@ -40,6 +42,8 @@ The product spine is already good: `DESIGN.md`, `docs/design-system/*.json`, `pa
 
 The work here is to make the repo look and behave as focused as that spine already is. The plan reduces agent confusion by clarifying active authority, quieting historical evidence, adding agent-ergonomic prepare affordances, and deciding ambiguous package/script/doc lifecycles without weakening the existing `prepare` contract.
 
+The 2026-05-07 refresh extends this active plan for the deepened spec requirements. P0-P5 are already recorded in the execution ledger. The next implementation work is follow-on scope: route coverage parity, gold-example promotion, productive missing-route recovery, operational stop classification, session-evidence traceability, and a small downstream command contract.
+
 The canonical agent command remains:
 
 ```bash
@@ -50,14 +54,15 @@ No phase may introduce a competing happy-path command.
 
 ## Planning Readiness
 
-| Check               | Result  | Evidence                                                                                                                                                                                                         |
-| ------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Plan route          | `fresh` | No existing `2026-05-02` simplification plan exists under `docs/plans/`.                                                                                                                                         |
-| Plan depth          | `deep`  | The work touches docs authority, archive/reference rules, public CLI output formats, engine payload fields, package taxonomy, scripts, and large-file refactors.                                                 |
-| Source authority    | Ready   | `docs/specs/2026-05-02-agent-first-design-system-simplification-spec.md` defines the product spine, interface alternatives, selected Shape A, SA1-SA22, phase gates, and first planning slice.                   |
-| Domain readiness    | Ready   | No repo `CONTEXT.md` or `CONTEXT-MAP.md` exists. The source spec defines canonical terms for active authority, historical evidence, archive, obsolete/deletion candidate, agent brief, PR evidence, and prepare. |
-| Interface readiness | Ready   | Shape A is selected: `prepare` remains the command family, while `--format brief` and `--format pr-evidence` are derived from the typed prepare payload.                                                         |
-| Linear readiness    | Linked  | JSC-238 is the completed Linear tracker for the agent-native design-system command layer that this simplification plan builds on. Jamie approved local HE heartbeat execution for this plan on 2026-05-02.       |
+| Check               | Result  | Evidence                                                                                                                                                                                                                                                          |
+| ------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Plan route          | `fresh` | No existing `2026-05-02` simplification plan exists under `docs/plans/`.                                                                                                                                                                                          |
+| Plan depth          | `deep`  | The work touches docs authority, archive/reference rules, public CLI output formats, engine payload fields, package taxonomy, scripts, and large-file refactors.                                                                                                  |
+| Source authority    | Ready   | `docs/specs/2026-05-02-agent-first-design-system-simplification-spec.md` defines the product spine, interface alternatives, selected Shape A, SA1-SA36, phase gates, completed P0-P5 history, and follow-on route/stop/session requirements.                      |
+| Domain readiness    | Ready   | No repo `CONTEXT.md` or `CONTEXT-MAP.md` exists. The source spec defines canonical terms for active authority, historical evidence, archive, obsolete/deletion candidate, agent brief, PR evidence, and prepare.                                                  |
+| Interface readiness | Ready   | Shape A is selected: `prepare` remains the command family, while `--format brief` and `--format pr-evidence` are derived from the typed prepare payload.                                                                                                          |
+| Session evidence    | Ready   | The deepened spec records the 2026-05-06 `~/.agents/session-collector` aggregate baseline, confidence, health, source counts, redaction status, and operational blocker categories.                                                                               |
+| Linear readiness    | Partial | JSC-238 is the completed Linear tracker for the agent-native design-system command layer that this simplification plan builds on. Follow-on route parity and stop classification work should get a fresh simplification-specific tracker before external closure. |
 
 ## Requirements Trace
 
@@ -69,6 +74,12 @@ No phase may introduce a competing happy-path command.
 | R4: Split large implementation files by responsibility without behavior drift.                                      | SA12, SA18                                | P3             |
 | R5: Resolve ambiguous package taxonomy for prototypes, effects, and templates.                                      | SA13, SA14, SA15, SA22                    | P4             |
 | R6: Reduce script/docs duplication and keep `FORJAMIE.md` as a current project map.                                 | SA16, SA17                                | P5             |
+| R7: Align protected guidance scopes with agent UI route coverage and intentional stops.                             | SA23, SA24, SA26                          | P6             |
+| R8: Make missing-route stops productive with recovery actions and route diagnostics.                                | SA25                                      | P6             |
+| R9: Promote gold examples into first-class prepare evidence.                                                        | SA27                                      | P6             |
+| R10: Keep downstream-facing command guidance small and product-positioned around the agent-first UI contract.       | SA28, SA29                                | P8             |
+| R11: Record session evidence safely and aggregate-only when it shapes specs or plans.                               | SA30, SA34                                | P9             |
+| R12: Distinguish design, route, proposal/manual, validation, and environment stops at the correct owner boundary.   | SA31, SA32, SA33, SA35, SA36              | P7             |
 
 ## Scope Boundaries
 
@@ -95,6 +106,9 @@ In scope:
 - `packages/effects/**`
 - `packages/cloudflare-template/**`
 - `packages/astudio-make-template/**`
+- `.design-system-guidance.json`
+- `docs/design-system/AGENT_UI_ROUTING.json`
+- `docs/design-system/GOLD_EXAMPLES.json`
 - root `package.json` scripts that expose agent-design, docs, policy, prototype, and package-taxonomy surfaces
 - authority indexes such as `docs/plans/README.md`, `reports/README.md`, and `artifacts/reviews/README.md`
 
@@ -183,6 +197,18 @@ git diff --check
 6. Resolve package taxonomy with explicit lifecycle outcomes.
 
    Prototype, effects, and template packages must end in a named state: promoted, moved, archived/quarantined, merged, retained with rationale, or deleted.
+
+7. Add follow-on scope as new phases, not rewrites of completed phases.
+
+   P0-P5 remain ledgered work. The deepened spec adds new implementation scope, so this plan appends P6-P9 instead of reshaping completed evidence.
+
+8. Implement route parity with the real guidance semantics.
+
+   Route parity must reuse the same path normalization, glob expansion, and `scopePrecedence` behavior as `.design-system-guidance.json`. A string-prefix report is not acceptable evidence.
+
+9. Keep stop ownership precise.
+
+   `prepare` owns pre-edit design, route, proposal/manual, and validation-setup classifications. Changed-surface checks own aggregation. Validation and diagnostic runners own observed environment failures such as cache, permission, timeout, network, browser/runtime, generated-file, or git-state blockers.
 
 ## Implementation Plan
 
@@ -436,22 +462,186 @@ pnpm test:policy
 git diff --check
 ```
 
+### P6: Route Coverage Parity, Missing-Route Recovery, and Gold Examples
+
+Goal: make common protected UI surfaces produce useful routes or intentional stop decisions instead of defaulting to unqualified missing-route stops.
+
+Files:
+
+- `.design-system-guidance.json`
+- `docs/design-system/AGENT_UI_ROUTING.json`
+- `docs/design-system/GOLD_EXAMPLES.json`
+- `packages/agent-design-engine/src/types.ts`
+- `packages/agent-design-engine/src/prepare.ts`
+- `packages/agent-design-engine/src/routes.ts`
+- `packages/agent-design-engine/tests/**`
+- `packages/cli/tests/**`
+- `docs/guides/AGENT_DESIGN_WORKFLOW.md`
+- `FORJAMIE.md`
+- this plan ledger
+
+Tasks:
+
+- Add a route parity report or fixture that compares `.design-system-guidance.json` protected and warn scopes against `docs/design-system/AGENT_UI_ROUTING.json`.
+- Use the same path normalization, glob expansion, and `scopePrecedence` semantics as the guidance enforcement path.
+- Classify each surface family as `routed`, `proposal_only`, `manual_only`, `exempt`, or `uncovered`.
+- Add `IconButton.tsx` as the concrete regression fixture because it is protected but currently returns `E_DESIGN_ROUTE_MISSING`.
+- Prioritize routes or intentional stops for settings, chat, base controls, overlays, web/template pages, and widget entrypoints.
+- Add missing-route `nextAction.recoveryAction` and `routeDiagnostics` with candidate files and closest route/example evidence.
+- Promote gold examples so prepare can return state coverage, maturity, copy guidance, do-not-copy guidance, and validation commands for common protected routes.
+
+Exit criteria:
+
+- Common protected surfaces return a route or intentional proposal/manual/exempt stop.
+- `packages/ui/src/components/ui/base/IconButton/IconButton.tsx` no longer receives an unqualified missing-route stop.
+- The parity report can identify uncovered protected surfaces before enforcement expands.
+- Missing-route output tells an agent exactly which recovery action to take.
+- Gold examples are used as prepare evidence, not just documentation.
+
+Validation:
+
+```bash
+pnpm agent-design:test
+pnpm -C packages/cli test
+pnpm -C packages/design-system-guidance check:ci
+pnpm docs:lint
+git diff --check
+```
+
+### P7: Stop Classification and Environment Recovery Hints
+
+Goal: make blocked command outcomes tell agents whether to update design evidence, open a proposal/manual decision, fix implementation, or repair the execution environment.
+
+Files:
+
+- `packages/agent-design-engine/src/types.ts`
+- `packages/agent-design-engine/src/prepare.ts`
+- `packages/agent-design-engine/src/prepare/**`
+- `packages/agent-design-engine/tests/**`
+- `packages/cli/tests/**`
+- `packages/cli/tests/fixtures/design-schemas/astudio-design-command.v1.schema.json`
+- changed-surface gate code and tests
+- `docs/guides/AGENT_DESIGN_WORKFLOW.md`
+- `FORJAMIE.md`
+- this plan ledger
+
+Tasks:
+
+- Add schema-backed stop classification fields for design, route, proposal, validation, and environment categories.
+- Keep `nextAction.category` and `stopClassification.category` consistent when both are present.
+- Add `stop_for_environment` only where a concrete environment blocker and recovery hint can be named.
+- Add validation-command prerequisites and environment hints for cache, generated-file, network/API, permission, timeout, git-state, and browser/runtime blockers.
+- Ensure brief and PR-evidence render the same blocked classification as JSON.
+- Ensure changed-surface aggregation preserves per-surface categories and reports the strongest blocked category without hiding detail.
+- Add tests proving new payload fields and `nextAction.kind` values move through TypeScript types, schema fixtures, JSON fixtures, brief rendering, PR-evidence rendering, and changed-surface gate behavior in the same slice.
+
+Exit criteria:
+
+- Blocked outputs distinguish design, route, proposal/manual, validation, and environment causes.
+- Environment failures cannot render as design-system decisions.
+- Read-only `prepare` still does not execute validation commands or mutate the workspace.
+- Existing consumers that branch only on `safeForAutomaticImplementation` still work.
+
+Validation:
+
+```bash
+pnpm agent-design:test
+pnpm -C packages/cli test
+pnpm agent-design:prepare:changed
+pnpm docs:lint
+git diff --check
+```
+
+### P8: Downstream Command Contract and Product Positioning
+
+Goal: make the public-facing command story small, stable, and centered on the agent-first UI contract system.
+
+Files:
+
+- `README.md`
+- `docs/guides/AGENT_DESIGN_WORKFLOW.md`
+- `docs/architecture/COMMAND_SURFACE.md`
+- `FORJAMIE.md`
+- CLI docs or help text if needed
+- this plan ledger
+
+Tasks:
+
+- Document the downstream command family as `astudio design init`, `astudio design prepare --surface <path> --json`, `astudio design check --changed --json`, and `astudio design propose-abstraction --surface <path> --json`.
+- If command aliases do not yet exist, mark them as proposed downstream aliases and keep local wrappers explicit.
+- Reword front-door docs so the agent-design lane is described as an agent-first UI contract system, not a generic design-system workbench.
+- Keep internal root scripts available through `docs/architecture/COMMAND_SURFACE.md` without making them the product pitch.
+
+Exit criteria:
+
+- Downstream docs do not ask adopters to understand the full internal script inventory.
+- Product wording consistently centers `prepare` as the implementation contract compiler for agents.
+- Proposed aliases are not described as implemented commands until code exists.
+
+Validation:
+
+```bash
+pnpm docs:lint
+git diff --check
+```
+
+### P9: Session Evidence Traceability
+
+Goal: keep session-derived spec and plan decisions reviewable without raw transcript dependence.
+
+Files:
+
+- `docs/specs/**` when session evidence is used
+- `docs/plans/**` when session evidence is used
+- `FORJAMIE.md`
+- optional evidence manifest or report under `reports/**` if a durable artifact is needed
+
+Tasks:
+
+- Record collector command, output path or extracted manifest fields, session window, source type counts, confidence, redaction status, collector health, parse warnings, and whether the artifact path is durable or temporary.
+- Record which requirements changed because of session evidence and which were only confirmed or reprioritized.
+- Keep raw transcript content out of specs and plans.
+- If the default collector cache path is blocked, retry with a writable `UV_CACHE_DIR` or record the blocker explicitly.
+
+Exit criteria:
+
+- Any future session-derived requirement can be audited from aggregate metadata.
+- No implementation task depends on raw transcript access.
+- Temporary artifact paths are not the only evidence record.
+
+Validation:
+
+```bash
+pnpm docs:lint
+git diff --check
+```
+
 ## Acceptance Criteria
 
-| ID   | Acceptance                                                                                                                                                               | Evidence                                    |
-| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
-| AC1  | Authority map rows classify active, historical, archived, and obsolete-candidate surfaces with reason, replacement when applicable, allowed use, and last-reviewed date. | P0 diff plus docs lint.                     |
-| AC2  | README, `FORJAMIE.md`, and `docs/guides/AGENT_DESIGN_WORKFLOW.md` name one detailed agent workflow authority.                                                            | P0 docs diff.                               |
-| AC3  | Historical/archive/deletion work records `rg --hidden` reference audits before moves/deletes.                                                                            | P0 plan ledger evidence.                    |
-| AC4  | `prepare` remains the only happy-path pre-edit command.                                                                                                                  | P0-P2 docs and CLI tests.                   |
-| AC5  | `nextAction`, `doNotInvent`, route confidence, example usage guidance, and validation `ifFails` are typed and schema-covered.                                            | P1 engine and CLI fixture tests.            |
-| AC6  | `--format brief` and `--format pr-evidence` are derived from typed prepare payload data.                                                                                 | P2 CLI tests comparing JSON-derived fields. |
-| AC7  | Unsafe prepare payloads cannot render brief or PR evidence that says implementation is safe.                                                                             | P2 negative tests.                          |
-| AC8  | Large-file responsibility splits preserve public behavior.                                                                                                               | P3 before/after fixture evidence and tests. |
-| AC9  | Prototype, effects, template, and app-pointer lifecycle decisions are explicit.                                                                                          | P4 docs/package diff.                       |
-| AC10 | Workspace config, scripts, docs, and package exports stay in sync after any package move.                                                                                | P4 validation evidence.                     |
-| AC11 | Script surface is simpler and compatibility aliases have active references or are removed.                                                                               | P5 reference audit plus docs diff.          |
-| AC12 | `FORJAMIE.md` remains current and is updated in every behavior/structure/tooling phase.                                                                                  | Phase diffs and Recent Changes entries.     |
+| ID   | Acceptance                                                                                                                                                                     | Evidence                                                   |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| AC1  | Authority map rows classify active, historical, archived, and obsolete-candidate surfaces with reason, replacement when applicable, allowed use, and last-reviewed date.       | P0 diff plus docs lint.                                    |
+| AC2  | README, `FORJAMIE.md`, and `docs/guides/AGENT_DESIGN_WORKFLOW.md` name one detailed agent workflow authority.                                                                  | P0 docs diff.                                              |
+| AC3  | Historical/archive/deletion work records `rg --hidden` reference audits before moves/deletes.                                                                                  | P0 plan ledger evidence.                                   |
+| AC4  | `prepare` remains the only happy-path pre-edit command.                                                                                                                        | P0-P2 docs and CLI tests.                                  |
+| AC5  | `nextAction`, `doNotInvent`, route confidence, example usage guidance, and validation `ifFails` are typed and schema-covered.                                                  | P1 engine and CLI fixture tests.                           |
+| AC6  | `--format brief` and `--format pr-evidence` are derived from typed prepare payload data.                                                                                       | P2 CLI tests comparing JSON-derived fields.                |
+| AC7  | Unsafe prepare payloads cannot render brief or PR evidence that says implementation is safe.                                                                                   | P2 negative tests.                                         |
+| AC8  | Large-file responsibility splits preserve public behavior.                                                                                                                     | P3 before/after fixture evidence and tests.                |
+| AC9  | Prototype, effects, template, and app-pointer lifecycle decisions are explicit.                                                                                                | P4 docs/package diff.                                      |
+| AC10 | Workspace config, scripts, docs, and package exports stay in sync after any package move.                                                                                      | P4 validation evidence.                                    |
+| AC11 | Script surface is simpler and compatibility aliases have active references or are removed.                                                                                     | P5 reference audit plus docs diff.                         |
+| AC12 | `FORJAMIE.md` remains current and is updated in every behavior/structure/tooling phase.                                                                                        | Phase diffs and Recent Changes entries.                    |
+| AC13 | Protected guidance scopes and agent UI routes have a parity report using the same path normalization, glob expansion, and `scopePrecedence` semantics as guidance enforcement. | P6 parity fixture plus guidance check.                     |
+| AC14 | `IconButton.tsx` has a useful route or intentional stop decision instead of an unqualified missing-route stop.                                                                 | P6 prepare fixture.                                        |
+| AC15 | Missing-route output includes recovery action, candidate files, and closest route/example evidence when available.                                                             | P6 engine and CLI fixture tests.                           |
+| AC16 | Gold examples are prepare evidence with state coverage, maturity, copy guidance, do-not-copy guidance, and validation commands.                                                | P6 gold-example and prepare tests.                         |
+| AC17 | Downstream docs advertise a small stable command family and do not expose the whole internal root-script surface as the product path.                                          | P8 docs review plus docs lint.                             |
+| AC18 | Product wording identifies the lane as an agent-first UI contract system.                                                                                                      | P8 README/workflow/FORJAMIE diff.                          |
+| AC19 | Session-derived changes record collector command, extracted manifest fields, confidence, health, redaction status, and temporary/durable artifact status.                      | P9 evidence section plus docs lint.                        |
+| AC20 | Stop classification distinguishes design, route, proposal/manual, validation, and environment causes at the correct owner boundary.                                            | P7 JSON, brief, PR-evidence, and changed-surface fixtures. |
+| AC21 | Validation guidance includes prerequisites and environment recovery hints for known operational blockers.                                                                      | P7 payload and renderer fixtures.                          |
+| AC22 | New prepare payload fields and `nextAction.kind` values update TypeScript types, schema fixtures, JSON fixtures, text renderers, and changed-surface behavior together.        | P7 typecheck and fixture evidence.                         |
 
 ## Execution Checkpoints
 
@@ -469,6 +659,7 @@ Between phases:
 - Fix P0/P1/P2 actionable findings before proceeding.
 - Record validation evidence before marking the phase complete.
 - Update `FORJAMIE.md` when behavior, structure, tooling, workflow, or authority changes.
+- For P6-P9, confirm whether a simplification-specific Linear issue replaces the completed JSC-238 command-layer tracker.
 
 After each phase:
 
@@ -478,14 +669,18 @@ After each phase:
 
 ## Risks and Rollback
 
-| Risk                                                 | Impact                                      | Mitigation                                                                                                                                | Rollback                                                              |
-| ---------------------------------------------------- | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| Authority cleanup deletes useful historical context. | Agents or humans lose decision evidence.    | Require indexed classification and reference audits before moves/deletes.                                                                 | Restore from git and reclassify as historical.                        |
-| Brief/PR evidence becomes a second truth.            | Agents follow stale or contradictory prose. | Generate only from typed prepare payload and compare tests against JSON.                                                                  | Remove format output and keep JSON only.                              |
-| File split changes behavior.                         | Prepare/CLI/guidance regressions.           | Pin fixtures before split and keep public exports stable.                                                                                 | Revert split commit.                                                  |
-| Package move breaks workspace references.            | Build/typecheck/CI failures.                | Audit imports/scripts/docs/workspace config before and after move.                                                                        | Revert move or add compatibility wrapper with explicit deprecation.   |
-| Script cleanup removes used aliases.                 | CI or developer workflow breakage.          | Reference audit before removal.                                                                                                           | Restore alias and document deprecation.                               |
-| Plan proceeds with stale tracker evidence.           | Work loses external traceability.           | Keep `linear_status: linked-completed` aligned with JSC-238 and update this section if a newer simplification-specific issue replaces it. | Pause and correct the Linear linkage before external tracker closure. |
+| Risk                                                     | Impact                                         | Mitigation                                                                                                                                | Rollback                                                              |
+| -------------------------------------------------------- | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| Authority cleanup deletes useful historical context.     | Agents or humans lose decision evidence.       | Require indexed classification and reference audits before moves/deletes.                                                                 | Restore from git and reclassify as historical.                        |
+| Brief/PR evidence becomes a second truth.                | Agents follow stale or contradictory prose.    | Generate only from typed prepare payload and compare tests against JSON.                                                                  | Remove format output and keep JSON only.                              |
+| File split changes behavior.                             | Prepare/CLI/guidance regressions.              | Pin fixtures before split and keep public exports stable.                                                                                 | Revert split commit.                                                  |
+| Package move breaks workspace references.                | Build/typecheck/CI failures.                   | Audit imports/scripts/docs/workspace config before and after move.                                                                        | Revert move or add compatibility wrapper with explicit deprecation.   |
+| Script cleanup removes used aliases.                     | CI or developer workflow breakage.             | Reference audit before removal.                                                                                                           | Restore alias and document deprecation.                               |
+| Plan proceeds with stale tracker evidence.               | Work loses external traceability.              | Keep `linear_status: linked-completed` aligned with JSC-238 and update this section if a newer simplification-specific issue replaces it. | Pause and correct the Linear linkage before external tracker closure. |
+| Route parity disagrees with guidance enforcement.        | Agents trust a false coverage map.             | Reuse the guidance path normalization, glob expansion, and `scopePrecedence` semantics.                                                   | Disable parity output until it uses the shared matcher.               |
+| Missing-route recovery becomes vague prose.              | Agents still stall or invent routes.           | Require typed `recoveryAction`, candidate files, closest routes, and example evidence.                                                    | Fall back to fail-closed missing-route stops.                         |
+| Environment blockers are reported as design failures.    | Agents update the wrong surface.               | Keep stop ownership boundaries explicit and fixture-test environment cases.                                                               | Remove environment classification until diagnostics can prove cause.  |
+| Downstream aliases are documented before implementation. | External users run commands that do not exist. | Mark aliases as proposed until code exists; keep local wrappers explicit.                                                                 | Revert docs wording or add compatibility alias.                       |
 
 ## Validation Ladder
 
@@ -527,11 +722,39 @@ pnpm docs:lint
 git diff --check
 ```
 
+Route parity and missing-route recovery P6:
+
+```bash
+pnpm agent-design:test
+pnpm -C packages/cli test
+pnpm -C packages/design-system-guidance check:ci
+pnpm docs:lint
+git diff --check
+```
+
+Stop classification P7:
+
+```bash
+pnpm agent-design:test
+pnpm -C packages/cli test
+pnpm agent-design:prepare:changed
+pnpm docs:lint
+git diff --check
+```
+
+Docs-only downstream/session phases P8/P9:
+
+```bash
+pnpm docs:lint
+git diff --check
+```
+
 Final handoff:
 
 ```bash
 pnpm build
 pnpm test:policy
+pnpm agent-design:test
 pnpm docs:lint
 git diff --check
 ```
@@ -549,12 +772,15 @@ Each phase must record:
 - unresolved risks,
 - reviewer pass/fail status,
 - `FORJAMIE.md` update status.
+- route parity report or fixture output for P6,
+- stop classification fixture coverage for P7,
+- session-evidence aggregate metadata for P9.
 
 Evidence may live in the plan ledger, PR body, or a linked review artifact, but it must use exact command text and pass/fail/blocked outcomes.
 
 ## First Work Packet
 
-Hand this packet to `he-work` first.
+Historical first packet, completed in P0. Keep this section as the record for why P0 started with authority mapping.
 
 Objective:
 
@@ -594,6 +820,54 @@ Stop conditions:
 - Active authority cannot be reduced to a clear front door without a product decision.
 - A Linear issue becomes required by project governance before execution continues.
 - Docs lint fails for reasons outside the phase scope and cannot be isolated.
+
+## Next Work Packet
+
+Hand this packet to `he-work` next.
+
+Objective:
+
+- Complete P7: stop classification and validation/environment recovery hints.
+
+Starting files:
+
+- `packages/agent-design-engine/src/types.ts`
+- `packages/agent-design-engine/src/prepare.ts`
+- `packages/agent-design-engine/src/prepare/**`
+- `packages/agent-design-engine/tests/**`
+- `packages/cli/src/commands/design.ts`
+- `packages/cli/tests/**`
+- `packages/cli/tests/fixtures/design-schemas/astudio-design-command.v1.schema.json`
+- changed-surface gate code and tests
+- `docs/guides/AGENT_DESIGN_WORKFLOW.md`
+- `FORJAMIE.md`
+- this plan
+
+Required actions:
+
+1. Add schema-backed stop classification fields for design, route, proposal, validation, and environment categories.
+2. Keep `nextAction.category` and any top-level stop-classification payload consistent.
+3. Add environment recovery hints only for concrete observed blockers; do not turn design decisions into environment failures.
+4. Thread classification through JSON payloads, brief rendering, PR-evidence rendering, CLI schema fixtures, and changed-surface aggregation.
+5. Add tests proving existing consumers can still branch on `safeForAutomaticImplementation`.
+6. Update `FORJAMIE.md` Recent Changes and the execution ledger.
+
+Required validation:
+
+```bash
+pnpm agent-design:test
+pnpm -C packages/cli test
+pnpm agent-design:prepare:changed
+pnpm docs:lint
+git diff --check
+```
+
+Stop conditions:
+
+- The classification shape would break the existing `safeForAutomaticImplementation` contract.
+- Environment blockers cannot be named with concrete recovery hints.
+- Changed-surface aggregation would hide per-surface blocked detail.
+- Follow-on Linear governance requires a new issue before implementation closure.
 
 ## Execution Ledger
 
@@ -861,6 +1135,51 @@ Reviewer status:
 - HE fix-bugs pass -> pass; no broken link, stale command, misleading wrapper/read-only guidance, or archive-reference issue found after validation.
 
 `FORJAMIE.md` update status: complete; Recent Changes includes the P5 command-surface and FORJAMIE-compression entry.
+
+### P6 Execution: Route Coverage Parity, Missing-Route Recovery, and Gold Examples
+
+Status: completed.
+
+Files changed:
+
+- `docs/design-system/AGENT_UI_ROUTING.json`
+- `docs/design-system/COMPONENT_LIFECYCLE.json`
+- `docs/design-system/GOLD_EXAMPLES.json`
+- `docs/design-system/proposals/waivers.json`
+- `packages/agent-design-engine/src/index.ts`
+- `packages/agent-design-engine/src/prepare.ts`
+- `packages/agent-design-engine/src/types.ts`
+- `packages/agent-design-engine/tests/engine.test.mjs`
+- `packages/cli/tests/fixtures/design-schemas/astudio-design-command.v1.schema.json`
+- `FORJAMIE.md`
+- this plan
+
+Source acceptance IDs targeted: SA23, SA24, SA25, SA26, SA27, AC13, AC14, AC15, AC16, AC12.
+
+Route and diagnostics changes:
+
+- Added the enforced `icon_action` route for `packages/ui/src/components/ui/base/IconButton/IconButton.tsx` and its Storybook state surface.
+- Registered `IconButton` as a canonical lifecycle component and promoted `IconButton.stories.tsx` as the gold example for ready, active, and disabled icon-only action states.
+- Added the typed `grandfather-route-icon-action-2026-05-07` proposal waiver so the new enforced route is explicit until JSC-245 proposal backfill replaces historical grandfathering.
+- Added `nextAction.recoveryAction` and `nextAction.routeDiagnostics` for `stop_for_missing_route` payloads, including protected-scope evidence, closest route hints, and candidate files to update.
+- Added `buildRouteParityReport()` so protected/warn/exempt guidance scope coverage can be compared against route matches using the same guidance glob and precedence semantics as prepare classification.
+- Updated the CLI schema fixture to require missing-route recovery details for missing-route stops while preserving the stable `safeForAutomaticImplementation` branching contract.
+
+Validation commands:
+
+- `pnpm agent-design:test` -> fail first on stale deterministic route expectation and missing proposal waiver for the new enforced route, then pass after adding the `icon_action` expectation and typed waiver; 137 tests passed.
+- `pnpm -C packages/cli test` -> fail first on AJV strict schema placement for conditional `recoveryAction` and `routeDiagnostics`, then pass after defining those properties inside the conditional branch; 121 tests passed.
+- `pnpm -C packages/design-system-guidance check:ci` -> pass; existing warning-level design guidance findings remained non-blocking.
+- `pnpm docs:lint` -> pass; 0 errors, 0 warnings, 0 suggestions and all markdown links resolved.
+- `jq . docs/design-system/AGENT_UI_ROUTING.json docs/design-system/GOLD_EXAMPLES.json docs/design-system/COMPONENT_LIFECYCLE.json docs/design-system/proposals/waivers.json packages/cli/tests/fixtures/design-schemas/astudio-design-command.v1.schema.json` -> pass.
+- `git diff --check` -> pass.
+
+Reviewer status:
+
+- HE implementation pass -> pass; the targeted `IconButton` protected route now prepares as safe with routed evidence instead of an unqualified missing-route stop.
+- Technical review coverage -> pass through focused engine and CLI fixtures; remaining route-family expansion is intentionally deferred to later protected families.
+
+`FORJAMIE.md` update status: complete; Recent Changes includes the P6 route-parity entry.
 
 ## Linear Traceability
 

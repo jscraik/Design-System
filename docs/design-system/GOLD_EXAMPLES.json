@@ -145,6 +145,29 @@
         }
       ],
       "promotable": true
+    },
+    {
+      "id": "icon-action-icon-button",
+      "routeNeed": "icon_action",
+      "title": "IconButton icon-only action",
+      "purpose": "Canonical icon-only action story set with accessible title, variant, size, active, and disabled state coverage.",
+      "sourcePath": "packages/ui/src/storybook/_holding/component-stories/IconButton.stories.tsx",
+      "storyPaths": ["packages/ui/src/storybook/_holding/component-stories/IconButton.stories.tsx"],
+      "testPaths": [],
+      "coveredStates": ["ready", "active", "disabled"],
+      "validationCommands": [
+        {
+          "command": "pnpm agent-design:lint",
+          "safetyClass": "read_only",
+          "reason": "Checks the design contract before promoting icon-only action surfaces."
+        },
+        {
+          "command": "pnpm test:visual:storybook",
+          "safetyClass": "read_only",
+          "reason": "Exercises Storybook visual coverage when the storybook suite is selected."
+        }
+      ],
+      "promotable": true
     }
   ],
   "deferredCategories": [

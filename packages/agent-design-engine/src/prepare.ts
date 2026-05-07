@@ -1,9 +1,9 @@
 import { createHash } from "node:crypto";
-import { readFile, realpath } from "node:fs/promises";
+import { readdir, readFile, realpath } from "node:fs/promises";
 import path from "node:path";
 import { performance } from "node:perf_hooks";
 import { parseDesignContract } from "./parser.js";
-import { resolveRouteForSurface } from "./routes.js";
+import { loadAgentUiRoutingTable, resolveRouteForSurface } from "./routes.js";
 import { buildDesignTokenContract } from "./token-contract.js";
 import type {
   AgentUiRouteValidationCommand,
@@ -14,6 +14,8 @@ import type {
   PrepareOpenDecision,
   PreparePayload,
   PrepareRouteConfidence,
+  PrepareRouteDiagnostics,
+  PrepareRouteParityReport,
   PrepareRouteRecommendation,
   PrepareSourceDigest,
   PrepareSurfaceScope,
@@ -473,6 +475,17 @@ function classifySurfaceScope(config: GuidanceConfig, surfacePath: string): Prep
   return "unknown";
 }
 
+function findMatchingGuidancePatterns(
+  config: GuidanceConfig,
+  surfacePath: string,
+): Array<{ scope: GuidanceScope; glob: string }> {
+  return guidanceScopes.flatMap((scope) =>
+    (config.scopes?.[scope] ?? [])
+      .filter((glob) => matchesGlob(surfacePath, glob))
+      .map((glob) => ({ scope, glob })),
+  );
+}
+
 /**
  * Produce a list of unique strings from `values`, sorted lexicographically.
  *
@@ -480,6 +493,161 @@ function classifySurfaceScope(config: GuidanceConfig, surfacePath: string): Prep
  */
 function uniqueSorted(values: string[]): string[] {
   return [...new Set(values)].sort((left, right) => left.localeCompare(right));
+}
+
+async function listRepositoryFiles(rootDir: string): Promise<string[]> {
+  const ignored = new Set([".git", "node_modules", "dist", ".turbo", ".wrangler", ".build"]);
+  const files: string[] = [];
+
+  async function visit(relativeDir: string): Promise<void> {
+    const absoluteDir = path.join(rootDir, relativeDir);
+    const entries = await readdir(absoluteDir, { withFileTypes: true });
+    for (const entry of entries) {
+      if (ignored.has(entry.name)) continue;
+      const relativePath = toPosixPath(path.join(relativeDir, entry.name));
+      if (entry.isDirectory()) {
+        await visit(relativePath);
+      } else if (entry.isFile()) {
+        files.push(relativePath);
+      }
+    }
+  }
+
+  await visit("");
+  return files.sort((left, right) => left.localeCompare(right));
+}
+
+function routeIdsForSurface(
+  surfacePath: string,
+  routes: ResolvedAgentUiRoute[] | Array<{ canonicalNeed: string; surfacePatterns: string[] }>,
+): string[] {
+  return uniqueSorted(
+    routes
+      .filter((route) => route.surfacePatterns.some((pattern) => matchesGlob(surfacePath, pattern)))
+      .map((route) => route.canonicalNeed),
+  );
+}
+
+function routeCandidateDiagnostics(
+  surfacePath: string,
+  routes: Array<{ canonicalNeed: string; surfacePatterns: string[]; sourceRefs?: string[] }>,
+): PrepareRouteDiagnostics["closestRoutes"] {
+  const tokens = surfacePath
+    .toLowerCase()
+    .split(/[/_.-]+/)
+    .filter(Boolean);
+  return routes
+    .map((route) => {
+      const haystack = `${route.canonicalNeed} ${route.surfacePatterns.join(" ")}`.toLowerCase();
+      const overlappingTokens = tokens.filter(
+        (token) => token.length > 3 && haystack.includes(token),
+      );
+      return {
+        routeId: route.canonicalNeed,
+        because:
+          overlappingTokens.length > 0
+            ? [`Shares surface terms: ${uniqueSorted(overlappingTokens).join(", ")}.`]
+            : ["No direct pattern match; listed as a low-confidence route-table neighbor."],
+        confidence: overlappingTokens.length > 0 ? ("medium" as const) : ("low" as const),
+        score: overlappingTokens.length,
+      };
+    })
+    .sort((left, right) => right.score - left.score || left.routeId.localeCompare(right.routeId))
+    .slice(0, 3)
+    .map(({ routeId, because, confidence }) => ({ routeId, because, confidence }));
+}
+
+function buildMissingRouteDiagnostics(
+  guidance: GuidanceConfig,
+  surfacePath: string,
+  rootDir: string,
+): PrepareRouteDiagnostics {
+  const matchingGuidance = findMatchingGuidancePatterns(guidance, surfacePath);
+  const protectedPattern = matchingGuidance.find((entry) => entry.scope === "error");
+  const routes = loadAgentUiRoutingTable(rootDir).routes;
+
+  return {
+    protectedScopeMatched: Boolean(protectedPattern),
+    scopeSource: guidancePath,
+    unmatchedSurfacePattern: protectedPattern?.glob ?? surfacePath,
+    closestRoutes: routeCandidateDiagnostics(surfacePath, routes),
+    candidateFilesToUpdate: [routingPath, goldExamplesPath, lifecyclePath, coveragePath],
+  };
+}
+
+export async function buildRouteParityReport(
+  rootDir = process.cwd(),
+  signal?: AbortSignal,
+): Promise<PrepareRouteParityReport> {
+  signal?.throwIfAborted();
+  const resolvedRoot = path.resolve(rootDir);
+  const guidanceSource = await readPrepareSource(
+    resolvedRoot,
+    guidancePath,
+    "E_DESIGN_GUIDANCE_SOURCE_MISSING",
+    signal,
+  );
+  let parsedGuidance: unknown;
+  try {
+    parsedGuidance = JSON.parse(guidanceSource) as unknown;
+  } catch {
+    throw new DesignEngineError("Guidance config contains invalid JSON.", {
+      code: "E_DESIGN_GUIDANCE_JSON",
+      exitCode: 2,
+    });
+  }
+
+  const guidance = parseGuidanceConfig(parsedGuidance);
+  const routing = loadAgentUiRoutingTable(resolvedRoot);
+  const files = await listRepositoryFiles(resolvedRoot);
+  const scopePrecedence = guidance.scopePrecedence ?? ["error", "warn", "exempt"];
+
+  const surfaces = guidanceScopes.flatMap((scope) =>
+    (guidance.scopes?.[scope] ?? []).map((glob) => {
+      const matchingFiles = files.filter((filePath) => matchesGlob(filePath, glob));
+      const matchedRouteIds = uniqueSorted(
+        matchingFiles.flatMap((filePath) => routeIdsForSurface(filePath, routing.routes)),
+      );
+      const matchedRoutes = routing.routes.filter((route) =>
+        matchedRouteIds.includes(route.canonicalNeed),
+      );
+      const status: PrepareRouteParityReport["surfaces"][number]["status"] =
+        scope === "exempt" ? "exempt" : matchedRouteIds.length > 0 ? "routed" : "uncovered";
+      const statusReason =
+        status === "routed"
+          ? `Matched ${matchedRouteIds.length} route(s) across ${matchingFiles.length} file(s).`
+          : status === "exempt"
+            ? "Guidance scope is exempt."
+            : `No route surface pattern matched ${matchingFiles.length} file(s) for this guidance pattern.`;
+
+      return {
+        surfaceFamily: glob,
+        guidanceScope: scope,
+        guidancePatterns: [glob],
+        matchedRouteIds,
+        status,
+        statusReason,
+        intentionalStopSourceRefs: [],
+        topExampleRefs: uniqueSorted(matchedRoutes.flatMap((route) => route.examples)).slice(0, 5),
+        validationCommands: uniqueSorted(
+          matchedRoutes.flatMap((route) =>
+            route.validationCommands.map((command) => command.command),
+          ),
+        ),
+      };
+    }),
+  );
+
+  return {
+    kind: "astudio.design.routeParity.v1",
+    guidanceConfigPath: guidancePath,
+    routingConfigPath: routingPath,
+    scopePrecedence,
+    surfaces,
+    uncoveredProtectedCount: surfaces.filter(
+      (surface) => surface.guidanceScope === "error" && surface.status === "uncovered",
+    ).length,
+  };
 }
 
 /**
@@ -1218,6 +1386,7 @@ function buildPrepareNextAction(
   safeForAutomaticImplementation: boolean,
   surfaceKind: string,
   openDecisions: PrepareOpenDecision[],
+  routeDiagnostics?: PrepareRouteDiagnostics,
 ): PrepareNextAction {
   const evidenceRefs = [designPath, guidancePath, routingPath];
   const blockingDecision = openDecisions.find((decision) => decision.severity === "error");
@@ -1246,6 +1415,8 @@ function buildPrepareNextAction(
       instruction:
         "Stop before editing UI because no canonical agent UI route matches this surface.",
       evidenceRefs,
+      recoveryAction: "create_route_candidate",
+      ...(routeDiagnostics ? { routeDiagnostics } : {}),
     };
   }
   if (
@@ -1571,10 +1742,16 @@ export async function buildPreparePayload(
   const openDecisions = routeDecisions(routeResult, surfaceScope);
   const ok = openDecisions.every((decision) => decision.severity !== "error");
   const safeForAutomaticImplementation = ok && surfaceScope !== "unknown";
+  const routeDiagnostics = routeResult.diagnostics.some(
+    (diagnostic) => diagnostic.code === "E_DESIGN_ROUTE_MISSING",
+  )
+    ? buildMissingRouteDiagnostics(guidance, normalizedSurfacePath, resolvedRoot)
+    : undefined;
   const nextAction = buildPrepareNextAction(
     safeForAutomaticImplementation,
     route?.canonicalNeed ?? "unknown",
     openDecisions,
+    routeDiagnostics,
   );
   const doNotInvent = buildDoNotInventGuidance(recommendedRoutes, designTokenContract, [
     designPath,

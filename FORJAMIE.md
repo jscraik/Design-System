@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-05-05
+**Last updated:** 2026-05-07
 **Production status:** IN_PROGRESS overall; Agent Design Prepare north-star plan is REVIEW_GREEN
 **Overall health:** Yellow overall; Green for the Agent Design Prepare plan lane
 
@@ -24,7 +24,7 @@
 | --- | --- | --- |
 | Build / CI | Yellow | Focused policy, token, matrix, docs, guidance, whitespace, browser, widget a11y, and aggregate build gates pass for the Agent Design Engine slice |
 | Tests | Yellow | Agent-design and release-readiness gates pass (`agent-design-engine`, `cli`, `design-system-guidance`, web E2E, widget a11y, and root build), including fixture-backed CLI JSON/recovery/migration coverage |
-| Agent Design Prepare plan | Merged into the current simplification lane | The prepare contract and changed-surface evidence gate are now the foundation for PR #161's agent-first simplification and review-thread fixes |
+| Agent Design Prepare plan | Merged into the current simplification lane | The prepare contract and changed-surface evidence gate now include the first P6 route-parity slice for protected `IconButton` coverage and missing-route recovery diagnostics |
 | Security | Clean | 13 CVEs patched; GitHub Actions SHA-pinned |
 | Open PRs | 1 | PR #161 carries the agent-first simplification slice and current review-thread fixes |
 | Blockers | None | |
@@ -77,10 +77,10 @@ flowchart LR
 - `docs/` holds architecture, adoption, rollout, and governance guidance.
 - `docs/specs/2026-04-28-agent-native-design-system-spec.md` is the deepened HE spec for turning the current agent-readable design-system contract into an agent-native preparation, routing, context-pack, remediation, example, and abstraction-proposal workflow.
 - `docs/specs/2026-04-30-agent-design-prepare-north-star-spec.md` is the focused north-star spec that makes `astudio design prepare --surface <path> --json` the required pre-edit UI contract for agents, including semantic token guidance, deterministic error codes, schema hardening, safe validation commands, source evidence, proposal-required stops, interface alternatives, token source priority, and first-plan sequencing.
-- `docs/specs/2026-05-02-agent-first-design-system-simplification-spec.md` provides the HE simplification spec for keeping the agent-design spine intact while reducing repo bulk, clarifying active authority, adding agent-ergonomic prepare affordances, resolving prototype/package taxonomy, and splitting large implementation files by responsibility.
+- `docs/specs/2026-05-02-agent-first-design-system-simplification-spec.md` provides the HE simplification spec for keeping the agent-design spine intact while reducing repo bulk, clarifying active authority, adding agent-ergonomic prepare affordances, resolving prototype/package taxonomy, splitting large implementation files by responsibility, closing route-coverage parity gaps, promoting gold-example guidance, and classifying productive stop/recovery behavior for agents.
 - `docs/plans/2026-04-28-agent-native-design-system-plan.md` is the execution plan for that spec, split into contract wiring, routing-table, prepare-payload, CLI, remediation, gold-example, and proposal-gate slices.
 - `docs/plans/2026-04-30-agent-design-prepare-north-star-plan.md` is the focused execution plan for making `prepare` the real north-star command: first prove the build-backed wrapper dependency chain and read-only distinction, then harden the prepare schema and fixture harness, add semantic token-contract loading, complete the payload, map deterministic errors, flip the docs front door, and keep human inspector/gold-example expansion deferred until they have evidence.
-- `docs/plans/2026-05-02-agent-first-design-system-simplification-plan.md` remains the active HE delivery plan for the simplification spec. It starts with authority mapping and reference audits, then sequences prepare ergonomics, derived brief/PR-evidence formats, responsibility splits, package taxonomy, root script simplification, and `FORJAMIE.md` compression.
+- `docs/plans/2026-05-02-agent-first-design-system-simplification-plan.md` remains the active HE delivery plan for the simplification spec. P0-P6 are recorded in its execution ledger; the next work packet is P7 stop classification and validation/environment recovery, followed by downstream command-contract wording and session-evidence traceability.
 - `docs/design-system/GOLD_EXAMPLES.json` is the machine-readable gold-example inventory for promoted agent examples, state coverage, validation commands, and explicitly deferred non-promotable categories.
 - `docs/design-system/proposals/` is the proposal-gate surface for new agent UI abstractions. It holds the proposal template, typed waiver registry, and docs for when enforced routes or uncovered canonical lifecycle promotions need accepted design evidence.
 - `docs/architecture/COMMAND_SURFACE.md` is the current command-routing map. It keeps canonical agent-design, repo health, product-surface, specialist, and compatibility commands in one place so README, workflow docs, and this handoff do not grow competing script inventories.
@@ -214,6 +214,15 @@ See also: `~/.codex/instructions/Learnings.md`
 - The next agent-native design-system hardening lane is specified broadly in `docs/specs/2026-04-28-agent-native-design-system-spec.md` and narrowed by `docs/specs/2026-04-30-agent-design-prepare-north-star-spec.md`. The north-star rule is that no protected UI change is ready until `astudio design prepare --surface <path> --json` returns `safeForAutomaticImplementation: true`, or the PR explains the proposal/manual decision required. The focused execution source for this lane is now `docs/plans/2026-04-30-agent-design-prepare-north-star-plan.md`; use the older `docs/plans/2026-04-28-agent-native-design-system-plan.md` only for broader historical context and adjacent non-prepare slices.
 
 ## Recent changes
+
+### 2026-05-07
+
+- **Agent-first simplification P6 route parity**: added the enforced `icon_action` route for protected `IconButton` surfaces, promoted the IconButton story as a gold example, registered IconButton in lifecycle metadata, and added a typed grandfathering waiver until proposal backfill is complete. `astudio design prepare` now emits actionable missing-route recovery diagnostics with candidate files and closest routes, and `packages/agent-design-engine` exposes a route-parity report so protected guidance scopes can be compared with route coverage. Focused validation passed with `pnpm agent-design:test`, `pnpm -C packages/cli test`, `pnpm -C packages/design-system-guidance check:ci`, `pnpm docs:lint`, JSON `jq` validation, and `git diff --check`.
+- **Agent-first simplification plan follow-on sync**: refreshed `docs/plans/2026-05-02-agent-first-design-system-simplification-plan.md` against the deepened spec so the completed P0-P5 ledger remains intact while new P6-P9 follow-on phases carry route coverage parity, missing-route recovery, gold-example promotion, stop classification, downstream command-contract positioning, and session-evidence traceability. P6 is now complete; the next work packet starts with P7 stop classification and validation/environment recovery.
+
+### 2026-05-06
+
+- **Agent-first simplification spec deepening and technical review**: deepened `docs/specs/2026-05-02-agent-first-design-system-simplification-spec.md` from the `he-deepen-spec` targeted-confidence lane and reviewed it with the `he-technical-review` document-review lens. The spec now records the session-collector evidence baseline, route-coverage parity and gold-example maturity requirements, productive missing-route recovery, operational stop taxonomy, correct owner boundaries between `prepare`, changed-surface aggregation, and validation/diagnostic runners, schema-backed payload compatibility guardrails, and new acceptance coverage through SA36. The review corrected over-broad environment-stop ownership before closeout and left the current implementation plan needing a follow-up sync to absorb the new SA23-SA36 acceptance details.
 
 ### 2026-05-05
 

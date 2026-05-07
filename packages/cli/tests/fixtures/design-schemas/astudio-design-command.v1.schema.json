@@ -204,6 +204,32 @@
               }
             }
           }
+        },
+        {
+          "if": {
+            "required": ["kind"],
+            "properties": {
+              "kind": {
+                "const": "stop_for_missing_route"
+              }
+            }
+          },
+          "then": {
+            "required": ["recoveryAction", "routeDiagnostics"],
+            "properties": {
+              "recoveryAction": {
+                "enum": [
+                  "create_route_candidate",
+                  "use_existing_route",
+                  "mark_exempt_with_reason",
+                  "open_proposal"
+                ]
+              },
+              "routeDiagnostics": {
+                "$ref": "#/definitions/prepareRouteDiagnostics"
+              }
+            }
+          }
         }
       ],
       "properties": {
@@ -225,6 +251,74 @@
           "minLength": 1
         },
         "evidenceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "recoveryAction": {
+          "enum": [
+            "create_route_candidate",
+            "use_existing_route",
+            "mark_exempt_with_reason",
+            "open_proposal"
+          ]
+        },
+        "routeDiagnostics": {
+          "$ref": "#/definitions/prepareRouteDiagnostics"
+        }
+      }
+    },
+    "prepareRouteDiagnostics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protectedScopeMatched",
+        "scopeSource",
+        "unmatchedSurfacePattern",
+        "closestRoutes",
+        "candidateFilesToUpdate"
+      ],
+      "properties": {
+        "protectedScopeMatched": {
+          "type": "boolean"
+        },
+        "scopeSource": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unmatchedSurfacePattern": {
+          "type": "string",
+          "minLength": 1
+        },
+        "closestRoutes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["routeId", "because", "confidence"],
+            "properties": {
+              "routeId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "because": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "confidence": {
+                "enum": ["low", "medium"]
+              }
+            }
+          }
+        },
+        "candidateFilesToUpdate": {
           "type": "array",
           "minItems": 1,
           "items": {
