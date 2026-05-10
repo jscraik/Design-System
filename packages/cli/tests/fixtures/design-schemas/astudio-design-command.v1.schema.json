@@ -196,11 +196,48 @@
             }
           },
           "then": {
-            "required": ["reasonCode"],
+            "required": ["reasonCode", "category", "recoveryHints"],
             "properties": {
               "reasonCode": {
                 "type": "string",
                 "minLength": 1
+              },
+              "category": {
+                "$ref": "#/definitions/prepareStopCategory"
+              },
+              "recoveryHints": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": ["kind"],
+            "properties": {
+              "kind": {
+                "const": "stop_for_missing_route"
+              }
+            }
+          },
+          "then": {
+            "required": ["recoveryAction", "routeDiagnostics"],
+            "properties": {
+              "recoveryAction": {
+                "enum": [
+                  "create_route_candidate",
+                  "use_existing_route",
+                  "mark_exempt_with_reason",
+                  "open_proposal"
+                ]
+              },
+              "routeDiagnostics": {
+                "$ref": "#/definitions/prepareRouteDiagnostics"
               }
             }
           }
@@ -220,11 +257,127 @@
           "type": "string",
           "minLength": 1
         },
+        "category": {
+          "$ref": "#/definitions/prepareStopCategory"
+        },
         "instruction": {
           "type": "string",
           "minLength": 1
         },
         "evidenceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "recoveryAction": {
+          "enum": [
+            "create_route_candidate",
+            "use_existing_route",
+            "mark_exempt_with_reason",
+            "open_proposal"
+          ]
+        },
+        "recoveryHints": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "routeDiagnostics": {
+          "$ref": "#/definitions/prepareRouteDiagnostics"
+        }
+      }
+    },
+    "prepareStopCategory": {
+      "enum": ["design", "route", "proposal", "validation", "environment"]
+    },
+    "prepareStopClassification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["category", "reasonCode", "instruction", "recoveryHints", "evidenceRefs"],
+      "properties": {
+        "category": {
+          "$ref": "#/definitions/prepareStopCategory"
+        },
+        "reasonCode": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instruction": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recoveryHints": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "evidenceRefs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "prepareRouteDiagnostics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protectedScopeMatched",
+        "scopeSource",
+        "unmatchedSurfacePattern",
+        "closestRoutes",
+        "candidateFilesToUpdate"
+      ],
+      "properties": {
+        "protectedScopeMatched": {
+          "type": "boolean"
+        },
+        "scopeSource": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unmatchedSurfacePattern": {
+          "type": "string",
+          "minLength": 1
+        },
+        "closestRoutes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["routeId", "because", "confidence"],
+            "properties": {
+              "routeId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "because": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "confidence": {
+                "enum": ["low", "medium"]
+              }
+            }
+          }
+        },
+        "candidateFilesToUpdate": {
           "type": "array",
           "minItems": 1,
           "items": {
@@ -566,6 +719,26 @@
     "preparePayload": {
       "type": "object",
       "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "required": ["safeForAutomaticImplementation"],
+            "properties": {
+              "safeForAutomaticImplementation": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": ["stopClassification"],
+            "properties": {
+              "stopClassification": {
+                "$ref": "#/definitions/prepareStopClassification"
+              }
+            }
+          }
+        }
+      ],
       "required": [
         "kind",
         "ok",
@@ -606,6 +779,9 @@
         },
         "nextAction": {
           "$ref": "#/definitions/prepareNextAction"
+        },
+        "stopClassification": {
+          "$ref": "#/definitions/prepareStopClassification"
         },
         "resolvedDesignFile": {
           "type": "string",

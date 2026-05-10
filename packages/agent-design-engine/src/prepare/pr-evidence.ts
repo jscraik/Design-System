@@ -13,6 +13,7 @@ export function renderPreparePrEvidence(payload: PreparePayload): string {
     `- Status: ${payload.safeForAutomaticImplementation ? "safe to implement" : "blocked"}`,
     `- Next action: \`${payload.nextAction.kind}\` - ${payload.nextAction.instruction}`,
     `- Next action reason code: \`${payload.nextAction.reasonCode ?? "none"}\``,
+    `- Stop category: \`${payload.stopClassification?.category ?? "none"}\``,
     `- Route: ${primaryRoute ? `\`${primaryRoute.canonicalNeed}\`` : "none"}`,
     `- Route confidence: ${primaryRoute ? `\`${primaryRoute.confidence.level}\`` : "none"}`,
     "",
@@ -33,6 +34,12 @@ export function renderPreparePrEvidence(payload: PreparePayload): string {
         `- \`${command.command}\` - expected: ${command.expectedOutcome}; if fails: ${command.ifFails}`,
     ),
   ];
+
+  const recoveryHints =
+    payload.nextAction.kind === "implement" ? [] : (payload.nextAction.recoveryHints ?? []);
+  if (recoveryHints.length > 0) {
+    lines.push("", "Recovery hints:", ...recoveryHints.map((hint) => `- ${hint}`));
+  }
 
   if (payload.openDecisions.length > 0) {
     lines.push(

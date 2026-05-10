@@ -115,13 +115,22 @@ Task-first routes:
 
 ## Agent UI Preparation
 
-Before an AI coding agent edits a protected UI surface, run the design prepare command:
+This repo's strongest agent-facing product surface is the pre-edit UI contract. A downstream project should only need a small `astudio design` command family:
+
+```bash
+astudio design init
+astudio design prepare --surface <path> --json
+astudio design check --changed --json
+astudio design propose-abstraction --need "<need>" --surface <path> --json
+```
+
+`prepare` is the dominant first-run path. Before an AI coding agent edits a protected UI surface, compile the file-specific implementation brief:
 
 ```bash
 astudio design prepare --surface <path> --json
 ```
 
-The detailed workflow authority is [`docs/guides/AGENT_DESIGN_WORKFLOW.md`](docs/guides/AGENT_DESIGN_WORKFLOW.md). Keep this README as the short front door: `prepare` is the implementation brief, and a protected UI change is not ready until `safeForAutomaticImplementation` is `true` or the PR explains the manual/proposal decision returned by `openDecisions`.
+The detailed workflow authority is [`docs/guides/AGENT_DESIGN_WORKFLOW.md`](docs/guides/AGENT_DESIGN_WORKFLOW.md). Keep this README as the short front door: `prepare` is the implementation contract compiler, and a protected UI change is not ready until `safeForAutomaticImplementation` is `true` or the PR explains the manual/proposal decision returned by `openDecisions`.
 
 JSON is the canonical machine contract. For human review or PR handoff after the JSON path is understood, the same typed payload can render derived text:
 
@@ -130,13 +139,13 @@ astudio design prepare --surface <path> --format brief
 astudio design prepare --surface <path> --format pr-evidence
 ```
 
-For local repo work, use the build-backed convenience wrapper in silent mode so stdout remains parseable JSON:
+For local monorepo work, use the build-backed convenience wrapper in silent mode so stdout remains parseable JSON:
 
 ```bash
 pnpm --silent agent-design:prepare --surface <path>
 ```
 
-That wrapper may build local workspace packages before invoking the CLI. The read-only operation contract belongs to `astudio design prepare` itself once the CLI is available. Before PR handoff for protected UI changes, run the changed-surface evidence gate:
+That wrapper may build local workspace packages before invoking the CLI. The read-only operation contract belongs to `astudio design prepare` itself once the CLI is available. Before PR handoff for protected UI changes, run the local changed-surface evidence gate:
 
 ```bash
 pnpm agent-design:prepare:changed
@@ -148,7 +157,7 @@ For a targeted local check, pass one or more explicit surfaces through the gate:
 pnpm agent-design:prepare:changed -- --surface <path>
 ```
 
-Supporting commands such as `astudio design lint`, `export`, `components`, `coverage`, and `propose-abstraction` are diagnostics rather than the normal pre-edit path.
+Supporting commands such as `astudio design lint`, `export`, `components`, and `coverage` are diagnostics rather than the normal pre-edit path. `astudio design propose-abstraction` is the explicit escalation path when `prepare` says the requested UI needs a new abstraction instead of improvisation.
 
 For broader command routing, see [`docs/architecture/COMMAND_SURFACE.md`](docs/architecture/COMMAND_SURFACE.md). That page groups the canonical agent-design, repo health, product-surface, and compatibility commands so this README stays a short front door.
 

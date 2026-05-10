@@ -73,6 +73,13 @@
       "notes": "Preferred expandable section primitive when progressive disclosure is needed."
     },
     {
+      "name": "IconButton",
+      "path": "packages/ui/src/components/ui/base/IconButton/IconButton.tsx",
+      "lifecycle": "canonical",
+      "routing_tier": 2,
+      "notes": "Preferred icon-only action primitive when the action has a clear accessible name, visible focus, and optional pressed/disabled states."
+    },
+    {
       "name": "EmptyMessage",
       "path": "packages/ui/src/components/ui/data-display/EmptyMessage/EmptyMessage.tsx",
       "lifecycle": "canonical",

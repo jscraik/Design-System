@@ -53,6 +53,51 @@
       ]
     },
     {
+      "need": "icon_action",
+      "canonicalNeed": "icon_action",
+      "aliases": ["icon button", "icon-only action", "toolbar action", "compact action"],
+      "preferredComponent": {
+        "name": "IconButton",
+        "importPath": "packages/ui/src/components/ui/base/IconButton/IconButton.tsx",
+        "packageName": "@design-studio/ui",
+        "coverageName": "IconButton"
+      },
+      "lifecycleStatus": "canonical",
+      "routeMaturity": "enforced",
+      "surfacePatterns": [
+        "packages/ui/src/components/ui/base/IconButton/IconButton.tsx",
+        "packages/ui/src/storybook/_holding/component-stories/IconButton.stories.tsx"
+      ],
+      "useWhen": [
+        "An icon-only button needs an accessible action target with a stable label.",
+        "A compact toolbar, list-row, or modal action should use the shared icon action primitive instead of a raw button."
+      ],
+      "requiredStates": ["ready", "active", "disabled"],
+      "examples": ["packages/ui/src/storybook/_holding/component-stories/IconButton.stories.tsx"],
+      "avoid": [
+        "Icon-only buttons without an accessible name.",
+        "Raw button elements with inline icon sizing, focus, active, or disabled styling."
+      ],
+      "fallbacks": [
+        {
+          "component": "Button",
+          "reason": "Use only when the action needs visible text or non-icon content."
+        }
+      ],
+      "validationCommands": [
+        {
+          "command": "pnpm agent-design:lint",
+          "safetyClass": "read_only",
+          "reason": "Checks the current design contract before editing protected UI."
+        }
+      ],
+      "sourceRefs": [
+        "docs/design-system/A11Y_CONTRACTS.md#iconbutton",
+        "docs/design-system/GOLD_EXAMPLES.md#promoted-examples",
+        "docs/design-system/COMPONENT_LIFECYCLE.json"
+      ]
+    },
+    {
       "need": "destructive_confirmation",
       "canonicalNeed": "destructive_confirmation",
       "aliases": ["confirm destructive", "danger confirmation", "delete confirmation"],

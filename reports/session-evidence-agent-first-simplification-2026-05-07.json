@@ -1,0 +1,108 @@
+{
+  "schema": "astudio.sessionEvidenceSummary.v1",
+  "generatedAt": "2026-05-07T17:47:06.821114Z",
+  "purpose": "P9 session-evidence traceability for the agent-first design-system simplification spec and plan.",
+  "collector": {
+    "toolRoot": "/Users/jamiecraik/.agents/session-collector",
+    "command": "UV_CACHE_DIR=/tmp/session-collector-uv-cache uv run --python 3.12 python main.py --days 30 --verbose --output /Users/jamiecraik/dev/design-system/reports/session-collector-agent-first-simplification-2026-05-07.json --bundle-dir /Users/jamiecraik/dev/design-system/reports/session-collector-agent-first-simplification-2026-05-07",
+    "collectorHealth": {
+      "filesSeen": 1818,
+      "linesSeen": 654868,
+      "linesKept": 644103,
+      "parseWarnings": []
+    },
+    "confidence": "medium",
+    "limitations": [
+      "Sensitive-looking paths or values were summarized.",
+      "Some sessions lacked enough evidence for outcome classification."
+    ],
+    "redaction": {
+      "applied": true,
+      "counts": {
+        "absolute_path": 98463,
+        "sensitive_keyword": 132769
+      }
+    }
+  },
+  "inputWindow": {
+    "requestedDays": 30,
+    "cutoff": "2026-04-07T17:46:04.350179Z",
+    "firstSeenAt": "2026-05-02T03:40:16.070000Z",
+    "lastSeenAt": "2026-05-07T17:46:03.842000Z"
+  },
+  "sourceTypeCounts": {
+    "codex_conversation": 10,
+    "codex_rollout": 490
+  },
+  "lineCounts": {
+    "seen": {
+      "codex_rollout": 643767,
+      "logs": 140,
+      "metrics": 10933,
+      "traces": 28
+    },
+    "kept": {
+      "codex_rollout": 643767,
+      "logs": 140,
+      "metrics": 178,
+      "traces": 18
+    }
+  },
+  "sessionCounts": {
+    "totalIncluded": 500,
+    "designSystemProjectHint": 22
+  },
+  "topHarnessEngineeringSignals": {
+    "he-code-review": 3733,
+    "he-spec": 3732,
+    "he-work": 3730,
+    "he-heartbeat": 2994,
+    "he-plan": 2434,
+    "he-router": 1352,
+    "he-fix-bugs": 906,
+    "he-brainstorm": 858,
+    "he-improve": 678,
+    "he-technical-review": 421,
+    "he-deepen-plan": 236,
+    "he-deepen-spec": 217
+  },
+  "aggregateBlockers": {
+    "approval_required": 97,
+    "git_state": 14,
+    "lint_failure": 57,
+    "missing_file": 87,
+    "network": 183,
+    "permission": 34,
+    "test_failure": 4,
+    "timeout": 254
+  },
+  "decisionsInformed": [
+    {
+      "decision": "P9 should require session-derived spec changes to cite aggregate collector metadata instead of raw transcripts.",
+      "evidence": "Collector output includes medium confidence, redaction counts, parse warning status, source type counts, and project/session aggregates."
+    },
+    {
+      "decision": "Environment and validation recovery hints should remain first-class in prepare/spec language.",
+      "evidence": "Aggregate blockers include timeout, network, approval_required, missing_file, lint_failure, permission, git_state, and test_failure categories."
+    },
+    {
+      "decision": "Session evidence should confirm or reprioritize requirements unless the exact changed requirement is listed with its evidence fields.",
+      "evidence": "The collector provides aggregate metadata and hashed session summaries, not a stable raw transcript dependency."
+    }
+  ],
+  "requirementsChanged": [
+    "Add a durable session-evidence summary artifact requirement for future session-derived spec and plan changes.",
+    "Require future session-evidence records to classify each affected requirement as changed, confirmed, or reprioritized.",
+    "Require redaction, confidence, parse-warning, source-count, and durable-artifact status in session-evidence records."
+  ],
+  "requirementsOnlyConfirmed": [
+    "Keep raw transcript content out of specs and plans.",
+    "Record collector command, output path, session window, source type counts, confidence, redaction status, collector health, and parse warnings.",
+    "Keep environment and validation blocker recovery hints visible in agent-facing contracts."
+  ],
+  "artifactDisposition": {
+    "durableSummaryPath": "reports/session-evidence-agent-first-simplification-2026-05-07.json",
+    "rawCollectorBundleCommitted": false,
+    "rawCollectorBundleReason": "The collector bundle was useful for extraction but too large and noisy for this PR; this summary preserves aggregate metadata without transcript dependence."
+  }
+}

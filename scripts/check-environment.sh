@@ -198,6 +198,20 @@ check_tooling_doc_sync
 		fi
 	done
 
+	if ! awk '
+		/^hooks-pre-push:/ { in_target = 1; next }
+		in_target && /^[[:alnum:]_-]+:/ { exit found ? 0 : 1 }
+		in_target && $0 ~ /^[[:space:]]*pnpm build -- --skip-tests$/ { found = 1 }
+		END {
+			if (in_target) {
+				exit found ? 0 : 1
+			}
+		}
+	' "$MAKEFILE_PATH"; then
+		echo "Error: Makefile hooks-pre-push must run browser-free build via 'pnpm build -- --skip-tests'"
+		exit 1
+	fi
+
 	python3 - "$PREK_CONFIG_PATH" <<'PY'
 import sys
 import tomllib

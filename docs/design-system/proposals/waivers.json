@@ -1,6 +1,6 @@
 {
   "schemaVersion": "agent-design.proposal-waivers.v1",
-  "updatedAt": "2026-04-28",
+  "updatedAt": "2026-05-07",
   "waivers": [
     {
       "id": "grandfather-route-async-collection-2026-04-28",
@@ -52,6 +52,19 @@
       "expiresAt": "2026-07-31",
       "cleanupMilestone": "JSC-245 proposal backfill",
       "cleanup": "Replace with an accepted proposal record or retire once historical route promotion decisions are backfilled.",
+      "status": "active"
+    },
+    {
+      "id": "grandfather-route-icon-action-2026-05-07",
+      "ruleId": "agent-design/proposal-gate",
+      "scope": "agent-ui-route",
+      "target": "icon_action",
+      "owner": "design-system",
+      "ticket": "JSC-245",
+      "reason": "IconButton already exists as a canonical protected primitive with Storybook state coverage; this route closes the protected-surface parity gap until the proposal backfill is complete.",
+      "expiresAt": "2026-07-31",
+      "cleanupMilestone": "JSC-245 proposal backfill",
+      "cleanup": "Replace with an accepted proposal record once route promotion decisions are backfilled.",
       "status": "active"
     },
     {
