@@ -6,8 +6,22 @@ name = "harness local environment"
 script = '''
 set -euo pipefail
 
-mise install
-pnpm install
+for candidate in "$HOME/.local/share/mise/shims" "$HOME/.local/bin" "/opt/homebrew/bin" "/opt/homebrew/sbin" "/usr/local/bin" "/usr/sbin" "/sbin"; do
+  if [[ -d "$candidate" && ":$PATH:" != *":$candidate:"* ]]; then
+    PATH="$candidate:$PATH"
+  fi
+done
+export PATH
+
+if command -v mise >/dev/null 2>&1; then
+  mise trust --yes .mise.toml || true
+  mise install
+fi
+if [[ -f scripts/prepare-worktree.sh ]]; then
+  bash scripts/prepare-worktree.sh
+else
+  pnpm install
+fi
 '''
 
 [[actions]]
@@ -16,8 +30,22 @@ icon = "tool"
 command = '''
 set -euo pipefail
 
-mise install
-pnpm install
+for candidate in "$HOME/.local/share/mise/shims" "$HOME/.local/bin" "/opt/homebrew/bin" "/opt/homebrew/sbin" "/usr/local/bin" "/usr/sbin" "/sbin"; do
+  if [[ -d "$candidate" && ":$PATH:" != *":$candidate:"* ]]; then
+    PATH="$candidate:$PATH"
+  fi
+done
+export PATH
+
+if command -v mise >/dev/null 2>&1; then
+  mise trust --yes .mise.toml || true
+  mise install
+fi
+if [[ -f scripts/prepare-worktree.sh ]]; then
+  bash scripts/prepare-worktree.sh
+else
+  pnpm install
+fi
 '''
 
 [[actions]]
@@ -44,7 +72,7 @@ icon = "test"
 command = '''
 set -euo pipefail
 
-pnpm 'mcp:test'
+pnpm 'quality-debt:test'
 '''
 
 [[actions]]
@@ -55,6 +83,58 @@ set -euo pipefail
 
 command -v prek >/dev/null 2>&1
 prek --version
+'''
+
+[[actions]]
+name = "Release Finalize"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+release_branch="${1:-}"
+if [ -z "$release_branch" ]; then
+  echo "Usage: Release Finalize <release-branch>"
+  echo "Example: Release Finalize codex/release-0.12.1-coherence"
+  exit 2
+fi
+
+case "$release_branch" in
+  codex/release-*|release-*) ;;
+  *)
+    echo "Expected a release branch matching codex/release-* or release-*"
+    exit 2
+    ;;
+esac
+
+git fetch --prune origin main "$release_branch"
+git checkout main
+local_main_ahead_count="$(git rev-list --count origin/main..HEAD)"
+if [ "$local_main_ahead_count" -ne 0 ]; then
+  echo "Local main is ahead of origin/main; aborting."
+  echo "Reconcile local commits before running Release Finalize."
+  exit 2
+fi
+
+git pull --ff-only origin main
+pull_status=$?
+if [ "$pull_status" -ne 0 ]; then
+  local_main_ahead_count="$(git rev-list --count origin/main..HEAD 2>/dev/null || echo 0)"
+  if [ "$local_main_ahead_count" -ne 0 ]; then
+    echo "Local main is ahead of origin/main; aborting."
+    echo "Reconcile local commits before running Release Finalize."
+    exit 2
+  fi
+  exit "$pull_status"
+fi
+
+git merge --ff-only "origin/$release_branch"
+git push origin main
+
+echo "Merged $release_branch into main and pushed origin/main."
+echo "Optional PR follow-up:"
+echo "  gh pr list --state open --head \"$release_branch\" --json number,url"
+echo "  gh pr comment <number> --body \"Published to npm and merged into main.\""
+echo "  gh pr close <number> --delete-branch=false"
 '''
 
 [[actions]]
@@ -84,6 +164,32 @@ command = '''
 set -euo pipefail
 
 command -v mise >/dev/null 2>&1
+if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  current_branch="$(git symbolic-ref --short -q HEAD || true)"
+  if [ -z "$current_branch" ]; then
+    repo_slug="$(basename "$PWD" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//')"
+    if [ -z "$repo_slug" ]; then
+      repo_slug="worktree"
+    fi
+    short_sha="$(git rev-parse --short HEAD)"
+    branch_base="jscraik/feature/$repo_slug-worktree-$short_sha"
+    branch_name="$branch_base"
+    suffix=1
+    while git show-ref --verify --quiet "refs/heads/$branch_name"; do
+      branch_name="$branch_base-$suffix"
+      suffix=$((suffix + 1))
+    done
+    echo "[codex] detached HEAD detected; creating branch $branch_name"
+    git switch -c "$branch_name"
+    if git show-ref --verify --quiet "refs/remotes/origin/main"; then
+      git branch --set-upstream-to=origin/main "$branch_name" >/dev/null 2>&1 || true
+      echo "[codex] tracking origin/main for $branch_name"
+      echo "[codex] fast-forwarding $branch_name with origin/main"
+      git pull --ff-only origin main
+    fi
+  fi
+fi
+mise trust --yes .mise.toml || true
 mise install
 '''
 
@@ -442,6 +548,15 @@ pnpm 'build:astudio'
 '''
 
 [[actions]]
+name = "Script: skill-ingestion:build"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'skill-ingestion:build'
+'''
+
+[[actions]]
 name = "Script: design-system-guidance:build"
 icon = "tool"
 command = '''
@@ -556,6 +671,159 @@ command = '''
 set -euo pipefail
 
 pnpm 'sync:versions:check'
+'''
+
+[[actions]]
+name = "Script: generated-source:check"
+icon = "debug"
+command = '''
+set -euo pipefail
+
+pnpm 'generated-source:check'
+'''
+
+[[actions]]
+name = "Script: agent-design:boundaries"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'agent-design:boundaries'
+'''
+
+[[actions]]
+name = "Script: agent-design:boundaries:self-test"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'agent-design:boundaries:self-test'
+'''
+
+[[actions]]
+name = "Script: agent-design:proposals"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'agent-design:proposals'
+'''
+
+[[actions]]
+name = "Script: agent-design:cli:prebuild"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'agent-design:cli:prebuild'
+'''
+
+[[actions]]
+name = "Script: agent-design:prepare"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'agent-design:prepare'
+'''
+
+[[actions]]
+name = "Script: agent-design:prepare:changed"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'agent-design:prepare:changed'
+'''
+
+[[actions]]
+name = "Script: agent-design:prepare:smoke"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'agent-design:prepare:smoke'
+'''
+
+[[actions]]
+name = "Script: tracked-ignored:check"
+icon = "debug"
+command = '''
+set -euo pipefail
+
+pnpm 'tracked-ignored:check'
+'''
+
+[[actions]]
+name = "Script: tracked-ignored:check:self-test"
+icon = "debug"
+command = '''
+set -euo pipefail
+
+pnpm 'tracked-ignored:check:self-test'
+'''
+
+[[actions]]
+name = "Script: quality-debt:check"
+icon = "debug"
+command = '''
+set -euo pipefail
+
+pnpm 'quality-debt:check'
+'''
+
+[[actions]]
+name = "Script: quality-debt:report"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'quality-debt:report'
+'''
+
+[[actions]]
+name = "Script: quality-debt:test"
+icon = "test"
+command = '''
+set -euo pipefail
+
+pnpm 'quality-debt:test'
+'''
+
+[[actions]]
+name = "Script: harness:pr-pipeline"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'harness:pr-pipeline'
+'''
+
+[[actions]]
+name = "Script: validation-prototype:build"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'validation-prototype:build'
+'''
+
+[[actions]]
+name = "Script: validation-prototype:analyze"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'validation-prototype:analyze'
+'''
+
+[[actions]]
+name = "Script: validation-prototype:ban-check"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'validation-prototype:ban-check'
 '''
 
 [[actions]]
@@ -901,6 +1169,15 @@ pnpm 'test:template-registry'
 '''
 
 [[actions]]
+name = "Script: test:theme-propagation"
+icon = "test"
+command = '''
+set -euo pipefail
+
+pnpm 'test:theme-propagation'
+'''
+
+[[actions]]
 name = "Script: test:web:property"
 icon = "test"
 command = '''
@@ -1204,4 +1481,67 @@ command = '''
 set -euo pipefail
 
 pnpm 'prepare'
+'''
+
+[[actions]]
+name = "Script: docs:lint"
+icon = "debug"
+command = '''
+set -euo pipefail
+
+pnpm 'docs:lint'
+'''
+
+[[actions]]
+name = "Script: check"
+icon = "debug"
+command = '''
+set -euo pipefail
+
+pnpm 'check'
+'''
+
+[[actions]]
+name = "Script: typecheck"
+icon = "debug"
+command = '''
+set -euo pipefail
+
+pnpm 'typecheck'
+'''
+
+[[actions]]
+name = "Script: agent-design:build"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'agent-design:build'
+'''
+
+[[actions]]
+name = "Script: agent-design:type-check"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+pnpm 'agent-design:type-check'
+'''
+
+[[actions]]
+name = "Script: agent-design:test"
+icon = "test"
+command = '''
+set -euo pipefail
+
+pnpm 'agent-design:test'
+'''
+
+[[actions]]
+name = "Script: agent-design:lint"
+icon = "debug"
+command = '''
+set -euo pipefail
+
+pnpm 'agent-design:lint'
 '''

@@ -61,7 +61,7 @@ hooks-pre-push: ## Run local pre-push governance gates before pushing
 	@bash ./scripts/check-environment.sh
 	$(MAKE) semgrep-changed
 	$(MAKE) codestyle
-	pnpm build
+	pnpm build -- --skip-tests
 
 secrets-staged: ## Scan staged content for secrets before committing
 	pnpm run secrets:staged

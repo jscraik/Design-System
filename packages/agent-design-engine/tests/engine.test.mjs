@@ -7,6 +7,7 @@ import { test } from "node:test";
 import {
   buildAbstractionProposalPreview,
   buildPreparePayload,
+  buildRouteParityReport,
   diffDesignContracts,
   exportDesignContract,
   lintDesignContract,
@@ -197,6 +198,8 @@ test("loads authored agent UI routing table in deterministic order", () => {
     [
       "async_collection",
       "destructive_confirmation",
+      "icon_action",
+      "navigation_sidebar",
       "page_shell",
       "product_panel",
       "product_section",
@@ -1747,6 +1750,45 @@ test("builds prepare payload for settings panel surfaces", async () => {
   );
 });
 
+test("builds prepare payload for protected IconButton route", async () => {
+  const payload = await buildPreparePayload(
+    "packages/ui/src/components/ui/base/IconButton/IconButton.tsx",
+    rootDir,
+  );
+  assert.equal(payload.ok, true);
+  assert.equal(payload.safeForAutomaticImplementation, true);
+  assert.equal(payload.surfaceScope, "protected");
+  assert.equal(payload.surfaceKind, "icon_action");
+  assert.equal(payload.nextAction.kind, "implement");
+  assert.equal(payload.recommendedRoutes[0].canonicalNeed, "icon_action");
+  assert.deepEqual(payload.requiredStates, ["active", "disabled", "ready"]);
+  assert.ok(
+    payload.relevantExamples.includes(
+      "packages/ui/src/storybook/_holding/component-stories/IconButton.stories.tsx",
+    ),
+  );
+  assert.equal(payload.recommendedRoutes[0].usageGuidance.maturity, "gold");
+});
+
+test("route parity report uses guidance scopes to track IconButton coverage", async () => {
+  const report = await buildRouteParityReport(rootDir);
+  assert.equal(report.kind, "astudio.design.routeParity.v1");
+  assert.deepEqual(report.scopePrecedence, ["error", "warn", "exempt"]);
+  const iconButtonSurface = report.surfaces.find(
+    (surface) =>
+      surface.surfaceFamily === "packages/ui/src/components/ui/base/IconButton/IconButton.tsx",
+  );
+  assert.ok(iconButtonSurface);
+  assert.equal(iconButtonSurface.guidanceScope, "error");
+  assert.equal(iconButtonSurface.status, "routed");
+  assert.deepEqual(iconButtonSurface.matchedRouteIds, ["icon_action"]);
+  assert.ok(
+    iconButtonSurface.topExampleRefs.includes(
+      "packages/ui/src/storybook/_holding/component-stories/IconButton.stories.tsx",
+    ),
+  );
+});
+
 test("builds prepare payload for async composition surfaces from routing metadata", async () => {
   const payload = await buildPreparePayload(
     "packages/ui/src/components/ui/layout/ProductComposition/ProductComposition.tsx",
@@ -1776,6 +1818,14 @@ test("build prepare payload fails closed when route examples are missing", async
   assert.equal(payload.safeForAutomaticImplementation, false);
   assert.equal(payload.nextAction.kind, "stop_for_validation_setup");
   assert.equal(payload.nextAction.reasonCode, "E_DESIGN_ROUTE_EXAMPLE_MISSING");
+  assert.equal(payload.nextAction.category, "design");
+  assert.deepEqual(payload.stopClassification, {
+    category: "design",
+    reasonCode: "E_DESIGN_ROUTE_EXAMPLE_MISSING",
+    instruction: payload.nextAction.instruction,
+    recoveryHints: payload.nextAction.recoveryHints,
+    evidenceRefs: payload.nextAction.evidenceRefs,
+  });
   assert.deepEqual(
     payload.openDecisions.find((decision) => decision.code === "E_DESIGN_ROUTE_EXAMPLE_MISSING"),
     {
@@ -1816,11 +1866,15 @@ test("renders blocked prepare outputs without safe-to-implement prose", async ()
   const brief = renderPrepareBrief(payload);
   assert.match(brief, /Status: STOP/);
   assert.match(brief, /Stop: do not edit UI/);
+  assert.match(brief, /Stop category: route/);
+  assert.match(brief, /Recovery Hints:/);
   assert.doesNotMatch(brief, /Status: SAFE_TO_IMPLEMENT/);
 
   const evidence = renderPreparePrEvidence(payload);
   assert.match(evidence, /Status: blocked/);
   assert.match(evidence, /Next action reason code: `E_DESIGN_ROUTE_MISSING`/);
+  assert.match(evidence, /Stop category: `route`/);
+  assert.match(evidence, /Recovery hints:/);
   assert.match(evidence, /Open decisions:/);
   assert.doesNotMatch(evidence, /Status: safe to implement/);
 });
@@ -1845,6 +1899,21 @@ test("builds prepare diagnostics for warn, exempt, and unknown surfaces", async 
   assert.equal(unknown.ok, false);
   assert.equal(unknown.nextAction.kind, "stop_for_missing_route");
   assert.equal(unknown.nextAction.reasonCode, "E_DESIGN_ROUTE_MISSING");
+  assert.equal(unknown.nextAction.category, "route");
+  assert.equal(unknown.nextAction.recoveryAction, "create_route_candidate");
+  assert.deepEqual(unknown.stopClassification, {
+    category: "route",
+    reasonCode: "E_DESIGN_ROUTE_MISSING",
+    instruction: unknown.nextAction.instruction,
+    recoveryHints: unknown.nextAction.recoveryHints,
+    evidenceRefs: unknown.nextAction.evidenceRefs,
+  });
+  assert.equal(unknown.nextAction.routeDiagnostics.protectedScopeMatched, false);
+  assert.ok(
+    unknown.nextAction.routeDiagnostics.candidateFilesToUpdate.includes(
+      "docs/design-system/AGENT_UI_ROUTING.json",
+    ),
+  );
   assert.ok(unknown.validationCommands.length > 0);
   assert.ok(
     unknown.openDecisions.some((decision) => decision.code === "E_DESIGN_SURFACE_SCOPE_UNKNOWN"),

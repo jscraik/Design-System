@@ -16,6 +16,12 @@ export function renderPrepareBrief(payload: PreparePayload): string {
     `Surface: ${payload.surfacePath}`,
     `Status: ${renderPrepareStatus(payload.safeForAutomaticImplementation)}`,
     `Next action: ${payload.nextAction.kind}`,
+    ...(payload.stopClassification
+      ? [
+          `Stop category: ${payload.stopClassification.category}`,
+          `Stop reason: ${payload.stopClassification.reasonCode}`,
+        ]
+      : []),
     `Instruction: ${payload.nextAction.instruction}`,
     "",
     "Use:",
@@ -56,6 +62,17 @@ export function renderPrepareBrief(payload: PreparePayload): string {
 
   if (!payload.safeForAutomaticImplementation) {
     lines.splice(5, 0, "Stop: do not edit UI until the next action is resolved.");
+    const recoveryHints =
+      payload.nextAction.kind === "implement" ? [] : (payload.nextAction.recoveryHints ?? []);
+    if (recoveryHints.length > 0) {
+      lines.splice(
+        lines.indexOf("Use:") - 1,
+        0,
+        "",
+        "Recovery Hints:",
+        ...recoveryHints.map((hint) => `- ${hint}`),
+      );
+    }
   }
 
   return `${lines.join("\n")}\n`;

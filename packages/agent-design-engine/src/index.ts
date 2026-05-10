@@ -10,7 +10,7 @@ export {
 export { extractDesignBody, parseDesignContract } from "./parser.js";
 export { renderPrepareBrief } from "./prepare/brief.js";
 export { renderPreparePrEvidence } from "./prepare/pr-evidence.js";
-export { buildPreparePayload, serializePreparePayload } from "./prepare.js";
+export { buildPreparePayload, buildRouteParityReport, serializePreparePayload } from "./prepare.js";
 export {
   buildAbstractionProposalPreview,
   PROPOSAL_TEMPLATE_PATH as proposalTemplatePath,
@@ -46,6 +46,9 @@ export type {
   ParseOptions,
   PrepareOpenDecision,
   PreparePayload,
+  PrepareRouteDiagnostics,
+  PrepareRouteParityReport,
+  PrepareRouteParitySurfaceFamily,
   PrepareSourceDigest,
   PrepareSurfaceScope,
   ProfileSource,
