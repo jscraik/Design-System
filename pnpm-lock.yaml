@@ -105,7 +105,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^4.0.18
-        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.8.9)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
+        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
 
   packages/agent-design-engine:
     devDependencies:
@@ -151,7 +151,7 @@ importers:
         version: 4.21.0
       vitest:
         specifier: ^4.0.18
-        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.8.9)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
+        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
 
   packages/astudio-make-template:
     dependencies:
@@ -311,7 +311,7 @@ importers:
         version: 4.5.4(@types/node@25.2.0)(rollup@4.59.0)(typescript@5.9.3)(vite@7.3.2(@types/node@25.2.0)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
       vitest:
         specifier: ^4.0.18
-        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.8.9)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
+        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
 
   packages/json-render:
     dependencies:
@@ -348,7 +348,7 @@ importers:
         version: 4.5.4(@types/node@25.2.0)(rollup@4.59.0)(typescript@5.9.3)(vite@7.3.2(@types/node@25.2.0)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
       vitest:
         specifier: ^4.0.18
-        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.8.9)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
+        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
 
   packages/runtime:
     devDependencies:
@@ -363,7 +363,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^4.0.18
-        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.8.9)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
+        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
 
   packages/skill-ingestion:
     devDependencies:
@@ -372,7 +372,7 @@ importers:
         version: 25.2.0
       vitest:
         specifier: ^4.0.18
-        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.8.9)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
+        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
 
   packages/tokens:
     devDependencies:
@@ -398,8 +398,8 @@ importers:
         specifier: ^4.7.0
         version: 4.7.0
       happy-dom:
-        specifier: ^20.8.9
-        version: 20.8.9
+        specifier: ^20.9.0
+        version: 20.9.0
       react:
         specifier: 19.2.5
         version: 19.2.5
@@ -411,7 +411,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^4.0.18
-        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.8.9)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
+        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
 
   packages/ui:
     dependencies:
@@ -597,8 +597,8 @@ importers:
         specifier: ^4.11.1
         version: 4.11.1
       happy-dom:
-        specifier: ^20.8.9
-        version: 20.8.9
+        specifier: ^20.9.0
+        version: 20.9.0
       jsdom:
         specifier: ^28.0.0
         version: 28.0.0
@@ -616,7 +616,7 @@ importers:
         version: 4.5.4(@types/node@25.2.0)(rollup@4.59.0)(typescript@5.9.3)(vite@7.3.2(@types/node@25.2.0)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
       vitest:
         specifier: ^4.0.18
-        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.8.9)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
+        version: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
       vitest-axe:
         specifier: 1.0.0-pre.3
         version: 1.0.0-pre.3(vitest@4.0.18)
@@ -5070,8 +5070,8 @@ packages:
   grid-index@1.1.0:
     resolution: {integrity: sha512-HZRwumpOGUrHyxO5bqKZL0B0GlUpwtCAzZ42sgxUPniu33R1LSFH5yrIcBCHjkctCAh3mtWKcKd9J4vDDdeVHA==}
 
-  happy-dom@20.8.9:
-    resolution: {integrity: sha512-Tz23LR9T9jOGVZm2x1EPdXqwA37G/owYMxRwU0E4miurAtFsPMQ1d2Jc2okUaSjZqAFz2oEn3FLXC5a0a+siyA==}
+  happy-dom@20.9.0:
+    resolution: {integrity: sha512-GZZ9mKe8r646NUAf/zemnGbjYh4Bt8/MqASJY+pSm5ZDtc3YQox+4gsLI7yi1hba6o+eCsGxpHn5+iEVn31/FQ==}
     engines: {node: '>=20.0.0'}
 
   has-flag@4.0.0:
@@ -10040,7 +10040,7 @@ snapshots:
       '@vitest/browser': 4.0.18(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.2.0)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))(vitest@4.0.18)
       '@vitest/browser-playwright': 4.0.18(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(playwright@1.58.2)(vite@7.3.2(@types/node@25.2.0)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))(vitest@4.0.18)
       '@vitest/runner': 4.0.18
-      vitest: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.8.9)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
+      vitest: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
     transitivePeerDependencies:
       - react
       - react-dom
@@ -10567,7 +10567,7 @@ snapshots:
       '@vitest/mocker': 4.0.18(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.2.0)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
       playwright: 1.58.2
       tinyrainbow: 3.0.3
-      vitest: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.8.9)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
+      vitest: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
     transitivePeerDependencies:
       - bufferutil
       - msw
@@ -10583,7 +10583,7 @@ snapshots:
       pngjs: 7.0.0
       sirv: 3.0.2
       tinyrainbow: 3.0.3
-      vitest: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.8.9)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
+      vitest: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
       ws: 8.20.0
     transitivePeerDependencies:
       - bufferutil
@@ -10603,7 +10603,7 @@ snapshots:
       obug: 2.1.1
       std-env: 3.10.0
       tinyrainbow: 3.0.3
-      vitest: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.8.9)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
+      vitest: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
     optionalDependencies:
       '@vitest/browser': 4.0.18(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.2.0)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))(vitest@4.0.18)
 
@@ -11900,7 +11900,7 @@ snapshots:
 
   grid-index@1.1.0: {}
 
-  happy-dom@20.8.9:
+  happy-dom@20.9.0:
     dependencies:
       '@types/node': 25.2.0
       '@types/whatwg-mimetype': 3.0.2
@@ -14684,9 +14684,9 @@ snapshots:
       axe-core: 4.11.1
       chalk: 5.6.2
       lodash-es: 4.18.1
-      vitest: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.8.9)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
+      vitest: 4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0)
 
-  vitest@4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.8.9)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0):
+  vitest@4.0.18(@types/node@25.2.0)(@vitest/browser-playwright@4.0.18)(happy-dom@20.9.0)(jiti@2.6.1)(jsdom@28.0.0)(lightningcss@1.30.2)(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(tsx@4.21.0):
     dependencies:
       '@vitest/expect': 4.0.18
       '@vitest/mocker': 4.0.18(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(vite@7.3.2(@types/node@25.2.0)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))
@@ -14711,7 +14711,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 25.2.0
       '@vitest/browser-playwright': 4.0.18(msw@2.12.10(@types/node@25.2.0)(typescript@5.9.3))(playwright@1.58.2)(vite@7.3.2(@types/node@25.2.0)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0))(vitest@4.0.18)
-      happy-dom: 20.8.9
+      happy-dom: 20.9.0
       jsdom: 28.0.0
     transitivePeerDependencies:
       - jiti
