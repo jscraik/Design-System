@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-05-05
+**Last updated:** 2026-05-07
 **Production status:** IN_PROGRESS overall; Agent Design Prepare north-star plan is REVIEW_GREEN
 **Overall health:** Yellow overall; Green for the Agent Design Prepare plan lane
 
@@ -99,7 +99,7 @@ flowchart LR
 | Quality debt radar | Warn-first baseline active | `pnpm quality-debt:check` validates the category/source contract, `pnpm quality-debt:report` generates weekly burn-down snapshots, and CI/release workflows run the radar as warn-first evidence |
 | Protected settings migration | In progress | The initial settings wave is migrated onto shared shell/composition patterns, with explicit state stories and jsdom exemplar tests for the protected settings slice; broader app/storybook warn backlog remains intentionally non-blocking |
 | Visual regression workflow | In progress | Root visual scripts now route through `scripts/run-playwright-suite.mjs` and `packages/ui build:visual`, and the exemplar gate now covers both the template browser shell and an isolated template-widget shell route |
-| Current dependency hygiene | In progress | This change-set pins `vitest-axe` back to `1.0.0-pre.3` for deterministic installs |
+| Current dependency hygiene | In progress | Security dependency PRs must update direct dependencies and transitive override/lockfile paths; the Hono remediation now forces SDK consumers to `>=4.12.16` |
 | Long-term debt cleanup | In progress | Lint, icon a11y, and docs maintenance remain ongoing work |
 
 ## How to run locally
@@ -176,6 +176,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - `DESIGN.md` section line numbers must stay anchored to the original file, including YAML frontmatter. Lint findings use those lines as agent remediation evidence.
 - `astudio design init` validates the starter contract before writing, but it must still enforce the write gate first so a missing `--write` remains a policy error instead of a provenance error.
 - Package-level Biome scripts need to use the same pinned Biome 2.x command as the root scripts. The workspace still contains older Biome 1.x dependencies for other packages, and those cannot parse the current `biome.json` schema.
+- Security upgrades that touch `platforms/mcp` need lockfile verification for both direct dependencies and SDK transitive runtime paths. A direct Hono bump is incomplete if `@modelcontextprotocol/sdk` still resolves its embedded Hono copy to the vulnerable version.
 - Browser-backed Playwright gates need a provisioned Chromium cache and a macOS launch path that is not blocked by the Codex sandbox. If every browser test fails at launch with `bootstrap_check_in ... Permission denied (1100)`, treat it as an environment permission issue and rerun the browser gate through the approved unsandboxed path before debugging UI code.
 - Package manifests can point at `dist` in `main`, `types`, `exports`, `bin`, or `files`, but those generated outputs are no longer committed source. Build before pack, publish, or direct `node packages/*/dist/...` execution.
 - `pnpm generated-source:check` is the canonical freshness gate for tracked generated runtime inputs. It regenerates the web template registry, widget JavaScript manifest, and Cloudflare worker manifest, formats the tracked generated source with Biome 2.3.11, and fails if the committed snapshot is stale.
@@ -214,6 +215,10 @@ See also: `~/.codex/instructions/Learnings.md`
 - The next agent-native design-system hardening lane is specified broadly in `docs/specs/2026-04-28-agent-native-design-system-spec.md` and narrowed by `docs/specs/2026-04-30-agent-design-prepare-north-star-spec.md`. The north-star rule is that no protected UI change is ready until `astudio design prepare --surface <path> --json` returns `safeForAutomaticImplementation: true`, or the PR explains the proposal/manual decision required. The focused execution source for this lane is now `docs/plans/2026-04-30-agent-design-prepare-north-star-plan.md`; use the older `docs/plans/2026-04-28-agent-native-design-system-plan.md` only for broader historical context and adjacent non-prepare slices.
 
 ## Recent changes
+
+### 2026-05-07
+
+- **Hono security override completion**: tightened the root pnpm override from `hono@<4.12.7` to `hono@<4.12.16` and regenerated `pnpm-lock.yaml` so `@modelcontextprotocol/sdk@1.26.0` and `@hono/node-server@1.19.11` resolve Hono through `4.12.16`, closing the MCP runtime path left open by the direct Dependabot bump.
 
 ### 2026-05-05
 
