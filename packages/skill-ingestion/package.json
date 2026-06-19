@@ -22,7 +22,7 @@
     "clean": "rm -rf dist node_modules/.tmp/tsconfig.tsbuildinfo"
   },
   "devDependencies": {
-    "@types/node": "^25.2.0",
+    "@types/node": "^26.0.0",
     "vitest": "^4.0.18"
   }
 }
