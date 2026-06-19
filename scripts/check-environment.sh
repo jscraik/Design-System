@@ -291,7 +291,7 @@ PY
 
 		repo_capabilities=()
 		explicit_capabilities=()
-		for capability in "${explicit_capabilities[@]}"; do
+		for capability in ${explicit_capabilities+"${explicit_capabilities[@]}"}; do
 			[[ -n "$capability" ]] || continue
 			repo_capabilities+=("$capability")
 		done
@@ -313,7 +313,7 @@ PY
 
 		has_capability() {
 			local wanted="$1"
-			for capability in "${repo_capabilities[@]}"; do
+			for capability in ${repo_capabilities+"${repo_capabilities[@]}"}; do
 				if [[ "$capability" == "$wanted" ]]; then
 					return 0
 				fi

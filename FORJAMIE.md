@@ -220,6 +220,8 @@ See also: `~/.codex/instructions/Learnings.md`
 ### 2026-06-19
 
 - **tsx tooling dependency refresh**: upgraded the root `tsx` dev dependency from `^4.21.0` to `^4.22.3` and refreshed the workspace lockfile. This keeps the repo's shared `node --import tsx ...` helper path current for scripts that rely on the hoisted root tooling dependency without changing the documented command surface.
+- **Web Vite security bump**: updated the web app Vite devDependency to 7.3.5 and refreshed `pnpm-lock.yaml` so frozen pnpm installs resolve the patched Vite version instead of retaining the previous 7.3.2 lockfile snapshot.
+- **Hook environment preflight hardening**: made the capability loops in `scripts/check-environment.sh` safe under nounset when the explicit capability list is empty, so the normal pre-push hook can evaluate repository capabilities instead of exiting on an empty Bash array expansion.
 
 ### 2026-05-07
 
