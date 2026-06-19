@@ -216,6 +216,10 @@ See also: `~/.codex/instructions/Learnings.md`
 
 ## Recent changes
 
+### 2026-06-19
+
+- **Web Vite security bump**: updated the web app Vite devDependency to 7.3.5 and refreshed `pnpm-lock.yaml` so frozen pnpm installs resolve the patched Vite version instead of retaining the previous 7.3.2 lockfile snapshot.
+
 ### 2026-05-07
 
 - **Hono security override completion**: tightened the root pnpm override from `hono@<4.12.7` to `hono@<4.12.16` and regenerated `pnpm-lock.yaml` so `@modelcontextprotocol/sdk@1.26.0` and `@hono/node-server@1.19.11` resolve Hono through `4.12.16`, closing the MCP runtime path left open by the direct Dependabot bump.
