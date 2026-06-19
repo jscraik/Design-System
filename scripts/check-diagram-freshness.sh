@@ -61,8 +61,11 @@ snapshot_artifacts() {
 				checksum="$(normalized_checksum "$file" "$rel_path")"
 				printf '%s %s
 ' "$rel_path" "$checksum"
-			done < <(find "$REPO_ROOT/$path" -type f | sort)
+			done < <(git -C "$REPO_ROOT" ls-files -- "$path" | sort | sed "s#^#$REPO_ROOT/#")
 		elif [[ -f "$REPO_ROOT/$path" ]]; then
+			if ! git -C "$REPO_ROOT" ls-files --error-unmatch "$path" >/dev/null 2>&1; then
+				continue
+			fi
 			local checksum
 			checksum="$(normalized_checksum "$REPO_ROOT/$path" "$path")"
 			printf '%s %s
