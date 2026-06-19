@@ -16,7 +16,7 @@
 ## Status
 
 <!-- STATUS_START -->
-**Last updated:** 2026-05-07
+**Last updated:** 2026-06-19
 **Production status:** IN_PROGRESS overall; Agent Design Prepare north-star plan is REVIEW_GREEN
 **Overall health:** Yellow overall; Green for the Agent Design Prepare plan lane
 
@@ -99,7 +99,7 @@ flowchart LR
 | Quality debt radar | Warn-first baseline active | `pnpm quality-debt:check` validates the category/source contract, `pnpm quality-debt:report` generates weekly burn-down snapshots, and CI/release workflows run the radar as warn-first evidence |
 | Protected settings migration | In progress | The initial settings wave is migrated onto shared shell/composition patterns, with explicit state stories and jsdom exemplar tests for the protected settings slice; broader app/storybook warn backlog remains intentionally non-blocking |
 | Visual regression workflow | In progress | Root visual scripts now route through `scripts/run-playwright-suite.mjs` and `packages/ui build:visual`, and the exemplar gate now covers both the template browser shell and an isolated template-widget shell route |
-| Current dependency hygiene | In progress | Security dependency PRs must update direct dependencies and transitive override/lockfile paths; the Hono remediation now forces SDK consumers to `>=4.12.16` |
+| Current dependency hygiene | In progress | Security dependency PRs must update direct dependencies and transitive override/lockfile paths; the current tooling hygiene lane upgrades the root `tsx` dev dependency to `^4.22.3` and refreshes the lockfile path |
 | Long-term debt cleanup | In progress | Lint, icon a11y, and docs maintenance remain ongoing work |
 
 ## How to run locally
@@ -182,6 +182,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - `pnpm generated-source:check` is the canonical freshness gate for tracked generated runtime inputs. It regenerates the web template registry, widget JavaScript manifest, and Cloudflare worker manifest, formats the tracked generated source with Biome 2.3.11, and fails if the committed snapshot is stale.
 - `packages/widgets/src/sdk/generated/widget-manifest.ts` is still an ignored mutable local mirror. The tracked runtime authority is `packages/widgets/src/sdk/generated/widget-manifest.js`, and Cloudflare consumes its own deterministic `src/worker/widget-manifest.generated.ts` mirror after `pnpm -C packages/cloudflare-template run prebuild`.
 - Workspace package scripts should prefer `node --import tsx ...` when they depend on hoisted `tsx`; bare package-local `tsx` shims have already failed in this workspace layout.
+- Root tooling dependency bumps still count as tooling changes even when they do not alter source behavior. Keep `FORJAMIE.md` in the same PR whenever the root manifest or lockfile changes a shared execution helper such as `tsx`.
 - `docs/plans/README.md`, `reports/README.md`, and `artifacts/reviews/README.md` are now the authority indexes for plan, report, and review-evidence routing. Prefer those front doors before trusting filename recency or old embedded status text.
 - `pnpm tracked-ignored:check` is the guard that keeps ignored runtime, cache, test-output, build-output, and ad hoc audit artifacts from becoming tracked again. It allows the documented planning/config exceptions, so do not replace it with a blanket ban on every `git ls-files -ci --exclude-standard` result.
 - `docs:lint` is the canonical docs quality command; `doc:lint` is only a compatibility alias. Theme propagation has an active property-test surface at `pnpm test:theme-propagation`, and the tree-shaking prototype is intentionally retained behind `pnpm validation-prototype:build`.
@@ -218,7 +219,9 @@ See also: `~/.codex/instructions/Learnings.md`
 
 ### 2026-06-19
 
+- **tsx tooling dependency refresh**: upgraded the root `tsx` dev dependency from `^4.21.0` to `^4.22.3` and refreshed the workspace lockfile. This keeps the repo's shared `node --import tsx ...` helper path current for scripts that rely on the hoisted root tooling dependency without changing the documented command surface.
 - **Web Vite security bump**: updated the web app Vite devDependency to 7.3.5 and refreshed `pnpm-lock.yaml` so frozen pnpm installs resolve the patched Vite version instead of retaining the previous 7.3.2 lockfile snapshot.
+- **Hook environment preflight hardening**: made the capability loops in `scripts/check-environment.sh` safe under nounset when the explicit capability list is empty, so the normal pre-push hook can evaluate repository capabilities instead of exiting on an empty Bash array expansion.
 
 ### 2026-05-07
 
@@ -256,7 +259,7 @@ project: design-system
 repo: ~/dev/design-system
 status: IN_PROGRESS
 health: yellow
-last_updated: 2026-05-03
+last_updated: 2026-06-19
 open_prs: 1
 blockers: none
 next_milestone: Agent Design Prepare PR review and merge
