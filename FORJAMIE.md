@@ -223,6 +223,8 @@ See also: `~/.codex/instructions/Learnings.md`
 - **Web Vite security bump**: updated the web app Vite devDependency to 7.3.5 and refreshed `pnpm-lock.yaml` so frozen pnpm installs resolve the patched Vite version instead of retaining the previous 7.3.2 lockfile snapshot.
 - **Hook environment preflight hardening**: made the capability loops in `scripts/check-environment.sh` safe under nounset when the explicit capability list is empty, so the normal pre-push hook can evaluate repository capabilities instead of exiting on an empty Bash array expansion.
 - **Node type baseline refresh**: upgraded workspace `@types/node` devDependency entries to `^26.0.0` and refreshed `pnpm-lock.yaml`, keeping package-level TypeScript tooling aligned with the current Node type baseline used by builds and tests.
+- **Vitest companion refresh**: upgraded the workspace Vitest baseline to `^4.1.0` and pinned `@vitest/browser-playwright` plus `@vitest/coverage-v8` at `4.1.0`, so browser and coverage test tooling no longer mixes 4.0 companions with 4.1 core Vitest internals.
+- **Diagram freshness hook hardening**: changed the pre-push diagram freshness snapshot to compare only tracked diagram artifacts, preventing refresh-time local logs under `.diagram/` from creating false stale-artifact failures when no committed diagram output changed.
 
 ### 2026-05-07
 
