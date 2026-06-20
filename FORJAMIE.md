@@ -217,6 +217,10 @@ See also: `~/.codex/instructions/Learnings.md`
 
 ## Recent changes
 
+### 2026-06-20
+
+- **Cloudflare template agents security bump**: upgraded packages/cloudflare-template from agents ^0.3.10 to ^0.4.0 and refreshed pnpm-lock.yaml so frozen pnpm installs resolve agents@0.4.0 with the matching partysocket@1.1.13 dependency path. The change keeps the template runtime dependency graph aligned with the Snyk security PR while leaving the public command surface unchanged.
+
 ### 2026-06-19
 
 - **tsx tooling dependency refresh**: upgraded the root `tsx` dev dependency from `^4.21.0` to `^4.22.3` and refreshed the workspace lockfile. This keeps the repo's shared `node --import tsx ...` helper path current for scripts that rely on the hoisted root tooling dependency without changing the documented command surface.
