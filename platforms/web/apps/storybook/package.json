@@ -37,13 +37,13 @@
     "@storybook/react": "10.3.5",
     "@storybook/react-vite": "10.2.10",
     "@storybook/test": "^8.6.15",
-    "@tailwindcss/vite": "4.1.18",
+    "@tailwindcss/vite": "4.3.0",
     "agentation": "^2.3.3",
     "dialkit": "^1.1.0",
     "msw": "^2.12.10",
     "msw-storybook-addon": "^2.0.6",
     "storybook": "10.2.17",
-    "tailwindcss": "4.1.18",
+    "tailwindcss": "4.3.0",
     "tw-animate-css": "^1.3.8"
   },
   "msw": {

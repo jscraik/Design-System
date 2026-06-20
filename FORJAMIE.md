@@ -225,6 +225,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - **Node type baseline refresh**: upgraded workspace `@types/node` devDependency entries to `^26.0.0` and refreshed `pnpm-lock.yaml`, keeping package-level TypeScript tooling aligned with the current Node type baseline used by builds and tests.
 - **Vitest companion refresh**: upgraded the workspace Vitest baseline to `^4.1.0` and pinned `@vitest/browser-playwright` plus `@vitest/coverage-v8` at `4.1.0`, so browser and coverage test tooling no longer mixes 4.0 companions with 4.1 core Vitest internals.
 - **Diagram freshness hook hardening**: changed the pre-push diagram freshness snapshot to compare only tracked diagram artifacts, preventing refresh-time local logs under `.diagram/` from creating false stale-artifact failures when no committed diagram output changed.
+- **Tailwind Vite tooling refresh**: upgraded `@tailwindcss/vite` and the direct `tailwindcss` pins for the web app, Storybook, and widget build surfaces to `4.3.0`, keeping Tailwind's compiler and Vite plugin on the same version line for CSS generation.
 
 ### 2026-05-07
 
