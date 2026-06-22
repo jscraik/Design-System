@@ -780,8 +780,8 @@ importers:
         specifier: ^2.1.16
         version: 2.1.16(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@radix-ui/react-focus-guards':
-        specifier: ^1.1.3
-        version: 1.1.3(@types/react@19.2.14)(react@19.2.5)
+        specifier: ^1.1.4
+        version: 1.1.4(@types/react@19.2.14)(react@19.2.5)
       '@radix-ui/react-focus-scope':
         specifier: ^1.1.8
         version: 1.1.8(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -2380,6 +2380,15 @@ packages:
       '@types/react':
         optional: true
 
+  '@radix-ui/react-focus-guards@1.1.4':
+    resolution: {integrity: sha512-cot/aB/mOm0IYVYTTmQcEEK1M48lZWi8FlYe5nDPQQ8NYZUlXEFgncJ9p2Kzer3RKSrY7cTTpEMLZKNo9QoP5Q==}
+    peerDependencies:
+      '@types/react': 19.2.14
+      react: 19.2.5
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
   '@radix-ui/react-focus-scope@1.1.7':
     resolution: {integrity: sha512-t2ODlkXBQyn7jkl6TNaw/MtVEVvIGelJDCG41Okq/KwUsJBwQ4XVZsHAVUkK4mBv3ewiAS3PGuUWuY2BoK4ZUw==}
     peerDependencies:
@@ -3910,29 +3919,6 @@ packages:
       react-dom:
         optional: true
 
-  agents@0.3.10:
-    resolution: {integrity: sha512-hKj3nbej14GA2SgE6/stQheJF35LCS7DxMuHG0QDl1/npnnECYyG0Yf5DXl6AvJAZOFNDwT3iEzKi8yLZngPDA==}
-    hasBin: true
-    peerDependencies:
-      '@ai-sdk/openai': ^3.0.0
-      '@ai-sdk/react': ^3.0.0
-      '@cloudflare/ai-chat': ^0.0.6
-      '@cloudflare/codemode': ^0.0.6
-      ai: ^6.0.0
-      react: 19.2.5
-      viem: '>=2.0.0'
-      x402: ^0.7.1
-      zod: ^3.25.0 || ^4.0.0
-    peerDependenciesMeta:
-      '@ai-sdk/openai':
-        optional: true
-      '@ai-sdk/react':
-        optional: true
-      viem:
-        optional: true
-      x402:
-        optional: true
-
   agents@0.4.0:
     resolution: {integrity: sha512-YZPNCpO9KxHsyE1HyGFHPKs2MrRiOaQ6GJ9R8uPGqjmsfGZ0WWB7mayiQDgSx7tezwckrX4ShtGGftffDCMx0Q==}
     hasBin: true
@@ -3944,7 +3930,7 @@ packages:
       '@x402/core': ^2.0.0
       '@x402/evm': ^2.0.0
       ai: ^6.0.0
-      react: ^19.0.0
+      react: 19.2.5
       viem: '>=2.0.0'
       zod: ^3.25.0 || ^4.0.0
     peerDependenciesMeta:
@@ -6175,9 +6161,6 @@ packages:
     resolution: {integrity: sha512-kaE3GYaYWFc70EJQDQEhyYbO2Wczz/NgsFXerfjRo0t2s7ZxL1XggWT+HkMrdEyqbZOv3b66CV93WG0Lcg/ThQ==}
     peerDependencies:
       '@cloudflare/workers-types': ^4.20240729.0
-
-  partysocket@1.1.11:
-    resolution: {integrity: sha512-P0EtOQiAwvLriqLgdThcSaREfz3bP77LkLSdmXq680BosPKvGSoGTh/d0g3S+UNmaqcw89Ad7JXHHKyRx3xU9Q==}
 
   partysocket@1.1.13:
     resolution: {integrity: sha512-RNXGzc6j0NISGE84+VTHHtbPwmnzZuOYJm9XZ+en+aZlIA2vC4AfwPlYxAHmGGGko3pQF7xRNhoe7bu1Brej4Q==}
@@ -9244,6 +9227,12 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.2.14
 
+  '@radix-ui/react-focus-guards@1.1.4(@types/react@19.2.14)(react@19.2.5)':
+    dependencies:
+      react: 19.2.5
+    optionalDependencies:
+      '@types/react': 19.2.14
+
   '@radix-ui/react-focus-scope@1.1.7(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
       '@radix-ui/react-compose-refs': 1.1.2(@types/react@19.2.14)(react@19.2.5)
@@ -10844,25 +10833,6 @@ snapshots:
     optionalDependencies:
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
-
-  agents@0.3.10(@cloudflare/workers-types@4.20260423.1)(react@19.2.5)(zod@3.25.76):
-    dependencies:
-      '@cfworker/json-schema': 4.1.1
-      '@modelcontextprotocol/sdk': 1.26.0(@cfworker/json-schema@4.1.1)(zod@3.25.76)
-      cron-schedule: 6.0.0
-      escape-html: 1.0.3
-      json-schema: 0.4.0
-      json-schema-to-typescript: 15.0.4
-      mimetext: 3.0.28
-      nanoid: 5.1.6
-      partyserver: 0.1.5(@cloudflare/workers-types@4.20260423.1)
-      partysocket: 1.1.11
-      react: 19.2.5
-      yargs: 18.0.0
-      zod: 3.25.76
-    transitivePeerDependencies:
-      - '@cloudflare/workers-types'
-      - supports-color
 
   agents@0.4.0(@cloudflare/workers-types@4.20260423.1)(react@19.2.5)(zod@3.25.76):
     dependencies:
@@ -13323,10 +13293,6 @@ snapshots:
     dependencies:
       '@cloudflare/workers-types': 4.20260423.1
       nanoid: 5.1.6
-
-  partysocket@1.1.11:
-    dependencies:
-      event-target-polyfill: 0.0.4
 
   partysocket@1.1.13:
     dependencies:
