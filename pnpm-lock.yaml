@@ -521,8 +521,8 @@ importers:
         specifier: 1.1.1
         version: 1.1.1(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       date-fns:
-        specifier: ^4.1.0
-        version: 4.1.0
+        specifier: ^4.4.0
+        version: 4.4.0
       embla-carousel-react:
         specifier: 8.6.0
         version: 8.6.0(react@19.2.5)
@@ -3910,29 +3910,6 @@ packages:
       react-dom:
         optional: true
 
-  agents@0.3.10:
-    resolution: {integrity: sha512-hKj3nbej14GA2SgE6/stQheJF35LCS7DxMuHG0QDl1/npnnECYyG0Yf5DXl6AvJAZOFNDwT3iEzKi8yLZngPDA==}
-    hasBin: true
-    peerDependencies:
-      '@ai-sdk/openai': ^3.0.0
-      '@ai-sdk/react': ^3.0.0
-      '@cloudflare/ai-chat': ^0.0.6
-      '@cloudflare/codemode': ^0.0.6
-      ai: ^6.0.0
-      react: 19.2.5
-      viem: '>=2.0.0'
-      x402: ^0.7.1
-      zod: ^3.25.0 || ^4.0.0
-    peerDependenciesMeta:
-      '@ai-sdk/openai':
-        optional: true
-      '@ai-sdk/react':
-        optional: true
-      viem:
-        optional: true
-      x402:
-        optional: true
-
   agents@0.4.0:
     resolution: {integrity: sha512-YZPNCpO9KxHsyE1HyGFHPKs2MrRiOaQ6GJ9R8uPGqjmsfGZ0WWB7mayiQDgSx7tezwckrX4ShtGGftffDCMx0Q==}
     hasBin: true
@@ -3944,7 +3921,7 @@ packages:
       '@x402/core': ^2.0.0
       '@x402/evm': ^2.0.0
       ai: ^6.0.0
-      react: ^19.0.0
+      react: 19.2.5
       viem: '>=2.0.0'
       zod: ^3.25.0 || ^4.0.0
     peerDependenciesMeta:
@@ -4527,8 +4504,8 @@ packages:
   date-fns-jalali@4.1.0-0:
     resolution: {integrity: sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==}
 
-  date-fns@4.1.0:
-    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
+  date-fns@4.4.0:
+    resolution: {integrity: sha512-+1UMbeh68lH1SegH83CGWwpb6OHHbpSgr3+s5Eww5M4CAgswBpoWS0AjTOfEJ33HiYKz1hdj/KTFprzXHmq/6w==}
 
   de-indent@1.0.2:
     resolution: {integrity: sha512-e/1zu3xH5MQryN2zdVaF0OrdNLUbvWxzMbi+iNA6Bky7l1RoP8a2fIbRocyHclXt/arDrrR6lL3TqFD9pMQTsg==}
@@ -6175,9 +6152,6 @@ packages:
     resolution: {integrity: sha512-kaE3GYaYWFc70EJQDQEhyYbO2Wczz/NgsFXerfjRo0t2s7ZxL1XggWT+HkMrdEyqbZOv3b66CV93WG0Lcg/ThQ==}
     peerDependencies:
       '@cloudflare/workers-types': ^4.20240729.0
-
-  partysocket@1.1.11:
-    resolution: {integrity: sha512-P0EtOQiAwvLriqLgdThcSaREfz3bP77LkLSdmXq680BosPKvGSoGTh/d0g3S+UNmaqcw89Ad7JXHHKyRx3xU9Q==}
 
   partysocket@1.1.13:
     resolution: {integrity: sha512-RNXGzc6j0NISGE84+VTHHtbPwmnzZuOYJm9XZ+en+aZlIA2vC4AfwPlYxAHmGGGko3pQF7xRNhoe7bu1Brej4Q==}
@@ -10845,25 +10819,6 @@ snapshots:
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
 
-  agents@0.3.10(@cloudflare/workers-types@4.20260423.1)(react@19.2.5)(zod@3.25.76):
-    dependencies:
-      '@cfworker/json-schema': 4.1.1
-      '@modelcontextprotocol/sdk': 1.26.0(@cfworker/json-schema@4.1.1)(zod@3.25.76)
-      cron-schedule: 6.0.0
-      escape-html: 1.0.3
-      json-schema: 0.4.0
-      json-schema-to-typescript: 15.0.4
-      mimetext: 3.0.28
-      nanoid: 5.1.6
-      partyserver: 0.1.5(@cloudflare/workers-types@4.20260423.1)
-      partysocket: 1.1.11
-      react: 19.2.5
-      yargs: 18.0.0
-      zod: 3.25.76
-    transitivePeerDependencies:
-      - '@cloudflare/workers-types'
-      - supports-color
-
   agents@0.4.0(@cloudflare/workers-types@4.20260423.1)(react@19.2.5)(zod@3.25.76):
     dependencies:
       '@cfworker/json-schema': 4.1.1
@@ -11422,7 +11377,7 @@ snapshots:
 
   date-fns-jalali@4.1.0-0: {}
 
-  date-fns@4.1.0: {}
+  date-fns@4.4.0: {}
 
   de-indent@1.0.2: {}
 
@@ -13324,10 +13279,6 @@ snapshots:
       '@cloudflare/workers-types': 4.20260423.1
       nanoid: 5.1.6
 
-  partysocket@1.1.11:
-    dependencies:
-      event-target-polyfill: 0.0.4
-
   partysocket@1.1.13:
     dependencies:
       event-target-polyfill: 0.0.4
@@ -13580,7 +13531,7 @@ snapshots:
     dependencies:
       '@date-fns/tz': 1.4.1
       '@tabby_ai/hijri-converter': 1.0.5
-      date-fns: 4.1.0
+      date-fns: 4.4.0
       date-fns-jalali: 4.1.0-0
       react: 19.2.5
 
