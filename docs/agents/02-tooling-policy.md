@@ -9,7 +9,7 @@
 
 ## Core tooling
 
-- Run shell commands with `zsh -lc`.
+- Use the tool's configured non-login shell. Use a login shell only for a bounded shell-startup investigation.
 - Prefer `rg`, `fd`, `jq` over `grep`, `find`, `cat|python`.
 - Linting/formatting: `pnpm lint` / `pnpm format` (Biome).
 - Type checking: `pnpm -s typecheck` (or `tsc -p . --noEmit`).
