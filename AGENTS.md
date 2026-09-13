@@ -12,43 +12,18 @@ Last updated: 2026-01-31
 
 ---
 
-# Jamie's "Living Map" Rule (put this in every CLAUDE.md + AGENTS.md)
+## Operator handoff
 
-When you work in this repo, you're not just changing code — you're also keeping the **map** up to date.
+Keep `FORJAMIE.md` accurate as the operator handoff. When an authorized change
+makes its behavior, architecture, code map, setup, or validation guidance
+inaccurate, update the affected sections in the same change. Record a lesson,
+weakness, improvement, or recent-change entry only when supported and useful
+for that handoff. Reuse accurate sections.
 
-## The one file that matters: `FORJAMIE.md`
-
-For **every project**, maintain a detailed `FORJAMIE.md` at the repo root that explains the whole project in plain language — like you're explaining it to future-me after I've been away for a while.
-
-**Hard rule:** if a commit changes behavior, structure, data flow, config, or tooling, then `FORJAMIE.md` must be updated **in the same change-set**. If a commit already happened without the doc update, immediately follow with a doc-fix commit.
-
-Think of `FORJAMIE.md` as the "project memory" that never forgets.
-
-## The "after every commit" update ritual (Doc Update Gate)
-
-Before you call the work "done", update `FORJAMIE.md` so it's true again.
-
-Checklist:
-
-1. **TL;DR still matches reality** (what this is + what changed).
-2. **Architecture & diagrams** updated if any connections/flows changed.
-3. **Codebase map** updated if files/dirs/modules moved/appeared/disappeared.
-4. **How to run/test** updated if commands, env, config, or setup changed.
-5. **Lessons learned** recorded (bugs hit, root cause, fix, prevention).
-6. **Weaknesses & improvements** updated.
-7. Add a short **Recent Changes** entry: *what changed, why, impact* (include commit hash if available).
-
-If you can't do one of these because something is unclear, stop and ask **one** yes/no question.
-
-## Definition of done (for any task/commit)
-
-Not done until:
-
-- The code works, **and**
-- `FORJAMIE.md` matches reality, **and**
-- Diagrams are accurate, **and**
-- Weak spots + improvements are updated, **and**
-- Recent change entry is added.
+Infer routine documentation details from repository evidence. Ask only when an
+unresolved decision materially affects correctness or authority, while
+continuing independent work. Completion requires the requested result,
+appropriate verification, and any affected documentation to agree.
 
 ---
 
@@ -115,9 +90,9 @@ After installing development tools, always verify installation with `--version` 
 - Source it with `source scripts/codex-preflight.sh` and run `preflight_repo` (or `preflight_js`, `preflight_py`, `preflight_rust`) as a guard before changing repo state.
 
 ## Mandatory workflow snippet
-1. Explore project first, then invoke skill.
+1. Read applicable instructions and relevant project sources before implementation; use a skill when required or applicable.
 2. IMPORTANT: Prefer retrieval-led reasoning over pre-training-led reasoning for any React, Tauri, Apps-SDK-ui, Tailwind, Vite, Storybook + Chat Widget tasks.
-3. Add a Table of Contents for docs.
+3. Add a Table of Contents when it helps readers navigate the document.
 
 ## Documentation map
 ### Table of Contents
