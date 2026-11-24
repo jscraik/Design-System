@@ -32,7 +32,15 @@
 
 ## TL;DR
 
+The pre-push environment check runs from repository-owned code. It keeps the
+tooling and hook checks, then checks approval posture, sandbox mode, Python and
+uv before writing the local environment attestation. The attestation checker
+accepts the exact contract previously accepted by the retired checker. Changes
+to that contract require validation and a matching digest update.
+
 This monorepo is the aStudio design system and Apps SDK UI foundation. It ships reusable token, UI, runtime, icon, and widget packages, plus example web and Storybook surfaces and an MCP integration harness so downstream apps can build consistent ChatGPT-style experiences.
+
+The README now opens with a stored gallery capture and a clone-to-gallery quick start. Local setup uses Node 24.13.1 and pnpm 10.33.0; `.mise.toml`, the package-manager declaration and the inspected GitHub Actions workflows agree on the pnpm version. CircleCI still has a pnpm 10.0.0 fallback; that existing CI mismatch remains unresolved.
 
 `DESIGN.md` is now the repo-level agent UI contract. Coding agents can use `astudio design ...` to lint, diff, export, initialize, migrate, and diagnose the contract before generating UI, while `packages/agent-design-engine` owns the semantic parsing and rule provenance behind those commands.
 
@@ -104,9 +112,17 @@ flowchart LR
 
 ## How to run locally
 
+Use Node 24.13.1 and pnpm 10.33.0 from `.mise.toml`. From a fresh checkout:
+
 ```bash
-pnpm install
-pnpm dev
+git clone https://github.com/jscraik/Design-System.git && cd Design-System
+pnpm install --frozen-lockfile
+pnpm dev:web
+```
+
+Open <http://localhost:5173/> for the Widget Gallery, or the URL printed by Vite if that port is occupied. Additional workflows:
+
+```bash
 pnpm dev:storybook
 pnpm build
 pnpm agent-design:lint
@@ -145,7 +161,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - Pre-release dependencies should stay pinned when the repo depends on exact lockfile behavior across workspaces.
 - Use the repo preflight helper before path-sensitive or multi-step git workflows.
 - Guidance-policy exemptions must stop applying the moment they expire; otherwise CI reports the ledger drift but still hides the real surface-level rule failure that needs cleanup.
-- Local Memory preflight probes need to honor the configured `rest_api.host` for every REST smoke request, not just health checks, or valid non-loopback setups look broken.
+- The Local Memory preflight runs from the repository-owned shell helper. It requires a fixed loopback REST endpoint and checks health, Qdrant when enabled, and the observe, relate and search cycle. Optional mode warns on failure, required mode blocks, and off mode skips the helper.
 - The exemplar-evaluation gate depends on Playwright browser binaries being installed locally; if `pnpm test:exemplar-evaluation` fails before running tests, verify Chromium is provisioned for Playwright in this environment. `pnpm test:policy` should stay browser-free so pre-Playwright CI and release workflows do not fail on unrelated changes.
 - `TemplateWidgetPage` only rendered during `VITE_TEMPLATE_ID` widget builds before this slice. The stable runtime route for browser QA is now `/template-widget/<template-id>`, which gives the web visual suite a deterministic way to protect the isolated widget shell.
 - Protected settings stories are inside the same repo-governed surface family as the app panels, so even Storybook-only scaffolding should avoid literal background hex values or other policy escapes that would add noisy guidance debt.
@@ -216,6 +232,14 @@ See also: `~/.codex/instructions/Learnings.md`
 - The next agent-native design-system hardening lane is specified broadly in `docs/specs/2026-04-28-agent-native-design-system-spec.md` and narrowed by `docs/specs/2026-04-30-agent-design-prepare-north-star-spec.md`. The north-star rule is that no protected UI change is ready until `astudio design prepare --surface <path> --json` returns `safeForAutomaticImplementation: true`, or the PR explains the proposal/manual decision required. The focused execution source for this lane is now `docs/plans/2026-04-30-agent-design-prepare-north-star-plan.md`; use the older `docs/plans/2026-04-28-agent-native-design-system-plan.md` only for broader historical context and adjacent non-prepare slices.
 
 ## Recent changes
+
+### 2026-11-24
+
+- Moved the README quick start and a stored gallery example ahead of the detailed workflow inventory. Added the clone step, local URL, expected first result and contributor route.
+- Aligned the mise pnpm pin with the existing `packageManager` and inspected GitHub Actions version, 10.33.0. CircleCI's existing 10.0.0 fallback still needs alignment. Corrected the README's Node 18 baseline to the local Node 24.13.1 pin; CI still selects its own Node versions.
+- Separated consumer installation from maintainer publishing. Documented the existing Apache-2.0 root licence and MIT UI manifest discrepancy without changing either licence.
+- Validation limits: the screenshot is an existing repository capture, not a new render. The toolchain and licence statements come from checked-in configuration; fresh gallery execution and full repository gates remain separate evidence.
+- Lesson: a package-manager version should come from `package.json` and be consistent with mise and CI. Consumer onboarding should not ask readers to publish a package first.
 
 ### 2026-07-11
 
