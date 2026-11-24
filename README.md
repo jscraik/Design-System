@@ -2,19 +2,25 @@
 
 # aStudio
 
-Cross-Platform UI Workbench
+A UI workbench with reusable React components, design tokens, host adapters and a local gallery for ChatGPT widgets and standalone applications.
 
-Last updated: 2026-01-09
+![The aStudio gallery showing the Chat template in dark mode, with template navigation, example messages and a composer](reports/playwright-chat-dark.png)
 
-## Doc requirements
+Gallery example from a stored capture. Run the local gallery below to inspect the current checkout.
 
-- Audience: Developers (intermediate)
-- Scope: Overview and essential workflows for this area
-- Non-scope: Deep API reference or internal design rationale
-- Owner: Platform Team (confirm)
-- Review cadence: Quarterly (confirm)
+## Quick Start
 
-This repository is a **library-first monorepo** for building consistent UI across ChatGPT widgets and standalone React applications.
+Use **Node.js 24.13.1 and pnpm 10.33.0**; see [Prerequisites](#prerequisites) for the repository tool pins.
+
+```bash
+git clone https://github.com/jscraik/Design-System.git && cd Design-System
+pnpm install --frozen-lockfile
+pnpm dev:web
+```
+
+Open <http://localhost:5173/>. The first result is the Widget Gallery, where you can browse UI examples locally. This path does not require a ChatGPT connection or a package release. If port 5173 is occupied, use the URL printed by Vite.
+
+For component stories, run `pnpm dev:storybook` and open <http://localhost:6006/>. To adopt the libraries in another project, see [Using in Other Projects](#using-in-other-projects). To contribute, start with [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## What This Is
 
@@ -46,9 +52,12 @@ Note: `apps/` is a navigation index only; canonical app paths remain under `plat
 
 ## Contents
 
+- [Quick Start](#quick-start)
+- [What This Is](#what-this-is)
+- [Primary Products](#primary-products)
+- [Development Surfaces](#development-surfaces)
 - [Prerequisites](#prerequisites)
 - [Compatibility matrix](#compatibility-matrix)
-- [Quick Start](#quick-start)
 - [Onboarding Command Center](#onboarding-command-center)
 - [Agent UI Preparation](#agent-ui-preparation)
 - [Verify](#verify)
@@ -69,36 +78,24 @@ Note: `apps/` is a navigation index only; canonical app paths remain under `plat
 - [Creating New Components](#creating-new-components)
 - [Development Workflow](#development-workflow)
 - [Architecture](#architecture)
+- [Licence scope](#licence-scope)
 
 ## Prerequisites
 
-- Node.js 18+
-- pnpm 10.28.0 (see `packageManager` in `package.json`)
+- Git to clone the repository.
+- Node.js **24.13.1**, the local development version pinned in [`.mise.toml`](.mise.toml).
+- pnpm **10.33.0**, matching `packageManager` in [`package.json`](package.json) and the inspected GitHub Actions workflows.
+
+If you use mise, install the two required tools with `mise install node@24.13.1 pnpm@10.33.0`, then use `mise exec -- pnpm install --frozen-lockfile` and `mise exec -- pnpm dev:web` from the repository root. Other tool managers can use the same versions.
+
+The Node versions in CI vary by workflow; they do not replace the local development pin above. The [CircleCI configuration](.circleci/config.yml) still installs pnpm 10.0.0 when pnpm is absent, so its fallback has not yet been aligned with the local setup.
 
 ## Compatibility matrix
 
 - **React**: 19.x (required by `@design-studio/ui` peerDependencies)
 - **TypeScript**: 5.9+ (workspace devDependency)
-- **Node.js**: 18+ (runtime baseline)
+- **Node.js**: 24.13.1 for local development (see `.mise.toml`)
 - **Apps SDK UI**: ^0.2.1 (from `@design-studio/ui` dependencies)
-
-## 🚀 Quick Start
-
-```bash
-# Install dependencies
-pnpm install
-
-# Start development
-pnpm dev                    # Widget Gallery at http://localhost:5173
-pnpm dev:web                # Widget Gallery only (http://localhost:5173)
-pnpm dev:storybook          # Storybook only (http://localhost:6006)
-
-# Build for production
-pnpm build                 # Build pipeline (web packages)
-pnpm build:web             # Web-only build
-pnpm build:widgets         # Widget bundles
-pnpm build:widget          # Single-file widget HTML (for MCP harness)
-```
 
 ## Onboarding Command Center
 
@@ -438,9 +435,10 @@ import { ChatFullWidthTemplate } from "@design-studio/ui/experimental";
 
 ## Release & versioning
 
-This repo uses Changesets for versioning and release automation:
+Maintainers use Changesets for versioning and release automation. These commands prepare and publish packages; they are not part of the local gallery or consumer installation path:
 
 ```bash
+pnpm build:lib
 pnpm changeset
 pnpm version-packages
 pnpm release
@@ -492,20 +490,13 @@ If your other projects are in the same monorepo:
 
 ### Option 2: Published Package (npm/GitHub Packages)
 
-Publish to npm or GitHub Packages:
-
-```bash
-pnpm build:lib
-pnpm changeset
-pnpm version-packages
-pnpm release
-```
-
-Then install normally:
+When the maintainer has published the packages to a registry you can access, install them in your consuming project:
 
 ```bash
 pnpm add @design-studio/ui @design-studio/runtime @design-studio/tokens
 ```
+
+Registry publication and access are separate from cloning this repository. If a package is unavailable, use the workspace path above or ask the maintainer which registry and release to use. Package publishing is covered under [Release & versioning](#release--versioning).
 
 Raw `file:` installs of `packages/ui` or a checked-out git submodule are not a supported consumer path. Those source manifests keep `workspace:*` links for local monorepo development, so use either a shared workspace or published packages instead.
 
@@ -610,6 +601,10 @@ The repository supports **React** implementations across web, widgets, and Tauri
 
 **brAInwav**  
 _from demo to duty_
+
+## Licence scope
+
+The root [LICENSE](LICENSE) contains Apache-2.0 terms, while [`packages/ui/package.json`](packages/ui/package.json) declares MIT for `@design-studio/ui`. The repository does not currently explain how those declarations divide responsibility. Confirm the intended package terms with the maintainer before redistribution; this README does not change either declaration.
 
 ## Distribution
 
