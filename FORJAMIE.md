@@ -32,6 +32,12 @@
 
 ## TL;DR
 
+The pre-push environment check runs from repository-owned code. It keeps the
+tooling and hook checks, then checks approval posture, sandbox mode, Python and
+uv before writing the local environment attestation. The attestation checker
+accepts the exact contract previously accepted by the retired checker. Changes
+to that contract require validation and a matching digest update.
+
 This monorepo is the aStudio design system and Apps SDK UI foundation. It ships reusable token, UI, runtime, icon, and widget packages, plus example web and Storybook surfaces and an MCP integration harness so downstream apps can build consistent ChatGPT-style experiences.
 
 The README now opens with a stored gallery capture and a clone-to-gallery quick start. Local setup uses Node 24.13.1 and pnpm 10.33.0; `.mise.toml`, the package-manager declaration and the inspected GitHub Actions workflows agree on the pnpm version. CircleCI still has a pnpm 10.0.0 fallback; that existing CI mismatch remains unresolved.
