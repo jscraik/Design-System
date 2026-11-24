@@ -17,19 +17,45 @@ extract_last_json_line() {
 extract_local_memory_rest_value() {
 	local config_path="$1"
 	local key="$2"
-	awk -v wanted="${key}" '
+	local section="${3:-rest_api}"
+	awk -v wanted="${key}" -v section="${section}:" '
 		BEGIN { in_rest = 0 }
-		/^[[:space:]]*rest_api:[[:space:]]*$/ { in_rest = 1; next }
+		$1 == section && NF == 1 { in_rest = 1; next }
 		in_rest && /^[^[:space:]]/ { in_rest = 0 }
 		in_rest && $1 == wanted ":" {
 			sub(/^[^:]+:[[:space:]]*/, "", $0)
-			gsub(/"/, "", $0)
 			gsub(/[[:space:]]+#.*/, "", $0)
 			gsub(/^[[:space:]]+|[[:space:]]+$/, "", $0)
-			print $0
-			exit
+			if (++matches > 1) exit 2
+			if (wanted != "auto_port" && ($0 ~ /^".*"$/ || $0 ~ /^\047.*\047$/)) $0 = substr($0, 2, length($0) - 2)
+			value = $0
 		}
+		END { if (matches == 1) print value }
 	' "${config_path}"
+}
+
+check_local_memory_qdrant() {
+	local config_path="$1"
+	local enabled url response status
+	enabled="$(extract_local_memory_rest_value "${config_path}" enabled qdrant)" || return 1
+	if [[ "${enabled}" != 'true' ]]; then
+		echo 'ℹ️ qdrant disabled in local-memory config; skipping backend probe'
+		return 0
+	fi
+	url="$(extract_local_memory_rest_value "${config_path}" url qdrant)" || return 1
+	url="${url:-http://localhost:6333}"
+	while [[ "${url}" == */ ]]; do url="${url%/}"; done
+	if ! response="$(curl -q -sS --proto '=http,https' --connect-timeout 2 --max-time 5 -w $'\n%{http_code}' -- "${url}/collections")"; then
+		log_err 'qdrant backend unreachable'
+		return 1
+	fi
+	status="${response##*$'\n'}"
+	if [[ ! "${status}" =~ ^2[0-9]{2}$ ]] ||
+		! jq -e 'type == "object" and ((.status | type) != "string" or .status == "ok") and (.result.collections | type == "array")' <<<"${response%$'\n'*}" >/dev/null; then
+		log_err 'qdrant backend did not return a healthy collections payload'
+		return 1
+	fi
+	log_ok 'qdrant backend ok'
 }
 
 # is_local_memory_pidfile_sandbox_block returns success if the provided output contains both "failed to write PID file" and "operation not permitted".
@@ -47,8 +73,8 @@ wait_for_local_memory_health() {
 	local health_success='false'
 
 	while (( attempt <= max_attempts )); do
-		if health_json="$(curl -fsS --connect-timeout 2 --max-time 5 "${health_url}" 2>/dev/null)"; then
-			health_success="$(echo "${health_json}" | jq -r '.success // false')"
+		if health_json="$(curl -q -fsS --connect-timeout 2 --max-time 5 "${health_url}" 2>/dev/null)"; then
+			health_success="$(echo "${health_json}" | jq -r '.success == true')" || continue
 			if [[ "${health_success}" == 'true' ]]; then
 				printf '%s\n' "${health_json}"
 				return 0
@@ -137,7 +163,7 @@ post_json_to_file() {
 	local url="$2"
 	local payload="$3"
 
-	curl -sS -o "${output_path}" -w '%{http_code}' \
+	curl -q -sS --connect-timeout 2 --max-time 5 -o "${output_path}" -w '%{http_code}' \
 		-H 'Content-Type: application/json' \
 		-d "${payload}" \
 		"${url}"
@@ -161,7 +187,10 @@ preflight_local_memory_shell_fallback() {
 	fi
 
 	local version
-	version="$(local-memory --version 2>/dev/null | tr -d '\r')"
+	if ! version="$(local-memory --version 2>/dev/null | tr -d '\r')"; then
+		log_err 'local-memory version probe failed'
+		return 1
+	fi
 	echo "local-memory version: ${version}"
 
 	local status_json
@@ -176,7 +205,7 @@ preflight_local_memory_shell_fallback() {
 	fi
 
 	local running
-	running="$(echo "${status_json}" | jq -r '.data.running // .running // false')"
+	running="$(echo "${status_json}" | jq -r '.data.running // .running // false')" || return 1
 
 	local lm_config_path="${LOCAL_MEMORY_CONFIG_PATH:-${HOME}/.local-memory/config.yaml}"
 	if [[ ! -f "${lm_config_path}" ]]; then
@@ -186,7 +215,7 @@ preflight_local_memory_shell_fallback() {
 	fi
 
 	local rest_host
-	rest_host="$(extract_local_memory_rest_value "${lm_config_path}" host)"
+	rest_host="$(extract_local_memory_rest_value "${lm_config_path}" host)" || return 1
 	if [[ "${rest_host}" != '127.0.0.1' ]]; then
 		log_err 'local-memory config host policy failed: expected host: 127.0.0.1'
 		echo "   file: ${lm_config_path}" >&2
@@ -194,7 +223,7 @@ preflight_local_memory_shell_fallback() {
 	fi
 
 	local rest_auto_port
-	rest_auto_port="$(extract_local_memory_rest_value "${lm_config_path}" auto_port)"
+	rest_auto_port="$(extract_local_memory_rest_value "${lm_config_path}" auto_port)" || return 1
 	if [[ "${rest_auto_port}" != 'false' ]]; then
 		log_err 'local-memory config auto_port policy failed: expected auto_port: false'
 		echo "   file: ${lm_config_path}" >&2
@@ -202,9 +231,9 @@ preflight_local_memory_shell_fallback() {
 	fi
 
 	local rest_port
-	rest_port="$(extract_local_memory_rest_value "${lm_config_path}" port)"
+	rest_port="$(extract_local_memory_rest_value "${lm_config_path}" port)" || return 1
 	rest_port="${rest_port:-3002}"
-	if [[ ! "${rest_port}" =~ ^[0-9]+$ ]]; then
+	if [[ ! "${rest_port}" =~ ^[0-9]{1,5}$ ]] || (( 10#${rest_port} < 1 || 10#${rest_port} > 65535 )); then
 		log_err "invalid rest_api_port from config: ${rest_port}"
 		return 1
 	fi
@@ -213,8 +242,8 @@ preflight_local_memory_shell_fallback() {
 	local health_url="http://${rest_host}:${rest_port}/api/v1/health"
 	local health_json
 	if [[ "${running}" != 'true' ]]; then
-		if health_json="$(curl -fsS "${health_url}" 2>/dev/null)"; then
-			if [[ "$(echo "${health_json}" | jq -r '.success // false')" == 'true' ]]; then
+		if health_json="$(curl -q -fsS --connect-timeout 2 --max-time 5 "${health_url}" 2>/dev/null)"; then
+			if jq -e '.success == true' <<<"${health_json}" >/dev/null; then
 				log_warn "local-memory status reported stopped; REST health succeeded at ${health_url}"
 				running='true'
 			fi
@@ -227,15 +256,16 @@ preflight_local_memory_shell_fallback() {
 		running='true'
 		health_json="$(wait_for_local_memory_health "${health_url}" 1 || true)"
 	fi
-	if [[ -z "${health_json:-}" ]] && ! health_json="$(curl -fsS "${health_url}")"; then
+	if [[ -z "${health_json:-}" ]] && ! health_json="$(curl -q -fsS --connect-timeout 2 --max-time 5 "${health_url}")"; then
 		log_err "REST health endpoint unreachable at ${health_url}"
 		return 1
 	fi
-	if [[ "$(echo "${health_json}" | jq -r '.success // false')" != 'true' ]]; then
+	if ! jq -e '.success == true' <<<"${health_json}" >/dev/null; then
 		log_err 'REST health endpoint returned success=false'
 		return 1
 	fi
 	log_ok "REST health ok: ${health_url}"
+	check_local_memory_qdrant "${lm_config_path}" || return 1
 
 	local probe
 	probe="LM-PREFLIGHT-$(date +%Y%m%d-%H%M%S)-$$"
@@ -300,7 +330,7 @@ preflight_local_memory_shell_fallback() {
 		log_err 'observe A failed'
 		return 1
 	fi
-	if [[ "${observe_code_a}" -ge 400 ]]; then
+	if [[ ! "${observe_code_a}" =~ ^2[0-9]{2}$ ]]; then
 		log_err "observe A returned HTTP ${observe_code_a}"
 		return 1
 	fi
@@ -308,7 +338,7 @@ preflight_local_memory_shell_fallback() {
 		log_err 'observe B failed'
 		return 1
 	fi
-	if [[ "${observe_code_b}" -ge 400 ]]; then
+	if [[ ! "${observe_code_b}" =~ ^2[0-9]{2}$ ]]; then
 		log_err "observe B returned HTTP ${observe_code_b}"
 		return 1
 	fi
@@ -320,8 +350,8 @@ preflight_local_memory_shell_fallback() {
 
 	local id_a
 	local id_b
-	id_a="$(echo "${observe_a_json}" | jq -r '.id // .data.id // .memory_id // .data.memory_id // empty')"
-	id_b="$(echo "${observe_b_json}" | jq -r '.id // .data.id // .memory_id // .data.memory_id // empty')"
+	id_a="$(echo "${observe_a_json}" | jq -r '[.id, .data.id, .memory_id, .data.memory_id] | map(select(type == "string" and length > 0)) | first // empty')" || return 1
+	id_b="$(echo "${observe_b_json}" | jq -r '[.id, .data.id, .memory_id, .data.memory_id] | map(select(type == "string" and length > 0)) | first // empty')" || return 1
 	if [[ -z "${id_a}" || -z "${id_b}" ]]; then
 		log_err 'observe returned no memory IDs'
 		return 1
@@ -337,13 +367,13 @@ preflight_local_memory_shell_fallback() {
 		log_err 'relationships create failed'
 		return 1
 	fi
-	if [[ "${relate_code}" -ge 400 ]]; then
+	if [[ ! "${relate_code}" =~ ^2[0-9]{2}$ ]]; then
 		if ! relate_code="$(post_json_to_file "${relate_output}" "${relate_url}" "${relate_payload}")"; then
 			log_err 'relate fallback failed'
 			return 1
 		fi
 	fi
-	if [[ "${relate_code}" -ge 400 ]]; then
+	if [[ ! "${relate_code}" =~ ^2[0-9]{2}$ ]]; then
 		log_err "relationship create returned HTTP ${relate_code}"
 		return 1
 	fi
@@ -352,7 +382,7 @@ preflight_local_memory_shell_fallback() {
 	local relationship_id
 	relationship_id="$(echo "${relate_json}" | jq -r '.id // .data.id // .relationship_id // .data.relationship_id // empty')"
 	local relate_ok
-	relate_ok="$(echo "${relate_json}" | jq -r '.success // true')"
+	relate_ok="$(echo "${relate_json}" | jq -r 'type == "object" and ((.success | type) != "boolean" or .success)')" || return 1
 	if [[ "${relate_ok}" != 'true' ]]; then
 		log_err 'relate reported failure'
 		return 1
@@ -362,52 +392,42 @@ preflight_local_memory_shell_fallback() {
 	search_payload="$(jq -nc --arg query "${probe}" '{query:$query,limit:10,response_format:"ids_only"}')"
 	local search_code=''
 	local search_attempt=1
+	local search_has_hits='false'
 	while (( search_attempt <= 5 )); do
 		if ! search_code="$(post_json_to_file "${search_output}" "${search_url}" "${search_payload}")"; then
 			log_err 'search failed'
 			return 1
 		fi
-		if [[ "${search_code}" -ge 400 ]]; then
+		if [[ ! "${search_code}" =~ ^2[0-9]{2}$ ]]; then
 			log_err "search returned HTTP ${search_code}"
 			return 1
 		fi
-		local search_json_attempt
-		search_json_attempt="$(cat "${search_output}")"
-		local search_hits_attempt
-		search_hits_attempt="$(echo "${search_json_attempt}" | jq -r '
-			if type == "array" then length
-			elif .search_info.total_results != null then .search_info.total_results
-			elif .results then (.results | length)
-			elif .data.results then (.data.results | length)
-			elif .data then (.data | length)
-			else 0 end
-		')"
-		if [[ "${search_hits_attempt}" -ge 1 ]]; then
+		search_has_hits="$(jq -r '
+			if type == "array" then length >= 1
+			elif type != "object" then false
+			elif (.search_info | type) == "object" and (.search_info.total_results | type) == "number"
+				then .search_info.total_results >= 1
+			elif (.results | type) == "array" then (.results | length >= 1)
+			elif (.data | type) == "object" and (.data.results | type) == "array"
+				then (.data.results | length >= 1)
+			elif (.data | type) == "array" then (.data | length >= 1)
+			else false end
+		' "${search_output}")" || return 1
+		if [[ "${search_has_hits}" == 'true' ]]; then
 			break
 		fi
 		sleep 0.2
 		search_attempt=$((search_attempt + 1))
 	done
-	local search_json
-	search_json="$(cat "${search_output}")"
-	local search_hits
-	search_hits="$(echo "${search_json}" | jq -r '
-		if type == "array" then length
-		elif .search_info.total_results != null then .search_info.total_results
-		elif .results then (.results | length)
-		elif .data.results then (.data.results | length)
-		elif .data then (.data | length)
-		else 0 end
-	')"
-	if [[ "${search_hits}" -lt 1 ]]; then
+	if [[ "${search_has_hits}" != 'true' ]]; then
 		log_err "search returned no results for probe ${probe}"
 		return 1
 	fi
 	log_ok "smoke cycle ok: ids ${id_a}, ${id_b}; relationship ${relationship_id}"
 
 	local malformed_code
-	malformed_code="$(post_json_to_file "${malformed_output}" "${observe_url}" '{"level":"observation"}')"
-	if [[ "${malformed_code}" -lt 400 ]]; then
+	malformed_code="$(post_json_to_file "${malformed_output}" "${observe_url}" '{"level":"observation"}')" || return 1
+	if [[ ! "${malformed_code}" =~ ^[45][0-9]{2}$ ]]; then
 		log_err "malformed payload did not return an error (HTTP ${malformed_code})"
 		return 1
 	fi
@@ -417,8 +437,8 @@ preflight_local_memory_shell_fallback() {
 	dup_payload="$(jq -nc --arg c "${content_a}" '{content:$c,domain:"coding-harness",source:"codex_preflight",tags:["preflight","duplicate-check"]}')"
 	local dup_code_1
 	local dup_code_2
-	dup_code_1="$(post_json_to_file "${dup_output_1}" "${observe_url}" "${dup_payload}")"
-	dup_code_2="$(post_json_to_file "${dup_output_2}" "${observe_url}" "${dup_payload}")"
+	dup_code_1="$(post_json_to_file "${dup_output_1}" "${observe_url}" "${dup_payload}")" || return 1
+	dup_code_2="$(post_json_to_file "${dup_output_2}" "${observe_url}" "${dup_payload}")" || return 1
 	echo "ℹ️ duplicate behavior snapshot: first=${dup_code_1}, second=${dup_code_2}"
 
 	local daemon_log="${HOME}/.local-memory/daemon.log"

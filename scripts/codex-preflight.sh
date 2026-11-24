@@ -268,114 +268,14 @@ check_paths() {
 	log_ok "paths ok: ${paths_csv}"
 }
 
-# run_local_memory_preflight_with_runner runs the given Local Memory helper command, appends a `--config` argument when a config path is available, prints the helper's output on success, writes the helper's output to stderr on failure, returns `0` on success, returns `3` when the output indicates a module-resolution/unknown-command error, and otherwise returns the helper's exit status.
-run_local_memory_preflight_with_runner() {
-	local runner_label="$1"
-	shift
-	local -a command=("$@")
-	local config_path="${LOCAL_MEMORY_CONFIG_PATH:-${HOME}/.local-memory/config.yaml}"
-	local output=''
-	local status=0
-
-	if [[ -n "${config_path}" ]]; then
-		command+=(--config "${config_path}")
-	fi
-
-	if output="$("${command[@]}" 2>&1)"; then
-		if [[ -n "${output}" ]]; then
-			printf '%s\n' "${output}"
-			case "${output}" in
-				*"❌ "*|*"local-memory preflight failed"*|*"observe A returned HTTP"*|*"observe B returned HTTP"*|*"relationship create returned HTTP"*|*"search returned HTTP"*)
-					log_warn "Local Memory helper reported failure output despite exit 0: ${runner_label}"
-					return 1
-					;;
-			esac
-		fi
-		return 0
-	fi
-
-	status=$?
-	if [[ -n "${output}" ]]; then
-		printf '%s\n' "${output}" >&2
-	fi
-	case "${output}" in
-		*"Unknown command"*|*"local @brainwav/coding-harness could not be resolved"*|*"MODULE_NOT_FOUND"*|*"Cannot find module"*)
-			return 3
-			;;
-	esac
-	log_warn "Local Memory helper runner failed: ${runner_label}"
-	return "${status}"
-}
-
-# run_local_memory_preflight_via_harness attempts to run the local-memory preflight using available harness runners in preferred order (repo source via pnpm+tsx, repo dist CLI via node, repo wrapper script, then global `harness`), returning the executed runner's exit status or `3` if no runner is available.
-run_local_memory_preflight_via_harness() {
-	local status=3
-
-	if [[ -f "${WORKSPACE_ROOT}/src/dev/run-local-memory-preflight.ts" ]] && command -v pnpm >/dev/null 2>&1; then
-		if command -v tsx >/dev/null 2>&1 || [[ -x "${WORKSPACE_ROOT}/node_modules/.bin/tsx" ]]; then
-			run_local_memory_preflight_with_runner \
-				"repo source helper (pnpm exec tsx src/dev/run-local-memory-preflight.ts)" \
-				pnpm exec tsx "${WORKSPACE_ROOT}/src/dev/run-local-memory-preflight.ts"
-			status=$?
-			if [[ "${status}" -ne 3 ]]; then
-				return "${status}"
-			fi
-		fi
-	fi
-
-	if [[ -f "${WORKSPACE_ROOT}/dist/cli.js" ]] && command -v node >/dev/null 2>&1; then
-		run_local_memory_preflight_with_runner \
-			"repo dist CLI (node dist/cli.js)" \
-			node "${WORKSPACE_ROOT}/dist/cli.js" local-memory-preflight
-		status=$?
-		if [[ "${status}" -ne 3 ]]; then
-			return "${status}"
-		fi
-	fi
-
-	if [[ -x "${WORKSPACE_ROOT}/scripts/harness-cli.sh" ]]; then
-		run_local_memory_preflight_with_runner \
-			"repo wrapper (bash scripts/harness-cli.sh)" \
-			bash "${WORKSPACE_ROOT}/scripts/harness-cli.sh" local-memory-preflight
-		status=$?
-		if [[ "${status}" -ne 3 ]]; then
-			return "${status}"
-		fi
-	fi
-
-	if command -v harness >/dev/null 2>&1; then
-		run_local_memory_preflight_with_runner \
-			"global npm harness ($(command -v harness))" \
-			harness local-memory-preflight
-		status=$?
-		if [[ "${status}" -ne 3 ]]; then
-			return "${status}"
-		fi
-	fi
-
-	return 3
-}
-
-# preflight_local_memory_gold attempts to run a Local Memory preflight using available harness runners; if none are usable it falls back to the legacy shell preflight and returns the resulting exit status.
+# Use the repository-owned Local Memory checks in both optional and required modes.
 preflight_local_memory_gold() {
-	local helper_status=0
-
-	run_local_memory_preflight_via_harness
-	helper_status=$?
-	if [[ "${helper_status}" -eq 0 ]]; then
-		return 0
-	fi
-	if [[ "${helper_status}" -ne 3 ]]; then
-		return "${helper_status}"
-	fi
-
-	log_warn 'no harness Local Memory helper runner available; falling back to legacy shell implementation'
 	if [[ ! -f "${LOCAL_MEMORY_FALLBACK_SCRIPT}" ]]; then
 		log_err "missing Local Memory fallback script: ${LOCAL_MEMORY_FALLBACK_SCRIPT}"
 		return 1
 	fi
 	# shellcheck source=/dev/null
-	source "${LOCAL_MEMORY_FALLBACK_SCRIPT}"
+	source "${LOCAL_MEMORY_FALLBACK_SCRIPT}" || return 1
 	preflight_local_memory_shell_fallback
 }
 

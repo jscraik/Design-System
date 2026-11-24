@@ -161,7 +161,7 @@ See also: `~/.codex/instructions/Learnings.md`
 - Pre-release dependencies should stay pinned when the repo depends on exact lockfile behavior across workspaces.
 - Use the repo preflight helper before path-sensitive or multi-step git workflows.
 - Guidance-policy exemptions must stop applying the moment they expire; otherwise CI reports the ledger drift but still hides the real surface-level rule failure that needs cleanup.
-- Local Memory preflight probes need to honor the configured `rest_api.host` for every REST smoke request, not just health checks, or valid non-loopback setups look broken.
+- The Local Memory preflight runs from the repository-owned shell helper. It requires a fixed loopback REST endpoint and checks health, Qdrant when enabled, and the observe, relate and search cycle. Optional mode warns on failure, required mode blocks, and off mode skips the helper.
 - The exemplar-evaluation gate depends on Playwright browser binaries being installed locally; if `pnpm test:exemplar-evaluation` fails before running tests, verify Chromium is provisioned for Playwright in this environment. `pnpm test:policy` should stay browser-free so pre-Playwright CI and release workflows do not fail on unrelated changes.
 - `TemplateWidgetPage` only rendered during `VITE_TEMPLATE_ID` widget builds before this slice. The stable runtime route for browser QA is now `/template-widget/<template-id>`, which gives the web visual suite a deterministic way to protect the isolated widget shell.
 - Protected settings stories are inside the same repo-governed surface family as the app panels, so even Storybook-only scaffolding should avoid literal background hex values or other policy escapes that would add noisy guidance debt.
