@@ -16,14 +16,28 @@ ROOT = Path(__file__).resolve().parents[1]
 CONTRACT_SHA256 = "842b442b041a613a9ad41a0669f72a7906aa6cfa36496b8136dcf8a7da6cbb3b"
 
 
-def version(command):
-    """Read the version from a bounded executable probe."""
-    result = subprocess.run(
-        command, capture_output=True, text=True, timeout=10, check=True
+def version(tool):
+    """Read the version from the checkout's mise-managed executable."""
+    selection = subprocess.run(
+        ["mise", "--cd", str(ROOT), "which", tool],
+        capture_output=True,
+        text=True,
+        timeout=10,
+        check=True,
     )
-    match = re.search(r"\b(\d+)\.(\d+)\.(\d+)\b", result.stdout)
+    executable = Path(selection.stdout.strip())
+    if not executable.is_absolute() or not executable.is_file():
+        raise ValueError(f"Mise did not resolve {tool}")
+    result = subprocess.run(
+        [str(executable), "--version"],
+        capture_output=True,
+        text=True,
+        timeout=10,
+        check=True,
+    )
+    match = re.search(r"\b(\d+)\.(\d+)\.(\d+)\b", result.stdout + result.stderr)
     if not match:
-        raise ValueError(f"Could not determine {command[0]} version")
+        raise ValueError(f"Could not determine {tool} version")
     return tuple(int(part) for part in match.groups())
 
 
@@ -73,11 +87,11 @@ def check():
         violations.append({"type": "sandbox_mode_not_allowed"})
     if not has_approval:
         violations.append({"type": "approval_posture_invalid"})
-    if version(["python3", "--version"]) < python_minimum:
+    if version("python3") < python_minimum:
         violations.append(
             {"type": "runtime_dependency_version_mismatch", "tool": "python"}
         )
-    if version(["uv", "--version"]) != uv_required:
+    if version("uv") != uv_required:
         violations.append({"type": "runtime_dependency_version_mismatch", "tool": "uv"})
 
     policy = {
